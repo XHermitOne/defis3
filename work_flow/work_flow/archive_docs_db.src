@@ -1,0 +1,1 @@
+{'archive_docs_db': {'storage_dir': u'./archive_docs_odb/', 'activate': 1, 'name': u'archive_docs_db', '_uuid': u'fe8096e000823ab54bc6bfa0569b4a1d', 'init_expr': None, 'type': u'ObjectStorageSource'}}

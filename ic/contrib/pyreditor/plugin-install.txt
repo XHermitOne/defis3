@@ -1,0 +1,9 @@
+﻿To install PyReditor as a Boa plugin do the following:
+
+1. Copy everything but Pyreditor.Plug-in.py to Boa\pyreditor, i.e.,
+   create pyreditor folder at Boa's root folder and copy the files
+   there.
+2. Copy Pyreditor.Plug-in.py to Boa's plugin directory.
+
+Note: If Boa is open, it needs to be restarted for the PyReditor
+to be accessible from the Tools menu.

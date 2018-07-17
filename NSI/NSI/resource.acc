@@ -1,0 +1,1 @@
+{'admin': {'lock_time': ([], [], [], [], [], [], []), 'name': u'admin', 'runner': [u'nsi_runner'], '_uuid': u'61c1a71c0cadd0d80fe05ca76b03fd68', 'on_logout': None, 'access': [], 'legacy': None, 'on_login': None, 'run_res': [u'nsi_runner.mnu'], 'local_dir': None, 'password': None, 'type': u'User', 'description': None}}

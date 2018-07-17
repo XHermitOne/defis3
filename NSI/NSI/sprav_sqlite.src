@@ -1,0 +1,1 @@
+{'sprav_sqlite': {'activate': 1, 'obj_module': None, 'encoding': u'utf_8', 'data_name': None, 'style': 0, 'alias': None, 'component_module': None, 'filename': u'sprav.db', 'type': u'SQLiteDB', 'res_module': None, 'description': None, '_uuid': u'8229e22d559a6b96d2a33344ca204d91', 'convert_unicode': True, 'path': u'./db/', 'name': u'sprav_sqlite', 'init_expr': None}}

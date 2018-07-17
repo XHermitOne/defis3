@@ -1,0 +1,1 @@
+{'new_tab': {'child': [], 'activate': 1, 'description': u'', 'idx': None, 'ctrl': None, 'post_del': None, 'post_init': None, '_uuid': None, 'filter': None, 'source': None, 'init': None, 'post_ctrl': None, 'del': None, 'init_expr': None, 'import': None, 'table': u'default_table', 'scheme': None, 'type': u'Table', 'children': [], 'name': u'default'}}

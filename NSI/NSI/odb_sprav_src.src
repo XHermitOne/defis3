@@ -1,0 +1,1 @@
+{'odb_sprav_src': {'storage_dir': u'./ODBStorage/Sprav', 'activate': 1, 'name': u'odb_sprav_src', '_uuid': u'21218fb32c0ab4b3634694e9491fbfa6', 'init_expr': None, 'type': u'ObjectStorageSource'}}

@@ -1,0 +1,138 @@
+{
+'zatraty_month_staty_tab':
+    {
+    'activate':1,
+    'name':'zatraty_month_staty_tab',
+    '_uuid':None,
+    'children':
+        [
+
+        ],
+    'source':'work_db',
+    'init_expr':None,
+    'child':
+        [
+        
+            {
+            'activate':1,
+            'name':'uuid',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'uuid',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Идентификатор UUID спецификации документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'kolichestvo',
+            'default':None,
+            '_uuid':None,
+            'type_val':'F',
+            'len':None,
+            'field':'kolichestvo',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':None
+            },
+        
+            {
+            'activate':1,
+            'name':'prim',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'prim',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':None
+            },
+        
+            {
+            'activate':1,
+            'name':'name',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'name',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':None
+            },
+        
+            {
+            'activate':1,
+            'name':'summ2',
+            'default':None,
+            '_uuid':None,
+            'type_val':'F',
+            'len':None,
+            'field':'summ2',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':None
+            },
+        
+            {
+            'activate':1,
+            'name':'summ1',
+            'default':None,
+            '_uuid':None,
+            'type_val':'F',
+            'len':None,
+            'field':'summ1',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':None
+            },
+        
+            {
+            'activate':1,
+            'name':'cod',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'cod',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':None
+            },
+        
+            {
+            'activate':1,
+            'name':'id_zatraty_month_tab',
+            '_uuid':None,
+            'del_lnk':True,
+            'init_expr':None,
+            'data_class':'zatraty_month_tab',
+            'type':'Link',
+            '__doc__':'public/ic.components.user.ic_link_wrp-module.html',
+            'description':'Связь с таблицей zatraty_month_tab'
+            }
+        ],
+    'table':'zatraty_month_staty_tab',
+    'type':'Table',
+    '__doc__':'public/ic.components.user.ic_tab_wrp-module.html',
+    'description':None
+    }
+}

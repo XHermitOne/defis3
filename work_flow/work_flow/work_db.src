@@ -1,0 +1,1 @@
+{'work_db': {'activate': 1, 'name': u'work_db', '_uuid': u'185b3e367106f2337a9f0c6166391c05', 'filename': u'zatraty.db', 'init_expr': None, 'path': u'./db/', 'type': u'SQLiteDB'}}

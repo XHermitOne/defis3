@@ -1,0 +1,1 @@
+{'my_docs_storage': {'activate': 1, 'name': u'my_docs_storage', '_uuid': u'f10a1fce82b9cd747df356abbca20bf5', 'storage_src': u'my_docs_db', 'init_expr': None, 'type': u'ObjectStorage'}}

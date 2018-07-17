@@ -1,0 +1,1 @@
+{'reestr_storage': {'activate': 1, 'name': u'reestr_storage', '_uuid': u'3f1ee31d6e67ee9abf47527a38174ec6', 'storage_src': u'reestr_db', 'init_expr': None, 'type': u'ObjectStorage'}}

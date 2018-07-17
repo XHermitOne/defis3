@@ -1,0 +1,216 @@
+{
+'zatraty_reg_tab':
+    {
+    'activate':1,
+    'name':'zatraty_reg_tab',
+    '_uuid':None,
+    'children':
+        [
+        'zatraty_reg_staty_tab'
+        ],
+    'source':'work_db',
+    'init_expr':None,
+    'child':
+        [
+        
+            {
+            'activate':1,
+            'name':'uuid',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'uuid',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Идентификатор UUID документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_no',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'doc_no',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Номер документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_date',
+            'default':None,
+            '_uuid':None,
+            'type_val':'D',
+            'len':None,
+            'field':'doc_date',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Дата документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_title',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'doc_title',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Заголовок документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_description',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'doc_description',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Описание документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_state',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'doc_state',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Состояние документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_create_date',
+            'default':None,
+            '_uuid':None,
+            'type_val':'D',
+            'len':None,
+            'field':'doc_create_date',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Дата создания документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_edit_date',
+            'default':None,
+            '_uuid':None,
+            'type_val':'D',
+            'len':None,
+            'field':'doc_edit_date',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Дата последнего редактирования документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_author',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'doc_author',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Автор документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_owner',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'doc_owner',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Владелец документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'doc_note',
+            'default':None,
+            '_uuid':None,
+            'type_val':'T',
+            'len':None,
+            'field':'doc_note',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':'Примечание документа'
+            },
+        
+            {
+            'activate':1,
+            'name':'summ2',
+            'default':None,
+            '_uuid':None,
+            'type_val':'F',
+            'len':None,
+            'field':'summ2',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':None
+            },
+        
+            {
+            'activate':1,
+            'name':'summ1',
+            'default':None,
+            '_uuid':None,
+            'type_val':'F',
+            'len':None,
+            'field':'summ1',
+            'init_expr':None,
+            'attr':0,
+            'type':'Field',
+            '__doc__':'public/ic.components.user.ic_field_wrp-module.html',
+            'description':None
+            }
+        ],
+    'table':'zatraty_reg_tab',
+    'type':'Table',
+    '__doc__':'public/ic.components.user.ic_tab_wrp-module.html',
+    'description':'Документ затрат'
+    }
+}

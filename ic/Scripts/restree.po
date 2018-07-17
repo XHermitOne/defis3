@@ -1,0 +1,1221 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Defis 0.3\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-04-01 16:51+0700\n"
+"Last-Translator: \n"
+"Language-Team: Defis team <infocentre@infocentre.su>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../PropertyEditor/icResTree.py:102
+msgid "Resource"
+msgstr "Ресурс"
+
+#: ../PropertyEditor/icResTree.py:180
+msgid "Import system component"
+msgstr "Импортирование системного компонента"
+
+#: ../PropertyEditor/icResTree.py:202
+msgid "MODULE IMPORT ERROR: module="
+msgstr "ОШИБКА ИМПОРТИРОВАНИЯ Модуля="
+
+#: ../PropertyEditor/icResTree.py:233
+#: ../PropertyEditor/icResTree.py:235
+msgid "Components"
+msgstr "Компоненты"
+
+#: ../PropertyEditor/icResTree.py:252
+msgid "Select file name"
+msgstr "Выбери имя файла"
+
+#: ../PropertyEditor/icResTree.py:427
+msgid "Metadata"
+msgstr "Метаданные"
+
+#: ../PropertyEditor/icResTree.py:873
+#: ../PropertyEditor/icResTree.py:1755
+msgid "Help"
+msgstr "Помощь"
+
+#: ../PropertyEditor/icResTree.py:1017
+msgid "Not find substring '%s' in resource"
+msgstr "Подстрока в ресурсе не найдена"
+
+#: ../PropertyEditor/icResTree.py:1050
+msgid "Do you realy want delete object?"
+msgstr "Вы действительно хотите удалить объект?"
+
+#: ../PropertyEditor/icResTree.py:1144
+msgid "Add"
+msgstr "Добавить"
+
+#: ../PropertyEditor/icResTree.py:1148
+msgid "Generate component by resource"
+msgstr "Генерировать компонент по ресурсу"
+
+#: ../PropertyEditor/icResTree.py:1153
+msgid "Edit object module"
+msgstr "Редактировать модуль объекта"
+
+#: ../PropertyEditor/icResTree.py:1157
+msgid "Delete (Del)"
+msgstr "Удалить"
+
+#: ../PropertyEditor/icResTree.py:1161
+msgid "Copy (Ctrl - Ins)"
+msgstr "Копировать"
+
+#: ../PropertyEditor/icResTree.py:1167
+msgid "Insert before (Shift - Ins)"
+msgstr "Вставить до"
+
+#: ../PropertyEditor/icResTree.py:1178
+msgid "Insert after"
+msgstr "Вставитть после"
+
+#: ../PropertyEditor/icResTree.py:1189
+msgid "Insert instead"
+msgstr "Вставить вместо"
+
+#: ../PropertyEditor/icResTree.py:1201
+msgid "Generate class"
+msgstr "Генерировать класс"
+
+#: ../PropertyEditor/icResTree.py:1214
+msgid "Input class name"
+msgstr "Введите имя класса"
+
+#: ../PropertyEditor/icResTree.py:1219
+msgid "Class <%s> will in module"
+msgstr "Класс <%s> будет находиться в модуле"
+
+#: ../PropertyEditor/icResTree.py:1256
+msgid "Select module package (%s)"
+msgstr "Выбери пакет модуля (%s)"
+
+#: ../PropertyEditor/icResTree.py:1261
+msgid "Select moule package"
+msgstr "Выбери пакет модуля"
+
+#: ../PropertyEditor/icResTree.py:1283
+msgid "Enter module name:"
+msgstr "Введи имя модуля"
+
+#: ../PropertyEditor/icResTree.py:1283
+msgid "Package <%s>"
+msgstr "Пакет <%s>"
+
+#: ../PropertyEditor/icResTree.py:1317
+msgid "Enter component type"
+msgstr "Введи тип компонента"
+
+#: ../PropertyEditor/icResTree.py:1386
+#: ../PropertyEditor/icResTree.py:1404
+#: ../PropertyEditor/icResTree.py:1425
+msgid "Inpossible insert object %s to %s"
+msgstr "Нельзя вставить объект %s в %s"
+
+#: ../PropertyEditor/icResTree.py:1536
+msgid "Error"
+msgstr "Ошибка"
+
+#: ../PropertyEditor/icResTree.py:1591
+msgid "Node with id = %s isn't find"
+msgstr "Узел id = %s не найден"
+
+#: ../PropertyEditor/icResTree.py:1734
+msgid "Open"
+msgstr "Открыть"
+
+#: ../PropertyEditor/icResTree.py:1738
+msgid "Save"
+msgstr "Сохранить"
+
+#: ../PropertyEditor/icResTree.py:1742
+msgid "Save as"
+msgstr "Сохранить как"
+
+#: ../PropertyEditor/icResTree.py:1746
+msgid "Delete"
+msgstr "Удалить"
+
+#: ../PropertyEditor/icResTree.py:1751
+msgid "Test"
+msgstr "Тест"
+
+#: ../PropertyEditor/icResTree.py:1778
+#: ../PropertyEditor/icResTree.py:2798
+msgid "Form editor"
+msgstr "Редактор форм"
+
+#: ../PropertyEditor/icResTree.py:1783
+msgid "Create user component"
+msgstr "Создать пользовательский компонент"
+
+#: ../PropertyEditor/icResTree.py:1787
+msgid "Resource module"
+msgstr "Модуль ресурса"
+
+#: ../PropertyEditor/icResTree.py:2008
+msgid "File <%s> exist"
+msgstr "Файл <%s> существует"
+
+#: ../PropertyEditor/icResTree.py:2142
+msgid "Couldn't find resource <%s> in <%s>"
+msgstr "Ресус не найден <%s> в <%s>"
+
+#: ../PropertyEditor/icResTree.py:2151
+msgid "Rename resource <%s> to <%s>"
+msgstr "Переименовать ресурс <%s> в <%s>"
+
+#: ../PropertyEditor/icResTree.py:2164
+msgid "Rename resource module <%s> to <%s>"
+msgstr "Переименовать модуль ресурса <%s> в <%s>"
+
+#: ../PropertyEditor/icResTree.py:2169
+msgid "Delete file:%s"
+msgstr "Удалть файл: %s"
+
+#: ../PropertyEditor/icResTree.py:2178
+msgid "<pkl> file <%s> is deleted"
+msgstr "<pkl> файл <%s> удален"
+
+#: ../PropertyEditor/icResTree.py:2217
+msgid "Form Editor"
+msgstr "Редактор форм"
+
+#: ../PropertyEditor/icResTree.py:2285
+msgid "Not find form <%s> in <%s>"
+msgstr "Не найдена форм <%s> в <%s>"
+
+#: ../PropertyEditor/icResTree.py:2292
+msgid "Choose form"
+msgstr "Закрыть форму"
+
+#: ../PropertyEditor/icResTree.py:2292
+msgid "Form"
+msgstr "Форма"
+
+#: ../PropertyEditor/icResTree.py:2310
+msgid "Error in"
+msgstr "Ошибка в"
+
+#: ../PropertyEditor/icResTree.py:2386
+#: ../PropertyEditor/icResTree.py:2431
+msgid "Choose resource file name"
+msgstr "Выбери имя файла ресурса"
+
+#: ../PropertyEditor/icResTree.py:2442
+msgid "File exist, rewrite?"
+msgstr "Файл существует, переписать?"
+
+#: ../PropertyEditor/icResTree.py:2446
+msgid "Enter class name"
+msgstr "Введите имя класса"
+
+#: ../PropertyEditor/icResTree.py:2460
+#: ../PropertyEditor/icResTree.py:2651
+msgid "Enter form name"
+msgstr "Введите имя формы"
+
+#: ../PropertyEditor/icResTree.py:2476
+msgid "Resource name: %s"
+msgstr "Имя ресурса: %s"
+
+#: ../PropertyEditor/icResTree.py:2478
+#: ../PropertyEditor/icResTree.py:2592
+#: ../PropertyEditor/icResTree.py:2594
+msgid "Resource name"
+msgstr "Имя ресурса"
+
+#: ../PropertyEditor/icResTree.py:2671
+msgid "Save resource <%s> to <%s>"
+msgstr "Сохранить ресурс <%s> в <%s>"
+
+#: ../PropertyEditor/icResTree.py:2677
+msgid "Exception in"
+msgstr "Исключение в"
+
+#: ../PropertyEditor/icResTree.py:2699
+msgid "Frame Editor"
+msgstr "Редактор форм"
+
+msgid "Base"
+msgstr "Базовые"
+
+msgid "Visual"
+msgstr "Визуальные"
+
+msgid "Special"
+msgstr "Специальные"
+
+msgid "Events"
+msgstr "События"
+
+msgid "All"
+msgstr "Все"
+
+msgid "Project Tree"
+msgstr "Дерево проекта"
+
+msgid "Resource Editor"
+msgstr "Редактор ресурсов"
+
+msgid "File %s is not found by template %s"
+msgstr "Файл %s по шаблону %s не найден"
+
+msgid "DB"
+msgstr "БД"
+
+msgid "Tables"
+msgstr "Таблицы"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Forms"
+msgstr "Формы"
+
+msgid "System"
+msgstr "Система"
+
+#: ../prj/prj_root.py:52
+msgid "Project"
+msgstr "Проект"
+
+#: ../prj/prj_root.py:263
+msgid "__init__.py is created in folder %s"
+msgstr "__init__.py создан в папке %s"
+
+#: ../prj/prj_root.py:506
+msgid "Invalid resource type '%s'"
+msgstr "Ошибочный тип ресурса '%s'"
+
+#: ../prj/prj_root.py:554
+msgid "Synhronization tree/file project error: %s"
+msgstr "Ошибка синхронизации дерева/файла проекта: %s"
+
+#: ../prj/menuPrjNode.py:58
+msgid "Add resource"
+msgstr "Добавить ресурс"
+
+#: ../prj/menuPrjNode.py:62
+msgid "Import resource"
+msgstr "Импортировать ресурс"
+
+#: ../prj/menuPrjNode.py:70
+msgid "Add folder"
+msgstr "Добавить папку"
+
+#: ../prj/menuPrjNode.py:87
+msgid "Cut"
+msgstr "Вырезать"
+
+#: ../prj/menuPrjNode.py:94
+msgid "Copy"
+msgstr "Копировать"
+
+#: ../prj/menuPrjNode.py:101
+msgid "Insert"
+msgstr "Вставить"
+
+#: ../prj/menuPrjNode.py:111
+msgid "Clone"
+msgstr "Клонировать"
+
+#: ../prj/menuPrjNode.py:130
+msgid "Edit"
+msgstr "Редактировать"
+
+#: ../prj/menuPrjNode.py:138
+msgid "Rename"
+msgstr "Переименовать"
+
+#: ../prj/menuPrjNode.py:275
+msgid "Table synhronization"
+msgstr "Синхронизация таблицы"
+
+#: ../prj/menuPrjNode.py:276
+msgid "Create copy of table %s. Old table is deleted."
+msgstr "Создание копии таблицы. Старая таблица удалена."
+
+#: ../prj/menuPrjNode.py:279
+msgid "Table synhronization error: %s"
+msgstr "Ошибка синхронизации таблицы"
+
+#: ../prj/menuPrjNode.py:282
+msgid "Tables (*.tab)|*.tab|DB (*.src)|*.src|ODB (*.odb)|*.odb|Forms (*.frm)|*.frm|Main window (*.win)|*.win|Menu (*.mnu)|*.mnu|Metedata (*.mtd)|*.mtd|"
+msgstr "Таблицы (*.tab)|*.tab|БД (*.src)|*.src|ODB (*.odb)|*.odb|Формы (*.frm)|*.frm|Главное окно (*.win)|*.win|Меню (*.mnu)|*.mnu|Метаданные (*.mtd)|*.mtd|"
+
+#: ../prj/ImpNode.py:100
+msgid "Resources"
+msgstr "Ресурсы"
+
+#: ../prj/ImpNode.py:114
+msgid "Modules"
+msgstr "Модули"
+
+#: ../prj/ImpNode.py:134
+msgid "Imported subsystems"
+msgstr "Импортированная подсистема"
+
+#: ../prj/ImpNode.py:182
+msgid "Subsystem import error: %s"
+msgstr "Ошибка импортирования подсистемы: %s"
+
+#: ../prj/ImpNode.py:183
+msgid "ERROR"
+msgstr "ОШИБКА"
+
+#: ../prj/ImpNode.py:185
+msgid "Invalid subsystem path %s"
+msgstr "Ошибочный путь подсистемы %s"
+
+#: ../prj/ImpNode.py:206
+msgid "Invalid project path %s"
+msgstr "Ошибочный путь проекат %s"
+
+#: ../prj/ImpNode.py:216
+msgid "Copy subsystem %s to %s"
+msgstr "Копирование подсистемы %s в %s"
+
+#: ../prj/ImpNode.py:231
+msgid "Subsystems refresh"
+msgstr "Обновление подсистемы"
+
+#: ../prj/ImpNode.py:236
+msgid "Refreshing"
+msgstr "Обновление"
+
+#: ../prj/ImpNode.py:256
+msgid "Refresh subsystems error"
+msgstr "Ошибка обновления подсистемы"
+
+#: ../prj/ImpNode.py:302
+msgid "Imported subsystem"
+msgstr "Импортируемая подсистема"
+
+#: ../prj/ImpNode.py:304
+msgid "Import subsystem"
+msgstr "Импортирование подсистемы"
+
+#: ../prj/ImpNode.py:407
+msgid "Choose subsystem"
+msgstr "Выбор подсистемы"
+
+#: ../prj/ImpNode.py:407
+msgid "Project file"
+msgstr "Файл проекта"
+
+#: ../prj/ImpNode.py:413
+msgid "WARRNING"
+msgstr "ПРЕДУПРЕЖДЕНИЕ"
+
+#: ../prj/ImpNode.py:414
+msgid "Subsystem with such name already exist!"
+msgstr "Подсистема с таким именем уже существует"
+
+#: ../prj/menuImpNode.py:49
+msgid "Refresh subsystem"
+msgstr "Обновление подсистемы"
+
+#: ../prj/menuImpNode.py:98
+msgid "Link to subsystem"
+msgstr "Ссылка на подсистему"
+
+#: ../prj/menuImpNode.py:105
+msgid "Switch off subsystem"
+msgstr "Отключение подсистемы"
+
+#: ../prj/menuModNode.py:39
+msgid "Add module"
+msgstr "Добавление модуля"
+
+#: ../prj/menuModNode.py:70
+msgid "Add resource class"
+msgstr "Добавление ресурсного класса"
+
+#: ../prj/menuRootNode.py:35
+msgid "New project"
+msgstr "Новый проект"
+
+#: ../prj/menuRootNode.py:68
+msgid "Run"
+msgstr "Запуск"
+
+#: ../prj/menuRootNode.py:75
+msgid "Debug"
+msgstr "Отладка"
+
+#: ../prj/menuRootNode.py:107
+msgid "Install package"
+msgstr "Инсталировать пакет"
+
+#: ../prj/menuRootNode.py:119
+msgid "Demo package"
+msgstr "Демонстрационные пакет"
+
+#: ../prj/menuRootNode.py:131
+msgid "Image library"
+msgstr "Библиотека изображений"
+
+#: ../prj/menuRootNode.py:143
+msgid "Publication"
+msgstr "Публикация"
+
+#: ../prj/menuRootNode.py:154
+msgid "Tools"
+msgstr "Инструменты"
+
+#: ../prj/menuRootNode.py:161
+msgid "Popup help"
+msgstr "Всплывающая подсказка"
+
+#: ../prj/menuUserNode.py:33
+msgid "New user"
+msgstr "Новый пользователь"
+
+#: ../prj/prj_env.py:25
+#: ../prj/prj_env.py:26
+msgid "Environment"
+msgstr "Окружение"
+
+#: ../prj/prj_module.py:239
+msgid "Package"
+msgstr "Пакет"
+
+#: ../prj/prj_module.py:266
+msgid "Create package error %s"
+msgstr "Ошибка создания пакета %s"
+
+#: ../prj/prj_module.py:389
+msgid "Module %s already exist!"
+msgstr "Модуль %s уже существует!"
+
+#: ../prj/prj_module.py:416
+msgid "Module"
+msgstr "Модуль"
+
+#: ../prj/prj_module.py:501
+msgid "Resource %s is locked by user %s. Computer: %s."
+msgstr "Ресурс %s блокирован пользователем %s. Компьютер: %s."
+
+#: ../prj/prj_module.py:669
+msgid "Interface module"
+msgstr "Модуль интерфейса"
+
+#: ../prj/prj_module.py:698
+msgid "Template module"
+msgstr "Модуль шаблона"
+
+#: ../prj/prj_module.py:726
+msgid "Image library module"
+msgstr "Модуль библиотеки изображений"
+
+#: ../prj/prj_report.py:25
+msgid "Reports"
+msgstr "Отчеты"
+
+#: ../prj/prj_resource.py:186
+msgid "Resource/folder %s exist in project!"
+msgstr "Ресурс/папка %s уже существеут в проекте!"
+
+#: ../prj/prj_resource.py:228
+msgid "Create resource class error %s"
+msgstr "Ошибка создания класса ресурса %s"
+
+#: ../prj/prj_resource.py:420
+msgid "Table"
+msgstr "Таблица"
+
+#: ../prj/prj_resource.py:433
+msgid "Do delete table from DB?"
+msgstr "Удалить таблицу из БД?"
+
+#: ../prj/prj_resource.py:435
+msgid "Do delete child table from DB?"
+msgstr "Удалить дочерние таблицы из БД?"
+
+#: ../prj/prj_resource.py:449
+msgid "All table, field and link name must be in lower case"
+msgstr "все имена таблиц, полей и ссылок должны быть в нижнем регистре"
+
+#: ../prj/prj_resource.py:455
+msgid "SQLite DB"
+msgstr "SQLite БД"
+
+#: ../prj/prj_resource.py:456
+msgid "PostgreSQL DB"
+msgstr "PostgreSQL БД"
+
+#: ../prj/prj_resource.py:457
+msgid "MSSQL DB"
+msgstr "MSSQL БД"
+
+#: ../prj/prj_resource.py:458
+msgid "Object Storage"
+msgstr "Объектное хранилище"
+
+#: ../prj/prj_resource.py:459
+msgid "ODBC data source"
+msgstr "Источник данных ODBC "
+
+#: ../prj/prj_resource.py:460
+msgid "COM server data source"
+msgstr "Источник данных COM server"
+
+#: ../prj/prj_resource.py:471
+msgid "Data source/DB"
+msgstr "Источник данных/БД"
+
+#: ../prj/prj_resource.py:488
+msgid "Choose DB"
+msgstr "Выбрать БД"
+
+#: ../prj/prj_resource.py:488
+msgid "DB list"
+msgstr "Список БД"
+
+#: ../prj/prj_resource.py:564
+msgid "Standart main window"
+msgstr "Стандартное главное окно"
+
+#: ../prj/prj_resource.py:565
+msgid "AUI main window"
+msgstr "AUI главное окно"
+
+#: ../prj/prj_resource.py:579
+msgid "Main window"
+msgstr "Главное окно"
+
+#: ../prj/prj_resource.py:590
+msgid "Choose main window type"
+msgstr "Выбери тип главного окна"
+
+#: ../prj/prj_resource.py:590
+msgid "Main window type list:"
+msgstr "Список типов главных окон"
+
+#: ../prj/prj_resource.py:630
+msgid "Template"
+msgstr "Шаблон"
+
+#: ../prj/prj_resource.py:646
+msgid "Method"
+msgstr "Метод"
+
+#: ../prj/prj_root.py:270
+msgid "Create project"
+msgstr "Создать проект"
+
+#: ../prj/prj_root.py:368
+msgid "Open project"
+msgstr "Открыть проект"
+
+#: ../prj/prj_root.py:369
+msgid "Project file (*.pro)|*.pro"
+msgstr "Файл проекта (*.pro)|*.pro"
+
+#: ../prj/prj_root.py:378
+msgid "Load subsystem %s project %s! After load all changes will lost. subsys: %s, project: %s!"
+msgstr "Загрузить подсистему %s проекта %s! После загрузки все изменения будут потеряны. Подсистема: %s, проект: %s!"
+
+#: ../prj/prj_user.py:33
+msgid "Users"
+msgstr "Пользователи"
+
+#: ../prj/prj_user.py:140
+msgid "User"
+msgstr "Пользователь"
+
+#: ../prj/PrjTree.py:223
+msgid "Build project tree error!"
+msgstr "Ошибка построеня дерева проекта!"
+
+#: ../prj/PrjTree.py:511
+msgid "Invalid name"
+msgstr "Не правильное имя"
+
+#: ../prj/PrjTree.py:511
+msgid "Message"
+msgstr "Сообщение"
+
+#: ../prj/PrjTree.py:566
+msgid "Open subsystem error"
+msgstr "Ошибка открытия подсистемы"
+
+#: ../prj/userRes.py:249
+msgid "Create user access file"
+msgstr "Созданть файл прав доступа пользователя"
+
+#: ../prj/userRes.py:250
+msgid "User access file (*.acc)|*.acc"
+msgstr "Файл прав доступа пользователя  (*.acc)|*.acc"
+
+#: ../prj/userRes.py:368
+msgid "User %s already exist!"
+msgstr "Пользователь %s уже существует!"
+
+#: ../prj/userRes.py:403
+msgid "Users %s are inherit access rights from deleting user. First delete them."
+msgstr "Пользователи %s наследую права от удаляемого пользователя. Сначала удалите их."
+
+#: ../prj/clrPrj.py:30
+msgid "Additional"
+msgstr "Дополнительный"
+
+#: ../prj/icimgmoduleviewer.py:49
+msgid "Image"
+msgstr "Изображение"
+
+#: ../prj/icimgmoduleviewer.py:49
+msgid "Name"
+msgstr "Имя"
+
+msgid "Search in tree"
+msgstr "Поиск в дереве"
+
+msgid "Prev page"
+msgstr "Предыдущая страница"
+
+msgid "Next page"
+msgstr "Следующая страница"
+
+msgid "Home page"
+msgstr "Домашная страница"
+
+msgid "Stop"
+msgstr "Остановить"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Place:"
+msgstr "Расположение:"
+
+#: ../prj/prj_user.py:145
+msgid "ERROR: Unknown type "
+msgstr "ОШИБКА: Неизвестный тип "
+
+#: ../components/icResourceParser.py:387
+msgid "Form %s is not found in resource: %s"
+msgstr "Форма %s не найдена в ресурсе: %s"
+
+#: ../components/icResourceParser.py:595
+msgid "Create form: %s"
+msgstr "Создать форму: %s"
+
+#: ../components/icResourceParser.py:653
+msgid "Create form error"
+msgstr "Ошибка создания формы"
+
+#: ../components/icResourceParser.py:735
+msgid "Designer not found"
+msgstr "Дизайнер не найден"
+
+msgid "Execute method error: %s"
+msgstr "Ошибка выполнения метода: %s"
+
+#: ../utils/ic_exec.py:340
+msgid "Run task: %s"
+msgstr "Запустить задачу: %s"
+
+#: ../utils/ic_exec.py:344
+msgid "Run task error: %s"
+msgstr "Ошибка запуска задачи: %s"
+
+#: ../utils/ic_exec.py:399
+msgid "Run programm error: %s"
+msgstr "Ошибка запуска программы: %s"
+
+#: ../utils/ic_exec.py:418
+msgid "Command error: %s"
+msgstr "Ошибочная команда: %s"
+
+#: ../utils/ic_exec.py:447
+msgid "Import module error: %s"
+msgstr "Ошибка импорта модуля: %s"
+
+#: ../utils/ic_exec.py:452
+msgid "Run module error: %s"
+msgstr "Ошибка запуска модуля: %s"
+
+#: ../utils/ic_exec.py:454
+msgid "Error in function ic_exec.execFuncStr, %s"
+msgstr "Ошибка в функции ic_exec.execFuncStr, %s"
+
+#: ../utils/ic_file.py:110
+msgid "File %s is not exist."
+msgstr "Файл %s не существует."
+
+#: ../utils/ic_file.py:110
+msgid "Copy file error"
+msgstr "Ошибка копирования файла"
+
+#: ../utils/ic_file.py:118
+msgid "Copy file"
+msgstr "Копировать файл"
+
+#: ../utils/ic_file.py:119
+msgid "File %s already exist. Rewrite?"
+msgstr "Файл %s уже существует. Переписать?"
+
+#: ../utils/ic_file.py:127
+msgid "Failed copy file %s to %s."
+msgstr "Ошибка при копировании файла %s в %s."
+
+#: ../utils/ic_file.py:140
+msgid "Create BAK file error: %s"
+msgstr "Ошибка создания BAK файла: %s"
+
+#: ../utils/ic_file.py:153
+msgid "Read subfolder list error: %s"
+msgstr "Ошибка чтения списка дочених папок: %s"
+
+#: ../utils/ic_file.py:167
+msgid "Read folder file list error: %s"
+msgstr "Ошибка чтения спска файлов: %s"
+
+#: ../utils/ic_file.py:187
+msgid "Read folder file list error: ext=%s, path=%s, list=%s"
+msgstr "Ошибка чтения списка файлов папки: расширение=%s, путь=%s, список=%s"
+
+#: ../utils/ic_file.py:338
+msgid "Create folder error: %s"
+msgstr "Ошибка создания папки: %s"
+
+#: ../utils/ic_file.py:351
+msgid "Append folder error, from folder %s to %s"
+msgstr "Ошибка дополнения папки, из папки %s в %s"
+
+#: ../utils/ic_file.py:376
+msgid "Copy folder error, from %s to %s"
+msgstr "Ошибка копирования папки, из %s в %s"
+
+#: ../utils/ic_file.py:397
+msgid "Clone folder error. Clone %s to %s'"
+msgstr "Ошибка клонирования папки. Папки %s в %s"
+
+#: ../utils/ic_file.py:397
+msgid "Error in function"
+msgstr "Ошибка в функции"
+
+#: ../utils/ic_ini.py:107
+msgid "Read INI file error: %s : %s : %s."
+msgstr "Ошибка чтения INI файла: %s : %s : %s."
+
+#: ../utils/ic_ini.py:152
+msgid "Write INI file error: %s."
+msgstr "Ошибка записи INI файла: %s."
+
+#: ../utils/ic_ini.py:165
+msgid "Not found INI file: %s."
+msgstr "INI Файл не найден: %s."
+
+#: ../utils/ic_ini.py:186
+msgid "Delete parameter error from %s."
+msgstr "Ошибка удаления параметров из %s."
+
+#: ../utils/ic_ini.py:290
+msgid "Dictionary is not defined: %s"
+msgstr "Словарь не определен: %s"
+
+#: ../utils/ic_res.py:119
+msgid "File %s is created."
+msgstr "Файл %s создан."
+
+#: ../utils/ic_res.py:122
+msgid "Create module error: %s/__init__.py"
+msgstr "Ошибка создания модуля: %s/__init__.py"
+
+#: ../utils/ic_res.py:163
+msgid "Module %s is created."
+msgstr "Модуль %s создан."
+
+#: ../utils/ic_res.py:166
+msgid "Create module error: %s"
+msgstr "Ошибка создания модуля: %s"
+
+#: ../utils/ic_res.py:183
+msgid "Invalid file format: %s."
+msgstr "Ошибочный формат файла: %s."
+
+#: ../utils/ic_res.py:183
+msgid "Read resource file error: %s."
+msgstr "Ошибка чтения файла ресурса: %s."
+
+#: ../utils/ic_res.py:203
+msgid "Resource file %s is not found."
+msgstr "Файл ресурса %s не найден."
+
+#: ../utils/ic_res.py:244
+msgid "File %s is saved in pickle format."
+msgstr "Файл %s сохранен в  pickle формате."
+
+#: ../utils/ic_res.py:250
+msgid "Faild save file in pickle format: %s."
+msgstr "Ошибка сохранения файла в pickle формате: %s."
+
+#: ../utils/ic_res.py:275
+msgid "Resource file %s is saved in text format."
+msgstr "Файл ресурса  %s сохранен в текстовом формате."
+
+#: ../utils/ic_res.py:280
+msgid "Faild save file in text format: %s."
+msgstr "Ошибка сохранения файла в текстовом формате: %s."
+
+#: ../utils/ic_time.py:34
+msgid "Monday"
+msgstr "Понедельник"
+
+#: ../utils/ic_time.py:34
+msgid "Tuesday"
+msgstr "Вторник"
+
+#: ../utils/ic_time.py:34
+msgid "Wednesday"
+msgstr "Среда"
+
+#: ../utils/ic_time.py:34
+msgid "Thursday"
+msgstr "Четверг"
+
+#: ../utils/ic_time.py:34
+msgid "Friday"
+msgstr "Пятница"
+
+#: ../utils/ic_time.py:34
+msgid "Saturday"
+msgstr "Суббота"
+
+#: ../utils/ic_time.py:34
+msgid "Sunday"
+msgstr "Воскресенье"
+
+#: ../utils/ic_util.py:406
+msgid "Argument error in icOctHexString."
+msgstr "Ошибка аргумента в icOctHexString."
+
+#: ../utils/ic_util.py:553
+msgid "Define HDD serial number error."
+msgstr "Ошибка определения серийного номера HDD."
+
+#: ../utils/lock.py:34
+msgid "Table is locked. Impossible lock record."
+msgstr "Таблица заблокирована. Невозможно заблокировать запись."
+
+#: ../utils/lock.py:35
+msgid "Record is locked."
+msgstr "Запись заблокирована."
+
+#: ../utils/lock.py:39
+msgid "Unknown error."
+msgstr "Неизвестная ошибка."
+
+#: ../utils/lock.py:229
+msgid "Lock file %s is deleted."
+msgstr "Блокировка файла %s удалена."
+
+#: ../utils/lock.py:235
+msgid "Read signature lock file error: %s."
+msgstr "Ошибка чтения сигнатуры блокированного файла: %s."
+
+#: ../utils/lock.py:237
+msgid "Delete lock file error. Dir:%s"
+msgstr "Ошибка удаления блокировки файла. Папка:%s"
+
+#: ../utils/lock.py:456
+msgid "Define lock file name error: %s %s"
+msgstr "Ошибка блокировки файла: %s %s"
+
+#: ../utils/moduleGenerator.py:93
+msgid "Subsystem component directory <%s> is not found."
+msgstr "Подсистемная папка компонентов <%s> не найдена."
+
+#: ../utils/moduleGenerator.py:98
+msgid "Generate component module: modul:%s, type:%s."
+msgstr "Генерация модуля компоенета: modul:%s, type:%s."
+
+#: ../utils/persistant.py:137
+msgid "Save resource file error: %s"
+msgstr "Ошибка сохранения файла ресурса: %s"
+
+#: ../utils/persistant.py:140
+msgid "Persistant file %s is locked to write"
+msgstr "Файл хранения данных %s блокирован на запись"
+
+#: ../utils/resource.py:326
+msgid ">>> icGetRes: component <%s> is not found in resource <%s>."
+msgstr ">>> icGetRes: Компонент <%s> не найден в ресурсе <%s>."
+
+#: ../utils/resource.py:328
+msgid ">>> icGetRes: resource file <%s> is not found."
+msgstr ">>> icGetRes: ресурсный файл <%s> не найден."
+
+#: ../utils/resource.py:331
+msgid "icGetRes: Component description <%s> is not found in resource files."
+msgstr "icGetRes: Описание компонента <%s> не найдено в ресурсных файлах."
+
+#: ../utils/resource.py:649
+msgid "Don't find method <%s> in subsystem %s."
+msgstr "Метод <%s>  в подсистеме %s не найден."
+
+#: ../utils/resource.py:651
+msgid "Don't find method <%s> in subsystemses."
+msgstr "Метод <%s> в подсистемах не найден."
+
+#: ../utils/translate.py:106
+msgid "Unexpected filter type. Must be srting type or dictionary."
+msgstr "Не известный тип фильтра. Тип должен быть srting или dictionary."
+
+#: ../utils/translate.py:227
+msgid "Filter has not key: <%s>."
+msgstr "Фильтр не имеет ключа: <%s>."
+
+#: ../utils/user_journal.py:108
+msgid "Journal registration user error: %s."
+msgstr "Ошибка регистрации пользователя в журнале: %s."
+
+#: ../utils/user_journal.py:116
+msgid "Unregister user %s."
+msgstr "Пользоватль %s снят с регистрации."
+
+#: ../utils/user_journal.py:120
+msgid "Journal delete user error: %s."
+msgstr "Ошибка удаления пользователя из журнала: %s."
+
+#: ../utils/user_journal.py:138
+msgid "Journal define current users names error: %s."
+msgstr "Ошибка определения имени текущего пользователя: %s."
+
+#: ../utils/user_journal.py:153
+msgid "Journal define user run parameters error: user=%s, journal=%s."
+msgstr "Ошибка определения пользовательских параметров запуска в журнале: пользователь=%s, журнал=%s."
+
+#: ../utils/util.py:210
+msgid "readAndEvalFile: Open file error: %s."
+msgstr "readAndEvalFile: ошибка открытия файла: %s."
+
+#: ../utils/util.py:253
+msgid "readAndEvalFile: translation error: %s."
+msgstr "readAndEvalFile: ошибка трансляции: %s."
+
+#: ../utils/util.py:634
+msgid "Save changes?"
+msgstr "Сохранить изменения?"
+
+#: ../utils/util.py:694
+msgid "Import error <%s> in <%s>."
+msgstr "Ошибка импортирования <%s> в <%s>."
+
+#: ../components/icdatasetnavigator.py:208
+msgid "Record"
+msgstr "Запись"
+
+#: ../components/icdatasetnavigator.py:245
+msgid "from"
+msgstr " из "
+
+#: ../components/icdatasetnavigator.py:260
+msgid "Add record"
+msgstr "Добавить запись"
+
+#: ../components/icdatasetnavigator.py:265
+msgid "Update"
+msgstr "Запомнить изменения"
+
+#: ../components/icdatasetnavigator.py:270
+msgid "Delete record"
+msgstr "Удалить запись"
+
+#: ../components/icdatasetnavigator.py:402
+msgid "Can't add row to the link object: <%s>"
+msgstr "Не удалось добавить строку в присоединенный объект: <%s>"
+
+#: ../components/icdatasetnavigator.py:472
+msgid "Can't delete row from the link object: <%s>"
+msgstr "Не удалось удалить строку в присоединенном объект: <%s>"
+
+#: ../components/icdatasetnavigator.py:494
+msgid " Seaching... "
+msgstr " Поиск... "
+
+#: ../components/icwidget.py:561
+msgid "... >> Failed to import object module:%s :%s"
+msgstr "... >> Не удалось импортировать модуль объекта:%s :%s"
+
+#: ../components/icwidget.py:684
+msgid "Invalid attribute value: <%s>=%s, component: <%s:%s>"
+msgstr "Не допустимое значение атрибута: <%s>=%s, компонента: <%s:%s>"
+
+#: ../components/icwidget.py:684
+msgid "ERROR: Init source signal error."
+msgstr "ERROR: Ошибка инициализации источника сигнала."
+
+#: ../components/icgriddataset.py:291
+msgid "icGridDataset: Data source %s is not defined in the object context."
+msgstr "icGridDataset: Источник данных %s не определен в контексте объекта."
+
+#: ../components/icgriddataset.py:419
+msgid "Save changes in <%s>?"
+msgstr "Сохранить изменения в <%s>?"
+
+#: ../components/icgriddataset.py:433
+msgid "Update record control failed"
+msgstr "При обновлении запись не прошла контроль"
+
+#: ../components/icgriddataset.py:540
+msgid "Invalid field value %s, col=%d, row=%d"
+msgstr "Не верное значение поля %s, col=%d, row=%d"
+
+#: ../components/icgriddataset.py:556
+msgid "Dataset attribute control: Invalid value, row=%d, col=%d"
+msgstr "Контроль атрибута класса данных: Не правильное занчение, row=%d, col=%d"
+
+#: ../components/icgriddataset.py:831
+msgid "Do you really want delete record?"
+msgstr "Вы действительно хотите удалить запись?"
+
+#: ../components/icgriddataset.py:836
+msgid "You can't delete this record"
+msgstr "Вы не можете удалить эту запись"
+
+#: ../components/icgriddataset.py:1510
+msgid "Record is locked by user: <%s>"
+msgstr "Запись заблокирована пользователем: <%s>"
+
+#: ../components/icgriddataset.py:1661
+msgid "Do you really want choose value: %s?"
+msgstr "Вы действительно хотите выбрать значение: %s?"
+
+#: ../components/icgriddataset.py:1695
+msgid "Analize return code error <hlp>: %s"
+msgstr "Ошибка анализа кода возврата: %s"
+
+#: ../components/icgriddataset.py:1746
+msgid "Do you really want undo changes (GridDataset)?"
+msgstr "Вы действительно хотите отменить изменения (GridDataset)?"
+
+#: ../components/icgriddataset.py:2019
+msgid "Dataclass %s is not defined in context."
+msgstr "Класс данных %s не определен в контексте."
+
+#: ../components/iclistdataset.py:197
+msgid "icListDataset: Data source %s is not defined in the object context."
+msgstr "icListDataset: Источник данных %s не определен в контексте объекта."
+
+#: ../components/iclistdataset.py:209
+msgid "Refrsh data error. <dataset=%s>"
+msgstr "Ошибка обновления данных. <dataset=%s>"
+
+#: ../components/ictextfield.py:483
+msgid "Do you really want change value: %s?"
+msgstr "Вы действительно хотите изменить значение: %s?"
+
+#: ../components/ictextfield.py:492
+msgid "Invalid field value. value: <%s>, field: <%s>"
+msgstr "Ошибочное значение поля. value: <%s>, field: <%s>"
+
+#: ../components/ictextfield.py:626
+msgid "Record (%d) is locked. <TextField=%s>, err=%s"
+msgstr "Запись (%d) заблокирована. <TextField=%s>, err=%s"
+
+#: ../components/icUserClassCreator.py:392
+msgid "Description component property."
+msgstr "Атрибуты описания компонента."
+
+#: ../components/icUserClassCreator.py:393
+msgid "Module name."
+msgstr "Имя модуля."
+
+msgid "Module name*"
+msgstr "Имя модуля*"
+
+#: ../components/icUserClassCreator.py:394
+msgid "Class name."
+msgstr "Имя класса."
+
+msgid "Class name*"
+msgstr "Имя класса*"
+
+#: ../components/icUserClassCreator.py:395
+msgid "Purpose:"
+msgstr "Назначение."
+
+#: ../components/icUserClassCreator.py:396
+msgid "Author:"
+msgstr "Автор."
+
+#: ../components/icUserClassCreator.py:398
+msgid "Parent module:"
+msgstr "Родительский модуль:"
+
+msgid "Parent module*"
+msgstr "Родительский модуль*"
+
+#: ../components/icUserClassCreator.py:399
+msgid "Parent class:"
+msgstr "Родительский класс:"
+
+msgid "Parent class*"
+msgstr "Родительский класс*"
+
+#: ../components/icUserClassCreator.py:400
+msgid "Icon path"
+msgstr "Файл иконки"
+
+#: ../components/icUserClassCreator.py:401
+msgid "Doc file path [*.html]"
+msgstr "Файл документации"
+
+#: ../components/icUserClassCreator.py:405
+msgid "Create Component Wizard"
+msgstr "Помощник создания компонентов"
+
+#: ../components/icUserClassCreator.py:406
+msgid "Base parameters"
+msgstr "Основные параметры"
+
+#: ../components/icUserClassCreator.py:407
+msgid "Class attributes"
+msgstr "Атрибуты класса"
+
+#: ../components/icUserClassCreator.py:408
+msgid "Event attributes"
+msgstr "Атрибуты сообщений"
+
+#: ../components/icUserClassCreator.py:409
+msgid "Edit module"
+msgstr "Редактирования модуля"
+
+#: ../components/icUserClassCreator.py:441
+msgid "Module %s already exist. Rewrite?"
+msgstr "Модуль %s уже существует. Переписать?"
+
+#: ../components/icUserClassCreator.py:450
+msgid "Wizard was cancelled"
+msgstr "Процесс создания прерван."
+
+msgid "* required fields"
+msgstr "* обязательные поля"
+
+msgid "User class name"
+msgstr "Имя пользовательского класса"
+
+msgid "Component description"
+msgstr "Описание компонента"
+
+msgid "Parent class module path. Example: <ic.components.icbutton>"
+msgstr "Путь до модуля родительского класса. Пример: <ic.components.icbutton>"
+
+msgid "Parent class name. Example: <icButton>"
+msgstr "Имя родительского класса. Пример: <icButton>"
+
+msgid "Define the base parameters of the user component."
+msgstr "Определение базовых параметров пользовательского компонента."
+

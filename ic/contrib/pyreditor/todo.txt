@@ -1,0 +1,20 @@
+=====
+TODOs
+=====
+
+Plans for the upcomming version 2
+---------------------------------
+
+* Recent files
+* Options dlg
+* Templates simple editor and syntax coloring.
+
+General (in the future)
+-----------------------
+
+* When cursor is within a group, group's background changes - use the same tool as for the brace matching?
+  automatically download them.
+* Group coloring only when a matching brace!?
+* Multiple regular expression windows/editors (several tabs); use set_editor() to change
+  the binding focus for the menus to work properly.
+* Linux problems?

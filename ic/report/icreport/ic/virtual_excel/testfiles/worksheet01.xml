@@ -1,0 +1,1294 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+  <Styles>
+    <Style ss:ID="Default">
+      <Alignment ss:Vertical="Bottom"/>
+      <Borders>
+      </Borders>
+      <Font ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s22">
+      <Alignment ss:Vertical="Bottom"/>
+      <Borders>
+      </Borders>
+      <Font ss:Color="#000000" ss:Bold="1"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s24">
+      <Alignment ss:Vertical="Bottom"/>
+      <Borders>
+      </Borders>
+      <Font ss:Color="#000000" ss:Underline="Single"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s25">
+      <Alignment ss:Vertical="Top"/>
+    </Style>
+    <Style ss:ID="s40">
+      <Font ss:Color="#0000FF" ss:Bold="1" x:CharSet="204" ss:Italic="1" ss:FontName="Arial"/>
+    </Style>
+    <Style ss:ID="s60">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s61">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s62">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s63">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s64">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s65">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s74">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s75">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s76">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s77">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s2">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s5">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s6">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s7">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s15">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s17">
+      <Font ss:Shadow="0" ss:Underline="None" x:CharSet="0" ss:Color="#000000" ss:Bold="1" ss:VerticalAlign="None" ss:FontName="Arial" ss:Size="10" ss:Outline="0" ss:Italic="0"/>
+      <Interior ss:Color="#ffffff"/>
+    </Style>
+    <Style ss:ID="s18">
+      <Alignment ss:Vertical="Bottom"/>
+      <Borders>
+      </Borders>
+      <Font ss:Shadow="0" ss:Underline="None" x:CharSet="0" ss:Color="#000000" ss:Bold="1" ss:VerticalAlign="None" ss:FontName="Arial" ss:Size="10" ss:Outline="0" ss:Italic="0"/>
+      <Interior ss:Color="#ffffff"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s20">
+      <Font ss:Shadow="0" ss:Underline="Single" x:CharSet="0" ss:Color="#000000" ss:Bold="0" ss:VerticalAlign="None" ss:FontName="Arial" ss:Size="10" ss:Outline="0" ss:Italic="0"/>
+      <Interior ss:Color="#ffffff"/>
+    </Style>
+    <Style ss:ID="s1">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Color="#000000" ss:Bold="1"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s8">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Color="#000000" ss:Bold="1"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s11">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+      </Borders>
+      <Font ss:Bold="1" ss:FontName="Arial" x:CharSet="204"/>
+      <Interior/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID="s33">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Shadow="0" ss:Underline="None" x:CharSet="0" ss:Color="#000000" ss:Bold="1" ss:VerticalAlign="None" ss:FontName="Arial" ss:Size="10" ss:Outline="0" ss:Italic="0"/>
+      <Interior ss:Color="#ffffff"/>
+      <NumberFormat/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Лист1">
+    <Table x:FullRows="1" x:FullColumns="1" ss:ExpandedColumnCount="11" ss:ExpandedRowCount="40">
+      <Column ss:Width="186" ss:AutoFitWidth="0"/>
+      <Column ss:Width="18" ss:AutoFitWidth="0"/>
+      <Column ss:Width="66" ss:AutoFitWidth="0"/>
+      <Column ss:Width="66" ss:AutoFitWidth="0"/>
+      <Column ss:Width="78" ss:AutoFitWidth="0"/>
+      <Column ss:Index="6" ss:Width="54"/>
+      <Column ss:Width="24"/>
+      <Column ss:Width="66" ss:AutoFitWidth="0"/>
+      <Column ss:Width="78" ss:AutoFitWidth="0"/>
+      <Column ss:Index="10" ss:Width="48"/>
+      <Column ss:Width="132" ss:AutoFitWidth="0"/>
+      <Row>
+        <Cell ss:StyleID="s17">
+          <Data ss:Type="String">СЧЕТ-ФАКТУРА 29826/1 от 31/12/2007</Data>
+        </Cell>
+      </Row>
+      <Row ss:Index="2" ss:AutoFitHeight="0" ss:Height="15.75">
+        <Cell ss:StyleID="s18">
+          <Data ss:Type="String">Продавец  ОАО "Аян"</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+          <Data ss:Type="String">Адрес Россия РХ 655004 г.Абакан ул.Советская 207</Data>
+        </Cell>
+      </Row>
+      <Row ss:AutoFitHeight="0" ss:Height="15">
+        <Cell ss:StyleID="s17">
+          <Data ss:Type="String">ИНН/КПП продавца 1901003094/190101001</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+          <Data ss:Type="String">Грузоотправитель и его адрес ОАО "Аян"</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Россия РХ 655004 г.Абакан ул.Советская 207</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Грузополучатель_его адрес Пр ль Дегтярева В И свид 3457 от 28.06.95(21033) г.Черногорск</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">ул.Советская 73-13</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s20">
+          <Data ss:Type="String">К платежно-расчетному документу N    ----    от         ----</Data>
+        </Cell>
+        <Cell ss:Index="2" ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s18">
+          <Data ss:Type="String">Покупатель Пр ль Дегтярева В И свид 3457 от 28.06.95(21033)</Data>
+        </Cell>
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+          <Data ss:Type="String">Адрес г.Черногорск ул.Советская 73-13</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s17">
+          <Data ss:Type="String">ИНН/КПП покупателя 019030000410/</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+          <Data ss:Type="String">Дополнение(номер платежно-расчетного документа,условия оплаты по договору,способ отправления и т.п.)</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Турбаевский О С ам 646 Пр № 27256 Серт.соот.РООС RU.АЕ65.Н00546 у к уд 717.719,</Data>
+        </Cell>
+      </Row>
+      <Row ss:AutoFitHeight="0" ss:Height="36.75">
+        <Cell ss:StyleID="s25">
+          <Data ss:Type="String">Турбаевский О С ам 646 Пр № 27256 Серт.соот.РООС RU.АЕ65.Н00546 у к уд 717.719,</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s60">
+          <Data ss:Type="String">Наименование товара</Data>
+        </Cell>
+        <Cell ss:StyleID="s61">
+          <Data ss:Type="String">Ед.</Data>
+        </Cell>
+        <Cell ss:StyleID="s61">
+          <Data ss:Type="String">Коли-</Data>
+        </Cell>
+        <Cell ss:StyleID="s61">
+          <Data ss:Type="String">Цена(тариф)</Data>
+        </Cell>
+        <Cell ss:StyleID="s61">
+          <Data ss:Type="String">Стоимость</Data>
+        </Cell>
+        <Cell ss:StyleID="s61">
+          <Data ss:Type="String">В т.ч.</Data>
+        </Cell>
+        <Cell ss:StyleID="s61">
+          <Data ss:Type="String">Налo</Data>
+        </Cell>
+        <Cell ss:StyleID="s61"/>
+        
+        <Cell ss:StyleID="s61">
+          <Data ss:Type="String">Стоимость</Data>
+        </Cell>
+        <Cell ss:StyleID="s61">
+          <Data ss:Type="String">Страна</Data>
+        </Cell>
+        <Cell ss:StyleID="s62">
+          <Data ss:Type="String">Номер</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s63">
+          <Data ss:Type="String">(описание выполненных</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">изм</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">чество</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">за единицу</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">товаров</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">акциз</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">гова</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">Сумма</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">товаров</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">происх</Data>
+        </Cell>
+        <Cell ss:StyleID="s65">
+          <Data ss:Type="String">таможенной</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s63">
+          <Data ss:Type="String">работ, оказаных услуг),</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">(работ,услуг)</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">я ст</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">налога</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">работ,услуг)</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s65">
+          <Data ss:Type="String">декларации</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s63">
+          <Data ss:Type="String">имущественного права</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">имущественных</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">авка</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">имущественных</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s65"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s63"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">прав, всего</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">прав, всего</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s65"/>
+        
+      </Row>
+      <Row ss:AutoFitHeight="0" ss:Height="13.5">
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="String">БЛАНКИ</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="String">ШТ</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">4.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">3.39</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">13.56</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">18.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">2.44</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">16.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="String">Россия</Data>
+        </Cell>
+        <Cell ss:StyleID="s15">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">ПИВО АБАКАНСКОЕ БУТЫЛОЧНОЕ</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">Л</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">400.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">13.14</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">5254.24</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">828.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">18.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">945.76</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">6200.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">Россия</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">БУТЫЛКА 0*5</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">ШТ</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">800.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">3.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">2400.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">2400.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">Россия</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="String">ЯЩИК П/ЭТ</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="String">Т</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">40.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">35.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">1400.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">1400.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="String">Россия</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="String">ВСЕГО К ОПЛАТЕ</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+        </Cell>
+        <Cell ss:StyleID="s6">
+        </Cell>
+        <Cell ss:StyleID="s6">
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">9067.8</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">828.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">948.2</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+          <Data ss:Type="Number">10016.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s6">
+        </Cell>
+        <Cell ss:StyleID="s6">
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Всего на сумму:</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s17">
+          <Data ss:Type="String">Десять тысяч шестнадцать рублей 00 копеек.</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s17">
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Генеральный директор ОАО АЯН       ____________Нежевец Геннадий Григорьевич   Главный бухгалтер ОАО АЯН          __________Фролова Екатерина Михайловна</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Уполномоченный представитель                                             Уполномоченный представитель</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Генерального директора ОАО АЯН     ____________Пискарева Людмила Аркадьевна   Главного бухгалтера ОАО АЯН        __________Бабайлова Любовь Дмитриевна</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">__________Тихонович Елена Вячеславовна</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">__________Пономарева Оксана Владимировна</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">__________Быкова Светлана Анатольевна</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Индивидуальный предприниматель_____________________                                      _____________________________________________</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">(подпись)             (ф.и.о.)</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">(реквизиты свидетельства о государственной регистрации</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">индивидуального предпринимателя)</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Примечание: Первый экземпляр - покупателю,второй экземпляр - продавцу.</Data>
+        </Cell>
+      </Row>
+      <Row>
+      </Row>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <PageSetup>
+        <PageMargins x:Right="0.78740157499999996" x:Bottom="0.984251969" x:Top="0.984251969" x:Left="0.78740157499999996"/>
+      </PageSetup>
+      <Print>
+        <ValidPrinterInfo/>
+        <PaperSizeIndex>9</PaperSizeIndex>
+        <HorizontalResolution>300</HorizontalResolution>
+        <VerticalResolution>300</VerticalResolution>
+        <NumberofCopies>1</NumberofCopies>
+      </Print>
+    </WorksheetOptions>
+  </Worksheet>
+  <Worksheet ss:Name="Лист1#1">
+    <Table x:FullRows="1" x:FullColumns="1" ss:ExpandedColumnCount="12" ss:ExpandedRowCount="47">
+      <Column ss:Width="30" ss:AutoFitWidth="0"/>
+      <Column ss:Width="258" ss:AutoFitWidth="0"/>
+      <Column ss:Width="18" ss:AutoFitWidth="0"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="48"/>
+      <Column ss:Width="48"/>
+      <Column ss:Width="54"/>
+      <Column ss:Width="48"/>
+      <Column ss:Width="30"/>
+      <Column ss:Width="54"/>
+      <Column ss:Width="54"/>
+      <Column ss:Width="72"/>
+      <Row>
+        <Cell ss:StyleID="s17">
+        </Cell>
+      </Row>
+      <Row ss:Index="2">
+        <Cell ss:StyleID="s18">
+          <Data ss:Type="String">Сумма:       10,016.00-</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s18">
+          <Data ss:Type="String">Поставщик  ОАО "Аян"                         ИНН 1901003094      КПП 190101001</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s18">
+          <Data ss:Type="String">Адрес Россия РХ 655004 г.Абакан ул.Советская 207</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+          <Data ss:Type="String">Телефон  28-52-87</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Расчетный счет N 40702810003020000101              БИК 040407777</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">г.Красноярск  Филиал Внешторгбанка в г.Красноярске</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">к/с 30101810200000000777</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s20">
+          <Data ss:Type="String">Грузоотправитель и его адрес Открытое Акционерное Общество "АЯН" Россия РХ 655004</Data>
+        </Cell>
+        <Cell ss:Index="2" ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+        <Cell ss:StyleID="s20"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s18">
+          <Data ss:Type="String">г.Абакан ул.Советская 207</Data>
+        </Cell>
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+          <Data ss:Type="String">Грузополучатель eго адрес Пр ль Дегтярева В И свид 3457 от 28.06.95 г.Черногорск ул.Советская</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s17">
+          <Data ss:Type="String">73-13</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+        </Cell>
+      </Row>
+      <Row ss:Index="14">
+        <Cell ss:StyleID="s17">
+          <Data ss:Type="String">НАКЛАДНАЯ НА ОТПУСК ГОТОВОЙ ПРОДУКЦИИ N 29826/1 от 31/12/2007</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+          <Data ss:Type="String">Склад:  Склад N 1  - ЭКСПЕДИЦИЯ</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s17">
+          <Data ss:Type="String">Покупатель( 21033) Пр ль Дегтярева В И свид 3457 от       ИНН 190300004101</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s22">
+          <Data ss:Type="String">28.06.95</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Адрес г.Черногорск ул.Советская 73-13</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Телефон</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Примечания(номер платежно-расчетного документа,условия оплаты по договору,способ отправления и т.п.)</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Турбаевский О С ам 646 Пр № 27256</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Серт.соот.РООС RU.АЕ65.Н00546</Data>
+        </Cell>
+        <Cell ss:Index="5" ss:StyleID="s40"/>
+        
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">у к уд 717.719,</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">С П Е Ц И Ф И К А Ц И Я</Data>
+        </Cell>
+      </Row>
+      <Row ss:AutoFitHeight="0" ss:Height="13.5">
+        <Cell>
+          <Data ss:Type="String">С П Е Ц И Ф И К А Ц И Я</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s60"/>
+        
+        <Cell ss:StyleID="s61"/>
+        
+        <Cell ss:StyleID="s61"/>
+        
+        <Cell ss:StyleID="s61"/>
+        
+        <Cell ss:StyleID="s74"/>
+        
+        <Cell ss:StyleID="s75">
+          <Data ss:Type="String">Б Е З  Н Д С</Data>
+        </Cell>
+        <Cell ss:StyleID="s75"/>
+        
+        <Cell ss:StyleID="s76"/>
+        
+        <Cell ss:StyleID="s74">
+          <Data ss:Type="String">НДС</Data>
+        </Cell>
+        <Cell ss:StyleID="s76"/>
+        
+        <Cell ss:StyleID="s74">
+          <Data ss:Type="String">С НДС</Data>
+        </Cell>
+        <Cell ss:StyleID="s77"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s33"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">Ед.</Data>
+        </Cell>
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">Коли-</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">В т.ч.</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64">
+          <Data ss:Type="String">В т.ч.</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s65"/>
+        
+      </Row>
+      <Row ss:AutoFitHeight="0" ss:Height="13.5">
+        <Cell ss:StyleID="s1">
+          <Data ss:Type="Number">1</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="String">БЛАНКИ</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="String">ШТ</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">4.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">3.39</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">13.56</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">18.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">2.44</Data>
+        </Cell>
+        <Cell ss:StyleID="s7">
+          <Data ss:Type="Number">4.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s15">
+          <Data ss:Type="Number">16.0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s8">
+          <Data ss:Type="Number">2</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">ПИВО АБАКАНСКОЕ БУТЫЛОЧНОЕ</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">Л</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">400.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">13.14</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">2.07</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">5254.24</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">828.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">18.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">945.76</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">15.5</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">6200.0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s8">
+          <Data ss:Type="Number">3</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">БУТЫЛКА 0*5</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="String">ШТ</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">800.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">3.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">2400.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">3.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s5">
+          <Data ss:Type="Number">2400.0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s1">
+          <Data ss:Type="Number">4</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="String">ЯЩИК П/ЭТ</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="String">Т</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">40.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">35.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">1400.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">35.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">1400.0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s1">
+          <Data ss:Type="String">ВСЕГ</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="String">К ОПЛАТЕ</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+        </Cell>
+        <Cell ss:StyleID="s2">
+        </Cell>
+        <Cell ss:StyleID="s2">
+        </Cell>
+        <Cell ss:StyleID="s2">
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">9067.8</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">828.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">948.2</Data>
+        </Cell>
+        <Cell ss:StyleID="s2">
+        </Cell>
+        <Cell ss:StyleID="s2">
+          <Data ss:Type="Number">10016.0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Всего на сумму:</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s17">
+          <Data ss:Type="String">Десять тысяч шестнадцать рублей 00 копеек.</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s17">
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Возвратная тара НДС не облагается. Сертификаты соответствия выданы ХЦСМ держатель сертификата: зав. лаборатория тел. 28-53-26,</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Советская, 207 действительны по наименованию продукции до 26.06.10, 22.05.08, 11.09.10, 24.05.09, 10.02.08, 05.03.10,</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">28.05.09, 19.11.09</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Пиво, напитки, минеральная вода, кисель, крахмал, чипсы - пищевые продукты. Общероссийский классификатор продукции ОК 005-93.</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Тара для пищевых продуктов - оборотная, подлежит обязательному возврату ОАО "АЯН".</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Продукцию согласно спецификации</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">ПОЛУЧИЛ___________________</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">(подпись покупателя или уполномоченного представителя покупателя</Data>
+        </Cell>
+      </Row>
+      <Row>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">ВЫДАЛ_____________________ Пискарева Л.А.</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">(подпись ответственного лица от поставщика)</Data>
+        </Cell>
+      </Row>
+      <Row>
+      </Row>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <PageSetup>
+        <PageMargins x:Right="0.78740157499999996" x:Bottom="0.984251969" x:Top="0.984251969" x:Left="0.78740157499999996"/>
+      </PageSetup>
+      <Print>
+        <ValidPrinterInfo/>
+        <PaperSizeIndex>9</PaperSizeIndex>
+        <HorizontalResolution>300</HorizontalResolution>
+        <VerticalResolution>300</VerticalResolution>
+        <NumberofCopies>1</NumberofCopies>
+      </Print>
+    </WorksheetOptions>
+  </Worksheet>
+</Workbook>

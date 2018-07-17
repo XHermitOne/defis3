@@ -1,0 +1,1 @@
+{'public_docs_db': {'storage_dir': u'./public_docs_odb/', 'activate': 1, 'name': u'public_docs_db', '_uuid': u'a486e675675e9910ad9ddc3ceecd21ca', 'init_expr': None, 'type': u'ObjectStorageSource'}}

@@ -1,0 +1,1 @@
+{'public_docs_storage': {'activate': 1, 'name': u'public_docs_storage', '_uuid': u'04984479d029a4a46be83cceb2708968', 'storage_src': u'public_docs_db', 'init_expr': None, 'type': u'ObjectStorage'}}

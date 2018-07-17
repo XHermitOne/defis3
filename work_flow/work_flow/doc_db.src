@@ -1,0 +1,1 @@
+{'doc_db': {'activate': 1, 'name': u'doc_db', '_uuid': u'a60dd217587e1dbabe26e2f19650d326', 'dbname': u'ic_db', 'port': u'5432', 'host': u'x.ic.plus', 'init_expr': None, 'password': u'ic_all', 'type': u'PostgreSQLDB', 'options': u'', 'user': u'ic_all'}}

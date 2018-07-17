@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Defis\n"
+"POT-Creation-Date: 2007-12-25 13:46+Þãî-Âîñòî÷íàÿ Àçèÿ (çèìà)\n"
+"PO-Revision-Date: 2007-12-25 13:52+0700\n"
+"Last-Translator: \n"
+"Language-Team: Defis <okoneshnikov.a@infocentre.su>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: defiscfg/__init__.py:30
+msgid "Run current module"
+msgstr "Запустить текущий модуль"
+
+#: defiscfg/__init__.py:30
+msgid "Run module"
+msgstr "Запустить модуль"
+
+#: defiscfg/__init__.py:31
+msgid "Debug current module"
+msgstr "Отладка текущего модуля"
+
+#: defiscfg/__init__.py:31
+msgid "Debug module"
+msgstr "Отладка модуля"
+
+#: defiscfg/__init__.py:32
+msgid "Defis Panel"
+msgstr "Панель проекта Defis"
+
+#: defiscfg/__init__.py:33
+msgid "Defis"
+msgstr "Проекты Defis"
+

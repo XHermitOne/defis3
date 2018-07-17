@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+  <Styles>
+    <Style ss:ID="Default">
+      <Font ss:Size="10" ss:FontName="Arial"/>
+    </Style>
+    <Style ss:ID="s18">
+    </Style>
+    <Style ss:ID="m21698426">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="m21712974">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="m21712994">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s25">
+    </Style>
+    <Style ss:ID="s43">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s44">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s45">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s46">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s47">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s48">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s49">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s50">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s51">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s52">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s53">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s54">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s55">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s56">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s57">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s58">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s59">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s60">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s61">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s62">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s63">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s64">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s65">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s66">
+    </Style>
+    <Style ss:ID="s67">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s68">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s69">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s70">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s71">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s72">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s73">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s80">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#0000ff" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#0000ff" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#0000ff" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s81">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#0000ff" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#0000ff" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s82">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#0000ff" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#0000ff" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#0000ff" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s83">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#0000ff" ss:LineStyle="Dash" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#0000ff" ss:LineStyle="Dash" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#0000ff" ss:LineStyle="Dash" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#0000ff" ss:LineStyle="Dash" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s84">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#ff0000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#ff0000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#ff0000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#ff0000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s85">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#008080" ss:LineStyle="Dot" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#008080" ss:LineStyle="Dot" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#008080" ss:LineStyle="Dot" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#008080" ss:LineStyle="Dot" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s86">
+      <Font ss:Size="10" ss:FontName="Arial"/>
+    </Style>
+    <Style ss:ID="s87">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#00ff00" ss:LineStyle="Dot" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#00ff00" ss:LineStyle="Dot" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#00ff00" ss:LineStyle="Dot" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#00ff00" ss:LineStyle="Dot" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s88">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#ffff00" ss:LineStyle="Dash" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#ffff00" ss:LineStyle="Dash" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#ffff00" ss:LineStyle="Dash" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#ffff00" ss:LineStyle="Dash" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s89">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#ff00ff" ss:LineStyle="Dot" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#ff00ff" ss:LineStyle="Dot" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#ff00ff" ss:LineStyle="Dot" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#ff00ff" ss:LineStyle="Dot" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s90">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#993366" ss:LineStyle="Dash" ss:Position="Left" ss:Weight="2.01"/>
+        <Border ss:Color="#993366" ss:LineStyle="Dash" ss:Position="Right" ss:Weight="2.01"/>
+        <Border ss:Color="#993366" ss:LineStyle="Dash" ss:Position="Top" ss:Weight="2.01"/>
+        <Border ss:Color="#993366" ss:LineStyle="Dash" ss:Position="Bottom" ss:Weight="2.01"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s91">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#808000" ss:LineStyle="Double" ss:Position="Left" ss:Weight="3"/>
+        <Border ss:Color="#808000" ss:LineStyle="Double" ss:Position="Right" ss:Weight="3"/>
+        <Border ss:Color="#808000" ss:LineStyle="Double" ss:Position="Top" ss:Weight="3"/>
+        <Border ss:Color="#808000" ss:LineStyle="Double" ss:Position="Bottom" ss:Weight="3"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="s95">
+    </Style>
+    <Style ss:ID="s96">
+      <Font ss:Size="10" ss:FontName="Arial"/>
+    </Style>
+    <Style ss:ID="s97">
+    </Style>
+    <Style ss:ID="s99">
+    </Style>
+    <Style ss:ID="s100">
+    </Style>
+    <Style ss:ID="s101">
+    </Style>
+    <Style ss:ID="ce1">
+      <Alignment ss:Horizontal="Left"/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce2">
+      <Alignment ss:Horizontal="Center"/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce3">
+      <Alignment ss:Horizontal="Right"/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce4">
+      <Alignment ss:Horizontal="Justify"/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce5">
+      <Font ss:Size="20" ss:Bold="1" ss:Italic="1" ss:FontName="Courier New"/>
+    </Style>
+    <Style ss:ID="ce6">
+      <Font ss:Size="20" ss:Bold="1" ss:FontName="Courier New Condensed"/>
+    </Style>
+    <Style ss:ID="ce7">
+      <NumberFormat ss:Format="0"/>
+    </Style>
+    <Style ss:ID="ce8">
+    </Style>
+    <Style ss:ID="ce9">
+      <NumberFormat ss:Format="# ##0,00"/>
+    </Style>
+    <Style ss:ID="ce10">
+      <NumberFormat ss:Format="0,0%"/>
+    </Style>
+    <Style ss:ID="ce11">
+      <NumberFormat ss:Format="0%"/>
+    </Style>
+    <Style ss:ID="ce12">
+      <NumberFormat ss:Format="0,00%"/>
+    </Style>
+    <Style ss:ID="ce13">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.06"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.06"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.06"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.06"/>
+      </Borders>
+      <Interior/>
+      <NumberFormat ss:Format="# ##0,00%"/>
+    </Style>
+    <Style ss:ID="ce14">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#000000"/>
+    </Style>
+    <Style ss:ID="ce15">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#eeeeee"/>
+    </Style>
+    <Style ss:ID="ce16">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#dddddd"/>
+    </Style>
+    <Style ss:ID="ce17">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#cccccc"/>
+    </Style>
+    <Style ss:ID="ce18">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#b2b2b2"/>
+    </Style>
+    <Style ss:ID="ce19">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#999999"/>
+    </Style>
+    <Style ss:ID="ce20">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#808080"/>
+    </Style>
+    <Style ss:ID="ce21">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#666666"/>
+    </Style>
+    <Style ss:ID="ce22">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#333333"/>
+    </Style>
+    <Style ss:ID="ce23">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#66ffff"/>
+    </Style>
+    <Style ss:ID="ce24">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#9900ff"/>
+    </Style>
+    <Style ss:ID="ce25">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#00ff66"/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Лист1">
+    <Table>
+      <Column ss:Width="109.508"/>
+      <Column ss:Width="116.844"/>
+      <Column ss:Width="48.496"/>
+      <Column ss:Width="122.724"/>
+      <Column ss:Width="55.86"/>
+      <Column ss:Width="63.224" ss:Span="9"/>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce14">
+          <Data ss:Type="Float">1</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce1">
+          <Data ss:Type="String">Текст русский</Data>
+        </Cell>
+        <Cell ss:StyleID="s96">
+          <Data ss:Type="String">Text</Data>
+        </Cell>
+        <Cell ss:StyleID="ce15">
+          <Data ss:Type="Float">2</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce2">
+          <Data ss:Type="String">Текст русский</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">Italic</Data>
+        </Cell>
+        <Cell ss:StyleID="ce16">
+          <Data ss:Type="Float">3</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce3">
+          <Data ss:Type="String">Текст русский</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">Bold</Data>
+        </Cell>
+        <Cell ss:StyleID="ce17">
+          <Data ss:Type="Float">4</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce4">
+          <Data ss:Type="String">Текст русский</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">Bold italic</Data>
+        </Cell>
+        <Cell ss:StyleID="ce18">
+          <Data ss:Type="Float">5</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce19">
+          <Data ss:Type="Float">6</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce1">
+          <Data ss:Type="Float">1234567890</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">Num</Data>
+        </Cell>
+        <Cell ss:StyleID="ce7">
+          <Data ss:Type="Float">12</Data>
+        </Cell>
+        <Cell ss:StyleID="ce20">
+          <Data ss:Type="Float">7</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce2">
+          <Data ss:Type="Float">1234567890</Data>
+        </Cell>
+        <Cell ss:StyleID="s18">
+          <Data ss:Type="Float">1000</Data>
+        </Cell>
+        <Cell ss:Formula="of:=SUM([R8C2:R8C5])" ss:StyleID="ce8">
+          <Data ss:Type="Float">1234568890</Data>
+        </Cell>
+        <Cell ss:StyleID="ce9">
+          <Data ss:Type="Float">123123.1424</Data>
+        </Cell>
+        <Cell ss:StyleID="ce10">
+          <Data ss:Type="Percentage">0.77</Data>
+        </Cell>
+        <Cell ss:StyleID="ce21">
+          <Data ss:Type="Float">8</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce3">
+          <Data ss:Type="Float">1234567890</Data>
+        </Cell>
+        <Cell ss:StyleID="s97">
+          <Data ss:Type="String">12.13.1990</Data>
+        </Cell>
+        <Cell ss:StyleID="ce11">
+          <Data ss:Type="Percentage">0.88</Data>
+        </Cell>
+        <Cell ss:StyleID="ce22">
+          <Data ss:Type="Float">9</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="ce4">
+          <Data ss:Type="Float">1234567890</Data>
+        </Cell>
+        <Cell ss:StyleID="s99"/>
+        
+        <Cell ss:StyleID="ce12">
+          <Data ss:Type="Percentage">0.99</Data>
+        </Cell>
+        <Cell ss:StyleID="ce23">
+          <Data ss:Type="Float">10</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="24.108">
+        <Cell ss:StyleID="ce5">
+          <Data ss:Type="String">Font size</Data>
+        </Cell>
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">Font size</Data>
+        </Cell>
+        <Cell ss:StyleID="ce13"/>
+        
+        <Cell ss:StyleID="ce24">
+          <Data ss:Type="Float">11</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:MergeDown="3" ss:MergeAcross="0" ss:StyleID="s25">
+          <Data ss:Type="String">Объединенные ячейки</Data>
+        </Cell>
+        <Cell ss:MergeDown="3" ss:MergeAcross="0" ss:StyleID="m21712974"/>
+        
+        <Cell ss:StyleID="ce25">
+          <Data ss:Type="Float">12</Data>
+        </Cell>
+        <Cell ss:StyleID="s80"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s86"/>
+        
+        <Cell ss:StyleID="s81"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s86"/>
+        
+        <Cell ss:StyleID="s81"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s86"/>
+        
+        <Cell ss:StyleID="s82"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:MergeDown="0" ss:MergeAcross="2" ss:StyleID="s25">
+          <Data ss:Type="String">Объединенные ячейки</Data>
+        </Cell>
+        <Cell ss:MergeDown="0" ss:MergeAcross="3" ss:StyleID="m21712994"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s87"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:MergeDown="2" ss:MergeAcross="2" ss:StyleID="s25">
+          <Data ss:Type="String">Объединенные ячейки</Data>
+        </Cell>
+        <Cell ss:MergeDown="2" ss:MergeAcross="3" ss:StyleID="m21698426"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s88"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s89"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s43">
+          <Data ss:Type="String">Бордер</Data>
+        </Cell>
+        <Cell ss:StyleID="s44"/>
+        
+        <Cell ss:StyleID="s83"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s45"/>
+        
+        <Cell ss:StyleID="s46"/>
+        
+        <Cell ss:StyleID="s84"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s47">
+          <Data ss:Type="String">Бордер</Data>
+        </Cell>
+        <Cell ss:StyleID="s48"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s49"/>
+        
+        <Cell ss:StyleID="s50"/>
+        
+        <Cell ss:StyleID="s85"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s51"/>
+        
+        <Cell ss:StyleID="s52">
+          <Data ss:Type="String">Бордер</Data>
+        </Cell>
+        <Cell ss:StyleID="s53"/>
+        
+        <Cell ss:StyleID="s54"/>
+        
+        <Cell ss:StyleID="s55"/>
+        
+        <Cell ss:StyleID="s55"/>
+        
+        <Cell ss:StyleID="s56"/>
+        
+        <Cell ss:StyleID="s90"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s57"/>
+        
+        <Cell ss:StyleID="s58"/>
+        
+        <Cell ss:StyleID="s59"/>
+        
+        <Cell ss:StyleID="s60"/>
+        
+        <Cell ss:StyleID="s61"/>
+        
+        <Cell ss:StyleID="s61"/>
+        
+        <Cell ss:StyleID="s62"/>
+        
+        <Cell ss:StyleID="s91"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s63"/>
+        
+        <Cell ss:StyleID="s52">
+          <Data ss:Type="String">Бордер</Data>
+        </Cell>
+        <Cell ss:StyleID="s64"/>
+        
+        <Cell ss:StyleID="s65"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s66"/>
+        
+        <Cell ss:StyleID="s67"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s68"/>
+        
+        <Cell ss:StyleID="s69"/>
+        
+        <Cell ss:StyleID="s70"/>
+        
+        <Cell ss:StyleID="s71"/>
+        
+        <Cell ss:StyleID="s72"/>
+        
+        <Cell ss:StyleID="s72"/>
+        
+        <Cell ss:StyleID="s73"/>
+        
+        <Cell ss:StyleID="s95"/>
+        
+        <Cell ss:StyleID="s100"/>
+        
+        <Cell ss:StyleID="s101"/>
+        
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+        <Cell ss:StyleID="s66">
+          <Data ss:Type="Float">3</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Float">2</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Float">1</Data>
+        </Cell>
+        <Cell ss:Formula="of:=[R36C2]/[R36C3]+[R36C4]">
+          <Data ss:Type="Float">2.5</Data>
+        </Cell>
+      </Row>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <PageSetup>
+        <Layout x:Orientation="Landscape"/>
+        <PageMargins x:Right="33.572" x:Bottom="47.6" x:Top="41.972" x:Left="25.2"/>
+      </PageSetup>
+      <Print>
+        <PaperSizeIndex>9</PaperSizeIndex>
+      </Print>
+    </WorksheetOptions>
+  </Worksheet>
+</Workbook>

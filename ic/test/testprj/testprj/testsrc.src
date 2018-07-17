@@ -1,0 +1,1 @@
+{u'testsrc': {'activate': 1, 'obj_module': None, 'encoding': 'UTF-8', 'style': 0, 'alias': None, 'filename': u'test.db', 'type': 'SQLiteDB', 'res_module': u'testsrc_src.py', 'description': None, '_uuid': 'f5ad7e170749e3a7a09809eda04b9d89', 'convert_unicode': False, 'component_module': None, 'path': u'./db/', 'name': u'testsrc', 'init_expr': None}}

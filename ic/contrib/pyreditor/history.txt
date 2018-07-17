@@ -1,0 +1,56 @@
+===================
+RegexEditor History
+===================
+
+06.01.10 PyReditor 1.1.4
+  * FIX: Ubuntu bug removed related to missing wx.BORDER_THEME and
+         wx.stc.STC_INDIC_ROUNDBOX.
+
+01.12.09 PyReditor 1.1.3
+  * FIX: Minor bugs fixed.
+  * FIX: Empty groups no more shown in the result list.
+  * NEW: Simple template editor.
+  
+23.11.09 PyReditor 1.1.2
+  * NEW: Minor enhancments: shortcuts to Save, Save as, etc., non-modal
+         help window, colored text in help, "Save as" option added,
+         file name shown in the title.
+
+15.11.09 PyReditor 1.1.1
+  * FIX: Some minor bugs fixed
+  * NEW: The .exe version compiled with python 2.6 and py2exe 0.6.9
+         Larger distribution but "behaves" better now.
+  
+25.07.09 PyReditor 1.1.0
+  * FIX: Fixed syntax coloring for the hex special codes like \xAF
+  * FIX: Brace matching fixed
+  * NEW: Added syntax coloring for numbered group matching like \1
+  * NEW: Changed syntax coloring for "operators" - to be easily detected
+  * NEW: Zoom status saved. Can be reset as well.
+
+14.07.09 PyReditor 1.0.0 Final
+  * FIX: text coloring (match resutls) bug fixed
+  * FIX: some "Other" insertions were missing
+  * FIX: loading some menu icons when run as Boa's plugin
+  * NEW: line numbers for RE and/or text editor
+  * NEW: auto indent for RE editor
+
+13.07.09 PyReditor 1.0.0b2; Beta 2 with some fixes
+  * FIX: Enhanced/fixed brace matching and some syntax coloring anomalies
+  
+10.07.09 PyReditor 1.0.0b; Beta verison with some new features added
+  * NEW: menus (popup as well), code templates, icons
+  * NEW: Some options added
+  * NEW: New saving format: re (and text if requested) can be saved/read
+         to/from an ascci file using "standard" cfg file format.
+  * NEW: Cfg file to save some options
+  
+01.07.09 PyReditor 0.4.0; A teasing verison :)
+  * NEW: Popup context menu for RE insertions (groups,...)
+  * NEW: Recoding in order to add many features like cfg,
+         multi-tab UI, etc.
+
+03.06.09 PyReditor 0.3.1- Name changed, "Plug-in" model changed
+12.01.09 RegexEditor 0.3.0 - enhanced GUI, syntax higlighting fixed a bit
+02.10.08 RegexEditor 0.2.1b3 - a bug-fix release
+03.08.08 RegexEditor 0.2.0 - the first public release

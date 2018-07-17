@@ -1,0 +1,1 @@
+{'MonthZtrPanel': {'style': 0, 'activate': 1, 'span': (1, 1), 'description': None, 'alias': None, 'border': 0, 'nest': None, '_uuid': u'b566817b765c286a7d9b0351995275d6', 'proportion': 0, 'component_module': None, 'flag': 0, 'init_expr': None, 'child': [], 'position': (-1, -1), 'size': (-1, -1), 'type': u'StdReestrZtrPanel', 'name': u'MonthZtrPanel'}}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet">
+  <Styles>
+  </Styles>
+  <Worksheet ss:Name="Лист1">
+    <Table>
+      <Column></Column>
+      <Column></Column>
+      <Column></Column>
+      <Row>
+      </Row>
+      <Row>
+      </Row>
+      <Row>
+        <Cell ss:Index="3">
+          <Data ss:Type="String">Привет</Data>
+        </Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>

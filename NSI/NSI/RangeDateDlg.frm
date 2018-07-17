@@ -1,0 +1,1 @@
+{'RangeDateDlg': {'activate': u'1', 'name': u'RangeDateDlg', 'link_expr': None, 'docstr': u'ic.db.icdataset.icDataLink.html', 'filter': None, 'res_query': u'RangeDateDlg', 'init_expr': None, 'file': u'resource.ftl', 'type': u'DataLink'}}

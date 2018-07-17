@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+  <Styles>
+    <Style ss:ID="ce1">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
+      <Interior ss:Color="#83caff"/>
+    </Style>
+    <Style ss:ID="ce2">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
+      <Interior ss:Color="#83caff"/>
+    </Style>
+    <Style ss:ID="ce3">
+      <Alignment ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
+      <Interior ss:Color="#83caff"/>
+    </Style>
+    <Style ss:ID="ce4">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce5">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce6">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce7">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:FontName="Arial"/>
+      <Interior ss:Color="#ffffff"/>
+    </Style>
+    <Style ss:ID="ce8">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce9">
+      <Alignment ss:Horizontal="Left"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce10">
+      <Alignment ss:Horizontal="Left"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce11">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce12">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8"/>
+      <Interior ss:Color="#83caff"/>
+    </Style>
+    <Style ss:ID="ce13">
+      <Alignment ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8"/>
+      <Interior ss:Color="#83caff"/>
+    </Style>
+    <Style ss:ID="ce14">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8" ss:FontName="Arial"/>
+      <Interior ss:Color="#dddddd"/>
+    </Style>
+    <Style ss:ID="ce15">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce16">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce17">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce18">
+      <Alignment ss:Horizontal="Left"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.49"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.49"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.49"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.49"/>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior ss:Color="#808080"/>
+    </Style>
+    <Style ss:ID="ce19">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2.49"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2.49"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.49"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2.49"/>
+      </Borders>
+      <Interior ss:Color="#808080"/>
+    </Style>
+    <Style ss:ID="ce20">
+      <Alignment/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2.49"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce21">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#dddddd"/>
+    </Style>
+    <Style ss:ID="ce22">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.74"/>
+      </Borders>
+      <Font ss:Size="12" ss:FontName="Arial"/>
+      <Interior ss:Color="#cccccc"/>
+    </Style>
+    <Style ss:ID="ce23">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.74"/>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce24">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce26">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#ffff99"/>
+    </Style>
+    <Style ss:ID="ce27">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.74"/>
+      </Borders>
+      <Interior ss:Color="#ffff99"/>
+    </Style>
+    <Style ss:ID="ce28">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.74"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.74"/>
+      </Borders>
+      <Interior ss:Color="#ffffff"/>
+    </Style>
+    <Style ss:ID="ce29">
+      <Alignment ss:Horizontal="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce30">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font/>
+      <Interior ss:Color="#83caff"/>
+    </Style>
+    <Style ss:ID="ce31">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8" ss:FontName="Arial"/>
+      <Interior ss:Color="#dddddd"/>
+    </Style>
+    <Style ss:ID="ce32">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce34">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce35">
+      <Alignment ss:Horizontal="Right"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce36">
+      <Alignment ss:Horizontal="Right"/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce37">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:FontName="Arial"/>
+      <Interior ss:Color="#dddddd"/>
+    </Style>
+    <Style ss:ID="ce38">
+      <Alignment ss:Horizontal="Left"/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce39">
+      <Alignment ss:Horizontal="Left"/>
+      <Borders>
+      </Borders>
+      <Interior ss:Color="#dddddd"/>
+    </Style>
+    <Style ss:ID="ce40">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Courier New1"/>
+      <Interior ss:Color="#666699"/>
+    </Style>
+    <Style ss:ID="ce41">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Courier New1"/>
+      <Interior ss:Color="#666699"/>
+    </Style>
+    <Style ss:ID="ce42">
+      <Font ss:Size="8"/>
+    </Style>
+    <Style ss:ID="Default">
+      <Font/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="rep_tmpl">
+    <Table>
+      <Column ss:Width="63.224" ss:StyleID="ce4"/>
+      <Column ss:Width="86.912" ss:StyleID="ce4"/>
+      <Column ss:Width="19.6" ss:Span="2" ss:StyleID="ce4"/>
+      <Column ss:Width="19.6" ss:StyleID="ce6"/>
+      <Column ss:Width="19.6" ss:StyleID="ce23"/>
+      <Column ss:Width="19.6" ss:StyleID="ce4"/>
+      <Column ss:Width="83.86" ss:StyleID="ce4"/>
+      <Column ss:Width="63.224" ss:Span="1" ss:StyleID="ce4"/>
+      <Column ss:Width="127.568"/>
+      <Column ss:Width="63.224" ss:Span="243"/>
+      <Row ss:Height="14.812">
+        <Cell ss:StyleID="ce1">
+          <Data ss:Type="String">Схема погрузки автомобиля готовой продукцией. 19 позиций</Data>
+        </Cell>
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce30"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce40">
+          <Data ss:Type="String">[description]</Data>
+        </Cell>
+        <Cell ss:StyleID="ce42"/>
+        
+      </Row>
+      <Row ss:Height="14.812">
+        <Cell ss:StyleID="ce2">
+          <Data ss:Type="String">.ODS</Data>
+        </Cell>
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce30"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce40">
+          <Data ss:Type="String">[generator]</Data>
+        </Cell>
+        <Cell ss:StyleID="ce42"/>
+        
+      </Row>
+      <Row ss:Height="14.812">
+        <Cell ss:StyleID="ce2"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce30"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce40">
+          <Data ss:Type="String">[data_source]</Data>
+        </Cell>
+        <Cell ss:StyleID="ce42"/>
+        
+      </Row>
+      <Row ss:Height="14.812">
+        <Cell ss:StyleID="ce3">
+          <Data ss:Type="String">PY: list()</Data>
+        </Cell>
+        <Cell ss:StyleID="ce13"/>
+        
+        <Cell ss:StyleID="ce13"/>
+        
+        <Cell ss:StyleID="ce13"/>
+        
+        <Cell ss:StyleID="ce13"/>
+        
+        <Cell ss:StyleID="ce30"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce40">
+          <Data ss:Type="String">[query]</Data>
+        </Cell>
+        <Cell ss:StyleID="ce42"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:MergeDown="39" ss:MergeAcross="0" ss:StyleID="ce41">
+          <Data ss:Type="String">[header]</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">г. Абакан</Data>
+        </Cell>
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:Index="13" ss:StyleID="ce42"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">АО «АЯН»</Data>
+        </Cell>
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:Index="13" ss:StyleID="ce42"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce37"/>
+        
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">года</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce5">
+          <Data ss:Type="String">Схема погрузки автомобиля готовой продукцией АО «АЯН»</Data>
+        </Cell>
+        <Cell ss:StyleID="ce4"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce34"/>
+        
+        <Cell ss:StyleID="ce34"/>
+        
+        <Cell ss:StyleID="ce34"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce14">
+          <Data ss:Type="String">SCANIA</Data>
+        </Cell>
+        <Cell ss:StyleID="ce17"/>
+        
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="2" ss:StyleID="ce31">
+          <Data ss:Type="String">а673ор19рус</Data>
+        </Cell>
+        <Cell ss:Index="9" ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce14">
+          <Data ss:Type="Float">2500</Data>
+        </Cell>
+        <Cell ss:StyleID="ce34"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce15">
+          <Data ss:Type="String">ТС: </Data>
+        </Cell>
+        <Cell ss:StyleID="ce17"/>
+        
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="2" ss:StyleID="ce32">
+          <Data ss:Type="String">гос.номер</Data>
+        </Cell>
+        <Cell ss:Index="9" ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce15">
+          <Data ss:Type="String">Вес (кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce7"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce7"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce14">
+          <Data ss:Type="String">SCHMITZ</Data>
+        </Cell>
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="2" ss:StyleID="ce31">
+          <Data ss:Type="String">Ае 1234 19</Data>
+        </Cell>
+        <Cell ss:Index="9" ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce14">
+          <Data ss:Type="Float">1400</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce7"/>
+        
+        <Cell ss:StyleID="ce15">
+          <Data ss:Type="String">ПОЛУПРИЦЕП ФУРГОН: </Data>
+        </Cell>
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce15"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="2" ss:StyleID="ce32">
+          <Data ss:Type="String">гос.номер </Data>
+        </Cell>
+        <Cell ss:Index="9" ss:StyleID="ce15"/>
+        
+        <Cell ss:StyleID="ce15">
+          <Data ss:Type="String">Вес (кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce7"/>
+        
+      </Row>
+      <Row ss:Height="16.8">
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce6"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:MergeDown="0" ss:MergeAcross="2" ss:StyleID="ce8">
+          <Data ss:Type="String">Допустимая нагрузка на ось</Data>
+        </Cell>
+        <Cell ss:Index="4" ss:MergeDown="1" ss:MergeAcross="3" ss:StyleID="ce22"/>
+        
+        <Cell ss:Index="8">
+          <Data ss:Type="String">Фактическая нагрузка на ось</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce9">
+          <Data ss:Type="String">Ось-1 (9000 кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce18"/>
+        
+        <Cell ss:Index="8" ss:StyleID="ce18"/>
+        
+        <Cell ss:StyleID="ce35">
+          <Data ss:Type="String">Ось-1 (кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce38">
+          <Data ss:Type="Float">6400</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce23"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1052</Data>
+        </Cell>
+        <Cell ss:StyleID="ce36"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell>
+          <Data ss:Type="String">Ось-2 (10000 кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce19"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1052</Data>
+        </Cell>
+        <Cell ss:Index="6" ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1052</Data>
+        </Cell>
+        <Cell ss:Index="8" ss:StyleID="ce19"/>
+        
+        <Cell ss:StyleID="ce35">
+          <Data ss:Type="String">Ось-2 (кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce39"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce20"/>
+        
+        <Cell ss:StyleID="ce23"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce27"/>
+        
+        <Cell ss:StyleID="ce20"/>
+        
+        <Cell ss:StyleID="ce36"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1052</Data>
+        </Cell>
+        <Cell ss:Index="6" ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1052</Data>
+        </Cell>
+        <Cell ss:StyleID="ce36"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce23"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce28">
+          <Data ss:Type="Float">1052</Data>
+        </Cell>
+        <Cell ss:StyleID="ce36"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:Index="6" ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:StyleID="ce36"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce23"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:StyleID="ce36"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:Index="6" ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:StyleID="ce36"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell>
+          <Data ss:Type="String">Ось-3 (7000 кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce19"/>
+        
+        <Cell ss:StyleID="ce23"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:StyleID="ce19"/>
+        
+        <Cell ss:StyleID="ce35">
+          <Data ss:Type="String">Ось-3 (кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce38">
+          <Data ss:Type="Float">6900</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell>
+          <Data ss:Type="String">Ось-4 (7000 кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce19"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:Index="6" ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:Index="8" ss:StyleID="ce19"/>
+        
+        <Cell ss:StyleID="ce35">
+          <Data ss:Type="String">Ось-4 (кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce38">
+          <Data ss:Type="Float">6900</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell>
+          <Data ss:Type="String">Ось-5 (7000 кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce19"/>
+        
+        <Cell ss:StyleID="ce23"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:StyleID="ce19"/>
+        
+        <Cell ss:StyleID="ce35">
+          <Data ss:Type="String">Ось-5 (кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce38">
+          <Data ss:Type="Float">6900</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce20"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:Index="6" ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:Index="8" ss:StyleID="ce20"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce23"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce23">
+          <Data ss:Type="Float">1053</Data>
+        </Cell>
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce9">
+          <Data ss:Type="String">Общий допустимый вес:40000 кг</Data>
+        </Cell>
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce35">
+          <Data ss:Type="String">Общий вес фактический (кг)</Data>
+        </Cell>
+        <Cell ss:StyleID="ce39"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce24"/>
+        
+        <Cell ss:StyleID="ce38"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce10">
+          <Data ss:Type="String">Общий вес продукции (кг)</Data>
+        </Cell>
+        <Cell ss:Index="3" ss:MergeDown="0" ss:MergeAcross="2" ss:StyleID="ce21">
+          <Data ss:Type="Float">19999</Data>
+        </Cell>
+        <Cell ss:Index="6" ss:StyleID="ce10"/>
+        
+        <Cell ss:StyleID="ce10"/>
+        
+        <Cell ss:StyleID="ce10"/>
+        
+        <Cell ss:StyleID="ce10"/>
+        
+        <Cell ss:StyleID="ce10"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce11"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce16"/>
+        
+        <Cell ss:StyleID="ce29"/>
+        
+        <Cell ss:StyleID="ce29"/>
+        
+        <Cell ss:StyleID="ce29"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce4"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell>
+          <Data ss:Type="String">Водитель перевозчика:</Data>
+        </Cell>
+        <Cell ss:StyleID="ce26"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell ss:StyleID="ce4"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+        <Cell>
+          <Data ss:Type="String">Водитель погрузчика: __________________________</Data>
+        </Cell>
+        <Cell ss:StyleID="ce4"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+      </Row>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <PageSetup>
+        <Layout x:Orientation="Portrait"/>
+        <PageMargins/>
+      </PageSetup>
+      <Print>
+        <PaperSizeIndex>9</PaperSizeIndex>
+      </Print>
+    </WorksheetOptions>
+  </Worksheet>
+</Workbook>

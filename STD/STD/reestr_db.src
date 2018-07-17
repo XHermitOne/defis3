@@ -1,0 +1,1 @@
+{'reestr_db': {'storage_dir': u'./reestr_odb/', 'activate': 1, 'name': u'reestr_db', '_uuid': u'f4e7fa295fd135116cd2fb0f9ae37e1a', 'init_expr': None, 'type': u'ObjectStorageSource'}}

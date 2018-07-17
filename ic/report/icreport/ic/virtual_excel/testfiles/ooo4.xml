@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet">
+  <Styles>
+    <Style ss:ID="s1">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="s2">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="s3">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="s4">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="s5">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="s6">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="s7">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="s8">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Лист1">
+    <Table>
+      <Column></Column>
+      <Column></Column>
+      <Column></Column>
+      <Row>
+      </Row>
+      <Row>
+      </Row>
+      <Row>
+        <Cell ss:Index="1" ss:StyleID="s1">
+        </Cell>
+        <Cell ss:Index="2" ss:StyleID="s2">
+        </Cell>
+        <Cell ss:Index="3" ss:StyleID="s3">
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:Index="1" ss:StyleID="s4">
+        </Cell>
+        <Cell ss:Index="3" ss:StyleID="s5">
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:Index="1" ss:StyleID="s6">
+        </Cell>
+        <Cell ss:Index="2" ss:StyleID="s7">
+        </Cell>
+        <Cell ss:Index="3" ss:StyleID="s8">
+        </Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>

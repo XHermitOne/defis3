@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+  <Styles>
+    <Style ss:ID="s1">
+      <Font ss:Size="16" ss:Bold="1" ss:Italic="1"/>
+      <Interior ss:Color="#00FF00"/>
+    </Style>
+    <Style ss:ID="s10">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Size="14" ss:Bold="1" ss:Italic="1"/>
+    </Style>
+    <Style ss:ID="s12">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Size="14" ss:Bold="1" ss:Italic="1"/>
+    </Style>
+    <Style ss:ID="s18">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Size="14" ss:Bold="1" ss:Italic="1"/>
+    </Style>
+    <Style ss:ID="s22">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Size="14" ss:Bold="1" ss:Italic="1"/>
+    </Style>
+    <Style ss:ID="s23">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Size="14" ss:Bold="1" ss:Italic="1"/>
+    </Style>
+    <Style ss:ID="s24">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Size="14" ss:Bold="1" ss:Italic="1"/>
+    </Style>
+    <Style ss:ID="s25">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s26">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s27">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s28">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s29">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s30">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="Default">
+      <Alignment ss:Vertical="Bottom"/>
+      <Font ss:FontName="Arial" x:CharSet="204"/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Worksheet1">
+    <Table>
+      <Column/>
+      <Column/>
+      <Column/>
+      <Column/>
+      <Column/>
+      <Column/>
+      <Column/>
+      <Column/>
+      <Column/>
+      <Column/>
+      <Row>
+        <Cell ss:StyleID="s1">
+          <Data ss:Type="Number">11.2</Data>
+        </Cell>
+        <Cell ss:MergeDown="1" ss:StyleID="s1">
+          <Data ss:Type="String">222</Data>
+        </Cell>
+        <Cell ss:Index="5">
+          <Data ss:Type="String">Yea       </Data>
+        </Cell>
+        <Cell ss:Index="10" ss:StyleID="s28"/>
+        
+      </Row>
+      <Row ss:Index="2">
+        <Cell ss:StyleID="s1">
+          <Data ss:Type="Number">333</Data>
+        </Cell>
+        <Cell ss:Index="10" ss:StyleID="s29"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:MergeAcross="1">
+          <Data ss:Type="String">444</Data>
+        </Cell>
+        <Cell ss:Index="3" ss:MergeDown="2" ss:MergeAcross="3" ss:StyleID="s10">
+          <Data ss:Type="String">Привет</Data>
+        </Cell>
+        <Cell ss:Index="7" ss:StyleID="s12"/>
+        
+        <Cell ss:Index="10" ss:StyleID="s29"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:Index="7" ss:StyleID="s18"/>
+        
+        <Cell ss:Index="10" ss:StyleID="s29"/>
+        
+      </Row>
+      <Row ss:Hidden="1">
+        <Cell ss:Index="7" ss:StyleID="s18"/>
+        
+        <Cell ss:Index="10" ss:StyleID="s29"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:Index="3" ss:StyleID="s22"/>
+        
+        <Cell ss:StyleID="s23"/>
+        
+        <Cell ss:StyleID="s23"/>
+        
+        <Cell ss:StyleID="s23"/>
+        
+        <Cell ss:StyleID="s24"/>
+        
+        <Cell ss:Index="10" ss:StyleID="s29"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:Index="10" ss:StyleID="s29"/>
+        
+      </Row>
+      <Row ss:Hidden="1">
+        <Cell ss:Index="10" ss:StyleID="s29"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:Index="10" ss:StyleID="s29"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s25"/>
+        
+        <Cell ss:StyleID="s26"/>
+        
+        <Cell ss:StyleID="s26"/>
+        
+        <Cell ss:StyleID="s26"/>
+        
+        <Cell ss:StyleID="s26"/>
+        
+        <Cell ss:StyleID="s27"/>
+        
+        <Cell ss:Index="10" ss:StyleID="s30"/>
+        
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>

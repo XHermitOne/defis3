@@ -1,0 +1,1 @@
+{'my_docs_db': {'storage_dir': u'C:/#my_docs_odb/', 'activate': 1, 'name': u'my_docs_db', '_uuid': u'4491d1ec20fab8c96d63f2aa06059a27', 'init_expr': None, 'type': u'ObjectStorageSource'}}

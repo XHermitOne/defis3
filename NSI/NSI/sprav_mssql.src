@@ -1,0 +1,1 @@
+{'sprav_mssql': {'activate': 1, 'name': u'sprav_mssql', '_uuid': u'eeec39ec2b6d0fa837b98973ca2b3515', 'host': u'192.168.0.83', 'init_expr': None, 'password': u'123456', 'type': u'MSSQLDB', 'dbname': u'ic_db', 'user': u'ic_all'}}

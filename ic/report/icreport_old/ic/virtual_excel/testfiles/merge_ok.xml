@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet">
+  <Styles>
+    <Style ss:ID="m16859048">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"></Alignment>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="m16859058">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"></Alignment>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+    <Style ss:ID="m16859068">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"></Alignment>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"></Border>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1"></Border>
+      </Borders>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Worksheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="5">
+          <Data ss:Type="String">Yea       </Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:Index="2" ss:MergeDown="2" ss:MergeAcross="1" ss:StyleID="m16859048">
+          <Data ss:Type="String">MERGE!!!</Data>
+        </Cell>
+      </Row>
+      <Row ss:Index="6">
+        <Cell ss:Index="3" ss:MergeAcross="2" ss:StyleID="m16859058">
+          <Data ss:Type="String">merge row</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:Index="2" ss:MergeDown="4" ss:StyleID="m16859068">
+          <Data ss:Type="String">merge col</Data>
+        </Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>

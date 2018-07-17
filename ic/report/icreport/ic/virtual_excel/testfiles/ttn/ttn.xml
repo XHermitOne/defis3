@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+  <Styles>
+    <Style ss:ID="Default">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce1">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce2">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce3">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10.5" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce4">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="11" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce5">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce6">
+      <Alignment ss:Horizontal="Center"/>
+      <Borders>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.74"/>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce7">
+      <Alignment ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce8">
+      <Alignment ss:Horizontal="Center"/>
+      <Borders>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.74"/>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.74"/>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.74"/>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce9">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1.76"/>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1.76"/>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="1.76"/>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.74"/>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce10">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1.76"/>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1.76"/>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.74"/>
+        <Border ss:Color="#3c3c3c" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.74"/>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Times New Roman"/>
+      <Interior/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="стр1">
+    <Table>
+      <Column ss:Width="3.892" ss:Span="256" ss:StyleID="ce2"/>
+      <Column ss:Width="3.892" ss:Span="766"/>
+      <Row ss:Height="12.6">
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce3"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:Index="169" ss:MergeDown="0" ss:MergeAcross="18" ss:StyleID="ce8">
+          <Data ss:Type="String">Код</Data>
+        </Cell>
+        <Cell ss:Index="189" ss:StyleID="ce1"/>
+        
+      </Row>
+      <Row ss:Height="13.328">
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce4"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:Index="149" ss:StyleID="ce7">
+          <Data ss:Type="String">Форма по ОКУД</Data>
+        </Cell>
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="18" ss:StyleID="ce9">
+          <Data ss:Type="String">0345009</Data>
+        </Cell>
+        <Cell ss:Index="188" ss:StyleID="ce1"/>
+        
+      </Row>
+      <Row ss:Height="14.084">
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce5">
+          <Data ss:Type="String">ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ</Data>
+        </Cell>
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="41" ss:StyleID="ce6">
+          <Data ss:Type="String">ХК</Data>
+        </Cell>
+        <Cell ss:Index="164" ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1">
+          <Data ss:Type="String">№</Data>
+        </Cell>
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:StyleID="ce1"/>
+        
+        <Cell ss:MergeDown="0" ss:MergeAcross="18" ss:StyleID="ce10">
+          <Data ss:Type="String">249</Data>
+        </Cell>
+        <Cell ss:Index="188" ss:StyleID="ce1"/>
+        
+      </Row>
+      <Row ss:Height="14.42">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="14.42">
+      </Row>
+      <Row ss:Height="12.6">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+      <Row ss:Height="12.656">
+      </Row>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <PageSetup>
+        <Layout x:Orientation="Landscape"/>
+        <PageMargins x:Right="28.0" x:Bottom="19.6" x:Top="24.892" x:Left="41.972"/>
+      </PageSetup>
+      <Print>
+        <PaperSizeIndex>9</PaperSizeIndex>
+      </Print>
+    </WorksheetOptions>
+  </Worksheet>
+</Workbook>

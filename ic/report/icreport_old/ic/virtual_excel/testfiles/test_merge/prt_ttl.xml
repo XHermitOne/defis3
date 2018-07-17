@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+  <Styles>
+    <Style ss:ID="s10">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s11">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s13">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s15">
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="1"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="Default">
+      <Alignment ss:Vertical="Bottom"/>
+      <Font ss:FontName="Arial" x:CharSet="204"/>
+    </Style>
+    <Style ss:ID="s1">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s2">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="2"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s3">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Right"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="2"/>
+        <Border ss:LineStyle="Continuous" ss:Position="Bottom"/>
+      </Borders>
+    </Style>
+    <Style ss:ID="s4">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="2"/>
+      </Borders>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Лист1">
+    <Table>
+      <Column ss:Width="60"/>
+      <Column ss:Width="180"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="66"/>
+      <Column ss:Width="78"/>
+      <Column ss:Width="78"/>
+      <Column ss:Width="78"/>
+      <Column/>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">09/02/09 12:22:10</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Отчет по выпадающим доходам</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">за Январь месяц 2009 года</Data>
+        </Cell>
+      </Row>
+      <Row>
+      </Row>
+      <Row>
+        <Cell ss:MergeDown="1" ss:StyleID="s1">
+          <Data ss:Type="String">Л.счет</Data>
+        </Cell>
+        <Cell ss:MergeDown="1" ss:StyleID="s2">
+          <Data ss:Type="String">Адрес</Data>
+        </Cell>
+        <Cell ss:MergeAcross="2" ss:StyleID="s3">
+        </Cell>
+        <Cell ss:Index="6" ss:MergeAcross="2" ss:StyleID="s3">
+        </Cell>
+        <Cell ss:Index="9" ss:MergeAcross="2" ss:StyleID="s3">
+          <Data ss:Type="String">Горя</Data>
+        </Cell>
+        <Cell ss:Index="12" ss:MergeAcross="2" ss:StyleID="s3">
+          <Data ss:Type="String">Холод</Data>
+        </Cell>
+        <Cell ss:Index="15" ss:MergeAcross="2" ss:StyleID="s3">
+        </Cell>
+        <Cell ss:Index="18" ss:MergeAcross="2" ss:StyleID="s3">
+          <Data ss:Type="String">Итого</Data>
+        </Cell>
+        <Cell ss:Index="21" ss:StyleID="s4"/>
+        
+      </Row>
+      <Row>
+        <Cell ss:Index="3" ss:StyleID="s13">
+          <Data ss:Type="String">12-2008</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">01.2009</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">Возмещение</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="Number">12.2008</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">01.2009</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">Возмещение</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="Number">12.2008</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">01.2009</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">Возмещение</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="Number">12.2008</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">01.2009</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">Возмещение</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="Number">12.2008</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">01.2009</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">Возмещение</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="Number">12.2008</Data>
+        </Cell>
+        <Cell ss:StyleID="s13">
+          <Data ss:Type="String">01.2009</Data>
+        </Cell>
+        <Cell ss:StyleID="s15">
+          <Data ss:Type="String">Возмещение</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">20001</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="String">Улица 20 кв. 1а</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3000.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3000.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3000.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3000.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">20002</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="String">Улица 20 кв. 2</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3600.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3600.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">97.2</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">115.2</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">18.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">243.6</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">297.6</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">54.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3940.8</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">4012.8</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">72.0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">1001001</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="String">Улица 1 кв. 1а</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2280.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2280.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">65.52</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">130.68</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">19.68</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">84.56</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">175.46</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">37.36</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">30.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">56.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">56.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2486.08</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2672.14</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">57.04</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">1001002</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="String">Улица 1 кв. 2</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2490.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2490.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">84.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">84.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2574.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2574.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">1001003</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="String">Улица 1 кв. 3</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2610.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2610.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">84.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">84.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2694.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2694.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">1002001</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="String">Улица 2 кв. 1</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2700.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2700.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">272.88</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">324.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">51.12</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">98.82</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">175.5</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">76.68</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3071.7</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3199.5</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">127.8</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">1002002</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="String">Улица 2 кв. 2</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2700.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">2700.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">326.88</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">388.8</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">61.92</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">117.72</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">210.6</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">92.88</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3144.6</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">3299.4</Data>
+        </Cell>
+        <Cell ss:StyleID="s10">
+          <Data ss:Type="Number">154.8</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">1002003</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="String">Улица 2 кв. 3</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">2700.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">2700.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">380.88</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">453.6</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">72.72</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">136.62</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">245.7</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">109.08</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">3217.5</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">3399.3</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">181.8</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s11">
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="String">Итого</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">22080.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">22080.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">1143.36</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">1412.28</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">223.44</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">328.16</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">473.06</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">91.36</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">353.16</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">661.8</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">278.64</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">224.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">224.0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">0</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">24128.68</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">24851.14</Data>
+        </Cell>
+        <Cell ss:StyleID="s11">
+          <Data ss:Type="Number">593.44</Data>
+        </Cell>
+      </Row>
+      <Row>
+      </Row>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <PageSetup>
+        <PageMargins x:Right="0.787401575" x:Bottom="0.984251969" x:Top="0.984251969" x:Left="0.787401575"/>
+      </PageSetup>
+      <Print>
+        <NumberofCopies>1</NumberofCopies>
+      </Print>
+    </WorksheetOptions>
+  </Worksheet>
+</Workbook>
