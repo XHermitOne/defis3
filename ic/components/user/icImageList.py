@@ -3,10 +3,10 @@
 
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 import ic.components.user.ic_imglib_wrp as parentModule
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import ic.components.icResourceParser as prs
 
 # Standart component interface

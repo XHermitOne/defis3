@@ -120,7 +120,7 @@ def onCodControl(obj):
             return crtl_ret
         return ctrl_ret, None
     except:
-        io_prnt.outErr(u'Code control Error!')
+        log.error(u'Code control Error!')
         return coderror.IC_CTRL_FAILED_IGNORE, None
 
 

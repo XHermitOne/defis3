@@ -25,12 +25,13 @@
 """
 
 import wx
+
 from ic.dlg.msgbox import MsgBox
-import ic.utils.util as util
+from ic.utils import util
 from .icwidget import icWidget, SPC_IC_WIDGET
-from ic.kernel import io_prnt
-import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.imglib import common
+from ic.PropertyEditor import icDefInf
+from ic.log import log
 
 
 _ = wx.GetTranslation
@@ -38,7 +39,7 @@ _ = wx.GetTranslation
 ICWindowStyle = {'CAPTION': wx.CAPTION,
                  'MINIMIZE_BOX': wx.MINIMIZE_BOX,
                  'MAXIMIZE_BOX': wx.MAXIMIZE_BOX,
-                 'THICK_FRAME': wx.THICK_FRAME,
+                 # 'THICK_FRAME': wx.THICK_FRAME,
                  'SIMPLE_BORDER': wx.SIMPLE_BORDER,
                  'DOUBLE_BORDER': wx.DOUBLE_BORDER,
                  'SUNKEN_BORDER': wx.SUNKEN_BORDER,
@@ -100,7 +101,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 0, 0, 4)
+__version__ = (1, 1, 1, 1)
 
 
 class icWindow(icWidget, wx.Window):
@@ -120,7 +121,7 @@ class icWindow(icWidget, wx.Window):
             testObj.context['_root_obj'].Show(True)
             testObj.context['_root_obj'].SetFocus()
         except: 
-            io_prnt.outErr()
+            log.error()
     
     def __init__(self, parent, id=-1, component={}, logType=0,
                  evalSpace=None, bCounter=False, progressDlg=None):

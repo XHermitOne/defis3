@@ -106,7 +106,7 @@ class BaseContext(context_dict):
                 else:
                     self['_dict_obj'][obj.name] = obj
         except AttributeError:
-            io_prnt.outErr(u'Ошибка регистрации')
+            log.error(u'Ошибка регистрации')
 
     def get_object(self, obj, name=None):
         """
@@ -117,7 +117,7 @@ class BaseContext(context_dict):
                 if name and name in self['_dict_obj']:
                     return self['_dict_obj'][name]
         except:
-            io_prnt.outErr(u'Ошибка получения объекта')
+            log.error(u'Ошибка получения объекта')
         return None
 
 
@@ -402,7 +402,7 @@ class Context(BaseContext):
                     return el
         # ОБъект не найден
         obj_names = [obj.name for obj in self['_list_obj']]
-        io_prnt.outLog(u'Объект <%s> не найден среди объектов <%s>' % (name, obj_names))
+        log.info(u'Объект <%s> не найден среди объектов <%s>' % (name, obj_names))
         return None
 
     def FindObjByPsp(self, psp):
@@ -427,7 +427,7 @@ class Context(BaseContext):
         try:
             return self['_dict_obj'][name]
         except KeyError:
-            io_prnt.outLog(u'Объект <%s> не найден среди <%s>' % (name, str(self['_dict_obj'].keys())))
+            log.info(u'Объект <%s> не найден среди <%s>' % (name, str(self['_dict_obj'].keys())))
         return None
         
     def GetObjectLst(self):
@@ -471,7 +471,7 @@ class Context(BaseContext):
                     
                 return True
         except:
-            io_prnt.outErr('ERROR setKey')
+            log.error('ERROR setKey')
                 
         return False
 

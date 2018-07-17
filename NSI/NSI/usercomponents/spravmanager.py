@@ -22,11 +22,11 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 # from NSI.nsi_sys import nsi_images
 from ic.bitmap import ic_bmp
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import NSI.nsi_sys.icspravman as parentModule
 

@@ -30,12 +30,11 @@ import datetime
 import wx
 import types
 import copy
-import cPickle
-import sets
+import pickle
 
 # from ic.log.iclog import LogLastError
 # from ic.log.iclog import MsgLastError
-import ic.kernel.icContext as icContext
+from ic.kernel import icContext
 from ic.kernel import io_prnt
 from ic.dlg import ic_dlg
 from . import coderror
@@ -43,7 +42,7 @@ from . import ic_uuid
 from ic.log import log
 import ic
 
-__version__ = (1, 0, 1, 2)
+__version__ = (1, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -198,7 +197,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
     try:
         #   Проверяем есть ли в буфферном файле такой объект, если есть, то его и возвращаем
         if not bRefresh and filename in Buff_readAndEvalFile:
-            io_prnt.outLog(' '*3+'[b] ' + ('Return from buffer; file:%s' % filename))
+            log.info(' '*3+'[b] ' + ('Return from buffer; file:%s' % filename))
             return Buff_readAndEvalFile[filename]
 
         nm = os.path.basename(filename)
@@ -219,18 +218,18 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                 fpcl = None
                 try:
                     fpcl = open(filepcl)
-                    obj = cPickle.load(fpcl)
+                    obj = pickle.load(fpcl)
                     fpcl.close()
                     #   Сохраняем объект в буфере
                     Buff_readAndEvalFile[filename] = obj
-                    io_prnt.outLog('\t[+] Load from: %s' % filepcl)
+                    log.info('\t[+] Load from: %s' % filepcl)
                     return obj
                 except IOError:
-                    io_prnt.outErr(_('\t[-] readAndEvalFile: Open file error: %s.') % filepcl)
+                    log.error(_('\t[-] readAndEvalFile: Open file error: %s.') % filepcl)
                 except:
                     if fpcl:
                         fpcl.close()
-                    io_prnt.outErr(_('readAndEvalFile: Open file error: %s.') % filepcl)
+                    log.error(_('readAndEvalFile: Open file error: %s.') % filepcl)
         except OSError:
             io_prnt.outWarning(u'Ошибка файла <%s>' % filename)
         #   Пытаемся прочитать cPickle, если не удается считаем, что в файле
@@ -239,14 +238,14 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
         if os.path.isfile(filename):
             try:
                 fpcl = open(filename)
-                obj = cPickle.load(fpcl)
+                obj = pickle.load(fpcl)
                 fpcl.close()
                 #   Сохраняем объект в буфере
                 Buff_readAndEvalFile[filename] = obj
-                io_prnt.outLog('\t[+] Load file <cPickle Format>: %s' % filename)
+                log.info('\t[+] Load file <cPickle Format>: %s' % filename)
                 return obj
-            except Exception, msg:
-                io_prnt.outLog('\t[*] <Non cPickle Format file:%s. Try to compile text>' % filename)
+            except Exception as msg:
+                log.info('\t[*] <Non cPickle Format file:%s. Try to compile text>' % filename)
 
         #   Открываем текстовое представление, если его нет, то создаем его
         f = open(filename, 'rb')
@@ -262,14 +261,14 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
 
         #   Сохраняем транслированный вариант
         fpcl = open(filepcl, 'w')
-        io_prnt.outLog('create: %s' % filepcl)
-        cPickle.dump(obj, fpcl, PICKLE_PROTOCOL)
+        log.info('create: %s' % filepcl)
+        pickle.dump(obj, fpcl, PICKLE_PROTOCOL)
         fpcl.close()
     except IOError:
-        io_prnt.outErr(_('\t[*] readAndEvalFile: Open file error: %s.') % filename)
+        log.error(_('\t[*] readAndEvalFile: Open file error: %s.') % filename)
         obj = None
     except:
-        io_prnt.outErr(_('\t[*] readAndEvalFile: translation error: %s.') % filename)
+        log.error(_('\t[*] readAndEvalFile: translation error: %s.') % filename)
         obj = None
 
     return obj
@@ -330,8 +329,7 @@ def icSpcDefStruct(spc, struct, bAll=False, count=0):
                         if attr not in struct[key].keys():
                             struct[key][attr] = spc[key][attr]
                         else:
-                            struct[key][attr] = list(sets.Set(struct[key][attr])
-                                                | sets.Set(spc[key][attr]))
+                            struct[key][attr] = list(set(struct[key][attr]) | set(spc[key][attr]))
                 elif key not in struct and key not in ('__parent__',):
                     if isinstance(spc[key], list):
                         struct[key] = copy.deepcopy(spc[key])
@@ -345,7 +343,7 @@ def icSpcDefStruct(spc, struct, bAll=False, count=0):
                     struct[key] = spc[key]
 
     except Exception:
-        io_prnt.outErr('icSpcDefStruct error')
+        log.error('icSpcDefStruct error')
 
     return struct
 
@@ -365,7 +363,7 @@ def AddAttrSpace(obj, localSpace):
 
 
 def MyExec(s):
-    exec s
+    exec(s)
 
 
 def transform_to_func(expr, compileKey=None):
@@ -452,10 +450,10 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
             if '_resultEval' in evalSpace:
                 ret = evalSpace['_resultEval']
 
-            io_prnt.outLog(u'### EXECUTE ATTRIBUTE DEBUG FUNCTION f%s(_esp)' % compileKey)
+            log.info(u'### EXECUTE ATTRIBUTE DEBUG FUNCTION f%s(_esp)' % compileKey)
             return coderror.IC_EVAL_OK, ret
         except:
-            io_prnt.outErr(msg)
+            log.error(msg)
             io_prnt.outWarning(u'''ВНИМАНИЕ! 
             Если GetManager(self) возвращает None, 
             то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
@@ -464,7 +462,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
         globSpace = globals()
 
     #   Отсекаем по типу выражения
-    if type(expr) not in (str, unicode):
+    if not isinstance(expr, str):
         return coderror.IC_EVAL_ERROR, None
 
     #   Отсекаем пустые строки
@@ -494,7 +492,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
         except:
             if msg is not None:
                 ret = u'EXEC[EVAL] EXCEPTION IN %s: exec(%s)' % (msg, expr)
-                io_prnt.outErr(ret)
+                log.error(ret)
                 io_prnt.outWarning(u'''ВНИМАНИЕ! 
                 Если GetManager(self) возвращает None, 
                 то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
@@ -527,7 +525,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
                 bSuccess = coderror.IC_EVAL_ERROR
                 if msg is not None:
                     ret = u'EXEC EXCEPTION IN %s: exec(%s)' % (msg, expr)
-                    io_prnt.outErr(ret)
+                    log.error(ret)
                     io_prnt.outWarning(u'''ВНИМАНИЕ! 
                     Если GetManager(self) возвращает None, 
                     то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
@@ -549,7 +547,7 @@ def icEvalExpr(expr, spcRepl = '', funcPath = ''):
     @param funcPath: Путь до функции.
         B{Пример:} C{'self.parent.owner', 'ic.globFunc.accounts'}
     """
-    if type(expr) not in (str, unicode) or expr == '':
+    if not isinstance(expr, str) or expr == '':
         return ''
 
     expr = expr.replace('_. ', spcRepl).replace('_.,', spcRepl+',').replace('_.', spcRepl+'.')
@@ -623,7 +621,7 @@ def setKey(evalSpace, key, obj, cod_access=None):
                 evalSpace['_access_keys'][key] = cod_access
             return True
     except:
-        io_prnt.outLog('ERROR setKey')
+        log.info('ERROR setKey')
 
     return False
 
@@ -743,9 +741,9 @@ def ic_import(dict_names, evalSpace = {}, isDebug = False):
                 except:
                     pass
 
-                exec 'import %s' % key
+                exec('import %s' % key)
             else:
-                exec 'import %s' % key
+                exec('import %s' % key)
 
             nm = ''
 
@@ -827,7 +825,7 @@ def icReLoadSource(name, path=None):
                 py_file_name = os.path.splitext(py_file_name)[0]+'.py'
                 path = py_file_name
             except:
-                io_prnt.outErr('Error')
+                log.error('Error')
                 return None
         else:
             return None
@@ -843,10 +841,11 @@ def isExprDict(expr):
     @rtype: C{bool}
     @return: Признак словаря.
     """
-    if type(expr) in (str, unicode) and len(expr) > 0 and expr[0] == '{' and expr[-1] == '}':
+    if isinstance(expr, str) and len(expr) > 0 and expr[0] == '{' and expr[-1] == '}':
         return True
 
     return False
+
 
 def isAcivateRes(res, evalSpace):
     """
@@ -903,7 +902,7 @@ def getKeyExpr(expr, keycod, evt, evalSpace={}):
     if expr not in [None, '', 'None']:
         #   Если expr словарь, то он задает способы реакции на некоторые
         #   клавиши. Пример: {'wx.WXK_F3':{'bShift':0, 'bCtrl':0, 'expr':'func_F3()'}, ...}
-        if type(expr) in (str, unicode):
+        if isinstance(expr, str):
             ret, val = ic_eval(expr, 0, evalSpace, 'getKeyExpr()')
             result = None
             if ret and isinstance(val, dict) and keycod in val.keys():
@@ -928,7 +927,7 @@ def getKeyExpr(expr, keycod, evt, evalSpace={}):
                 result = None
 
         #   Если значение строка,
-        elif type(key_val) in (str, unicode):
+        elif isinstance(key_val, str):
             result = key_val
 
         #   Вычисляем выражение реакции на нажатие клавиши. Если такая реакция
@@ -980,7 +979,7 @@ def getICAttr(attr_val, evalSpace=None, msg=None, compileKey=None):
     @return: Возвращает значение атрибута. None - если произошла ошибка при
         вычислении атрибута.
     """
-    if type(attr_val) not in (str, unicode):
+    if not isinstance(attr_val, str):
         return attr_val
 
     try:
@@ -1006,12 +1005,12 @@ def setFocusToForm(evalSpace, bFocus=True):
     try:
         for key, obj in evalSpace['_dict_obj'].items():
             if obj.type in ['Frame', 'Dialog']:
-                io_prnt.outLog('___ setFocusToForm: %s' % obj.name)
+                log.info('___ setFocusToForm: %s' % obj.name)
                 obj.Enable(True)
                 obj.SetFocus()
                 break
     except:
-        io_prnt.outLog('___ setFocusToForm ERROR')
+        log.info('___ setFocusToForm ERROR')
 
 
 def test1():
@@ -1082,7 +1081,7 @@ def test3():
     import time
 
     t1 = time.clock()
-    for x in xrange(1000):
+    for x in range(1000):
         s = test2(_SS)
 
     t2 = time.clock()
@@ -1090,7 +1089,7 @@ def test3():
     print('TIME-0:', t2-t1)
 
     t1 = time.clock()
-    for x in xrange(1000):
+    for x in range(1000):
         s = _SS.replace(' return', 'globals().update(locals());return')
         s = _SS.replace('\nreturn', 'globals().update(locals());return')
         s = _SS.replace('return;', 'globals().update(locals());return')

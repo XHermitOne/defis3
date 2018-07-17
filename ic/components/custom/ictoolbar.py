@@ -56,15 +56,14 @@
 """
         
 import wx
-import ic.utils.util as util
-from ic.bitmap.icbitmap import icBitmapType
+
+from ic.utils import util
 from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
-import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.imglib import common
+from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
-from ic.kernel import io_prnt
-import ic.utils.coderror as coderror
+from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
 TBFLAGS = (wx.TB_HORIZONTAL | wx.NO_BORDER | wx.TB_FLAT)
@@ -186,7 +185,7 @@ SPC_IC_TB_TOOL = {'type': 'ToolBarTool',
                   }
 
 #   Версия компонента
-__version__ = (1, 0, 0, 10)
+__version__ = (1, 1, 1, 1)
 
 
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):

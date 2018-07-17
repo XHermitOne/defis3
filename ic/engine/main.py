@@ -25,7 +25,7 @@ import copy
 from ic.engine import ic_user
 from ic.utils import ic_mode
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 def main(args):

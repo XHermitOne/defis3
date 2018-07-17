@@ -25,7 +25,7 @@ from ic.components.icfont import *
 from ic.utils.util import ic_eval
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 from ic.components import icwindow
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 SPC_IC_STATICBOX = {'type': 'StaticBox',
                     'name': 'default',

@@ -32,7 +32,7 @@ from os.path import splitext as SplitExt
 from os.path import dirname as DirName
 from os.path import basename as BaseName
 from os.path import abspath as AbsPath
-from os.path import walk as Walk
+# from os.path import walk as Walk
 from os.path import join as Join
 from os.path import exists as Exists
 from os.path import normpath as NormPath
@@ -56,7 +56,7 @@ from py_compile import compile as CompileFile
 from imp import load_source as LoadSource
 
 
-__version__ = (0, 1, 1, 3)
+__version__ = (0, 2, 1, 1)
 
 _ = wx.GetTranslation
 

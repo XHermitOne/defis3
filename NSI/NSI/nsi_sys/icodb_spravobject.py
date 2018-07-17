@@ -10,7 +10,7 @@
 """
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 import ic.utils.ic_cache as ic_cache
 import time

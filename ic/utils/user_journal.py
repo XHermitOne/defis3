@@ -121,10 +121,10 @@ class icRegUserJournal:
             self.setCurUser(UserName_)
 
             if ic_mode.isDebugMode():
-                io_prnt.outLog(u'Register user %s' % UserName_)
+                log.info(u'Register user %s' % UserName_)
             return result
         except:
-            io_prnt.outErr(u'Journal registration user error: %s.' % UserName_)
+            log.error(u'Journal registration user error: %s.' % UserName_)
             return False    
             
     def unregister(self):
@@ -140,12 +140,12 @@ class icRegUserJournal:
                     return False
                 else:
                     if ic_mode.isDebugMode():
-                        io_prnt.outLog(u'Unregister user %s.' % cur_username)
+                        log.info(u'Unregister user %s.' % cur_username)
                 return ini.delParamINI(self._journal_file_name, 'CURRENT_USERS',
                                        cur_username)
             return True
         except:
-            io_prnt.outErr(u'Journal delete user error: %s.' % self._journal_file_name)
+            log.error(u'Journal delete user error: %s.' % self._journal_file_name)
             return False
             
     def getCurrentUsersCount(self):
@@ -157,7 +157,7 @@ class icRegUserJournal:
                 return ini.getParamCountINI(self._journal_file_name, 'CURRENT_USERS')
             return 0
         except:
-            io_prnt.outErr(u'Journal define number of current users error: %s.' % self._journal_file_name)
+            log.error(u'Journal define number of current users error: %s.' % self._journal_file_name)
             return None
 
     def getCurrentUserNames(self):
@@ -167,7 +167,7 @@ class icRegUserJournal:
         try:
             return ini.getParamNamesINI(self._journal_file_name, 'CURRENT_USERS')
         except:
-            io_prnt.outErr(u'Journal define current users names error: %s.' % self._journal_file_name)
+            log.error(u'Journal define current users names error: %s.' % self._journal_file_name)
             return None
         
     def getCurrentRegComputers(self):
@@ -185,6 +185,6 @@ class icRegUserJournal:
             return eval(ini.loadParamINI(self._journal_file_name,
                                          'CURRENT_USERS', UserName_))
         except:
-            io_prnt.outErr(u'Journal define user run parameters error: user=%s, journal=%s.' % (UserName_,
+            log.error(u'Journal define user run parameters error: user=%s, journal=%s.' % (UserName_,
                                                                                                 self._journal_file_name))
             return None

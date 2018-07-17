@@ -195,7 +195,7 @@ class icSpravInterface:
                     else:
                         io_prnt.outWarning(u'ОШИБКА! Не определенный тип БД %s СПРАВОЧНИКА %s' % (db_res['type'], self.getName()))
                 except:
-                    io_prnt.outErr(u'Ошибка создания хранилища справочников %s %s' % (db_name, self.getTableName()))
+                    log.error(u'Ошибка создания хранилища справочников %s %s' % (db_name, self.getTableName()))
         else:
             # База данных не указана, поэтому считаем что по умолчанию
             # это SQL БД и таблица сама определяет в какой БД ей храниться
@@ -472,7 +472,7 @@ class icSpravPrototype(icSpravInterface):
                                'sprav_field': field,
                                }
             evsp = util.InitEvalSpace({'OBJ': self})
-            io_prnt.outLog('  .... begin:!!!!!')
+            log.info('  .... begin:!!!!!')
             res_val = icResourceParser.ResultForm(form,
                                                   evalSpace=evsp,
                                                   parent=parentForm,
@@ -487,7 +487,7 @@ class icSpravPrototype(icSpravInterface):
             else:
                 result = IC_HLP_OK
         except:
-            io_prnt.outErr(u'СПРАВОЧНИК [%s] Ошибка в методе Hlp' % self._name)
+            log.error(u'СПРАВОЧНИК [%s] Ошибка в методе Hlp' % self._name)
             result = IC_HLP_FAILED_TYPE_SPRAV
 
         return result, res_val, self.getFields(field, res_val)
@@ -512,9 +512,9 @@ class icSpravPrototype(icSpravInterface):
                 # record = dict([(field_name, field_values[i]) for i, field_name in enumerate(field_names)])
                 return record
             else:
-                io_prnt.outErr(u'Ошибка выбора справочника <%s>. Результат %s' % (self.getName(), result))
+                log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self.getName(), result))
         except:
-            io_prnt.outErr(u'Ошибка выбора записи справочника <%s>' % self.getName())
+            log.error(u'Ошибка выбора записи справочника <%s>' % self.getName())
         return None
 
     def choice_code(self, parent=None, *args, **kwargs):
@@ -580,7 +580,7 @@ class icSpravPrototype(icSpravInterface):
         try:
             return self.getLevels()[Index_]
         except:
-            io_prnt.outErr(u'СПРАВОЧНИК [%s] Ошибка определения уровня справочника по индексу' % self.name)
+            log.error(u'СПРАВОЧНИК [%s] Ошибка определения уровня справочника по индексу' % self.name)
             return None
 
     def Edit(self, ParentCode_=(None,), ParentForm_=None):
@@ -653,7 +653,7 @@ class icSpravPrototype(icSpravInterface):
 
             return ok
         except:
-            io_prnt.outErr(u'СПРАВОЧНИК [%s] Ошибка редактирования' % self.name)
+            log.error(u'СПРАВОЧНИК [%s] Ошибка редактирования' % self.name)
             return False
 
     def Ctrl(self, val, old=None, field='name', flds=None, bCount=True, cod='', DateTime_=None):
@@ -704,9 +704,9 @@ class icSpravPrototype(icSpravInterface):
                     return result, res_val
             # Не найдено
             result = coderror.IC_CTRL_FAILED
-            io_prnt.outLog('CTRL: NOT_FOUND val=%s' % val)
+            log.info('CTRL: NOT_FOUND val=%s' % val)
         except:
-            io_prnt.outErr(u'СПРАВОЧНИК [%s] Ошибка контроля' % self.name)
+            log.error(u'СПРАВОЧНИК [%s] Ошибка контроля' % self.name)
             result = coderror.IC_CTRL_FAILED_TYPE_SPRAV
 
         return result, res_val
@@ -984,7 +984,7 @@ class icSpravPrototype(icSpravInterface):
                     mngr = self.getSpravManager()
                     ref_sprav = mngr.getSpravByName(ref)
                     if ref and not ref_sprav:
-                        io_prnt.outLog(u'ERROR. Not Found referer sprav <%s>' % ref)
+                        log.info(u'ERROR. Not Found referer sprav <%s>' % ref)
                         raise
                     if ref_sprav:
                         try:
@@ -993,7 +993,7 @@ class icSpravPrototype(icSpravInterface):
                             name = ref_sprav.Find(ref_cod)
                             df = {'name': name}
                         except:
-                            io_prnt.outErr(u'Find <name> in ref sprav ERROR!')
+                            log.error(u'Find <name> in ref sprav ERROR!')
                     else:
                         df = {'name': cd}
 
@@ -1007,6 +1007,6 @@ class icSpravPrototype(icSpravInterface):
         storage = self.getStorage()
         if storage:
             return storage.getUUIDByCod(Cod_)
-        io_prnt.outlog(u'У объекта справочника [%s] не определено хранилище.' % self.getName())
+        log.info(u'У объекта справочника [%s] не определено хранилище.' % self.getName())
         return None
 

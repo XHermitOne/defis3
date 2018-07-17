@@ -17,10 +17,9 @@
     - B{modules={}}: [depricated] Словарь импортируемых имен. Пример:{'ic.db':['ic_base', 'icdataset'], 'util':['*']}
 """
 
-import wx
-import ic.utils.util as util
+from ic.utils import util
 from . import icwidget
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 SPC_IC_IMPORT = {'type': 'Import',
                  'name': 'imp',
@@ -66,7 +65,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 4)
+__version__ = (1, 1, 1, 1)
 
 
 class icImport(icwidget.icBase):

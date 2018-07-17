@@ -116,7 +116,7 @@ def onCodControl(obj):
         return (ctrl_ret,None)
     except:
         #ic_log.icLogErr(u'Ошибка контроля кода справочника.')
-        return io_prnt.outErr('Code control Error!')
+        return log.error('Code control Error!')
         return (coderror.IC_CTRL_FAILED_IGNORE, None)
 
 def _get_refspr_parent_cod(sprav, cod):

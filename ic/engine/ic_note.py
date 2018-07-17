@@ -55,7 +55,7 @@ class icMainNotebook(wx.Notebook):
             # Индекс текущей страницы
             self._cur_selected_page = -1
         except:
-            io_prnt.outErr(u'Ошибка создания объекта главного органайзера')
+            log.error(u'Ошибка создания объекта главного органайзера')
 
     def addPage(self, Page_, Title_, OpenExists_=False, Image_=None,
                 CanClose_=True, OpenScript_=None, CloseScript_=None, DefaultPage_=-1):
@@ -84,10 +84,10 @@ class icMainNotebook(wx.Notebook):
             else:
                 page = Page_
 
-            io_prnt.outLog(u'Новая страница главного органайзера: %s' % page)
+            log.info(u'Новая страница главного органайзера: %s' % page)
             # Проверка корректности типа страницы
             if not page:
-                io_prnt.outErr(u'Ошибка типа страницы, помещаемой в органайзер. %s' % str(page))
+                log.error(u'Ошибка типа страницы, помещаемой в органайзер. %s' % str(page))
                 return None
                 
             self._page_attr.append([OpenScript_, CloseScript_, CanClose_])
@@ -130,7 +130,7 @@ class icMainNotebook(wx.Notebook):
 
             return ret
         except:
-            io_prnt.outErr(u'Ошибка добавления страницы в органайзер.')
+            log.error(u'Ошибка добавления страницы в органайзер.')
             return None
 
     def deletePage(self, Index_):
@@ -167,7 +167,7 @@ class icMainNotebook(wx.Notebook):
             self.Refresh()
             return result
         except:
-            io_prnt.outErr(u'deletePage')
+            log.error(u'deletePage')
             return None
     
     def deleteAllPages(self):
@@ -224,7 +224,7 @@ class icMainNotebook(wx.Notebook):
             # ЗДЕСЬ ОБЯЗАТЕЛЬНО ДОЛЖЕН БЫТЬ Skip() ИНАЧЕ ОБЪЕКТ ГЛЮЧИТ!!!
             event.Skip()
         except:
-            io_prnt.outErr(u'Ошибка функции изменения страницы.')
+            log.error(u'Ошибка функции изменения страницы.')
             event.Skip()
 
     def OnRightClick(self, event):
@@ -267,7 +267,7 @@ class icMainNotebook(wx.Notebook):
             self.PopupMenu(std_popup_menu, wx.Point(event.GetX(), event.GetY()))
             std_popup_menu.Destroy()
         except:
-            io_prnt.outErr(u'Ошибка вывода стандартного меню страницы')
+            log.error(u'Ошибка вывода стандартного меню страницы')
             event.Skip()
     
     def OnClosePage(self, event):
@@ -284,7 +284,7 @@ class icMainNotebook(wx.Notebook):
                     if self.GetPageCount() == 0:
                         self._cur_selected_page = -1
         except:
-            io_prnt.outErr(u'Ошибка закрытия страницы')
+            log.error(u'Ошибка закрытия страницы')
             event.Skip()
 
     def OnPrevPage(self, event):
@@ -294,7 +294,7 @@ class icMainNotebook(wx.Notebook):
         try:
             self.AdvanceSelection(False)
         except:
-            io_prnt.outLog(u'Ошибка переключения страницы')
+            log.info(u'Ошибка переключения страницы')
             event.Skip()
 
     def OnNextPage(self, event):
@@ -304,7 +304,7 @@ class icMainNotebook(wx.Notebook):
         try:
             self.AdvanceSelection(True)
         except:
-            io_prnt.outLog(u'Ошибка переключения страницы')
+            log.info(u'Ошибка переключения страницы')
             event.Skip()
 
     # --- Свойства ---
@@ -316,7 +316,7 @@ class icMainNotebook(wx.Notebook):
             if 0 <= self._cur_selected_page < self.GetPageCount():
                 return self.GetPage(self._cur_selected_page)
         except:
-            io_prnt.outLog(u'Ошибка определения объекта текущей страницы')
+            log.info(u'Ошибка определения объекта текущей страницы')
         return None
 
     def SetPageImg(self, Image_, NPage_):
@@ -339,7 +339,7 @@ class icMainNotebook(wx.Notebook):
                 img_idx = self._img_name[Image_]
             return self.SetPageImage(NPage_, img_idx)
         except:
-            io_prnt.outErr(u'Ошибка установки картинки страницы')
+            log.error(u'Ошибка установки картинки страницы')
 
     def getMainWin(self, CurObj_=None):
         """

@@ -14,14 +14,14 @@ StdReestr (MetaItem <FileStorage>)
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 from STD import reestr_img
 from ic.components.user import ic_metaitem_wrp
 import ic.engine.ic_user as ic_user
 import ic.components.icResourceParser as prs
 import ic.utils.resource as resmod
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 ### Общий интерфейс компонента
 ictemplate.init_component_interface(globals(), ic_class_name = 'CStdReestr')

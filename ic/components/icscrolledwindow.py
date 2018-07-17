@@ -29,13 +29,13 @@
 
 import wx
 import copy
-from ic.log.iclog import *
-import ic.utils.util as util
+
+from ic.utils import util
 from .icwidget import icWidget, SPC_IC_WIDGET
 from .icwindow import ICWindowStyle
-import ic.PropertyEditor.icDefInf as icDefInf
-from ic.kernel import io_prnt
-import ic.imglib.common as common
+from ic.PropertyEditor import icDefInf
+from ic.imglib import common
+from ic.log import log
 
 _ = wx.GetTranslation
 
@@ -94,7 +94,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 0, 0, 5)
+__version__ = (1, 1, 1, 1)
 
 
 class icScrolledWindow(icWidget, wx.ScrolledWindow):
@@ -112,7 +112,7 @@ class icScrolledWindow(icWidget, wx.ScrolledWindow):
             testObj.context['_root_obj'].Show(True)
             testObj.context['_root_obj'].SetFocus()
         except: 
-            io_prnt.outErr()
+            log.error()
     
     def __init__(self, parent, id=-1, component={}, logType=0,
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):

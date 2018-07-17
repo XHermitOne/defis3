@@ -118,7 +118,7 @@ class icFilter2PostgreSQLConverter:
             elif element['type'] == 'compare':
                 sql_element = self.gen_requisite_sql(element)
             else:
-                ic.io_prnt.outLog(u'Неопределенный тип элемента фильтра: %s' % element['type'])
+                ic.log.info(u'Неопределенный тип элемента фильтра: %s' % element['type'])
                 continue
             sql_elements.append(sql_element)
             
@@ -226,7 +226,7 @@ class icFilter2SQLAlchemyConverter:
                 ext_dict = Requisite_['get_args']()
                 Requisite_.update(ext_dict)
         except:
-            ic.io_prnt.outLastErr(u'Ошибка получения аргументов')
+            ic.log.fatal(u'Ошибка получения аргументов')
 
         try:
             if Requisite_['func'] == 'equal':
@@ -290,6 +290,6 @@ class icFilter2SQLAlchemyConverter:
         
             ic.io_prnt.outWarning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % Requisite_['func'])
         except:
-            ic.io_prnt.outErr(u'Ошибка конвертации реквизита фильтра <%s>' % Requisite_)
+            ic.log.error(u'Ошибка конвертации реквизита фильтра <%s>' % Requisite_)
             
         return None

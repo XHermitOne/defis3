@@ -48,10 +48,10 @@ from wx.lib import buttons
 from ic.dlg.msgbox import MsgBox
 from ic.bitmap.icbitmap import icBitmapType
 from ic.log.iclog import *
-import ic.utils.util as util
+from ic.utils import util
 from ic.components.icwidget import icWidget, icShortHelpString, SPC_IC_WIDGET
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 try:
     from ic.components import icImage

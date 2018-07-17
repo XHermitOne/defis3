@@ -31,7 +31,7 @@ def getWorkSQLStorageByPsp(DBPsp_):
     work_storage_name = DBPsp_[0][1]
     if work_storage_name not in _WORK_SQL_STORAGE:
         _WORK_SQL_STORAGE[work_storage_name] = icWorkSQLStorage(None, DBPsp_)
-        ic.io_prnt.outLog(u'Регистрация БД <%s> в списке хранилищ' % work_storage_name)
+        ic.log.info(u'Регистрация БД <%s> в списке хранилищ' % work_storage_name)
     return _WORK_SQL_STORAGE[work_storage_name]
 
 
@@ -193,7 +193,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                 elif isinstance(_id_, int) and _id_ >= 0:
                     return self._setCascadeDict(Obj_, _id_, Dict_)
                 elif isinstance(_id_, list):
-                    ic.io_prnt.outLog(u'Ошибка идентификации записи. Много записей соответствуют запросу %s' % _id_)
+                    ic.log.info(u'Ошибка идентификации записи. Много записей соответствуют запросу %s' % _id_)
                     return None
                 else:
                     return None
@@ -227,7 +227,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                 elif find_rec.rowcount > 1:
                     return [rec.id for rec in find_rec]
         except:
-            ic.io_prnt.outErr(u'Ошибка идентификации записи в таблице %s.' % Obj_)
+            ic.log.error(u'Ошибка идентификации записи в таблице %s.' % Obj_)
             return None
         return -1
 
@@ -266,7 +266,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                     self._setCascadeDict(child_tab_name, ID_, child_rec)
             return True
         except:
-            ic.io_prnt.outErr(u'Ошибка обновления данных в каскад таблицы %s.' % Obj_)
+            ic.log.error(u'Ошибка обновления данных в каскад таблицы %s.' % Obj_)
             return None
 
     def _tabObj(self, Obj_):
@@ -313,7 +313,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                     self.addCascadeDict(child_tab_name, rec)
             return True
         except:
-            ic.io_prnt.outErr(u'Ошибка добавления данных в каскад таблицы %s.' % Obj_)
+            ic.log.error(u'Ошибка добавления данных в каскад таблицы %s.' % Obj_)
             return None
 
     def saveObject(self, Obj_):
@@ -342,7 +342,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
             requisite_dict = doc_table.getDefaultRecDict()
             requisite_dict.update(Obj_.getRequisiteData())
             try:
-                ic.io_prnt.outLog(u'WorkStorage SAVE RECORD %s' % requisite_dict.keys())
+                ic.log.info(u'WorkStorage SAVE RECORD %s' % requisite_dict.keys())
             except UnicodeDecodeError:
                 ic.io_prnt.outWarning(u'UnicodeDecodeError. WorkStorage SAVE RECORD')
 
@@ -350,7 +350,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
             if not doc_table.count(doc_table.c.uuid == Obj_.getUUID()):
                 # Добавить
                 try:
-                    ic.io_prnt.outLog(u'WorkStorage ADD RECORD %s' % save_rec.keys())
+                    ic.log.info(u'WorkStorage ADD RECORD %s' % save_rec.keys())
                 except UnicodeDecodeError:
                     ic.io_prnt.outWarning(u'UnicodeDecodeError. WorkStorage ADD RECORD')
 
@@ -381,7 +381,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
         except:
             # Вернуть транзакцию
             transaction.rollback()
-            ic.io_prnt.outErr(u'ОШИБКА сохранения реквизитов объекта <%s>' % Obj_.__class__.__name__)
+            ic.log.error(u'ОШИБКА сохранения реквизитов объекта <%s>' % Obj_.__class__.__name__)
 
         doc_table.db.disconnect()
         return result
@@ -446,11 +446,11 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
             try:
                 count = tab.count(tab.c.uuid == UUID_)
             except:
-                ic.io_prnt.outErr(u'ОШИБКА наличия объекта в хранилище')
+                ic.log.error(u'ОШИБКА наличия объекта в хранилище')
                 return False
             return True if count > 0 else False
         except:
-            ic.io_prnt.outErr(u'ОШИБКА определения существования объекта <%s>' % UUID_)
+            ic.log.error(u'ОШИБКА определения существования объекта <%s>' % UUID_)
             return False
 
     def loadObject(self, Obj_, UUID_):
@@ -468,7 +468,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
             try:
                 result = tab.select(tab.c.uuid == UUID_)
             except:
-                ic.io_prnt.outErr(u'ОШИБКА чтения объекта их хранилища')
+                ic.log.error(u'ОШИБКА чтения объекта их хранилища')
                 return False
 
             if result.rowcount:
@@ -476,9 +476,9 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                 Obj_.uuid = UUID_
                 # Получить все данные документа в виде словаря
                 cascade_data = tab.getCascadeDict(result.first().id)
-                # ic.io_prnt.outLog(u'GET Cascade Data %s' % cascade_data)
+                # ic.log.info(u'GET Cascade Data %s' % cascade_data)
             else:
-                ic.io_prnt.outLog(u'Данные объекта <%s> не найдены' % UUID_)
+                ic.log.info(u'Данные объекта <%s> не найдены' % UUID_)
                 return False
             # Установка внутренних данных в объекте
             # Только реквизиты
@@ -499,7 +499,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                     self._setObjectData(obj_spc, cascade_data[tab_name])
             return True
         except:
-            ic.io_prnt.outErr(u'ОШИБКА загрузки реквизитов объекта %s' % Obj_.getUUID())
+            ic.log.error(u'ОШИБКА загрузки реквизитов объекта %s' % Obj_.getUUID())
             return False
 
     def _setObjectData(self, CurObj_, Data_):
@@ -547,7 +547,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
         obj_requisites = [requisite for requisite in Obj_.getAllRequisites() if issubclass(requisite.__class__,
                                                                                            persistent.icAttrPersistent)]
         fields = [obj_requisite.getFieldName() for obj_requisite in obj_requisites]
-        ic.io_prnt.outLog(u'icworkstorage.getFieldNames::: %s' % fields)
+        ic.log.info(u'icworkstorage.getFieldNames::: %s' % fields)
         return fields
         
     def delAllData(self, Obj_, Filter_=None):
@@ -566,7 +566,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
             else:
                 return obj_table.dataclass.select().delete().execute()            
         except:
-            ic.io_prnt.outErr(u'ОШИБКА удаления объекта %s их хранилища' % Obj_.name)
+            ic.log.error(u'ОШИБКА удаления объекта %s их хранилища' % Obj_.name)
             return None
         
     def getAllData(self, Obj_, Filter_=None):
@@ -588,12 +588,12 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                     result = obj_table.select()
 
                 if not self._resultLen(result):
-                    ic.io_prnt.outLog(u'Данные объекта %s не найдены' % Obj_.name)
+                    ic.log.info(u'Данные объекта %s не найдены' % Obj_.name)
                     # Только реквизиты
                     fields = self.getFieldNames(Obj_)
                     return {'fields': fields, 'data': []}
             except:
-                ic.io_prnt.outErr(u'ОШИБКА чтения объекта %s их хранилища' % Obj_.name)
+                ic.log.error(u'ОШИБКА чтения объекта %s их хранилища' % Obj_.name)
                 return None
 
             # Только реквизиты
@@ -614,7 +614,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                 
             return {'fields': fields, 'data': data}
         except:
-            ic.io_prnt.outErr(u'ОШИБКА. Получения всех данных объекта %s' % Obj_.name)
+            ic.log.error(u'ОШИБКА. Получения всех данных объекта %s' % Obj_.name)
             return None
 
     def getAllUUID(self, Obj_, order_sort=None):
@@ -642,7 +642,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
             records = sql.execute()
             return [record['uuid'] for record in records]
         except:
-            ic.io_prnt.outErr(u'Ошибка получения всех UUID')
+            ic.log.error(u'Ошибка получения всех UUID')
         return list()
 
     def test(self):

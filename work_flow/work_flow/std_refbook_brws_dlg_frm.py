@@ -52,5 +52,5 @@ def onSaveToolMouseClick(Context_):
             #После сохранения необходимо перегрузить дерево
             onTreeBrwsInit(Context_)
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Сохранение изменений.')
+        ic.log.error(u'ОШИБКА. Сохранение изменений.')
     

@@ -77,20 +77,20 @@ class icFormDataManager(object):
         if hasattr(ctrl, 'setData'):
             # Обработка методом setData
             try:
-                io_prnt.outLog(u'Заполнение данных объекта <%s> методом setData.' % ctrl.__class__.__name__)
+                log.info(u'Заполнение данных объекта <%s> методом setData.' % ctrl.__class__.__name__)
                 ctrl.setData(value)
                 result = True
             except:
-                io_prnt.outErr(u'Ошибка заполнения данных объекта <%s> методом setData. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
+                log.error(u'Ошибка заполнения данных объекта <%s> методом setData. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
                 result = False
         elif hasattr(ctrl, 'setValue'):
             # Обработка методом setValue
             try:
-                io_prnt.outLog(u'Заполнение данных объекта <%s> методом setValue.' % ctrl.__class__.__name__)
+                log.info(u'Заполнение данных объекта <%s> методом setValue.' % ctrl.__class__.__name__)
                 ctrl.setValue(value)
                 result = True
             except:
-                io_prnt.outErr(u'Ошибка заполнения данных объекта <%s> методом setValue. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
+                log.error(u'Ошибка заполнения данных объекта <%s> методом setValue. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
                 result = False
         elif hasattr(ctrl, 'SetValue'):
             # Обработка методом SetValue
@@ -101,21 +101,21 @@ class icFormDataManager(object):
                         value = ic_time.pydate2wxdate(value)
                     elif isinstance(value, datetime.datetime):
                         value = ic_time.pydatetime2wxdatetime(value)
-                io_prnt.outLog(u'Заполнение данных объекта <%s> методом SetValue.' % ctrl.__class__.__name__)
+                log.info(u'Заполнение данных объекта <%s> методом SetValue.' % ctrl.__class__.__name__)
                 ctrl.SetValue(value)
                 result = True
             except:
-                io_prnt.outErr(u'Ошибка заполнения данных объекта <%s> методом SetValue. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
+                log.error(u'Ошибка заполнения данных объекта <%s> методом SetValue. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
                 result = False
         elif hasattr(ctrl, 'SetLabel'):
             # Обработка методом SetValue (Только для объектов wxStaticText)
             try:
-                io_prnt.outLog(u'Заполнение данных объекта <%s> методом SetLabel.' % ctrl.__class__.__name__)
+                log.info(u'Заполнение данных объекта <%s> методом SetLabel.' % ctrl.__class__.__name__)
                 value = ic_str.toUnicode(value)
                 ctrl.SetLabel(value)
                 result = True
             except:
-                io_prnt.outErr(u'Ошибка заполнения данных объекта <%s> методом SetLabel. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
+                log.error(u'Ошибка заполнения данных объекта <%s> методом SetLabel. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
                 result = False
         else:
             io_prnt.outWarning(u'Не определен метод заполнения данных объекта <%s>' % ctrl.__class__.__name__)
@@ -176,33 +176,33 @@ class icFormDataManager(object):
             # Обработка методом getData
             try:
                 value = ctrl.getData()
-                io_prnt.outLog(u'Получение данных объекта <%s> методом getData.' % ctrl.__class__.__name__)
+                log.info(u'Получение данных объекта <%s> методом getData.' % ctrl.__class__.__name__)
             except:
-                io_prnt.outErr(u'Ошибка получения данных объекта <%s> методом getData.' % ctrl.__class__.__name__)
+                log.error(u'Ошибка получения данных объекта <%s> методом getData.' % ctrl.__class__.__name__)
                 value = None
         elif hasattr(ctrl, 'getValue'):
             # Обработка методом getValue
             try:
                 value = ctrl.getValue()
-                io_prnt.outLog(u'Получение данных объекта <%s> методом getValue.' % ctrl.__class__.__name__)
+                log.info(u'Получение данных объекта <%s> методом getValue.' % ctrl.__class__.__name__)
             except:
-                io_prnt.outErr(u'Ошибка получения данных объекта <%s> методом getValue.' % ctrl.__class__.__name__)
+                log.error(u'Ошибка получения данных объекта <%s> методом getValue.' % ctrl.__class__.__name__)
                 value = None
         elif hasattr(ctrl, 'GetValue'):
             # Обработка методом GetValue
             try:
                 value = ctrl.GetValue()
-                io_prnt.outLog(u'Получение данных объекта <%s> методом GetValue.' % ctrl.__class__.__name__)
+                log.info(u'Получение данных объекта <%s> методом GetValue.' % ctrl.__class__.__name__)
             except:
-                io_prnt.outErr(u'Ошибка получения данных объекта <%s> методом GetValue.' % ctrl.__class__.__name__)
+                log.error(u'Ошибка получения данных объекта <%s> методом GetValue.' % ctrl.__class__.__name__)
                 value = None
         elif hasattr(ctrl, 'GetLabel'):
             # Обработка методом SetValue (Только для объектов wxStaticText)
             try:
                 value = ctrl.GetLabel()
-                io_prnt.outLog(u'Получение данных объекта <%s> методом GetLabel.' % ctrl.__class__.__name__)
+                log.info(u'Получение данных объекта <%s> методом GetLabel.' % ctrl.__class__.__name__)
             except:
-                io_prnt.outErr(u'Ошибка получения данных объекта <%s> методом GetLabel.' % ctrl.__class__.__name__)
+                log.error(u'Ошибка получения данных объекта <%s> методом GetLabel.' % ctrl.__class__.__name__)
                 value = None
         else:
             io_prnt.outWarning(u'Не определен метод получения данных объекта <%s>' % ctrl.__class__.__name__)

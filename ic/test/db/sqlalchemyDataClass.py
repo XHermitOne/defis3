@@ -23,14 +23,14 @@ class TesticSQLAlchemyDataClass(unittest.TestCase):
         """
         """
         db_engine=create_engine('sqlite:///sqlite/input.db', strategy='threadlocal')
-        io_prnt.outLog('open sqlite:///sqlite/input.db - ok!')
+        log.info('open sqlite:///sqlite/input.db - ok!')
         return db_engine
 
     def open_db_1(self):
         """
         """
         db_engine=create_engine('sqlite:///sqlite/input1.db', strategy='threadlocal')
-        io_prnt.outLog('open sqlite:///sqlite/input1.db - ok!')
+        log.info('open sqlite:///sqlite/input1.db - ok!')
         return db_engine
 
     def open_pgs(self):
@@ -38,7 +38,7 @@ class TesticSQLAlchemyDataClass(unittest.TestCase):
         """
         db_engine = create_engine('postgres://ic_all:ic_all@x.ic.plus:5432/ic_db')
         print()
-        io_prnt.outLog('open postgres://ic_all:ic_all@x.ic.plus:5432/ic_db')
+        log.info('open postgres://ic_all:ic_all@x.ic.plus:5432/ic_db')
         return db_engine
         
     def _test_testEngine(self):

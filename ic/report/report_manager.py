@@ -70,10 +70,10 @@ class icReportManager(object):
         if os.path.exists(self._report_exec_filename):
             cmd = 'python2 %s --editor --path=%s &' % (self._report_exec_filename, self.getReportDir())
             try:
-                io_prnt.outLog(u'Запуск внешней программы <%s>' % cmd)
+                log.info(u'Запуск внешней программы <%s>' % cmd)
                 os.system(cmd)
             except:
-                io_prnt.outLastErr(u'Запуск программы <icReport> в режиме конструктора отчетов: <%s>' % cmd)
+                log.fatal(u'Запуск программы <icReport> в режиме конструктора отчетов: <%s>' % cmd)
         else:
             io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
@@ -92,7 +92,7 @@ class icReportManager(object):
             if not os.path.exists(self._report_dir):
                 try:
                     os.makedirs(self._report_dir)
-                    io_prnt.outLog(u'Cоздание папки <%s>' % self._report_dir)
+                    log.info(u'Cоздание папки <%s>' % self._report_dir)
                     description_filename = os.path.join(self._report_dir, 'descript.ion')
                     prj_name = os.path.basename(prj_dir)
                     ic_extend.save_file_text(description_filename,
@@ -128,10 +128,10 @@ class icReportManager(object):
                 cmd = cmd.encode(config.DEFAULT_ENCODING)
             msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
             try:
-                io_prnt.outLog(u'Запуск внешней программы <%s>' % msg_cmd)
+                log.info(u'Запуск внешней программы <%s>' % msg_cmd)
                 os.system(cmd)
             except:
-                io_prnt.outLastErr(u'Запуск программы <icReport> в режиме печати отчета: <%s>' % msg_cmd)
+                log.fatal(u'Запуск программы <icReport> в режиме печати отчета: <%s>' % msg_cmd)
         else:
             io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
@@ -159,10 +159,10 @@ class icReportManager(object):
                 cmd = cmd.encode(config.DEFAULT_ENCODING)
             msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
             try:
-                io_prnt.outLog(u'Запуск внешней программы <%s>' % msg_cmd)
+                log.info(u'Запуск внешней программы <%s>' % msg_cmd)
                 os.system(cmd)
             except:
-                io_prnt.outLastErr(u'Запуск программы <icReport> в режиме предварительного просмотра отчета: <%s>' % msg_cmd)
+                log.fatal(u'Запуск программы <icReport> в режиме предварительного просмотра отчета: <%s>' % msg_cmd)
         else:
             io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
@@ -190,10 +190,10 @@ class icReportManager(object):
                 cmd = cmd.encode(config.DEFAULT_ENCODING)
             msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
             try:
-                io_prnt.outLog(u'Запуск внешней программы <%s>' % msg_cmd)
+                log.info(u'Запуск внешней программы <%s>' % msg_cmd)
                 os.system(cmd)
             except:
-                io_prnt.outLastErr(u'Запуск программы <icReport> в режиме экспорта отчета: <%s>' % msg_cmd)
+                log.fatal(u'Запуск программы <icReport> в режиме экспорта отчета: <%s>' % msg_cmd)
         else:
             io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
@@ -223,10 +223,10 @@ class icReportManager(object):
                 cmd = cmd.encode(config.DEFAULT_ENCODING)
             msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
             try:
-                io_prnt.outLog(u'Запуск внешней программы <%s>' % msg_cmd)
+                log.info(u'Запуск внешней программы <%s>' % msg_cmd)
                 os.system(cmd)
             except:
-                io_prnt.outLastErr(u'Запуск программы <icReport> в режиме выбора действия над отчетом отчета: <%s>' % msg_cmd)
+                log.fatal(u'Запуск программы <icReport> в режиме выбора действия над отчетом отчета: <%s>' % msg_cmd)
         else:
             io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
@@ -353,7 +353,7 @@ class icReportManager(object):
         except:
             if dlg:
                 dlg.Destroy()
-            io_prnt.outErr(u'Ошибка выбора действия над отчетом <%s>' % report_filename)
+            log.error(u'Ошибка выбора действия над отчетом <%s>' % report_filename)
         return False
 
     def getReportResourceFilename(self, report_filename='', report_dir=''):

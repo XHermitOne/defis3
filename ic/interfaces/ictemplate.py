@@ -6,8 +6,8 @@
 """
 
 import wx
-import ic.utils.util as util
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.utils import util
+from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.images import editorimg
 import ic.components.icwidget as icwidget
 import copy

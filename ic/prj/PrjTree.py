@@ -117,7 +117,7 @@ class ImgList(wx.ImageList):
         try:
             self._img_lst.Replace(ImgIdx_, Img_)
         except:
-            io_prnt.outErr(u'%s from %s %s ' % (ImgIdx_, self._img_lst.GetImageCount(), Img_))
+            log.error(u'%s from %s %s ' % (ImgIdx_, self._img_lst.GetImageCount(), Img_))
         return ImgIdx_
 
 
@@ -212,7 +212,7 @@ class PrjTree(wx.TreeCtrl):
                 self.Expand(self._Root)
             return True
         except:
-            io_prnt.outErr(u'Build project tree error!')
+            log.error(u'Build project tree error!')
             return False
 
     def getRoot(self):
@@ -287,7 +287,7 @@ class PrjTree(wx.TreeCtrl):
         txt_color = wx.Colour(0, 0, 0)
         # Установить элемент/узел дерева
         if not self._Root:
-            io_prnt.outLog(u'Add root <%s>' % txt)
+            log.info(u'Add root <%s>' % txt)
             self._Root = self.AddRoot(txt)
             Root_ = self._Root
             # Установить картинки у корневого элемента
@@ -299,7 +299,7 @@ class PrjTree(wx.TreeCtrl):
         else:
             # ВНИМАНИЕ! Когда поставил этот print
             # прекратилась ошибка <Segmentation Fault>
-            # io_prnt.outLog(u'Append item %s.<%s>' % (Root_, txt))
+            # log.info(u'Append item %s.<%s>' % (Root_, txt))
             Root_ = self.AppendItem(Root_, txt)
             self.SetItemImage(Root_, img_idx, wx.TreeItemIcon_Normal)
             if img_extended_idx >= 0:
@@ -580,7 +580,7 @@ class PrjTree(wx.TreeCtrl):
                 for child in node.getChildren():
                     self.AddBranch(item, child)
             except:
-                io_prnt.outErr(u'Open subsystem error')
+                log.error(u'Open subsystem error')
                 wx.MessageBox(u'Open subsystem error',
                               u'ОШИБКА',
                               wx.OK | wx.ICON_ERROR)
@@ -641,7 +641,7 @@ class icPrjTreeViewer(PrjTree):
                 except:
                     self.GetParent().GetParent().setPassportLabel('')
             except:
-                io_prnt.outErr()
+                log.error()
                 
         event.Skip()
     

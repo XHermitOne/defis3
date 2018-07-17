@@ -75,11 +75,11 @@ def CreateICToolBar(Win_, MenuBar_, Name_, ToolbarData_):
     """
     try:
         if not ToolbarData_:
-            io_prnt.outLog(u'Данные о панели %s не найдены!' % Name_)
+            log.info(u'Данные о панели %s не найдены!' % Name_)
             return None
         return icToolBar(Win_, MenuBar_, Name_, ToolbarData_)
     except:
-        io_prnt.outErr(u'Ошибка создания панели инструментов %s!' % Name_)
+        log.error(u'Ошибка создания панели инструментов %s!' % Name_)
         return None
 
 
@@ -183,7 +183,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
 
             self.DoToolBar(ToolBarStruct_)
         except:
-            io_prnt.outErr(u'Ошибка создания объекта панели инструментов %s!' % self._Name)
+            log.error(u'Ошибка создания объекта панели инструментов %s!' % self._Name)
 
     def DoToolBar(self, ToolBarStruct_):
         """
@@ -215,7 +215,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 self.Realize()
             return self
         except:
-            io_prnt.outErr(u'Ошибка загрузки панели инструментов!')
+            log.error(u'Ошибка загрузки панели инструментов!')
             return None
 
     def AddToLoadToolBar(self, ToolItem_):
@@ -235,7 +235,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             # elif type(self._ResData)==DictType:
             #    tool_struct=self._ResData[tool_name]
             # else:
-            #    io_prnt.outLog( 'Ошибка загрузки панели инструментов!')
+            #    log.info( 'Ошибка загрузки панели инструментов!')
             #    return None
             # Если инструмент с таким именем уже существует,  то не создавать его
             tool_name = ToolItem_['name']
@@ -245,7 +245,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 self.AppendTool(tool_name, tool)
             return self
         except:
-            io_prnt.outErr(u'Ошибка загрузки панели инструментов %s!' % self._Name)
+            log.error(u'Ошибка загрузки панели инструментов %s!' % self._Name)
             return None
 
     def AddToLinkToolBar(self, ToolItem_):
@@ -269,7 +269,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 self.AppendToolByItem(item_name, item)
             return self
         except:
-            io_prnt.outErr(u'Ошибка добавления инструментов в панель %s!' % self._Name)
+            log.error(u'Ошибка добавления инструментов в панель %s!' % self._Name)
             return None
 
     def RemoveAll(self):
@@ -286,7 +286,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             self._tools_check_on.clear()
             self._tools_check_off.clear()
         except:
-            io_prnt.outErr(u'Ошибка удаления инструментов из панели %s!' % self._Name)
+            log.error(u'Ошибка удаления инструментов из панели %s!' % self._Name)
 
     def FindToolByAlias(self, Name_):
         """
@@ -411,7 +411,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 self.Register(tool, tool_id, ToolName_)
                 return tool
         except:
-            io_prnt.outErr(u'Ошибка создания инструмента %s!' % ToolName_)
+            log.error(u'Ошибка создания инструмента %s!' % ToolName_)
             return None
 
     def AppendToolByItem(self, ItemName_, Item_):
@@ -477,7 +477,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 return None
             return tool 
         except:
-            io_prnt.outErr(u'Ошибка создания инструмента %s по пункту меню!' % ItemName_)
+            log.error(u'Ошибка создания инструмента %s по пункту меню!' % ItemName_)
             return None
 
     def OnToolClick(self, event):

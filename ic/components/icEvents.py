@@ -46,6 +46,7 @@ class icKeyDownEvent(wx.PyCommandEvent):
     def GetData(self):
         return self.data
 
+
 #   *** Идентификаторы для события icGridDestroyEvent ***
 icEVT_GRID_DESTROY = wx.NewEventType()
 EVT_GRID_DESTROY = wx.PyEventBinder(icEVT_GRID_DESTROY)
@@ -62,6 +63,7 @@ class icGridDestroyEvent(wx.PyEvent):
         self.id = id
         self.data = None
 
+
 #   *** Идентификаторы для события icDestroyEvent ***
 icEVT_DLG_PREDESTROY = wx.NewEventType()
 EVT_DLG_PREDESTROY = wx.PyEventBinder(icEVT_DLG_PREDESTROY)
@@ -77,6 +79,7 @@ class icDlgPreDestroyEvent(wx.PyEvent):
         #   Пользовательские данные
         self.id = id
         self.data = None
+
 
 #   *** Идентификаторы для события icDestroyEvent ***
 icEVT_TEXT_TEMPL = wx.NewEventType()
@@ -98,6 +101,7 @@ class icTextTemplEvent(wx.PyEvent):
     def GetData(self):
         return self.data
 
+
 #   Сообщение для автоматического заполнения текста
 icEVT_AUTO_TEXT_FILL = wx.NewEventType()
 EVT_AUTO_TEXT_FILL = wx.PyEventBinder(icEVT_AUTO_TEXT_FILL)
@@ -116,6 +120,7 @@ class icAutoTextFillEvent(wx.PyEvent):
 
     def GetData(self):
         return self.data
+
 
 #   Сообщение post_select для грида
 icEVT_GRID_POST_SELECT = wx.NewEventType()
@@ -138,6 +143,7 @@ class icGridPostSelectEvent(wx.PyEvent):
     def GetData(self):
         return self.data
 
+
 #   Сообщение, которое приходит после инициализации визуального компонента
 icEVT_POST_INIT = wx.NewEventType()
 EVT_POST_INIT = wx.PyEventBinder(icEVT_POST_INIT)
@@ -158,6 +164,7 @@ class icPostInitEvent(wx.PyEvent):
 
     def GetData(self):
         return self.data
+
 
 #   Сообщение, на изменение надписи визуального компонента
 icEVT_LABEL_CHANGE = wx.NewEventType()

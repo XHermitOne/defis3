@@ -47,8 +47,8 @@ import wx
 from wx.lib import buttons
 from ic.bitmap.icbitmap import icBitmapType
 from ic.log.iclog import *
-import ic.utils.util as util
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.utils import util
+from ic.PropertyEditor import icDefInf
 from ic.components.icwidget import icWidget, icShortHelpString, SPC_IC_WIDGET
 import ic.imglib.common as common
 

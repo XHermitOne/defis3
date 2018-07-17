@@ -7,7 +7,7 @@
 
 # Подключение библиотек
 import copy
-import new
+import types
 
 from ic.log import log
 
@@ -68,7 +68,7 @@ from .icPostgreSQL import SPC_IC_POSTGRESQL
 from .icMSSQL import SPC_IC_MSSQL
 from .icMySQL import SPC_IC_MYSQL
 
-__version__ = (0, 1, 6, 1)
+__version__ = (1, 1, 1, 1)
 
 DB_TYPES = [SQLITE_DB_TYPE, POSTGRES_DB_TYPE, MSSQL_DB_TYPE, MYSQL_DB_TYPE]
 
@@ -337,7 +337,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         Создание метаданных работы с БД.
         """
         # В качестве указания БД может быть указано, только имя БД
-        if type(DBRes_) in (str, unicode):
+        if isinstance(DBRes_, str):
             DBRes_ = resource.icGetRes(DBRes_, ext='src', bRefresh=False, nameRes=DBRes_)
         try:
             metadata = None
@@ -346,7 +346,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                 connection_args = self._getConnectionArgs(DBRes_)
                 # Параметры кодировки БД
                 encoding = DBRes_.get('encoding', 'UTF-8')
-                if isinstance(encoding, unicode):
+                if isinstance(encoding, str):
                     # ВНИМАНИЕ! В Unicode этот параметр быть не должен
                     # иначе ошибка в sqlalchemy появляется.
                     # Надо обязательно переводить в строку
@@ -1097,7 +1097,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         if self.dataclass is not None:
             tab_name = self.dataclass.name
-            if isinstance(tab_name, unicode):
+            if isinstance(tab_name, str):
                 tab_name = tab_name.encode()
             return tab_name
         return None
@@ -1194,12 +1194,12 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return Value_
 
         if self._get_to_unicode():
-            if not isinstance(Value_, unicode):
-                return unicode(str(Value_), DEFAULT_DB_ENCODING)
+            if not isinstance(Value_, str):
+                return str(Value_)
             else:
                 return Value_
         else:
-            if isinstance(Value_, unicode):
+            if isinstance(Value_, str):
                 return Value_.encode(DEFAULT_DB_ENCODING)
         try:
             return str(Value_)
@@ -1319,7 +1319,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         Правильно представить запись для использования ее в функции добавления/обновления.
         """
         for item in RecData_.items():
-            if isinstance(item[0], unicode):
+            if isinstance(item[0], str):
                 new_item = item[0].encode()
                 del RecData_[item[0]]
                 RecData_[new_item] = item[1]
@@ -1562,7 +1562,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 del Struct_[key]
                 Struct_[key_new] = value_new
 
-        elif isinstance(Struct_, unicode):
+        elif isinstance(Struct_, str):
             # Строка юникод
             return Struct_.encode(DEFAULT_DB_ENCODING)
 
@@ -1595,7 +1595,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
 
         elif isinstance(Struct_, str):
             # Строка юникод
-            return unicode(Struct_, DEFAULT_DB_ENCODING)
+            return Struct_
         else:
             # Оставить без изменений все другие типы
             return Struct_
@@ -1677,7 +1677,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         if self.db:
             try:
-                if len(args) == 1 and type(args[0]) in (str, unicode):
+                if len(args) == 1 and isinstance(args[0], str):
                     # Если запрос задается строкой,
                     # то сразу перекодировать его юникод
                     args = (self._encodeTextSQL(args[0]),)
@@ -1943,7 +1943,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 if 'activate' not in field or int(field['activate']):
                     # Имя поля(не должно быть unicode)
                     fld_name = field['name']
-                    if isinstance(fld_name, unicode):
+                    if isinstance(fld_name, str):
                         fld_name = fld_name.encode()
 
                     if field['type'] == 'Field':
@@ -2033,7 +2033,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             Например:
                 'id_table1_tab'
         """
-        if isinstance(parent_table, str) or isinstance(parent_table, unicode):
+        if isinstance(parent_table, str):
             # Родительская таблица задается именем
             tab = self.getParentTable(parent_table)
             if tab:
@@ -2093,14 +2093,14 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             if self.dataclass is not None:
                 # Создание класса
                 mapperclass_name = self.dataclass.name
-                if isinstance(mapperclass_name, unicode):
+                if isinstance(mapperclass_name, str):
                     mapperclass_name = mapperclass_name.encode()
-                self._mapper_class = new.classobj(mapperclass_name, (object,), {})
+                self._mapper_class = type(mapperclass_name, (object,), {})
 
                 field_names = [fld['name'] for fld in self.getResource()['child'] if fld['type'] == FIELD_TYPE]
                 _init_ = self._gen_mapper_init_(field_names)
                 # Установить конструктор
-                self._mapper_class.__init__ = new.instancemethod(_init_, None, self._mapper_class)
+                self._mapper_class.__init__ = types.MethodType(_init_, self._mapper_class)
                 if AutoMapper_:
                     _properties_ = None
                     if Children_:
@@ -2160,8 +2160,6 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             field_default = self.getFieldDefault(FieldName_)
             if isinstance(field_default, str):
                 return '\''+str(field_default)+'\''
-            elif isinstance(field_default, unicode):
-                return 'u\''+str(field_default)+'\''
             return str(field_default)
         return None
 
@@ -2179,7 +2177,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             else:
                 init_func_txt += '\tpass\n'
 
-            exec init_func_txt      # in name_space
+            exec(init_func_txt)      # in name_space
             return __init__
         except:
             log.fatal(u'Ошибка генерации конструктора маппера табицы.')

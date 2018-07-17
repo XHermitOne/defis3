@@ -7,7 +7,7 @@
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.kernel import io_prnt
@@ -38,11 +38,11 @@ class icStorageViewerDlg(icobjectinterface.icObjectInterface):
         try:
             viewer = self.GetNameObj('view_treectrl')
             var_storage = ic_user.getVarStorage().getStorage()
-            io_prnt.outLog(u'VAR STORAGE VIEWER: <%s>' % var_storage)
+            log.info(u'VAR STORAGE VIEWER: <%s>' % var_storage)
             variables = self._storageConvert(var_storage)
             viewer.LoadTree(variables)
         except:
-            io_prnt.outErr(u'Ошибка инициализации дерева просмотра хранилища переменных.')
+            log.error(u'Ошибка инициализации дерева просмотра хранилища переменных.')
 
     ###BEGIN EVENT BLOCK
     ###END EVENT BLOCK

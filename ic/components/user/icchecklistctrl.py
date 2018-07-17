@@ -12,7 +12,7 @@ from ic.bitmap import ic_bmp
 from ic.log import log
 from ic.utils import util
 
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
 
 #   Тип компонента

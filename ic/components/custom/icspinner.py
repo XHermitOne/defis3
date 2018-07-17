@@ -51,7 +51,7 @@ from ic.log.iclog import *
 from ic.utils import util
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 from ic.components.icfont import *
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
 
 ICSpinnerStyle = {'SP_ARROW_KEYS': wx.SP_ARROW_KEYS,

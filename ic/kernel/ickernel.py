@@ -9,14 +9,14 @@ from . import decorators
 from . import icContext
 from .icbasekernel import icBaseKernel
 from . import io_prnt
-import thread
+import _thread
 import threading
 import time
 import imp
 from . import icexceptions
 from ic.log import log
 
-__version__ = (0, 1, 1, 3)
+__version__ = (0, 2, 1, 1)
 
 prs = None
 resource = None
@@ -221,7 +221,7 @@ class icKernel(icBaseKernel):
         else:
             mod = '%s.py' % resName.replace('\\', '/').replace('/', '.')
         # Импортируем модуль
-        execfile(mod, globals())
+        exec(open(mod).read(), globals())
         # Создаем объект
         iclass = globals()[className]
         obj = iclass(parent, **kwarg).getObject()
@@ -529,7 +529,7 @@ class icKernel(icBaseKernel):
         try:
             # Блокируем очередь
             num = min(len(self.loopLst), self.num_parse_signal)
-            for i in xrange(num):
+            for i in range(num):
                 sign, slot = self.loopLst[i]
                 if slot and slot.isValidSignal(sign):
                     if sign.isSkip():
@@ -614,7 +614,7 @@ class icKernel(icBaseKernel):
         self._eventLoopLst = threading.Event()
         self._eventLoopLst.set()
         self.__stop = False
-        self._loopThread = thread.start_new(self.signal_loop, (0,))
+        self._loopThread = _thread.start_new(self.signal_loop, (0,))
 
     def setBehaviour(self, BehaviourResourceFileName_):
         """

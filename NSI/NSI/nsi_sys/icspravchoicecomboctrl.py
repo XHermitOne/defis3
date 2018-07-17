@@ -175,7 +175,7 @@ class icSpravChoiceComboCtrlProto(wx.combo.ComboCtrl):
                 self.SetValue(name)
                 return self._selected_cod
             else:
-                io_prnt.outErr(u'Ошибка выбора справочника <%s>. Результат %s' % (self._sprav.name, result))
+                log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self._sprav.name, result))
         return None
 
     def onMouseLeftDown(self, event):

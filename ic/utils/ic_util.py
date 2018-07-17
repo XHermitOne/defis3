@@ -10,7 +10,7 @@ import sys
 from types import *
 import os.path
 import wx
-import md5
+import hashlib
 
 from encodings import aliases
 
@@ -29,11 +29,10 @@ except:
 from ic.log import log
 from . import util
 from . import ic_str
-from .ic_str import toUnicode
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции
@@ -246,15 +245,6 @@ def StructToTxt(Struct_, Level_=0):
                                                                            '\\r').replace('\n',
                                                                                           '\\n').replace('\t',
                                                                                                          '\\t')+'\''
-        elif obj_type == unicode:
-            # Появляется косяк с разделителем папок в именах путей
-            # Проверка на кавычки
-            txt = txt+'u\''+Struct_.replace('\'',
-                                            '\\\'').replace('\'',
-                                                            '\\\'').replace('\r',
-                                                                            '\\r').replace('\n',
-                                                                                           '\\n').replace('\t',
-                                                                                                          '\\t')+'\''
         else:
             txt = txt+str(Struct_)
 
@@ -383,10 +373,7 @@ def ReCodeString(String_, StringCP_, NewCP_):
     """
     if NewCP_.upper() == 'UNICODE':
         # Кодировка в юникоде.
-        if isinstance(String_, str):
-            return unicode(String_, StringCP_)
-        else:
-            return String_
+        return String_
 
     if NewCP_.upper() == 'OCT' or NewCP_.upper() == 'HEX':
         # Закодировать строку в восьмеричном/шестнадцатеричном виде.
@@ -394,11 +381,9 @@ def ReCodeString(String_, StringCP_, NewCP_):
 
     if isinstance(String_, str):
         if StringCP_.upper() != 'UNICODE':
-            string = unicode(String_, StringCP_)
-        else:
-            string = unicode(String_)
-        
-    elif isinstance(String_, unicode):
+            string = String_
+
+    elif isinstance(String_, str):
         string = String_
         
     return string.encode(NewCP_)
@@ -458,7 +443,7 @@ def icListStrRecode(List_, StringCP_, NewCP_):
         elif isinstance(List_[i], tuple):
             # Елемент списка - кортеж
             value = icTupleStrRecode(List_[i], StringCP_, NewCP_)
-        elif isinstance(List_[i], str) or isinstance(List_[i], unicode):
+        elif isinstance(List_[i], str):
             value = ReCodeString(List_[i], StringCP_, NewCP_)
         else:
             value = List_[i]
@@ -505,7 +490,7 @@ def icDictStrRecode(Dict_, StringCP_, NewCP_):
         elif isinstance(value, tuple):
             # Елемент - кортеж
             Dict_[new_key] = icTupleStrRecode(value, StringCP_, NewCP_)
-        elif isinstance(value, str) or isinstance(value, unicode):
+        elif isinstance(value, str):
             Dict_[new_key] = ReCodeString(value, StringCP_, NewCP_)
 
     return Dict_
@@ -545,7 +530,7 @@ def icStructStrRecode(Struct_, StringCP_, NewCP_):
     elif isinstance(Struct_, tuple):
         # Кортеж
         struct = icTupleStrRecode(Struct_, StringCP_, NewCP_)
-    elif isinstance(Struct_, str) or isinstance(Struct_, unicode):
+    elif isinstance(Struct_, str):
         # Строка
         struct = ReCodeString(Struct_, StringCP_, NewCP_)
     else:
@@ -672,7 +657,7 @@ def get_check_summ(Value_):
     check_sum = None
     try:
         val = str(Value_)
-        check_summ = md5.new(val).hexdigest()
+        check_summ = hashlib.md5.new(val).hexdigest()
     except:
         log.fatal(u'Ошибка определения контрольной суммы')
     return check_summ

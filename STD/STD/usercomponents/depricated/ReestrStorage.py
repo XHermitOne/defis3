@@ -6,8 +6,8 @@ ODB хранилище реестров.
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.utils import util
+from ic.PropertyEditor import icDefInf
 import ic.engine.ic_user as ic_user
 import copy
 

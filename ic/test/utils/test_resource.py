@@ -48,7 +48,7 @@ class TestGlobalFunctions(unittest.TestCase):
     def testicGetRes(self):
         path, nm = os.path.split(__file__)
         res = resource.icGetRes(None, 'frm', path, nameRes='test_res')
-        io_prnt.outLog('>>> read resource name:%s type:%s' % (res['name'], res['type']))
+        log.info('>>> read resource name:%s type:%s' % (res['name'], res['type']))
         self.assertEqual(res['type'], 'Panel')
         self.assertEqual(res['name'], 'test1_panel')
 
@@ -61,7 +61,7 @@ class TestGlobalFunctions(unittest.TestCase):
         """
         path, nm = os.path.split(__file__)
         res = resource.icGetRes(None, 'frm', path, nameRes='test_res')
-        io_prnt.outLog('read resource name:%s type:%s' % (res['name'], res['type']))
+        log.info('read resource name:%s type:%s' % (res['name'], res['type']))
         
         r = resource.FindResInRes(res, 'btn2', 'Button')
         self.assertEqual(r['type'], 'Button')

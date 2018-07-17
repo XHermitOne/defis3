@@ -75,7 +75,7 @@ def icStampedText(Win_, Text_, FontName_=DEFAULT_TEXT_FONT):
         win_canvas.EndDrawing()
 
     except:
-        io_prnt.outErr(u'Ошибка заполнения фона окна.')
+        log.error(u'Ошибка заполнения фона окна.')
 
 
 def ShowSplash(GraphFile_=''):
@@ -95,7 +95,7 @@ def ShowSplash(GraphFile_=''):
         splash.Show()
         return splash
     except:
-        io_prnt.outErr(u'Ошибка вывода сплеш-окна: <%s>' % GraphFile_)
+        log.error(u'Ошибка вывода сплеш-окна: <%s>' % GraphFile_)
 
 
 class icSplashScreen(wx.SplashScreen):
@@ -116,7 +116,7 @@ class icSplashScreen(wx.SplashScreen):
                                      SPLASH_DELAY, None, -1, wx.DefaultPosition, wx.DefaultSize,
                                      wx.SIMPLE_BORDER | wx.FRAME_NO_TASKBAR | wx.STAY_ON_TOP)
         except:
-            io_prnt.outErr(u'Ошибка создания всплывающего окошка.')
+            log.error(u'Ошибка создания всплывающего окошка.')
 
 
 def ShowMsgWin(Title_=''):
@@ -185,5 +185,5 @@ def load_component_proccess(parent=None, Frames_=None):
         ic_logo_dlg.LoadProjectProccess(parent, u'Подождите',
                                         prs.GetComponentModulDict, tuple(), Frames_=Frames_)
     except:
-        io_prnt.outErr(u'Ошибка загрузки сплеш-окна')
+        log.error(u'Ошибка загрузки сплеш-окна')
 

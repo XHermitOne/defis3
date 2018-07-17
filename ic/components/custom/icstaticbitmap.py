@@ -33,14 +33,14 @@ import os
 import os.path
 import cStringIO
 import wx
-import ic.utils.util as util
+from ic.utils import util
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.components.icwidget import icWidget,  SPC_IC_WIDGET
 from ic.bitmap.icbitmap import icBitmapType
 import ic.imglib.common as common
 from ic.components import icwindow
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 
 def getBitmap(img_data):

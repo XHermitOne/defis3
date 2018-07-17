@@ -21,13 +21,13 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 from ic.utils import coderror
 from ic.kernel import io_prnt
 import ic.components.icResourceParser as prs
 from ic.bitmap import ic_bmp
 # from work_flow.work_sys import work_img
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import work_flow.doc_sys.icoperation as parentModule
 
@@ -179,7 +179,7 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
         if not self.is_do_func():
             return True
         else:
-            io_prnt.outLog(u'Выполнение ОПЕРАЦИИ <%s>' % self.name)
+            log.info(u'Выполнение ОПЕРАЦИИ <%s>' % self.name)
 
         context = self.GetContext()
         context['OBJ'] = self.parent
@@ -217,7 +217,7 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
         if not self.is_do_func():
             return True
         else:
-            io_prnt.outLog(u'Отмена ОПЕРАЦИИ <%s>' % self.name)
+            log.info(u'Отмена ОПЕРАЦИИ <%s>' % self.name)
 
         context = self.GetContext()
         context['OBJ'] = self.parent

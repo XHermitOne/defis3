@@ -37,23 +37,15 @@
         символ '@'.
 """
 
-# import wx
-# import sys
-# import os
-# import copy
-# import string
-# import ic
-import ic.utils.resource as resource
+from ic.utils import resource
 from ic.utils.util import icSpcDefStruct, ic_eval
-import ic.utils.util as util
+from ic.utils import util
 
-# from ic.log.iclog import MsgLastError
-# from ic.dlg.msgbox import MsgBox
 from ic.dlg import ic_dlg
 from ic.utils import ic_uuid
-from ic.kernel import io_prnt
 from ic.utils import coderror
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.log import log
+from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.components import icwidget
 
@@ -137,7 +129,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 2, 1)
+__version__ = (1, 1, 1, 1)
 
 
 # Функции редактирования
@@ -435,7 +427,7 @@ def setResAttr(res, typRes, name, attr, value, uuidLink=None, prntRes=None):
                 
             return True
         except:
-            io_prnt.outLastErr(u'setResAttr ERROR')
+            log.fatal(u'Ошибка в setResAttr')
             return None
     else:
         for key in res:
@@ -505,6 +497,7 @@ def getRes(res, typRes, name):
                         if bret:
                             return bret
     return False
+
 
 #   Список атрибутов контейнеров
 contAttr = ['child', 'cols', 'win1', 'win2']
@@ -673,7 +666,7 @@ class icDataLink(icwidget.icSimple):
 
             if name in self.fltDict:
                 res['filter'] = self.fltDict[name]
-                io_prnt.outLog(u'RELOAD FILTER IN DATALINK <%s> [%s]' % (name, res['filter']))
+                log.info(u'RELOAD FILTER IN DATALINK <%s> [%s]' % (name, res['filter']))
             else:
                 res['filter'] = component['filter']
         return res
@@ -695,14 +688,14 @@ class icDataLink(icwidget.icSimple):
            link_type = _query[1].split('.')[0]
            link_name = _query[1].split('.')[1]
 
-           io_prnt.outLog(u'ICDATASET: point to object resource: type=<%s>, name=<%s>' % (link_type, link_name))
+           log.info(u'ICDATASET: point to object resource: type=<%s>, name=<%s>' % (link_type, link_name))
         except:
            link_type = None
            link_name = None
 
         #   Получаем ресурсное описание, где в общем случае ищется
         #   описание нужного компонента
-        io_prnt.outLog(u'Связь с ресурсом по паспорту: %s' % psp_link)
+        log.info(u'Связь с ресурсом по паспорту: %s' % psp_link)
         res = resource.getResByPsp(psp_link)
 
         # ---- В ресурсе ищем описание нужного компoнента
@@ -711,7 +704,7 @@ class icDataLink(icwidget.icSimple):
             ret = getRes(res, link_type, link_name)
 
             if not ret:
-                io_prnt.outWarning(u'Не найден объект [%s : %s] в ресурсе' % (link_type, link_name))
+                log.warning(u'Не найден объект [%s : %s] в ресурсе' % (link_type, link_name))
                 res = None
 
         # -------------------------------------------------------------
@@ -751,7 +744,7 @@ class icDataLink(icwidget.icSimple):
             link_type = _query[1].split('.')[0]
             link_name = _query[1].split('.')[1]
             
-            io_prnt.outLog(u'ICDATASET: point to object resource: type=<%s>, name=<%s>' % (link_type, link_name))
+            log.info(u'ICDATASET: point to object resource: type=<%s>, name=<%s>' % (link_type, link_name))
         except:
             link_type = None
             link_name = None
@@ -764,7 +757,7 @@ class icDataLink(icwidget.icSimple):
         if link_key:
             
             try:
-                io_prnt.outLog(u'DATA LINK TO key=%s, path=%s, ext=%s' % (link_key, path, res_ext))
+                log.info(u'DATA LINK TO key=%s, path=%s, ext=%s' % (link_key, path, res_ext))
                 res = resource.icGetRes(link_key, res_ext, path, nameRes=nameRes)
                                 
                 #   В описание найденого ресурса добавляем атрибуты, которые
@@ -796,7 +789,7 @@ class icDataLink(icwidget.icSimple):
             if ret:
                 if isinstance(val, dict) and 'name' in val and 'type' in val:
                     res = val
-                    io_prnt.outLog(u'ICDATASET RCONSTRUCT RES: <%s>' % val)
+                    log.info(u'ICDATASET RCONSTRUCT RES: <%s>' % val)
 
         # -------------------------------------------------------------
         #   В полученном ресурсном описании ищем ссылки и заменяем их
@@ -840,12 +833,12 @@ class icDataLink(icwidget.icSimple):
                 name, prp = div[-1].split('.')
                     
                 if setResAttr(res, div[0], name, prp, reload_attr, self._uuid):
-                    io_prnt.outLog(u'setResAttr() [%s : %s : %s]' % (div[0], name, prp))
+                    log.info(u'setResAttr() [%s : %s : %s]' % (div[0], name, prp))
             else:
                 if attr in res:
                     res[attr] = reload_attr
                 else:
-                    io_prnt.outWarning(u'RELOAD ATTRIBUTE ERROR in icdataset.icDataLink.__init__(...): Invalid attribute name <%s> in component name:%s' % (attr, component['name']))
+                    log.warning(u'RELOAD ATTRIBUTE ERROR in icdataset.icDataLink.__init__(...): Invalid attribute name <%s> in component name:%s' % (attr, component['name']))
 
         return res
     
@@ -881,7 +874,7 @@ def getAddProperyLst(spc, attrs, unSpecAttr):
     if spc and isinstance(spc, dict):
         lst_add_prop = [x for x in attrs if not x in spc.keys() and not x in unSpecAttr]
     else:
-        io_prnt.outLog(u'TYPE ERROR in getAddPropertyList()')
+        log.warning(u'TYPE ERROR in getAddPropertyList()')
         
     return lst_add_prop
 

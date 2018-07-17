@@ -90,7 +90,7 @@ class icUserEditDialog(wx.Dialog):
             self.SetSizer(self._boxsizer)
             self.SetAutoLayout(True)
         except:
-            io_prnt.outErr(u'Ошибка создания диалогового окна редактирования пользователей.')
+            log.error(u'Ошибка создания диалогового окна редактирования пользователей.')
 
     def OnOK(self, event):
         """
@@ -209,7 +209,7 @@ class icUserManager(object):
                     ParentForm_.Destroy()
                 return result
         except:
-            io_prnt.outErr(u'Ошибка редактирования пользователей.')
+            log.error(u'Ошибка редактирования пользователей.')
         finally:
             if dlg:
                 dlg.Destroy()
@@ -279,7 +279,7 @@ class icUserManager(object):
                         return ini.Dict2INI(reg_user_journal,
                                             reg_user_journal_file_name, rewrite=True)
         except:
-            io_prnt.outErr(u'Ошибка в функции управления регистрационной информацией пользователей.')
+            log.error(u'Ошибка в функции управления регистрационной информацией пользователей.')
         return False
 
 
@@ -319,7 +319,7 @@ def test():
 
             form.Show()
         except :
-            io_prnt.outErr()
+            log.error()
         finally:
             ic.Logout()
     app.MainLoop()

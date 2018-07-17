@@ -22,11 +22,11 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 from ic.bitmap import ic_bmp
 import ic.components.icResourceParser as prs
 # from work_flow.work_sys import workflow_img
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import work_flow.work_sys.icrequisite as parentModule
 from ic.db import icsqlalchemy

@@ -23,8 +23,8 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.utils import util
+from ic.PropertyEditor import icDefInf
 
 from ic.db import icsqlalchemymodel
 

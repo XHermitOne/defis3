@@ -258,7 +258,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
                 self.limit_staticText.SetForegroundColour(wx.RED)
                 return
             except:
-                io_prnt.outLastErr(u'Ошибка в setLimitLabel')
+                log.fatal(u'Ошибка в setLimitLabel')
         if limit:
             # Есть ограничение, но не превышено
             try:
@@ -268,7 +268,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
                 self.limit_staticText.SetForegroundColour(fg)
                 return
             except:
-                io_prnt.outLastErr(u'Ошибка в setLimitLabel')
+                log.fatal(u'Ошибка в setLimitLabel')
         # Нет ограничений
         self.limit_staticText.SetLabel(u'')
 
@@ -484,7 +484,7 @@ class icFilterChoiceCtrlProto(wx.combo.ComboCtrl):
         """
         Имя файла хранения фильтра.
         """
-        io_prnt.outLog(u'icFilterChoiceCtrl [%s]. Установка файла <%s> для хранения фильтра' % (self.getUUID(), filename))
+        log.info(u'icFilterChoiceCtrl [%s]. Установка файла <%s> для хранения фильтра' % (self.getUUID(), filename))
         self._filter_filename = filename
 
     def saveFilter(self, filter_filename=None):

@@ -42,13 +42,13 @@ import wx
 from ic.dlg.msgbox import MsgBox
 from ic.log.iclog import *
 from ic.components.icfont import *
-import ic.utils.util as util
+from ic.utils import util
 from ic.components import icwidget
 from ic.PropertyEditor.ExternalEditors import baseeditor
 import ic.utils.coderror as coderror
 
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import wx.lib.agw.gradientbutton as GB
 
 # -------------------------------------------

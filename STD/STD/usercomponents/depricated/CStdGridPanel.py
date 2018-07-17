@@ -7,7 +7,7 @@
 
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 
 ### Общий интерфэйс компонента

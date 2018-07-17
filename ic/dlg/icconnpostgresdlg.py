@@ -7,7 +7,7 @@
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.utils.resource as res
 
 ### !!!! Данный блок изменять не рекомендуется !!!!

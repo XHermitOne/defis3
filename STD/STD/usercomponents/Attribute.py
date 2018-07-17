@@ -6,8 +6,8 @@
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.PropertyEditor.icDefInf as icDefInf
-import ic.utils.util as util
+from ic.PropertyEditor import icDefInf
+from ic.utils import util
 import copy
 from STD import reestr_img
 import ic.engine.ic_user as ic_user

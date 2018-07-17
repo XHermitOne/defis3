@@ -23,15 +23,14 @@
 """
 
 import wx
+
 from ic.utils.util import icSpcDefStruct
-import ic.utils.util as util
+from ic.utils import util
 from .icwidget import icWidget, SPC_IC_WIDGET
 from . import icwindow
-import ic.utils.graphicUtils as graphicUtils
-from ic.kernel import io_prnt
+from ic.utils import graphicUtils
 from ic.log import log
-from ic.engine import ic_user
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 _ = wx.GetTranslation
 
@@ -94,7 +93,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 0, 1, 1)
+__version__ = (1, 1, 1, 1)
 
 DESIGN_BORDER_CLR = (112, 146, 190)
 
@@ -118,7 +117,7 @@ class icWXPanel(icWidget, wx.Panel):
                 testObj.Show(True)
                 testObj.SetFocus()
         except:
-            io_prnt.outErr()
+            log.error()
     
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None, *arg, **kwarg):

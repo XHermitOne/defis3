@@ -7,8 +7,8 @@
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.PropertyEditor.icDefInf as icDefInf
-import ic.utils.util as util
+from ic.PropertyEditor import icDefInf
+from ic.utils import util
 import copy
 import ic.components.icwxpanel as icwxpanel
 import ic.kernel.icobject as icobject
@@ -144,7 +144,7 @@ class CRegPanel(ictemplate.icTemplateInterface):
             # Вызываем у объекта функцию чтения данных на форму
             if self._obj:
                 if hasattr(self._obj.metaitem.value, 'doc_uuid') and self._obj.metaitem.value.doc_uuid:
-                    io_prnt.outLog(u'>>> Загружаем документ UUID=%s' % self._obj.metaitem.value.doc_uuid)
+                    log.info(u'>>> Загружаем документ UUID=%s' % self._obj.metaitem.value.doc_uuid)
                     self._obj.load(self._obj.metaitem.value.doc_uuid)
                     self._obj.startEdit()
 

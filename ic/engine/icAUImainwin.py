@@ -143,7 +143,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
             try:
                 return main_notebook.GetPage(page_idx)
             except:
-                io_prnt.outErr(u'Ошибка определения страницы главного нотебука приложения')
+                log.error(u'Ошибка определения страницы главного нотебука приложения')
         else:
             io_prnt.outWarning(u'Не определен главный нотебук главного окна прораммы')
         return None
@@ -181,7 +181,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
                     self.evalSpace['event'] = event
                     self.eval_attr(ic_win.RES_WIN_OPEN)
             except:
-                io_prnt.outErr(u'Ошибка открытия главного окна')
+                log.error(u'Ошибка открытия главного окна')
             self._is_opened = True
         event.Skip()
 
@@ -214,7 +214,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
             if app:
                 app.ExitMainLoop()
         except:
-            io_prnt.outErr(u'Ошибка закрытия главного окна')
+            log.error(u'Ошибка закрытия главного окна')
         # ВНИМАНИЕ! При выходе из программы не надо вызывать
         # event.Skip(), чтобы не было повторного вызова процедуры
         # закрытия
@@ -248,7 +248,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
                 # Добавить страницу
                 return self._MainNotebook.addPage(Page_, Title_, Select_, Image_, not_dublicate)
         except:
-            io_prnt.outErr(u'Ошибка добавления страницы в главное окно.')
+            log.error(u'Ошибка добавления страницы в главное окно.')
         return None
     
     def OnPaint(self, evt):
@@ -302,7 +302,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
             self._MainNotebook.deletePage(Index_)
             return self._MainNotebook
         except:
-            io_prnt.outErr(u'Ошибка удаления страницы из органайзера.')
+            log.error(u'Ошибка удаления страницы из органайзера.')
             return None
 
     def delPageByTitle(self, page_title):
@@ -318,11 +318,11 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
             for i, page in enumerate(pages):
                 title = page.get('title', None)
                 if title == page_title:
-                    io_prnt.outLog(u'Удаление страницы <%s> с индексом %d' %(title, i))
+                    log.info(u'Удаление страницы <%s> с индексом %d' %(title, i))
                     self._MainNotebook.deletePage(i + 1)
             return self._MainNotebook
         except:
-            io_prnt.outErr(u'Ошибка удаления страницы из органайзера.')
+            log.error(u'Ошибка удаления страницы из органайзера.')
             return None
 
     def DelOrg(self):
@@ -335,7 +335,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
                 self._MainNotebook.deleteAllPages()
             return True
         except:
-            io_prnt.outErr(u'Ошибка удаления главного органайзера')
+            log.error(u'Ошибка удаления главного органайзера')
             return False
 
     def CloseOrgPages(self):
@@ -348,7 +348,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
                 self._MainNotebook.closeAllPages()
             return True
         except:
-            io_prnt.outErr(u'Ошибка удаления главного органайзера')
+            log.error(u'Ошибка удаления главного органайзера')
             return False
 
     def getAUIManager(self):

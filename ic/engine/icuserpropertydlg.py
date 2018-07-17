@@ -6,7 +6,7 @@ import md5
 import wx
 import ic
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.kernel import io_prnt
@@ -263,7 +263,7 @@ def icUserPropertyDlg(ParentForm_, DefaultRes_, UserManager_=None):
                 ParentForm_.Destroy()
             return result
     except:
-        io_prnt.outErr(u'Ошибка редактирования пользователя.')
+        log.error(u'Ошибка редактирования пользователя.')
 
     finally:
         if dlg:

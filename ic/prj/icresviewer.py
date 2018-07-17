@@ -51,7 +51,7 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
         try:
             return Node_.getMyRes()
         except:
-            io_prnt.outErr()
+            log.error()
             return {}
         
     def getSelectedObject(self):

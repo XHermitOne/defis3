@@ -6,11 +6,11 @@
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 import STD.interfaces.reestr.treeReestrInterface as reestr
 import ic.utils.uuid as uuid
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 ### Общий интерфейс компонента
 ictemplate.init_component_interface(globals(), ic_class_name = 'CTreeReestrCtrl')

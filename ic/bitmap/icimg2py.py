@@ -34,12 +34,12 @@ def getImgFileData(ImgFileName_):
         img_file_ext = ic_file.SplitExt(ImgFileName_)[1]
         # Конвертировать файл образа во временный файл
         tmp_file_name = tempfile.mktemp()
-        io_prnt.outLog(u'Серилизация файла образа [%s : %s : %s]' % (ImgFileName_, img_file_ext, img_file_type))
+        log.info(u'Серилизация файла образа [%s : %s : %s]' % (ImgFileName_, img_file_ext, img_file_type))
         ok, msg = img2img.convert(ImgFileName_, None,
                                   None, tmp_file_name, img_file_type, img_file_ext)
         # Все нормально?
         if not ok:
-            io_prnt.outLog(msg)
+            log.info(msg)
             return None
         # Получить данные из временного файла
         tmp_file = open(tmp_file_name, 'rb').read()
@@ -47,7 +47,7 @@ def getImgFileData(ImgFileName_):
         ic_file.UnLink(tmp_file_name)
         return data
     except:
-        io_prnt.outErr(u'Ошибка серилизации файла образа <%s> в строку.' % ImgFileName_)
+        log.error(u'Ошибка серилизации файла образа <%s> в строку.' % ImgFileName_)
         return None
 
 

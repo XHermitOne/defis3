@@ -90,7 +90,7 @@ class icKernelContext(icContext.BaseContext):
                 log.info('%-20s %-50s' % (str(name)[:20], str(value)[:50]))
             log.info('-------------------------------------------------------------------------------')
         except:
-            io_prnt.outErr(u'Ошибка метода icKernelContext.Print')
+            log.error(u'Ошибка метода icKernelContext.Print')
 
     # ФУНКЦИИ ДВИЖКА
     def saveImports(self):
@@ -111,7 +111,7 @@ class icKernelContext(icContext.BaseContext):
                     try:
                         del sys.modules[import_module]
                     except:
-                        io_prnt.outErr(u'Ошибка удаления импортированного модуля %s из пространства имен(sys.modules).' % import_module)
+                        log.error(u'Ошибка удаления импортированного модуля %s из пространства имен(sys.modules).' % import_module)
 
     def refreshImports(self):
         """
@@ -139,11 +139,11 @@ class icKernelContext(icContext.BaseContext):
             if parent_prj_dir not in sys.path:
                 sys.path.append(parent_prj_dir)
 
-            io_prnt.outLog(u'vvvvvvvvvvvvvvvvvvvvvvvv')
-            io_prnt.outLog(u'Окружение системы. Пути:')
+            log.info(u'vvvvvvvvvvvvvvvvvvvvvvvv')
+            log.info(u'Окружение системы. Пути:')
             for pth in sys.path:
-                io_prnt.outLog(u'\t%s' % pth)
-            io_prnt.outLog(u'^^^^^^^^^^^^^^^^^^^^^^^^')
+                log.info(u'\t%s' % pth)
+            log.info(u'^^^^^^^^^^^^^^^^^^^^^^^^')
 
             prj_name = os.path.basename(PrjDir_)
             # Папка ресурсов проекта

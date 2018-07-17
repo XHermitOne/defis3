@@ -4,7 +4,7 @@
 
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 import ic.components.icgriddataset as parentModule
 from ic.components.renders import xpgridrenders as xpr

@@ -34,7 +34,7 @@ def onCancelButtonMouseClick(Context_):
         dlg.EndModal(wx.ID_CANCEL)
         Context_['result']=None
     except:
-        ic.io_prnt.outErr(u'ОШИБКА.Обработчик нажатия на кнопку <Отмена>.')
+        ic.log.error(u'ОШИБКА.Обработчик нажатия на кнопку <Отмена>.')
     return None
     
 def onOkButtonMouseClick(Context_):
@@ -53,6 +53,6 @@ def onOkButtonMouseClick(Context_):
         
         return OBJ
     except:
-        ic.io_prnt.outErr(u'ОШИБКА.Обработчик нажатия на кнопку <OK>.')
+        ic.log.error(u'ОШИБКА.Обработчик нажатия на кнопку <OK>.')
     return None
     

@@ -38,7 +38,7 @@ def doFilterBuilder(Parent_, Environment_, Default_=None):
             # Нажата кнопка "Отмена"
             return None
     except:
-        io_prnt.outLastErr(u'Ошибка запуска редактора критериев выбора.')
+        log.fatal(u'Ошибка запуска редактора критериев выбора.')
         return None
 
 

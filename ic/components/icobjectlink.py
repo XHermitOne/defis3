@@ -43,12 +43,13 @@
 """
 
 import wx
+
 from . import icwidget
-import ic.utils.util as util
+from ic.utils import util
 from ic.log import log
 from ic.utils import coderror
 from ic.utils import resource
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
 parentModule = icwidget
@@ -92,7 +93,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования

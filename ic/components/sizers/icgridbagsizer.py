@@ -25,7 +25,7 @@ import wx
 from ic.utils.util import icSpcDefStruct
 from ic.components.icwidget import icSizer, icParentShapeType, icSelectedShapeType, SPC_IC_SIZER
 from ic.log.iclog import MsgLastError, LogLastError
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
 import ic.imglib.common as common
 
@@ -139,7 +139,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
             try:
                 self.AddGrowableCol(col)
             except:
-                io_prnt.outLastErr('flexCols col=<%s>' % col)
+                log.fatal('flexCols col=<%s>' % col)
 
         for row in component['flexRows']:
             self.AddGrowableRow(row)
@@ -173,7 +173,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
                         parent.EnableScrolling(* self.enableScr)
                         self.SetVirtualSizeHints(parent)
             except:
-                io_prnt.outErr(u'Ошибка при привязке сайзера')
+                log.error(u'Ошибка при привязке сайзера')
 
             self.win_parent = parent
             # Добавляем в сайзер дочерние элементы
@@ -211,7 +211,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
             
             self.objectList.append(obj)
         else:
-            io_prnt.outLastErr('Error Add obj: <%s>' % obj)
+            log.fatal('Error Add obj: <%s>' % obj)
 
         return bret
 
@@ -403,7 +403,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
             for i in range(col):
                 dx += wx.GridBagSizer.GetCellSize(self, row, i)
         except:
-            io_prnt.outLastErr('icGridBagSizer.GetCellRBPoint')
+            log.fatal('icGridBagSizer.GetCellRBPoint')
                 
         return wx.Point(dx, dy)
 

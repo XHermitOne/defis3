@@ -167,7 +167,7 @@ class icAUIPanePrototype:
                                                       parent=self._Parent)
             return control
         except:
-            io_prnt.outErr(u'Ошибка создания прикрепленного к AUI панели объекта.')
+            log.error(u'Ошибка создания прикрепленного к AUI панели объекта.')
             return None
         
     def getControl(self):

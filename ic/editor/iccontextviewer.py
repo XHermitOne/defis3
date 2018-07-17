@@ -7,7 +7,7 @@
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.kernel import io_prnt
@@ -42,7 +42,7 @@ class icContextViewerDlg(icobjectinterface.icObjectInterface):
             variables = self._contextConvert(Context_)
             viewer.LoadTree(variables)
         except:
-            io_prnt.outErr(u'Ошибка инициализации дерева просмотра хранилища переменных.')
+            log.error(u'Ошибка инициализации дерева просмотра хранилища переменных.')
 
     ###BEGIN EVENT BLOCK
     ###END EVENT BLOCK

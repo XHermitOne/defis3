@@ -305,7 +305,7 @@ class icRequisitePrototype(icworkbase.icRequisiteBase):
             # Число с плавающей запятой
             return form_generator.FLOAT_EDIT_TYPE
         else:
-            ic.io_prnt.outLog(u'Не определен тип хранения \'%s\' реквизита <%s>' % (self.type_val, self.name))
+            ic.log.info(u'Не определен тип хранения \'%s\' реквизита <%s>' % (self.type_val, self.name))
             
         return form_generator.DEFAULT_EDIT_TYPE        
     
@@ -326,7 +326,7 @@ class icRequisitePrototype(icworkbase.icRequisiteBase):
         elif self.type_val == 'F':
             return DEFAULT_FLOAT_WIDTH
         else:
-            ic.io_prnt.outLog(u'Не определен тип хранения \'%s\' реквизита <%s>' % (self.type_val, self.name))
+            ic.log.info(u'Не определен тип хранения \'%s\' реквизита <%s>' % (self.type_val, self.name))
         return DEFAULT_CTRL_WIDTH
     
     def createLabelCtrl(self, Parent_=None):
@@ -354,7 +354,7 @@ class icRequisitePrototype(icworkbase.icRequisiteBase):
             spc = self._genFloatEditorRes(self.name+'_edit')
             return self.GetKernel().createObjBySpc(Parent_, spc)
         else:
-            ic.io_prnt.outLog(u'Не определен тип хранения \'%s\' реквизита <%s>' % (self.type_val, self.name))
+            ic.log.info(u'Не определен тип хранения \'%s\' реквизита <%s>' % (self.type_val, self.name))
         return None
 
 

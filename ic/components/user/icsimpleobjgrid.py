@@ -26,7 +26,7 @@ from ic.utils import util
 from ic.utils import coderror
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import ic.contrib.ObjectListView as parentModule
 

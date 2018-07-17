@@ -106,7 +106,7 @@ def dictFilterToSQL(flt, tables, _id='id'):
     if type(flt) in (str, unicode):
         return flt
     if not isinstance(flt, dict):
-        io_prnt.outLog(_('Unexpected filter type. Must be srting type or dictionary.'))
+        log.info(_('Unexpected filter type. Must be srting type or dictionary.'))
         return None
         
     condition = ''
@@ -228,11 +228,11 @@ def isInFilteredVal(flt, fld, value, isVerSize=True):
     @return: Признак принадлежность значения заданному фильтру.
     """
     if not isinstance(flt, dict):
-        io_prnt.outLog(_('Unexpected filter type. Must be srting type or dictionary.'))
+        log.info(_('Unexpected filter type. Must be srting type or dictionary.'))
         return None
     
     if fld not in flt.keys():
-        io_prnt.outLog(_('Filter has not key: <%s>.'))
+        log.info(_('Filter has not key: <%s>.'))
         return False
     
     filt = flt[fld]
@@ -294,7 +294,7 @@ def InitValidValue(flt, fld, value):
         заполнены '*'
     """
     if fld not in flt.keys():
-        io_prnt.outLog(_('Filter has not key: <%s>.'))
+        log.info(_('Filter has not key: <%s>.'))
         return False
     
     filt = flt[fld]

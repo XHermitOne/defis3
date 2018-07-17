@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import exceptions
+"""
+Определение классов исключений.
+"""
+
+__version__ = (0, 1, 1, 1)
 
 
-class KernelAccessException(exceptions.Exception):
+class KernelAccessException(Exception):
     """
     Запретщен доступ к ядру.
     """
@@ -12,7 +16,7 @@ class KernelAccessException(exceptions.Exception):
         self.args = args
 
 
-class LoginErrorException(exceptions.Exception):
+class LoginErrorException(Exception):
     """
     Ошибка логина пользователя: Пользователь уже зарегистрирован
     """
@@ -20,7 +24,7 @@ class LoginErrorException(exceptions.Exception):
         self.args = args
 
 
-class LoginInvalidException(exceptions.Exception):
+class LoginInvalidException(Exception):
     """
     Ошибка логина пользователя: Неправильный пользователь или пароль
     """
@@ -28,7 +32,7 @@ class LoginInvalidException(exceptions.Exception):
         self.args = args
 
 
-class LoginDBExclusiveException(exceptions.Exception):
+class LoginDBExclusiveException(Exception):
     """
     Ошибка при логине: БД открыта в монополльном режиме
     """
@@ -36,7 +40,7 @@ class LoginDBExclusiveException(exceptions.Exception):
         self.args = args
 
 
-class LoginWorkTimeException(exceptions.Exception):
+class LoginWorkTimeException(Exception):
     """
     Ошибка при логине: Попытка входа в системы в не рабочее время
     """
@@ -44,7 +48,7 @@ class LoginWorkTimeException(exceptions.Exception):
         self.args = args
 
 
-class MethodAccessDeniedException(exceptions.Exception):
+class MethodAccessDeniedException(Exception):
     """
     Access denied: Доступ к методу запрещен.
     """

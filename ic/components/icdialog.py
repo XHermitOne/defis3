@@ -42,17 +42,11 @@
 """
 
 import wx
-# from ic.dlg.msgbox import MsgBox
-# from ic.log.iclog import *
-import ic.utils.util as util
+
+from ic.utils import util
 from .icwidget import icWidget, SPC_IC_WIDGET
-# import ic.utils.resource as resource
-# import icEvents
-# from ic.kernel import io_prnt
 from ic.log import log
-# from ic.PropertyEditor import icDefInf
-# import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 _ = wx.GetTranslation
 
@@ -60,7 +54,7 @@ ICDialogStyle = {'CAPTION': wx.CAPTION,
                  'DEFAULT_DIALOG_STYLE': wx.DEFAULT_DIALOG_STYLE,
                  'RESIZE_BORDER': wx.RESIZE_BORDER,
                  'SYSTEM_MENU': wx.SYSTEM_MENU,
-                 'THICK_FRAME': wx.THICK_FRAME,
+                 # 'THICK_FRAME': wx.THICK_FRAME,
                  'STAY_ON_TOP': wx.STAY_ON_TOP,
                  'DIALOG_NO_PARENT': wx.DIALOG_NO_PARENT,
                  'DIALOG_EX_CONTEXTHELP': wx.DIALOG_EX_CONTEXTHELP,
@@ -132,7 +126,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 0, 0, 11)
+__version__ = (1, 1, 1, 1)
 
 
 class icDialog(icWidget, wx.Dialog):

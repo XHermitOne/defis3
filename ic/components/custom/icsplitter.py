@@ -49,10 +49,10 @@
 """
 
 import wx
-import ic.utils.util as util
+from ic.utils import util
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 import ic.utils.resource as resource
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
 import ic.imglib.common as common
 
@@ -146,7 +146,7 @@ class icSplitter(icWidget, wx.SplitterWindow):
             testObj.context['_root_obj'].Show(True)
             testObj.context['_root_obj'].SetFocus()
         except: 
-            io_prnt.outErr()
+            log.error()
     
     def __init__(self, parent, id=-1, component={}, logType=0,
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):

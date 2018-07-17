@@ -17,7 +17,7 @@
 import wx
 from ic.utils.util import icSpcDefStruct
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 SPC_IC_LINE = {'type': 'StaticLine',
                'name': 'DefaultName',

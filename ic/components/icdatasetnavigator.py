@@ -41,20 +41,19 @@
 """
 
 import wx
-from ic.dlg.msgbox import MsgBox
-from ic.log.iclog import *
-import ic.utils.util as util
+
+from ic.utils import util
 from ic.imglib import common
 from . import icfont
-import os, cStringIO
 from .icwidget import icWidget, SPC_IC_WIDGET
 from ic.components.custom import ictoolbar
-import ic.PropertyEditor.icDefInf as icDefInf
-from ic.kernel import io_prnt
+from ic.PropertyEditor import icDefInf
+from ic.log import log
 
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
+
 
 _ = wx.GetTranslation
 
@@ -135,7 +134,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 1, 3)
+__version__ = (1, 1, 1, 1)
 
 
 # --- Функции редактирования
@@ -342,10 +341,10 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         """
         self.object_link = object_link
         if self.object_link is None:
-            io_prnt.outWarning(u'DatasetNavigator. Object link is <None>')
+            log.warning(u'DatasetNavigator. Object link is <None>')
             return None
         else:
-            io_prnt.outLog(u'DatasetNavigator. Object link <%s>' % self.object_link)
+            log.info(u'DatasetNavigator. Object link <%s>' % self.object_link)
 
         self.dataset = self.object_link.dataset
         self.UpdateViewFromDB()
@@ -357,7 +356,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         """
         if self.object_link is None:
             psp = self.getICAttr('object_link')
-            io_prnt.outLog(u'DatasetNavigator. Object link passport <%s>' % psp)
+            log.info(u'DatasetNavigator. Object link passport <%s>' % psp)
             object_link = self.GetKernel().getObjectByPsp(psp)
             self.setLink(object_link)
         return self.object_link
@@ -476,7 +475,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                     try:
                         object_link.AddRows()
                     except:
-                        io_prnt.outWarning(u'Can\'t add row to the link object: <%s>' % object_link)
+                        log.warning(u'Can\'t add row to the link object: <%s>' % object_link)
                 else:
                     for key in self.evalSpace['_has_source'].keys():
                         try:
@@ -484,7 +483,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                                 self.evalSpace['_has_source'][key].AddRows()
                                 break
                         except:
-                            io_prnt.outWarning(u'DatasetNavigator Add rows <%s>' % key)
+                            log.warning(u'DatasetNavigator Add rows <%s>' % key)
 
                 self.datasize.SetLabel(u' из ' + str(self.dataset.getRecordCount() - 1) + u'    ')
                 self.datasize.Refresh()
@@ -543,7 +542,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                     try:
                         object_link.DelRows(cur)
                     except:
-                        io_prnt.outWarning(_('Can\'t delete row from the link object: <%s>') % object_link)
+                        log.warning(_('Can\'t delete row from the link object: <%s>') % object_link)
                 else:
                     for key in self.evalSpace['_has_source'].keys():
                         try:
@@ -589,7 +588,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                     else:
                         fields = None
                                 
-                io_prnt.outLog(u'__# FIELDS IN SEARCH: %s' % fields)
+                log.info(u'__# FIELDS IN SEARCH: %s' % fields)
 
                 #   Если определено поле
                 if fields:
@@ -617,7 +616,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                 self.datasize.SetLabel(u' из ' + str(self.dataset.getRecordCount() - 1) + u'    ')
                 self.datasize.Refresh()
             except:
-                io_prnt.outErr(u'Error in search')
+                log.fatal(u'Ошибка поиска')
     
     def OnTextEnteredCursor(self, evt):
         """
@@ -692,7 +691,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         @rtype: C{tuple}
         @return: Возвращает номер строку и название поля, где найдена искомая строка.
         """
-        io_prnt.outLog(u'>>> FindRowString : fields=%s' % fields)
+        log.info(u'>>> FindRowString : fields=%s' % fields)
         if not string or not obj:
             return None, cursor
 
@@ -714,7 +713,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         elif obj.type == 'ListDataset':
             rows = obj.GetDataRows()
 
-        for cur in xrange(cursor, rows):
+        for cur in range(cursor, rows):
             for fld in fields:
                 value = obj.getNameValue(fld, cur)
                 if bLast and value.find(string) == 0:

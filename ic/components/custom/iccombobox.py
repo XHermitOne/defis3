@@ -36,9 +36,9 @@
 import wx
 from ic.dlg.msgbox import MsgBox
 from ic.log.iclog import *
-import ic.utils.util as util
+from ic.utils import util
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 LOG_TYPE = 0
 

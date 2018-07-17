@@ -57,7 +57,7 @@ def spravTable_onInit(obj, evt):
         level_tab = [('', sprav.description, '', '', '')]
         grid.SetDataset(level_tab, cod=cod)
     except:
-        io_prnt.outErr(u'Ошибка инициализации таблицы справочника.')
+        log.error(u'Ошибка инициализации таблицы справочника.')
 
 
 def spravTable_keyDown(obj, evt):
@@ -94,7 +94,7 @@ def onMouseClickAddTool(obj):
         grid.AddRows()
         return to_cod
     except:
-        io_prnt.outErr(u'Ошибка обработчика щелчка на кнопке панели инструментов addTool.')
+        log.error(u'Ошибка обработчика щелчка на кнопке панели инструментов addTool.')
 
 
 def onCodControl(evalSpace):
@@ -146,7 +146,7 @@ def onCodControl(evalSpace):
 
         return (ctrl_ret,None)
     except:
-        io_prnt.outErr(u'Ошибка контроля кода справочника.')
+        log.error(u'Ошибка контроля кода справочника.')
         return (coderror.IC_CTRL_FAILED_IGNORE,None)
 
 
@@ -190,7 +190,7 @@ def onMouseClickDelTool(obj):
         grid.DelRows(i_row)
         #Внесено изменение
     except:
-        io_prnt.outErr(u'Ошибка обработчика кнопки delTool на панели инструментов.')
+        log.error(u'Ошибка обработчика кнопки delTool на панели инструментов.')
 
 
 def onMouseClickSaveTool(obj):
@@ -209,7 +209,7 @@ def onMouseClickSaveTool(obj):
         sprav.getStorage().setLevelTable(cur_cod,tab, change_buff=buff)
         grid.GetDataset().set_change_prz(False)
     except:
-        io_prnt.outErr(u'Ошибка обработчика кнопки сохрания изменения справочника.')
+        log.error(u'Ошибка обработчика кнопки сохрания изменения справочника.')
 
 
 buff_find_str = None
@@ -232,7 +232,7 @@ def _find(obj):
         return
 
     if not buff_find_str or buff_find_str.find_str != find_str or buff_find_str.isEOF():
-        io_prnt.outLog(u'  ... find string: %s' % find_str)
+        log.info(u'  ... find string: %s' % find_str)
         tab = sprav.getStorage().getSpravTabClass()
         tabcls = sprav.getStorage().getSpravTabClass().dataclass
         conn = sprav.getStorage().getSpravTabClass().getConnection()
@@ -283,7 +283,7 @@ def onMouseClickFindTool(obj):
     try:
         return _find(obj)
     except:
-        io_prnt.outErr(u'Ошибка обработчика конпки поиска в справочнике.')
+        log.error(u'Ошибка обработчика конпки поиска в справочнике.')
 
 
 def spravTable_cellSelect(obj, evt):
@@ -371,7 +371,7 @@ def spravTable_cellSelect(obj, evt):
 
         return old_cod
     except:
-        io_prnt.outErr(u'Ошибка обработчика смены элемента дерева справочника.')
+        log.error(u'Ошибка обработчика смены элемента дерева справочника.')
 
 
 def onChangedGrid(obj):

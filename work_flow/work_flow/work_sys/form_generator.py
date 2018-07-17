@@ -204,7 +204,7 @@ class icObjFormGenerator:
             if res_module:
                 res_module.close()
             if ic_mode.isDebugMode():
-                io_prnt.outErr(u'Ошибка генерации файла модуля формы %s' % ResModuleFileName_)
+                log.error(u'Ошибка генерации файла модуля формы %s' % ResModuleFileName_)
             return None
     
     def _genChoicePanelRes(self, name=None):
@@ -617,7 +617,7 @@ class icObjFormGenerator:
                         box_spc['span'] = (1, 2)
                         sizer_spc['child'].append(box_spc)
                     else:
-                        io_prnt.outLog(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
                     sizer_spc['flexCols'] = [2]
         
         return notebook_spc
@@ -1166,7 +1166,7 @@ class icObjFormGenerator:
                         box_spc['span'] = (1, 2)
                         sizer_spc['child'].append(box_spc)
                     else:
-                        io_prnt.outLog(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
         
         return notebook_spc
     
@@ -1217,7 +1217,7 @@ class icObjFormGenerator:
                         box_spc['span'] = (1, 2)
                         sizer_spc['child'].append(box_spc)
                     else:
-                        io_prnt.outLog(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
         
         return scrolledwin_spc
         
@@ -1414,7 +1414,7 @@ class icObjFormGenerator:
                         box_spc['child'][0]['enable'] = False
                         sizer_spc['child'].append(box_spc)
                     else:
-                        io_prnt.outLog(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
                     
         return notebook_spc
     
@@ -1468,7 +1468,7 @@ class icObjFormGenerator:
                         box_spc['child'][0]['enable'] = False
                         sizer_spc['child'].append(box_spc)
                     else:
-                        io_prnt.outLog(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
         
         return scrolledwin_spc
         
@@ -1604,7 +1604,7 @@ class icAttrFormGenerator:
             if self.label and type(self.label) in (str, unicode):
                 return self.label
         except AttributeError:
-            io_prnt.outLog(u'У атрибута <%s> объекта не определено свойство label' % self.name)
+            log.info(u'У атрибута <%s> объекта не определено свойство label' % self.name)
         description = self._getTxtDescription()
         if description[-1] != u':':
             return description+u':'
@@ -1617,7 +1617,7 @@ class icAttrFormGenerator:
         try:
             return self.isInit()
         except AttributeError:
-            io_prnt.outLog(u'В атрибуте <%s> объекта не определен метод isInit' % self.name)
+            log.info(u'В атрибуте <%s> объекта не определен метод isInit' % self.name)
             return True
         
     def _isEdit(self):
@@ -1627,7 +1627,7 @@ class icAttrFormGenerator:
         try:
             return self.isEdit()
         except AttributeError:
-            io_prnt.outLog(u'В атрибуте <%s> объекта не определен метод isEdit' % self.name)
+            log.info(u'В атрибуте <%s> объекта не определен метод isEdit' % self.name)
             return True
         
     def _isView(self):
@@ -1637,7 +1637,7 @@ class icAttrFormGenerator:
         try:
             return self.isView()
         except AttributeError:
-            io_prnt.outLog(u'В атрибуте <%s> объекта не определен метод isView' % self.name)
+            log.info(u'В атрибуте <%s> объекта не определен метод isView' % self.name)
             return True
         
     def _isSearch(self):
@@ -1647,7 +1647,7 @@ class icAttrFormGenerator:
         try:
             return self.isSearch()
         except AttributeError:
-            io_prnt.outLog(u'В атрибуте <%s> объекта не определен метод isSearch' % self.name)
+            log.info(u'В атрибуте <%s> объекта не определен метод isSearch' % self.name)
             return True
 
     def _isIDAttr(self):
@@ -1657,7 +1657,7 @@ class icAttrFormGenerator:
         try:
             return self.isIDAttr()
         except AttributeError:
-            io_prnt.outLog(u'В атрибуте <%s> объекта не определен метод isIDAttr' % self.name)
+            log.info(u'В атрибуте <%s> объекта не определен метод isIDAttr' % self.name)
             return False
         
     def _genEditorName(self):
@@ -1695,7 +1695,7 @@ class icAttrFormGenerator:
         elif edit_type == NSI_EDIT_TYPE:
             editor_spc = self._genNSIEditorRes(self._genEditorName(), ResModuleFileName_)
         else:
-            io_prnt.outLog(u'Не определен тип редактора реквизита <%s>' % self.name)
+            log.info(u'Не определен тип редактора реквизита <%s>' % self.name)
             
         return editor_spc
 
@@ -1884,7 +1884,7 @@ class icGridFormGenerator:
         try:
             return self.isInit()
         except AttributeError:
-            io_prnt.outLog(u'В атрибуте <%s> объекта не определен метод isInit' % self.name)
+            log.info(u'В атрибуте <%s> объекта не определен метод isInit' % self.name)
             return True
         
     def _isEdit(self):
@@ -1894,7 +1894,7 @@ class icGridFormGenerator:
         try:
             return self.isEdit()
         except AttributeError:
-            io_prnt.outLog(u'В атрибуте <%s> объекта не определен метод isEdit' % self.name)
+            log.info(u'В атрибуте <%s> объекта не определен метод isEdit' % self.name)
             return True
         
     def _isView(self):
@@ -1904,7 +1904,7 @@ class icGridFormGenerator:
         try:
             return self.isView()
         except AttributeError:
-            io_prnt.outLog(u'В атрибуте <%s> объекта не определен метод isView' % self.name)
+            log.info(u'В атрибуте <%s> объекта не определен метод isView' % self.name)
             return True
         
     def _isSearch(self):

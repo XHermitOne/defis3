@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-import ic.utils.util as util
+from ic.utils import util
 
 
 def ConvertRes(old_res_fl, path, ext=None):

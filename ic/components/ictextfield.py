@@ -69,18 +69,19 @@
     - C{wx.TE_WORDWRAP}:  Разворачивает так, чтобы слово было видно полностью (wx.Unix only currently).
 """
 import wx
+
 from ic.dlg.msgbox import MsgBox
 from .icFieldTempl import *
 from ic.log.iclog import *
-import ic.utils.util as util
+from ic.utils import util
 from ic.utils.coderror import *
 from .icfont import icFont
 from .icwidget import icWidget, SPC_IC_WIDGET
 from . import icEvents
-import ic.utils.frequencydict as frequencydict
-from ic.kernel import io_prnt
-import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.utils import frequencydict
+from ic.imglib import common
+from ic.PropertyEditor import icDefInf
+from ic.log import log
 
 _ = wx.GetTranslation
 
@@ -98,7 +99,7 @@ ICTextFieldStyle = {'TE_PROCESS_ENTER': wx.TE_PROCESS_ENTER,
                     'TE_CENTRE': wx.TE_CENTRE,
                     'TE_RIGHT': wx.TE_RIGHT,
                     'TE_DONTWRAP': wx.TE_DONTWRAP,
-                    'TE_LINEWRAP': wx.TE_LINEWRAP,
+                    # 'TE_LINEWRAP': wx.TE_LINEWRAP,
                     'TE_WORDWRAP': wx.TE_WORDWRAP,
                     'SIMPLE_BORDER': wx.SIMPLE_BORDER}
 
@@ -174,7 +175,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 1, 4)
+__version__ = (1, 1, 1, 1)
 
 #   Код спец. кнопок, которые не обрабатываются при форматировании теста по шаблону
 KEYTEMPLATE = [wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_BACK, wx.WXK_HOME, wx.WXK_DELETE, wx.WXK_END,
@@ -253,7 +254,7 @@ class icTextField(icWidget, wx.TextCtrl):
         self.setfocus = component['setFocus']
         self.use_fdict = component['use_fdict']
 
-        if not type(val) in (str, unicode):
+        if not isinstance(val, str):
             val = str(val)
 
         wx.TextCtrl.__init__(self, parent, id, val, pos, size, self.style, name=self.name)
@@ -480,7 +481,7 @@ class icTextField(icWidget, wx.TextCtrl):
                 else:
                     ctrl_val = int(ctrl_ret)
             except:
-                io_prnt.outErr('INVALID RETURN CODE=%s in Ctrl' % str(ctrl_ret))
+                log.error('INVALID RETURN CODE=%s in Ctrl' % str(ctrl_ret))
                 ctrl_val = IC_CTRL_OK
         return ctrl_val
 
@@ -553,7 +554,7 @@ class icTextField(icWidget, wx.TextCtrl):
         #   Разблокируем запись для редактирования, если объект данных поддерживает блокировки
         try:
             self.dataset.Unlock()
-            io_prnt.outLog('>>> TextField Unlock rec=%s' % str(self.dataset.Recno()))
+            log.info('>>> TextField Unlock rec=%s' % str(self.dataset.Recno()))
         except:
             pass
 
@@ -626,7 +627,7 @@ class icTextField(icWidget, wx.TextCtrl):
             MsgLastError(self.parent, 'Exception in setTempl()')
 
         # if self.IsDebugMode():
-        #     io_prnt.outLog(u'TEXT SET VALUE=%s' % value)
+        #     log.info(u'TEXT SET VALUE=%s' % value)
 
         wx.TextCtrl.SetValue(self, value)
         #   Обнуляем признак изменения при необходимости (prz == 0), поскольку SetValue
@@ -675,7 +676,7 @@ class icTextField(icWidget, wx.TextCtrl):
                 self._oldLockReck = rec
                 self.bkillfocus = True
             else:
-                io_prnt.outLog('TEXTFIELD LOCK RECORD: %s' % str(rec))
+                log.info('TEXTFIELD LOCK RECORD: %s' % str(rec))
 
         self.eval_attr('setFocus')
         self.bChanged = False
@@ -741,7 +742,7 @@ class icTextField(icWidget, wx.TextCtrl):
         if self.dataset is not None and self.IsShown() and self.bStatusVisible and self.dataset.name == db_name:
             val = self.dataset.getNameValue(self.field_name, bFromBuff=bFromBuff)
             self.SetValue(val)
-            io_prnt.outLog('REFRESH name = %s, value = %s' % (self.name, val))
+            log.info('REFRESH name = %s, value = %s' % (self.name, val))
             return True
         return False
 

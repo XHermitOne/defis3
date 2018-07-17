@@ -21,11 +21,11 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 from ic.dlg import ic_dlg
 import ic.components.icResourceParser as prs
 from NSI.nsi_sys import nsi_images
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt

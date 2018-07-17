@@ -6,23 +6,23 @@
 """
 
 import wx
+
 from ic.dlg.msgbox import MsgBox
-import ic.components.icdialog as icdialog
-import ic.components.icfont as icfont
-import ic.components.sizers.icgridbagsizer as icgridbagsizer
-import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.components import icdialog
+from ic.components import icfont
+from ic.components.sizers import icgridbagsizer
+from ic.components import icwidget
+from ic.utils import util
 from ic.utils.util import icSpcDefStruct
 from ic.components.icwidget import icBase, icParentShapeType
-import ic.PropertyEditor.icPanelTool as icPanelTool
-from ic.kernel import io_prnt
+from ic.PropertyEditor import icPanelTool
 from .images import editorimg
 from ic.log import log
 from ic.components import icwxpanel
 
 _ = wx.GetTranslation
 
-__version__ = (1, 0, 1, 2)
+__version__ = (1, 1, 1, 1)
 
 # Локализация сообщений
 SPC_IC_BACKGROUND = {'name': '__EditorBackground__',
@@ -122,7 +122,7 @@ class icBackground(object):
             name = '%s::%s' % (nm, id)
             obj.SetName(name)
         except:
-            io_prnt.outLastErr('SetName ERROR')
+            log.fatal('SetName ERROR')
 
         self.container.append(obj)
         obj.editorBackground = self
@@ -284,7 +284,7 @@ class icBackground(object):
                     if self.ChangeObjProperty(obj, property, value):
                         return True
             except:
-                io_prnt.outLastErr('ChangeItemProperty ERROR')
+                log.fatal('ChangeItemProperty ERROR')
             
         return False
 
@@ -305,7 +305,7 @@ class icBackground(object):
                 ret = True
                 self.ReSizer()
         except:
-            io_prnt.outLastErr('ChangeSelObjProperty ERROR')
+            log.fatal('ChangeSelObjProperty ERROR')
             ret = False
         return ret
 
@@ -340,7 +340,7 @@ class icBackground(object):
             self.propertyTree.tree.ChangePropertyId(iditem, property, value, bRefresh)
             return True
         except:
-            io_prnt.outLastErr('')
+            log.fatal('')
             
         return False
 
@@ -371,11 +371,11 @@ class icBackground(object):
                 try:
                     obj.DrawShape()
                 except:
-                    io_prnt.outLastErr('DrawShape  Error')
+                    log.fatal('DrawShape  Error')
 
             self.bRedrawCursor = True
         except:
-            io_prnt.outErr('DrawAll Error')
+            log.error('DrawAll Error')
     
     def getEvtObj(self, evt):
         """
@@ -514,7 +514,7 @@ class icBackground(object):
             if obj and obj != self.selectedObj:
                 self.propertyTree.tree.SelectResId(obj.resource['__item_id'])
         except:
-            io_prnt.outLastErr('OnSelectObj ERROR')
+            log.fatal('OnSelectObj ERROR')
             
         self.SelectObj(obj_evt, x, y, bDrag=bDrag)
         self.RefreshStatusBar()
@@ -665,7 +665,7 @@ class icBackground(object):
             self.oldPoint = pos
             self.RefreshStatusBar()
             self.selectedObj.DrawCursor()
-            io_prnt.outLastErr('Except in OnMove')
+            log.fatal('Except in OnMove')
             
         evt.Skip()
 
@@ -964,7 +964,7 @@ class icBackground(object):
                         elif kcod == wx.WXK_DOWN:
                             self.selectedObj.SetPosition((x, y+ds))
             except:
-                io_prnt.outLastErr('OnKeyDown')
+                log.fatal('OnKeyDown')
             
             self.selectedObj.DrawCursor()
         evt.Skip()
@@ -987,8 +987,8 @@ class icBackground(object):
         x0 = 0
         y0 = 0
         
-        for i in xrange(ny):
-            for n in xrange(nx):
+        for i in range(ny):
+            for n in range(nx):
                 dc.DrawBitmap(bmp, x0 + n*sx*fx, y0 + i*sy*fy, True)
                 
         dc.EndDrawing()
@@ -1045,7 +1045,7 @@ class icBackground(object):
                     # Освобождаем указатель на графический редактор в панели инструментов
                     self.toolpanel.ReleaseGraphEditor()
             except:
-                io_prnt.outLastErr('###')
+                log.fatal('###')
                 
         # Удаляем форму
         if evt:
@@ -1068,7 +1068,7 @@ class icBackground(object):
                     elif self.selectedObj:
                         self.selectedObj.DrawCursor()
                 except:
-                    io_prnt.outErr('DrawCursor ERROR In OnUpdate')
+                    log.error('DrawCursor ERROR In OnUpdate')
                     
             if self.bRedraw:
                 self.bRedraw = False
@@ -1207,7 +1207,7 @@ class icBackground(object):
                     obj.SetFocus()
                     return True
             except:
-                io_prnt.outLastErr('ERROR in SelectObjId')
+                log.fatal('ERROR in SelectObjId')
         return False
         
     def get_style_panel(self):
@@ -1425,7 +1425,7 @@ class icBackgroundFDialog(icwidget.icSimple, wx.Frame):
                 # Освобождаем указатель на графический редактор в панели инструментов
                 self.toolpanel.ReleaseGraphEditor()
         except:
-            io_prnt.outLastErr('###')
+            log.fatal('###')
 
         if evt:
             evt.Skip()

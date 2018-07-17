@@ -13,7 +13,7 @@ import os.path
 import ic.imglib.common as imglib
 import ic.utils.ic_file as ic_file
 import ic.utils.ic_res as ic_res
-import ic.utils.util as util
+from ic.utils import util
 import ic.dlg.ic_dlg as ic_dlg
 from ic.kernel import io_prnt
 from ic.editor import ext_python_editor
@@ -122,7 +122,7 @@ class PrjModules(prj_node.PrjFolder):
             module_file.close()
             return text.find(Signature_) != -1
         except:
-            io_prnt.outErr(u'Search signature error. Signature <%s> in module <%s>.' % (Signature_, ModuleName_))
+            log.error(u'Search signature error. Signature <%s> in module <%s>.' % (Signature_, ModuleName_))
             if module_file:
                 module_file.close()
             return False
@@ -396,7 +396,7 @@ class PrjPackage(prj_node.PrjFolder):
             self.getRoot().save()
             return ok
         except:
-            io_prnt.outErr(u'Create package error <%s>' % self.name)
+            log.error(u'Create package error <%s>' % self.name)
             return False
         
     def rename(self, OldName_, NewName_):
@@ -625,7 +625,7 @@ class PrjModule(prj_node.PrjNode):
         ide = self.getRoot().getParent().ide
         if ide is None:
             io_prnt.outWarning(u'Не определен IDE для редактрования модуля <%s>' % py_file)
-            io_prnt.outLog(u'Используется внешний редактор модулей Python')
+            log.info(u'Используется внешний редактор модулей Python')
             ide = ext_python_editor.icExtPythonEditor()
 
         if ide:
@@ -802,7 +802,7 @@ class PrjModule(prj_node.PrjNode):
             return None
         except:
             err_txt = u'MODULE IMPORT ERROR: module=' + module_filename
-            io_prnt.outErr(err_txt)
+            log.error(err_txt)
             return err_txt
 
 

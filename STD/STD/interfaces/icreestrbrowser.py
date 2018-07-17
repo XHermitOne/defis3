@@ -6,7 +6,7 @@
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 #import plan.interfaces.IYearEdtPanel as IYearEdtPanel
 import ic.dlg.msgbox as msgbox
 import ic.interfaces.icobjectinterface as icobjectinterface

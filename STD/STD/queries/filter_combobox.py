@@ -172,7 +172,7 @@ class icFilterComboBoxProto(wx.ComboBox):
         """
         i = self.GetSelection()-1
         if i < 0:
-            io_prnt.outLog(u'Фильтрация отключена')
+            log.info(u'Фильтрация отключена')
             return None
         try:
             return self._filters[i]

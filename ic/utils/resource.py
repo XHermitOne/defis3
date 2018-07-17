@@ -18,23 +18,22 @@ from ic.log import log
 from ic.imglib import common
 from . import lock
 from ic.kernel import io_prnt
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import ic.storage.storesrc
 from . import util
 from ic.engine import ic_user
+
+__version__ = (1, 1, 1, 1)
 
 _ = wx.GetTranslation
 
 #   Указатель на пользовательское хранилище
 isUserObjectStorage = None
 
-__version__ = (1, 0, 1, 2)
-
 IC_DOC_PATH = '%s%sic%sdoc%shtml' % (os.getcwd(), os.sep, os.sep, os.sep)
 
+
 # Функции определения ресурсных файлов системы
-
-
 def icGetKernel():
     """
     Возвращает ссылку на ядро системы.
@@ -375,7 +374,7 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
                                 bFindRes = True
                                 break
                         if not bFindRes:
-                            raise KeyError, className
+                            raise KeyError(className)
                     else:
                         resource_data = copy.deepcopy(res[className])
                 elif className:
@@ -505,8 +504,8 @@ def genNextVersion(version=None):
     """
     if version:
         lst = list(version)
-        ver = reduce(lambda x,y: x*10+y, lst)
-        return [int(s) for s in str(ver+1)]
+        ver = sum([v*(10**(len(lst)-i-1)) for i, v in enumerate(lst)])
+        return [int(s) for s in str(ver + 1)]
     else:
         return 1, 0, 0, 1
 
@@ -523,7 +522,7 @@ def genClassFromRes(className, res, version=None):
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 ### !!!! NO CHANGE !!!!
@@ -580,7 +579,7 @@ if __name__ == '__main__':
 
 
 def MyExec(s):
-    exec s
+    exec(s)
 
 
 def genResModuleHead(rn, fn, descr=_('Resource module'), ver=u'(0, 0, 0, 1)'):
@@ -669,7 +668,7 @@ def getICObjectResource(path):
         if isinstance(res, dict):
             return res, className, version
     except:
-        io_prnt.outErr(_('Import module error: %s') % path)
+        log.error(_('Import module error: %s') % path)
 
     return None, None, None
 
@@ -764,9 +763,9 @@ def method(id_meth, subsys, esp=locals(), **params):
             return val
 
     elif subsys_path:
-        io_prnt.outErr(_('Don\'t find method <%s> in subsystem %s.') % (id_meth, subsys))
+        log.error(_('Don\'t find method <%s> in subsystem %s.') % (id_meth, subsys))
     else:
-        io_prnt.outErr(_('Don\'t find method <%s> in subsystems.') % id_meth)
+        log.error(_('Don\'t find method <%s> in subsystems.') % id_meth)
 
     return None
 

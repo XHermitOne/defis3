@@ -6,42 +6,43 @@
 
 import wx
 from wx.lib.agw import flatmenu
-import ic
 import os
 import os.path
 import time
 import shutil
 import gettext
 import copy
+
+import ic
 import ic.imglib
 from ic.imglib import common
-# from ic.dlg.msgbox import Ask
-import ic.components as components
-# from ic.log.iclog import MsgLastError, LogLastError
-import ic.utils.resource as resource
+from ic import components
+from ic.utils import resource
 from ic.utils import ic_uuid
 from ic.db import icdataset
-import ic.components.icResourceParser as icResourceParser
-from ic.PropertyEditor.icDefInf import *
-from ic.PropertyEditor.icPanelEditor import *
-import ic.components.icwidget as icwidget
+from ic.components import icResourceParser
+from ic.components import icwidget
+from ic.components import icwindow
 
-import ic.PropertyEditor.icDefInf as icDefInf
-import ic.components.user.objects.icpanelgroupedt as icpanelgroupedt
+from ic.PropertyEditor import icDefInf
+from ic.components.user.objects import icpanelgroupedt
 from ic.PropertyEditor import icpropertyeditmanager
 
-import ic.prj.PrjTree as PrjTree
-import ic.engine.ic_user as ic_user
-import ic.components.user as user
-import ic.components.icEvents as icEvents
-import ic.dlg.ic_logo_dlg as ic_logo_dlg
-import ic.utils.ic_file as ic_file
+from ic.prj import PrjTree
+from ic.engine import ic_user
+from ic.components import user
+from ic.components import icEvents
+from ic.dlg import ic_logo_dlg
+from ic.utils import ic_file
 from ic.dlg import ic_dlg
-from ic.kernel import io_prnt
+from ic.utils import util
+from ic.log import log
 from ic.PropertyEditor.icProjectNotebook import icProjectNB
+from ic.PropertyEditor import icPanelEditor
+from . import ic_pyed
 
 _ = wx.GetTranslation
-__version__ = (1, 0, 2, 2)
+__version__ = (1, 1, 1, 1)
 
 # Список идентификаторов дерева, храним для того, чтобы контролировать уникальность
 # идентификаторов
@@ -60,8 +61,9 @@ def setCopyBuffEdt(obj):
     global Res_copyBuff
     Res_copyBuff = obj
 
+
 # Словарь идентификаторов узлов дерева
-OpenTreeItemIdDict = {}
+OpenTreeItemIdDict = dict()
 
 
 def addOpenTreeItemId(key, id):
@@ -150,7 +152,7 @@ def GetObjectClass(obj_typ):
 
 
 def MyExec(s):
-    exec s
+    exec(s)
 
 
 #   Спецификация на объект группы
@@ -174,7 +176,7 @@ def InitObjectsInfo(bRefresh=False):
                    'ResTree': (-1, -1, -1, {}, -1, None, None)}
 
     spc = copy.deepcopy(components.icgrid.SPC_IC_CELL)
-    spc = icSpcDefStruct(spc, spc, True)
+    spc = util.icSpcDefStruct(spc, spc, True)
     ObjectsInfo['GridCell'] = (icDefInf._icComboType, common.imgEdtCell, common.imgEdtCell, spc, [], None, None)
 
     ObjectsInfo['ToolBarTool'] = (icDefInf._icComboType, common.imgEdtTBTool, common.imgEdtTBTool,
@@ -183,7 +185,7 @@ def InitObjectsInfo(bRefresh=False):
                                 components.custom.ictoolbar.SPC_IC_TB_SEPARATOR, [], None, None)
 
     spc = SPC_IC_GROUP
-    spc = icSpcDefStruct(spc, spc, True)
+    spc = util.icSpcDefStruct(spc, spc, True)
     ObjectsInfo['Group'] = (icDefInf._icServiceType, common.imgFolder, common.imgFolderOpen, spc, -1, [], None)
 
     spc = icdataset.SPC_IC_DATALINK
@@ -204,13 +206,13 @@ def InitObjectsInfo(bRefresh=False):
             key = spc['type']
 
             # Дополняем спецификацию с учетом наследования
-            spc = icSpcDefStruct(spc, spc, False)
+            spc = util.icSpcDefStruct(spc, spc, False)
             ObjectsInfo[key] = (modl.ic_class_type,
                                 img, img2, spc,
                                 modl.ic_can_contain,
                                 modl.ic_can_not_contain, modl)
         except:
-            io_prnt.outErr(u'MODULE IMPORT ERROR: module= <%s>' % modl)
+            log.error(u'MODULE IMPORT ERROR: module= <%s>' % modl)
 
     # Чистим словарь групп
     icDefInf.ClearUserGroup()
@@ -225,7 +227,7 @@ def InitObjectsInfo(bRefresh=False):
         img = ic.imglib.get_image_by_expr(mod.ic_class_pic)
         img2 = ic.imglib.get_image_by_expr(mod.ic_class_pic2)
         # Дополняем спецификацию с учетом наследования
-        spc = icSpcDefStruct(spc, spc, False)
+        spc = util.icSpcDefStruct(spc, spc, False)
 
         # Регестрируем новую группу
         if key in ObjectsInfo.keys():
@@ -282,8 +284,8 @@ def getStyleFromDict(style_dict, allstyles):
             if key in allstyles.keys():
                 stl = allstyles[key]
                 style = style | allstyles[key]
-            elif key in ICWindowStyle.keys():
-                style = style | ICWindowStyle[key]
+            elif key in icwindow.ICWindowStyle.keys():
+                style = style | icwindow.ICWindowStyle[key]
     return style
 
 
@@ -314,40 +316,40 @@ def findSpcStruct(component):
     # Гриды и их объекты
     if component['type'] == 'GridDataset':
         spc = components.icgriddataset.SPC_IC_GRID_DATASET
-        icSpcDefStruct(components.icgriddataset.SPC_IC_GRID_DATASET, component, True)
-        icSpcDefStruct(components.icgrid.SPC_IC_CELLATTR, component['cell_attr'], True)
-        icSpcDefStruct(components.icfont.SPC_IC_FONT, component['cell_attr']['font'], True)
-        icSpcDefStruct(components.icgrid.SPC_IC_LABELATTR, component['label_attr'], True)
-        icSpcDefStruct(components.icfont.SPC_IC_FONT, component['label_attr']['font'], True)
+        util.icSpcDefStruct(components.icgriddataset.SPC_IC_GRID_DATASET, component, True)
+        util.icSpcDefStruct(components.icgrid.SPC_IC_CELLATTR, component['cell_attr'], True)
+        util.icSpcDefStruct(components.icfont.SPC_IC_FONT, component['cell_attr']['font'], True)
+        util.icSpcDefStruct(components.icgrid.SPC_IC_LABELATTR, component['label_attr'], True)
+        util.icSpcDefStruct(components.icfont.SPC_IC_FONT, component['label_attr']['font'], True)
 
         # Так как служебный атрибут '__styles__'  не наследуется
         component['__styles__'] = spc['__styles__']
 
     elif component['type'] == 'ListDataset':
         spc = components.iclistdataset.SPC_IC_LIST_DATASET
-        icSpcDefStruct(components.iclistdataset.SPC_IC_LIST_DATASET, component, True)
-        icSpcDefStruct(components.icfont.SPC_IC_FONT, component['font'], True)
+        util.icSpcDefStruct(components.iclistdataset.SPC_IC_LIST_DATASET, component, True)
+        util.icSpcDefStruct(components.icfont.SPC_IC_FONT, component['font'], True)
 
     elif component['type'] == 'GridCell':
         spc = components.icgrid.SPC_IC_CELL
-        icSpcDefStruct(components.icgrid.SPC_IC_CELL, component, True)
-        icSpcDefStruct(components.icgrid.SPC_IC_CELLATTR, component['cell_attr'], True)
-        icSpcDefStruct(components.icfont.SPC_IC_FONT, component['cell_attr']['font'], True)
+        util.icSpcDefStruct(components.icgrid.SPC_IC_CELL, component, True)
+        util.icSpcDefStruct(components.icgrid.SPC_IC_CELLATTR, component['cell_attr'], True)
+        util.icSpcDefStruct(components.icfont.SPC_IC_FONT, component['cell_attr']['font'], True)
 
     elif component['type'] == 'cell_attr':
         spc = components.icgrid.SPC_IC_CELLATTR
-        icSpcDefStruct(components.icgrid.SPC_IC_CELLATTR, component, True)
-        icSpcDefStruct(components.icfont.SPC_IC_FONT, component['font'], True)
+        util.icSpcDefStruct(components.icgrid.SPC_IC_CELLATTR, component, True)
+        util.icSpcDefStruct(components.icfont.SPC_IC_FONT, component['font'], True)
 
     elif component['type'] == 'label_attr':
         spc = components.icgrid.SPC_IC_LABELATTR
-        icSpcDefStruct(components.icgrid.SPC_IC_LABELATTR, component, True)
-        icSpcDefStruct(components.icfont.SPC_IC_FONT, component['font'], True)
+        util.icSpcDefStruct(components.icgrid.SPC_IC_LABELATTR, component, True)
+        util.icSpcDefStruct(components.icfont.SPC_IC_FONT, component['font'], True)
 
     # Пользовательские компоненты
     elif component['type'] in ObjectsInfo.keys():
         spc = ObjectsInfo[component['type']][3]
-        icSpcDefStruct(spc, component, True)
+        util.icSpcDefStruct(spc, component, True)
 
     #   Если уникальный идентификатор не опрделен, то генерируем его
     if '_uuid' in component and not component['_uuid']:
@@ -377,7 +379,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if id == -1:
             id = icwidget.icNewId()
 
-        icSpcDefStruct(SPC_IC_RESTREE, component)
+        util.icSpcDefStruct(SPC_IC_RESTREE, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         size = component['size']
@@ -482,10 +484,10 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         # Устанавливем цвет узлов
         if not bActive or ('activate' in res and res['activate'] in ['0', 'False']):
-            self.SetItemTextColour(root, wx.Colour(*DEACTIVATE_COLOR))
+            self.SetItemTextColour(root, wx.Colour(*icDefInf.DEACTIVATE_COLOR))
             bActive = False
         else:
-            self.SetItemTextColour(root, wx.Colour(*ACTIVATE_COLOR))
+            self.SetItemTextColour(root, wx.Colour(*icDefInf.ACTIVATE_COLOR))
 
         self.SetPyData(root, res)
         self._dictResTreeId[self._treeItemId] = root
@@ -664,7 +666,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                     self.lastSel = None
                     self.SelectItem(item)
         except:
-            io_prnt.outErr(u'ChangePropertyId ERROR id=%s, property=%s, value=%s' % (id, property, value))
+            log.error(u'ChangePropertyId ERROR id=%s, property=%s, value=%s' % (id, property, value))
 
     def _get_res_class(self, res):
         """
@@ -730,7 +732,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         """
         data = self.GetPyData(item)
         for key, val in data.items():
-            if type(val) in (str, unicode) and findStr in val.lower():
+            if isinstance(val, str) and findStr in val.lower():
                 self.EnsureVisible(item)
                 self.SelectItem(item)
                 self.editor.notebook.GetPropertyEditor().SelectPropertyEdt(key)
@@ -802,7 +804,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             item = self._dictResTreeId[id]
             data = self.GetPyData(item)
         except:
-            io_prnt.outErr(u'GetIdObj ERROR')
+            log.error(u'GetIdObj ERROR')
 
     def GetPanelGroup(self):
         """
@@ -898,9 +900,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                     cmd = 'start explorer ' + fileDoc.replace('/', '\\')
                     os.system(cmd)
             else:
-                io_prnt.outWarning(u'Help file %s is not found' % fileDoc)
+                log.warning(u'Файл помощи <%s> не найден' % fileDoc)
         except:
-            io_prnt.outLastErr(u'View Help Error!')
+            log.fatal(u'View Help Error!')
 
     def _initPicDict(self):
         """
@@ -1641,10 +1643,10 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             return
 
         if not bActive or ('activate' in data and data['activate'] in [0, '0', 'False']):
-            self.SetItemTextColour(parent, wx.Colour(*DEACTIVATE_COLOR))
+            self.SetItemTextColour(parent, wx.Colour(*icDefInf.DEACTIVATE_COLOR))
             bActive = False
         else:
-            self.SetItemTextColour(parent, wx.Colour(*ACTIVATE_COLOR))
+            self.SetItemTextColour(parent, wx.Colour(*icDefInf.ACTIVATE_COLOR))
 
         # Создаем список дочерних элементов
         while 1:
@@ -1674,7 +1676,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             self.SelectItem(treeId)
             return True
         except:
-            io_prnt.outErr(u'Элемент с id = %s не найден' % str(res_id))
+            log.error(u'Элемент с id = %s не найден' % str(res_id))
 
         return False
 
@@ -1767,7 +1769,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             InitObjectsInfo()
 
         self.spc = SPC_IC_RESEDITOR
-        icSpcDefStruct(self.spc, component)
+        util.icSpcDefStruct(self.spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         size = component['size']
@@ -2077,10 +2079,10 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if self.graphEditor.toolpanel:
                 self.graphEditor.toolpanel.Close(True)
             self.graphEditor.Close(True)
-        paneltool = GetPanelToolBuff()
+        paneltool = icPanelEditor.GetPanelToolBuff()
         if paneltool:
             paneltool.Destroy()
-        SetPanelToolBuff(None)
+        icPanelEditor.SetPanelToolBuff(None)
         wx.SplitterWindow.Destroy(self)
 
     def CloseResource2(self, bSaveAs=True):
@@ -2168,7 +2170,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 shutil.copyfile(oldFileName, fileName)
                 os.remove(oldFileName)
             except:
-                io_prnt.outErr(u'###')
+                log.error(u'###')
                 return False
         else:
             res = util.readAndEvalFile(oldFileName, bRefresh=True)
@@ -2186,8 +2188,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 res[nameRes] = obj_res
 
             else:
-                io_prnt.outLog(u'Не найден ресурс <%s> в <%s>' % (oldNameRes, oldFileName),
-                               Device_=io_prnt.IC_LOG_CONSOLE)
+                log.info(u'Не найден ресурс <%s> в <%s>' % (oldNameRes, oldFileName))
                 return False
 
             # Сохраняем измененный ресурс
@@ -2195,8 +2196,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 f = open(fileName, 'wb')
                 f.write(str(res))
                 f.close()
-                io_prnt.outLog(u'Переименовать ресурс <%s> в <%s>' % (oldFileName, fileName),
-                               Device_=io_prnt.IC_LOG_CONSOLE)
+                log.info(u'Переименовать ресурс <%s> в <%s>' % (oldFileName, fileName))
                 self.file = fileName
                 self.res = obj_res
                 self._formName = nameRes
@@ -2206,12 +2206,11 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                     #   Переименовываем модуль ресурса
                     if os.path.isfile(old_mod):
                         os.rename(old_mod, new_mod)
-                        io_prnt.outLog(u'Переименовать модуль ресурса <%s> в <%s>' % (old_mod, new_mod),
-                                       Device_=io_prnt.IC_LOG_CONSOLE)
+                        log.info(u'Переименовать модуль ресурса <%s> в <%s>' % (old_mod, new_mod))
 
                     # Удаляем старые файлы ресурса
                     os.remove(oldFileName)
-                    io_prnt.outLog(u'Удалить файл: %s' % oldFileName, Device_=io_prnt.IC_LOG_CONSOLE)
+                    log.info(u'Удалить файл: %s' % oldFileName)
 
                     if '.' in oldFileName:
                         pkl = oldFileName.replace('.', '_pkl.')
@@ -2220,13 +2219,12 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
 
                     # Удаляем старый скомпилированный ресурсный файл
                     os.remove(pkl)
-                    io_prnt.outLog(u'<pkl> файл <%s> удален' % pkl, Device_=io_prnt.IC_LOG_CONSOLE)
+                    log.info(u'<pkl> файл <%s> удален' % pkl)
 
                 # Убираем ресурс из буфера
                 util.clearResourceBuff()
             except:
-                io_prnt.outErr(u'Ошибка создания файла <%s>' % fileName,
-                               Device_=io_prnt.IC_LOG_CONSOLE)
+                log.fatal(u'Ошибка создания файла <%s>' % fileName)
                 return False
 
         return True
@@ -2355,7 +2353,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             self.file = path
             self.RefreshTree()
         except:
-            io_prnt.outErr(u'Ошибка в LoadRes')
+            log.error(u'Ошибка в LoadRes')
             return False
 
         return True
@@ -2609,7 +2607,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                     obj.SetFocus()
                     bExcept = False
                 except:
-                    io_prnt.outErr(u'IMPORT ERROR')
+                    log.error(u'IMPORT ERROR')
                     bExcept = True
 
         # В случае если редактируется только ресурсное описание
@@ -2698,7 +2696,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if _res is None:
                 _res = {}
             if self._formName in [None, ''] or (self._formName in _res.keys() and bAsk and ic_dlg.icAskDlg(u'ВНИМАНИЕ',
-                u'Форма c таким именем уже существует, переписать?') != wx.ID_YES):
+                                                                                                           u'Форма c таким именем уже существует, переписать?') != wx.ID_YES):
                 # Ввод нового имени формы
                 dlg = wx.TextEntryDialog(frame, 
                                          u'Введите имя формы', u'', u'')
@@ -2717,8 +2715,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             file_obj = open(path, 'wb')
             file_obj.write(text)
             file_obj.close()
-            io_prnt.outLog(u'Сохранить ресурс <%s> в <%s>' % (self._formName, path),
-                           Device_=io_prnt.IC_LOG_CONSOLE)
+            log.info(u'Сохранить ресурс <%s> в <%s>' % (self._formName, path))
         except IOError:
             if file_obj:
                 file_obj.close()
@@ -2790,9 +2787,8 @@ def GetProjectEditorOLD(parent, drFrame=None, ifs=None):
     common.img_init()
     if ifs is None:
         if drFrame:
-            import ic.interfaces.drPythonInterface as dri
-            from . import icPanelTool
-            ifs = dri.drPythonInterface(drFrame)
+            from ic.interfaces import drPythonInterface
+            ifs = drPythonInterface.drPythonInterface(drFrame)
         else:
             ifs = None
     
@@ -2879,7 +2875,7 @@ def editor_main(par=0, path=None):
     ic.utils.resource.IC_DOC_PATH = os.getcwd().replace('PropertyEditor', '')+'doc'
     # Путь к файлам ресурсов
     if not path:
-        path = 'C:/defis/'
+        path = os.path.join(ic_file.getHomePath(), '.defis', 'prj')
 
     # ---------------------------------------------------------------------------
     evalSpace = icwidget.icResObjContext()

@@ -6,7 +6,7 @@
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 from STD import reestr_img
 import STD.interfaces.reestr.browsPanelInterface as ifs

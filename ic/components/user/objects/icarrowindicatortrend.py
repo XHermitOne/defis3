@@ -7,7 +7,7 @@ try:
 except:
     print('import error icResourceParser')
     
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icwidget as icwidget
 import datetime, time, calendar
 

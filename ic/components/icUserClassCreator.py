@@ -10,7 +10,7 @@ import time
 import wx
 
 from ic.utils import resource
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import wx.wizard as wiz
 from ic.imglib import common
 import ic.dlg.msgbox as msg
@@ -349,7 +349,7 @@ class MsgPage(wiz.PyWizardPage):
                 else:
                     spc['__attr_types__'][id_type] = [key]
             except:
-                io_prnt.outLastErr(u'Set Attribute Type')
+                log.fatal(u'Set Attribute Type')
                 
         #   Читаем атрибуты обработчиков сообщений
         msgGrid = self.sizer.evalSpace['_dict_obj']['MsgGrid']
@@ -490,7 +490,7 @@ def RunWizard(parent):
 
         if bCr == wx.ID_YES:
             f = open(module_name, 'w')
-            io_prnt.outLog(u'CREATE MODULE: <%s>' % module_name)
+            log.info(u'CREATE MODULE: <%s>' % module_name)
             f.write(txt.encode('utf-8'))
             f.close()
             wx.MessageBox(_('Module %s is created.') % module_name, '')

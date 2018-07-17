@@ -31,7 +31,7 @@ def _db_connection_odbc(DB_):
     """
     Создать коннекшн.
     """
-    io_prnt.outLog(u'Создание коннекшна ODBC <%s : %s : %s : %s>' % (DB_['dbname'],
+    log.info(u'Создание коннекшна ODBC <%s : %s : %s : %s>' % (DB_['dbname'],
                                                                      DB_['host'],
                                                                      DB_['user'],
                                                                      DB_['password']))
@@ -79,7 +79,7 @@ class icODBCDataSourcePrototype(icsourceinterface.icSourceInterface):
         try:
             self.connection = mx_odbc.DriverConnect(connection_string)
         except:
-            io_prnt.outErr(u'ODBC: Ошибка установления связи с БД. ConnectionString: <%s>' % connection_string)
+            log.error(u'ODBC: Ошибка установления связи с БД. ConnectionString: <%s>' % connection_string)
         return self.connection
         
     def getConnection(self):
@@ -98,7 +98,7 @@ class icODBCDataSourcePrototype(icsourceinterface.icSourceInterface):
                 self.connection.close()
                 self.connection = None
         except:
-            io_prnt.outErr(u'ODBC: Ошибка разрыва связи с БД.')
+            log.error(u'ODBC: Ошибка разрыва связи с БД.')
         return self.connection
     
     def execSQL(self, SQLTxt_):
@@ -116,7 +116,7 @@ class icODBCDataSourcePrototype(icsourceinterface.icSourceInterface):
             fields = self.cursor.description
             result = {'__fields__': fields, '__data__': recordset}
         except:
-            io_prnt.outErr(u'ODBC: Ошибка выполнения запроса. SQL: <%s>' % SQLTxt_)
+            log.error(u'ODBC: Ошибка выполнения запроса. SQL: <%s>' % SQLTxt_)
         self.closeCursor()
         return result
             
@@ -129,9 +129,9 @@ class icODBCDataSourcePrototype(icsourceinterface.icSourceInterface):
                 self.closeCursor()
                 self.cursor = self.connection.cursor()
             else:
-                io_prnt.outLog(u'ODBC: Не определена связь с БД!')
+                log.info(u'ODBC: Не определена связь с БД!')
         except:
-            io_prnt.outErr(u'ODBC: Ошибка создания курсора.')
+            log.error(u'ODBC: Ошибка создания курсора.')
         return self.cursor
 
     def getCursor(self):
@@ -149,4 +149,4 @@ class icODBCDataSourcePrototype(icsourceinterface.icSourceInterface):
                 self.cursor.close()
                 self.cursor = None
         except:
-            io_prnt.outErr(u'ODBC: Ошибка закрытия курсора')
+            log.error(u'ODBC: Ошибка закрытия курсора')

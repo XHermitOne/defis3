@@ -17,7 +17,7 @@ component_template = '''#!/usr/bin/env python
 
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 
 ### Standart component interface
@@ -99,7 +99,7 @@ inherit_component_template = '''#!/usr/bin/env python
 
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 import %s as parentModule
 
@@ -174,17 +174,17 @@ def GenComponent(componentType, modulName=None, res=None):
             # Создаем пакет usercomponents
             import ic.utils.ic_res as ic_res
             ic_res.CreatePackage(mod_path)
-            io_prnt.outLog(_('INFO') + 
+            log.info(_('INFO') +
                            _('Create package %s') % mod_path)
             wx.MessageBox(_('WARRNING') + '! ' + _('Create package %s') % mod_path)
         elif not mod_path:
-            io_prnt.outLog(_('WARRNING') + 
+            log.info(_('WARRNING') +
                            _('Subsystem component directory <%s> is not found.') % mod_path)
             mod_path = resource.icGetUserClassesPath()
             modulName = '%s/%s.py' % (mod_path, componentType)
     
     className = 'C%s' % componentType
-    io_prnt.outLog(_('Generate component module: modul:%s, type:%s.') % (modulName, componentType))
+    log.info(_('Generate component module: modul:%s, type:%s.') % (modulName, componentType))
     text = component_template % (className, str(res), '(1, 0, 0, 1)', componentType, className, className)
     #   Сохраняем сгенерированный текст модуля компонента
     f = open(modulName, 'wb')
@@ -207,17 +207,17 @@ def InheritComponent(componentType, parentModule, modulName=None):
             # Создаем пакет usercomponents
             import ic.utils.ic_res as ic_res
             ic_res.CreatePackage(mod_path)
-            io_prnt.outLog(_('INFO') + 
+            log.info(_('INFO') +
                            _('Create package %s') % mod_path)
             wx.MessageBox(_('WARRNING') + '! ' + _('Create package %s') % mod_path)
         elif not mod_path:
-            io_prnt.outLog(_('WARRNING') + '! ' + 
+            log.info(_('WARRNING') + '! ' +
                            _('Subsystem component directory <%s> is not found.') % mod_path)
             mod_path = resource.icGetUserClassesPath()
             modulName = '%s/%s.py' % (mod_path, componentType)
     
     className = 'C%s' % componentType
-    io_prnt.outLog(_('Generate component module: modul:%s, type:%s.') % (modulName, componentType))
+    log.info(_('Generate component module: modul:%s, type:%s.') % (modulName, componentType))
     text = inherit_component_template % (parentModule,
                                          className,
                                          componentType,

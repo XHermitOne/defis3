@@ -297,7 +297,7 @@ def getSpravChoiceListDlg(parent=None, sprav=None):
         except:
             if dlg:
                 dlg.Destroy()
-            io_prnt.outErr(u'Ошибка диалогового окна выбора кода справочника.')
+            log.error(u'Ошибка диалогового окна выбора кода справочника.')
     else:
         io_prnt.outWarning(u'Не определен справочник диалогового окна выбора кода справочника.')
     return result

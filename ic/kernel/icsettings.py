@@ -29,7 +29,7 @@ def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
     prj_settings = None
     if ic_user.getSettings() is None:
         if ic_mode.isDebugMode():
-            io_prnt.outLog(u'Не определена переменная настроек проекта.')
+            log.info(u'Не определена переменная настроек проекта.')
         prj_dir = ic_user.icGet('PRJ_DIR')
         prj_name = ic_user.icGet('PrjName')
         if prj_dir and prj_name:
@@ -45,10 +45,10 @@ def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
         for section_name, section in prj_settings.items():
             for param, value in section.items():
                 if ic_user.icIs(param):
-                    io_prnt.outLog(u'Переменная %s уже определена в окружении' % param)
+                    log.info(u'Переменная %s уже определена в окружении' % param)
                     if ReDefine_:
                         ic_user.icLet(param, value)
-                        io_prnt.outLog(u'Переменная %s переопределена в окружении' % param)
+                        log.info(u'Переменная %s переопределена в окружении' % param)
                 else:
                     ic_user.icLet(param, value)
         if ic_mode.isDebugMode():

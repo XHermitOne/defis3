@@ -294,7 +294,7 @@ class icBitmapComboBox(wx.combo.BitmapComboBox):
         try:
             i = item_names.index(Name_)
         except:
-            io_prnt.outLog(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
+            log.info(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
             i = -1
         self.Select(i)
         return i
@@ -369,7 +369,7 @@ class icItemComboBox(wx.ComboBox):
         try:
             i = item_names.index(Name_)
         except:
-            io_prnt.outLog(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
+            log.info(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
             i = -1
         self.Select(i)
         return i
@@ -665,7 +665,7 @@ class icLabelChoice(wx.StaticText):
         try:
             i = item_names.index(Name_)
         except:
-            io_prnt.outLog(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
+            log.info(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
             i = -1
         self.Select(i)
         return i

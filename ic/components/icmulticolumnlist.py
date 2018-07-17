@@ -26,13 +26,13 @@
 """
 
 import wx
+
 from ic.log.iclog import *
 from .icFieldTempl import *
-import ic.utils.util as util
+from ic.utils import util
 from .icwidget import icWidget, SPC_IC_WIDGET
-import ic.PropertyEditor.icDefInf as icDefInf
-from ic.kernel import io_prnt
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
+from ic.log import log
 
 _ = wx.GetTranslation
 
@@ -98,7 +98,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 4)
+__version__ = (1, 1, 1, 1)
 
 
 class icMultiColumnList(icWidget, wx.ListCtrl):
@@ -200,7 +200,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
                     ret_strings.append(tuple(rec))
             return ret_strings
         except:
-            io_prnt.outErr(u'MULTICOLUMNLIST getStringsByCol ERROR')
+            log.error(u'MULTICOLUMNLIST getStringsByCol ERROR')
             return None
 
     def moveStringRec(self, Index_=-1, Step_=1):
@@ -241,7 +241,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
             self.DeleteItem(del_idx)
             return True
         except:
-            io_prnt.outErr(u'MULTICOLUMNLIST moveStringRec ERROR')
+            log.error(u'MULTICOLUMNLIST moveStringRec ERROR')
             return None
         
     def focusRec(self, Index_):

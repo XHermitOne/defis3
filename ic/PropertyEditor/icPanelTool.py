@@ -10,7 +10,7 @@ from ic.imglib import common
 import ic.components.sizers.icstaticboxsizer as icstaticboxsizer
 import ic.components.sizers.icboxsizer as icboxsizer
 import ic.components.custom.ictoggleimagebutton as ictoggleimagebutton
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.log import log
 
 _ = wx.GetTranslation

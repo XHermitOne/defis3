@@ -7,14 +7,12 @@
 
 # --- Подключение библиотек ---
 import wx
-import wx.combo
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
+
 
 # --- Описание классов ---
-
-
-class icExtendedComboCtrlPrototype(wx.combo.ComboCtrl):
+class icExtendedComboCtrlPrototype(wx.ComboCtrl):
     """
     Прототип расширеннного комбинированнного редактора.
     """
@@ -23,7 +21,7 @@ class icExtendedComboCtrlPrototype(wx.combo.ComboCtrl):
         """
         Конструктор.
         """
-        wx.combo.ComboCtrl.__init__(self, *args, **kwargs)
+        wx.ComboCtrl.__init__(self, *args, **kwargs)
         bmp = self._drawButton()
         # and tell the ComboCtrl to use it
         self.SetButtonBitmaps(bmp, True)
@@ -108,4 +106,4 @@ class icGridDatasetComboCtrl(icExtendedComboCtrlPrototype):
             return self.grid.OnExtend()
 
     def GetButton(self):
-        return wx.combo.ComboCtrl.GetButton(self)
+        return wx.ComboCtrl.GetButton(self)

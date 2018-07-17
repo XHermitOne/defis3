@@ -53,7 +53,7 @@ class tst_business_obj_init_InitFormManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_OK)
             self.context['result']=True
         except:
-            ic.io_prnt.outErr(u'ОШИБКА.Обработчик нажатия на кнопку <OK>.')
+            ic.log.error(u'ОШИБКА.Обработчик нажатия на кнопку <OK>.')
         event.Skip()
 
     def onCancelButton(self,event):
@@ -65,7 +65,7 @@ class tst_business_obj_init_InitFormManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_CANCEL)
             self.context['result']=None
         except:
-            ic.io_prnt.outErr(u'ОШИБКА.Обработчик нажатия на кнопку <Отмена>.')
+            ic.log.error(u'ОШИБКА.Обработчик нажатия на кнопку <Отмена>.')
         event.Skip()
 
 manager_class = tst_business_obj_init_InitFormManager

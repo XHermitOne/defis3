@@ -176,7 +176,7 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         try:
             return choice_ctrl.GetClientData(item)
         except:
-            io_prnt.outLastErr(u'Не данных узла <%d>' % item)
+            log.fatal(u'Не данных узла <%d>' % item)
         return None
 
     def clearLevelChoice(self, min_index=0, max_index=-1):

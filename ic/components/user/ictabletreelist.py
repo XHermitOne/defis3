@@ -25,11 +25,11 @@ import wx
 import wx.gizmos as parentModule
 
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 from ic.log import log
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.dlg.msgbox import MsgBox
 
 #   Тип компонента

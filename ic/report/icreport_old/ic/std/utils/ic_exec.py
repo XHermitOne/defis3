@@ -76,7 +76,7 @@ def ExecuteMethod(Func_, self=None):
         else:
             return None
     except:
-        io_prnt.outErr(_('Execute method error: %s') % (str(Func_)))
+        log.error(_('Execute method error: %s') % (str(Func_)))
         return None
 
 
@@ -102,7 +102,7 @@ def ExecuteCode(Code_, self=None):
         # Выполнить
         return ic_util.icEval(Code_, 0, locals(), globals())
     except:
-        io_prnt.outErr()
+        log.error()
 
 
 def IsEmptyMethod(Func_):
@@ -127,7 +127,7 @@ def IsEmptyMethod(Func_):
                 find = False
         return find
     except:
-        io_prnt.outErr('Function: %s' % str(Func_))
+        log.error('Function: %s' % str(Func_))
 
 
 def GetNameFuncFromCode(Code_):
@@ -168,7 +168,7 @@ def icExecFunc(Func_):
         name_space = ic.utils.util.ic_import(Func_['import'])
         return ic.utils.util.ic_eval(Func_['func'], -1, name_space)
     except:
-        io_prnt.outErr()
+        log.error()
         return None
 
 
@@ -185,7 +185,7 @@ def icExecFuncByName(FuncName_, Funcs_):
             Funcs_ = ic_res.ReadAndEvalFile(Funcs_)
         return icExecFunc(Funcs_[FuncName_])
     except:
-        io_prnt.outErr()
+        log.error()
         return None
 
 
@@ -214,7 +214,7 @@ def icMethod(MethodStr_, NameSpace_=None):
         value = ic.utils.resource.method(method_name, sub_sys, NameSpace_, **method_args)
         return value
     except:
-        io_prnt.outErr(_('Execute method error: %s') % MethodStr_)
+        log.error(_('Execute method error: %s') % MethodStr_)
         return None
 
 _run_py_code = '''import sys
@@ -279,10 +279,10 @@ def RunTaskSH(Cmd_):
         f.close()
         f = None
         # Запуск исполняемого скрипта
-        io_prnt.outLog(_('Run task: %s') % run_sh_name)
+        log.info(_('Run task: %s') % run_sh_name)
         os.system('gnome-terminal --command \'sh %s\'' % run_sh_name)
     except:
-        io_prnt.outErr(_('Run task error: %s') % run_sh_name)
+        log.error(_('Run task error: %s') % run_sh_name)
         if f:
             f.close()
 
@@ -303,10 +303,10 @@ def RunTaskBAT(Cmd_):
         f.close()
         f = None
         # Запуск батника
-        io_prnt.outLog(_('Run task: %s') % run_bat_name)
+        log.info(_('Run task: %s') % run_bat_name)
         os.startfile(run_bat_name)
     except:
-        io_prnt.outErr(_('Run task error: %s') % run_bat_name)
+        log.error(_('Run task error: %s') % run_bat_name)
         if f:
             f.close()
 
@@ -337,11 +337,11 @@ def RunProgramm(Cmd_, Mode_=os.P_NOWAIT):
                         
             args.append(parse_arg)
             i += 1
-        io_prnt.outLog('RunProgramm: %s' % args)
+        log.info('RunProgramm: %s' % args)
         os.spawnve(Mode_, args[0], args, os.environ)
         return True
     except:
-        io_prnt.outErr(_('Run programm error: %s') % Cmd_)
+        log.error(_('Run programm error: %s') % Cmd_)
         return False
 
 
@@ -361,7 +361,7 @@ def RunOSCommand(Cmd_, Wait_=True):
             return RunProgramm(Cmd_)
         return True
     except:
-        io_prnt.outErr(_('Command error: %s') % Cmd_)
+        log.error(_('Command error: %s') % Cmd_)
         return False
 
 
@@ -393,12 +393,12 @@ def execFuncStr(FuncStr_, NameSpace_=None, ReImport_=False, *args, **kwargs):
                 import_str = 'import '+func_mod
                 exec import_str
             except:
-                io_prnt.outErr(_('Import module error: %s') % import_str)
+                log.error(_('Import module error: %s') % import_str)
             NameSpace_.update(locals())
             result = eval(FuncStr_, globals(), NameSpace_)
         except:
-            io_prnt.outErr(_('Run module error: %s') % (FuncStr_, func_mod))
+            log.error(_('Run module error: %s') % (FuncStr_, func_mod))
     except:
-        io_prnt.outErr(_('Error in function ic_exec.execFuncStr, %s') % FuncStr_)
+        log.error(_('Error in function ic_exec.execFuncStr, %s') % FuncStr_)
     
     return result

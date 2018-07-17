@@ -22,10 +22,10 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.dlg import ic_dlg
 
 from ic.kernel import io_prnt
@@ -430,7 +430,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
 
             return table
         except:
-            io_prnt.outErr(u'Ошибка определения таблицы записей справочника %s' % self.getTypeSprav())
+            log.error(u'Ошибка определения таблицы записей справочника %s' % self.getTypeSprav())
             return None
         
     def OnSelected(self, evt):

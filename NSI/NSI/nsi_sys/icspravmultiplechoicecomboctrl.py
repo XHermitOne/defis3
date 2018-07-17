@@ -202,7 +202,7 @@ class icSpravMultipleChoiceComboCtrlProto(wx.combo.ComboCtrl):
                 else:
                     io_prnt.outWarning(u'Код [%s] уже присутствует в выбранных' % code)
             else:
-                io_prnt.outErr(u'Ошибка выбора справочника <%s>. Результат %s' % (self._sprav.name, result))
+                log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self._sprav.name, result))
         return None
 
     def onMouseLeftDown(self, event):

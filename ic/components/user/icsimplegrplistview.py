@@ -29,7 +29,7 @@ from ic.bitmap import ic_bmp
 from ic.utils import coderror
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
 
 import ic.contrib.ObjectListView as parentModule
@@ -313,7 +313,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
                 """
                 result = util.ic_eval(get_grp_key, evalSpace=locals())
                 try:
-                    io_prnt.outLog(u'Определение ключа группы колонки <%s>. Результат <%s>' % (column['name'],
+                    log.info(u'Определение ключа группы колонки <%s>. Результат <%s>' % (column['name'],
                                                                                                result))
                 except:
                     pass
@@ -335,7 +335,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
                 """
                 result = util.ic_eval(get_grp_title, evalSpace=locals())
                 try:
-                    io_prnt.outLog(u'Определение заголовка группы колонки <%s>. Результат <%s>' % (column['name'],
+                    log.info(u'Определение заголовка группы колонки <%s>. Результат <%s>' % (column['name'],
                                                                                                    result))
                 except:
                     pass

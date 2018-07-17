@@ -148,14 +148,14 @@ def CreateICWin(Name_, ResFile_=DEFAULT_WIN_RES_FILE, ParentWin_=None, Runner_=N
         win = None
         win_struct = LoadWinStruct(Name_, ResFile_)
         if win_struct == {}:
-            io_prnt.outLog(u'Нет данных о таком окне!')
+            log.info(u'Нет данных о таком окне!')
             return None
         win = icMainWindow(Name_, win_struct, ResFile_, ParentWin_, Runner_)
         return win
     except:
         if win is not None:
             MsgLastError(win, u'Ошибка создания окна!')
-        io_prnt.outErr(u'Ошибка создания главного окна!')
+        log.error(u'Ошибка создания главного окна!')
         return win
 
 
@@ -173,14 +173,14 @@ def createMainWin(Name_, ResFile_=DEFAULT_WIN_RES_FILE, ParentWin_=None, Runner_
         win = None
         win_struct = LoadWinStruct(Name_, ResFile_)
         if win_struct == {}:
-            io_prnt.outLog(u'Нет данных о таком окне!')
+            log.info(u'Нет данных о таком окне!')
             return None
         win = ic_mainwin_wrp.icMainWindow(None, component=win_struct)
         return win
     except:
         if win is not None:
             MsgLastError(win, u'Ошибка создания окна!')
-        io_prnt.outErr(u'Ошибка создания главного окна!')
+        log.error(u'Ошибка создания главного окна!')
         return win
 
 
@@ -478,7 +478,7 @@ class icMainWindow(wx.Frame):
         content_psp = WinStruct_.get('content', None)
         if content_psp:
             self.content_obj = ic.getKernel().Create(content_psp, parent=self)
-            io_prnt.outLog(u'Наполнение главного окна <%s>' % self.content_obj)
+            log.info(u'Наполнение главного окна <%s>' % self.content_obj)
             self.setCentralPanel(self.content_obj)
 
         # Функция вызываемая каждй раз при отрисовке главного окна.
@@ -544,7 +544,7 @@ class icMainWindow(wx.Frame):
                 try:
                     icon = wx.Icon(ico_file_name, wx.BITMAP_TYPE_ICO)
                 except:
-                    io_prnt.outErr(u'Ошибка инициализации иконки <%s> главного окна. Файл не ICO формата.' % ico_file_name)
+                    log.error(u'Ошибка инициализации иконки <%s> главного окна. Файл не ICO формата.' % ico_file_name)
                     return None
             else:
                 io_prnt.outWarning(u'Иконка главного окна <%s> не найдена' % ico_file_name)
@@ -600,7 +600,7 @@ class icMainWindow(wx.Frame):
                     
                 dc.EndDrawing()
         except:
-            io_prnt.outErr(u'Ошибка отрисовки главного окна')
+            log.error(u'Ошибка отрисовки главного окна')
 
         if event:
             event.Skip()
@@ -632,7 +632,7 @@ class icMainWindow(wx.Frame):
             else:
                 event.Continue = False
         except:
-            io_prnt.outErr(u'Ошибка открытия главного окна')
+            log.error(u'Ошибка открытия главного окна')
             event.Skip()
 
     def OnClose(self, event):
@@ -662,7 +662,7 @@ class icMainWindow(wx.Frame):
             else:
                 event.Continue = False
         except:
-            io_prnt.outErr(u'Ошибка закрытия главного окна')
+            log.error(u'Ошибка закрытия главного окна')
             event.Skip()
 
     def onStatusBarMouseDblClick(self, event):
@@ -725,7 +725,7 @@ class icMainWindow(wx.Frame):
                 self.SetTitle(win_title)
                 self.Refresh()
         except:
-            io_prnt.outErr(u'Ошибка выполнения функции обновления заголовка главного окна.')
+            log.error(u'Ошибка выполнения функции обновления заголовка главного окна.')
 
     def SetTitleReadOnly(self, TitleReadOnly_):
         """
@@ -788,7 +788,7 @@ class icMainWindow(wx.Frame):
                                               Image_, CanClose_, OpenScript_,
                                               CloseScript_, DefaultPage_)
         except:
-            io_prnt.outErr(u'Ошибка добавления страницы в главное окно.')
+            log.error(u'Ошибка добавления страницы в главное окно.')
             return None
 
     # Можно использовать и другое наименование метода
@@ -812,7 +812,7 @@ class icMainWindow(wx.Frame):
                 self.DelOrg()
             return self._MainNotebook
         except:
-            io_prnt.outErr(u'Ошибка удаления страницы из органайзера.')
+            log.error(u'Ошибка удаления страницы из органайзера.')
             return None
 
     def DelOrg(self):
@@ -834,7 +834,7 @@ class icMainWindow(wx.Frame):
             self.Refresh()
             return True
         except:
-            io_prnt.outErr(u'Ошибка удаления главного органайзера')
+            log.error(u'Ошибка удаления главного органайзера')
             return False
 
     def CloseOrgPages(self):
@@ -852,7 +852,7 @@ class icMainWindow(wx.Frame):
             self.Refresh()
             return True
         except:
-            io_prnt.outErr(u'Ошибка закрытия окон главного органайзера')
+            log.error(u'Ошибка закрытия окон главного органайзера')
             return False
 
     def _createAreaSplitter(self):
@@ -878,7 +878,7 @@ class icMainWindow(wx.Frame):
                 
             return self._v_area_splitter
         except:
-            io_prnt.outErr(u'Ошибка создания разделителя областей.')
+            log.error(u'Ошибка создания разделителя областей.')
             return None
         
     def _destroyAreaSplitter(self):
@@ -903,7 +903,7 @@ class icMainWindow(wx.Frame):
                     self.central_panel = None
             return True
         except:
-            io_prnt.outErr(u'Ошибка удаления разделителя областей.')
+            log.error(u'Ошибка удаления разделителя областей.')
             return False
         
     def _insPanel(self, Splitter_, Index_, Panel_):
@@ -935,7 +935,7 @@ class icMainWindow(wx.Frame):
                     
             return True
         except:
-            io_prnt.outErr(u'Ошибка установки панели в разделитель областей.')
+            log.error(u'Ошибка установки панели в разделитель областей.')
             return False
 
     def _delPanel(self, Splitter_, Index_):
@@ -959,7 +959,7 @@ class icMainWindow(wx.Frame):
                 win.Destroy()
             return True
         except:
-            io_prnt.outErr(u'Ошибка удаления панели из разделителя областей.')
+            log.error(u'Ошибка удаления панели из разделителя областей.')
             return False
 
     def getLeftPanel(self):
@@ -1110,4 +1110,4 @@ class icMainWindow(wx.Frame):
             self.SetMenuBar(MenuBar_)
             MenuBar_.Refresh()
         except:
-            io_prnt.outErr(u'Ошибка установки горизонтального меню <%s> в главное окно.' % MenuBar_)
+            log.error(u'Ошибка установки горизонтального меню <%s> в главное окно.' % MenuBar_)

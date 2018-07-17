@@ -374,14 +374,14 @@ class icObject(object):
             kernel = self.context.get_kernel()
         except:
             kernel = None
-            io_prnt.outLog(u'WARNING! Ядро в контексте не определено')
+            log.info(u'WARNING! Ядро в контексте не определено')
             
         if kernel and hasattr(kernel, 'getConnectionByObject'):
             self.srcCntLst, self.slotCntLst = kernel.getConnectionByObject(self)
             if self.srcCntLst:
-                io_prnt.outLog(u'Объект: %s. Зарегестрированы исходящие соединения:%s' % (self.name, self.srcCntLst))
+                log.info(u'Объект: %s. Зарегестрированы исходящие соединения:%s' % (self.name, self.srcCntLst))
             if self.slotCntLst:
-                io_prnt.outLog(u'Объект: %s. Зарегестрированы входящие соединения:%s' % (self.name, self.slotCntLst))
+                log.info(u'Объект: %s. Зарегестрированы входящие соединения:%s' % (self.name, self.slotCntLst))
             
             #   Создаем источники
             # Регестрируем атрибуты за которыми ведется наблюдение
@@ -557,7 +557,7 @@ class icObject(object):
         """
         # Проверяем сигнал на соответствие соединению
         if not con.isValidSignal(signal):
-            io_prnt.outLog(u'WARRNING. Сигнал <%s> не соответствует соединению <%s>' % (signal, con))
+            log.info(u'WARRNING. Сигнал <%s> не соответствует соединению <%s>' % (signal, con))
             return False
         # Передаем сигнал на слоты
         kernel = self.context.get_kernel()

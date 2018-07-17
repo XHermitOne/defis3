@@ -14,7 +14,7 @@ from ic.log.iclog import MsgLastError, LogLastError
 from ic.dlg.msgbox import *
 from ic.db import tabclass
 from ic.utils.coderror import *
-import ic.utils.util as util
+from ic.utils import util
 from ic.components.icResourceParser import *
 import ic.components.icwidget as icwidget
 

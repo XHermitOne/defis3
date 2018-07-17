@@ -152,5 +152,5 @@ class icTABRequisitePrototype(icworkbase.icTabRequisiteBase):
             if transaction:
                 # Откатить транзакцию
                 transaction.rollback()
-            io_prnt.outErr(u'Ошибка удаления из хранилища дочерних записей объекта [%s]' % self.getParent().name)
+            log.error(u'Ошибка удаления из хранилища дочерних записей объекта [%s]' % self.getParent().name)
         return False

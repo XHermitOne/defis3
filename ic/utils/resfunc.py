@@ -24,10 +24,10 @@ except ImportError:
     print('Import Error types')
 
 try:
-    import cPickle
+    import pickle
 except ImportError:
-    print('Import Error cPickle')
-    cPickle = None
+    print('Import Error pickle')
+    pickle = None
 
 
 from . import util
@@ -36,7 +36,7 @@ from . import ic_util
 from . import resource
 from . import lock
 
-__version__ = (0, 0, 0, 5)
+__version__ = (0, 1, 1, 1)
 
 # === Основные константы ===
 
@@ -221,7 +221,7 @@ def LoadResourcePickle(FileName_):
         f = None
         try:
             f = open(FileName_)
-            struct = cPickle.load(f)
+            struct = pickle.load(f)
             f.close()
             return struct
         except:
@@ -273,7 +273,7 @@ def SaveResourcePickle(FileName_, Resource_):
             pass
 
         f = open(FileName_, 'w')
-        cPickle.dump(Resource_, f)
+        pickle.dump(Resource_, f)
         f.close()
         log.info(u'Файл <%s> сохранен в формате Pickle.' % FileName_)
         return True

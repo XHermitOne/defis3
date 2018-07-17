@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
-import ic.utils.util as util
+from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 import ic.utils.graphicUtils as grph
 

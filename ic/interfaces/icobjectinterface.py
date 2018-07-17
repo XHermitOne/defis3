@@ -8,7 +8,7 @@
 import os
 import wx
 import ic.components.icResourceParser as prs
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import ic.components.icwidget as icwidget
 
 __version__ = (0, 0, 0, 3)

@@ -20,10 +20,10 @@
 """
 
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 from ic.kernel import io_prnt
 
@@ -142,7 +142,7 @@ class icConvertQuery(icwidget.icSimple, icconvertquery.icConvertQueryPrototype):
             if driver_name:
                 return self.components[driver_name]
         except:
-            io_prnt.outErr(u'Не определен драйвер источника данных в объекте %s' % self.getName())
+            log.error(u'Не определен драйвер источника данных в объекте %s' % self.getName())
         return None
         
     def getFirstField(self):

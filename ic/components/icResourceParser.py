@@ -24,7 +24,7 @@ import ic.components.icwidget as icwidget
 from ic.dlg import ic_dlg
 
 from .icFieldTempl import *
-import ic.utils.util as util
+from ic.utils import util
 import ic.utils.resource as resource
 import ic.db.icdataset as icdataset
 from ic.dlg import progress
@@ -341,12 +341,12 @@ def getFormFromBuffer(formName, subsys, parent, flt=''):
                 bff.pop(key_frm)
                 frm = None
             
-            io_prnt.outLog('\t[+] Form <%s> returned from buffer.' % formName)
+            log.info('\t[+] Form <%s> returned from buffer.' % formName)
             return frm
         else:
-            io_prnt.outLog('key_frm=%s already is activated; struct=<%s>' % (key_frm, str(bff[key_frm])))
+            log.info('key_frm=%s already is activated; struct=<%s>' % (key_frm, str(bff[key_frm])))
     except:
-        io_prnt.outLog('\t[!] Form <%s> is not found in buffer.' % formName)
+        log.info('\t[!] Form <%s> is not found in buffer.' % formName)
     
     return None
 
@@ -433,7 +433,7 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
     except KeyError:
         MsgBox(None, _('Form <%s> is not found in resource: <%s>') % (formName, fileRes))
     except:
-        io_prnt.outErr(_('Create form error'))
+        log.error(_('Create form error'))
     
     return frm
 
@@ -585,7 +585,7 @@ def ResultForm(formName, fileRes=None, filter={}, logType=0,
         except:
             pass
 
-        io_prnt.outLog(u'Dialog return value <%s> ok: %s' % (val, wx.ID_OK))
+        log.info(u'Dialog return value <%s> ok: %s' % (val, wx.ID_OK))
 
         if val in [0, wx.ID_OK]:
             if 'result' in frm.evalSpace:
@@ -675,7 +675,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
                         after = evalSpace['_dict_obj'][ob.moveAfterInTabOrder]
                         ob.MoveAfterInTabOrder(after)
                 except:
-                    io_prnt.outErr('CREATE TAB ORDER ERROR')
+                    log.error('CREATE TAB ORDER ERROR')
 
         #   Посылаем сообщение о том, что форма создана для обычных объектов
         # Буфер объектов, которым сообщение onInit послано. Создаем буфер, чтобы
@@ -798,7 +798,7 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
                 if designer:
                     constr = designer
             except:
-                io_prnt.outErr(_('Designer not found'))
+                log.error(_('Designer not found'))
                 designer = None
         
         if 'sizer' in constr.__init__.im_func.func_code.co_varnames:
@@ -835,7 +835,7 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
                 evalSpace['_root_obj'] = wxw
         return wxw
     except:
-        io_prnt.outErr('ERROR USER TYPE PARSE: <%s> mod=<%s>' % (component['type'], modl))
+        log.error('ERROR USER TYPE PARSE: <%s> mod=<%s>' % (component['type'], modl))
 
 
 def icResourceParser(parent, components, sizer=None, logType=0,
@@ -992,7 +992,7 @@ def icResourceParser(parent, components, sizer=None, logType=0,
                         try:
                             edt.AddObject(wxw)
                         except:
-                            io_prnt.outErr('### AddOject Error: <%s> edt=%s' % (wxw, edt))
+                            log.error('### AddOject Error: <%s> edt=%s' % (wxw, edt))
                 
             # Заполнение контейнеров
             if wxw is not None and parent is not None and name and component['type'] != 'Table':
@@ -1074,12 +1074,12 @@ def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, cl
                 if attr_name not in ('type', 'style', 'name') and not attr_name.startswith('_'):
                     if attr_name in res:
                         res[attr_name] = value
-                        io_prnt.outLog(u'Замена атрибута [%s] ресурса <%s>' % (attr_name, ResName_))
+                        log.info(u'Замена атрибута [%s] ресурса <%s>' % (attr_name, ResName_))
                     else:
                         # Если нет такого атрибута, значит это замена атрибутов дочернего объекта
                         if isinstance(value, dict):
                             res = resource.update_child_resource(attr_name, res, value)
-                            io_prnt.outLog(u'Замена атрибутов дочернего объекта [%s] ресурса <%s>' % (attr_name, ResName_))
+                            log.info(u'Замена атрибутов дочернего объекта [%s] ресурса <%s>' % (attr_name, ResName_))
                         else:
                             io_prnt.outWarning(u'Не поддерживаемый тип %s замены ресурса дочернего объекта <%s>' % (type(value),
                                                                                                                     attr_name))
@@ -1090,7 +1090,7 @@ def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, cl
             return icBuildObject(parent, res, evalSpace=context, id=kwargs.get('id', None))
         return None
     except:
-        io_prnt.outErr('CREATE OBJECT ERROR: [%s . %s]' % (ResName_, ResExt_))
+        log.error('CREATE OBJECT ERROR: [%s . %s]' % (ResName_, ResExt_))
         return None
 
 

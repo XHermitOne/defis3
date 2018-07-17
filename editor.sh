@@ -1,0 +1,1 @@
+/usr/bin/python3 ./ic/engine/run.py -cfg -dbg

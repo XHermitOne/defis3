@@ -183,7 +183,7 @@ class PrjImportSystems(PrjImportFolder):
                     # Построить дерево-содержание импортируемой подсистемы
                     imp_sys_node._is_build = False
                 except:
-                    io_prnt.outErr(u'Ошибка подключения подсистемы <%s>' % sub_sys_dir)
+                    log.error(u'Ошибка подключения подсистемы <%s>' % sub_sys_dir)
                     ic_dlg.icMsgBox(u'ОШИБКА', u'Ошибка подключения подсистемы <%s>' % sub_sys_dir)
             else:
                 ic_dlg.icMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
@@ -219,7 +219,7 @@ class PrjImportSystems(PrjImportFolder):
         @param PrjDir_: Папка проекта.
         """
         if SubSysDir_ and PrjDir_:
-            io_prnt.outLog(u'Копирование подсистемы <%s> в <%s>' % (SubSysDir_, PrjDir_))
+            log.info(u'Копирование подсистемы <%s> в <%s>' % (SubSysDir_, PrjDir_))
             # Просто скопировать одну папку в другую
             ok = ic_file.CopyDir(SubSysDir_, PrjDir_, True)
             # Кроме кодирования надо удалить все пикловсвие файлы из проекта
@@ -227,7 +227,7 @@ class PrjImportSystems(PrjImportFolder):
             new_subsys_dir = PrjDir_+'/'+os.path.basename(SubSysDir_)
             ic_file.delAllFilesFilter(new_subsys_dir, *ALL_PKL_FILES_MASK)
             if ok:
-                io_prnt.outLog(u'[+] Refresh subsys <%s> succesfully' % PrjDir_)
+                log.info(u'[+] Refresh subsys <%s> succesfully' % PrjDir_)
                 return new_subsys_dir
         return None
 
@@ -253,7 +253,7 @@ class PrjImportSystems(PrjImportFolder):
                 self._copySubSysDir(sub_sys_dir, prj_dir)
 
             # Обновить дерево пользовательских компонентов
-            io_prnt.outLog(u'<<<Init Objects Info >>>')
+            log.info(u'<<<Init Objects Info >>>')
             ic_user.refreshImports()
             tree_prj = self.getParentRoot().getParent()
             tree_prj.res_editor.CloseResource()
@@ -261,7 +261,7 @@ class PrjImportSystems(PrjImportFolder):
 
             ic_dlg.icCloseProgressDlg()
         except:
-            io_prnt.outErr(u'Ошибка обновления подсистем')
+            log.error(u'Ошибка обновления подсистем')
             ic_dlg.icCloseProgressDlg()
             return False
 
@@ -289,7 +289,7 @@ class PrjImportSystems(PrjImportFolder):
         sub_sys_path = self.getSubSysPath(SubSysName_)
         prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
         del_dir = prj_dir+'/'+os.path.basename(os.path.dirname(sub_sys_path))
-        io_prnt.outLog(u'UNLINK SUBSYTEM %s %s %s' % (SubSysName_, del_dir, sub_sys_path))
+        log.info(u'UNLINK SUBSYTEM %s %s %s' % (SubSysName_, del_dir, sub_sys_path))
         # Сначала удалить из описания в фале *.pro
         ok = self.getRoot().prj_res_manager.delImpSubSys(SubSysName_)
         # Затем удалить папку подсистемы
@@ -650,7 +650,7 @@ class PrjImportSys(PrjNotImportSys):
             sub_systems.getRoot().synchroPrj(True)
             return True
         except:
-            io_prnt.outErr(u'Ошибка обновления подсистемы <%s>' % self.name)
+            log.error(u'Ошибка обновления подсистемы <%s>' % self.name)
             return False
 
     def onNodePopup(self, event):

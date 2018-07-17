@@ -54,5 +54,5 @@ class icWXApp(wx.App, ickernel.icKernel):
             file_name, file_ext = ic_file.SplitExt(BehaviourResourceFileName_)
             return icResourceParser.icCreateObject(file_name, file_ext[1:])
         except:
-            io_prnt.outErr(u'Ошибка установки поведения системы из файла: <%s>' % BehaviourResourceFileName_)
+            log.error(u'Ошибка установки поведения системы из файла: <%s>' % BehaviourResourceFileName_)
             return None

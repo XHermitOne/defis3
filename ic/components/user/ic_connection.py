@@ -21,10 +21,10 @@
 """
 
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import ic.engine.ic_user as ic_user
 import ic.kernel.io_prnt as io_prnt
 
@@ -145,11 +145,11 @@ class icConnection(icwidget.icSimple,parentModule.icConnection):
         # Регистрируем соединение через ядро
         kernel = ic_user.icGetRunner()
         if kernel:
-            io_prnt.outLog(u'>>> Регистрируем соединение first_signal = <%s>, slot_list = <%s>' % (first_signal,
+            log.info(u'>>> Регистрируем соединение first_signal = <%s>, slot_list = <%s>' % (first_signal,
                                                                                                    slot_list))
             kernel.add_connection_lst([self])
         else:
-            io_prnt.outLog(u'WARNING! Ядро системы не инициализировано')
+            log.info(u'WARNING! Ядро системы не инициализировано')
 
     def childCreator(self, bCounter, progressDlg):
         """

@@ -262,7 +262,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                 return res['__record__']
             return None
         except:
-            io_prnt.outErr(u'ОШИБКА компонента %s метода getItemRecord'%(self.name))
+            log.error(u'ОШИБКА компонента %s метода getItemRecord'%(self.name))
             return None
 
     def getSelectionRecord(self):
@@ -287,7 +287,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                     break
             return True
         except:
-            io_prnt.outErr(u'ОШИБКА компонента %s метода setLabelCols'%(self.name))
+            log.error(u'ОШИБКА компонента %s метода setLabelCols'%(self.name))
             return False
         
     def getElementName(self, res, indx):
@@ -416,7 +416,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                     children.append(child)
             return children
         except:
-            io_prnt.outErr(u'ОШИБКА компонента %s метода определения списка дочерних элементов'%(self.name))
+            log.error(u'ОШИБКА компонента %s метода определения списка дочерних элементов'%(self.name))
             return None
         
     def findItemColumnString(self,string,curItem=None,columns=None,curColIdx=0,bILike=True):
@@ -496,7 +496,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             #Все равно не нашли
             return None
         except:
-            io_prnt.outErr(u'ОШИБКА компонента %s метода поиска узла по строке'%(self.name))
+            log.error(u'ОШИБКА компонента %s метода поиска узла по строке'%(self.name))
             return None
         
     def selectFindItemColumn(self,string,columns=None,bILike=True):
@@ -597,7 +597,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             #Все равно не нашли
             return None
         except:
-            io_prnt.outErr(u'ОШИБКА компонента %s метода поиска узла по строке'%(self.name))
+            log.error(u'ОШИБКА компонента %s метода поиска узла по строке'%(self.name))
             return None
         
     def _getNextItem4Find(self,Item_):

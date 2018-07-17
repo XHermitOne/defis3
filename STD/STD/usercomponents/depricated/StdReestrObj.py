@@ -9,11 +9,11 @@
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 from STD import reestr_img
 from ic.components.user import ic_metaitem_wrp
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import ic.engine.ic_user as ic_user
 import ic.utils.resource as resmod
 import ic.kernel.io_prnt as io_prnt
@@ -110,7 +110,7 @@ class CStdReestrObj(ictemplate.icTemplateInterface):
             
 #            self.doc = prs.icResourceParser(None, [res], None, evalSpace = evalSpace,
 #                                bCounter = False, progressDlg = None)
-            #io_prnt.outLog('=========== Создан документ:%s,%s' % (self.doc_type, self.doc.name))
+            #log.info('=========== Создан документ:%s,%s' % (self.doc_type, self.doc.name))
 
     def _init_spc(self, component):
         """

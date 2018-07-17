@@ -4,11 +4,11 @@
 
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 import ic.components.icwxpanel as parentModule
 import ic.components.custom.icsplitter as split_mod
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
 
 ### Standart component interface
@@ -54,7 +54,7 @@ class CBrPanel(parentClass):
             testObj.context['_root_obj'].Show(True)
             testObj.context['_root_obj'].SetFocus()
         except: 
-            io_prnt.outErr()
+            log.error()
     
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,
                  bCounter=False, progressDlg=None):

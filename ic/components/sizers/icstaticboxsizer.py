@@ -30,7 +30,7 @@ import wx
 from ic.utils.util import icSpcDefStruct
 from ic.components import icwidget
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.log import log
 
 from . import icspacesizer

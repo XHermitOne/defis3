@@ -3,7 +3,7 @@
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 #import ic.interfaces.icobjectinterface as icobjectinterface
 
 from work_flow.interfaces.forms import edit_panel

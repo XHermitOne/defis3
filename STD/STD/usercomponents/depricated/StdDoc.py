@@ -5,10 +5,10 @@
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 import STD.interfaces.reestr.objectInterface as ifs
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from STD import reestr_img
 import ic.engine.ic_user as ic_user
 

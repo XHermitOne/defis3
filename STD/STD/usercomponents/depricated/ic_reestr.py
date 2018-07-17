@@ -23,10 +23,10 @@
 
 #import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import ic.components.user.ic_metatree_wrp as parentModule
 from ic.components.user import ic_metaitem_wrp

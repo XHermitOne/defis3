@@ -4,7 +4,7 @@
 import wx
 import ic
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 from ic.utils import ic_res
 
@@ -33,7 +33,7 @@ def icNewPeriodDlg(ParentWin_=None,OBJ_=None):
         dlg.ShowModal()
         return dlg_interface.getResult()
     except:
-        ic.io_prnt.outErr(u'Ошибка при вызове диалогового окна создания нового периода объекта %s.'%OBJ_)
+        ic.log.error(u'Ошибка при вызове диалогового окна создания нового периода объекта %s.'%OBJ_)
         return None
         
 class icNewPeriodDialog(icobjectinterface.icObjectInterface):
@@ -47,7 +47,7 @@ class icNewPeriodDialog(icobjectinterface.icObjectInterface):
         try:
             ic_res.findSpcInResource('subject_choice',resource)['sprav']=OBJ.getHistory().getSubjectPsp()
         except:
-            ic.io_prnt.outErr(u'Ошибка инициализации справочника субъектов контрола \'subject_choice\' в форме %s'%resource['name'])
+            ic.log.error(u'Ошибка инициализации справочника субъектов контрола \'subject_choice\' в форме %s'%resource['name'])
             
         #   Base class constructor
         icobjectinterface.icObjectInterface.__init__(self, parent, resource)
@@ -98,7 +98,7 @@ class icNewPeriodDialog(icobjectinterface.icObjectInterface):
                 return False
             return True
         except:
-            ic.io_prnt.outErr(u'Ошибка проверки результирующих данных')
+            ic.log.error(u'Ошибка проверки результирующих данных')
         return None
         
     def getResult(self):

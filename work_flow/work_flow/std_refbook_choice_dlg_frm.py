@@ -42,7 +42,7 @@ def onDialogTitle(Context_):
                 description=unicode(str(description),'utf-8')
             title+=description
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Генерация заголовка диалогового окна справочника.')
+        ic.log.error(u'ОШИБКА. Генерация заголовка диалогового окна справочника.')
     return title
 
 def onTreeRootTitle(Context_):
@@ -56,7 +56,7 @@ def onTreeRootTitle(Context_):
         if type(title)<>type(u''):
             title=unicode(str(title),'utf-8')
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Генерация заголовка дерева справочника.')
+        ic.log.error(u'ОШИБКА. Генерация заголовка дерева справочника.')
     return title
     
 def onTreeBrwsInit(Context_):
@@ -80,7 +80,7 @@ def onTreeBrwsInit(Context_):
             tree_ctrl.expandAllRoot()
             tree_ctrl.reFresh()
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Обработчик инициализации браузера дерева справочника.')
+        ic.log.error(u'ОШИБКА. Обработчик инициализации браузера дерева справочника.')
         
 def onBrwsModeTool(Context_):
     """
@@ -95,7 +95,7 @@ def onBrwsModeTool(Context_):
         
         return OBJ.Browse()
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Обработчик переключения в режим браузера справочника.')
+        ic.log.error(u'ОШИБКА. Обработчик переключения в режим браузера справочника.')
         return False
 
 def onCancelButtonMouseClick(Context_):
@@ -109,7 +109,7 @@ def onCancelButtonMouseClick(Context_):
         main_dlg.EndModal(wx.ID_CANCEL)
         return None
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Обработчик нажатия на кнопке ОТМЕНА.')
+        ic.log.error(u'ОШИБКА. Обработчик нажатия на кнопке ОТМЕНА.')
     
 def onOkButtonMouseClick(Context_):
     """
@@ -122,7 +122,7 @@ def onOkButtonMouseClick(Context_):
         main_dlg.EndModal(wx.ID_OK)
         return True
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Обработчик нажатия на кнопке OK.')
+        ic.log.error(u'ОШИБКА. Обработчик нажатия на кнопке OK.')
     return False
     
 def onDataGridInit(Context_):
@@ -153,7 +153,7 @@ def onDataGridInit(Context_):
                 #    grid_dataset.SetStructFilter({'code':[cur_obj_code,code_len]})
             grid_ctrl.RefreshGrid()
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Заполнение грида объектов.')
+        ic.log.error(u'ОШИБКА. Заполнение грида объектов.')
             
 def onObjCodeChanged(Context_):
     """
@@ -175,7 +175,7 @@ def onObjCodeChanged(Context_):
         #Если код выбран в браузере, то обновиться и грид заодно
         onDataGridInit(Context_)
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Изменения выбранного кода в дереве объекта.')
+        ic.log.error(u'ОШИБКА. Изменения выбранного кода в дереве объекта.')
 
        
 def onDelObjTool(Context_):
@@ -205,7 +205,7 @@ def onDelObjTool(Context_):
 
                     #tree_ctrl.Refresh()
     except:
-        ic.io_prnt.outErr(u'ОШИБКА. Удаления выбранного объекта в дереве объекта.')
+        ic.log.error(u'ОШИБКА. Удаления выбранного объекта в дереве объекта.')
         
 def onCodeObjControl(Context_):
     """
@@ -228,5 +228,5 @@ def onCodeObjControl(Context_):
         
         return (ic.coderror.IC_CTRL_OK,value)
     except:
-        ic.io_prnt.outErr(u'ОШИБКА.Контроля кода объекта.')
+        ic.log.error(u'ОШИБКА.Контроля кода объекта.')
         return (ic.coderror.IC_CTRL_FAILED_IGNORE,None)

@@ -91,7 +91,7 @@ class icVarStorage:
             path = split(r'[/]', Name_)
             return self.AddToPath(path, Data_, Security_)
         except:
-            io_prnt.outErr(u'Ошибка записи в хранилище объекта %s' % Name_)
+            log.error(u'Ошибка записи в хранилище объекта %s' % Name_)
             return False, None
 
     def AddToPath(self, Path_, Data_, Security_='*rw',storage_=None):
@@ -136,7 +136,7 @@ class icVarStorage:
                 return self.AddToPath(Path_[1:], Data_, Security_, storage_)
             return True, None
         except:
-            io_prnt.outErr(u'Ошибка записи в хранилище объекта %s' % node)
+            log.error(u'Ошибка записи в хранилище объекта %s' % node)
             return False, None
 
     def Clear(self):
@@ -146,7 +146,7 @@ class icVarStorage:
         try:
             self._storage = {}
         except:
-            io_prnt.outErr(u'Ошибка очистки хранилища данных')
+            log.error(u'Ошибка очистки хранилища данных')
 
     def Del(self, Name_):
         """
@@ -158,7 +158,7 @@ class icVarStorage:
             path = split(r'[/]', Name_)
             return self.DelToPath(path)
         except:
-            io_prnt.outErr(u'Ошибка удаления объекта <%s> из хранилища' % Name_)
+            log.error(u'Ошибка удаления объекта <%s> из хранилища' % Name_)
             return False, None
 
     def DelToPath(self, Path_, storage_=None):
@@ -206,7 +206,7 @@ class icVarStorage:
                 return self.DelToPath(Path_[1:], storage_)
             return False, None
         except:
-            io_prnt.outErr(u'Ошибка удаления объекта <%s> из хранилища' % node)
+            log.error(u'Ошибка удаления объекта <%s> из хранилища' % node)
             return False, None
 
     def GetCopy(self, Name_, LockKey_=None):
@@ -242,7 +242,7 @@ class icVarStorage:
                     self._Log(u'Запрет на чтение объекта <%s>' % Name_)
             return False, None
         except:
-            io_prnt.outErr()
+            log.error()
 
     def PutCopy(self, Name_, Data_, LockKey_=None):
         """
@@ -275,7 +275,7 @@ class icVarStorage:
                     return False, None
             return True, None
         except:
-            io_prnt.outErr()
+            log.error()
 
     def Ref(self, Name_, LockKey_=None):
         """
@@ -310,7 +310,7 @@ class icVarStorage:
                     return True, node[STORE_DATA_KEY]
             return False, None
         except:
-            io_prnt.outErr()
+            log.error()
 
     def _GetNode(self, Path_, storage_=None):
         """
@@ -337,7 +337,7 @@ class icVarStorage:
                 return self._GetNode(Path_[1:], storage_)
             return False, None
         except:
-            io_prnt.outErr(u'Ошибка определения узла <%s>' % node)
+            log.error(u'Ошибка определения узла <%s>' % node)
             return False, None
         
     # --- Функции чтения/записи на диск ---
@@ -354,7 +354,7 @@ class icVarStorage:
 
             resfunc.SaveResourceText(self._ResFile, self._storage)
         except:
-            io_prnt.outErr()
+            log.error()
 
     def _Load(self, ResFile_=''):
         """
@@ -367,7 +367,7 @@ class icVarStorage:
             if self._ResFile != '':
                 self._storage = resfunc.LoadResourceText(self._ResFile)
         except:
-            io_prnt.outErr()
+            log.error()
 
     # --- Сервисные функции ---
     def Is(self, Name_):
@@ -382,7 +382,7 @@ class icVarStorage:
                 return False
             return True
         except:
-            io_prnt.outErr()
+            log.error()
 
     def CanRead(self, Name_, LockKey_=None):
         """
@@ -399,7 +399,7 @@ class icVarStorage:
                 return False
             return True
         except:
-            io_prnt.outErr()
+            log.error()
 
     def CanWrite(self, Name_, LockKey_=None):
         """
@@ -416,7 +416,7 @@ class icVarStorage:
                 return False
             return True
         except:
-            io_prnt.outErr()
+            log.error()
 
     def CanRef(self, Name_, LockKey_=None):
         """
@@ -433,7 +433,7 @@ class icVarStorage:
                 return False
             return True
         except:
-            io_prnt.outErr()
+            log.error()
 
     def TextStorage(self):
         """
@@ -452,7 +452,7 @@ class icVarStorage:
             txt += line
             return txt
         except:
-            io_prnt.outErr(u'Ошибка преобразования в виде текста объектов ХРАНИЛИЩА')
+            log.error(u'Ошибка преобразования в виде текста объектов ХРАНИЛИЩА')
         
     def _TextListAll(self, Storage_=None, Path_=''):
         """

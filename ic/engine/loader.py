@@ -56,7 +56,7 @@ def mapclass(sysdb, tab_name=None):
     orm.clear_mappers()
     orm.mapper(Resources, resources_tab, extension=ResEventExtension(),
                properties={'_res': orm.deferred(resources_tab.c.res)})
-    io_prnt.outLog('MAP Resource Loader class.')
+    log.info('MAP Resource Loader class.')
     return resources_tab, Resources
 
 
@@ -106,14 +106,14 @@ class icLoader(object):
             tab_name = ic.load_ini_param('SYSDB', 'sys_table_name')
             self.sysdb = ic_postgres_wrp.icPostgreSQL(None)
             self.systab, self.syscls = mapclass(self.sysdb, tab_name)
-            io_prnt.outLog('(+) INIT SYSDB:%s, %s, %s' % (self.sysdb, self.systab, self.syscls))
+            log.info('(+) INIT SYSDB:%s, %s, %s' % (self.sysdb, self.systab, self.syscls))
             if not self.systab.exists():
                 self.systab.create()
-                io_prnt.outLog('(+) CREATE SYSTEM TABLE: %s' % self.systab)
+                log.info('(+) CREATE SYSTEM TABLE: %s' % self.systab)
             self.dbstore = ic.load_ini_param('RESOURCE', 'dbstore').strip()
         except:
-            io_prnt.outErr('')
-            io_prnt.outLog('(!) SYSDB ERROR. POSSIBLE INVALID CONNECTION PARAMETERS IN <PRJNAME>.INI FILE.')
+            log.error('')
+            log.info('(!) SYSDB ERROR. POSSIBLE INVALID CONNECTION PARAMETERS IN <PRJNAME>.INI FILE.')
         
     def init_db_auth(self):
         """
@@ -152,14 +152,14 @@ class icLoader(object):
             
             if self.sysdb:
                 self.systab, self.syscls = mapclass(self.sysdb, sys_table_name)
-                io_prnt.outLog('(+) DB INIT SYSDB:%s, %s, %s' % (self.sysdb, self.systab, self.syscls))
+                log.info('(+) DB INIT SYSDB:%s, %s, %s' % (self.sysdb, self.systab, self.syscls))
                 if not self.systab.exists():
                     self.systab.create()
-                    io_prnt.outLog('(+) CREATE SYSTEM TABLE: %s' % self.systab)
+                    log.info('(+) CREATE SYSTEM TABLE: %s' % self.systab)
                 self.dbstore = dbstore
         except:
-            io_prnt.outErr('')
-            io_prnt.outLog('(!) SYSDB ERROR. POSSIBLE INVALID CONNECTION PARAMETERS IN <PRJNAME>.PRO FILE.')
+            log.error('')
+            log.info('(!) SYSDB ERROR. POSSIBLE INVALID CONNECTION PARAMETERS IN <PRJNAME>.PRO FILE.')
         
     def is_db_store(self, path=None):
         """
@@ -179,7 +179,7 @@ class icLoader(object):
             lst = session.query(self.syscls).filter_by(path=path).all()
             if lst:
                 obj = lst[0]
-                io_prnt.outLog('Load resource from DB')
+                log.info('Load resource from DB')
                 return obj.res
 
     @todbpath
@@ -195,7 +195,7 @@ class icLoader(object):
             lst = session.query(self.syscls).filter_by(path=path).all()
             if not lst and flag:
                 self.save_db_res(path, 'LOCKREC', block=True, ttl=ttl)
-                io_prnt.outLog('.lock resource %s' % path)
+                log.info('.lock resource %s' % path)
             elif lst:
                 obj = lst[0]
                 obj.lock = flag
@@ -205,9 +205,9 @@ class icLoader(object):
                 session.add(obj)
                 session.flush()
                 if flag:
-                    io_prnt.outLog('.lock resource %s' % path)
+                    log.info('.lock resource %s' % path)
                 else:
-                    io_prnt.outLog('.unlock resource %s' % path)
+                    log.info('.unlock resource %s' % path)
                 return True
         return False
 
@@ -225,7 +225,7 @@ class icLoader(object):
                 if lst:
                     session.delete(lst[0])
                     session.flush()
-                    io_prnt.outLog('.unlock and delete resource %s' % path)
+                    log.info('.unlock and delete resource %s' % path)
             else:
                 return self.lock_db(path, False)
 
@@ -373,7 +373,7 @@ class icLoader(object):
         obj.last_modified = datetime.datetime.now()
         session.add(obj)
         session.flush()
-        io_prnt.outLog('Save resource to DB')
+        log.info('Save resource to DB')
         return obj
 
     def save_file_res(self, path, res):

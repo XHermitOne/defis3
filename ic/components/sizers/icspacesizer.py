@@ -17,7 +17,7 @@ import wx
 from ic.utils.util import icSpcDefStruct
 from ic.components import icwidget
 from ic.imglib import common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 SPC_IC_SIZER_SPACE = {'type': 'SizerSpace',
                       'name': 'DefaultName',

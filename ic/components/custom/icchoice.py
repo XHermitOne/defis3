@@ -32,7 +32,7 @@
 """
 
 import wx
-import ic.utils.util as util
+from ic.utils import util
 from ic.utils import ic_util
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 from ic.utils import coderror
@@ -40,7 +40,7 @@ from ic.components import icwindow
 from ic.kernel import io_prnt
 from ic.dlg import ic_dlg
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 
 LOG_TYPE = 0
@@ -377,7 +377,7 @@ class icChoice(icWidget, wx.Choice):
                 ret = self.SetRealValue(val)
             except:
                 self.SetSelection(-1)
-                io_prnt.outLastErr('KeyError in icchoice.SetValue(val), val=%s' % value)
+                log.fatal('KeyError in icchoice.SetValue(val), val=%s' % value)
         else:
             ret = self.SetRealValue(value)
             

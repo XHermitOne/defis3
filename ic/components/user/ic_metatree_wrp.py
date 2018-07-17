@@ -22,10 +22,10 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import ic.utils.resource as resource
 from ic.kernel import io_prnt
@@ -143,7 +143,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
             if object_storage_res:
                 self._storage = objstore.icObjectStorage(object_storage_res)
                 self._object_storage_name = ObjectStorageName_
-            io_prnt.outLog(u'MetaTree %s STORAGE: %s' % (self.name, self._storage))
+            log.info(u'MetaTree %s STORAGE: %s' % (self.name, self._storage))
             # Убить все дочерние объекты
             self.clearBuffChildren()
         return self._storage
@@ -155,7 +155,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
         try:
             return dict([child for child in self.components.items() if issubclass(child[1].__class__, ic_metaitem_wrp.icMetaItemEngine)])
         except:
-            io_prnt.outErr(u'Ошибка определения списка метаклассов в метадереве %s' % self.name)
+            log.error(u'Ошибка определения списка метаклассов в метадереве %s' % self.name)
             return {}
         
     def getContainerMetaItem(self, MetaComponentName_):
@@ -169,7 +169,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
         if MetaComponentName_ in container_metacomponents:
             return container_metacomponents[MetaComponentName_]
         else:
-            io_prnt.outLog(u'ВНИМАНИЕ!!! Метакомпонент %s в метадереве %s не найден!' % (MetaComponentName_, self.name))
+            log.info(u'ВНИМАНИЕ!!! Метакомпонент %s в метадереве %s не найден!' % (MetaComponentName_, self.name))
         return None
 
     def Save(self, MetaObject_=None):
@@ -256,7 +256,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
                 try:
                     return self.getStoreNodeLevel(Path_[1:], CurStoreLevel_[Path_[0]])
                 except:
-                    io_prnt.outErr(u'Ошибка определения узла хранилища метаобъекта %s %s %s' % (Path_,
+                    log.error(u'Ошибка определения узла хранилища метаобъекта %s %s %s' % (Path_,
                                                                                                 CurStoreLevel_.getName(),
                                                                                                 CurStoreLevel_.keys()))
                     return None
@@ -299,7 +299,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
                 try:
                     return self.saveStoreNodeLevel(Path_[1:], MetaObject_, CurStoreLevel_[Path_[0]])
                 except:
-                    io_prnt.outErr(u'Ошибка сохранения узла хранилища метаобъекта %s %s %s' % (Path_,
+                    log.error(u'Ошибка сохранения узла хранилища метаобъекта %s %s %s' % (Path_,
                                                                                                CurStoreLevel_.getName(),
                                                                                                CurStoreLevel_.keys()))
                     return None
@@ -308,7 +308,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
                     CurStoreLevel_[Path_[0]].save()
                     return CurStoreLevel_[Path_[0]]
                 except:
-                    io_prnt.outErr(u'!Ошибка сохранения узла хранилища метаобъекта %s %s %s' % (Path_,
+                    log.error(u'!Ошибка сохранения узла хранилища метаобъекта %s %s %s' % (Path_,
                                                                                                 CurStoreLevel_.getName(),
                                                                                                 CurStoreLevel_.keys()))
                     return None

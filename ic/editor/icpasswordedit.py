@@ -91,7 +91,7 @@ class icPasswordEditPanel(wx.Panel):
             
             self._password_md5 = None
         except:
-            io_prnt.outErr(u'Ошибка создания объекта панели редактирования пароля')
+            log.error(u'Ошибка создания объекта панели редактирования пароля')
 
     def SetPasswordMD5Default(self, PasswordMD5_):
         """
@@ -157,7 +157,7 @@ class icPasswordEditDialog(wx.Dialog):
             self.SetSizer(self._boxsizer)
             self.SetAutoLayout(True)
         except:
-            io_prnt.outErr(u'Ошибка создания объекта диалогового окна редактирования пароля')
+            log.error(u'Ошибка создания объекта диалогового окна редактирования пароля')
         
     def OnOK(self, event):
         """

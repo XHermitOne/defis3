@@ -57,9 +57,9 @@ import ic.components.icwidget as icwidget
 from ic.utils.util import icSpcDefStruct, getICAttr
 from ic.components.icfont import icFont
 from ic.log.iclog import LogLastError
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import ic.utils.graphicUtils as graphicUtils
-import ic.utils.util as util
+from ic.utils import util
 from ic.kernel import io_prnt
 
 _ = wx.GetTranslation
@@ -387,7 +387,7 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
                     col = self.position[1]
                     self.GetParent().grid.SortCol(col, self.sortDirection)
                 except:
-                    io_prnt.outLastErr(u'Error in icheadergrid')
+                    log.fatal(u'Error in icheadergrid')
               
             self.Refresh()
 
@@ -437,7 +437,7 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
             try:
                 label = unicode(label, 'utf-8')
             except:
-                io_prnt.outLog(_('WARRNING')+':' + 'icHeadCell, label is not in utf-8 encoding.')
+                log.info(_('WARRNING')+':' + 'icHeadCell, label is not in utf-8 encoding.')
                 label = unicode(label, 'cp1251')
         # Заглушка!!!
         if label.strip().startswith('_('):

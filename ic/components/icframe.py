@@ -42,10 +42,11 @@
     - C{FRAME_TOOL_WINDOW} - создает маленькое окно, но на панель задач не помещает.
 """
 import wx
-import ic.utils.util as util
+
+from ic.utils import util
 from . import icwidget as icwidget
-import ic.kernel.io_prnt as io_prnt
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.log import log
+from ic.PropertyEditor import icDefInf
 
 ICFrameStyle = {'DEFAULT_FRAME_STYLE': wx.DEFAULT_FRAME_STYLE,
                 'ICONIZE': wx.ICONIZE,
@@ -116,7 +117,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 0, 0, 9)
+__version__ = (1, 1, 1, 1)
 
 
 # ---------- Классы --------------
@@ -144,7 +145,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
             testObj.context['_root_obj'].Show(True)
             testObj.context['_root_obj'].SetFocus()
         except: 
-            io_prnt.outErr()
+            log.fatal(u'Ошибка тестирования компонента')
 
     def __init__(self, parent=None, id=-1, component=None, logType=0,
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):
@@ -250,9 +251,9 @@ class icFrame(icwidget.icWidget, wx.Frame):
                 try:
                     self.evalSpace['_dict_obj'][key].ObjDestroy()
                 except:
-                    io_prnt.outWarning(u'Ошибка разрушения фрейма')
+                    log.warning(u'Ошибка разрушения фрейма')
         except:
-            io_prnt.outWarning(u'Ошибка разрушения фрейма')
+            log.warning(u'Ошибка разрушения фрейма')
 
     def OnCloseFrame(self, evt):
         """
@@ -287,7 +288,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
                         self.parent.components.pop(key)
                         break
         except:
-            io_prnt.outWarning(u'FRAME DESTROY: can\'t pop element from parent.components dctionary.')
+            log.warning(u'FRAME DESTROY: can\'t pop element from parent.components dctionary.')
 
         #   Удаляем форму
         wx.Window.Destroy(self)

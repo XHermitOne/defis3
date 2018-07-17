@@ -6,8 +6,8 @@
 """
 
 # Подключение пакетов
-import md5
-import thread
+import hashlib
+import _thread
 import time
 import os
 import os.path
@@ -18,7 +18,7 @@ import wx.lib.imagebrowser
 from ic.log import log
 
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 2, 1, 1)
 
 
 def icFileDlg(Win_=None, Title_='', Filter_='', DefaultPath_=''):
@@ -914,7 +914,7 @@ class icLoginDialog(wx.Dialog):
         """
         Получить введенный пароль md5.
         """
-        return md5.new(self._password).hexdigest()
+        return hashlib.md5.new(self._password).hexdigest()
 
 _BUSY_INFO = None
 
@@ -980,7 +980,7 @@ def WaitFunc(Parent_, Msg_,
     ic_wait_proccess_dlg = wait_box = icWaitBox(Parent_, Msg_, Frames_)
     wait_box.SetResultList(wait_result)
     # Запустить функцию ожидания
-    thread.start_new(wait_box.Run, (Func_, FuncArgs_, FuncKW_))
+    _thread.start_new(wait_box.Run, (Func_, FuncArgs_, FuncKW_))
     wait_box.ShowModal()
     wait_box.Destroy()
     ic_wait_proccess_dlg = None

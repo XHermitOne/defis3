@@ -135,7 +135,7 @@ def CreateICMenuBar(Win_, Name_, MenubarData_):
     try:
         return icMenuBar(Win_, Name_, None, MenubarData_)
     except:
-        io_prnt.outErr(u'Ошибка создания меню <%s>!' % Name_)
+        log.error(u'Ошибка создания меню <%s>!' % Name_)
         return None
 
 
@@ -180,7 +180,7 @@ def AppendICMenuBar(Win_, Name_, MenubarData_, MenuBar_=None):
             MenuBar_.AddToLoadMenu(menu_items)
             return MenuBar_
     except:
-        io_prnt.outErr(u'Ошибка создания меню <%s>!' % Name_)
+        log.error(u'Ошибка создания меню <%s>!' % Name_)
         return None
 
 
@@ -239,7 +239,7 @@ def appendMenuBar(Win_, Name_, MenubarData_, MenuBar_=None, RunnerResource_=None
             MenuBar_.AddToLoadMenu(menu_items)
             return MenuBar_
     except:
-        io_prnt.outErr(u'Ошибка создания меню <%s>!' % Name_)
+        log.error(u'Ошибка создания меню <%s>!' % Name_)
         return None
         
 
@@ -316,7 +316,7 @@ class icMenuBar(wx.MenuBar):
             #     но не будет отображатся в окне.
             return self
         except:
-            io_prnt.outErr(u'Ошибка загрузки меню')
+            log.error(u'Ошибка загрузки меню')
             return None
  
     def AddToLoadMenu(self, MenuItems_):
@@ -343,7 +343,7 @@ class icMenuBar(wx.MenuBar):
                         self.Register(item)
             return self
         except:
-            io_prnt.outErr(u'Ошибка загрузки горизонтального меню <%s>' % self._Name)
+            log.error(u'Ошибка загрузки горизонтального меню <%s>' % self._Name)
             return None
 
     def AppendMenuItem(self, Menu_, ItemName_, ItemStruct_):
@@ -409,7 +409,7 @@ class icMenuBar(wx.MenuBar):
             # очистить реестр
             self.ClearReg()
         except:
-            io_prnt.outErr(u'Ошибка очистки меню <%s>' % self._Name)
+            log.error(u'Ошибка очистки меню <%s>' % self._Name)
 
     def FindMenuByAlias(self, Name_):
         """
@@ -608,7 +608,7 @@ class icMenu(wx.Menu):
 
             self.DoMenu(MenuStruct_[RES_MENU_ITEMS])
         except:
-            io_prnt.outErr(u'Ошибка создания выпадающего меню!')
+            log.error(u'Ошибка создания выпадающего меню!')
 
     def getParentWindow(self):
         """
@@ -643,7 +643,7 @@ class icMenu(wx.Menu):
 
             return self
         except:
-            io_prnt.outErr(u'Ошибка загрузки выпадающего меню')
+            log.error(u'Ошибка загрузки выпадающего меню')
             return None
 
     def AppendMenuByStruct(self, MenuName_, MenuStruct_):
@@ -1039,7 +1039,7 @@ class icMenuItem(wx.MenuItem):
 
             self._SelfChecked = self.is_checked()
         except:
-            io_prnt.outErr(u'Ошибка создания пункта меню <%s>' % self._Name)
+            log.error(u'Ошибка создания пункта меню <%s>' % self._Name)
 
     def GetContext(self):
         return None
@@ -1073,7 +1073,7 @@ class icMenuItem(wx.MenuItem):
                 #    пункта к меню. Иначе она не будет отображаться!
                 self.SetBitmap(img)
         except:
-            io_prnt.outErr(u'Ошибка установки образа для пункта меню <%s>!' % Image_)
+            log.error(u'Ошибка установки образа для пункта меню <%s>!' % Image_)
             return
         
     def setBitmap(self, BmpPsp_):
@@ -1100,7 +1100,7 @@ class icMenuItem(wx.MenuItem):
                 #    пункта к меню. Иначе она не будет отображаться!
                 self.SetBitmap(img)
         except:
-            io_prnt.outErr(u'Ошибка установки картинки %s для пункта меню %s!' % (BmpPsp_, self.GetID()))
+            log.error(u'Ошибка установки картинки %s для пункта меню %s!' % (BmpPsp_, self.GetID()))
             return
 
     def DoAction(self):
@@ -1134,7 +1134,7 @@ class icMenuItem(wx.MenuItem):
             if item_id == self.GetID():
                 self.DoAction()
         except:
-            io_prnt.outErr(u'Ошибка выполнения команды:')
+            log.error(u'Ошибка выполнения команды:')
             event.Skip()
 
     def ToggleOffRadio(self):

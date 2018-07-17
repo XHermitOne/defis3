@@ -131,7 +131,7 @@ class icRefObjChoiceComboCtrlProto(wx.combo.ComboCtrl):
                 txt = self._ref_obj.getRequisiteValue('n_obj')
                 self.SetValue(txt)
             else:
-                io_prnt.outErr(u'Ошибка выбора бизнес объекта/документа <%s>. Результат %s' % (self._ref_obj.name, result))
+                log.error(u'Ошибка выбора бизнес объекта/документа <%s>. Результат %s' % (self._ref_obj.name, result))
 
     def DoSetPopupControl(self, popup):
         """

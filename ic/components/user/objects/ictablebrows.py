@@ -4,7 +4,7 @@
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icgrid as icgrid
 
 ### !!!! Данный блок изменять не рекомендуется !!!!

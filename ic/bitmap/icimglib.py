@@ -98,10 +98,10 @@ class icImgLibResource:
             self._img_lib_file = None
 
             if ic_mode.isDebugMode():
-                io_prnt.outLog(u'Загрузка библиотеки образов <%s>' % sImgLibFileName)
+                log.info(u'Загрузка библиотеки образов <%s>' % sImgLibFileName)
             return self._img_lib_text
         except:
-            io_prnt.outErr(u'Ошибка загрузки файла библиотеки образов <%s>' % sImgLibFileName)
+            log.error(u'Ошибка загрузки файла библиотеки образов <%s>' % sImgLibFileName)
             if self._img_lib_file:
                 self._img_lib_file.close()
                 self._img_lib_file = None
@@ -179,7 +179,7 @@ class icImgLibResource:
             self._img_lib_file = None
             return True
         except:
-            io_prnt.outErr(u'Ошибка сохранения файла библиотеки образов <%s>' % sImgLibFileName)
+            log.error(u'Ошибка сохранения файла библиотеки образов <%s>' % sImgLibFileName)
             if self._img_lib_file:
                 self._img_lib_file.close()
                 self._img_lib_file = None
@@ -203,7 +203,7 @@ class icImgLibResource:
                     end += 1
             return begin, end
         except:
-            io_prnt.outErr(u'Ошибка поиска блока образа <%s>.' % ImgName_)
+            log.error(u'Ошибка поиска блока образа <%s>.' % ImgName_)
             return None
           
     def delImgBlock(self, ImgName_):

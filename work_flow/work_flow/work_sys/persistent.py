@@ -383,7 +383,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 session.rollback()
                 # if session.is_active:
                 #    session.clear()
-            io_prnt.outErr(u'Ошибка сохранения данных мета-объекта [%s]' % self.name)
+            log.error(u'Ошибка сохранения данных мета-объекта [%s]' % self.name)
             return None
             
     def _saveCascadeData(self, Tab_, UUID_, Data_):
@@ -426,7 +426,7 @@ class icObjPersistent(icObjPersistentPrototype):
                         io_prnt.outWarning(u'Не найдены данные для дочерней таблицы/реквизита <%s>/<%s>' % (child_tab_name, child_name))
                 return result
         except:
-            io_prnt.outErr(u'Ошибка сохранения каскада данных мета-объекта [%s]' % self.name)
+            log.error(u'Ошибка сохранения каскада данных мета-объекта [%s]' % self.name)
         return False
 
     def _updateChildCascadeData(self, Tab_, Data_, ParentRecord_):
@@ -502,7 +502,7 @@ class icObjPersistent(icObjPersistentPrototype):
             result = self._addCascadeData(Tab_, Data_)
             return result
         except:
-            io_prnt.outErr(u'Ошибка сохранения каскада данных мета-объекта [%s]' % self.name)
+            log.error(u'Ошибка сохранения каскада данных мета-объекта [%s]' % self.name)
         return False
         
     def _load_data(self, UUID_=None):
@@ -523,7 +523,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 UUID_ = self.getUUID()
             return self._getCascadeDataTab(self.getTable(), UUID_, True)
         except:
-            io_prnt.outErr(u'Ошибка загрузки данных мета-объекта [%s]' % self.name)
+            log.error(u'Ошибка загрузки данных мета-объекта [%s]' % self.name)
             return None
         
     def load_data(self, UUID_=None):
@@ -551,7 +551,7 @@ class icObjPersistent(icObjPersistentPrototype):
             cascade_data = self._load_data(UUID_)
             return self._setCascadeData(cascade_data)
         except:
-            io_prnt.outErr(u'Ошибка загрузки данных мета-объекта [%s]' % self.name)
+            log.error(u'Ошибка загрузки данных мета-объекта [%s]' % self.name)
             return None
     
     def _getCascadeDataTab(self, Tab_, UUID_, OneBreak_=False):
@@ -583,7 +583,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 
                 return data
         except:
-            io_prnt.outErr(u'Ошибка определения каскада данных объекта [%s] из хранилища' % self.name)
+            log.error(u'Ошибка определения каскада данных объекта [%s] из хранилища' % self.name)
         return None
 
     def _getChildCascadeDataTab(self, Tab_, ParentUUID_):
@@ -651,7 +651,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     result = result and child_obj._setCascadeData(Data_[child_obj.name][0])
             return result
         except:
-            io_prnt.outErr(u'Ошибка каскадной установки значений реквизитов мета-объекта [%s]' % self.name)
+            log.error(u'Ошибка каскадной установки значений реквизитов мета-объекта [%s]' % self.name)
             return False
 
     def _getCascadeDataObj(self, bInsertChildData_=True):
@@ -688,7 +688,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     records = child._getData(Filter_={'parent': self.getUUID()})
                     
                 if ic_mode.isDebugMode():
-                    io_prnt.outLog(u'CHILD: <%s> RECORDS: %s' % (child.name, records))
+                    log.info(u'CHILD: <%s> RECORDS: %s' % (child.name, records))
                     
                 data[child.name] = records
                 
@@ -728,7 +728,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     pass
                     
                 if ic_mode.isDebugMode():
-                    io_prnt.outLog(u'CHILD: <%s> RECORDS: %s' % (child.name, records))
+                    log.info(u'CHILD: <%s> RECORDS: %s' % (child.name, records))
                     
                 data[child.name] = records
                 
@@ -741,7 +741,7 @@ class icObjPersistent(icObjPersistentPrototype):
         try:
             return self._getCascadeDataObj()
         except:
-            io_prnt.outErr(u'Ошибка определения данных мета-объекта [%s]' % self.name)
+            log.error(u'Ошибка определения данных мета-объекта [%s]' % self.name)
         return None
 
     def setValue(self, Value_):
@@ -754,7 +754,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 child.setValue(Value_[child.getFieldName()])
             return True
         except:
-            io_prnt.outErr(u'Ошибка установки данных мета-объекта [%s]' % self.name)
+            log.error(u'Ошибка установки данных мета-объекта [%s]' % self.name)
             return None
 
     def _getData(self, Tab_=None, Filter_=None):
@@ -772,9 +772,9 @@ class icObjPersistent(icObjPersistentPrototype):
                 return tab.queryAll(Filter_)
             else:
                 if ic_mode.isDebugMode():
-                    io_prnt.outErr(u'Не определена таблица мета-объекта [%s]' % self.name)
+                    log.error(u'Не определена таблица мета-объекта [%s]' % self.name)
         except:
-            io_prnt.outErr(u'Ошибка получения отфильтрованных данных объекта [%s]' % self.name)
+            log.error(u'Ошибка получения отфильтрованных данных объекта [%s]' % self.name)
         return None
 
     def add(self, UUID_=None, Data_=None, table=None):
@@ -810,7 +810,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 session.begin()
 
                 if ic_mode.isDebugMode():
-                    io_prnt.outLog(u'Meta-object [%s] Add data: %s' % (self.name, data_dict))
+                    log.info(u'Meta-object [%s] Add data: %s' % (self.name, data_dict))
 
                 result = self._addCascadeData(tab, data_dict)
                 
@@ -823,7 +823,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 # Откатить транзакцию
                 session.rollback()
                 # session.clear()
-            io_prnt.outErr(u'Ошибка добавления в хранилище объекта [%s]' % self.name)
+            log.error(u'Ошибка добавления в хранилище объекта [%s]' % self.name)
         return False
 
     def findChildByName(self, child_name):
@@ -916,7 +916,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     self._addCascadeData(tab_name, rec, rec_obj)
             return True
         except:
-            io_prnt.outErr(u'Ошибка добавления данных в каскад таблицы <%s>.' % Tab_)
+            log.error(u'Ошибка добавления данных в каскад таблицы <%s>.' % Tab_)
             return None
 
     def delete(self, UUID_=None):
@@ -940,7 +940,7 @@ class icObjPersistent(icObjPersistentPrototype):
 
                 # Получить данные объекта в каскадном представлении
                 if ic_mode.isDebugMode():
-                    io_prnt.outLog(u'Meta-object [%s] Delete data: <%s>' % (self.name, UUID_))
+                    log.info(u'Meta-object [%s] Delete data: <%s>' % (self.name, UUID_))
                 recs = tab.get_where(tab.c.uuid == UUID_)
 
                 # Получить идентификатор записи
@@ -964,7 +964,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 # Откатить транзакцию
                 transaction.rollback()
                 # session.clear()
-            io_prnt.outErr(u'Ошибка удаления из хранилища объекта [%s]' % self.name)
+            log.error(u'Ошибка удаления из хранилища объекта [%s]' % self.name)
         return False
 
     def clear(self, ask=False):
@@ -990,7 +990,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 records = transaction.query(tab.dataclass.columns.id).all()
                 obj_ids = [rec[0] for rec in records]
                 if ic_mode.isDebugMode():
-                    io_prnt.outLog(u'Meta-object [%s] Clear all data %s' % (self.name, obj_ids))
+                    log.info(u'Meta-object [%s] Clear all data %s' % (self.name, obj_ids))
 
                 result = True
                 for obj_id in obj_ids:
@@ -1006,7 +1006,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 # Откатить транзакцию
                 transaction.rollback()
                 # session.clear()
-            io_prnt.outErr(u'Ошибка очистки объектов [%s] из хранилища' % self.name)
+            log.error(u'Ошибка очистки объектов [%s] из хранилища' % self.name)
         return False
 
     def _getUuidsByParent(self, Tab_, ParentUUID_):
@@ -1047,14 +1047,14 @@ class icObjPersistent(icObjPersistentPrototype):
                     for child_rec in child_recs.fetchall():
                         result = result and child_obj._delCascadeData(child_tab, child_rec['id'], transaction)
                 else:
-                    io_prnt.outLog(u'Не найдено дочерних записей в таблице <%s>' % child_tab.getDBTableName())
+                    log.info(u'Не найдено дочерних записей в таблице <%s>' % child_tab.getDBTableName())
 
             # Удалить запись из родительской таблицы в конце
             tab.del_where_transact(tab.c.id == rec_id,
                                    transaction=transaction)
             return result
         except:
-            io_prnt.outErr(u'Ошибка каскадного удаления данных из таблицы <%s>.' % Tab_)
+            log.error(u'Ошибка каскадного удаления данных из таблицы <%s>.' % Tab_)
         return False
 
     def getChildrenRequisites(self):
@@ -1357,14 +1357,14 @@ class icObjPersistent(icObjPersistentPrototype):
         if not filter_requisite_data:
             filter_requisite_data = None
 
-        io_prnt.outLog(u'BUSINES OBJECT get data')
+        log.info(u'BUSINES OBJECT get data')
         data_filter = self.filterRequisiteData(filter_requisite_data)
-        io_prnt.outLog(u'\tFilter: <%s>' % data_filter)
+        log.info(u'\tFilter: <%s>' % data_filter)
         query = self.getFilterSQLAlchemy(data_filter,
                                          limit=limit if limit else self._limit)
-        # io_prnt.outLog(u'\tQuery: <%s>' % query)
+        # log.info(u'\tQuery: <%s>' % query)
         result = self.getTable().getConnection().execute(query)
-        io_prnt.outLog(u'\tResult: [%s]' % result.rowcount)
+        log.info(u'\tResult: [%s]' % result.rowcount)
         return self._resultFilter2Dataset(result.fetchall())
 
     # Другие наименования метода
@@ -1388,20 +1388,20 @@ class icObjPersistent(icObjPersistentPrototype):
         if not filter_requisite_data:
             filter_requisite_data = None
 
-        io_prnt.outLog(u'BUSINES OBJECT get count data')
+        log.info(u'BUSINES OBJECT get count data')
         data_filter = self.filterRequisiteData(filter_requisite_data)
-        io_prnt.outLog(u'\tFilter: <%s>' % data_filter)
+        log.info(u'\tFilter: <%s>' % data_filter)
         query = self.getFilterSQLAlchemy(data_filter)
         # ВНИМАНИЕ! Подзапрос должен иметь алиас.
         # Иначе возникает ошибка SQL <ERROR:  subquery in FROM must have an alias>
         #               v
         query = query.alias().count()
-        io_prnt.outLog(u'\tQuery: <%s>' % query)
+        log.info(u'\tQuery: <%s>' % query)
         # Небходимо просто получить число. Поэтому берем значение явно
         #                                                          v
         result = self.getTable().getConnection().execute(query).fetchone()
         int_result = result[0]
-        io_prnt.outLog(u'\tResult: [%s]' % int_result)
+        log.info(u'\tResult: [%s]' % int_result)
         return int_result
 
     # Другие наименования метода
@@ -1470,7 +1470,7 @@ class icAttrPersistent:
         try:
             field_name = str(self.name).lower()
         except UnicodeEncodeError:
-            io_prnt.outErr(u'Не латинские буквы в имени атрибута <%s> запрещены' % self.name)
+            log.error(u'Не латинские буквы в имени атрибута <%s> запрещены' % self.name)
             field_name = 'no_name_field'
         return field_name
         
@@ -1554,7 +1554,7 @@ class icAccRegPersistent(icObjPersistent):
         data_filter = self.filterRequisiteData()
         query = self.getFilterSQLAlchemy(data_filter, Fields_='*', limit=limit)
         result = query.execute()
-        io_prnt.outLog(u'ACCUMULATE REGISTRY get data\n\tResult: [%s]' % result.rowcount)
+        log.info(u'ACCUMULATE REGISTRY get data\n\tResult: [%s]' % result.rowcount)
         return self._resultFilter2Dataset(result.fetchall())
 
 

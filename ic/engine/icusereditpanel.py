@@ -3,7 +3,7 @@
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.kernel import io_prnt
@@ -178,7 +178,7 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
             if event:    
                 event.Skip()
         except:
-            io_prnt.outErr(u'Ошибка добавления нового пользователя.')
+            log.error(u'Ошибка добавления нового пользователя.')
         
     def onEditButtonMouseClick(self, event, values=None):
         """
@@ -198,7 +198,7 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
             if event:    
                 event.Skip()
         except:
-            io_prnt.outErr(u'Ошибка редактирования пользователя.')
+            log.error(u'Ошибка редактирования пользователя.')
         
     def onDelButtonMouseClick(self, event, values=None):
         """
@@ -217,7 +217,7 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
             if event:
                 event.Skip()
         except:
-            io_prnt.outErr(u'Ошибка удаления пользователя.')
+            log.error(u'Ошибка удаления пользователя.')
             
     def onUserGridItemSelected(self, event, values=None):
         """

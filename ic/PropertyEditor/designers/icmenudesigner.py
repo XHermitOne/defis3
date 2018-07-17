@@ -14,7 +14,7 @@
 # -----------------------------------------------------------------------------
 
 import wx
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icwidget as icwidget
 import ic.utils.resource as resource
 import ic.utils.graphicUtils as graphicUtils

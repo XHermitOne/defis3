@@ -35,7 +35,7 @@ from ic.components.icfont import *
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 from ic.utils.util import ic_eval, icSpcDefStruct, getICAttr
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 ICStaticTextStyle = {'ALIGN_LEFT': wx.ALIGN_LEFT,
                      'ALIGN_RIGHT': wx.ALIGN_RIGHT,

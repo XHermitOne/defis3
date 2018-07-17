@@ -57,7 +57,7 @@ def icFilterConstructorDlg(ParentWin_=None, DefaultFilterData_=None, Env_=None):
             return result
 
     except:
-        io_prnt.outLastErr(u'Ошибка конструктора фильтра')
+        log.fatal(u'Ошибка конструктора фильтра')
 
     finally:
         if dlg:
@@ -143,7 +143,7 @@ class icFilterConstructorDialog(wx.Dialog):
             self.SetSizer(self._boxsizer)
             self.SetAutoLayout(True)
         except:
-            io_prnt.outErr(u'Ошибка создания объекта диалогового окна конструктора фильтров')
+            log.error(u'Ошибка создания объекта диалогового окна конструктора фильтров')
         
     def OnOK(self, event):
         """

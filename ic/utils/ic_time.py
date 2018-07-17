@@ -18,7 +18,7 @@ except:
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 # --- Константы и переменные ---
 DEFAULT_DATETIME_FMT = '%d.%m.%Y'
@@ -77,7 +77,7 @@ def TodayFmt(Fmt_=DEFAULT_DATETIME_FMT):
     @return: Возвращает строку или None в случае ошибки.
     """
     try:
-        return datetime.date(2005, 01, 01).today().strftime(Fmt_)
+        return datetime.date(2005, 1, 1).today().strftime(Fmt_)
     except:
         log.fatal(_('ERROR') + ' in ic_time.TodayFmt')
         return None
@@ -89,7 +89,7 @@ def Today():
     @return: Объект date или None в случае ошибки.
     """
     try:
-        return datetime.date(2005, 01, 01).today()
+        return datetime.date(2005, 1, 1).today()
     except:
         log.fatal(_('ERROR') + ' in ic_time.Today')
         return None
@@ -136,7 +136,7 @@ def MinDayFmt(Fmt_=DEFAULT_DATETIME_FMT):
     @return: Возвращает строку или None в случае ошибки.
     """
     try:
-        return datetime.date(datetime.MINYEAR, 01, 01).strftime(Fmt_)
+        return datetime.date(datetime.MINYEAR, 1, 1).strftime(Fmt_)
     except:
         log.fatal(_('ERROR') + ' in ic_time.MinDayFmt')
         return None

@@ -15,7 +15,7 @@ from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
 from ic.components import icResourceParser as prs
 
-import ic.utils.util as util
+from ic.utils import util
 from ic.log import log
 from ic.bitmap import ic_bmp
 

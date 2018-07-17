@@ -38,10 +38,10 @@
     - C{NB_MULTILINE} - (Windows only) закладки могут располагаться в несколько строк.
 """
 import wx
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icwidget as icwidget
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 ICPagesBookStyle = {'DEFAULT': 0,
                     'NB_LEFT': wx.NB_LEFT,

@@ -38,7 +38,7 @@ from ic.components.icfont import icFont
 from ic.log.iclog import LogLastError
 from . import icheadcell
 from ic.kernel import io_prnt
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 SPC_IC_HEAD = {'type': 'Head',
                'name': 'Head',
@@ -268,7 +268,7 @@ class icHeader(icBase, wx.ScrolledWindow):
         try:
             self.sz.Add(cell, pos, cell.span, cell.add_style)
         except:
-            io_prnt.outLastErr(u'ADD ERROR')
+            log.fatal(u'ADD ERROR')
             
         self.parAddList.append(cell)
         self.parAddList.sort(sortCell)
@@ -579,7 +579,7 @@ def test(par=0):
     header.AddCell(cell)
     bsz.Add(header, (0, 0), (1, 1), 0, wx.EXPAND)
     
-    io_prnt.outLog(u'header.GetSize() = %s\t%s' % (header.GetSize(), header.size))
+    log.info(u'header.GetSize() = %s\t%s' % (header.GetSize(), header.size))
     frame.Show(True)
 
     app.MainLoop()

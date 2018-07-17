@@ -19,6 +19,8 @@ from . import ic_util
 from . import ic_file
 from . import util
 
+__version__ = (0, 1, 1, 1)
+
 _ = wx.GetTranslation
 
 # --- Основные константы ---
@@ -96,7 +98,7 @@ def ExecuteCode(Code_, self=None):
         # Выполнить
         return ic_util.icEval(Code_, 0, locals(), globals())
     except:
-        log.fatal()
+        log.fatal(u'Ошибка выполнения блока кода')
 
 
 def IsEmptyMethod(Func_):
@@ -117,7 +119,7 @@ def IsEmptyMethod(Func_):
         else:
             # Проверка метода
             if RES_METHOD in Func_ and Func_[RES_METHOD] != '' and \
-               Func_[RES_METHOD] <> '@' and Func_[RES_METHOD] is not None:
+               Func_[RES_METHOD] != CODE_UNIT_TAG and Func_[RES_METHOD] is not None:
                 find = False
         return find
     except:
@@ -158,6 +160,7 @@ def icExecFunc(Func_):
     @param Func_: Описание функции (См. спецификацию SPC_IC_FUNC).
     @return: Возвращает значение,  которое возвращает функция.
     """
+    name_space = dict()
     try:
         name_space = util.ic_import(Func_['import'])
         return util.ic_eval(Func_['func'], -1, name_space)
@@ -302,7 +305,7 @@ def RunTaskBAT(Cmd_):
         log.info(u'Run task: %s' % run_bat_name)
         os.startfile(run_bat_name)
     except:
-        log.fatal(u'Run task error: %s' % run_bat_name)
+        log.fatal(u'Ошибка запуска коммандного файла: %s' % run_bat_name)
         if f:
             f.close()
 
@@ -333,11 +336,11 @@ def RunProgramm(Cmd_, Mode_=os.P_NOWAIT):
                         
             args.append(parse_arg)
             i += 1
-        log.info(u'Run programm: %s' % args)
+        log.info(u'Запуск программы: %s' % args)
         os.spawnve(Mode_, args[0], args, os.environ)
         return True
     except:
-        log.fatal(u'Run programm error: %s' % Cmd_)
+        log.fatal(u'Ошибка запуска программы: %s' % Cmd_)
         return False
 
 
@@ -357,7 +360,7 @@ def RunOSCommand(Cmd_, Wait_=True):
             return RunProgramm(Cmd_)
         return True
     except:
-        log.fatal(u'Command error: %s' % Cmd_)
+        log.fatal(u'Ошибка запуска комманды ОС: %s' % Cmd_)
         return False
 
 
@@ -387,14 +390,14 @@ def execFuncStr(FuncStr_, NameSpace_=None, ReImport_=False, *args, **kwargs):
                 if ReImport_:
                     util.icUnLoadSource(func_mod)
                 import_str = 'import '+func_mod
-                exec import_str
+                exec(import_str)
             except:
-                log.fatal(u'Import module error: %s' % import_str)
+                log.fatal(u'Ошибка импорта модуля: %s' % import_str)
             NameSpace_.update(locals())
             result = eval(FuncStr_, globals(), NameSpace_)
         except:
-            log.fatal(u'Run module error: %s' % (FuncStr_, func_mod))
+            log.fatal(u'Ошибка запуска модуля: %s' % (FuncStr_, func_mod))
     except:
-        log.fatal(u'Error in function ic_exec.execFuncStr, %s' % FuncStr_)
+        log.fatal(u'Ошибка в функции ic_exec.execFuncStr, %s' % FuncStr_)
     
     return result

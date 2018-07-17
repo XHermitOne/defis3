@@ -56,19 +56,17 @@
 """
 
 import wx
+
 from ic.dlg.msgbox import MsgBox
-import ic.utils.util as util
 from ic.utils.coderror import *
 from . import icwidget
-import os, copy
 from .icgriddataset import defColDBDescription
 from .icgrid import *
 from .icfont import icFont, SPC_IC_FONT
-from ic.log.iclog import *
 from .icFieldTempl import *
-import ic.db.icsimpledataset as icsimpledataset
-from ic.kernel import io_prnt
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.db import icsimpledataset
+from ic.PropertyEditor import icDefInf
+from ic.log import log
 
 _ = wx.GetTranslation
 
@@ -148,7 +146,7 @@ ic_can_contain = ['GridCell', 'DataLink']
 #   список ic_can_contain
 ic_can_not_contain = None
 
-__version__ = (1, 0, 0, 8)
+__version__ = (1, 1, 1, 1)
 
 
 class icListDataset(icwidget.icWidget, wx.ListCtrl):
@@ -363,7 +361,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         try:
             self.rowDict.update(self.dataset.getDict(currentItem, True))
         except:
-            io_prnt.outErr(u'OnItemActivated ERROR:')
+            log.error(u'OnItemActivated ERROR:')
             self.rowDict = {}
         
         self.evalSpace['values'] = self.rowDict
@@ -416,6 +414,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         @rtype: C{string}
         @return: Текст нужной ячейки.
         """
+        templ = None
         try:
             fld = self.colNames[col]
             value = self.dataset.getNameValue(fld, item)
@@ -434,10 +433,10 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
             try:
                 value, point = setTempl(templ, value, -1)
             except Exception:
-                io_prnt.outErr(u'>> setTempl Error in OnGetItemText col=%d pic=%s' % (col, templ))
+                log.error(u'>> setTempl Error in OnGetItemText col=%d pic=%s' % (col, templ))
 
         except IndexError:
-            io_prnt.outErr(u'>> Key Error in OnGetItemText col=%d pic=%s' % (col, templ))
+            log.error(u'>> Key Error in OnGetItemText col=%d pic=%s' % (col, templ))
             value = ''
 
         return value
@@ -485,8 +484,6 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         """
         Обновляет данные в текстовом поле после изменения курсора в
         источнике данных.
-        @type link_key: C{String}
-        @param link_key: Имя источника данных.
         """
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:
@@ -500,8 +497,8 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         Устанавливаем фильтр на нужный объект данных.
         @type clsName: C{string}
         @param clsName: Имя класса данных на который устанавливается фильтр.
-        @type filter: C{string | dictionary}
-        @param filter: Фильтр, накладываемый на класс данных.
+        @type flt: C{string | dictionary}
+        @param flt: Фильтр, накладываемый на класс данных.
         @type isUpdSelf: C{bool}
         @param isUpdSelf: Признак того, что необходимо обновлять и состояние
             текущего объекта.
@@ -532,7 +529,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         except KeyError:
             MsgBox(None, _('Dataclass %s is not defined in context.') % clsName)
         except:
-            io_prnt.outErr(u'Error in ic.components.iclistdataset.setFilter')
+            log.error(u'Error in ic.components.iclistdataset.setFilter')
     
     def SetFilterField(self, clsName, fieldName, row):
         """
@@ -569,7 +566,8 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         except KeyError:
             MsgBox(None, _('Dataclass %s is not defined in context.') % clsName)
         except:
-            io_prnt.outErr(u'Error in ic.components.iclistdataset.SetFilterField')
-            
+            log.error(u'Error in ic.components.iclistdataset.SetFilterField')
+
+
 if __name__ == '__main__':
     pass

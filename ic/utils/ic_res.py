@@ -12,7 +12,7 @@
 import os
 import os.path
 import wx
-import cPickle
+import pickle
 
 from . import util
 from . import ic_file
@@ -20,20 +20,14 @@ from . import ic_file
 from . import ic_util
 from ic.log import log
 from ic.engine import ic_user
+# Функции блокировки ресурсов
+from . import lock
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
 # Основные константы
-# Индексы блоков данных в файле ресурсов ДВИЖКА
-# RES_IDX_RUN=0        #   <(0)словарь главных меню>,
-# RES_IDX_MENUBAR=1    #   <(1)словарь пунктов горизонтальных меню>,
-# RES_IDX_MENU_ITEM=2  #   <(2)словарь пунктов выпадающих меню>,
-# RES_IDX_POPUP_ITEM=3 #   <(3)словарь пунктов всплывающих меню>,
-# RES_IDX_POPUP=4      #   <(4)словарь всплывающих меню>,
-# RES_IDX_TOOLBAR=5    #   <(5)словарь панелей инструментов>,
-# RES_IDX_TOOL=6       #   <(6)словарь инструментов>,
 
 # Образ ресурсного файла в памяти
 CUR_MENU_RES_FILE_NAME = ''
@@ -129,8 +123,8 @@ def CreateInitFile(Path_):
     if os.path.isfile(init_file):
         return True
 
+    f = None
     try:
-        f = None
         f = open(init_file, 'w')
         f.write(_InitFileDefault)
         f.close()
@@ -174,8 +168,8 @@ def CreatePyFile(PyFileName_, PyFileBody_=None):
     """
     if os.path.isfile(PyFileName_):
         return True
+    f = None
     try:
-        f = None
         try:
             os.makedirs(os.path.dirname(PyFileName_))
         except:
@@ -208,7 +202,7 @@ def LoadResource(FileName_):
         struct = LoadResourceText(FileName_)
     if struct is None:
         # Но если не в тексте но ошибка!
-        log.warning(u'Invalid file format: %s.' % FileName_)
+        log.warning(u'Не корректный формат файла: %s.' % FileName_)
         return None
     return struct
 
@@ -220,10 +214,10 @@ def LoadResourcePickle(FileName_):
     """
     FileName_ = ic_file.AbsolutePath(FileName_)
     if os.path.isfile(FileName_):
+        f = None
         try:
-            f = None
             f = open(FileName_)
-            struct = cPickle.load(f)
+            struct = pickle.load(f)
             f.close()
             return struct
         except:
@@ -243,8 +237,8 @@ def LoadResourceText(FileName_):
     """
     FileName_ = ic_file.AbsolutePath(FileName_)
     if os.path.isfile(FileName_):
+        f = None
         try:
-            f = None
             f = open(FileName_)
             txt = f.read().replace('\r\n', '\n')
             f.close()
@@ -277,7 +271,7 @@ def SaveResourcePickle(FileName_, Resource_):
             pass
 
         f = open(FileName_, 'w')
-        cPickle.dump(Resource_, f)
+        pickle.dump(Resource_, f)
         f.close()
         log.info(u'File <%s> is saved in pickle format.' % FileName_)
         return True
@@ -334,9 +328,6 @@ def isPackage(Dir_):
         is_init_file = os.path.exists(Dir_+'/__init__.py')
     return bool(is_dir and is_init_file)
     
-# Функции блокировки ресурсов
-from . import lock
-
 
 def lockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     """

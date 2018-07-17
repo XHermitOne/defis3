@@ -25,7 +25,7 @@ import ic.components.icwidget as icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 import ic.db.icsqlalchemydataset as parentModule
 import ic.imglib.syscomp_img as syscomp_img

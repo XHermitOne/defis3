@@ -35,10 +35,10 @@ wx.EVT_TREE_KEY_DOWN, а не wx.EVT_KEY_DOWN, как у других компо
 import wx
 from ic.utils import ic_str
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.dlg import ic_dlg
 from ic.db import icsqlalchemy
 from ic.kernel import io_prnt
@@ -368,7 +368,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
                 return res['__record__']
             return None
         except:
-            io_prnt.outErr(u'ОШИБКА компонента <%s> метода getItemRecord' % self.name)
+            log.error(u'ОШИБКА компонента <%s> метода getItemRecord' % self.name)
             return None
 
     def getSelectionRecord(self):
@@ -395,7 +395,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
                     break
             return True
         except:
-            io_prnt.outErr(u'ОШИБКА компонента <%s> метода setLabelCols' % self.name)
+            log.error(u'ОШИБКА компонента <%s> метода setLabelCols' % self.name)
             return False
         
     def childCreator(self, bCounter, progressDlg):
@@ -552,7 +552,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
                     children.append(child)
             return children
         except:
-            io_prnt.outErr(u'ОШИБКА компонента <%s> метода определения списка дочерних элементов' % self.name)
+            log.error(u'ОШИБКА компонента <%s> метода определения списка дочерних элементов' % self.name)
             return None
         
     def findItemColumnString(self, string, curItem=None, columns=None, curColIdx=0, bILike=True):
@@ -632,7 +632,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
             # Все равно не нашли
             return None
         except:
-            io_prnt.outErr(u'ОШИБКА компонента <%s> метода поиска узла по строке' % self.name)
+            log.error(u'ОШИБКА компонента <%s> метода поиска узла по строке' % self.name)
             return None
         
     def selectFindItemColumn(self, string, columns=None, bILike=True):
@@ -733,7 +733,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
             # Все равно не нашли
             return None
         except:
-            io_prnt.outErr(u'ОШИБКА компонента <%s> метода поиска узла по строке' % self.name)
+            log.error(u'ОШИБКА компонента <%s> метода поиска узла по строке' % self.name)
             return None
         
     def _getNextItem4Find(self, Item_):

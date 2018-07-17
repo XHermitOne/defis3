@@ -4,7 +4,7 @@
 
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
 import ic.components.user.icsimplegrid as parentModule
 from ic.utils import graphicUtils
@@ -260,7 +260,7 @@ class CXPSpravTable(parentClass):
 
             self.ForceRefresh()
         except:
-            io_prnt.outErr(u'Exception in UpdateDataView')
+            log.error(u'Exception in UpdateDataView')
 
     def SendAddMess(self, num):
         """ Функция посылает сообщение на добавление строк в грид."""
@@ -283,7 +283,7 @@ class CXPSpravTable(parentClass):
             msg = wx.grid.GridTableMessage(self.GetTable(), wx.grid.GRIDTABLE_NOTIFY_ROWS_DELETED, cur, num)
             self.ProcessTableMessage(msg)
         except Exception:
-            io_prnt.outLog(u'Exception, wx.grid.GRIDTABLE_NOTIFY_ROWS_DELETED')
+            log.info(u'Exception, wx.grid.GRIDTABLE_NOTIFY_ROWS_DELETED')
             return False
 
         self.oldSize = self.GetTable().GetNumberRows()

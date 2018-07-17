@@ -4,7 +4,7 @@
 
 import wx
 import ic.components.icResourceParser as prs
-import ic.utils.util as util
+from ic.utils import util
 import ic.utils.coderror as coderror
 import ic.dlg.msgbox as msgbox
 

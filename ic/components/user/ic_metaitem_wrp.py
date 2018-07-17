@@ -47,10 +47,10 @@
 import wx
 import copy
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import ic.dlg.ic_dlg as ic_dlg
 from ic.kernel import io_prnt
@@ -734,7 +734,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
                     # Создать новое имя если это нужно
                     if Name_ is None:
                         Name_ = meta_type_obj.genNewName()
-                    io_prnt.outLog(u'Создание метаобъекта %s метакомпонента %s родитель: %s' % (Name_, Type_,
+                    log.info(u'Создание метаобъекта %s метакомпонента %s родитель: %s' % (Name_, Type_,
                                                                                                 self.name))
                     new_metaobj = meta_type_obj.createMetaObj(self, Name_)
                     if new_metaobj:
@@ -843,7 +843,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         """
         if MetaObject_ is None:
             MetaObject_ = self
-            io_prnt.outLog(u'METAITEM Save <%s> <%s>' % (MetaObject_.isValueChanged(), MetaObject_.isStructChanged()))
+            log.info(u'METAITEM Save <%s> <%s>' % (MetaObject_.isValueChanged(), MetaObject_.isStructChanged()))
 
         # Если не было никаких изменений, то сохранять не надо
         if (not MetaObject_.isValueChanged()) and \
@@ -1174,7 +1174,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         @return: Возвращает объект клона или None в случае неудачи.
         """
         try:
-            io_prnt.outLog(u'Создание клона %s метаобъекта %s родитель: %s' % (CloneName_, self.name,
+            log.info(u'Создание клона %s метаобъекта %s родитель: %s' % (CloneName_, self.name,
                                                                                self._Parent.name))
             clone = self._Parent._add(CloneName_, self.value.metatype)
             clone.Save()
@@ -1189,7 +1189,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
             clone.Save()
             return clone
         except:
-            io_prnt.outErr(u'Ошибка создания клона метаобъекта %s' % self.name)
+            log.error(u'Ошибка создания клона метаобъекта %s' % self.name)
             return None
 
     def copyChildren(self):
@@ -1224,7 +1224,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
             my_container_metaitems = [metaitem.name for metaitem in self.getMyContainerMetaItems()]
             return MetaObject_.value.metatype in my_container_metaitems
         except:
-            io_prnt.outErr()
+            log.error()
             return False
         
     def canPastChildren(self):
@@ -1261,7 +1261,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
                 new_child._deepcopyChildren(child[1]._children)
                 new_child.savePropertyStorage()
             except:
-                io_prnt.outErr(u'Ошибка создания и инициализации копии %s метаобъекта %s' % (new_child_name, child[0]))
+                log.error(u'Ошибка создания и инициализации копии %s метаобъекта %s' % (new_child_name, child[0]))
                 return False
         return True
 

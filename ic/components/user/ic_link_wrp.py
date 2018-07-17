@@ -22,10 +22,10 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.kernel import icobject
 
@@ -137,7 +137,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
                     ic_dlg.icWarningBox(u'ОШИБКА', u'ВНИМАНИЕ! Связанные таблицы должны находиться в одной БД.')
                     return coderror.IC_CTRL_FAILED_IGNORE
             except:
-                io_prnt.outErr(u'Ошибка контроля вводимого значения %s : %s' % (attr, value))
+                log.error(u'Ошибка контроля вводимого значения %s : %s' % (attr, value))
             return ret
 
 

@@ -102,21 +102,21 @@
 import os
 import wx
 
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from . import icEvents
-import ic.utils.graphicUtils as graphicUtils
-import ic.utils.resource as resource
-import ic.utils.util as util
+from ic.utils import graphicUtils
+from ic.utils import resource
+from ic.utils import util
 from ic.utils import ic_uuid
 from ic.log import log
 from . import icEvents
-import ic.dlg.msgbox as msg
-import ic.kernel.icobject as icobject
-import ic.kernel.icContext as icContext
-import ic.kernel.icsignalsrc as icsignalsrc
-import ic.kernel.io_prnt as io_prnt
+from ic.dlg import msgbox as msg
+from ic.kernel import icobject
+from ic.kernel import icContext
+from ic.kernel import icsignalsrc
 import ic
 
+__version__ = (1, 1, 1, 1)
 
 SPC_IC_SIMPLE = {'name': 'base',
                  'type': 'Base',
@@ -241,8 +241,6 @@ SPC_IC_SIZER = {'name': 'DefaultName',
 
 
 _ = wx.GetTranslation
-
-__version__ = (1, 0, 4, 6)
 
 #   Указатель на окно всплывающей подсказки
 icHelpStringWin = None
@@ -556,7 +554,7 @@ class icResObjContext(icContext.Context):
                     if is_ctrl_children:
                         self._setValueInCtrl(ctrl, DataDict_)
                 except wx.PyDeadObjectError:
-                    io_prnt.outErr(u'Обращение к разрушенному wx объекту')
+                    log.fatal(u'Обращение к разрушенному wx объекту')
 
     def _setCtrlValue(self, Control_, Value_=None, ErrMsg_=u''):
         """
@@ -570,7 +568,7 @@ class icResObjContext(icContext.Context):
                 Value_ = ''
             Control_.setValue(Value_)
         except:
-            io_prnt.outErr(ErrMsg_)
+            log.fatal(ErrMsg_)
         
     def clearValueInCtrl(self, Control_, DataNames_=None):
         """
@@ -636,7 +634,7 @@ class icResObjContext(icContext.Context):
                 if is_ctrl_children:
                     self._clearValueInCtrl(ctrl, DataNames_)
             except wx.PyDeadObjectError:
-                io_prnt.outErr(u'Обращение к разрушенному wx объекту')
+                log.fatal(u'Обращение к разрушенному wx объекту')
 
     def FindObject(self, type_=None, name=None):
         return icContext.Context.FindObject(self, type_, name)
@@ -675,7 +673,7 @@ class icResObjContext(icContext.Context):
                         try:
                             data[data_name] = ctrl.getValue()
                         except:
-                            io_prnt.outErr(u'Ошибка чтения значения контрола %s' % ctrl.name)
+                            log.fatal(u'Ошибка чтения значения контрола %s' % ctrl.name)
                 # Внимание! Контрол может принимать значения из нескольких
                 # полей. Эта функция включается только у тех контролов
                 # у которых это необходимо.
@@ -687,7 +685,7 @@ class icResObjContext(icContext.Context):
                             for i, data_name in enumerate(data_name_lst):
                                 data[data_name] = values[i]
                         except:
-                            io_prnt.outErr(u'Ошибка чтения значения контрола %s' % ctrl.name)
+                            log.fatal(u'Ошибка чтения значения контрола %s' % ctrl.name)
                             
                 # Обработать дочерние элементы
                 is_ctrl_children = bool(ctrl.get_children_lst())
@@ -695,7 +693,7 @@ class icResObjContext(icContext.Context):
                     child_data = self._getValueInCtrl(ctrl)
                     data.update(child_data)
             except wx.PyDeadObjectError:
-                io_prnt.outErr(u'Обращение к разрушенному wx объекту')
+                log.fatal(u'Обращение к разрушенному wx объекту')
         return data
 
 
@@ -854,7 +852,7 @@ class icSimple(icobject.icObject):
                     self._manager.Init()
                     self.GetContext()['__manager_object'] = self._manager
             else:
-                io_prnt.outWarning(u'Не определен класс менеджера компонента <%s> модуль: <%s>' % (self.__class__.__name__,
+                log.warning(u'Не определен класс менеджера компонента <%s> модуль: <%s>' % (self.__class__.__name__,
                                                                                                    res_module))
 
     def get_manager(self):
@@ -888,7 +886,7 @@ class icSimple(icobject.icObject):
             fn = os.path.dirname(self.GetContext()['__file_res'])+'/'+res['res_module']
 
             if not os.path.isfile(fn):
-                return io_prnt.outWarning(u'\t(!) Resource module: <%s> is not found' % fn)
+                return log.warning(u'\t(!) Resource module: <%s> is not found' % fn)
 
             try:
                 mod = None
@@ -900,13 +898,13 @@ class icSimple(icobject.icObject):
                 # Загружаем модуль, если не загружен
                 if not mod:
                     mod = util.icLoadSource(res['res_module'].replace('.', '_'), fn)
-                    io_prnt.outLog(u'\t(+) Load resource module: <%s>' % fn)
+                    log.info(u'\t(+) Load resource module: <%s>' % fn)
 
                 if not self.GetContext().get('res_module', False):
                     self.GetContext()['res_module'] = mod
                     self.__file_res_mod = mod
             except:
-                io_prnt.outErr(u'\t(-) Not load resource module: <%s>' % fn)
+                log.fatal(u'\t(-) Not load resource module: <%s>' % fn)
 
     def init_obj_module(self):
         """
@@ -918,7 +916,7 @@ class icSimple(icobject.icObject):
                 mod = util.icLoadSource(self.resource['obj_module'].replace('.', '_'), fn)
                 self.__obj_module = mod
             except:
-                io_prnt.outErr(_('\t(-) Failed to import object module: [%s : %s]') % (self.resource['obj_module'], fn))
+                log.fatal(_('\t(-) Failed to import object module: [%s : %s]') % (self.resource['obj_module'], fn))
 
     def get_children_lst(self):
         """
@@ -1113,7 +1111,7 @@ class icSimple(icobject.icObject):
                                    % (prop, str(value), self.type, self.name))
                         value = None
             except:
-                io_prnt.outErr(u'<< Unable load user property %s>>' % prop)
+                log.fatal(u'<< Unable load user property %s>>' % prop)
 
         return value
 
@@ -1287,13 +1285,13 @@ class icSimple(icobject.icObject):
         """
         Установить данные в виджет.
         """
-        io_prnt.outWarning(u'Не определен метод setValue компонента <%s>' % self.__class__.__name__)
+        log.warning(u'Не определен метод setValue компонента <%s>' % self.__class__.__name__)
 
     def getValue(self):
         """
         Получить данные из виджета.
         """
-        io_prnt.outWarning(u'Не определен метод getValue компонента <%s>' % self.__class__.__name__)
+        log.warning(u'Не определен метод getValue компонента <%s>' % self.__class__.__name__)
 
     def setValueBuff(self, Data_):
         """
@@ -1357,7 +1355,7 @@ class icSimple(icobject.icObject):
                     if child_data:
                         data.update(child_data)
             except wx.PyDeadObjectError:
-                io_prnt.outErr(u'Ошибка определения дочернего элемента')
+                log.fatal(u'Ошибка определения дочернего элемента')
         return data
     
     def setChildrenData(self, Data_):
@@ -1393,7 +1391,7 @@ class icSimple(icobject.icObject):
                 if child.isChildren():
                     child.setChildrenData(Data_)
             except wx.PyDeadObjectError:
-                io_prnt.outErr(u'Ошибка определения дочернего элемента')
+                log.fatal(u'Ошибка определения дочернего элемента')
                 
         return True
         
@@ -1583,7 +1581,7 @@ class icSizer(icBase):
         try:
             item.SetBorder(border)
         except:
-            io_prnt.outLog('SetBorder Failed in obj: <%s>' % obj)
+            log.error('SetBorder Failed in obj: <%s>' % obj)
 
         bCreate = True
         bSpacer = False
@@ -1598,7 +1596,7 @@ class icSizer(icBase):
                     self.SetItemMinSize(obj, obj.size)
         except:
             bCreate = False
-            io_prnt.outLastErr('Error in Sizer.Add()')
+            log.fatal(u'Ошибка в методе Sizer.Add()')
 
         if bCreate:
             self.AddItem(item)
@@ -1650,7 +1648,7 @@ class icSizer(icBase):
                 if x == obj:
                     return indx
             except:
-                io_prnt.outErr('GetIndex ERROR')
+                log.fatal(u'Ошибка в GetIndex')
 
         return -1
 
@@ -1793,7 +1791,7 @@ class icWidget(icBase, icEvent):
                 if con.src and issubclass(con.src.__class__, icsignalsrc.icWxEvtSignalSrc):
                     self.Bind(con.src.evt_id, self._generate_signal)
         except:
-            io_prnt.outErr(_('ERROR: Init source signal error.'))
+            log.fatal(_('ERROR: Init source signal error.'))
 
     def _generate_signal(self, evt):
         """
@@ -1849,8 +1847,7 @@ class icWidget(icBase, icEvent):
         if 'onInit' in self.resource:
             self.eval_attr('onInit')
         else:
-            io_prnt.outLog('### KeyError obj=(%s, %s, %s)'
-                           % (self.resource['name'], self.resource['type'], self))
+            log.warning(u'### KeyError obj=(%s, %s, %s)' % (self.resource['name'], self.resource['type'], self))
         evt.Skip()
 
     def PostOnInitEvent(self):
@@ -1966,7 +1963,7 @@ class icWidget(icBase, icEvent):
                     event = evt.Clone()
                     src.GetEventHandler().AddPendingEvent(event)
                 except:
-                    io_prnt.outErr('BackPropKeyDownEvt Error')
+                    log.fatal(u'Ошибка в BackPropKeyDownEvt')
         evt.Skip()
 
     def getRootObject(self):
@@ -1978,7 +1975,7 @@ class icWidget(icBase, icEvent):
             try:
                 return parent.getRootObject()
             except:
-                io_prnt.outErr(u'Ошибка определения корневого элемента объекта <%s>' % self.name)
+                log.fatal(u'Ошибка определения корневого элемента объекта <%s>' % self.name)
                 return None
         else:
             return self

@@ -6,7 +6,7 @@
 """
 
 import wx
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icwidget as icwidget
 import ic.components.icwxpanel as icwxpanel
 import ic.utils.resource as resource

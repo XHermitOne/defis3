@@ -63,7 +63,7 @@ from ic.utils.util import icSpcDefStruct
 from ic.components import icwidget
 import ic.kernel.io_prnt as io_prnt
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 from ic.log import log
 
@@ -220,7 +220,7 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
                         parent.EnableScrolling(*self.enableScr)
                         self.SetVirtualSizeHints(parent)
             except:
-                io_prnt.outErr(u'Ошибка при привязке сайзера')
+                log.error(u'Ошибка при привязке сайзера')
 
     def DrawShape(self, dc=None):
         """

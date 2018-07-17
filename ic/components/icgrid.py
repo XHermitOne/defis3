@@ -104,18 +104,16 @@
         для таблиц с большим количетвом записей и сложной алгоритмикой вычисления полей.
 """
 import wx
-import wx.grid as grid
-import wx.lib.mixins.gridlabelrenderer as glr
-#from ic.dlg.msgbox import MsgBox
-#from ic.log.iclog import *
 import types
-import ic.utils.util as util
+import copy
+from wx import grid
+import wx.lib.mixins.gridlabelrenderer as glr
+
+from ic.utils import util
 from . import icwidget
 from .icfont import SPC_IC_FONT
-import copy
-import ic.PropertyEditor.icDefInf as icDefInf
-import ic.kernel.io_prnt as io_prnt
-
+from ic.PropertyEditor import icDefInf
+from ic.log import log
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -269,6 +267,9 @@ SPC_IC_CELL = {'type': 'GridCell',
                '__parent__': icwidget.SPC_IC_SIMPLE,
                }
 
+#   Версия компонента
+__version__ = (1, 1, 1, 1)
+
 
 # Функции редактирования
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
@@ -319,22 +320,22 @@ def getIdAlignment(horiz, vert):
     @return: Возвращает кортеж, состоящий из идентификаторов. Пример ('left', 'top')
     @rtype: C{tuple}
     """
-    if type(horiz) in (str, unicode):
-        if unicode(horiz) == u'left':
+    if isinstance(horiz, str):
+        if horiz == u'left':
             iHoriz = wx.ALIGN_LEFT
-        elif unicode(horiz) == u'right':
+        elif horiz == u'right':
             iHoriz = wx.ALIGN_RIGHT
         else:
             iHoriz = wx.ALIGN_CENTRE
     else:
         iHoriz = horiz
 
-    if type(vert) in (str, unicode):
-        if unicode(vert) == u'top':
+    if isinstance(vert, str):
+        if vert == u'top':
             iVert = wx.ALIGN_TOP
-        elif unicode(vert) == u'bottom':
+        elif vert == u'bottom':
             iVert = wx.ALIGN_BOTTOM
-        elif unicode(vert) == u'centre':
+        elif vert == u'centre':
             iVert = wx.ALIGN_TOP
         else:
             iVert = wx.ALIGN_TOP
@@ -435,7 +436,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
             #   Вычисляем атрибут <show> колонки
             bShow = 1
             if 'show' in col:
-                if type(col['show']) in (str, unicode):
+                if isinstance(col['show'], str):
                     attr_show = '@' + col['show']
                     keyExpr = self.GetUUIDAttr('show', col['name'])
                     bShow = util.getICAttr(attr_show, evalSpace,
@@ -474,7 +475,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         try:
             return self.resource['cols'][indx]
         except:
-            io_prnt.outErr(u'GetIndxFieldResource error!')
+            log.fatal(u'Ошибка в функции GetIndxFieldResource')
     
     def GetWidthGrid(self):
         """
@@ -644,7 +645,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         try:
             header.ConnectGrid(self, bAuto, bHideOldHead)
         except:
-            io_prnt.outLog(u'Can\'t ConnectGrid() in icGrid.SetHeader')
+            log.fatal(u'Can\'t ConnectGrid() in icGrid.SetHeader')
         
     def getSelectionModeAttr(self):
         """
@@ -655,7 +656,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
             if attr_value in GRID_SELECTION_MODES:
                 return GRID_SELECTION_MODES[attr_value]
         except:
-            io_prnt.outLog(u'Not define attr selection_mode in Grid')
+            log.warning(u'Not define attr selection_mode in Grid')
         return grid.Grid.wxGridSelectCells
 
     def moveCursorFirst(self):

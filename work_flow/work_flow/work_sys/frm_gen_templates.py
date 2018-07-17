@@ -57,7 +57,7 @@ _stdTreeBrwsResModuleFmt = '''
             tree_ctrl.LoadTree(tree_data)
             return True 
         except:
-            ic.io_prnt.outErr(u'Ошибка инициализации дерева просмотра объекта')
+            ic.log.error(u'Ошибка инициализации дерева просмотра объекта')
             return False
         
 '''
@@ -116,7 +116,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_OK)
             self.context['result'] = self.GetObject('view_obj_grid').getSelectedObjUUID()
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <OK>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <OK>.')
         event.Skip()
 
     def onCancelButton(self, event):
@@ -128,7 +128,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_CANCEL)
             self.context['result'] = None
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <Отмена>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <Отмена>.')
         event.Skip()
 
     def onInit(self, event):
@@ -236,7 +236,7 @@ _cancelMouseClickScript = '''def onCancelButtonMouseClick(Context_):
         dlg.EndModal(wx.ID_CANCEL)
         Context_['result'] = None
     except:
-        ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <Отмена>.')
+        ic.log.error(u'Обработчик нажатия на кнопку <Отмена>.')
     return None
     
 '''
@@ -251,7 +251,7 @@ _okMouseClickScript = '''def onOkButtonMouseClick(Context_):
         dlg.EndModal(wx.ID_OK)
         Context_['result'] = True
     except:
-        ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <OK>.')
+        ic.log.error(u'Обработчик нажатия на кнопку <OK>.')
     return None
     
 '''
@@ -312,7 +312,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_OK)
             self.context['result'] = True
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <OK>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <OK>.')
         event.Skip()
 
     def onCancelButton(self, event):
@@ -324,7 +324,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_CANCEL)
             self.context['result'] = None
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <Отмена>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <Отмена>.')
         event.Skip()
 
     def onEditButton(self, event):
@@ -348,7 +348,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
                 # он будет работать в другом режиме
                 obj.Edit(Context_=ic.components.icwidget.icResObjContext())
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <Редактирование>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <Редактирование>.')
         event.Skip()
 
 
@@ -507,7 +507,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_OK)
             self.context['result'] = True
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <OK>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <OK>.')
         event.Skip()
 
     def onCancelButton(self, event):
@@ -519,7 +519,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_CANCEL)
             self.context['result'] = None
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <Отмена>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <Отмена>.')
         event.Skip()
 
 
@@ -590,7 +590,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             self.context['result'] = True
             
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <OK>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <OK>.')
         event.Skip()
 
     def onCancelButton(self, event):
@@ -602,7 +602,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_CANCEL)
             self.context['result'] = None
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <Отмена>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <Отмена>.')
         event.Skip()
         
     def onInitDlg(self, event):
@@ -731,7 +731,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_OK)
             self.context['result'] = True
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <OK>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <OK>.')
         event.Skip()
 
     def onCancelButton(self, event):
@@ -743,7 +743,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             dlg.EndModal(wx.ID_CANCEL)
             self.context['result'] = None
         except:
-            ic.io_prnt.outErr(u'Обработчик нажатия на кнопку <Отмена>.')
+            ic.log.error(u'Обработчик нажатия на кнопку <Отмена>.')
         event.Skip()
 
 

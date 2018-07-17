@@ -64,6 +64,6 @@ class icPasswordExternalEdt(passportobj.ic_user_property_editor):
         try:
             value = text
         except:
-            io_prnt.outErr(u'>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
+            log.error(u'>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
             return None
         return value

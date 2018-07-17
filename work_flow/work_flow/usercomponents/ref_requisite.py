@@ -25,7 +25,7 @@ from ic.utils import util
 from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
 from ic.utils import coderror
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 #from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportListUserEdt as pspListEdt

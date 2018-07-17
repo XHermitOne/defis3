@@ -91,7 +91,7 @@ def _get_requisite_field(requisite):
     """
     if ('field' not in requisite) or (not requisite['field']):
         if ('name' not in requisite) or (not requisite['name']):
-            io_prnt.outLog(u'Не определено поле хранения для реквизита <%s>' % requisite)
+            log.info(u'Не определено поле хранения для реквизита <%s>' % requisite)
             return None
         field = requisite['name'].lower()
     else:

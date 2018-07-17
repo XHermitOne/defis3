@@ -144,7 +144,7 @@ class UserResource(resManager.ResourceManagerInterface):
             self._user_res[NewUserName_]['name'] = NewUserName_
             return True
         except:
-            io_prnt.outErr(u'renameUser ERROR')
+            log.error(u'renameUser ERROR')
             return False
 
     def Copy(self, struct, parent=None):

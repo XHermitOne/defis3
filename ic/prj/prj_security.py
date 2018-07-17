@@ -153,7 +153,7 @@ class PrjSecurity(prj_node.PrjFolder):
             self.addChild(usr)
             return usr
         except:
-            io_prnt.outErr(u'Ошибка. Класс PrjSecurity Метод _addChildUser')
+            log.error(u'Ошибка. Класс PrjSecurity Метод _addChildUser')
             return None
         
     def _addChildRole(self, RoleName_):
@@ -172,7 +172,7 @@ class PrjSecurity(prj_node.PrjFolder):
             # Создать ресурс роли
             return role
         except:
-            io_prnt.outErr(u'ERROR. Class: PrjSecurity Method: _addChildRole')
+            log.error(u'ERROR. Class: PrjSecurity Method: _addChildRole')
             return None
             
     def _addChildUserGroup(self, UserGrpName_):
@@ -188,7 +188,7 @@ class PrjSecurity(prj_node.PrjFolder):
             self.addChild(usr)
             return usr
         except:
-            io_prnt.outErr(u'Ошибка. Класс PrjSecurity Метод _addChildUserGroup')
+            log.error(u'Ошибка. Класс PrjSecurity Метод _addChildUserGroup')
             return None
         
     def openRoles(self):
@@ -224,7 +224,7 @@ class PrjSecurity(prj_node.PrjFolder):
             elif user_type == 'UserGroup':
                 pass
             else:
-                io_prnt.outLog(u'ERROR: Unknown type <%s>' % user_type)
+                log.info(u'ERROR: Unknown type <%s>' % user_type)
 
     def _openBranch(self, UserGroupName_):
         """
@@ -508,7 +508,7 @@ class PrjUserGroup(prj_node.PrjFolder, PrjUserPrototype):
             self.addChild(usr)
             return usr
         except:
-            io_prnt.outErr(u'ОШИБКА. Класс PrjUserGroup Функция _addChildUser')
+            log.error(u'ОШИБКА. Класс PrjUserGroup Функция _addChildUser')
             return None
 
     def createUserGroup(self, UserGrpName_='new_user_grp'):
@@ -553,7 +553,7 @@ class PrjUserGroup(prj_node.PrjFolder, PrjUserPrototype):
             self.addChild(usr)
             return usr
         except:
-            io_prnt.outErr(u'ОШИБКА. Класс PrjUserGroup Функция _addChildUserGroup')
+            log.error(u'ОШИБКА. Класс PrjUserGroup Функция _addChildUserGroup')
             return None
 
 

@@ -38,7 +38,7 @@ def MenuToTree(Tree_, Name_, Index_, Data_):
             key = ic_menu.RES_MENU_ITEMS
             next_idx = ic.utils.ic_res.RES_IDX_POPUP_ITEM
         else:
-            io_prnt.outLog(u'Недопустимый индекс')
+            log.info(u'Недопустимый индекс')
             return {}
         
         tree = []
@@ -91,5 +91,5 @@ def MenuToTree(Tree_, Name_, Index_, Data_):
 
         return tree
     except:
-        io_prnt.outErr(u'Ошибка перекодировки описания движка в описание дерева')
+        log.error(u'Ошибка перекодировки описания движка в описание дерева')
         raise

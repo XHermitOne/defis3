@@ -137,10 +137,10 @@ def CreateInitFile(Path_):
         f = open(init_file, 'w')
         f.write(_InitFileDefault)
         f.close()
-        io_prnt.outLog(_('File %s is created.') % init_file)
+        log.info(_('File %s is created.') % init_file)
         return True
     except:
-        io_prnt.outErr(_('Create module error: %s/__init__.py') % Path_)
+        log.error(_('Create module error: %s/__init__.py') % Path_)
         if f:
             f.close()
         return False
@@ -189,10 +189,10 @@ def CreatePyFile(PyFileName_, PyFileBody_=None):
         else:
             f.write(str(PyFileBody_))
         f.close()
-        io_prnt.outLog(_('Module %s is created.') % PyFileName_)
+        log.info(_('Module %s is created.') % PyFileName_)
         return True
     except:
-        io_prnt.outErr(_('Create module error: %s') % PyFileName_)
+        log.error(_('Create module error: %s') % PyFileName_)
         if f:
             f.close()
         return False
@@ -211,7 +211,7 @@ def LoadResource(FileName_):
         struct = LoadResourceText(FileName_)
     if struct is None:
         # Но если не в тексте но ошибка!
-        io_prnt.outLog(_('Invalid file format: %s.') % FileName_)
+        log.info(_('Invalid file format: %s.') % FileName_)
         return None
     return struct
 
@@ -232,10 +232,10 @@ def LoadResourcePickle(FileName_):
         except:
             if f:
                 f.close()
-            io_prnt.outErr(_('Read resource file error: %s.') % FileName_)
+            log.error(_('Read resource file error: %s.') % FileName_)
             return None
     else:
-        io_prnt.outLog(_('Resource file %s is not found.') % FileName_)
+        log.info(_('Resource file %s is not found.') % FileName_)
         return None
 
 
@@ -255,10 +255,10 @@ def LoadResourceText(FileName_):
         except:
             if f:
                 f.close()
-            io_prnt.outErr(_('Read resource file error: %s.') % FileName_)
+            log.error(_('Read resource file error: %s.') % FileName_)
             return None
     else:
-        io_prnt.outLog(_('Resource file %s is not found.') % FileName_)
+        log.info(_('Resource file %s is not found.') % FileName_)
         return None
 
 
@@ -282,12 +282,12 @@ def SaveResourcePickle(FileName_, Resource_):
         f = open(FileName_, 'w')
         cPickle.dump(Resource_, f)
         f.close()
-        io_prnt.outLog(_('File %s is saved in pickle format.') % FileName_)
+        log.info(_('File %s is saved in pickle format.') % FileName_)
         return True
     except:
         if f:
             f.close()
-        io_prnt.outErr(_('Faild save file in pickle format: %s.') % FileName_)
+        log.error(_('Faild save file in pickle format: %s.') % FileName_)
         return False
 
 
@@ -316,12 +316,12 @@ def SaveResourceText(FileName_, Resource_, ToStruct_=False):
             text = str(Resource_)
         f.write(text)
         f.close()
-        io_prnt.outLog(_('Resource file %s is saved in text format.') % FileName_)
+        log.info(_('Resource file %s is saved in text format.') % FileName_)
         return True
     except:
         if f:
             f.close()
-        io_prnt.outErr(_('Faild save file in text format: %s.') % FileName_)
+        log.error(_('Faild save file in text format: %s.') % FileName_)
         return False
 
 
@@ -369,7 +369,7 @@ def lockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     comp_name = lock.ComputerName()
     user_name = ic.engine.ic_user.icGet('UserName')
     if ic_mode.isDebugMode():
-        io_prnt.outLog(u'Lock resource <%s>' % lock_file)
+        log.info(u'Lock resource <%s>' % lock_file)
     return lock.LockFile(lock_file, u'{\'computer\':\'%s\',\'user\':\'%s\'}' % (comp_name,
                                                                                 user_name))
 
@@ -393,7 +393,7 @@ def unlockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
                                                                 ResFileExt_.strip(), lock.LOCK_FILE_EXT)
     user_name = ic.engine.ic_user.getCurUserName()
     if ic_mode.isDebugMode():
-        io_prnt.outLog(u'Unlock resource <%s> : <%s>' % (lock_file, user_name))
+        log.info(u'Unlock resource <%s> : <%s>' % (lock_file, user_name))
     return lock.UnLockFile(lock_file, user=user_name)
 
 
@@ -425,7 +425,7 @@ def isLockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     is_lock = False
     if is_lock_file or is_lock_res:
         if ic_mode.isDebugMode():
-            io_prnt.outLog(u'Is lock resource <%s> : [%s : %s]' % (lock_file, is_lock_file, is_lock_res))
+            log.info(u'Is lock resource <%s> : [%s : %s]' % (lock_file, is_lock_file, is_lock_res))
             
         # Если файл блокировки есть, то
         # проверить кем он заблокирован
@@ -465,7 +465,7 @@ def getLockResOwner(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
         
     lock_file = LockDir_+'/%s_%s_%s%s' % (ResName_, ResFileName_,
                                           ResFileExt_, lock.LOCK_FILE_EXT)
-    io_prnt.outLog(u'Lock resource <%s> owner' % lock_file)
+    log.info(u'Lock resource <%s> owner' % lock_file)
     return lock.ReadLockRecord(lock_file)['user']
 
 

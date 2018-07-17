@@ -6,9 +6,9 @@
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import ic.kernel.io_prnt as io_prnt
 import STD.reestr_img as reestr_img
 

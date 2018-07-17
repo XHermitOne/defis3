@@ -26,13 +26,13 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.bitmap import ic_bmp
 from ic.utils import coderror
 from ic.dlg import ic_dlg
 from ic.utils import ic_time
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import work_flow.work_sys.numerator as parentModule
 # from work_flow.work_sys import icworkbase

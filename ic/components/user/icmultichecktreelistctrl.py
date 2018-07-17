@@ -18,8 +18,8 @@
 import wx
 from wx.lib.agw import customtreectrl
 
-import ic.utils.util as util
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.utils import util
+from ic.PropertyEditor import icDefInf
 
 from . import icsimpletreelistctrl
 

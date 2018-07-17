@@ -5,11 +5,13 @@
 Модуль содержит базовый класс для внешних редакторов.
 """
 
-import ic.utils.coderror as coderror
+from ic.utils import coderror
 import wx.lib.dialogs
 from ic.utils import ic_uuid
 from . import basefuncs
-from ic.kernel import io_prnt
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -53,7 +55,7 @@ class icBaseEdt:
         @param value: Контролируемое значение.
         """
         # Текст
-        if type(value) in (str, unicode):
+        if isinstance(value, str):
             return coderror.IC_CTRL_OK
         else:
             return coderror.IC_CTRL_FAILED
@@ -251,7 +253,7 @@ class icFileEdt(icBaseEdt):
         Функция контроля значения.
         @param value: Контролируемое значение.
         """
-        if type(value) in (str, unicode):
+        if isinstance(value, str):
             import os.path
             if os.path.isabs(value):
                 return coderror.IC_CTRL_OK
@@ -279,7 +281,7 @@ class icDirEdt(icBaseEdt):
         Функция контроля значения.
         @param value: Контролируемое значение.
         """
-        if type(value) in (str, unicode):
+        if isinstance(value, str):
             import os.path
             if os.path.isabs(value):
                 return coderror.IC_CTRL_OK
@@ -302,7 +304,7 @@ class icPyScriptEdt(icBaseEdt):
         """
         bgr = renderer.backgroundColor
         icPyScriptEdt.Clear(dc, rect, bgr)
-        text = unicode(grid.GetTable().GetValue(row, col))
+        text = str(grid.GetTable().GetValue(row, col))
         nf = text.find('\n')
         if nf >= 0:
             text = '<Script> %s' % text[:nf-1]
@@ -374,7 +376,7 @@ class icPyScriptEdt(icBaseEdt):
             if dlg:
                 dlg.Destroy()
         except:
-            io_prnt.outLastErr(u'PyScript HlpDlg ERROR')
+            log.fatal(u'PyScript HlpDlg ERROR')
 
         return prz, text, uuid_attr
 
@@ -549,7 +551,7 @@ class icChoiceEdt(icBaseEdt):
         @param value: Контролируемое значение.
         """
         # Текст
-        if type(value) in (str, unicode):
+        if isinstance(value, str):
             return coderror.IC_CTRL_OK
         else:
             return coderror.IC_CTRL_FAILED
@@ -649,7 +651,7 @@ class icTextListEdt(icBaseEdt):
             if dlg:
                 dlg.Destroy()
         except:
-            io_prnt.outLastErr(u'icTextListEdt HlpDlg ERROR')
+            log.fatal(u'icTextListEdt HlpDlg ERROR')
 
         return prz, text, uuid_attr
 
@@ -736,7 +738,7 @@ class icTextDictEdt(icBaseEdt):
             if dlg:
                 dlg.Destroy()
         except:
-            io_prnt.outLastErr(u'icTextDictEdt HlpDlg ERROR')
+            log.fatal(u'icTextDictEdt HlpDlg ERROR')
 
         return prz, text, uuid_attr
 
@@ -828,7 +830,7 @@ class icFontEdt(icBaseEdt):
             fnt['underline'] = font.GetUnderlined()
 
         dlg.Destroy()
-        return unicode(fnt)
+        return str(fnt)
 
 
 class icNumberEdt(icBaseEdt):
@@ -845,8 +847,8 @@ class icNumberEdt(icBaseEdt):
         Контроль.
         """
         # Преобразем строку к значению
-        #value = icNumberEdt.strToVal(value)
-        #if value is None:
+        # value = icNumberEdt.strToVal(value)
+        # if value is None:
         #    return value
 
         if type(value) in (int, float, bool):
@@ -997,7 +999,7 @@ class icCombineEdt(icBaseEdt):
             else:
                 icCombineEdt.DrawText(renderer, grid, style, dc, rect)
         except:
-            io_prnt.outLastErr(u'ERROR')
+            log.fatal(u'ERROR')
             icCombineEdt.DrawText(renderer, grid, style, dc, rect)
 
     @staticmethod
@@ -1006,8 +1008,8 @@ class icCombineEdt(icBaseEdt):
         Контроль.
         """
         # Преобразем строку к значению
-        #val = icCombineEdt.strToVal(value)
-        #if val is None:
+        # val = icCombineEdt.strToVal(value)
+        # if val is None:
         #    return val
 
         if type(value) in (int, float, bool):
@@ -1100,7 +1102,7 @@ class icColorEdt(icBaseEdt):
         dc.SetTextForeground(renderer.color)
         dc.SetTextBackground(bgr)
         dc.SetFont(renderer.font)
-        dc.DrawText(unicode(text), x+2*st+sx, y+1)
+        dc.DrawText(str(text), x+2*st+sx, y+1)
 
     @staticmethod
     def HlpDlg(parent, attr, value, pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -1233,7 +1235,7 @@ class icUserEdt(icBaseEdt):
                     if edtFunc(dc, cell_attr, rect, row, col, isSelected, propEdt):
                         return
             except:
-                io_prnt.outErr(_('User property eritor draw error.') + (' property: <%s>' % cell_attr))
+                log.fatal(_('User property editor draw error.') + (' property: <%s>' % cell_attr))
 
         return icBaseEdt.Draw(renderer, grid, cell_attr, dc, rect, row, col, isSelected)
 
@@ -1252,7 +1254,7 @@ class icUserEdt(icBaseEdt):
                 edtFunc = getattr(modl, 'property_editor_ctrl')
                 return edtFunc(attr, value, propEdt, *arg, **kwarg)
             except:
-                io_prnt.outErr(_('User property editor control error.') + (u' property: <%s>' % attr))
+                log.fatal(_('User property editor control error.') + (u' property: <%s>' % attr))
 
         return coderror.IC_CTRL_OK
 
@@ -1285,7 +1287,7 @@ class icUserEdt(icBaseEdt):
                 return edtFunc(attr, value, pos, size,
                                style, propEdt, *arg, **kwarg)
             except:
-                io_prnt.outErr(u'Ошибка вызова пользовательского редактора свойства <%s>' % attr)
+                log.fatal(u'Ошибка вызова пользовательского редактора свойства <%s>' % attr)
 
     @staticmethod
     def strToVal(text, propEdt=None, *arg, **kwarg):
@@ -1302,7 +1304,7 @@ class icUserEdt(icBaseEdt):
                 edtFunc = getattr(modl, 'str_to_val_user_property')
                 return edtFunc(propEdt.GetAttr(), text, propEdt, *arg, **kwarg)
             except:
-                io_prnt.outErr(u'Ошибка конвертации пользовательского свойства')
+                log.fatal(u'Ошибка конвертации пользовательского свойства')
         else:
             try:
                 value = eval(text)

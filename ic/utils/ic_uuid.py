@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import uuid
-import md5
+import hashlib
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 def get_uuid(*args):
@@ -37,7 +37,7 @@ def get_passport_check_sum(passport, asUUID=True):
     @return: Строка контрольной суммы.
     """
     data = str(passport)
-    data = md5.md5(data).hexdigest()
+    data = hashlib.md5.md5(data).hexdigest()
     if asUUID:
         data = data[:8]+'-'+data[8:12]+'-'+data[12:16]+'-'+data[16:20]+'-'+data[20:]
     return data
@@ -48,7 +48,7 @@ def valid_uuid(UUID):
     Проверка корректного значения UUID.
     @return: True/False.
     """
-    if type(UUID) not in (str, unicode):
+    if not isinstance(UUID, str):
         UUID = str(UUID)
     return len(UUID) == 36 and UUID[8] == '-' and UUID[13] == '-' and UUID[18] == '-' and UUID[23] == '-'
 
@@ -59,6 +59,7 @@ def test():
     """
     psp = (('A', 'a', None, 'test', 'STD'),)
     print(get_passport_check_sum(psp))
+
 
 if __name__ == '__main__':
     test()

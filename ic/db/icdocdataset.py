@@ -29,7 +29,7 @@
     - B{data_buff=[]}: Буфер данных, список списков.
 """
 
-import ic.utils.util as util
+from ic.utils import util
 from ic.utils.util import icSpcDefStruct
 import ic.utils.coderror as coderror
 import os

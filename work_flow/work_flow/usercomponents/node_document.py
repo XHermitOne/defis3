@@ -65,13 +65,13 @@
 import copy
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.kernel import io_prnt
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 import work_flow.doc_sys.icdocument as parentModule
 from work_flow.work_sys import icworkbase

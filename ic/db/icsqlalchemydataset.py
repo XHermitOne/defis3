@@ -74,7 +74,7 @@ import os
 import copy
 import string
 import time
-import ic.utils.util as util
+from ic.utils import util
 import ic.utils.resource as resource
 from ic.utils import ic_uuid
 import ic.utils.translate as translate
@@ -769,7 +769,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                     try:
                         value = self.spravBuff[fieldName][value]
                     except:
-                        io_prnt.outLastErr()
+                        log.fatal()
                     
                 # -------------------------------------------------------------------------------
                 if value is None:
@@ -778,7 +778,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 return value
                     
         except:
-            io_prnt.outErr('Error in field = \'%s\'' % fieldName)
+            log.error('Error in field = \'%s\'' % fieldName)
         
         return None
 
@@ -910,7 +910,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                         else:
                             ctrl_val = int(ctrl_ret)
                     except:
-                        io_prnt.outErr(u'INVALID RETURN CODE in CtrlVal')
+                        log.error(u'INVALID RETURN CODE in CtrlVal')
                         ctrl_val = IC_CTRL_OK
                         
                     if ctrl_val == IC_CTRL_FAILED:
@@ -979,11 +979,11 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                     else:
                         self.changeRowBuff[rec] = {fieldName: val}
                         
-                    io_prnt.outLog(u'BUFF_ROW=%s' % self.changeRowBuff[rec])
+                    log.info(u'BUFF_ROW=%s' % self.changeRowBuff[rec])
 
                 return ctrl_val
         except:
-            io_prnt.outErr('Error in \'%s\'' % fieldName)
+            log.error('Error in \'%s\'' % fieldName)
         
         return None
     
@@ -1067,7 +1067,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 # ---------------------------------------------------------------
                 #   Если поле нормальное, то изменяем соответствующий атрибут
                 #   объекта данных
-                io_prnt.outLog(u'UPDATE RECORD=%s: %s' % (rec, record))
+                log.info(u'UPDATE RECORD=%s: %s' % (rec, record))
                 if record is not None and record != {}:
                     tab = self.GetIDataclass()
                     if tab:
@@ -1081,7 +1081,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                         
                 return ctrl_val
         except:
-            io_prnt.outErr('Error in set(\'%s\')' % values)
+            log.error('Error in set(\'%s\')' % values)
         
         return None
     
@@ -1301,7 +1301,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                     #   Преобразуем значение поля к виду хранения и осуществляем
                     #   контроль значения
                     ctrl_val, obj = self.ctrlVal(fld, val, rec)
-                    io_prnt.outLog(u'CTRL FIELD: [%s : %s : %s]' % (val, ctrl_val, obj))
+                    log.info(u'CTRL FIELD: [%s : %s : %s]' % (val, ctrl_val, obj))
                                       
                     #   Если контроль не прошел, сообщаем об этом
                     if ctrl_val == IC_CTRL_FAILED:
@@ -1401,10 +1401,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 else:
                     self.GetIDataclass().delete(new_id)
                     self.oldMaxId = old_max_id
-                    io_prnt.outLog(u'addRecord Rollback on <post_init>')
+                    log.info(u'addRecord Rollback on <post_init>')
                     return False
         except:
-            io_prnt.outErr(u'Error in AddRecord')
+            log.error(u'Error in AddRecord')
             return False
         
         return True
@@ -1471,7 +1471,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             if self.post_del_rec:
                 self.eval_attr('post_del')
         except:
-            io_prnt.outErr(u'DELETE RECORD ERROR')
+            log.error(u'DELETE RECORD ERROR')
             codDel = IC_DEL_FAILED
             
         return codDel
@@ -1635,8 +1635,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         else:
             self._filterQuery = filt
         
-        io_prnt.outLog(u'____ FILTER: <%s>' % filt)
-        io_prnt.outLog(u'REAL FILTER: <%s>' % self._filterQuery)
+        log.info(u'____ FILTER: <%s>' % filt)
+        log.info(u'REAL FILTER: <%s>' % self._filterQuery)
         try:
             self.oldSize = self.getRecordCount()
         except:
@@ -1720,7 +1720,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 return True
 
         except:
-            io_prnt.outErr(u'Filter ERROR in filter:%s' % filter_tab)
+            log.error(u'Filter ERROR in filter:%s' % filter_tab)
         
         return False
         
@@ -1915,7 +1915,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             for id in self._lockBuff:
                 self.GetIDataclass().unLockObject(id)
         except:
-            io_prnt.outLastErr(u'SQLAlchemy Dataset. UnlockAll')
+            log.fatal(u'SQLAlchemy Dataset. UnlockAll')
         
     def isLock(self, rec=-1):
         """
@@ -1936,7 +1936,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             id = self.indexBuff[rec][0]
             ret = self.GetIDataclass().IsLockObject(id)
         except IndexError:
-            io_prnt.outLastErr(u'SQLAlchemy Dataset. isLock')
+            log.fatal(u'SQLAlchemy Dataset. isLock')
 
         return ret
 
@@ -2120,13 +2120,13 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             if id in self.bufferPageDict:
                 dict = self.bufferPageDict[id]
             elif len(self.bufferPageDict.keys()) > 0:
-                io_prnt.outLog(u'DEL row from indexBuff id=%s' % id)
+                log.info(u'DEL row from indexBuff id=%s' % id)
                 self._del_indexBuff[cursor] = id
         except KeyError:
-            io_prnt.outErr(u'KEY ERROR in getDict row=%d, id=%d' % (cursor, id))
+            log.error(u'KEY ERROR in getDict row=%d, id=%d' % (cursor, id))
             dict = None
         except:
-            io_prnt.outErr(u'ERROR in getDict row=%d, autocomit=' % cursor)
+            log.error(u'ERROR in getDict row=%d, autocomit=' % cursor)
             dict = None
             
         return dict
@@ -2180,7 +2180,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 if self._isSortDESC:
                     self.indexBuff.reverse()
         except:
-            io_prnt.outErr(u'Error in buffIndexes filter=%s' % self._filterQuery)
+            log.error(u'Error in buffIndexes filter=%s' % self._filterQuery)
             self._bInvalidFilter = True
             self.indexBuff = []
             self.oldMaxId = - 1
@@ -2302,7 +2302,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                                                                        str(id), like_expr,
                                                                        self.GetIDataclass().getIdName())
             
-        io_prnt.outLog(u'SEARCH SQL: <%s>' % s)
+        log.info(u'SEARCH SQL: <%s>' % s)
             
         result = self.GetIDataclass().queryAll(s.lower())
         if result is None:
@@ -2375,7 +2375,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             return prop
         
         except:
-            io_prnt.outErr(u'Error in getPropList SQL:%s' % s)
+            log.error(u'Error in getPropList SQL:%s' % s)
             
     def setParentIdDict(self, prnts):
         """
@@ -2402,7 +2402,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         try:
             return self._prnts_id[className]
         except:
-            io_prnt.outLastErr(u'ICSQLOBJDATASET: Invalid key in getParentId(%s)' % className)
+            log.fatal(u'ICSQLOBJDATASET: Invalid key in getParentId(%s)' % className)
 
     def SortField(self, fld, direction=None):
         """
@@ -2462,7 +2462,7 @@ def getDataset(className, subsys=None, logType=0, evalSpace=None):
         evalSpace['self'] = dataset
         dataset.eval_attr('init_expr')
     except:
-        io_prnt.outErr(u'Ошибка при создании объекта данных \'%s\' подсистемы \'%s\'' % (className, subsys_path))
+        log.error(u'Ошибка при создании объекта данных \'%s\' подсистемы \'%s\'' % (className, subsys_path))
         
     return dataset
 

@@ -397,7 +397,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                     ic_file.icCopyFile(ico_file,
                                        install_dir+'/'+os.path.basename(ico_file))
                 else:
-                    io_prnt.outLog(u'Файл иконки <%s> не существует' % ico_file)
+                    log.info(u'Файл иконки <%s> не существует' % ico_file)
                 
                 # Создание пакета прикладной системы
                 i += 1
@@ -417,7 +417,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                         ic_file.icCopyFile(package,
                                            install_dir+'/package/'+os.path.basename(package))
                     else:
-                        io_prnt.outLog(u'Файл пакета <%s> не существует' % package)
+                        log.info(u'Файл пакета <%s> не существует' % package)
 
                 # Сохранить скрипт инсталятора
                 i += 1
@@ -429,7 +429,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                     nsi_file.write(script)
                     nsi_file.close()
                 except:
-                    io_prnt.outErr(u'Ошибка сохранения скрипта инсталятора')
+                    log.error(u'Ошибка сохранения скрипта инсталятора')
                     if nsi_file:
                         nsi_file.close()
 
@@ -437,12 +437,12 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 i += 1
                 ic_dlg.icUpdateProgressDlg(i, u'Компилирование скрипта инсталятора')
                 nsis_cmd = '%s %s/setup.nsi' % (self.getInstallMaker(), install_dir)
-                io_prnt.outLog(u'Компиляция скрипта инсталятора '+nsis_cmd)
+                log.info(u'Компиляция скрипта инсталятора '+nsis_cmd)
                 ic_exec.icSysCmd(nsis_cmd)
 
                 ic_dlg.icCloseProgressDlg()
             except:
-                io_prnt.outErr(u'Ошибка создания инсталяционного пакета')
+                log.error(u'Ошибка создания инсталяционного пакета')
                 ic_dlg.icCloseProgressDlg()
                 
     def _makePrjInstall(self):
@@ -453,9 +453,9 @@ class NullsoftInstallSystem(PrjInstallMaker):
             prj_name = self.getPrjName()
             temp_dir = 'c:/temp/'+prj_name
             if os.path.exists(temp_dir):
-                io_prnt.outLog(u'INSTALL WIZARD DELETE TEMP DIR <%s>' % temp_dir)
+                log.info(u'INSTALL WIZARD DELETE TEMP DIR <%s>' % temp_dir)
                 ic_file.RemoveTreeDir(temp_dir)
-                io_prnt.outLog(u'INSTALL WIZARD DELETE TEMP DIR OK')
+                log.info(u'INSTALL WIZARD DELETE TEMP DIR OK')
 
             os.makedirs(temp_dir)
             # Скопировать необходимые папки и модули
@@ -463,7 +463,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
             prj_dir = os.path.dirname(self._prj_dir)
             main_dir = os.path.dirname(prj_dir)
             # Пакет ic
-            io_prnt.outLog(u'INSTALL WIZARD COPY ic PACKAGE <%s>' % main_dir)
+            log.info(u'INSTALL WIZARD COPY ic PACKAGE <%s>' % main_dir)
             ic_tmp_dir = temp_dir+'/ic'
             ic_file.CopyTreeDir(main_dir+'/ic', ic_tmp_dir)
             
@@ -472,7 +472,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 ic_file.delAllFilesFilter(ic_tmp_dir, '*.py', '*.bak')
 
             # Пакет прикладной системы
-            io_prnt.outLog(u'INSTALL WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
+            log.info(u'INSTALL WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
             usr_tmp_dir = temp_dir+'/'+os.path.basename(prj_dir)
             ic_file.CopyTreeDir(prj_dir,
                                 temp_dir+'/'+os.path.basename(prj_dir))
@@ -485,11 +485,11 @@ class NullsoftInstallSystem(PrjInstallMaker):
             arch_file_name = temp_dir+'/'+prj_name+'.exe'
             arch_cmd = '%s a -r -s -ep1 -sfx -df %s %s/*.*' % (rar_util,
                                                                arch_file_name, temp_dir)
-            io_prnt.outLog(u'INSTALL WIZARD Команда архивации: <%s>' % arch_cmd)
+            log.info(u'INSTALL WIZARD Команда архивации: <%s>' % arch_cmd)
             ic_exec.icSysCmd(arch_cmd)
             return arch_file_name
         except:
-            io_prnt.outErr(u'Ошибка архивации прикладной системы')
+            log.error(u'Ошибка архивации прикладной системы')
     
 
 # Шаблон для скрипта инсталятора py2exe
@@ -539,12 +539,12 @@ class py2exeInstallSystem(PrjInstallMaker):
                     setup_file.write(script)
                     setup_file.close()
                 except:
-                    io_prnt.outErr(u'Ошибка сохранения скрипта инсталятора')
+                    log.error(u'Ошибка сохранения скрипта инсталятора')
                     if setup_file:
                         setup_file.close()
             
             except:
-                io_prnt.outErr(u'Ошибка создания инсталяционного пакета')
+                log.error(u'Ошибка создания инсталяционного пакета')
 
     def setupScript(self):
         """
@@ -799,9 +799,9 @@ class zipPublicSystem(PrjInstallMaker):
             prj_name = self.getPrjName()
             temp_dir = os.environ['TMP']+'/'+prj_name
             if os.path.exists(temp_dir):
-                io_prnt.outLog(u'PUBLIC WIZARD DELETE TEMP DIR <%s>' % temp_dir)
+                log.info(u'PUBLIC WIZARD DELETE TEMP DIR <%s>' % temp_dir)
                 ic_file.RemoveTreeDir(temp_dir)
-                io_prnt.outLog(u'PUBLIC WIZARD DELETE TEMP DIR OK')
+                log.info(u'PUBLIC WIZARD DELETE TEMP DIR OK')
 
             os.makedirs(temp_dir)
             # Скопировать необходимые папки и модули
@@ -809,7 +809,7 @@ class zipPublicSystem(PrjInstallMaker):
             prj_dir = os.path.dirname(self._prj_dir)
             main_dir = os.path.dirname(prj_dir)
             # Пакет ic
-            io_prnt.outLog(u'PUBLIC WIZARD COPY ic PACKAGE <%s>' % main_dir)
+            log.info(u'PUBLIC WIZARD COPY ic PACKAGE <%s>' % main_dir)
             ic_tmp_dir = temp_dir+'/ic'
             ic_file.CopyDir(main_dir+'/ic', temp_dir)
             
@@ -817,7 +817,7 @@ class zipPublicSystem(PrjInstallMaker):
             ic_file.delAllFilesFilter(ic_tmp_dir, '*.bak', '*.pyc')
 
             # Пакет прикладной системы
-            io_prnt.outLog(u'PUBLIC WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
+            log.info(u'PUBLIC WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
             usr_tmp_dir = temp_dir+'/'+os.path.basename(prj_dir)
             ic_file.CopyDir(prj_dir, temp_dir)
             
@@ -835,7 +835,7 @@ class zipPublicSystem(PrjInstallMaker):
                 return self._makeArchiveZIP(temp_dir, prj_name)
             
         except:
-            io_prnt.outErr(u'Ошибка архивации прикладной системы')
+            log.error(u'Ошибка архивации прикладной системы')
         return None
             
     def _makeArchiveRAR(self, MainDir_, TempDir_, PrjName_):
@@ -847,7 +847,7 @@ class zipPublicSystem(PrjInstallMaker):
         arch_file_name = TempDir_+'/'+PrjName_+'_'+str(self.readPrjVersion())+'.zip'
         arch_cmd = '%s a -r -s -ep1 -afzip -df %s %s/*.*' % (arch_util,
                                                              arch_file_name, TempDir_)
-        io_prnt.outLog(u'PUBLIC WIZARD Команда архивации: '+arch_cmd)
+        log.info(u'PUBLIC WIZARD Команда архивации: '+arch_cmd)
         ic_exec.icSysCmd(arch_cmd)
         return arch_file_name
         
@@ -860,7 +860,7 @@ class zipPublicSystem(PrjInstallMaker):
         arch_file_name = TempDir_+'/'+PrjName_+'_'+str(self.readPrjVersion())+'.zip'
 
         arch_cmd = 'cd %s;%s -r %s *' % (TempDir_, arch_util, arch_file_name)
-        io_prnt.outLog(u'PUBLIC WIZARD Команда архивации: '+arch_cmd)
+        log.info(u'PUBLIC WIZARD Команда архивации: '+arch_cmd)
         ic_exec.icSysCmd(arch_cmd)
         return arch_file_name
         

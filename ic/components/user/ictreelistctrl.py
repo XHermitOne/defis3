@@ -22,10 +22,10 @@
 
 import wx
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import wx.gizmos as parentModule
 import ic.dlg.msgbox as msgbox
 from ic.dlg import progress

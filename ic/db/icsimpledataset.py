@@ -27,21 +27,19 @@
     - B{data_buff=[]}: Буфер данных, список списков.
 """
 
-import ic.utils.util as util
-from ic.utils.util import icSpcDefStruct
-from ic.log.iclog import MsgLastError, LogLastError
-from ic.engine import icUser as icuser
-import ic.utils.coderror as coderror
 import os
-import wx.grid as grid
 import copy
-import ic.interfaces.icdatasetinterface as icdatasetinterface
-import ic.utils.translate as translate
+from wx import grid
+
+from ic.utils.util import icSpcDefStruct
+from ic.engine import icUser
+from ic.utils import coderror
+from ic.interfaces import icdatasetinterface
+from ic.utils import translate
 from ic.utils import ic_str
 from ic.utils import ic_util
 from ic.db import icsqlalchemy
-import copy
-from ic.kernel import io_prnt
+from ic.log import log
 
 SPC_IC_SIMPLE_DATASET = {'type': 'SimpleDataset',
                          'name': 'DefaultName',
@@ -53,7 +51,7 @@ SPC_IC_SIMPLE_DATASET = {'type': 'SimpleDataset',
                          }
 
 #   Версия компонента
-__version__ = (1, 0, 0, 8)
+__version__ = (1, 1, 1, 1)
 
 
 class CChangeBuff(object):
@@ -71,7 +69,7 @@ class CChangeBuff(object):
         self.update_rows_dct = {}
 
     def get_key(self, row):
-        return tuple([row[col] for col in self.key_col_lst or xrange(len(row))])
+        return tuple([row[col] for col in self.key_col_lst or range(len(row))])
 
     def reg_add(self, row):
         key = self.get_key(row)
@@ -210,7 +208,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
                 self.description = self.rc_description
                 self.data = dict_file
         else:
-            if type(self.rc_description) in (str, unicode):
+            if isinstance(self.rc_description, str):
                 self.description = eval(self.rc_description)
             else:
                 self.description = self.rc_description
@@ -258,7 +256,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         @return: Возвращает в случае успеха код контроля (0,1,2), в противном случае None.
         """
         #   Проверка на права доступа к данному методу
-        if not icuser.canAuthent('wr', self.name, icuser.ACC_DATA):
+        if not icUser.canAuthent('wr', self.name, icUser.ACC_DATA):
             return None
 
         #   Если номер строки не указан, то номер записи определяем по положению курсора
@@ -297,7 +295,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         value = ''
         #   Проверка на права доступа к данному методу
-        if not icuser.canAuthent('r', self.name, icuser.ACC_DATA, False):
+        if not icUser.canAuthent('r', self.name, icUser.ACC_DATA, False):
             return ''
         #   Если номер строки не указан, то номер записи определяем по положению курсора
         if rec is None:
@@ -314,7 +312,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
                 indxFld = self.getFieldList().index(fieldName)
                 value = self.data[rec][indxFld]
             except:
-                LogLastError(u'getNameValue ERROR')
+                log.fatal(u'Ошибка в getNameValue')
 
         return value
 
@@ -356,7 +354,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
                 if self.allChangeBuff:
                     self.allChangeBuff.reg_update(self.data[rec])
             except:
-                LogLastError(u'update ERROR')
+                log.fatal(u'Ошибка в update')
 
             #   Чистим буфер изменений данной строки
             self.clearChangeRowBuff(rec)
@@ -380,7 +378,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         @rtype: C{bool}
         """
         #   Проверка на права доступа к данному методу
-        if not icuser.canAuthent('a', self.name,  icuser.ACC_DATA,  True):
+        if not icUser.canAuthent('a', self.name,  icUser.ACC_DATA,  True):
             return False
 
         rec = self.getRecordCount()
@@ -410,7 +408,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
             #   Чистим буфер введенной записи
             self.clearChangeRowBuff(rec)
         except:
-            LogLastError(u'addRecord ERROR')
+            log.fatal(u'Ошибка в addRecord')
 
         return True
 
@@ -424,7 +422,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         @rtype: C{int}
         """
         #   Проверка на права доступа к данному методу
-        if not icuser.canAuthent('d', self.name,  icuser.ACC_DATA,  True):
+        if not icUser.canAuthent('d', self.name,  icUser.ACC_DATA,  True):
             return coderror.IC_DEL_FAILED
 
         if rec is None:
@@ -635,7 +633,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         try:
             return self.data[rec]
         except IndexError:
-            io_prnt.outErr(u'icSimpleDataset getObj IndexError, rec=%s data=%s' % (rec, self.data))
+            log.fatal(u'icSimpleDataset getObj IndexError, rec=%s data=%s' % (rec, self.data))
         return None
 
     def SortField(self, fld, direction=None):
@@ -686,7 +684,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         except:
             if f:
                 f.close()
-            LogLastError(u'Exception in Open ...')
+            log.fatal(u'Ошибка при загрузке из файла')
 
     def Save(self):
         f = None
@@ -697,7 +695,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         except:
             if f:
                 f.close()
-            LogLastError(u'Exception in Update ...', self.logType)
+            log.fatal(u'Ошибка записи файла')
             raise Exception
 
     def SetDataBuff(self, buff):
@@ -754,12 +752,13 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
 
             return -1, None
         except:
-            LogLastError()
+            log.fatal(u'Ошибка поиска')
             # Подстрока не найдена
             return -1, None
 
     def isFieldIndexed(self, *arg, **kwarg):
         pass
+
 
 if __name__ == '__main__':
     pass

@@ -7,9 +7,9 @@ import os.path
 
 import ic.components.icResourceParser as prs
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.utils.coderror as coderror
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import wx.grid as Grid
 import ic.PropertyEditor.icEditorGridRender as icrender
 import ic.dlg.msgbox as msgbox
@@ -456,7 +456,7 @@ class PropNotebookEdt:
                             ide.insertEvtFuncToInterface(fl, func)
                             grid.EnableCellEditControl()
             except:
-                io_prnt.outLastErr('###')
+                log.fatal('###')
         
         return None
 
@@ -577,7 +577,7 @@ class PropNotebookEdt:
                         if ide and ide.SelectFile(fl):
                             ide.GoToFunc(func)
             except:
-                io_prnt.outLastErr('###')
+                log.fatal('###')
 
     def OnPostSelectGridCell(self, row, col):
         """
@@ -627,7 +627,7 @@ class PropNotebookEdt:
 
             self._last_sel = (row, col)
         except:
-            io_prnt.outLastErr('###')
+            log.fatal('###')
     
     def OnHelpFuncValues(self, grid, row, col, evt):
         """

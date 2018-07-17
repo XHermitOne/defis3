@@ -14,7 +14,7 @@ import os.path
 import ic.imglib.common as imglib
 import ic.utils.ic_file as ic_file
 import ic.utils.ic_res as ic_res
-import ic.utils.util as util
+from ic.utils import util
 import ic.dlg.ic_dlg as ic_dlg
 from ic.kernel import io_prnt
 
@@ -244,7 +244,7 @@ class PrjResource(prj_node.PrjNode):
             self.getRoot().synchroPrj(Refresh_=True)
             return ok
         except:
-            io_prnt.outErr(u'Create resource class error <%s>' % self.name)
+            log.error(u'Create resource class error <%s>' % self.name)
             return None
 
     def edit(self):
@@ -365,7 +365,7 @@ class PrjResource(prj_node.PrjNode):
         except:
             if copy_res_file:
                 copy_res_file.close()
-            io_prnt.outErr()
+            log.error()
         return node
         
     def paste(self, Node_):
@@ -491,7 +491,7 @@ class PrjTabRes(PrjResource):
                 tab = ic.db.icsqlalchemy.icSQLAlchemyTabClass(self.name)
                 tab.drop(del_cascade)
             except:
-                io_prnt.outErr(u'Ошибка удаления таблицы из БД при удалении ресурса')
+                log.error(u'Ошибка удаления таблицы из БД при удалении ресурса')
             
         return PrjResource.delete(self)
 

@@ -28,10 +28,10 @@
 import wx
 import os
 import ic.components.icwidget as icwidget
-import ic.utils.util as util
+from ic.utils import util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 import ic.components.icfont as icfont
 import ic.bitmap.icbitmap as icbitmap
 import ic.components.custom.icheadcell as icheadcell
@@ -170,7 +170,7 @@ class icTitle:
                 else:
                     obj.Show(bShow)
             except:
-                io_prnt.outLastErr('##?: Show Error')
+                log.fatal('##?: Show Error')
 
     def GetConnectedObj(self):
         return self._objList
@@ -380,7 +380,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
                         if obj not in self.GetConnectedObjLst():
                             self.ConnectObjToTitle(indx, obj)
                 except:
-                    io_prnt.outLastErr('')
+                    log.fatal('')
         self.SelectTitle()
 
     def OnSize(self, evt):
@@ -425,7 +425,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
             if obj not in self._connectedObjList:
                 self._connectedObjList.append(obj)
         except:
-            io_prnt.outLastErr('###?: ConnectObjToTitle() ERROR')
+            log.fatal('###?: ConnectObjToTitle() ERROR')
             
     def GetConnectedObjLst(self):
         """
@@ -516,7 +516,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
         try:
             return self.GetTitlesList()[indx]
         except:
-            io_prnt.outLastErr('##?: GetTitle ERROR')
+            log.fatal('##?: GetTitle ERROR')
             return None
             
     def CanPressNext(self):
@@ -650,7 +650,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
                         try:
                             item.SetBitmap(obj.bitmap)
                         except:
-                            io_prnt.outLastErr('')
+                            log.fatal('')
                         
                     menu.AppendItem(item)
                     self.Bind(wx.EVT_MENU, self.OnMenu, id=id)

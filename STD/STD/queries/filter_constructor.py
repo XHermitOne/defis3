@@ -280,7 +280,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
                                      filter_builder_env.REQUISITE_TYPE_NUM):
                     arg_edit = filter_builder_ctrl.icNumArgEdit(self.GetMainWindow(), arg)
                 else:
-                    io_prnt.outLog(u'Не определен тип <%s> аргумента <%s>' % (arg['type'], arg))
+                    log.info(u'Не определен тип <%s> аргумента <%s>' % (arg['type'], arg))
                     return None
         
             # Установить контролы на элементе
@@ -520,7 +520,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
                     if compare_function:   
                         item_data['__sql__'] = compare_function(**kwargs)
         else:
-            io_prnt.outLog(u'Ошибка определения типа элемента конструктора фильтров <%s>' % type_item)
+            log.info(u'Ошибка определения типа элемента конструктора фильтров <%s>' % type_item)
             return None
         
         # Добавить дочерние элементы
@@ -585,7 +585,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
                 if arg_edit:
                     arg_edit.setValue(Data_['arg_'+str(i_col-2)])
         else:
-            io_prnt.outLog(u'Ошибка определения типа элемента конструктора фильтров <%s>' % Data_['type'])
+            log.info(u'Ошибка определения типа элемента конструктора фильтров <%s>' % Data_['type'])
             return False
         return result
      

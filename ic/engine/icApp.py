@@ -121,7 +121,7 @@ class icApp(ic_app.icWXApp):
         # Завершить работу
         self._User.Logout()
         # Выполнение обработчика события при старте движка
-        io_prnt.outLog(u'Выход из системы.')
+        log.info(u'Выход из системы.')
         ic_util.print_defis_logo()
         return True
 
@@ -221,7 +221,7 @@ class icApp(ic_app.icWXApp):
                 self._MainWindow.showSplash()
                 self._MainWindow.Enable(self._Enabled)
             except:
-                io_prnt.outErr(u'Ошибка создания главного окна системы. Паспорт: <%s> тип паспорта: <%s>' % (MainWinPsp_,
+                log.error(u'Ошибка создания главного окна системы. Паспорт: <%s> тип паспорта: <%s>' % (MainWinPsp_,
                                                                                                              type(MainWinPsp_)))
                 return False
         else:

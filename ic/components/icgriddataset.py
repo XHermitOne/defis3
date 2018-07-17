@@ -23,27 +23,27 @@ from .icgrid import getIdAlignment
 from .icgrid import GRID_SELECTION_MODES
 from .icgrid import SPC_IC_CELL
 from .icfont import *
-from ic.log.iclog import *
 from . import icwidget
 from . import icEvents
-import ic.utils.frequencydict as frequencydict
-import ic.utils.associationdict as associationdict
+from ic.utils import frequencydict
+from ic.utils import associationdict
 
-import ic.utils.util as util
+from ic.utils import util
 from ic.utils import ic_uuid
 from ic.utils.coderror import *
-import ic.utils.translate as translate
-import ic.utils.lock as ic_lock
+from ic.utils import translate
+from ic.utils import lock as ic_lock
+from ic.log import log
 from . import icGridCellEditors as icEdt
-from ic.kernel import io_prnt
 from . import icgriddataset_erm
 from ic.kernel import icContext
 import ic
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 _ = wx.GetTranslation
 
-SPC_IC_GRID_DATASET = copy.deepcopy(SPC_IC_GRID)
+# SPC_IC_GRID_DATASET = copy.deepcopy(SPC_IC_GRID)
+SPC_IC_GRID_DATASET = SPC_IC_GRID
 SPC_IC_GRID_DATASET['type'] = 'GridDataset'
 
 # -------------------------------------------
@@ -82,7 +82,7 @@ ic_can_contain = ['GridCell']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 8)
+__version__ = (1, 1, 1, 1)
 
 #   Атрибуты редактируемых ячеек
 icAttrEditCell = {'backgroundColor': (255, 255, 255),
@@ -125,11 +125,11 @@ def getAttrKey(attrRes):
     @param attrRes: Описание аттрибута ячейки.
     """
     fk = util.icSpcDefStruct(SPC_IC_FONT, attrRes['font'])
-    font_key = unicode(fk['size']) + unicode(fk['family']) + unicode(fk['faceName']) + unicode(fk['style']) + unicode(fk['underline'])
-    key = (unicode(attrRes['foregroundColor']) + unicode(attrRes['backgroundColor']) +
-           font_key + unicode(attrRes['alignment']))
+    font_key = str(fk['size']) + str(fk['family']) + str(fk['faceName']) + str(fk['style']) + str(fk['underline'])
+    key = (str(attrRes['foregroundColor']) + str(attrRes['backgroundColor']) +
+           font_key + str(attrRes['alignment']))
     if 'readonly' in attrRes:
-        key += unicode(attrRes['readonly'])
+        key += str(attrRes['readonly'])
     return key
 
 
@@ -190,7 +190,7 @@ def createAttr(attrRes):
     #   Устанавливаем способ выравнивания по умолчанию
     if attrRes['alignment']:
         aln = attrRes['alignment']
-        if type(aln[0]) in (str, unicode):
+        if isinstance(aln[0], str):
             aln = getIdAlignment(*aln)
 
         attr.SetAlignment(* aln)
@@ -228,7 +228,7 @@ def iter_rowcol(gridData, lstBgColor, lstTextColor=None):
         attrRes = {'backgroundColor': clrBg, 'foregroundColor': clr}
         return attrRes
     except:
-        io_prnt.outErr('iter_rowcol error')
+        log.fatal(u'Ошибка в iter_rowcol')
     return {}
 
 
@@ -270,14 +270,14 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
         """
         try:
             if not self.colNames:
-                io_prnt.outWarning(u'Не определены колонки для грида <%s>' % self.grid.name)
+                log.warning(u'Не определены колонки для грида <%s>' % self.grid.name)
                 return None
             name = self.colNames[col]
             for count, oCol in enumerate(self.cols):
                 if oCol['name'] == name:
                     return count
         except:
-            io_prnt.outLastErr(u'### icGridDatasetData ERROR: GetDataCol [%d]' % col)
+            log.fatal(u'### icGridDatasetData ERROR: GetDataCol [%d]' % col)
         return None
 
     def defData(self, cols, dataset=None):
@@ -313,7 +313,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
         if dataset is None:
             #   Если источник данных прописан
             if self.grid.source:
-                MsgBox(self.grid, _('icGridDataset: Data source %s is not defined in the object context.') % unicode(self.link_res, 'utf-8'))
+                MsgBox(self.grid, _('icGridDataset: Data source %s is not defined in the object context.') % str(self.link_res))
             #   В противном случае используем стандартный icSimpleDataset
             else:
                 dataset = icsimpledataset.icSimpleDataset(icwidget.icNewId(),
@@ -563,7 +563,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
                     #   Если тип выражения картеж, то первый
                     #   элемент код контроля, второй словарь значений
                     if isinstance(ctrl_ret, tuple):
-                        io_prnt.outLog('>>> $$$# CTRL COL ctrl_ret=%s, value=%s' % (str(ctrl_ret), value))
+                        log.info('>>> $$$# CTRL COL ctrl_ret=%s, value=%s' % (str(ctrl_ret), value))
                         ctrl_val, values = ctrl_ret
                         if ctrl_val in [IC_CTRL_OK, IC_CTRL_REPL] and isinstance(values, dict):
                             for fld in values:
@@ -582,7 +582,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
                     else:
                         ctrl_val = int(ctrl_ret)
                 except:
-                    io_prnt.outErr(u'INVALID RETURN CODE in UpdateCell')
+                    log.error(u'INVALID RETURN CODE in UpdateCell')
                     ctrl_val = IC_CTRL_OK
 
                 if ctrl_val == IC_CTRL_FAILED:
@@ -603,7 +603,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
                                                                                     IC_STRING_FORMAT):
                         self.GetView()._freqDict.AddWordInFreqDict(fld_name, value)
                 except:
-                    io_prnt.outErr(u'FREQUENCY DICTIONARY ERROR')
+                    log.fatal(u'FREQUENCY DICTIONARY ERROR')
             # ----------------------------------
 
         # -------------------------------------------------------------------------------
@@ -787,7 +787,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
                 except:
                     MsgLastError(self.parent, u'Exception in setTempl()')
         except:
-            io_prnt.outErr(u'Error in GetValue')
+            log.fatal(u'Ошибка в GetValue')
             value = ''
             val = ''
 
@@ -799,7 +799,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
                 self.GetDataset().delRecord(row)
                 self.GetView().SendDelMess(row, 1)
         except:
-            io_prnt.outLastErr(u'GridDataset. Check del rec')
+            log.fatal(u'Ошибка GridDataset. Проверка удаления записи')
         #   Проверяем не появились ли в источнике данных новые записи.
         try:
             if self.GetDataset().isAdded():
@@ -808,7 +808,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
                 num = self.GetDataset().AddExternal()
                 self.GetView().SendAddMess(num)
         except:
-            io_prnt.outLastErr(u'GridDataset. Check new rec')
+            log.fatal(u'Ошибка GridDataset. Проверка новой записи')
         return value
 
     def SetValue(self, row, col, value):
@@ -1009,7 +1009,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
                 else:
                     attr = attrRes
             except:
-                io_prnt.outErr(u'Error in GetAttr:')
+                log.fatal(u'Ошибка в GetAttr')
                 return None
         return attr
 
@@ -1062,7 +1062,7 @@ class icGridDataset(icGrid):
                                                'ERROR in getICAttr() attr<width>=%s' % col['width'])
                     self.SetColSize(i, int(width))
                 except:
-                    io_prnt.outLastErr(u'GridDataset. Set col size')
+                    log.fatal(u'Ошибка GridDataset. Установка размера колонки')
         # Устанавливаем атрибуты ячеек по умолчанию
         if isinstance(self.cell_attr, dict):
             attr = self.cell_attr
@@ -1173,7 +1173,7 @@ class icGridDataset(icGrid):
         try:
             self.evalSpace['dataclass'] = self.dataset.dataclass
         except:
-            io_prnt.outLastErr(u'GridDataset. Set dataclass')
+            log.fatal(u'Ошибка GridDataset. Установка набора записей')
 
         # Обработчики событий
         self.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.OnLeftDClick)
@@ -1254,7 +1254,7 @@ class icGridDataset(icGrid):
             self._asscDict = {}
 
         if self.GetDataset():
-            asscDictName = 'dataclass_association_dict:'+self.GetDataset().name+unicode(key_tuple)
+            asscDictName = 'dataclass_association_dict:'+self.GetDataset().name+str(key_tuple)
             asscDict = associationdict.icAssociationDict(asscDictName, key_tuple, val_tuple)
             self._asscDict[key_tuple] = asscDict
 
@@ -1276,7 +1276,7 @@ class icGridDataset(icGrid):
         try:
             return self.GetTable().colNames[col]
         except:
-            io_prnt.outErr(u'### GRIDDATASET ERROR')
+            log.fatal(u'Ошибка определения имени колонки')
 
     def getNameValue(self, col_name, row=None):
         """
@@ -1333,14 +1333,14 @@ class icGridDataset(icGrid):
 
     def ClearSortPrz(self):
         """
-        Сбрасывает приознак сортировки у всех колонок.
+        Сбрасывает признак сортировки у всех колонок.
         """
         try:
             for col, val in enumerate(self.cols):
                 rndr = self.GetColLabelRenderer(col)
                 rndr.sortDirection = 0
         except:
-            io_prnt.outLog(u'Not found renderer for col=%d' % col)
+            log.fatal(u'Not found renderer for col=%d' % col)
 
     def SortCol(self, col, direction=None):
         """
@@ -1373,7 +1373,7 @@ class icGridDataset(icGrid):
                             self.GetDataset()._isSortDESC = False
                     sl = []
                     indexBuff = self.GetDataset().getIndexBuff()
-                    for row in xrange(self.GetNumberRows()-1):
+                    for row in range(self.GetNumberRows()-1):
                         val = self.GetTable().GetValue(row, col)
                         sl.append((indexBuff[row], val))
                     #   Сортируем список, а затем собираем новый буфер идентификаторов
@@ -1393,7 +1393,7 @@ class icGridDataset(icGrid):
                     else:
                         rndr.sortDirection = 1
                 except:
-                    io_prnt.outLog(u'Not found renderer for col=%d' % col)
+                    log.fatal(u'Not found renderer for col=%d' % col)
 
                 #   Обновляем грид
                 self.ForceRefresh()
@@ -1465,7 +1465,7 @@ class icGridDataset(icGrid):
         try:
             self.GetDataset().UnlockAll()
         except:
-            io_prnt.outLastErr(u'GridDataset. UnlockAll')
+            log.fatal(u'Ошибка сброа блокировок GridDataset.')
         #
         #   Сохраняем системные настройки и настройки пользователя
         #
@@ -1476,7 +1476,7 @@ class icGridDataset(icGrid):
                 i = GetColFromName(self.cols, col['name'])
                 wcols[col['name']] = self.GetColSize(i)
             except:
-                io_prnt.outLastErr(u'GridDataset. Save col size')
+                log.fatal(u'Ошибка сохранения размеров колонки GridDataset.')
 
         self.SaveUserProperty('wcols', wcols)
         #   Сохраняем частотный словарь ввода
@@ -1603,7 +1603,7 @@ class icGridDataset(icGrid):
                 try:
                     editor.setNSIPsp(self.GetTable().exCols[col]['nsi_psp'])
                 except:
-                    io_prnt.outLastErr(u'Set NSI external grid cell editor')
+                    log.fatal(u'Set NSI external grid cell editor')
             #   Если не поставить такой стиль, то в диалоговом окне ENTER в
             #   редакторе не отрабатывает
             style = editor.GetTextCtrl().GetWindowStyle()
@@ -1637,10 +1637,10 @@ class icGridDataset(icGrid):
                         msg = eval(msg)
                         msg = msg['user']
                     except:
-                        io_prnt.outLastErr(u'GridDataset. read lock message')
+                        log.fatal(u'GridDataset. read lock message')
                     MsgBox(self.GetView(), u'Запись заблокирована пользователем: <%s>' % unicode(msg, 'utf-8'))
             except:
-                io_prnt.outErr(u'GRIDDATASET LOCK ERROR')
+                log.error(u'GRIDDATASET LOCK ERROR')
         try:
             editor = self.editors[col]
         #   Если для колонки спец. редактора нет, то пробуем взять последний созданный
@@ -1710,7 +1710,7 @@ class icGridDataset(icGrid):
             elif kcod == wx.WXK_DELETE:
                 pass
         except:
-            io_prnt.outErr(u'KEYDOWN EDITOR ERROR')
+            log.error(u'KEYDOWN EDITOR ERROR')
 
         evt.Skip()
 
@@ -1734,7 +1734,7 @@ class icGridDataset(icGrid):
         try:
             self.GetDataset().Unlock(row)
         except:
-            io_prnt.outLastErr(u'GridDataset. Unlock row <%s>' % row)
+            log.fatal(u'GridDataset. Unlock row <%s>' % row)
 
         evt.Skip()
 
@@ -1810,9 +1810,9 @@ class icGridDataset(icGrid):
                         #   Если возвращаемое значение картеж, то собираем из
                         #   него строку
                         if isinstance(ret_val, tuple):
-                            ret_val = ''.join([unicode(x) for x in ret_val])
+                            ret_val = ''.join([str(x) for x in ret_val])
                         else:
-                            ret_val = unicode(ret_val)
+                            ret_val = str(ret_val)
                         ctrl_cod = self.GetTable().UpdateCell(row, col, ret_val)
                         self.Refresh()
                         #   Если указан словарь дополнительных значений, то
@@ -1829,7 +1829,7 @@ class icGridDataset(icGrid):
                                     if ctrlFld == IC_CTRL_FAILED:
                                         MsgBox(self, _('Invalid field value %s, col=%d, row=%d') % (fld, col, row))
         except:
-            io_prnt.outErr(_('Analize return code error <hlp>: %s') % val)
+            log.error(_('Analize return code error <hlp>: %s') % val)
 
         self.SetFocus()
         self.SetCursor(row)
@@ -1944,14 +1944,14 @@ class icGridDataset(icGrid):
             try:
                 self.editors[col].Copy()
             except:
-                io_prnt.outLastErr(u'GridDataset. Copy clipboard')
+                log.fatal(u'GridDataset. Copy clipboard')
         elif keycod == wx.WXK_INSERT and evt.ShiftDown() and self.CanEnableCellControl():
             self.EnableCellEditControl()
             #   Копируем значение из Clipboard
             try:
                 self.editors[col].Paste()
             except:
-                io_prnt.outLastErr(u'GridDataset. Paste clipboard')
+                log.fatal(u'GridDataset. Paste clipboard')
         elif keycod in (wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_UP, wx.WXK_DOWN):
             evt.Skip()
         else:
@@ -2049,7 +2049,7 @@ class icGridDataset(icGrid):
 
                 self.ForceRefresh()
         except:
-            io_prnt.outLog(u'Exception in UpdateDataView')
+            log.fatal(u'Exception in UpdateDataView')
 
     def AddRows(self, num=1, bAddData=True):
         """
@@ -2140,7 +2140,7 @@ class icGridDataset(icGrid):
             msg = wx.grid.GridTableMessage(self.GetTable(), wx.grid.GRIDTABLE_NOTIFY_ROWS_DELETED, cur, num)
             self.ProcessTableMessage(msg)
         except Exception:
-            io_prnt.outLog(u'Exception, wx.grid.GRIDTABLE_NOTIFY_ROWS_DELETED')
+            log.fatal(u'Exception, wx.grid.GRIDTABLE_NOTIFY_ROWS_DELETED')
             return False
 
         if self.dataset:
@@ -2189,7 +2189,7 @@ class icGridDataset(icGrid):
                 for gr in gridList:
                     gr.GetTable().Update()
             except:
-                io_prnt.outErr(u'')
+                log.error(u'')
 
             #   Если буфер заполнен, то необходимо запросить потверждение на
             #   обновление данных и обновить данные. В противном случае изменения
@@ -2210,11 +2210,11 @@ class icGridDataset(icGrid):
                         #   Обновляем связанные гриды
                         self.evalSpace['_has_source'][key].UpdateDataView(real_name)
                 except:
-                    io_prnt.outLastErr(u'GridDataset. Update view')
+                    log.fatal(u'GridDataset. Update view')
         except KeyError:
             MsgBox(self.GetView(), _('Dataclass %s is not defined in context.') % clsName)
         except:
-            io_prnt.outErr(u'Error in ic.components.iclistdataset.setFilter')
+            log.error(u'Error in ic.components.iclistdataset.setFilter')
 
     def SetFilterField(self, clsName, fieldName, value=None, bReplNames=True):
         """
@@ -2256,11 +2256,11 @@ class icGridDataset(icGrid):
                         self.evalSpace['_has_source'][key].UpdateViewFromDB(clsName)
                         self.evalSpace['_has_source'][key].UpdateDataView(clsName)
                 except:
-                    io_prnt.outLastErr(u'GridDataset. Update view')
+                    log.fatal(u'GridDataset. Update view')
         except KeyError:
             MsgBox(self.GetView(), _('Dataclass %s is not defined in context.') % clsName)
         except:
-            io_prnt.outErr(u'Error in ic.components.icgriddataset.SetFilterField')
+            log.error(u'Error in ic.components.icgriddataset.SetFilterField')
 
     def GetView(self):
         return self

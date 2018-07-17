@@ -1177,7 +1177,7 @@ class icTreeDirStorage(icDirStorage):
                 ic_file.RemoveTreeDir(StorageDir_, True)
                 ic_file.MakeDirs(StorageDir_)
             except:
-                io_prnt.outErr(u'Ошибка очистки папки объектного хранилища <%s>' % StorageDir_)
+                log.error(u'Ошибка очистки папки объектного хранилища <%s>' % StorageDir_)
         
     def getStorageDir(self):
         return self.getNodeDir()

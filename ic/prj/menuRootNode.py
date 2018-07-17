@@ -87,7 +87,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
 
         # Определен проект открыт уже или нет?
         prj_none = self._Parent.isOpened()
-        io_prnt.outLog(u'Проект открыт <%s>' % self._Parent.isOpened())
+        log.info(u'Проект открыт <%s>' % self._Parent.isOpened())
 
         # 'Сохранить'
         self.saveID = wx.NewId()
@@ -397,7 +397,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                     www_browser = os.environ.get('BROWSER', DEFAULT_WWW_BROWSER)
                     ic_exec.icSysCmd(www_browser + ' ' + hlp_file_name)
                 except:
-                    io_prnt.outErr()
+                    log.error()
         else:
             ic_dlg.icWarningBox(u'ПОМОЩЬ',
                                 u'Файл помощи <%s> не найден. Запустите генерацию документации :-)' % hlp_file_name)
@@ -433,7 +433,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         """
         start_filename = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'contrib', 'pyreditor', 'pyreditor.pyw')
         cmd = '%s %s&' % (sys.executable, start_filename)
-        io_prnt.outLog(u'Выполнение команды ОС <%s>' % cmd)
+        log.info(u'Выполнение команды ОС <%s>' % cmd)
         os.system(cmd)
 
     def OnDiffTool(self, event):
@@ -441,7 +441,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         Утилита сравнения файлов.
         """
         cmd = 'meld &'
-        io_prnt.outLog(u'Выполнение команды ОС <%s>' % cmd)
+        log.info(u'Выполнение команды ОС <%s>' % cmd)
         os.system(cmd)
 
     def OnMakePublic(self, event):
@@ -488,7 +488,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
             # Обновление дерева проектов
             self._Parent.getRoot().getParent().Refresh()
         except:
-            io_prnt.outErr(u'Ошибка запуска визарда импорта метаобъектов 1С')
+            log.error(u'Ошибка запуска визарда импорта метаобъектов 1С')
 
     def OnWXFormBuilder(self, event):
         """

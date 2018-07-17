@@ -14,9 +14,9 @@ StdReestrBox (MetaTree <DirStorage> )
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.utils.util as util
+from ic.utils import util
 import copy
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from STD import reestr_img
 from ic.components.user import ic_metaitem_wrp
 import ic.engine.ic_user as ic_user

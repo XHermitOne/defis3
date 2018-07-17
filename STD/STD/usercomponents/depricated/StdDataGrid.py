@@ -8,8 +8,8 @@
 """
 import wx
 import ic.interfaces.ictemplate as ictemplate
-import ic.PropertyEditor.icDefInf as icDefInf
-import ic.utils.util as util
+from ic.PropertyEditor import icDefInf
+from ic.utils import util
 import copy
 
 ### Общий интерфейс компонента

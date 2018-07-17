@@ -64,14 +64,14 @@ def set_ini_file(prj_path):
     global ini_file
     prj_path = prj_path.replace('\\', '/')
     ini_file = ('%s/%s.ini' % (prj_path, prj_path.split('/')[-2])).replace('//', '/')
-    io_prnt.outLog('SET INI FILE VARIABLE ini_file=%s' % ini_file)
+    log.info('SET INI FILE VARIABLE ini_file=%s' % ini_file)
 
 
 def load_ini_param(section, par):
     if ini_file and os.path.isfile(ini_file):
         return ini.loadParamINI(ini_file, section, par)
     else:
-        io_prnt.outLog('(!) INI File [%s] not found' % ini_file)
+        log.info('(!) INI File [%s] not found' % ini_file)
 
 
 def get_loader():

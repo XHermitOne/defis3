@@ -30,10 +30,10 @@ import wx
 # from ic.log.iclog import MsgLastError, LogLastError
 # from ic.utils.util import icSpcDefStruct
 from ic.components.icfont import *
-import ic.utils.util as util
+from ic.utils import util
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 from ic.components import icwindow
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 
 SPC_IC_CHECK_LIST_BOX = {'type': 'CheckListBox',
                          'name': 'default',

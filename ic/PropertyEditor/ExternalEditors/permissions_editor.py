@@ -39,6 +39,6 @@ class icPermissionsEdt(object):
             #else:
             value = text
         except:
-            io_prnt.outErr('>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
+            log.error('>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
             return None
         return value
