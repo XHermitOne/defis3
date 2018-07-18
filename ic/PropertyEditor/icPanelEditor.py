@@ -1589,7 +1589,7 @@ class icBackgroundDocumentFrame(icBackground, icwidget.icBase, wx.ScrolledWindow
                     self.object.SetPosition((x, y))
                     self.Refresh()
                     
-            except Exception, msg:
+            except Exception as msg:
                 log.error('OnSizeBgr <%s>' % msg)
                 
         if evt:

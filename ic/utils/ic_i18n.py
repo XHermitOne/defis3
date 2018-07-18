@@ -5,8 +5,8 @@
 # Dependancies
 import os
 import wx
-import wx.lib.langlistctrl as langlist
-import wx.combo
+from wx.lib import langlistctrl as langlist
+import wx.adv
 import glob
 from . import resource
 
@@ -14,6 +14,7 @@ from . import resource
 __author__ = 'Cody Precord <cprecord@editra.org>'
 __svnid__ = '$Id: ed_i18n.py 50147 2007-11-22 07:44:22Z CJP $'
 __revision__ = '$Revision: 50147 $'
+__version__ = (0, 1, 1, 1)
 
 # ----------------------------------------------------------------------------
 # Global Variables
@@ -77,7 +78,7 @@ def GetLangId(lang_n):
 
 
 # ---- Language List Combo Box----
-class LangListCombo(wx.combo.BitmapComboBox):
+class LangListCombo(wx.adv.BitmapComboBox):
     """
     Combines a langlist and a BitmapComboBox
     """
@@ -92,15 +93,16 @@ class LangListCombo(wx.combo.BitmapComboBox):
         lang_ids = GetLocaleDict(GetAvailLocales()).values()
         lang_items = langlist.CreateLanguagesResourceLists(langlist.LC_ONLY,
                                                            lang_ids)
-        wx.combo.BitmapComboBox.__init__(self, parent, id_, 
-                                         size=wx.Size(250, 26), 
-                                         style=wx.CB_READONLY)
+        wx.adv.BitmapComboBox.__init__(self, parent, id_,
+                                       size=wx.Size(250, 26),
+                                       style=wx.CB_READONLY)
         for lang_d in lang_items[1]:
             bit_m = lang_items[0].GetBitmap(lang_items[1].index(lang_d))
             self.Append(lang_d, bit_m)
 
         if default:
             self.SetValue(default)
+
 
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':

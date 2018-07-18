@@ -31,14 +31,15 @@
 
 import os
 import os.path
-import cStringIO
+import io
 import wx
+
 from ic.utils import util
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.components.icwidget import icWidget,  SPC_IC_WIDGET
 from ic.bitmap.icbitmap import icBitmapType
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.components import icwindow
 from ic.PropertyEditor import icDefInf
 
@@ -48,7 +49,7 @@ def getBitmap(img_data):
 
 
 def getImage(img_data):
-    stream = cStringIO.StringIO(img_data)
+    stream = io.BytesIO(img_data)
     return wx.ImageFromStream(stream)
 
 
@@ -106,7 +107,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 4)
+__version__ = (1, 1, 1, 1)
 
 
 class icStaticBitmap(icWidget, wx.StaticBitmap):

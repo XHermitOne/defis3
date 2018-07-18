@@ -7,7 +7,7 @@
 
 import wx
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 def is_same_wx_object(wx_obj1, wx_obj2):
@@ -59,7 +59,7 @@ def isWxDeadObject(wx_object):
     @param wx_object: WX объект.
     @return: True/False.
     """
-    return isinstance(wx_object, wx._core._wxPyDeadObject)
+    return not wx_object  # avoid a PyDeadObject error
 
 
 def wxColour2StrHex(colour):

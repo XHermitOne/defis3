@@ -432,9 +432,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         # Обработчики событий
         # Поиск в дереве ресурса
-        self.Bind(wx.EVT_COMMAND_FIND, self.OnFind)
-        self.Bind(wx.EVT_COMMAND_FIND_NEXT, self.OnFind)
-        self.Bind(wx.EVT_COMMAND_FIND_CLOSE, self.OnFindClose)
+        # self.Bind(wx.wxEVT_COMMAND_FIND, self.OnFind)
+        # self.Bind(wx.wxEVT_COMMAND_FIND_NEXT, self.OnFind)
+        # self.Bind(wx.wxEVT_COMMAND_FIND_CLOSE, self.OnFindClose)
 
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChanged, id=id)
         # self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightClick)
@@ -1814,7 +1814,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         self.SplitHorizontally(panel, panel2, 100)
 
         self.toolbar = wx.ToolBar(panel, icwidget.icNewId(), pos=(0, 0), size=(300, -1),
-                                  style = TBFLAGS)
+                                  style=TBFLAGS)
         self.toolbar.SetToolBitmapSize(wx.Size(16, 16))
         # ВНИМАНИЕ!!! Устанавливать цвет фона не надо, иначе он прорисовывается на кнопках!!!
 
@@ -1822,41 +1822,41 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         # работы с файлами ресурсов (Создать, открыть, сохранить, ...).
         if component['style_work'] == 'single':
             id = icwidget.icNewId()
-            self.toolbar.AddTool(bitmap=common.imgFolderOpen,  shortHelpString=u'Открыть', id=id)
+            self.toolbar.AddTool(id, u'Open', common.imgFolderOpen, shortHelp=u'Открыть')
             self.Bind(wx.EVT_TOOL, self.OnLoad, id=id)
 
             id = icwidget.icNewId()
-            self.toolbar.AddTool(bitmap=common.imgSave, shortHelpString=u'Сохранить', id=id)
+            self.toolbar.AddTool(id, u'Save', common.imgSave, shortHelp=u'Сохранить')
             self.Bind(wx.EVT_TOOL, self.OnSave, id=id)
 
             id = icwidget.icNewId()
-            self.toolbar.AddTool(bitmap=common.imgSaveAs, shortHelpString=u'Сохранить как ...', id=id)
+            self.toolbar.AddTool(id, u'SaveAs', common.imgSaveAs, shortHelp=u'Сохранить как ...')
             self.Bind(wx.EVT_TOOL, self.OnSaveAs, id=id)
 
         id = icwidget.icNewId()
-        self.toolbar.AddTool(bitmap=common.imgTrash, shortHelpString=u'Удалить', id=id)
+        self.toolbar.AddTool(id, u'Del', common.imgTrash, shortHelp=u'Удалить')
         self.Bind(wx.EVT_TOOL, self.OnDelete, id=id)
 
         id = icwidget.icNewId()
         self.toolbar.AddSeparator()
-        self.toolbar.AddTool(bitmap=common.imgPlay, shortHelpString=u'Тестировать', id=id)
+        self.toolbar.AddTool(id, u'Test', common.imgPlay, shortHelp=u'Тестировать')
         self.Bind(wx.EVT_TOOL, self.OnTest, id=id)
 
         self.toolbar.AddSeparator()
 
         # Кнопка для вызова графического редактора
         id = icwidget.icNewId()
-        self.toolbar.AddTool(bitmap=common.imgDesigner, shortHelpString=u'Дизайнер', id=id)
+        self.toolbar.AddTool(id, u'Design', common.imgDesigner, shortHelp=u'Дизайнер')
         self.Bind(wx.EVT_TOOL, self.OnGraphEditor, id=id)
 
         # Кнопка для генерации пользовательского класса
         id = icwidget.icNewId()
-        self.toolbar.AddTool(bitmap=common.imgEdtComponent,
-                             shortHelpString=u'Создать пользовательский компонент', id=id)
+        self.toolbar.AddTool(id, u'NewComponent', common.imgEdtComponent,
+                             shortHelp=u'Создать пользовательский компонент')
         self.Bind(wx.EVT_TOOL, self.OnUserClass, id=id)
 
         id = icwidget.icNewId()
-        self.toolbar.AddTool(bitmap=common.imgEdtResModule, shortHelpString=u'Модуль ресурса', id=id)
+        self.toolbar.AddTool(id, u'ResModule', common.imgEdtResModule, shortHelp=u'Модуль ресурса')
         self.Bind(wx.EVT_TOOL, self.OnPyScript, id=id)
 
         self.toolbar.Realize()

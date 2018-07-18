@@ -7,13 +7,14 @@
 
 # Подключение библиотек
 import wx
+
 from ic.utils import ic_file
-from ic.kernel import io_prnt
 from ic.components import icwidget
 from . import prj_root
 from ic.bitmap import ic_bmp
+from ic.log import log
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 # Константы
 hyNodeImgWidth = 16
@@ -278,8 +279,8 @@ class PrjTree(wx.TreeCtrl):
         img_extended_idx = self._img_list.GetNodeImgExtendedIdx(Node_)
 
         # Определить текст надписи
-        if not isinstance(Node_.name, unicode):
-            txt = unicode(str(Node_.name.strip()), 'utf-8')
+        if not isinstance(Node_.name, str):
+            txt = str(Node_.name.strip())
         else:
             txt = Node_.name.strip()
 
@@ -500,7 +501,7 @@ class PrjTree(wx.TreeCtrl):
             # Большие латинские буквы
             # Маленькие латинские буквы
             # Знак подчеркивания
-            if not ((r >= 48 and r <= 57) or (r >= 65 and r <= 90) or (r >= 97 and r <= 122) or (r == 95)):
+            if not ((48 <= r <= 57) or (65 <= r <= 90) or (97 <= r <= 122) or (r == 95)):
                 return False
         return True
 
