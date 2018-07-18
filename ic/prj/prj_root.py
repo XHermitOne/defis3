@@ -9,13 +9,13 @@
 import wx
 import sys
 import os.path
-import ic.imglib.common as imglib
 
 from ic.log import log
 
-import ic.utils.ic_file as ic_file
-import ic.utils.ic_res as ic_res
-import ic.dlg.ic_dlg as ic_dlg
+from ic.imglib import common as imglib
+from ic.utils import ic_file
+from ic.utils import ic_res
+from ic.dlg import ic_dlg
 from ic.kernel import icexceptions
 from ic.utils import ic_util
 
@@ -34,14 +34,14 @@ from . import prj_module
 try:
     import winpdb
 except:
-    log.error(u'Winpdb import Error')
+    log.error(u'Winpdb import Error', bForcePrint=True)
 
-import shlex
+# import shlex
 import subprocess
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 # Константы
 # Файл журнала зарегистрированных пользователей

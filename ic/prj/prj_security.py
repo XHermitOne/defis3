@@ -11,9 +11,9 @@ import os
 import os.path
 import ic.imglib.common as imglib
 
-import ic.utils.ic_file as ic_file
-import ic.utils.ic_res as ic_res
-import ic.dlg.ic_dlg as ic_dlg
+from ic.utils import ic_file
+from ic.utils import ic_res
+from ic.dlg import ic_dlg
 
 from ic.kernel import io_prnt
 

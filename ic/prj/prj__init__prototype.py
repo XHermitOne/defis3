@@ -5,13 +5,15 @@
 Пакет приложения.
 """
 
+import os
+import os.path
+
 from ic.engine import ic_user as ic_user
 from ic.utils import ic_mode
-import os
 from ic.kernel import ic_dot_use
 
 # Версия
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 def init_env():
@@ -22,7 +24,8 @@ def init_env():
     pth = pth.replace('\\', '/')
     ln = pth.split('/')[-1]
     ic_mode.setRuntimeMode(False)
-    ic_user.icEditorLogin(None, None, '-s', PrjDir_=pth+'/'+ln, DEBUG_MODE=False)
+    ic_user.icEditorLogin(None, None, '-s',
+                          PrjDir_=os.path.join(pth, ln), DEBUG_MODE=False)
 
 
 def get_metadata(bInitEnv=False):

@@ -6,19 +6,19 @@
 """
 
 # --- Подключение библиотек ---
+import os
+import os.path
 import wx
 from wx.lib.agw import flatmenu
 
-import os
-import os.path
-import ic.imglib.common as imglib
-import ic.dlg.ic_dlg as ic_dlg
-import ic.utils.clipboard as clipboard
-from ic.utils import ic_file
+from ic.imglib import common as imglib
+from ic.utils import clipboard
 from . import prj_node
 from . import prj_module
 
 from ic.bitmap import icimagelibrarybrowser
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 

@@ -52,7 +52,7 @@ import ic.components.icResourceParser as prs
 import ic.imglib.common as common
 from ic.PropertyEditor import icDefInf
 
-import ic.dlg.ic_dlg as ic_dlg
+from ic.dlg import ic_dlg
 from ic.kernel import io_prnt
 import ic.interfaces.Persistent as persistent
 import ic.storage.storesrc as storesrc

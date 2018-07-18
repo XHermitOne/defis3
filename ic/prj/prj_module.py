@@ -10,20 +10,22 @@ import wx
 from wx.lib.agw import flatmenu
 import os
 import os.path
-import ic.imglib.common as imglib
-import ic.utils.ic_file as ic_file
-import ic.utils.ic_res as ic_res
+import shutil
+
+from ic.imglib import common as imglib
+from ic.utils import ic_file
+from ic.utils import ic_res
 from ic.utils import util
-import ic.dlg.ic_dlg as ic_dlg
-from ic.kernel import io_prnt
+from ic.dlg import ic_dlg
 from ic.editor import ext_python_editor
+from ic.log import log
 
 from . import prj_node
 from . import prj_resource
 from . import prj_fb
 from . import prj_xrc
 
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -82,7 +84,7 @@ class PrjModules(prj_node.PrjFolder):
         @return:
         """
         # Обработка подпапок
-        file_list = [os.path.join(Path_, cur_file) for cur_file in ic_file.ListDir(Path_)]
+        file_list = [os.path.join(Path_, cur_file) for cur_file in os.listdir(Path_)]
         dir_list = [file_name for file_name in file_list if self.isPackage(file_name)]
         dir_list.sort()
         # Обработка списка файлов
@@ -133,9 +135,9 @@ class PrjModules(prj_node.PrjFolder):
         @param FileName_: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(FileName_) and \
-            (ic_file.SplitExt(FileName_)[1] == '.py' and
-             ic_file.BaseName(FileName_) != '__init__.py') and \
+        return os.path.isfile(FileName_) and \
+            (os.path.splitext(FileName_)[1] == '.py' and
+             os.path.basename(FileName_) != '__init__.py') and \
             (not self._findModuleSignature(FileName_, INTERFACE_MODULE_SIGNATURE))
 
     def isFBP(self, sFileName):
@@ -144,8 +146,8 @@ class PrjModules(prj_node.PrjFolder):
         @param sFileName: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(sFileName) and \
-            (ic_file.SplitExt(sFileName)[1] == '.fbp')
+        return os.path.isfile(sFileName) and \
+            (os.path.splitext(sFileName)[1] == '.fbp')
 
     def isXRC(self, sFileName):
         """
@@ -153,8 +155,8 @@ class PrjModules(prj_node.PrjFolder):
         @param sFileName: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(sFileName) and \
-            (ic_file.SplitExt(sFileName)[1] == '.xrc')
+        return os.path.isfile(sFileName) and \
+            (os.path.splitext(sFileName)[1] == '.xrc')
 
     def isInterfaceModule(self, FileName_):
         """
@@ -162,9 +164,9 @@ class PrjModules(prj_node.PrjFolder):
         @param FileName_: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(FileName_) and \
-            (ic_file.SplitExt(FileName_)[1] == '.py' and \
-             ic_file.BaseName(FileName_) != '__init__.py') and \
+        return os.path.isfile(FileName_) and \
+            (os.path.splitext(FileName_)[1] == '.py' and \
+             os.path.basename(FileName_) != '__init__.py') and \
             self._findModuleSignature(FileName_, INTERFACE_MODULE_SIGNATURE)
             
     def isResourceModule(self, FileName_):
@@ -173,9 +175,9 @@ class PrjModules(prj_node.PrjFolder):
         @param FileName_: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(FileName_) and \
-            (ic_file.SplitExt(FileName_)[1] == '.py' and \
-             ic_file.BaseName(FileName_) != '__init__.py') and \
+        return os.path.isfile(FileName_) and \
+            (os.path.splitext(FileName_)[1] == '.py' and \
+             os.path.basename(FileName_) != '__init__.py') and \
             self._findModuleSignature(FileName_, RESOURCE_MODULE_SIGNATURE)
             
     def isImageModule(self, FileName_):
@@ -184,9 +186,9 @@ class PrjModules(prj_node.PrjFolder):
         @param FileName_: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(FileName_) and \
-            (ic_file.SplitExt(FileName_)[1] == '.py' and \
-            ic_file.BaseName(FileName_) != '__init__.py') and \
+        return os.path.isfile(FileName_) and \
+            (os.path.splitext(FileName_)[1] == '.py' and \
+            os.path.basename(FileName_) != '__init__.py') and \
             self._findModuleSignature(FileName_, IMAGE_MODULE_SIGNATURE)
 
     def isFBModule(self, FileName_):
@@ -195,9 +197,9 @@ class PrjModules(prj_node.PrjFolder):
         @param FileName_: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(FileName_) and \
-            (ic_file.SplitExt(FileName_)[1] == '.py' and
-             ic_file.BaseName(FileName_) != '__init__.py') and \
+        return os.path.isfile(FileName_) and \
+            (os.path.splitext(FileName_)[1] == '.py' and
+             os.path.basename(FileName_) != '__init__.py') and \
             self._findModuleSignature(FileName_, WXFB_MODULE_SIGNATURE)
 
     def isXRCModule(self, FileName_):
@@ -207,9 +209,9 @@ class PrjModules(prj_node.PrjFolder):
         @param FileName_: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(FileName_) and \
-            (ic_file.SplitExt(FileName_)[1] == '.py' and
-             ic_file.BaseName(FileName_) != '__init__.py') and \
+        return os.path.isfile(FileName_) and \
+            (os.path.splitext(FileName_)[1] == '.py' and
+             os.path.basename(FileName_) != '__init__.py') and \
             self._findModuleSignature(FileName_, XRC_MODULE_SIGNATURE)
 
     def isTemplateModule(self, FileName_):
@@ -218,9 +220,9 @@ class PrjModules(prj_node.PrjFolder):
         @param FileName_: Имя файла.
         @return: Возвращает True/False.
         """
-        return ic_file.IsFile(FileName_) and \
-            (ic_file.SplitExt(FileName_)[1] == '.py' and \
-            ic_file.BaseName(FileName_) != '__init__.py') and \
+        return os.path.isfile(FileName_) and \
+            (os.path.splitext(FileName_)[1] == '.py' and \
+            os.path.basename(FileName_) != '__init__.py') and \
             self._findModuleSignature(FileName_, TEMPLATE_MODULE_SIGNATURE)
             
     def isPackage(self, Dir_):
@@ -229,7 +231,7 @@ class PrjModules(prj_node.PrjFolder):
         @param Dir_: Указание директории.
         @return: Возвращает True/False.
         """
-        is_dir = ic_file.IsDir(Dir_)
+        is_dir = os.path.isdir(Dir_)
         is_in_prj = False
         is_init_file = False
         if is_dir:
@@ -407,7 +409,7 @@ class PrjPackage(prj_node.PrjFolder):
         self.name = NewName_
         new_path = self.getPath()
         if os.path.isdir(old_path):
-            ic_file.Rename(old_path, new_path)
+            os.rename(old_path, new_path)
         # Для синхронизации дерева проекта
         self.getRoot().save()
         return True
@@ -474,8 +476,8 @@ class PrjPackage(prj_node.PrjFolder):
         # Удалить все блокировки
         self.getRoot().unlockAllPyFilesInIDE()
 
-        if ic_file.Exists(package):
-            ic_file.RemoveTreeDir(package, 1)
+        if os.path.exists(package):
+            shutil.rmtree(package, 1)
         # Для синхронизации дерева проекта
         self.getRoot().save()
             
@@ -524,7 +526,7 @@ class PrjPackage(prj_node.PrjFolder):
             ok = False
             if os.path.exists(copy_module_file_name):
                 ok = ic_file.icCopyFile(copy_module_file_name, module_file_name)
-                ic_file.Remove(copy_module_file_name)
+                os.remove(copy_module_file_name)
             
             # Для синхронизации дерева проекта
             Node_.getRoot().save()
@@ -602,7 +604,7 @@ class PrjModule(prj_node.PrjNode):
         new_path = self.getModulePath()
         new_py_file = os.path.join(new_path, NewName_+self.ext)
         if os.path.isfile(old_py_file):
-            ic_file.Rename(old_py_file, new_py_file)
+            os.rename(old_py_file, new_py_file)
             # Закрыть модуль для редактирования
             ide = self.getRoot().getParent().ide
             ide.CloseFile(old_py_file)
@@ -624,7 +626,7 @@ class PrjModule(prj_node.PrjNode):
         # Определяем IDE
         ide = self.getRoot().getParent().ide
         if ide is None:
-            io_prnt.outWarning(u'Не определен IDE для редактрования модуля <%s>' % py_file)
+            log.warning(u'Не определен IDE для редактрования модуля <%s>' % py_file)
             log.info(u'Используется внешний редактор модулей Python')
             ide = ext_python_editor.icExtPythonEditor()
 
@@ -701,11 +703,11 @@ class PrjModule(prj_node.PrjNode):
         self.getRoot().unlockAllPyFilesInIDE()
 
         # И в конце удалить папку пакета, если она есть
-        if ic_file.Exists(module_name):
+        if os.path.exists(module_name):
             # ВНИМАНИЕ! Удаляем файл, но оставляем его бекапную версию
             # для возможного восстановления!
             ic_file.icCreateBAKFile(module_name)
-            ic_file.Remove(module_name)
+            os.remove(module_name)
         # Для синхронизации дерева проекта
         self.getRoot().save()
 
@@ -755,7 +757,7 @@ class PrjModule(prj_node.PrjNode):
             ok = False
             if os.path.exists(copy_module_file_name):
                 ok = ic_file.icCopyFile(copy_module_file_name, module_file_name)
-                ic_file.Remove(copy_module_file_name)
+                os.remove(copy_module_file_name)
             # Для синхронизации дерева проекта
             Node_.getRoot().save()
             return ok
@@ -798,7 +800,7 @@ class PrjModule(prj_node.PrjNode):
                 if wx.Platform == '__WXGTK__':
                     return module.__doc__.strip()
                 elif wx.Platform == '__WXMSW__':
-                    return unicode(module.__doc__.strip(), 'utf-8')
+                    return str(module.__doc__.strip())
             return None
         except:
             err_txt = u'MODULE IMPORT ERROR: module=' + module_filename

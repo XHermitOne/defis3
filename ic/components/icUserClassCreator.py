@@ -14,7 +14,7 @@ from ic.PropertyEditor import icDefInf
 import wx.wizard as wiz
 from ic.imglib import common
 import ic.dlg.msgbox as msg
-import ic.utils.ic_res as ic_res
+from ic.utils import ic_res
 from ic.kernel import io_prnt
 
 _ = wx.GetTranslation

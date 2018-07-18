@@ -7,11 +7,12 @@
 
 # Подключение библиотек
 import wx
-import ic.imglib.common as imglib
+
+from ic.imglib import common as imglib
 from . import prj_node
 from ic import report
 
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 

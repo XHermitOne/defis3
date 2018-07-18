@@ -8,10 +8,11 @@
 
 # Подключение библиотек
 import wx
-import ic.imglib.common as imglib
+
+from ic.imglib import common as imglib
 from ic.utils import ic_res
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class PrjNode:

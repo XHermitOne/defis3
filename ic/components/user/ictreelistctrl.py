@@ -31,7 +31,7 @@ import ic.dlg.msgbox as msgbox
 from ic.dlg import progress
 import time
 import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
-import ic.dlg.ic_dlg as ic_dlg
+from ic.dlg import ic_dlg
 import ic.interfaces.icMetaTreeCtrlInterface as metaCtrl
 
 #   Тип компонента

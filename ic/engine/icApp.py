@@ -30,7 +30,7 @@ from ic.kernel import io_prnt
 from ic.kernel import icexceptions
 from ic.utils import lock  # Модуль необходим для удаления файлов-блокировок
 import ic.imglib.common as imglib
-import ic.dlg.ic_dlg as ic_dlg
+from ic.dlg import ic_dlg
 from . import ic_app
 from ic.utils import ic_util
 

@@ -9,20 +9,22 @@
 import os.path
 import wx
 
-import ic.imglib.common as imglib
+from ic.imglib import common as imglib
 
-import ic.utils.ic_file as ic_file
-import ic.utils.ic_res as ic_res
-import ic.dlg.ic_dlg as ic_dlg
-from ic.kernel import io_prnt
+from ic.utils import ic_file
+from ic.utils import ic_res
+from ic.dlg import ic_dlg
+from ic.log import log
 
-import ic.interfaces.subsysinterface as subsysinterface
+from ic.interfaces import subsysinterface
 
 from . import menuImpNode
 from . import prj_node
 from . import prj_module
 from . import PrjRes
 from ic.engine import ic_user
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -584,8 +586,8 @@ class PrjImportSys(PrjNotImportSys):
             py_file = imp_path+'/__init__.py'
             # Если в файле нет функций регистрации
             # импортируемой системы, то добавить их
+            init_file = None
             try:
-                init_file = None
                 init_file = open(py_file, 'r')
                 init_txt = init_file.read()
                 init_file.close()

@@ -4,8 +4,8 @@
 import os
 import os.path
 import wx
-import ic.imglib.common as imglib
 
+from ic.imglib import common as imglib
 from ic.utils import ic_file
 from ic.utils import ic_exec
 from ic.utils import filefunc
@@ -14,7 +14,7 @@ from ic.log import log
 
 from . import prj_node
 
-__version__ = (0, 0, 2, 3)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 

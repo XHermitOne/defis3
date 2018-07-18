@@ -9,9 +9,10 @@
 import wx
 from wx.lib.agw import flatmenu
 
-import ic.imglib.common as imglib
-import ic.dlg.ic_dlg as ic_dlg
+from ic.imglib import common as imglib
 from . import prj_security
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 

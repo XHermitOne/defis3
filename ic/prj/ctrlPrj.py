@@ -20,7 +20,6 @@ import wx
 import copy
 
 from ic.log import log
-from ic.utils import ic_file
 from ic.utils import util
 from ic.utils import resource
 from ic.engine import ic_user
@@ -28,7 +27,7 @@ from . import PrjRes
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 # --- константы ---
 OTHER_PRJ_FOLDER_NAME = u'Дополнительно'
@@ -100,7 +99,7 @@ class icProjectResController:
         @return: Содержимое ресурса или None в случае ошибки.
         """
         res_file_name = os.path.join(self._PrjResDir, '%s.%s' % (ResName_, ResType_))
-        if ic_file.IsFile(res_file_name):
+        if os.path.isfile(res_file_name):
             res_file = util.readAndEvalFile(res_file_name)
             res = res_file[ResName_]
             return copy.deepcopy(res)
@@ -118,8 +117,8 @@ class icProjectResController:
             self._PrjRes.savePrj()
             
         res_file_name = self._PrjResDir+'/%s.%s' % (ResName_, ResType_)
-        if ic_file.IsFile(res_file_name):
-            ic_file.Remove(res_file_name)
+        if os.path.isfile(res_file_name):
+            os.remove(res_file_name)
             return True
         return False
 
@@ -224,7 +223,7 @@ class icProjectResController:
             self._PrjResDir = ic_user.icGet('PRJ_DIR')
             self._PrjResFileName = self._PrjResDir+'/%s.pro' % self._PrjName
         else:
-            self._PrjResDir = ic_file.DirName(self._PrjResFileName)
+            self._PrjResDir = os.path.dirname(self._PrjResFileName)
     
     def setPrj(self, PrjName_, PrjResFileName_):
         self.setPrjName(PrjName_)

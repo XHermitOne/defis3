@@ -11,12 +11,12 @@ import copy
 import os
 import os.path
 
-import ic.imglib.common as imglib
-import ic.utils.ic_file as ic_file
-import ic.utils.ic_res as ic_res
+from ic.imglib import common as imglib
+from ic.utils import ic_file
+from ic.utils import ic_res
 from ic.utils import util
-import ic.dlg.ic_dlg as ic_dlg
-from ic.kernel import io_prnt
+from ic.dlg import ic_dlg
+from ic.log import log
 
 # Необходимо для определений спецификаций
 import ic.components.user.ic_tab_wrp as ic_tab
@@ -39,7 +39,7 @@ from . import prj_node
 from . import menuPrjNode
 from . import menuImpNode
 
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -162,7 +162,7 @@ class PrjResource(prj_node.PrjNode):
             return ic_file.icAbsolutePath(prj_name,
                                           os.path.dirname(self.getRoot().getPrjFileName()))
         else:
-            return ic_file.Split(prj_file_name)[0].strip()
+            return os.path.split(prj_file_name)[0].strip()
 
     def getPath(self):
         """
@@ -203,7 +203,7 @@ class PrjResource(prj_node.PrjNode):
         if res_editor:
             res_name = self.getResName()
             res_path = self.getResPath()
-            ic_file.MakeDirs(res_path)
+            os.makedirs(res_path)
             res_file = self.getResFileName()
             res_ext = self.getResFileExt()
             # Если ресурс/папка с таким именем уже есть в проекте, то
@@ -256,7 +256,7 @@ class PrjResource(prj_node.PrjNode):
         if res_editor:
             res_name = self.getResName()
             res_path = self.getResPath()
-            ic_file.MakeDirs(res_path)
+            os.makedirs(res_path)
             res_file = self.getResFileName()
             res_ext = self.getResFileExt()
             self.getRoot().unlockResInResEditor(res_editor)
@@ -547,7 +547,7 @@ class PrjDBRes(PrjResource):
         global DBTypeChoice
         self.template = DBTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                               _('Choose DB'), _('DB list:'),
-                                                              [txt for txt in DBTypeChoice.keys() if type(txt) in (str, unicode)])]
+                                                              [txt for txt in DBTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
         return PrjResource.create(self)
         
@@ -559,7 +559,7 @@ class PrjDBRes(PrjResource):
         global DBTypeChoice
         self.template = DBTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                               _('Choose DB'), _('DB list:'),
-                                                              [txt for txt in DBTypeChoice.keys() if type(txt) in (str, unicode)])]
+                                                              [txt for txt in DBTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
         return PrjResource.createResClass(self)
 
@@ -700,7 +700,7 @@ class PrjWinRes(PrjResource):
         self.template = WinTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                                _('Choose main window type'),
                                                                _('Main window type list:'),
-                                                               [txt for txt in WinTypeChoice.keys() if type(txt) in (str, unicode)])]
+                                                               [txt for txt in WinTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
         return PrjResource.create(self)
         
@@ -713,9 +713,10 @@ class PrjWinRes(PrjResource):
         self.template = WinTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                                _('Choose main window type'),
                                                                _('Main window type list:'),
-                                                               [txt for txt in WinTypeChoice.keys() if type(txt) in (str, unicode)])]
+                                                               [txt for txt in WinTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
         return PrjResource.createResClass(self)
+
 
 # Словарь выбора типов меню
 MenuTypeChoice = {'Standart menu bar': ic_menubar_wrp.ic_class_spc,
@@ -751,7 +752,7 @@ class PrjMenuRes(PrjResource):
         global MenuTypeChoice
         self.template = MenuTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                                 _('Choose menu type'), _('Menu type list:'),
-                                                                [txt for txt in MenuTypeChoice.keys() if type(txt) in (str, unicode)])]
+                                                                [txt for txt in MenuTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
         return PrjResource.create(self)
         
@@ -764,7 +765,7 @@ class PrjMenuRes(PrjResource):
         self.template = MenuTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                                 _('Choose menu type'),
                                                                 _('Menu type list:'),
-                                                                [txt for txt in MenuTypeChoice.keys() if type(txt) in (str, unicode)])]
+                                                                [txt for txt in MenuTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
         return PrjResource.createResClass(self)
 
@@ -841,7 +842,7 @@ class PrjMetaDataRes(PrjResource):
         except ImportError:
             # Если нет возможности импортировать,
             # то и инструмент не доступен
-            io_prnt.outWarning(u'''Не доступен дополнительный инструмент
+            log.warning(u'''Не доступен дополнительный инструмент
 <Генератор форм wxFormBuilder бизнес объекта/документа>.
 Для его активации подключите/обновите подсистему <work_flow>''')
             fb_form_gen = None
@@ -896,4 +897,4 @@ class PrjMetaDataRes(PrjResource):
                 func = ext_tools[i_select]['func']
                 func()
         else:
-            io_prnt.outWarning(u'Не предусмотрены дополнительные инструменты для ресурса <%s>' % self.getResName())
+            log.warning(u'Не предусмотрены дополнительные инструменты для ресурса <%s>' % self.getResName())

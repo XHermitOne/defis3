@@ -83,11 +83,10 @@ from ic.log import log
 
 from ic.interfaces import resManager
 from ic.utils import util
-from ic.utils import ic_file
 from ic.utils import ic_res
 import ic
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -167,8 +166,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         path, name = os.path.split(PrjFileName_)
         ic.set_ini_file(path)
         self.prj_file_name = PrjFileName_
-        if ic_file.IsFile(self.prj_file_name) and \
-           ic_file.Exists(self.prj_file_name):
+        if os.path.isfile(self.prj_file_name) and os.path.exists(self.prj_file_name):
             prj = util.readAndEvalFile(self.prj_file_name, bRefresh=True)
             self._prj = self._prepareDataPrj(prj)
 
@@ -205,7 +203,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             Prj_ = [self._prepareDataPrj(value) for value in Prj_]
         elif isinstance(Prj_, tuple):
             Prj_ = tuple([self._prepareDataPrj(value) for value in Prj_])
-        elif type(Prj_) in (str, unicode):
+        elif isinstance(Prj_, str):
             Prj_ = Prj_.strip()
         return Prj_
 
@@ -220,7 +218,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             Prj_ = self._prepareDataPrj(self._prj)
         ok = ic_res.SaveResourcePickle(PrjFileName_.strip(), Prj_)
         # Кроме того, что сохраняем проект, еще делаем его пакетом
-        ic_res.CreateInitFile(ic_file.DirName(PrjFileName_.strip()))
+        ic_res.CreateInitFile(os.path.dirname(PrjFileName_.strip()))
         return ok
 
     def getPrjRes(self):
@@ -649,7 +647,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
                     find_list += find_folder
             else:
                 try:
-                    res_file_name=res_name+'.'+res_type
+                    res_file_name = res_name+'.'+res_type
                     if [pattern for pattern in ResPattern_ if re.match(pattern, res_file_name)]:
                         # Если имя файла подходит под какойлибо шаблон,
                         # то добавитьв выходной список
@@ -755,7 +753,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         """
         Получить список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
         @param ResPattern_: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
-        @param OBjTypes_: Кортеж типов объектов, например ('icButton',).
+        @param ObjTypes_: Кортеж типов объектов, например ('icButton',).
         @return: Список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
         """
         obj_list = []

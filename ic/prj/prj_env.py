@@ -7,10 +7,13 @@
 
 # Подключение библиотек
 import wx
-import ic.imglib.common as imglib
+
+from ic.imglib import common as imglib
 from ic.editor import icenvironmenteditor
 from . import prj_node
 from ic.kernel import icsettings
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -27,6 +30,9 @@ class PrjEnv(prj_node.PrjNode):
         self.img = imglib.imgEdtEnv
         self.description = u'Окружение'
         self.name = u'Окружение'
+
+        # Объект дизайнера
+        self.designer = None
 
     def design(self):
         """

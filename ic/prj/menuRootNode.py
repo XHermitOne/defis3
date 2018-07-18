@@ -11,17 +11,18 @@ import wx
 from wx.lib.agw import flatmenu
 import os
 import os.path
-import ic.imglib.common as imglib
-from ic.kernel import io_prnt
-import ic.utils.ic_file as ic_file
-import ic.utils.ic_exec as ic_exec
-import ic.install.InstallWiz as install_wiz
+
+from ic.imglib import common as imglib
+from ic.utils import ic_file
+from ic.utils import ic_exec
+from ic.install import InstallWiz as install_wiz
 from ic.bitmap import icimagelibrarybrowser
 from ic.utils import ini
 from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
+from ic.log import log
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -388,7 +389,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         """
         import ic
         hlp_file_name = os.path.join(os.path.dirname(ic.__file__), 'doc', 'index.html')
-        if ic_file.Exists(hlp_file_name):
+        if os.path.exists(hlp_file_name):
             if wx.Platform == '__WXMSW__':
                 hlp_file_name = os.path.normpath(hlp_file_name)
                 ic_exec.icSysCmd('start explorer ' + hlp_file_name)
@@ -423,7 +424,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         prj_file_name = self._Parent.getRoot().getPrjFileName()
         prj_ini_file = None
         if prj_file_name:
-            prj_ini_file = ic_file.SplitExt(prj_file_name)[0]+'.ini'
+            prj_ini_file = os.path.splitext(prj_file_name)[0]+'.ini'
         icimagelibrarybrowser.runImageLibraryBrowser(self._Parent.getRoot().getParent(),
                                                      prj_ini_file)
 

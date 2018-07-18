@@ -172,7 +172,7 @@ def GenComponent(componentType, modulName=None, res=None):
             modulName = '%s/%s.py' % (mod_path, componentType)
         if mod_path and not path.isdir(mod_path):
             # Создаем пакет usercomponents
-            import ic.utils.ic_res as ic_res
+            from ic.utils import ic_res
             ic_res.CreatePackage(mod_path)
             log.info(_('INFO') +
                            _('Create package %s') % mod_path)
@@ -205,7 +205,7 @@ def InheritComponent(componentType, parentModule, modulName=None):
             modulName = '%s/%s.py' % (mod_path, componentType)
         if mod_path and not path.isdir(mod_path):
             # Создаем пакет usercomponents
-            import ic.utils.ic_res as ic_res
+            from ic.utils import ic_res
             ic_res.CreatePackage(mod_path)
             log.info(_('INFO') +
                            _('Create package %s') % mod_path)

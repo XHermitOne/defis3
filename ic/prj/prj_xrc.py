@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import wx
+import os
+import os.path
+
 from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
 
@@ -10,7 +13,7 @@ from ic.utils import ic_exec
 
 from . import prj_node
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -34,7 +37,7 @@ class PrjXRCResource(prj_node.PrjNode):
         Редактирование.
         """
         filename = self.getPath()
-        if ic_file.Exists(filename):
+        if os.path.exists(filename):
             cmd = 'xrced --meta %s&' % filename
             ic_exec.icSysCmd(cmd)
         return True
@@ -48,7 +51,7 @@ class PrjXRCResource(prj_node.PrjNode):
         return True
 
     def getPath(self):
-        return ic_file.NormPathUnix(self.getModulePath()+'/%s.xrc' % self.name)
+        return ic_file.NormPathUnix(os.path.join(self.getModulePath(), '%s.xrc' % self.name))
 
     def getModulePath(self):
         """ 
@@ -61,7 +64,7 @@ class PrjXRCResource(prj_node.PrjNode):
         if issubclass(self._Parent.__class__, prj_module.PrjPackage):
             path = self._Parent.getPath()
         elif issubclass(self._Parent.__class__, prj_module.PrjModules):
-            path = ic_file.DirName(self.getRoot().getPrjFileName())
+            path = os.path.dirname(self.getRoot().getPrjFileName())
         return path
 
     def unlockAllPyFiles(self):
@@ -79,8 +82,8 @@ class PrjXRCResource(prj_node.PrjNode):
         xrc_filename = self.getFullResFileName()
         yes = ic_dlg.icAskBox(u'Генерация Python модуля', u'Сгенерировать Python модуль из XRC файла <%s>?' % xrc_filename)
         if yes:
-            py_filename = ic_file.Join(ic_file.DirName(xrc_filename),
-                                       ic_file.BaseName(xrc_filename).replace('.', '_')+'.py')
+            py_filename = os.path.join(os.path.dirname(xrc_filename),
+                                       os.path.basename(xrc_filename).replace('.', '_')+'.py')
             cmd = 'pywxrc --python --output %s %s' % (py_filename, xrc_filename)
             ic_exec.icSysCmd(cmd)
             msg = u'Сгенерирован файл <%s>' % py_filename

@@ -3,17 +3,13 @@
 
 """
 Просмотрщик ресурсного узла проекта.
-@author: Шурик Колчанов.
 """
 
 # --- Подключение библиотек ---
-from ic.kernel import io_prnt
 from ic.utils import util
-from ic.utils import ic_file
-
 from ic.interfaces import icprjnodeviewer
-
 from ic.PropertyEditor import icResTree
+from ic.log import log
 
 
 class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
@@ -31,7 +27,7 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
         eval_space = util.InitEvalSpace()
         icResTree.icResTree.__init__(self, parent, evalSpace=eval_space)
         
-        self._full_res_file_name=Node_.getFullResFileName()
+        self._full_res_file_name = Node_.getFullResFileName()
         
         # Прочитать ресурс
         res = self._getNodeRes(Node_)
@@ -70,5 +66,5 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
         try:
             self.parent.GetParent().setPassportLabel()
         except:
-            self.parent.GetParent().setPassportLabel('')
+            self.parent.GetParent().setPassportLabel(u'')
 

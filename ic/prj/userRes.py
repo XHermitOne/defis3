@@ -12,9 +12,9 @@ import os
 import os.path
 import ic.interfaces.resManager as resManager
 from ic.kernel import io_prnt
-import ic.utils.ic_res as ic_res
-import ic.utils.ic_file as ic_file
-import ic.dlg.ic_dlg as ic_dlg
+from ic.utils import ic_res
+from ic.utils import ic_file
+from ic.dlg import ic_dlg
 from ic.engine import icUser 
 
 _ = wx.GetTranslation

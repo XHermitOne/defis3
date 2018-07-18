@@ -13,6 +13,8 @@ from . import prj_resource
 from . import prj_module
 from . import ImpNode
 
+__version__ = (0, 1, 1, 1)
+
 # Константы
 # Реестр узлов дерева проектов
 # 'тип ресурса':класс узла

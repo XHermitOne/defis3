@@ -8,12 +8,12 @@
 # --- Подключение библиотек ---
 import wx
 import wx.grid
-from ic.log import ic_log
-from ic.utils import util
-from ic.utils import ic_file
+
 from ic.bitmap import icimglib
 from ic.interfaces import icprjnodeviewer
 from ic.components.user import icsimplegrid
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 # --- Константы ---
