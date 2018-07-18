@@ -220,7 +220,7 @@ SPC_IC_GRID = {'type': 'Grid',         # тип ресурса
                '__events__': {'onSize': ('wx.EVT_SIZE', 'OnSizeGrid', False),
                               'dclickEditor': ('wx.EVT_LEFT_DCLICK', 'OnDClickEditor', False),
                               },
-               '__lists__': {'selection_mode': GRID_SELECTION_MODES.keys(),
+               '__lists__': {'selection_mode': list(GRID_SELECTION_MODES.keys()),
                              },
                '__attr_types__': {icDefInf.EDT_COLOR: ['line_color'],
                                   icDefInf.EDT_NUMBER: ['label_height', 'row_height', 'fixRowSize', 'fixColSize'],

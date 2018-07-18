@@ -255,7 +255,7 @@ def OnFile(evt):
     Выбирает имя файла.
     """
     card = u'All files (*.*)|*.*'
-    dlg = wx.FileDialog(None, u'Выберите имя файла', u'', u'', card, wx.OPEN)
+    dlg = wx.FileDialog(None, u'Выберите имя файла', u'', u'', card, wx.FD_OPEN)
     path = ''
     if dlg.ShowModal() == wx.ID_OK:
         path = dlg.GetPaths()[0]
@@ -2480,7 +2480,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         Загружает ресурсное описание из выбранного файла.
         """
         dlg = wx.FileDialog(self,
-                            u'Выберите имя ресурсного файла', u'', u'', _ResCard, wx.OPEN)
+                            u'Выберите имя ресурсного файла', u'', u'', _ResCard, wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPaths()[0]
             self.LoadRes(path)

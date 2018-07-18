@@ -212,7 +212,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
         """
         Обрабатываем нажатия кнопки выбора новой картинки.
         """
-        dlg = wx.FileDialog(self, u'Выбери картинку', '', '', imgcard, wx.OPEN)
+        dlg = wx.FileDialog(self, u'Выбери картинку', '', '', imgcard, wx.FD_OPEN)
         
         if dlg.ShowModal() == wx.ID_OK:
             paths = dlg.GetPaths()

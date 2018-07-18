@@ -42,8 +42,7 @@ from ic.PropertyEditor import icDefInf
 
 _ = wx.GetTranslation
 
-# SPC_IC_GRID_DATASET = copy.deepcopy(SPC_IC_GRID)
-SPC_IC_GRID_DATASET = SPC_IC_GRID
+SPC_IC_GRID_DATASET = copy.deepcopy(SPC_IC_GRID)
 SPC_IC_GRID_DATASET['type'] = 'GridDataset'
 
 # -------------------------------------------

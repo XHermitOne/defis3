@@ -38,7 +38,7 @@ def icFileDlg(Win_=None, Title_='', Filter_='', DefaultPath_=''):
            win_clear = True
 
         wildcard = Filter_+'|All Files (*.*)|*.*'
-        dlg = wx.FileDialog(Win_, Title_, '', '', wildcard, wx.OPEN)
+        dlg = wx.FileDialog(Win_, Title_, '', '', wildcard, wx.FD_OPEN)
         if DefaultPath_:
             dlg.SetDirectory(os.path.normpath(DefaultPath_))
         else:
@@ -74,7 +74,8 @@ def icDirDlg(Win_=None, Title_='', DefaultPath_=''):
            Win_ = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = wx.DirDialog(Win_, Title_, style=wx.DD_DEFAULT_STYLE|wx.DD_NEW_DIR_BUTTON)
+        dlg = wx.DirDialog(Win_, Title_,
+                           style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         # Установка пути по умолчанию
         if not DefaultPath_:
             DefaultPath_ = os.getcwd()
@@ -609,19 +610,8 @@ class icStrComboBoxDialog(wx.Dialog):
             if StrList_ is None:
                 StrList_ = []
 
-            # Instead of calling wx.Dialog.__init__ we precreate the dialog
-            # so we can set an extra style that must be set before
-            # creation, and then we create the GUI object using the Create
-            # method.
-            pre = wx.PreDialog()
-            pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-            pre.Create(parent, -1, title=Title_,
-                       pos=wx.DefaultPosition, size=wx.Size(500, 150))
-
-            # This next step is the most important, it turns this Python
-            # object into the real wrapper of the dialog (instead of pre)
-            # as far as the wxPython extension is concerned.
-            self.PostCreate(pre)
+            wx.Dialog.__init__(self, parent, -1, title=Title_,
+                               pos=wx.DefaultPosition, size=wx.Size(500, 150))
 
             self._text = wx.StaticText(self, -1, Text_, wx.Point(10, 10), wx.Size(-1, -1))
             # Кнопка -OK-
@@ -700,19 +690,8 @@ class icAboutDialog(wx.Dialog):
         @param Logo_: Объект типа wx.Bitmap определяющий логотип.
         """
         try:
-            # Instead of calling wx.Dialog.__init__ we precreate the dialog
-            # so we can set an extra style that must be set before
-            # creation, and then we create the GUI object using the Create
-            # method.
-            pre = wx.PreDialog()
-            pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-            pre.Create(parent, -1, title=Title_,
-                       pos=wx.DefaultPosition, size=wx.Size(500, 500))
-
-            # This next step is the most important, it turns this Python
-            # object into the real wrapper of the dialog (instead of pre)
-            # as far as the wxPython extension is concerned.
-            self.PostCreate(pre)
+            wx.Dialog.__init__(self, parent, -1, title=Title_,
+                               pos=wx.DefaultPosition, size=wx.Size(500, 500))
 
             # Сайзер
             sizer = wx.BoxSizer(wx.VERTICAL)
@@ -745,6 +724,7 @@ class icAboutDialog(wx.Dialog):
         """
         self.EndModal(wx.ID_OK)
 
+
 #
 LOGIN_USER_IDX = 0
 LOGIN_PASSWORD_IDX = 1
@@ -763,8 +743,8 @@ def icLoginDlg(Win_=None, Title_='', DefaultUser_='', RegUsers_=None):
         Второй элемент - пароль (LOGIN_PASSWORD_IDX).
     """
     dlg = None
+    win_clear = False
     try:
-        win_clear = False
         if Win_ is None:
             id_ = wx.NewId()
             Win_ = wx.Frame(None, id_, '')
@@ -803,23 +783,13 @@ class icLoginDialog(wx.Dialog):
             if not Title_:
                 Title_ = ''
                 
-            # Instead of calling wx.Dialog.__init__ we precreate the dialog
-            # so we can set an extra style that must be set before
-            # creation, and then we create the GUI object using the Create
-            # method.
-            pre = wx.PreDialog()
-            pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-            pre.Create(parent_,-1, title=Title_,
-                       pos=wx.DefaultPosition, size=wx.Size(350, 150))
+            wx.Dialog.__init__(self, parent_, -1, title=Title_,
+                               pos=wx.DefaultPosition, size=wx.Size(350, 150))
 
-            # This next step is the most important, it turns this Python
-            # object into the real wrapper of the dialog (instead of pre)
-            # as far as the wxPython extension is concerned.
-            self.PostCreate(pre)
             from ic.PropertyEditor.images import editorimg
             icon_img = editorimg.shield.GetBitmap()
             if icon_img:
-                icon = wx.IconFromBitmap(icon_img)
+                icon = wx.Icon(icon_img)
                 self.SetIcon(icon)
 
             id_ = wx.NewId()
@@ -867,9 +837,9 @@ class icLoginDialog(wx.Dialog):
         Обработчик нажатия клавиш клавиатуры.
         """
         key = event.GetKeyCode()
-        if key == wx.K_ESCAPE:
+        if key == wx.WXK_ESCAPE:
             self.EndModal(wx.ID_CANCEL)
-        elif key == wx.K_RETURN:
+        elif key == wx.WXK_RETURN:
             self._user = self._get_user_name_from_combobox()
             self._password = self._password_edit.GetValue()
             self.EndModal(wx.ID_OK)
@@ -916,6 +886,7 @@ class icLoginDialog(wx.Dialog):
         """
         return hashlib.md5.new(self._password).hexdigest()
 
+
 _BUSY_INFO = None
 
 
@@ -961,7 +932,7 @@ def WaitFunc(Parent_, Msg_,
     wait_result = [None]
     if not Frames_:
         # Определить кадры по умолчанию
-        wait_dir = os.path.dirname(__file__)+'/Wait/'
+        wait_dir = os.path.join(os.path.dirname(__file__), 'Wait')
         Frames_ = [wait_dir+'Wait1.png',
                    wait_dir+'Wait2.png',
                    wait_dir+'Wait3.png',
@@ -1014,20 +985,8 @@ class icWaitBox(wx.Dialog):
         """
         if Parent_ is None:
             style = wx.STAY_ON_TOP
-            
-        # Instead of calling wx.Dialog.__init__ we precreate the dialog
-        # so we can set an extra style that must be set before
-        # creation, and then we create the GUI object using the Create
-        # method.
-        pre = wx.PreDialog()
-        pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-        pre.Create(Parent_, -1,
-                   size=wx.Size(150, 34), style=style)
 
-        # This next step is the most important, it turns this Python
-        # object into the real wrapper of the dialog (instead of pre)
-        # as far as the wxPython extension is concerned.
-        self.PostCreate(pre)
+        wx.Dialog.__init__(self, Parent_, -1, size=wx.Size(150, 34), style=style)
 
         from ic.bitmap import ic_bmp
         self._ani = [ic_bmp.createBitmap(frame_file_name) for frame_file_name in Frames_]
@@ -1080,10 +1039,10 @@ class icWaitBox(wx.Dialog):
         frame_bmp = self._ani[NFrame_]
         
         dc = wx.WindowDC(self._picture)
-        dc.BeginDrawing()
+        # dc.BeginDrawing()
         dc.Clear()
         dc.DrawBitmap(frame_bmp, 0, 0, True)
-        dc.EndDrawing()
+        # dc.EndDrawing()
         self._picture.Refresh()
         
     def OnCheckClose(self, event=None):

@@ -419,7 +419,7 @@ def file_dlg(Title_='', Filter_='', DefaultPath_=''):
             main_win = app.GetTopWindow()
 
             wildcard = Filter_+'|All Files (*.*)|*.*'
-            dlg = wx.FileDialog(main_win, Title_, '', '', wildcard, wx.OPEN)
+            dlg = wx.FileDialog(main_win, Title_, '', '', wildcard, wx.FD_OPEN)
             if DefaultPath_:
                 dlg.SetDirectory(normpath(DefaultPath_, get_login()))
             else:

@@ -637,7 +637,7 @@ class icPyEditorFrame(icframe.icFrame):
                                             style=wx.YES_NO | wx.NO_DEFAULT) == wx.ID_YES:
             self.Save()
                             
-        dlg = wx.FileDialog(self, u'Выбери имя файла', '', '', _PyCard, wx.OPEN)
+        dlg = wx.FileDialog(self, u'Выбери имя файла', '', '', _PyCard, wx.FD_OPEN)
 
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPaths()[0]

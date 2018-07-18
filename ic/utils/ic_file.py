@@ -347,13 +347,20 @@ def PathFile(Path_, File_):
     @param Path_: Путь.
     @param File_: Имя файла.
     """
-    File_ = File_.replace('\\', '/')
-    Path_ = Path_.replace('\\', '/')
-    relative_path = icRelativePath(Path_).replace('\\', '/')
+    if not Path_:
+        log.warning(u'Не определен путь для корректировки')
+        return File_
+    if not File_:
+        log.warning(u'Не определено имя файла для корректировки')
+        return File_
+
+    Path_ = os.path.normpath(Path_)
+    File_ = os.path.normpath(File_)
+    relative_path = icRelativePath(Path_)
     # Этот путь уже присутствует в имени файла
     if File_.find(Path_) != -1 or File_.find(relative_path) != -1:
         return File_
-    return (relative_path+'/'+File_).replace('//', '/')
+    return os.path.join(relative_path, File_)
 
 
 def NormPathWin(Path_):

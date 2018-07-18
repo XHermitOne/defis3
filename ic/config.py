@@ -13,7 +13,7 @@ DEBUG_MODE = True
 LOG_MODE = True
 
 # Имя папки прфиля программы
-PROFILE_DIRNAME = '.defis'
+PROFILE_DIRNAME = '.defis3'
 
 DEFAULT_ENCODING = 'utf-8'
 

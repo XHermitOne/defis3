@@ -229,7 +229,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                 except:
                     if fpcl:
                         fpcl.close()
-                    log.error(_('readAndEvalFile: Open file error: %s.') % filepcl)
+                    log.fatal(_('readAndEvalFile: Open file error: %s.') % filepcl)
         except OSError:
             log.warning(u'Ошибка файла <%s>' % filename)
         #   Пытаемся прочитать cPickle, если не удается считаем, что в файле
@@ -242,13 +242,13 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                 fpcl.close()
                 #   Сохраняем объект в буфере
                 Buff_readAndEvalFile[filename] = obj
-                log.info('\t[+] Load file <cPickle Format>: %s' % filename)
+                log.info('\t[+] Load file <PICKLE Format>: %s' % filename)
                 return obj
             except Exception as msg:
-                log.info('\t[*] <Non cPickle Format file:%s. Try to compile text>' % filename)
+                log.info('\t[*] <Non PICKLE Format file:%s. Try to compile text>' % filename)
 
         #   Открываем текстовое представление, если его нет, то создаем его
-        f = open(filename, 'rb')
+        f = open(filename, 'rt')
         txt = f.read().replace('\r\n', '\n')
         f.close()
         for key in dictRpl:
@@ -256,6 +256,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
 
         #   Выполняем
         obj = eval(txt)
+
         #   Сохраняем объект в буфере
         Buff_readAndEvalFile[filename] = obj
 
@@ -268,7 +269,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
         log.error(_('\t[*] readAndEvalFile: Open file error: %s.') % filename)
         obj = None
     except:
-        log.error(_('\t[*] readAndEvalFile: translation error: %s.') % filename)
+        log.fatal(_('\t[*] readAndEvalFile: translation error: %s.') % filename)
         obj = None
 
     return obj
@@ -311,7 +312,7 @@ def icSpcDefStruct(spc, struct, bAll=False, count=0):
         if '__attr_types__' not in struct:
             struct['__attr_types__'] = {}
     try:
-        for key in spc.keys():
+        for key in list(spc.keys()):
             if bAll:
                 if key == '__parent__' and isinstance(spc['__parent__'], dict):
                     count += 1
@@ -343,7 +344,7 @@ def icSpcDefStruct(spc, struct, bAll=False, count=0):
                     struct[key] = spc[key]
 
     except Exception:
-        log.error('icSpcDefStruct error')
+        log.fatal('icSpcDefStruct error')
 
     return struct
 

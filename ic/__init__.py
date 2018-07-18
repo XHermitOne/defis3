@@ -33,7 +33,7 @@ from ic.report import REPORT_MANAGER
 
 # ic series version number
 # (note that subpackages have their own version number)
-__version__ = (0, 0, 7, 1)
+__version__ = (0, 1, 1, 1)
 
 # Copyright notice string
 __copyright__ = u'Copyright (c) 2002, Kolchanov Alexander xhermitone@gmail.com'
@@ -47,8 +47,8 @@ def set_log_prj(prj_path):
     """
     Устанавливает систему журнилирования проекта.
     """
-    prj_path = prj_path.replace('\\', '/')
-    cfg_filename = ('%s/config.py' % prj_path).replace('//', '/')
+    prj_path = os.path.normpath(prj_path)
+    cfg_filename = os.path.join(prj_path, 'config.py')
     if os.path.exists(cfg_filename):
         cfg_module = util.icLoadSource('cfg_module', cfg_filename)
         log.init(cfg_module)
@@ -62,8 +62,8 @@ def set_ini_file(prj_path):
     Устанавливает имя ini файла проекта.
     """
     global ini_file
-    prj_path = prj_path.replace('\\', '/')
-    ini_file = ('%s/%s.ini' % (prj_path, prj_path.split('/')[-2])).replace('//', '/')
+    prj_path = os.path.normpath(prj_path)
+    ini_file = os.path.join(prj_path, '%s.ini' % prj_path.split('/')[-2])
     log.info('SET INI FILE VARIABLE ini_file=%s' % ini_file)
 
 

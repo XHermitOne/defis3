@@ -273,10 +273,10 @@ def SaveResourcePickle(FileName_, Resource_):
         f = open(FileName_, 'w')
         pickle.dump(Resource_, f)
         f.close()
-        log.info(u'File <%s> is saved in pickle format.' % FileName_)
+        log.info(u'Файл <%s> записан в pickle формате.' % FileName_)
         return True
     except:
-        log.fatal(u'Faild save file in pickle format: <%s>.' % FileName_)
+        log.fatal(u'Ошибка записи файла <%s> в pickle формате.' % FileName_)
         if f:
             f.close()
         return False
