@@ -87,7 +87,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 # --- Constants ---
 GREY_ITEM_TEXT_COLOR = wx.Colour(192, 192, 192)
@@ -151,7 +151,7 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
         Добавить дочерние узлы, описанные словарем.
         """
         id_pic, id_exp_pic = self._getPicturesId(res)
-        st = u'  ' + (unicode(res['__record__'][0]) or '')
+        st = u'  ' + (str(res['__record__'][0]) or u'')
         child = self.AppendItem(root, res['name'] + st, ct_type=res.get('__type__', 0))
         self.SetItemImage(child, id_pic, which=wx.TreeItemIcon_Normal)
         self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)

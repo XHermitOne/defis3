@@ -39,7 +39,7 @@ import os.path
 import wx
 from wx.lib.splitter import MultiSplitterWindow
 
-import ic.imglib.common as common
+from ic.imglib import common
 import ic.utils.ic_res
 import ic.utils.resource
 import ic.utils.ic_file
@@ -529,7 +529,7 @@ class icMainWindow(wx.Frame):
         if icon and type(icon) in (str, unicode):
             return ic.utils.ic_file.AbsolutePath(icon)
         else:
-            io_prnt.outWarning(u'Не определена иконка главного окна')
+            log.warning(u'Не определена иконка главного окна')
         return None
 
     def setIcon(self, Icon_):
@@ -547,12 +547,12 @@ class icMainWindow(wx.Frame):
                     log.error(u'Ошибка инициализации иконки <%s> главного окна. Файл не ICO формата.' % ico_file_name)
                     return None
             else:
-                io_prnt.outWarning(u'Иконка главного окна <%s> не найдена' % ico_file_name)
+                log.warning(u'Иконка главного окна <%s> не найдена' % ico_file_name)
                 return None
         elif isinstance(Icon_, wx.Icon):
             icon = Icon_
         else:
-            io_prnt.outWarning(u'Не обрабатываемый тип иконки <%s>' % Icon_)
+            log.warning(u'Не обрабатываемый тип иконки <%s>' % Icon_)
             return None
         self.SetIcon(icon)
         return icon
@@ -771,7 +771,7 @@ class icMainWindow(wx.Frame):
             Если -1, то открывается текущая добавляемая страница.
         """
         if self.content_obj is not None:
-            io_prnt.outWarning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
+            log.warning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
             return None
         try:
             # --- Объект главного менеджера системных панелей ---
@@ -800,7 +800,7 @@ class icMainWindow(wx.Frame):
         @param Index_: Индекс страницы.
         """
         if self.content_obj is not None:
-            io_prnt.outWarning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
+            log.warning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
             return None
         try:
             # --- Объект главного менеджера системных панелей ---
@@ -821,7 +821,7 @@ class icMainWindow(wx.Frame):
         @return: Возвращает результат выполнения операции True/False.
         """
         if self.content_obj is not None:
-            io_prnt.outWarning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
+            log.warning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
             return None
         try:
             if self.area_split:
@@ -843,7 +843,7 @@ class icMainWindow(wx.Frame):
         @return: Возвращает результат выполнения операции True/False.
         """
         if self.content_obj is not None:
-            io_prnt.outWarning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
+            log.warning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
             return None
         try:
             if self.area_split:

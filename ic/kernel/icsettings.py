@@ -184,7 +184,7 @@ class icPrjDotUse(icSettingsDotUsePrototype):
             cmd = 'gedit %s &' % ini_file_name
             ic_exec.icSysCmd(cmd)
         else:
-            io_prnt.outWarning(u'INI файл <%s> не найден' % ini_file_name)
+            log.warning(u'INI файл <%s> не найден' % ini_file_name)
 
 
 class icSectionDotUse(icSettingsDotUsePrototype):

@@ -231,7 +231,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                         fpcl.close()
                     log.error(_('readAndEvalFile: Open file error: %s.') % filepcl)
         except OSError:
-            io_prnt.outWarning(u'Ошибка файла <%s>' % filename)
+            log.warning(u'Ошибка файла <%s>' % filename)
         #   Пытаемся прочитать cPickle, если не удается считаем, что в файле
         #   хранится текст. Читаем его, выполняем, полученный объект сохраняем
         #   на диске для последующего использования
@@ -454,7 +454,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
             return coderror.IC_EVAL_OK, ret
         except:
             log.error(msg)
-            io_prnt.outWarning(u'''ВНИМАНИЕ! 
+            log.warning(u'''ВНИМАНИЕ! 
             Если GetManager(self) возвращает None, 
             то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
 
@@ -493,7 +493,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
             if msg is not None:
                 ret = u'EXEC[EVAL] EXCEPTION IN %s: exec(%s)' % (msg, expr)
                 log.error(ret)
-                io_prnt.outWarning(u'''ВНИМАНИЕ! 
+                log.warning(u'''ВНИМАНИЕ! 
                 Если GetManager(self) возвращает None, 
                 то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
             return coderror.IC_EVAL_ERROR, ret
@@ -526,7 +526,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
                 if msg is not None:
                     ret = u'EXEC EXCEPTION IN %s: exec(%s)' % (msg, expr)
                     log.error(ret)
-                    io_prnt.outWarning(u'''ВНИМАНИЕ! 
+                    log.warning(u'''ВНИМАНИЕ! 
                     Если GetManager(self) возвращает None, 
                     то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
     return bSuccess, ret

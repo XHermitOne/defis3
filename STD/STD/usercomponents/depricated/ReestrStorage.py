@@ -8,7 +8,7 @@ import wx
 import ic.interfaces.ictemplate as ictemplate
 from ic.utils import util
 from ic.PropertyEditor import icDefInf
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 import copy
 
 ### Общий интерфейс компонента

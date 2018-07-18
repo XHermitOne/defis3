@@ -198,5 +198,5 @@ class icSpravLevelChoiceCtrl(parentModule.icSpravLevelChoiceCtrlProto, icwidget.
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка выполнения блока кода при заполнении кода справочника')
+            log.warning(u'Ошибка выполнения блока кода при заполнении кода справочника')
         return None

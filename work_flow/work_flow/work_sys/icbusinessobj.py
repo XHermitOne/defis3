@@ -787,7 +787,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             False - удаление отменено по какойто причине
         """
         if UUID_ is None:
-            ic.io_prnt.outWarning(u'Не определен объект для удаления')
+            ic.log.warning(u'Не определен объект для удаления')
             return False
 
         # Определить можно ли удалить объект
@@ -1063,7 +1063,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             False-не удачно,None-ошибка.
         """
         if not RequisiteData_:
-            ic.io_prnt.outWarning(u'Не заполнен словарь реквизитов для сохранения в бизнес объекте <%s>' % self.name)
+            ic.log.warning(u'Не заполнен словарь реквизитов для сохранения в бизнес объекте <%s>' % self.name)
             return False
 
         try:
@@ -1088,7 +1088,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                 if req_data_name in RequisiteData_:
                     requisite.setValue(RequisiteData_[req_data_name])
                 else:
-                    ic.io_prnt.outWarning(u'Не определено значение реквизита <%s>. Используется значение по умолчанию' % req_data_name)
+                    ic.log.warning(u'Не определено значение реквизита <%s>. Используется значение по умолчанию' % req_data_name)
                     # Если данные в словаре значений не определены,
                     # тогда значение реквизита установить по умолчанию
                     requisite.setValue(requisite.getDefault())
@@ -1214,7 +1214,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             requisite.setValue(value)
             return True
         else:
-            ic.io_prnt.outWarning(u'Не определен реквизит <%s> в объекте <%s>' % (requisite_name, self.name))
+            ic.log.warning(u'Не определен реквизит <%s> в объекте <%s>' % (requisite_name, self.name))
         return False
 
     def getRequisiteValue(self, requisite_name):
@@ -1227,7 +1227,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         if requisite:
             return requisite.getValue()
         else:
-            ic.io_prnt.outWarning(u'Не определен реквизит <%s> в объекте <%s>' % (requisite_name, self.name))
+            ic.log.warning(u'Не определен реквизит <%s> в объекте <%s>' % (requisite_name, self.name))
         return None
 
     def getChildRequisite(self, requisite_name):

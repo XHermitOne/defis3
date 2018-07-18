@@ -168,7 +168,7 @@ class icPopupMenu(ic_menu.icMenu):
                 elif isinstance(self._ResData, dict):
                     item_struct = self._ResData[item_name]
                 else:
-                    io_prnt.outWarning(u'Ошибка загрузки меню:')
+                    log.warning(u'Ошибка загрузки меню:')
                     return None
                     
                 self.AppendMenuItem(self, item_name, item_struct)

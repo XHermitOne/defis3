@@ -27,7 +27,7 @@ from ic.components.icwidget import icSizer, icParentShapeType, icSelectedShapeTy
 from ic.log.iclog import MsgLastError, LogLastError
 from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
-import ic.imglib.common as common
+from ic.imglib import common
 
 
 SPC_IC_GRID_BAGSIZER = {'type': 'GridBagSizer',

@@ -9,7 +9,7 @@
 import wx
 
 import ic.utils.ic_exec
-import ic.bitmap.ic_bmp as ic_bmp
+from ic.bitmap import ic_bmp
 from ic.kernel import io_prnt
 
 __version__ = (0, 0, 1, 2)

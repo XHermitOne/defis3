@@ -50,7 +50,7 @@ from ic.bitmap.icbitmap import icBitmapType
 from ic.log.iclog import *
 from ic.utils import util
 from ic.components.icwidget import icWidget, icShortHelpString, SPC_IC_WIDGET
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 try:
@@ -402,7 +402,7 @@ def test(par=0):
     frame = wx.Frame(None, -1, 'icImageButton Test')
     win = wx.Panel(frame, -1)
     s = '''
-import ic.imglib.common as common
+from ic.imglib import common
 return common.imgEdtImage
     '''
     ctrl_1 = get_ext_btn(win)

@@ -33,17 +33,17 @@ wx.EVT_TREE_KEY_DOWN, а не wx.EVT_KEY_DOWN, как у других компо
     компонент (ic_can_contain = -1).
 """
 import wx
-from ic.utils import ic_str
-import ic.components.icwidget as icwidget
-from ic.utils import util
-import ic.components.icResourceParser as prs
-import ic.imglib.common as common
-from ic.PropertyEditor import icDefInf
-from ic.dlg import ic_dlg
-from ic.db import icsqlalchemy
-from ic.kernel import io_prnt
 import wx.lib.agw.hypertreelist as parentModule
 from wx.lib.agw import customtreectrl
+
+from ic.utils import ic_str
+from ic.components import icwidget
+from ic.utils import util
+import ic.components.icResourceParser as prs
+from ic.imglib import common
+from ic.PropertyEditor import icDefInf
+from ic.dlg import ic_dlg
+from ic.log import log
 
 _ = wx.GetTranslation
 
@@ -60,7 +60,7 @@ ic_class_styles = {'TR_NO_BUTTONS': wx.TR_NO_BUTTONS,
                    'TR_LINES_AT_ROOT': wx.TR_LINES_AT_ROOT,
                    'TR_SINGLE': wx.TR_SINGLE,
                    'TR_MULTIPLE': wx.TR_MULTIPLE,
-                   'TR_EXTENDED': wx.TR_EXTENDED,
+                   # 'TR_EXTENDED': wx.TR_EXTENDED,
                    'TR_HAS_VARIABLE_ROW_HEIGHT': wx.TR_HAS_VARIABLE_ROW_HEIGHT,
                    'TR_EDIT_LABELS': wx.TR_EDIT_LABELS,
                    'TR_HIDE_ROOT': wx.TR_HIDE_ROOT,
@@ -68,7 +68,7 @@ ic_class_styles = {'TR_NO_BUTTONS': wx.TR_NO_BUTTONS,
                    'TR_FULL_ROW_HIGHLIGHT': wx.TR_FULL_ROW_HIGHLIGHT,
                    'TR_DEFAULT_STYLE': wx.TR_DEFAULT_STYLE,
                    'TR_TWIST_BUTTONS': wx.TR_TWIST_BUTTONS,
-                   'TR_MAC_BUTTONS': wx.TR_MAC_BUTTONS,
+                   # 'TR_MAC_BUTTONS': wx.TR_MAC_BUTTONS,
                    'NO_BORDER': wx.NO_BORDER,
                    }
 
@@ -122,13 +122,13 @@ ic_can_contain = ['StaticText']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 class icColTreeInfo(parentModule.TreeListColumnInfo):
-    def __init__(self, input="", width=parentModule._DEFAULT_COL_WIDTH, flag=wx.ALIGN_LEFT,
+    def __init__(self, input='', width=parentModule._DEFAULT_COL_WIDTH, flag=wx.ALIGN_LEFT,
                  image=-1, shown=True, colour=None, edit=False):
-        if type(input) in (str, unicode):
+        if isinstance(input, str):
             self._text = input
             self._width = width
             self._flag = flag
@@ -136,9 +136,9 @@ class icColTreeInfo(parentModule.TreeListColumnInfo):
             self._selected_image = -1
             self._shown = shown
             self._edit = edit
-            self._font = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
+            self._font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
             if colour is None:
-                self._colour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOWTEXT)
+                self._colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
         else:
             self._text = input._text
             self._width = input._width
@@ -280,7 +280,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
         Имя самого главного узла.
         @return: Возвращает всегда строку.
         """
-        return unicode(self.getICAttr('titleRoot'))
+        return str(self.getICAttr('titleRoot'))
 
     def expandAllRoot(self):
         """
@@ -302,7 +302,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
         id_pic, id_exp_pic = self._getPicturesId(res)
         
         if len(self.labels) == 1 and len(res['__record__']) > 1:
-            st = u'  ' + (unicode(res['__record__'][1]) or '')
+            st = u'  ' + (str(res['__record__'][1]) or u'')
         else:
             st = u''
         child = self.AppendItem(root, res['name']+st, ct_type=res.get('__type__', 0))
@@ -346,9 +346,9 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
         @param Record_: Запись узла. Список.
         """
         if Record_ and self.isList(Record_):
-            for idx,value in enumerate(Record_[1:]):
-                if not isinstance(value, unicode):
-                    value = unicode(str(value), icsqlalchemy.DEFAULT_DB_ENCODING)
+            for idx, value in enumerate(Record_[1:]):
+                if not isinstance(value, str):
+                    value = str(str(value))     # icsqlalchemy.DEFAULT_DB_ENCODING
                 self.SetItemText(Item_, value, idx+1)
         return Item_
         
@@ -589,11 +589,11 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
                         # Получить значение поля
                         if bILike:
                             # Без учета регистра?
-                            value = ic_str.icUpper(unicode(cur_item_rec[col]))
+                            value = ic_str.icUpper(str(cur_item_rec[col]))
                             find_str = ic_str.icUpper(string)
                             find_col_idx = i
                         else:
-                            value = unicode(cur_item_rec[col])
+                            value = str(cur_item_rec[col])
                             find_str = string
                             find_col_idx = i
                         # Проверка на совпадение подстроки
@@ -962,7 +962,7 @@ def test(par=0):
 
 
 def testStorage():
-    import ic.storage.storesrc as storesrc
+    from ic.storage import storesrc
     
     res_path = 'c:/temp/db'
     storage = storesrc.icTreeDirStorage(res_path)

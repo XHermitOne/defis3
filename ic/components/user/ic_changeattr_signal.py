@@ -21,10 +21,10 @@
     компонент (ic_can_contain = -1).
 """
 
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 from ic.kernel import icobject
@@ -94,7 +94,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icChangeAttrSignal(icwidget.icSimple,parentModule.icChangedAttrSrc):
@@ -138,7 +138,7 @@ class icChangeAttrSignal(icwidget.icSimple,parentModule.icChangedAttrSrc):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') <> 0]
+        lst_keys = [x for x in component.keys() if x.find('__') != 0]
         
         for key in lst_keys:
             setattr(self, key, component[key])

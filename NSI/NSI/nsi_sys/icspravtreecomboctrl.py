@@ -206,7 +206,7 @@ class icSpravTreeComboPopup(wx.combo.ComboPopup):
                 code = data_item.getCode()
                 return code
             else:
-                io_prnt.outWarning(u'Нет данных элемента дерева <%s>' % item)
+                log.warning(u'Нет данных элемента дерева <%s>' % item)
         return None
 
     def set_selected_sprav_code(self, src, Code_, AltCodeField_=None):
@@ -223,7 +223,7 @@ class icSpravTreeComboPopup(wx.combo.ComboPopup):
                 value = record['name']
                 self.curitem = self.find_tree_item(Code_)
                 if self.curitem is None:
-                    io_prnt.outWarning(u'Не найден элемент дерева справочника <%s> с кодом <%s>' % (self._get_root_label(),
+                    log.warning(u'Не найден элемент дерева справочника <%s> с кодом <%s>' % (self._get_root_label(),
                                                                                                     Code_))
                 if AltCodeField_ is not None:
                     pref = record[AltCodeField_].strip() or pref
@@ -450,7 +450,7 @@ class icSpravTreeComboCtrlPrototype(wx.combo.ComboCtrl):
         @param sprav_psp: Паспорт справочника.
         """
         if not ic_util.is_pasport(sprav_psp):
-            io_prnt.outWarning(u'Не корректное значение паспорта <%s>' % sprav_psp)
+            log.warning(u'Не корректное значение паспорта <%s>' % sprav_psp)
             return
 
         self.Clear()
@@ -473,7 +473,7 @@ class icSpravTreeComboCtrlPrototype(wx.combo.ComboCtrl):
                 self.Clear()
                 self.init(sprav_psp, self.view_code, self.view_all)
             else:
-                io_prnt.outWarning(u'Не определен паспорт справочника контрола выбора')
+                log.warning(u'Не определен паспорт справочника контрола выбора')
 
     def viewAll(self):
         """
@@ -821,7 +821,7 @@ class icSpravTreeComboCtrlPrototype(wx.combo.ComboCtrl):
             code = None
             self._combo_popup.curitem = None
         else:
-            io_prnt.outWarning(u'Не корректный тип <%s> значения контрола %s' % (type(Value_), self.__class__.__name__))
+            log.warning(u'Не корректный тип <%s> значения контрола %s' % (type(Value_), self.__class__.__name__))
         return self.setSelectedCode(code)
     
     def getSelectedRecord(self):

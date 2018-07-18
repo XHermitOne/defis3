@@ -136,7 +136,7 @@ class icRegUserJournal:
                 cur_username = self.getCurUser()
                 if cur_username is None:
                     if ic_mode.isDebugMode():
-                        io_prnt.outWarning(u'Not define current user')
+                        log.warning(u'Not define current user')
                     return False
                 else:
                     if ic_mode.isDebugMode():

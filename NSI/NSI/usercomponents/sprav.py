@@ -22,7 +22,7 @@
 
 import wx
 from ic.dlg import ic_dlg
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.bitmap import ic_bmp

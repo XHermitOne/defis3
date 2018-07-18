@@ -21,16 +21,15 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+import wx.gizmos as parentModule
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.dlg import ic_dlg
-
-from ic.kernel import io_prnt
-
-import wx.gizmos as parentModule
+from ic.log import log
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -45,7 +44,7 @@ ic_class_styles = {'TR_NO_BUTTONS': wx.TR_NO_BUTTONS,
                    'TR_LINES_AT_ROOT': wx.TR_LINES_AT_ROOT,
                    'TR_SINGLE': wx.TR_SINGLE,
                    'TR_MULTIPLE': wx.TR_MULTIPLE,
-                   'TR_EXTENDED': wx.TR_EXTENDED,
+                   # 'TR_EXTENDED': wx.TR_EXTENDED,
                    'TR_HAS_VARIABLE_ROW_HEIGHT': wx.TR_HAS_VARIABLE_ROW_HEIGHT,
                    'TR_EDIT_LABELS': wx.TR_EDIT_LABELS,
                    'TR_HIDE_ROOT': wx.TR_HIDE_ROOT,
@@ -53,7 +52,7 @@ ic_class_styles = {'TR_NO_BUTTONS': wx.TR_NO_BUTTONS,
                    'TR_FULL_ROW_HIGHLIGHT': wx.TR_FULL_ROW_HIGHLIGHT,
                    'TR_DEFAULT_STYLE': wx.TR_DEFAULT_STYLE,
                    'TR_TWIST_BUTTONS': wx.TR_TWIST_BUTTONS,
-                   'TR_MAC_BUTTONS': wx.TR_MAC_BUTTONS,
+                   # 'TR_MAC_BUTTONS': wx.TR_MAC_BUTTONS,
                    }
 
 # --- Спецификация на ресурсное описание класса ---
@@ -100,7 +99,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
 
 
 class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):

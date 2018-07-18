@@ -546,7 +546,7 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
             # Справочник определен в менеджере справочников
             nsi_sprav_res = [sprav for sprav in nsi_sprav_manager_res['child'] if sprav['name'] == NSIType_]
         if not nsi_sprav_res:
-            ic.io_prnt.outWarning(u'Не найден справочник <%s> в ресурсе [%s]' % (NSIType_, NSIRes_))
+            ic.log.warning(u'Не найден справочник <%s> в ресурсе [%s]' % (NSIType_, NSIRes_))
             return None
         nsi_sprav_res = nsi_sprav_res[0]
         # Получить ресурсное описание полей

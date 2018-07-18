@@ -91,7 +91,7 @@ class icDocDataset(icsimpledataset.icSimpleDataset):
                 self.data[-1].append(uuid)
                 return ret
         else:
-            io_prnt.outWarning(u'Спецификация документа не определена')
+            log.warning(u'Спецификация документа не определена')
             return icsimpledataset.icSimpleDataset.addRecord(self, values)
             
         return False

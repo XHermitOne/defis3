@@ -21,13 +21,12 @@
 """
 
 import wx
-import wx.combo
-import ic.components.icwidget as icwidget
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-
 from ic.dlg import ic_dlg
 
 #   Тип компонента
@@ -84,10 +83,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
-class icColourComboBox(icwidget.icWidget,wx.combo.ComboCtrl):
+class icColourComboBox(icwidget.icWidget, wx.ComboCtrl):
     """
     КОМБОБОКС ВЫБОРА ЦВЕТА.
     @type component_spc: C{dictionary}
@@ -129,10 +128,10 @@ class icColourComboBox(icwidget.icWidget,wx.combo.ComboCtrl):
             setattr(self, key, component[key])
         
         #   !!! Конструктор наследуемого класса !!!
-        wx.combo.ComboCtrl.__init__(self, parent, 
-                                    pos=self.position,
-                                    size=self.size,
-                                    style=self.style)
+        wx.ComboCtrl.__init__(self, parent,
+                              pos=self.position,
+                              size=self.size,
+                              style=self.style)
 
         self._draw_choice_button()
         

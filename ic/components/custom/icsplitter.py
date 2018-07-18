@@ -54,7 +54,7 @@ from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 import ic.utils.resource as resource
 from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
-import ic.imglib.common as common
+from ic.imglib import common
 
 _ = wx.GetTranslation
 

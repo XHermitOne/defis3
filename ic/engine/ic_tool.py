@@ -12,7 +12,7 @@ from os.path import *
 from . import ic_menu 
 import ic.utils.ic_exec
 import ic.utils.ic_util
-import ic.bitmap.ic_bmp as ic_bmp
+from ic.bitmap import ic_bmp
 from ic.kernel import io_prnt
 import ic.utils.ic_res
 

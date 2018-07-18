@@ -21,14 +21,14 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 from ic.utils import ic_util
 from ic.dlg import ic_dlg
 from ic.bitmap import ic_bmp
 from ic.utils import coderror
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
 
@@ -365,7 +365,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
                 self._data_src_obj.setFilter(data_src_filter)
             return self._data_src_obj.getDataDict()
         else:
-            io_prnt.outWarning(u'Не определен источник данных в объекте <%s>' % self.name)
+            log.warning(u'Не определен источник данных в объекте <%s>' % self.name)
         return None
 
     def setDataset(self, DatasetList_=None, data_src_filter=None):
@@ -393,7 +393,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
                 DatasetList_ = self.getDatasetFromDataSource(self._data_src_obj, data_src_filter)
 
         if DatasetList_ is None:
-            io_prnt.outWarning(u'Not define DATASET for object <%s>. DataSource: <%s>' % (self.name, self._data_src_obj))
+            log.warning(u'Not define DATASET for object <%s>. DataSource: <%s>' % (self.name, self._data_src_obj))
         else:
             if self.isICAttrValue('conv_dataset'):
                 # Определена функция преобразования датасета

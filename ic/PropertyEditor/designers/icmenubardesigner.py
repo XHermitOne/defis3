@@ -15,7 +15,7 @@
 
 import wx
 from ic.utils import util
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 import ic.utils.resource as resource
 import ic.utils.graphicUtils as graphicUtils
 from ic.interfaces import icdesignerinterface

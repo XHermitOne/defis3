@@ -49,11 +49,11 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 from ic.utils import coderror
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 import wx.lib.ogl as parentModule

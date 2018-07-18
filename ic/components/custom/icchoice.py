@@ -39,7 +39,7 @@ from ic.utils import coderror
 from ic.components import icwindow
 from ic.kernel import io_prnt
 from ic.dlg import ic_dlg
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 

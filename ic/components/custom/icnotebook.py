@@ -39,8 +39,8 @@
 """
 import wx
 from ic.utils import util
-import ic.components.icwidget as icwidget
-import ic.imglib.common as common
+from ic.components import icwidget
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 ICPagesBookStyle = {'DEFAULT': 0,

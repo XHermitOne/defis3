@@ -215,20 +215,7 @@ class icDialog(icWidget, wx.Dialog):
         # Буфер результата работы с формой
         self.__result_buff = None
 
-        # wx.Dialog.__init__(self, parent, id, self.title, pos, self.size, style = style, name = self.name)
-        # Instead of calling wxDialog.__init__ we precreate the dialog
-        # so we can set an extra style that must be set before
-        # creation, and then we create the GUI dialog using the Create
-        # method.
-
-        pre = wx.PreDialog()
-        pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-        pre.Create(parent, id, self.title, pos, self.size, style, self.name)
-
-        # This next step is the most important, it turns this Python
-        # object into the real wrapper of the dialog (instead of pre)
-        # as far as the wxPython extension is concerned.
-        self.this = pre.this
+        wx.Dialog.__init__(self, parent, id, self.title, pos, self.size, style, self.name)
 
         if icon:
             icon_img = util.ic_eval(icon, evalSpace=self.evalSpace)

@@ -74,7 +74,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
                 new_filter['id'] = filter_id
                 new_filter['description'] = filter_description
             else:
-                io_prnt.outWarning(u'Не определен фильтр для добавления')
+                log.warning(u'Не определен фильтр для добавления')
                 return False
 
         if new_filter:
@@ -102,7 +102,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
             try:
                 i = filters_id.index(filter_name)
             except IndexError:
-                io_prnt.outWarning(u'Не найден фильтр <%s> среди <%s>' % (filter_name, filters_id))
+                log.warning(u'Не найден фильтр <%s> среди <%s>' % (filter_name, filters_id))
                 return False
             del self._filters[i]
             self.filterCheckList.Delete(i+1)
@@ -204,10 +204,10 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
             filter_idx = self.filterCheckList.GetSelection()
         num_filters = len(self._filters)
         if (filter_idx < 0) or (filter_idx >= num_filters):
-            io_prnt.outWarning(u'Не корректный индекс <%s>' % filter_idx)
+            log.warning(u'Не корректный индекс <%s>' % filter_idx)
             return False
         elif filter_idx == 0:
-            io_prnt.outWarning(u'Не возможно передвинуть фильтр выше')
+            log.warning(u'Не возможно передвинуть фильтр выше')
             return False
         # Меняем фильтры местами
         selected_filter = self._filters[filter_idx]
@@ -230,10 +230,10 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
             filter_idx = self.filterCheckList.GetSelection()
         num_filters = len(self._filters)
         if (filter_idx < 0) or (filter_idx >= num_filters):
-            io_prnt.outWarning(u'Не корректный индекс <%s>' % filter_idx)
+            log.warning(u'Не корректный индекс <%s>' % filter_idx)
             return False
         elif filter_idx == num_filters-1:
-            io_prnt.outWarning(u'Не возможно передвинуть фильтр ниже')
+            log.warning(u'Не возможно передвинуть фильтр ниже')
             return False
         # Меняем фильтры местами
         selected_filter = self._filters[filter_idx]
@@ -508,14 +508,14 @@ class icFilterChoiceCtrlProto(wx.combo.ComboCtrl):
                     res[self.getUUID()] = self._filter
                     ic_res.SaveResourcePickle(filter_filename, res)
                 else:
-                    io_prnt.outWarning(u'Error resource file <%s>' % filter_filename)
+                    log.warning(u'Error resource file <%s>' % filter_filename)
                     return False
             else:
                 # Просто записать в файл
                 res = {self.getUUID(): self._filter}
                 ic_res.SaveResourcePickle(filter_filename, res)
         else:
-            io_prnt.outWarning(u'Not define save filter file')
+            log.warning(u'Not define save filter file')
             return False
         return True
 
@@ -537,10 +537,10 @@ class icFilterChoiceCtrlProto(wx.combo.ComboCtrl):
                 if filter_data:
                     self.setFilter(filter_data)
                 else:
-                    io_prnt.outWarning(u'Not fond filters for combo box <%s> in file <%s>!' % (self.getUUID(),
+                    log.warning(u'Not fond filters for combo box <%s> in file <%s>!' % (self.getUUID(),
                                                                                                filter_filename))
         else:
-            io_prnt.outWarning(u'Filters file <%s> not exists!' % filter_filename)
+            log.warning(u'Filters file <%s> not exists!' % filter_filename)
 
     def setFilter(self, filter_data):
         """

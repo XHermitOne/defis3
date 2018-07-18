@@ -172,7 +172,7 @@ class icSpravMultipleChoiceComboCtrlProto(wx.combo.ComboCtrl):
             self.SetValue(label)
             return True
         else:
-            io_prnt.outWarning(u'Не определен справочник в контроле icSpravMultipleChoiceComboCtrl')
+            log.warning(u'Не определен справочник в контроле icSpravMultipleChoiceComboCtrl')
         return False
 
     getValue = getCodes
@@ -200,7 +200,7 @@ class icSpravMultipleChoiceComboCtrlProto(wx.combo.ComboCtrl):
                     self.SetValue(label)
                     return code
                 else:
-                    io_prnt.outWarning(u'Код [%s] уже присутствует в выбранных' % code)
+                    log.warning(u'Код [%s] уже присутствует в выбранных' % code)
             else:
                 log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self._sprav.name, result))
         return None

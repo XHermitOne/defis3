@@ -8,7 +8,7 @@ import ic.interfaces.ictemplate as ictemplate
 from ic.utils import util
 import copy
 from ic.PropertyEditor import icDefInf
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 import STD.reestr_img as reestr_img
 import ic.components.icResourceParser as prs
 

@@ -16,7 +16,7 @@ from ic.db import tabclass
 from ic.utils.coderror import *
 from ic.utils import util
 from ic.components.icResourceParser import *
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 
 from ic.dlg.ic_dlg import icAskDlg
 

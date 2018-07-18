@@ -6,8 +6,8 @@
 """
 
 import wx
-import ic.imglib.common as common
-import ic.components.icwidget as icwidget
+from ic.imglib import common
+from ic.components import icwidget
 import time
 from ic.kernel import io_prnt
 import ic.dlg.ic_proccess_dlg as ic_proccess_dlg

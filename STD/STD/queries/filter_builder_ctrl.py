@@ -609,7 +609,7 @@ class icLabelChoice(wx.StaticText):
             
                 self._menuitem_item_dict[id] = item
         else:
-            io_prnt.outWarning(u'Конструктор фильтров. Не определены пункты для выбора функции')
+            log.warning(u'Конструктор фильтров. Не определены пункты для выбора функции')
 
         return menu
         

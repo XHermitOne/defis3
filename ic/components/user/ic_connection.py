@@ -20,13 +20,13 @@
     компонент (ic_can_contain = -1).
 """
 
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-import ic.engine.ic_user as ic_user
-import ic.kernel.io_prnt as io_prnt
+from ic.engine import ic_user
+from ic.log import log
 
 import ic.kernel.icObjConnection as parentModule
 
@@ -75,7 +75,7 @@ ic_can_contain = ['WxSignal', 'ChangeAttrSignal', 'PostFuncSignal', 'SimpleSlot'
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icConnection(icwidget.icSimple,parentModule.icConnection):
@@ -118,7 +118,7 @@ class icConnection(icwidget.icSimple,parentModule.icConnection):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') <> 0]
+        lst_keys = [x for x in component.keys() if x.find('__') != 0]
         
         for key in lst_keys:
             setattr(self, key, component[key])
@@ -135,10 +135,10 @@ class icConnection(icwidget.icSimple,parentModule.icConnection):
             first_signal = filter(lambda item: item.type in ('WxSignal', 'ChangeAttrSignal', 'PostFuncSignal'),
                                   self.components.values())[0]
         except IndexError:
-            io_prnt.outWarning(u'CONNECTION CREATE ERROR! Connection has\'t signal <%s>' % self.name)
+            log.warning(u'CONNECTION CREATE ERROR! Connection has\'t signal <%s>' % self.name)
         slot_list = [item for item in self.components.values() if item.type in ('SimpleSlot',)]
         if not slot_list:
-            io_prnt.outWarning(u'CONNECTION CREATE ERROR! Connection has\'t slots <%s>' % self.name)
+            log.warning(u'CONNECTION CREATE ERROR! Connection has\'t slots <%s>' % self.name)
             
         parentModule.icConnection.__init__(self, first_signal, slot_list)
 
@@ -158,5 +158,3 @@ class icConnection(icwidget.icSimple,parentModule.icConnection):
         if self.child:
             prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
                                  bCounter=bCounter, progressDlg=progressDlg)
-      
-    #   Обработчики событий

@@ -236,7 +236,7 @@ def init():
     if not bInit_var:
         import ic.components.icResourceParser as icprs
         import ic.utils.resource as icres
-        import ic.imglib.common as common
+        from ic.imglib import common
 
 
 class Context(BaseContext):

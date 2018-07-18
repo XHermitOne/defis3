@@ -46,17 +46,18 @@
 
 import wx
 import copy
-import ic.components.icwidget as icwidget
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 from ic.dlg import ic_dlg
-from ic.kernel import io_prnt
 import ic.interfaces.Persistent as persistent
-import ic.storage.storesrc as storesrc
-import ic.utils.clipboard as clipboard
+from ic.storage import storesrc
+from ic.utils import clipboard
+from ic.log import log
 from . import ic_metaconst_wrp
 from . import ic_metaattr_wrp
 
@@ -160,7 +161,7 @@ ic_can_contain = ['MetaConst', 'MetaAttr']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Классы ---
@@ -202,7 +203,7 @@ class icMetaProperty:
         try:
             return self.__dict__[name]
         except KeyError:
-            io_prnt.outWarning(u'Нет ключа %s в спецификации объекта %s компонента %s среди имен %s %s' % (name,
+            log.warning(u'Нет ключа %s в спецификации объекта %s компонента %s среди имен %s %s' % (name,
                                                                                                            self.__dict__['property']['name'],
                                                                                                            self.__dict__['property']['metatype'],
                                                                                                            self.__dict__['property'].keys(),
@@ -288,7 +289,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         self._value_spc = None
         if isinstance(Resource_['spc'], dict):
             self._value_spc = Resource_['spc']
-        elif type(Resource_['spc']) in (str, unicode):
+        elif isinstance(Resource_['spc'], str):
             self._value_spc = self.eval_attr('spc')[1]
         if not self._value_spc:
             self._value_spc = dict()
@@ -598,7 +599,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         if view_form:
             if '.' in view_form:
                 import_str = 'import %s' % ('.'.join(view_form.split('.')[:-1]))
-                exec import_str
+                exec(import_str)
                 form_class = view_form.split('.')[-1]
                 form_mod = eval('.'.join(view_form.split('.')[:-1]))
                 
@@ -613,7 +614,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         if self._view_form:
             if '.' in self._view_form:
                 import_str = 'import %s' % ('.'.join(self._view_form.split('.')[:-1]))
-                exec import_str
+                exec(import_str)
                 form_class = self._view_form.split('.')[-1]
                 form_mod = eval('.'.join(self._view_form.split('.')[:-1]))
                 
@@ -633,7 +634,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         if edit_form:
             if '.' in edit_form:
                 import_str = 'import %s' % ('.'.join(edit_form.split('.')[:-1]))
-                exec import_str
+                exec(import_str)
                 form_class = edit_form.split('.')[-1]
                 form_mod = eval('.'.join(edit_form.split('.')[:-1]))
                 
@@ -648,7 +649,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         if self._edit_form:
             if '.' in self._edit_form:
                 import_str = 'import %s' % ('.'.join(self._edit_form.split('.')[:-1]))
-                exec import_str
+                exec(import_str)
                 form_class = self._edit_form.split('.')[-1]
                 form_mod = eval('.'.join(self._edit_form.split('.')[:-1]))
                 
@@ -1175,7 +1176,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         """
         try:
             log.info(u'Создание клона %s метаобъекта %s родитель: %s' % (CloneName_, self.name,
-                                                                               self._Parent.name))
+                                                                         self._Parent.name))
             clone = self._Parent._add(CloneName_, self.value.metatype)
             clone.Save()
             clone_property = copy.deepcopy(self.value.getProperty())

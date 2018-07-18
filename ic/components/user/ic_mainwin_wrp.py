@@ -21,14 +21,14 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 import ic.engine.ic_win as ic_win
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 from ic.utils import coderror
 from ic.dlg import ic_dlg
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt

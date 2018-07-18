@@ -5,7 +5,8 @@
 Библиотека управления образами.
 """
 
-__version__ = '0.3'
+__version__ = (0, 1, 1, 1)
+
 
 def get_image_by_expr(expr):
     """
@@ -14,12 +15,12 @@ def get_image_by_expr(expr):
     @param expr: Выражение.
     """
     import wx
-    import ic
     from . import common
     from ic.bitmap import icbitmap
+
     img = expr
     
-    if type(expr) in (str, unicode) and expr not in ('', 'None') and expr.startswith('@'):
+    if isinstance(expr, str) and expr not in ('', 'None') and expr.startswith('@'):
         expr = expr[1:]
         
         try:
@@ -31,7 +32,7 @@ def get_image_by_expr(expr):
             
         expr = img
 
-    if type(expr) in (str, unicode) and expr not in ('', 'None'):
+    if isinstance(expr, str) and expr not in ('', 'None'):
         bmptype = icbitmap.icBitmapType(expr)
         img = wx.Image(expr, bmptype).ConvertToBitmap()
     elif not img:

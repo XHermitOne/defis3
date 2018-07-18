@@ -23,14 +23,14 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+import wx.lib.agw.customtreectrl as CT
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
 
-import wx.lib.customtreectrl as CT
 
 #   Тип компонента
 ic_class_type = icDefInf._icControlsType
@@ -45,7 +45,7 @@ ic_class_styles = {'TR_NO_BUTTONS': wx.TR_NO_BUTTONS,
                    'TR_LINES_AT_ROOT': wx.TR_LINES_AT_ROOT,
                    'TR_SINGLE': wx.TR_SINGLE,
                    'TR_MULTIPLE': wx.TR_MULTIPLE,
-                   'TR_EXTENDED': wx.TR_EXTENDED,
+                   # 'TR_EXTENDED': wx.TR_EXTENDED,
                    'TR_HAS_VARIABLE_ROW_HEIGHT': wx.TR_HAS_VARIABLE_ROW_HEIGHT,
                    'TR_EDIT_LABELS': wx.TR_EDIT_LABELS,
                    'TR_HIDE_ROOT': wx.TR_HIDE_ROOT,
@@ -55,7 +55,8 @@ ic_class_styles = {'TR_NO_BUTTONS': wx.TR_NO_BUTTONS,
                    'TR_TWIST_BUTTONS': wx.TR_TWIST_BUTTONS,
                    'TR_AUTO_CHECK_CHILD': CT.TR_AUTO_CHECK_CHILD,
                    'TR_AUTO_CHECK_PARENT': CT.TR_AUTO_CHECK_PARENT,
-                   'TR_AUTO_TOGGLE_CHILD': CT.TR_AUTO_TOGGLE_CHILD}
+                   'TR_AUTO_TOGGLE_CHILD': CT.TR_AUTO_TOGGLE_CHILD,
+                   }
 
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'CustomTreeCtrl',
@@ -94,7 +95,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icCustomTreeCtrl(icwidget.icWidget, CT.CustomTreeCtrl):
@@ -110,7 +111,6 @@ class icCustomTreeCtrl(icwidget.icWidget, CT.CustomTreeCtrl):
             на каждый уровень вложенности может быть свой словарь.
         - B{treeDict={}}: Словарно-списковая структура, отображаемая в дереве.
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType=0, evalSpace=None,

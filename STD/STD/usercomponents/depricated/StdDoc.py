@@ -10,7 +10,7 @@ import copy
 import STD.interfaces.reestr.objectInterface as ifs
 from ic.PropertyEditor import icDefInf
 from STD import reestr_img
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 
 form_name_lst = ic_user.get_res_name_list('frm')#getPrjRoot().getResNamesByTypes('frm')
 

@@ -132,7 +132,7 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
             dataset = self._sprav.getStorage().getLevelTable(code)
             self.setDataset(dataset)
         else:
-            io_prnt.outWarning(u'Не определен справочник для выбора')
+            log.warning(u'Не определен справочник для выбора')
 
     def setDataset(self, dataset):
         """
@@ -156,7 +156,7 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
             self.dlg_toolbar.EnableTool(self.return_tool.GetId(),
                                         not self.isEmptyCode())
         else:
-            io_prnt.outWarning(u'Не определен датасет справочника (код <%s>) для выбора' % self._getStrCode())
+            log.warning(u'Не определен датасет справочника (код <%s>) для выбора' % self._getStrCode())
 
     def selectCode(self, code):
         """
@@ -184,7 +184,7 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
             self.sprav_list_ctrl.Focus(idx)
         except ValueError:
             print(code, self._cur_code, code_list)
-            io_prnt.outWarning(u'Ошибка определения кода справочника <%s> при выборе из <%s>' % (code, parent_code))
+            log.warning(u'Ошибка определения кода справочника <%s> при выборе из <%s>' % (code, parent_code))
 
     def getSprav(self):
         """
@@ -299,7 +299,7 @@ def getSpravChoiceListDlg(parent=None, sprav=None):
                 dlg.Destroy()
             log.error(u'Ошибка диалогового окна выбора кода справочника.')
     else:
-        io_prnt.outWarning(u'Не определен справочник диалогового окна выбора кода справочника.')
+        log.warning(u'Не определен справочник диалогового окна выбора кода справочника.')
     return result
 
 

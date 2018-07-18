@@ -344,7 +344,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
             try:
                 ic.log.info(u'WorkStorage SAVE RECORD %s' % requisite_dict.keys())
             except UnicodeDecodeError:
-                ic.io_prnt.outWarning(u'UnicodeDecodeError. WorkStorage SAVE RECORD')
+                ic.log.warning(u'UnicodeDecodeError. WorkStorage SAVE RECORD')
 
             save_rec = dict([(str(fld_name), value) for fld_name, value in requisite_dict.items() if not isinstance(value, list)])
             if not doc_table.count(doc_table.c.uuid == Obj_.getUUID()):
@@ -352,7 +352,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                 try:
                     ic.log.info(u'WorkStorage ADD RECORD %s' % save_rec.keys())
                 except UnicodeDecodeError:
-                    ic.io_prnt.outWarning(u'UnicodeDecodeError. WorkStorage ADD RECORD')
+                    ic.log.warning(u'UnicodeDecodeError. WorkStorage ADD RECORD')
 
                 doc_table.add_rec_transact(rec=save_rec,
                                            transaction=transaction)
@@ -637,7 +637,7 @@ class icWorkSQLStorage(object, icWorkStorageInterface):
                 elif isinstance(order_sort, str) or isinstance(order_sort, unicode):
                     sql = sql.order_by(getattr(doc_table.c, order_sort))
                 else:
-                    ic.io_prnt.outWarning(u'Не корректный тип <%s> параметра порядка сортировки в методе getAllUUID' % type(order_sort))
+                    ic.log.warning(u'Не корректный тип <%s> параметра порядка сортировки в методе getAllUUID' % type(order_sort))
 
             records = sql.execute()
             return [record['uuid'] for record in records]

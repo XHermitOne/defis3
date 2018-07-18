@@ -5,17 +5,18 @@
 Редактор критериев выбора коллекций.
 """
 
-# Version
-__version__ = (0, 0, 0, 1)
 
 # Imports
 import wx
 import wx.lib.scrolledpanel
 
-from ic.kernel import io_prnt
 from ic.imglib import common as imglib
+from ic.log import log
 
 from .filter_builder_ctrl import *
+
+# Version
+__version__ = (0, 1, 1, 1)
 
 
 def doFilterBuilder(Parent_, Environment_, Default_=None):
@@ -320,7 +321,7 @@ class icFilterBuilderDialog(wx.Dialog):
                         func = self.environment['funcs'][func]
                         result.append(func['description'])
                 else:
-                    io_prnt.outWarning(u'Ошибка. Не корректный тип функции: <%s<' % func)
+                    log.warning(u'Ошибка. Не корректный тип функции: <%s<' % func)
         return result
     
     def _getFunctions(self, Idx_):
@@ -339,7 +340,7 @@ class icFilterBuilderDialog(wx.Dialog):
                         func = self.environment['funcs'][func]
                         result.append(func)
                 else:
-                    io_prnt.outWarning(u'Ошибка. Не корректный тип функции: <%s>' % func)
+                    log.warning(u'Ошибка. Не корректный тип функции: <%s>' % func)
         return result
     
     def delFuncChoice(self, Idx_):
@@ -607,8 +608,8 @@ def test():
 
     log.init(ic.config)
 
-    # env = copy.deepcopy(filter_builder_env.FILTER_ENVIRONMENT)
-    env = filter_builder_env.FILTER_ENVIRONMENT
+    env = copy.deepcopy(filter_builder_env.FILTER_ENVIRONMENT)
+    # env = filter_builder_env.FILTER_ENVIRONMENT
     func1 = {'func': filter_builder_env.str_equal,
              'description': u'Строковое сравнение',
              'args': []

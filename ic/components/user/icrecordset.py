@@ -21,16 +21,17 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 import ic.db.icsqlalchemydataset as parentModule
-import ic.imglib.syscomp_img as syscomp_img
 from ic.utils import coderror
 from ic.dlg import ic_dlg
+from ic.bitmap import ic_bmp
 
 #   Тип компонента
 ic_class_type = icDefInf._icDatasetType
@@ -58,8 +59,8 @@ ic_class_spc = {'type': 'Recordset',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = syscomp_img.recordset
-ic_class_pic2 = syscomp_img.recordset
+ic_class_pic = ic_bmp.createLibraryBitmap('database_table.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('database_table.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
@@ -73,7 +74,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
@@ -82,6 +83,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     Стандартная функция для вызова пользовательских редакторов свойств
     (EDT_USER_PROPERTY).
     """
+    ret = None
     if attr in ('sourcePsp',):
         ret = pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
 

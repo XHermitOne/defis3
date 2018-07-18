@@ -1497,7 +1497,7 @@ DEFAULT_ENV_FUNCS.update(DEFAULT_ENV_DATETIME_FUNCS)
 try:
     from NSI.usercomponents.spravtreecomboctrl import icSpravTreeComboCtrl
 except ImportError:
-    io_prnt.outWarning(u'Не подключен редактор НСИ аргумента в конструкторе фильтров')
+    log.warning(u'Не подключен редактор НСИ аргумента в конструкторе фильтров')
     icSpravTreeComboCtrl = None
 
 DEFAULT_ENV_NSI_FUNCS = {

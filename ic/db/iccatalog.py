@@ -18,17 +18,22 @@
     ... дополнительные атрибуты
 """
 
-from ic.interfaces.icabstract import abstract
+import os
 import time
 import datetime
 import wx
-# Исключения
-import exceptions
+
+from ic.interfaces.icabstract import abstract
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
+FLD_DIV = os.sep
+DEFAULT_OTYPE = 'object'
 
-class PathExistException(exceptions.Exception):
+
+class PathExistException(Exception):
     """
     Заданный путь существует.
     """
@@ -36,14 +41,12 @@ class PathExistException(exceptions.Exception):
         self.args = args
 
 
-class InvalidCatalogItemTypeException(exceptions.Exception):
+class InvalidCatalogItemTypeException(Exception):
     """
     Не верный тип элемента каталога.
     """
     def __init__(self, args=None, user=None):
         self.args = args
-
-FLD_DIV = '/'
 
 
 class icAbsItemCatalog(object):
@@ -58,8 +61,6 @@ class icAbsItemCatalog(object):
         Признак возможности добавления элемента в качестве дочернего.
         """
         abstract()
-
-DEFAULT_OTYPE = 'object'
 
 
 class icItemCatalog(icAbsItemCatalog):    
@@ -123,7 +124,7 @@ class icItemCatalog(icAbsItemCatalog):
         try:
             return getattr(self, val)
         except AttributeError:
-            raise KeyError, val
+            raise KeyError(val)
             
     def save(self):
         pass
@@ -341,7 +342,7 @@ class icCatalog(icAbsCatalog):
             self._catalog.append(item)
             return item
         else:
-            CatalogItemTypeException(('Invalid item type',))
+            InvalidCatalogItemTypeException(('Invalid item type', ))
                             
     @norm_path    
     def add(self, path, pobj, otype=None, title='', description='', *arg, **kwarg):
@@ -376,7 +377,7 @@ class icCatalog(icAbsCatalog):
             t1 = el.split(FLD_DIV)[:-1]
             b = True
             for i, x in enumerate(t):
-                if x and (len(t1) <= i or x <> t1[i]):
+                if x and (len(t1) <= i or x != t1[i]):
                     b = False
                     break
             if b:

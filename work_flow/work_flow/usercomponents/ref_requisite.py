@@ -20,7 +20,7 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg

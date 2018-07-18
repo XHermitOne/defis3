@@ -23,12 +23,12 @@
 import wx
 from wx.lib.agw import flatmenu
 
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 from ic.utils import coderror
 from ic.dlg import ic_dlg
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
 
@@ -290,7 +290,7 @@ class icFlatMenuTool(icwidget.icSimple, icflatmenutool.icFlatMenuToolPrototype):
         if item_name:
             item = menubar.findMenuItemByName(item_name)
             if item is None:
-                io_prnt.outWarning(u'Пункт меню <%s> не найден!' % item_name)
+                log.warning(u'Пункт меню <%s> не найден!' % item_name)
         return item
     
     def getMenuBar(self):

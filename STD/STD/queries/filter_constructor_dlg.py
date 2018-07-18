@@ -30,7 +30,7 @@ def icFilterConstructorDlg(ParentWin_=None, DefaultFilterData_=None, Env_=None):
     @param Env_: Окружение работы конструктора фильтров.
     """
     if Env_ is None:
-        io_prnt.outWarning(u'Не определено окружение для конструктора фильтров')
+        log.warning(u'Не определено окружение для конструктора фильтров')
 
         # Окружение должно быть обязательно
         try:

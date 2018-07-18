@@ -47,7 +47,7 @@ from ic.components import icwidget
 from ic.PropertyEditor.ExternalEditors import baseeditor
 import ic.utils.coderror as coderror
 
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 import wx.lib.agw.gradientbutton as GB
 

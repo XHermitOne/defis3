@@ -145,7 +145,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
             except:
                 log.error(u'Ошибка определения страницы главного нотебука приложения')
         else:
-            io_prnt.outWarning(u'Не определен главный нотебук главного окна прораммы')
+            log.warning(u'Не определен главный нотебук главного окна прораммы')
         return None
 
     def onClosePage(self, event):
@@ -199,7 +199,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
                 result = self.eval_attr(ic_win.RES_WIN_CLOSE)
                 if result and not result[1]:
                     # Не нажато подтверждение выхода из главного окна
-                    io_prnt.outWarning(u'Условия корректного выхода из программы не подтверждены')
+                    log.warning(u'Условия корректного выхода из программы не подтверждены')
                     return
 
             # ВНИМАНИЕ! Для корректного выхода из приложения необходимо
@@ -242,7 +242,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
                 if Image_ is None:
                     Image_ = wx.NullBitmap
                 if type(Title_) not in (str, unicode):
-                    io_prnt.outWarning(u'Не допустимый тип <%s> заголовка страницы нотебука' % type(Title_))
+                    log.warning(u'Не допустимый тип <%s> заголовка страницы нотебука' % type(Title_))
                     Title_ = str(Title_)
 
                 # Добавить страницу

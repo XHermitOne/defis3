@@ -15,7 +15,7 @@ from ic.utils import util
 import copy
 import ic.kernel.icobject as icobject
 import ic.kernel.ickernel as ickernel
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 from ic.PropertyEditor import icDefInf
 import STD.interfaces.reestr.browsInterface as ifs
 

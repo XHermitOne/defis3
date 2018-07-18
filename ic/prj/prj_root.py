@@ -19,7 +19,7 @@ from ic.dlg import ic_dlg
 from ic.kernel import icexceptions
 from ic.utils import ic_util
 
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 import ic.utils.ic_mode as ic_mode
 
 from . import PrjRes

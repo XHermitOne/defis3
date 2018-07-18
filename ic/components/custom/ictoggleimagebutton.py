@@ -50,7 +50,7 @@ from ic.log.iclog import *
 from ic.utils import util
 from ic.PropertyEditor import icDefInf
 from ic.components.icwidget import icWidget, icShortHelpString, SPC_IC_WIDGET
-import ic.imglib.common as common
+from ic.imglib import common
 
 ICToggleImageButtonStyle = {'BU_LEFT': wx.BU_LEFT,
                             'BU_TOP': wx.BU_TOP,

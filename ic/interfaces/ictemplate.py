@@ -9,7 +9,7 @@ import wx
 from ic.utils import util
 from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.images import editorimg
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 import copy
 
 #   Спецификация на объект группы

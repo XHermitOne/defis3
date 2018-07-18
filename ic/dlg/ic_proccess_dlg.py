@@ -1,16 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Диалоговые окна прогресс бара.
+"""
+
+import os
+import os.path
+import time
+import _thread
 import wx
 import wx.lib.imagebrowser
 
-import ic.components.icfont as icfont
+from ic.components import icfont
 import ic.utils.ic_exec   # Этот модуль подгружается для спецификации
-import ic.bitmap.ic_bmp as ic_bmp
+from ic.bitmap import ic_bmp
 from ic.utils import ic_file
-import time
-import thread
 
+__version__ = (0, 1, 1, 1)
 
 # Класс и функции индикатора процесса
 ic_proccess_dlg = None
@@ -24,9 +31,9 @@ def proccess_deco(f):
     """
     def func(*arg, **kwarg):
         if issubclass(arg[0].__class__, wx.Window):
-            return ProccessFunc(arg[0], 'Подождите     ', f, arg, kwarg)
+            return ProccessFunc(arg[0], u'Подождите     ', f, arg, kwarg)
         else:
-            return ProccessFunc(None, 'Подождите     ', f, arg, kwarg)
+            return ProccessFunc(None, u'Подождите     ', f, arg, kwarg)
     return func
 
 
@@ -36,7 +43,7 @@ def proccess_noparent_deco(f):
     родительского оконного объекта).
     """
     def func(*arg, **kwarg):
-        return ProccessFunc(None, 'Подождите   ', f, arg, kwarg)
+        return ProccessFunc(None, u'Подождите   ', f, arg, kwarg)
     return func
 
 
@@ -46,7 +53,7 @@ def proccess_noparent_deco_auto(f):
     родительского оконного объекта).
     """
     def func(*arg, **kwarg):
-        return ProccessFunc(None, 'Подождите   ', f, arg, kwarg, bAutoIncr=True)
+        return ProccessFunc(None, u'Подождите   ', f, arg, kwarg, bAutoIncr=True)
     return func
 
 
@@ -58,9 +65,9 @@ def proccess2_deco(f):
     """
     def func(*arg, **kwarg):
         if issubclass(arg[0].__class__, wx.Window):
-            return ProccessFunc(arg[0], 'Подождите     ', f, arg, kwarg, bDoubleLine=True)
+            return ProccessFunc(arg[0], u'Подождите     ', f, arg, kwarg, bDoubleLine=True)
         else:
-            return ProccessFunc(None, 'Подождите     ', f, arg, kwarg, bDoubleLine=True)
+            return ProccessFunc(None, u'Подождите     ', f, arg, kwarg, bDoubleLine=True)
     return func
 
 
@@ -70,7 +77,7 @@ def proccess2_noparent_deco(f):
     родительского оконного объекта).
     """
     def func(*arg, **kwarg):
-        return ProccessFunc(None, 'Подождите   ', f, arg, kwarg, bDoubleLine=True)
+        return ProccessFunc(None, u'Подождите   ', f, arg, kwarg, bDoubleLine=True)
     return func
 
 
@@ -136,7 +143,7 @@ def ProccessFunc(Parent_, Msg_,
     wait_result = [None]
     if not Frames_:
         # Определить кадры по умолчанию
-        wait_dir = ic_file.DirName(__file__)+'/Wait/'
+        wait_dir = os.path.join(os.path.dirname(__file__), 'Wait')
         Frames_ = [wait_dir+'Wait1.png',
                    wait_dir+'Wait2.png',
                    wait_dir+'Wait3.png',
@@ -161,7 +168,7 @@ def ProccessFunc(Parent_, Msg_,
         
     wait_box.SetResultList(wait_result)
     # Запустить функцию ожидания
-    thread.start_new(wait_box.Run, (Func_, FuncArgs_, FuncKW_))
+    _thread.start_new(wait_box.Run, (Func_, FuncArgs_, FuncKW_))
     wait_box.ShowModal()
     wait_box.Destroy()
     ic_proccess_dlg = None
@@ -587,7 +594,7 @@ def test(par=0):
     frame.Show(True)
     
     load_component_proccess()
-    
+
     app.MainLoop()
 
 

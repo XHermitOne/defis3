@@ -7,7 +7,7 @@
 
 import os.path
 
-import ic.dlg.ic_logo_dlg as ic_logo_dlg
+from ic.dlg import ic_logo_dlg
 from ic.log import log
 
 #
@@ -67,7 +67,7 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
                 dir_list = os.listdir(user_dir)
                 
                 for j, file in enumerate(dir_list):
-                    if not '__init__.py' in file and not '.bak' in file:
+                    if '__init__.py' not in file and '.bak' not in file:
                         path, fileName = os.path.split(file)
         
                         #   Определяем расширение
@@ -87,7 +87,7 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
                                 log.info('>>> user component import %s' % md)
                                 ic_logo_dlg.SetLoadProccessBoxLabel(u'>>> Имп. компонент: %s' % md, 100*j/len(dir_list))
 
-                                class_mod = __import__(md, globals(), locals(), [], -1)
+                                class_mod = __import__(md, globals(), locals(), [], level=1)
                                 # Поскольку __import__ возвращает родительский модуль
                                 # получаем доступ до нужного нам модуля через 
                                 # рекурсивный getattr

@@ -21,10 +21,12 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+import wx.adv
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 #   Тип компонента
@@ -96,10 +98,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
-class icPenStyleComboBox(icwidget.icWidget, wx.combo.OwnerDrawnComboBox):
+class icPenStyleComboBox(icwidget.icWidget, wx.adv.OwnerDrawnComboBox):
     """
     КОМБОБОКС СТИЛЯ ЛИНИИ.
     @type component_spc: C{dictionary}
@@ -145,11 +147,11 @@ class icPenStyleComboBox(icwidget.icWidget, wx.combo.OwnerDrawnComboBox):
         #   На этапе генерации их не всегда можно определить.
         items = [item.keys()[0] for item in self.items]
 
-        wx.combo.OwnerDrawnComboBox.__init__(self, parent, 
-                                             choices=items,
-                                             pos=self.position,
-                                             size=self.size,
-                                             style=self.style)
+        wx.adv.OwnerDrawnComboBox.__init__(self, parent,
+                                           choices=items,
+                                           pos=self.position,
+                                           size=self.size,
+                                           style=self.style)
 
         # --- Регистрация обработчиков событий
         self.BindICEvt()
@@ -173,9 +175,9 @@ class icPenStyleComboBox(icwidget.icWidget, wx.combo.OwnerDrawnComboBox):
         pen = wx.Pen(fgCol, 3, penStyle)
         dc.SetPen(pen)
 
-        if flags & wx.combo.ODCB_PAINTING_CONTROL:
-           # for painting the control itself
-           dc.DrawLine(r.x+5, r.y+r.height/2, r.x+r.width - 5, r.y+r.height/2)
+        if flags & wx.adv.ODCB_PAINTING_CONTROL:
+            # for painting the control itself
+            dc.DrawLine(r.x+5, r.y+r.height/2, r.x+r.width - 5, r.y+r.height/2)
 
         else:
             # for painting the items in the popup
@@ -192,9 +194,9 @@ class icPenStyleComboBox(icwidget.icWidget, wx.combo.OwnerDrawnComboBox):
         """
         # If the item is selected, or its item # iseven, or we are painting the
         # combo control itself, then use the default rendering.
-        if (item & 1 == 0 or flags & (wx.combo.ODCB_PAINTING_CONTROL |
-                                      wx.combo.ODCB_PAINTING_SELECTED)):
-            wx.combo.OwnerDrawnComboBox.OnDrawBackground(self, dc, rect, item, flags)
+        if (item & 1 == 0 or flags & (wx.adv.ODCB_PAINTING_CONTROL |
+                                      wx.adv.ODCB_PAINTING_SELECTED)):
+            wx.adv.OwnerDrawnComboBox.OnDrawBackground(self, dc, rect, item, flags)
             return
 
         # Otherwise, draw every other background with different colour.

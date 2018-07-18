@@ -14,7 +14,7 @@ import copy
 from STD import reestr_img
 from ic.components.user import ic_metaitem_wrp
 from ic.PropertyEditor import icDefInf
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 import ic.utils.resource as resmod
 import ic.kernel.io_prnt as io_prnt
 import ic.components.icResourceParser as prs

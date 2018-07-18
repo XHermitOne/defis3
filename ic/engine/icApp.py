@@ -225,7 +225,7 @@ class icApp(ic_app.icWXApp):
                                                                                                              type(MainWinPsp_)))
                 return False
         else:
-            io_prnt.outWarning(u'Не определено окно в ресурсном описании пользователя')
+            log.warning(u'Не определено окно в ресурсном описании пользователя')
             return False
         
         # --- Создание главного меню ---
@@ -255,7 +255,7 @@ class icApp(ic_app.icWXApp):
                 else:
                     self._MainMenu.appendMenuBar(menubar)
             else:
-                io_prnt.outWarning(u'Не определено горизонтальное меню')
+                log.warning(u'Не определено горизонтальное меню')
         return self._MainMenu
 
     def LoadPopupMenu(self, Name_, Owner_):

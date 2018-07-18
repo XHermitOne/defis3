@@ -347,7 +347,7 @@ class icHeader(icBase, wx.ScrolledWindow):
             try:
                 self.sz.Add(obj, pos, obj.span, obj.add_style)
             except:
-                io_prnt.outWarning(u'wxGridBagSize cell (%s : %s) is busy' % (pos[0], pos[1]))
+                log.warning(u'wxGridBagSize cell (%s : %s) is busy' % (pos[0], pos[1]))
 
         self.sz.Layout()
         self.Refresh()

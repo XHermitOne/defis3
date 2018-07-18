@@ -312,7 +312,7 @@ def test(par=0):
     frame = wx.Frame(None, -1, 'icStaticBitmap Test', size=(200, 200))
     panel = wx.Panel(frame, -1)
     img = icStaticBitmap(panel, -1, {'position': (50, 50), 'hlp': '',
-                                     'file': '''@import ic.imglib.common as common
+                                     'file': '''@from ic.imglib import common
 _resultEval = common.icImageLibName('Project.gif')''',
                                      'keyDown': 'print \'keyDown in StaticBitmap\''})
     app.SetTopWindow(frame)

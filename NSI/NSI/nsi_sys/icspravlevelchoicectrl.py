@@ -217,7 +217,7 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         if self._sprav.isEmpty():
             # Если справочник пустой, то не можем
             # инициализировать по индексу уровня
-            io_prnt.outWarning(u'Пустой справочник. Не возможно инициализировать список выбора')
+            log.warning(u'Пустой справочник. Не возможно инициализировать список выбора')
             return False
 
         if level_index < 0:

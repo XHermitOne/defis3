@@ -75,7 +75,7 @@ class icReportManager(object):
             except:
                 log.fatal(u'Запуск программы <icReport> в режиме конструктора отчетов: <%s>' % cmd)
         else:
-            io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
     def getReportDir(self):
         """
@@ -101,7 +101,7 @@ class icReportManager(object):
                     ic_extend.save_file_text(init_filename,
                                              DEFAULT_INIT_PY_FMT % prj_name)
                 except IOError:
-                    io_prnt.outWarning(u'Ошибка создания папки <%s>' % self._report_dir)
+                    log.warning(u'Ошибка создания папки <%s>' % self._report_dir)
         return self._report_dir
 
     def report_print(self, report_filename,
@@ -133,7 +133,7 @@ class icReportManager(object):
             except:
                 log.fatal(u'Запуск программы <icReport> в режиме печати отчета: <%s>' % msg_cmd)
         else:
-            io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
     def report_preview(self, report_filename,
                        db_url=None, sql=None, command=None,
@@ -164,7 +164,7 @@ class icReportManager(object):
             except:
                 log.fatal(u'Запуск программы <icReport> в режиме предварительного просмотра отчета: <%s>' % msg_cmd)
         else:
-            io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
     def report_export(self, report_filename,
                       db_url=None, sql=None, command=None,
@@ -195,7 +195,7 @@ class icReportManager(object):
             except:
                 log.fatal(u'Запуск программы <icReport> в режиме экспорта отчета: <%s>' % msg_cmd)
         else:
-            io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
     def post_select_action(self, report_filename, parent=None,
                            db_url=None, sql=None, command=None,
@@ -228,7 +228,7 @@ class icReportManager(object):
             except:
                 log.fatal(u'Запуск программы <icReport> в режиме выбора действия над отчетом отчета: <%s>' % msg_cmd)
         else:
-            io_prnt.outWarning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
 
     def _addCmdVars(self, cmd, variables=None):
         """
@@ -376,7 +376,7 @@ class icReportManager(object):
             filename = os.path.join(report_dir, report_filename)
             if not os.path.exists(filename):
                 # Нет такого файла
-                io_prnt.outWarning(u'Файл шаблона отчета <%s> не найден' % filename)
+                log.warning(u'Файл шаблона отчета <%s> не найден' % filename)
                 filename = None
         return filename
 

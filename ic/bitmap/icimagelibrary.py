@@ -9,11 +9,13 @@
 # Функции необходимые для получения объектов из серилизованной строки
 from wx import ImageFromStream, BitmapFromImage
 from wx import EmptyIcon
-import cStringIO
+import io
 
 from ic.imglib import common
 
 from . import icimg2py
+
+__version__ = (0, 1, 1, 1)
 
 
 class icImageLibraryPrototype:
@@ -120,7 +122,7 @@ class icSerializedImagePrototype:
         """
         body = self.getBody()
         if body: 
-            stream = cStringIO.StringIO(body)
+            stream = io.BytesIO(body)
             return ImageFromStream(stream)
         return None
 

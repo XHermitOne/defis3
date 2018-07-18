@@ -141,7 +141,7 @@ class icTABRequisitePrototype(icworkbase.icTabRequisiteBase):
                 if rec_id:
                     result = self._delCascadeData(tab, rec_id, transaction)
                 else:
-                    io_prnt.outWarning(u'Не найдены дочерние записи объекта с UUID <%s>' % UUID_)
+                    log.warning(u'Не найдены дочерние записи объекта с UUID <%s>' % UUID_)
                     result = False
 
                 # Завершить транзакцию

@@ -20,16 +20,16 @@
     компонент (ic_can_contain = -1).
 """
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.db import icsqlalchemy
 from ic.dlg import ic_dlg
 from ic.utils import coderror
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 from ic.log import log
 
 _ = wx.GetTranslation

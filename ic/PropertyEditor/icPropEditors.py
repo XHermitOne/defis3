@@ -37,7 +37,7 @@ import types
 # from ic.icEditor.CfgMthDialog import MthDialog
 from ic.components.icwidget import icEvent
 from ic.utils.util import icSpcDefStruct
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from . import icDefInf
 from ic.log import log
 

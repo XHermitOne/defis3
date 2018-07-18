@@ -22,7 +22,7 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 from ic.PropertyEditor import icDefInf
 

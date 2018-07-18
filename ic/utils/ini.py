@@ -121,7 +121,7 @@ def loadParamINI(sINIFileName, sSection, sParamName):
     """
     try:
         param = None
-        ini_parser = configparser.configparser()
+        ini_parser = configparser.ConfigParser()
         # Прочитать файл
         ini_parser.read(sINIFileName)
         if ini_parser.has_section(sSection):
@@ -174,7 +174,7 @@ def saveParamINI(sINIFileName, sSection, sParamName, vParamValue):
             ini_file.close()
             
         # Создать объект конфигурации
-        ini_parser = configparser.configparser()
+        ini_parser = configparser.ConfigParser()
         ini_file = open(sINIFileName, 'r')
         ini_parser.readfp(ini_file)
         ini_file.close()
@@ -183,7 +183,7 @@ def saveParamINI(sINIFileName, sSection, sParamName, vParamValue):
         if not ini_parser.has_section(sSection):
             ini_parser.add_section(sSection)
 
-        if isinstance(vParamValue, unicode):
+        if isinstance(vParamValue, str):
             vParamValue = vParamValue.encode(DEFAULT_ENCODE)
         ini_parser.set(sSection, sParamName, vParamValue)
 
@@ -217,7 +217,7 @@ def delParamINI(sINIFileName, sSection, sParamName):
             return False
             
         # Создать объект конфигурации
-        ini_parser = configparser.configparser()
+        ini_parser = configparser.ConfigParser()
         ini_file = open(sINIFileName, 'r')
         ini_parser.readfp(ini_file)
         ini_file.close()
@@ -259,7 +259,7 @@ def getParamCountINI(sINIFileName, sSection):
             return 0
             
         # Создать объект конфигурации
-        ini_parser = configparser.configparser()
+        ini_parser = configparser.ConfigParser()
         ini_file = open(sINIFileName, 'r')
         ini_parser.readfp(ini_file)
         ini_file.close()
@@ -293,7 +293,7 @@ def getParamNamesINI(sINIFileName, sSection):
             return None
             
         # Создать объект конфигурации
-        ini_parser = configparser.configparser()
+        ini_parser = configparser.ConfigParser()
         ini_file = open(sINIFileName, 'r')
         ini_parser.readfp(ini_file)
         ini_file.close()
@@ -325,7 +325,7 @@ def INI2Dict(sINIFileName):
             return None
             
         # Создать объект конфигурации
-        ini_parser = configparser.configparser()
+        ini_parser = configparser.ConfigParser()
         ini_file = open(sINIFileName, 'r')
         ini_parser.readfp(ini_file)
         ini_file.close()
@@ -384,7 +384,7 @@ def Dict2INI(dDict, sINIFileName, rewrite=False):
             ini_file.close()
 
         # Создать объект конфигурации
-        ini_parser = configparser.configparser()
+        ini_parser = configparser.ConfigParser()
         ini_file = open(sINIFileName, 'r')
         ini_parser.readfp(ini_file)
         ini_file.close()

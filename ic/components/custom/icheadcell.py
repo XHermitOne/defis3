@@ -53,7 +53,7 @@
 import wx
 import wx.grid as  gridlib
 import ic.components.icgrid as icgrid
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils.util import icSpcDefStruct, getICAttr
 from ic.components.icfont import icFont
 from ic.log.iclog import LogLastError

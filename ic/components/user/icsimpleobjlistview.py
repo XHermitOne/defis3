@@ -21,13 +21,13 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 from ic.utils import ic_util
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.kernel import io_prnt
 
@@ -305,7 +305,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
                 self._data_src_obj.setFilter(data_src_filter)
             return self._data_src_obj.getDataDict()
         else:
-            io_prnt.outWarning(u'Не определен источник данных в объекте <%s>' % self.name)
+            log.warning(u'Не определен источник данных в объекте <%s>' % self.name)
         return None
 
     def setDataset(self, DatasetList_=None, data_src_filter=None):
@@ -329,7 +329,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
                 # этот набор из источника данных
                 DatasetList_ = self.getDatasetFromDataSource(self.data_src, data_src_filter)
         if DatasetList_ is None:
-            io_prnt.outWarning(u'Not define DATASET for object <%s>' % self.name)
+            log.warning(u'Not define DATASET for object <%s>' % self.name)
         else:
             if self.isICAttrValue('conv_dataset'):
                 # Определена функция преобразования датасета

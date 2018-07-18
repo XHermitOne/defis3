@@ -22,16 +22,17 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+import wx.grid as parentModule
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 import wx.lib.mixins.gridlabelrenderer as glr
 from ic.utils import ic_util
 
 from ic.dlg import ic_dlg
-import wx.grid as parentModule
 
 # --- Спецификация ---
 GRID_SELECTION_MODES = {'cells': parentModule.Grid.wxGridSelectCells,
@@ -104,7 +105,7 @@ ic_class_spc = {'type': 'SimpleGrid',
                 'readonly': False,     # Не редакттируемые ячейки грида?
 
                 '__styles__': ic_class_styles,
-                '__lists__': {'selection_mode': GRID_SELECTION_MODES.keys(),
+                '__lists__': {'selection_mode': list(GRID_SELECTION_MODES.keys()),
                               },
                             
                 '__attr_types__': {0: ['name', 'type'],
@@ -142,7 +143,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Классы ---

@@ -21,18 +21,20 @@ Object catalog.
 """
 
 import wx
-import ic.components.icwidget as icwidget
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-import ic.imglib.newstyle_img as newstyle_img
 import ic.db.icdbcatalog as parentModule
 from ic.db import iccatalog
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.PropertyEditor.ExternalEditors.multichoiceeditor import icMultiChoiceUserEdt as multiChoiceEdt
 from ic.db import icsqlalchemy
+from ic.bitmap import ic_bmp
+
 _ = wx.GetTranslation
 
 #   Тип компонента
@@ -42,7 +44,7 @@ ic_class_type = icDefInf._icDatasetType
 ic_class_name = 'Catalog'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'ObjectCatalog',
@@ -63,8 +65,8 @@ ic_class_spc = {'type': 'ObjectCatalog',
                     
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = '@ic.imglib.newstyle_img.folder'
-ic_class_pic2 = '@ic.imglib.newstyle_img.folderOpen'
+ic_class_pic = ic_bmp.createLibraryBitmap('folder.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('folder-open.png')
 
 #   Путь до файла документации
 ic_class_doc = 'doc/public/catalog.html'
@@ -78,7 +80,7 @@ ic_can_contain = None   # ['ObjectCatalogItem', 'FolderCatalogItem']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
@@ -87,6 +89,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     Стандартная функция для вызова пользовательских редакторов свойств
     (EDT_USER_PROPERTY).
     """
+    ret = None
     if attr in ('sourcePsp',):
         ret = pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
     elif attr in ('catalog_types',):
@@ -122,7 +125,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if type(tps) in (type([]), type((0,))):
             lst = iccatalog.catalog_type_dct.keys()
             for el in tps:
-                if not el in lst:
+                if el not in lst:
                     msgbox.MsgBox(parent, _('Type <%s> is not registered catalog item.' % el))
                     return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK

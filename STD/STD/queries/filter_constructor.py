@@ -268,7 +268,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
                             if psp:
                                 arg_edit.setSpravByPsp(psp)
                             else:
-                                io_prnt.outWarning(u'Не определен паспорт НСИ для реквизита <%s>' % requisite['requisite'])
+                                log.warning(u'Не определен паспорт НСИ для реквизита <%s>' % requisite['requisite'])
                 else:
                     # По умолчанию создаем редактор строк
                     arg_edit = filter_builder_ctrl.icStrArgEdit(self.GetMainWindow(), arg)
@@ -304,7 +304,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
                 else:
                     func_lst.append(func)
         else:
-            io_prnt.outWarning(u'Конструктор фильтров. Не определен список функций сравнения')
+            log.warning(u'Конструктор фильтров. Не определен список функций сравнения')
         return func_lst
         
     def _findItemByCtrl(self, Ctrl_, Item_=None):

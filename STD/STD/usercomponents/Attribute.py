@@ -10,7 +10,7 @@ from ic.PropertyEditor import icDefInf
 from ic.utils import util
 import copy
 from STD import reestr_img
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 
 
 ### Общий интерфейс компонента

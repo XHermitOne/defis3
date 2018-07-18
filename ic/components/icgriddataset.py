@@ -1638,7 +1638,7 @@ class icGridDataset(icGrid):
                         msg = msg['user']
                     except:
                         log.fatal(u'GridDataset. read lock message')
-                    MsgBox(self.GetView(), u'Запись заблокирована пользователем: <%s>' % unicode(msg, 'utf-8'))
+                    MsgBox(self.GetView(), u'Запись заблокирована пользователем: <%s>' % str(msg))
             except:
                 log.error(u'GRIDDATASET LOCK ERROR')
         try:

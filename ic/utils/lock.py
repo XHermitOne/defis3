@@ -229,7 +229,7 @@ def getLockDir():
     """
     lock_dir = ic.engine.ic_user.icGet('LOCK_DIR')
     if not lock_dir:
-        io_prnt.outWarning(u'NOT DEFINE LOCK_DIR')
+        log.warning(u'NOT DEFINE LOCK_DIR')
         return lockDir
     return lock_dir
 
@@ -259,7 +259,7 @@ def DelMyLockInDir(LockMyID_, LockDir_, DirFilesLock_):
                         os.remove(cur_file)
                         log.info(u'Lock file %s is deleted.' % cur_file)
                 except:
-                    io_prnt.outWarning(u'Invalid lock signature: %s.' % signature)
+                    log.warning(u'Invalid lock signature: %s.' % signature)
             except:
                 if f:
                     f.close()

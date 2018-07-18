@@ -90,7 +90,7 @@ from ic.db import icsqlalchemy
 import ic.utils.lock as ic_lock
 
 from ic.engine import icUser as icuser
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 import ic.interfaces.icdatasetinterface as icdatasetinterface
 
 
@@ -914,7 +914,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                         ctrl_val = IC_CTRL_OK
                         
                     if ctrl_val == IC_CTRL_FAILED:
-                        io_prnt.outWarning(u'control Error cod=IC_CTRL_FAILED')
+                        log.warning(u'control Error cod=IC_CTRL_FAILED')
                         val = None
         
         return ctrl_val, val
@@ -1062,7 +1062,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                         except:
                             ctrl_val = IC_CTRL_OK
                         if ctrl_val == IC_CTRL_FAILED:
-                            io_prnt.outWarning(u'control Error cod=IC_CTRL_FAILED')
+                            log.warning(u'control Error cod=IC_CTRL_FAILED')
                             record = {}
                 # ---------------------------------------------------------------
                 #   Если поле нормальное, то изменяем соответствующий атрибут
@@ -1288,7 +1288,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 if isinstance(self.filter, dict) and fld in self.filter.keys():
                     #
                     if self._bInvalidFilter:
-                        io_prnt.outWarning(u'Invalid Filter in addRecord <return False>')
+                        log.warning(u'Invalid Filter in addRecord <return False>')
                         return False
                     
                     val = translate.InitValidValue(self.filter, fld, val)

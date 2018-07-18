@@ -124,7 +124,7 @@ class icFilterComboBoxProto(wx.ComboBox):
                 res[self.getUUID()] = self._filters
                 ic_res.SaveResourcePickle(filters_filename, res)
             else:
-                io_prnt.outWarning(u'Error resource file <%s>' % filters_filename)
+                log.warning(u'Error resource file <%s>' % filters_filename)
         else:
             # Просто записать в файл
             res = {self.getUUID(): self._filters}
@@ -144,9 +144,9 @@ class icFilterComboBoxProto(wx.ComboBox):
                 if filters:
                     self.setFilters(filters)
                 else:
-                    io_prnt.outWarning(u'Not fond filters for combo box <%s> in file <%s>!' % (self.getUUID(), filters_filename))
+                    log.warning(u'Not fond filters for combo box <%s> in file <%s>!' % (self.getUUID(), filters_filename))
         else:
-            io_prnt.outWarning(u'Filters file <%s> not exists!' % filters_filename)
+            log.warning(u'Filters file <%s> not exists!' % filters_filename)
 
     def getFilterFilename(self):
         return self._filter_filename
@@ -177,7 +177,7 @@ class icFilterComboBoxProto(wx.ComboBox):
         try:
             return self._filters[i]
         except IndexError:
-            io_prnt.outWarning(u'Нет фильтра с таким индексом <%d>' % i)
+            log.warning(u'Нет фильтра с таким индексом <%d>' % i)
             return None
 
     def offFilter(self):
@@ -204,7 +204,7 @@ class icFilterComboBoxProto(wx.ComboBox):
                 new_filter['id'] = filter_id
                 new_filter['description'] = filter_description
             else:
-                io_prnt.outWarning(u'Не определен фильтр для добавления')
+                log.warning(u'Не определен фильтр для добавления')
                 return False
 
         if new_filter:
@@ -235,7 +235,7 @@ class icFilterComboBoxProto(wx.ComboBox):
             try:
                 i = filters_id.index(filter_name)
             except IndexError:
-                io_prnt.outWarning(u'Не найден фильтр <%s> среди <%s>' % (filter_name, filters_id))
+                log.warning(u'Не найден фильтр <%s> среди <%s>' % (filter_name, filters_id))
                 return False
             del self._filters[i]
             self.Delete(i+1)

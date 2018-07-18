@@ -20,7 +20,7 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 from ic.utils import coderror
 from ic.kernel import io_prnt
@@ -198,7 +198,7 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка выполнения ОПЕРАЦИИ <%s>.' % self.name)
+            log.warning(u'Ошибка выполнения ОПЕРАЦИИ <%s>.' % self.name)
         return False
 
     def is_undo_func(self):
@@ -236,5 +236,5 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка отмены ОПЕРАЦИИ <%s>.' % self.name)
+            log.warning(u'Ошибка отмены ОПЕРАЦИИ <%s>.' % self.name)
         return False

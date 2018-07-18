@@ -91,7 +91,7 @@ class icObjPersistentPrototype:
         if self._validUUID(UUID):
             self.uuid = UUID
         else:
-            io_prnt.outWarning(u'Не корректное устанавливаемое значение UUID <%s>. UUID остался прежним' % UUID)
+            log.warning(u'Не корректное устанавливаемое значение UUID <%s>. UUID остался прежним' % UUID)
         return self.uuid
 
     def genUUID(self):
@@ -423,7 +423,7 @@ class icObjPersistent(icObjPersistentPrototype):
                         result = result and child_obj._updateChildCascadeData(child_obj.getTable(),
                                                                               Data_[child_name], save_rec)
                     else:
-                        io_prnt.outWarning(u'Не найдены данные для дочерней таблицы/реквизита <%s>/<%s>' % (child_tab_name, child_name))
+                        log.warning(u'Не найдены данные для дочерней таблицы/реквизита <%s>/<%s>' % (child_tab_name, child_name))
                 return result
         except:
             log.error(u'Ошибка сохранения каскада данных мета-объекта [%s]' % self.name)
@@ -797,7 +797,7 @@ class icObjPersistent(icObjPersistentPrototype):
         elif isinstance(Data_, dict):
             data_dict.update(Data_)
         else:
-            io_prnt.outWarning(u'Не корректный тип данных <%s> объекта <%s>' % (Data_.__class__.__name__,
+            log.warning(u'Не корректный тип данных <%s> объекта <%s>' % (Data_.__class__.__name__,
                                                                                 self.getName()))
             return False
 
@@ -952,7 +952,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 if rec_id:
                     result = self._delCascadeData(tab, rec_id, transaction)
                 else:
-                    io_prnt.outWarning(u'Не найдена запись объекта с UUID <%s>' % UUID_)
+                    log.warning(u'Не найдена запись объекта с UUID <%s>' % UUID_)
                     result = False
                 
                 # Завершить транзакцию
@@ -1029,7 +1029,7 @@ class icObjPersistent(icObjPersistentPrototype):
         tab = self._tabObj(Tab_)
         if not tab:
             # Таблица не определена по какойто причине
-            io_prnt.outWarning(u'Удаление данных. Не определена таблица <%s>' % Tab_)
+            log.warning(u'Удаление данных. Не определена таблица <%s>' % Tab_)
             return False
         try:
             # ВНИМАНИЕ! Сначала нужно удалять записи
@@ -1149,7 +1149,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     # Это реквизит
                     fields_spc = child_requisite._createFieldsSpc()
                     if fields_spc is None:
-                        io_prnt.outWarning(u'Не определена спецификация поля при создании таблицы хранимого объекта')
+                        log.warning(u'Не определена спецификация поля при создании таблицы хранимого объекта')
                     tab_res['child'] += fields_spc
                 elif issubclass(child_requisite.__class__, icObjPersistent):
                     # Это спецификация табличной части
@@ -1157,7 +1157,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     # Прописать имя дочерней ьаблицы в списке подчиненных таблиц
                     tab_res['children'].append(child_requisite.getTableName())
                 else:
-                    io_prnt.outWarning(u'Неизвестный тип дочернего компонента <%s> объекта' % child_requisite)
+                    log.warning(u'Неизвестный тип дочернего компонента <%s> объекта' % child_requisite)
                     
         return tab_res
        

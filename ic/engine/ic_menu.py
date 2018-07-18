@@ -46,7 +46,7 @@ import ic.bitmap.ic_color as ic_color
 import ic.utils.ic_util
 import ic.utils.util
 from ic.kernel import io_prnt
-import ic.bitmap.ic_bmp as ic_bmp
+from ic.bitmap import ic_bmp
 from . import icUser
 
 import ic
@@ -158,10 +158,10 @@ def AppendICMenuBar(Win_, Name_, MenubarData_, MenuBar_=None):
         elif isinstance(MenubarData_, dict):
             run_struct = MenubarData_[Name_]
         else:
-            io_prnt.outWarning(u'Ошибка создания меню <%s>!' % Name_)
+            log.warning(u'Ошибка создания меню <%s>!' % Name_)
             return None
         if not run_struct:
-            io_prnt.outWarning(u'Данные горизонтального меню <%s> не найдены!' % Name_)
+            log.warning(u'Данные горизонтального меню <%s> не найдены!' % Name_)
             return None
         find_menubar_res = ic.utils.ic_util.findChildResByName(run_struct[RES_MENU_ITEMS],
                                                                run_struct['menubar'])
@@ -206,10 +206,10 @@ def appendMenuBar(Win_, Name_, MenubarData_, MenuBar_=None, RunnerResource_=None
         elif isinstance(MenubarData_, dict):
             run_struct = MenubarData_[Name_]
         else:
-            io_prnt.outWarning(u'Ошибка создания меню <%s>!' % Name_)
+            log.warning(u'Ошибка создания меню <%s>!' % Name_)
             return None
         if not run_struct:
-            io_prnt.outWarning(u'Данные горизонтального меню <%s> не найдены!' % Name_)
+            log.warning(u'Данные горизонтального меню <%s> не найдены!' % Name_)
             return None
         find_menubar_res = ic.utils.ic_util.findChildResByName(run_struct[RES_MENU_ITEMS],
                                                                run_struct['menubar'])
@@ -304,7 +304,7 @@ class icMenuBar(wx.MenuBar):
         try:
             # Проверка аргументов
             if not MenuItems_:
-                io_prnt.outWarning(u'Не определены пункты меню!')
+                log.warning(u'Не определены пункты меню!')
                 return None
             # Перед загрузкой удалить все
             self.RemoveAll()
@@ -380,7 +380,7 @@ class icMenuBar(wx.MenuBar):
                 elif isinstance(self._ResData, dict):
                     subitem_struct = self._ResData[cur_item]
                 else:
-                    io_prnt.outWarning(u'Ошибка добавления пункта')
+                    log.warning(u'Ошибка добавления пункта')
                     return None
                 # Здесь рекурсия, так прикольней
                 self.AppendMenuItem(subitem, cur_item, subitem_struct)
@@ -632,7 +632,7 @@ class icMenu(wx.Menu):
         try:
             # Проверка аргументов
             if not MenuItems_:
-                io_prnt.outWarning(u'Не определены пункты меню!')
+                log.warning(u'Не определены пункты меню!')
                 return None
 
             for item_struct in MenuItems_:

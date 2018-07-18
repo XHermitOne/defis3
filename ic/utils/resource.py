@@ -393,10 +393,10 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
                 resource_data['__file_res'] = fileRes
                 return resource_data
             except KeyError:
-                io_prnt.outWarning(sp_f + (_('icGetRes: component <%s> is not found in resource <%s>.') % (className,
+                log.warning(sp_f + (_('icGetRes: component <%s> is not found in resource <%s>.') % (className,
                                                                                                            fileRes)))
         else:
-            io_prnt.outWarning(sp_f + (_('icGetRes: resource file <%s> is not found.') % fileRes))
+            log.warning(sp_f + (_('icGetRes: resource file <%s> is not found.') % fileRes))
 
     ic_dlg.icWarningBox(u'ОШИБКА', u'icGetRes: Компонент <%s> не найден в ресурсном файле.' % className)
     return None

@@ -19,7 +19,7 @@ import copy
 from ic.PropertyEditor import icDefInf
 from STD import reestr_img
 from ic.components.user import ic_metaitem_wrp
-import ic.engine.ic_user as ic_user
+from ic.engine import ic_user
 
 ### Общий интерфейс компонента
 ictemplate.init_component_interface(globals(), ic_class_name = 'CReestrBox')

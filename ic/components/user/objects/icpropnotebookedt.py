@@ -6,7 +6,7 @@ import copy
 import os.path
 
 import ic.components.icResourceParser as prs
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 import ic.utils.coderror as coderror
 from ic.PropertyEditor import icDefInf

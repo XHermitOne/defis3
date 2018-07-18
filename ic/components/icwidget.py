@@ -1126,7 +1126,7 @@ class icSimple(icobject.icObject):
         @param expr: Само выражение. Если не строка, то остается без изменений.
         @return: Подготовленное выражение.
         """
-        if type(expr) in (str, unicode):
+        if isinstance(expr, str):
             expr = expr.strip()
             if expr.startswith('@'):
                 expr = expr.replace('\\n', '\n').replace('\\r', '\r')
@@ -1204,7 +1204,7 @@ class icSimple(icobject.icObject):
         """
         attr_val = self.getExpression(attr)
 
-        if type(attr_val) not in (str, unicode):
+        if not isinstance(attr_val, str):
             return None
 
         if not attr_val:
@@ -1233,7 +1233,7 @@ class icSimple(icobject.icObject):
             иначе False.
         """
         attr_val = self.resource[attr]
-        if type(attr_val) in (str, unicode):
+        if isinstance(attr_val, str):
             return attr_val.strip() not in ('None', '')
         else:
             return attr_val is not None
@@ -1262,7 +1262,7 @@ class icSimple(icobject.icObject):
         """
         attr_val = self.getExpression(attr)
 
-        if type(attr_val) not in (str, unicode) or not attr_val:
+        if not isinstance(attr_val, str) or not attr_val:
             return attr_val
 
         if attr_val[0] == '@' or bExpectedExpr:

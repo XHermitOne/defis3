@@ -113,7 +113,7 @@ class icRefObjChoiceComboCtrlProto(wx.combo.ComboCtrl):
                 self.SetValue(txt)
                 return True
         else:
-            io_prnt.outWarning(u'Не определен бизнес объект/документ в контроле icRefObjChoiceComboCtrl')
+            log.warning(u'Не определен бизнес объект/документ в контроле icRefObjChoiceComboCtrl')
         return False
 
     getValue = getUUID

@@ -1079,7 +1079,7 @@ def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, cl
                             res = resource.update_child_resource(attr_name, res, value)
                             log.info(u'Замена атрибутов дочернего объекта [%s] ресурса <%s>' % (attr_name, ResName_))
                         else:
-                            io_prnt.outWarning(u'Не поддерживаемый тип %s замены ресурса дочернего объекта <%s>' % (type(value),
+                            log.warning(u'Не поддерживаемый тип %s замены ресурса дочернего объекта <%s>' % (type(value),
                                                                                                                     attr_name))
             
             if not context:

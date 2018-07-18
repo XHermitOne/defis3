@@ -23,10 +23,10 @@
 import wx
 from wx.lib.agw.artmanager import ArtManager
 
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.dlg import ic_dlg
 from ic.utils import coderror

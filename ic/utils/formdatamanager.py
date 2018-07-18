@@ -50,7 +50,7 @@ class icFormDataManager(object):
             когда контрол не найден.
         """
         if self.__form is None:
-            io_prnt.outWarning(u'Не определена форма заполнения/чтения данных')
+            log.warning(u'Не определена форма заполнения/чтения данных')
             return None
 
         ctrl = None
@@ -63,7 +63,7 @@ class icFormDataManager(object):
             ctrl = self.__form.FindWindowByName(name)
 
         if ctrl is None:
-            io_prnt.outWarning(u'Контрол <%s> в форме данных не найден' % name)
+            log.warning(u'Контрол <%s> в форме данных не найден' % name)
         return ctrl
 
     def setControlValue(self, ctrl, value):
@@ -118,7 +118,7 @@ class icFormDataManager(object):
                 log.error(u'Ошибка заполнения данных объекта <%s> методом SetLabel. Значение <%s : %s>' % (ctrl.__class__.__name__, type(value), value))
                 result = False
         else:
-            io_prnt.outWarning(u'Не определен метод заполнения данных объекта <%s>' % ctrl.__class__.__name__)
+            log.warning(u'Не определен метод заполнения данных объекта <%s>' % ctrl.__class__.__name__)
         return result
 
     def setData(self, data):
@@ -128,7 +128,7 @@ class icFormDataManager(object):
         @return: True/False.
         """
         if data is None:
-            io_prnt.outWarning(u'Не определен словарь данных формы')
+            log.warning(u'Не определен словарь данных формы')
             return False
 
         # Контроль типа входного значения
@@ -205,7 +205,7 @@ class icFormDataManager(object):
                 log.error(u'Ошибка получения данных объекта <%s> методом GetLabel.' % ctrl.__class__.__name__)
                 value = None
         else:
-            io_prnt.outWarning(u'Не определен метод получения данных объекта <%s>' % ctrl.__class__.__name__)
+            log.warning(u'Не определен метод получения данных объекта <%s>' % ctrl.__class__.__name__)
         return value
 
     def getData(self, *name_filter):

@@ -41,7 +41,7 @@
 
 import copy
 import wx
-import ic.components.icwidget as icwidget
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.bitmap import ic_bmp
@@ -553,7 +553,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка инициализации БИЗНЕС ОБЪЕКТА <%s>' % self.name)
+            log.warning(u'Ошибка инициализации БИЗНЕС ОБЪЕКТА <%s>' % self.name)
         return None
 
     def doEdit(self, *args, **kwargs):
@@ -570,7 +570,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка редактирования БИЗНЕС ОБЪЕКТА <%s>' % self.name)
+            log.warning(u'Ошибка редактирования БИЗНЕС ОБЪЕКТА <%s>' % self.name)
         return None
 
     def doView(self, *args, **kwargs):
@@ -587,7 +587,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка просмотра БИЗНЕС ОБЪЕКТА <%s>' % self.name)
+            log.warning(u'Ошибка просмотра БИЗНЕС ОБЪЕКТА <%s>' % self.name)
         return None
 
     def doSearch(self, *args, **kwargs):
@@ -604,7 +604,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка поиска БИЗНЕС ОБЪЕКТА <%s>' % self.name)
+            log.warning(u'Ошибка поиска БИЗНЕС ОБЪЕКТА <%s>' % self.name)
         return None
 
     def doChoice(self, *args, **kwargs):
@@ -621,7 +621,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка выбора БИЗНЕС ОБЪЕКТА <%s>' % self.name)
+            log.warning(u'Ошибка выбора БИЗНЕС ОБЪЕКТА <%s>' % self.name)
         return None
 
     def isDoInit(self):
@@ -677,7 +677,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка валидации при инициализации БИЗНЕС ОБЪЕКТА <%s>' % self.name)
+            log.warning(u'Ошибка валидации при инициализации БИЗНЕС ОБЪЕКТА <%s>' % self.name)
         return False
 
     def isValidInit(self):
@@ -706,7 +706,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка валидации при редактировании БИЗНЕС ОБЪЕКТА <%s>' % self.name)
+            log.warning(u'Ошибка валидации при редактировании БИЗНЕС ОБЪЕКТА <%s>' % self.name)
         return False
 
     def isValidEdit(self):
@@ -737,7 +737,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         if result[0] == coderror.IC_EVAL_OK:
             return result[1]
         else:
-            io_prnt.outWarning(u'Ошибка валидации при удалении БИЗНЕС ОБЪЕКТА <%s>.' % self.name)
+            log.warning(u'Ошибка валидации при удалении БИЗНЕС ОБЪЕКТА <%s>.' % self.name)
         return False
 
     def isValidDel(self):
@@ -765,7 +765,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
             if result[0] == coderror.IC_EVAL_OK:
                 return True
             else:
-                io_prnt.outWarning(u'Ошибка обработки смены состояни ОБЪЕКТА <%s>. Результат: %s' % (self.name, result))
+                log.warning(u'Ошибка обработки смены состояни ОБЪЕКТА <%s>. Результат: %s' % (self.name, result))
         else:
             # Обработчик не определен
             # Поэтому считаем что все OK

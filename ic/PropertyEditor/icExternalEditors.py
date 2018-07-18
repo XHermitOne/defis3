@@ -9,7 +9,7 @@ import wx
 import string
 import wx.grid as Grid
 from . import icDefInf
-import ic.components.icfont as icfont
+from ic.components import icfont
 import wx.lib.dialogs
 from . import ic_pyed
 from ic.utils import ic_uuid

@@ -161,7 +161,7 @@ class icSpravInterface:
             try:
                 return storage.getSpravTabClass()
             except:
-                io_prnt.outWarning(u'Не определена таблица для справочника <%s>' % self.getName())
+                log.warning(u'Не определена таблица для справочника <%s>' % self.getName())
         return None
 
     def createStorage(self, ShowMsg_=True):
@@ -193,7 +193,7 @@ class icSpravInterface:
                         from . import icodb_spravstorage
                         self._storage = icodb_spravstorage.icSpravODBStorage(self, db_name, self.getTableName())
                     else:
-                        io_prnt.outWarning(u'ОШИБКА! Не определенный тип БД %s СПРАВОЧНИКА %s' % (db_res['type'], self.getName()))
+                        log.warning(u'ОШИБКА! Не определенный тип БД %s СПРАВОЧНИКА %s' % (db_res['type'], self.getName()))
                 except:
                     log.error(u'Ошибка создания хранилища справочников %s %s' % (db_name, self.getTableName()))
         else:
@@ -430,7 +430,7 @@ class icSpravPrototype(icSpravInterface):
             # Нет такого уровня в справочнике
 
             if self.getLevelCount() <= x_level:
-                io_prnt.outWarning(u'Не корректный номер уровня %d' % x_level)
+                log.warning(u'Не корректный номер уровня %d' % x_level)
                 return IC_HLP_FAILED_LEVEL, res_val
 
             # определить длину кода уровня
@@ -603,7 +603,7 @@ class icSpravPrototype(icSpravInterface):
             # Если запрашиваемый уровень больше общего количества уровней, то выйти
             # Нет такого уровня в справочнике
             if self.getLevelCount() <= x_level:
-                io_prnt.outWarning(u'Не корректный номер уровня <%d>' % x_level)
+                log.warning(u'Не корректный номер уровня <%d>' % x_level)
                 return False
 
             # определить длину кода уровня
@@ -784,7 +784,7 @@ class icSpravPrototype(icSpravInterface):
                                         coderror.IC_CTRL_FAILED_TYPE_SPRAV,
                                         coderror.IC_CTRL_FAILED_LOCK):
                 # Контроль не прошел
-                io_prnt.outWarning(u'Не прошел контроль обновление/изменение записи в справочник [%s]. Код ошибки: <%d>' %
+                log.warning(u'Не прошел контроль обновление/изменение записи в справочник [%s]. Код ошибки: <%d>' %
                                    (self.getName(), update_ctrl_result))
 
         return False
@@ -832,7 +832,7 @@ class icSpravPrototype(icSpravInterface):
                                      coderror.IC_CTRL_FAILED_TYPE_SPRAV,
                                      coderror.IC_CTRL_FAILED_LOCK):
                 # Контроль не прошел
-                io_prnt.outWarning(u'Не прошел контроль добавления записи в справочник [%s]. Код ошибки: <%d>' %
+                log.warning(u'Не прошел контроль добавления записи в справочник [%s]. Код ошибки: <%d>' %
                                    (self.getName(), add_ctrl_result))
 
         return False
@@ -881,7 +881,7 @@ class icSpravPrototype(icSpravInterface):
                                      coderror.IC_CTRL_FAILED_TYPE_SPRAV,
                                      coderror.IC_CTRL_FAILED_LOCK):
                 # Контроль не прошел
-                io_prnt.outWarning(u'Не прошел контроль удаления записи в справочник [%s]. Код ошибки: <%d>' %
+                log.warning(u'Не прошел контроль удаления записи в справочник [%s]. Код ошибки: <%d>' %
                                    (self.getName(), del_ctrl_result))
 
         return False

@@ -485,7 +485,7 @@ class icVarStorage:
         @param Msg_: Текст сообщения.
         """
         if self._CanLog:
-            io_prnt.outWarning(Msg_)
+            log.warning(Msg_)
 
     # --- Функции-свойства класса ---
 

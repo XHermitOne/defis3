@@ -669,7 +669,7 @@ class icObjFormGenerator:
                         box_spc['span'] = (1, 2)
                         sizer_spc['child'].append(box_spc)
                     else:
-                        io_prnt.outWarning(u'Ошибка определения типа реквизита <%s>' % child_requisite.name)
+                        log.warning(u'Ошибка определения типа реквизита <%s>' % child_requisite.name)
                     sizer_spc['flexCols'] = [2]
 
         return scrolledwin_spc
@@ -948,7 +948,7 @@ class icObjFormGenerator:
         # Заполнение колонок
         requisites = self.getChildrenRequisites()
         if not requisites:
-            io_prnt.outWarning(u'Генерация грида объекта. Не определены реквизиты объекта <%s>' % self.__class__.__name__)
+            log.warning(u'Генерация грида объекта. Не определены реквизиты объекта <%s>' % self.__class__.__name__)
         for i, child_requisite in enumerate(requisites):
             if child_requisite._isIDAttr():
                 column_spc = util.icSpcDefStruct(util.DeepCopy(icgrid.SPC_IC_CELL), None)

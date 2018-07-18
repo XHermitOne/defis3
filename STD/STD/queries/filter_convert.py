@@ -188,7 +188,7 @@ class icFilter2SQLAlchemyConverter:
             query = self.gen_group_section(self.filter)
             return query
         else:
-            ic.io_prnt.outWarning(u'Не определен фильтр <%s>' % self.filter)
+            ic.log.warning(u'Не определен фильтр <%s>' % self.filter)
         return None
     
     def gen_group_section(self, Grp_):
@@ -204,7 +204,7 @@ class icFilter2SQLAlchemyConverter:
             elif element['type'] == 'compare':
                 sql_alchemy_element = self.gen_requisite_section(element)
             else:
-                ic.io_prnt.outWarning(u'Неопределенный тип элемента фильтра: %s' % element['type'])
+                ic.log.warning(u'Неопределенный тип элемента фильтра: %s' % element['type'])
                 continue
 
             if sql_alchemy_element is not None:
@@ -269,11 +269,11 @@ class icFilter2SQLAlchemyConverter:
                 return getattr(self.table.c, Requisite_['requisite']).endswith(Requisite_['arg_1'])
             elif Requisite_['func'] == 'mask':
                 # Проверка <соответствует маске>
-                ic.io_prnt.outWarning(u'Проверка на соответствие маски пока не реализованно')
+                ic.log.warning(u'Проверка на соответствие маски пока не реализованно')
                 return None
             elif Requisite_['func'] == 'not_mask':
                 # Проверка <не соответствует маске>
-                ic.io_prnt.outWarning(u'Проверка на не соответствие маски пока не реализованно')
+                ic.log.warning(u'Проверка на не соответствие маски пока не реализованно')
                 return None
             elif Requisite_['func'] == 'is_null':
                 # Проверка <пусто>
@@ -288,7 +288,7 @@ class icFilter2SQLAlchemyConverter:
                 # Проверка <не одно из>
                 return sqlalchemy.not_(getattr(self.table.c, Requisite_['requisite']).in_(Requisite_['arg_1']))
         
-            ic.io_prnt.outWarning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % Requisite_['func'])
+            ic.log.warning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % Requisite_['func'])
         except:
             ic.log.error(u'Ошибка конвертации реквизита фильтра <%s>' % Requisite_)
             

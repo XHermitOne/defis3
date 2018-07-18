@@ -21,10 +21,12 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
+import wx.adv
+
+from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
+from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 #   Тип компонента
@@ -34,11 +36,11 @@ ic_class_type = icDefInf._icUserType
 ic_class_name = 'icDatePickerCtrl'
 
 #   Описание стилей компонента
-ic_class_styles = {'DP_SPIN': wx.DP_SPIN,
-                   'DP_DROPDOWN': wx.DP_DROPDOWN,
-                   'DP_DEFAULT': wx.DP_DEFAULT,
-                   'DP_ALLOWNONE': wx.DP_ALLOWNONE,
-                   'DP_SHOWCENTURY': wx.DP_SHOWCENTURY}
+ic_class_styles = {'DP_SPIN': wx.adv.DP_SPIN,
+                   'DP_DROPDOWN': wx.adv.DP_DROPDOWN,
+                   'DP_DEFAULT': wx.adv.DP_DEFAULT,
+                   'DP_ALLOWNONE': wx.adv.DP_ALLOWNONE,
+                   'DP_SHOWCENTURY': wx.adv.DP_SHOWCENTURY}
 
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'DatePickerCtrl',
@@ -81,10 +83,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
-class icDatePickerCtrl(icwidget.icWidget, wx.DatePickerCtrl):
+class icDatePickerCtrl(icwidget.icWidget, wx.adv.DatePickerCtrl):
     """
     Описание пользовательского компонента.
     @type component_spc: C{dictionary}
@@ -135,10 +137,10 @@ class icDatePickerCtrl(icwidget.icWidget, wx.DatePickerCtrl):
         else:
             tm = wx.DefaultDateTime
             
-        wx.DatePickerCtrl.__init__(self, parent, dt=tm, pos=self.position, size=self.size, style=self.style)
+        wx.adv.DatePickerCtrl.__init__(self, parent, dt=tm, pos=self.position, size=self.size, style=self.style)
         
         # --- Регистрация обработчиков событий
-        self.Bind(wx.EVT_DATE_CHANGED, self.OnDateChanged)
+        self.Bind(wx.adv.EVT_DATE_CHANGED, self.OnDateChanged)
         self.BindICEvt()
       
     # --- Обработчики событий
@@ -163,7 +165,7 @@ class icDatePickerCtrl(icwidget.icWidget, wx.DatePickerCtrl):
         Установить дату. Дата - строка в формате yyyy.mm.dd.
         @return: True - значение установилось, False - значение не установилось.
         """
-        if (type(StrDate_) not in (str, unicode)) or (not StrDate_):
+        if (not isinstance(StrDate_, str)) or (not StrDate_):
             return False
         
         value = StrDate_.replace(':', '.').replace('/', '.').replace('\\', '.')
@@ -215,7 +217,7 @@ def test(par=0):
     frame = wx.Frame(None, -1, 'Test')
     win = wx.Panel(frame, -1)
 
-    style = wx.DP_DEFAULT | wx.DP_DROPDOWN | wx.DP_SHOWCENTURY
+    style = wx.adv.DP_DEFAULT | wx.adv.DP_DROPDOWN | wx.adv.DP_SHOWCENTURY
     dpc = icDatePickerCtrl(win, -1, {'position': (10, 10), 'size': (120, -1),
                                      'value': '12.05.2003',
                                      'style': style})
