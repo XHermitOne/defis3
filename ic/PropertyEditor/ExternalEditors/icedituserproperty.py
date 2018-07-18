@@ -13,7 +13,7 @@ from ic.log import log
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icEditUserProperty(wx.propgrid.PyStringProperty):
@@ -22,7 +22,7 @@ class icEditUserProperty(wx.propgrid.PyStringProperty):
         определяемого компонентом
     """
 
-    def __init__(self, label, name=wx.propgrid.LABEL_AS_NAME, value=''):
+    def __init__(self, label, name=wx.propgrid.PG_LABEL, value=''):
         wx.propgrid.PyStringProperty.__init__(self, label, name, value)
 
         self.property_edit_manager = None

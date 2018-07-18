@@ -8,7 +8,7 @@
 # --- Подключение библиотек ---
 # --- Константы ---
 
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Описание классов ---
@@ -44,7 +44,7 @@ class ImportSubSysInterface:
             # Если имя определено, то импортировать
             # пакет импортируемой подсистемы
             if self.name:
-                exec 'import '+self.name
+                exec('import '+self.name)
             self.package = eval(self.name)
         return self.package
 

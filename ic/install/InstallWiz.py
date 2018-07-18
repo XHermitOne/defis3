@@ -8,17 +8,17 @@
 # --- Подключение библиотек ---
 import os
 import os.path
-import wx.wizard as wizard
+import wx.adv
 
-import ic.dlg.ic_dlg as ic_dlg
-import ic.utils.ic_file as ic_file
+from ic.dlg import ic_dlg
+from ic.utils import ic_file
 from ic.utils import ini
-import ic.utils.ic_util as ic_util
-from ic.kernel import io_prnt
-import ic.utils.ic_exec as ic_exec
-import ic.imglib.common as imglib
+from ic.utils import ic_util
+from ic.utils import ic_exec
+from ic.imglib import common as imglib
+from ic.log import log
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class PrjInstallMaker:
@@ -45,7 +45,7 @@ class PrjInstallMaker:
         self._prj_dir = PrjDir_
         # Имя файла настроек/параметров проекта
         if self._prj_dir:
-            self._prj_ini_file_name = self._prj_dir+'/%s.ini' % (os.path.basename(self._prj_dir))
+            self._prj_ini_file_name = os.path.join(self._prj_dir, '%s.ini' % os.path.basename(self._prj_dir))
 
     def getPrjName(self):
         """
@@ -225,6 +225,7 @@ class PrjInstallMaker:
         """
         pass
 
+
 # Шаблон для скрипта инсталятора Nullsoft Install System
 _NSISScriptTemplate = '''; setup.nsi
 ; Наименование инсталятора
@@ -353,8 +354,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
         """
         prj_name = self.getPrjName()
         sub_sys_name = os.path.basename(self._prj_dir)
-        package_text = reduce(lambda txt, line: txt+line,
-                              [self._makeNSISSection(ic_file.BaseName(package)) for package in self.getPackages()])
+        package_text = ''.join([self._makeNSISSection(os.path.basename(package)) for package in self.getPackages()])
 
         icon_name = os.path.basename(self.getPrjIcon())
         script = _NSISScriptTemplate % (self.getPrjTitle().replace('\"', '\''),
@@ -423,8 +423,8 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 i += 1
                 ic_dlg.icUpdateProgressDlg(i, u'Создание скрипта инсталятора')
                 script = self.installScript()
+                nsi_file = None
                 try:
-                    nsi_file = None
                     nsi_file = open(install_dir+'\setup.nsi', 'w')
                     nsi_file.write(script)
                     nsi_file.close()
@@ -533,8 +533,8 @@ class py2exeInstallSystem(PrjInstallMaker):
             try:
                 # Создание setup.py файла
                 script = self.setupScript()
+                setup_file = None
                 try:
-                    setup_file = None
                     setup_file = open(install_dir+'\setup.nsi', 'w')
                     setup_file.write(script)
                     setup_file.close()
@@ -566,6 +566,7 @@ class py2exeInstallSystem(PrjInstallMaker):
         return ini.saveParamINI(self._prj_ini_file_name,
                                 'INSTALL', 'open_src', str(MakeConsole_))
             
+
 # --- Визард создания инсталяционного пакета ---
 def runInstallWizard(Parent_,PrjResFileName_):
     """
@@ -575,7 +576,7 @@ def runInstallWizard(Parent_,PrjResFileName_):
     """
     install_maker = NullsoftInstallSystem(os.path.dirname(PrjResFileName_))
     
-    wiz = wizard.Wizard(Parent_, -1,
+    wiz = wx.adv.Wizard(Parent_, -1,
                         u'Создание инсталяционного пакета проекта',
                         imglib.imgInstallWizard)
     page1 = PrjAttrPage(wiz,
@@ -640,9 +641,9 @@ def makePackagePage(wizPg, title, installMaker):
     return sizer
 
 
-class PrjAttrPage(wizard.PyWizardPage):
+class PrjAttrPage(wx.adv.PyWizardPage):
     def __init__(self, parent, title, installMaker=None):
-        wizard.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         self.sizer = makePrjAttrPage(self, title, installMaker)
         self.next = self.prev = None
         
@@ -659,9 +660,9 @@ class PrjAttrPage(wizard.PyWizardPage):
         return self.prev
 
 
-class PackagePage(wizard.PyWizardPage):
+class PackagePage(wx.adv.PyWizardPage):
     def __init__(self, parent, title, installMaker=None):
-        wizard.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         self.sizer = makePackagePage(self, title, installMaker)
         self.next = self.prev = None
         
@@ -677,6 +678,7 @@ class PackagePage(wizard.PyWizardPage):
     def GetPrev(self):
         return self.prev
   
+
 # --- Визард создания демо-приложения ---
 def runDemoWizard(Parent_, PrjResFileName_):
     """
@@ -686,7 +688,7 @@ def runDemoWizard(Parent_, PrjResFileName_):
     """
     install_maker = py2exeInstallSystem(os.path.dirname(PrjResFileName_))
     
-    wiz = wizard.Wizard(Parent_, -1,
+    wiz = wx.adv.Wizard(Parent_, -1,
                         u'Создание демо-проекта',
                         imglib.imgInstallWizard)
     page = DemoPage(wiz, u'Атрибуты демо-проекта', install_maker)
@@ -728,9 +730,9 @@ def makeDemoPrjPage(wizPg, title, installMaker):
     return sizer
 
 
-class DemoPage(wizard.PyWizardPage):
+class DemoPage(wx.adv.PyWizardPage):
     def __init__(self, parent, title, installMaker=None):
-        wizard.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         self.sizer = makeDemoPrjPage(self, title, installMaker)
         self.next = self.prev = None
         
@@ -745,6 +747,7 @@ class DemoPage(wizard.PyWizardPage):
 
     def GetPrev(self):
         return self.prev
+
 
 # --- Визард создания публикации ---
 class zipPublicSystem(PrjInstallMaker):
@@ -873,7 +876,7 @@ def runPublicWizard(Parent_, PrjResFileName_):
     """
     public_maker = zipPublicSystem(ic_file.DirName(PrjResFileName_))
     
-    wiz = wizard.Wizard(Parent_, -1,
+    wiz = wx.adv.Wizard(Parent_, -1,
                         u'Создание пакета публикации',
                         imglib.imgInstallWizard)
     page = PublicPage(wiz, u'Атрибуты пакета публикации', public_maker)
@@ -911,9 +914,9 @@ def makePublicPrjPage(wizPg, title, publicMaker):
     return sizer
 
 
-class PublicPage(wizard.PyWizardPage):
+class PublicPage(wx.adv.PyWizardPage):
     def __init__(self, parent, title, publicMaker=None):
-        wizard.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         self.sizer = makePublicPrjPage(self, title, publicMaker)
         self.next = self.prev = None
         

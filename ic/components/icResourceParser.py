@@ -15,30 +15,29 @@
 find ./ic/ -type f -name "*.pyc" -delete
 """
 
-import wx
 import time
-import ic.components as components_lib
+import hashlib
+import wx
+
+from ic import components as components_lib
 from ic.components.icwidget import icNewId
-import ic.components.icwidget as icwidget
-# from ic.log.iclog import MsgLastError
+from ic.components import icwidget
 from ic.dlg import ic_dlg
 
 from .icFieldTempl import *
 from ic.utils import util
-import ic.utils.resource as resource
-import ic.db.icdataset as icdataset
+from ic.utils import resource
+from ic.db import icdataset
 from ic.dlg import progress
 
-import ic.imglib.common as common
-import ic.components.user as user
-import md5
-import ic.interfaces.ictemplate as ictemplate
-import ic.kernel.io_prnt as io_prnt
+from ic.imglib import common
+from ic.components import user
+from ic.interfaces import ictemplate
 from ic.log import log
 
 _ = wx.GetTranslation
 
-__version__ = (1, 0, 1, 2)
+__version__ = (1, 1, 1, 1)
 
 #   Определяем словарь компонентов, которые могут парсится
 componentModulDict = None
@@ -59,6 +58,7 @@ def GetComponentModulDict():
 
     return componentModulDict
     
+
 #   Буфер перегружаемых фильтров. Ключ буффера задает алиас объекта данных, а значение фильтр.
 #   Фильтр, который храниться  в буффере перегружает фильтр, который храниться в icDataLink (ключ 'filter').
 #   Фильтр может быть задан двумя способами: словарем и строкой. Словарь задает фильтр на значение определенных
@@ -105,6 +105,7 @@ def getProgressDlgBuff():
 def setProgressDlgBuff(obj):
     global parserProgressDlg
     parserProgressDlg = obj
+
 
 #   В режиме отладки отличается способ импортирования - загруженные модули перегружаются.
 #   Режим необходим для того, чтобы модуль перегружался после редактирования во внутреннем текстовом редакторе.
@@ -168,6 +169,7 @@ def getEditorPoint():
     Функция возвращает ссылку на редактор форм.
     """
     return formEditorPoint
+
 
 # Функции для работы с буфером форм
 #   Буфер форм
@@ -240,7 +242,7 @@ def getFormKey(formName, subsys, parent, flt):
             prnt_key = str(parent)
     
     str_key = formName + subsys + flt_key + prnt_key + prnt_id_key
-    ret_key = md5.md5(str_key).hexdigest()
+    ret_key = hashlib.md5.md5(str_key).hexdigest()
     return ret_key
 
 
@@ -367,9 +369,8 @@ def CountResElements(res, count = 0):
 
     return count
     
+
 # Функции для работы с формами
-
-
 def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
                evalSpace=None, parent=None, formRes=None, bIndicator=True):
     """
@@ -400,8 +401,8 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
     @return: Возвращает форму.
     """
     log.info(u'Создание формы <%s>' % formName)
+    frm = None
     try:
-        frm = None
         #   Если ресурсное описание не задано берем его из ресурсного файла
         if formRes is None:
             #   По необходимости вычисляем имя ресурса
@@ -596,8 +597,6 @@ def ResultForm(formName, fileRes=None, filter={}, logType=0,
     
 
 # Функции парсера
-
-
 def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, id=None):
     """
     Функция собирает объект по ресурсному описанию.
@@ -688,7 +687,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
                     ob.PostOnInitEvent()
                     post_buff_lst.append(ob)
             except AttributeError:
-                io_prnt.outWarning('### PostOnInitEvent() AttributeError <resource> obj: <%s>' % str(ob))
+                log.warning(u'### PostOnInitEvent() AttributeError <resource> obj: <%s>' % str(ob))
 
         #   Для объектов входящих в составной объект
         if '_interfaces' in evalSpace:
@@ -701,7 +700,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
                             ob.PostOnInitEvent()
                             post_buff_lst.append(ob)
                     except AttributeError:
-                        io_prnt.outWarning('### PostOnInitEvent() AttributeError <resource> obj: <%s>' % ob)
+                        log.warning(u'### PostOnInitEvent() AttributeError <resource> obj: <%s>' % ob)
     except:
         log.fatal(u'Создание формы (icBuildObject):')
         ic_dlg.icFatalBox(u'ОШИБКА', u'Создание формы (icBuildObject):')
@@ -1046,9 +1045,8 @@ def icResourceParser(parent, components, sizer=None, logType=0,
                         wxw.Show(bShow)
     return parent
 
+
 # Создание объектов
-
-
 def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, className=None, **kwargs):
     """
     Функция создает объект по имени и типу ресурса.
@@ -1099,8 +1097,8 @@ def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, cl
 try:
     import psyco
     icResourceParser = psyco.proxy(icResourceParser)
-except:
-    pass
+except ImportError:
+    log.error(u'Ошибка импорта psyco')
 
 
 if __name__ == '__main__':

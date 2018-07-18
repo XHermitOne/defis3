@@ -14,17 +14,17 @@
 import wx
 
 # --- Константы ---
-_Clipboard = None
+CLIPBOARD = None
+
 
 # --- Функции ---
-
-
 def toClipboard(Obj_):
     """
     Положить объект в клипбоард.
     @param Obj_: Объект.
     """
-    if type(Obj_) in (str, unicode):
+    global CLIPBOARD
+    if isinstance(Obj_, str):
         # Строку можно запихать непосредственно в клтпбоард.
         txt_data_clipboard = wx.TextDataObject()
         txt_data_clipboard.SetText(Obj_)
@@ -32,13 +32,11 @@ def toClipboard(Obj_):
         wx.TheClipboard.SetData(txt_data_clipboard)
         wx.TheClipboard.Close()
         # Очистить внутренний буфер
-        global _Clipboard
-        _Clipboard = None
+        CLIPBOARD = None
         return True
     else:
         # Обычный объект просто запихнуть во внутренний буфер
-        global _Clipboard
-        _Clipboard = Obj_
+        CLIPBOARD = Obj_
         # Очистить системный клипбоард
         wx.TheClipboard.Open()
         wx.TheClipboard.Clear()
@@ -51,9 +49,9 @@ def fromClipboard(Clear_=True):
     Получить содержимое клипборда.
     @param Clear_: Признак того,  что после извлечения содержимое очищается.
     """
-    global _Clipboard
-    if _Clipboard:
-        buff = _Clipboard
+    global CLIPBOARD
+    if CLIPBOARD:
+        buff = CLIPBOARD
         if Clear_:
             clearClipboard()
         return buff
@@ -75,8 +73,8 @@ def clearClipboard():
     Очистить клипбоард.
     """
     # Очистить внутренний буфер
-    global _Clipboard
-    _Clipboard = None
+    global CLIPBOARD
+    CLIPBOARD = None
     # Очистить системный клипбоард
     wx.TheClipboard.Open()
     wx.TheClipboard.Clear()
@@ -90,8 +88,8 @@ def emptyClipboard():
         False-если в клипбоарде что-либо есть.
     """
     # Проверка внутреннего буфера
-    global _Clipboard
-    empty_my_buff = bool(_Clipboard==None)
+    global CLIPBOARD
+    empty_my_buff = bool(CLIPBOARD==None)
     # Проверка системного клипборда
     txt_data_clipboard = wx.TextDataObject()
     wx.TheClipboard.Open()

@@ -63,7 +63,7 @@ def main(args):
             from ic.PropertyEditor import icResTree
             icResTree.editor_main(0, path=prj_path)
         except:
-            print(__doc__)
+            ic.log.fatal(u'Ошибка запуска редактора', bForcePrint=True)
             return
 
     elif '-run' in args:
@@ -87,7 +87,7 @@ def main(args):
         # Режим работы СЕРВИСНОГО СЕРВЕРА
         pass
     else:
-        print(__doc__)
+        ic.log.warning(u'Не определенный режим запуска', bForcePrint=True)
 
 
 def run():

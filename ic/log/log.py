@@ -57,7 +57,7 @@ import stat
 import traceback
 import locale
 
-__version__ = (0, 0, 4, 3)
+__version__ = (0, 1, 1, 1)
 
 # Кодировка коммандной оболочки по умолчанию
 DEFAULT_ENCODING = sys.stdout.encoding if sys.platform.startswith('win') else locale.getpreferredencoding()
@@ -74,8 +74,9 @@ NORMAL_COLOR_TEXT = '\x1b[0m'       # normal
 
 
 def print_color_txt(sTxt, sColor=NORMAL_COLOR_TEXT):
-    if type(sTxt) == unicode:
-        sTxt = sTxt.encode(get_default_encoding())
+    if isinstance(sTxt, str):
+        # sTxt = sTxt.encode(get_default_encoding())
+        pass
     if sys.platform.startswith('win'):
         # Для Windows систем цветовая раскраска отключена
         txt = sTxt
@@ -83,6 +84,7 @@ def print_color_txt(sTxt, sColor=NORMAL_COLOR_TEXT):
         # Добавление цветовой раскраски
         txt = sColor + sTxt + NORMAL_COLOR_TEXT
     print(txt)        
+
 
 # Модуль конфигурации
 CONFIG = None
@@ -263,10 +265,10 @@ def fatal(sMsg=u'', bForcePrint=False, bForceLog=False):
     try:
         msg = sMsg+u'\n'+trace_txt
     except UnicodeDecodeError:
-        if not isinstance(sMsg, unicode):
-            sMsg = unicode(sMsg, get_default_encoding())
-        if not isinstance(trace_txt, unicode):
-            trace_txt = unicode(trace_txt, get_default_encoding())
+        if not isinstance(sMsg, str):
+            sMsg = str(sMsg)
+        if not isinstance(trace_txt, str):
+            trace_txt = str(trace_txt)
         msg = sMsg+u'\n'+trace_txt
 
     if CONFIG:

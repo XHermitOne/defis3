@@ -7,11 +7,14 @@
 
 # Подключение библиотек
 import wx
+import wx.adv
 import os
 
-import ic.bitmap.ic_bmp as ic_bmp
-from ic.kernel import io_prnt
-import ic.bitmap.ic_color as ic_color
+from ic.bitmap import ic_bmp
+from ic.bitmap import ic_color
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 # Задержка всплывающего окошка
 SPLASH_DELAY = 2000
@@ -85,7 +88,7 @@ def ShowSplash(GraphFile_=''):
     """
     try:
         if (not GraphFile_) or (not os.path.exists(GraphFile_)):
-            io_prnt.outWarning(u'Сплеш-окно <%s> не найдено!' % GraphFile_)
+            log.warning(u'Сплеш-окно <%s> не найдено!' % GraphFile_)
             return None
 
         wx.InitAllImageHandlers()
@@ -98,7 +101,7 @@ def ShowSplash(GraphFile_=''):
         log.error(u'Ошибка вывода сплеш-окна: <%s>' % GraphFile_)
 
 
-class icSplashScreen(wx.SplashScreen):
+class icSplashScreen(wx.adv.SplashScreen):
     """
     Класс всплывающего окошка системы.
     """
@@ -111,10 +114,10 @@ class icSplashScreen(wx.SplashScreen):
         """
         try:
             bmp = ic_bmp.createBitmap(GraphFile_)
-            wx.SplashScreen.__init__(self, bmp,
-                                     wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,
-                                     SPLASH_DELAY, None, -1, wx.DefaultPosition, wx.DefaultSize,
-                                     wx.SIMPLE_BORDER | wx.FRAME_NO_TASKBAR | wx.STAY_ON_TOP)
+            wx.adv.SplashScreen.__init__(self, bmp,
+                                         wx.adv.SPLASH_CENTRE_ON_SCREEN | wx.adv.SPLASH_TIMEOUT,
+                                         SPLASH_DELAY, None, -1, wx.DefaultPosition, wx.DefaultSize,
+                                         wx.SIMPLE_BORDER | wx.FRAME_NO_TASKBAR | wx.STAY_ON_TOP)
         except:
             log.error(u'Ошибка создания всплывающего окошка.')
 

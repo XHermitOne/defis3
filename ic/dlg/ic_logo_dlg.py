@@ -5,18 +5,19 @@
 Заставка при загрузки проекта.
 """
 
+import os
+import os.path
+import time
+import _thread
 import wx
 import wx.lib.imagebrowser
 
-import ic.components.icfont as icfont
+from ic.components import icfont
 import ic.utils.ic_exec     # Этот модуль подгружается для спецификации
-import ic.bitmap.ic_bmp as ic_bmp
-from ic.utils import ic_file
-import time
-import thread
+from ic.bitmap import ic_bmp
 
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Класс и функции индикатора процесса
@@ -74,18 +75,19 @@ def LoadProjectProccess(Parent_, Msg_,
 
     if not Frames_:
         # Определить кадры по умолчанию
-        wait_dir = ic_file.DirName(__file__)+'/Wait/'
+        wait_dir = os.path.join(os.path.dirname(__file__), 'Wait')
         Frames_ = [wait_dir+'logo.jpg']
     
     ic_proccess_dlg = wait_box = icThreadLoadProjectDlg(Parent_, Frames_, Msg_, bAutoIncr=bAutoIncr)
         
     wait_box.SetResultList(wait_result)
     # Запустить функцию ожидания
-    thread.start_new(wait_box.Run, (Func_, FuncArgs_, FuncKW_))
+    _thread.start_new(wait_box.Run, (Func_, FuncArgs_, FuncKW_))
     wait_box.ShowModal()
     wait_box.Destroy()
     ic_proccess_dlg = None
     return wait_result[0]
+
 
 try:
     from ic.engine import ic_user
@@ -389,6 +391,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
             self.value = self.max
         else:
             self.value = value
+
 
 @load_proccess_deco
 def f(parent):

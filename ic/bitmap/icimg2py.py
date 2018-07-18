@@ -7,7 +7,7 @@
 
 # --- Подключение библиотек ---
 import zlib
-import cStringIO
+import io
 
 from wx import ImageFromStream, BitmapFromImage
 from wx import EmptyIcon
@@ -18,7 +18,9 @@ from wx.tools import img2py     # Функции серилизации обра
 
 from . import ic_bmp
 from ic.utils import ic_file
-from ic.kernel import io_prnt
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 
 # --- Определение функций ---
@@ -76,7 +78,7 @@ def ic_crunch_data(data, compressed):
     data = repr(data)
 
     # This next bit is borrowed from PIL.  It is used to wrap the text intelligently.
-    fp = cStringIO.StringIO()
+    fp = io.BytesIO()
     data += ' '  # buffer for the +1 test
     c = i = 0
     word = ''
@@ -88,13 +90,13 @@ def ic_crunch_data(data, compressed):
             i += 1
         else:
             if data[i+1] in octdigits:
-                for n in xrange(2, 5):
+                for n in range(2, 5):
                     if data[i+n] not in octdigits:
                         break
                 word = data[i:i+n]
                 i += n
             elif data[i+1] == 'x':
-                for n in xrange(2, 5):
+                for n in range(2, 5):
                     if data[i+n] not in hexdigits:
                         break
                 word = data[i:i+n]
@@ -119,7 +121,7 @@ def imageFromData(ImageData_):
     Создание wx.Image из строки серилизованной картинки.
     @param ImageData_: Данные строки серилизованной картинки.
     """
-    stream = cStringIO.StringIO(ImageData_)
+    stream = io.BytesIO(ImageData_)
     return ImageFromStream(stream)
 
 

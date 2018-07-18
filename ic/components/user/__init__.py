@@ -6,12 +6,12 @@
 """
 
 import os.path
+
 import ic.dlg.ic_logo_dlg as ic_logo_dlg
-# import ic.kernel.io_prnt as io_prnt
 from ic.log import log
 
 #
-__version__ = (1, 0, 1, 1)
+__version__ = (1, 1, 1, 1)
 
 
 #   Словарь пользовательских модулей
@@ -53,7 +53,7 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
         prefix = '%s.' % DEFAULT_SUBSYS_PACKAGE 
         
         #   Ищем прикладные пользовательские компоненты
-        if resource.icGetSubsysResPaths() and resource.icGetSubsysResPaths()[0] <> None:
+        if resource.icGetSubsysResPaths() and resource.icGetSubsysResPaths()[0] is not None:
             lst_dir += resource.icGetSubsysResPaths()
         
         for i, user_dir in enumerate(lst_dir):
@@ -101,7 +101,7 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
                                 try:
                                     typ = class_mod.ic_class_spc['type']
                                     user_modules_dict[typ] = class_mod
-                                except AttributeError, msg:
+                                except AttributeError as msg:
                                     typ = None
                                     log.warning(u'### module <%s> has invalid component interface (absent variable <ic_class_spc>)' % md)
                             except:
