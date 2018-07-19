@@ -47,7 +47,6 @@
 
 import wx
 from ic.dlg.msgbox import MsgBox
-from ic.log.iclog import *
 from ic.utils import util
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 from ic.components.icfont import *
@@ -120,7 +119,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 0, 0, 6)
+__version__ = (1, 1, 1, 1)
 
 
 class icSpinner(icWidget, wx.SpinCtrl):
@@ -286,7 +285,7 @@ class icSpinner(icWidget, wx.SpinCtrl):
         """
         Установить значение редактора.
         """
-        if type(Value_) in (str, unicode) and Value_.strip().isdigit():
+        if isinstance(Value_, str) and Value_.strip().isdigit():
             Value_ = int(Value_.strip())
         elif type(Value_) in (int, float):
             Value_ = int(Value_)

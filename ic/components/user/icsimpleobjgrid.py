@@ -21,6 +21,7 @@
 """
 
 import wx
+
 from ic.components import icwidget
 from ic.utils import util
 from ic.utils import coderror
@@ -85,7 +86,7 @@ ic_can_contain = ['GridCell']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
@@ -181,11 +182,9 @@ class icSimpleObjectGrid(icwidget.icWidget, parentModule.GroupListView):
         """
         Приведение всех надписей к юникоду.
         """
-        if type(Value_) not in (str, unicode):
+        if not isinstance(Value_, str):
             Value_ = str(Value_)
         if isinstance(Value_, str):
-            return unicode(Value_, 'utf-8')
-        elif isinstance(Value_, unicode):
             return Value_
         return u''
 

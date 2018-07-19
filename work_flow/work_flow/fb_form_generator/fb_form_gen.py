@@ -65,7 +65,7 @@ class icWxFBPrjGenerator(object):
             log.warning(u'Указан пустой ресурс для генерации проекта wxFormBuilder')
             return False
 
-        res_key = resource.keys()[0]
+        res_key = list(resource.keys())[0]
         res_type = resource[res_key]['type']
         return res_type in PARSED_TYPES
 
@@ -84,7 +84,7 @@ class icWxFBPrjGenerator(object):
         Генерация имени проекта.
         @return: Имя проекта.
         """
-        name = os.path.basename(self.resource.keys()[0])
+        name = os.path.basename(list(self.resource.keys())[0])
         prj_name = name.lower() + '_frm_proto'
         return prj_name
 

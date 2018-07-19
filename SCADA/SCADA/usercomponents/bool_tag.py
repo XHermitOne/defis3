@@ -68,7 +68,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 4)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
@@ -234,7 +234,7 @@ class icBoolSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
         @param value: Текущее значение тега.
         @return: Преобразованное значение.
         """
-        if type(value) in (str, unicode):
+        if isinstance(value, str):
             return value in ('True', '1', )
         elif isinstance(value, bool):
             return value

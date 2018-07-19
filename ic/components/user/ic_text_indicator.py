@@ -12,7 +12,7 @@ from ic.components import icwidget
 from ic.components import icfont
 from ic.PropertyEditor import icDefInf
 from ic.utils import util
-from ic.utils import  coderror
+from ic.utils import coderror
 from ic.bitmap import ic_bmp
 
 # Стили
@@ -91,7 +91,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icTextIndicator(icwidget.icWidget, wx.StaticText):
@@ -166,7 +166,7 @@ class icTextIndicator(icwidget.icWidget, wx.StaticText):
                         default_label = self.getDefaultLabel()
                         new_text_indicator = text_indicator.get(value, default_label)
                         return new_text_indicator
-                    elif type(text_indicator) in (str, unicode):
+                    elif isinstance(text_indicator, str):
                         # Получили текст надписи в явном виде
                         return text_indicator
                     elif text_indicator is None:

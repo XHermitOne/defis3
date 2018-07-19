@@ -30,16 +30,13 @@
     - B{grid.GRID_VALUE_DATETIME}
 """
 
-from ic.dlg.msgbox import MsgBox
-from ic.log.iclog import LogLastError
-from operator import truth
 import wx
 from wx import grid
-import re
 import string
-import types
 
-__version__ = (0, 0, 0, 3)
+from ic.log.iclog import LogLastError
+
+__version__ = (0, 1, 1, 1)
 
 #   Типы форматирования
 IC_N_STRING_FORMAT = 0
@@ -384,10 +381,10 @@ def setTempl(pic, txt, ins_pos, list_div=ListDIV):
     @param list_div: Список разделителей, используемых в шаблонах
     @type list_div: C{List}
     """
-    if type(txt) in (str, unicode):
+    if isinstance(txt, str):
         value = txt
     else:
-        value = unicode(txt)
+        value = str(txt)
         
     bTempl = True
     oDiv = []

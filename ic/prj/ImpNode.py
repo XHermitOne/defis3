@@ -491,7 +491,7 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
             # Создание ресурсов
             for cur_res in prj_manager.getPrjRoot():
                 self.getParentRoot().buildPrjRes(self.getResources(), cur_res.values()[0],
-                                                 cur_res.keys()[0], PrjImportFolder)
+                                                 list(cur_res.keys())[0], PrjImportFolder)
 
             # Создание дерева функционала
             self.getModules().buildPrjPy(os.path.dirname(SubSysPrjFileName_))

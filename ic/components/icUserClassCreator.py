@@ -5,17 +5,19 @@
 Функции генерации пользовательских классов.
 """
 
-import os.path
 import time
+import os.path
 import wx
+import wx.wizard as wiz
 
 from ic.utils import resource
 from ic.PropertyEditor import icDefInf
-import wx.wizard as wiz
 from ic.imglib import common
 import ic.dlg.msgbox as msg
 from ic.utils import ic_res
-from ic.kernel import io_prnt
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -99,8 +101,8 @@ def CreatUserClass(discr, file_templ=None):
         file_templ = resource.icGetICPath() + '/components/templates/icuserclass.tpl'
 
     #   Читаем текст шаблона
-    f = open(file_templ, 'rb')
-    templ = unicode(f.read().replace('\r\n', '\n'), 'utf-8')
+    f = open(file_templ, 'rt', encoding='utf-8')
+    templ = f.read().replace('\r\n', '\n')
     f.close()
     
     dct = IC_USER_CLASS_DESCR
@@ -178,7 +180,7 @@ def makePageTitle(wizPg, title):
     sizer = wx.BoxSizer(wx.VERTICAL)
     wizPg.SetSizer(sizer)
     title = wx.StaticText(wizPg, -1, title)
-    title.SetFont(wx.Font(18, wx.SWISS, wx.NORMAL, wx.BOLD))
+    title.SetFont(wx.Font(18, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
     sizer.Add(title, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
     sizer.Add(wx.StaticLine(wizPg, -1), 0, wx.EXPAND | wx.ALL, 5)
     return sizer
@@ -189,7 +191,7 @@ def makePageTitle2(wizPg, title):
     sizer.SetEmptyCellSize((20, 20))
     wizPg.SetSizer(sizer)
     title = wx.StaticText(wizPg, -1, title)
-    title.SetFont(wx.Font(18, wx.SWISS, wx.NORMAL, wx.BOLD))
+    title.SetFont(wx.Font(18, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
     sizer.Add(title, (0, 0), (1, 3), 1, wx.ALIGN_CENTER_HORIZONTAL, 5)
     sizer.Add(wx.StaticLine(wizPg, -1, size=(300, 1)), (1, 0), (1, 3), 0, wx.EXPAND | wx.ALL, 5)
     return sizer

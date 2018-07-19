@@ -21,18 +21,19 @@
 """
 
 import wx
+import wx.lib as wxlib
+
 from ic.components import icwidget
 from ic.utils import util
+from ic.log import log
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.engine import ic_user
-import ic.kernel.io_prnt as io_prnt
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.PropertyEditor.ExternalEditors import baseeditor
-import wx.lib as wxlib
 import ic.kernel.icobject as icobject
 
 # --- Спецификация ---
@@ -81,7 +82,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактора
@@ -92,13 +93,13 @@ def _get_lib_evt_lst(lib='wx', bPref=False):
     if lib and lib != 'wx':
         exec('import %s as wx_lib' % lib)
         if bPref:
-            lst = [el for el in dir(wx_lib) if type(el) in (str, unicode) and el.startswith('EVT_')]
+            lst = [el for el in dir(wx_lib) if isinstance(el, str) and el.startswith('EVT_')]
         else:
-            lst = [el[4:] for el in dir(wx_lib) if type(el) in (str, unicode) and el.startswith('EVT_')]
+            lst = [el[4:] for el in dir(wx_lib) if isinstance(el, str) and el.startswith('EVT_')]
     elif bPref:
-        lst = [el for el in dir(wx) if type(el) in (str, unicode) and el.startswith('EVT_')]
+        lst = [el for el in dir(wx) if isinstance(el, str) and el.startswith('EVT_')]
     else:
-        lst = [el[4:] for el in dir(wx) if type(el) in (str, unicode) and el.startswith('EVT_')]
+        lst = [el[4:] for el in dir(wx) if isinstance(el, str) and el.startswith('EVT_')]
     
     return lst
 

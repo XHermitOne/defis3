@@ -1963,14 +1963,14 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         @return: Код завершения операции: 1 - ресурс успешно создан; 0 - ресурс с
             таким именем в заданном ресурсном файле существует; -1 - директория не найдена.
         """
-        path = '%s/%s.%s' % (filePath, fileName, fileExt)
+        path = os.path.join(filePath, '%s.%s' % (fileName, fileExt))
         path = path.replace('\\', '/').replace('//', '/')
         # Если ресурс является прикладным компонентом (питоновским модулем)
         if fileExt == 'py':
             if os.path.isdir(filePath) and (not os.path.isfile(path) or bRecreate):
                 text = resource.genClassFromRes(nameRes, templ)
-                file_obj = open(path, 'wb')
-                file_obj.write(text.encode('utf-8'))
+                file_obj = open(path, 'wt')
+                file_obj.write(text)
                 file_obj.close()
                 return 1
             elif not os.path.isdir(filePath):
@@ -1983,7 +1983,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if os.path.isdir(filePath) and (not os.path.isfile(path) or bRecreate):
                 _res = {nameRes: templ}
                 text = str(_res)
-                file_obj = open(path, 'wb')
+                file_obj = open(path, 'wt')
                 file_obj.write(text)
                 file_obj.close()
                 return 1
@@ -1997,7 +1997,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 else:
                     _res[nameRes] = None
                     text = str(_res)
-                    file_obj = open(path, 'wb')
+                    file_obj = open(path, 'wt')
                     file_obj.write(text)
                     file_obj.close()
                     return 1
@@ -2333,7 +2333,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                     ic_dlg.icWarningBox(u'ОШИБКА',
                                         u'Не найдена форма <%s> в <%s>' % (formName, path))
                 elif len(_res.keys()) == 1:
-                    self._formName = _res.keys()[0]
+                    self._formName = list(_res.keys())[0]
                     self.res = _res[self._formName]
                 else:
                     # Выбор нужного ресурсного описания

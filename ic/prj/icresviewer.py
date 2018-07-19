@@ -31,7 +31,7 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
         
         # Прочитать ресурс
         res = self._getNodeRes(Node_)
-        self.parseTree(res[res.keys()[0]])
+        self.parseTree(res[list(res.keys())[0]])
         self.Expand(self.root)
 
     def getNodeResFileName(self):

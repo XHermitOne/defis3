@@ -9,7 +9,7 @@ from ic.editor import icpassportchoice
 from ic.utils import coderror
 from ic.log import log
 
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class ic_user_property_editor:
@@ -105,7 +105,7 @@ class icObjectPassportUserEdt(ic_user_property_editor):
         """
         # Превращаем текст в кортеж (представление паспорта)
         try:
-            if type(text) in (str, unicode) and text.strip():
+            if isinstance(text, str) and text.strip():
                 value = eval(text)
             else:
                 value = text
@@ -165,7 +165,7 @@ class icObjectPassportListUserEdt(ic_user_property_editor):
         """
         # Превращаем текс в картеж (представление паспорта)
         try:
-            if type(text) in (str, unicode) and text.strip():
+            if isinstance(text, str) and text.strip():
                 value = eval(text)
             else:
                 value = text

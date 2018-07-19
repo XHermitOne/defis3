@@ -5,25 +5,25 @@
 Виджеты используемые в редакторе фильтров.
 """
 
-# Version
-__version__ = (0, 0, 0, 2)
-
 # Imports
 import wx
-import wx.combo
+import wx.adv
 import wx.lib.platebtn
 
-from ic.kernel import io_prnt
 from ic.dlg import ic_dlg
 from ic.bitmap import ic_bmp
 from ic.components import icEvents
+from ic.log import log
+
+# Version
+__version__ = (0, 1, 1, 1)
 
 # Constants
 DEFAULT_COMBO_SIZE = (200, -1)
 DEFAULT_EDIT_SIZE = (100, -1)
 
 
-class icCustomComboCtrl(wx.combo.ComboCtrl):
+class icCustomComboCtrl(wx.adv.ComboCtrl):
     """
     Абстрактный класс контрола вызова расширенного редактора.
     """
@@ -32,7 +32,7 @@ class icCustomComboCtrl(wx.combo.ComboCtrl):
         """
         Конструктор.
         """
-        wx.combo.ComboCtrl.__init__(self, *args, **kwargs)
+        wx.adv.ComboCtrl.__init__(self, *args, **kwargs)
         # Нарисовать кнопку выбора
         self._drawCustomButton()
         
@@ -194,7 +194,7 @@ class icBitmapButton(wx.BitmapButton):
         self.SetBackgroundColour(wx.WHITE)
 
 
-class icBitmapComboBox(wx.combo.BitmapComboBox):
+class icBitmapComboBox(wx.adv.BitmapComboBox):
     """
     Класс комбобокса с картинкой.
     """
@@ -203,7 +203,7 @@ class icBitmapComboBox(wx.combo.BitmapComboBox):
         """
         Конструктор.
         """
-        wx.combo.BitmapComboBox.__init__(self, *args, **kwargs)
+        wx.adv.BitmapComboBox.__init__(self, *args, **kwargs)
         
         self._cur_selected_item = -1
         
@@ -216,7 +216,7 @@ class icBitmapComboBox(wx.combo.BitmapComboBox):
         Выбрать элемент  с индексом.
         """
         self._cur_selected_item = Item_
-        return wx.combo.BitmapComboBox.Select(self, Item_)
+        return wx.adv.BitmapComboBox.Select(self, Item_)
     
     def onCombo(self, event):
         """
@@ -254,7 +254,7 @@ class icBitmapComboBox(wx.combo.BitmapComboBox):
             img = None
             if 'img' in item:
                 img = item['img']
-                if img and (type(img) in (str, unicode)):
+                if img and isinstance(img, str):
                     img = ic_bmp.getSysImg(img)
             if img is None:
                 img = wx.EmptyBitmap(DEFAULT_IMG_WIDTH, DEFAULT_IMG_HEIGHT)
@@ -473,10 +473,10 @@ class icArgEdit(wx.TextCtrl):
         """
         Приведение значения любого типа к юникоду.
         """
-        if isinstance(Value_, unicode):
+        if isinstance(Value_, str):
             return Value_
         else:
-            return unicode(str(Value_), 'utf8')
+            return str(Value_)
         
     getValue = wx.TextCtrl.GetValue
     setValue = wx.TextCtrl.SetValue

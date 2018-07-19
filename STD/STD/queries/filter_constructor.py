@@ -5,19 +5,20 @@
 Виджет конструктора фильтров.
 """
 
-# Version
-__version__ = (0, 0, 0, 3)
-
 # Imports
+import copy
 import wx
 from wx.lib.agw import hypertreelist
+
 import ic
-from ic.kernel import io_prnt
 from ic.imglib import constructor_img as img_lib
 from ic.components import icEvents
-import copy
 from . import filter_builder_env
 from . import filter_builder_ctrl
+from ic.log import log
+
+# Version
+__version__ = (0, 1, 1, 1)
 
 # Constants
 DEFAULT_ITEM_LABEL = ''
@@ -298,7 +299,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         func_lst = list()
         if Funcs_:
             for func in Funcs_:
-                if type(func) in (str, unicode):
+                if isinstance(func, str):
                     # Функция сравнения задана именем
                     func_lst.append(Env_['funcs'][func])
                 else:
@@ -607,7 +608,7 @@ def test():
     env = copy.deepcopy(filter_builder_env.FILTER_ENVIRONMENT)
     
     app = wx.PySimpleApp()
-    dlg = wx.Dialog(mwin,-1)
+    dlg = wx.Dialog(mwin, -1)
     constructor = icFilterConstructorTreeList(dlg, -1)
     constructor.setEnvironment(env)
     constructor.setDefault()
@@ -615,6 +616,7 @@ def test():
     app.MainLoop()
     
     print('TEST filter constructor STOP ... ok')
+
 
 if __name__ == '__main__':
     test()

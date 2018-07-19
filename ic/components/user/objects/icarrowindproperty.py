@@ -118,7 +118,7 @@ class ArrowIndProperty:
                 for indx, nm in enumerate(lst):
                     if indx < len(clr):
                         val = clr[indx][0]
-                        if type(val) in (str, unicode):
+                        if isinstance(val, str):
                             self.GetNameObj(nm).SetValue(int(val.replace('%', '')))
                         
             # --- Заполняем структуру классов данных

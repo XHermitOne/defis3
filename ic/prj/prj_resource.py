@@ -453,7 +453,7 @@ class PrjResource(prj_node.PrjNode):
         """
         res = self.getMyRes()
         if res:
-            res_root = res[res.keys()[0]]
+            res_root = res[list(res.keys())[0]]
             description = res_root.get('description', u'')
             return description
         return u''
@@ -570,7 +570,7 @@ class PrjDBRes(PrjResource):
         """
         # Данном случае проверка связи с БД
         res = self.getMyRes()
-        name = res.keys()[0]
+        name = list(res.keys())[0]
         spc = res.get(name, dict())
         yes = ic_dlg.icAskBox(u'Проверка связи с БД', u'Поверить связь с БД <%s : %s>?' % (spc['name'], spc['type']))
         if yes:

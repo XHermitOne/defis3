@@ -15,7 +15,7 @@ from ic.PropertyEditor import icPanelEditor
 from ic.imglib import common
 from ic.log import log
 
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -447,7 +447,7 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
                 p, res_name = os.path.split(res_name)
         title = '%s (%s)' % (_('Designer'), res_name)
         bAddPage = True
-        for i in xrange(nb.GetPageCount()):
+        for i in range(nb.GetPageCount()):
             ctrl = nb.GetPage(i)
             if 'FormEditor' == ctrl.GetFileName():
                 bAddPage = False
@@ -513,7 +513,7 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
         @return: Признак успешной загрузки.
         """
         if isinstance(filename, str):
-            filename = unicode(filename, self.getDefaultEncoding())
+            filename = str(filename)    # self.getDefaultEncoding())
         self.GetIDEFrame().nb.OnDrop([filename])
         
     def CloseFile(self, fileName):
@@ -602,7 +602,7 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
             -1, если файл не открыт.
         """
         nb = self.GetDocumentNotebook()
-        alreadyopen = [nb.GetPage(i).GetFileName() for i in xrange(nb.GetPageCount())]
+        alreadyopen = [nb.GetPage(i).GetFileName() for i in range(nb.GetPageCount())]
         i = -1
         try:
             i = alreadyopen.index(fileName)
@@ -620,7 +620,7 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
         """
         fileName = fileName.replace('\\', '/')
         nb = self.GetDocumentNotebook()
-        for i in xrange(nb.GetPageCount()):
+        for i in range(nb.GetPageCount()):
             ctrl = nb.GetPage(i)
             # log.debug(u'IDE. Is opened <%s> in page <%s>' % (fileName, ctrl.GetFileName()))
             if (ctrl.GetFileName() or '').replace('\\', '/') == fileName:

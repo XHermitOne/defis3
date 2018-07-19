@@ -46,11 +46,12 @@
 import wx
 from wx.lib import buttons
 from ic.bitmap.icbitmap import icBitmapType
-from ic.log.iclog import *
 from ic.utils import util
 from ic.PropertyEditor import icDefInf
 from ic.components.icwidget import icWidget, icShortHelpString, SPC_IC_WIDGET
 from ic.imglib import common
+
+__version__ = (0, 1, 1, 1)
 
 ICToggleImageButtonStyle = {'BU_LEFT': wx.BU_LEFT,
                             'BU_TOP': wx.BU_TOP,
@@ -129,7 +130,7 @@ class icToggleImageButton(icWidget, buttons.ThemedGenBitmapTextToggleButton):
         self.image = img = util.getICAttr(component['image'], evalSpace,
                                           'Error in getICAttr in icimagebutton. name=%s attribute <image>' % self.name)
 
-        if type(img) in (str, unicode) and img not in ['', 'None', u'', u'None']:
+        if isinstance(img, str) and img not in ['', 'None', u'', u'None']:
             bmptype = icBitmapType(img)
             img = wx.Image(img, bmptype).ConvertToBitmap()
         elif not img:

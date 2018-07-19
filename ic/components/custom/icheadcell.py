@@ -52,15 +52,17 @@
 
 import wx
 import wx.grid as  gridlib
+
 import ic.components.icgrid as icgrid
 from ic.components import icwidget
 from ic.utils.util import icSpcDefStruct, getICAttr
 from ic.components.icfont import icFont
-from ic.log.iclog import LogLastError
 from ic.PropertyEditor import icDefInf
 import ic.utils.graphicUtils as graphicUtils
 from ic.utils import util
-from ic.kernel import io_prnt
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -193,7 +195,7 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
         self._helpWin = None
         # -----------------------------------------------------------------------
         aln = component['alignment']
-        if type(aln) in (str, unicode):
+        if isinstance(aln, str):
             try:
                 aln = eval(aln)
             except:
@@ -435,10 +437,10 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
         # Заглушка!!!
         if isinstance(label, str):
             try:
-                label = unicode(label, 'utf-8')
+                label = str(label)
             except:
                 log.info(_('WARRNING')+':' + 'icHeadCell, label is not in utf-8 encoding.')
-                label = unicode(label, 'cp1251')
+                label = str(label)
         # Заглушка!!!
         if label.strip().startswith('_('):
             label = label.replace('_(', '').replace(')', '').replace('\'', '').replace('"', '')

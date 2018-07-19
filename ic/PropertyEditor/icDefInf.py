@@ -12,6 +12,8 @@ from .ExternalEditors import basefuncs
 
 from ic.log import log
 
+__version__ = (0, 1, 1, 1)
+
 _ = wx.GetTranslation
 
 # Список не графических компонентов
@@ -182,10 +184,10 @@ def strToVal(typ, text):
     @param text: Значение в строковом представлении.
     """
     old_typ = typ
-    if type(typ) in (str, unicode) and (typ in id_dict):
+    if isinstance(typ, str) and (typ in id_dict):
         typ = id_dict[typ]
         
-    if type(text) not in (str, unicode):
+    if not isinstance(text, str):
         return None
         
     value = text
@@ -259,7 +261,7 @@ def ctrlVal(typ, text):
         
     ret = coderror.IC_CTRL_FAILED
     # Текст
-    if typ in (EDT_TEXTFIELD, EDT_PY_SCRIPT, EDT_CHOICE) and type(value) in (str, unicode):
+    if typ in (EDT_TEXTFIELD, EDT_PY_SCRIPT, EDT_CHOICE) and isinstance(value, str):
         ret = coderror.IC_CTRL_OK
     # Список в синтаксисе Python. Пример: ['1', 2, 'abc']
     elif typ == EDT_TEXTLIST and isinstance(value, list):

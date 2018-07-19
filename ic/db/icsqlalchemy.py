@@ -470,10 +470,10 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             tab_resources = dict([(tab_res_name, tab_res) for tab_res_name, tab_res in tab_resources.items() \
                                   if tab_res])
             tab_resources = dict([(tab_res_name, tab_res) for tab_res_name, tab_res in tab_resources.items() \
-                                  if tab_res[tab_res.keys()[0]]['source'] == self.getName() or \
-                                  tab_res[tab_res.keys()[0]]['source'] == self.getPsp()])
+                                  if tab_res[list(tab_res.keys())[0]]['source'] == self.getName() or \
+                                  tab_res[list(tab_res.keys())[0]]['source'] == self.getPsp()])
             for tab_res_name, tab_res in tab_resources.items():
-                tab_spc = tab_res[tab_res.keys()[0]]
+                tab_spc = tab_res[list(tab_res.keys())[0]]
                 tab_psp = ((tab_spc['type'], tab_spc['name'], None, ic_file.BaseName(tab_res_name), None),)
                 obj = self.GetKernel().Create(tab_psp, parent=self)
         return self

@@ -26,7 +26,7 @@ from ic.utils import ic_util
 from .ExternalEditors import icedituserproperty
 from .ExternalEditors import icpyscriptproperty
 
-__version__ = (0, 0, 2, 3)
+__version__ = (0, 1, 1, 1)
 
 IGNORE_PROPERTIES = ('type', 'child', 'win1', 'win2', 'cell_attr', 'label_attr', 'cols')
 BASE_PROPERTIES = tuple([attr for attr in icwidget.SPC_IC_SIMPLE.keys() if not attr.startswith('_') and
@@ -157,7 +157,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         wx_property = None
         if property_type == icDefInf.EDT_TEXTFIELD:
             # Текстовое поле
-            if type(value) not in (str, unicode):
+            if not isinstance(value, str):
                 value = str(value)
             wx_property = wx.propgrid.StringProperty(name, value=value)
 
@@ -166,9 +166,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             value_list = []
             if type(value) in (list, tuple):
                 for item in value:
-                    if isinstance(item, str):
-                        item = unicode(item, DEFAULT_ENCODE)
-                    elif not isinstance(item, unicode):
+                    if not isinstance(item, str):
                         item = str(item)
                     value_list.append(item)
             wx_property = wx.propgrid.ArrayStringProperty(name, value=value_list)
@@ -209,7 +207,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
 
         elif property_type == icDefInf.EDT_CHECK_BOX:
             # CheckBox
-            if type(value) in (str, unicode):
+            if isinstance(value, str):
                 value = eval(value)
             value = bool(value)
             wx_property = wx.propgrid.BoolProperty(name, value=value)
@@ -257,13 +255,13 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
 
         elif property_type == icDefInf.EDT_POINT:
             # Редактор координат точки wxPoint.
-            if type(value) not in (str, unicode):
+            if not isinstance(value, str):
                 value = str(value)
             wx_property = wx.propgrid.StringProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_SIZE:
             # Редактор paзмеров wxSize.
-            if type(value) not in (str, unicode):
+            if not isinstance(value, str):
                 value = str(value)
             wx_property = wx.propgrid.StringProperty(name, value=value)
 
@@ -272,8 +270,6 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             if value is None:
                 value = str(value)
             elif isinstance(value, str):
-                value = unicode(value, DEFAULT_ENCODE)
-            elif isinstance(value, unicode):
                 pass
             elif type(value) in (int, float, list, tuple, dict, bool):
                 value = str(value)
@@ -303,14 +299,14 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         elif property_type == icDefInf.EDT_USER_PROPERTY:
             # Редактор пользовательского свойства,
             # определяемого компонентом
-            if type(value) not in (str, unicode):
+            if not isinstance(value, str):
                 value = str(value)
             wx_property = icedituserproperty.icEditUserProperty(name, value=value)
             wx_property.setPropertyEditManager(self)
 
         elif property_type == icDefInf.EDT_RO_TEXTFIELD:
             # Read-Only текстовое поле
-            if type(value) not in (str, unicode):
+            if not isinstance(value):
                 value = str(value)
             wx_property = wx.propgrid.StringProperty(name, value=value)
             wx_property.Enable(False)
@@ -321,13 +317,13 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
 
         elif property_type == icDefInf.EDT_FILE:
             # Редактор выбора файла
-            if type(value) not in (str, unicode):
+            if not isinstance(value, str):
                 value = u''
             wx_property = wx.propgrid.FileProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_DIR:
             # Редактор выбора директории
-            if type(value) not in (str, unicode):
+            if not isinstance(value, str):
                 value = u''
             wx_property = wx.propgrid.DirProperty(name, value=value)
         else:
@@ -639,7 +635,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         if name == 'activate':
             #   По состоянию родителя определяем изменять цвет текста
             #   или нет
-            if type(value) in (str, unicode):
+            if isinstance(value, str):
                 value = eval(value)
             value = bool(value)
             res_tree.SetTextColor(res_tree.GetSelection(), value)
@@ -655,7 +651,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         @param expr: Само выражение. Если не строка, то остается без изменений.
         @return: Подготовленное выражение.
         """
-        if type(expr) in (str, unicode):
+        if isinstance(expr, str):
             expr = expr.strip()
             expr = expr.replace('\\n', '\n').replace('\\r', '\r')
         return expr
@@ -860,7 +856,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         # ВНИМАНИЕ! Значение может задаваться в виде строки.
         # Если задается в виде строки, то возможно необходимо
         # сделать преобразование типа
-        if bConvert and type(value) in (str, unicode):
+        if bConvert and isinstance(value, str):
             str_value = value
             value = self.convertPropertyValue(name, str_value, self._spc)
             log.info(u'Set string property [%s] value <%s - \'%s\'>' % (name, value, str_value))

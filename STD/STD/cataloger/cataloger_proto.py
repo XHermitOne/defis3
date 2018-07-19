@@ -198,7 +198,7 @@ class icCatalogerProto(object):
             return False
         real_path = os.path.join(self.physic_catalog_folder, *physic_path)
 
-        if isinstance(obj, str) or isinstance(obj, unicode):
+        if isinstance(obj, str):
             # Если объект-строка, то считаем что это имя файла
             if not os.path.exists(obj):
                 log.warning(u'Не найден файл <%s> для размещения в каталоге' % obj)

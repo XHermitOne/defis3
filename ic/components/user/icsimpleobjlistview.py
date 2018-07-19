@@ -29,7 +29,7 @@ from ic.utils import coderror
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.kernel import io_prnt
+from ic.log import log
 
 import ic.contrib.ObjectListView as parentModule
 
@@ -111,7 +111,7 @@ ic_can_contain = ['GridCell']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
@@ -241,12 +241,10 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         """
         Приведение всех надписей к юникоду.
         """
-        if type(Value_) not in (str, unicode):
+        if not isinstance(Value_, str):
             Value_ = str(Value_)
         if isinstance(Value_, str):
-            return unicode(Value_, 'utf-8')
-        elif isinstance(Value_, unicode):
-            return Value_
+            return Value_   #  'utf-8'
         return u''
 
     def setColumnsSpc(self, *Columns_):

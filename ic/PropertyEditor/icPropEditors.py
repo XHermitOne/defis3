@@ -25,21 +25,20 @@
     - B{EDT_NEW_PROPERTY}: Редактор для добавления дополнительного свойства.
 """
 
-import wx
-# import ic
-from ic.components.icfont import *
-# from ic.dlg.msgbox import MsgBox
-from ic.log.iclog import *
+import types
 import os
 import sys
+import wx
+
+from ic.components.icfont import *
 import ic.PropertyEditor.ic_pyed as ic_pyed
-import types
-# from ic.icEditor.CfgMthDialog import MthDialog
 from ic.components.icwidget import icEvent
 from ic.utils.util import icSpcDefStruct
 from ic.components import icwidget
 from . import icDefInf
 from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 # Признак, что атрибут описывает дополнительное свойство.
 icAddPropertyPrzn = ''
@@ -52,6 +51,7 @@ icNameTypeNormal = 0
 icNameTypeCheckBox = 1
 icNameTypeReadonly = 2
 icNameTypeAddPropery = 3
+
 
 class icEditPropCtrl(icEvent):
     """
@@ -106,7 +106,7 @@ class icEditPropCtrl(icEvent):
             except:
                 pass
 
-    def SetSize(self, (width, height)):
+    def SetSize(self, width, height):
         if self.editorCtrl:
             self.editorCtrl.SetSize(wx.Size(width-1, height))
 
@@ -711,7 +711,7 @@ class icEditPropTButton(icEditPropCtrl):
         evt.Skip()
         self.button.Refresh(True)
         
-    def SetSize(self, (width, height)):
+    def SetSize(self, width, height):
         if self.editorCtrl:
             self.editorCtrl.SetSize(wx.Size(width-1, height))
             self.button.SetPosition((width - EPBSize - 1, 0))
@@ -963,7 +963,7 @@ class icEditPropPyScript(icEditPropTButton):
         Возвращает признак скрипта.
         """
         value = self.nameValue.value
-        return type(value) in (str, unicode) and ('\r\n' in value or '\n' in value)
+        return isinstance(value, str) and ('\r\n' in value or '\n' in value)
         
     def OnEditScript(self, evt):
         """

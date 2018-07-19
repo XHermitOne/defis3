@@ -21,6 +21,7 @@ SQL Запрос к БД.
 """
 
 import wx
+
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -98,7 +99,7 @@ ic_can_contain = ['Field']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Функции редактирования ---
@@ -201,7 +202,7 @@ class icQuery(icwidget.icSimple, icquery.icQueryPrototype):
             if self._data_src is None:
                 log.warning(u'Не определен источник данных/БД запроса <%s>' % self.name)
                 return None
-            elif type(self._data_src) in (str, unicode):
+            elif isinstance(self._data_src, str):
                 # Источник данных задается именем
                 psp = ((None, self._data_src, None, self._data_src+SRC_EXT, None),)
                 self.data_source = self.GetKernel().getObjectByPsp(psp)

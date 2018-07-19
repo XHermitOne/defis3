@@ -138,7 +138,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
         @param host: Указанный хост.
         @return: True - localhost/False-нет.
         """
-        return (not host) or (type(host) in (str, unicode) and host.lower().strip() in ('localhost', '127.0.0.1'))
+        return (not host) or (isinstance(host, str) and host.lower().strip() in ('localhost', '127.0.0.1'))
 
     def connect(self, host=None, opc_server=None):
         """
@@ -154,7 +154,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
         if opc_server is None:
             opc_server = self.getOPCServer()
 
-        if type(host) not in (None.__class__, str, unicode):
+        if type(host) not in (None.__class__, str):
             log.error(u'Не корректный тип хоста OPC сервера <%s>' % type(host))
             return None
 

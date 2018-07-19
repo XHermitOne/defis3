@@ -109,7 +109,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 # --- Описываем константы, которые используются для рисования шкалы
 #   Сдвиг шкалы от начала координат контрола
@@ -391,7 +391,7 @@ class icClassicSkin(icIndicatorSkin):
         for i, obj in enumerate(clrLst):
             val, clr = obj
             
-            if type(val) in (str, unicode):
+            if isinstance(val, str):
                 v = float(val.replace('%', ''))
                 if v > 100:
                     v = 100
@@ -547,7 +547,7 @@ class icClassicSkin(icIndicatorSkin):
 def _getColor(clr):
     """
     """
-    if type(clr) in (str, unicode):
+    if isinstance(clr, str):
         try:
             clr = getattr(wx, clr)
         #
@@ -580,7 +580,7 @@ def GetValColor(value, min, max, clrReg, planFactor=1):
         
     if clrReg and max is not None and min is not None and value:
         for v, clr in clrReg:
-            if type(v) in (str, unicode):
+            if isinstance(v, str):
                 v = float(v.replace('%', ''))
                 if v > 100:
                     v = 100
@@ -615,7 +615,7 @@ def GetStateIndx(value, min, max, clrReg, planFactor=1):
     if clrReg and max is not None and min is not None and value:
         for indx, r in enumerate(clrReg):
             v, clr = r
-            if type(v) in (str, unicode):
+            if isinstance(v, str):
                 v = float(v.replace('%', ''))
                 if v > 100:
                     v = 100
@@ -967,7 +967,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         for obj in clrLst:
             val, clr = obj
             
-            if type(val) in (str, unicode):
+            if isinstance(val, str):
                 v = float(val.replace('%', ''))
                 if v > 100:
                     v = 100
@@ -980,7 +980,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             
             w = (sx - 2*dx)*(val-old)/(max - min)
             
-            if type(clr) in (str, unicode):
+            if isinstance(clr, str):
                 _clr = getattr(wx, clr)
                 icheadcell.DrawGradient(dc, w+1, h, _clr, icheadcell.BGR_GRAD_RIGHT, x, y, 2)
             else:

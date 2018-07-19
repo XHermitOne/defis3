@@ -263,7 +263,7 @@ class icStrSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
             return value
         else:
             # Необходимо произвести перекодировку только строковых значений
-            if isinstance(value, unicode):
+            if isinstance(value, str):
                 src_encoding = DEFAULT_ENCODING if src_encoding is None else src_encoding
                 dst_encoding = DEFAULT_ENCODING if dst_encoding is None else dst_encoding
                 value = value.encode(src_encoding).decode(dst_encoding)
@@ -276,9 +276,9 @@ class icStrSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
         @return: Преобразованное значение.
         """
         # Работаем только с Юникодом
-        if isinstance(value, unicode):
+        if isinstance(value, str):
             return value
-        return unicode(value, DEFAULT_ENCODING)
+        return str(value)
 
     def normValueOut(self, value):
         """

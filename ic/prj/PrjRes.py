@@ -216,7 +216,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         """
         if Prj_ is None:
             Prj_ = self._prepareDataPrj(self._prj)
-        ok = ic_res.SaveResourcePickle(PrjFileName_.strip(), Prj_)
+        ok = ic_res.SaveResourceText(PrjFileName_.strip(), Prj_)
         # Кроме того, что сохраняем проект, еще делаем его пакетом
         ic_res.CreateInitFile(os.path.dirname(PrjFileName_.strip()))
         return ok
@@ -244,7 +244,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             
         ok=False
         for folder in CurFolder_:
-            folder_name = folder.keys()[0]
+            folder_name = list(folder.keys())[0]
             # Проверять только папки
             if isinstance(folder[folder_name], list):
                 if folder_name == FolderName_:
@@ -272,7 +272,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             CurFolder_ = self.getPrjRoot()
         ok=False
         for folder in CurFolder_:
-            folder_name = folder.keys()[0]
+            folder_name = list(folder.keys())[0]
             # Проверять только папки
             if isinstance(folder[folder_name], list):
                 if folder_name == FolderName_:
@@ -297,7 +297,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         del_ok = False
         for i_folder in range(len(CurFolder_)):
             folder = CurFolder_[i_folder]
-            folder_name = folder.keys()[0]
+            folder_name = list(folder.keys())[0]
             # Проверять только папки
             if isinstance(folder[folder_name], list):
                 if folder_name == FolderName_:
@@ -321,7 +321,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             CurFolder_ = self.getPrjRoot()
         for i_folder in range(len(CurFolder_)):
             folder = CurFolder_[i_folder]
-            folder_name = folder.keys()[0]
+            folder_name = list(folder.keys())[0]
             # Проверять только папки
             if isinstance(folder[folder_name], list):
                 if folder_name == FolderName_:
@@ -344,7 +344,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             CurFolder_ = self.getPrjRoot()
         for i_folder in range(len(CurFolder_)):
             folder = CurFolder_[i_folder]
-            folder_name = folder.keys()[0]
+            folder_name = list(folder.keys())[0]
             # Проверять только папки
             if isinstance(folder[folder_name], list):
                 if folder_name == FolderName_:
@@ -371,7 +371,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         del_ok = False
         for i_res in range(len(CurFolder_)):
             res = CurFolder_[i_res]
-            res_name = res.keys()[0]
+            res_name = list(res.keys())[0]
             # Проверять только папки
             if isinstance(res[res_name], list):
                 find_res = self.delRes(ResName_, ResType_, res[res_name])
@@ -401,7 +401,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             CurFolder_ = self.getPrjRoot()
         ret_res = None
         for res in CurFolder_:
-            res_name = res.keys()[0]
+            res_name = list(res.keys())[0]
             # Проверять только папки
             if isinstance(res[res_name], list):
                 find_res = self.getResRef(ResName_, ResType_, res[res_name])
@@ -431,7 +431,8 @@ class icPrjRes(resManager.ResourceManagerInterface):
         Имя корневой папки проекта.
         """
         root = self._prj[0]
-        return filter(lambda key: key[0] != '_', root.keys())[0]
+        names = [key for key in root.keys() if not key.startswith('_')]
+        return names[0]
 
     def setPrjRootName(self, NewPrjRootName_):
         """
@@ -439,7 +440,8 @@ class icPrjRes(resManager.ResourceManagerInterface):
         """
         NewPrjRootName_ = NewPrjRootName_
         root = self._prj[0]
-        old_prj_root_name = filter(lambda key: key[0] != '_', root.keys())[0]
+        names = [key for key in root.keys() if not key.startswith('_')]
+        old_prj_root_name = names[0]
         prj_root = root[old_prj_root_name]
         del self._prj[0][old_prj_root_name]
         self._prj[0][NewPrjRootName_] = prj_root
@@ -493,7 +495,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         rename_res = False
         for i_res in range(len(CurFolder_)):
             res = CurFolder_[i_res]
-            res_name = res.keys()[0]
+            res_name = list(res.keys())[0]
             if res_name == OldName_:
                 CurFolder_[i_res] = {NewName_: res[res_name]}
                 return True
@@ -532,7 +534,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         find = False
         for i_res in range(len(CurFolder_)):
             res = CurFolder_[i_res]
-            res_name = res.keys()[0]
+            res_name = list(res.keys())[0]
             if res_name == Name_:
                 return True
             elif isinstance(res[res_name], list):
@@ -556,7 +558,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         find = False
         for i_res in range(len(CurFolder_)):
             res = CurFolder_[i_res]
-            res_name = res.keys()[0]
+            res_name = list(res.keys())[0]
             res_type = res[res_name]
             if isinstance(res[res_name], list):
                 # Если это папка, то обработать все подпапки
@@ -582,7 +584,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         find_list = []
         for i_res in range(len(CurFolder_)):
             res = CurFolder_[i_res]
-            res_name = res.keys()[0]
+            res_name = list(res.keys())[0]
             res_type = res[res_name]
             if isinstance(res[res_name], list):
                 # Если это папка, то обработать все подпапки
@@ -606,7 +608,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         find_list = []
         for i_res in range(len(CurFolder_)):
             res = CurFolder_[i_res]
-            res_name = res.keys()[0]
+            res_name = list(res.keys())[0]
             res_type = res[res_name]
             if isinstance(res[res_name], list):
                 # Если это папка, то обработать все подпапки
@@ -638,7 +640,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         find_list = []
         for i_res in range(len(CurFolder_)):
             res = CurFolder_[i_res]
-            res_name = res.keys()[0]
+            res_name = list(res.keys())[0]
             res_type = res[res_name]
             if isinstance(res[res_name], list):
                 # Если это папка, то обработать все подпапки
@@ -688,7 +690,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         """
         if CurObj_ is None:
             spc = util.readAndEvalFile(ResFileName_, bRefresh=True)
-            CurObj_ = spc[spc.keys()[0]]
+            CurObj_ = spc[list(spc.keys())[0]]
 
         find_list = []
         try:
@@ -715,7 +717,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         """
         if CurObj_ is None:
             spc = util.readAndEvalFile(ResFileName_, bRefresh=True)
-            CurObj_ = spc[spc.keys()[0]]
+            CurObj_ = spc[list(spc.keys())[0]]
 
         find_list = []
         try:

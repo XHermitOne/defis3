@@ -413,7 +413,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
         """
         Возвращает имя элемента списка.
         """
-        return u'element %s:' % unicode(indx)
+        return u'element %s:' % str(indx)
         
     def isDict(self, res):
         """

@@ -49,6 +49,7 @@
 """
 
 import wx
+
 from ic.components import icwidget
 from ic.utils import util
 from ic.utils import coderror
@@ -110,7 +111,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
@@ -531,7 +532,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
             # Перо
             if 'pen' in attrs:
                 pen = attrs['pen']
-                if type(pen) in (str, unicode):
+                if isinstance(pen, str):
                     # Перо задано строковым значением
                     pen = eval(pen, globals(), locals())
                 Shape_.SetPen(pen)
@@ -539,7 +540,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
             # Заливка
             if 'brush' in attrs:
                 brush = attrs['brush']
-                if type(brush) in (str, unicode):
+                if isinstance(brush, str):
                     # Заливка задана строковым значением
                     brush = eval(brush, globals(), locals())
                 Shape_.SetBrush(brush)
@@ -659,7 +660,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
                 # Перо
                 if 'pen' in attrs:
                     pen = attrs['pen']
-                    if type(pen) in (str, unicode):
+                    if isinstance(pen, str):
                         # Перо задано строковым значением
                         pen = eval(pen, globals(), locals())
                     Line_.SetPen(pen)
@@ -667,7 +668,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
                 # Заливка
                 if 'brush' in attrs:
                     brush = attrs['brush']
-                    if type(brush) in (str, unicode):
+                    if isinstance(brush, str):
                         # Заливка задана строковым значением
                         brush = eval(brush, globals(), locals())
                     Line_.SetBrush(brush)
@@ -675,7 +676,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
                 # Стрелка
                 if 'arrow' in attrs:
                     arrow = attrs['arrow']
-                    if type(arrow) in (str, unicode):
+                    if isinstance(arrow, str):
                         # Стрелка задана строковым значением
                         arrow = eval(arrow, globals(), locals())
                     Line_.AddArrow(arrow)

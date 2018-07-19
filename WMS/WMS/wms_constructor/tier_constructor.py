@@ -15,7 +15,7 @@ from . import board
 from ic.bitmap import ic_bmp
 from ic.log import log
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_SHAPE_POS = None
 
@@ -113,7 +113,7 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
         """
         if isinstance(background_bitmap, wx.Bitmap):
             self.bg_bmp = background_bitmap
-        elif type(background_bitmap) in (str, unicode):
+        elif isinstance(background_bitmap, str):
             # Задается именем файла
             bmp = ic_bmp.createBitmap(background_bitmap)
             self.bg_bmp = bmp

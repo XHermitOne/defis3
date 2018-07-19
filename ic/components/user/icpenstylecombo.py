@@ -145,7 +145,7 @@ class icPenStyleComboBox(icwidget.icWidget, wx.adv.OwnerDrawnComboBox):
         #   !!! Конструктор наследуемого класса !!!
         #   Необходимо вставить реальные параметры конструкора.
         #   На этапе генерации их не всегда можно определить.
-        items = [item.keys()[0] for item in self.items]
+        items = [list(item.keys())[0] for item in self.items]
 
         wx.adv.OwnerDrawnComboBox.__init__(self, parent,
                                            choices=items,

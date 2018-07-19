@@ -7,14 +7,15 @@
 
 # --- Imports ---
 import wx
+
 from ic.dlg import ic_dlg
-from ic.kernel import io_prnt
 from ic.utils import coderror
+from ic.log import log
 from . import passportobj
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icMultiChoiceUserEdt(passportobj.ic_user_property_editor):
@@ -73,7 +74,7 @@ class icMultiChoiceUserEdt(passportobj.ic_user_property_editor):
         """
         # Превращаем текс в картеж (представление паспорта)
         try:
-            if type(text) in (str, unicode):
+            if isinstance(text, str):
                 value = eval(text)
             else:
                 value = text

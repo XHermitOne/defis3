@@ -448,7 +448,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             # Создание ресурсов
             for cur_res in self.prj_res_manager.getPrjRoot():
                 self.buildPrjRes(self.getResources(),
-                                 cur_res.values()[0], cur_res.keys()[0])
+                                 cur_res.values()[0], list(cur_res.keys())[0])
 
             # Создание дерева функционала
             self.getModules().buildPrjPy(os.path.dirname(prj_file))
@@ -494,7 +494,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             for cur_res in ResNode_:
                 # Обработка подпапок
                 self.buildPrjRes(cur_node, cur_res.values()[0],
-                                 cur_res.keys()[0], FolderClass_)
+                                 list(cur_res.keys())[0], FolderClass_)
         else:
             from . import prj_prototype
             res_node_typ = ResNode_.strip()
@@ -536,7 +536,7 @@ class PrjRoot(ImpNode.PrjImportSys):
                     # Создание ресурсов
                     for cur_res in self.prj_res_manager.getPrjRoot():
                         self.buildPrjRes(self.getResources(),
-                                         cur_res.values()[0], cur_res.keys()[0])
+                                         cur_res.values()[0], list(cur_res.keys())[0])
     
                     # Создание дерева функционала
                     self.getModules().buildPrjPy(os.path.dirname(prj_file))

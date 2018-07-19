@@ -12,7 +12,7 @@ from ic.components import icwxpanel
 
 from ic.log import log
 
-__version__ = (0, 0, 5, 1)
+__version__ = (0, 1, 1, 1)
 
 # Период сканирования формы/панели SCADA системы по умолчанию
 DEFAULT_SCAN_TICK = -1
@@ -231,7 +231,7 @@ class icSCADAFormManager(form_manager.icFormManager):
             Адреса объектов указываются как <Имя_движка.Имя_объекта_в_движке>.
         @return: Найденный объект или None, если объект не найден.
         """
-        if type(obj_address) not in (str, unicode):
+        if not isinstance(obj_address, str):
             log.error(u'Не корректный тип адреса <%s> объекта SCADA движка' % obj_address.__class__.__name__)
             return None
 

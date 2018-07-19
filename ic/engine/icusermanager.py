@@ -242,7 +242,7 @@ class icUserManager(object):
         result = []
         for role_file in role_files:
             role_data = util.readAndEvalFile(role_file)
-            role_spc = role_data[role_data.keys()[0]]
+            role_spc = role_data[list(role_data.keys())[0]]
             role_name = role_spc['name']
             role_description = role_spc.get('description', u'') or u''
             result.append((role_name, role_description))

@@ -21,14 +21,15 @@
 """
 
 import wx
+
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
+from ic.log import log
 
 import ic.utils.resource as resource
-from ic.kernel import io_prnt
 from . import ic_metaitem_wrp
 import ic.storage.objstore as objstore
 
@@ -88,7 +89,7 @@ ic_can_contain = ['MetaItem', 'MetaConst', 'MetaAttr']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Классы ---
@@ -121,7 +122,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
         @param ObjectStorage_: Объект хранилища данных. Может передаваться
             по имени и в виде готового объекта.
         """
-        if type(ObjectStorage_) in (str, unicode):
+        if isinstance(ObjectStorage_, str):
             return self.setStorageByName(ObjectStorage_)
         else:
             if self._object_storage_name != ObjectStorage_.name:

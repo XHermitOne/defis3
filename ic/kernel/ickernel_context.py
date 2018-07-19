@@ -125,8 +125,9 @@ class icKernelContext(icContext.BaseContext):
         Инициализация окружения по папке проекта.
         @param PrjDir_: Папке проекта.
         """
-        if isinstance(PrjDir_, unicode):
-            PrjDir_ = PrjDir_.encode(sys.getfilesystemencoding())
+        if isinstance(PrjDir_, str):
+            # PrjDir_ = PrjDir_.encode(sys.getfilesystemencoding())
+            pass
             
         if PrjDir_ and os.path.isdir(PrjDir_):
             # !!!Обязательно нормировать для использования!!!

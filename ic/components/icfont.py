@@ -22,12 +22,12 @@
 """
 
 import wx
+
 from ic.dlg.msgbox import MsgBox
-from ic.log.iclog import *
 from ic.utils.util import icSpcDefStruct
 from . import icwidget as icwidget
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 SPC_IC_FONT = {'type': 'Font',
                'name': 'defaultFont',
@@ -51,11 +51,11 @@ def getICFamily(font):
     @return: Название группы шрифта из ['default', 'serif', 'sansSerif', 'monospace'].
     """
     wxf = font.GetFamily()
-    if wxf == wx.ROMAN:
+    if wxf == wx.FONTFAMILY_ROMAN:
         family = 'serif'
-    elif wxf == wx.SWISS:
+    elif wxf == wx.FONTFAMILY_SWISS:
         family = 'sansSerif'
-    elif wxf == wx.MODERN:
+    elif wxf == wx.FONTFAMILY_MODERN:
         family = 'monospace'
     else:
         family = 'default'
@@ -73,11 +73,11 @@ def getICFontStyle(font):
     """
     style = font.GetStyle()
     weight = font.GetWeight()
-    if style == wx.ITALIC and weight == wx.NORMAL:
+    if style == wx.FONTSTYLE_ITALIC and weight == wx.FONTWEIGHT_NORMAL:
         ret = 'italic'
-    elif style == wx.NORMAL and weight == wx.BOLD:
+    elif style == wx.FONTSTYLE_NORMAL and weight == wx.FONTWEIGHT_BOLD:
         ret = 'bold'
-    elif style == wx.ITALIC and weight == wx.BOLD:
+    elif style == wx.FONTSTYLE_ITALIC and weight == wx.FONTWEIGHT_BOLD:
         ret = 'boldItalic'
     else:
         ret = 'regular'
@@ -106,13 +106,13 @@ class icFont(wx.Font):
         @rtype: C{int}
         """
         if name in ('serif', 'Serif'):
-            return wx.ROMAN
+            return wx.FONTFAMILY_ROMAN
         elif name in ('sansSerif', 'Sans'):
-            return wx.SWISS
+            return wx.FONTFAMILY_SWISS
         elif name in ('monospace', 'Monospace'):
-            return wx.MODERN
+            return wx.FONTFAMILY_MODERN
         else:
-            return wx.DEFAULT
+            return wx.FONTFAMILY_DEFAULT
 
     def _styleId(self, name):
         """ По названию определяет стиль шрифта
@@ -122,17 +122,17 @@ class icFont(wx.Font):
         @rtype: C{tuple}
         """
         if name in ('italic', 'Italic'):
-            style = wx.ITALIC
-            weight = wx.NORMAL
+            style = wx.FONTSTYLE_ITALIC
+            weight = wx.FONTWEIGHT_NORMAL
         elif name in ('bold',):
-            style = wx.NORMAL
-            weight = wx.BOLD
+            style = wx.FONTSTYLE_NORMAL
+            weight = wx.FONTWEIGHT_BOLD
         elif name in ('boldItalic',):
-            style = wx.ITALIC
-            weight = wx.BOLD
+            style = wx.FONTSTYLE_ITALIC
+            weight = wx.FONTWEIGHT_BOLD
         else:
-            style = wx.NORMAL
-            weight = wx.NORMAL
+            style = wx.FONTSTYLE_NORMAL
+            weight = wx.FONTWEIGHT_NORMAL
 
         return style, weight
 
@@ -142,7 +142,7 @@ class icFont(wx.Font):
         @param underline:
         @return:
         """
-        if type(underline) in (str, unicode):
+        if isinstance(underline, str):
             return underline == 'Underlined'
         return bool(underline)
 
@@ -159,15 +159,14 @@ class icFont(wx.Font):
         if component['family'] is not None:
             family = self._familyId(component['family'])
         else:
-            family = wx.DEFAULT
+            family = wx.FONTFAMILY_DEFAULT
 
         if component['style'] is not None:
             style, weight = self._styleId(component['style'])
         else:
-            style = wx.NORMAL
-            weight = wx.NORMAL
+            style = wx.FONTSTYLE_NORMAL
+            weight = wx.FONTWEIGHT_NORMAL
 
-        # wx.Font.__init__(self, size, family, style, weight, underline, faceName, encoding=wx.FONTENCODING_CP1251)
         wx.Font.__init__(self, size, family, style, weight, underline, faceName, encoding=wx.FONTENCODING_UTF8)
 
 
@@ -183,6 +182,7 @@ def test(par=0):
     ctrl.SetFont(icFont({'style': 'boldItalic', 'size': 14}))
     frame.Show(True)
     app.MainLoop()
+
 
 if __name__ == '__main__':
     test()

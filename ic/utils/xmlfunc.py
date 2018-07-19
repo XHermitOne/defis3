@@ -7,12 +7,13 @@
 
 import os
 import os.path
+
 from ic.contrib import xmltodict
 from ic.contrib import dicttoxml
 from ic.log import log
 from ic.convert import simple_dict2xml
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 def load_xml_content(xml_filename, is_change_keys=True):
@@ -83,7 +84,7 @@ def save_xml_content(xml_filename, data, is_rewrite=True):
                                       custom_root='root',
                                       ids=False, attr_type=False)
     elif isinstance(data, dict):
-        root_key = data[data.keys()[0]]
+        root_key = data[list(data.keys())[0]]
         xml_txt = dicttoxml.dicttoxml(data, root=False,
                                       custom_root=root_key,
                                       ids=False, attr_type=False)

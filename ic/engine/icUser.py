@@ -24,6 +24,7 @@ import re
 import os.path
 import os
 import wx
+import hashlib
 
 from ic.utils import ic_mode
 
@@ -105,7 +106,7 @@ SPC_IC_USER = {'type': 'User',
                }
 
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- ФУНКЦИИ СИСТЕМЫ ОГРАНИЧЕНИЯ ДОСТУПА ---
@@ -494,8 +495,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         Получить из обычного пароля зашифрованный пароль.
         """
-        import md5
-        md5_password = md5.new(Password_).hexdigest()
+        md5_password = hashlib.md5.new(Password_).hexdigest()
         return md5_password
        
     def Login(self, DefaultUserName_=SYS_ADMIN_NAME,
@@ -712,32 +712,6 @@ class icUserPrototype(icbaseuser.icRootUser):
         return True
     
     # --- Функции-свойства ---
-    
-    # def GetResources(self):
-    #     """
-    #     Функция возвращает список движков текущего пользователя.
-    #     """
-    #     try:
-    #         if self._UserName and self._UserRequisit:
-    #             return self._UserRequisit[RES_ACC_RUNRES]
-    #         return []
-    #     except:
-    #         return []
-    #
-    # def GetRunners(self):
-    #     """
-    #     Функция возвращает список движков текущего пользователя.
-    #     """
-    #     try:
-    #         if self._UserName and self._UserRequisit:
-    #             if type(self._UserRequisit[RES_ACC_RUNNAME]) in (str, unicode):
-    #                 return ic.utils.util.ic_eval(self._UserRequisit[RES_ACC_RUNNAME])
-    #             else:
-    #                 return self._UserRequisit[RES_ACC_RUNNAME]
-    #         return []
-    #     except:
-    #         return []
-
     def getMenubarsPsp(self):
         """
         Список паспортов горизонтальных меню.
@@ -868,8 +842,7 @@ class icLoginManager(object):
             user_login = ic_dlg.icLoginDlg(None, u' Вход в систему',
                                            user_name, self.getRegUserList())
         else:
-            import md5
-            md5_password = md5.new(DefaultPassword_).hexdigest()
+            md5_password = hashlib.md5.new(DefaultPassword_).hexdigest()
             # Автологин
             user_login = (DefaultUserName_, DefaultPassword_, md5_password)
 

@@ -10,16 +10,17 @@ import wx
 import copy
 import os
 import os.path
+
 import ic.interfaces.resManager as resManager
-from ic.kernel import io_prnt
 from ic.utils import ic_res
 from ic.utils import ic_file
 from ic.dlg import ic_dlg
-from ic.engine import icUser 
+from ic.engine import icUser
+from ic.log import log
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class UserResource(resManager.ResourceManagerInterface):
@@ -155,19 +156,19 @@ class UserResource(resManager.ResourceManagerInterface):
         @return: Возвращает struct с новыми именами.
         """
         # получить новое имя
-        nm = self.HasItemInDict('', struct.keys()[0], 'acc')
+        nm = self.HasItemInDict('', list(struct.keys())[0], 'acc')
         # изменить словарь acc
-        val = copy.deepcopy(self._user_res[struct.keys()[0]])
+        val = copy.deepcopy(self._user_res[list(struct.keys())[0]])
         self._user_res[nm] = val
         self._user_res[nm]['name'] = nm
         if parent is not None:
             self._user_res[nm]['group'] = parent
         parent = nm
         # сохранить новое имя в передавамой структуре
-        val = struct[struct.keys()[0]]
-        del struct[struct.keys()[0]]
+        val = struct[list(struct.keys())[0]]
+        del struct[list(struct.keys())[0]]
         struct[nm] = val
-        list = struct[struct.keys()[0]]
+        list = struct[list(struct.keys())[0]]
         i = 0
         for item in list:
             if isinstance(item, str):
@@ -179,7 +180,7 @@ class UserResource(resManager.ResourceManagerInterface):
                 self._user_res[nm]['name'] = nm
                 self._user_res[nm]['group'] = parent
                 # сохранить новое имя в передавамой структуре
-                struct[struct.keys()[0]][i] = nm
+                struct[list(struct.keys())[0]][i] = nm
             elif isinstance(item, dict):
                 self.Copy(item, parent)
             i += 1
@@ -190,8 +191,8 @@ class UserResource(resManager.ResourceManagerInterface):
         Удаляет все значения ключей acc, заданных в struct.
         """
         try:
-            del self._user_res[struct.keys()[0]]
-            list = struct[struct.keys()[0]]
+            del self._user_res[list(struct.keys())[0]]
+            list = struct[list(struct.keys())[0]]
             for item in list:
                 if isinstance(item, str):
                     del self._user_res[item]
@@ -206,9 +207,9 @@ class UserResource(resManager.ResourceManagerInterface):
         Формирует список значений ключей acc, заданых в struct.
         """
         lst = []
-        s = copy.deepcopy(self._user_res[struct.keys()[0]])
+        s = copy.deepcopy(self._user_res[list(struct.keys())[0]])
         lst.insert(0, s)
-        list = struct[struct.keys()[0]]
+        list = struct[list(struct.keys())[0]]
         for item in list:
             if isinstance(item, str):
                 s = copy.deepcopy(self._user_res[item])
@@ -226,10 +227,10 @@ class UserResource(resManager.ResourceManagerInterface):
         @return: Возвращает struct с новыми именами.
         """
         # получить новое имя
-        nm = self.HasItemInDict('', struct.keys()[0], 'acc')
+        nm = self.HasItemInDict('', list(struct.keys())[0], 'acc')
         # сохранить новое имя в передавамой структуре
-        val = struct[struct.keys()[0]]
-        del struct[struct.keys()[0]]
+        val = struct[list(struct.keys())[0]]
+        del struct[list(struct.keys())[0]]
         struct[nm] = val
         # изменить словарь acc
         self._user_res[nm] = lst.pop()
@@ -237,14 +238,14 @@ class UserResource(resManager.ResourceManagerInterface):
         if parent is not None:
             self._user_res[nm]['group'] = parent
         parent = nm
-        list = struct[struct.keys()[0]]
+        list = struct[list(struct.keys())[0]]
         i = 0
         for item in list:
             if isinstance(item, str):
                 # получить новое имя
                 nm = self.HasItemInDict('', item, 'acc')
                 # сохранить новое имя в передавамой структуре
-                struct[struct.keys()[0]][i] = nm
+                struct[list(struct.keys())[0]][i] = nm
                 # изменить словарь acc
                 self._user_res[nm] = lst.pop()
                 self._user_res[nm]['name'] = nm

@@ -228,7 +228,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
             # Если фильтр не указан, то возвращаем исходный список записей
             return records
 
-        if type(rec_filter) in (str, unicode):
+        if isinstance(rec_filter, str):
             # Если функция задается строкой, то необходимо правильно обработать
             # с помощью функии ic_eval
             self.evalSpace['self'] = self

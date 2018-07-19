@@ -20,13 +20,14 @@
     компонент (ic_can_contain = -1).
 """
 
-import wx, sys
+import os
+import wx
+
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-import os
 import ic.bitmap.icbitmap as icbitmap
 
 import ic.components.custom.icheadcell as parentModule
@@ -98,7 +99,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class IndicatorState(parentModule.icHeadCell):
@@ -163,7 +164,7 @@ class IndicatorState(parentModule.icHeadCell):
         self.statesDict = {}
         
         for indx, nm in enumerate(self.images):
-            if not type(nm) in (str, unicode):
+            if not isinstance(nm, str):
                 img = nm
                 self.imageList.append(img)
             else:

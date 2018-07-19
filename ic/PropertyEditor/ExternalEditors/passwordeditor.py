@@ -46,7 +46,7 @@ class icPasswordExternalEdt(passportobj.ic_user_property_editor):
             return coderror.IC_CTRL_FAILED_IGNORE
         icPasswordExternalEdt._is_external_edit = False
         
-        if type(value) in (str, unicode):
+        if isinstance(value, str):
             return coderror.IC_CTRL_OK
         else:
             parent = propEdt.GetPropertyGrid().GetView()

@@ -5,16 +5,17 @@
 Редакторы свойств.
 """
 
+import types
 import wx
 from wx.lib.stattext import GenStaticText
+
 from .icPropEditors import *
-import types
 from ic.components.icfont import *
 from ic.components.icframe import *
-from ic.log.iclog import *
 from ic.components.icwidget import icEvent
 from . import icDefInf
 from ic.utils import ic_uuid
+from ic.log import log
 
 scrollBarWidth = 0
 IECWidthFudge = 3
@@ -343,7 +344,7 @@ class NameValue(icEvent):
             ret = 'wx.Size' + str(self.value)
 
         elif self.type in [icDefInf.EDT_PY_SCRIPT, icDefInf.EDT_ADD_PROPERTY] and \
-             type(self.value) in (str, unicode) and ('\r\n' in self.value or '\n' in self.value):
+             isinstance(self.value, str) and ('\r\n' in self.value or '\n' in self.value):
             val = self.value.replace('\r\n', '\n')
             nf = val.find('\n')
             ret = '<Script> ' + val[:nf] + ' ...'         
@@ -368,7 +369,7 @@ class NameValue(icEvent):
             self.edit_ctrl = icEditPropPyScript(prnt, pos=(-2, indx*height-1),
                                                 size=(self.main.panel2.GetSize()[0]+4, self.height+2))
                     
-            if type(self.value) in (str, unicode) and ('\r\n' in self.value or '\n' in self.value):
+            if isinstance(self.value, str) and ('\r\n' in self.value or '\n' in self.value):
                 self.edit_ctrl.OnEditScript(None)
 
         elif self.type == icDefInf.EDT_NUMBER:
@@ -432,7 +433,7 @@ class NameValue(icEvent):
             self.edit_ctrl = icEditAddProperty(prnt, pos=(-2, indx*height-1),
                                                size=(self.main.panel2.GetSize()[0]+4, self.height+2))
 
-            if type(self.value) in (str, unicode) and ('\r\n' in self.value or '\n' in self.value):
+            if isinstance(self.value, str) and ('\r\n' in self.value or '\n' in self.value):
                 self.edit_ctrl.OnEditScript(None)
 
         # Устанавливаем для редактора его высоту
@@ -825,7 +826,7 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         indx = 0
         size = len(self.NameValues)
         
-        for indx in xrange(size):
+        for indx in range(size):
             self.RemoveIndx(0)
             
         if bRefresh:

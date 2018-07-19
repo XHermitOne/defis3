@@ -32,10 +32,7 @@ import types
 import copy
 import pickle
 
-# from ic.log.iclog import LogLastError
-# from ic.log.iclog import MsgLastError
 from ic.kernel import icContext
-from ic.kernel import io_prnt
 from ic.dlg import ic_dlg
 from . import coderror
 from . import ic_uuid
@@ -43,6 +40,8 @@ from ic.log import log
 import ic
 
 __version__ = (1, 1, 1, 1)
+
+DEFAULT_ENCODING = 'utf-8'
 
 _ = wx.GetTranslation
 
@@ -65,7 +64,7 @@ icEvalCompileBuff = {}
 
 #   Протокол хранения сериализованных объектов модулем cPickle
 # ВНИМАНИЕ! PICKLE_PROTOCOL = 1 и 2 использовать нельзя - ресурсы не востанавливаются
-PICKLE_PROTOCOL = 0
+PICKLE_PROTOCOL = 3
 
 
 def ClearCompileBuff():
@@ -248,8 +247,9 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                 log.info('\t[*] <Non PICKLE Format file:%s. Try to compile text>' % filename)
 
         #   Открываем текстовое представление, если его нет, то создаем его
-        f = open(filename, 'rt')
-        txt = f.read().replace('\r\n', '\n')
+        f = open(filename, 'rt', encoding=DEFAULT_ENCODING)
+        txt = f.read()
+        txt = txt.replace(u'\r\n', u'\n')
         f.close()
         for key in dictRpl:
             txt = txt.replace(key, dictRpl[key])
@@ -261,8 +261,8 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
         Buff_readAndEvalFile[filename] = obj
 
         #   Сохраняем транслированный вариант
-        fpcl = open(filepcl, 'w')
-        log.info('create: %s' % filepcl)
+        fpcl = open(filepcl, 'wb')
+        log.info('Сохранение в файл pickle: %s' % filepcl)
         pickle.dump(obj, fpcl, PICKLE_PROTOCOL)
         fpcl.close()
     except IOError:
