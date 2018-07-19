@@ -119,19 +119,19 @@ def CreateInitFile(Path_):
     except:
         pass
 
-    init_file = Path_+'/__init__.py'
+    init_file = os.path.join(Path_, '__init__.py')
     if os.path.isfile(init_file):
         return True
 
     f = None
     try:
-        f = open(init_file, 'w')
+        f = open(init_file, 'wt')
         f.write(_InitFileDefault)
         f.close()
-        log.info(u'File <%s> is created.' % init_file)
+        log.info(u'Создан файл <%s>' % init_file)
         return True
     except:
-        log.fatal(u'Create module error: %s/__init__.py' % Path_)
+        log.fatal(u'Ошибка создания модуля <%s/__init__.py>' % Path_)
         if f:
             f.close()
         return False
@@ -174,13 +174,13 @@ def CreatePyFile(PyFileName_, PyFileBody_=None):
             os.makedirs(os.path.dirname(PyFileName_))
         except:
             pass
-        f = open(PyFileName_, 'w')
+        f = open(PyFileName_, 'wt')
         if PyFileBody_ is None:
             f.write(_PyFileDefault)
         else:
             f.write(str(PyFileBody_))
         f.close()
-        log.info(u'Module <%s> is created.' % PyFileName_)
+        log.info(u'Создан модуль Python <%s>' % PyFileName_)
         return True
     except:
         log.fatal(u'Create module error: %s' % PyFileName_)
@@ -216,17 +216,17 @@ def LoadResourcePickle(FileName_):
     if os.path.isfile(FileName_):
         f = None
         try:
-            f = open(FileName_)
+            f = open(FileName_, 'rb')
             struct = pickle.load(f)
             f.close()
             return struct
         except:
             if f:
                 f.close()
-            log.fatal(u'Read resource file error: %s.' % FileName_)
+            log.fatal(u'Ошибка чтения файла ресурса <%s>' % FileName_)
             return None
     else:
-        log.warning(u'Resource file <%s> is not found.' % FileName_)
+        log.warning(u'Файл ресурса <%s> не найден' % FileName_)
         return None
 
 
@@ -239,17 +239,17 @@ def LoadResourceText(FileName_):
     if os.path.isfile(FileName_):
         f = None
         try:
-            f = open(FileName_)
+            f = open(FileName_, 'rt')
             txt = f.read().replace('\r\n', '\n')
             f.close()
             return eval(txt)
         except:
             if f:
                 f.close()
-            log.fatal(u'Read resource file error: %s.' % FileName_)
+            log.fatal(u'Ошибка чтения файла ресурса <%s>' % FileName_)
             return None
     else:
-        log.warning(u'Resource file <%s> is not found.' % FileName_)
+        log.warning(u'Файл ресурса <%s> не найден' % FileName_)
         return None
 
 
@@ -270,7 +270,7 @@ def SaveResourcePickle(FileName_, Resource_):
         except:
             pass
 
-        f = open(FileName_, 'w')
+        f = open(FileName_, 'wb')
         pickle.dump(Resource_, f)
         f.close()
         log.info(u'Файл <%s> записан в pickle формате.' % FileName_)
@@ -300,17 +300,17 @@ def SaveResourceText(FileName_, Resource_, ToStruct_=False):
         except:
             pass
 
-        f = open(FileName_, 'w')
+        f = open(FileName_, 'wt')
         if ToStruct_:
             text = ic_util.StructToTxt(Resource_)
         else:
             text = str(Resource_)
         f.write(text)
         f.close()
-        log.info(u'Resource file <%s> is saved in text format.' % FileName_)
+        log.info(u'Ресурс сохранен в файле <%s> в текстовом формате' % FileName_)
         return True
     except:
-        log.fatal(u'Faild save file in text format: %s.' % FileName_)
+        log.fatal(u'Ошибка сохранения ресурса в текстовом формате в файле <%s>' % FileName_)
         if f:
             f.close()
         return False
@@ -325,7 +325,7 @@ def isPackage(Dir_):
     is_dir = os.path.isdir(Dir_)
     is_init_file = False
     if is_dir:
-        is_init_file = os.path.exists(Dir_+'/__init__.py')
+        is_init_file = os.path.exists(os.path.join(Dir_, '__init__.py'))
     return bool(is_dir and is_init_file)
     
 
@@ -351,12 +351,14 @@ def lockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     if ResName_ is None:
         ResName_ = ResFileName_
         
-    lock_file = LockDir_+'/%s_%s_%s%s' % (ResName_.strip(),
-                                          ResFileName_.strip(),
-                                          ResFileExt_.strip(), lock.LOCK_FILE_EXT)
+    lock_file = os.path.join(LockDir_,
+                             '%s_%s_%s%s' % (ResName_.strip(),
+                                             ResFileName_.strip(),
+                                             ResFileExt_.strip(),
+                                             lock.LOCK_FILE_EXT))
     comp_name = lock.ComputerName()
     user_name = ic_user.icGet('UserName')
-    log.info(u'Lock resource <%s>' % lock_file)
+    log.info(u'Блокировка ресурса <%s>' % lock_file)
     return lock.LockFile(lock_file, u'{\'computer\':\'%s\',\'user\':\'%s\'}' % (comp_name,
                                                                                 user_name))
 
@@ -375,11 +377,13 @@ def unlockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     if ResName_ is None:
         ResName_ = ResFileName_
         
-    lock_file = ic_file.NormPathUnix(LockDir_)+'/%s_%s_%s%s' % (ResName_.strip(),
-                                                                ResFileName_.strip(),
-                                                                ResFileExt_.strip(), lock.LOCK_FILE_EXT)
+    lock_file = os.path.join(ic_file.NormPathUnix(LockDir_),
+                             '%s_%s_%s%s' % (ResName_.strip(),
+                                             ResFileName_.strip(),
+                                             ResFileExt_.strip(),
+                                             lock.LOCK_FILE_EXT))
     user_name = ic_user.getCurUserName()
-    log.info(u'Unlock resource <%s> : <%s>' % (lock_file, user_name))
+    log.info(u'Снятие блокировки ресурса <%s> : <%s>' % (lock_file, user_name))
     return lock.UnLockFile(lock_file, user=user_name)
 
 
@@ -398,19 +402,23 @@ def isLockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
         ResName_ = ResFileName_
         
     # Кроме проверки блокировки ресурса необходимо проверить блокировку файла ресурса
-    lock_file = ic_file.NormPathUnix(LockDir_)+'/%s_%s_%s%s' % (ResFileName_.strip(),
-                                                                ResFileName_.strip(),
-                                                                ResFileExt_.strip(), lock.LOCK_FILE_EXT)
+    lock_file = os.path.join(ic_file.NormPathUnix(LockDir_),
+                             '%s_%s_%s%s' % (ResFileName_.strip(),
+                                             ResFileName_.strip(),
+                                             ResFileExt_.strip(),
+                                             lock.LOCK_FILE_EXT))
         
-    lock_res = ic_file.NormPathUnix(LockDir_)+'/%s_%s_%s%s' % (ResName_.strip(),
-                                                               ResFileName_.strip(),
-                                                               ResFileExt_.strip(), lock.LOCK_FILE_EXT)
+    lock_res = os.path.join(ic_file.NormPathUnix(LockDir_),
+                            '%s_%s_%s%s' % (ResName_.strip(),
+                                            ResFileName_.strip(),
+                                            ResFileExt_.strip(),
+                                            lock.LOCK_FILE_EXT))
         
     is_lock_file = lock.IsLockedFile(lock_file)
     is_lock_res = lock.IsLockedFile(lock_res)
     is_lock = False
     if is_lock_file or is_lock_res:
-        log.info(u'Is lock resource <%s> : [%s : %s]' % (lock_file, is_lock_file, is_lock_res))
+        log.info(u'Ресурс заблокирован <%s> : [%s : %s]' % (lock_file, is_lock_file, is_lock_res))
             
         # Если файл блокировки есть, то
         # проверить кем он заблокирован
@@ -448,9 +456,10 @@ def getLockResOwner(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     if ResName_ is None:
         ResName_ = ResFileName_
         
-    lock_file = LockDir_+'/%s_%s_%s%s' % (ResName_, ResFileName_,
-                                          ResFileExt_, lock.LOCK_FILE_EXT)
-    log.info(u'Lock resource <%s> owner' % lock_file)
+    lock_file = os.path.join(LockDir_,
+                             '%s_%s_%s%s' % (ResName_, ResFileName_,
+                                             ResFileExt_, lock.LOCK_FILE_EXT))
+    log.info(u'Владелец заблокированного ресурса <%s>' % lock_file)
     return lock.ReadLockRecord(lock_file)['user']
 
 
@@ -464,8 +473,9 @@ def getLockResRecord(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     if ResName_ is None:
         ResName_ = ResFileName_
         
-    lock_file = LockDir_+'/%s_%s_%s%s' % (ResName_, ResFileName_,
-                                          ResFileExt_, lock.LOCK_FILE_EXT)
+    lock_file = os.path.join(LockDir_,
+                             '%s_%s_%s%s' % (ResName_, ResFileName_,
+                                             ResFileExt_, lock.LOCK_FILE_EXT))
     return lock.ReadLockRecord(lock_file)
 
 

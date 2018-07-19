@@ -72,6 +72,8 @@ CYAN_COLOR_TEXT = '\x1b[36m'        # cyan
 WHITE_COLOR_TEXT = '\x1b[37m'       # white
 NORMAL_COLOR_TEXT = '\x1b[0m'       # normal
 
+NOT_INIT_LOG_SYS_MSG = u'Не инициализирована система журналирования'
+
 
 def print_color_txt(sTxt, sColor=NORMAL_COLOR_TEXT):
     if isinstance(sTxt, str):
@@ -172,7 +174,7 @@ def init(mConfig=None, sLogFileName=None):
                  stat.S_IWOTH | stat.S_IROTH)
 
     if get_debug_mode():
-        print_color_txt('INFO. Init log %s' % sLogFileName, GREEN_COLOR_TEXT)
+        print_color_txt('INFO. Инициализация файла журнала <%s>' % sLogFileName, GREEN_COLOR_TEXT)
 
 
 def debug(sMsg=u'', bForcePrint=False, bForceLog=False):
@@ -190,7 +192,7 @@ def debug(sMsg=u'', bForcePrint=False, bForceLog=False):
         if get_log_mode() or bForceLog:
             logging.debug(sMsg)
     else:
-        print_color_txt('Not init log system.', PURPLE_COLOR_TEXT)
+        print_color_txt(NOT_INIT_LOG_SYS_MSG, PURPLE_COLOR_TEXT)
         print_color_txt('DEBUG. ' + sMsg, BLUE_COLOR_TEXT)
 
 
@@ -209,7 +211,7 @@ def info(sMsg=u'', bForcePrint=False, bForceLog=False):
         if get_log_mode() or bForceLog:
             logging.info(sMsg)    
     else:
-        print_color_txt('Not init log system.', PURPLE_COLOR_TEXT)
+        print_color_txt(NOT_INIT_LOG_SYS_MSG, PURPLE_COLOR_TEXT)
         print_color_txt('INFO. ' + sMsg, GREEN_COLOR_TEXT)
 
 
@@ -228,7 +230,7 @@ def error(sMsg=u'', bForcePrint=False, bForceLog=False):
         if get_log_mode() or bForceLog:
             logging.error(sMsg)    
     else:
-        print_color_txt('Not init log system.', PURPLE_COLOR_TEXT)
+        print_color_txt(NOT_INIT_LOG_SYS_MSG, PURPLE_COLOR_TEXT)
         print_color_txt('ERROR. ' + sMsg, RED_COLOR_TEXT)
 
 
@@ -247,7 +249,7 @@ def warning(sMsg=u'', bForcePrint=False, bForceLog=False):
         if get_log_mode() or bForceLog:
             logging.warning(sMsg)    
     else:
-        print_color_txt('Not init log system.', PURPLE_COLOR_TEXT)
+        print_color_txt(NOT_INIT_LOG_SYS_MSG, PURPLE_COLOR_TEXT)
         print_color_txt('WARNING. ' + sMsg, YELLOW_COLOR_TEXT)
 
 
@@ -277,7 +279,7 @@ def fatal(sMsg=u'', bForcePrint=False, bForceLog=False):
         if get_log_mode() or bForceLog:
             logging.fatal(msg)
     else:
-        print_color_txt('Not init log system.', PURPLE_COLOR_TEXT)
+        print_color_txt(NOT_INIT_LOG_SYS_MSG, PURPLE_COLOR_TEXT)
         print_color_txt('FATAL. ' + msg, RED_COLOR_TEXT)
 
 
@@ -296,5 +298,5 @@ def service(sMsg=u'', bForcePrint=False, bForceLog=False):
         if get_log_mode() or bForceLog:
             logging.debug('SERVICE. ' + sMsg)
     else:
-        print_color_txt('Not init log system.', PURPLE_COLOR_TEXT)
+        print_color_txt(NOT_INIT_LOG_SYS_MSG, PURPLE_COLOR_TEXT)
         print_color_txt('SERVICE. ' + sMsg, CYAN_COLOR_TEXT)

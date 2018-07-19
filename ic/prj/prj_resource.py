@@ -203,7 +203,8 @@ class PrjResource(prj_node.PrjNode):
         if res_editor:
             res_name = self.getResName()
             res_path = self.getResPath()
-            os.makedirs(res_path)
+            if not os.path.exists(res_path):
+                os.makedirs(res_path)
             res_file = self.getResFileName()
             res_ext = self.getResFileExt()
             # Если ресурс/папка с таким именем уже есть в проекте, то

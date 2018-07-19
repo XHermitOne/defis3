@@ -20,7 +20,7 @@ from ic.log import log
 try:
     import configparser
 except ImportError:
-    print('ERROR! Import error configparser module')
+    log.error('Ошибка импорта configparser', bForcePrint=True)
 
 __version__ = (0, 1, 1, 1)
 
@@ -42,7 +42,7 @@ def loadParamCFG(sCFGFileName, sParamName):
     cfg_file = None
     try:
         param = None
-        cfg_file = open(sCFGFileName, 'r')
+        cfg_file = open(sCFGFileName, 'rt')
         row = None  # Текущая считанная из файла строка
         while row != '':
             row = cfg_file.readline()
@@ -58,7 +58,7 @@ def loadParamCFG(sCFGFileName, sParamName):
     except:
         if cfg_file:
             cfg_file.close()
-        log.fatal(u'Error load param %s from CFG file <%s>' % (sParamName, sCFGFileName))
+        log.fatal(u'Ошибка загрузки параметра [%s] из CFG файла <%s>' % (sParamName, sCFGFileName))
     return None
 
 
@@ -79,8 +79,8 @@ def saveParamCFG(sCFGFileName, sParamName, vParamValue):
         bak_cfg_name = os.path.splitext(sCFGFileName)[0] + '.bak'
         shutil.copyfile(sCFGFileName, bak_cfg_name)
         
-        old_cfg = open(bak_cfg_name, 'r')   # откуда читать
-        new_cfg = open(sCFGFileName, 'w')   # куда писать
+        old_cfg = open(bak_cfg_name, 'rt')   # откуда читать
+        new_cfg = open(sCFGFileName, 'wt')   # куда писать
         for row in old_cfg.readlines():
             # Разделить запись на имя и значение
             name_value = re.split(r'=', row)
@@ -103,7 +103,7 @@ def saveParamCFG(sCFGFileName, sParamName, vParamValue):
             new_cfg.close()
         if old_cfg:
             old_cfg.close()
-        log.fatal(u'Save param [%s] in INI file <%s>' % (sParamName, sCFGFileName))
+        log.fatal(u'Ошибка сохранения параметра [%s] в INI файл <%s>' % (sParamName, sCFGFileName))
     return False
 
 
@@ -128,7 +128,7 @@ def loadParamINI(sINIFileName, sSection, sParamName):
             param = ini_parser.get(sSection, sParamName)
         return param
     except:
-        log.fatal(u'Load param [%s.%s] from CFG file <%s>' % (sSection, sParamName, sINIFileName))
+        log.fatal(u'Ошибка загрузки параметра [%s.%s] из CFG файла <%s>' % (sSection, sParamName, sINIFileName))
     return None
 
 
@@ -169,13 +169,13 @@ def saveParamINI(sINIFileName, sSection, sParamName, vParamValue):
 
         # Если ини-файла нет, то создать его
         if not os.path.isfile(sINIFileName):
-            ini_file = open(sINIFileName, 'w')
+            ini_file = open(sINIFileName, 'wt')
             ini_file.write('')
             ini_file.close()
             
         # Создать объект конфигурации
         ini_parser = configparser.ConfigParser()
-        ini_file = open(sINIFileName, 'r')
+        ini_file = open(sINIFileName, 'rt')
         ini_parser.readfp(ini_file)
         ini_file.close()
 
@@ -183,19 +183,19 @@ def saveParamINI(sINIFileName, sSection, sParamName, vParamValue):
         if not ini_parser.has_section(sSection):
             ini_parser.add_section(sSection)
 
-        if isinstance(vParamValue, str):
-            vParamValue = vParamValue.encode(DEFAULT_ENCODE)
+        if not isinstance(vParamValue, str):
+            vParamValue = str(vParamValue)
         ini_parser.set(sSection, sParamName, vParamValue)
 
         # Сохранить и закрыть файл
-        ini_file = open(sINIFileName, 'w')
+        ini_file = open(sINIFileName, 'wt')
         ini_parser.write(ini_file)
         ini_file.close()
         return True
     except:
         if ini_file:
             ini_file.close()
-        log.fatal(u'Save param [%s.%s] in INI file <%s>' % (sSection, sParamName, sINIFileName))
+        log.fatal(u'Ошибка сохранения параметра [%s.%s] в INI файл <%s>' % (sSection, sParamName, sINIFileName))
     return False
 
 
@@ -213,25 +213,25 @@ def delParamINI(sINIFileName, sSection, sParamName):
     ini_file = None
     try:
         if not os.path.isfile(sINIFileName):
-            log.warning(u'INI file <%s> not exists' % sINIFileName)
+            log.warning(u'INI файл <%s> не найден' % sINIFileName)
             return False
             
         # Создать объект конфигурации
         ini_parser = configparser.ConfigParser()
-        ini_file = open(sINIFileName, 'r')
+        ini_file = open(sINIFileName, 'rt')
         ini_parser.readfp(ini_file)
         ini_file.close()
 
         # Если такой секции нет
         if not ini_parser.has_section(sSection):
-            log.warning(u'Section [%s] not exists in file <%s>' % (sSection, sINIFileName))
+            log.warning(u'Секция [%s] не существует в файле <%s>' % (sSection, sINIFileName))
             return False
 
         # Удалить
         ini_parser.remove_option(sSection, sParamName)
 
         # Сохранить и закрыть файл
-        ini_file = open(sINIFileName, 'w')
+        ini_file = open(sINIFileName, 'wt')
         ini_parser.write(ini_file)
         ini_file.close()
 
@@ -239,7 +239,7 @@ def delParamINI(sINIFileName, sSection, sParamName):
     except:
         if ini_file:
             ini_file.close()
-        log.fatal(u'Delete param [%s.%s] from INI file <%s>' % (sSection, sParamName, sINIFileName))
+        log.fatal(u'Ошибка удаления параметра [%s.%s] из INI файла <%s>' % (sSection, sParamName, sINIFileName))
     return False
 
 
@@ -255,25 +255,25 @@ def getParamCountINI(sINIFileName, sSection):
     ini_file = None
     try:
         if not os.path.isfile(sINIFileName):
-            log.warning(u'INI file <%s> not exists' % sINIFileName)
+            log.warning(u'INI файл <%s> не найден' % sINIFileName)
             return 0
             
         # Создать объект конфигурации
         ini_parser = configparser.ConfigParser()
-        ini_file = open(sINIFileName, 'r')
+        ini_file = open(sINIFileName, 'rt')
         ini_parser.readfp(ini_file)
         ini_file.close()
 
         # Если такой секции нет
         if not ini_parser.has_section(sSection):
-            log.warning(u'Section [%s] not exists in file <%s>' % (sSection, sINIFileName))
+            log.warning(u'Секция [%s] не существует в файле <%s>' % (sSection, sINIFileName))
             return 0
         # Количество параметров в секции
         return len(ini_parser.options(sSection))
     except:
         if ini_file:
             ini_file.close()
-        log.fatal(u'INI file: <%s> Get param count in section [%s]' % (sINIFileName, sSection))
+        log.fatal(u'INI файл <%s>. Ошибка определения количества параметров секции [%s]' % (sINIFileName, sSection))
     return -1
 
 
@@ -289,25 +289,25 @@ def getParamNamesINI(sINIFileName, sSection):
     ini_file = None
     try:
         if not os.path.isfile(sINIFileName):
-            log.warning(u'INI file <%s> not exists' % sINIFileName)
+            log.warning(u'INI файл <%s> не найден' % sINIFileName)
             return None
             
         # Создать объект конфигурации
         ini_parser = configparser.ConfigParser()
-        ini_file = open(sINIFileName, 'r')
+        ini_file = open(sINIFileName, 'rt')
         ini_parser.readfp(ini_file)
         ini_file.close()
 
         # Если такой секции нет
         if not ini_parser.has_section(sSection):
-            log.warning(u'Section [%s] not exists in file <%s>' % (sSection, sINIFileName))
+            log.warning(u'Секция [%s] не существует в файле <%s>' % (sSection, sINIFileName))
             return []
         # Количество параметров в секции
         return ini_parser.options(sSection)
     except:
         if ini_file:
             ini_file.close()
-        log.fatal(u'INI file <%s> Get param names in section [%s]' % (sINIFileName, sSection))
+        log.fatal(u'INI файл <%s>. Ошибка определения имен параметров секции [%s]' % (sINIFileName, sSection))
     return None
 
 
@@ -321,12 +321,12 @@ def INI2Dict(sINIFileName):
     ini_file = None
     try:
         if not os.path.exists(sINIFileName):
-            log.warning(u'INI file <%s> not exists' % sINIFileName)
+            log.warning(u'INI файл <%s> не существует' % sINIFileName)
             return None
             
         # Создать объект конфигурации
         ini_parser = configparser.ConfigParser()
-        ini_file = open(sINIFileName, 'r')
+        ini_file = open(sINIFileName, 'rt')
         ini_parser.readfp(ini_file)
         ini_file.close()
         
@@ -351,7 +351,7 @@ def INI2Dict(sINIFileName):
     except:
         if ini_file:
             ini_file.close()
-        log.fatal(u'Conver INI file <%s> to dictionary' % sINIFileName)
+        log.fatal(u'Ошибка преобразования INI файла <%s> в словарь' % sINIFileName)
     return None
 
 
@@ -368,7 +368,7 @@ def Dict2INI(dDict, sINIFileName, rewrite=False):
     ini_file = None
     try:
         if not dDict:
-            log.warning(u'Not define dictionary <%s>' % dDict)
+            log.warning(u'Не определен словарь <%s> для сохранения в INI файле' % dDict)
             return False
 
         ini_file_name = os.path.split(sINIFileName)
@@ -379,13 +379,13 @@ def Dict2INI(dDict, sINIFileName, rewrite=False):
 
         # Если ини-файла нет, то создать его
         if not os.path.exists(sINIFileName) or rewrite:
-            ini_file = open(sINIFileName, 'w')
+            ini_file = open(sINIFileName, 'wt')
             ini_file.write('')
             ini_file.close()
 
         # Создать объект конфигурации
         ini_parser = configparser.ConfigParser()
-        ini_file = open(sINIFileName, 'r')
+        ini_file = open(sINIFileName, 'rt')
         ini_parser.readfp(ini_file)
         ini_file.close()
 
@@ -401,7 +401,7 @@ def Dict2INI(dDict, sINIFileName, rewrite=False):
                 ini_parser.set(section_str, str(param), str(dDict[section][param]))
 
         # Сохранить и закрыть файл
-        ini_file = open(sINIFileName, 'w')
+        ini_file = open(sINIFileName, 'wt')
         ini_parser.write(ini_file)
         ini_file.close()
         
@@ -409,5 +409,5 @@ def Dict2INI(dDict, sINIFileName, rewrite=False):
     except:
         if ini_file:
             ini_file.close()
-        log.fatal(u'Conver dictionary to INI file <%s>' % sINIFileName)
+        log.fatal(u'Ошибка сохранения словаря в INI файле <%s>' % sINIFileName)
     return False
