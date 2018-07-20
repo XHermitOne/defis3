@@ -62,7 +62,7 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
                 p, subsys = os.path.split(user_dir)
                 user_dir += '/%s' % DEFAULT_SUBSYS_PACKAGE
                 
-            log.info('>>> user_dir %s' % user_dir)
+            log.info(u'>>> Папка пользовательских компонентов %s' % user_dir)
             if user_dir and os.path.isdir(user_dir):
                 dir_list = os.listdir(user_dir)
                 
@@ -78,16 +78,26 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
         
                         #   Импортируем пользовательский модуль
                         if i > 0:
+                            # Модуль их папки компонентов подсистемы
                             md = subsys+'.'+prefix+fileName.split('.')[0]
                         else:
+                            # Модуль из папки системных компонентов
                             md = fileName.split('.')[0]
 
                         if ext == 'py' and md not in not_load_lst:
                             try:
-                                log.info('>>> user component import %s' % md)
-                                ic_logo_dlg.SetLoadProccessBoxLabel(u'>>> Имп. компонент: %s' % md, 100*j/len(dir_list))
+                                log.info(u'>>> Импорт пользовательского компонента %s' % md)
+                                ic_logo_dlg.SetLoadProccessBoxLabel(u'>>> Импортируемый компонент: %s' % md,
+                                                                    100 * j / len(dir_list))
 
-                                class_mod = __import__(md, globals(), locals(), [], level=1)
+                                # ВНИМАНИЕ! Аргумент level определяет уровень с которого
+                                # происходит импортирование.
+                                # Если level=0, то импорт происходит с глобального уровня
+                                # Если level=1, то импорт происходит с текущего пакета
+                                # Если level=2, то импорт происходит с родительского пакета и т.п.
+                                class_mod = __import__(md, globals(), locals(), [],
+                                                       level=int(i == 0))
+
                                 # Поскольку __import__ возвращает родительский модуль
                                 # получаем доступ до нужного нам модуля через 
                                 # рекурсивный getattr
@@ -103,12 +113,12 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
                                     user_modules_dict[typ] = class_mod
                                 except AttributeError as msg:
                                     typ = None
-                                    log.warning(u'### module <%s> has invalid component interface (absent variable <ic_class_spc>)' % md)
+                                    log.warning(u'### В модуле <%s> не корректный интерфейс компонента (Проверте переменную <ic_class_spc>)' % md)
                             except:
                                 try:
-                                    log.fatal(u'###! import error module: %s' % md)
+                                    log.fatal(u'###! Ошибка импорта модуля: %s' % md)
                                 except:
-                                    print(u'###! import error module: %s' % md)
+                                    print(u'###! Ошибка импорта модуля: %s' % md)
 
     return user_modules_dict
 
