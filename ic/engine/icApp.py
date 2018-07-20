@@ -26,13 +26,15 @@ import ic.utils.resource
 
 import ic.utils.ic_file
 import ic.utils.ic_util
-from ic.kernel import io_prnt
 from ic.kernel import icexceptions
 from ic.utils import lock  # Модуль необходим для удаления файлов-блокировок
 import ic.imglib.common as imglib
 from ic.dlg import ic_dlg
 from . import ic_app
 from ic.utils import ic_util
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 
 def GetPrjSubSysDirs(PrjDir_):

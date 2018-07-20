@@ -8,6 +8,8 @@ from . import icobject
 from . import ickernel_context
 from . import icbaseuser
 
+__version__ = (0, 1, 1, 1)
+
 DEFAULT_USER = 'root'
 
 

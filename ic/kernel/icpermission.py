@@ -7,6 +7,8 @@
 
 import wx
 
+__version__ = (0, 1, 1, 1)
+
 _ = wx.GetTranslation
 
 # Список зарегистрированных разрешений.
@@ -43,7 +45,8 @@ def registerPermission(permission):
 def getPermissionDct():
     global __system_permissions
     return __system_permissions
-    
+
+
 view_permission = icPermission('view', _('Can view'), '', '__SYSTEM__')
 edit_permission = icPermission('edit', _('Can edit'), '', '__SYSTEM__')
 add_permission = icPermission('add', _('Can add'), '', '__SYSTEM__')
@@ -58,6 +61,7 @@ def _gen_base_permissions():
     registerPermission(edit_permission)
     registerPermission(add_permission)
     registerPermission(delete_permission)
+
 
 # Регистрируем базовые разрешения
 _gen_base_permissions()

@@ -10,15 +10,16 @@ import wx
 import time
 import os
 import os.path
+
 from . import ic_file
 from . import lock
 from . import ini
 from . import ic_mode
-from ic.kernel import io_prnt
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
-
-__version__ = (0, 0, 0, 2)
 
 # --- Constants ---
 # Имя журнала регистрации пользователей по умолчанию
@@ -121,10 +122,10 @@ class icRegUserJournal:
             self.setCurUser(UserName_)
 
             if ic_mode.isDebugMode():
-                log.info(u'Register user %s' % UserName_)
+                log.info(u'Регистрация пользователя <%s>' % UserName_)
             return result
         except:
-            log.error(u'Journal registration user error: %s.' % UserName_)
+            log.fatal(u'Ошибка регистрации пользователя <%s> в журнале' % UserName_)
             return False    
             
     def unregister(self):
@@ -136,16 +137,16 @@ class icRegUserJournal:
                 cur_username = self.getCurUser()
                 if cur_username is None:
                     if ic_mode.isDebugMode():
-                        log.warning(u'Not define current user')
+                        log.warning(u'Не определен текущий пользователь')
                     return False
                 else:
                     if ic_mode.isDebugMode():
-                        log.info(u'Unregister user %s.' % cur_username)
+                        log.info(u'Снятие регистрации пользовтеля %s.' % cur_username)
                 return ini.delParamINI(self._journal_file_name, 'CURRENT_USERS',
                                        cur_username)
             return True
         except:
-            log.error(u'Journal delete user error: %s.' % self._journal_file_name)
+            log.fatal(u'Ошибка удаления пользователя из журнала <%s>' % self._journal_file_name)
             return False
             
     def getCurrentUsersCount(self):
@@ -157,7 +158,7 @@ class icRegUserJournal:
                 return ini.getParamCountINI(self._journal_file_name, 'CURRENT_USERS')
             return 0
         except:
-            log.error(u'Journal define number of current users error: %s.' % self._journal_file_name)
+            log.fatal(u'Ошибка определения количества текущих пользователей системы. Журанал <%s>' % self._journal_file_name)
             return None
 
     def getCurrentUserNames(self):
@@ -167,7 +168,7 @@ class icRegUserJournal:
         try:
             return ini.getParamNamesINI(self._journal_file_name, 'CURRENT_USERS')
         except:
-            log.error(u'Journal define current users names error: %s.' % self._journal_file_name)
+            log.fatal(u'Ошибка определения имен текущих пользователей системы. Журнал <%s>' % self._journal_file_name)
             return None
         
     def getCurrentRegComputers(self):
@@ -185,6 +186,6 @@ class icRegUserJournal:
             return eval(ini.loadParamINI(self._journal_file_name,
                                          'CURRENT_USERS', UserName_))
         except:
-            log.error(u'Journal define user run parameters error: user=%s, journal=%s.' % (UserName_,
-                                                                                                self._journal_file_name))
+            log.fatal(u'Ошибка определения параметров запуска пользователя <%s>. Журнал <%s>' % (UserName_,
+                                                                                                 self._journal_file_name))
             return None

@@ -7,10 +7,15 @@
 
 # Подключение библиотек
 import os
+import os.path
 import traceback
 import sys
+
 import ic.config
 from ic.log import log
+from ic.utils import ic_str
+
+__version__ = (0, 1, 1, 1)
 
 
 def SetUserLog(user, kernel=None, filemode='a'):
@@ -18,7 +23,7 @@ def SetUserLog(user, kernel=None, filemode='a'):
     Установка пользовательского лога.
     """
     if not kernel:
-        path = 'C:/DEFISWRK/'
+        path = os.path.join(ic.config.PROFILE_PATH, 'wrk')
     else:
         path = kernel.GetContext()['LOG_DIR']
 
@@ -26,41 +31,12 @@ def SetUserLog(user, kernel=None, filemode='a'):
         os.makedirs(path)
 
     user_name = user
-    if not isinstance(user_name, unicode):
-        user_name = unicode(str(user), 'utf-8')
+    if not isinstance(user_name, str):
+        user_name = str(user)
 
-    fn = path + user_name+'.log'
+    fn = os.path.join(path, user_name+'.log')
 
     log.init(ic.config, fn)
-
-
-def ReCodeString(String_, StringCP_, NewCP_):
-    """
-    Перекодировать из одной кодировки в другую.
-    @param String_: Строка.
-    @param StringCP_: Кодовая страница строки.
-    @param NewCP_: Новая кодовая страница строки.
-    """
-    if NewCP_.upper() == 'UNICODE':
-        # Кодировка в юникоде.
-        if isinstance(String_, str):
-            return unicode(String_, StringCP_)
-        else:
-            return String_
-
-    if NewCP_.upper() == 'OCT' or NewCP_.upper() == 'HEX':
-        # Закодировать строку в восьмеричном/шестнадцатеричном виде.
-        return OctHexString(String_, NewCP_)
-
-    if isinstance(String_, str):
-        string = unicode(String_, StringCP_)
-    elif isinstance(String_, unicode):
-        string = String_
-    try:
-        return string.encode(NewCP_)
-    except:
-        log.error('Decode string error: <%s> -> <%s>.' % (StringCP_, NewCP_))
-        return string
 
 
 def OctHexString(String_, Code_):
@@ -95,6 +71,7 @@ def OctHexString(String_, Code_):
         outErr()
         return None
 
+
 # Устройства вывода
 IC_CONSOLE = 0x0001
 IC_CONSOLE_INFO = 0x0002
@@ -119,6 +96,7 @@ def getConsoleEncoding():
         return 'CP866'
     else:
         return 'utf-8'
+
 
 IC_CONSOLE_CODEPAGE = getConsoleEncoding()
 
@@ -162,9 +140,9 @@ def outDevice(msg, Device_=IC_CONSOLE):
             return False
 
     if Device_ & IC_FILE:
+        log_file = None
         try:
-            log_file = None
-            log_file = open(IC_LOG_FILE_DEFAULT, 'w+')
+            log_file = open(IC_LOG_FILE_DEFAULT, 'wt+')
             log_file.write(msg)
             log_file.close()
         except:
@@ -172,10 +150,10 @@ def outDevice(msg, Device_=IC_CONSOLE):
                 log_file.close()
             return False
     if Device_ & IC_MSG_INFO:
-        import ic.dlg
+        import ic.dlg.ic_dlg
         ic.dlg.ic_dlg.icMsgBox(u'ВНИМАНИЕ', msg)
     if Device_ & IC_MSG_ERR:
-        import ic.dlg
+        import ic.dlg.ic_dlg
         ic.dlg.ic_dlg.icErrBox(u'ОШИБКА', msg)
     return True
 
@@ -188,7 +166,7 @@ def outLog(msg, TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=IC_C
     @param DevCP_: Кодовая страница вывода на устройство.
     @param Device_: Указание устройства вывода.
     """
-    txt = ReCodeString(msg, TxtCP_, DevCP_)
+    txt = ic_str.recode_text(msg, TxtCP_, DevCP_)
     if Device_ == IC_LOG:
         log.info(txt)
         return True
@@ -221,7 +199,7 @@ def outErr(msg=u'', TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=
     """
     txt = u''
     if msg:
-        txt = ReCodeString(msg, TxtCP_, DevCP_)
+        txt = ic_str.recode_text(msg, TxtCP_, DevCP_)
 
     if Device_ == IC_LOG:
         log.error(txt)
@@ -251,20 +229,18 @@ def _to_unicode(String_, DefaultCP_='utf-8'):
     """
     Подбор кодировки для превращения строки в юникод.
     """
-    if isinstance(String_, unicode):
+    if isinstance(String_, str):
         return String_
-    elif isinstance(String_, str):
-        String_ = str(String_)
 
     u_str = u''
     try:
-        u_str = unicode(String_, DefaultCP_)
+        u_str = str(String_)    # DefaultCP_)
     except:
         if sys.platform[:3].lower() == 'win':
             # Windows
-            u_str = unicode(String_, 'cp1251')
+            u_str = str(String_)    # 'cp1251'
         else:
             # Linux
-            u_str = unicode(String_, 'koi8-r')
+            u_str = str(String_)    # 'koi8-r'
     return u_str
 

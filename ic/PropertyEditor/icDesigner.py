@@ -7,11 +7,16 @@
 
 import wx
 import sys
+# import locale
+
 from ic.utils import ic_i18n
+from ic.engine import ic_user
+from ic.utils import ic_util
+from ic.log import log
 
 _ = wx.GetTranslation
 
-__version__ = (1, 0, 0, 5)
+__version__ = (1, 1, 1, 1)
 
 
 class icDesignerApp(wx.App):
@@ -23,6 +28,16 @@ class icDesignerApp(wx.App):
         """
         Инициализация приложения.
         """
+        # ВНИМАНИЕ! Выставить русскую локаль
+        # Это необходимо для корректного отображения календарей,
+        # форматов дат, времени, данных и т.п.
+
+        # Системная локаль Python
+        # locale.setlocale(locale.LC_ALL, RU_LOCALE)
+        # Локаль wxPython
+        # self.locale = wx.Locale()
+        # self.locale.Init(wx.LANGUAGE_RUSSIAN)
+
         self.locale = None
         lang = wx.LANGUAGE_DEFAULT
         wx.Locale.AddCatalogLookupPathPrefix(ic_i18n.LANG_DIR)
@@ -30,7 +45,17 @@ class icDesignerApp(wx.App):
         return True
         
     def OnExit(self):
-        pass
+        """
+        Обработчик выхода из приложения.
+        """
+        cur_user = ic_user.getCurUser()
+        # Завершить работу пользователя
+        if cur_user:
+            cur_user.Logout()
+        # Выполнение обработчика события при старте движка
+        log.info(u'Выход из системы. Режим редактора')
+        ic_util.print_defis_logo()
+        return True
 
     def updateLanguage(self, lang):
         # Make *sure* any existing locale is deleted before the new
@@ -48,6 +73,7 @@ class icDesignerApp(wx.App):
             self.locale.AddCatalog('restree')
         else:
             self.locale = None
+
 
 if __name__ == '__main__':
     # Тестируем

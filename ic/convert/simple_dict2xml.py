@@ -12,7 +12,7 @@ from xml.sax import saxutils
 
 from ic.log import log
 
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 DEFUALT_ENCODING = 'utf-8'
 
@@ -37,10 +37,10 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
 
     def _my_write(self, text):
 
-        if not isinstance(text, unicode):
+        if not isinstance(text, str):
             # ВНИМАНИЕ! Записываться в файл должен только unicode иначе падает
             # при сохранении русских букв
-            text = unicode(str(text), 'utf-8')
+            text = str(text)    # 'utf-8')
 
         try:
             self._out.write(text)
@@ -53,13 +53,14 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
             # ВНИМАНИЕ! Записываться в файл должен только unicode иначе падает
             # при сохранении русских букв
             if sys.platform[:3].lower() == 'win':
-                if isinstance(value, unicode):
-                    value = value.encode(self._encoding)
+                if isinstance(value, str):
+                    # value = value.encode(self._encoding)
+                    pass
                 txt = ' %s=%s' % (name, saxutils.quoteattr(value))
             else:
                 txt = u' %s=%s' % (name, saxutils.quoteattr(value))
-            if isinstance(txt, unicode):
-                txt = txt.encode(self._encoding)
+            if isinstance(txt, str):
+                # txt = txt.encode(self._encoding)
                 self._my_write(txt)
 
         if auto_close:
@@ -80,8 +81,8 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
         self._my_write('\n' + self.break_line)
 
         for item in attrs.items():
-            if not isinstance(item[1], unicode):
-                attrs[item[0]] = unicode(str(item[1]), self._encoding)
+            if not isinstance(item[1], str):
+                attrs[item[0]] = str(item[1])   # , self._encoding)
         self._startElement(name, attrs, auto_close)
         self.break_line += '  '
 
@@ -108,8 +109,8 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
         self._my_write('\n' + self.break_line)
 
         for item in attrs.items():
-            if not isinstance(item[1], unicode):
-                attrs[item[0]] = unicode(str(item[1]), self._encoding)
+            if not isinstance(item[1], str):
+                attrs[item[0]] = str(item[1])   # self._encoding)
         self._startElement(name, attrs, auto_close)
 
     def endElement(self, name, auto_close=False):
@@ -190,6 +191,8 @@ def test():
     """
     Функция тестирования.
     """
+    import os.path
+    import ic.config
     data = {'''ns:Documents Version="1.0"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:ns="http://fsrar.ru/WEGAIS/WB_DOC_SINGLE_01"
@@ -197,13 +200,14 @@ xmlns:c="http://fsrar.ru/WEGAIS/Common"
 xmlns:oref="http://fsrar.ru/WEGAIS/ClientRef"
 xmlns:pref="http://fsrar.ru/WEGAIS/ProductRef"
 xmlns:wb="http://fsrar.ru/WEGAIS/TTNSingle"
-''': {'Document': [{'Item': 'XXX'}, {'Item': '111'}, {'Item': '222'},]},
+''': {'Document': [{'Item': 'XXX'}, {'Item': '111'}, {'Item': '222'}, ]},
             }
 
     xml_file = None
     try:
         # Начать запись
-        xml_file = open('/home/xhermit/.defis/text.xml', 'wt')
+        xml_filename = os.path.join(ic.config.PROFILE_PATH, 'text.xml')
+        xml_file = open(xml_filename, 'wt')
         xml_writer = icSimpleDict2XmlWriter(data, xml_file, encoding='utf-8')
         xml_writer.startDocument()
         xml_writer.startWrite()
@@ -215,6 +219,7 @@ xmlns:wb="http://fsrar.ru/WEGAIS/TTNSingle"
         if xml_file:
             xml_file.close()
         raise
+
 
 if __name__ == '__main__':
     test()

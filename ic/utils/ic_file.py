@@ -55,6 +55,8 @@ from compileall import compile_dir as CompileDir
 from py_compile import compile as CompileFile
 from imp import load_source as LoadSource
 
+import ic.config
+
 
 __version__ = (0, 2, 1, 1)
 
@@ -624,7 +626,7 @@ def getProfilePath(bAutoCreatePath=True):
     """
     home_path = getHomePath()
     if home_path:
-        profile_path = os.path.join(home_path, '.defis')
+        profile_path = os.path.join(home_path, ic.config.PROFILE_DIRNAME)
         if not os.path.exists(profile_path) and bAutoCreatePath:
             # Автоматическое создание пути
             try:

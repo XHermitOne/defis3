@@ -8,14 +8,16 @@
 """
 
 # Подключение библиотек
+import os
+import os.path
+
 from ic.utils import ic_mode
 from ic.utils import ini
-from ic.utils import ic_file
 from ic.utils import ic_exec
 from ic.engine import ic_user
-from . import io_prnt
+from ic.log import log
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
@@ -83,10 +85,11 @@ class icSettingsDotUsePrototype(object):
         """
         prj_dir = ic_user.icGet('PRJ_DIR')
         if prj_dir:
-            ini_file_name = prj_dir+'/'+self._cur_settings_list[0]+'.ini'
+            ini_file_name = os.path.join(prj_dir, self._cur_settings_list[0]+'.ini')
         else:
             prj_name = self._cur_settings_list[0]
-            ini_file_name = ic_file.DirName(ic_file.DirName(ic_file.DirName(__file__)))+'/%s/%s/%s.ini' % (prj_name, prj_name, prj_name)
+            ini_file_name = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+                                         prj_name, prj_name, '%s.ini' % prj_name)
         return ini_file_name
     
     def get(self):
@@ -180,7 +183,7 @@ class icPrjDotUse(icSettingsDotUsePrototype):
         Запуск редактирования INI файла настроек
         """
         ini_file_name = self._get_ini_file_name()
-        if ic_file.Exists(ini_file_name):
+        if os.path.exists(ini_file_name):
             cmd = 'gedit %s &' % ini_file_name
             ic_exec.icSysCmd(cmd)
         else:
@@ -252,7 +255,7 @@ class icParamDotUse(icSettingsDotUsePrototype):
         ini_file_name = self._get_ini_file_name()
         value = ini.loadParamINI(ini_file_name, self._cur_settings_list[1], self._cur_settings_list[2])
         value = u'' if value is None else value
-        value = unicode(value, ini.DEFAULT_ENCODE) if isinstance(value, str) else value
+        # value = unicode(value, ini.DEFAULT_ENCODE) if isinstance(value, str) else value
         return value
     
     def set(self, value):

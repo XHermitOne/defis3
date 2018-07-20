@@ -124,11 +124,11 @@ def loadParamINI(sINIFileName, sSection, sParamName):
         ini_parser = configparser.ConfigParser()
         # Прочитать файл
         ini_parser.read(sINIFileName)
-        if ini_parser.has_section(sSection):
+        if ini_parser.has_section(sSection) and ini_parser.has_option(sSection, sParamName):
             param = ini_parser.get(sSection, sParamName)
         return param
     except:
-        log.fatal(u'Ошибка загрузки параметра [%s.%s] из CFG файла <%s>' % (sSection, sParamName, sINIFileName))
+        log.fatal(u'Ошибка загрузки параметра [%s.%s] из INI файла <%s>' % (sSection, sParamName, sINIFileName))
     return None
 
 

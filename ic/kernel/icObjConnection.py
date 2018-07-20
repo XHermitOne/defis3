@@ -5,6 +5,8 @@
 Описание связей между объектами системы.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 class icConnection:
     """
@@ -52,7 +54,7 @@ class icConnection:
         @type passport: C{icObjectPassport}
         @param passport: Паспорт объекта.
         """
-        for sing in self.slotLst:
+        for sign in self.slotLst:
             if sign.passport == passport:
                 return True
                 
@@ -83,7 +85,7 @@ class icDirectConnection(icConnection):
     Класс прямого соединения минуя ядро системы.
     """
 
-    def init_connection():
+    def init_connection(self):
         """
         Инициализация соединения.
         """

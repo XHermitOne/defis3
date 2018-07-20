@@ -348,7 +348,7 @@ def getFormFromBuffer(formName, subsys, parent, flt=''):
         else:
             log.info('key_frm=%s already is activated; struct=<%s>' % (key_frm, str(bff[key_frm])))
     except:
-        log.info('\t[!] Form <%s> is not found in buffer.' % formName)
+        log.error('\t[!] Form <%s> is not found in buffer.' % formName)
     
     return None
 
@@ -432,9 +432,9 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
                 return frm
             return None
     except KeyError:
-        MsgBox(None, _('Form <%s> is not found in resource: <%s>') % (formName, fileRes))
+        ic_dlg.icMsgBox(u'ОШИБКА', _('Form <%s> is not found in resource: <%s>') % (formName, fileRes))
     except:
-        log.error(_('Create form error'))
+        log.fatal(_('Create form error'))
     
     return frm
 
@@ -800,7 +800,7 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
                 log.error(_('Designer not found'))
                 designer = None
         
-        if 'sizer' in constr.__init__.im_func.func_code.co_varnames:
+        if 'sizer' in constr.__init__.__code__.co_varnames:
             wxw = constr(parent, id, component, logType, evalSpace,
                          bCounter=bCounter, progressDlg=progressDlg, sizer=sizer)
         else:
@@ -834,7 +834,7 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
                 evalSpace['_root_obj'] = wxw
         return wxw
     except:
-        log.error('ERROR USER TYPE PARSE: <%s> mod=<%s>' % (component['type'], modl))
+        log.fatal('ERROR USER TYPE PARSE: <%s> mod=<%s>' % (component['type'], modl))
 
 
 def icResourceParser(parent, components, sizer=None, logType=0,
@@ -1088,7 +1088,7 @@ def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, cl
             return icBuildObject(parent, res, evalSpace=context, id=kwargs.get('id', None))
         return None
     except:
-        log.error('CREATE OBJECT ERROR: [%s . %s]' % (ResName_, ResExt_))
+        log.fatal('CREATE OBJECT ERROR: [%s . %s]' % (ResName_, ResExt_))
         return None
 
 

@@ -8,6 +8,8 @@
 from ic.utils import icprotector
 from . import icpermission
 
+__version__ = (0, 1, 1, 1)
+
 
 class icRole(object):
     """

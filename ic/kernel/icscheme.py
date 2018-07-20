@@ -10,6 +10,8 @@
 from ic.utils import ic_cache
 from . import ic_dot_use
 
+__version__ = (0, 1, 1, 1)
+
 
 class icDataDotUsePrototype(ic_dot_use.icMetaDotUsePrototype):
     """
@@ -88,7 +90,6 @@ class icDBSchemeDotUse(icDataDotUsePrototype):
             new_tab = tab.create()
             db_scheme_cache.add('DB_SCHEME', tab.passport(), new_tab)
             return new_tab
-        return tab
 
     def create(self, parent=None, *arg, **kwarg):
         """

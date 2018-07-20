@@ -216,7 +216,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                 #   последней модификации транслированного варианта.
                 fpcl = None
                 try:
-                    fpcl = open(filepcl)
+                    fpcl = open(filepcl, 'rb')
                     obj = pickle.load(fpcl)
                     fpcl.close()
                     #   Сохраняем объект в буфере

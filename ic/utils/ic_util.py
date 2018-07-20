@@ -657,7 +657,7 @@ def get_check_summ(Value_):
     check_sum = None
     try:
         val = str(Value_)
-        check_summ = hashlib.md5.new(val).hexdigest()
+        check_summ = hashlib.md5(val.encode()).hexdigest()
     except:
         log.fatal(u'Ошибка определения контрольной суммы')
     return check_summ

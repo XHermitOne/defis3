@@ -572,7 +572,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         except:
             dct = self.getTables()
             if dct:
-                self.session().query(mapper or dct.values()[0].getMapperClass()).get(1)
+                self.session().query(mapper or list(dct.values())[0].getMapperClass()).get(1)
 
     def getTables(self):
         """

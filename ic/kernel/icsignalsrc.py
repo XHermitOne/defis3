@@ -7,6 +7,8 @@
 
 from . import icsignal
 
+__version__ = (0, 1, 1, 1)
+
 
 class icSignalSrc:
     """

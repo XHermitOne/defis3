@@ -41,6 +41,7 @@ from ic.kernel import icexceptions
 from ic.kernel import icbaseuser
 from ic.utils import coderror
 from . import ic_user
+import ic.config
 
 _ = wx.GetTranslation
 
@@ -56,7 +57,7 @@ DEFAULT_USERS_RES_FILE = 'users.acc'
 SYS_ADMIN_NAME = 'admin'
 
 # Имя папки локальных настроек по умолчанию
-LOCALDIR_DEFAULT = '.defis/wrk/'
+LOCALDIR_DEFAULT = os.path.join(ic.config.PROFILE_PATH, 'wrk')
 
 # Типы ресурсов системы
 ACC_NONE = -1       # Тип ресурса не определен
@@ -97,7 +98,7 @@ SPC_IC_USER = {'type': 'User',
                'password': None,  # зашифрованный пароль пользователя
                'group': None,  # имя группы-родителя, у которого наследуются права доступа,
                'lock_time': [[], [], [], [], [], [], []],  # временной график  доступа к системе  за неделю
-               'local_dir': '.defis/wrk/',  # папка локальных настроек
+               'local_dir': LOCALDIR_DEFAULT,  # папка локальных настроек
                'main_win': None,   # Паспорт-идентификатор главного окна
                'menubars': [],     # Список меню.
                'on_login': None,   # скрипт, выполняемый после успешного логина
@@ -444,7 +445,7 @@ class icUserPrototype(icbaseuser.icRootUser):
 
             if self._checkLoginUser(UserName_):
                 if UserName_:
-                    err_txt = 'User %s registered in system yet' % self._UserName
+                    err_txt = 'Пользователь <%s> уже зарегистрирован в системе' % self._UserName
                     log.warning(err_txt)
                     raise icexceptions.LoginErrorException((coderror.IC_LOGIN_ERROR, err_txt))
         
@@ -484,18 +485,18 @@ class icUserPrototype(icbaseuser.icRootUser):
                     log.warning(err_txt)
                     raise icexceptions.LoginInvalidException((coderror.IC_LOGIN_ERROR, err_txt))
         except:
-            log.fatal(u'User registration Error <%s>' % UserName_)
+            log.fatal(u'Ошибка регистрации пользователя <%s>' % UserName_)
             raise
         
         ok = ['FAILED', 'OK'][int(sys_enter)]
-        log.info(u'Enter to system: %s ... %s' % (self._UserName, ok))
+        log.info(u'Вход в систему <%s> ... %s' % (self._UserName, ok))
         return sys_enter
         
     def _password_md5(self, Password_):
         """
         Получить из обычного пароля зашифрованный пароль.
         """
-        md5_password = hashlib.md5.new(Password_).hexdigest()
+        md5_password = hashlib.md5(Password_.encode()).hexdigest()
         return md5_password
        
     def Login(self, DefaultUserName_=SYS_ADMIN_NAME,
@@ -842,7 +843,7 @@ class icLoginManager(object):
             user_login = ic_dlg.icLoginDlg(None, u' Вход в систему',
                                            user_name, self.getRegUserList())
         else:
-            md5_password = hashlib.md5.new(DefaultPassword_).hexdigest()
+            md5_password = hashlib.md5(DefaultPassword_.encode()).hexdigest()
             # Автологин
             user_login = (DefaultUserName_, DefaultPassword_, md5_password)
 

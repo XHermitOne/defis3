@@ -1238,7 +1238,7 @@ class icMetaItemEngine(persistent.icMetaComponentInterface, object):
         from_metaobj = clipboard.fromClipboard(False)
         if issubclass(from_metaobj.__class__, icMetaItem):
             if from_metaobj._children:
-                ok = self.canMyChild(from_metaobj._children.values()[0])
+                ok = self.canMyChild(list(from_metaobj._children.values())[0])
                 return ok
             else:
                 return False

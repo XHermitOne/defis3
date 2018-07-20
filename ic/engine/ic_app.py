@@ -8,11 +8,12 @@
 # --- Подключение библиотек ---
 import locale
 import wx
-from ic.kernel import io_prnt
+
 from ic.utils import ic_file
 from ic.kernel import ickernel
+from ic.log import log
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 # Русская локаль
 RU_LOCALE = 'ru_RU.UTF-8'

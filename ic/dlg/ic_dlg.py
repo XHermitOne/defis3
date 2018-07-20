@@ -884,7 +884,7 @@ class icLoginDialog(wx.Dialog):
         """
         Получить введенный пароль md5.
         """
-        return hashlib.md5.new(self._password).hexdigest()
+        return hashlib.md5(self._password.encode()).hexdigest()
 
 
 _BUSY_INFO = None

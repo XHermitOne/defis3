@@ -119,17 +119,17 @@ class icWxFBPrjGenerator(object):
         prj_name = self.genPrjName()
         # Генерация самих форм
         content = u''
-        content += self.genInitPanel(self.resource.values()[0])
-        content += self.genInitDlg(self.resource.values()[0])
-        content += self.genEditPanel(self.resource.values()[0])
-        content += self.genEditDlg(self.resource.values()[0])
-        content += self.genViewPanel(self.resource.values()[0])
-        content += self.genViewDlg(self.resource.values()[0])
+        content += self.genInitPanel(list(self.resource.values())[0])
+        content += self.genInitDlg(list(self.resource.values())[0])
+        content += self.genEditPanel(list(self.resource.values())[0])
+        content += self.genEditDlg(list(self.resource.values())[0])
+        content += self.genViewPanel(list(self.resource.values())[0])
+        content += self.genViewDlg(list(self.resource.values())[0])
 
-        content += self.genChoicePanel(self.resource.values()[0])
-        content += self.genChoiceDlg(self.resource.values()[0])
+        content += self.genChoicePanel(list(self.resource.values())[0])
+        content += self.genChoiceDlg(list(self.resource.values())[0])
 
-        content += self.genBrowsePanel(self.resource.values()[0])
+        content += self.genBrowsePanel(list(self.resource.values())[0])
 
         txt = fb_form_template.FBP_PRJ_TEMPLATE % (prj_name, prj_name, content)
         self.fbp_txt = txt

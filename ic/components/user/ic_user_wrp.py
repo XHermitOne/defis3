@@ -19,7 +19,9 @@
     компонент (ic_can_contain = -1).
 """
 
+import os.path
 import wx
+
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -39,6 +41,9 @@ from ic.utils import icprotector
 from ic.engine import ic_user
 
 import ic.engine.icUser as icuser
+import ic.config
+
+USER_WRK_PATH = os.path.join(ic.config.PROFILE_PATH, 'wrk')
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType
@@ -59,7 +64,7 @@ ic_class_spc = {'type': 'User',
                 'password': None,  # зашифрованный пароль пользователя
                 'group': None,     # имя группы-родителя, у которой наследуются права доступа,
                 'lock_time': [[], [], [], [], [], [], []],  # временной график  доступа к системе  за неделю
-                'local_dir': '.defis/wrk/',  # папка локальных настроек
+                'local_dir': USER_WRK_PATH,  # папка локальных настроек
                 'main_win': None,  # Паспорт-идентификатор главного окна
                 'menubars': [],    # Список меню.
                 'on_login': None,   # скрипт, выполняемый после успешного логина
@@ -103,11 +108,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
+
 
 # Функции редактирования
-
-
 def getRolesChoiceList():
     """
     Функция получения списка ролей, определенных в проекте.
@@ -117,7 +121,7 @@ def getRolesChoiceList():
     # Сразу отфильтровать Pkl файлы
     role_files = [role_file for role_file in role_files if '_pkl.rol' not in role_file.lower()]
     # Получить только базовые имена файлов
-    role_files = [ic_file.SplitExt(ic_file.BaseName(role_file))[0] for role_file in role_files]
+    role_files = [os.path.splitext(os.path.basename(role_file))[0] for role_file in role_files]
     return role_files
 
 

@@ -6,16 +6,17 @@
 """
 
 
+import os
+import os.path
 import wx
 import datetime
 from ic.utils import util
-from ic.kernel import io_prnt
 from ic.bitmap import ic_bmp
-from ic.utils import ic_file
 from ic.utils import ic_uuid
 from ic.components import icwidget
 from STD.queries import filter_choicectrl as parentModule
 from ic.PropertyEditor import icDefInf
+from ic import config
 
 # Регистрация прав использования
 from ic.kernel import icpermission
@@ -27,7 +28,7 @@ prm = icpermission.icPermission(id='filter_edit', title='ObjFilterEdit',
 icpermission.registerPermission(prm)
 
 
-DEFAULT_FILTER_SAVE_FILENAME = ic_file.getHomePath()+'/.defis/filters.save'
+DEFAULT_FILTER_SAVE_FILENAME = os.path.join(config.PROFILE_PATH, 'filters.save')
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -82,8 +83,6 @@ __version__ = (0, 0, 1, 3)
 class icFilterChoiceCtrl(icwidget.icWidget, parentModule.icFilterChoiceCtrlProto):
     """
     Компонент выбора фильтра.
-    @type component_spc: C{dictionary}
-    @cvar component_spc: Specification.
     """
     security = ClassSecurityInfo()
 

@@ -381,9 +381,9 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
                     resource_data = res[className]
                 #   Если имя ресурса не указано, берется корневой элемент
                 elif bCopy:
-                    resource_data = copy.deepcopy(res.values()[0])
+                    resource_data = copy.deepcopy(list(res.values())[0])
                 else:
-                    resource_data = res.values()[0]
+                    resource_data = list(res.values())[0]
 
                 #   Организуем наследование классов данных
                 if ext == 'tab':

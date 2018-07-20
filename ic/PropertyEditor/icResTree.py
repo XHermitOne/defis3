@@ -40,6 +40,7 @@ from ic.log import log
 from ic.PropertyEditor.icProjectNotebook import icProjectNB
 from ic.PropertyEditor import icPanelEditor
 from . import ic_pyed
+import ic.config
 
 _ = wx.GetTranslation
 __version__ = (1, 1, 1, 1)
@@ -2875,7 +2876,7 @@ def editor_main(par=0, path=None):
     ic.utils.resource.IC_DOC_PATH = os.getcwd().replace('PropertyEditor', '')+'doc'
     # Путь к файлам ресурсов
     if not path:
-        path = os.path.join(ic_file.getHomePath(), '.defis', 'prj')
+        path = os.path.join(ic.config.PROFILE_PATH, 'prj')
 
     # ---------------------------------------------------------------------------
     evalSpace = icwidget.icResObjContext()

@@ -10,6 +10,8 @@ from . import icpermission
 from ic.utils import coderror
 from ic.utils import icprotector
 
+__version__ = (0, 1, 1, 1)
+
 
 class icBaseUser(object):
     """

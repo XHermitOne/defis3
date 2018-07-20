@@ -7,13 +7,14 @@
 """
 
 import time
-from . import io_prnt
+
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 #   Код доступа недопускающий переопределения
 CODE_NOBODY = 1234567
 CODE_NODEL = 1
-
-__version__ = (0, 0, 1, 3)
 
 
 class context_dict(dict):
@@ -319,7 +320,7 @@ class Context(BaseContext):
         """
         Возвращает признак специального ключа.
         """
-        if type(key) not in (str, unicode):
+        if not isinstance(key, str):
             return True
         if key and (key.startswith('_') or key in self['_access_keys']):
             return True
@@ -492,7 +493,7 @@ class Context(BaseContext):
         Служебные ключи игнорируются.
         """
         for key, val in context.items():
-            if type(key) in (str, unicode) and (key[0] == '_' or key in self.func_names):
+            if isinstance(key, str) and (key[0] == '_' or key in self.func_names):
                 pass
             else:
                 self[key] = val
@@ -504,7 +505,7 @@ def test(n):
     """
     init()
     t1 = time.clock()
-    for x in xrange(n):
+    for x in range(n):
         Context()
     t2 = time.clock()
     print(u'test1 time = <%s>' % (t2 - t1))
@@ -516,9 +517,9 @@ def test2(n):
            '_resultEval', '_resultEval1', '_resultEval2', '_resultEval3', '_resultEval4']
     t1 = time.clock()
     
-    for x in xrange(n):
+    for x in range(n):
         d = {}
-        for y in xrange(10):
+        for y in range(10):
             d[lst[y]] = y
             
     t2 = time.clock()
@@ -535,7 +536,7 @@ def test3():
     c2['fgh'] = 5
     c2['_resultEval'] = 'C2'
     t1 = time.clock()
-    for x in xrange(10000):
+    for x in range(10000):
         c1.update_context(c2)
 
     t2 = time.clock()

@@ -8,12 +8,13 @@
 import os
 import os.path
 import sys
-from ic.kernel import io_prnt
 
 from ic.utils import ic_file
 from ic.utils import ic_mode
 from . import icContext
 from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 
 GET_KERNEL_FUNC = compile(u'''

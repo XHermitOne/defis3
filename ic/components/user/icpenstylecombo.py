@@ -169,7 +169,7 @@ class icPenStyleComboBox(icwidget.icWidget, wx.adv.OwnerDrawnComboBox):
         r.Deflate(3, 5)
 
         # Определить стиль штриховки
-        penStyle = self.items[item].values()[0]
+        penStyle = list(self.items[item].values())[0]
             
         fgCol = wx.Colour(*tuple(self.foregroundColor))
         pen = wx.Pen(fgCol, 3, penStyle)
@@ -229,7 +229,7 @@ class icPenStyleComboBox(icwidget.icWidget, wx.adv.OwnerDrawnComboBox):
         """
         selected = self.GetSelection()
         if selected >= 0:
-            item_values = [item.values()[0] for item in self.items]
+            item_values = [list(item.values())[0] for item in self.items]
             return item_values[selected]
         return -1
 
@@ -238,7 +238,7 @@ class icPenStyleComboBox(icwidget.icWidget, wx.adv.OwnerDrawnComboBox):
         Выбрать в комбобоксе стиль.
         @param PenStyle_: Стиль линии, например wx.SOLID. 
         """
-        item_values = [item.values()[0] for item in self.items]
+        item_values = [list(item.values())[0] for item in self.items]
         find_idx = -1
         try:
             find_idx = item_values.index(PenStyle_)

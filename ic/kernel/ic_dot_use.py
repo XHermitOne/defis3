@@ -14,7 +14,7 @@ from ic.engine import ic_user
 from ic.components import icwidget
 from ic.log import log
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icMetaDotUsePrototype(object):
@@ -87,7 +87,8 @@ class icMetaDotUsePrototype(object):
         """
         Получение паспорта выбранного объекта.
         """
-        return (tuple(self._cur_passport_list), )
+        psp = (tuple(self._cur_passport_list), )
+        return psp
 
 
 class icMetaDataDotUse(icMetaDotUsePrototype):

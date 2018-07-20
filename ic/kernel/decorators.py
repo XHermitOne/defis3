@@ -3,6 +3,8 @@
 
 from . import icobject
 
+__version__ = (0, 1, 1, 1)
+
 
 def to_passport(func):
     """

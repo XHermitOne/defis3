@@ -1347,7 +1347,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
             """
             if self._dbf:
                 cur_record = self._get_current_record()
-                return cur_record.values()[int(FieldNum_)]
+                return list(cur_record.values())[int(FieldNum_)]
             return None
 
         def getFieldByName(self, FieldName_):

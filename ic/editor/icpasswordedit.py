@@ -165,8 +165,8 @@ class icPasswordEditDialog(wx.Dialog):
         """
         password1_txt = self._password_edit_panel._password_edit1.GetValue()
         password2_txt = self._password_edit_panel._password_edit2.GetValue()
-        password1_md5 = hashlib.md5.new(password1_txt).hexdigest()
-        password2_md5 = hashlib.md5.new(password2_txt).hexdigest()
+        password1_md5 = hashlib.md5(password1_txt.encode()).hexdigest()
+        password2_md5 = hashlib.md5(password2_txt.encode()).hexdigest()
         if password1_md5 != password2_md5:
             ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
                             u'Введенный пароль и подтверждение на совпадают. Введите еще раз.',
@@ -176,7 +176,7 @@ class icPasswordEditDialog(wx.Dialog):
         else:
             if not password1_txt.strip():
                 # Выбрана пустая строка
-                self._password_edit_panel._password_md5 = hashlib.md5.new('').hexdigest()
+                self._password_edit_panel._password_md5 = hashlib.md5(b'').hexdigest()
             else:
                 self._password_edit_panel._password_md5 = password1_md5
             self.EndModal(wx.ID_OK)

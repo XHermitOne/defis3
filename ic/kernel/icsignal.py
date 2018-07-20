@@ -8,6 +8,9 @@
 
 from ic.utils import ic_uuid
 
+__version__ = (0, 1, 1, 1)
+
+
 class icSignal:
     """
     Базовый класс сигнала.
@@ -96,7 +99,7 @@ class icRollBackTransactSignal(icSignal):
     pass
 
 
-class icCommitTransackSignal(icSignal):
+class icCommitTransactSignal(icSignal):
     """
     Сервисный сигнал - 'завершить транзакцию'.
     """

@@ -11,7 +11,6 @@ import wx
 from ic.utils import ic_uuid
 from . import icContext
 from . import icsignalsrc
-from . import io_prnt
 from . import icObjConnection
 from . import ickernelmode
 from .icaccesscontrol import ClassSecurityInfo
@@ -19,7 +18,7 @@ from ic.log import log
 from ic.utils import wxfunc
 
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
 def check_wx_dead_object(func):

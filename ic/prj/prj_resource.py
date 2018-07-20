@@ -854,7 +854,7 @@ class PrjMetaDataRes(PrjResource):
                 # Определить ресурс
                 res = self.getMyRes()
                 # Генерация имени файла по умолчанию
-                fbp_base_filename = res.values()[0]['name'].lower() + '_frm_proto.fbp'
+                fbp_base_filename = list(res.values())[0]['name'].lower() + '_frm_proto.fbp'
                 # Выбор имени файла проекта
                 fbp_dir = ic_dlg.icDirDlg(self.getPrjTreeCtrl(),
                                           u'Выбор файла папки хранения проекта wxFormBuilder для генерации',
