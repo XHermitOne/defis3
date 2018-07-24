@@ -10,7 +10,7 @@
 """
 
 import time
-import thread
+import _thread
 
 from ic.components import icwidget
 from ic.components import icResourceParser as prs
@@ -288,7 +288,7 @@ class icSCADAEngine(icwidget.icSimple):
         self.init_scan_objects()
 
         self.exit_run = False
-        thread.start_new(self.run, ())
+        _thread.start_new(self.run, ())
 
         # Ожидание запуска движка
         start_time = time.time()

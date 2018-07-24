@@ -23,7 +23,7 @@ DEFAULT_COMBO_SIZE = (200, -1)
 DEFAULT_EDIT_SIZE = (100, -1)
 
 
-class icCustomComboCtrl(wx.adv.ComboCtrl):
+class icCustomComboCtrl(wx.ComboCtrl):
     """
     Абстрактный класс контрола вызова расширенного редактора.
     """
@@ -32,7 +32,7 @@ class icCustomComboCtrl(wx.adv.ComboCtrl):
         """
         Конструктор.
         """
-        wx.adv.ComboCtrl.__init__(self, *args, **kwargs)
+        wx.ComboCtrl.__init__(self, *args, **kwargs)
         # Нарисовать кнопку выбора
         self._drawCustomButton()
         
@@ -51,7 +51,7 @@ class icCustomComboCtrl(wx.adv.ComboCtrl):
         dc.Clear()
 
         # draw the label onto the bitmap
-        label = "..."
+        label = '...'
         font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         dc.SetFont(font)
@@ -163,6 +163,7 @@ class icArgExtendedEdit(icCustomComboCtrl):
             result = self.ext_edit_func(self, self.data, self.default)
             if result is not None:
                 self.SetValue(str(result))
+
 
 # Constants
 DEFAULT_IMG_WIDTH = 16

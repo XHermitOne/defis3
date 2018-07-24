@@ -8,7 +8,7 @@
 import datetime
 from STD.dlg import dlg
 
-__version__ = (0, 0, 2, 3)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_DATE_FMT = '%Y.%m.%d'
 

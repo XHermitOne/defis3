@@ -699,8 +699,8 @@ def test(par=0):
     frame = wx.Frame(None, -1, u'icHeadCell Test')
     win = wx.Panel(frame, -1)
 
-    clr1 = graphicUtils.AdjustColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE), -50)
-    clr2 = graphicUtils.AdjustColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE), 50)
+    clr1 = graphicUtils.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), -50)
+    clr2 = graphicUtils.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
     
     cell = icHeadCell(win, -1, {'size': (100, 30),
                                 'backgroundType': 1,

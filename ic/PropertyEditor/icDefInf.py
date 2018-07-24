@@ -322,7 +322,7 @@ def ClearUserGroup():
     Удаляем пользовательские группы из словаря групп.
     """
     global GroupsInfo
-    lst = GroupsInfo.keys()
+    lst = list(GroupsInfo.keys())
     for id in lst:
         if id > _icMaxTypeId:
             GroupsInfo.pop(id)
@@ -346,8 +346,13 @@ def RegComponentGroup(name):
 
 
 def GetGroupIdByName(name):
-    """ Возвращает идентификатор группы по имени."""
-    return filter(lambda x: x[1] == name, GroupsInfo.items())[0][0]
+    """
+    Возвращает идентификатор группы по имени.
+    """
+    global GroupsInfo
+    group_info = [x for x in GroupsInfo.items() if x[1] == name]
+    return group_info[0][0]
+
 
 ObjectGroupsMenuStruct = []
 

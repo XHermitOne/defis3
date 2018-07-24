@@ -223,7 +223,11 @@ def InitObjectsInfo(bRefresh=False):
     subsys_lst = []
 
     for mod in modDct.values():
-        spc = copy.deepcopy(mod.ic_class_spc)
+        try:
+            spc = copy.deepcopy(mod.ic_class_spc)
+        except TypeError:
+            log.warning(u'Ошибка глубокого копирования спецификации <%s>' % mod.ic_class_spc.get('type', u''))
+            raise
         key = spc['type']
         img = ic.imglib.get_image_by_expr(mod.ic_class_pic)
         img2 = ic.imglib.get_image_by_expr(mod.ic_class_pic2)
@@ -2339,7 +2343,8 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 else:
                     # Выбор нужного ресурсного описания
                     dlg = wx.SingleChoiceDialog(self,
-                                                u'Выберите форму', u'Форма', _res.keys(), wx.OK | wx.CANCEL)
+                                                u'Выберите форму', u'Форма', list(_res.keys()),
+                                                wx.OK | wx.CANCEL)
                     try:
                         if dlg.ShowModal() == wx.ID_OK:
                             key = dlg.GetStringSelection()

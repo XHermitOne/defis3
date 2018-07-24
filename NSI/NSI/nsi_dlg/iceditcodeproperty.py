@@ -14,7 +14,7 @@ from ic.dlg import edit_masked_txt_dlg
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_ENCODE = 'utf-8'
 
@@ -24,7 +24,7 @@ class icEditCodeProperty(wx.propgrid.PyStringProperty):
     Редактор свойства кода справочника.
     """
 
-    def __init__(self, label, name=wx.propgrid.LABEL_AS_NAME, value=u''):
+    def __init__(self, label, name=wx.propgrid.PG_LABEL, value=u''):
         wx.propgrid.PyStringProperty.__init__(self, label, name, value)        
 
         # Для работы контроля ввода кода, необходим объект справочника
@@ -165,14 +165,14 @@ class icEditCodeProperty(wx.propgrid.PyStringProperty):
         If failed, return False or (False, None). If success, return tuple
             (True, newValue).
         """
-        value = unicode(text, DEFAULT_ENCODE)
+        value = str(text)   #, DEFAULT_ENCODE)
         return True, value
 
     def ValidateValue(self, value, validationInfo):
         """
         Функция контроля/валидации.
         """
-        if isinstance(value, str) or isinstance(value, unicode):
+        if isinstance(value, str):
             return True, value
         else:
             return False

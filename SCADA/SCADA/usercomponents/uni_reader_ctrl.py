@@ -13,7 +13,6 @@ from ic.log import log
 from ic.components import icwidget
 
 from ic.utils import util
-# from ic.utils import coderror
 from ic.PropertyEditor import icDefInf
 
 from ic.bitmap import ic_bmp

@@ -5,6 +5,8 @@ from ic.db import icsqlalchemy
 import sqlalchemy as sql_
 from ic.utils import ic_time
 
+__version__ = (0, 1, 1, 1)
+
 
 class SearchManager(object):
     def __init__(self, manager=None):
@@ -42,7 +44,6 @@ class SearchManager(object):
             q &= dq
         elif dq:
             q = dq
-        print(' *** date_query:', q, date_min, date_max)
         return q
     
     def get_search_query(self, search_dict):

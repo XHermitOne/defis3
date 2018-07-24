@@ -6,14 +6,15 @@
 """
 
 # --- Подключение библиотек ---
-import types
+import os
+import os.path
+
 from ic.log import log
-from ic.dlg import ic_dlg
-from ic.utils import ic_file
-from ic.kernel import io_prnt
 from ic.utils import util
 from ic.utils import ic_mode
 from ic.bitmap import icimg2py
+
+__version__ = (0, 1, 1, 1)
 
 # --- Константы ---
 # Шаблон файла библиотеки образов
@@ -27,7 +28,7 @@ _ImageLibraryFileTemplate = '''#!/usr/bin/env python
 # --- Imports ---
 from wx import ImageFromStream, BitmapFromImage
 from wx import EmptyIcon
-import cStringIO
+import io
 
 '''
 
@@ -41,7 +42,7 @@ def get%sBitmap():
 
 
 def get%sImage():
-    stream = cStringIO.StringIO(get%sData())
+    stream = io.BytesIO(get%sData())
     return ImageFromStream(stream)
 
 
@@ -52,7 +53,6 @@ def get%sIcon():
 
 
 %s = get%sBitmap()
-
 # --- END %s
 '''
 
@@ -121,8 +121,8 @@ class icImgLibResource:
         @param ImgName_: Имя добавляемого объекта.
         @param ImgData_: Сериализованные данные файла образа.
         """
-        if isinstance(ImgName_, unicode):
-            ImgName_ = ImgName_.encode()
+        # if isinstance(ImgName_, str):
+        #    ImgName_ = ImgName_.encode()
         
         # Заменить <-> в именах образа на <_>
         ImgName_ = ImgName_.replace('-', '_')
@@ -153,7 +153,7 @@ class icImgLibResource:
         Добавить образ в библиотеку образов из файла.
         @param ImgFileName_: Имя файла образа.
         """
-        img_name = ic_file.SplitExt(ic_file.BaseName(ImgFileName_))[0]
+        img_name = os.path.splitext(os.path.basename(ImgFileName_))[0]
         img_data = self.getImgData(ImgFileName_)
         if img_data:
             img_block = self.createImgBlock(img_name, img_data)
@@ -173,13 +173,13 @@ class icImgLibResource:
             
         self._img_lib_file = None
         try:
-            self._img_lib_file = open(sImgLibFileName, 'w')
+            self._img_lib_file = open(sImgLibFileName, 'wt')
             self._img_lib_file.write(self._img_lib_text)
             self._img_lib_file.close()
             self._img_lib_file = None
             return True
         except:
-            log.error(u'Ошибка сохранения файла библиотеки образов <%s>' % sImgLibFileName)
+            log.fatal(u'Ошибка сохранения файла библиотеки образов <%s>' % sImgLibFileName)
             if self._img_lib_file:
                 self._img_lib_file.close()
                 self._img_lib_file = None
@@ -191,8 +191,8 @@ class icImgLibResource:
         @param ImgName_: Имя объекта.
         @return: Возвращает кортеж позиции начала и конца или None, если блок не найден.
         """
-        if isinstance(ImgName_, unicode):
-            ImageName_ = ImgName_.encode()
+        # if isinstance(ImgName_, unicode):
+        #    ImageName_ = ImgName_.encode()
         try:
             begin = self._img_lib_text.find(BEGIN_IMG_SIGNATURE % ImgName_)
             end = self._img_lib_text.find(END_IMG_SIGNATURE % ImgName_)
@@ -203,7 +203,7 @@ class icImgLibResource:
                     end += 1
             return begin, end
         except:
-            log.error(u'Ошибка поиска блока образа <%s>.' % ImgName_)
+            log.fatal(u'Ошибка поиска блока образа <%s>.' % ImgName_)
             return None
           
     def delImgBlock(self, ImgName_):
@@ -212,8 +212,8 @@ class icImgLibResource:
         @param ImgName_: Имя объекта.
         @return: Возвращает результат выполнения операции True/False.
         """
-        if isinstance(ImgName_, unicode):
-            ImgName_ = ImgName_.encode()
+        # if isinstance(ImgName_, unicode):
+        #    ImgName_ = ImgName_.encode()
 
         begin_end = self.findImgBlock(ImgName_)
         if begin_end:
@@ -229,8 +229,8 @@ class icImgLibResource:
         @return: Возвращает строку данных образа или 
             None, если образ с таким именем не найден.
         """
-        if isinstance(ImgName_, unicode):
-            ImgName_ = ImgName_.encode()
+        # if isinstance(ImgName_, unicode):
+        #     ImgName_ = ImgName_.encode()
 
         module = util.icLoadSource('img_lib_module', self._img_lib_file_name)
         img_data_func_name = 'get%sData' % ImgName_
@@ -247,10 +247,10 @@ class icImgLibResource:
         @param NewImgName_: Новое имя объекта.
         @return: True/False.
         """
-        if isinstance(ImgName_, unicode):
-            ImgName_ = ImgName_.encode()
-        if isinstance(NewImgName_, unicode):
-            NewImgName_ = NewImgName_.encode()
+        # if isinstance(ImgName_, unicode):
+        #    ImgName_ = ImgName_.encode()
+        # if isinstance(NewImgName_, unicode):
+        #    NewImgName_ = NewImgName_.encode()
             
         img_data = self.findImgData(ImgName_)
         if img_data:

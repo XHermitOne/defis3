@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """
 Тестирование схемы данных.
 """
 
-import ic
 import unittest
 import datetime
 import time
 import wx
-import os, os.path
+import os
+import os.path
+
 from . import filter_py_funcs as pyf
+import ic
 
 
 class TestFilterFucs(unittest.TestCase):

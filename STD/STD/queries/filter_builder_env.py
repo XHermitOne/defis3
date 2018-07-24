@@ -45,16 +45,18 @@ REQUISITE_TYPE_NSI='NSI' - Справочник
 
 # Imports
 import wx
+import wx.adv
 
-from ic.kernel import io_prnt
 from . import filter_py_funcs as pyf
 from . import filter_ext_funcs as exf
 
 # Образы
 from ic.imglib import logic_img as img_lib
 
+from ic.log import log
+
 # Version
-__version__ = (0, 0, 3, 4)
+__version__ = (0, 1, 1, 1)
 
 
 # Constants
@@ -1084,7 +1086,7 @@ DEFAULT_ENV_DATE_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_equal,
         },
@@ -1097,7 +1099,7 @@ DEFAULT_ENV_DATE_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_not_equal,
         },
@@ -1110,7 +1112,7 @@ DEFAULT_ENV_DATE_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_great,
         },
@@ -1123,7 +1125,7 @@ DEFAULT_ENV_DATE_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_great_or_equal,
         },
@@ -1136,7 +1138,7 @@ DEFAULT_ENV_DATE_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_lesser,
         },
@@ -1149,7 +1151,7 @@ DEFAULT_ENV_DATE_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_lesser_or_equal,
         },
@@ -1162,12 +1164,12 @@ DEFAULT_ENV_DATE_FUNCS = {
             {'name': 'minimum',
              'description': u'Минимальное значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
             {'name': 'maximum',
              'description': u'Максимальное значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
             ],
         'img': img_lib.logic_between,
@@ -1181,12 +1183,12 @@ DEFAULT_ENV_DATE_FUNCS = {
             {'name': 'minimum',
              'description': u'Минимальное значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
             {'name': 'maximum',
              'description': u'Максимальное значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
             ],
         'img': img_lib.logic_not_between,
@@ -1280,7 +1282,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_equal,
     },
@@ -1293,7 +1295,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_not_equal,
     },
@@ -1306,7 +1308,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_great,
     },
@@ -1319,7 +1321,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_great_or_equal,
     },
@@ -1332,7 +1334,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_lesser,
     },
@@ -1345,7 +1347,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
             {'name': 'value',
              'description': u'Значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
         'img': img_lib.logic_lesser_or_equal,
     },
@@ -1358,12 +1360,12 @@ DEFAULT_ENV_DATETIME_FUNCS = {
             {'name': 'minimum',
              'description': u'Минимальное значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
             {'name': 'maximum',
              'description': u'Максимальное значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
         ],
         'img': img_lib.logic_between,
@@ -1377,12 +1379,12 @@ DEFAULT_ENV_DATETIME_FUNCS = {
             {'name': 'minimum',
              'description': u'Минимальное значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
             {'name': 'maximum',
              'description': u'Максимальное значение',
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
-             'ext_kwargs': {'component': {'style': wx.DP_DROPDOWN}}
+             'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
         ],
         'img': img_lib.logic_not_between,

@@ -51,8 +51,8 @@ class ToolGroupPanel(icobjectinterface.icObjectInterface):
         import ic.utils.graphicUtils as grph
         obj.SetState(1)
 
-        clr1 = wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE)
-        clr2 = grph.AdjustColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE), 50)
+        clr1 = wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE)
+        clr2 = grph.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
         bnd = grph.AdjustColour(clr1, -60)
         bnd2 = grph.AdjustColour(clr2, 50)
 
@@ -60,7 +60,7 @@ class ToolGroupPanel(icobjectinterface.icObjectInterface):
         obj.bgr2 = clr2
 
         if obj.imageState and wx.Platform == '__WXMSW__':
-            obj.imageState.SetBackgroundColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE))
+            obj.imageState.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE))
             
         obj.leftColor = bnd
         obj.topColor = wx.WHITE

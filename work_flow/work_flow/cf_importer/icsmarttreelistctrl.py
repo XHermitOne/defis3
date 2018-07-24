@@ -54,9 +54,9 @@ class icColTreeInfo(hypertreelist.TreeListColumnInfo):
             self._selected_image = -1
             self._shown = shown
             self._edit = edit
-            self._font = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
+            self._font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
             if colour is None:
-                self._colour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOWTEXT)
+                self._colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
         else:
             self._text = input._text
             self._width = input._width

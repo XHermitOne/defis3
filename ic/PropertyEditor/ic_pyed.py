@@ -176,8 +176,8 @@ class icPyEditor(stc.StyledTextCtrl):
         # Selection background
         self.SetSelBackground(1, '#66CCFF')
 
-        self.SetSelBackground(True, wx.SystemSettings_GetColour(wx.SYS_COLOUR_HIGHLIGHT))
-        self.SetSelForeground(True, wx.SystemSettings_GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
+        self.SetSelBackground(True, wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
+        self.SetSelForeground(True, wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
 
         # ---------- Внутренние атрибуты ------------------------
         self.finddata = wx.FindReplaceData()

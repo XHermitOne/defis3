@@ -1,18 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """
 Библиотека образов.
 """
-print('Load Image Library',str(__file__))
-#--- Imports ---
+
+# --- Imports ---
 from wx import ImageFromStream, BitmapFromImage
 from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
+import io
+# --- Image Library File ---
 
-#--- BEGIN enum
+
+# --- BEGIN enum
 def getenumData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x11IDAT8\x8d\xa5SMJ\x031\x18}\xc9\xf4\x00b\xaf1+\xcf\x90q!\xb8pUp\
 \x8e\xa0\xe2\xaa\xdbt"\xb8\x90Y\xea\x11&\x82Kq\xe7\\\xa3G\xb0]\x14\x84@\x02\
@@ -27,24 +29,29 @@ def getenumData():
 \xefg\x8a\x92\xbb\x06\x7f\xc5/\xdf\xe5\xc0\xbfQO\xec\x13\x00\x00\x00\x00IEND\
 \xaeB`\x82' 
 
+
 def getenumBitmap():
     return BitmapFromImage(getenumImage())
 
+
 def getenumImage():
-    stream = cStringIO.StringIO(getenumData())
+    stream = io.BytesIO(getenumData())
     return ImageFromStream(stream)
+
 
 def getenumIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getenumBitmap())
     return icon
 
-enum=getenumBitmap()
 
-#--- END enum
-#--- BEGIN db_sql
+enum = getenumBitmap()
+# --- END enum
+
+
+# --- BEGIN db_sql
 def getdb_sqlData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01lIDAT8\x8d\x9d\x93OJ\xc3@\x14\x87\xbf\x99tQ\xb0\x8a(\xb8p\xe1\xca\
 \xba\xd2\x8dt\xe1\x1d\xc4\x03\xd43\xe8\x15\xb4\xe3\x15\xf4\x0e=@{\x8c\xb4\n\
@@ -63,24 +70,29 @@ def getdb_sqlData():
 \xf5]7\xe6\xf3a\x01\x7fQ\x1e\xf0\x0eq\xdf\xd5\x8aX\xb0!\x81\x00\x00\x00\x00I\
 END\xaeB`\x82' 
 
+
 def getdb_sqlBitmap():
     return BitmapFromImage(getdb_sqlImage())
 
+
 def getdb_sqlImage():
-    stream = cStringIO.StringIO(getdb_sqlData())
+    stream = io.BytesIO(getdb_sqlData())
     return ImageFromStream(stream)
+
 
 def getdb_sqlIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getdb_sqlBitmap())
     return icon
 
-db_sql=getdb_sqlBitmap()
 
-#--- END db_sql
-#--- BEGIN level
+db_sql = getdb_sqlBitmap()
+# --- END db_sql
+
+
+# --- BEGIN level
 def getlevelData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x019IDAT8\x8d\xa5\x92\xbfJ\x03A\x10\xc6\xbf\xdd\xbd\x97\x11|\x05\xbb\
 \xa4U\xaeQ\xc4\xee A\xe4\x0el\xaf\xb8\xbd\x9b+\xb5\x0b"\xa2\xady\n\xed\xc4N\
@@ -97,25 +109,29 @@ def getlevelData():
 \x17\\\x1f\xd26\xf6\x03]`\xb9\x0b\xf7U\x03\x1e\x00\x00\x00\x00IEND\xaeB`\x82\
 ' 
 
+
 def getlevelBitmap():
     return BitmapFromImage(getlevelImage())
 
+
 def getlevelImage():
-    stream = cStringIO.StringIO(getlevelData())
+    stream = io.BytesIO(getlevelData())
     return ImageFromStream(stream)
+
 
 def getlevelIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlevelBitmap())
     return icon
 
-level=getlevelBitmap()
 
-#--- END level
+level = getlevelBitmap()
+# --- END level
 
-#--- BEGIN case_close
+
+# --- BEGIN case_close
 def getcase_closeData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd3IDAT8\x8d\x95Sm\x0e\x83 \x0cm\xd5\xe9\xa1v\xa1e\xd1\xdd\xc1+\xb8\
 \xc5x!OD\xc4\xc9\x82o\x7f\x94\xa1|\xe8\x9a4@\xe9{\xfd\xa0\x10\')\xf9\xb4\xae\
@@ -128,24 +144,29 @@ k\x10QPW?/xu\xea\xda\x1eR\xea\xcd\x1a%X/\xf7\xa0\x10\x98\x93\x94x\x01\x12f\
 \xbf\x10\xed\x16\xed\xfe\xc0"_\xf34\xa4s4\rPM\x00\x00\x00\x00IEND\xaeB`\x82'\
  
 
+
 def getcase_closeBitmap():
     return BitmapFromImage(getcase_closeImage())
 
+
 def getcase_closeImage():
-    stream = cStringIO.StringIO(getcase_closeData())
+    stream = io.BytesIO(getcase_closeData())
     return ImageFromStream(stream)
+
 
 def getcase_closeIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getcase_closeBitmap())
     return icon
 
-case_close=getcase_closeBitmap()
 
-#--- END case_close
-#--- BEGIN case_open
+case_close = getcase_closeBitmap()
+# --- END case_close
+
+
+# --- BEGIN case_open
 def getcase_openData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xbfIDAT8\x8d\x8dSQ\x0e\x83 \x0c}\x85\xddj\x17Z\x8cx\x07\xae\xa0\xc6\
 x!O\xe4\xdf\x12\xed>f\tT\xe8\xf6\x92\x06H\xfb^\x9b\xb6\x80\x9cG\xcdb\x8c\x0c\
@@ -157,24 +178,28 @@ x!O\xe4\xdf\x12\xed>f\tT\xe8\xf6\x92\x06H\xfb^\x9b\xb6\x80\x9cG\xcdb\x8c\x0c\
 \x13k\xe4\xdb_0\xbb\x05\xf5\x07.|\x00\xbf\xa8\xa2\xcd\x8e8`\xee\x00\x00\x00\
 \x00IEND\xaeB`\x82' 
 
+
 def getcase_openBitmap():
     return BitmapFromImage(getcase_openImage())
 
+
 def getcase_openImage():
-    stream = cStringIO.StringIO(getcase_openData())
+    stream = io.BytesIO(getcase_openData())
     return ImageFromStream(stream)
+
 
 def getcase_openIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getcase_openBitmap())
     return icon
 
-case_open=getcase_openBitmap()
+case_open = getcase_openBitmap()
+# --- END case_open
 
-#--- END case_open
-#--- BEGIN sprav
+
+# --- BEGIN sprav
 def getspravData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01)IDAT8\x8d\x95\x93=R\xc2@\x18\x86\x9fo\x93\xce\xb1\xb4\xb3\xb0\xa0\
 \xd0^;\xcb\x1c\x83#\x80\xde\x85\xb1\xe0\x00\x1c#7\xd0^\x0f\x80U\xb6\x0b0$\
@@ -190,26 +215,29 @@ def getspravData():
 \x8fd.\xb2\xc7\xf9\xfc\xd7\xf8]2tz\xa1\xdb(]\xf4ueo3\xfd\x07\xdf \x16\xc1\
 \xb5\x0f\xb6\t\x18\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getspravBitmap():
     return BitmapFromImage(getspravImage())
 
+
 def getspravImage():
-    stream = cStringIO.StringIO(getspravData())
+    stream = io.BytesIO(getspravData())
     return ImageFromStream(stream)
+
 
 def getspravIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getspravBitmap())
     return icon
 
-sprav=getspravBitmap()
 
-#--- END sprav
+sprav = getspravBitmap()
+# --- END sprav
 
 
-#--- BEGIN FolderClose
+# --- BEGIN FolderClose
 def getFolderCloseData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd3IDAT8\x8d\xad\x93=\x0e\xc20\x0cF_\xda\x8e\x0c\xec\xdc\x84\x1b\
 \xc0\xb9P"e\xe3\np\x15V\xa4\n\x16X\x99\x10K\x8b\n\x0b-\x98\xa1\xbf\xa9\xa0j\
@@ -222,24 +250,29 @@ def getFolderCloseData():
 \x87\xdah+\xea/\xbf\xf1\x17\xbd\x01\xb8v\xec\xb5\x01;_!\x00\x00\x00\x00IEND\
 \xaeB`\x82' 
 
+
 def getFolderCloseBitmap():
     return BitmapFromImage(getFolderCloseImage())
 
+
 def getFolderCloseImage():
-    stream = cStringIO.StringIO(getFolderCloseData())
+    stream = io.BytesIO(getFolderCloseData())
     return ImageFromStream(stream)
+
 
 def getFolderCloseIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getFolderCloseBitmap())
     return icon
 
-FolderClose=getFolderCloseBitmap()
 
-#--- END FolderClose
-#--- BEGIN FolderOpen
+FolderClose = getFolderCloseBitmap()
+# --- END FolderClose
+
+
+# --- BEGIN FolderOpen
 def getFolderOpenData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01(IDAT8\x8d\xa5\x93\xbfK\xc3@\x14\xc7\xbf\x97\xf4?\x924\xe8"\x04\xd4\
 \x8c\xc9_\xa2\x8eJ\xa0\x11B\x02\x1d\x1c\xdb\xff\xa2\xc9\xe6\xa9S\x17\x85@A\'\
@@ -255,24 +288,29 @@ t\x14EIDD\xb6\xe5\x90\xb1m\xbd\xb8<\x07\xf0\xfd\x1b\xd8X\xaf\xe3\xf5\xe5S\
 \xa8#\x1f\r\xe5|\xb0}\xa7\xb1\xb9^\xff`\x05n\xad\xa2T%\xae\x0fh\x00\x00\x00\
 \x00IEND\xaeB`\x82' 
 
+
 def getFolderOpenBitmap():
     return BitmapFromImage(getFolderOpenImage())
 
+
 def getFolderOpenImage():
-    stream = cStringIO.StringIO(getFolderOpenData())
+    stream = io.BytesIO(getFolderOpenData())
     return ImageFromStream(stream)
+
 
 def getFolderOpenIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getFolderOpenBitmap())
     return icon
 
-FolderOpen=getFolderOpenBitmap()
 
-#--- END FolderOpen
-#--- BEGIN DBCalendar
+FolderOpen = getFolderOpenBitmap()
+# --- END FolderOpen
+
+
+# --- BEGIN DBCalendar
 def getDBCalendarData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xfaIDAT8\x8d\xa5\x911N\xc3@\x10E\xdf\xda[\xb9N*\x0e\x80\x80\x92\x0b\
 \xf8\x1a\\\x81 .\x90b\xab\xd4\x14\x903p\x8c]\xf9\x18t QD\x91\xb0\xcb\x15R<\
@@ -286,24 +324,29 @@ def getDBCalendarData():
 \xe2\xa9\xba1\x06U\x94J\x03G\xca\xde\xf7t]\x07\x1c/+G\x86\x993\xce!\x90\x01~\
 \x00\xeb\xa2t\xb1Z\xe3\x8a\xae\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getDBCalendarBitmap():
     return BitmapFromImage(getDBCalendarImage())
 
+
 def getDBCalendarImage():
-    stream = cStringIO.StringIO(getDBCalendarData())
+    stream = io.BytesIO(getDBCalendarData())
     return ImageFromStream(stream)
+
 
 def getDBCalendarIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getDBCalendarBitmap())
     return icon
 
-DBCalendar=getDBCalendarBitmap()
 
-#--- END DBCalendar
-#--- BEGIN NSILevel
+DBCalendar = getDBCalendarBitmap()
+# --- END DBCalendar
+
+
+# --- BEGIN NSILevel
 def getNSILevelData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01oIDAT8\x8d}\x931K\x03A\x10\x85\xbf\xbd\xcb\x9f\x11\xec\xc4\xd2\xce\
 \x94\x9a\x84\x88"v\x82A\x82\x82\x9d\x88\xe4r\x1b\x0bA[\x11\xd1\xd6\xd4\x16\
@@ -321,24 +364,29 @@ $\xd45\xa5\xb4\xd6\x92\x9b]u\xc8\xb8`\xec\xea !\xf63\xef\xac\x94\xb2(\xcfW\
 on\x0e \xfdgr\xa6\x0e\x84\x183\xa4\xac\x18\xfe,1\x8e\x9b\xc2\x8c\xa4\x121L\
 \x9e\x9d\xab\x1f\xe08\xda\xabz\x8b!Q\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getNSILevelBitmap():
     return BitmapFromImage(getNSILevelImage())
 
+
 def getNSILevelImage():
-    stream = cStringIO.StringIO(getNSILevelData())
+    stream = io.BytesIO(getNSILevelData())
     return ImageFromStream(stream)
+
 
 def getNSILevelIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getNSILevelBitmap())
     return icon
 
-NSILevel=getNSILevelBitmap()
 
-#--- END NSILevel
-#--- BEGIN NSISprav
+NSILevel = getNSILevelBitmap()
+# --- END NSILevel
+
+
+# --- BEGIN NSISprav
 def getNSISpravData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x88IDAT8\x8d\x95\x93=H#Q\x10\xc7\x7fo\xdfbq\xb2\x9d\xe8\x81\xeduW\
 \x85\xa0H\xeat\x97\xc4\x1c\xb1\xbbJD\xb4\x11l\xfch\x8c\x95pq+\x91\x03+\x8b\
@@ -357,18 +405,21 @@ def getNSISpravData():
 \xe7\xae\\V[\xf1\xb1m\x80\xf0\xf8\x84\xdf@\xd0w\x06(~\x8d\xcb\x8b\xf0G\x1b\
 \xc9:\xea\x01t\x00\xb1\xc1\xcf\xa6Tp\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getNSISpravBitmap():
     return BitmapFromImage(getNSISpravImage())
 
+
 def getNSISpravImage():
-    stream = cStringIO.StringIO(getNSISpravData())
+    stream = io.BytesIO(getNSISpravData())
     return ImageFromStream(stream)
+
 
 def getNSISpravIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getNSISpravBitmap())
     return icon
 
-NSISprav=getNSISpravBitmap()
 
-#--- END NSISprav
+NSISprav = getNSISpravBitmap()
+# --- END NSISprav

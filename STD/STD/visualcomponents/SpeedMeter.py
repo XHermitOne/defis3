@@ -1161,7 +1161,7 @@ class SpeedMeter(BufferedWindow):
         """ Sets The Background Colour Outside The SpeedMeter Control."""
         
         if colour is None:
-            colour = wx.SystemSettings_GetColour(0)
+            colour = wx.SystemSettings.GetColour(0)
 
         self._speedbackground = colour
 

@@ -7,7 +7,6 @@
 
 import datetime
 import wx
-import wx.calendar
 
 from ic.dlg.msgbox import MsgBox
 from .icwidget import icWidget
@@ -17,7 +16,7 @@ from ic.log import log
 from ic.dlg import calendar_dlg_proto
 
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 # Строковый формат даты по умолчанию
 DEFAULT_DATE_FORMAT = '%Y.%m.%d'

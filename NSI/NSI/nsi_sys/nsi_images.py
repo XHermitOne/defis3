@@ -3,15 +3,17 @@
 """
 Библиотека образов.
 """
-print('Load Image Library',str(__file__))
-#--- Imports ---
+
+# --- Imports ---
 from wx import ImageFromStream, BitmapFromImage
 from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
-#--- BEGIN style_spravs
+import io
+# --- Image Library File ---
+
+
+# --- BEGIN style_spravs
 def getstyle_spravsData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xa8IDAT8\x8d\x8d\x90=oS1\x14\x86\x1f\xdf^7\xb9\x81BS\xc1\x1fH\t\x11\
 \x8a\x04\x0c\x88\t10 \xa6.\xa4KwD\x87\xae\xac\xfc\x07&*\xa6\xac\x15\xac \xd1\
@@ -32,24 +34,29 @@ Z\xad\x95\r\x1e\xc4y\xca\xfb\xe7n\xbe|\xbeE\xb6\xd7\xc39\x07\xc0\xb5\xb9\x1b\
 \xa589\xc1\x00g\xc0\xe1p-\x06\xae\x03?\x9a\xcd\xe6\xec^\x81\xdd\x89\xeeQ\xe5\
 \xf28\xe0\x0fn\\\x01\x0f\xbd"\x94\x9e\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getstyle_spravsBitmap():
     return BitmapFromImage(getstyle_spravsImage())
 
+
 def getstyle_spravsImage():
-    stream = cStringIO.StringIO(getstyle_spravsData())
+    stream = io.BytesIO(getstyle_spravsData())
     return ImageFromStream(stream)
+
 
 def getstyle_spravsIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getstyle_spravsBitmap())
     return icon
 
-style_spravs=getstyle_spravsBitmap()
 
-#--- END style_spravs
-#--- BEGIN style_sprav
+style_spravs = getstyle_spravsBitmap()
+# --- END style_spravs
+
+
+# --- BEGIN style_sprav
 def getstyle_spravData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x1eIDAT8\x8d\x95\x8fMHTQ\x18\x86\x9fs\xbc:\xe3\xa8\xd71.\xe5\x0f\
 \xa4\xd5\xa6.\t\xbaJ\x08\x890\xabM\x84Pn\x82\x16m\x8aZ$\xb5\x93D\xd4U\x10\
@@ -74,24 +81,29 @@ C\xa9\x94\xe2\xd5\xf88\x15\x89\x045\xd5\xd5\x94\'\x12h\xad\t\xc3\x90\xd9\xdf\
 \xe0\xe7\x07\xec\xa4$\x90\x002\x80Wh\xe8/vP0\x13\xff\xb1\xbb(\x00\x00\x00\
 \x00IEND\xaeB`\x82' 
 
+
 def getstyle_spravBitmap():
     return BitmapFromImage(getstyle_spravImage())
 
+
 def getstyle_spravImage():
-    stream = cStringIO.StringIO(getstyle_spravData())
+    stream = io.BytesIO(getstyle_spravData())
     return ImageFromStream(stream)
+
 
 def getstyle_spravIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getstyle_spravBitmap())
     return icon
 
-style_sprav=getstyle_spravBitmap()
 
-#--- END style_sprav
-#--- BEGIN style_nsi_level
+style_sprav = getstyle_spravBitmap()
+# --- END style_sprav
+
+
+# --- BEGIN style_nsi_level
 def getstyle_nsi_levelData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xedIDAT8\x8d\xc5\x92\xbdkTQ\x10\xc5\x7f\xef\xee\x8b\xb8\x1fn|B\x8ch\
 vC$\x92&\t\xc1\x88\x16\xe9\xb6\xb7\xb0Q\xb0\xb1U\xf4\x1f\xb0\xc8B*+\xebX\xa4\
@@ -115,25 +127,29 @@ w\xce\xc4\x99sFTY\xbcZ\xa5P\xbc\xd9\x7f\xf0"\x9d4%\xf3\x9e\x93\xd3\xd3\x00\
 \xfb\x80\x83@\xfc\xc7\x1d\xfe\n\x01\xb6\xff\xf2\xe6W|\x01\xf1\x9c&&\xd6\x7f\
 \xe0\x99\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getstyle_nsi_levelBitmap():
     return BitmapFromImage(getstyle_nsi_levelImage())
 
+
 def getstyle_nsi_levelImage():
-    stream = cStringIO.StringIO(getstyle_nsi_levelData())
+    stream = io.BytesIO(getstyle_nsi_levelData())
     return ImageFromStream(stream)
+
 
 def getstyle_nsi_levelIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getstyle_nsi_levelBitmap())
     return icon
 
-style_nsi_level=getstyle_nsi_levelBitmap()
 
-#--- END style_nsi_level
+style_nsi_level = getstyle_nsi_levelBitmap()
+# --- END style_nsi_level
 
-#--- BEGIN style_sprav_combo
+
+# --- BEGIN style_sprav_combo
 def getstyle_sprav_comboData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xe4IDAT8\x8d\x8d\x93\xb1kSQ\x14\xc6\x7fy\xc4\x08\xd1\xd0F\xc1j\x16\
 \xff\x02\x17[\x1c\xc4!\x8e\x0en\xd9%\x90hqp\xcb\xa0\x9d2\x19\\],\xe9\xe8\x12\
@@ -156,18 +172,21 @@ D~MDF\xae\xc8\xa9\x12\xd1\xe1\xf9\xe2>\x1d\xcc\xbd\x17w7\t\x10\x04\x01\xce\
 \x96\x85\x88\xa0\xb5&\x0c\x83\xd8\xce\xc0\r \x9e\xeb\x8aJ\x01\x89?\x841r\xc3\
 \xc4{\xe1\x89\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getstyle_sprav_comboBitmap():
     return BitmapFromImage(getstyle_sprav_comboImage())
 
+
 def getstyle_sprav_comboImage():
-    stream = cStringIO.StringIO(getstyle_sprav_comboData())
+    stream = io.BytesIO(getstyle_sprav_comboData())
     return ImageFromStream(stream)
+
 
 def getstyle_sprav_comboIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getstyle_sprav_comboBitmap())
     return icon
 
-style_sprav_combo=getstyle_sprav_comboBitmap()
 
-#--- END style_sprav_combo
+style_sprav_combo = getstyle_sprav_comboBitmap()
+# --- END style_sprav_combo

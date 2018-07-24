@@ -7,7 +7,6 @@
 
 # --- Imports ---
 import wx
-import wx.combo
 
 from . import icspravtreedatasource
 import wx.lib.agw.customtreectrl as CT
@@ -15,10 +14,10 @@ from ic.components import icwidget
 import wx.lib.platebtn as platebtn
 
 from ic.utils import ic_util
-from ic.kernel import io_prnt
+from ic.log import log
 
 # Version
-__version__ = (0, 0, 0, 5)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_ENCODE = 'utf-8'
 
@@ -68,7 +67,7 @@ DEFAULT_ENABLE_ITEM_COLOUR = wx.BLACK
 DEFAULT_DISABLE_ITEM_COLOUR = wx.Colour(128, 128, 128)
 
 
-class icSpravTreeComboPopup(wx.combo.ComboPopup):
+class icSpravTreeComboPopup(wx.ComboPopup):
     """
     Выпадающее дерево справочника.
     """
@@ -399,7 +398,7 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
 TREE_CHOICE_LIST_POPUP = 1
 
 
-class icSpravTreeComboCtrlPrototype(wx.combo.ComboCtrl):
+class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
     """
     Контрол выбора элемента справочника в виде выпадающего дерева справочника.
 
@@ -416,7 +415,7 @@ class icSpravTreeComboCtrlPrototype(wx.combo.ComboCtrl):
         self._popup_type = kwargs.pop('popup_type', 0)
         self._complex_load = kwargs.pop('complex_load', -1)
 
-        wx.combo.ComboCtrl.__init__(self, *args, **kwargs)
+        wx.ComboCtrl.__init__(self, *args, **kwargs)
         # Ввод текста итерпретируется как задание строки поиска
         self.Bind(wx.EVT_TEXT_ENTER, self.onTextEnter)
 
@@ -522,7 +521,7 @@ class icSpravTreeComboCtrlPrototype(wx.combo.ComboCtrl):
         self._combo_popup.clear()
 
     # Очистка выбора
-    clearSelect = wx.combo.ComboCtrl.Clear
+    clearSelect = wx.ComboCtrl.Clear
 
     def getCurDataItem(self):
         """
@@ -769,7 +768,7 @@ class icSpravTreeComboCtrlPrototype(wx.combo.ComboCtrl):
         self._oldCode = Code_
         value, pref = self._combo_popup.set_selected_sprav_code(self._data_source, Code_, AltCodeField_)
         if value or pref:
-            str_value = ic_util.toUnicode(value, DEFAULT_ENCODE) if type(value) in (str, unicode) else u''
+            str_value = value if isinstance(value, str) else u''
             return self.SetValue(str_value)
         else:
             return self.SetValue(u'')
@@ -813,8 +812,6 @@ class icSpravTreeComboCtrlPrototype(wx.combo.ComboCtrl):
         code = None
         if isinstance(Value_, str):
             code = Value_
-        elif isinstance(Value_, unicode):
-            code = Value_.encode(DEFAULT_ENCODE)
         elif isinstance(Value_, dict):
             code = Value_.get('cod', None)
         elif Value_ is None:

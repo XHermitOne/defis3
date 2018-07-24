@@ -5,13 +5,12 @@
 Диалоговое окно конструктора фильтров.
 """
 
-# Version
-__version__ = (0, 0, 0, 1)
-
 # Imports
 import wx
-from ic.kernel import io_prnt
+
 from ic.bitmap import ic_bmp
+from ic.log import log
+
 try:
     from . import filter_constructor
 except:
@@ -21,6 +20,10 @@ try:
     from . import filter_builder_env
 except:
     filter_builder_env = None
+
+# Version
+__version__ = (0, 1, 1, 1)
+
 
 def icFilterConstructorDlg(ParentWin_=None, DefaultFilterData_=None, Env_=None):
     """
@@ -40,8 +43,8 @@ def icFilterConstructorDlg(ParentWin_=None, DefaultFilterData_=None, Env_=None):
             Env_ = filter_builder_env.FILTER_ENVIRONMENT
 
     dlg = None
+    win_clear = False
     try:
-        win_clear = False
         if ParentWin_ is None:
             id_ = wx.NewId()
             ParentWin_ = wx.Frame(None, id_, '')
@@ -82,16 +85,9 @@ class icFilterConstructorDialog(wx.Dialog):
         try:
             _title = u'Конструктор фильтров'
             
-            pre = wx.PreDialog()
-            pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-            pre.Create(parent, -1, title=_title,
-                       style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
-                       pos=wx.DefaultPosition, size=wx.Size(900, 400))
-
-            # This next step is the most important, it turns this Python
-            # object into the real wrapper of the dialog (instead of pre)
-            # as far as the wxPython extension is concerned.
-            self.PostCreate(pre)
+            wx.Dialog.__init__(self, parent, -1, title=_title,
+                               style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+                               pos=wx.DefaultPosition, size=wx.Size(900, 400))
 
             # Определение иконки диалогового окна
             icon = None
@@ -101,7 +97,7 @@ class icFilterConstructorDialog(wx.Dialog):
             except:
                 icon_img = ic_bmp.getSysImg('imgFilter')
             if icon_img:
-                icon = wx.IconFromBitmap(icon_img)
+                icon = wx.Icon(icon_img)
             if icon:
                 self.SetIcon(icon)
 
@@ -209,6 +205,7 @@ def test(parent=None):
     print('TEST ... RESULT:', result)
     app.MainLoop()
     print('TEST ... STOP')
+
 
 if __name__ == '__main__':
     test()

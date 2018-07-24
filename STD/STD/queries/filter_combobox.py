@@ -11,12 +11,13 @@ import wx
 import uuid
 
 from ic.components import icwidget
-from ic.kernel import io_prnt
 from ic.utils import ic_res
 from ic.dlg import ic_dlg
+from ic.log import log
 
 from . import filter_constructor_dlg
 
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_ALL_LABEL = '<Все>'
 

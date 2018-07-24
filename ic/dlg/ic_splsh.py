@@ -42,7 +42,7 @@ def icStampedText(Win_, Text_, FontName_=DEFAULT_TEXT_FONT):
             text_font = wx.Font(MAX_FONT_SIZE, wx.DEFAULT,
                                 wx.NORMAL, wx.BOLD, False, FontName_)
         except:
-            txt_font_name = wx.SystemSettings_GetSystemFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+            txt_font_name = wx.SystemSettings.GetSystemFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
             text_font = wx.Font(MAX_FONT_SIZE, wx.DEFAULT,
                                 wx.NORMAL, wx.BOLD, False, txt_font_name)
 

@@ -1,16 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """
 Библиотека образов.
 """
-#--- Imports ---
+
+# --- Imports ---
 from wx import ImageFromStream, BitmapFromImage
 from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
-#--- BEGIN pageBlue
+import io
+
+# --- Image Library File ---
+
+
+# --- BEGIN pageBlue
 def getpageBlueData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x8cIDAT8\x8d\x8d\x93MH\x93q\x00\xc6\x7f\xffw\xafn\xaf\xef\xe6>\x9bn\
 \x13+E\xb3\\1\xb0<D\x91\x85\x97"\xf2\x96\tu\xe9\x12\xd8\xa1Kt\x12:\x05Bt\xec\
@@ -40,24 +45,29 @@ def getpageBlueData():
 \x8e\xbc\x92RJ4\xcd\x82\xa6Y\xf0W\x866\x1diK\xc1\xff\xa2\xfc;\xb25?\x01\xf0[\
 \xed8\xf6\xb8ib\x00\x00\x00\x00IEND\xaeB`\x82'
 
+
 def getpageBlueBitmap():
     return BitmapFromImage(getpageBlueImage())
 
+
 def getpageBlueImage():
-    stream = cStringIO.StringIO(getpageBlueData())
+    stream = io.BytesIO(getpageBlueData())
     return ImageFromStream(stream)
+
 
 def getpageBlueIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getpageBlueBitmap())
     return icon
 
-pageBlue=getpageBlueBitmap()
 
-#--- END pageBlue
-#--- BEGIN pageComment
+pageBlue = getpageBlueBitmap()
+# --- END pageBlue
+
+
+# --- BEGIN pageComment
 def getpageCommentData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02SIDAT8\x8d}\x93\xcdKTa\x14\xc6\x7f\xef\xbd\xd7\x99\xb9\xa3\x8db\xe3\
 \x98\x8eBE\x18J"I\x85I \x08-f\xd3\xb8\x89j\xd3NJ\xda\xb5\x8b\xc8M\xffC\xb6h\
@@ -84,24 +94,29 @@ Qq\x00\x97\x9e\xa6\xdc*\xa8\xdf\xaf\xd3T\xef &K)3\xd7\xf0\xb4\x1d\xcam\xac`\
 6\xf7\xe8\xefSWU5\xc7B\x03hn>Fo\xefM\x14%\xff\xb7\ni\x16Z6\xde\xd5u\x0e\x80?\
 5\xcf\x169\xde\xfc\x9a\x87\x00\x00\x00\x00IEND\xaeB`\x82'
     
+
 def getpageCommentBitmap():
     return BitmapFromImage(getpageCommentImage())
 
+
 def getpageCommentImage():
-    stream = cStringIO.StringIO(getpageCommentData())
+    stream = io.BytesIO(getpageCommentData())
     return ImageFromStream(stream)
+
 
 def getpageCommentIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getpageCommentBitmap())
     return icon
 
-pageComment=getpageCommentBitmap()
 
-#--- END pageComment
-#--- BEGIN pageDemo
+pageComment = getpageCommentBitmap()
+# --- END pageComment
+
+
+# --- BEGIN pageDemo
 def getpageDemoData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\xbcIDAT8\x8d\xa5\x93\xdfOS\x07\x18\x86\x9fs8\xc7jKi\xc9i\xa9"E\xe0p\
 j\xdb\xb4\xcaX\x86\t\x85dW\xf3?pYbL4\xfe\x19&\x18\xb6\x0b\x97\x98x\xe5\x05wK\
@@ -133,24 +148,29 @@ r\xec\x98\x8c\xa6\r\x12\x8fG9w\xfe\xb37\xdc\xbf\xadoo}\xe3\x94\xcb\xbbG\x01s\
 \xb3\xd3\x8em\xdb\x8c\xa6>\x7f\xa7\xe1}\x12>\xf6\x9d\xff\x07k|\x1d\xa9h\xbd\
 \x8c\xb9\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getpageDemoBitmap():
     return BitmapFromImage(getpageDemoImage())
 
+
 def getpageDemoImage():
-    stream = cStringIO.StringIO(getpageDemoData())
+    stream = io.BytesIO(getpageDemoData())
     return ImageFromStream(stream)
+
 
 def getpageDemoIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getpageDemoBitmap())
     return icon
 
-pageDemo=getpageDemoBitmap()
 
-#--- END pageDemo
-#--- BEGIN pageGreen
+pageDemo = getpageDemoBitmap()
+# --- END pageDemo
+
+
+# --- BEGIN pageGreen
 def getpageGreenData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\xa0IDAT8\x8d\x8d\xd3Il\x8cq\x18\xc7\xf1\xef\xff}\xa7\xb3\xf4}\xc7,\
 \xed\xb4\x1dcL2\xa3\xa5QK(jK$4\xa1$.\x0e\xd6D\xb8X\x8e\xc2\x85\xb8\x08n\x8e\
@@ -180,24 +200,29 @@ z/\xba\xd4\x88\x880\x0e\xc3\x8e\xd3\xee\xa0\xa8\xc8O\xb0\xac\x94P(HII1\x1e\
 \xe8\x9f\xc0\xffF\xf9w\xe5\xef\xf9\x06ks\xf9#Xx=\xa9\x00\x00\x00\x00IEND\xae\
 B`\x82' 
 
+
 def getpageGreenBitmap():
     return BitmapFromImage(getpageGreenImage())
 
+
 def getpageGreenImage():
-    stream = cStringIO.StringIO(getpageGreenData())
+    stream = io.BytesIO(getpageGreenData())
     return ImageFromStream(stream)
+
 
 def getpageGreenIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getpageGreenBitmap())
     return icon
 
-pageGreen=getpageGreenBitmap()
 
-#--- END pageGreen
-#--- BEGIN pageProp
+pageGreen = getpageGreenBitmap()
+# --- END pageGreen
+
+
+# --- BEGIN pageProp
 def getpagePropData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x03/IDAT8\x8du\x93\xdfOSw\x00\xc5?\xdf\xf6\xde\xde\xde\xf6\x96\xdbK\x7f\
 R7LhD7\xdd\x8c\x80\x0f\xf4a221 h\x1a\x7fd!1\x19<\xf9Bb\\\x14\x93\xbd\x81\xec\
@@ -231,24 +256,29 @@ x\x14l6A\xb1X\xc2\xb2t\xf6\xf6\xca$\x12+\x04\x02\x01R\xa9=\x0c\xc3\x00@\x19\
 o\xbe\xfeV&\x12\x7fP,n\xd3\xden\xd1\xd5u\x86p8L\xad\xcf/\xfe\xcd\xfe\r=\x97)\
 \x8a*a\x19N\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getpagePropBitmap():
     return BitmapFromImage(getpagePropImage())
 
+
 def getpagePropImage():
-    stream = cStringIO.StringIO(getpagePropData())
+    stream = io.BytesIO(getpagePropData())
     return ImageFromStream(stream)
+
 
 def getpagePropIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getpagePropBitmap())
     return icon
 
-pageProp=getpagePropBitmap()
 
-#--- END pageProp
-#--- BEGIN pageRed
+pageProp = getpagePropBitmap()
+# --- END pageProp
+
+
+# --- BEGIN pageRed
 def getpageRedData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x94IDAT8\x8d\xa5\xd3IH\x94q\x18\xc7\xf1\xef\xfb\xbe\xe3,\xbe\xb3\
 \xbc3:\xcc\xf8\xba6\x9aK\x89ZY)A\x0b\x04E]\x8a\xb6C\x10I\x1b\xd5\xc1S]\xbc\
@@ -278,24 +308,29 @@ Ya\xb0\xfb\xaa\x98\x1d\x1aD\x9b~\xcd\xcah\x10\xbb\x01LV\x0b\xe4r`4A&\xce\xd5\
 \x7f\x8d\xfc_\xdd\xc07\xc1\x03\xe3\xf6>:*\xe4\x00\x00\x00\x00IEND\xaeB`\x82'\
  
 
+
 def getpageRedBitmap():
     return BitmapFromImage(getpageRedImage())
 
+
 def getpageRedImage():
-    stream = cStringIO.StringIO(getpageRedData())
+    stream = io.BytesIO(getpageRedData())
     return ImageFromStream(stream)
+
 
 def getpageRedIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getpageRedBitmap())
     return icon
 
-pageRed=getpageRedBitmap()
 
-#--- END pageRed
-#--- BEGIN user
+pageRed = getpageRedBitmap()
+# --- END pageRed
+
+
+# --- BEGIN user
 def getuserData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x18IDAT8\x8d\xa5\x92\xbfm\x83`\x10\xc5\x7f`\x8f\x90\x86\xc2\x03|R\\\
 \x84%,\x87\x11\xe8\xcc\x04XV\xe2\x01\x90+$[\xa2\xc6\x92\x0bF\x08\x96\x97\xb0\
@@ -310,24 +345,29 @@ def getuserData():
 \xf9;\x95\x1c\\\t2 \\Zb\x93W\xe5c\xa1&.\xf1/\xf1\x031\x04_\x9bL1Z\xb0\x00\
 \x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getuserBitmap():
     return BitmapFromImage(getuserImage())
 
+
 def getuserImage():
-    stream = cStringIO.StringIO(getuserData())
+    stream = io.BytesIO(getuserData())
     return ImageFromStream(stream)
+
 
 def getuserIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getuserBitmap())
     return icon
 
-user=getuserBitmap()
 
-#--- END user
-#--- BEGIN tools
+user = getuserBitmap()
+# --- END user
+
+
+# --- BEGIN tools
 def gettoolsData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x05IDAT8\x8d\xa5R?h\x13Q\x18\xff\xbd;\x87+d\xb8A!\x19\x1c:8\xa4t\
 \xc8y.)dy$\xd0\xa6N\x1d:T\x07\xa5\x88\x84@!\x94\x80\x83(J\x07\xa9\xe7\xd6\
@@ -351,24 +391,29 @@ def gettoolsData():
 \xecY\xc6u=\xc3\xb4T\x12#\xcf\x83\x96J\xfeSa\xff\xed{\xba_\xed\x84\x89\x93\
 \xc0\xd3\xec/\xc8\xb3\xf0(=\x92<\x03\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def gettoolsBitmap():
     return BitmapFromImage(gettoolsImage())
 
+
 def gettoolsImage():
-    stream = cStringIO.StringIO(gettoolsData())
+    stream = io.BytesIO(gettoolsData())
     return ImageFromStream(stream)
+
 
 def gettoolsIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(gettoolsBitmap())
     return icon
 
-tools=gettoolsBitmap()
 
-#--- END tools
-#--- BEGIN file
+tools = gettoolsBitmap()
+# --- END tools
+
+
+# --- BEGIN file
 def getfileData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xa6IDAT8\x8d\xb5\x91\xb1\x0e\xc2 \x14E\x0f\xc5\xe1\x8d\xfd\x85\x0e&\
 v\xb3_\xa4\xf1;4.\xb4~bM\x1c:8tet\xc3\xa11)\xd6R\xd0x7\x08\xef\xdc\x03(\x95i\
@@ -378,24 +423,29 @@ v\xb3_\xa4\xf1;4.\xb4~bM\x1c:8tet\xc3\xa11)\xd6R\xd0x7\x08\xef\xdc\x03(\x95i\
 \x19\x84\x9a\xa3\rB\xed\x13@\x9e\xe7\xc1\xc3\xb3\x80\xfe\xdeS_\xea\xa4\xc1\
 \xee\xd6\x01\xf0\x04\xfb4WC=\x9d\xad\xca\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getfileBitmap():
     return BitmapFromImage(getfileImage())
 
+
 def getfileImage():
-    stream = cStringIO.StringIO(getfileData())
+    stream = io.BytesIO(getfileData())
     return ImageFromStream(stream)
+
 
 def getfileIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getfileBitmap())
     return icon
 
-file=getfileBitmap()
 
-#--- END file
-#--- BEGIN folder
+file = getfileBitmap()
+# --- END file
+
+
+# --- BEGIN folder
 def getfolderData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x010IDAT8\x8d\xa5\x931K\xc3@\x14\x80\xbf\xc4\x0e\xd7-\xd9\\\xbb\xe9f\
 \x05\x07\x05\x177\xdd$8;\x04l\xa9\xff\xc1\xc1\xff \xe8R\x14\xe9/\x10\x02.\
@@ -411,24 +461,29 @@ def getfolderData():
 \xb0\xf6\xcf\xfdL\xed\x9e\xd5\x1a})\xf4\'\xa3\xf7Gk\x06\x01\x94~\x15\x1b1\
 \xd2\xc5\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getfolderBitmap():
     return BitmapFromImage(getfolderImage())
 
+
 def getfolderImage():
-    stream = cStringIO.StringIO(getfolderData())
+    stream = io.BytesIO(getfolderData())
     return ImageFromStream(stream)
+
 
 def getfolderIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getfolderBitmap())
     return icon
 
-folder=getfolderBitmap()
 
-#--- END folder
-#--- BEGIN folderOpen
+folder = getfolderBitmap()
+# --- END folder
+
+
+# --- BEGIN folderOpen
 def getfolderOpenData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01LIDAT8\x8d\xa5\x93!O\xc3P\x14\x85\xbfB\xc5\x9b{u\x9b\xc4\xad\x16\x07\
 \t\x82:H&\xb0\xb3K\xd82\xfe\x03\x02\x8d%a!Y@\x8c?\xb0\xa4K\r\x12\xb9\x91 \
@@ -445,24 +500,29 @@ E\xe8t\xb2\x95s\x02\x887]@eO)*\x00fS\x12AkS\x18\x88$\xb8\xda\x90\x18C\x14\
 \xfe\xdcGB\x1f\xcb\xbd\x18\xa4\xaa\xed\xed\xdf\xbb\xaa\xf8\x9d\x8f\xe0\xd1\
 \xfa\x05\xf8\xcd\x88\xc8\x8a\xa8\xfe\xca\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getfolderOpenBitmap():
     return BitmapFromImage(getfolderOpenImage())
 
+
 def getfolderOpenImage():
-    stream = cStringIO.StringIO(getfolderOpenData())
+    stream = io.BytesIO(getfolderOpenData())
     return ImageFromStream(stream)
+
 
 def getfolderOpenIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getfolderOpenBitmap())
     return icon
 
-folderOpen=getfolderOpenBitmap()
 
-#--- END folderOpen
-#--- BEGIN property
+folderOpen = getfolderOpenBitmap()
+# --- END folderOpen
+
+
+# --- BEGIN property
 def getpropertyData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x80IDAT8\x8d\xa5\x93?K\x03A\x10\xc5\x7f\x97\xa4\x88\xa8\xb0\x01\x91\
 \xdb2`\xe1Yy\xa9\xbc\x94\x82Bb!\x9a\xd2*\xa43\x96Z\'\x07v9\xecR\x06\xbf\xc5\
@@ -481,24 +541,29 @@ g\xdec\xe6\xed\x8ead\xb2,c\x99\xa5\xd0@n^\xb2\xe3\xb9\xf14\xbe\xbal\x19\x0bu\
 \xf7n\xaec\xef\xe6:\x9e\xc6Q\x14\xa5\xce\xd38\xf1y\xdb\xb8\xc8.\xcc%X\xc4\
 \xbe\x00\x14\xfd\xa0\x08;1\xd8\x80\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getpropertyBitmap():
     return BitmapFromImage(getpropertyImage())
 
+
 def getpropertyImage():
-    stream = cStringIO.StringIO(getpropertyData())
+    stream = io.BytesIO(getpropertyData())
     return ImageFromStream(stream)
+
 
 def getpropertyIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getpropertyBitmap())
     return icon
 
-property=getpropertyBitmap()
 
-#--- END property
-#--- BEGIN protect
+property = getpropertyBitmap()
+# --- END property
+
+
+# --- BEGIN protect
 def getprotectData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xf9IDAT8\x8dcddbf\xa0\x04\xb0$\xc5\'\xfcWTU$ISmM=#\x9c\xd3\xd2\xd6\
 \xf2\x9fT\xd0\xd2\xd6\xf2\x9f\x91\x89\x99\x81\x91\x89\x99\x81\x05f\xd0\x87\
@@ -512,24 +577,28 @@ s\x96sQ\x0c\xfd\x9fy\x0e\x85O0\x16888\x18\xbek\x1cc\xe0\x9co\xc5\xf0=\xf1\
 \xfe\xf89Ck{+I\x9a\xee\xdf\xbe\x0fg\x03\x00,\x9d\x85\'v\xc2\x04"\x00\x00\x00\
 \x00IEND\xaeB`\x82' 
 
+
 def getprotectBitmap():
     return BitmapFromImage(getprotectImage())
 
+
 def getprotectImage():
-    stream = cStringIO.StringIO(getprotectData())
+    stream = io.BytesIO(getprotectData())
     return ImageFromStream(stream)
+
 
 def getprotectIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getprotectBitmap())
     return icon
 
-protect=getprotectBitmap()
+protect = getprotectBitmap()
+# --- END protect
 
-#--- END protect
-#--- BEGIN file_ub
+
+# --- BEGIN file_ub
 def getfile_ubData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xe5IDAT8\x8d\x8d\x93\xb1K\x1cA\x14\xc6\x7f{\x8e\xf0\x1660\x03'\xec\
 \x04$\xca\x15\xc1\x80\xc5\x15VV\xb1\xc8\xdf\x91&\xe4\xffJm\x9d&`:\xed\xb48\
@@ -552,24 +621,29 @@ def getfile_ubData():
 \xfa\xf2:\xc1O#\x04\xc1\x8f#\xd1\x0b!z\xeaq`29*\xfe6\xd1/pU\xd3e\xdf`s$\x00\
 \x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getfile_ubBitmap():
     return BitmapFromImage(getfile_ubImage())
 
+
 def getfile_ubImage():
-    stream = cStringIO.StringIO(getfile_ubData())
+    stream = io.BytesIO(getfile_ubData())
     return ImageFromStream(stream)
+
 
 def getfile_ubIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getfile_ubBitmap())
     return icon
 
-file_ub=getfile_ubBitmap()
 
-#--- END file_ub
-#--- BEGIN folder_ub
+file_ub = getfile_ubBitmap()
+# --- END file_ub
+
+
+# --- BEGIN folder_ub
 def getfolder_ubData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x0fIDAT8\x8d\xa5\x92\xc1K\x15Q\x14\xc6\x7f\xcfnp\x06\x0c\xe6\x82\
 \xc2\x0c\xb8\xf0\xf2\x94\x9aW.\xde\x03![\xb6,h\xd1\xb2E\xff]\xb4\xb2E\x0b\
@@ -593,24 +667,29 @@ Kw\x05\xb6H\xa7\x84F)O\xc1\x9fAP!\xbb\x97\x93\n\xa0\x02@\xdd\x086\xcb1\xda(\
 t8\xe7n@\xd7\xcb\x14+\x034<a\xf7\xa8\xc6\xceY\xdc\x83+\xe0\xfe\x9f\x81_\xeb;\
 \x18K\xea\xed"/\x82p\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getfolder_ubBitmap():
     return BitmapFromImage(getfolder_ubImage())
 
+
 def getfolder_ubImage():
-    stream = cStringIO.StringIO(getfolder_ubData())
+    stream = io.BytesIO(getfolder_ubData())
     return ImageFromStream(stream)
+
 
 def getfolder_ubIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getfolder_ubBitmap())
     return icon
 
-folder_ub=getfolder_ubBitmap()
 
-#--- END folder_ub
-#--- BEGIN protect_ub
+folder_ub = getfolder_ubBitmap()
+# --- END folder_ub
+
+
+# --- BEGIN protect_ub
 def getprotect_ubData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x024IDAT8\x8d}\x93\xb1j\x1bA\x10\x86\xbf\x93\xd70\x07\n\xec\x81\x02w!&\
 \x16*\x12\x07\\(\xe0"q%\x15y\x00\xbbs\x1a7!\x85\xdb\x94y\x80<\x80\xfc\x02\
@@ -636,25 +715,29 @@ mX\\\x98xR\x9f\xa2\x99\xa2\xb9b\rD\x89\xe5\xe9zD\\K\xa8\xaf%4\x1eo\x05A\xf9\
 \x9d\x8f\x8e>\xcc\xcf\xce\x1d\xfcV\xa2H\xb0\xb5\x84\xc4\nQb\x89k\x11\x8d\xc6\
 V\xf0?G\x7f\x00\xdb\x8c\xf8\xef\x1f\x16\xb6<\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getprotect_ubBitmap():
     return BitmapFromImage(getprotect_ubImage())
 
+
 def getprotect_ubImage():
-    stream = cStringIO.StringIO(getprotect_ubData())
+    stream = io.BytesIO(getprotect_ubData())
     return ImageFromStream(stream)
+
 
 def getprotect_ubIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getprotect_ubBitmap())
     return icon
 
-protect_ub=getprotect_ubBitmap()
 
-#--- END protect_ub
+protect_ub = getprotect_ubBitmap()
+# --- END protect_ub
 
-#--- BEGIN expXP
+
+# --- BEGIN expXP
 def getexpXPData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x85IDAT8\x8d\x8d\x93?K\x9cA\x10\xc6\x7f{\xae\xb0\x07)\xee\xc0"E\x1a\
 ?\x87\xd8\x99\xce@\xe0J\xed\xb4\xb5L\x8a\x80\x95\xa0\x8d\x1f\xc1\xd6.\xe9\
@@ -673,24 +756,29 @@ def getexpXPData():
 j\x05\xd2J\xd3r\xb1\xe7I\x1c\xbc\xdd\xe6p\x7f+\x84a\x9do\xee\x9f\x96\xbcP$\
 \xb1_\xd6\xf9\x1fR\x02\xbc\x08\re\x84@\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getexpXPBitmap():
     return BitmapFromImage(getexpXPImage())
 
+
 def getexpXPImage():
-    stream = cStringIO.StringIO(getexpXPData())
+    stream = io.BytesIO(getexpXPData())
     return ImageFromStream(stream)
+
 
 def getexpXPIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getexpXPBitmap())
     return icon
 
-expXP=getexpXPBitmap()
 
-#--- END expXP
-#--- BEGIN closeXP
+expXP = getexpXPBitmap()
+# --- END expXP
+
+
+# --- BEGIN closeXP
 def getcloseXPData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xa2IDAT8\x8du\x93?k\x15A\x14\xc5\x7f\xb3\x19\xe1.\xbc"\x01\xbf@\nK?\
 \x81\xad6\xcb\xb3p\xb1\xb2}\x95Iec\x111E\xf0)\x08\x96\xb1\xb3M\x99*\xac)\xa2\
@@ -710,24 +798,28 @@ Lm\x17\xe3\xba\x97+\xf0J\xff\xfa\xb0r\xb02\xd6J!\xc82T\x19\xde\x9c\xe5\x9a\
 \xff\xe1\x13\x96\xcb;\xc6\xa4q\xbe\xfa\xbe\x9dn\x08\xfcO\xa8*\xcb8\xce\x7f\
 \x00\x82\x9b\xce\x08\xb9>\x1a\xab\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getcloseXPBitmap():
     return BitmapFromImage(getcloseXPImage())
 
+
 def getcloseXPImage():
-    stream = cStringIO.StringIO(getcloseXPData())
+    stream = io.BytesIO(getcloseXPData())
     return ImageFromStream(stream)
+
 
 def getcloseXPIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getcloseXPBitmap())
     return icon
 
-closeXP=getcloseXPBitmap()
+closeXP = getcloseXPBitmap()
+# --- END closeXP
 
-#--- END closeXP
-#--- BEGIN minXP
+
+# --- BEGIN minXP
 def getminXPData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01_IDAT8\x8d}\x93\xbdJCA\x10\x85\xbfMV\x98@\x8a\x04,m\xf2\x1c\xc1N\xbb\
 \x08\x82e\xec|\nk\x0b_\xc2\xd6\xceRl\x8c\xa56\xc1\xde7\xb0\x11\xbcE`\x072\
@@ -745,47 +837,57 @@ def getminXPData():
 \x18\xaa0\x9b\x0e\x1d\xc0\x1f\x14\xac\xc1c\xf6\x84\x18A\x00\x00\x00\x00IEND\
 \xaeB`\x82' 
 
+
 def getminXPBitmap():
     return BitmapFromImage(getminXPImage())
 
+
 def getminXPImage():
-    stream = cStringIO.StringIO(getminXPData())
+    stream = io.BytesIO(getminXPData())
     return ImageFromStream(stream)
+
 
 def getminXPIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getminXPBitmap())
     return icon
 
-minXP=getminXPBitmap()
 
-#--- END minXP
-#--- BEGIN extEditor2
+minXP = getminXPBitmap()
+# --- END minXP
+
+
+# --- BEGIN extEditor2
 def getextEditor2Data():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x001IDAT8\x8dcddbf\xa0\x040Q\xa4{\xd4\x80ak@Rr\xe7\x7f\x03=\xb3\xff\xf8\
 \xd8x\r8wz-A62`\x1cM\xca\x94\x1b\x00\x00*T\x12\x9d\xeeU4\xd9\x00\x00\x00\x00\
 IEND\xaeB`\x82' 
 
+
 def getextEditor2Bitmap():
     return BitmapFromImage(getextEditor2Image())
 
+
 def getextEditor2Image():
-    stream = cStringIO.StringIO(getextEditor2Data())
+    stream = io.BytesIO(getextEditor2Data())
     return ImageFromStream(stream)
+
 
 def getextEditor2Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getextEditor2Bitmap())
     return icon
 
-extEditor2=getextEditor2Bitmap()
 
-#--- END extEditor2
-#--- BEGIN element
+extEditor2 = getextEditor2Bitmap()
+# --- END extEditor2
+
+
+# --- BEGIN element
 def getelementData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x1eIDAT8\x8d\xad\x92\xa1K\x03Q\x1c\xc7?\xbf\xed\xfe\x07\xab\xd5"b\
 \x90\x197\x10\x19\x86!\x065\x08\xc2\x82\xc1b\xb8$\x8bF\x83\x88\x06\xc3D\x18\
@@ -800,24 +902,29 @@ def getelementData():
 \xbf\xb44J\r\x9b\xd4\x18AG9\xad\xa51\xdf\x14\x16\x97\xd7"\x80~\xb7-\xc9~\x16\
 \xfdn[~\x00\xafsecy\xd6r\x86\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getelementBitmap():
     return BitmapFromImage(getelementImage())
 
+
 def getelementImage():
-    stream = cStringIO.StringIO(getelementData())
+    stream = io.BytesIO(getelementData())
     return ImageFromStream(stream)
+
 
 def getelementIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getelementBitmap())
     return icon
 
-element=getelementBitmap()
 
-#--- END element
-#--- BEGIN word
+element = getelementBitmap()
+# --- END element
+
+
+# --- BEGIN word
 def getwordData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x02\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x02\
 \x00\x00\x00\x90\x91h6\x00\x00\x00\x03sBIT\x08\x08\x08\xdb\xe1O\xe0\x00\x00\
 \x01\xbbIDAT(\x91u\x921\x88\x13A\x14\x86\xbf\x0b[L#\xccvZ\x08\xb7\xdd\xd9y\
 \x82\x85\x81+.e\xc0\xe2\xf6\xe0@RI\xaa#b\xa1he\x19\xb0QK\xad\xd6\xce\xb3\x10\
@@ -839,24 +946,29 @@ of\xde\xfb\xdf7\xef\xbd\x9d\xe7\xefk\x00\x10 \t\xc0#<\xd2\xfa\xfaN\xf2@-\x17\
 \x10\xf0j\xb1<\xf0\x07z&\x16\xb18\xb4\xd0\xbc\x00\x00\x00\x00IEND\xaeB`\x82'\
  
 
+
 def getwordBitmap():
     return BitmapFromImage(getwordImage())
 
+
 def getwordImage():
-    stream = cStringIO.StringIO(getwordData())
+    stream = io.BytesIO(getwordData())
     return ImageFromStream(stream)
+
 
 def getwordIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getwordBitmap())
     return icon
 
-word=getwordBitmap()
 
-#--- END word
-#--- BEGIN excel
+word = getwordBitmap()
+# --- END word
+
+
+# --- BEGIN excel
 def getexcelData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x02\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x02\
 \x00\x00\x00\x90\x91h6\x00\x00\x00\x03sBIT\x08\x08\x08\xdb\xe1O\xe0\x00\x00\
 \x01\x96IDAT(\x91}\x92-\x88\x1bQ\x14\x85\xbf\x0e#R\xf7\xc65n\xc6u\x02\x85\
 \xa6\xbebm\xdc\xa6n\xa3\xca\xd4,\xac)TF\x06\xd6l\xab\x12*\x96\x91\xe9B\x03\
@@ -876,24 +988,28 @@ def getexcelData():
 \xbf\x13?b\x7f,\xb6\xe1\x94,\xb4\x07\x12\x03\xd5\xed6\xe0<\xc4{\xdbFZ\xc1\
 \x9f\x13\xfd\x0c\xc3\x1f}C\x88\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getexcelBitmap():
     return BitmapFromImage(getexcelImage())
 
+
 def getexcelImage():
-    stream = cStringIO.StringIO(getexcelData())
+    stream = io.BytesIO(getexcelData())
     return ImageFromStream(stream)
+
 
 def getexcelIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getexcelBitmap())
     return icon
 
-excel=getexcelBitmap()
+excel = getexcelBitmap()
+# --- END excel
 
-#--- END excel
-#--- BEGIN first
+
+# --- BEGIN first
 def getfirstData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01tIDAT8\x8d\xb5\x931K\x1cA\x14\xc7\x7f\xb3kq\x07)n\x0b?\xc0vi\x04W,\
 \xbc"\x85G>\x81\xfa\x01\x14K\xbfB\x8a@@\xd2X\x1c*)\x02\t\x88B\n=\xc4\xc2\x14\
@@ -911,24 +1027,29 @@ def getfirstData():
 \xbd\xb5s\x92\xfbd!\xf1\x8f9\x13\x84\xa3#\xfc\x0f\xcf\xf3\x99\xfe\x85\xdf3M\
 \xe2!G\xb9"\xc3\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getfirstBitmap():
     return BitmapFromImage(getfirstImage())
 
+
 def getfirstImage():
-    stream = cStringIO.StringIO(getfirstData())
+    stream = io.BytesIO(getfirstData())
     return ImageFromStream(stream)
+
 
 def getfirstIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getfirstBitmap())
     return icon
 
-first=getfirstBitmap()
 
-#--- END first
-#--- BEGIN last
+first = getfirstBitmap()
+# --- END first
+
+
+# --- BEGIN last
 def getlastData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01JIDAT8\x8d\xcd\xd3!HCA\x1c\xc7\xf1\xef\xdb^\xd0\xf6\xd6\x8c\xbe*\x18\
 \x86\x18\x0c\x06\x1f2\xb0\x89\x98\xd4&\x96\xe1\xd2\x92\x08\xa6%\x83\xb0\xb18\
@@ -945,24 +1066,29 @@ L\xc3\x81\xa8\xd9\xa0\x1b"\xf2\x10q\x87,\x88\x18.X\x0c\xc2\xfd\xdb\xae\x9da\
 T\xa5\xb0\x93\xf3F\xb9?,\xa0X\xb9\xa4\xb0\xbe\xe8\x8d\xe3\xde\xff\xfbL\x7f\
 \xado\xc4\x0f\xd4 W\x94\x83\xf9\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlastBitmap():
     return BitmapFromImage(getlastImage())
 
+
 def getlastImage():
-    stream = cStringIO.StringIO(getlastData())
+    stream = io.BytesIO(getlastData())
     return ImageFromStream(stream)
+
 
 def getlastIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlastBitmap())
     return icon
 
-last=getlastBitmap()
 
-#--- END last
-#--- BEGIN next
+last = getlastBitmap()
+# --- END last
+
+
+# --- BEGIN next
 def getnextData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01 IDAT8\x8d\xcd\x93\xafKCQ\x14\xc7?\xef\xcd0\xdb]3\xfa\xfe\x00\xc3\
 \x10\x83\xc12DX\x13\xb1i\x13\x9bKK"\x98\x96\x0c\xc2\xc6\xe2\x10\xc3\xd8@\xd0\
@@ -977,24 +1103,28 @@ l\xf0\x07\x06yA\xe4"Kb\xb8\x7f\xc2=m\xa7]\xc338}\xcf\x89+~\xe1\x84\x03\xe7|\
 \x17\xe7\xdc\x1d\xe4\xa8\xd9\xb9\xa4\xb1\xb9\x92\xdb\x0c\x10\xfd\xefg\xfa\
 \x8d\xde\x01\xac.z\x02\x11>\xfa\xde\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getnextBitmap():
     return BitmapFromImage(getnextImage())
 
+
 def getnextImage():
-    stream = cStringIO.StringIO(getnextData())
+    stream = io.BytesIO(getnextData())
     return ImageFromStream(stream)
+
 
 def getnextIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnextBitmap())
     return icon
 
-next=getnextBitmap()
+next = getnextBitmap()
+# --- END next
 
-#--- END next
-#--- BEGIN newdoc
+
+# --- BEGIN newdoc
 def getnewdocData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xf0IDAT8\x8d\xa5\x93\xb1n\xc20\x10\x86?\x07\x1e\x00\x066^\x02\xd6nl\
 \xa0.}\x00&\xbaed\x8d\x18\xf2\x0e\x19\x99\xaa\n\x89\xa1\x13tG\x08x\x91J\x8c\
@@ -1008,24 +1138,28 @@ def getnewdocData():
 \xc9\xe7\xd3\xc5\x00\xea\xd5\xef|\x05\xaa\xd5m\x02\x86\x96e\xad\x00\x00\x00\
 \x00IEND\xaeB`\x82" 
 
+
 def getnewdocBitmap():
     return BitmapFromImage(getnewdocImage())
 
+
 def getnewdocImage():
-    stream = cStringIO.StringIO(getnewdocData())
+    stream = io.BytesIO(getnewdocData())
     return ImageFromStream(stream)
+
 
 def getnewdocIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnewdocBitmap())
     return icon
 
-newdoc=getnewdocBitmap()
+newdoc = getnewdocBitmap()
+# --- END newdoc
 
-#--- END newdoc
-#--- BEGIN prev
+
+# --- BEGIN prev
 def getprevData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x017IDAT8\x8d\xb5\x931K\x03A\x14\x84\xbfK\xd2\xd8\xe5~\xc2v6B.\x95\x11,\
 \x04\x7f\x82?B\xb0\xb7\x8a\xd8\x88\x9d\x85h\xad \n\x16\x9a\xc2" \x86\x84+B\
@@ -1041,24 +1175,28 @@ m\xaex\x85\xf5\x1d\x9a5=M7\x94!\x95\x9e\xbaN\xef\x9a.X\r\xdc,\xce\xc4\x08\
 \xf3\xe0\x7f?\xd3o\xf0\t\xc5\x9f\x90\xd9RM\xfa\xc4\x00\x00\x00\x00IEND\xaeB`\
 \x82' 
 
+
 def getprevBitmap():
     return BitmapFromImage(getprevImage())
 
+
 def getprevImage():
-    stream = cStringIO.StringIO(getprevData())
+    stream = io.BytesIO(getprevData())
     return ImageFromStream(stream)
+
 
 def getprevIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getprevBitmap())
     return icon
 
-prev=getprevBitmap()
+prev = getprevBitmap()
+# --- END prev
 
-#--- END prev
-#--- BEGIN printdoc
+
+# --- BEGIN printdoc
 def getprintdocData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xdbIDAT8\x8d\xa5\x93?\x8b\x13a\x10\xc6\x7f\x9b\xa4\xc8u\x1bH\x91\
 \x80\xcdv\xb7\x88\xa0\x87MT\x10\x84\x14\x9eVW\x08\x96bi\xebG\xf0\x1b\\\xb0\
@@ -1081,24 +1219,29 @@ j8\x03U\xd0}\xb83_\xb5\nbJ\xb4\x1e\xe7\x00\xd5J\x95L\x15\x97e\x8c\xfa\xa3\
 \x03\x14D\xc2\x89Ml1\xe6\xb5\xf6&O\x1f\xdf\x0b\x82\xf3\x9e\xf3_4\x86\x0c\xb0\
 \x8e\xcdq\x1f\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getprintdocBitmap():
     return BitmapFromImage(getprintdocImage())
 
+
 def getprintdocImage():
-    stream = cStringIO.StringIO(getprintdocData())
+    stream = io.BytesIO(getprintdocData())
     return ImageFromStream(stream)
+
 
 def getprintdocIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getprintdocBitmap())
     return icon
 
-printdoc=getprintdocBitmap()
 
-#--- END printdoc
-#--- BEGIN savedoc
+printdoc = getprintdocBitmap()
+# --- END printdoc
+
+
+# --- BEGIN savedoc
 def getsavedocData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01oIDAT8\x8d\xa5\x93\xadO\x03A\x10\xc5\x7fw\xad8\\\xcf\xd5VV \xea\xb0=\
 \x87\xa4\x95$\x08\x82#\xfc\x07\xc8*\x92\x12\x08\x04A\x82\x83\xe0\xaa A\xd5 \
@@ -1116,24 +1259,29 @@ PY\x82{\x00\xf1*<30x\xec\xd3j'<\xdc>C\x04\xfd\x9b>f\xe6\x98\x0b\xed^\xd6\xa0\
 \x7f.&\xaf)b\xa4$\x0f\x95\xbc\xda\xb6\xa0\xfeb?\xd4\xfb\xdbE\x10l\xfa\x9d\
 \x7f\x00\xad\x8a\xef\\`\xd7\xd6\xbd\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getsavedocBitmap():
     return BitmapFromImage(getsavedocImage())
 
+
 def getsavedocImage():
-    stream = cStringIO.StringIO(getsavedocData())
+    stream = io.BytesIO(getsavedocData())
     return ImageFromStream(stream)
+
 
 def getsavedocIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getsavedocBitmap())
     return icon
 
-savedoc=getsavedocBitmap()
 
-#--- END savedoc
-#--- BEGIN search
+savedoc = getsavedocBitmap()
+# --- END savedoc
+
+
+# --- BEGIN search
 def getsearchData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xabIDAT8\x8d\xa5\x931h\x14A\x14\x86\xbf\xdd\xbb\xe2\xec\xe6@\xe1\
 \x02\x16\x99.\xd7\xb9\xdb\x1d\xda\xb8\xdd\x05\xb1HLg\x17;K\xdb\xc5\xe2\xb8R\
@@ -1154,24 +1302,28 @@ n\xce\xf7\xb2\xb1*\x88\xbf\xf6\xffD\x08\xd7_T\xa5)T\x13\xc9\xdb\\\xb1\xbd\
 \x06\x83\x03E{\xabO\xe9s\xfc\xab\xdf|\x98\xb8\xe8\x81t\xfdw#\xe7\xf95~\x01\
 \xf5g\xc1\xa5|\x16k\xfe\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getsearchBitmap():
     return BitmapFromImage(getsearchImage())
 
+
 def getsearchImage():
-    stream = cStringIO.StringIO(getsearchData())
+    stream = io.BytesIO(getsearchData())
     return ImageFromStream(stream)
+
 
 def getsearchIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getsearchBitmap())
     return icon
 
-search=getsearchBitmap()
+search = getsearchBitmap()
+# --- END search
 
-#--- END search
-#--- BEGIN help
+
+# --- BEGIN help
 def gethelpData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02+IDAT8\x8d\x95\x93\xc1K\x15A\x1c\xc7?\xfb\\a\x16<\xec\x92\x1d\x1e$\
 \xe9%z\x90\xa0\x89\x97\'\x1e\x0c\x0c4\xf1P\xe0\xc5w\xb3\xc0C\xfe\'\xdd*\xa8\
@@ -1196,24 +1348,29 @@ W\xcd\xab\x8f)\xca\xffC\x8d\x9b\x0f\x1f\xa0\x1c\xa9\xf3\xe2\x13\x81v\x88:\
 \x07\xd5JJ\xad6\xe5]\n\x00XXX*\xd2&$\r\x10\x83\xf3\xdb\x15Q\xe9\x96s\x1f\xe9\
 \x9f\x80\xff\xa9_B\xf5\x11\xb6\xe2@$\xc8\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def gethelpBitmap():
     return BitmapFromImage(gethelpImage())
 
+
 def gethelpImage():
-    stream = cStringIO.StringIO(gethelpData())
+    stream = io.BytesIO(gethelpData())
     return ImageFromStream(stream)
+
 
 def gethelpIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(gethelpBitmap())
     return icon
 
-help=gethelpBitmap()
 
-#--- END help
-#--- BEGIN exit16
+help = gethelpBitmap()
+# --- END help
+
+
+# --- BEGIN exit16
 def getexit16Data():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x035IDAT8\x8dm\x93]h\x9bu\x14\xc6\x7fy\xdf7o>\xdb\xd8nmb\x92eI\xba\xfa1\
 7\xd9\x8aP\xdb\x0e)\x1b\xd6\x0f\x18hg\x98\xbaYW\xe6.\x94!\x08\xc2\xaev\xa3\
@@ -1249,24 +1406,29 @@ T\x93\x15[*\x81T(\xd4D\xc7\xa2\xf0\xcb8\xba\xb1\xef\xc9%\x93\xa8\x15\x8d9\
 \xf5|x:U\xba\xba\xf1\xcd\xf9\xd0\xbd\xdc\x7f\x00\x91\xc2W\xc4\xf6WQ\xa9\x00\
 \x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getexit16Bitmap():
     return BitmapFromImage(getexit16Image())
 
+
 def getexit16Image():
-    stream = cStringIO.StringIO(getexit16Data())
+    stream = io.BytesIO(getexit16Data())
     return ImageFromStream(stream)
+
 
 def getexit16Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getexit16Bitmap())
     return icon
 
-exit16=getexit16Bitmap()
 
-#--- END exit16
-#--- BEGIN contexthelp16
+exit16 = getexit16Bitmap()
+# --- END exit16
+
+
+# --- BEGIN contexthelp16
 def getcontexthelp16Data():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\xedIDAT8\x8d\x8d\x92[H\xd3a\x18\xc6\x9f\xff\xe6\xb6\xd6\xb6<ls\x95\
 \xb9\xf24g\x07s\xac\xa6\x98\xa4\xa9t M\xb3\x06a"B\xa5\t\xd9\x81\x04#\x0b\xaf\
@@ -1299,24 +1461,29 @@ c`\x02V\x08\x97\x15\xc1Yvc\x9e\xf9\x89\x1e\x8b\xadv\xc03\xdb\xb5\xba\xe1\xfb\
 \xb5ZIUU\xd5\x9b\xbfK\xfc_\x88\xc1`xI\xd3t\xbc^\xaf\x0f\x93\xcb\xe57\xf5z\
 \xbd\xf5\x17\xd4`0\xfb<E\xf7\x83\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getcontexthelp16Bitmap():
     return BitmapFromImage(getcontexthelp16Image())
 
+
 def getcontexthelp16Image():
-    stream = cStringIO.StringIO(getcontexthelp16Data())
+    stream = io.BytesIO(getcontexthelp16Data())
     return ImageFromStream(stream)
+
 
 def getcontexthelp16Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getcontexthelp16Bitmap())
     return icon
 
-contexthelp16=getcontexthelp16Bitmap()
 
-#--- END contexthelp16
-#--- BEGIN opendoc
+contexthelp16 = getcontexthelp16Bitmap()
+# --- END contexthelp16
+
+
+# --- BEGIN opendoc
 def getopendocData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xbfIDAT8\x8d\xa5\x93\xbfk\x14Q\x14\x85\xbf\x89[L\xf9\xa6\x9cn\xb7H\
 \xb1\x85\x85A\x8bE$0\x04\tKlD,$\xf8\x0f\x88\xd8\xda\x06k!\x8d`\xb3"\x12\x16,\
@@ -1337,24 +1504,29 @@ T\x18\xf8\x04q\x19\xfb\xbb\x9b\xf5U\x16\xbco\xd1r\x9eb\xf8r\x1e[\x01\xcc!!\
 \x1f\xd1\xda\rT\x041]\x99\'\xc0\x9bO\x0f\xe7\x17)\xba\xea\xef\xfc\x0f\xd4\
 \x83\xdc^(\x947\xe0\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getopendocBitmap():
     return BitmapFromImage(getopendocImage())
 
+
 def getopendocImage():
-    stream = cStringIO.StringIO(getopendocData())
+    stream = io.BytesIO(getopendocData())
     return ImageFromStream(stream)
+
 
 def getopendocIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getopendocBitmap())
     return icon
 
-opendoc=getopendocBitmap()
 
-#--- END opendoc
-#--- BEGIN openfolder
+opendoc = getopendocBitmap()
+# --- END opendoc
+
+
+# --- BEGIN openfolder
 def getopenfolderData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\xa4IDAT8\x8d\xa5\x93\xddkTW\x14\xc5\x7f\xe7\xdcs\'\x19%_\xa3\xc6\
 \xc4j\xa8!\xd1\x04\x15?\xd2j\xd2!\x8dA\xb1>h\xfe\x01\x05\xf1\xc5?\xc1\x17\
@@ -1384,24 +1556,29 @@ I\xb4\xb6\xe0y>\xaaQY*\x91`>\x93\xe7\xe1\xab";\xba:\xd9\xb49\xc1\x96\x16\x85\
 \xba}\xf2\xe4\xa9\xfd\x94\xfb\x1a\xde\x01\xd6(4\x1dr3\xbcE\x00\x00\x00\x00IE\
 ND\xaeB`\x82' 
 
+
 def getopenfolderBitmap():
     return BitmapFromImage(getopenfolderImage())
 
+
 def getopenfolderImage():
-    stream = cStringIO.StringIO(getopenfolderData())
+    stream = io.BytesIO(getopenfolderData())
     return ImageFromStream(stream)
+
 
 def getopenfolderIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getopenfolderBitmap())
     return icon
 
-openfolder=getopenfolderBitmap()
 
-#--- END openfolder
-#--- BEGIN folder
+openfolder = getopenfolderBitmap()
+# --- END openfolder
+
+
+# --- BEGIN folder
 def getfolderData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xb5IDAT8\x8d\x9d\x93KkSA\x14\xc7\x7f\xe7N\x92\xdbKJE\xc1\x8d\x9f\
 \xa0\x0bW\xea\xa6\xf6\xbb\x14q\xa3b\xbb\xe9\xc2/\xe0\xa2n\x14\xc4\xaf \x04!k\
@@ -1422,24 +1599,29 @@ def getfolderData():
 \xc6\xc6\xb5\x12@\xe6\xb7\xf1\xfa\xce\xd3\x7fn\xe3j\xd8\xe1\xce\xf6\xa6\xcc\
 \xfbJ\x80\xff\xd1oL\x8b\xfc\xec\xc8\x7f\x04z\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getfolderBitmap():
     return BitmapFromImage(getfolderImage())
 
+
 def getfolderImage():
-    stream = cStringIO.StringIO(getfolderData())
+    stream = io.BytesIO(getfolderData())
     return ImageFromStream(stream)
+
 
 def getfolderIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getfolderBitmap())
     return icon
 
-folder=getfolderBitmap()
 
-#--- END folder
-#--- BEGIN check_on
+folder = getfolderBitmap()
+# --- END folder
+
+
+# --- BEGIN check_on
 def getcheck_onData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x16IDAT8\x8d\x95\x93?hSq\x10\xc7?\xef%\xc3\xbd\xed~C\xe1\xbd\xado\
 \x10\x1a\xa7D\x10\xda\x80C\x03"\xb6\xe0\x90\x0e\xa5\x95\xbat\n\x8a\x08-\x8am\
@@ -1464,24 +1646,29 @@ q\x90\xe2 t\xb2qj&\xb1\xa5\x93S#"\xa4[\xd3\xc9\xb1\xe9\x96\xe2\xf2\x02\x1d\
 \x12\x91t\xfa\x85B\x81\xa3\xe3\xe3\xd11\xfd\x01\xd5\xba\xa6\x02\xf2\x07\xd1\
 \x0f\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getcheck_onBitmap():
     return BitmapFromImage(getcheck_onImage())
 
+
 def getcheck_onImage():
-    stream = cStringIO.StringIO(getcheck_onData())
+    stream = io.BytesIO(getcheck_onData())
     return ImageFromStream(stream)
+
 
 def getcheck_onIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getcheck_onBitmap())
     return icon
 
-check_on=getcheck_onBitmap()
 
-#--- END check_on
-#--- BEGIN check_off
+check_on = getcheck_onBitmap()
+# --- END check_on
+
+
+# --- BEGIN check_off
 def getcheck_offData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xffIDAT8\x8d\xa5\x931N\x031\x10E\x9f\xbd[\xd8\xdd\xa6\xf3\x15|\xa2\
 \x88S\x808\x04\x82\x12\xb1\xe2\n(\x07\x08G\xc8\xe6\x06)\x93.\xee\xe2.\xd3\
@@ -1496,24 +1683,29 @@ def getcheck_offData():
 \xf7\xbc\xacV\xaa2\xf8+o\xb2\x91\x84\x14\xa7\xf3\x9b\xfa\x00\x00\x00\x00IEND\
 \xaeB`\x82' 
 
+
 def getcheck_offBitmap():
     return BitmapFromImage(getcheck_offImage())
 
+
 def getcheck_offImage():
-    stream = cStringIO.StringIO(getcheck_offData())
+    stream = io.BytesIO(getcheck_offData())
     return ImageFromStream(stream)
+
 
 def getcheck_offIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getcheck_offBitmap())
     return icon
 
-check_off=getcheck_offBitmap()
 
-#--- END check_off
-#--- BEGIN radio_off
+check_off = getcheck_offBitmap()
+# --- END check_off
+
+
+# --- BEGIN radio_off
 def getradio_offData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x96IDAT8\x8d\x9d\x93\xbfk\x1b1\x14\xc7?:{\x907\xddv\xb7\x9d\x86B<\
 \xdeP\xa8\x0f2\xd4\xd0)\xd0\xbf tj\xe9?\xd0\x92\xd2?\xa04\xf4\x08\x84d)\xad\
@@ -1533,24 +1725,29 @@ def getradio_offData():
 \xbe\xdf\x10b\xed\xa6\x12\xff\xd2\x8dI\x92\xa03\xcd\xbb\xe3\xf7\x7f\xee\xc6\
 \xff\xb1_-\xfc\xe88\xaa\x88\x87\xd5\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getradio_offBitmap():
     return BitmapFromImage(getradio_offImage())
 
+
 def getradio_offImage():
-    stream = cStringIO.StringIO(getradio_offData())
+    stream = io.BytesIO(getradio_offData())
     return ImageFromStream(stream)
+
 
 def getradio_offIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getradio_offBitmap())
     return icon
 
-radio_off=getradio_offBitmap()
 
-#--- END radio_off
-#--- BEGIN radio_on
+radio_off = getradio_offBitmap()
+# --- END radio_off
+
+
+# --- BEGIN radio_on
 def getradio_onData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x020IDAT8\x8d\x95\x931h\x13Q\x18\xc7\x7f\xa9\x0e\xdf\r\xc2w\x83xo\x08\
 \xe4\r\x05OP\x9a\x80C2\n\x0eQp,t\xb1C\xc0\xc1\xc1.\xd5J\xdb\xb1\x16\xab\xb6\
@@ -1576,24 +1773,29 @@ E\xbb\x13\x93\xa4\xca\xea\xbb:\xd6x\x00\xc4\xc9\x88\xe3\x93\x94{\x8f\xbe\x16\
 \x88\x871i\x9a\x02\x10\x04\x01\xb6b\xd9\xde\xf9xc\x1a\xffi\xf0?\xfa\x0b\xdc\
 \x12\xc2\xff\xb5e\x17\x8f\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getradio_onBitmap():
     return BitmapFromImage(getradio_onImage())
 
+
 def getradio_onImage():
-    stream = cStringIO.StringIO(getradio_onData())
+    stream = io.BytesIO(getradio_onData())
     return ImageFromStream(stream)
+
 
 def getradio_onIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getradio_onBitmap())
     return icon
 
-radio_on=getradio_onBitmap()
 
-#--- END radio_on
-#--- BEGIN add_grp
+radio_on = getradio_onBitmap()
+# --- END radio_on
+
+
+# --- BEGIN add_grp
 def getadd_grpData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xbdIDAT8\x8d\xbd\x93]\n\xc20\x10\x84\'\xd5KH@=\x9fz\x04m+\xb4o\xfe^\
 B\xbd\x96\x0f\xb6\x1e\xa2\x9b\xf1\xc1$HC1E\xec\xc0\xbe,;\x99o\x17\xa2T2\xc2/\
@@ -1604,24 +1806,29 @@ Jb\x07uYS\x97\x15\xdb\xfdqt\x14\t"\xf0C}[A\x17\x15I\x02\xd6L\x12 QgS\x15E@\
 \x04\xab\xe5\x82.\xd9\x95\x88\xe0r\xbd\xfd\x87 \xfa7v\xe9\x05\xa0\\|\xc6;\\U\
 \xfe\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getadd_grpBitmap():
     return BitmapFromImage(getadd_grpImage())
 
+
 def getadd_grpImage():
-    stream = cStringIO.StringIO(getadd_grpData())
+    stream = io.BytesIO(getadd_grpData())
     return ImageFromStream(stream)
+
 
 def getadd_grpIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getadd_grpBitmap())
     return icon
 
-add_grp=getadd_grpBitmap()
 
-#--- END add_grp
-#--- BEGIN add_if
+add_grp = getadd_grpBitmap()
+# --- END add_grp
+
+
+# --- BEGIN add_if
 def getadd_ifData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00lIDAT8\x8d\xe5\x90K\n\x800\x0c\x05\xa7\xb5\xe7\xf2L\x82z\x0c?g\xf2\\\
 \x92\xb8\xaa\x8bHiK\xc5\x8d\x0f\xb2JHf\xe2\x9c\xefhI\x00\xd8\xd6EmCD\x18\xa7\
@@ -1629,24 +1836,29 @@ def getadd_ifData():
 \x7f"\x88=K\x13\xec`-AV!\xf7\x17_{\xb1\x9a\xc0\x92X\xcd\xef\x08Ri&\xb8\x00\
 \xd2\x930g\x95Q)\xea\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getadd_ifBitmap():
     return BitmapFromImage(getadd_ifImage())
 
+
 def getadd_ifImage():
-    stream = cStringIO.StringIO(getadd_ifData())
+    stream = io.BytesIO(getadd_ifData())
     return ImageFromStream(stream)
+
 
 def getadd_ifIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getadd_ifBitmap())
     return icon
 
-add_if=getadd_ifBitmap()
 
-#--- END add_if
-#--- BEGIN and_logic
+add_if = getadd_ifBitmap()
+# --- END add_if
+
+
+# --- BEGIN and_logic
 def getand_logicData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xb9IDAT8\x8d\xc5\x93\xbfk\x13q\x18\xc6?\xdf\xb4K\xa1\xf6\xda\xe8\
 \xe5\xae\\\x8f\x9a\x9f\x84\x806!KV\t\x82h\x95L\xea\xd2\xd1\xc5\xc5\xcd\xc9\
@@ -1667,24 +1879,29 @@ f\xb3\xb4\xdb\xedi@\xaf\xd7C\xd7\xf5@<\xf6\x1c\x96\x96\x97\x18\x8e|\x16\xa5\
 \xbc}E\xa7\xfe\x95x<N>\x9f\xa7P(\xf0\xf8\xc9S\xf1\x07\xe0o\xeb\xff\xff\xc2\
 \xcc\x80\xdfj\xfe\x99"n\xc9\xa1\x95\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getand_logicBitmap():
     return BitmapFromImage(getand_logicImage())
 
+
 def getand_logicImage():
-    stream = cStringIO.StringIO(getand_logicData())
+    stream = io.BytesIO(getand_logicData())
     return ImageFromStream(stream)
+
 
 def getand_logicIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getand_logicBitmap())
     return icon
 
-and_logic=getand_logicBitmap()
 
-#--- END and_logic
-#--- BEGIN or_logic
+and_logic = getand_logicBitmap()
+# --- END and_logic
+
+
+# --- BEGIN or_logic
 def getor_logicData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xdaIDAT8\x8d\xc5\x93\xbfk\x13q\x18\xc6?\x97\xa4Mm.\xb9\xbb\xa6i\x92\
 &*\x94\nE\x906\xba\n\x0eQ(\n.\xe2 \xd2\xa1\xe0\xa8\xfe9n\x82\xa3V\xc7\x82\
@@ -1706,24 +1923,29 @@ i\xfa\xb8(/\x1c\x03\xa4\xde)?[y\xd8\xcdu\x9eRhm\xd0\x16\r\xe4Q\x85\xe0\xd0\
 \x08\xf6\xf7\x0e\x96m"\x87CL*S\\\n/r\xfb\xca=\xe9\x0f\xc0\xdf\xea\xff\xff\
 \xc2\xc0\x80_\xde\x10\xca\xc7h\xe9.\xa9\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getor_logicBitmap():
     return BitmapFromImage(getor_logicImage())
 
+
 def getor_logicImage():
-    stream = cStringIO.StringIO(getor_logicData())
+    stream = io.BytesIO(getor_logicData())
     return ImageFromStream(stream)
+
 
 def getor_logicIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getor_logicBitmap())
     return icon
 
-or_logic=getor_logicBitmap()
 
-#--- END or_logic
-#--- BEGIN not_and_logic
+or_logic = getor_logicBitmap()
+# --- END or_logic
+
+
+# --- BEGIN not_and_logic
 def getnot_and_logicData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xacIDAT8\x8d\xc5\x93\xcfj\x1aq\x14\x85\xbf\x994a\x06K%\x13\x1c\xa7\
 \x1df\xe1_\xc4M\x14\x17u\xef\xaeM\x8b\x9b\xb4\xcd&\xfb\xbc\x8aO\x10\xdf\xa1\
@@ -1744,24 +1966,29 @@ w\xef\xa5`\x04\xdf\xf71\x0c\x83R\xa9\x84eYL\xeauTU%yx\xc8\x8b\x9d\x1d~\x9c\
 \x1f>~\x92\xfe\x00\xfcm\xfd\xff_\xd8\x18\xf0\x1b\xf9\x19\x9b\xd0\xb1G/\x9b\
 \x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getnot_and_logicBitmap():
     return BitmapFromImage(getnot_and_logicImage())
 
+
 def getnot_and_logicImage():
-    stream = cStringIO.StringIO(getnot_and_logicData())
+    stream = io.BytesIO(getnot_and_logicData())
     return ImageFromStream(stream)
+
 
 def getnot_and_logicIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnot_and_logicBitmap())
     return icon
 
-not_and_logic=getnot_and_logicBitmap()
 
-#--- END not_and_logic
-#--- BEGIN not_or_logic
+not_and_logic = getnot_and_logicBitmap()
+# --- END not_and_logic
+
+
+# --- BEGIN not_or_logic
 def getnot_or_logicData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xc6IDAT8\x8d\xc5\x93MO\x1aa\x14\x85\x9f\x19\xbe\xde\x81\x19\x06H\
 \x00\x176\x1amX\xba\xa7]ta\\\x1a\x9a\xb4\xfe\x83\xf6\x87\xb5{w\x96\xd6mc\xd2\
@@ -1782,24 +2009,29 @@ m\xee\x8f\x8e0\xb2Y\xca\x1b\x1b\xa4t\x9d\xe4\xc1\xc1|\x06}\xc7\xc1Z^f\x12EL\
 \xaf\xc7C\x14\x914MD\xa5\x82V\xab\xf1\xea\xdd{\xed\x0f\xc0\xdf\xea\xff\xff\
 \xc2\xc2\x80\xdf\xfcK\xc0A\xb2&\xb7\x1d\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getnot_or_logicBitmap():
     return BitmapFromImage(getnot_or_logicImage())
 
+
 def getnot_or_logicImage():
-    stream = cStringIO.StringIO(getnot_or_logicData())
+    stream = io.BytesIO(getnot_or_logicData())
     return ImageFromStream(stream)
+
 
 def getnot_or_logicIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnot_or_logicBitmap())
     return icon
 
-not_or_logic=getnot_or_logicBitmap()
 
-#--- END not_or_logic
-#--- BEGIN clear
+not_or_logic = getnot_or_logicBitmap()
+# --- END not_or_logic
+
+
+# --- BEGIN clear
 def getclearData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01:IDAT8\x8d\xa5\x93\xb1j\xc2P\x14\x86On\x8c\x8bC\xa1\x14uS\x10\\\x057\
 \x1f\xc0Mp\x14\x84\xe6\x05\x1cl\xfb\nm\xc6\x16\xc18\xb9\xd4J\xda\x92\x82\xd5\
@@ -1816,24 +2048,29 @@ def getclearData():
 \xa2\xbd~\xe3w\xfa\x02\xf7"\x86-\xb0\xb1%\xfb\x00\x00\x00\x00IEND\xaeB`\x82'\
  
 
+
 def getclearBitmap():
     return BitmapFromImage(getclearImage())
 
+
 def getclearImage():
-    stream = cStringIO.StringIO(getclearData())
+    stream = io.BytesIO(getclearData())
     return ImageFromStream(stream)
+
 
 def getclearIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getclearBitmap())
     return icon
 
-clear=getclearBitmap()
 
-#--- END clear
-#--- BEGIN filter_constructor
+clear = getclearBitmap()
+# --- END clear
+
+
+# --- BEGIN filter_constructor
 def getfilter_constructorData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01<IDAT8\x8d\x95\x92\xb1N\xc30\x10\x86?\xa7A\x11\x9d\xda\xadR\x07$$\
 \x16`\xc2B<\x00\x03\x0f\xc0\\uA\xae\xd8x\x1dG}\x05\x16v\xc6\xb2\x10wdB}\x85*\
@@ -1849,48 +2086,58 @@ h\xd6Z.\xa7\x0b\xccl\xe6\xa5\xd7L5\x18@h\xa5\xdcn\x8b&sw;\xe1\xe4\xf5\tY-\
 v!\xa8h\xb6H\xfe\xbf\x83\x10\x98\x9a\x1d0\xc0/4\x84\x98p\x01h\x9b\xe8\x00\
 \x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getfilter_constructorBitmap():
     return BitmapFromImage(getfilter_constructorImage())
 
+
 def getfilter_constructorImage():
-    stream = cStringIO.StringIO(getfilter_constructorData())
+    stream = io.BytesIO(getfilter_constructorData())
     return ImageFromStream(stream)
+
 
 def getfilter_constructorIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getfilter_constructorBitmap())
     return icon
 
-filter_constructor=getfilter_constructorBitmap()
 
-#--- END filter_constructor
-#--- BEGIN equal
+filter_constructor = getfilter_constructorBitmap()
+# --- END filter_constructor
+
+
+# --- BEGIN equal
 def getequalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00UIDAT8\x8dcddbf\xa0\x040Q\xa4{x\x18\xc0\x82\xcc).*\xfc\xff\xef\xdf?\
 \x86?\x7f\xfe0\xfc\xf9\xf3\x87\xe1\xef\xdf\xbfp6\x8c\xbfr\xd5jFd=\x8c\x03\
 \x1e\x0b(^\x08\xf0\xf7\xfb\x8f\xeedd\xfe\x9f?\x7f\x18\xce_\xb88\xc8\xbc0j\
 \x00\x15\x0c\x00\x00\x90\xe984\x0c\xf9W)\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getequalBitmap():
     return BitmapFromImage(getequalImage())
 
+
 def getequalImage():
-    stream = cStringIO.StringIO(getequalData())
+    stream = io.BytesIO(getequalData())
     return ImageFromStream(stream)
+
 
 def getequalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getequalBitmap())
     return icon
 
-equal=getequalBitmap()
 
-#--- END equal
-#--- BEGIN not_equal
+equal = getequalBitmap()
+# --- END equal
+
+
+# --- BEGIN not_equal
 def getnot_equalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd2IDAT8\x8d\xa5\x93M\x0e\x820\x10\x85\xfb\xb3\xe26\\\x80\r$,\xb5\
 \xa7\xb0.Q\xcf\xa1\xe8\x96\xaa{5\x01\x12\x126\x1cB{\x17\x96\x03\xe3J\x03\xca\
@@ -1903,24 +2150,29 @@ def getnot_equalData():
 \xb6\x07\x8b)\xe3\xf5!N\xa9\xd9\xbf\xf1\r\x82\xddl\x9d~\xd14,\x00\x00\x00\
 \x00IEND\xaeB`\x82' 
 
+
 def getnot_equalBitmap():
     return BitmapFromImage(getnot_equalImage())
 
+
 def getnot_equalImage():
-    stream = cStringIO.StringIO(getnot_equalData())
+    stream = io.BytesIO(getnot_equalData())
     return ImageFromStream(stream)
+
 
 def getnot_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnot_equalBitmap())
     return icon
 
-not_equal=getnot_equalBitmap()
 
-#--- END not_equal
-#--- BEGIN great
+not_equal = getnot_equalBitmap()
+# --- END not_equal
+
+
+# --- BEGIN great
 def getgreatData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xc3IDAT8\x8d\xdd\x93;\x0e\x82P\x10E\xef\x03\x97\xc2\x02(i)h\xe4\x19\
 u\x0fT\x14j\xcf\x06\xd4FL\xd4\xc6oH\xe8\xfd\x80%K`-\xb4\xaf\xbav6\xf8TBl\x9c\
@@ -1932,24 +2184,29 @@ u\x0fT\x14j\xcf\x06\xd4FL\xd4\xc6oH\xe8\xfd\x80%K`-\xb4\xaf\xbav6\xf8TBl\x9c\
 \x99?\xfd\x85&\xf3\x00\x9c1@\xe8\xe8z\xf9\xb6\x00\x00\x00\x00IEND\xaeB`\x82'\
  
 
+
 def getgreatBitmap():
     return BitmapFromImage(getgreatImage())
 
+
 def getgreatImage():
-    stream = cStringIO.StringIO(getgreatData())
+    stream = io.BytesIO(getgreatData())
     return ImageFromStream(stream)
+
 
 def getgreatIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getgreatBitmap())
     return icon
 
-great=getgreatBitmap()
 
-#--- END great
-#--- BEGIN great_or_equal
+great = getgreatBitmap()
+# --- END great
+
+
+# --- BEGIN great_or_equal
 def getgreat_or_equalData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01%IDAT8\x8d\xad\x93\xbbN\x84P\x14E\xf7\x05\xc3\x1fP\x92\xd0\xd2\xa9-\
 \x185\xa1\xf21HC\xc4D-hT~EM|&\x14:*\x12\x82R\xcc0\xa3\xc5\xf4\xfc\x01\x7f\
@@ -1965,24 +2222,29 @@ n\x03\\_]\xd2\xeb\xcb\x90\xe6\x05\xb0\xb6\x08\x8f\x0f\xf7T\x14\x05\x14E\xc1\
 z\x87\x19\xc7\xf7\xbf\x83y\xf4\xff\x9fiQ\xfd\x00\x1f\x1e`\xabJ#\xd5Y\x00\x00\
 \x00\x00IEND\xaeB`\x82" 
 
+
 def getgreat_or_equalBitmap():
     return BitmapFromImage(getgreat_or_equalImage())
 
+
 def getgreat_or_equalImage():
-    stream = cStringIO.StringIO(getgreat_or_equalData())
+    stream = io.BytesIO(getgreat_or_equalData())
     return ImageFromStream(stream)
+
 
 def getgreat_or_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getgreat_or_equalBitmap())
     return icon
 
-great_or_equal=getgreat_or_equalBitmap()
 
-#--- END great_or_equal
-#--- BEGIN lesser
+great_or_equal = getgreat_or_equalBitmap()
+# --- END great_or_equal
+
+
+# --- BEGIN lesser
 def getlesserData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd9IDAT8\x8d\xd5\x931\x0e\x82@\x10E\xff\xecZ\xc0E\xa8\xb9\x00\t4J"\
 \x1e\x80V<\x07b\xa3V4\xea\x11H\xe8\x14-H\xd4\x16\xee\x005=G\x18+\x1b\xdd\xd5\
@@ -1994,24 +2256,29 @@ def getlesserData():
 \x19\x12R/ !\x91e\x19\xbb\xae\xcba\x18rY\x96J\xd1G\xc1\xb3\xa2(b\xcb\xb2\xd4\
 \x9d\xfc\xff_\x18,x\x00\x02\xc9By)\x0b9\x15\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlesserBitmap():
     return BitmapFromImage(getlesserImage())
 
+
 def getlesserImage():
-    stream = cStringIO.StringIO(getlesserData())
+    stream = io.BytesIO(getlesserData())
     return ImageFromStream(stream)
+
 
 def getlesserIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlesserBitmap())
     return icon
 
-lesser=getlesserBitmap()
 
-#--- END lesser
-#--- BEGIN lesser_or_equal
+lesser = getlesserBitmap()
+# --- END lesser
+
+
+# --- BEGIN lesser_or_equal
 def getlesser_or_equalData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x19IDAT8\x8d\xd5\x93?N\x84`\x10\xc5\xdf@\x02\t\xe5RQ\xd2\x12\xb5R\
 \x1a*B\xa2\x06\xed\x14\xed\x84p\x03\xf5\x02\xfe9\x80\xae6\xb2\xda\xa8$t$,\
@@ -2026,24 +2293,29 @@ n!\xe0\xf8\xc8\xe3\xa2(0\xbe\xbb'UU\x11E\x11\xc6\xb77\xc3\x10\x12\xc4_J\xd3\
 \xb3eY\xecy^\xef\xef$\x88\x8b\x013\xf9\xbe\xcf\xba\xae\xf7C\xfe\xcf1\r\xd57\
 \x12\xb4W\xd1mk\xff\xb6\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getlesser_or_equalBitmap():
     return BitmapFromImage(getlesser_or_equalImage())
 
+
 def getlesser_or_equalImage():
-    stream = cStringIO.StringIO(getlesser_or_equalData())
+    stream = io.BytesIO(getlesser_or_equalData())
     return ImageFromStream(stream)
+
 
 def getlesser_or_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlesser_or_equalBitmap())
     return icon
 
-lesser_or_equal=getlesser_or_equalBitmap()
 
-#--- END lesser_or_equal
-#--- BEGIN between
+lesser_or_equal = getlesser_or_equalBitmap()
+# --- END lesser_or_equal
+
+
+# --- BEGIN between
 def getbetweenData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01SIDAT8\x8d\xedSMK\x02Q\x14=o\xa6\x88\xa4\xc0$u\x08*\x08kZD\xbf\xa0&\
 \xfa\x11\xad\xda\xcc\xaaE+A\x8cj!\xb8l\xfa\x05.\xdcE\xb40"Z\xf4\x0f\xc2\x02#\
@@ -2060,24 +2332,29 @@ def getbetweenData():
 \x9f\x11\x8dF\xb9,\xcb<\x12\x89\xb8\xfb\xff\xbf\x807\x0e\xbc\x984\x8e\xb8=\
 \x00\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getbetweenBitmap():
     return BitmapFromImage(getbetweenImage())
 
+
 def getbetweenImage():
-    stream = cStringIO.StringIO(getbetweenData())
+    stream = io.BytesIO(getbetweenData())
     return ImageFromStream(stream)
+
 
 def getbetweenIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getbetweenBitmap())
     return icon
 
-between=getbetweenBitmap()
 
-#--- END between
-#--- BEGIN not_between
+between = getbetweenBitmap()
+# --- END between
+
+
+# --- BEGIN not_between
 def getnot_betweenData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x83IDAT8\x8d\xcd\x92\xbbK[a\x14\xc0\x7f\xdfwc\xc5\x16\xa9\xa6U\xb4\
 \xa0\xb4\xa0htp\r\xb4\xd5\xc1Mp\x12\xdc\xa4C\xc6\xcc\x81\x90!}\x17\x97\x8c)t\
@@ -2096,24 +2373,29 @@ _n&0\xde\xb9\x1eG\x01\xb6f\x08j\x06[3l\xb9\x07\x94\xca\x15\x9e<~$\x00\x0f\
 \xcdf%\x91HH&\x93\x91?s\x95v\xce&hD.\xfe\x95\x1b\x06\xfc\x02\x1d\x0f\xa6J\
 \xd3\x89t\x05\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getnot_betweenBitmap():
     return BitmapFromImage(getnot_betweenImage())
 
+
 def getnot_betweenImage():
-    stream = cStringIO.StringIO(getnot_betweenData())
+    stream = io.BytesIO(getnot_betweenData())
     return ImageFromStream(stream)
+
 
 def getnot_betweenIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnot_betweenBitmap())
     return icon
 
-not_between=getnot_betweenBitmap()
 
-#--- END not_between
-#--- BEGIN contain
+not_between = getnot_betweenBitmap()
+# --- END not_between
+
+
+# --- BEGIN contain
 def getcontainData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xfdIDAT8\x8d\xed\x92=N\xc3P\x10\x84g\xdf\xbb\x01p\x07N\x10h\x90\xac\
 $"\xae\x01\x8b\xc2@\r\x04|\x82HT\xf9\x81\xca\x12\xa6B(r\x81\x1f\xe0\xb8 \xb9\
@@ -2127,24 +2409,29 @@ $"\xae\x01\x8b\xc2@\r\x04|\x82HT\xf9\x81\xca\x12\xa6B(r\x81\x1f\xe0\xb8 \xb9\
 \x9b(B\x1c\xc7\xd8X_[@\xe4\xff\x95\xeb\x03\xbe\x01\x8e\xfff\x98.R\x80X\x00\
 \x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getcontainBitmap():
     return BitmapFromImage(getcontainImage())
 
+
 def getcontainImage():
-    stream = cStringIO.StringIO(getcontainData())
+    stream = io.BytesIO(getcontainData())
     return ImageFromStream(stream)
+
 
 def getcontainIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getcontainBitmap())
     return icon
 
-contain=getcontainBitmap()
 
-#--- END contain
-#--- BEGIN not_contain
+contain = getcontainBitmap()
+# --- END contain
+
+
+# --- BEGIN not_contain
 def getnot_containData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x01IDAT8\x8d\xed\x92\xbdJ\xc4P\x10\x85\xcf\xbd\xb72O\x90"d\x1f \x85\
 i\xf2S\xa4\x0b\xfeB\x8a\x85\xa4I\xaf\xeb\xdfs\xa8\xfd\xadvIi\x12\xc5Fm,vA\
@@ -2158,24 +2445,29 @@ i\xf2S\xa4\x0b\xfeB\x8a\x85\xa4I\xaf\xeb\xdfs\xa8\xfd\xadvIi\x12\xc5Fm,vA\
 \xedPH\x05\xd7u\xe98\x0em\xdb\xa6\xd6zK\xf7\xff\xca\xe3\r\xbe\x00O\xa5f\xdeU\
 lT=\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getnot_containBitmap():
     return BitmapFromImage(getnot_containImage())
 
+
 def getnot_containImage():
-    stream = cStringIO.StringIO(getnot_containData())
+    stream = io.BytesIO(getnot_containData())
     return ImageFromStream(stream)
+
 
 def getnot_containIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnot_containBitmap())
     return icon
 
-not_contain=getnot_containBitmap()
 
-#--- END not_contain
-#--- BEGIN left_equal
+not_contain = getnot_containBitmap()
+# --- END not_contain
+
+
+# --- BEGIN left_equal
 def getleft_equalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01%IDAT8\x8d\xd5\x93\xb1N\x83P\x14\x86\xff\x03>\x82i*\xed3\xa8\xaf\xd0\
 \xb0(23\x10u)\xe8\xa8\xae\x8d\x1d\x8c\x06\x9d`\x06u%j\xc2\xaa\xd5\'q\xe8bR\
@@ -2190,24 +2482,29 @@ def getleft_equalData():
 \xa75\x1c\xff\xaa\x91$\xcf#0Z\xc3qm\xcf\xab\x83W.\x0f\xb8\xa9\xe8\xff\x7f\
 \xa6o\xc5\x89\x8d\x1d\xa2!\xf7\xae\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getleft_equalBitmap():
     return BitmapFromImage(getleft_equalImage())
 
+
 def getleft_equalImage():
-    stream = cStringIO.StringIO(getleft_equalData())
+    stream = io.BytesIO(getleft_equalData())
     return ImageFromStream(stream)
+
 
 def getleft_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getleft_equalBitmap())
     return icon
 
-left_equal=getleft_equalBitmap()
 
-#--- END left_equal
-#--- BEGIN right_equal
+left_equal = getleft_equalBitmap()
+# --- END left_equal
+
+
+# --- BEGIN right_equal
 def getright_equalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x19IDAT8\x8d\xd5\x93=N\xc3@\x10\x85\xdf8\x1c\x01EQbn\xe1\x06\x90\
 \xaf\xe0\xd2\x82@gh\x80\x13DI\x11\x82R\x04*\x88i]\xb8\xb0\x80\x0es\x18\x8a4H\
@@ -2222,24 +2519,29 @@ def getright_equalData():
 \xbe\xf1:\xad9\x98im\xfd"1\xa39\x98\xd5\xf6`\xbb\xf7\xcaE\x07\xf4\xff?\xd37_\
 \x02\x85\xf4\xa1\x85a\xf6\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getright_equalBitmap():
     return BitmapFromImage(getright_equalImage())
 
+
 def getright_equalImage():
-    stream = cStringIO.StringIO(getright_equalData())
+    stream = io.BytesIO(getright_equalData())
     return ImageFromStream(stream)
+
 
 def getright_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getright_equalBitmap())
     return icon
 
-right_equal=getright_equalBitmap()
 
-#--- END right_equal
-#--- BEGIN mask
+right_equal = getright_equalBitmap()
+# --- END right_equal
+
+
+# --- BEGIN mask
 def getmaskData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x0cIDAT8\x8d\xed\x92\xbdJ\xc4P\x10\x85\xcf\xbdW\xf0\t\x82y\x01\xb1\
 \x0f\x04\x82&\x04m%H i\xb2>\x81\xfa\x02k+\xe8\x82\xabM:WL,\x12-\x02\xfb\x83\
@@ -2254,24 +2556,29 @@ def getmaskData():
 \x18\xc6\xea\x92\xffW\xee.\xf0\x05\xfcTl+\xa96\x90\x96\x00\x00\x00\x00IEND\
 \xaeB`\x82' 
 
+
 def getmaskBitmap():
     return BitmapFromImage(getmaskImage())
 
+
 def getmaskImage():
-    stream = cStringIO.StringIO(getmaskData())
+    stream = io.BytesIO(getmaskData())
     return ImageFromStream(stream)
+
 
 def getmaskIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getmaskBitmap())
     return icon
 
-mask=getmaskBitmap()
 
-#--- END mask
-#--- BEGIN not_mask
+mask = getmaskBitmap()
+# --- END mask
+
+
+# --- BEGIN not_mask
 def getnot_maskData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x10IDAT8\x8d\xed\x92\xb1J\xc3P\x14\x86\xffs\xafK\xea\\\xe8V\xba\x04\
 \xba\x06\x02\x1dRJ\xe9\x9a\x0c\x19\xe2\x10}\x02\xeb\x8bt\x0e\x11\x85\xd0;56\
@@ -2286,24 +2593,29 @@ i\xcaG\xc7ae\x0cEiL&\x13\xe6y\xce\xaf\x0cDil6\x1bFQ\xc40\x0c\x19\x04\x01EiTI\
 \xd7\xeb\xb1\xdb\xed~J\xfe_\xb9\xbd\xe0\x03\x9e\xebm\x9f\xfc\xe8\xae\x87\x00\
 \x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getnot_maskBitmap():
     return BitmapFromImage(getnot_maskImage())
 
+
 def getnot_maskImage():
-    stream = cStringIO.StringIO(getnot_maskData())
+    stream = io.BytesIO(getnot_maskData())
     return ImageFromStream(stream)
+
 
 def getnot_maskIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnot_maskBitmap())
     return icon
 
-not_mask=getnot_maskBitmap()
 
-#--- END not_mask
-#--- BEGIN is_null
+not_mask = getnot_maskBitmap()
+# --- END not_mask
+
+
+# --- BEGIN is_null
 def getis_nullData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x15IDAT8\x8dcddbf\xa0\x040Q\xa4\x9b\x1a\x06\xb0`\x13\\\xb8`\xfe\xff\
 7o\xde0|\xf8\xf0\x81\x81\x9b\x9b\x9bAXX\x98!5-\x9d\x91(\x17L\x9e4\xf1\xff\
@@ -2318,24 +2630,29 @@ def getis_nullData():
 \xd3\x01V\x03H\x01\x03\x9f\x17(6\x00\x00\x7f\xbePrba\x8e\x9b\x00\x00\x00\x00\
 IEND\xaeB`\x82' 
 
+
 def getis_nullBitmap():
     return BitmapFromImage(getis_nullImage())
 
+
 def getis_nullImage():
-    stream = cStringIO.StringIO(getis_nullData())
+    stream = io.BytesIO(getis_nullData())
     return ImageFromStream(stream)
+
 
 def getis_nullIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getis_nullBitmap())
     return icon
 
-is_null=getis_nullBitmap()
 
-#--- END is_null
-#--- BEGIN is_not_null
+is_null = getis_nullBitmap()
+# --- END is_null
+
+
+# --- BEGIN is_not_null
 def getis_not_nullData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01TIDAT8\x8d\xc5\x93=K\xc3P\x14\x86\xdf$\x15C\x9b\x12\xc35Ck\x07\xab\
 \x11\xd7N\xfe\x08qru\xf5\x03G\x07\x17\'qW\xd0.\xea\xa2N\xfa\x1b$?@\x85"\x88\
@@ -2352,24 +2669,29 @@ Wh\xa0x\xce\xd0q\xe2\xb0O.\x85-\x08\x00\x00\x98_\x9b\xe5\xd7\xb9[\xbc\xdc\
 \xfb i\x15\x93\x994\x8e\xb7\xec\x9f\xdd\xc1o\xe3\xff\x7f\xa1o\xc0;\xc4Iw\xbe\
 \x91\xea\xaf\xeb\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getis_not_nullBitmap():
     return BitmapFromImage(getis_not_nullImage())
 
+
 def getis_not_nullImage():
-    stream = cStringIO.StringIO(getis_not_nullData())
+    stream = io.BytesIO(getis_not_nullData())
     return ImageFromStream(stream)
+
 
 def getis_not_nullIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getis_not_nullBitmap())
     return icon
 
-is_not_null=getis_not_nullBitmap()
 
-#--- END is_not_null
-#--- BEGIN into
+is_not_null = getis_not_nullBitmap()
+# --- END is_not_null
+
+
+# --- BEGIN into
 def getintoData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01(IDAT8\x8d\xdd\x92\xcdJ\x02\x01\x00\x84\xbf]\xbbf\xa8\xa5\xbb\xcb\
 \xca\xae\x9ahe&]\xba\xf5\x00\xf5\x00A\xbdBG\xdf\xa6C\xa7N\xf9\x16\xe9\xa1@-6\
@@ -2385,24 +2707,28 @@ R\xd3-[\xffKQ#0\x91\xd8N\x06\xd2-\x0f\x81s\x9a\xcb|0\xc3\x08\x82\xe8`\x1e\
 \x08\xae\xc41\x07\xb7X=\x13\xd9\xa3qqR\x12~\x01\xfe\xaa\xff\xff\xc1\x02\x00\
 \xbe\x01v\x87g\xa4\x93\xae5J\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getintoBitmap():
     return BitmapFromImage(getintoImage())
 
+
 def getintoImage():
-    stream = cStringIO.StringIO(getintoData())
+    stream = io.BytesIO(getintoData())
     return ImageFromStream(stream)
+
 
 def getintoIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getintoBitmap())
     return icon
 
-into=getintoBitmap()
+into = getintoBitmap()
+# --- END into
 
-#--- END into
-#--- BEGIN not_into
+
+# --- BEGIN not_into
 def getnot_intoData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x1dIDAT8\x8d\xdd\x92\xddJ\xc2\x00\x00\x85\xbfM1\x98M\'*\x08\xa2\xb2\
 \xcd\xbf\xbdBt\xd5+\xd4\x93\xd4M\xbdM\xdd\xd73\x14t\xa7\xc3\xbf\xe9\xa6\xe2n\
@@ -2417,29 +2743,29 @@ def getnot_intoData():
 \xe18\xc8\xd5*q\xc3 \xec\xf7\t\\\x97c]\xe7\xec\xf1I\xf8\x05\xf8\xab\xfe\xff\
 \x07\x07\x00\xf8\x069\xc2grM\x14\xf4\xe6\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getnot_intoBitmap():
     return BitmapFromImage(getnot_intoImage())
 
+
 def getnot_intoImage():
-    stream = cStringIO.StringIO(getnot_intoData())
+    stream = io.BytesIO(getnot_intoData())
     return ImageFromStream(stream)
+
 
 def getnot_intoIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getnot_intoBitmap())
     return icon
 
-not_into=getnot_intoBitmap()
 
-#--- END not_into
-
-
+not_into = getnot_intoBitmap()
+# --- END not_into
 
 
-
-#--- BEGIN item_closed2
+# --- BEGIN item_closed2
 def getitem_closed2Data():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd5IDAT8\x8d\xdd\x92=\n\x02A\x0cF\xdf\xccz\x1e=\x82\x85\x88\xa5\xa5\
 \x8d\xa0\xd8X\x8aG\xd9\x13\xa8`-Z\x8b\xe0\x19<\xc1\x94\x96\xb1\x8bU,\x96\xd9\
@@ -2452,24 +2778,29 @@ def getitem_closed2Data():
 \xd0\xee\x8f\xed\xd3\xc3\xcbq\xfb\xf2'>\x00\xcd\x0ewhx\xff\x1aN\x00\x00\x00\
 \x00IEND\xaeB`\x82" 
 
+
 def getitem_closed2Bitmap():
     return BitmapFromImage(getitem_closed2Image())
 
+
 def getitem_closed2Image():
-    stream = cStringIO.StringIO(getitem_closed2Data())
+    stream = io.BytesIO(getitem_closed2Data())
     return ImageFromStream(stream)
+
 
 def getitem_closed2Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getitem_closed2Bitmap())
     return icon
 
-item_closed2=getitem_closed2Bitmap()
 
-#--- END item_closed2
-#--- BEGIN item_opened2
+item_closed2 = getitem_closed2Bitmap()
+# --- END item_closed2
+
+
+# --- BEGIN item_opened2
 def getitem_opened2Data():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xb9IDAT8\x8d\xdd\x921\n\x021\x10E\xff$9\x8f\x1e\xc1B\xc4#\xd8\x08\
 \x8a7\xf0(9\x81.X\x8b\xd6"x\x06O\x90\xd2r\xb6\x8b\xd5\xd8\xb8\x89\xecn\x12q;\
@@ -2480,24 +2811,29 @@ def getitem_opened2Data():
 \xac|\xael\xa7r\x0e\x0e-\xa4l\x97\xe0 P\x84KC,\xc1\xb9g$R\x1a\xa3\xd9RJV\xef\
 \x97C\xefO|\x01\x01\xe6p\xe9%yg_\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getitem_opened2Bitmap():
     return BitmapFromImage(getitem_opened2Image())
 
+
 def getitem_opened2Image():
-    stream = cStringIO.StringIO(getitem_opened2Data())
+    stream = io.BytesIO(getitem_opened2Data())
     return ImageFromStream(stream)
+
 
 def getitem_opened2Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getitem_opened2Bitmap())
     return icon
 
-item_opened2=getitem_opened2Bitmap()
 
-#--- END item_opened2
-#--- BEGIN item_empty
+item_opened2 = getitem_opened2Bitmap()
+# --- END item_opened2
+
+
+# --- BEGIN item_empty
 def getitem_emptyData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00]IDAT8\x8dcddbf\xa0\x040Q\xa4{\xd4\x80Ab\x00\x0b\xba@\xff\xbc\xbd\
 \xffa\xec\xc2$gF\x92\\\xd0?o\xef\x7f\x03\x03\x03\x06\x03\x03\x03\x06\x01\t\
@@ -2505,24 +2841,29 @@ def getitem_emptyData():
 \xa5\xddK\x08\x86\x01\x86\x01\xa4\x82\x81O\x07\x00W\x85\x10\xebV\xd5\xfcs\
 \x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getitem_emptyBitmap():
     return BitmapFromImage(getitem_emptyImage())
 
+
 def getitem_emptyImage():
-    stream = cStringIO.StringIO(getitem_emptyData())
+    stream = io.BytesIO(getitem_emptyData())
     return ImageFromStream(stream)
+
 
 def getitem_emptyIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getitem_emptyBitmap())
     return icon
 
-item_empty=getitem_emptyBitmap()
 
-#--- END item_empty
-#--- BEGIN item_closed
+item_empty = getitem_emptyBitmap()
+# --- END item_empty
+
+
+# --- BEGIN item_closed
 def getitem_closedData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x9fIDAT8\x8d\xa5\x93\xbdnSA\x10\x85\xbf\xbd\xf7\xc66AH\x89\x89\xb0H\
 \x83\x84D\xe1\x8eG\x80"\x12U^\x02\x89\x8a(o\x81(\xe8h)\xe8A\x14@GAO\x07\x15%\
@@ -2542,24 +2883,29 @@ d(1&|\x13\xb1]E^\xa4~\xc0\xe8\x9aaqr\xc9`{\x04\xc6\xa0IQU4A\x10\xa1ZV\xd860\
 \xe1\xdd\xcbG\xfdI\xfc_m\\\xa6\x8d\x01\xbf\x01\xc8H\x05\xc6R\xe9k\xaa\x00\
 \x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getitem_closedBitmap():
     return BitmapFromImage(getitem_closedImage())
 
+
 def getitem_closedImage():
-    stream = cStringIO.StringIO(getitem_closedData())
+    stream = io.BytesIO(getitem_closedData())
     return ImageFromStream(stream)
+
 
 def getitem_closedIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getitem_closedBitmap())
     return icon
 
-item_closed=getitem_closedBitmap()
 
-#--- END item_closed
-#--- BEGIN item_opened
+item_closed = getitem_closedBitmap()
+# --- END item_closed
+
+
+# --- BEGIN item_opened
 def getitem_openedData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x80IDAT8\x8d\xa5\xd3?n\x14Q\x0c\xc7\xf1\xef\x9b\x99l\x96\xd0$!\x12"\
 \r\x12\x12E\x0e\x82D\xc51\xa8\x90\xb8\x06\x05\x1d\x17\xe0\x00\x88\x02\xe8\
@@ -2579,24 +2925,29 @@ n\x94\xaa\xa9Hj\xf4\xb9\xd0GeLJ.\x06\x01\x9a\xa6fJ\x91\xdc\xa7\xf9\x08S\x82*\
 \xbfy:\x7f\x89\xff[\x07?\xd3\xc1\xc0o\x85N\xfeK\xdc]\x1f\x13\x00\x00\x00\x00\
 IEND\xaeB`\x82' 
 
+
 def getitem_openedBitmap():
     return BitmapFromImage(getitem_openedImage())
 
+
 def getitem_openedImage():
-    stream = cStringIO.StringIO(getitem_openedData())
+    stream = io.BytesIO(getitem_openedData())
     return ImageFromStream(stream)
+
 
 def getitem_openedIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getitem_openedBitmap())
     return icon
 
-item_opened=getitem_openedBitmap()
 
-#--- END item_opened
-#--- BEGIN paste
+item_opened = getitem_openedBitmap()
+# --- END item_opened
+
+
+# --- BEGIN paste
 def getpasteData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02HIDAT8\x8d\xa5\xd3KH\xd4Q\x14\xc7\xf1\xef\x7ff\x1cCh#IYA\xab"*\x8b\
 \xa0\xa2\xe7\xa6\xda\xa9Q\xe4\xca"\x88T\x82\xe8\xb1\xd16\x15\x84\xabB[\xb8\t\
@@ -2623,24 +2974,29 @@ def getpasteData():
 \x9a\'#/\x7f\xd9\xff\x1f\x13\xfc\xe97\xb6t\\\xf1\x13#w\x17\xbd\xbc(\xf0\xaf\
 \xf9\x06\xe8uY\x91}F\x14\x8e\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getpasteBitmap():
     return BitmapFromImage(getpasteImage())
 
+
 def getpasteImage():
-    stream = cStringIO.StringIO(getpasteData())
+    stream = io.BytesIO(getpasteData())
     return ImageFromStream(stream)
+
 
 def getpasteIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getpasteBitmap())
     return icon
 
-paste=getpasteBitmap()
 
-#--- END paste
-#--- BEGIN add_16
+paste = getpasteBitmap()
+# --- END paste
+
+
+# --- BEGIN add_16
 def getadd_16Data():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x00IDAT8\x8d\xa5\x93\xcdk\x13Q\x14\xc5\x7fo\xded\xf2a&M1\xb46MS\xaa\
 \xb1\x1b\xa9T\x07\xfc\x1b\xba(.\xba\x10\x11\xc4\n\xda\x85\n.\\\xea\xb2\x88 \
@@ -2664,24 +3020,29 @@ A\x07(Tj"gG-\x96\x9e\x9f\xe1\x98e\xb3v3\xcf\xce\xafm\xee\xbcX\x00@\xda&B\x18\
 \xc7\x00\xcc\x81\xb8\x02\\\xef\x9dy \x0e|\x04\xdc\xc1\xc2>\xc4Q\xbf\xf3_\xd0\
 \xd4\xb0\xe6\xbd\xb6\xd1\xc5\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getadd_16Bitmap():
     return BitmapFromImage(getadd_16Image())
 
+
 def getadd_16Image():
-    stream = cStringIO.StringIO(getadd_16Data())
+    stream = io.BytesIO(getadd_16Data())
     return ImageFromStream(stream)
+
 
 def getadd_16Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getadd_16Bitmap())
     return icon
 
-add_16=getadd_16Bitmap()
 
-#--- END add_16
-#--- BEGIN cancel_16
+add_16 = getadd_16Bitmap()
+# --- END add_16
+
+
+# --- BEGIN cancel_16
 def getcancel_16Data():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x1aIDAT8\x8d\xa5\x93\xcbkSA\x18\xc5\x7f\xf7\x91\x9b&\xbd\x98\xa7m5R\
 \xb5\xa5\xa1\x081\x85\xc6\xec\\\xb8\x10\x04\xb5\xe0B\x04Q\x89\x9b\nn\xfa\'\
@@ -2707,24 +3068,29 @@ J\xcbK|\xce\xbf\xc7\xb4,\x17\x97\xf2\x12(\x80\xa6H\x82=\xa10\xa8m\xf0\xf6V\
 \x00t`\x15\xa8w\x03\xf7=\xe8\xf5;\xff\x06ek\xc2d\x97\xac|\x84\x00\x00\x00\
 \x00IEND\xaeB`\x82' 
 
+
 def getcancel_16Bitmap():
     return BitmapFromImage(getcancel_16Image())
 
+
 def getcancel_16Image():
-    stream = cStringIO.StringIO(getcancel_16Data())
+    stream = io.BytesIO(getcancel_16Data())
     return ImageFromStream(stream)
+
 
 def getcancel_16Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getcancel_16Bitmap())
     return icon
 
-cancel_16=getcancel_16Bitmap()
 
-#--- END cancel_16
-#--- BEGIN link_obj
+cancel_16 = getcancel_16Bitmap()
+# --- END cancel_16
+
+
+# --- BEGIN link_obj
 def getlink_objData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01,IDAT8\x8d\xd5\x93\xbdJ\x03A\x14\x85\xcf\xecncc\x13,RX\x99E1\x08j\n\
 \x89\x8d\xb5\xa0>@J\xbb\xb4\xbe\x81\x95\xad \x88M:Q\xf3\x12\x06$h\xc4\x95\
@@ -2740,24 +3106,29 @@ def getlink_objData():
 \xa4o\x16\xe8\xe7\xdd0\r\x1dV\xaauJ\xad\x1f\x8e\x04`\xff\x7f\x99>\x01\xc0\
 \xdc\x86v\\\xb0/Z\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlink_objBitmap():
     return BitmapFromImage(getlink_objImage())
 
+
 def getlink_objImage():
-    stream = cStringIO.StringIO(getlink_objData())
+    stream = io.BytesIO(getlink_objData())
     return ImageFromStream(stream)
+
 
 def getlink_objIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlink_objBitmap())
     return icon
 
-link_obj=getlink_objBitmap()
 
-#--- END link_obj
-#--- BEGIN interface
+link_obj = getlink_objBitmap()
+# --- END link_obj
+
+
+# --- BEGIN interface
 def getinterfaceData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01JIDAT8\x8d\xcd\x92;KBq\x18\xc6\x7f\xc7\xcb\xa1\xcc\x0bjJ.QPK\x18\x14\
 t\x85\xa8\xd6hhnji\xea\xc3\xf4\x05\xfa\x04A\x10B-\r\xd5`\x12]DCH\xc5\xc2\xca\
@@ -2773,24 +3144,29 @@ t\x85\xa8\xd6hhnji\xea\xc3\xf4\x05\xfa\x04A\x10B-\r\xd5`\x12]DCH\xc5\xc2\xca\
 \xe8\x82\xaaZ\xc3l\xb7\xd9\xd9\xda`i.\xda\xfd\x17~R\xef\x97\xd8{\xc0\'SZ\x80\
 0\x15VRM\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getinterfaceBitmap():
     return BitmapFromImage(getinterfaceImage())
 
+
 def getinterfaceImage():
-    stream = cStringIO.StringIO(getinterfaceData())
+    stream = io.BytesIO(getinterfaceData())
     return ImageFromStream(stream)
+
 
 def getinterfaceIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getinterfaceBitmap())
     return icon
 
-interface=getinterfaceBitmap()
 
-#--- END interface
-#--- BEGIN xpgrid
+interface = getinterfaceBitmap()
+# --- END interface
+
+
+# --- BEGIN xpgrid
 def getxpgridData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xc2IDAT8\x8d\xa5\xd3\xbdkSQ\x18\xc7\xf1\xefM\xd4\xb9\xd0\xd1I;\xe8\
 \x98\x12\xaa\xa8(("\x14\x07\xa5\x93\x8b\xa0\x08..\xfe\x13Y\x9c\xdd2T\x11T,\
@@ -2812,24 +3188,29 @@ U\x03\xfb\x00^\xb7V,\x88\x10D\xf1> AH\x9cCDQ\t\x04QT\x04\x11\xc1T\x10Un]\x9d\
 \xcc\x9e\xb9\xf7\x0c\x86\xfd\xce\x7f\x01\xa4P\x96\xc0\xf5D\x8e\xe2\x00\x00\
 \x00\x00IEND\xaeB`\x82' 
 
+
 def getxpgridBitmap():
     return BitmapFromImage(getxpgridImage())
 
+
 def getxpgridImage():
-    stream = cStringIO.StringIO(getxpgridData())
+    stream = io.BytesIO(getxpgridData())
     return ImageFromStream(stream)
+
 
 def getxpgridIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getxpgridBitmap())
     return icon
 
-xpgrid=getxpgridBitmap()
 
-#--- END xpgrid
-#--- BEGIN szdialog
+xpgrid = getxpgridBitmap()
+# --- END xpgrid
+
+
+# --- BEGIN szdialog
 def getszdialogData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x01IDAT8\x8d\xa5\x93\xbfK\xd6Q\x14\xc6?\xe7\xbe_\r\x03\xc7\x06\xff\
 \x10\x97\xd6 \x10E\xeb\x1d\xa2\x1fP\xa1\xef\xd0\xe0\xd0\xa0\x7fE"\x91\xd4\
@@ -2853,24 +3234,29 @@ Y\\y\x0c\xc0\xec\x85\x13\xbcx\xf5\x0e3\x83\x9bk\xcf\xf7\xcd\xb2K\xca\xaa\xea\
 \ty\xc0\x83\xd1\xa6\xec\xc8\xc0\x042\x08\x80d\xfc\x00\xe7\xca\x8e\x8f\xf1a\
 \xad]\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getszdialogBitmap():
     return BitmapFromImage(getszdialogImage())
 
+
 def getszdialogImage():
-    stream = cStringIO.StringIO(getszdialogData())
+    stream = io.BytesIO(getszdialogData())
     return ImageFromStream(stream)
+
 
 def getszdialogIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getszdialogBitmap())
     return icon
 
-szdialog=getszdialogBitmap()
 
-#--- END szdialog
-#--- BEGIN flat_imagebook
+szdialog = getszdialogBitmap()
+# --- END szdialog
+
+
+# --- BEGIN flat_imagebook
 def getflat_imagebookData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01oIDAT8\x8d\xa5\x93+LCA\x10EOa\xc5\xd4\xb5\x12C\x82\xc4@\xb0H$8d-\x12\
 \x1c8\x90\xe0\x8aCb\x91\xd8:\x90\xe0J0T\xbe\x04\xd3G \xd9%\x88\xbd\xc1\x141\
@@ -2888,24 +3274,29 @@ def getflat_imagebookData():
 \x06\x85\x88*\x80&\xca\x19\x9aM\xff$\x95\xf74\x11$X\xdd\xd8\xc1\x15\xcf;\xbb\
 \x7f\xdd\xbf\x01H\xd8.\x8edd@Y\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getflat_imagebookBitmap():
     return BitmapFromImage(getflat_imagebookImage())
 
+
 def getflat_imagebookImage():
-    stream = cStringIO.StringIO(getflat_imagebookData())
+    stream = io.BytesIO(getflat_imagebookData())
     return ImageFromStream(stream)
+
 
 def getflat_imagebookIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getflat_imagebookBitmap())
     return icon
 
-flat_imagebook=getflat_imagebookBitmap()
 
-#--- END flat_imagebook
-#--- BEGIN add_row
+flat_imagebook = getflat_imagebookBitmap()
+# --- END flat_imagebook
+
+
+# --- BEGIN add_row
 def getadd_rowData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01$IDAT8\x8d\xa5\x931N\xc3@\x10E\x9f\x1d\x0b\xa5\xb1\xec#\xe4\x06\x84\
 \x8e.\xa6Bt\xa1\xa3\x03n\x0071\\\x80\xd0A\x97\x1b\x904\xd4\xaeP\x9aH\x9b\x8e\
@@ -2921,24 +3312,29 @@ X!xy\x9d\x1b\xdd\xba0\x9be\x1c\x9d]o\xf8\xb6!\xee\xc60\x9ed\xb6\x065\x135\
 \xe5/\xecl`\xab\xdc\x9a\xda\xde\x1d\xf8\xff\xaen\xe0\x07@\x8f\xaa\x93\xbb%\
 \x91\xf7\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getadd_rowBitmap():
     return BitmapFromImage(getadd_rowImage())
 
+
 def getadd_rowImage():
-    stream = cStringIO.StringIO(getadd_rowData())
+    stream = io.BytesIO(getadd_rowData())
     return ImageFromStream(stream)
+
 
 def getadd_rowIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getadd_rowBitmap())
     return icon
 
-add_row=getadd_rowBitmap()
 
-#--- END add_row
-#--- BEGIN del_row
+add_row = getadd_rowBitmap()
+# --- END add_row
+
+
+# --- BEGIN del_row
 def getdel_rowData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x16IDAT8\x8d\xa5\x92OHTQ\x14\xc6\x7foF\xc3\xa0an\x04\x11Q\xf8\xa2\
 \x88Y\x04M\x11\x84\x7fp\x06J\xd2\xa0\x98 bZe\x10\xe1Jg\x97\xb5\xb2h\xe7fl\
@@ -2962,24 +3358,29 @@ IDE\xe2\xb6L\xf4\xf4\xc8\x8b\x9b\xf7DG\x10\x9d\x8cK\xdf\x13-\xab\x02,\x1c\
 \x04\xd1\x11%^".Kg\xb9\xc3\r\xe2*VW\xf0\xa6\xff\xaeL\xdaJ^\x0e<\x93\xe5\xb3\
 \xc1\xde\xdb\xf2\x07\xf8\xd2\xef\xed\xe0>>Q\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getdel_rowBitmap():
     return BitmapFromImage(getdel_rowImage())
 
+
 def getdel_rowImage():
-    stream = cStringIO.StringIO(getdel_rowData())
+    stream = io.BytesIO(getdel_rowData())
     return ImageFromStream(stream)
+
 
 def getdel_rowIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getdel_rowBitmap())
     return icon
 
-del_row=getdel_rowBitmap()
 
-#--- END del_row
-#--- BEGIN edit_row
+del_row = getdel_rowBitmap()
+# --- END del_row
+
+
+# --- BEGIN edit_row
 def getedit_rowData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xacIDAT8\x8d\xa5\x93\xb1k\x14A\x14\xc6\x7f{wE\x1aa\x05\x0b\xcb\x05\
 \x9btNy\xa9\x9c"\xe0u\xd9\xce\xeb\\\xf1\x1f\xd8\xf2\x1aaJ\xcb\xfb\x0f\\\x10$\
@@ -3000,24 +3401,29 @@ def getedit_rowData():
 \x8c\xb1k\xce\x92\xb8\xa3\x83\x04\xb6|u{\xf5?\x90\xdd\xf7;\xff\x03\xc4$\x08P\
 \xad\x85\x94\xd7\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getedit_rowBitmap():
     return BitmapFromImage(getedit_rowImage())
 
+
 def getedit_rowImage():
-    stream = cStringIO.StringIO(getedit_rowData())
+    stream = io.BytesIO(getedit_rowData())
     return ImageFromStream(stream)
+
 
 def getedit_rowIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getedit_rowBitmap())
     return icon
 
-edit_row=getedit_rowBitmap()
 
-#--- END edit_row
-#--- BEGIN dis_del_row
+edit_row = getedit_rowBitmap()
+# --- END edit_row
+
+
+# --- BEGIN dis_del_row
 def getdis_del_rowData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xe2IDAT8\x8d\xa5\x93?h\x13Q\x1c\xc7?/I\xb1j\xc5d\xb0E\x11r\xa7X\x82\
 \x8a$\x95\xa24b\x8a(8\x89ZQq0\x05qrp\xac[\x077+!\xdd\\$\xc9\xe2\x9fArt\xb0\
@@ -3040,24 +3446,29 @@ h\xff\x0e\x01\x10\xbb=&\xb6\xbfx\xc4R\xb4\xb7= \xb1w\x9b\xd0wG\x01p\xae\x8d\
 \xfduw\xe0\xc9\xb4\x08m\xee\xe1\x17\xec\x81\xb8\xf1\x81\xc9\xf8\x12\x00\x00\
 \x00\x00IEND\xaeB`\x82' 
 
+
 def getdis_del_rowBitmap():
     return BitmapFromImage(getdis_del_rowImage())
 
+
 def getdis_del_rowImage():
-    stream = cStringIO.StringIO(getdis_del_rowData())
+    stream = io.BytesIO(getdis_del_rowData())
     return ImageFromStream(stream)
+
 
 def getdis_del_rowIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getdis_del_rowBitmap())
     return icon
 
-dis_del_row=getdis_del_rowBitmap()
 
-#--- END dis_del_row
-#--- BEGIN add_cond
+dis_del_row = getdis_del_rowBitmap()
+# --- END dis_del_row
+
+
+# --- BEGIN add_cond
 def getadd_condData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xaeIDAT8\x8dcddbf\xa0\x040Q\xa4\x9b\x1a\x06\xb0`\x13\xdcr\xfc\xcd\
 \xff\xa7/?0\x9c\xbe\xfc\x80\x81\x81\x81\x81\xc1TW\x81AZ\\\x80\xc1\xc7R\x84\
@@ -3068,25 +3479,29 @@ def getadd_condData():
 \x81\xb4\xb8\x00A\x1b\xd1\xd5P\x1c\x8d\x18\x06\xc0\x0c!;!\x91\n\x06>3\x01\
 \x00\xc98H\xf1\xecw\x19d\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getadd_condBitmap():
     return BitmapFromImage(getadd_condImage())
 
+
 def getadd_condImage():
-    stream = cStringIO.StringIO(getadd_condData())
+    stream = io.BytesIO(getadd_condData())
     return ImageFromStream(stream)
+
 
 def getadd_condIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getadd_condBitmap())
     return icon
 
-add_cond=getadd_condBitmap()
 
-#--- END add_cond
+add_cond = getadd_condBitmap()
+# --- END add_cond
 
-#--- BEGIN del_cond
+
+# --- BEGIN del_cond
 def getdel_condData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xe2IDAT8\x8dcddbf\xa0\x040Q\xa4\x9b\x1a\x06\xb0`\x13|~\xea\xc0\xff\
 \x07\x87\x8e0|x\xf0\x88\x81\x81\x81\x81A@A\x8eA\xc1\xce\x86A\xd2\xcc\x81\x11\
@@ -3099,24 +3514,29 @@ def getdel_condData():
 \x0c\x0c(\xceF\xf6\x0e\xb2\x1a\x18\xa08\x1a1\x0c``\xa00!\x91\n\x06>3\x01\x00\
 5\x9do6P\xf9"\xba\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getdel_condBitmap():
     return BitmapFromImage(getdel_condImage())
 
+
 def getdel_condImage():
-    stream = cStringIO.StringIO(getdel_condData())
+    stream = io.BytesIO(getdel_condData())
     return ImageFromStream(stream)
+
 
 def getdel_condIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getdel_condBitmap())
     return icon
 
-del_cond=getdel_condBitmap()
 
-#--- END del_cond
-#--- BEGIN data_filter
+del_cond = getdel_condBitmap()
+# --- END del_cond
+
+
+# --- BEGIN data_filter
 def getdata_filterData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x15IDAT8\x8d\xd5S\xa1N\xc4@\x14\x9cmOTV"+\x91hLW\x91\xca\x93\x04M\
 \x82\xddO8\x89\xa3\x12\x83G \x9a\x90 h\x08%\x84\xa4\x01\xb3\t\x88\x0b\x98gH*\
@@ -3131,24 +3551,29 @@ Z\xd5\x7f\xa2\xc1\x0c\x00\xae/\xae\x88\x08\x88\xa3\x18\xda*\xb4U\xa0\xed\x04\
 \xee1\xe9@U\xa1P\x18|\xef\x8a\tB3\xd4\x99\xff\xbfL\x1f\xb5\xdc\x89\x8a\xf2\
 \x820\xb4\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getdata_filterBitmap():
     return BitmapFromImage(getdata_filterImage())
 
+
 def getdata_filterImage():
-    stream = cStringIO.StringIO(getdata_filterData())
+    stream = io.BytesIO(getdata_filterData())
     return ImageFromStream(stream)
+
 
 def getdata_filterIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getdata_filterBitmap())
     return icon
 
-data_filter=getdata_filterBitmap()
 
-#--- END data_filter
-#--- BEGIN scheme
+data_filter = getdata_filterBitmap()
+# --- END data_filter
+
+
+# --- BEGIN scheme
 def getschemeData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xcaIDAT8\x8d\xa5\x92\xb1kSa\x14\xc5\x7f\xdf\xf7\xb4\xd4\xa5<\xfc\
 \x07\x9c\x14\\\xac\x8b\x10A\xb1\x1d\xd4\xe2\x92\x0cE\xd0b\x9bv\xc8\xa8\x8b\
@@ -3171,24 +3596,29 @@ A\x03<\xae|\x91h\xc2\x92y\xe7\xab\xecD\x14MX\x01O\x03d\xc6\xc7\xc0\x87\xd4\
 \xa1\xf1\xfe\xef\x1c\xfc\x06\x84\xd5\xad\x9f\xeb=\xa1\x9f\x00\x00\x00\x00IEN\
 D\xaeB`\x82' 
 
+
 def getschemeBitmap():
     return BitmapFromImage(getschemeImage())
 
+
 def getschemeImage():
-    stream = cStringIO.StringIO(getschemeData())
+    stream = io.BytesIO(getschemeData())
     return ImageFromStream(stream)
+
 
 def getschemeIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getschemeBitmap())
     return icon
 
-scheme=getschemeBitmap()
 
-#--- END scheme
-#--- BEGIN treeToParent
+scheme = getschemeBitmap()
+# --- END scheme
+
+
+# --- BEGIN treeToParent
 def gettreeToParentData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xdbIDAT8\x8d\xa5\x931\n\xc2@\x10E\xdfF\x0f`i\xe9\x11r\x04o\x10\xab\
 \xa0U\xec\xac\x94\xa4\xb2T\x0f\x10\xd0\xd6\x03\x88\xb5\x17P\xf0\x02\x82\x17\
@@ -3200,24 +3630,29 @@ t\x81cu\x05\x92\x08\xd1`\xfe\xeb\x05`\x9cF\xe9\xe9\xf5C[6/5\xd1\xf3\xc7\xb6\
 ;"\x827\xea\x12\xcc\\T\xdf\x9b\xab\xe2\xcd\xa2\xc0T\xc5k{P\xfb7>\x00J\xfd\
 \x87\x83\x90\xda\xdb\xd8\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def gettreeToParentBitmap():
     return BitmapFromImage(gettreeToParentImage())
 
+
 def gettreeToParentImage():
-    stream = cStringIO.StringIO(gettreeToParentData())
+    stream = io.BytesIO(gettreeToParentData())
     return ImageFromStream(stream)
+
 
 def gettreeToParentIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(gettreeToParentBitmap())
     return icon
 
-treeToParent=gettreeToParentBitmap()
 
-#--- END treeToParent
-#--- BEGIN users7
+treeToParent = gettreeToParentBitmap()
+# --- END treeToParent
+
+
+# --- BEGIN users7
 def getusers7Data():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\xcfIDAT8\x8d\xa5\x93KLSy\x14\xc6\x7f\xffR\nR\n\xa8\x80\x151\x18\x15\
 \xc9\x10\x0c1\x84\x8c\x011\x8e\xf1\x81\x9a\x98\x10\x17j\xe2\xc2\xc7B\x9c\xe5\
@@ -3249,29 +3684,29 @@ w$\x85k\\\'\xea\xd6\x08\x86b\x9f_\xf9\xc2?\xd7\xa4#\xec\xa5\xae\xac\x86\xa5\
 \x99\xd7T6\xaeh\xe2\xf8\xe1#y\xa7\xfb\x1a\xe2{\xe3\xfc\t\xc2\x1aOG\x02\x05\
 \xe4\x11\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getusers7Bitmap():
     return BitmapFromImage(getusers7Image())
 
+
 def getusers7Image():
-    stream = cStringIO.StringIO(getusers7Data())
+    stream = io.BytesIO(getusers7Data())
     return ImageFromStream(stream)
+
 
 def getusers7Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getusers7Bitmap())
     return icon
 
-users7=getusers7Bitmap()
 
-#--- END users7
-
-
+users7 = getusers7Bitmap()
+# --- END users7
 
 
-
-#--- BEGIN align_left
+# --- BEGIN align_left
 def getalign_leftData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\x9fIDAT8\x8d\xa5\x93\xd1\x15\x04\x11\x0cE\x9f=\x9a\xf0\x91>t1C!\x8a\
 \xd1H\xe8B\'\xca\xb0_\xb3\x87=\xb2\xc3\xec\xfbB\xf2n\x12\x07\xe5\xbdo\xf8C\
@@ -3281,24 +3716,29 @@ def getalign_leftData():
 \xb9\xce\xbe\xf3~\x8e\xc0)\xabZ+z\xc8\x16\xa0\x87H\x1aF`f\x11r\x0bx\xfa\xa14\
 0>\x90]\xbd\x01\x0fZE\xff]m+\x9b\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getalign_leftBitmap():
     return BitmapFromImage(getalign_leftImage())
 
+
 def getalign_leftImage():
-    stream = cStringIO.StringIO(getalign_leftData())
+    stream = io.BytesIO(getalign_leftData())
     return ImageFromStream(stream)
+
 
 def getalign_leftIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getalign_leftBitmap())
     return icon
 
-align_left=getalign_leftBitmap()
 
-#--- END align_left
-#--- BEGIN align_right
+align_left = getalign_leftBitmap()
+# --- END align_left
+
+
+# --- BEGIN align_right
 def getalign_rightData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xa6IDAT8\x8d\xa5\x92\xd1\r\xc3 \x0cD\x8f\x8a%\xd8\xc4[\x04\x18\x84a\
 X\x84d\x0b\xef\xc1\x07c\xd0/\xa2\x10\xd9)m\xfd\x05\xc2\xf7|>ab\x8c\x1d\x7f\
@@ -3308,24 +3748,29 @@ X\x84d\x0b\xef\xc1\x07c\xd0/\xa2\x10\xd9)m\xfd\x05\xc2\xf7|>ab\x8c\x1d\x7f\
 c\xf0[\xbf\x8b5\x07\xea\n+\xe2G\xc0\x8a\x18\xb8e0\xeaIXJ\xf9\x0cP\xc5\x02\
 \xd8\x02\xf2'Z\xad7\x80\xb2S\x13\xc425\x94\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getalign_rightBitmap():
     return BitmapFromImage(getalign_rightImage())
 
+
 def getalign_rightImage():
-    stream = cStringIO.StringIO(getalign_rightData())
+    stream = io.BytesIO(getalign_rightData())
     return ImageFromStream(stream)
+
 
 def getalign_rightIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getalign_rightBitmap())
     return icon
 
-align_right=getalign_rightBitmap()
 
-#--- END align_right
-#--- BEGIN align_top
+align_right = getalign_rightBitmap()
+# --- END align_right
+
+
+# --- BEGIN align_top
 def getalign_topData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\x9eIDAT8\x8d\xa5S\xc1\r\xc4 \x0cs+\x96\xc8#{d\x8b\x16\x06a\x18\x16\
 \xe1n*\xc6\xe0^\xa0\xf4Z"\xda\xfa\x05\x89\xec(\xb6\xb2\x84\x10*^\xc0\x01@\
@@ -3335,24 +3780,29 @@ p\xe5C[\xcb\xf2h\x1d5\xfc\xbeU"\x02\x11\x99\xfe\\\n4\xb2\x88@DL\x91\x93\x80&\
 \xff\x93FI\x0cS\x98\xc5i\x05\x8d\x94\xd2s\x81\xd9\x03s\xc0\xfdC\xd2\xf8\x01\
 \x1b\xb5?\xec\x95]\x9a\x9e\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getalign_topBitmap():
     return BitmapFromImage(getalign_topImage())
 
+
 def getalign_topImage():
-    stream = cStringIO.StringIO(getalign_topData())
+    stream = io.BytesIO(getalign_topData())
     return ImageFromStream(stream)
+
 
 def getalign_topIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getalign_topBitmap())
     return icon
 
-align_top=getalign_topBitmap()
 
-#--- END align_top
-#--- BEGIN align_bottom
+align_top = getalign_topBitmap()
+# --- END align_top
+
+
+# --- BEGIN align_bottom
 def getalign_bottomData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xa9IDAT8\x8d\xa5S\xc9\x11\xc4 \x0c\x13;4\xc1\x83>\xe8"\x81Bh\r\xe8\
 \xc2}\xf0\xa0\x0c\xf6\x95]\xae\x00\x93\xe8\xc7\xd8\x92%{`\xc6\x98\x8c\x17\
@@ -3363,24 +3813,29 @@ def getalign_bottomData():
 \xba\x08\xd7\xb6Wp\xce\xf5\x0e\xda\xc2.~\x02O?\x14\x07\xe6\xf9W\xf8\x02\xf8d\
 [\xf9C\x91\xefo\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getalign_bottomBitmap():
     return BitmapFromImage(getalign_bottomImage())
 
+
 def getalign_bottomImage():
-    stream = cStringIO.StringIO(getalign_bottomData())
+    stream = io.BytesIO(getalign_bottomData())
     return ImageFromStream(stream)
+
 
 def getalign_bottomIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getalign_bottomBitmap())
     return icon
 
-align_bottom=getalign_bottomBitmap()
 
-#--- END align_bottom
-#--- BEGIN align_hcenter
+align_bottom = getalign_bottomBitmap()
+# --- END align_bottom
+
+
+# --- BEGIN align_hcenter
 def getalign_hcenterData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\x7fIDAT8\x8d\xad\x93\xd1\r\x80 \x0cD\x8b\xe9\x1a\xcc\xa40\x80:\x9a\
 \xba@u&\x06\xc1/\x8d6Gh\xc4\xf7u\x90\xe3hZp1\xc6L\r0\x11\x91\xec\x87\xfbr8\
@@ -3389,24 +3844,29 @@ def getalign_hcenterData():
 \x0e\xaa\x15X\xf97\x00\x8dI\xa3=w\x0f,\x1f\ny\x98\x087\xc7\xca\tuf(..J\x86\
 \xe0\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getalign_hcenterBitmap():
     return BitmapFromImage(getalign_hcenterImage())
 
+
 def getalign_hcenterImage():
-    stream = cStringIO.StringIO(getalign_hcenterData())
+    stream = io.BytesIO(getalign_hcenterData())
     return ImageFromStream(stream)
+
 
 def getalign_hcenterIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getalign_hcenterBitmap())
     return icon
 
-align_hcenter=getalign_hcenterBitmap()
 
-#--- END align_hcenter
-#--- BEGIN align_vcenter
+align_hcenter = getalign_hcenterBitmap()
+# --- END align_hcenter
+
+
+# --- BEGIN align_vcenter
 def getalign_vcenterData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00uIDAT8\x8dc\x0c\n\n\xfa\xcf@\x01`a```X\xbfa##9\x9a\x03\x03\xfc\xff\
 \xb3 sH\xd1\x0c\xb3\x94\x05Y000\x908\xcd\xeb\xd7\xc3\xd9,\xb8$\x88\x05p\x03\
@@ -3415,24 +3875,29 @@ def getalign_vcenterData():
 \x9f\x90H2\x80\xd4\x8c\x84\x0c\x00u\xa1-\x02\xbe\x9c\xec2\x00\x00\x00\x00IEN\
 D\xaeB`\x82' 
 
+
 def getalign_vcenterBitmap():
     return BitmapFromImage(getalign_vcenterImage())
 
+
 def getalign_vcenterImage():
-    stream = cStringIO.StringIO(getalign_vcenterData())
+    stream = io.BytesIO(getalign_vcenterData())
     return ImageFromStream(stream)
+
 
 def getalign_vcenterIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getalign_vcenterBitmap())
     return icon
 
-align_vcenter=getalign_vcenterBitmap()
 
-#--- END align_vcenter
-#--- BEGIN expand
+align_vcenter = getalign_vcenterBitmap()
+# --- END align_vcenter
+
+
+# --- BEGIN expand
 def getexpandData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\x86IDAT8\x8d\xa5S\xd1\x0e\x80 \x08\x04\xeb\xff\x8a\xfbQ\xea\x0b\xed\
 Ig&WK6\xc6\x80y\x1e\x87*\x80,3\x06 kZ$r\xd6\x07\x90\x13\x03\xb7}\xcbm\x1c\
@@ -3441,24 +3906,28 @@ Ig&WK6\xc6\x80y\x1e\x87*\x80,3\x06 kZ$r\xd6\x07\x90\x13\x03\xb7}\xcbm\x1c\
 \x1f2\xe8\xc5lk}\xef\x01\xf0\xe5\xf1\xbc2(\xd6j\x10\x01\xd3-\x94C\x8c\x95\
 \xce~\xe7\x0bP\xc6AI\xeb4\xccQ\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getexpandBitmap():
     return BitmapFromImage(getexpandImage())
 
+
 def getexpandImage():
-    stream = cStringIO.StringIO(getexpandData())
+    stream = io.BytesIO(getexpandData())
     return ImageFromStream(stream)
+
 
 def getexpandIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getexpandBitmap())
     return icon
 
-expand=getexpandBitmap()
+expand = getexpandBitmap()
+# --- END expand
 
-#--- END expand
-#--- BEGIN grow
+
+# --- BEGIN grow
 def getgrowData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\x85IDAT8\x8d\xa5S[\x0e\xc0 \x08C\xc3\xfd|\\\x14=\xa1\xfb\x19\x8b:pL\
 \xfbe\x08\xa5MA\x97snp\x00\x04\x00\xa0R\xdd\x0e9\xc5\xd0\xd0\xda\xc8\xefY\
@@ -3467,24 +3936,29 @@ def getgrowData():
 \xbb"\x0f\x03$\x07\x16\xa8k$"\xd3\x89\x8b\x97x\xe4\xe0\xef\xc7B\x80\xbd52.f\
 \x12=C\xdb\xd7a\xf0\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getgrowBitmap():
     return BitmapFromImage(getgrowImage())
 
+
 def getgrowImage():
-    stream = cStringIO.StringIO(getgrowData())
+    stream = io.BytesIO(getgrowData())
     return ImageFromStream(stream)
+
 
 def getgrowIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getgrowBitmap())
     return icon
 
-grow=getgrowBitmap()
 
-#--- END grow
-#--- BEGIN proportional
+grow = getgrowBitmap()
+# --- END grow
+
+
+# --- BEGIN proportional
 def getproportionalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd1IDAT8\x8d\xa5S\xdb\r\x830\x0c\xbc\xd0\xac\x91\x99\xc0\x1e\xa0\
 \xed\x04\x0c\xc3\x04\xc0\x02\x86\x99<\x88\xfb\xd3\xa0\xbc\xa0jk)R\x12\x9f/\
@@ -3497,24 +3971,29 @@ g\x1e\xac\xcbl\xd1\xc4\xd4\x87h"\x80\xc3\xcc&A\x08\x01\x11\xd02\x91\x88\x10g\
 \x9c\x8f/\x9c\x01>\xc5\x0bJ\x10x\x06\x83\xb9\xb0\xf2\x00\x00\x00\x00IEND\xae\
 B`\x82' 
 
+
 def getproportionalBitmap():
     return BitmapFromImage(getproportionalImage())
 
+
 def getproportionalImage():
-    stream = cStringIO.StringIO(getproportionalData())
+    stream = io.BytesIO(getproportionalData())
     return ImageFromStream(stream)
+
 
 def getproportionalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getproportionalBitmap())
     return icon
 
-proportional=getproportionalBitmap()
 
-#--- END proportional
-#--- BEGIN refresh3
+proportional = getproportionalBitmap()
+# --- END proportional
+
+
+# --- BEGIN refresh3
 def getrefresh3Data():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x02\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x02\
 \x00\x00\x00\x90\x91h6\x00\x00\x00\x03sBIT\x08\x08\x08\xdb\xe1O\xe0\x00\x00\
 \x01\xd9IDAT(\x91\x95\xd2K\x8b\xdaP\x18\x06\xe0o\x9ahDDb\x02.D\xa5\x8bRC\x17\
 \xc5\x11)u\xb4X\x89L\xa1J\xb1\x8a\x88\x17t\xd3?\xe0\xc6\xec\xcc/\xf0W\xe8.\
@@ -3536,18 +4015,21 @@ z\x9dL&\xcb\xe5\xb2\xd3\xe94\x0cC\xd7\xf5\xc9dr\x000\xc6\xd3\xe9\xd4d2q\x1c\
 \x9f\xb7\xb1\x1d\x00\x80\x8b/?\xfc\x8f\xdd\xf9|\xdel6\xdf\xbc\xc4r\xb9\xdcO\
 \x03\xc0\xc9}\xbf\xf7_\xef\xcc\xcd.%f!\xe2\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getrefresh3Bitmap():
     return BitmapFromImage(getrefresh3Image())
 
+
 def getrefresh3Image():
-    stream = cStringIO.StringIO(getrefresh3Data())
+    stream = io.BytesIO(getrefresh3Data())
     return ImageFromStream(stream)
+
 
 def getrefresh3Icon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getrefresh3Bitmap())
     return icon
 
-refresh3=getrefresh3Bitmap()
 
-#--- END refresh3
+refresh3 = getrefresh3Bitmap()
+# --- END refresh3

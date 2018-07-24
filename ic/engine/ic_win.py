@@ -415,7 +415,7 @@ class icMainWindow(wx.Frame):
                                     WinStruct_[RES_WIN_PHONECOLOR][ic_color.I_GREEN],
                                     WinStruct_[RES_WIN_PHONECOLOR][ic_color.I_BLUE])
         else:
-            phone_color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOW)
+            phone_color = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
         # Установить цвет фона
         self.SetBackgroundColour(phone_color)
 

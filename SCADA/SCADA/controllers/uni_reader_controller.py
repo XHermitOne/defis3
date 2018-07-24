@@ -8,12 +8,12 @@
 с помощью XML-RPC данных из службы UniReader.
 """
 
-import xmlrpclib
+import xmlrpc.client
 
 from ic.log import log
 
 # Version
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 # Используемый порт по умолчанию
@@ -89,7 +89,7 @@ class icUniReaderControllerProto(object):
 
         try:
             # Создание клиента OPC
-            opc = xmlrpclib.ServerProxy('http://%s:%d' % (host, port))
+            opc = xmlrpc.client.ServerProxy('http://%s:%d' % (host, port))
             values = opc.sources.ReadValuesAsStrings(node, server, *addresses)
 
             result = dict([(tag_name, values[i]) for i, tag_name in enumerate(tag_names)])

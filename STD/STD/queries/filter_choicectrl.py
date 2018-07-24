@@ -11,16 +11,15 @@ import os.path
 import uuid
 import operator
 import wx
-import wx.combo
 
 from ic.dlg import ic_dlg
-from ic.kernel import io_prnt
 from ic.utils import ic_res
+from ic.log import log
 
 from . import filter_choice_dlg
 from . import filter_constructor_dlg
 
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_LIMIT_LABEL_FMT = u'Ограничение количества объектов: %d'
 ERROR_LIMIT_LABEL_FMT = u'(!) Превышено ограничение: %d'
@@ -305,7 +304,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
         event.Skip()
 
 
-class icFilterChoiceCtrlProto(wx.combo.ComboCtrl):
+class icFilterChoiceCtrlProto(wx.ComboCtrl):
     """
     Контрол выбора фильтров.
     """
@@ -318,7 +317,7 @@ class icFilterChoiceCtrlProto(wx.combo.ComboCtrl):
         # Редактирование подразумевается только при вызове соответствующих функций
         kwargs['style'] = wx.CB_READONLY | wx.CB_DROPDOWN | kwargs.get('style', 0)
 
-        wx.combo.ComboCtrl.__init__(self, *args, **kwargs)
+        wx.ComboCtrl.__init__(self, *args, **kwargs)
 
         self._uuid = None
 

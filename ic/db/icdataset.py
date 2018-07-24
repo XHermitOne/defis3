@@ -814,7 +814,7 @@ class icDataLink(icwidget.icSimple):
         @type component: C{dictionary}
         @param component: Ресурсное описание ссылки.
         """
-        attrs = getAddProperyLst(SPC_IC_DATALINK, component.keys(),
+        attrs = getAddProperyLst(SPC_IC_DATALINK, list(component.keys()),
                                  icDefInf.icUnSpecAttr)
 
         #   Атрибуты начинающиеся с '__' являются служебными и не обрабатываются

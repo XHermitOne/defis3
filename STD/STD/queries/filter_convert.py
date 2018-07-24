@@ -46,7 +46,7 @@ import sqlalchemy
 import ic
 
 # Version
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
 def convertFilter2PgSQL(Filter_, TableName_, Fields_=('*',), limit=None):
@@ -234,7 +234,7 @@ class icFilter2SQLAlchemyConverter:
                 return getattr(self.table.c, Requisite_['requisite']) == Requisite_['arg_1']
             elif Requisite_['func'] == 'not_equal':
                 # Проверка на <неравенство>
-                return getattr(self.table.c, Requisite_['requisite']) <> Requisite_['arg_1']
+                return getattr(self.table.c, Requisite_['requisite']) != Requisite_['arg_1']
             elif Requisite_['func'] == 'great':
                 # Проверка на <больше>
                 return getattr(self.table.c, Requisite_['requisite']) > Requisite_['arg_1']

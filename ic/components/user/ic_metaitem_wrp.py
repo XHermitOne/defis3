@@ -206,8 +206,8 @@ class icMetaProperty:
             log.warning(u'Нет ключа %s в спецификации объекта %s компонента %s среди имен %s %s' % (name,
                                                                                                            self.__dict__['property']['name'],
                                                                                                            self.__dict__['property']['metatype'],
-                                                                                                           self.__dict__['property'].keys(),
-                                                                                                           self.__dict__['const'].keys()))
+                                                                                                           str(self.__dict__['property'].keys()),
+                                                                                                           str(self.__dict__['const'].keys())))
             raise KeyError
         
     def __setattr__(self, name, value):

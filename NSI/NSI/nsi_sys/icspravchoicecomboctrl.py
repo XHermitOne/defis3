@@ -7,14 +7,13 @@
 
 # --- Imports ---
 import wx
-import wx.combo
 
-from ic.kernel import io_prnt
 from ic.utils import coderror
 from ic.components import icwidget
+from ic.log import log
 
 # Version
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_CODE_DELIMETER = u' '
 DEFAULT_ENCODING = 'utf-8'
@@ -27,7 +26,7 @@ SPC_IC_SPRAVCHOICECOMBOCTRL = {'sprav': None,       # Паспорт справ�
                                }
 
 
-class icSpravChoiceComboCtrlProto(wx.combo.ComboCtrl):
+class icSpravChoiceComboCtrlProto(wx.ComboCtrl):
     """
     Класс компонента выбора справочника через стандартный
     механизм диалогового окна выбора/поиска.
@@ -43,7 +42,7 @@ class icSpravChoiceComboCtrlProto(wx.combo.ComboCtrl):
             style = kwargs['style'] | wx.CB_READONLY
         kwargs['style'] = style
 
-        wx.combo.ComboCtrl.__init__(self, *args, **kwargs)
+        wx.ComboCtrl.__init__(self, *args, **kwargs)
 
         self.makeCustomButton()
 
@@ -65,12 +64,12 @@ class icSpravChoiceComboCtrlProto(wx.combo.ComboCtrl):
         Почему то не зарисовывается контрол серым при включении стиля wx.CB_READONLY.
         Поэтому переопределяем.
         """
-        wx.combo.ComboCtrl.Enable(self, *args, **kwargs)
+        wx.ComboCtrl.Enable(self, *args, **kwargs)
 
         if not self.IsEnabled():
             self.SetBackgroundColour(wx.Colour(236, 234, 233))
         else:
-            self.SetBackgroundColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DHIGHLIGHT))
+            self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT))
 
     def makeCustomButton(self):
         """

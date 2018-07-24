@@ -712,8 +712,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
             dc.SetPen(pagePen)
             dc.DrawLine(w+1, IC_NB_HEIGHT-1, w+wo-1, IC_NB_HEIGHT-1)
 
-            clr1 = graphicUtils.AdjustColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE), -50)
-            clr2 = graphicUtils.AdjustColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE), 50)
+            clr1 = graphicUtils.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), -50)
+            clr2 = graphicUtils.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
             
             graphicUtils.DrawGradientRect(dc, wo-2, IC_NB_HEIGHT-pst, clr1, clr2, 1, x0=w+1, y0=pst+1)
             graphicUtils.drawRoundCornersRect(dc, (w, pst), (wo, IC_NB_HEIGHT-pst),
@@ -741,7 +741,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
 
         if obj.GetImage():
             obj.GetImage().Show(True)
-            obj.GetImage().SetBackgroundColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DFACE))
+            obj.GetImage().SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE))
             obj.GetImage().SetPosition((w+IC_NB_STEP, pst+2))
         
     def Draw(self, dc):

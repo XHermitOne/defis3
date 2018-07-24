@@ -8,13 +8,12 @@
 
 # --- Imports ---
 import wx
-import wx.combo
 
-from ic.kernel import io_prnt
 from ic.components import icwidget
+from ic.log import log
 
 # Version
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_CODE_DELIMETER = u' '
 DEFAULT_ENCODING = 'utf-8'
@@ -25,7 +24,7 @@ SPC_IC_REFOBJCHOICECOMBOCTRL = {'obj_psp': None,  # Паспорт объект�
                                 }
 
 
-class icRefObjChoiceComboCtrlProto(wx.combo.ComboCtrl):
+class icRefObjChoiceComboCtrlProto(wx.ComboCtrl):
     """
     Класс компонента выбора бизнес объекта/документа
     через стандартный механизм диалогового
@@ -36,7 +35,7 @@ class icRefObjChoiceComboCtrlProto(wx.combo.ComboCtrl):
         """
         Конструктор.
         """
-        wx.combo.ComboCtrl.__init__(self, *args, **kwargs)
+        wx.ComboCtrl.__init__(self, *args, **kwargs)
 
         self.makeCustomButton()
 
