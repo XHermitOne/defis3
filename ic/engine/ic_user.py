@@ -17,7 +17,7 @@ from ic.kernel import ickernel
 from ic.log import log
 from ic.kernel import icexceptions
 
-from . import glob
+from . import glob_variables
 from ic.utils import ic_file
 
 __version__ = (0, 0, 3, 2)
@@ -27,28 +27,28 @@ def getKernel():
     """
     Ядро системы. Он же движок.
     """
-    return glob.get_glob_var('KERNEL')
+    return glob_variables.get_glob_var('KERNEL')
 
 
 def getMetadata():
     """
     Метаданные системы.
     """
-    return glob.get_glob_var('metadata')
+    return glob_variables.get_glob_var('metadata')
 
 
 def getSchemas():
     """
     Схемы системы.
     """
-    return glob.get_glob_var('schemas')
+    return glob_variables.get_glob_var('schemas')
 
 
 def getSettings():
     """
     Настройки системы.
     """
-    return glob.get_glob_var('settings')
+    return glob_variables.get_glob_var('settings')
 
 
 def icLet(Name_, Data_, Security_='*rw'):
@@ -214,7 +214,7 @@ def icLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
     from . import icUser
 
     kernel = ickernel.createKernel()
-    glob.set_glob_var('KERNEL', kernel)
+    glob_variables.set_glob_var('KERNEL', kernel)
     InitEnv(**kwargs)
 
     # Полное имя файла ресурса доступа к ресурсам
@@ -232,9 +232,9 @@ def icLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
     if not login_ok:
         kernel.Logout()
     else:
-        metadata = glob.set_glob_var('metadata', kernel.GetContext()['metadata'])
-        schemas = glob.set_glob_var('schemas',  kernel.GetContext()['schemas'])
-        settings = glob.set_glob_var('settings', kernel.GetContext()['settings'])
+        metadata = glob_variables.set_glob_var('metadata', kernel.GetContext()['metadata'])
+        schemas = glob_variables.set_glob_var('schemas', kernel.GetContext()['schemas'])
+        settings = glob_variables.set_glob_var('settings', kernel.GetContext()['settings'])
 
         import ic
         ic.metadata = metadata
@@ -262,7 +262,7 @@ def icEditorLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
     app = icApp.icApp()
 
     kernel = ickernel.createEditorKernel()
-    glob.set_glob_var('KERNEL', kernel)
+    glob_variables.set_glob_var('KERNEL', kernel)
     InitEnv(**kwargs)
     # Полное имя файла ресурса доступа к ресурсам
     users_file = icUser.DEFAULT_USERS_RES_FILE
@@ -271,9 +271,9 @@ def icEditorLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
     icLet('PrjName', ic_file.Split(icGet('SYS_RES'))[1])
     login_result = kernel.Login(User_, Password_, DBMode_)
 
-    metadata = glob.set_glob_var('metadata', kernel.GetContext()['metadata'])
-    schemas = glob.set_glob_var('schemas', kernel.GetContext()['schemas'])
-    settings = glob.set_glob_var('settings', kernel.GetContext()['settings'])
+    metadata = glob_variables.set_glob_var('metadata', kernel.GetContext()['metadata'])
+    schemas = glob_variables.set_glob_var('schemas', kernel.GetContext()['schemas'])
+    settings = glob_variables.set_glob_var('settings', kernel.GetContext()['settings'])
     import ic
     ic.metadata = metadata
     ic.schemas = schemas
@@ -332,17 +332,17 @@ def icLogout():
     """
     Останов.
     """
-    kernel = glob.get_glob_var('KERNEL')
+    kernel = glob_variables.get_glob_var('KERNEL')
     if kernel:
         # Закрыть главное окно
         kernel.Stop()
-        glob.set_glob_var('KERNEL', None)
+        glob_variables.set_glob_var('KERNEL', None)
     else:
         log.warning(u'Не определено ядро системы при останове. Принудительное закрытие главного окна.')
 
-    glob.set_glob_var('metadata', None)
-    glob.set_glob_var('schemas', None)
-    glob.set_glob_var('settings', None)
+    glob_variables.set_glob_var('metadata', None)
+    glob_variables.set_glob_var('schemas', None)
+    glob_variables.set_glob_var('settings', None)
 
     return True
 

@@ -223,14 +223,16 @@ class PrjImportSystems(PrjImportFolder):
         if SubSysDir_ and PrjDir_:
             log.info(u'Копирование подсистемы <%s> в <%s>' % (SubSysDir_, PrjDir_))
             # Просто скопировать одну папку в другую
-            ok = ic_file.CopyDir(SubSysDir_, PrjDir_, True)
+            ok = ic_file.CopyDir(Dir_=SubSysDir_, ToDir_=PrjDir_, ReWrite_=True)
             # Кроме кодирования надо удалить все пикловсвие файлы из проекта
             # иначе бывает рассинхронизация с отредактированными ресурсами
-            new_subsys_dir = PrjDir_+'/'+os.path.basename(SubSysDir_)
+            new_subsys_dir = os.path.join(PrjDir_, os.path.basename(SubSysDir_))
             ic_file.delAllFilesFilter(new_subsys_dir, *ALL_PKL_FILES_MASK)
             if ok:
-                log.info(u'[+] Refresh subsys <%s> succesfully' % PrjDir_)
+                log.info(u'[+] Обновление подсистемы <%s> прошло успешно' % PrjDir_)
                 return new_subsys_dir
+            else:
+                log.warning(u'Ошибка копирования подсистемы <%s> в <%s>' % (SubSysDir_, PrjDir_))
         return None
 
     def refreshSubSystems(self):
@@ -341,8 +343,8 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         return self.getParent().getRoot()
 
     def getPrjFileName(self):
-        return os.path.dirname(os.path.dirname(self.getParentRoot().getPrjFileName())) + \
-            '/%s/%s.pro' % (self.name.strip(), self.name.strip())
+        return os.path.join(os.path.dirname(os.path.dirname(self.getParentRoot().getPrjFileName())),
+                            self.name.strip(), '%s.pro' % self.name.strip())
 
     def openPrjFile(self, PrjFileName_):
         """
@@ -350,7 +352,11 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         @param PrjFileName_: Имя файла проекта.
         @return: Готовую структуру проекта или None в случае ошибки.
         """
-        return ic_res.LoadResourcePickle(PrjFileName_)
+        if PrjFileName_.endswith('_pkl.pro'):
+            # Определяем тип ресурса по окончанию имени файла
+            return ic_res.LoadResourcePickle(PrjFileName_)
+        else:
+            return ic_res.LoadResourceText(PrjFileName_)
 
     def getPath(self):
         """
@@ -445,7 +451,8 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
             else:
                 # Скопировать в папку текущего проекта
                 prj_dir = self._Parent.copySubSys(prj_file_name)
-                self.imp_prj_file_name = ic_file.GetFilesByExt(prj_dir, '.pro')[0]
+                prj_filenames = [filename for filename in ic_file.GetFilesByExt(prj_dir, '.pro') if not filename.startswith('_pkl.pro')]
+                self.imp_prj_file_name = [0] if prj_filenames else None
                 # добавить в список
                 if self.imp_prj_file_name:
                     self.name = new_name
@@ -472,7 +479,9 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
             else:
                 prj_data = PrjFile_
             # Задано содержание файла
-            return filter(lambda key: key[0] != '_', prj_data[0].keys())[0]
+            # return filter(lambda key: key[0] != '_', prj_data[0].keys())[0]
+            prj_names = [key for key in prj_data[0].keys() if not key.startswith('_')]
+            return prj_names[0]
         return None
 
     def buildSubSysTree(self, SubSysPrjFileName_=None):
@@ -486,6 +495,10 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         if SubSysPrjFileName_ is None:
             SubSysPrjFileName_ = self.imp_prj_file_name
         if SubSysPrjFileName_:
+            if not os.path.exists(SubSysPrjFileName_):
+                log.warning(u'Не найден файл проекта <%s> подсистемы' % SubSysPrjFileName_)
+                return False
+
             prj_manager = PrjRes.icPrjRes()
             prj_manager.openPrj(SubSysPrjFileName_)
             # Создание ресурсов

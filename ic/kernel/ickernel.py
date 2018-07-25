@@ -57,9 +57,9 @@ def createEditorKernel():
     """
     Создание и регистрация ядра в режиме радактирования.
     """
-    from ic.engine import glob
+    from ic.engine import glob_variables
     # Определить ядро
-    kernel = glob.set_glob_var('KERNEL', icKernel())
+    kernel = glob_variables.set_glob_var('KERNEL', icKernel())
     log.info(u'[KERNEL] CREATE EDITOR KERNEL <%s>' % kernel.context.__class__)
     return kernel
 
@@ -69,9 +69,9 @@ def createRuntimeKernel():
     Создание и регистрация ядра в режиме исполнения.
     """
     from ic.engine import icApp
-    from ic.engine import glob
+    from ic.engine import glob_variables
     # Определить ядро
-    kernel = glob.set_glob_var('KERNEL', icApp.icApp())
+    kernel = glob_variables.set_glob_var('KERNEL', icApp.icApp())
     log.info(u'[KERNEL] CREATE RUNTIME KERNEL !')
     return kernel
 

@@ -99,7 +99,7 @@ def icChangeExt(FileName_, NewExt_):
             os.rename(FileName_, new_name)
             return new_name
     except:
-        log.fatal(u'Change extension file error: from %s to %s.' % (FileName_, NewExt_))
+        log.fatal(u'Ошибка изменения расширения файла <%s> -> <%s>' % (FileName_, NewExt_))
     return None
 
 
@@ -135,7 +135,7 @@ def icCopyFile(FileName_, NewFileName_, Rewrite_=True):
             shutil.copyfile(FileName_, NewFileName_)
         return True
     except:
-        log.fatal(u'Failed copy file %s to %s.' % (FileName_, NewFileName_))
+        log.fatal(u'Ошибка копирования файла <%s> -> <%s>' % (FileName_, NewFileName_))
         return False
 
 
@@ -147,10 +147,14 @@ def icCreateBAKFile(FileName_, BAKFileExt_='.bak'):
     @return: Возвращает результат выполнения операции True/False.
     """
     try:
+        if not os.path.exists(FileName_):
+            log.warning(u'Не найден файл <%s> для создания его резервной копии' % FileName_)
+            return False
+
         bak_name = os.path.splitext(FileName_)[0]+BAKFileExt_
         return icCopyFile(FileName_, bak_name)
     except:
-        log.fatal(u'Create BAK file error: %s' % FileName_)
+        log.fatal(u'Ошибка создания BAK файла <%s>' % FileName_)
         return False
 
 
@@ -161,11 +165,14 @@ def GetSubDirs(Path_):
     @return: В случае ошибки возвращает None.
     """
     try:
-        dir_list = [Path_+'/'+path for path in ListDir(Path_)]
-        dir_list = [path for path in dir_list if IsDir(path)]
+        if not os.path.exists(Path_):
+            log.warning(u'Путь <%s> не найден для определения списка поддриекторий' % Path_)
+            return list()
+        dir_list = [os.path.join(Path_, path) for path in os.listdir(Path_)]
+        dir_list = [path for path in dir_list if os.path.isdir(path)]
         return dir_list
     except:
-        log.fatal(u'Read subfolder list error: %s' % Path_)
+        log.fatal(u'Ошибка чтения списка поддиректорий <%s>' % Path_)
         return None
 
 
@@ -177,12 +184,16 @@ def GetSubDirsFilter(Path_, Filter_=('.svn','.SVN','.Svn')):
     @return: В случае ошибки возвращает None.
     """
     try:
-        dir_list = [Path_+'/'+path for path in os.listdir(Path_)]
+        if not os.path.exists(Path_):
+            log.warning(u'Не найден путь <%s> для определения списка поддиректорий' % Path_)
+            return list()
+
+        dir_list = [os.path.join(Path_, path) for path in os.listdir(Path_)]
         dir_list = [path for path in dir_list if os.path.isdir(path)]
         dir_list = [d for d in dir_list if _pathFilter(d, Filter_)]
         return dir_list
     except:
-        log.fatal(u'Read subfolder list error: %s' % Path_)
+        log.fatal(u'Ошибка чтения списка поддиректорий <%s>' % Path_)
         return None
 
 
@@ -203,12 +214,16 @@ def GetFiles(Path_):
     @return: В случае ошибки возвращает None.
     """
     try:
+        if not os.path.exists(Path_):
+            log.warning(u'Не найден путь <%s> для определения списка файлов директории' % Path_)
+            return list()
+
         file_list = None
         file_list = [Path_+'/'+x.lower() for x in os.listdir(Path_)]
         file_list = [x for x in file_list if os.path.isfile(x)]
         return file_list
     except:
-        log.fatal(u'Read folder file list error: %s' % Path_)
+        log.fatal(u'Ошибка чтения списка файлов <%s>' % Path_)
         return None
 
 
@@ -221,6 +236,9 @@ def GetFilesByExt(Path_, Ext_):
     """
     try:
         Path_ = getCurDirPrj(Path_)
+        if not os.path.exists(Path_):
+            log.warning(u'Путь <%s> не найден для определения списка файлов директории по расширению' % Path_)
+            return list()
 
         if Ext_[0] != '.':
             Ext_ = '.' + Ext_
@@ -229,10 +247,10 @@ def GetFilesByExt(Path_, Ext_):
         file_list = None
         file_list = [os.path.join(Path_, file_name) for file_name in os.listdir(Path_)]
         file_list = [file_name for file_name in file_list if os.path.isfile(file_name) and
-                           (SplitExt(file_name)[1].lower() == Ext_)]
+                     (SplitExt(file_name)[1].lower() == Ext_)]
         return file_list
     except:
-        log.fatal(u'Read folder file list error: ext=%s, path=%s, list=%s' % (Ext_, Path_, file_list))
+        log.fatal(u'Ошибка чтения списка файлов <ext=%s, path=%s, list=%s>' % (Ext_, Path_, file_list))
         return None
 
 
@@ -285,7 +303,7 @@ def icAbsolutePath(Path_):
         Path_ = Path_.replace('\\', '/').lower().strip()
         return Path_
     except:
-        log.fatal(u'Path_: %s' % Path_)
+        log.fatal(u'Ошибка определения абсолютного пути <%s>' % Path_)
         return Path_
 
 
@@ -339,7 +357,7 @@ def AbsolutePath(sPath, sCurDir=None):
         sPath = os.path.abspath(sPath.replace('./', sCurDir).strip())
         return sPath
     except:
-        log.fatal(u'AbsolutePath: <%s> current directory: <%s>' % (sPath, sCurDir))
+        log.fatal(u'Ошибка определения абсолютног пути <%s>. Текущая директория <%s>' % (sPath, sCurDir))
         return sPath
 
 
@@ -432,7 +450,7 @@ def _addCopyDirWalk(args, CurDir_, CurNames_):
                     try:
                         os.makedirs(to_path)
                     except:
-                        log.fatal(u'Create folder error: <%s>' % to_path)
+                        log.fatal(u'Ошибка создания папки <%s>' % to_path)
                         raise
 
 
@@ -444,10 +462,10 @@ def addCopyDir(Dir_, ToDir_, NotCopyFilter_=('.svn', '.SVN', '.Svn')):
     @param NotCopyFilter_: Не копировать файлы/папки.
     """
     try:
-        os.path.walk(Dir_, _addCopyDirWalk, (Dir_, ToDir_, NotCopyFilter_))
+        os.walk(Dir_, _addCopyDirWalk, (Dir_, ToDir_, NotCopyFilter_))
         return True
     except:
-        log.fatal(u'Append folder error, from folder %s to %s' % (Dir_, ToDir_))
+        log.fatal(u'Ошибка дополнения папки из <%s> в <%s>' % (Dir_, ToDir_))
         return False
 
 
@@ -464,16 +482,18 @@ def CopyDir(Dir_, ToDir_, ReWrite_=False, AddDir_=True):
     @return: Функция возвращает результат выполнения операции True/False.    
     """
     try:
-        to_dir = ToDir_+'/'+BaseName(Dir_)
+        to_dir = os.path.join(ToDir_, BaseName(Dir_))
         if os.path.exists(to_dir) and ReWrite_:
+            log.info(u'Удаление папки <%s>' % to_dir)
             shutil.rmtree(to_dir, 1)
-        if AddDir_:
+        if os.path.exists(to_dir) and AddDir_:
             return addCopyDir(Dir_, to_dir)
         else:
+            log.info(u'Копировние папки <%s> в <%s>' % (Dir_, to_dir))
             shutil.copytree(Dir_, to_dir)
         return True
     except:
-        log.fatal(u'Copy folder error, from %s to %s' % (Dir_, ToDir_))
+        log.fatal(u'Ошибка копирования папки из <%s> в <%s>' % (Dir_, ToDir_))
         return False
 
 
@@ -496,7 +516,7 @@ def CloneDir(Dir_, NewDir_, ReWrite_=False):
             icCopyFile(file_name, NewDir_+'/'+BaseName(file_name))
         return True
     except:
-        log.fatal(u'Clone folder error. Clone %s to %s' % (Dir_, NewDir_))
+        log.fatal(u'Ошибка клонирования папки из <%s> в <%s>' % (Dir_, NewDir_))
         return False
 
 
@@ -532,7 +552,25 @@ def getFilesByMask(FileMask_):
     @return: Возвращает список строк-полных путей к файлам.
         В случае ошибки None.
     """
-    return [AbsPath(file_name) for file_name in glob.glob(FileMask_)]
+    try:
+        if isinstance(FileMask_, str):
+            dir_path = os.path.dirname(FileMask_)
+            if os.path.exists(dir_path):
+                filenames = glob.glob(pathname=FileMask_, recursive=False)
+                return [os.path.abspath(file_name) for file_name in filenames]
+            else:
+                log.warning(u'Не найден путь <%s> для определения списка файлов по маске <%s>' % (dir_path, FileMask_))
+        elif isinstance(FileMask_, tuple) or isinstance(FileMask_, list):
+            filenames = list()
+            for file_mask in FileMask_:
+                filenames = glob.glob(pathname=FileMask_, recursive=False)
+                filenames += [os.path.abspath(file_name) for file_name in filenames]
+            return filenames
+        else:
+            log.warning(u'Не поддерживаемый тип аргумента в функции getFilesByMask')
+    except:
+        log.fatal(u'Ошибка определения списка файлов по маске <%s>' % str(FileMask_))
+    return []
 
 
 def copyToDir(FileName_, DestDir_, Rewrite_=True):
@@ -566,10 +604,10 @@ def delAllFilesFilter(DelDir_, *Filter_):
             del_files = getFilesByMask(os.path.join(DelDir_, file_mask))
             for del_file in del_files:
                 os.remove(del_file)
-                log.info(u'Remove file <%s>' % del_file)
+                log.info(u'Удаление файла <%s>' % del_file)
         return True
     except:
-        log.fatal(u'Error in function ic_file.delAllFilesFilter')
+        log.fatal(u'Ошибка удаления файлов %s из папки <%s>' % (str(Filter_), DelDir_))
         return None
 
 
