@@ -368,13 +368,13 @@ def rtfReport(data, repFileName, templFileName):
     """
     Создает rtf отчет по шаблону.
     """
-    f = open(templFileName, 'r')
+    f = open(templFileName, 'rt')
     rep = f.read()
     f.close()
 
     rep = parse_rtf(data, rep)
     
-    f = open(repFileName, 'w')
+    f = open(repFileName, 'wt')
     f.write(rep)
     f.close()
 

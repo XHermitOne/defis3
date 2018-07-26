@@ -14,8 +14,7 @@ import ic.imglib.common as imglib
 from ic.utils import ic_file
 from ic.utils import ic_res
 from ic.dlg import ic_dlg
-
-from ic.kernel import io_prnt
+from ic.log import log
 
 from ic.engine import icUser
 from . import prj_node
@@ -24,7 +23,7 @@ from . import userRes
 
 import ic
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -65,9 +64,11 @@ class PrjSecurity(prj_node.PrjFolder):
         if prj_file_name is None:
             prj_name = self.getRoot().prj_res_manager.getPrjRootName()
             return ic_file.AbsolutePath(prj_name,
-                                        os.path.dirname(self.getRoot().getPrjFileName()))+'/'+icUser.DEFAULT_USERS_RES_FILE
+                                        os.path.join(os.path.dirname(self.getRoot().getPrjFileName()),
+                                        icUser.DEFAULT_USERS_RES_FILE))
         else:
-            return os.path.split(prj_file_name)[0]+'/'+icUser.DEFAULT_USERS_RES_FILE
+            return os.path.join(os.path.split(prj_file_name)[0],
+                                icUser.DEFAULT_USERS_RES_FILE)
 
     def save(self):
         """
@@ -400,10 +401,12 @@ class PrjUserPrototype(prj_node.PrjNode):
         res_editor = tree_prj.res_editor
         if res_editor:
             old_res_name = self.getResName()
-            old_res_file = self.getResPath()+'/'+self.getResFileName()+'.'+self.getResFileExt()
+            old_res_file = os.path.join(self.getResPath(),
+                                        self.getResFileName()+'.'+self.getResFileExt())
             self.name = NewName_
             new_res_name = self.getResName()
-            new_res_file = self.getResPath()+'/'+self.getResFileName()+'.'+self.getResFileExt()
+            new_res_file = os.path.join(self.getResPath(),
+                                        self.getResFileName()+'.'+self.getResFileExt())
             # Если открыт в редакторе ресурсов, то поменять и в нем
             res_editor.CloseResource(bSaveAs=False, bCloseGrpEdt=False)
             

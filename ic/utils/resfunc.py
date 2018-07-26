@@ -132,7 +132,7 @@ def CreateInitFile(Path_):
 
     f = None
     try:
-        f = open(init_file, 'w')
+        f = open(init_file, 'wt')
         f.write(_InitFileDefault)
         f.close()
         log.info(u'Создан файл: <%s>.' % init_file)
@@ -180,7 +180,7 @@ def CreatePyFile(PyFileName_, PyFileBody_=None):
             os.makedirs(os.path.dirname(PyFileName_))
         except:
             pass
-        f = open(PyFileName_, 'w')
+        f = open(PyFileName_, 'wt')
         if PyFileBody_ is None:
             f.write(_PyFileDefault)
         else:
@@ -220,7 +220,7 @@ def LoadResourcePickle(FileName_):
     if os.path.isfile(FileName_):
         f = None
         try:
-            f = open(FileName_)
+            f = open(FileName_, 'rb')
             struct = pickle.load(f)
             f.close()
             return struct
@@ -242,7 +242,7 @@ def LoadResourceText(FileName_):
     if os.path.isfile(FileName_):
         f = None
         try:
-            f = open(FileName_)
+            f = open(FileName_, 'rt')
             txt = f.read().replace('\r\n', '\n')
             f.close()
             return eval(txt)
@@ -272,7 +272,7 @@ def SaveResourcePickle(FileName_, Resource_):
         except:
             pass
 
-        f = open(FileName_, 'w')
+        f = open(FileName_, 'wb')
         pickle.dump(Resource_, f)
         f.close()
         log.info(u'Файл <%s> сохранен в формате Pickle.' % FileName_)
@@ -301,7 +301,7 @@ def SaveResourceText(FileName_, Resource_):
         except:
             pass
 
-        f = open(FileName_, 'w')
+        f = open(FileName_, 'wt')
         text = ic_util.StructToTxt(Resource_)
         f.write(text)
         f.close()
@@ -343,7 +343,7 @@ def lockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     @param LockDir_: Папка блокировок.
     """
     if LockDir_ is None:
-        LockDir_ = os.getcwd()+'/lock'
+        LockDir_ = os.path.join(os.getcwd(), 'lock')
         try:
             os.makedirs(LockDir_)
         except:
@@ -365,7 +365,7 @@ def unlockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     @param LockDir_: Папка блокировок.
     """
     if LockDir_ is None:
-        LockDir_ = os.getcwd()+'/lock'
+        LockDir_ = os.path.join(os.getcwd(), 'lock')
         try:
             os.makedirs(LockDir_)
         except:
@@ -387,7 +387,7 @@ def isLockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     @param LockDir_: Папка блокировок.
     """
     if LockDir_ is None:
-        LockDir_ = os.getcwd()+'/lock'
+        LockDir_ = os.path.join(os.getcwd(), 'lock')
         try:
             os.makedirs(LockDir_)
         except:

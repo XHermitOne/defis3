@@ -3,6 +3,8 @@
 
 import os.path
 
+__version__ = (0, 1, 1, 1)
+
 
 def DoPyEndLine(dir_path):
     """
@@ -20,7 +22,7 @@ def DoPyEndLine(dir_path):
             except:
                 ext = None
             
-            fn = dir_path+'/'+fl
+            fn = os.path.join(dir_path, fl)
             
             #   Если очередное имя является именем директории то рекурсивно 
             #   вызываем функцию конвертации файлов директории
@@ -29,18 +31,21 @@ def DoPyEndLine(dir_path):
                 DoPyEndLine(fn)
                 
             elif ext in ['py', 'PY']:
+                f = None
                 try:
-                    f = open(fn, 'r')
+                    f = open(fn, 'rt')
                     txt = f.read(-1)
                     txt = txt.replace('\r\n', '\n').replace('\n\r', '\n').replace('\r', '\n')
                     f.close()
                     
-                    f = open(fn, 'w')
+                    f = open(fn, 'wt')
                     f.write(txt)
                     f.close()
 
                     print('>> Success convert file:', fn)
                 except:
+                    if f:
+                        f.close()
                     print('convert Error file:', fn)
 
 

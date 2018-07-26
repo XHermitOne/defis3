@@ -238,7 +238,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             CurFolder_ = self.getPrjRoot()
         # Если имя папки==имя проекта, то просто добавить
         # папку в проект
-        if FolderName_ == self.getPrjRootName() :
+        if FolderName_ == self.getPrjRootName():
             self.getPrjRoot().append({NewFolderName_: []})
             return True
             
@@ -410,7 +410,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             else:
                 if res_name == ResName_ and res[res_name] == ResType_:
                     return res_name, res[res_name]
-                elif res_name == ResName_ and ResType_ == None:
+                elif res_name == ResName_ and ResType_ is None:
                     return res_name, res[res_name]
         return ret_res
 
@@ -469,7 +469,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         """
         package_path = PackagePath_
         if NewPackageName_:
-            package_path += '/'+NewPackageName_
+            package_path = os.path.join(package_path, NewPackageName_)
         return ic_res.CreateInitFile(package_path)
 
     def addModule(self, ModuleName_, PackagePath_):
@@ -648,6 +648,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
                 if find_folder:
                     find_list += find_folder
             else:
+                res_file_name = u''
                 try:
                     res_file_name = res_name+'.'+res_type
                     if [pattern for pattern in ResPattern_ if re.match(pattern, res_file_name)]:
@@ -668,7 +669,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         res_file_names = self.getResFileNamesByResPattern(ResPattern_)
         prj_dir = os.path.dirname(self.prj_file_name)
         for res_file_name in res_file_names:
-            full_res_file_name = prj_dir+'/'+res_file_name
+            full_res_file_name = os.path.join(prj_dir, res_file_name)
             spc = util.readAndEvalFile(full_res_file_name, bRefresh=True)
             obj = (spc['type'], spc['name'], spc['description'])
             obj_list.append(obj)
@@ -746,7 +747,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         res_file_names = self.getResFileNamesByResPattern(ResPattern_)
         prj_dir = os.path.dirname(self.prj_file_name)
         for res_file_name in res_file_names:
-            full_res_file_name = prj_dir+'/'+res_file_name
+            full_res_file_name = os.path.join(prj_dir, res_file_name)
             obj_lst = self.getObjectsInResByType(full_res_file_name, ObjType_)
             obj_list += obj_lst
         return obj_list
@@ -762,7 +763,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         res_file_names = self.getResFileNamesByResPattern(ResPattern_)
         prj_dir = os.path.dirname(self.prj_file_name)
         for res_file_name in res_file_names:
-            full_res_file_name = prj_dir+'/'+res_file_name
+            full_res_file_name = os.path.join(prj_dir, res_file_name)
             obj_lst = self.getObjectsInResByTypes(full_res_file_name, ObjTypes_)
             obj_list += obj_lst
         return obj_list

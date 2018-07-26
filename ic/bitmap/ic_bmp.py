@@ -17,7 +17,7 @@ from ic.utils import ic_file
 
 import ic.imglib.common
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_MASK_COLOUR = wx.LIGHT_GREY
 
@@ -50,7 +50,7 @@ def createLibraryBitmap(img_filename, bMask=False):
     @return: Возвращает созданный объект или None в случае ошибки.
     """
     imglib_dir = getImageLibDir()
-    full_img_filename = os.path.normpath(imglib_dir+'/'+img_filename)
+    full_img_filename = os.path.normpath(os.path.join(imglib_dir, img_filename))
     if os.path.exists(full_img_filename):
         return createBitmap(full_img_filename, bMask)
     return None

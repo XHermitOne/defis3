@@ -17,6 +17,8 @@ find ./ic/ -type f -name "*.pyc" -delete
 
 import time
 import hashlib
+import os
+import os.path
 import wx
 
 from ic import components as components_lib
@@ -415,7 +417,7 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
                 else:
                     #   Определяем текущий системный путь
                     sys_path = resource.icGetSubsysResPaths()[0].replace('\\', '/')
-                    pathRes = '/'.join(sys_path.split('/')[:-1])+'/'+fileRes
+                    pathRes = os.path.join(os.path.sep.join(sys_path.split(os.path.sep)[:-1]), fileRes)
                     
                 formRes = resource.icGetRes(formName, ext='frm', pathRes=pathRes, bRefresh=IS_TEST_MODE)
             else:

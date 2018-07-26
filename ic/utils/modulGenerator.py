@@ -5,9 +5,14 @@
 Модуль содержит функции генерации специальных модулей.
 """
 
+import os
+import os.path
 import wx
+
 from . import resource
-import ic.kernel.io_prnt as io_prnt
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -165,29 +170,28 @@ def GenComponent(componentType, modulName=None, res=None):
     Функция генерирует модуль в интерфейсе компонента системы.
     """
     if not modulName:
-        import os.path as path
         mod_path = resource.icGetResPath()
         if mod_path:
-            mod_path = mod_path.replace('\\', '/') + '/usercomponents'
-            modulName = '%s/%s.py' % (mod_path, componentType)
-        if mod_path and not path.isdir(mod_path):
+            mod_path = os.path.join(mod_path, 'usercomponents')
+            modulName = os.path.join(mod_path, '%s.py' % componentType)
+        if mod_path and not os.path.isdir(mod_path):
             # Создаем пакет usercomponents
             from ic.utils import ic_res
             ic_res.CreatePackage(mod_path)
             log.info(_('INFO') +
-                           _('Create package %s') % mod_path)
+                     _('Create package %s') % mod_path)
             wx.MessageBox(_('WARRNING') + '! ' + _('Create package %s') % mod_path)
         elif not mod_path:
             log.info(_('WARRNING') +
-                           _('Subsystem component directory <%s> is not found.') % mod_path)
+                     _('Subsystem component directory <%s> is not found.') % mod_path)
             mod_path = resource.icGetUserClassesPath()
-            modulName = '%s/%s.py' % (mod_path, componentType)
+            modulName = os.path.join(mod_path, '%s.py' % componentType)
     
     className = 'C%s' % componentType
-    log.info(_('Generate component module: modul:%s, type:%s.') % (modulName, componentType))
+    log.info(_('Generate component module: module :%s, type:%s.') % (modulName, componentType))
     text = component_template % (className, str(res), '(1, 0, 0, 1)', componentType, className, className)
     #   Сохраняем сгенерированный текст модуля компонента
-    f = open(modulName, 'wb')
+    f = open(modulName, 'wt')
     f.write(text)
     f.close()
     wx.MessageBox(_('Component %s  is created successfuly!') % modulName)
@@ -197,24 +201,21 @@ def InheritComponent(componentType, parentModule, modulName=None):
     """
     Функция генерирует модуль в интерфейсе компонента системы.
     """
-    import os.path as path
     if not modulName:
         mod_path = resource.icGetResPath()
         if mod_path:
-            mod_path = mod_path.replace('\\', '/') + '/usercomponents'
-            modulName = '%s/%s.py' % (mod_path, componentType)
-        if mod_path and not path.isdir(mod_path):
+            mod_path = os.path.join(mod_path, 'usercomponents')
+            modulName = os.path.join(mod_path, '%s.py' % componentType)
+        if mod_path and not os.path.isdir(mod_path):
             # Создаем пакет usercomponents
             from ic.utils import ic_res
             ic_res.CreatePackage(mod_path)
-            log.info(_('INFO') +
-                           _('Create package %s') % mod_path)
+            log.info(_('INFO') + _('Create package %s') % mod_path)
             wx.MessageBox(_('WARRNING') + '! ' + _('Create package %s') % mod_path)
         elif not mod_path:
-            log.info(_('WARRNING') + '! ' +
-                           _('Subsystem component directory <%s> is not found.') % mod_path)
+            log.info(_('WARRNING') + '! ' + _('Subsystem component directory <%s> is not found.') % mod_path)
             mod_path = resource.icGetUserClassesPath()
-            modulName = '%s/%s.py' % (mod_path, componentType)
+            modulName = os.path.join(mod_path, '%s.py' % componentType)
     
     className = 'C%s' % componentType
     log.info(_('Generate component module: modul:%s, type:%s.') % (modulName, componentType))
@@ -224,13 +225,13 @@ def InheritComponent(componentType, parentModule, modulName=None):
                                          className,
                                          className)
     #   Сохраняем сгенерированный текст модуля компонента
-    if not path.isfile(modulName):
-        f = open(modulName, 'wb')
+    if not os.path.isfile(modulName):
+        f = open(modulName, 'wt')
         f.write(text)
         f.close()
         wx.MessageBox(_('Component %s  is created successfuly!') % modulName)
     else:
-        wx.MessageBox(_('Warrning! Module %s already exist!') % modulName, style=wx.ICON_ERROR )
+        wx.MessageBox(_('Warrning! Module %s already exist!') % modulName, style=wx.ICON_ERROR)
 
 
 def test1():

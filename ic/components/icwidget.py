@@ -883,7 +883,8 @@ class icSimple(icobject.icObject):
 
         #   Грузим модуль ресурса, если он определен в атрибуте 'res_module'
         if res.get('res_module', None) and self.GetContext().get('__file_res', None):
-            fn = os.path.dirname(self.GetContext()['__file_res'])+'/'+res['res_module']
+            fn = os.path.join(os.path.dirname(self.GetContext()['__file_res']),
+                              res['res_module'])
 
             if not os.path.isfile(fn):
                 return log.warning(u'\t(!) Resource module: <%s> is not found' % fn)
@@ -911,7 +912,8 @@ class icSimple(icobject.icObject):
         Инициализация модуля объекта. depricated.
         """
         if self.resource.get('obj_module', None):
-            fn = os.path.dirname(self.GetContext()['__file_res'])+'/'+self.resource['obj_module']
+            fn = os.path.join(os.path.dirname(self.GetContext()['__file_res']),
+                              self.resource['obj_module'])
             try:
                 mod = util.icLoadSource(self.resource['obj_module'].replace('.', '_'), fn)
                 self.__obj_module = mod

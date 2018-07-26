@@ -19,7 +19,7 @@ from . import ic_file
 from ic.engine import ic_user
 from ic.log import log
 
-__version__ = (1, 0, 1, 2)
+__version__ = (1, 1, 1, 1)
 
 #   Размер словаря ассоциаций
 accDictBuffSize = 100
@@ -69,7 +69,7 @@ class icAssociationDict(persistant.icPersistant):
 
         local_dir = ic_user.icGet('LOCAL_DIR')
         if not self.res_path and local_dir:
-            self.res_path = ic_file.NormPathUnix(local_dir+'/')
+            self.res_path = ic_file.NormPathUnix(local_dir)
 
         #   Читаем словарь
         self._model = {}

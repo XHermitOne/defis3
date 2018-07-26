@@ -22,7 +22,7 @@ def loadSource(name, path):
     @type path: C{string}
     @param path: Полный путь до модуля.
     """
-    f = open(path)
+    f = open(path, 'rt')
     mod = imp.load_source(name, path, f)
     f.close()
     return mod

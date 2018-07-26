@@ -30,7 +30,7 @@ def load_xml_content(xml_filename, is_change_keys=True):
 
     xml_file = None
     try:
-        xml_file = open(xml_filename, 'r')
+        xml_file = open(xml_filename, 'rt')
         xml_txt = xml_file.read()
         xml_file.close()
     except:
@@ -94,7 +94,7 @@ def save_xml_content(xml_filename, data, is_rewrite=True):
 
     xml_file = None
     try:
-        xml_file = open(xml_filename, 'w')
+        xml_file = open(xml_filename, 'wt')
         xml_file.write(xml_txt)
         xml_file.close()
         return True

@@ -9,11 +9,10 @@ import os
 import os.path
 import re
 
-# try:
-#     from utils import util
-# except:
-#     pass
 from ic.log import log
+from ic.utils import ic_util
+
+__version__ = (0, 1, 1, 1)
 
 RE_UID_PATTERN = r'........-....-....-....-............'
 RE_DATE_PATTERN = r',([0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]),'
@@ -48,7 +47,8 @@ class icCFResource:
             self.cf_res_filename = os.path.abspath(cf_res_filename)
         
         if os.path.exists(self.cf_res_filename):
-            f_res = None            
+            f_res = None
+            txt_data = u''
             try:
                 f_res = open(self.cf_res_filename)
                 txt_data = f_res.read()
@@ -115,7 +115,7 @@ class icCFResource:
         try:
             data = eval(txt_data)
         except:
-            log.fatal(u'ERROR! Resource syntax error: <%s>' % unicode(txt_data, 'utf-8'))
+            log.fatal(u'ERROR! Resource syntax error: <%s>' % txt_data)
             data = None
         
         return data
@@ -126,8 +126,8 @@ class icCFResource:
                 return data.replace('\n', '\r\r\n').replace('\\n', '\r\r\n')
             else:
                 return '"' + data.replace('\n', '\r\n') + '"'
-        elif isinstance(data, unicode):
-            return '"' + data.encode('utf-8') + '"'
+        # elif isinstance(data, unicode):
+        #    return '"' + data.encode('utf-8') + '"'
         else:
             return str(data)
         
@@ -157,7 +157,7 @@ class icCFResource:
         """
         Преобразовать данные в текст.
         """
-        data = util.structStrRecode(data, 'unicode', 'utf-8')
+        data = ic_util.icStructStrRecode(data, 'unicode', 'utf-8')
         txt_data = self._data2txt(data)
         txt_data = RESOURCE_PREFIX + txt_data
         
@@ -231,7 +231,7 @@ def test():
         
     sys.path.append(os.path.dirname(dir_path))
     
-    res_filename = os.path.abspath(dir_path + '/test/root')
+    res_filename = os.path.abspath(os.path.join(dir_path, 'test', 'root'))
     print('RES FILE:', res_filename)
     if os.path.exists(res_filename):
         res = icCFResource(res_filename)
@@ -247,7 +247,8 @@ def test1():
     if not dir_path:
         dir_path = os.getcwd()
         
-    res_filename = os.path.dirname(os.path.dirname(dir_path)) + '/example/form'
+    res_filename = os.path.join(os.path.dirname(os.path.dirname(dir_path)),
+                                'example', 'form')
     print('RES FILE:', res_filename)
     if os.path.exists(res_filename):
         res = icCFResource(res_filename)

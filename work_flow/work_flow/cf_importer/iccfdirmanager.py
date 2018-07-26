@@ -4,11 +4,14 @@
 """
 Класс работы с папкой конфигурации 1с, разобранной V8Unpack.
 """
+
 import os
 import os.path
 
 from .cf_obj import iccfroot
 from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 
 class icCFDirManager:
@@ -46,11 +49,11 @@ def test():
     """
     """
     cur_dir = os.getcwd()
-    # cf_dir=os.path.dirname(cur_dir)+'/testcf'
-    cf_dir = os.path.dirname(cur_dir)+'/tst_doc'
+    cf_dir = os.path.join(os.path.dirname(cur_dir), 'tst_doc')
     print('CF DIR:::', cf_dir)
     cf = icCFDirManager(cf_dir)
     cf.buildObjects()
-    
+
+
 if __name__ == '__main__':
     test()

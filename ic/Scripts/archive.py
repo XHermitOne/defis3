@@ -24,7 +24,7 @@ def _del_not_archived_walk(args, cur_dir, cur_names):
                 _find_ = True
                 break
         if _find_:
-            full_name = cur_dir+'/'+cur_name
+            full_name = os.path.join(cur_dir, cur_name)
             if os.path.isfile(full_name):
                 print('DELETE:', full_name)
                 os.remove(full_name)

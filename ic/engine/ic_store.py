@@ -20,8 +20,8 @@
 import copy
 from re import split
 
-from ic.kernel import io_prnt
 from ic.utils import resfunc
+from ic.log import log
 
 # --- Константы ---
 # Для защиты данных есть 3 флага (в виде строки '*r-'):
@@ -52,7 +52,7 @@ SPC_IC_STORENODE = {STORE_LOCK_KEY: None,       # Ключ блокировки 
                     STORE_ITEMS_KEY: {},        # Вложенные узлы
                     }
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icVarStorage:
@@ -91,8 +91,8 @@ class icVarStorage:
             path = split(r'[/]', Name_)
             return self.AddToPath(path, Data_, Security_)
         except:
-            log.error(u'Ошибка записи в хранилище объекта %s' % Name_)
-            return False, None
+            log.fatal(u'Ошибка записи в хранилище объекта %s' % Name_)
+        return False, None
 
     def AddToPath(self, Path_, Data_, Security_='*rw',storage_=None):
         """
@@ -136,17 +136,14 @@ class icVarStorage:
                 return self.AddToPath(Path_[1:], Data_, Security_, storage_)
             return True, None
         except:
-            log.error(u'Ошибка записи в хранилище объекта %s' % node)
-            return False, None
+            log.fatal(u'Ошибка записи в хранилище объекта %s' % node)
+        return False, None
 
     def Clear(self):
         """
         Полностью очистить хранилище.
         """
-        try:
-            self._storage = {}
-        except:
-            log.error(u'Ошибка очистки хранилища данных')
+        self._storage = dict()
 
     def Del(self, Name_):
         """
@@ -158,8 +155,8 @@ class icVarStorage:
             path = split(r'[/]', Name_)
             return self.DelToPath(path)
         except:
-            log.error(u'Ошибка удаления объекта <%s> из хранилища' % Name_)
-            return False, None
+            log.fatal(u'Ошибка удаления объекта <%s> из хранилища' % Name_)
+        return False, None
 
     def DelToPath(self, Path_, storage_=None):
         """
@@ -167,8 +164,8 @@ class icVarStorage:
         @param Path_: в качестве пути передается список имен.
         @return: Возвращает ссылку на объект или None.
         """
+        node = ''
         try:
-            node = ''
             # Проверка аргументов
             if not isinstance(Path_, list):
                 self._Log(u'Неверный тип аргумента Path_')
@@ -204,10 +201,9 @@ class icVarStorage:
                     return False, None
                 storage_ = storage_[node][STORE_ITEMS_KEY]
                 return self.DelToPath(Path_[1:], storage_)
-            return False, None
         except:
-            log.error(u'Ошибка удаления объекта <%s> из хранилища' % node)
-            return False, None
+            log.fatal(u'Ошибка удаления объекта <%s> из хранилища' % node)
+        return False, None
 
     def GetCopy(self, Name_, LockKey_=None):
         """
@@ -240,9 +236,9 @@ class icVarStorage:
                     return True, copy.deepcopy(node[STORE_DATA_KEY])
                 else:
                     self._Log(u'Запрет на чтение объекта <%s>' % Name_)
-            return False, None
         except:
-            log.error()
+            log.fatal()
+        return False, None
 
     def PutCopy(self, Name_, Data_, LockKey_=None):
         """
@@ -275,7 +271,8 @@ class icVarStorage:
                     return False, None
             return True, None
         except:
-            log.error()
+            log.fatal()
+        return False, None
 
     def Ref(self, Name_, LockKey_=None):
         """
@@ -308,17 +305,17 @@ class icVarStorage:
             if STORE_SECURITY_KEY in node:
                 if node[STORE_SECURITY_KEY][READ_IDX] == READ_SYMB:
                     return True, node[STORE_DATA_KEY]
-            return False, None
         except:
-            log.error()
+            log.fatal()
+        return False, None
 
     def _GetNode(self, Path_, storage_=None):
         """
         Получить узел объекта из хранилища по пути.
         @param Path_: в качестве пути передается список имен.
         """
+        node = ''
         try:
-            node = ''
             # Проверка аргументов
             if not isinstance(Path_, list):
                 self._Log(u'Неверный тип аргумента Path_')
@@ -335,10 +332,9 @@ class icVarStorage:
             else:
                 storage_ = storage_[node][STORE_ITEMS_KEY]
                 return self._GetNode(Path_[1:], storage_)
-            return False, None
         except:
-            log.error(u'Ошибка определения узла <%s>' % node)
-            return False, None
+            log.fatal(u'Ошибка определения узла <%s>' % node)
+        return False, None
         
     # --- Функции чтения/записи на диск ---
     def _Save(self, ResFile_=''):
@@ -354,7 +350,7 @@ class icVarStorage:
 
             resfunc.SaveResourceText(self._ResFile, self._storage)
         except:
-            log.error()
+            log.fatal()
 
     def _Load(self, ResFile_=''):
         """
@@ -367,7 +363,7 @@ class icVarStorage:
             if self._ResFile != '':
                 self._storage = resfunc.LoadResourceText(self._ResFile)
         except:
-            log.error()
+            log.fatal()
 
     # --- Сервисные функции ---
     def Is(self, Name_):
@@ -382,7 +378,8 @@ class icVarStorage:
                 return False
             return True
         except:
-            log.error()
+            log.fatal()
+        return False
 
     def CanRead(self, Name_, LockKey_=None):
         """
@@ -399,7 +396,8 @@ class icVarStorage:
                 return False
             return True
         except:
-            log.error()
+            log.fatal()
+        return False
 
     def CanWrite(self, Name_, LockKey_=None):
         """
@@ -416,7 +414,8 @@ class icVarStorage:
                 return False
             return True
         except:
-            log.error()
+            log.fatal()
+        return False
 
     def CanRef(self, Name_, LockKey_=None):
         """
@@ -433,7 +432,8 @@ class icVarStorage:
                 return False
             return True
         except:
-            log.error()
+            log.fatal()
+        return False
 
     def TextStorage(self):
         """
@@ -452,7 +452,8 @@ class icVarStorage:
             txt += line
             return txt
         except:
-            log.error(u'Ошибка преобразования в виде текста объектов ХРАНИЛИЩА')
+            log.fatal(u'Ошибка преобразования в виде текста объектов ХРАНИЛИЩА')
+        return None
         
     def _TextListAll(self, Storage_=None, Path_=''):
         """
@@ -469,7 +470,7 @@ class icVarStorage:
             security = Storage_[obj_name][STORE_SECURITY_KEY]
             lock = u'-'
             
-            if Storage_[obj_name][STORE_LOCK_KEY]<>None:
+            if Storage_[obj_name][STORE_LOCK_KEY] is not None:
                 lock = u'+'
             txt += u'%-20s %-40s %-9s %-7s' % (name, value, security, lock)
             if STORE_ITEMS_KEY in Storage_[obj_name] and \

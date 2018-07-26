@@ -641,7 +641,7 @@ class icPyEditorFrame(icframe.icFrame):
 
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPaths()[0]
-            f = open(path)
+            f = open(path, 'wt')
             txt = f.read()
             f.close()
             
@@ -761,7 +761,7 @@ if __name__ == '__main__':
     app = wx.PySimpleApp(0)
     wx.InitAllImageHandlers()
     
-    f = open('icResTree.py')
+    f = open('icResTree.py', 'rt')
     res = f.read()
     f.close()
 

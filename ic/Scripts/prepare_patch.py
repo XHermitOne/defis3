@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os, os.path
-import sys
-import datetime
-import time
-import shutil
-__doc__ = """ Create patch folder with changed files.
+"""
+Create patch folder with changed files.
 prepare_patch path [lt [path_to [ignor_list] ]]
 path    - files projects path
 lt      - compare time - files changed after this time will copy to patch folder
@@ -14,6 +10,18 @@ ignor_lst - ignor list files. For example: '*.doc', 'first.bat'
 
 Example: prepare_patch c:\defis 2009.09.04 c:\defis_patch *.pyc *.pyo
 """
+
+import os
+import os.path
+import sys
+import datetime
+import time
+import shutil
+
+
+__version__ = (0, 1, 1, 1)
+
+
 IGNOR_PATCH_FILE_EXT = [
     '*.pyc',
     '*.~py',
@@ -25,29 +33,33 @@ IGNOR_PATCH_FILE_EXT = [
     '*.bak',
     '*_pkl.*',
     '*.rar',
-    #'*.html',
+    # '*.html',
     '*.zip',
     '.svn',
     '*.mdb',
     'Thumbs.db',
     '*.tmp',
     '*.chm',
-    #'*.doc',
+    # '*.doc',
     '.pdbrc',
 ]
 
-IGNOR_PATCH_FOLDER_PRZ = ['.svn',
+
+IGNOR_PATCH_FOLDER_PRZ = [
+    '.svn',
     '.git',
     '/lock',
     '/log',
     '/tmp',
     'Registr/admin',
-    #'Registr/NSI',
+    # 'Registr/NSI',
     'Registr/STD',
     'media/npa',
     ]
 
-IGNOR_RELEASE_FOLDER_PRZ = ['.svn',
+
+IGNOR_RELEASE_FOLDER_PRZ = [
+    '.svn',
     '.git',
     '/lock',
     '/log',
@@ -55,11 +67,13 @@ IGNOR_RELEASE_FOLDER_PRZ = ['.svn',
     'Registr/admin',
     ]
 
-#IGNOR_PATCH_FOLDER_PRZ = IGNOR_RELEASE_FOLDER_PRZ
+
+# IGNOR_PATCH_FOLDER_PRZ = IGNOR_RELEASE_FOLDER_PRZ
+
 
 def parse_folder(args, dirname, names):
     """ """
-    dirname = dirname.replace('\\','/')
+    dirname = dirname.replace('\\', '/')
     for ign in IGNOR_PATCH_FOLDER_PRZ:
         if ign in dirname:
            return
@@ -83,19 +97,19 @@ def parse_folder(args, dirname, names):
     for fn in names:
         ignor = False
         for ign in il:
-            ign=ign.replace('*','')
+            ign = ign.replace('*', '')
             if ign in fn:
                 ignor = True
                 break
-        src = '%s/%s' % (dirname, fn)
+        src = os.path.join(dirname, fn)
         if not ignor and not os.path.isdir(src):
             tm = os.path.getmtime(src)
             st = list(time.gmtime(tm))
-            #st[3] += 8
-            #print st
+            # st[3] += 8
+            # print st
             tt = '%04d.%02d.%02d %02d:%02d' % (st[0], st[1], st[2], st[3], st[4])
             if tt >= lt:
-                dst =  '%s/%s' % (todir, fn)
+                dst = os.path.join(todir, fn)
                 if not bp and not os.path.isdir(todir):
                     os.makedirs(todir)
                     print('make dirs:', todir)
@@ -113,18 +127,21 @@ def parse_folder(args, dirname, names):
                 print(s)
                 f.write(s+'\n')
 
+
 def prepare_patch_tree(path, path_to, lt, ignor_list=IGNOR_PATCH_FILE_EXT):
-    """ Создает папку с файлами которые изменились с определенного времени.
+    """
+    Создает папку с файлами которые изменились с определенного времени.
     @param path: Путь до папки с проектом.
     @param path_to: Путь куда положить патч.
     @param lt: Время актуальных изменений. Если не указано, то изменения беруться за текущий день.
     @param ignor_list: Список игнорируемых файлов.
     """
     ignor_list = ignor_list or IGNOR_PATCH_FILE_EXT
-    #print (path, path_to, lt, ignor_list)
-    f = open('patch.log', 'w')
+    # print (path, path_to, lt, ignor_list)
+    f = open('patch.log', 'wt')
     os.path.walk(path, parse_folder, (path, path_to, lt, ignor_list, f))
     f.close()
+
 
 def main():
     pars = sys.argv[1:]
@@ -141,7 +158,7 @@ def main():
     now = datetime.datetime.now()
 
     if len(pars) > 1:
-        lt = pars[1].replace('-','.').replace('&',' ')
+        lt = pars[1].replace('-', '.').replace('&', ' ')
     else:
         lt = '%04d.%02d.%02d' % (now.year, now.month, now.day)
 
@@ -156,6 +173,7 @@ def main():
         ignor_list = None
 
     prepare_patch_tree(path, path_to, lt, ignor_list)
+
 
 if __name__ == '__main__':
     main()

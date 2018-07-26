@@ -8,23 +8,23 @@
 """
 
 # Imports
+import copy
 import os
 import os.path
 import wx
 
 from ic.utils import ic_mode
 
-from ic import io_prnt
-from ic.utils import ic_str
 from ic.utils import util
 from ic.utils import ic_file
+from ic.log import log
 
 from ic.engine import ic_user
 
 from . import frm_gen_templates
 
 # Version
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 # Classes
 # Размеры генерируемых диалоговых окон по умолчанию
@@ -98,10 +98,10 @@ class icObjFormGenerator:
         from ic.components import icgriddataset
         from ic.components import icgrid
         
-        grid_spc = util.icSpcDefStruct(util.DeepCopy(icgriddataset.SPC_IC_GRID_DATASET), None)
+        grid_spc = util.icSpcDefStruct(copy.deepcopy(icgriddataset.SPC_IC_GRID_DATASET), None)
         
         for requisite in self.getChildrenRequisites():
-            grid_col_spc = util.icSpcDefStruct(util.DeepCopy(icgrid.SPC_IC_CELL), None)
+            grid_col_spc = util.icSpcDefStruct(copy.deepcopy(icgrid.SPC_IC_CELL), None)
             
             grid_spc['child'].append(grid_col_spc)
         return grid_spc
@@ -123,13 +123,13 @@ class icObjFormGenerator:
 
         # Панель инструментов
         # Генерация ресурса панели инструментов поиска
-        toolbar_spc = util.icSpcDefStruct(util.DeepCopy(ictoolbar.ic_class_spc), None)
+        toolbar_spc = util.icSpcDefStruct(copy.deepcopy(ictoolbar.ic_class_spc), None)
         toolbar_spc['name'] = 'ctrl_toolbar'
         toolbar_spc['image_list'] = (('icImageList', 'search_imglst', None, 'search_imglst.mtd', 'work_flow'),)
         toolbar_spc['flag'] = wx.EXPAND
 
         if isAddTool_:
-            tool_spc = util.icSpcDefStruct(util.DeepCopy(ictoolbar.SPC_IC_TB_TOOL), None)
+            tool_spc = util.icSpcDefStruct(copy.deepcopy(ictoolbar.SPC_IC_TB_TOOL), None)
             tool_spc['name'] = 'add_obj_tool'
             tool_spc['img_indx'] = 8
             tool_spc['shortHelpString'] = u'Добавить объект'
@@ -137,7 +137,7 @@ class icObjFormGenerator:
             toolbar_spc['child'].append(tool_spc)
 
         if isDelTool_:
-            tool_spc = util.icSpcDefStruct(util.DeepCopy(ictoolbar.SPC_IC_TB_TOOL), None)
+            tool_spc = util.icSpcDefStruct(copy.deepcopy(ictoolbar.SPC_IC_TB_TOOL), None)
             tool_spc['name'] = 'del_obj_tool'
             tool_spc['img_indx'] = 9
             tool_spc['shortHelpString'] = u'Удалить объект'
@@ -145,12 +145,12 @@ class icObjFormGenerator:
             toolbar_spc['child'].append(tool_spc)
 
         if isViewTool_ or isEditTool_:
-            separator_spc = util.icSpcDefStruct(util.DeepCopy(ictoolbar.SPC_IC_TB_SEPARATOR), None)
+            separator_spc = util.icSpcDefStruct(copy.deepcopy(ictoolbar.SPC_IC_TB_SEPARATOR), None)
             separator_spc['name'] = 'separator1'
             toolbar_spc['child'].append(separator_spc)
         
         if isViewTool_:
-            tool_spc = util.icSpcDefStruct(util.DeepCopy(ictoolbar.SPC_IC_TB_TOOL), None)
+            tool_spc = util.icSpcDefStruct(copy.deepcopy(ictoolbar.SPC_IC_TB_TOOL), None)
             tool_spc['name'] = 'view_obj_tool'
             tool_spc['img_indx'] = 3
             tool_spc['shortHelpString'] = u'Показать выбранный объект'
@@ -158,7 +158,7 @@ class icObjFormGenerator:
             toolbar_spc['child'].append(tool_spc)
         
         if isEditTool_:
-            tool_spc = util.icSpcDefStruct(util.DeepCopy(ictoolbar.SPC_IC_TB_TOOL), None)
+            tool_spc = util.icSpcDefStruct(copy.deepcopy(ictoolbar.SPC_IC_TB_TOOL), None)
             tool_spc['name'] = 'edit_obj_tool'
             tool_spc['img_indx'] = 4
             tool_spc['shortHelpString'] = u'Редактировать выбранный объект'
@@ -177,7 +177,7 @@ class icObjFormGenerator:
         from ic.components.user import icsimpletreelistctrl
         
         # Дерево выбора
-        tree_spc = util.icSpcDefStruct(util.DeepCopy(icsimpletreelistctrl.ic_class_spc), None)
+        tree_spc = util.icSpcDefStruct(copy.deepcopy(icsimpletreelistctrl.ic_class_spc), None)
         tree_spc['name'] = 'tree_object_ctrl'
         tree_spc['flag'] = wx.GROW | wx.EXPAND
         tree_spc['proportion'] = 1
@@ -191,7 +191,7 @@ class icObjFormGenerator:
     def _genResModule(self, ResModuleFileName_, Txt_):
         """
         Генерация модуля формы объекта по описанию объекта.
-        @param ResModuleName_: Имя модуля генерируемой формы.
+        @param ResModuleFileName_: Имя файла модуля генерируемой формы.
         @return: Возвращает True/False.
         """
         res_module = None
@@ -204,7 +204,7 @@ class icObjFormGenerator:
             if res_module:
                 res_module.close()
             if ic_mode.isDebugMode():
-                log.error(u'Ошибка генерации файла модуля формы %s' % ResModuleFileName_)
+                log.fatal(u'Ошибка генерации файла модуля формы %s' % ResModuleFileName_)
             return None
     
     def _genChoicePanelRes(self, name=None):
@@ -221,23 +221,24 @@ class icObjFormGenerator:
         if name is None:
             name = self.getChoicePanelName()
 
-        spc = util.icSpcDefStruct(util.DeepCopy(icwxpanel.SPC_IC_PANEL), None)
+        spc = util.icSpcDefStruct(copy.deepcopy(icwxpanel.SPC_IC_PANEL), None)
         spc['name'] = 'choice_panel'
         spc['res_module'] = name+'_frm.py'
         spc['title'] = u''+self._getTxtDescription()
         spc['onInit'] = 'GetManager(self).onInit(event)'
 
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+spc['res_module'])
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'),
+                                                                 spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+name+'.frm')
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), name+'.frm'))
         txt = frm_gen_templates._choiceDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                           form_file_name, res_module_file_name,
                                                           name+'_ChoicePanel', name+'_ChoicePanel')
         self._genResModule(res_module_file_name, txt)
 
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.SPC_IC_BOXSIZER), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.SPC_IC_BOXSIZER), None)
         box_sizer_spc['name'] = name+'_sizer_v'
         box_sizer_spc['layout'] = 'vertical'
         box_sizer_spc['flag'] = wx.GROW | wx.EXPAND
@@ -250,7 +251,7 @@ class icObjFormGenerator:
         box_sizer_spc['child'].append(toolbar_spc)
 
         # Компонент выбора фильтров
-        filter_choice = util.icSpcDefStruct(util.DeepCopy(icfilterchoicectrl.ic_class_spc), None)
+        filter_choice = util.icSpcDefStruct(copy.deepcopy(icfilterchoicectrl.ic_class_spc), None)
         filter_choice['name'] = 'filter_choice'
         filter_choice['flag'] = wx.GROW | wx.EXPAND
         filter_choice['save_filename'] = icfilterchoicectrl.DEFAULT_FILTER_SAVE_FILENAME
@@ -281,7 +282,7 @@ class icObjFormGenerator:
         if name is None:
             name = self.getChoiceFormName()
         
-        frm_spc = util.icSpcDefStruct(util.DeepCopy(icdialog.SPC_IC_DIALOG), None)
+        frm_spc = util.icSpcDefStruct(copy.deepcopy(icdialog.SPC_IC_DIALOG), None)
         frm_spc['name'] = 'choice_dlg'
         frm_spc['size'] = DEFAULT_DIALOG_SIZE
         frm_spc['style'] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
@@ -290,16 +291,16 @@ class icObjFormGenerator:
         frm_spc['onInit'] = 'GetManager(self).onInit(event)'
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+frm_spc['res_module'])
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+name+'.frm')
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), name+'.frm'))
         txt = frm_gen_templates._choiceDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                           form_file_name, res_module_file_name,
                                                           name+'_ChoiceForm', name+'_ChoiceForm')
         self._genResModule(res_module_file_name, txt)
         
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.SPC_IC_BOXSIZER), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.SPC_IC_BOXSIZER), None)
         box_sizer_spc['name'] = name+'_sizer_v'
         box_sizer_spc['layout'] = 'vertical'
         frm_spc['child'].append(box_sizer_spc)
@@ -310,14 +311,14 @@ class icObjFormGenerator:
         box_sizer_spc['child'].append(toolbar_spc)
         
         # Сплиттер
-        splitter_spc = util.icSpcDefStruct(util.DeepCopy(icsplitter.ic_class_spc), None)
+        splitter_spc = util.icSpcDefStruct(copy.deepcopy(icsplitter.ic_class_spc), None)
         splitter_spc['name'] = 'choice_splitter'
         splitter_spc['flag'] = wx.GROW | wx.EXPAND
         splitter_spc['proportion'] = 1
         splitter_spc['sash_pos'] = DEFAULT_DIALOG_HEIGHT/2
         box_sizer_spc['child'].append(splitter_spc)
         # Генерация ресурса стандартного дерева конструктора фильтра
-        filter_list = util.icSpcDefStruct(util.DeepCopy(icmulticolumnlist.ic_class_spc), None)
+        filter_list = util.icSpcDefStruct(copy.deepcopy(icmulticolumnlist.ic_class_spc), None)
         filter_list['name'] = 'filter_list'
         filter_list['fields'] = [u'Фильтр', u'Описание']
         splitter_spc['win1'] = filter_list
@@ -326,12 +327,12 @@ class icObjFormGenerator:
         splitter_spc['win2'] = view_grid_spc
         
         # Кнопки
-        btn_box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.SPC_IC_BOXSIZER), None)
+        btn_box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.SPC_IC_BOXSIZER), None)
         btn_box_sizer_spc['name'] = name+'_sizer_btn'
         btn_box_sizer_spc['layout'] = 'horizontal'
         btn_box_sizer_spc['flag'] = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT
         btn_box_sizer_spc['border'] = 5
-        btn_cancel_spc = util.icSpcDefStruct(util.DeepCopy(icbutton.SPC_IC_BUTTON), None)
+        btn_cancel_spc = util.icSpcDefStruct(copy.deepcopy(icbutton.SPC_IC_BUTTON), None)
         btn_cancel_spc['name'] = 'cancel_button'
         btn_cancel_spc['label'] = u'Отмена'
         btn_cancel_spc['flag'] = wx.ALL
@@ -339,7 +340,7 @@ class icObjFormGenerator:
         btn_cancel_spc['mouseClick'] = 'GetManager(self).onCancelButton(event)'
         btn_box_sizer_spc['child'].append(btn_cancel_spc)
         
-        btn_ok_spc = util.icSpcDefStruct(util.DeepCopy(icbutton.SPC_IC_BUTTON), None)
+        btn_ok_spc = util.icSpcDefStruct(copy.deepcopy(icbutton.SPC_IC_BUTTON), None)
         btn_ok_spc['name'] = 'ok_button'
         btn_ok_spc['label'] = u'OK'
         btn_ok_spc['flag'] = wx.ALL
@@ -475,9 +476,9 @@ class icObjFormGenerator:
         """
         Описание объекта в текстовом представлении.
         """
-        if type(self.description) in (str, unicode):
+        if isinstance(self.description, str):
             return self.description
-        return ''
+        return u''
         
     def _genInitDialogRes(self, FormName_=None):
         """
@@ -492,7 +493,7 @@ class icObjFormGenerator:
         if FormName_ is None:
             FormName_ = self.getInitFormName()
         
-        frm_spc = util.icSpcDefStruct(util.DeepCopy(icdialog.ic_class_spc), None)
+        frm_spc = util.icSpcDefStruct(copy.deepcopy(icdialog.ic_class_spc), None)
         frm_spc['name'] = 'init_dlg'
         frm_spc['res_module'] = FormName_+'_frm.py'
         frm_spc['size'] = DEFAULT_DIALOG_SIZE
@@ -500,16 +501,16 @@ class icObjFormGenerator:
         frm_spc['title'] = u'Создание: '+self._getTxtDescription()
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+frm_spc['res_module'])
-        if ic_file.Exists(res_module_file_name):
-            ic_file.Remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+FormName_+'.frm')
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), frm_spc['res_module']))
+        if os.path.exists(res_module_file_name):
+            os.remove(res_module_file_name)
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), FormName_+'.frm'))
         txt = frm_gen_templates._initResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                      form_file_name, res_module_file_name,
                                                      FormName_+'_InitForm', FormName_+'_InitForm')
         self._genResModule(res_module_file_name, txt)
         
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.SPC_IC_BOXSIZER), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.SPC_IC_BOXSIZER), None)
         box_sizer_spc['name'] = 'init_sizer_v'
         box_sizer_spc['layout'] = 'vertical'
         frm_spc['child'].append(box_sizer_spc)
@@ -518,13 +519,13 @@ class icObjFormGenerator:
         edit_panel_spc = self._genStdInitPanelRes(FormName_)
         box_sizer_spc['child'].append(edit_panel_spc)
         
-        btn_box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.SPC_IC_BOXSIZER), None)
+        btn_box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.SPC_IC_BOXSIZER), None)
         btn_box_sizer_spc['name'] = 'init_sizer_btn'
         btn_box_sizer_spc['layout'] = 'horizontal'
         btn_box_sizer_spc['flag'] = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT
         btn_box_sizer_spc['border'] = 5
         
-        btn_cancel_spc = util.icSpcDefStruct(util.DeepCopy(icbutton.SPC_IC_BUTTON), None)
+        btn_cancel_spc = util.icSpcDefStruct(copy.deepcopy(icbutton.SPC_IC_BUTTON), None)
         btn_cancel_spc['name'] = 'cancel_button'
         btn_cancel_spc['label'] = u'Отмена'
         btn_cancel_spc['flag'] = wx.ALL
@@ -532,7 +533,7 @@ class icObjFormGenerator:
         btn_cancel_spc['mouseClick'] = 'GetManager(self).onCancelButton(event)'
         btn_box_sizer_spc['child'].append(btn_cancel_spc)
 
-        btn_ok_spc = util.icSpcDefStruct(util.DeepCopy(icbutton.SPC_IC_BUTTON), None)
+        btn_ok_spc = util.icSpcDefStruct(copy.deepcopy(icbutton.SPC_IC_BUTTON), None)
         btn_ok_spc['name'] = 'ok_button'
         btn_ok_spc['label'] = u'OK'
         btn_ok_spc['flag'] = wx.ALL
@@ -568,7 +569,7 @@ class icObjFormGenerator:
         from ic.components.custom import icnotebook
         from ic.components.sizers import icgridbagsizer
         
-        notebook_spc = util.icSpcDefStruct(util.DeepCopy(icnotebook.ic_class_spc), None)
+        notebook_spc = util.icSpcDefStruct(copy.deepcopy(icnotebook.ic_class_spc), None)
         notebook_spc['name'] = 'init_notebook'
         notebook_spc['flag'] = wx.GROW | wx.EXPAND
         notebook_spc['proportion'] = 1
@@ -617,7 +618,7 @@ class icObjFormGenerator:
                         box_spc['span'] = (1, 2)
                         sizer_spc['child'].append(box_spc)
                     else:
-                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.warning(u'Ошибка определения типа реквизита %s' % child_requisite.name)
                     sizer_spc['flexCols'] = [2]
         
         return notebook_spc
@@ -633,13 +634,13 @@ class icObjFormGenerator:
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
 
-        scrolledwin_spc = util.icSpcDefStruct(util.DeepCopy(icscrolledpanel.ic_class_spc), None)
+        scrolledwin_spc = util.icSpcDefStruct(copy.deepcopy(icscrolledpanel.ic_class_spc), None)
         scrolledwin_spc['name'] = 'init_scrolledwin'
         scrolledwin_spc['flag'] = wx.GROW | wx.EXPAND
         scrolledwin_spc['style'] = wx.TAB_TRAVERSAL
         scrolledwin_spc['proportion'] = 1
         
-        win_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icgridbagsizer.ic_class_spc), None)
+        win_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icgridbagsizer.ic_class_spc), None)
         win_sizer_spc['name'] = 'win_sizer'
         win_sizer_spc['flag'] = wx.GROW | wx.EXPAND
         win_sizer_spc['vgap'] = 5
@@ -688,7 +689,7 @@ class icObjFormGenerator:
         if FormName_ is None:
             FormName_ = self.getSearchFormName()+'_dlg'
 
-        frm_spc = util.icSpcDefStruct(util.DeepCopy(icdialog.ic_class_spc), None)
+        frm_spc = util.icSpcDefStruct(copy.deepcopy(icdialog.ic_class_spc), None)
         frm_spc['name'] = 'search_dlg'
         frm_spc['size'] = DEFAULT_DIALOG_SIZE
         frm_spc['style'] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
@@ -696,29 +697,29 @@ class icObjFormGenerator:
         frm_spc['title'] = u'Поиск: '+self._getTxtDescription()
 
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+frm_spc['res_module'])
-        if ic_file.Exists(res_module_file_name):
-            ic_file.Remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+FormName_+'.frm')
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), frm_spc['res_module']))
+        if os.path.exists(res_module_file_name):
+            os.remove(res_module_file_name)
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), FormName_+'.frm'))
         txt = frm_gen_templates._searchDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                           form_file_name, res_module_file_name,
                                                           FormName_+'_SearchDialog', FormName_+'_SearchDialog')
         self._genResModule(res_module_file_name, txt)
 
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         box_sizer_spc['name'] = 'search_sizer_v'
         box_sizer_spc['layout'] = 'vertical'
         frm_spc['child'].append(box_sizer_spc)
         
         # Панель в диалог добавляется по ссылке
-        search_panel_spc = util.icSpcDefStruct(util.DeepCopy(icobjectlink.ic_class_spc), None)
+        search_panel_spc = util.icSpcDefStruct(copy.deepcopy(icobjectlink.ic_class_spc), None)
         search_panel_spc['name'] = 'search_panel_link'
         search_panel_spc['flag'] = wx.GROW | wx.EXPAND
         search_panel_spc['proportion'] = 1
         search_panel_spc['object'] = ((None, None, None, self.getSearchFormName()+'.frm', None),)
         box_sizer_spc['child'].append(search_panel_spc)
 
-        button_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        button_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         button_sizer_spc['name'] = 'button_sizer_h'
         button_sizer_spc['layout'] = 'horizontal'
         box_sizer_spc['child'].append(button_sizer_spc)
@@ -737,7 +738,7 @@ class icObjFormGenerator:
         if FormName_ is None:
             FormName_ = self.getSearchFormName()
         
-        frm_spc = util.icSpcDefStruct(util.DeepCopy(icwxpanel.ic_class_spc), None)
+        frm_spc = util.icSpcDefStruct(copy.deepcopy(icwxpanel.ic_class_spc), None)
         frm_spc['name'] = 'search_panel'
         frm_spc['res_module'] = FormName_+'_frm.py'
         frm_spc['flag'] = wx.GROW | wx.EXPAND
@@ -745,16 +746,16 @@ class icObjFormGenerator:
         frm_spc['description'] = u'Поиск: '+self._getTxtDescription()
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+frm_spc['res_module'])
-        if ic_file.Exists(res_module_file_name):
-            ic_file.Remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+FormName_+'.frm')
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), frm_spc['res_module']))
+        if os.path.exists(res_module_file_name):
+            os.remove(res_module_file_name)
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), FormName_+'.frm'))
         txt = frm_gen_templates._searchResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                        form_file_name, res_module_file_name,
                                                        FormName_+'_SearchPanel', FormName_+'_SearchPanel')
         self._genResModule(res_module_file_name, txt)
         
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         box_sizer_spc['name'] = 'search_sizer_v'
         box_sizer_spc['layout'] = 'vertical'
         frm_spc['child'].append(box_sizer_spc)
@@ -779,7 +780,7 @@ class icObjFormGenerator:
         """ 
         from ic.components.custom import icsplitter
         
-        splitter_spc = util.icSpcDefStruct(util.DeepCopy(icsplitter.ic_class_spc), None)
+        splitter_spc = util.icSpcDefStruct(copy.deepcopy(icsplitter.ic_class_spc), None)
         splitter_spc['name'] = 'search_splitter'
         splitter_spc['flag'] = wx.GROW | wx.EXPAND
         splitter_spc['proportion'] = 1
@@ -810,7 +811,7 @@ class icObjFormGenerator:
         from ic.components.custom import icnotebook
         from ic.components.sizers import icgridbagsizer
         
-        notebook_spc = util.icSpcDefStruct(util.DeepCopy(icnotebook.ic_class_spc), None)
+        notebook_spc = util.icSpcDefStruct(copy.deepcopy(icnotebook.ic_class_spc), None)
         notebook_spc['name'] = 'search_notebook'
         notebook_spc['flag'] = wx.GROW | wx.EXPAND
         notebook_spc['proportion'] = 1
@@ -867,13 +868,13 @@ class icObjFormGenerator:
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
 
-        page_spc = util.icSpcDefStruct(util.DeepCopy(icscrolledpanel.ic_class_spc), None)
+        page_spc = util.icSpcDefStruct(copy.deepcopy(icscrolledpanel.ic_class_spc), None)
         page_spc['name'] = 'page_'+str(PageIdx_)
         page_spc['flag'] = wx.GROW | wx.EXPAND
         page_spc['style'] = wx.TAB_TRAVERSAL
         page_spc['proportion'] = 1
 
-        page_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icgridbagsizer.ic_class_spc), None)
+        page_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icgridbagsizer.ic_class_spc), None)
         page_sizer_spc['name'] = 'page_sizer_'+str(PageIdx_)
         page_sizer_spc['flag'] = wx.GROW | wx.EXPAND
         page_sizer_spc['proportion'] = 1
@@ -895,15 +896,15 @@ class icObjFormGenerator:
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
 
-        scrolledwin_spc = util.icSpcDefStruct(util.DeepCopy(icscrolledpanel.ic_class_spc), None)
+        scrolledwin_spc = util.icSpcDefStruct(copy.deepcopy(icscrolledpanel.ic_class_spc), None)
         scrolledwin_spc['name'] = 'search_scrolledwin'
         scrolledwin_spc['flag'] = wx.GROW | wx.EXPAND
         scrolledwin_spc['style'] = wx.TAB_TRAVERSAL
         scrolledwin_spc['proportion'] = 1
         
-        win_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icgridbagsizer.ic_class_spc), None)
+        win_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icgridbagsizer.ic_class_spc), None)
         win_sizer_spc['name'] = 'win_sizer'
-        wiin_sizer_spc['flag'] = wx.GROW | wx.EXPAND
+        win_sizer_spc['flag'] = wx.GROW | wx.EXPAND
         win_sizer_spc['proportion'] = 1
         win_sizer_spc['vgap'] = 5
         win_sizer_spc['flexCols'] = [2]
@@ -939,9 +940,9 @@ class icObjFormGenerator:
         from ic.components import icgrid
 
         if self.isAutoGroup():
-            grid_spc = util.icSpcDefStruct(util.DeepCopy(icsimplegrplistview.ic_class_spc), None)
+            grid_spc = util.icSpcDefStruct(copy.deepcopy(icsimplegrplistview.ic_class_spc), None)
         else:
-            grid_spc = util.icSpcDefStruct(util.DeepCopy(icsimpleobjlistview.ic_class_spc), None)
+            grid_spc = util.icSpcDefStruct(copy.deepcopy(icsimpleobjlistview.ic_class_spc), None)
         grid_spc['name'] = 'view_obj_grid'
         grid_spc['data_src'] = tuple(self.GetPassport())
 
@@ -951,7 +952,7 @@ class icObjFormGenerator:
             log.warning(u'Генерация грида объекта. Не определены реквизиты объекта <%s>' % self.__class__.__name__)
         for i, child_requisite in enumerate(requisites):
             if child_requisite._isIDAttr():
-                column_spc = util.icSpcDefStruct(util.DeepCopy(icgrid.SPC_IC_CELL), None)
+                column_spc = util.icSpcDefStruct(copy.deepcopy(icgrid.SPC_IC_CELL), None)
                 column_spc['name'] = child_requisite.getFieldName()
                 column_spc['label'] = child_requisite.getLabel()
                 column_spc['width'] = child_requisite._getDefaultWidth()
@@ -974,7 +975,7 @@ class icObjFormGenerator:
         if FormName_ is None:
             FormName_ = self.getEditFormName()+'_dlg'
 
-        frm_spc = util.icSpcDefStruct(util.DeepCopy(icdialog.ic_class_spc), None)
+        frm_spc = util.icSpcDefStruct(copy.deepcopy(icdialog.ic_class_spc), None)
         frm_spc['name'] = 'edit_dlg'
         frm_spc['size'] = DEFAULT_DIALOG_SIZE
         frm_spc['style'] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
@@ -983,36 +984,36 @@ class icObjFormGenerator:
         # frm_spc['onInit'] = 'GetManager(self).onInit(event)'
 
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+frm_spc['res_module'])
-        if ic_file.Exists(res_module_file_name):
-            ic_file.Remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+FormName_+'_dlg.frm')
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), frm_spc['res_module']))
+        if os.path.exists(res_module_file_name):
+            os.remove(res_module_file_name)
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), FormName_+'_dlg.frm'))
         txt = frm_gen_templates._editDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                         form_file_name, res_module_file_name,
                                                         FormName_+'_EditDialog', FormName_+'_EditDialog')
         self._genResModule(res_module_file_name, txt)
 
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         box_sizer_spc['name'] = 'edit_sizer_v'
         box_sizer_spc['layout'] = 'vertical'
         frm_spc['child'].append(box_sizer_spc)
         
         # Панель в диалог добавляется по ссылке
-        search_panel_spc = util.icSpcDefStruct(util.DeepCopy(icobjectlink.ic_class_spc), None)
+        search_panel_spc = util.icSpcDefStruct(copy.deepcopy(icobjectlink.ic_class_spc), None)
         search_panel_spc['name'] = 'edit_panel_link'
         search_panel_spc['flag'] = wx.GROW | wx.EXPAND
         search_panel_spc['proportion'] = 1
         search_panel_spc['object'] = ((None, None, None, self.getEditFormName()+'.frm', None),)
         box_sizer_spc['child'].append(search_panel_spc)
 
-        button_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        button_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         button_sizer_spc['name'] = 'button_sizer_h'
         button_sizer_spc['layout'] = 'horizontal'
         button_sizer_spc['flag'] = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT
         button_sizer_spc['border'] = 5
         box_sizer_spc['child'].append(button_sizer_spc)
 
-        btn_cancel_spc = util.icSpcDefStruct(util.DeepCopy(icbutton.SPC_IC_BUTTON), None)
+        btn_cancel_spc = util.icSpcDefStruct(copy.deepcopy(icbutton.SPC_IC_BUTTON), None)
         btn_cancel_spc['name'] = 'cancel_button'
         btn_cancel_spc['label'] = u'Отмена'
         btn_cancel_spc['flag'] = wx.ALL
@@ -1020,7 +1021,7 @@ class icObjFormGenerator:
         btn_cancel_spc['mouseClick'] = 'GetManager(self).onCancelButton(event)'
         button_sizer_spc['child'].append(btn_cancel_spc)
         
-        btn_ok_spc = util.icSpcDefStruct(util.DeepCopy(icbutton.SPC_IC_BUTTON), None)
+        btn_ok_spc = util.icSpcDefStruct(copy.deepcopy(icbutton.SPC_IC_BUTTON), None)
         btn_ok_spc['name'] = 'ok_button'
         btn_ok_spc['label'] = u'Ok'
         btn_ok_spc['flag'] = wx.ALL
@@ -1044,7 +1045,7 @@ class icObjFormGenerator:
         if FormName_ is None:
             FormName_ = self.getEditFormName()
         
-        frm_spc = util.icSpcDefStruct(util.DeepCopy(icwxpanel.ic_class_spc), None)
+        frm_spc = util.icSpcDefStruct(copy.deepcopy(icwxpanel.ic_class_spc), None)
         frm_spc['name'] = 'edit_panel'
         frm_spc['res_module'] = FormName_+'_frm.py'
         frm_spc['flag'] = wx.GROW | wx.EXPAND
@@ -1053,16 +1054,16 @@ class icObjFormGenerator:
         frm_spc['description'] = u'Редактирование: '+self._getTxtDescription()
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+frm_spc['res_module'])
-        if ic_file.Exists(res_module_file_name):
-            ic_file.Remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+FormName_+'.frm')
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), frm_spc['res_module']))
+        if os.path.exists(res_module_file_name):
+            os.remove(res_module_file_name)
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), FormName_+'.frm'))
         txt = frm_gen_templates._editResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                      form_file_name, res_module_file_name,
                                                      FormName_+'_EditPanel', FormName_+'_EditPanel')
         self._genResModule(res_module_file_name, txt)
         
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         box_sizer_spc['name'] = 'edit_sizer_v'
         box_sizer_spc['flag'] = wx.GROW | wx.EXPAND
         box_sizer_spc['proportion'] = 1
@@ -1073,7 +1074,7 @@ class icObjFormGenerator:
             # Если к объекту прикреплена история, то
             # необходимо в панель редактирования вставить панель
             # редактирования периодов истории
-            splitter_spc = util.icSpcDefStruct(util.DeepCopy(icsplitter.ic_class_spc), None)
+            splitter_spc = util.icSpcDefStruct(copy.deepcopy(icsplitter.ic_class_spc), None)
             splitter_spc['name'] = 'edit_splitter'
             splitter_spc['flag'] = wx.GROW | wx.EXPAND
             splitter_spc['proportion'] = 1
@@ -1083,7 +1084,7 @@ class icObjFormGenerator:
             panel_spc = self._genStdEditPanelRes(FormName_)
             splitter_spc['win1'] = panel_spc
             #
-            obj_link_spc = util.icSpcDefStruct(util.DeepCopy(icobjectlink.ic_class_spc), None)
+            obj_link_spc = util.icSpcDefStruct(copy.deepcopy(icobjectlink.ic_class_spc), None)
             obj_link_spc['name'] = 'hist_panel_link'
             obj_link_spc['object'] = self.getHistory().getEditFormPsp()
             splitter_spc['win2'] = obj_link_spc
@@ -1117,7 +1118,7 @@ class icObjFormGenerator:
         from ic.components.custom import icnotebook
         from ic.components.sizers import icgridbagsizer
         
-        notebook_spc = util.icSpcDefStruct(util.DeepCopy(icnotebook.ic_class_spc), None)
+        notebook_spc = util.icSpcDefStruct(copy.deepcopy(icnotebook.ic_class_spc), None)
         notebook_spc['name'] = 'edit_notebook'
         notebook_spc['flag'] = wx.GROW | wx.EXPAND
         notebook_spc['proportion'] = 1
@@ -1166,7 +1167,7 @@ class icObjFormGenerator:
                         box_spc['span'] = (1, 2)
                         sizer_spc['child'].append(box_spc)
                     else:
-                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.warning(u'Ошибка определения типа реквизита %s' % child_requisite.name)
         
         return notebook_spc
     
@@ -1181,13 +1182,13 @@ class icObjFormGenerator:
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
 
-        scrolledwin_spc = util.icSpcDefStruct(util.DeepCopy(icscrolledpanel.ic_class_spc), None)
+        scrolledwin_spc = util.icSpcDefStruct(copy.deepcopy(icscrolledpanel.ic_class_spc), None)
         scrolledwin_spc['name'] = 'edit_scrolledwin'
         scrolledwin_spc['flag'] = wx.GROW | wx.EXPAND
         scrolledwin_spc['style'] = wx.TAB_TRAVERSAL
         scrolledwin_spc['proportion'] = 1
         
-        win_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icgridbagsizer.ic_class_spc), None)
+        win_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icgridbagsizer.ic_class_spc), None)
         win_sizer_spc['name'] = 'win_sizer'
         win_sizer_spc['flag'] = wx.GROW | wx.EXPAND
         win_sizer_spc['proportion'] = 1
@@ -1217,7 +1218,7 @@ class icObjFormGenerator:
                         box_spc['span'] = (1, 2)
                         sizer_spc['child'].append(box_spc)
                     else:
-                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.warning(u'Ошибка определения типа реквизита %s' % child_requisite.name)
         
         return scrolledwin_spc
         
@@ -1261,7 +1262,7 @@ class icObjFormGenerator:
         if FormName_ is None:
             FormName_ = self.getViewFormName()+'_dlg'
 
-        frm_spc = util.icSpcDefStruct(util.DeepCopy(icdialog.ic_class_spc), None)
+        frm_spc = util.icSpcDefStruct(copy.deepcopy(icdialog.ic_class_spc), None)
         frm_spc['name'] = 'view_dlg'
         frm_spc['size'] = DEFAULT_DIALOG_SIZE
         frm_spc['style'] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
@@ -1269,29 +1270,29 @@ class icObjFormGenerator:
         frm_spc['title'] = u'Просмотр: '+self._getTxtDescription()
 
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+frm_spc['res_module'])
-        if ic_file.Exists(res_module_file_name):
-            ic_file.Remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+FormName_+'.frm')
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), frm_spc['res_module']))
+        if os.path.exists(res_module_file_name):
+            os.remove(res_module_file_name)
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), FormName_+'.frm'))
         txt = frm_gen_templates._viewDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                         form_file_name, res_module_file_name,
                                                         FormName_+'_ViewDialog', FormName_+'_ViewDialog')
         self._genResModule(res_module_file_name, txt)
 
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         box_sizer_spc['name'] = 'view_sizer_v'
         box_sizer_spc['layout'] = 'vertical'
         frm_spc['child'].append(box_sizer_spc)
         
         # Панель в диалог добавляется по ссылке
-        search_panel_spc = util.icSpcDefStruct(util.DeepCopy(icobjectlink.ic_class_spc), None)
+        search_panel_spc = util.icSpcDefStruct(copy.deepcopy(icobjectlink.ic_class_spc), None)
         search_panel_spc['name'] = 'view_panel_link'
         search_panel_spc['flag'] = wx.GROW | wx.EXPAND
         search_panel_spc['proportion'] = 1
         search_panel_spc['object'] = ((None, None, None, self.getViewFormName()+'.frm', None),)
         box_sizer_spc['child'].append(search_panel_spc)
 
-        button_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        button_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         button_sizer_spc['name'] = 'button_sizer_h'
         button_sizer_spc['layout'] = 'horizontal'
         box_sizer_spc['child'].append(button_sizer_spc)
@@ -1311,7 +1312,7 @@ class icObjFormGenerator:
         if FormName_ is None:
             FormName_ = self.getViewFormName()
         
-        frm_spc = util.icSpcDefStruct(util.DeepCopy(icwxpanel.ic_class_spc), None)
+        frm_spc = util.icSpcDefStruct(copy.deepcopy(icwxpanel.ic_class_spc), None)
         frm_spc['name'] = 'view_panel'
         frm_spc['res_module'] = FormName_+'_frm.py'
         frm_spc['flag'] = wx.GROW | wx.EXPAND
@@ -1319,16 +1320,16 @@ class icObjFormGenerator:
         frm_spc['description'] = u'Просмотр: '+self._getTxtDescription()
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+frm_spc['res_module'])
-        if ic_file.Exists(res_module_file_name):
-            ic_file.Remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(ic_user.icGet('PRJ_DIR')+'/'+FormName_+'.frm')
+        res_module_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), frm_spc['res_module']))
+        if os.path.exists(res_module_file_name):
+            os.remove(res_module_file_name)
+        form_file_name = ic_file.AbsolutePath(os.path.join(ic_user.icGet('PRJ_DIR'), FormName_+'.frm'))
         txt = frm_gen_templates._viewResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                      form_file_name, res_module_file_name,
                                                      FormName_+'_ViewPanel', FormName_+'_ViewPanel')
         self._genResModule(res_module_file_name, txt)
         
-        box_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icboxsizer.ic_class_spc), None)
+        box_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icboxsizer.ic_class_spc), None)
         box_sizer_spc['name'] = 'view_sizer_v'
         box_sizer_spc['layout'] = 'vertical'
         frm_spc['child'].append(box_sizer_spc)
@@ -1362,7 +1363,7 @@ class icObjFormGenerator:
         from ic.components.custom import icnotebook
         from ic.components.sizers import icgridbagsizer
         
-        notebook_spc = util.icSpcDefStruct(util.DeepCopy(icnotebook.ic_class_spc), None)
+        notebook_spc = util.icSpcDefStruct(copy.deepcopy(icnotebook.ic_class_spc), None)
         notebook_spc['name'] = 'view_notebook'
         notebook_spc['flag'] = wx.GROW | wx.EXPAND
         notebook_spc['proportion'] = 1
@@ -1414,7 +1415,7 @@ class icObjFormGenerator:
                         box_spc['child'][0]['enable'] = False
                         sizer_spc['child'].append(box_spc)
                     else:
-                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.warning(u'Ошибка определения типа реквизита %s' % child_requisite.name)
                     
         return notebook_spc
     
@@ -1429,13 +1430,13 @@ class icObjFormGenerator:
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
 
-        scrolledwin_spc = util.icSpcDefStruct(util.DeepCopy(icscrolledpanel.ic_class_spc), None)
+        scrolledwin_spc = util.icSpcDefStruct(copy.deepcopy(icscrolledpanel.ic_class_spc), None)
         scrolledwin_spc['name'] = 'view_scrolledwin'
         scrolledwin_spc['flag'] = wx.GROW | wx.EXPAND
         scrolledwin_spc['style'] = wx.TAB_TRAVERSAL
         scrolledwin_spc['proportion'] = 1
         
-        win_sizer_spc = util.icSpcDefStruct(util.DeepCopy(icgridbagsizer.ic_class_spc), None)
+        win_sizer_spc = util.icSpcDefStruct(copy.deepcopy(icgridbagsizer.ic_class_spc), None)
         win_sizer_spc['name'] = 'win_sizer'
         win_sizer_spc['flag'] = wx.GROW | wx.EXPAND
         win_sizer_spc['proportion'] = 1
@@ -1468,7 +1469,7 @@ class icObjFormGenerator:
                         box_spc['child'][0]['enable'] = False
                         sizer_spc['child'].append(box_spc)
                     else:
-                        log.info(u'Ошибка определения типа реквизита %s' % child_requisite.name)
+                        log.warning(u'Ошибка определения типа реквизита %s' % child_requisite.name)
         
         return scrolledwin_spc
         
@@ -1560,6 +1561,7 @@ class icObjFormGenerator:
         """
         return None
 
+
 # Идентификаторы типов редакторов реквизитов
 TEXT_EDIT_TYPE = 'Text'
 DATE_EDIT_TYPE = 'Date'
@@ -1592,7 +1594,7 @@ class icAttrFormGenerator:
         """
         Описание объекта в текстовом представлении.
         """
-        if type(self.description) in (str, unicode):
+        if isinstance(self.description, str):
             return self.description.strip()
         return ''
         
@@ -1601,10 +1603,10 @@ class icAttrFormGenerator:
         Надпись атрибута.
         """
         try:
-            if self.label and type(self.label) in (str, unicode):
+            if self.label and isinstance(self.label, str):
                 return self.label
         except AttributeError:
-            log.info(u'У атрибута <%s> объекта не определено свойство label' % self.name)
+            log.warning(u'У атрибута <%s> объекта не определено свойство label' % self.name)
         description = self._getTxtDescription()
         if description[-1] != u':':
             return description+u':'
@@ -1617,7 +1619,7 @@ class icAttrFormGenerator:
         try:
             return self.isInit()
         except AttributeError:
-            log.info(u'В атрибуте <%s> объекта не определен метод isInit' % self.name)
+            log.warning(u'В атрибуте <%s> объекта не определен метод isInit' % self.name)
             return True
         
     def _isEdit(self):
@@ -1627,7 +1629,7 @@ class icAttrFormGenerator:
         try:
             return self.isEdit()
         except AttributeError:
-            log.info(u'В атрибуте <%s> объекта не определен метод isEdit' % self.name)
+            log.warning(u'В атрибуте <%s> объекта не определен метод isEdit' % self.name)
             return True
         
     def _isView(self):
@@ -1637,7 +1639,7 @@ class icAttrFormGenerator:
         try:
             return self.isView()
         except AttributeError:
-            log.info(u'В атрибуте <%s> объекта не определен метод isView' % self.name)
+            log.warning(u'В атрибуте <%s> объекта не определен метод isView' % self.name)
             return True
         
     def _isSearch(self):
@@ -1647,7 +1649,7 @@ class icAttrFormGenerator:
         try:
             return self.isSearch()
         except AttributeError:
-            log.info(u'В атрибуте <%s> объекта не определен метод isSearch' % self.name)
+            log.warning(u'В атрибуте <%s> объекта не определен метод isSearch' % self.name)
             return True
 
     def _isIDAttr(self):
@@ -1657,7 +1659,7 @@ class icAttrFormGenerator:
         try:
             return self.isIDAttr()
         except AttributeError:
-            log.info(u'В атрибуте <%s> объекта не определен метод isIDAttr' % self.name)
+            log.warning(u'В атрибуте <%s> объекта не определен метод isIDAttr' % self.name)
             return False
         
     def _genEditorName(self):
@@ -1695,7 +1697,7 @@ class icAttrFormGenerator:
         elif edit_type == NSI_EDIT_TYPE:
             editor_spc = self._genNSIEditorRes(self._genEditorName(), ResModuleFileName_)
         else:
-            log.info(u'Не определен тип редактора реквизита <%s>' % self.name)
+            log.warning(u'Не определен тип редактора реквизита <%s>' % self.name)
             
         return editor_spc
 
@@ -1709,9 +1711,9 @@ class icAttrFormGenerator:
         from ic.components import ictextfield
         
         # Редактор
-        editor_spc = util.icSpcDefStruct(util.DeepCopy(ictextfield.ic_class_spc), None)
+        editor_spc = util.icSpcDefStruct(copy.deepcopy(ictextfield.ic_class_spc), None)
         editor_spc['name'] = EditorName_
-        editor_spc['flag'] = wx.GROW|wx.EXPAND
+        editor_spc['flag'] = wx.GROW | wx.EXPAND
         editor_spc['proportion'] = 1
         editor_spc['style'] |= wx.ALIGN_LEFT
         editor_spc['size'] = DEFAULT_ATTR_EDIT_SIZE
@@ -1732,7 +1734,7 @@ class icAttrFormGenerator:
         from ic.components.user import icdatepickerctrl
         
         # Редактор
-        editor_spc = util.icSpcDefStruct(util.DeepCopy(icdatepickerctrl.ic_class_spc), None)
+        editor_spc = util.icSpcDefStruct(copy.deepcopy(icdatepickerctrl.ic_class_spc), None)
         editor_spc['name'] = EditorName_
         editor_spc['flag'] = wx.GROW | wx.EXPAND
         editor_spc['proportion'] = 1
@@ -1755,7 +1757,7 @@ class icAttrFormGenerator:
         from ic.components.custom import icspinner
         
         # Редактор
-        editor_spc = util.icSpcDefStruct(util.DeepCopy(icspinner.ic_class_spc), None)
+        editor_spc = util.icSpcDefStruct(copy.deepcopy(icspinner.ic_class_spc), None)
         editor_spc['name'] = EditorName_
         editor_spc['flag'] = wx.GROW | wx.EXPAND
         editor_spc['proportion'] = 1
@@ -1778,7 +1780,7 @@ class icAttrFormGenerator:
         from ic.components.custom import icspinner
         
         # Редактор
-        editor_spc = util.icSpcDefStruct(util.DeepCopy(icspinner.ic_class_spc), None)
+        editor_spc = util.icSpcDefStruct(copy.deepcopy(icspinner.ic_class_spc), None)
         editor_spc['name'] = EditorName_
         editor_spc['flag'] = wx.GROW | wx.EXPAND
         editor_spc['proportion'] = 1
@@ -1801,7 +1803,7 @@ class icAttrFormGenerator:
         from NSI.usercomponents import spravtreecomboctrl
         
         # Редактор
-        editor_spc = util.icSpcDefStruct(util.DeepCopy(spravtreecomboctrl.ic_class_spc), None)
+        editor_spc = util.icSpcDefStruct(copy.deepcopy(spravtreecomboctrl.ic_class_spc), None)
         editor_spc['name'] = EditorName_
         editor_spc['flag'] = wx.GROW | wx.EXPAND
         editor_spc['proportion'] = 1
@@ -1824,7 +1826,7 @@ class icAttrFormGenerator:
         from work_flow.usercomponents import refobjchoicecomboctrl
 
         # Редактор
-        editor_spc = util.icSpcDefStruct(util.DeepCopy(refobjchoicecomboctrl.ic_class_spc), None)
+        editor_spc = util.icSpcDefStruct(copy.deepcopy(refobjchoicecomboctrl.ic_class_spc), None)
         editor_spc['name'] = EditorName_
         editor_spc['flag'] = wx.GROW | wx.EXPAND
         editor_spc['proportion'] = 1
@@ -1846,7 +1848,7 @@ class icAttrFormGenerator:
         from ic.components.custom import icstatictext
 
         # Надпись
-        label_spc = util.icSpcDefStruct(util.DeepCopy(icstatictext.ic_class_spc), None)
+        label_spc = util.icSpcDefStruct(copy.deepcopy(icstatictext.ic_class_spc), None)
         label_spc['name'] = str(self.name).lower()+'_label'
         label_spc['flag'] = wx.GROW | wx.EXPAND
         label_spc['proportion'] = 0
@@ -1858,6 +1860,7 @@ class icAttrFormGenerator:
         # Дополнить модуль ресурса обработчиками событий
 
         return label_spc
+
 
 # Размеры редактора табличного атрибута по умолчанию
 DEFAULT_GRID_EDIT_WIDTH = 500
@@ -1884,7 +1887,7 @@ class icGridFormGenerator:
         try:
             return self.isInit()
         except AttributeError:
-            log.info(u'В атрибуте <%s> объекта не определен метод isInit' % self.name)
+            log.warning(u'В атрибуте <%s> объекта не определен метод isInit' % self.name)
             return True
         
     def _isEdit(self):
@@ -1894,7 +1897,7 @@ class icGridFormGenerator:
         try:
             return self.isEdit()
         except AttributeError:
-            log.info(u'В атрибуте <%s> объекта не определен метод isEdit' % self.name)
+            log.warning(u'В атрибуте <%s> объекта не определен метод isEdit' % self.name)
             return True
         
     def _isView(self):
@@ -1904,7 +1907,7 @@ class icGridFormGenerator:
         try:
             return self.isView()
         except AttributeError:
-            log.info(u'В атрибуте <%s> объекта не определен метод isView' % self.name)
+            log.warning(u'В атрибуте <%s> объекта не определен метод isView' % self.name)
             return True
         
     def _isSearch(self):
@@ -1936,13 +1939,13 @@ class icGridFormGenerator:
         from ic.components import icgrid
         
         # Сайзер
-        sizer_spc = util.icSpcDefStruct(util.DeepCopy(icstaticboxsizer.ic_class_spc), None)
+        sizer_spc = util.icSpcDefStruct(copy.deepcopy(icstaticboxsizer.ic_class_spc), None)
         sizer_spc['flag'] = wx.GROW | wx.EXPAND
         sizer_spc['proportion'] = 1
         sizer_spc['label'] = self.getLabel()
         
         # Грид
-        grid_spc = util.icSpcDefStruct(util.DeepCopy(icgriddataset.ic_class_spc), None)
+        grid_spc = util.icSpcDefStruct(copy.deepcopy(icgriddataset.ic_class_spc), None)
         grid_spc['name'] = self._genGridName()
         grid_spc['flag'] = wx.GROW | wx.EXPAND
         grid_spc['proportion'] = 1
@@ -1952,7 +1955,7 @@ class icGridFormGenerator:
         # Заполнение колонок
         for child_requisite in self.getChildrenRequisites():
             if child_requisite._isEdit():
-                column_spc = util.icSpcDefStruct(util.DeepCopy(icgrid.SPC_IC_CELL), None)
+                column_spc = util.icSpcDefStruct(copy.deepcopy(icgrid.SPC_IC_CELL), None)
                 column_spc['name'] = child_requisite.getFieldName()
                 column_spc['label'] = child_requisite.getLabel()
                 column_spc['width'] = child_requisite._getDefaultWidth()

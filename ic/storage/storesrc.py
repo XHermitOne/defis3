@@ -12,19 +12,19 @@
 """
 
 # --- Подключение библиотек ---
+import os
+import os.path
 import shelve
 import copy
-import time
 
 import ic.utils.lock
 from ic.utils import ic_util
 from ic.utils import ic_file
 from ic.interfaces import StorageInterface as storage_interface
 from ic.utils import ic_exec
+from ic.log import log
 
-from ic.kernel import io_prnt
-
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 1, 1, 1)
 
 # --- Константы и спецификации ---
 DEFAULT_STORAGE_DIR = ic_file.getProfilePath()
@@ -415,7 +415,8 @@ class icFileStorage(storage_interface.icElementStorageInterface):
         Определить имя файла по имени узла.
         """
         if self._ParentNode is not None:
-            self._FileName = self._ParentNode.getNodeDir()+'/'+Name_+FILE_STORAGE_EXT
+            self._FileName = os.path.join(self._ParentNode.getNodeDir(),
+                                          Name_+FILE_STORAGE_EXT)
         
     def getFileName(self):
         """
@@ -431,7 +432,8 @@ class icFileStorage(storage_interface.icElementStorageInterface):
             return
             
         if self._ParentNode is not None:
-            new_file_name = self._ParentNode.getNodeDir()+'/'+NewName_+FILE_STORAGE_EXT
+            new_file_name = os.path.join(self._ParentNode.getNodeDir(),
+                                         NewName_+FILE_STORAGE_EXT)
             # Необходимо переименовать файл
             self.renameFile(new_file_name)
 
@@ -552,7 +554,8 @@ class icFileStorage(storage_interface.icElementStorageInterface):
         Клонировать узел.
         @param CloneName_: Имя клона.
         """
-        new_file_name = ic_file.DirName(self._FileName)+'/'+CloneName_+FILE_STORAGE_EXT
+        new_file_name = os.path.join(os.path.dirname(self._FileName),
+                                     CloneName_+FILE_STORAGE_EXT)
         # Клонировать только если такого файла нет
         if not ic_file.Exists(new_file_name):
             self.closeFile()
@@ -617,7 +620,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
             item = item.getData()
 
         # Только если значение изменено, только тогда записать
-        self._file[str(key)]=item
+        self._file[str(key)] = item
 
     def __delitem__(self, key):
         if not self.isOpen():
@@ -804,14 +807,14 @@ class icDirStorage(storage_interface.icElementStorageInterface):
         for name in list_dir:
             # Отфильтровать папки системного назначения
             if name[0] != SYSTEM_DIR_PREFIX:
-                full_name = self._NodeDir+'/'+name
+                full_name = os.path.join(self._NodeDir, name)
                 if ic_file.IsDir(full_name):
                     self._StorageDB[name] = icDirStorage()
                     self._StorageDB[name].setParentNode(self, name)
                     self._StorageDB[name].Open()
                 elif ic_file.IsFile(full_name):
                     if name != DIR_STORAGE_PROPERTY_FILE_NAME:
-                        node_name = ic_file.SplitExt(name)[0]
+                        node_name = os.path.splitext(name)[0]
                         self._StorageDB[node_name] = icFileStorage()
                         self._StorageDB[node_name].setParentNode(self, node_name)
                     else:
@@ -874,7 +877,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
             return
             
         if self._ParentNode is not None:
-            new_node_dir = self._ParentNode.getNodeDir()+'/'+NewName_
+            new_node_dir = os.path.join(self._ParentNode.getNodeDir(), NewName_)
 
             # Необходимо переименовать папку
             self.copyNodeDir(new_node_dir)
@@ -908,7 +911,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
         @param Name_: Имя узла.
         """
         if self._ParentNode is not None:
-            self._NodeDir = self._ParentNode.getNodeDir()+'/'+Name_
+            self._NodeDir = os.path.join(self._ParentNode.getNodeDir(), Name_)
         else:
             self._NodeDir = Name_
         # Кроме того что необходимо поменять путь до папки
@@ -935,7 +938,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
             return
         
         # Сохранить свои свойства
-        if self._NodeDir and (not ic_file.Exists(self._NodeDir)):
+        if self._NodeDir and (not os.path.exists(self._NodeDir)):
             self.makeNodeDir()
         if self.property:
             self.property.save()
@@ -989,7 +992,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
         Клонировать узел.
         @param CloneName_: Имя клона.
         """
-        new_dir_name = ic_file.DirName(self._NodeDir)+'/'+CloneName_
+        new_dir_name = os.path.join(os.path.dirname(self._NodeDir), CloneName_)
         # Клонировать только если такого директория нет
         if not ic_file.Exists(new_dir_name):
             self.closeAllFiles()
@@ -997,7 +1000,8 @@ class icDirStorage(storage_interface.icElementStorageInterface):
             # Установить имя в файле свойств
             file = None
             try:
-                file = shelve.open(new_dir_name+'/'+DIR_STORAGE_PROPERTY_FILE_NAME,
+                filename = os.path.join(new_dir_name, DIR_STORAGE_PROPERTY_FILE_NAME)
+                file = shelve.open(filename,
                                    protocol=FILE_STORAGE_PROTOCOL, writeback=self._cache)
                 file['name'] = CloneName_
                 file.sync()
@@ -1163,7 +1167,8 @@ class icTreeDirStorage(icDirStorage):
         """
         # Создать системму блокировки
         if StorageDir_:
-            self._lockSys = ic.utils.lock.icLockSystem(StorageDir_+'/#lock')
+            lock_dir = os.path.join(StorageDir_, '#lock')
+            self._lockSys = ic.utils.lock.icLockSystem(lock_dir)
         return self.makeNodeDir(StorageDir_)
 
     def clearStorageDir(self, StorageDir_=None):
@@ -1177,7 +1182,7 @@ class icTreeDirStorage(icDirStorage):
                 ic_file.RemoveTreeDir(StorageDir_, True)
                 ic_file.MakeDirs(StorageDir_)
             except:
-                log.error(u'Ошибка очистки папки объектного хранилища <%s>' % StorageDir_)
+                log.fatal(u'Ошибка очистки папки объектного хранилища <%s>' % StorageDir_)
         
     def getStorageDir(self):
         return self.getNodeDir()
@@ -1192,7 +1197,7 @@ class icTreeDirStorage(icDirStorage):
             return
             
         # Сохранить свои свойства
-        if self._NodeDir and (not ic_file.Exists(self._NodeDir)):
+        if self._NodeDir and (not os.path.exists(self._NodeDir)):
             self.makeNodeDir()
         # !!! У корня не надо сохранять свойства!!!
 

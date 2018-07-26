@@ -104,7 +104,7 @@ def _toUnicodeResourceWalk(args, CurDir_, CurNames_):
             new_text = str(x_dict)
             print('>>', res_file, ' : ', x_dict)
             try:
-                f = open(res_file, 'w')
+                f = open(res_file, 'wt')
                 f.write(new_text)
                 f.close()
             except:

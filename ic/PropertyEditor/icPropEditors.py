@@ -554,7 +554,7 @@ class icEditImportNames(icEditPropDict):
             fn = _path + fname
 
             if os.path.exists(fn):
-                f = open(fn)
+                f = open(fn, 'rt')
                 txt = f.read()
                 f.close()
                 break

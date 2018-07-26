@@ -34,7 +34,7 @@ from . import prj_module
 try:
     import winpdb
 except:
-    log.error(u'Winpdb import Error', bForcePrint=True)
+    log.error(u'Ошибка импорта Winpdb', bForcePrint=True)
 
 # import shlex
 import subprocess
@@ -234,8 +234,9 @@ class PrjRoot(ImpNode.PrjImportSys):
         Создать новый __init__.py файл проекта.
         """
         log.info(_('__init__.py is created in folder %s') % PrjPath_)
-        return ic_file.icCopyFile(os.path.dirname(__file__)+'/prj__init__prototype.py',
-                                  PrjPath_+'/__init__.py', False)
+        return ic_file.icCopyFile(os.path.join(os.path.dirname(__file__),
+                                               'prj__init__prototype.py'),
+                                  os.path.join(PrjPath_, '__init__.py'), False)
         
     def newPrj(self):
         """
@@ -262,7 +263,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             # Инициализировать по умолчанию
             self.Default()
             # определить папку блокировок не уровне выше
-            self.lock_dir = os.path.dirname(os.path.dirname(new_prj_file_name))+'/lock'
+            self.lock_dir = os.path.join(os.path.dirname(os.path.dirname(new_prj_file_name)), 'lock')
             log.debug(u'Initilize LOCK DIR: <%s>' % self.lock_dir)
             self.delMyLocks()
             # и сразу сохранить
@@ -410,7 +411,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             if prj_name != sub_sys_name:
                 ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
                                 u'Load subsystem <%s> to project <%s>! After load all changes will lost. subsys: <%s>, project: <%s>!' % (sub_sys_name,
-                                prj_name, sub_sys_name, prj_name), tree_prj)
+                                prj_name, sub_sys_name, prj_name), parent=tree_prj)
             self.delMyLocks()   # Удалить блокировки из старого проекта
             self.logout()
 
@@ -441,7 +442,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             self.prj_res_size = ic_file.GetFileSize(prj_file)
 
             # определить папку блокировок
-            self.lock_dir = ic_file.DirName(ic_file.DirName(prj_file))+'/lock'
+            self.lock_dir = os.path.join(os.path.dirname(os.path.dirname(prj_file)), 'lock')
             log.debug(u'Init LOCK DIR: <%s>' % self.lock_dir)
             self.delMyLocks()   # Удалить блокировки из вновь открытого проекта
             
@@ -550,7 +551,7 @@ class PrjRoot(ImpNode.PrjImportSys):
                     self.prj_res_time = cur_prj_res_time
                     self.prj_res_size = cur_prj_res_size
                 except:
-                    log.error(u'Synhronization tree/file project error: <%s>' % self.name)
+                    log.fatal(u'Ошибка синхронизации проекта <%s>' % self.name)
 
     def save(self):
         """
@@ -687,14 +688,14 @@ class PrjRoot(ImpNode.PrjImportSys):
             import ic
             p, fl = os.path.split(self.getRoot().getPrjFileName())
             p = p.replace('\\', '/')
-            filename = '%s/run.py' % '/'.join(p.split('/')[:-1])
+            filename = os.path.join(os.path.dirname(p), 'run.py')
             icp, icf = os.path.split(ic.__file__)
-            dbg = '%s/Scripts/debug.py' % icp
-            dbg2 = '%s/Scripts/debug.bat' % icp
-            ppth = '%s/python' % sys.prefix 
+            dbg = os.path.join(icp, 'Scripts', 'debug.py')
+            dbg2 = os.path.join(icp, 'Scripts', 'debug.bat')
+            ppth = sys.executable
             ppth = ppth.replace('\\', '/')
             dbg = dbg.replace('\\', '/')
-            ppth3 = sys.prefix + '/Scripts/winpdb_.pyw'
+            ppth3 = os.path.join(sys.prefix, 'Scripts', 'winpdb_.pyw')
             if wx.Platform != '__WXMSW__':
                 p = subprocess.Popen(['python', dbg, filename])
             else:
@@ -716,7 +717,7 @@ class PrjRoot(ImpNode.PrjImportSys):
 
             imp_path, fl = os.path.split(imp_path)
             imp_path = imp_path.replace('\\', '/')
-            py_file = '%s/run.py' % '/'.join(imp_path.split('/')[:-1])
+            py_file = os.path.join(os.path.dirname(imp_path), 'run.py')
             
             if not ide.SelectFile(py_file):
                 return ide.OpenFile(py_file, True, readonly=False)

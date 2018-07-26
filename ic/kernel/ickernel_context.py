@@ -151,8 +151,8 @@ class icKernelContext(icContext.BaseContext):
             # Папка ресурсов проекта
             self.Set('SYS_RES', PrjDir_)
             self.Set('PRJ_DIR', PrjDir_)
-            self.Set('LOG_DIR', os.path.dirname(PrjDir_)+'/log/')
-            self.Set('LOCK_DIR', os.path.dirname(PrjDir_)+'/lock')
+            self.Set('LOG_DIR', os.path.join(os.path.dirname(PrjDir_), 'log'))
+            self.Set('LOCK_DIR', os.path.join(os.path.dirname(PrjDir_), 'lock'))
         
             # Список папок подсистем
             self.Set('SUBSYS_RES', self._getSubSysRes(PrjDir_))
@@ -198,7 +198,7 @@ class icKernelContext(icContext.BaseContext):
         @param Dir_: Исследуемая папка.
         """
         is_dir = os.path.isdir(Dir_)
-        is_init_file = os.path.exists(Dir_+'/__init__.py')
+        is_init_file = os.path.exists(os.path.join(Dir_, '__init__.py'))
         is_pro_file = bool(ic_file.GetFilesByExt(Dir_, '.pro'))
         return is_dir and is_init_file and is_pro_file
     

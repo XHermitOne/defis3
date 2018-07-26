@@ -4,6 +4,8 @@
 import os.path
 import epydoc.cli as cli
 
+__version__ = (0, 1, 1, 1)
+
 
 def GetPackageModuleList(package_name, ignore_lst,  moduleList=None):
     """
@@ -33,7 +35,7 @@ def GetPackageModuleList(package_name, ignore_lst,  moduleList=None):
             except:
                 ext = None
             
-            fn = package_name+'/'+fl
+            fn = os.path.join(package_name, fl)
             
             #   Если очередное имя является именем директории то рекурсивно 
             #   вызываем функцию создания списка модулей.

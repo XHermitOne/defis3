@@ -41,8 +41,8 @@ def wait_func(parent, message,
         cur_dir = os.path.dirname(__file__)
         if not cur_dir:
             cur_dir = os.getcwd()
-        wait_dir = cur_dir+'/img/wait/'
-        art_gif = wait_dir+'spinner.gif'
+        wait_dir = os.path.join(cur_dir, 'img', 'wait/')
+        art_gif = os.path.join(wait_dir, 'spinner.gif')
 
     if parent is None:
         parent = wx.GetApp().GetTopWindow()

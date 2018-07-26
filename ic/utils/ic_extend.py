@@ -22,7 +22,7 @@ try:
 except:
     print(u'Import error ic_str module')
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
 DEFAULT_ENCODING = 'utf-8'
@@ -215,8 +215,8 @@ def get_dist_packages_path():
     (в зависимости от дистрибутива) Python.
     """
     python_stdlib_path = sysconfig.get_path('stdlib')
-    site_packages_path = os.path.normpath(python_stdlib_path+'/site-packages')
-    dist_packages_path = os.path.normpath(python_stdlib_path+'/dist-packages')
+    site_packages_path = os.path.normpath(os.path.join(python_stdlib_path, 'site-packages'))
+    dist_packages_path = os.path.normpath(os.path.join(python_stdlib_path, 'dist-packages'))
     if os.path.exists(site_packages_path):
         return site_packages_path
     elif os.path.exists(dist_packages_path):
@@ -234,7 +234,7 @@ def create_pth_file(PthFileName_, Path_):
     pth_file = None
     try:
         dist_packages_path = get_dist_packages_path()
-        pth_file_name = dist_packages_path+'/'+PthFileName_
+        pth_file_name = os.path.join(dist_packages_path, PthFileName_)
         pth_file = open(pth_file_name, 'wt')
         pth_file.write(Path_)
         pth_file.close()
@@ -474,20 +474,20 @@ def save_file_text(FileName_, Txt_=''):
     @param Txt_: Записываемый текст.
     @return: True/False
     """
-    if isinstance(Txt_, unicode):
-        # Если передается текст в юникоде,
-        #  то автоматом перекодировать в UTF-8
-        Txt_ = Txt_.encode(DEFAULT_ENCODING)
+    # if isinstance(Txt_, str):
+    #    # Если передается текст в юникоде,
+    #    #  то автоматом перекодировать в UTF-8
+    #    Txt_ = Txt_.encode(DEFAULT_ENCODING)
 
-    file = None
+    file_obj = None
     try:
-        file = open(FileName_, 'wt')
-        file.write(Txt_)
-        file.close()
+        file_obj = open(FileName_, 'wt')
+        file_obj.write(Txt_)
+        file_obj.close()
         return True
     except:
-        if file:
-            file.close()
+        if file_obj:
+            file_obj.close()
         print('Save text file', FileName_, 'ERROR')
         print(traceback.format_exc())
     return False
@@ -518,8 +518,8 @@ def load_file_text(FileName_, code_page='utf-8',
         print(u'Load text file <%s>' % FileName_)
         return ''
 
-    if to_unicode:
-        return unicode(txt, code_page)
+    # if to_unicode:
+    #    return unicode(txt, code_page)
     return txt
 
 
@@ -535,7 +535,7 @@ def load_file_unicode(FileName_, code_page=None):
     body_text = load_file_text(FileName_)
     if not code_page:
         code_page = ic_str.get_codepage(body_text)
-    return unicode(body_text, code_page)
+    return str(body_text)   # , code_page)
 
 
 def recode_text_file(txt_filename, new_filename=None, src_codepage=None, dst_codepage='utf-8'):
@@ -559,8 +559,8 @@ def recode_text_file(txt_filename, new_filename=None, src_codepage=None, dst_cod
 
     txt_unicode = load_file_unicode(txt_filename, src_codepage)
 
-    if txt_unicode and isinstance(txt_unicode, unicode):
-        txt_str = txt_unicode.encode(dst_codepage)
+    if txt_unicode and isinstance(txt_unicode, str):
+        txt_str = txt_unicode   # .encode(dst_codepage)
         if os.path.exists(new_filename):
             try:
                 os.remove(new_filename)
@@ -582,7 +582,7 @@ def copy_file_to(SrcFileName_, DstPath_, ReWrite_=True):
         DstPath_ = normpath(DstPath_, get_login())
         if not os.path.exists(DstPath_):
             os.makedirs(DstPath_)
-        dst_file_name = DstPath_+'/'+os.path.basename(SrcFileName_)
+        dst_file_name = os.path.join(DstPath_, os.path.basename(SrcFileName_))
         if ReWrite_:
             if os.path.exists(dst_file_name):
                 os.remove(dst_file_name)
@@ -824,7 +824,7 @@ def getComputerName():
     comp_name = socket.gethostname()
     if isWindowsPlatform():
         # Если win то поменять кодировку c cp1251 на utf-8
-        comp_name = unicode(comp_name, 'cp1251').encode('utf-8')
+        comp_name = str(comp_name)  # , 'cp1251').encode('utf-8')
     return comp_name
 
 
@@ -845,7 +845,7 @@ def getComputerNameLAT():
     # приходится заменять все на латиницу.
     if isinstance(comp_name, str):
         if isWindowsPlatform():
-            comp_name = unicode(comp_name, 'cp1251')
+            comp_name = str(comp_name)  # , 'cp1251')
             comp_name = rus2lat(comp_name)
     return comp_name
 
@@ -856,9 +856,9 @@ def _rus2lat(sText, dTranslateDict):
     @param sText: Русский текст.
     @param dTranslateDict: Словарь замен.
     """
-    if not isinstance(sText, unicode):
-        # Привести к юникоду
-        sText = unicode(sText, 'utf-8')
+    # if not isinstance(sText, unicode):
+    #    # Привести к юникоду
+    #    sText = unicode(sText, 'utf-8')
 
     txt_list = list(sText)
     txt_list = [dTranslateDict.setdefault(ch, ch) for ch in txt_list]
@@ -882,7 +882,7 @@ def rus2lat(sText):
     return _rus2lat(sText, RUS2LATDict)
 
 
-def norm_path(sPath, sDelim='/'):
+def norm_path(sPath, sDelim=os.path.sep):
     """
     Удалить двойные разделител из пути.
     @type sPath: C{string}
@@ -922,14 +922,14 @@ def text_file_append(sTextFileName, sText, CR='\n'):
     if os.path.exists(txt_filename):
         f = None
         try:
-            f = open(txt_filename, 'r')
+            f = open(txt_filename, 'rt')
             txt = f.read()
             txt += CR
             txt += sText
             print('Text file append <%s> in <%s>' % (sText, txt_filename))
             f.close()
             f = None
-            f = open(txt_filename, 'w')
+            f = open(txt_filename, 'wt')
             f.write(txt)
             f.close()
             f = None
@@ -958,7 +958,7 @@ def text_file_replace(sTextFileName, sOld, sNew, bAutoAdd=True, CR='\n'):
     if os.path.exists(txt_filename):
         f = None
         try:
-            f = open(txt_filename, 'r')
+            f = open(txt_filename, 'rt')
             txt = f.read()
             txt = txt.replace(sOld, sNew)
             if bAutoAdd and (sNew not in txt):
@@ -967,7 +967,7 @@ def text_file_replace(sTextFileName, sOld, sNew, bAutoAdd=True, CR='\n'):
                 print('Text file append <%s> in <%s>' % (sNew, txt_filename))
             f.close()
             f = None
-            f = open(txt_filename, 'w')
+            f = open(txt_filename, 'wt')
             f.write(txt)
             f.close()
             f = None
@@ -993,7 +993,7 @@ def text_file_find(sTextFileName, sFind):
     if os.path.exists(txt_filename):
         f = None
         try:
-            f = open(txt_filename, 'r')
+            f = open(txt_filename, 'rt')
             txt = f.read()
             result = sFind in txt
             f.close()
@@ -1023,7 +1023,7 @@ def text_file_subreplace(sTextFileName, sSubStr, sNew, bAutoAdd=True, CR='\n'):
     if os.path.exists(txt_filename):
         f = None
         try:
-            f = open(txt_filename, 'r')
+            f = open(txt_filename, 'rt')
             lines = f.readlines()
             is_replace = False
             for i, line in enumerate(lines):
@@ -1037,7 +1037,7 @@ def text_file_subreplace(sTextFileName, sSubStr, sNew, bAutoAdd=True, CR='\n'):
                 print('Text file append <%s> in <%s>' % (sNew, txt_filename))
             f.close()
             f = None
-            f = open(txt_filename, 'w')
+            f = open(txt_filename, 'wt')
             f.writelines(lines)
             f.close()
             f = None
@@ -1064,7 +1064,7 @@ def text_file_subdelete(sTextFileName, sSubStr):
         f = None
         try:
             result_lines = []
-            f = open(txt_filename, 'r')
+            f = open(txt_filename, 'rt')
             lines = f.readlines()
             for line in lines:
                 if sSubStr not in line:
@@ -1073,7 +1073,7 @@ def text_file_subdelete(sTextFileName, sSubStr):
                     print('Text file delete line <%s> from <%s>' % (line, txt_filename))
             f.close()
             f = None
-            f = open(txt_filename, 'w')
+            f = open(txt_filename, 'wt')
             f.writelines(result_lines)
             f.close()
             f = None
@@ -1122,8 +1122,8 @@ def targz_install_python_package(targz_package_filename=None):
     targz_extract_to_dir(targz_package_filename, pkg_dir)
 
     targz_basename = os.path.splitext(os.path.basename(targz_package_filename))[0]
-    setup_dir = os.path.normpath(pkg_dir+'/'+targz_basename)
-    setup_filename = os.path.normpath(setup_dir+'/setup.py')
+    setup_dir = os.path.normpath(os.path.join(pkg_dir, targz_basename))
+    setup_filename = os.path.normpath(os.path.join(setup_dir, 'setup.py'))
     if os.path.exists(setup_filename):
         cmd = 'cd %s; sudo python2 setup.py install' % setup_dir
         print('Install <%s> library. Command <%s>' % (targz_basename, cmd))

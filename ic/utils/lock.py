@@ -248,7 +248,7 @@ def DelMyLockInDir(LockMyID_, LockDir_, DirFilesLock_):
         for cur_file in lock_files:
             f = None
             try:
-                f = open(cur_file)
+                f = open(cur_file, 'rt')
                 signature = f.read()
                 f.close()
                 try:

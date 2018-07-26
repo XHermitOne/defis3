@@ -860,7 +860,7 @@ def test():
 
     # Начать запись
     xml_file = None
-    xml_file = open('./testfiles/test.xml', 'w')
+    xml_file = open('./testfiles/test.xml', 'wt')
     xml_writer = icDICT2XMLWriter(data, xml_file)
     xml_writer.startDocument()
     xml_writer.setBook()

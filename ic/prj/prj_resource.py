@@ -119,7 +119,7 @@ class PrjResources(prj_node.PrjFolder):
         new_node = None
         if os.path.exists(ResFileName_):
             # Сделать новое имя файла
-            new_res_file_name = ic_file.AbsolutePath('./%s/%s' % (self.getRoot().name,
+            new_res_file_name = ic_file.AbsolutePath(os.path.join('.', self.getRoot().name,
                                                      os.path.basename(ResFileName_)))
             # Если новый файл существут, то спросить о его перезаписи
             if not ic_file.SamePathWin(ResFileName_, new_res_file_name):
@@ -186,7 +186,8 @@ class PrjResource(prj_node.PrjNode):
         """
         Полное имя файла ресурса.
         """
-        return ic_file.NormPathUnix(self.getResPath()+'/'+self.getResFileName()+'.'+self.getResFileExt())
+        return ic_file.NormPathUnix(os.path.join(self.getResPath(),
+                                                 self.getResFileName()+'.'+self.getResFileExt()))
         
     def getResName(self):
         """
@@ -297,7 +298,8 @@ class PrjResource(prj_node.PrjNode):
         res_editor = tree_prj.res_editor
         if res_editor:
             old_res_name = self.getResName()
-            old_res_file = self.getResPath()+'/'+self.getResFileName()+'.'+self.getResFileExt()
+            old_res_file = os.path.join(self.getResPath(),
+                                        self.getResFileName()+'.'+self.getResFileExt())
 
             # Снять блокировку со старого ресурса
             res_name = self.getResName()
@@ -311,7 +313,8 @@ class PrjResource(prj_node.PrjNode):
             
             self.name = NewName_
             new_res_name = self.getResName()
-            new_res_file = self.getResPath()+'/'+self.getResFileName()+'.'+self.getResFileExt()
+            new_res_file = os.path.join(self.getResPath(),
+                                        self.getResFileName()+'.'+self.getResFileExt())
             # Переименовать в проекте
             self.getRoot().prj_res_manager.renameRes(old_res_name, new_res_name)
             # Для синхронизации дерева проекта
@@ -335,8 +338,10 @@ class PrjResource(prj_node.PrjNode):
         @return: Возвращает указхатель на удаленный узел.
         """
         # Переименовать файл ресурса, если он есть
-        res_file_name = self.getResPath()+'/'+self.getResFileName()+'.'+self.getResFileExt()
-        res_pkl_file_name = self.getResPath()+'/'+self.getResFileName()+'_pkl.'+self.getResFileExt()
+        res_file_name = os.path.join(self.getResPath(),
+                                     self.getResFileName()+'.'+self.getResFileExt())
+        res_pkl_file_name = os.path.join(self.getResPath(),
+                                         self.getResFileName()+'_pkl.'+self.getResFileExt())
         ic_file.icChangeExt(res_file_name, '.bak')
         ic_file.icChangeExt(res_pkl_file_name, '.bak')
         # Удалить из проекта
@@ -350,8 +355,10 @@ class PrjResource(prj_node.PrjNode):
         """
         node = prj_node.PrjNode.copy(self)
         # Скопировать файл ресурса во временный файл
-        res_file_name = self.getResPath()+'/'+self.getResFileName()+'.'+self.getResFileExt()
-        copy_res_file_name = node.getResPath()+'/'+node.getResFileName()+'.bak'
+        res_file_name = os.path.join(self.getResPath(),
+                                     self.getResFileName()+'.'+self.getResFileExt())
+        copy_res_file_name = os.path.join(node.getResPath(),
+                                          node.getResFileName()+'.bak')
         ic_file.icCopyFile(res_file_name, copy_res_file_name)
         # Кроме копирования файла необходимо
         # поменять имя ресурса в этом файле
@@ -360,7 +367,7 @@ class PrjResource(prj_node.PrjNode):
         del res[self.name]
         copy_res_file = None
         try:
-            copy_res_file = open(copy_res_file_name, 'w')
+            copy_res_file = open(copy_res_file_name, 'wt')
             copy_res_file.write(str(res))
             copy_res_file.close()
         except:
@@ -375,10 +382,14 @@ class PrjResource(prj_node.PrjNode):
         @param Node_: Вставляемый узел.
         """
         # Поменять расширение у bak файлов.
-        res_file_name = Node_.getResPath()+'/'+Node_.getResFileName()+'.bak'
-        res_pkl_file_name = Node_.getResPath()+'/'+Node_.getResFileName()+'_pkl.bak'
-        to_res_file_name = self.getResPath()+'/'+Node_.getResFileName()+'.'+Node_.typ
-        to_res_pkl_file_name = self.getResPath()+'/'+Node_.getResFileName()+'_pkl.''.'+Node_.typ
+        res_file_name = os.path.join(Node_.getResPath(),
+                                     Node_.getResFileName()+'.bak')
+        res_pkl_file_name = os.path.join(Node_.getResPath(),
+                                         Node_.getResFileName()+'_pkl.bak')
+        to_res_file_name = os.path.join(self.getResPath(),
+                                        Node_.getResFileName()+'.'+Node_.typ)
+        to_res_pkl_file_name = os.path.join(self.getResPath(),
+                                            Node_.getResFileName()+'_pkl.'+Node_.typ)
         
         ic_file.icCopyFile(res_file_name, to_res_file_name)
         ic_file.icCopyFile(res_pkl_file_name, to_res_pkl_file_name)
@@ -667,6 +678,7 @@ class PrjObjStorageRes(PrjResource):
         # Шаблон для заполнения по умолчанию
         self.template = ic_obj_storage.ic_class_spc
  
+
 # Словарь выбора главных окон
 WinTypeChoice = {'Standart main window': ic_mainwin.ic_class_spc,
                  'AUI main window': ic_auimainwin.ic_class_spc,

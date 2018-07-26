@@ -325,10 +325,10 @@ class NullsoftInstallSystem(PrjInstallMaker):
         @param InstallDir_: Инсталяционная папка.
         """
         python_dir = ic_file.getPythonDir()
-        dll_name = python_dir+'/msvcp71.dll'
+        dll_name = os.path.join(python_dir, 'msvcp71.dll')
         if os.path.exists(dll_name):
             ic_file.copyToDir(dll_name, InstallDir_)
-        dll_name = python_dir+'/msvcr71.dll'
+        dll_name = os.path.join(python_dir, 'msvcr71.dll')
         if os.path.exists(dll_name):
             ic_file.copyToDir(dll_name, InstallDir_)
             
@@ -387,7 +387,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                                          0, len(packages)+5)
                 i = 0
                 # Создать папку пакетов
-                os.makedirs(install_dir+'/package')
+                os.makedirs(os.path.join(install_dir, 'package'))
 
                 # Скопировать иконку
                 i += 1
@@ -395,9 +395,9 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 ico_file = self.getPrjIcon()
                 if os.path.exists(ico_file):
                     ic_file.icCopyFile(ico_file,
-                                       install_dir+'/'+os.path.basename(ico_file))
+                                       os.path.join(install_dir, os.path.basename(ico_file)))
                 else:
-                    log.info(u'Файл иконки <%s> не существует' % ico_file)
+                    log.warning(u'Файл иконки <%s> не существует' % ico_file)
                 
                 # Создание пакета прикладной системы
                 i += 1
@@ -405,7 +405,8 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 arch_file = self._makePrjInstall()
                 if os.path.exists(arch_file):
                     ic_file.icCopyFile(arch_file,
-                                       install_dir+'/package/'+os.path.basename(arch_file))
+                                       os.path.join(install_dir, 'package',
+                                                    os.path.basename(arch_file)))
                     # Удалить временную папку
                     ic_file.RemoveTreeDir(os.path.dirname(arch_file), 1)
                     
@@ -415,9 +416,10 @@ class NullsoftInstallSystem(PrjInstallMaker):
                     ic_dlg.icUpdateProgressDlg(i, u'Копирование пакета <%s>' % package)
                     if os.path.exists(package):
                         ic_file.icCopyFile(package,
-                                           install_dir+'/package/'+os.path.basename(package))
+                                           os.path.join(install_dir, 'package',
+                                                        os.path.basename(package)))
                     else:
-                        log.info(u'Файл пакета <%s> не существует' % package)
+                        log.warning(u'Файл пакета <%s> не существует' % package)
 
                 # Сохранить скрипт инсталятора
                 i += 1
@@ -425,24 +427,24 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 script = self.installScript()
                 nsi_file = None
                 try:
-                    nsi_file = open(install_dir+'\setup.nsi', 'w')
+                    nsi_file = open(os.path.join(install_dir, 'setup.nsi'), 'wt')
                     nsi_file.write(script)
                     nsi_file.close()
                 except:
-                    log.error(u'Ошибка сохранения скрипта инсталятора')
+                    log.fatal(u'Ошибка сохранения скрипта инсталятора')
                     if nsi_file:
                         nsi_file.close()
 
                 # Компилирование скрипта инсталятора
                 i += 1
                 ic_dlg.icUpdateProgressDlg(i, u'Компилирование скрипта инсталятора')
-                nsis_cmd = '%s %s/setup.nsi' % (self.getInstallMaker(), install_dir)
-                log.info(u'Компиляция скрипта инсталятора '+nsis_cmd)
+                nsis_cmd = '%s %s' % (self.getInstallMaker(), os.path.join(install_dir, 'setup.ini'))
+                log.info(u'Компиляция скрипта инсталятора <%s>' % nsis_cmd)
                 ic_exec.icSysCmd(nsis_cmd)
 
                 ic_dlg.icCloseProgressDlg()
             except:
-                log.error(u'Ошибка создания инсталяционного пакета')
+                log.fatal(u'Ошибка создания инсталяционного пакета')
                 ic_dlg.icCloseProgressDlg()
                 
     def _makePrjInstall(self):
@@ -451,7 +453,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
         """
         try:
             prj_name = self.getPrjName()
-            temp_dir = 'c:/temp/'+prj_name
+            temp_dir = os.path.join(os.path.dirname(os.tmpnam()), prj_name)
             if os.path.exists(temp_dir):
                 log.info(u'INSTALL WIZARD DELETE TEMP DIR <%s>' % temp_dir)
                 ic_file.RemoveTreeDir(temp_dir)
@@ -464,8 +466,8 @@ class NullsoftInstallSystem(PrjInstallMaker):
             main_dir = os.path.dirname(prj_dir)
             # Пакет ic
             log.info(u'INSTALL WIZARD COPY ic PACKAGE <%s>' % main_dir)
-            ic_tmp_dir = temp_dir+'/ic'
-            ic_file.CopyTreeDir(main_dir+'/ic', ic_tmp_dir)
+            ic_tmp_dir = os.path.join(temp_dir, 'ic')
+            ic_file.CopyTreeDir(os.path.join(main_dir, 'ic'), ic_tmp_dir)
             
             # Условие удаления исходников из ic
             if not self.getOpenSource():
@@ -473,16 +475,16 @@ class NullsoftInstallSystem(PrjInstallMaker):
 
             # Пакет прикладной системы
             log.info(u'INSTALL WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
-            usr_tmp_dir = temp_dir+'/'+os.path.basename(prj_dir)
+            usr_tmp_dir = os.path.join(temp_dir, os.path.basename(prj_dir))
             ic_file.CopyTreeDir(prj_dir,
-                                temp_dir+'/'+os.path.basename(prj_dir))
+                                os.path.join(temp_dir, os.path.basename(prj_dir)))
 
             # Все откомпелироавать нехрен
             ic_file.CompileDir(temp_dir)
             
             # Заархивировать пакет прикладной системы
-            rar_util = main_dir+'/ic/db/postgresql/Rar.exe'
-            arch_file_name = temp_dir+'/'+prj_name+'.exe'
+            rar_util = os.path.join(main_dir, 'ic', 'db', 'postgresql', 'Rar.exe')
+            arch_file_name = os.path.join(temp_dir, prj_name+'.exe')
             arch_cmd = '%s a -r -s -ep1 -sfx -df %s %s/*.*' % (rar_util,
                                                                arch_file_name, temp_dir)
             log.info(u'INSTALL WIZARD Команда архивации: <%s>' % arch_cmd)
@@ -535,7 +537,8 @@ class py2exeInstallSystem(PrjInstallMaker):
                 script = self.setupScript()
                 setup_file = None
                 try:
-                    setup_file = open(install_dir+'\setup.nsi', 'w')
+                    script_filename = os.path.join(install_dir, 'setup.nsi')
+                    setup_file = open(script_filename, 'wt')
                     setup_file.write(script)
                     setup_file.close()
                 except:
@@ -559,7 +562,7 @@ class py2exeInstallSystem(PrjInstallMaker):
         return bool(ini.loadParamINI(self._prj_ini_file_name,
                                      'INSTALL', 'console'))
 
-    def setConsole(self,MakeConsole_):
+    def setConsole(self, MakeConsole_):
         """
         Признак поддержки консоли.
         """
@@ -568,7 +571,7 @@ class py2exeInstallSystem(PrjInstallMaker):
             
 
 # --- Визард создания инсталяционного пакета ---
-def runInstallWizard(Parent_,PrjResFileName_):
+def runInstallWizard(Parent_, PrjResFileName_):
     """
     Запуск визарда создания инсталяционного пакета.
     @param Parent_: Родительское окно.
@@ -786,7 +789,7 @@ class zipPublicSystem(PrjInstallMaker):
         if os.path.isdir(install_dir):
             arch_file_name = self._makePrjInstall()
             ic_file.icCopyFile(arch_file_name,
-                               install_dir+'/'+os.path.basename(arch_file_name))
+                               os.path.join(install_dir, os.path.basename(arch_file_name)))
             
     def _publicWinRAR(self, InstallDir_):
         """
@@ -800,7 +803,7 @@ class zipPublicSystem(PrjInstallMaker):
         """
         try:
             prj_name = self.getPrjName()
-            temp_dir = os.environ['TMP']+'/'+prj_name
+            temp_dir = os.path.join(os.environ['TMP'], prj_name)
             if os.path.exists(temp_dir):
                 log.info(u'PUBLIC WIZARD DELETE TEMP DIR <%s>' % temp_dir)
                 ic_file.RemoveTreeDir(temp_dir)
@@ -813,24 +816,24 @@ class zipPublicSystem(PrjInstallMaker):
             main_dir = os.path.dirname(prj_dir)
             # Пакет ic
             log.info(u'PUBLIC WIZARD COPY ic PACKAGE <%s>' % main_dir)
-            ic_tmp_dir = temp_dir+'/ic'
-            ic_file.CopyDir(main_dir+'/ic', temp_dir)
+            ic_tmp_dir = os.path.join(temp_dir, 'ic')
+            ic_file.CopyDir(os.path.join(main_dir, 'ic'), temp_dir)
             
             # Условие удаления исходников из ic
             ic_file.delAllFilesFilter(ic_tmp_dir, '*.bak', '*.pyc')
 
             # Пакет прикладной системы
             log.info(u'PUBLIC WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
-            usr_tmp_dir = temp_dir+'/'+os.path.basename(prj_dir)
+            usr_tmp_dir = os.path.join(temp_dir, os.path.basename(prj_dir))
             ic_file.CopyDir(prj_dir, temp_dir)
             
-            #Условие удаления исходников из ic
+            # Условие удаления исходников из ic
             ic_file.delAllFilesFilter(usr_tmp_dir, '*.bak', '*.pyc', '*.lck', '/log/*.ini', '/log/*.log')
             
-            ic_file.icCopyFile(main_dir+'/readme.ru',
-                               temp_dir+'/readme.ru')
-            ic_file.icCopyFile(main_dir+'/license.ru',
-                               temp_dir+'/license.ru')
+            ic_file.icCopyFile(os.path.join(main_dir, 'readme.ru'),
+                               os.path.join(temp_dir, 'readme.ru'))
+            ic_file.icCopyFile(os.path.join(main_dir, 'license.ru'),
+                               os.path.join(temp_dir, 'license.ru'))
 
             if ic_util.isOSWindowsPlatform():
                 return self._makeArchiveRAR(main_dir, temp_dir, prj_name)
@@ -846,8 +849,8 @@ class zipPublicSystem(PrjInstallMaker):
         Заархивировать пакет прикладной системы. Архиватор: RAR.
         """
         # Заархивировать пакет прикладной системы
-        arch_util = MainDir_+'/ic/db/postgresql/Rar.exe'
-        arch_file_name = TempDir_+'/'+PrjName_+'_'+str(self.readPrjVersion())+'.zip'
+        arch_util = os.path.join(MainDir_, 'ic', 'db', 'postgresql', 'Rar.exe')
+        arch_file_name = os.path.join(TempDir_, PrjName_+'_'+str(self.readPrjVersion())+'.zip')
         arch_cmd = '%s a -r -s -ep1 -afzip -df %s %s/*.*' % (arch_util,
                                                              arch_file_name, TempDir_)
         log.info(u'PUBLIC WIZARD Команда архивации: '+arch_cmd)
@@ -860,7 +863,7 @@ class zipPublicSystem(PrjInstallMaker):
         """
         # Заархивировать пакет прикладной системы
         arch_util = 'zip'
-        arch_file_name = TempDir_+'/'+PrjName_+'_'+str(self.readPrjVersion())+'.zip'
+        arch_file_name = os.path.join(TempDir_, PrjName_+'_'+str(self.readPrjVersion())+'.zip')
 
         arch_cmd = 'cd %s;%s -r %s *' % (TempDir_, arch_util, arch_file_name)
         log.info(u'PUBLIC WIZARD Команда архивации: '+arch_cmd)

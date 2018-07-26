@@ -35,7 +35,7 @@ def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
         prj_dir = ic_user.icGet('PRJ_DIR')
         prj_name = ic_user.icGet('PrjName')
         if prj_dir and prj_name:
-            prj_ini_file_name = prj_dir+'/'+prj_name+'.ini'
+            prj_ini_file_name = os.path.join(prj_dir, prj_name+'.ini')
             prj_settings = ini.INI2Dict(prj_ini_file_name)
     else:    
         if ProjectName_ is None:

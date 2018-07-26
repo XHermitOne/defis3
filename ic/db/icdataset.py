@@ -37,6 +37,9 @@
         символ '@'.
 """
 
+import os
+import os.path
+
 from ic.utils import resource
 from ic.utils.util import icSpcDefStruct, ic_eval
 from ic.utils import util
@@ -581,10 +584,10 @@ class icDataLink(icwidget.icSimple):
                                 
             #   Если относительный путь до файла c указанием подсистемы
             #   <NSI/sprav.tab>
-            elif '/' in source and '.' in source:
-                path = ('/'.join(sys_path.split('/')[:-1]) +
-                        '/'+'/'.join(source.split('/')[:-1]))
-                nameRes = source.split('/')[-1].split('.')[0]
+            elif os.path.sep in source and '.' in source:
+                path = os.path.join(os.path.sep.join(sys_path.split(os.path.sep)[:-1]),
+                                    os.path.sep.join(source.split(os.path.sep)[:-1]))
+                nameRes = source.split(os.path.sep)[-1].split('.')[0]
                 res_ext = source.split('.')[-1]
                 
             #   Если относительный путь до файла без указания папки
@@ -596,7 +599,7 @@ class icDataLink(icwidget.icSimple):
             #   Если указан относительный путь до папки подсистемы
             #   <NSI>
             else:
-                path = '/'.join(sys_path.split('/')[:-1])+'/'+source
+                path = os.path.join(os.path.sep.join(sys_path.split(os.path.sep)[:-1]), source)
                 
         return path, nameRes, res_ext
 

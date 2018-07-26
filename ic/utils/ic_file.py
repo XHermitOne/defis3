@@ -219,7 +219,7 @@ def GetFiles(Path_):
             return list()
 
         file_list = None
-        file_list = [Path_+'/'+x.lower() for x in os.listdir(Path_)]
+        file_list = [os.path.join(Path_, x.lower()) for x in os.listdir(Path_)]
         file_list = [x for x in file_list if os.path.isfile(x)]
         return file_list
     except:
@@ -513,11 +513,11 @@ def CloneDir(Dir_, NewDir_, ReWrite_=False):
         for sub_dir in GetSubDirs(Dir_):
             shutil.copytree(sub_dir, NewDir_)
         for file_name in GetFiles(Dir_):
-            icCopyFile(file_name, NewDir_+'/'+BaseName(file_name))
+            icCopyFile(file_name, os.path.join(NewDir_, os.path.basename(file_name)))
         return True
     except:
         log.fatal(u'Ошибка клонирования папки из <%s> в <%s>' % (Dir_, NewDir_))
-        return False
+    return False
 
 
 def IsSubDir(Dir1_, Dir2_):

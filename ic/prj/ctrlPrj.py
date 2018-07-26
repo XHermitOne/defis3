@@ -116,7 +116,7 @@ class icProjectResController:
             self._PrjRes.delRes(ResName_, ResType_)
             self._PrjRes.savePrj()
             
-        res_file_name = self._PrjResDir+'/%s.%s' % (ResName_, ResType_)
+        res_file_name = os.path.join(self._PrjResDir, '%s.%s' % (ResName_, ResType_))
         if os.path.isfile(res_file_name):
             os.remove(res_file_name)
             return True
@@ -221,7 +221,7 @@ class icProjectResController:
         self._PrjResFileName = PrjResFileName_
         if self._PrjResFileName is None:
             self._PrjResDir = ic_user.icGet('PRJ_DIR')
-            self._PrjResFileName = self._PrjResDir+'/%s.pro' % self._PrjName
+            self._PrjResFileName = os.path.join(self._PrjResDir, '%s.pro' % self._PrjName)
         else:
             self._PrjResDir = os.path.dirname(self._PrjResFileName)
     

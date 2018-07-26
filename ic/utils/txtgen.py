@@ -144,7 +144,7 @@ def gen_txt_file(sTxtTemplateFilename, sTxtOutputFilename, dContext=None, output
 
     # Чтение шаблона из файла
     try:
-        template_file = open(template_filename, 'r')
+        template_file = open(template_filename, 'rt')
         template_txt = template_file.read()
         template_file.close()
     except:
@@ -181,7 +181,7 @@ def gen_txt_file(sTxtTemplateFilename, sTxtOutputFilename, dContext=None, output
             log.info(u'Создание папки <%s>' % output_path)
             os.makedirs(output_path)
 
-        output_file = open(output_filename, 'w+')
+        output_file = open(output_filename, 'wt+')
         output_file.write(gen_txt)
         output_file.close()
         # Дополнительная проверка на существующий выходной файл

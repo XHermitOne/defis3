@@ -202,9 +202,9 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
         nm = os.path.basename(filename)
         pt = nm.find('.')
         if pt >= 0:
-            filepcl = os.path.dirname(filename) + '/' + nm[:pt] + '_pkl' + nm[pt:]
+            filepcl = os.path.join(os.path.dirname(filename), nm[:pt] + '_pkl' + nm[pt:])
         else:
-            filepcl = os.path.dirname(filename) + '/' + nm +'_pkl'
+            filepcl = os.path.join(os.path.dirname(filename), nm +'_pkl')
 
         #   Проверяем нужно ли компилировать данную структуру по следующим признакам:
         #   наличие скомпилированного файла, по времени последней модификации.

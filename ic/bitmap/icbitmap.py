@@ -7,15 +7,18 @@
 import os
 import os.path
 import wx
-from ic.log.iclog import *
+
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 # Буфер картинок
-icUserBitmapBuff = {}
+USER_BITMAP_CACHE = {}
 
 
 def icBitmapType(filename):
     """
-    Get the type of an image from the file's extension ( .jpg, etc. )
+    Определить тип графического файла по его расширению (.jpg, .png и т.п.)
     """
 
     if filename == '':
@@ -46,7 +49,7 @@ def icBitmapType(filename):
             return wx.BITMAP_TYPE_ICO
         return None
     except:
-        LogLastError('FILE ERROR:')
+        log.fatal('Ошибка определения типа графического файла')
 
     return None
 
@@ -62,11 +65,11 @@ def GetUserBitmap(fileName, subsys, dir='images'):
     @rtype: C{wx.Bitmap}
     @return: Объект картинки.
     """
-    global icUserBitmapBuff
-    key = str(subsys)+'/'+fileName
+    global USER_BITMAP_CACHE
+    key = str(subsys) + os.path.sep + fileName
     
-    if key in icUserBitmapBuff:
-        return icUserBitmapBuff[key]
+    if key in USER_BITMAP_CACHE:
+        return USER_BITMAP_CACHE[key]
     else:
         typ = icBitmapType(fileName)
         
@@ -74,11 +77,11 @@ def GetUserBitmap(fileName, subsys, dir='images'):
             import ic.utils.resource as resource
             path = resource.icGetResPath().replace('\\', '/')
             if not subsys:
-                path = '%s/%s/%s' % (path, dir, fileName)
+                path = os.path.join(path, dir, fileName)
             else:
-                path = '%s/%s/%s/%s' % ('/'.join(path.split('/')[:-1]), subsys, dir, fileName)
+                path = os.path.join(os.path.sep.join(path.split(os.path.sep)[:-1]), subsys, dir, fileName)
                 
             img = wx.Image(path, typ)
             bmp = img.ConvertToBitmap()
-            icUserBitmapBuff[key] = bmp
+            USER_BITMAP_CACHE[key] = bmp
             return bmp

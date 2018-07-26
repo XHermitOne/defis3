@@ -29,7 +29,7 @@ def ConvertRes(old_res_fl, path, ext=None):
         res = util.readAndEvalFile(old_res_fl)
         
         for nm in res:
-            fn = path + '/%s.%s' % (nm, ext)
+            fn = os.path.join(path, '%s.%s' % (nm, ext))
             
             if not os.path.isfile(fn):
                 f = open(fn, 'wb')

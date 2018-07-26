@@ -80,7 +80,8 @@ def getReportList(ReportDir_, is_sort=True):
         for sub_dir in sub_dirs:
             description_file = None
             try:
-                description_file = open(sub_dir+'/descript.ion', 'r')
+                description_filename = os.path.join(sub_dir, 'descript.ion')
+                description_file = open(description_filename, 'rt')
                 dir_description = description_file.read()
                 description_file.close()
             except:
@@ -541,7 +542,7 @@ class icReportBrowserPrototype:
             report = ic.utils.util.readAndEvalFile(new_rep_file_name, bRefresh=True)
             report['name'] = NewName_
             try:
-                rep_file = open(new_rep_file_name, 'w')
+                rep_file = open(new_rep_file_name, 'wt')
                 rep_file.write(str(report))
                 rep_file.close()
             except:

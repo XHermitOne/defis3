@@ -1249,9 +1249,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             if resource.icGetResPath():
                 mod_dir = resource.icGetResPath()
             else:
-                mod_dir = resource.icGetICPath() + '/components/user/objects'
+                mod_dir = os.path.join(resource.icGetICPath(), 'components', 'user', 'objects')
 
-            module_name = mod_dir + '/ic'+className.lower()+'.py'
+            module_name = os.path.join(mod_dir, 'ic'+className.lower()+'.py')
             ic_dlg.icMsgBox(u'СООБЩЕНИЕ', u'Класс <%s> в модуле <%s>' % (className, module_name))
             # Удаляем из ресурса служебную информацию
             item = self.GetSelection()
@@ -1316,9 +1316,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                     name = dlg_inp.GetValue()
 
                     if '.py' in name.lower():
-                        path = path + '/' + name
+                        path = os.path.join(path, name)
                     else:
-                        path = path + '/' + name + '.py'
+                        path = os.path.join(path, name + '.py')
 
                     # Создаем модуль объекта
                     self.GetResEditor().create_obj_module(obj_name, path.replace('\\', '/'))
@@ -2018,7 +2018,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         rn = rn.replace('\\', '/')
         if rn:
             p, nm = os.path.split(rn)
-            fn = p + '/'+nm.replace('.', '_')+'.py'
+            fn = os.path.join(p, nm.replace('.', '_')+'.py')
         else:
             return rn
 
@@ -2035,7 +2035,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
 
         if rn:
             p, nm = os.path.split(rn)
-            fn = p + '/' + name
+            fn = os.path.join(p, name)
         else:
             return rn
 

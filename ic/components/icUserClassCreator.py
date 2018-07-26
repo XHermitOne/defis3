@@ -98,7 +98,8 @@ def CreatUserClass(discr, file_templ=None):
     @param file_templ: Имя файла шаблона.
     """
     if not file_templ:
-        file_templ = resource.icGetICPath() + '/components/templates/icuserclass.tpl'
+        file_templ = os.path.join(resource.icGetICPath(), 'components',
+                                  'templates', 'icuserclass.tpl')
 
     #   Читаем текст шаблона
     f = open(file_templ, 'rt', encoding='utf-8')
@@ -471,18 +472,19 @@ def RunWizard(parent):
         txt = page4.editor.GetText()
         
         if resource.icGetResPath():
-            user_mod_dir = resource.icGetResPath()+'/usercomponents'
+            user_mod_dir = os.path.join(resource.icGetResPath(), 'usercomponents')
         else:
             user_mod_dir = None
         
         if not user_mod_dir:
-            module_name = resource.icGetICPath() + '/components/user/' + page4.modulName.GetLabel()
+            module_name = os.path.join(resource.icGetICPath(), 'components',
+                                       'user', page4.modulName.GetLabel())
         elif not os.path.isdir(user_mod_dir):
             # Создаем пакет
             ic_res.CreatePackage(user_mod_dir)
-            module_name = user_mod_dir + '/' + page4.modulName.GetLabel()
+            module_name = os.path.join(user_mod_dir, page4.modulName.GetLabel())
         else:
-            module_name = user_mod_dir + '/' + page4.modulName.GetLabel()
+            module_name = os.path.join(user_mod_dir, page4.modulName.GetLabel())
             
         bCr = wx.ID_YES
         
@@ -491,9 +493,9 @@ def RunWizard(parent):
                              style=wx.YES_NO | wx.NO_DEFAULT)
 
         if bCr == wx.ID_YES:
-            f = open(module_name, 'w')
+            f = open(module_name, 'wt', encoding='utf-8')
             log.info(u'CREATE MODULE: <%s>' % module_name)
-            f.write(txt.encode('utf-8'))
+            f.write(txt)
             f.close()
             wx.MessageBox(_('Module %s is created.') % module_name, '')
     else:

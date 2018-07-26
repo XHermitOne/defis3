@@ -6,23 +6,24 @@
 
 
 # --- Imports ---
-
+import os
+import os.path
 import wx
+
 import ic
-from ic.bitmap import ic_bmp
-from ic.kernel import io_prnt
 from ic.dlg import ic_dlg
 from ic.utils import ic_file
 from ic.utils import util
 from ic.utils import ic_res
 from ic.utils import ini
+from ic.log import log
 
 from ic.engine import icusereditpanel
 
 from ic.engine import ic_user
 
 # Version
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 def runEditDlg():
@@ -45,22 +46,15 @@ class icUserEditDialog(wx.Dialog):
         # менеджер управления файлами ресурса пользователя.
         self._manager = Manager_
         try:
-            pre = wx.PreDialog()
-            pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-            pre.Create(parent, -1,
-                       title=u'Управление пользователями',
-                       pos=wx.DefaultPosition, size=wx.Size(700, 350),
-                       style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
-
-            # This next step is the most important, it turns this Python
-            # object into the real wrapper of the dialog (instead of pre)
-            # as far as the wxPython extension is concerned.
-            self.PostCreate(pre)
+            wx.Dialog.__init__(self, parent, -1,
+                               title=u'Управление пользователями',
+                               pos=wx.DefaultPosition, size=wx.Size(700, 350),
+                               style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
             from ic.imglib import newstyle_img
             icon_img = newstyle_img.getusers7Bitmap()
             if icon_img:
-                icon = wx.IconFromBitmap(icon_img)
+                icon = wx.Icon(icon_img)
                 self.SetIcon(icon)
 
             self._boxsizer = wx.BoxSizer(wx.VERTICAL)
@@ -90,7 +84,7 @@ class icUserEditDialog(wx.Dialog):
             self.SetSizer(self._boxsizer)
             self.SetAutoLayout(True)
         except:
-            log.error(u'Ошибка создания диалогового окна редактирования пользователей.')
+            log.fatal(u'Ошибка создания диалогового окна редактирования пользователей.')
 
     def OnOK(self, event):
         """
@@ -139,7 +133,7 @@ class icUserManager(object):
         """
         # Если ресурс уже не заблокирован
         rl = ic.resource_loader
-        path = path or ic_user.icGet('PRJ_DIR')+'/users.acc'
+        path = path or os.path.join(ic_user.icGet('PRJ_DIR'), 'users.acc')
         if not rl.is_lock_res(path):
             # Заблокировать ресурс
             # bAdd=False - признак того, что запись о блокировки при отсутствии объекта
@@ -195,8 +189,8 @@ class icUserManager(object):
         """
         dlg = None
         result = None
+        clear = False
         try:
-            clear = False
             if ParentForm_ is None:
                 id_ = wx.NewId()
                 ParentForm_ = wx.Frame(None, id_, '')
@@ -209,7 +203,7 @@ class icUserManager(object):
                     ParentForm_.Destroy()
                 return result
         except:
-            log.error(u'Ошибка редактирования пользователей.')
+            log.fatal(u'Ошибка редактирования пользователей.')
         finally:
             if dlg:
                 dlg.Destroy()
@@ -258,7 +252,8 @@ class icUserManager(object):
         try:
             if CurDirPrj_ is None:
                 CurDirPrj_ = ic_file.getCurDirPrj()
-            reg_user_journal_file_name = CurDirPrj_+'/log/reg_user_journal.ini'
+            reg_user_journal_file_name = os.path.join(CurDirPrj_,
+                                                      'log', 'reg_user_journal.ini')
             if ic_file.Exists(reg_user_journal_file_name):
                 reg_user_journal = ini.INI2Dict(reg_user_journal_file_name)
                 if reg_user_journal and 'CURRENT_USERS' in reg_user_journal:
@@ -279,7 +274,7 @@ class icUserManager(object):
                         return ini.Dict2INI(reg_user_journal,
                                             reg_user_journal_file_name, rewrite=True)
         except:
-            log.error(u'Ошибка в функции управления регистрационной информацией пользователей.')
+            log.fatal(u'Ошибка в функции управления регистрационной информацией пользователей.')
         return False
 
 

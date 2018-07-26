@@ -111,8 +111,9 @@ def Msg(msg, id=0):
 
 
 def tolog(msg, log_file_name='econvert2.log'):
-    if isinstance(msg, unicode):
-        msg = msg.encode('utf-8')
+    # if isinstance(msg, unicode):
+    #    msg = msg.encode('utf-8')
+
     # Здесь я сделал автоматическое определение папки HOME
     home_dir = ''
     if sys.platform[:3].lower() == 'win':
@@ -128,7 +129,8 @@ def tolog(msg, log_file_name='econvert2.log'):
         home_dir = os.environ['HOME']
     
     try:
-        f = open(home_dir + '/' + log_file_name, 'a+')
+        log_filename = os.path.join(home_dir, log_file_name)
+        f = open(log_filename, 'at+')
         t = time.strftime('[%Y-%m-%d %H:%M:%S] ', time.localtime())
         f.write(t + msg+'\n')
         f.close()

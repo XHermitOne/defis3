@@ -119,7 +119,7 @@ class PrjModules(prj_node.PrjFolder):
         find = False
         module_file = None
         try:
-            module_file = open(ModuleName_, 'r')
+            module_file = open(ModuleName_, 'rt')
             text = module_file.read()
             module_file.close()
             return text.find(Signature_) != -1
@@ -236,7 +236,7 @@ class PrjModules(prj_node.PrjFolder):
         is_init_file = False
         if is_dir:
             is_in_prj = ic_file.IsSubDir(Dir_, os.path.dirname(self.getRoot().getPrjFileName()))
-            is_init_file = os.path.exists(Dir_+'/__init__.py')
+            is_init_file = os.path.exists(os.path.join(Dir_, '__init__.py'))
         is_sub_sys = False
         return is_dir and is_in_prj and is_init_file and (not is_sub_sys)
         
@@ -336,7 +336,8 @@ class PrjModules(prj_node.PrjFolder):
         """
         ide = self.getRoot().getParent().ide
         if ide:
-            py_file = os.path.dirname(self.getRoot().getPrjFileName())+'/__init__.py'
+            py_file = os.path.join(os.path.dirname(self.getRoot().getPrjFileName()),
+                                   '__init__.py')
             # Если файл не открыт, то открыть его
             if not ide.SelectFile(py_file):
                 return ide.OpenFile(py_file, True, readonly=self.readonly)
@@ -421,9 +422,9 @@ class PrjPackage(prj_node.PrjFolder):
         if CurPath_ is None:
             CurPath_ = self.name
         if issubclass(self._Parent.__class__, PrjPackage):
-            CurPath_ = self._Parent.getPath()+'/'+CurPath_
+            CurPath_ = os.path.join(self._Parent.getPath(), CurPath_)
         elif issubclass(self._Parent.__class__, PrjModules):
-            CurPath_ = ic_file.AbsolutePath('./%s/' % self.getRoot().name+CurPath_,
+            CurPath_ = ic_file.AbsolutePath(os.path.join('.', self.getRoot().name+CurPath_),
                                             os.path.split(os.path.dirname(self.getRoot().getPrjFileName()))[0])
         return CurPath_
             
@@ -440,7 +441,7 @@ class PrjPackage(prj_node.PrjFolder):
         ide = self.getRoot().getParent().ide
         if ide:
             pack_dir = self.getPath()
-            py_file = pack_dir+'/__init__.py'
+            py_file = os.path.join(pack_dir, '__init__.py')
             # Сначала разблокировать все модули
             self.getRoot().unlockAllPyFilesInIDE()
             if not ide.SelectFile(py_file):
@@ -456,7 +457,7 @@ class PrjPackage(prj_node.PrjFolder):
         Разблокировать все *.py файлы.
         """
         # Разблокировать себя
-        py_file = self.getPath()+'/__init__.py'
+        py_file = os.path.join(self.getPath(), '__init__.py')
         self.getRoot().unlockPyFileInIDE(py_file)
         # Разблокировать все дочерние файлы/пакеты
         for child in self.children:
@@ -471,7 +472,7 @@ class PrjPackage(prj_node.PrjFolder):
         # И в конце удалить папку пакета, если она есть
         package = self.getPath()
         # Выгрузить из редакторов
-        self.getRoot().getParent().ide.CloseFile(package+'/__init__.py')
+        self.getRoot().getParent().ide.CloseFile(os.path.join(package, '__init__.py'))
 
         # Удалить все блокировки
         self.getRoot().unlockAllPyFilesInIDE()
@@ -485,7 +486,7 @@ class PrjPackage(prj_node.PrjFolder):
         """
         Вырезать.
         """
-        py_file = self.getPath()+'/__init__.py'
+        py_file = os.path.join(self.getPath(), '__init__.py')
         copy_py_file = self.getCopyModuleName()
         ic_file.icCopyFile(py_file, copy_py_file)
         me_node = prj_node.PrjNode.cut(self)
@@ -496,7 +497,7 @@ class PrjPackage(prj_node.PrjFolder):
         """
         Копировать.
         """
-        py_file = self.getPath()+'/__init__.py'
+        py_file = os.path.join(self.getPath(), '__init__.py')
         copy_node = prj_node.PrjNode.copy(self)
         copy_py_file = copy_node.getCopyModuleName()
         ic_file.icCopyFile(py_file, copy_py_file)
@@ -521,7 +522,7 @@ class PrjPackage(prj_node.PrjFolder):
                 return False
             # Добавить модуль в ресурс проекта
             Node_.getRoot().prj_res_manager.addModule(mod_name, mod_path)
-            module_file_name = mod_path+'/'+mod_name+'.py'
+            module_file_name = os.path.join(mod_path, mod_name+'.py')
             copy_module_file_name = Node_.getCopyModuleName()
             ok = False
             if os.path.exists(copy_module_file_name):
@@ -534,7 +535,7 @@ class PrjPackage(prj_node.PrjFolder):
         return False
 
     def getCopyModuleName(self):
-        return self.getPath()+'__init__.bak'
+        return os.path.join(self.getPath(), '__init__.bak')
 
 
 class PrjModule(prj_node.PrjNode):
@@ -773,7 +774,7 @@ class PrjModule(prj_node.PrjNode):
         module_lines = None
         module_file = None
         try:
-            module_file = open(ModuleFileName_, 'r')
+            module_file = open(ModuleFileName_, 'rt')
             module_lines = module_file.readlines()
             module_file.close()
             module_lines = [line[:-1].strip() for line in module_lines]
@@ -785,7 +786,7 @@ class PrjModule(prj_node.PrjNode):
         return ok
         
     def getCopyModuleName(self):
-        return self.getPath()+'/'+self.name+'.bak'
+        return os.path.join(self.getPath(), self.name+'.bak')
   
     def getPopupHelpText(self):
         """
@@ -826,7 +827,8 @@ class PrjInterfaceModule(PrjModule):
         """
         Полное имя файла ресурса.
         """
-        return ic_file.NormPathUnix(self.getModulePath()+'/'+self.getModuleName()+self.ext)
+        return ic_file.NormPathUnix(os.path.join(self.getModulePath(),
+                                                 self.getModuleName()+self.ext))
         
     def getViewer(self, parent):
         """

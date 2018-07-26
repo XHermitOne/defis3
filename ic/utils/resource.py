@@ -17,7 +17,6 @@ from ic.dlg import ic_dlg
 from ic.log import log
 from ic.imglib import common
 from . import lock
-from ic.kernel import io_prnt
 from ic.PropertyEditor import icDefInf
 import ic.storage.storesrc
 from . import util
@@ -28,9 +27,9 @@ __version__ = (1, 1, 1, 1)
 _ = wx.GetTranslation
 
 #   Указатель на пользовательское хранилище
-isUserObjectStorage = None
+USER_OBJECT_STORAGE = None
 
-IC_DOC_PATH = '%s%sic%sdoc%shtml' % (os.getcwd(), os.sep, os.sep, os.sep)
+IC_DOC_PATH = '%s%sic%sdoc%shtml' % (os.getcwd(), os.path.sep, os.path.sep, os.path.sep)
 
 
 # Функции определения ресурсных файлов системы
@@ -55,11 +54,11 @@ def icGetSysPath():
     pth = icGetResPath()
     if pth:
         pth = pth.replace('\\', '/')
-        lst = pth.split('/')
+        lst = pth.split(os.path.sep)
         if lst[-1]:
-            return '/'.join(lst[:-1])
+            return os.path.sep.join(lst[:-1])
         else:
-            return '/'.join(lst[:-2])
+            return os.path.sep.join(lst[:-2])
 
 
 def icGetSubsys():
@@ -69,7 +68,7 @@ def icGetSubsys():
     pth = icGetResPath()
     if pth:
         pth = pth.replace('\\', '/')
-        lst = pth.split('/')
+        lst = pth.split(os.path.sep)
         if lst[-1]:
             return lst[-1]
         else:
@@ -113,17 +112,17 @@ def icSetUserVariable(varName, value, subsys='', bClose = False):
     @type subsys: C{string}
     @param subsys: Имя подсистемы
     """
-    global isUserObjectStorage
+    global USER_OBJECT_STORAGE
     res_path = icGetUserPath()
     if not res_path:
         return None
 
     #   По необходимости создаем хранилище
-    if not isUserObjectStorage:
-        isUserObjectStorage = storage = ic.storage.storesrc.icTreeDirStorage(res_path)
+    if not USER_OBJECT_STORAGE:
+        USER_OBJECT_STORAGE = storage = ic.storage.storesrc.icTreeDirStorage(res_path)
         storage.Open()
     else:
-        storage = isUserObjectStorage
+        storage = USER_OBJECT_STORAGE
 
     keyObj = lock.GetMyHostName()+'Property'
     #   По необходимости создаем файл
@@ -136,7 +135,7 @@ def icSetUserVariable(varName, value, subsys='', bClose = False):
     if bClose:
         storage.save()
         storage.Close()
-        isUserObjectStorage = None
+        USER_OBJECT_STORAGE = None
 
     return True
 
@@ -145,10 +144,10 @@ def icCloseLocalStorage():
     """
     Закрывает и сохраняет локальное хранилище.
     """
-    global isUserObjectStorage
-    if isUserObjectStorage:
-        isUserObjectStorage.save()
-        isUserObjectStorage.Close()
+    global USER_OBJECT_STORAGE
+    if USER_OBJECT_STORAGE:
+        USER_OBJECT_STORAGE.save()
+        USER_OBJECT_STORAGE.Close()
         log.info('*** save and close local storage ***')
 
 
@@ -162,17 +161,17 @@ def icGetUserVariable(varName, subsys='', bClose = False):
     @type subsys: C{string}
     @param subsys: Имя подсистемы.
     """
-    global isUserObjectStorage
+    global USER_OBJECT_STORAGE
     res_path = icGetUserPath()
     if not res_path:
         return None
     #   По необходимости создаем хранилище
-    if not isUserObjectStorage:
-        isUserObjectStorage = storage = ic.storage.storesrc.icTreeDirStorage(res_path)
+    if not USER_OBJECT_STORAGE:
+        USER_OBJECT_STORAGE = storage = ic.storage.storesrc.icTreeDirStorage(res_path)
         storage.setCache()
         storage.Open()
     else:
-        storage = isUserObjectStorage
+        storage = USER_OBJECT_STORAGE
 
     keyObj = lock.GetMyHostName()+'Property'
     result = None
@@ -184,7 +183,7 @@ def icGetUserVariable(varName, subsys='', bClose = False):
 
     if bClose:
         storage.Close()
-        isUserObjectStorage = None
+        USER_OBJECT_STORAGE = None
 
     return result
 
@@ -216,7 +215,7 @@ def icGetICPath():
 
 
 def icGetUserClassesPath():
-    return icGetICPath()+'/components/user'
+    return os.path.join(icGetICPath(), 'components', 'user')
 
 
 def icGetHlpPath():
@@ -225,14 +224,15 @@ def icGetHlpPath():
     """
     return IC_DOC_PATH
 
+
 def icGetResFileName(Ext_='tab'):
     """
     Ресурсный файл.
     @return: Функцмя возвращает полное имя ресурсного файла по его расширению.
     """
-    res_file = icGetResPath()+'resource.'+Ext_
+    res_file = os.path.join(icGetResPath(), 'resource.'+Ext_)
     res_file = res_file.replace('\\', '/')
-    print(res_file)
+    # print(res_file)
     return res_file
 
 
@@ -304,7 +304,7 @@ def buildDataClassRes(resource, nameRes='resource'):
     while prnt_name:
         #   Выделяем имя подсистемы
         if '/' in prnt_name:
-            subsys, clsName = prnt_name.split('/')
+            subsys, clsName = prnt_name.split(os.path.sep)
             subsys_path = getSubsysPath(subsys)
             prnt_res = icGetRes(clsName, 'tab', subsys_path, bCopy=True, nameRes=nameRes)
         else:
@@ -420,12 +420,12 @@ def getResFilesByType(ext='tab', pathRes=None):
         paths = [pathRes]
 
     for pathRes in paths:
-        path_res = (pathRes+'/').replace('\\', '/').replace('//', '/')
-        file_names=os.listdir(pathRes)
-        full_file_res_name = [path_res+file_name for file_name in file_names if os.path.splitext(file_name)[1][1:].lower() == ext]
-        result = result+full_file_res_name
-    # Отфильтровываем откомпилированные ресурсы
+        path_res = os.path.normpath(pathRes)    # +'/').replace('\\', '/').replace('//', '/')
+        file_names = os.listdir(pathRes)
+        full_file_res_name = [os.path.join(path_res, file_name) for file_name in file_names if os.path.splitext(file_name)[1][1:].lower() == ext]
+        result += full_file_res_name
 
+    # Отфильтровываем откомпилированные ресурсы
     res = []
     pr = '_pkl.%s' % ext
     for el in result:
@@ -521,6 +521,7 @@ def genClassFromRes(className, res, version=None):
 # -*- coding: utf-8 -*-
 
 import wx
+
 import ic.components.icResourceParser as prs
 from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
@@ -668,7 +669,7 @@ def getICObjectResource(path):
         if isinstance(res, dict):
             return res, className, version
     except:
-        log.error(_('Import module error: %s') % path)
+        log.fatal(_('Import module error: %s') % path)
 
     return None, None, None
 
@@ -684,9 +685,16 @@ def saveICObject(path, className, res):
     @param res: Ресурсное описание.
     """
     text = genClassFromRes(className, res)
-    file = open(path, 'w')
-    file.write(text)
-    file.close()
+
+    file_obj = None
+    try:
+        file_obj = open(path, 'wt')
+        file_obj.write(text)
+        file_obj.close()
+    except:
+        log.fatal(u'Ошибка генерации модуля <%s> класса python по ресурсу' % path)
+        if file_obj:
+            file_obj.close()
 
 
 def updateICObject(path, className, res, version=None):
@@ -699,10 +707,18 @@ def updateICObject(path, className, res, version=None):
     @type res: C{dictionary}
     @param res: Ресурсное описание.
     """
-    #   Читаем текст файла
-    file = open(path, 'rb')
-    text = file.read()
-    file.close()
+    file_obj = None
+    try:
+        #   Читаем текст файла
+        file_obj = open(path, 'rt')
+        text = file_obj.read()
+        file_obj.close()
+    except:
+        log.fatal(u'Ошибка чтения файла <%s>' % path)
+        if file_obj:
+            file_obj.close()
+        return
+
     #   Обновляем текст
     version = genNextVersion(version)
     n1 = text.find('###BEGIN')
@@ -715,9 +731,15 @@ resource = %s
 __version__ = %s
 %s''' % (text[:n1], str(res), str(tuple(version)), text[n2:])
 
-    file = open(path, 'wb')
-    file.write(text)
-    file.close()
+    file_obj = None
+    try:
+        file_obj = open(path, 'wt')
+        file_obj.write(text)
+        file_obj.close()
+    except:
+        log.fatal(u'Ошибка записи файла <%s>' % path)
+        if file_obj:
+            file_obj.close()
 
 
 def getSubsysPath(subsys=None):
@@ -728,7 +750,7 @@ def getSubsysPath(subsys=None):
     """
     sys_path = icGetSubsysResPaths()[0].replace('\\', '/')
     if subsys:
-        return '/'.join(sys_path.split('/')[:-1])+'/'+subsys
+        return os.path.join(os.path.sep.join(sys_path.split(os.path.sep)[:-1]), subsys)
     else:
         return sys_path
 
@@ -769,9 +791,11 @@ def method(id_meth, subsys, esp=locals(), **params):
 
     return None
 
+
 # Форматы ресурса.
 PICKLE_RES_FMT = 0
 TEXT_RES_FMT = 1
+
 from . import ic_res
 
 
@@ -797,7 +821,7 @@ def icSaveRes(className, ext, pathRes=None, nameRes='resource',
     """
     if not pathRes:
         pathRes = ic_user.icGet('PRJ_DIR')
-    fileResName = (pathRes+'/'+nameRes+'.'+ext).replace('\\', '/').replace('//', '/')
+    fileResName = os.path.join(pathRes, nameRes+'.'+ext)
 
     if ResFmt == PICKLE_RES_FMT:
         return ic_res.SaveResourcePickle(fileResName, {className: resData})
@@ -812,11 +836,20 @@ def updateImporsObjModule(fn, imp_path):
     @param imp_path: Имя модуля объекта.
     """
     # Читаем текст модуля
-    fn = fn.replace('\\', '/')
-    imp_path = imp_path.replace('\\', '/')
-    f = open(fn, 'rb')
-    text = f.read()
-    f.close()
+    fn = os.path.normpath(fn)
+    imp_path = os.path.join(imp_path)
+
+    f = None
+    try:
+        f = open(fn, 'rt')
+        text = f.read()
+        f.close()
+    except:
+        log.fatal(u'Ошибка чтения файла <%s>' % fn)
+        if f:
+            f.close()
+        return
+
     n = text.find('### RESOURCE_MODULE_IMPORTS')
     if n < 0:
         n = text.find('### RESOURCE_MODULE:')
@@ -826,9 +859,9 @@ def updateImporsObjModule(fn, imp_path):
 
     subsys = icGetSubsys()
     if subsys:
-        pack = '%s.%s' % (subsys, p2.replace(p1, '')[1:].replace('/', '.'))
+        pack = '%s.%s' % (subsys, p2.replace(p1, '')[1:].replace(os.path.sep, '.'))
     else:
-        pack = p2.replace(p1, '')[1:].replace('/', '.')
+        pack = p2.replace(p1, '')[1:].replace(os.path.sep, '.')
 
     mod = n2.replace('.py', '')
 
@@ -839,9 +872,15 @@ def updateImporsObjModule(fn, imp_path):
     else:
         text = text + '\n' + imp
 
-    file = open(fn, 'wb')
-    file.write(text)
-    file.close()
+    f = None
+    try:
+        f = open(fn, 'wt')
+        f.write(text)
+        f.close()
+    except:
+        log.fatal(u'Ошибка записи файла <%s>' % fn)
+        if f:
+            f.close()
 
 
 def _findres(res, nameObj, typeObj):

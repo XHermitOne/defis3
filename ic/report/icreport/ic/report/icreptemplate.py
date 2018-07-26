@@ -103,7 +103,7 @@ class icReportTemplate:
         pickle_file_name = os.path.splitext(template_filename)[0]+DEFAULT_REPORT_FILE_EXT
         pickle_file = None
         try:
-            pickle_file = open(pickle_file_name, 'w')
+            pickle_file = open(pickle_file_name, 'wb')
             cPickle.dump(self._rep_template, pickle_file)
             pickle_file.close()
         except:
@@ -120,7 +120,7 @@ class icReportTemplate:
         pickle_file_name = os.path.splitext(template_filename)[0]+DEFAULT_REPORT_FILE_EXT
         pickle_file = None
         try:
-            pickle_file = open(pickle_file_name, 'r')
+            pickle_file = open(pickle_file_name, 'rb')
             self._rep_template = cPickle.load(pickle_file)
             pickle_file.close()
         except:

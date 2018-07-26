@@ -235,7 +235,7 @@ def CreateRunApp(PrjDir_):
     Создать если надо модуль запуска прикладной системы.
     @return: True/False.
     """
-    run_py_file_name = ic_file.AbsolutePath(PrjDir_)+'/run.py'
+    run_py_file_name = os.path.join(ic_file.AbsolutePath(PrjDir_), 'run.py')
     
     if not os.path.exists(run_py_file_name):
         run_py_file = None
@@ -273,7 +273,7 @@ def RunTaskSH(Cmd_):
         os.remove(run_sh_name)
     f = None
     try:
-        f = open(run_sh_name, 'w')
+        f = open(run_sh_name, 'wt')
         f.write(Cmd_)
         f.close()
         f = None
@@ -297,7 +297,7 @@ def RunTaskBAT(Cmd_):
         os.remove(run_bat_name)
     f = None
     try:
-        f = open(run_bat_name, 'w')
+        f = open(run_bat_name, 'wt')
         f.write(Cmd_)
         f.close()
         f = None

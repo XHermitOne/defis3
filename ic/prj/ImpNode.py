@@ -292,7 +292,7 @@ class PrjImportSystems(PrjImportFolder):
         """
         sub_sys_path = self.getSubSysPath(SubSysName_)
         prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
-        del_dir = prj_dir+'/'+os.path.basename(os.path.dirname(sub_sys_path))
+        del_dir = os.path.join(prj_dir, os.path.basename(os.path.dirname(sub_sys_path)))
         log.info(u'UNLINK SUBSYTEM %s %s %s' % (SubSysName_, del_dir, sub_sys_path))
         # Сначала удалить из описания в фале *.pro
         ok = self.getRoot().prj_res_manager.delImpSubSys(SubSysName_)
@@ -602,12 +602,12 @@ class PrjImportSys(PrjNotImportSys):
             imp_path = self.getPath()
             if not imp_path:
                 return False
-            py_file = imp_path+'/__init__.py'
+            py_file = os.path.join(imp_path, '__init__.py')
             # Если в файле нет функций регистрации
             # импортируемой системы, то добавить их
             init_file = None
             try:
-                init_file = open(py_file, 'r')
+                init_file = open(py_file, 'rt')
                 init_txt = init_file.read()
                 init_file.close()
                 for func_name in _SubSysFuncs:
@@ -628,7 +628,7 @@ class PrjImportSys(PrjNotImportSys):
         """
         init_file = None
         try:
-            init_file = open(InitFileName_, 'w')
+            init_file = open(InitFileName_, 'wt')
             init_file.write(FuncBody_)
             init_file.close()
         except:
