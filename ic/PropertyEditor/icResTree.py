@@ -880,7 +880,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         data = self.GetPyData(item)
         # Создаем окно помощи
         try:
-            doc_path = ic_file.DirName(ic.utils.resource.icGetICPath())
+            doc_path = os.path.dirname(ic.utils.resource.icGetICPath())
             from ic.components import icIEHtmlWin
             # Старый способ
             if 'docstr' in data:

@@ -160,7 +160,7 @@ class icAUIPanePrototype:
         """
         control = None
         try:
-            res_name, res_ext = ic_file.SplitExt(ResFileName_)
+            res_name, res_ext = os.path.splitext(ResFileName_)
             control = icResourceParser.icCreateObject(res_name,
                                                       res_ext[1:],
                                                       subsys=subsys,

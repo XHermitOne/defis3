@@ -6,6 +6,7 @@
 """
 
 # --- Подключение библиотек ---
+import os
 import zlib
 import io
 
@@ -33,7 +34,7 @@ def getImgFileData(ImgFileName_):
     try:
         # Определить тип образа и расширение файла
         img_file_type = ic_bmp.getImageFileType(ImgFileName_)
-        img_file_ext = ic_file.SplitExt(ImgFileName_)[1]
+        img_file_ext = os.path.splitext(ImgFileName_)[1]
         # Конвертировать файл образа во временный файл
         tmp_file_name = tempfile.mktemp()
         log.info(u'Серилизация файла образа [%s : %s : %s]' % (ImgFileName_, img_file_ext, img_file_type))
@@ -46,7 +47,7 @@ def getImgFileData(ImgFileName_):
         # Получить данные из временного файла
         tmp_file = open(tmp_file_name, 'rb').read()
         data = crunchImgData(tmp_file)
-        ic_file.UnLink(tmp_file_name)
+        os.unlink(tmp_file_name)
         return data
     except:
         log.error(u'Ошибка серилизации файла образа <%s> в строку.' % ImgFileName_)

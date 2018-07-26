@@ -424,8 +424,8 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             else:
                 log.warning(u'Ошибка определения файла БД: path: <%s> filename: <%s>' % (DBRes_['path'], DBRes_['filename']))
             # Проверка существования папки БД
-            dir_path = ic_file.DirName(full_path)
-            if not ic_file.Exists(dir_path):
+            dir_path = os.path.dirname(full_path)
+            if not os.path.exists(dir_path):
                 log.info(u'CREATE NEW DIR <%s>' % dir_path)
                 ic_file.MakeDirs(dir_path)
             url['database'] = full_path
@@ -474,7 +474,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                                   tab_res[list(tab_res.keys())[0]]['source'] == self.getPsp()])
             for tab_res_name, tab_res in tab_resources.items():
                 tab_spc = tab_res[list(tab_res.keys())[0]]
-                tab_psp = ((tab_spc['type'], tab_spc['name'], None, ic_file.BaseName(tab_res_name), None),)
+                tab_psp = ((tab_spc['type'], tab_spc['name'], None, os.path.basename(tab_res_name), None),)
                 obj = self.GetKernel().Create(tab_psp, parent=self)
         return self
 

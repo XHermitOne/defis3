@@ -13,64 +13,25 @@ import shutil   # Для реализации высокоуровневых ф�
 import sys
 import time
 import glob     # Для поиска файлов по маске/шаблону
-import imp      # Для импорта файлов-модулей
 import platform
-
-# --- Переопределение имен некоторых функций ---
-from os import rename as Rename
-from os import getcwd as GetCurDir
-from os import remove as Remove
-from os import unlink as UnLink
-from os import listdir as ListDir
-from os import mkdir as MakeDir
-from os import sep as PATH_SEPARATOR    # Разделитель путей текущей ОС
-
-from os.path import isfile as IsFile
-from os.path import isdir as IsDir
-from os.path import split as Split
-from os.path import splitext as SplitExt
-from os.path import dirname as DirName
-from os.path import basename as BaseName
-from os.path import abspath as AbsPath
-# from os.path import walk as Walk
-from os.path import join as Join
-from os.path import exists as Exists
-from os.path import normpath as NormPath
-from os.path import getmtime as GetMTime
-from os.path import getatime as GetAccessFileTime
-from os.path import getsize as GetFileSize
-
-from shutil import rmtree as RemoveTreeDir
-from shutil import copytree as CopyTreeDir
-from shutil import copyfile as CopyFile
-
-from sys import path as PATH
-from sys import argv as ARGV
 
 from ic.log import log
 from ic.dlg import ic_dlg
 
-# --- Функции работы с файлами исходников ---
-from compileall import compile_dir as CompileDir
-from py_compile import compile as CompileFile
-from imp import load_source as LoadSource
-
 import ic.config
 
-
-__version__ = (0, 2, 1, 1)
+__version__ = (1, 1, 1, 1)
 
 _ = wx.GetTranslation
 
+
 # --- Функции пользователя ---
-
-
 def GetMakeFileTime(FileName_):
     """
     Время создания файла. Если файла не существует то 0.
     """
     if os.path.exists(FileName_):
-        return GetMTime(FileName_)
+        return os.path.getmtime(FileName_)
     return 0
 
 
@@ -247,7 +208,7 @@ def GetFilesByExt(Path_, Ext_):
         file_list = None
         file_list = [os.path.join(Path_, file_name) for file_name in os.listdir(Path_)]
         file_list = [file_name for file_name in file_list if os.path.isfile(file_name) and
-                     (SplitExt(file_name)[1].lower() == Ext_)]
+                     (os.path.splitext(file_name)[1].lower() == Ext_)]
         return file_list
     except:
         log.fatal(u'Ошибка чтения списка файлов <ext=%s, path=%s, list=%s>' % (Ext_, Path_, file_list))
@@ -280,7 +241,7 @@ def getFileExt(FileName_):
     """
     Получить расширение файла с точкой.
     """
-    return SplitExt(FileName_)[1]
+    return os.path.splitext(FileName_)[1]
 
 
 def icRelativePath(Path_):
@@ -299,7 +260,7 @@ def icAbsolutePath(Path_):
     @param Path_: Путь.
     """
     try:
-        Path_ = AbsPath(Path_)
+        Path_ = os.path.abspath(Path_)
         Path_ = Path_.replace('\\', '/').lower().strip()
         return Path_
     except:
@@ -315,7 +276,7 @@ def RelativePath(Path_, CurDir_=None):
     """
     if CurDir_ is None:
         import ic.engine.ic_user
-        CurDir_ = DirName(ic.engine.ic_user.icGet('PRJ_DIR')).replace('\\', '/').lower()
+        CurDir_ = os.path.dirname(ic.engine.ic_user.icGet('PRJ_DIR')).replace('\\', '/').lower()
     if CurDir_:
         Path_ = Path_.replace('\\', '/').lower().strip()
         return Path_.replace(CurDir_, '.')
@@ -391,16 +352,16 @@ def NormPathWin(Path_):
         return ''
         
     if Path_.find(' ') > -1 and Path_[0] != '\'' and Path_[-1] != '\'':
-        return '\''+NormPath(Path_).strip()+'\''
+        return '\''+os.path.normpath(Path_).strip()+'\''
     else:
-        return NormPath(Path_).strip()
+        return os.path.normpath(Path_).strip()
 
 
 def NormPathUnix(Path_):
     """
     Приведение пути к виду UNIX.
     """
-    return NormPath(Path_).replace('\\', '/').strip()
+    return os.path.normpath(Path_).replace('\\', '/').strip()
 
 
 def SamePathWin(Path1_, Path2_):
@@ -416,8 +377,8 @@ def _pathFilter(Path_, Filter_):
     @return: Возвращает True если папок с указанными имена в фильтре нет в пути и
         False если наоборот.
     """
-    path = NormPath(Path_).replace('\\', '/')
-    path_lst = path.split('/')
+    path = os.path.normpath(Path_).replace('\\', '/')
+    path_lst = path.split(os.path.sep)
     filter_result = True
     for cur_filter in Filter_:
         if cur_filter in path_lst:
@@ -482,7 +443,7 @@ def CopyDir(Dir_, ToDir_, ReWrite_=False, AddDir_=True):
     @return: Функция возвращает результат выполнения операции True/False.    
     """
     try:
-        to_dir = os.path.join(ToDir_, BaseName(Dir_))
+        to_dir = os.path.join(ToDir_, os.path.basename(Dir_))
         if os.path.exists(to_dir) and ReWrite_:
             log.info(u'Удаление папки <%s>' % to_dir)
             shutil.rmtree(to_dir, 1)
@@ -525,12 +486,12 @@ def IsSubDir(Dir1_, Dir2_):
     Функция проверяет, является ли директория Dir1_ поддиректорией Dir2_.
     @return: Возвращает True/False.
     """
-    dir1 = AbsPath(Dir1_)
-    dir2 = AbsPath(Dir2_)
+    dir1 = os.path.abspath(Dir1_)
+    dir2 = os.path.abspath(Dir2_)
     if dir1 == dir2:
         return True
     else:
-        sub_dirs = [path for path in [dir2+PATH_SEPARATOR+name for name in os.listdir(dir2)] if IsDir(path)]
+        sub_dirs = [path for path in [os.path.join(dir2, name) for name in os.listdir(dir2)] if os.path.isdir(path)]
         for cur_sub_dir in sub_dirs:
             find = IsSubDir(Dir1_, cur_sub_dir)
             if find:
@@ -583,7 +544,8 @@ def copyToDir(FileName_, DestDir_, Rewrite_=True):
         то выдать сообщение о подтверждении перезаписи файла.
     @return: Возвращает результат выполнения операции True/False.
     """
-    return icCopyFile(FileName_, os.path.join(DestDir_, BaseName(FileName_)), Rewrite_)
+    return icCopyFile(FileName_, os.path.join(DestDir_,
+                                              os.path.basename(FileName_)), Rewrite_)
 
 
 def delAllFilesFilter(DelDir_, *Filter_):
@@ -615,7 +577,7 @@ def getPythonDir():
     """
     Папка в которую установлен Python.
     """
-    return DirName(sys.executable)
+    return os.path.dirname(sys.executable)
 
 
 def getPythonExe():

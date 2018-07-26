@@ -170,7 +170,7 @@ def smb_download_file_rename(download_urls=None, filename=None, dst_filename=Non
             ic_file.icCopyFile(new_filename, dst_filename, re_write)
 
             # После копирования удаляем временную директорию
-            ic_file.RemoveTreeDir(tmp_path, True)
+            shutil.rmtree(tmp_path, True)
 
             return True
         except:

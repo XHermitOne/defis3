@@ -404,7 +404,7 @@ class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
         """
         if ICOFileName_:
             ico_file_name = ic_file.AbsolutePath(ICOFileName_)
-            if ic_file.Exists(ico_file_name):
+            if os.path.exists(ico_file_name):
                 icon = wx.Icon(ico_file_name, wx.BITMAP_TYPE_ICO)
                 icon.SetWidth(24)
                 icon.SetHeight(24)

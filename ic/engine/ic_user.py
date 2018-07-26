@@ -194,7 +194,7 @@ def InitEnv(PrjDir_, **environ):
         from ic.prj import PrjRes
         prj_res_manager = PrjRes.icPrjRes()
         prj_dir = ic_file.NormPathUnix(PrjDir_)
-        prj_res_file_name = os.path.join(prj_dir, ic_file.BaseName(prj_dir)+'.pro')
+        prj_res_file_name = os.path.join(prj_dir, os.path.basename(prj_dir)+'.pro')
         if os.path.exists(prj_res_file_name):
             prj_res_manager.openPrj(prj_res_file_name)
             env_dict = prj_res_manager.getPrjEnv()
@@ -222,7 +222,7 @@ def icLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
     icLet('UserAccessFile', users_file)
 
     # Имя проекта
-    icLet('PrjName', ic_file.Split(icGet('SYS_RES'))[1])
+    icLet('PrjName', os.path.split(icGet('SYS_RES'))[1])
 
     # Установить операционный год
     setOperateYear()
@@ -268,7 +268,7 @@ def icEditorLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
     users_file = icUser.DEFAULT_USERS_RES_FILE
     icLet('UserAccessFile', users_file)
     # Имя проекта
-    icLet('PrjName', ic_file.Split(icGet('SYS_RES'))[1])
+    icLet('PrjName', os.path.split(icGet('SYS_RES'))[1])
     login_result = kernel.Login(User_, Password_, DBMode_)
 
     metadata = glob_variables.set_glob_var('metadata', kernel.GetContext()['metadata'])

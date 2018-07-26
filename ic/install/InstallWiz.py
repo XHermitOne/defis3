@@ -8,6 +8,8 @@
 # --- Подключение библиотек ---
 import os
 import os.path
+import shutil
+import compileall
 import wx.adv
 
 from ic.dlg import ic_dlg
@@ -408,7 +410,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                                        os.path.join(install_dir, 'package',
                                                     os.path.basename(arch_file)))
                     # Удалить временную папку
-                    ic_file.RemoveTreeDir(os.path.dirname(arch_file), 1)
+                    shutil.rmtree(os.path.dirname(arch_file), 1)
                     
                 # Скопировать пакеты
                 for package in packages:
@@ -456,7 +458,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
             temp_dir = os.path.join(os.path.dirname(os.tmpnam()), prj_name)
             if os.path.exists(temp_dir):
                 log.info(u'INSTALL WIZARD DELETE TEMP DIR <%s>' % temp_dir)
-                ic_file.RemoveTreeDir(temp_dir)
+                shutil.rmtree(temp_dir)
                 log.info(u'INSTALL WIZARD DELETE TEMP DIR OK')
 
             os.makedirs(temp_dir)
@@ -467,7 +469,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
             # Пакет ic
             log.info(u'INSTALL WIZARD COPY ic PACKAGE <%s>' % main_dir)
             ic_tmp_dir = os.path.join(temp_dir, 'ic')
-            ic_file.CopyTreeDir(os.path.join(main_dir, 'ic'), ic_tmp_dir)
+            shutil.copytree(os.path.join(main_dir, 'ic'), ic_tmp_dir)
             
             # Условие удаления исходников из ic
             if not self.getOpenSource():
@@ -476,11 +478,11 @@ class NullsoftInstallSystem(PrjInstallMaker):
             # Пакет прикладной системы
             log.info(u'INSTALL WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
             usr_tmp_dir = os.path.join(temp_dir, os.path.basename(prj_dir))
-            ic_file.CopyTreeDir(prj_dir,
+            shutil.copytree(prj_dir,
                                 os.path.join(temp_dir, os.path.basename(prj_dir)))
 
             # Все откомпелироавать нехрен
-            ic_file.CompileDir(temp_dir)
+            compileall.compile_dir(temp_dir)
             
             # Заархивировать пакет прикладной системы
             rar_util = os.path.join(main_dir, 'ic', 'db', 'postgresql', 'Rar.exe')
@@ -806,7 +808,7 @@ class zipPublicSystem(PrjInstallMaker):
             temp_dir = os.path.join(os.environ['TMP'], prj_name)
             if os.path.exists(temp_dir):
                 log.info(u'PUBLIC WIZARD DELETE TEMP DIR <%s>' % temp_dir)
-                ic_file.RemoveTreeDir(temp_dir)
+                shutil.rmtree(temp_dir)
                 log.info(u'PUBLIC WIZARD DELETE TEMP DIR OK')
 
             os.makedirs(temp_dir)
@@ -877,7 +879,7 @@ def runPublicWizard(Parent_, PrjResFileName_):
     @param Parent_: Родительское окно.
     @param PrjResFileName_: Имя ресурса проекта.
     """
-    public_maker = zipPublicSystem(ic_file.DirName(PrjResFileName_))
+    public_maker = zipPublicSystem(os.path.dirname(PrjResFileName_))
     
     wiz = wx.adv.Wizard(Parent_, -1,
                         u'Создание пакета публикации',

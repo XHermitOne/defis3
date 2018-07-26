@@ -32,12 +32,12 @@ def LockFile(FileName_, LockRecord_=None):
     lock_rec = LockRecord_
     
     # Сгенерировать имя файла блокировки
-    lock_file = ic_file.SplitExt(FileName_)[0]+LOCK_FILE_EXT
+    lock_file = os.path.splitext(FileName_)[0]+LOCK_FILE_EXT
     # Если файл не заблокирован, то заблокировать его
-    if not ic_file.IsFile(lock_file):
+    if not os.path.isfile(lock_file):
         # Создать все директории для файла блокировки
-        lock_dir = ic_file.DirName(lock_file)
-        if not ic_file.IsDir(lock_dir):
+        lock_dir = os.path.dirname(lock_file)
+        if not os.path.isdir(lock_dir):
             ic_file.MakeDirs(lock_dir)
         
         # Генерация файла-флага блокировки
@@ -83,9 +83,9 @@ def ReadLockRecord(LockFile_):
         lock_file = None
         lock_rec = None
         # На всякий случай преобразовать
-        lock_file = ic_file.SplitExt(LockFile_)[0]+LOCK_FILE_EXT
+        lock_file = os.path.splitext(LockFile_)[0]+LOCK_FILE_EXT
         # Если файла не существует, тогда и нечего прочитать
-        if not ic_file.Exists(lock_file):
+        if not os.path.exists(lock_file):
             return None
         # Открыть для чтения
         f = os.open(lock_file, os.O_RDONLY, 0777)
@@ -111,8 +111,8 @@ def IsLockedFile(FileName_):
     @return: Возвращает результат True/False.
     """
     # Сгенерировать имя файла блокировки
-    lock_file = ic_file.SplitExt(FileName_)[0]+LOCK_FILE_EXT
-    return ic_file.IsFile(lock_file)
+    lock_file = os.path.splitext(FileName_)[0]+LOCK_FILE_EXT
+    return os.path.isfile(lock_file)
 
 
 def ComputerName():
@@ -139,21 +139,21 @@ def UnLockFile(FileName_, **If_):
     @return: Возвращает результат True/False.
     """
     # Сгенерировать имя файла блокировки
-    lock_file = ic_file.SplitExt(FileName_)[0]+LOCK_FILE_EXT
-    if ic_file.IsFile(lock_file):
+    lock_file = os.path.splitext(FileName_)[0]+LOCK_FILE_EXT
+    if os.path.isfile(lock_file):
         if If_:
             lck_rec = ReadLockRecord(lock_file)
             # Если значения по указанным ключам равны, то все ОК
             can_unlock = bool(len([key for key in If_.keys() if lck_rec.setdefault(key, None) == If_[key]]) == len(If_))
             if can_unlock:
                 # Ресурс можно разблокировать
-                ic_file.Remove(lock_file)
+                os.remove(lock_file)
             else:
                 # Нельзя разблокировать файл
                 return False
         else:
             # Ресурс можно разблокировать
-            ic_file.Remove(lock_file)
+            os.remove(lock_file)
     return True
 
 
@@ -166,11 +166,11 @@ def _UnLockFileWalk(ComputerName_, CurDir_, CurNames_):
     @param CurNames_: Имена поддиректорий и файлов в текущей директории.
     """
     # Отфильтровать только файлы блокировок
-    lock_files = [x for x in [ic_file.Join(CurDir_, x) for x in CurNames_] if ic_file.IsFile(x) and ic_file.SplitExt(x)[1] == LOCK_FILE_EXT]
+    lock_files = [x for x in [os.path.join(CurDir_, x) for x in CurNames_] if os.path.isfile(x) and os.path.splitext(x)[1] == LOCK_FILE_EXT]
     # Выбрать только свои файлы-блокировки
     for cur_file in lock_files:
         if ReadLockRecord(cur_file)['owner'] == ComputerName_:
-            ic_file.Remove(cur_file)
+            os.remove(cur_file)
 
 
 def UnLockAllFile(LockDir_, ComputerName_=None):
@@ -229,7 +229,7 @@ class icLockSystem:
             if isinstance(LockName_, list):
                 lock_name = LockName_[-1]
             elif isinstance(LockName_, str):
-                lock_name = ic_file.SplitExt(ic_file.BaseName(LockName_))[0]
+                lock_name = os.path.splitext(os.path.basename(LockName_))[0]
             lock_file_name = os.path.join(self._LockDir, lock_name+LOCK_FILE_EXT)
             return lock_file_name
         except:

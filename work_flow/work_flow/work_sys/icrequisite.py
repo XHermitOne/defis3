@@ -532,7 +532,7 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
             nsi_res_name = 'nsi_sprav'
             nsi_res_ext = 'mtd'
         else:
-            nsi_res = ic_file.SplitExt(ic_file.BaseName(NSIRes_))
+            nsi_res = os.path.splitext(os.path.basename(NSIRes_))
             nsi_res_name = nsi_res[0]
             nsi_res_ext = nsi_res[1][1:]  # И стереть первую точку
             

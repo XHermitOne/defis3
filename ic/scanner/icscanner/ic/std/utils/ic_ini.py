@@ -278,7 +278,7 @@ def Ini2Dict(INIFileName_):
     """
     ini_file = None
     try:
-        if not ic_file.Exists(INIFileName_):
+        if not os.path.exists(INIFileName_):
             log.warning(u'Файл конфигурации %s не найден.' % INIFileName_)
             return None
             
@@ -325,14 +325,14 @@ def Dict2Ini(Dict_, INIFileName_):
             log.warning(u'Не верно определен исходный словарь: %s' % Dict_)
             return False
 
-        ini_file_name = ic_file.Split(INIFileName_)
+        ini_file_name = os.path.split(INIFileName_)
         path = ini_file_name[0]
         filename = ini_file_name[1]
-        if not ic_file.IsDir(path):
+        if not os.path.isdir(path):
             ic_file.MakeDirs(path)
 
         # Если ини-файла нет, то создать его
-        if not ic_file.Exists(INIFileName_):
+        if not os.path.exists(INIFileName_):
             ini_file = open(INIFileName_, 'w')
             ini_file.write('')
             ini_file.close()

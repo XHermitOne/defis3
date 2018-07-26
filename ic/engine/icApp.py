@@ -43,7 +43,7 @@ def GetPrjSubSysDirs(PrjDir_):
     Заполнение списка происходит по файлу *.pro.
     @param PrjDir_: Папка проекта.
     """
-    root_prj_dir = ic.utils.ic_file.DirName(PrjDir_)
+    root_prj_dir = ic.utils.os.path.dirname(PrjDir_)
     pro_files = ic.utils.ic_file.GetFilesByExt(PrjDir_, '.pro')
     if pro_files:
         pro_file = pro_files[0]
@@ -58,7 +58,7 @@ def GetSubSysDirs(PrjDir_):
         Заполнение списка происходит по файлу *.pro.
     @param PrjDir_: Папка проекта.
     """
-    root_prj_dir = ic.utils.ic_file.DirName(PrjDir_)
+    root_prj_dir = ic.utils.os.path.dirname(PrjDir_)
     pro_files = ic.utils.ic_file.GetFilesByExt(PrjDir_, '.pro')
     if pro_files:
         pro_file = pro_files[0]

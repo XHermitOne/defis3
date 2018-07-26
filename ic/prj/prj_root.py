@@ -9,6 +9,7 @@
 import wx
 import sys
 import os.path
+import py_compile
 
 from ic.log import log
 
@@ -166,7 +167,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         # импорта модулей
         if self.getPrjFileName():
             prj_dir = os.path.dirname(self.getPrjFileName())
-            ic_file.PATH.append(prj_dir)
+            sys.path.append(prj_dir)
         
     def Default(self):
         """
@@ -420,7 +421,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             # должен отразиться актуальный проект------------------------------+
             # Иначе дерево проекта для выбора паспорта не обновляется          |
             # Поэтому явно задаем корень проекта в окружении                   v
-            ic_user.InitEnv(ic_file.DirName(prj_file), PrjName=prj_name, PRJ_ROOT=self)
+            ic_user.InitEnv(os.path.dirname(prj_file), PrjName=prj_name, PRJ_ROOT=self)
             
             # Регистрация программиста
             if not self.login(prj_filename=prj_file):
@@ -439,7 +440,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             self._openDefault()
             # Сохранить время и размер до следующей синхронизации
             self.prj_res_time = ic_file.GetMakeFileTime(prj_file)
-            self.prj_res_size = ic_file.GetFileSize(prj_file)
+            self.prj_res_size = os.path.getsize(prj_file)
 
             # определить папку блокировок
             self.lock_dir = os.path.join(os.path.dirname(os.path.dirname(prj_file)), 'lock')
@@ -520,7 +521,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         prj_file = self.getPrjFileName()
         if prj_file:
             cur_prj_res_time = ic_file.GetMakeFileTime(prj_file)
-            cur_prj_res_size = ic_file.GetFileSize(prj_file)
+            cur_prj_res_size = os.path.getsize(prj_file)
             if (cur_prj_res_time != self.prj_res_time) or \
                (cur_prj_res_size != self.prj_res_size) or \
                Refresh_:
@@ -560,7 +561,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         ok = self.prj_res_manager.savePrj()
         # Сохранить время и размер до следующей синхронизации
         self.prj_res_time = ic_file.GetMakeFileTime(self.getPrjFileName())
-        self.prj_res_size = ic_file.GetFileSize(self.getPrjFileName())
+        self.prj_res_size = os.path.getsize(self.getPrjFileName())
         return ok
 
     def rename(self, OldName_, NewName_):
@@ -672,7 +673,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         app_dir = os.path.dirname(prj_path)
         # Откомпилировать главный модуль
         if os.path.exists(os.path.join(app_dir, 'run.py')):
-            ic_file.CompileFile(os.path.join(app_dir, 'run.py'))
+            py_compile.compile(os.path.join(app_dir, 'run.py'))
 
         # Коммандная строка
         self._runPrjCmd(app_dir, prj_path)
@@ -732,9 +733,9 @@ class PrjRoot(ImpNode.PrjImportSys):
         
         python_exe = sys.executable
         winpdb_module = '%s%sLib%ssite-packages%swinpdb.py' % (sys.prefix,
-                                                               ic_file.PATH_SEPARATOR,
-                                                               ic_file.PATH_SEPARATOR,
-                                                               ic_file.PATH_SEPARATOR)
+                                                               os.path.sep,
+                                                               os.path.sep,
+                                                               os.path.sep)
         
         if os.path.exists(winpdb_module):
             # Если установлен WinPDB

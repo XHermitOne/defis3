@@ -298,7 +298,7 @@ class PrjImportSystems(PrjImportFolder):
         ok = self.getRoot().prj_res_manager.delImpSubSys(SubSysName_)
         # Затем удалить папку подсистемы
         if ok:
-            ic_file.RemoveTreeDir(del_dir, True)
+            shutil.rmtree(del_dir, True)
             self.delChildByName(SubSysName_)
 
     def getPrjTreeCtrl(self):

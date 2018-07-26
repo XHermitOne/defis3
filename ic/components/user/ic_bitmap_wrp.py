@@ -157,7 +157,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     Стандартная функция контроля.
     """
     if attr == 'file_name':
-        if value and ic_file.Exists(value):
+        if value and os.path.exists(value):
             # Серилизованная строка
             srlz_string = icimg2py.getImgFileData(value)
             # Т.к. функция создания серилизованной строки

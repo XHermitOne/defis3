@@ -11,6 +11,7 @@ from wx.lib.agw import flatmenu
 import os
 import os.path
 import shutil
+import imp
 
 from ic.imglib import common as imglib
 from ic.utils import ic_file
@@ -795,8 +796,8 @@ class PrjModule(prj_node.PrjNode):
         try:
             module_filename = os.path.join(self.getModulePath(),
                                            self.name+self.ext)
-            module = ic_file.LoadSource(os.path.splitext(os.path.basename(module_filename))[0],
-                                        module_filename)
+            module = imp.load_source(os.path.splitext(os.path.basename(module_filename))[0],
+                                     module_filename)
             if hasattr(module, '__doc__'):
                 if wx.Platform == '__WXGTK__':
                     return module.__doc__.strip()

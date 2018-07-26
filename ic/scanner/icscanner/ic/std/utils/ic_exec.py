@@ -238,7 +238,7 @@ def CreateRunApp(PrjDir_):
     """
     run_py_file_name = ic_file.AbsolutePath(PrjDir_)+'/run.py'
     
-    if not ic_file.Exists(run_py_file_name):
+    if not os.path.exists(run_py_file_name):
         run_py_file = None
         try:
             run_py_file = open(run_py_file_name, 'wt')
@@ -270,8 +270,8 @@ def RunTaskSH(Cmd_):
     @param Cmd_: Комманда системы.
     """
     run_sh_name = ic_file.AbsolutePath('./run.sh')
-    if ic_file.IsFile(run_sh_name):
-        ic_file.Remove(run_sh_name)
+    if os.path.isfile(run_sh_name):
+        os.remove(run_sh_name)
     f = None
     try:
         f = open(run_sh_name, 'w')
@@ -294,8 +294,8 @@ def RunTaskBAT(Cmd_):
     @param Cmd_: Комманда системы.
     """
     run_bat_name = ic_file.AbsolutePath('./run.bat')
-    if ic_file.IsFile(run_bat_name):
-        ic_file.Remove(run_bat_name)
+    if os.path.isfile(run_bat_name):
+        os.remove(run_bat_name)
     f = None
     try:
         f = open(run_bat_name, 'w')

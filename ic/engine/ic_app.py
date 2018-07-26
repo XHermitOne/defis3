@@ -52,7 +52,7 @@ class icWXApp(wx.App, ickernel.icKernel):
         """
         from ic.components import icResourceParser
         try:
-            file_name, file_ext = ic_file.SplitExt(BehaviourResourceFileName_)
+            file_name, file_ext = os.path.splitext(BehaviourResourceFileName_)
             return icResourceParser.icCreateObject(file_name, file_ext[1:])
         except:
             log.error(u'Ошибка установки поведения системы из файла: <%s>' % BehaviourResourceFileName_)

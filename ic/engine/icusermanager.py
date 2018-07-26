@@ -254,7 +254,7 @@ class icUserManager(object):
                 CurDirPrj_ = ic_file.getCurDirPrj()
             reg_user_journal_file_name = os.path.join(CurDirPrj_,
                                                       'log', 'reg_user_journal.ini')
-            if ic_file.Exists(reg_user_journal_file_name):
+            if os.path.exists(reg_user_journal_file_name):
                 reg_user_journal = ini.INI2Dict(reg_user_journal_file_name)
                 if reg_user_journal and 'CURRENT_USERS' in reg_user_journal:
                     users = [(True, usr) for usr in reg_user_journal['CURRENT_USERS'].keys()]

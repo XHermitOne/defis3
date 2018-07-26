@@ -275,7 +275,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
         """
         select = DefaultPage_ == -1
         if type(Page_) in (str, unicode):
-            res_name, res_ext = ic_file.SplitExt(Page_)
+            res_name, res_ext = os.path.splitext(Page_)
             # По умолчанию ресурс форм: *.frm
             if not res_ext:
                 res_ext = '.frm'
@@ -380,13 +380,13 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
         """
         pane = self.GetChildByName(PaneName_)
         if type(Page_) in (str, unicode):
-            res_name, res_ext = ic_file.SplitExt(Page_)
+            res_name, res_ext = os.path.splitext(Page_)
             # По умолчанию ресурс форм: *.frm
             if not res_ext:
                 res_ext = '.frm'
             Page_ = icResourceParser.icCreateObject(res_name, res_ext[1:], parent=self)
             if Page_:
-                pane.control_name = ic_file.BaseName(res_name)
+                pane.control_name = os.path.basename(res_name)
                 pane.control_res = res_name+res_ext
         return pane.showControl(Page_)
 

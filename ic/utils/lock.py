@@ -420,7 +420,7 @@ def UnLockFile(FileName_, **If_):
     """
     # Сгенерировать имя файла блокировки
     lock_file = os.path.splitext(FileName_)[0]+LOCK_FILE_EXT
-    log.info(u'UnLockInfo: %s, %s, %s' % (lock_file, If_, ic_file.Exists(lock_file)))
+    log.info(u'UnLockInfo: %s, %s, %s' % (lock_file, If_, os.path.exists(lock_file)))
     if os.path.exists(lock_file):
         if If_:
             lck_rec = ReadLockRecord(lock_file)
@@ -451,7 +451,7 @@ def _UnLockFileWalk(args, CurDir_, CurNames_):
     computer_name = args[0]
     user_name = args[1]
     # Отфильтровать только файлы блокировок
-    lock_files = [x for x in [ic_file.Join(CurDir_, x) for x in CurNames_] if ic_file.IsFile(x) and ic_file.SplitExt(x)[1] == LOCK_FILE_EXT]
+    lock_files = [x for x in [os.path.join(CurDir_, x) for x in CurNames_] if os.path.isfile(x) and os.path.splitext(x)[1] == LOCK_FILE_EXT]
     # Выбрать только свои файлы-блокировки
     for cur_file in lock_files:
         lock_record = ReadLockRecord(cur_file)

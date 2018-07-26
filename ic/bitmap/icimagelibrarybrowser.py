@@ -46,7 +46,7 @@ def runImageLibraryBrowser(ParentWin_, PrjIniFile_=None, ImgLibFileName_=None):
     if PrjIniFile_:
         img_lib_browser.loadImgDir(PrjIniFile_)
         
-    if ImgLibFileName_ and ic_file.Exists(ImgLibFileName_):
+    if ImgLibFileName_ and os.path.exists(ImgLibFileName_):
         result = img_lib_browser.openImgLib(ImgLibFileName_)
         if result:
             img_lib_browser.refreshImgGrid()
@@ -101,7 +101,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         img_lib_dir = ic_dlg.icDirDlg(dlg, u'Папка размещения библиотеки образов')
         if img_lib_dir and img_lib_name:
             img_lib_file_name = os.path.join(img_lib_dir, img_lib_name+'.py')
-            if ic_file.Exists(img_lib_file_name):
+            if os.path.exists(img_lib_file_name):
                 ic_dlg.icMsgBox(u'ОШИБКА',
                                 u'Файл %s уже существует!' % img_lib_file_name, dlg)
                 return False
@@ -123,7 +123,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         if sImgFileName is None:
             sImgFileName = ic_dlg.icImageDlg(dlg, self._img_dir)
             # Сохранить выбранную папку как папку картинок
-            self.setImgDir(ic_file.DirName(sImgFileName))
+            self.setImgDir(os.path.dirname(sImgFileName))
             self.saveImgDir()
             
         if sImgFileName:
@@ -132,7 +132,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             self._img_lib_res.saveImgLib()
             
             # Добавить в словарь образов
-            img_name=ic_file.SplitExt(ic_file.BaseName(sImgFileName))[0]
+            img_name=os.path.splitext(os.path.basename(sImgFileName))[0]
             # Заменить все минусы на подчеркивание
             # иначе в генерирумом фалйе будут имена объектов с минусами (SyntaxisError)
             img_name = img_name.replace('-', '_')
@@ -239,7 +239,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         Имя образа по файлу образа.
         """
         if sImgFileName:
-            return 'img'+ic_file.SplitExt(ic_file.BaseName(sImgFileName))[0]
+            return 'img'+os.path.splitext(os.path.basename(sImgFileName))[0]
         return 'img'+str(wx.NewId())
 
     def setImgDir(self, ImgDir_):

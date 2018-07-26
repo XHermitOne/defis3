@@ -49,7 +49,7 @@ class icObjectStorageDir(storesrc.icTreeDirStorage,
         Dir_ = ic_file.AbsolutePath(Dir_)
         storage_interface.icObjectStorageInterface.__init__(self, None)
         storesrc.icTreeDirStorage.__init__(self, Dir_)
-        self.name = ic_file.BaseName(Dir_)
+        self.name = os.path.basename(Dir_)
         self.Open()
 
 

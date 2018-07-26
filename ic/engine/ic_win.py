@@ -212,8 +212,8 @@ def LoadWinStruct(Name_, ResFile_=DEFAULT_WIN_RES_FILE):
         (см описание формата ресурсного файла окна).
     """
     return ic.utils.resource.icGetRes(Name_,
-                                      ic.utils.ic_file.SplitExt(ResFile_)[1][1:],
-                                      nameRes=ic.utils.ic_file.SplitExt(ResFile_)[0])
+                                      ic.utils.os.path.splitext(ResFile_)[1][1:],
+                                      nameRes=ic.utils.os.path.splitext(ResFile_)[0])
 
 # --- Классы ---
 # Индексы полей статусной строки

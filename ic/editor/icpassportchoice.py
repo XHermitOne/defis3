@@ -194,18 +194,18 @@ class icPassportChoicePanel(wx.Panel):
                 prj_path = prj.getPath()
             else:
                 prj_path = prj.getParentRoot().getPath()
-            root_prj_path = ic_file.DirName(prj_path)
-            res_dirname = ic_file.DirName(res_file_name)
+            root_prj_path = os.path.dirname(prj_path)
+            res_dirname = os.path.dirname(res_file_name)
 
             # Заменить в пути файла ресурса путь до проекта
             if prj_path in res_file_name:
                 # Ресурс находиться в этом же проекте
                 res_name = res_file_name.replace(prj_path, '')
-                subsys_name = ic_file.BaseName(prj_path)
+                subsys_name = os.path.basename(prj_path)
             elif root_prj_path in res_dirname:
                 # Ресурс находиться в подсистеме
                 res_name = res_file_name.replace(res_dirname, '')
-                subsys_name = ic_file.BaseName(res_dirname)
+                subsys_name = os.path.basename(res_dirname)
             if res_name[0] == '/':
                 res_name = res_name[1:]
 

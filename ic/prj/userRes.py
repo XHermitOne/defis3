@@ -276,7 +276,7 @@ class UserResource(resManager.ResourceManagerInterface):
         
         if self._user_res_file_name:
             # Создать путь к файлу
-            ic_file.MakeDirs(ic_file.Split(self._user_res_file_name)[0])
+            ic_file.MakeDirs(os.path.split(self._user_res_file_name)[0])
             # Сохранить сам файл
             return ic_res.SaveResourceText(self._user_res_file_name,
                                            self._user_res)
@@ -307,7 +307,7 @@ class UserResource(resManager.ResourceManagerInterface):
         """
         if self._user_res is None:
             if self._user_res_file_name:
-                if ic_file.Exists(self._user_res_file_name):
+                if os.path.exists(self._user_res_file_name):
                     self._user_res = ic_res.ReadAndEvalFile(self._user_res_file_name)
                 else:
                     self._user_res = {'admin': self.newDefaultUser()}

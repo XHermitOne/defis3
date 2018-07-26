@@ -38,7 +38,7 @@ def LogLastError(beg_msg, logType=0, msg_encoding='utf-8'):
 
 def _toUnicodeResourcePyWalk(args, CurDir_, CurNames_):
     # Отфильтровать только файлы py
-    py_files = [x for x in [ic_file.Join(CurDir_, x) for x in CurNames_] if ic_file.IsFile(x) and ic_file.SplitExt(x)[1] == '.py']
+    py_files = [x for x in [os.path.join(CurDir_, x) for x in CurNames_] if os.path.isfile(x) and os.path.splitext(x)[1] == '.py']
 
     for py_file in py_files:
         try:
@@ -86,7 +86,7 @@ RESOURCE_EXT = ['.frm', '.mtd', '.tab', '.src', '.mnu', '.odb', '.win', '.acc']
 
 def _toUnicodeResourceWalk(args, CurDir_, CurNames_):
     # Отфильтровать только файлы ресурсов
-    res_files = [x for x in [ic_file.Join(CurDir_, x) for x in CurNames_] if ic_file.IsFile(x) and ic_file.SplitExt(x)[1].lower() in RESOURCE_EXT]
+    res_files = [x for x in [os.path.join(CurDir_, x) for x in CurNames_] if os.path.isfile(x) and os.path.splitext(x)[1].lower() in RESOURCE_EXT]
 
     for res_file in res_files:
         try:
