@@ -42,7 +42,7 @@ def MakeDirs(Path_):
     try:
         return os.makedirs(Path_)
     except:
-        pass
+        log.fatal(u'Ошибка создания каталога <%s>' % Path_)
 
 
 def icChangeExt(FileName_, NewExt_):
