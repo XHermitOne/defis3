@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -236,7 +236,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
         #   на диске для последующего использования
         if os.path.isfile(filename):
             try:
-                fpcl = open(filename)
+                fpcl = open(filename, 'rb')
                 obj = pickle.load(fpcl)
                 fpcl.close()
                 #   Сохраняем объект в буфере

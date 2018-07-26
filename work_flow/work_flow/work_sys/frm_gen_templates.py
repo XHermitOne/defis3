@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -62,7 +62,7 @@ _stdTreeBrwsResModuleFmt = '''
         
 '''
 
-_choiceDlgResModuleFmt = '''#!/usr/bin/env python
+_choiceDlgResModuleFmt = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
@@ -257,7 +257,7 @@ _okMouseClickScript = '''def onOkButtonMouseClick(Context_):
 '''
 
 # Шаблон модуля ресурса для формы инициализации объекта
-_initResModuleFmt = '''#!/usr/bin/env python
+_initResModuleFmt = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
@@ -357,7 +357,7 @@ manager_class = %sManager
 '''
 
 # Шаблон модуля ресурса для формы/панели поиска объекта
-_searchResModuleFmt = '''#!/usr/bin/env python
+_searchResModuleFmt = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
@@ -452,7 +452,7 @@ manager_class = %sManager
 '''
 
 # Шаблон модуля ресурса для диалоговой формы поиска объекта
-_searchDlgResModuleFmt = '''#!/usr/bin/env python
+_searchDlgResModuleFmt = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
@@ -528,7 +528,7 @@ manager_class = %sManager
 '''
 
 # Шаблон модуля ресурса для формы редактирования объекта
-_editDlgResModuleFmt = '''#!/usr/bin/env python
+_editDlgResModuleFmt = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
@@ -624,7 +624,7 @@ manager_class = %sManager
 '''
 
 # Шаблон модуля ресурса для панели редактирования объекта
-_editResModuleFmt = '''#!/usr/bin/env python
+_editResModuleFmt = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
@@ -676,7 +676,7 @@ manager_class = %sManager
 '''
 
 # Шаблон модуля ресурса для формы просмотра объекта
-_viewDlgResModuleFmt = '''#!/usr/bin/env python
+_viewDlgResModuleFmt = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
@@ -752,7 +752,7 @@ manager_class = %sManager
 '''
 
 # Шаблон модуля ресурса для панели просмотра объекта
-_viewResModuleFmt = '''#!/usr/bin/env python
+_viewResModuleFmt = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"

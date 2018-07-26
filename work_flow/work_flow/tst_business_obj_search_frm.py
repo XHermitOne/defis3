@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Модуль ресурса <C:\develop\python_projects_svn_repository\work\defis\work_flow\work_flow/tst_business_obj_search.frm>.

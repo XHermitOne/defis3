@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -452,7 +452,7 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
                 # Скопировать в папку текущего проекта
                 prj_dir = self._Parent.copySubSys(prj_file_name)
                 prj_filenames = [filename for filename in ic_file.GetFilesByExt(prj_dir, '.pro') if not filename.startswith('_pkl.pro')]
-                self.imp_prj_file_name = [0] if prj_filenames else None
+                self.imp_prj_file_name = prj_filenames[0] if prj_filenames else None
                 # добавить в список
                 if self.imp_prj_file_name:
                     self.name = new_name
@@ -481,6 +481,7 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
             # Задано содержание файла
             # return filter(lambda key: key[0] != '_', prj_data[0].keys())[0]
             prj_names = [key for key in prj_data[0].keys() if not key.startswith('_')]
+            # log.debug(u'Имена читаемых проектов %s' % str(prj_names))
             return prj_names[0]
         return None
 
@@ -495,28 +496,31 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         if SubSysPrjFileName_ is None:
             SubSysPrjFileName_ = self.imp_prj_file_name
         if SubSysPrjFileName_:
-            if not os.path.exists(SubSysPrjFileName_):
-                log.warning(u'Не найден файл проекта <%s> подсистемы' % SubSysPrjFileName_)
-                return False
+            try:
+                if not os.path.exists(SubSysPrjFileName_):
+                    log.warning(u'Не найден файл проекта <%s> подсистемы' % SubSysPrjFileName_)
+                    return False
 
-            prj_manager = PrjRes.icPrjRes()
-            prj_manager.openPrj(SubSysPrjFileName_)
-            # Создание ресурсов
-            for cur_res in prj_manager.getPrjRoot():
-                self.getParentRoot().buildPrjRes(self.getResources(),
-                                                 list(cur_res.values())[0],
-                                                 list(cur_res.keys())[0],
-                                                 PrjImportFolder)
+                prj_manager = PrjRes.icPrjRes()
+                prj_manager.openPrj(SubSysPrjFileName_)
+                # Создание ресурсов
+                for cur_res in prj_manager.getPrjRoot():
+                    self.getParentRoot().buildPrjRes(self.getResources(),
+                                                     list(cur_res.values())[0],
+                                                     list(cur_res.keys())[0],
+                                                     PrjImportFolder)
 
-            # Создание дерева функционала
-            self.getModules().buildPrjPy(os.path.dirname(SubSysPrjFileName_))
+                # Создание дерева функционала
+                self.getModules().buildPrjPy(os.path.dirname(SubSysPrjFileName_))
 
-            # Все узлы импортируемых подсистем открываются
-            # только для проcмотра
-            self.readonlyChildren(True)
+                # Все узлы импортируемых подсистем открываются
+                # только для проcмотра
+                self.readonlyChildren(True)
 
-            self._is_build = True
-            return self._is_build
+                self._is_build = True
+                return self._is_build
+            except:
+                log.fatal(u'Ошибка построения дерева проекта подсистемы <%s>' % SubSysPrjFileName_)
         return False
 
     def isBuild(self):

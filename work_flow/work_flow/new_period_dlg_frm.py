@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Resource module <C:/develop/python_projects_svn_repository/work/defis/work_flow/work_flow/new_period_dlg.frm>.

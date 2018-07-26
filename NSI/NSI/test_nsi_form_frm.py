@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Resource module <C:/defis/NSI/NSI/test_nsi_form.frm>.

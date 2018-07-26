@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Show how to have wx draw a cursor over an axes that moves with the

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -19,7 +19,7 @@ from . import ic_str
 
 
 # Формат для генерации текста модуля формы
-GEN_PY_MODULE_FMT = u'''#!/usr/bin/env python
+GEN_PY_MODULE_FMT = u'''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"

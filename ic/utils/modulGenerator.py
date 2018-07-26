@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -11,7 +11,7 @@ import ic.kernel.io_prnt as io_prnt
 
 _ = wx.GetTranslation
 
-component_template = '''#!/usr/bin/env python
+component_template = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ### TEMPLATE_MODULE:
 
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     test()
 '''
 
-inherit_component_template = '''#!/usr/bin/env python
+inherit_component_template = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ### TEMPLATE_MODULE:
 

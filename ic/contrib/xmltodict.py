@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 "Makes working with XML feel like you are working with JSON"
 
 try:

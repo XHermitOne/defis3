@@ -517,7 +517,7 @@ def genClassFromRes(className, res, version=None):
     #   Удаляем служебную информацию
     delResServiceInfo(res)
     version = genNextVersion(version)
-    class_txt = u'''#!/usr/bin/env python
+    class_txt = u'''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import wx
@@ -587,7 +587,7 @@ def genResModuleHead(rn, fn, descr=_('Resource module'), ver=u'(0, 0, 0, 1)'):
     Генерирует заголовок модуля ресурса.
     """
     mngr = 'ResObjectManager'
-    mod_txt = u'''#!/usr/bin/env python
+    mod_txt = u'''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
@@ -629,7 +629,7 @@ def genObjModuleHead(on, fn, descr=_('Object module'), ver=u'(0, 0, 0, 1)'):
     @param ver: Версия.
     """
     st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y')
-    mod_txt = u'''#!/usr/bin/env python
+    mod_txt = u'''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"

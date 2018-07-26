@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -493,7 +493,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
     
 
 # Шаблон для скрипта инсталятора py2exe
-_py2exeScriptTemplate = '''#!/usr/bin/env python
+_py2exeScriptTemplate = '''#!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
 
 from distutils.core import setup

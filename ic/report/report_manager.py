@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """ 
@@ -22,7 +22,7 @@ __version__ = (0, 0, 1, 4)
 
 DEFAULT_REPORT_FILE_EXT = '.rprt'
 
-DEFAULT_INIT_PY_FMT = '''#!/usr/bin/env python
+DEFAULT_INIT_PY_FMT = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 \"\"\"
