@@ -8,9 +8,9 @@
 import os
 import sys
 import imp
-from ic.std.log import log
+from ic.log import log
 
-__versiom__ = (0, 0, 0, 2)
+__versiom__ = (0, 1, 1, 1)
 
 
 def loadSource(name, path):
@@ -54,7 +54,7 @@ def reLoadSource(name, path=None):
             py_file_name = os.path.splitext(py_file_name)[0]+'.py'
             path = py_file_name
         else:
-            log.warning('Module <%s> not loaded' % name)
+            log.warning(u'Модуль <%s> не загружен' % name)
             return None
     unLoadSource(name)
     return loadSource(name, path)
@@ -90,9 +90,9 @@ def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
     if func_mod:
         import_str = 'import ' + func_mod
         try:
-            exec import_str
+            exec(import_str)
         except:
-            log.error(u'Import module error <%s>' % import_str)
+            log.fatal(u'Ошибка импорта <%s>' % import_str)
             raise
 
     # Добавить локальное пространство имен
@@ -108,7 +108,7 @@ def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
     try:
         result = eval(sCode, globals(), name_space)
     except:
-        log.error(u'Execute function error <%s>' % sCode)
+        log.fatal(u'Ошибка выполнения выражения <%s>' % sCode)
         raise
 
     return result
