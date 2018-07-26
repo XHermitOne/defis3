@@ -2747,7 +2747,7 @@ class ResourseEditorFrame(wx.Frame):
     Фрейм для редактора проекта.
     """
 
-    def __init__(self, parent, id=-1, title=u'Редактор форм',
+    def __init__(self, parent, id=-1, title=u'DEFIS',
                  size=(-1, -1), pos=(-1, -1), style=wx.DEFAULT_FRAME_STYLE):
         """
         Конструктор.
@@ -2874,7 +2874,7 @@ def editor_main(par=0, path=None):
     log.info(u'Запуск редактора проекта <%s>' % path)
     from . import icDesigner
     app = icDesigner.icDesignerApp(par)
-    txt = u'Редактор форм'
+    txt = u'Менеджер проекта'
     # ---------------------------------------------------------------------------
     # Устанавливаем окружение
     # до файлов с документацией
@@ -2885,7 +2885,7 @@ def editor_main(par=0, path=None):
 
     # ---------------------------------------------------------------------------
     evalSpace = icwidget.icResObjContext()
-    frame = ResourseEditorFrame2(None, -1, u'Редактор форм', size=(350, 500),
+    frame = ResourseEditorFrame2(None, -1, u'Менеджер проекта', size=(350, 500),
                                  style=wx.DEFAULT_FRAME_STYLE | wx.CLIP_CHILDREN)
     frame.SetIcon(common.icoFormEditor)
 
