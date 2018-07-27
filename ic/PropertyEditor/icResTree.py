@@ -2718,7 +2718,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 return False
             _res[self._formName] = self.GetResource()
             text = str(_res)
-            file_obj = open(path, 'wb')
+            file_obj = open(path, 'wt', encoding=ic.config.DEFAULT_ENCODING)
             file_obj.write(text)
             file_obj.close()
             log.info(u'Сохранить ресурс <%s> в <%s>' % (self._formName, path))

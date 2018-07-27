@@ -196,7 +196,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
     try:
         #   Проверяем есть ли в буфферном файле такой объект, если есть, то его и возвращаем
         if not bRefresh and filename in Buff_readAndEvalFile:
-            log.info(' '*3+'[b] ' + ('Return from buffer; file:%s' % filename))
+            log.info(u' '*3+u'[b] ' + (u'Файл <%s> из буфера' % filename))
             return Buff_readAndEvalFile[filename]
 
         nm = os.path.basename(filename)
@@ -221,14 +221,14 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                     fpcl.close()
                     #   Сохраняем объект в буфере
                     Buff_readAndEvalFile[filename] = obj
-                    log.info('\t[+] Load from: %s' % filepcl)
+                    log.info(u'\t[+] Загрузка из <%s>' % filepcl)
                     return obj
                 except IOError:
-                    log.error(_('\t[-] readAndEvalFile: Open file error: %s.') % filepcl)
+                    log.error(u'\t[-] Ошибка открытия файла <%s> в readAndEvalFile' % filepcl)
                 except:
                     if fpcl:
                         fpcl.close()
-                    log.fatal(_('readAndEvalFile: Open file error: %s.') % filepcl)
+                    log.fatal(u'Ошибка открытия файла <%s> в readAndEvalFile' % filepcl)
         except OSError:
             log.warning(u'Ошибка файла <%s>' % filename)
         #   Пытаемся прочитать cPickle, если не удается считаем, что в файле
@@ -241,10 +241,10 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                 fpcl.close()
                 #   Сохраняем объект в буфере
                 Buff_readAndEvalFile[filename] = obj
-                log.info('\t[+] Load file <PICKLE Format>: %s' % filename)
+                log.info(u'\t[+] Загрузка файла <%s> <PICKLE формат>' % filename)
                 return obj
             except Exception as msg:
-                log.info('\t[*] <Non PICKLE Format file:%s. Try to compile text>' % filename)
+                log.info(u'\t[*] Не PICKLE формат файла <%s>' % filename)
 
         #   Открываем текстовое представление, если его нет, то создаем его
         f = open(filename, 'rt', encoding=DEFAULT_ENCODING)
@@ -255,21 +255,25 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
             txt = txt.replace(key, dictRpl[key])
 
         #   Выполняем
-        obj = eval(txt)
+        try:
+            obj = eval(txt)
+        except:
+            log.fatal(u'Ошибка выполнения блока кода <%s>' % txt)
+            return None
 
         #   Сохраняем объект в буфере
         Buff_readAndEvalFile[filename] = obj
 
         #   Сохраняем транслированный вариант
         fpcl = open(filepcl, 'wb')
-        log.info('Сохранение в файл pickle: %s' % filepcl)
+        log.info(u'Сохранение в файл pickle: %s' % filepcl)
         pickle.dump(obj, fpcl, PICKLE_PROTOCOL)
         fpcl.close()
     except IOError:
-        log.error(_('\t[*] readAndEvalFile: Open file error: %s.') % filename)
+        log.error(u'\t[*] Ошибка открытия файла <%s> в readAndEvalFile' % filename)
         obj = None
     except:
-        log.fatal(_('\t[*] readAndEvalFile: translation error: %s.') % filename)
+        log.fatal(u'\t[*] Ошибка чтения файла <%s> в readAndEvalFile' % filename)
         obj = None
 
     return obj

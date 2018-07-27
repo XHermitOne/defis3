@@ -38,7 +38,7 @@ RESOURCE_MODULE_SIGNATURE = '### RESOURCE_MODULE:'
 # Сигнатура модуля шаблона
 TEMPLATE_MODULE_SIGNATURE = '### TEMPLATE_MODULE:'
 # Сигнанура модуля библиотки образов
-IMAGE_MODULE_SIGNATURE = '#--- Image Library File ---'
+IMAGE_MODULE_SIGNATURE = '# --- Image Library File ---'
 # Сигнанура модуля прототипа форм сгенерированнх wxFormBuilder
 WXFB_MODULE_SIGNATURE = '## Python code generated with wxFormBuilder'
 # Сигнатура модуля прототипа форм сгенерированного pywxrc утилитой (из XRC ресурса)
@@ -112,7 +112,7 @@ class PrjModules(prj_node.PrjFolder):
 
     def _findModuleSignature(self, ModuleName_, Signature_):
         """
-        Проверка есть ли в модуле сигнатура ?
+        Проверка есть ли в модуле сигнатура?
         @param ModuleName_: Имя модуля.
         @param Signature_: Текст сигнатуры.
         @return: Возвращает True/False.
@@ -125,7 +125,7 @@ class PrjModules(prj_node.PrjFolder):
             module_file.close()
             return text.find(Signature_) != -1
         except:
-            log.error(u'Search signature error. Signature <%s> in module <%s>.' % (Signature_, ModuleName_))
+            log.fatal(u'Ошибка поиска сигнатуры <%s> в модуле <%s>.' % (Signature_, ModuleName_))
             if module_file:
                 module_file.close()
             return False
@@ -425,8 +425,9 @@ class PrjPackage(prj_node.PrjFolder):
         if issubclass(self._Parent.__class__, PrjPackage):
             CurPath_ = os.path.join(self._Parent.getPath(), CurPath_)
         elif issubclass(self._Parent.__class__, PrjModules):
-            CurPath_ = ic_file.AbsolutePath(os.path.join('.', self.getRoot().name+CurPath_),
+            CurPath_ = ic_file.AbsolutePath(os.path.join('.', self.getRoot().name, CurPath_),
                                             os.path.split(os.path.dirname(self.getRoot().getPrjFileName()))[0])
+        # log.debug(u'Путь до пакета <%s>' % CurPath_)
         return CurPath_
             
     def getModuleName(self):
@@ -563,16 +564,17 @@ class PrjModule(prj_node.PrjNode):
         """
         Путь до модуля.
         """
-        path = ''
-        # Если родитель -пакет, то дабывить его в путь
+        module_path = ''
+        # Если родитель - пакет, то дабывить его в путь
         if issubclass(self._Parent.__class__, PrjPackage):
-            path = self._Parent.getPath()
+            module_path = self._Parent.getPath()
         elif issubclass(self._Parent.__class__, PrjModules):
-            path = os.path.dirname(self.getRoot().getPrjFileName())
-        return path
+            module_path = os.path.dirname(self.getRoot().getPrjFileName())
+        # log.debug(u'Путь до модуля <%s>' % module_path)
+        return module_path
         
     def getPath(self):
-        return ic_file.NormPathUnix(self.getModulePath())
+        return os.path.normpath(self.getModulePath())
         
     def getFullModuleFileName(self):
         return os.path.join(self.getPath(), self.getModuleName()+self.ext)
@@ -621,9 +623,9 @@ class PrjModule(prj_node.PrjNode):
         Редактирование модуля.
         """
         # Определяем имя модуля
-        py_name = self.getModuleName()
         py_dir = self.getModulePath()
-        py_file = os.path.join(py_dir, py_name+self.ext)
+        py_file = self.getFullModuleFileName()
+        log.info(u'Редактирование модуля python <%s>' % py_file)
 
         # Определяем IDE
         ide = self.getRoot().getParent().ide
@@ -786,7 +788,7 @@ class PrjModule(prj_node.PrjNode):
             if module_file:
                 module_file.close()
         if module_lines:
-            ok = '###BEGIN SPECIAL BLOCK' in module_lines
+            ok = INTERFACE_MODULE_SIGNATURE in module_lines
         return ok
         
     def getCopyModuleName(self):
@@ -796,6 +798,7 @@ class PrjModule(prj_node.PrjNode):
         """
         Получить текст всплывающей помощи.
         """
+        module_filename = u''
         try:
             module_filename = os.path.join(self.getModulePath(),
                                            self.name+self.ext)
@@ -808,7 +811,7 @@ class PrjModule(prj_node.PrjNode):
                     return str(module.__doc__.strip())
             return None
         except:
-            err_txt = u'MODULE IMPORT ERROR: module=' + module_filename
+            err_txt = u'Ошибка импорта модуля <%s>' % module_filename
             log.error(err_txt)
             return err_txt
 
@@ -831,8 +834,8 @@ class PrjInterfaceModule(PrjModule):
         """
         Полное имя файла ресурса.
         """
-        return ic_file.NormPathUnix(os.path.join(self.getModulePath(),
-                                                 self.getModuleName()+self.ext))
+        return os.path.normpath(os.path.join(self.getModulePath(),
+                                             self.getModuleName()+self.ext))
         
     def getViewer(self, parent):
         """
