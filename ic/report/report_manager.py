@@ -6,19 +6,21 @@
 программы генераторов отчетов icReport.
 """
 
+import sys
 import os
 import os.path
 import wx
+
 from . import config
-from ic.kernel import io_prnt
 from ic.engine import ic_user
 from ic.utils import ic_extend
 from ic.utils import ic_res
 from ic.utils import ic_str
+from ic.log import log
 
 from . import icreportactiondlg
 
-__version__ = (0, 0, 1, 4)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_REPORT_FILE_EXT = '.rprt'
 
@@ -68,7 +70,9 @@ class icReportManager(object):
         Запуск режима конструирования отчетов.
         """
         if os.path.exists(self._report_exec_filename):
-            cmd = 'python2 %s --editor --path=%s &' % (self._report_exec_filename, self.getReportDir())
+            cmd = '%s %s --editor --path=%s &' % (sys.executable,
+                                                  self._report_exec_filename,
+                                                  self.getReportDir())
             try:
                 log.info(u'Запуск внешней программы <%s>' % cmd)
                 os.system(cmd)
@@ -120,12 +124,14 @@ class icReportManager(object):
         @return: True/False.
         """
         if os.path.exists(self._report_exec_filename):
-            cmd = 'python2 %s --print=%s --path=%s' % (self._report_exec_filename,
-                                                       report_filename, self.getReportDir())
+            cmd = '%s %s --print=%s --path=%s' % (sys.executable,
+                                                  self._report_exec_filename,
+                                                  report_filename,
+                                                  self.getReportDir())
             cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
                                       stylelib_filename, variables)
-            if isinstance(cmd, unicode):
-                cmd = cmd.encode(config.DEFAULT_ENCODING)
+            # if isinstance(cmd, unicode):
+            #    cmd = cmd.encode(config.DEFAULT_ENCODING)
             msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
             try:
                 log.info(u'Запуск внешней программы <%s>' % msg_cmd)
@@ -151,12 +157,14 @@ class icReportManager(object):
         @return: True/False.
         """
         if os.path.exists(self._report_exec_filename):
-            cmd = 'python2 %s --preview=%s --path=%s' % (self._report_exec_filename,
-                                                         report_filename, self.getReportDir())
+            cmd = '%s %s --preview=%s --path=%s' % (sys.executable,
+                                                    self._report_exec_filename,
+                                                    report_filename,
+                                                    self.getReportDir())
             cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
                                       stylelib_filename, variables)
-            if isinstance(cmd, unicode):
-                cmd = cmd.encode(config.DEFAULT_ENCODING)
+            # if isinstance(cmd, unicode):
+            #    cmd = cmd.encode(config.DEFAULT_ENCODING)
             msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
             try:
                 log.info(u'Запуск внешней программы <%s>' % msg_cmd)
@@ -182,12 +190,14 @@ class icReportManager(object):
         @return: True/False.
         """
         if os.path.exists(self._report_exec_filename):
-            cmd = 'python2 %s --export=%s --path=%s' % (self._report_exec_filename,
-                                                        report_filename, self.getReportDir())
+            cmd = '%s %s --export=%s --path=%s' % (sys.executable,
+                                                   self._report_exec_filename,
+                                                   report_filename, self.getReportDir())
+
             cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
                                       stylelib_filename, variables)
-            if isinstance(cmd, unicode):
-                cmd = cmd.encode(config.DEFAULT_ENCODING)
+            # if isinstance(cmd, unicode):
+            #    cmd = cmd.encode(config.DEFAULT_ENCODING)
             msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
             try:
                 log.info(u'Запуск внешней программы <%s>' % msg_cmd)
@@ -215,12 +225,14 @@ class icReportManager(object):
         @return: True/False.
         """
         if os.path.exists(self._report_exec_filename):
-            cmd = 'python2 %s --select=%s --path=%s' % (self._report_exec_filename,
-                                                        report_filename, self.getReportDir())
+            cmd = '%s %s --select=%s --path=%s' % (sys.executable,
+                                                   self._report_exec_filename,
+                                                   report_filename,
+                                                   self.getReportDir())
             cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
                                       stylelib_filename, variables)
-            if isinstance(cmd, unicode):
-                cmd = cmd.encode(config.DEFAULT_ENCODING)
+            # if isinstance(cmd, unicode):
+            #    cmd = cmd.encode(config.DEFAULT_ENCODING)
             msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
             try:
                 log.info(u'Запуск внешней программы <%s>' % msg_cmd)

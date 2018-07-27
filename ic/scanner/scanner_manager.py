@@ -6,14 +6,14 @@
 программы сканирования документов icScanner.
 """
 
+import sys
 import os
 import os.path
-import wx
+
 from . import config
-# from ic.kernel import io_prnt
 from ic.log import log
 
-__version__ = (0, 0, 3, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icScannerManager(object):
@@ -42,7 +42,7 @@ class icScannerManager(object):
         @return: True/False.
         """
         if os.path.exists(self._scanner_exec_filename):
-            cmd = 'python2 %s' % self._scanner_exec_filename
+            cmd = '%s %s' % (sys.executable, self._scanner_exec_filename)
             try:
                 log.info(u'Запуск внешней программы <%s>' % cmd)
                 os.system(cmd)
@@ -59,7 +59,7 @@ class icScannerManager(object):
         @return: True/False.
         """
         if os.path.exists(self._scanner_exec_filename):
-            cmd = 'python2 %s --preview' % self._scanner_exec_filename
+            cmd = '%s %s --preview' % (sys.executable, self._scanner_exec_filename)
             try:
                 log.info(u'Запуск внешней программы <%s>' % cmd)
                 os.system(cmd)
@@ -81,8 +81,9 @@ class icScannerManager(object):
             scan_dir = os.path.dirname(scan_filename)
             file_name = os.path.splitext(os.path.basename(scan_filename))[0]
             file_type = os.path.splitext(os.path.basename(scan_filename))[1].replace('.', '').upper()
-            cmd = 'python2 %s --scan_dir=%s --file_name=%s --file_type=%s' % (self._scanner_exec_filename,
-                                                                              scan_dir, file_name, file_type)
+            cmd = '%s %s --scan_dir=%s --file_name=%s --file_type=%s' % (sys.executable,
+                                                                         self._scanner_exec_filename,
+                                                                         scan_dir, file_name, file_type)
             try:
                 log.info(u'Запуск внешней программы <%s>' % cmd)
                 os.system(cmd)
@@ -125,11 +126,12 @@ class icScannerManager(object):
             filename_list = [os.path.splitext(os.path.basename(scan_filename))[0] for scan_filename, n_page, is_duplex in scan_filenames]
             filenames = ';'.join(filename_list)
             n_pages = ';'.join([str(n_page) + (u'/1' if is_duplex else u'') for scan_filename, n_page, is_duplex in scan_filenames])
-            cmd = 'python2 %s --scan_dir=%s --file_type=%s --pack_mode --file_name=\"%s\" --pack_pages=\"%s\"' % (self._scanner_exec_filename,
-                                                                                                                  scan_dir,
-                                                                                                                  file_type,
-                                                                                                                  filenames,
-                                                                                                                  n_pages)
+            cmd = '%s %s --scan_dir=%s --file_type=%s --pack_mode --file_name=\"%s\" --pack_pages=\"%s\"' % (sys.executable,
+                                                                                                             self._scanner_exec_filename,
+                                                                                                             scan_dir,
+                                                                                                             file_type,
+                                                                                                             filenames,
+                                                                                                             n_pages)
             try:
                 log.info(u'Запуск внешней программы <%s>' % cmd)
                 os.system(cmd)
@@ -153,4 +155,3 @@ class icScannerManager(object):
                     log.info(u'Удален файл <%s>' % scan_filename)
                 except OSError:
                     log.fatal(u'Ошибка удаления файла <%s>' % scan_filename)
-            

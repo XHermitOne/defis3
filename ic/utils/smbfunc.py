@@ -122,7 +122,7 @@ def smb_download_file(download_urls=None, filename=None, out_path=None, re_write
                 log.warning(u'''При возникновении ошибки в smbclient'e
 возможно проблема в самой библиотеке pysmbclient.
 Решение:
-    В файле /usr/local/lib/python2.7/dist-packages/smbclient.py
+    В файле /usr/local/lib/pythonX.X/dist-packages/smbclient.py
     в вызове функции subprocess.Popen() убрать параметр <shell=True> 
     или поставить в False.
                 ''')

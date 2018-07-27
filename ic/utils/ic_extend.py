@@ -1125,7 +1125,7 @@ def targz_install_python_package(targz_package_filename=None):
     setup_dir = os.path.normpath(os.path.join(pkg_dir, targz_basename))
     setup_filename = os.path.normpath(os.path.join(setup_dir, 'setup.py'))
     if os.path.exists(setup_filename):
-        cmd = 'cd %s; sudo python2 setup.py install' % setup_dir
+        cmd = 'cd %s; sudo %s setup.py install' % (setup_dir, sys.executable)
         print('Install <%s> library. Command <%s>' % (targz_basename, cmd))
         os.system(cmd)
         # Удалить после инсталляции распакованный архив
