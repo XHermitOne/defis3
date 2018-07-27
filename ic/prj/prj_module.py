@@ -645,10 +645,13 @@ class PrjModule(prj_node.PrjNode):
                                     self.getRoot().lock_dir):
                     lock_rec = ic_res.getLockResRecord(self.name, parent_pack,
                                                        'py', self.getRoot().lock_dir)
-                    ic_dlg.icMsgBox(u'ВНИМАНИЕ!', 
+
+                    lock_user = lock_rec.get('user', u'Не определен') if lock_rec else u'Не определен'
+                    lock_computer = lock_rec.get('computer', u'Не определен') if lock_rec else u'Не определен'
+                    ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
                                     u'Ресурс <%s> заблокирован пользователем <%s>. Компьютер: <%s>.' % (self.name, 
-                                                                                                        lock_rec['user'], 
-                                                                                                        lock_rec['computer']))
+                                                                                                        lock_user,
+                                                                                                        lock_computer))
                     self.readonly = True
                 else:
                     # Заблокировать файл

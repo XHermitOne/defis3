@@ -7,6 +7,7 @@
 
 # --- Подключение библиотек ---
 import os.path
+import shutil
 import wx
 
 from ic.imglib import common as imglib
@@ -192,8 +193,6 @@ class PrjImportSystems(PrjImportFolder):
                 # Добавить узел не импортированной подсистемы
                 not_imp_sys_node = PrjNotImportSys(self)
                 not_imp_sys_node.name = sub_sys['name']
-                # Путь к подсистеме
-                not_sub_sys_dir = not_imp_sys_node.getPathInPrj()
                 self.addChild(not_imp_sys_node)
                 not_imp_sys_node._is_build = True
 
@@ -257,7 +256,6 @@ class PrjImportSystems(PrjImportFolder):
                 self._copySubSysDir(sub_sys_dir, prj_dir)
 
             # Обновить дерево пользовательских компонентов
-            log.info(u'<<<Init Objects Info >>>')
             ic_user.refreshImports()
             tree_prj = self.getParentRoot().getParent()
             tree_prj.res_editor.CloseResource()
@@ -290,16 +288,20 @@ class PrjImportSystems(PrjImportFolder):
         Отключить импортированную подсистему.
         @param SubSysName_: Имя подсистемы.
         """
-        sub_sys_path = self.getSubSysPath(SubSysName_)
-        prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
-        del_dir = os.path.join(prj_dir, os.path.basename(os.path.dirname(sub_sys_path)))
-        log.info(u'UNLINK SUBSYTEM %s %s %s' % (SubSysName_, del_dir, sub_sys_path))
-        # Сначала удалить из описания в фале *.pro
-        ok = self.getRoot().prj_res_manager.delImpSubSys(SubSysName_)
-        # Затем удалить папку подсистемы
-        if ok:
-            shutil.rmtree(del_dir, True)
-            self.delChildByName(SubSysName_)
+        try:
+            sub_sys_path = self.getSubSysPath(SubSysName_)
+            prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
+            del_dir = os.path.join(prj_dir, os.path.basename(os.path.dirname(sub_sys_path)))
+            log.info(u'Отключение подсистемы <%s>' % SubSysName_)
+            log.info(u'\tУдаление папки <%s>' % del_dir)
+            # Сначала удалить из описания в фале *.pro
+            ok = self.getRoot().prj_res_manager.delImpSubSys(SubSysName_)
+            # Затем удалить папку подсистемы
+            if ok:
+                shutil.rmtree(del_dir, True)
+                self.delChildByName(SubSysName_)
+        except:
+            log.fatal(u'Ошибка отключения импортированной подсистемы <%s>' % SubSysName_)
 
     def getPrjTreeCtrl(self):
         return self.getParent().getPrjTreeCtrl()
@@ -479,9 +481,7 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
             else:
                 prj_data = PrjFile_
             # Задано содержание файла
-            # return filter(lambda key: key[0] != '_', prj_data[0].keys())[0]
             prj_names = [key for key in prj_data[0].keys() if not key.startswith('_')]
-            # log.debug(u'Имена читаемых проектов %s' % str(prj_names))
             return prj_names[0]
         return None
 

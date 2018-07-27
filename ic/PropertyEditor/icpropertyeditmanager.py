@@ -306,7 +306,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
 
         elif property_type == icDefInf.EDT_RO_TEXTFIELD:
             # Read-Only текстовое поле
-            if not isinstance(value):
+            if not isinstance(value, str):
                 value = str(value)
             wx_property = wx.propgrid.StringProperty(name, value=value)
             wx_property.Enable(False)
@@ -491,10 +491,10 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         @return: Кортеж имен атрибутов событий.
         """
         if '__events__' in res:
-            events_attr = res['__events__'].keys()
+            events_attr = list(res['__events__'].keys())
             events_attr.sort()
         else:
-            events_attr = []
+            events_attr = list()
         return tuple(events_attr)
 
     def getResource(self):
@@ -859,7 +859,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         if bConvert and isinstance(value, str):
             str_value = value
             value = self.convertPropertyValue(name, str_value, self._spc)
-            log.info(u'Set string property [%s] value <%s - \'%s\'>' % (name, value, str_value))
+            log.info(u'Свойство [%s] значение <%s - \'%s\'>' % (name, value, str_value))
         self._resource[name] = value
         # Синхронизировать ресурс с редактором ресурса
         resource.RefreshResUUID(self._resource, self.getParentResource(), ic_uuid.get_uuid())

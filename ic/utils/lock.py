@@ -12,18 +12,16 @@
 """
 
 # --- Подключение пакетов ---
-import wx
 import os
 import os.path
-from . import ic_file
+import stat
+
 from . import ic_util
 from . import ic_str
 import ic.engine.ic_user
-from ic.kernel import io_prnt
+from ic.log import log
 
 __version__ = (0, 1, 1, 1)
-
-_ = wx.GetTranslation
 
 # --- Константы ---
 # Расширение файла блокировки
@@ -32,17 +30,20 @@ LOCK_FILE_EXT = '.lck'
 # Имя блокировки по умолчанию
 DEFAULT_LOCK_NAME = 'default'
 
-lockDir = '.'+os.sep+'lock'     # Это путь к общей директории блокировок
+# Это путь к общей директории блокировок
+LOCK_DIR = os.path.join('.', 'lock')
 
-err = 0     # код текущей ошибки
+# код текущей ошибки
+ERROR_CODE = 0
+
 # key - код оишбки, сообщение (строка)
-errRes = {1: u'Таблица заблокирована. Не возможно заблокировать запись.',
-          2: u'Запись заблокирована.',      # №2
-          3: u'',                           # №3
-          4: u'',                           # №4
-          5: u'',                           # №5
-          99: u'Не известная ошибка.'       # 99
-          }
+ERROR_CODE2MESSAGE = {1: u'Таблица заблокирована. Не возможно заблокировать запись.',
+                      2: u'Запись заблокирована.',      # №2
+                      3: u'',                           # №3
+                      4: u'',                           # №4
+                      5: u'',                           # №5
+                      99: u'Не известная ошибка.'       # 99
+                      }
 
 
 # --- Функции ---
@@ -53,41 +54,51 @@ def LockRecord(table, record, message=None):
     @param record:  -номер записи (int/String)
     @param message: -тестовое сообщение (небязательное)
     """
-    global err
-    err = 0
-    log.info(u'### LockRecord ic_lock path=%s' % os.getcwd())
+    global ERROR_CODE
+    ERROR_CODE = 0
+    log.info(u'### Блокировка записи. Путь блокировки <%s>' % os.getcwd())
     table = __norm(table)
     record = __norm(record)
 
     if isLockTable(record):
-        err = 1     # Вся таблица уже заблокирована
-                    # Запись заблокировать невозможно
-        return err
-    path = getLockDir()+os.sep+table    # это путь к директории флагов блокировок этой таблицы
-    if os.path.isdir(path) == 0:            # директории блокировок
-                                        # под эту таблицу еще не создали
+        # Вся таблица уже заблокирована
+        # Запись заблокировать невозможно
+        ERROR_CODE = 1
+        return ERROR_CODE
+
+    # это путь к директории флагов блокировок этой таблицы
+    table_lock_dirname = os.path.join(getLockDir(), table)
+    if not os.path.isdir(table_lock_dirname):
+        # директории блокировок
+        # под эту таблицу еще не создали
         try:
-            os.makedirs(path)       # Создать директори. под эту таблицу
+            os.makedirs(table_lock_dirname)       # Создать директори. под эту таблицу
         except:
-            log.error(u'Makedirs Error!')
-            err = 99
+            log.error(u'Ошибка создания папки <%s>' % table_lock_dirname)
+            ERROR_CODE = 99
     # Проверка на блокирвку всего файла недоделана!!!!!!!!!!!!!!!!
     # Генерация файла-флага блокировки
-    name = path+os.sep+record
+    record_lock_filename = os.path.join(table_lock_dirname, record)
     try:
         # Попытка создать файл
-        f = os.open(name, os.O_CREAT | os.O_EXCL, 777)
+        f = os.open(record_lock_filename, os.O_CREAT | os.O_EXCL,
+                    mode=stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
     except OSError:
-        err = 2     # Уже есть файл. Т.Е. уже заблокирован
-    else:           # выполнено без ошибки
-        if message is not None:
+        # Уже есть файл. Т.Е. уже заблокирован
+        ERROR_CODE = 2
+    else:
+        # выполнено без ошибки
+        if isinstance(message, str):
             os.close(f)
-            f = os.open(name, os.O_WRONLY, 777)
-            os.write(f, message)
-            
+            try:
+                f = os.open(record_lock_filename, os.O_WRONLY,
+                            mode=stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+                os.write(f, message.encode())
+            except:
+                log.fatal(u'Ошибка записи файла блокировки <%s>' % record_lock_filename)
         os.close(f)
                 
-    return err
+    return ERROR_CODE
 
 
 def unLockRecord(table, record):
@@ -98,20 +109,23 @@ def unLockRecord(table, record):
     @type record: C{int/string}
     @parma record: Номер записи.
     """
-    global err
-    err = 0
+    global ERROR_CODE
+    ERROR_CODE = 0
     table = __norm(table)
     record = __norm(record)
     # это путь к директории флагов блокировок этой таблицы
-    path = getLockDir()+os.sep+table
-    if os.path.isdir(path):    # директории блокировок под эту таблицу еще не создали
-        if os.path.isfile(path+os.sep+record):
+    table_lock_dirname = os.path.join(getLockDir(), table)
+    if os.path.isdir(table_lock_dirname):
+        # директории блокировок под эту таблицу еще не создали
+        record_lock_filename = os.path.join(table, record)
+        if os.path.isfile(record_lock_filename):
             try:
                 # удалить этот файл флага
-                os.remove(path+os.sep+record)
+                os.remove(record_lock_filename)
             except:
-                err = 99  # оишбка удаления файла флага
-        return err
+                log.error(u'Ошибка удаления файла <%s>' % record_lock_filename)
+                ERROR_CODE = 99  # оишбка удаления файла флага
+        return ERROR_CODE
 
 
 def LockTable():
@@ -127,7 +141,7 @@ def isLockTable(table):
     Проверка на блокировку таблицы.
     """
     table = __norm(table)
-    log.info('%s, %s' % (table, getLockDir()))
+    # log.info('%s, %s' % (table, getLockDir()))
     # это путь к директории флагов блокировок этой таблицы
     path = os.path.join(getLockDir(), table+'.lck')
     return os.path.isdir(path)
@@ -147,14 +161,15 @@ def readMessage(table, record):
         table = __norm(table)
         record = __norm(record)
         # это путь к директории флагов блокировок этой таблицы
-        path = getLockDir()+os.sep+table
-        name = path+os.sep+record
+        table_lock_dirname = os.path.join(getLockDir(), table)
+        record_lock_filename = os.path.join(table_lock_dirname, record)
         try:
             # Попытка создать файл
-            f = os.open(name, os.O_RDONLY | os.O_EXCL, 777)
+            f = os.open(record_lock_filename, os.O_RDONLY | os.O_EXCL,
+                        mode=stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
         except OSError:
             # Уже есть файл. Т.Е. уже заблокирован
-            err = 2
+            ERROR_CODE = 2
 
     if f:
         # выполнено без ошибки
@@ -172,15 +187,15 @@ def isLockRecord(table, record):
     @parma record: Номер записи.
     """
     ret = None
-    global err
+    global ERROR_CODE
     table = __norm(table)
     record = __norm(record)
     ret = 0
     # это путь к директории флагов блокировок этой таблицы
-    path = getLockDir()+os.sep+table
-    # директории блокировок под эту таблицу еще не создали
-    if os.path.isdir(path):
-        if os.path.isfile(path+os.sep+record):
+    table_lock_dirname = os.path.join(getLockDir(), table)
+    if os.path.isdir(table_lock_dirname):
+        record_lock_filename = os.path.join(table_lock_dirname, record)
+        if os.path.isfile(record_lock_filename):
             ret = 1
         else:
             ret = 0
@@ -191,22 +206,22 @@ def lastErr():
     """
     Вернуть последнне значение ошибки (число).
     """
-    global err
-    if err == 0:
+    global ERROR_CODE
+    if ERROR_CODE == 0:
         return 0
     else:
-        return err
+        return ERROR_CODE
 
 
 def lastErrMsg():
     """
     Вернуть последнне значение ошибки (Строковое сообщение).
     """
-    global err
-    if err == 0:
+    global ERROR_CODE
+    if ERROR_CODE == 0:
         return u''
     else:
-        return errRes[err]
+        return ERROR_CODE2MESSAGE[ERROR_CODE]
 
 
 def __norm(var):
@@ -229,8 +244,8 @@ def getLockDir():
     """
     lock_dir = ic.engine.ic_user.icGet('LOCK_DIR')
     if not lock_dir:
-        log.warning(u'NOT DEFINE LOCK_DIR')
-        return lockDir
+        log.warning(u'Не определена папка блокировок. Используется папка по умолчанию <%s>' % LOCK_DIR)
+        return LOCK_DIR
     return lock_dir
 
 
@@ -257,18 +272,18 @@ def DelMyLockInDir(LockMyID_, LockDir_, DirFilesLock_):
                     # удалить этот файл-блокировку
                     if signature['computer'] == LockMyID_:
                         os.remove(cur_file)
-                        log.info(u'Lock file %s is deleted.' % cur_file)
+                        log.info(u'Файл блокировки <%s> удален' % cur_file)
                 except:
-                    log.warning(u'Invalid lock signature: %s.' % signature)
+                    log.warning(u'Не корректная сигнатура блокировки <%s>' % signature)
             except:
                 if f:
                     f.close()
-                log.error(u'Read signature lock file error: %s.' % cur_file)
+                log.fatal(u'Ошибка чтения сигнатуры файла блокировки <%s>' % cur_file)
     except:
-        log.error(u'Delete lock file error. Dir: %s' % LockDir_)
+        log.fatal(u'Ошибка удаления файлов блокировки. Папка блокировки <%s>' % LockDir_)
 
 
-def DelMyLock(LockMyID_=None, LockDir_=lockDir):
+def DelMyLock(LockMyID_=None, LockDir_=LOCK_DIR):
     """
     Функция рекурсивного удаления блокировок записей.
     @param LockMyID_: Идентификация хозяина блокировок.
@@ -286,11 +301,11 @@ def LockFile(FileName_, LockRecord_=None):
     @param FileName_: Полное имя блокируемого файла.
     @param LockRecord_: Запись блокировки.
     @return: Возвращает кортеж:
-        (результат выполения операции,запись блокировки).
+        (результат выполения операции, запись блокировки).
     """
     lock_file_flag = False  # Флаг блокировки файла
     lock_rec = LockRecord_
-    str_lock_rec = ''
+    str_lock_rec = u''
 
     # Сгенерировать имя файла блокировки
     lock_file = os.path.splitext(FileName_)[0]+LOCK_FILE_EXT
@@ -299,14 +314,18 @@ def LockFile(FileName_, LockRecord_=None):
         # Создать все директории для файла блокировки
         lock_dir = os.path.dirname(lock_file)
         if not os.path.isdir(lock_dir):
-            os.makedirs(lock_dir)
+            try:
+                os.makedirs(lock_dir)
+            except:
+                log.error(u'Ошибка создания папки <%s>' % lock_dir)
         
         # Генерация файла-флага блокировки
         # ВНИМАНИЕ! Создавать файл надо на самом нижнем уровне!
         f = None
         try:
             #  Попытка создать файл
-            f = os.open(lock_file, os.O_CREAT | os.O_EXCL, 777)
+            f = os.open(lock_file, os.O_CREAT | os.O_EXCL,
+                        mode=stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
         except OSError:
             #  Уже есть файл. Т.Е. уже заблокирован
             lock_file_flag = True
@@ -320,12 +339,13 @@ def LockFile(FileName_, LockRecord_=None):
             if LockRecord_ is not None:
                 os.close(f)     # Закрыть сначала
                 # Открыть для записи
-                f = os.open(lock_file, os.O_WRONLY, 777)
+                f = os.open(lock_file, os.O_WRONLY,
+                            mode=stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
                 if isinstance(LockRecord_, str):
                     str_lock_rec = LockRecord_
                 else:
                     str_lock_rec = str(LockRecord_)
-                os.write(f, str_lock_rec)
+                os.write(f, str_lock_rec.encode())
             os.close(f)
     else:
         # Если файл заблокирован
@@ -351,7 +371,8 @@ def ReadLockRecord(LockFile_):
         if not os.path.exists(lock_file):
             return None
         # Открыть для чтения
-        f = os.open(lock_file, os.O_RDONLY, 777)
+        f = os.open(lock_file, os.O_RDONLY,
+                    mode=stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
         lock_rec = os.read(f, 65535)
         os.close(f)
         try:
@@ -363,7 +384,7 @@ def ReadLockRecord(LockFile_):
     except:
         if f:
             os.close(f)
-        log.error(u'Read record lock: %s' % lock_file)
+        log.fatal(u'Ошибка чтения записи файла блокировки <%s>' % lock_file)
         return None
 
 
@@ -395,7 +416,6 @@ def ComputerName():
     # приходится заменять все на латиницу.
     if isinstance(comp_name, str):
         if ic_util.isOSWindowsPlatform():
-            # comp_name = unicode(comp_name, 'cp1251')
             comp_name = ic_str.rus2lat(comp_name)
     return comp_name
 
@@ -420,13 +440,14 @@ def UnLockFile(FileName_, **If_):
     """
     # Сгенерировать имя файла блокировки
     lock_file = os.path.splitext(FileName_)[0]+LOCK_FILE_EXT
-    log.info(u'UnLockInfo: %s, %s, %s' % (lock_file, If_, os.path.exists(lock_file)))
+    log.info(u'Сброс блокировки. Файл <%s> (%s). Условия снятия блокировки %s' % (lock_file,
+                                                                                  os.path.exists(lock_file), If_))
     if os.path.exists(lock_file):
         if If_:
             lck_rec = ReadLockRecord(lock_file)
             # Если значения по указанным ключам равны, то все ОК
             can_unlock = bool(len([key for key in If_.keys() if lck_rec.setdefault(key, None) == If_[key]]) == len(If_))
-            log.info(u'UnLockInfo: %s, %s' % (lck_rec, can_unlock))
+            log.info(u'Запись блокировки %s. Право снятия блокировки <%s>' % (lck_rec, can_unlock))
             if can_unlock:
                 # Ресурс можно разблокировать
                 os.remove(lock_file)
@@ -436,6 +457,7 @@ def UnLockFile(FileName_, **If_):
         else:
             # Ресурс можно разблокировать
             os.remove(lock_file)
+    log.info(u'Блокировка снята <%s>' % lock_file)
     return True
 
 
@@ -458,10 +480,12 @@ def _UnLockFileWalk(args, CurDir_, CurNames_):
         if not user_name:
             if lock_record['computer'] == computer_name:
                 os.remove(cur_file)
+                log.info(u'Блокировка снята <%s>' % cur_file)
         else:
             if lock_record['computer'] == computer_name and \
                lock_record['user'] == user_name:
                 os.remove(cur_file)
+                log.info(u'Блокировка снята <%s>' % cur_file)
 
 
 def UnLockAllFile(LockDir_, ComputerName_=None, UserName_=None):
@@ -492,7 +516,7 @@ class icLockSystem:
         @param LockDir_: Папка блокировки.
         """
         if LockDir_ is None:
-            LockDir_ = lockDir
+            LockDir_ = LOCK_DIR
         
         self._LockDir = LockDir_
         
@@ -531,7 +555,8 @@ class icLockSystem:
             lock_file_name = os.path.join(self._LockDir, lock_name+LOCK_FILE_EXT)
             return lock_file_name
         except:
-            log.error(u'Define lock file name error: %s %s' % (self._LockDir, LockName_))
+            log.error(u'Папка блокировки <%s>. Имя блокировки <%s>' % (self._LockDir, LockName_))
+            log.fatal(u'Ошибка определения имени файла блокировки')
         return lock_file_name
         
     def lockFileRes(self, LockName_, LockRec_=None):

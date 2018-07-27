@@ -459,8 +459,10 @@ def getLockResOwner(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     lock_file = os.path.join(LockDir_,
                              '%s_%s_%s%s' % (ResName_, ResFileName_,
                                              ResFileExt_, lock.LOCK_FILE_EXT))
-    log.info(u'Владелец заблокированного ресурса <%s>' % lock_file)
-    return lock.ReadLockRecord(lock_file)['user']
+    lock_record = lock.ReadLockRecord(lock_file)
+    lock_user = lock_record.get('user', u'Не определен') if lock_record else u'Не определен'
+    log.info(u'Владелец <%s> заблокированного ресурса <%s>' % (lock_user, lock_file))
+    return lock_user
 
 
 def getLockResRecord(ResName_, ResFileName_, ResFileExt_, LockDir_=None):

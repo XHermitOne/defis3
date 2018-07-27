@@ -258,7 +258,13 @@ class PrjResource(prj_node.PrjNode):
         if res_editor:
             res_name = self.getResName()
             res_path = self.getResPath()
-            os.makedirs(res_path)
+
+            if not os.path.exists(res_path):
+                try:
+                    os.makedirs(res_path)
+                except:
+                    log.error(u'Ошибка создания папки <%s>' % res_path)
+
             res_file = self.getResFileName()
             res_ext = self.getResFileExt()
             self.getRoot().unlockResInResEditor(res_editor)
