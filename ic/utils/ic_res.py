@@ -377,7 +377,7 @@ def unlockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
     if ResName_ is None:
         ResName_ = ResFileName_
         
-    lock_file = os.path.join(ic_file.NormPathUnix(LockDir_),
+    lock_file = os.path.join(os.path.normpath(LockDir_),
                              '%s_%s_%s%s' % (ResName_.strip(),
                                              ResFileName_.strip(),
                                              ResFileExt_.strip(),
@@ -402,13 +402,13 @@ def isLockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
         ResName_ = ResFileName_
         
     # Кроме проверки блокировки ресурса необходимо проверить блокировку файла ресурса
-    lock_file = os.path.join(ic_file.NormPathUnix(LockDir_),
+    lock_file = os.path.join(os.path.normpath(LockDir_),
                              '%s_%s_%s%s' % (ResFileName_.strip(),
                                              ResFileName_.strip(),
                                              ResFileExt_.strip(),
                                              lock.LOCK_FILE_EXT))
         
-    lock_res = os.path.join(ic_file.NormPathUnix(LockDir_),
+    lock_res = os.path.join(os.path.normpath(LockDir_),
                             '%s_%s_%s%s' % (ResName_.strip(),
                                             ResFileName_.strip(),
                                             ResFileExt_.strip(),

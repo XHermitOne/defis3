@@ -186,8 +186,8 @@ class PrjResource(prj_node.PrjNode):
         """
         Полное имя файла ресурса.
         """
-        return ic_file.NormPathUnix(os.path.join(self.getResPath(),
-                                                 self.getResFileName()+'.'+self.getResFileExt()))
+        return os.path.normpath(os.path.join(self.getResPath(),
+                                             self.getResFileName()+'.'+self.getResFileExt()))
         
     def getResName(self):
         """

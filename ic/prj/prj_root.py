@@ -596,7 +596,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         """
         prj_file_name = self.getPrjFileName()
         if prj_file_name:
-            return ic_file.NormPathUnix(os.path.dirname(prj_file_name.strip()))
+            return os.path.normpath(os.path.dirname(prj_file_name.strip()))
         return None
      
     def isPrjRoot(self):

@@ -51,7 +51,7 @@ class PrjXRCResource(prj_node.PrjNode):
         return True
 
     def getPath(self):
-        return ic_file.NormPathUnix(os.path.join(self.getModulePath(), '%s.xrc' % self.name))
+        return os.path.normpath(os.path.join(self.getModulePath(), '%s.xrc' % self.name))
 
     def getModulePath(self):
         """ 

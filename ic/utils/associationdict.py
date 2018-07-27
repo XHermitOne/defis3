@@ -13,8 +13,10 @@
 количество атрибутов будут заполняться автоматически.
 """
 
+import os
+import os.path
+
 from . import persistant
-from . import ic_file
 
 from ic.engine import ic_user
 from ic.log import log
@@ -69,7 +71,7 @@ class icAssociationDict(persistant.icPersistant):
 
         local_dir = ic_user.icGet('LOCAL_DIR')
         if not self.res_path and local_dir:
-            self.res_path = ic_file.NormPathUnix(local_dir)
+            self.res_path = os.path.normpath(local_dir)
 
         #   Читаем словарь
         self._model = {}

@@ -193,7 +193,7 @@ def InitEnv(PrjDir_, **environ):
         # Подгрузить дополнительные атрибуты проекта
         from ic.prj import PrjRes
         prj_res_manager = PrjRes.icPrjRes()
-        prj_dir = ic_file.NormPathUnix(PrjDir_)
+        prj_dir = os.path.normpath(PrjDir_)
         prj_res_file_name = os.path.join(prj_dir, os.path.basename(prj_dir)+'.pro')
         if os.path.exists(prj_res_file_name):
             prj_res_manager.openPrj(prj_res_file_name)
