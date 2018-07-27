@@ -10,6 +10,7 @@ import sys
 import os
 import os.path
 import wx
+import wx.adv
 import wx.gizmos
 import wx.dataview
 
@@ -26,7 +27,7 @@ from ic.utils import ic_file
 from ic.utils import key_combins
 
 
-__version__ = (0, 1, 8, 6)
+__version__ = (1, 1, 1, 1)
 
 
 class icFormManager(formdatamanager.icFormDataManager):
@@ -61,7 +62,7 @@ class icFormManager(formdatamanager.icFormDataManager):
                 value = ctrl.IsChecked()
             elif issubclass(ctrl.__class__, wx.TextCtrl):
                 value = ctrl.GetValue()
-            elif issubclass(ctrl.__class__, wx.DatePickerCtrl):
+            elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):
                 wx_dt = ctrl.GetValue()
                 value = ic_time.wxdatetime2pydatetime(wx_dt)
             elif issubclass(ctrl.__class__, wx.DirPickerCtrl):
@@ -92,14 +93,14 @@ class icFormManager(formdatamanager.icFormDataManager):
             ctrl.SetValue(value)
             result = True
         elif issubclass(ctrl.__class__, wx.StaticText):
-            value = value if type(value) in (str, unicode) else ic_str.toUnicode(value, config.DEFAULT_ENCODING)
+            value = value if isinstance(value, str) else ic_str.toUnicode(value, config.DEFAULT_ENCODING)
             ctrl.SetLabel(value)
             result = True
         elif issubclass(ctrl.__class__, wx.TextCtrl):
-            value = value if type(value) in (str, unicode) else ic_str.toUnicode(value, config.DEFAULT_ENCODING)
+            value = value if isinstance(value, str) else ic_str.toUnicode(value, config.DEFAULT_ENCODING)
             ctrl.SetValue(value)
             result = True
-        elif issubclass(ctrl.__class__, wx.DatePickerCtrl):
+        elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):
             wx_dt = ic_time.pydatetime2wxdatetime(value)
             ctrl.SetValue(wx_dt)
             result = True
@@ -187,7 +188,6 @@ class icFormManager(formdatamanager.icFormDataManager):
                 # Добавить значение колонки в запись
                 record[col_name] = ctrl.GetValue(i_row, i_col)
             recordset.append(record)
-            # log.debug(u'Record %s' % record)
 
         return recordset
 
@@ -212,7 +212,7 @@ class icFormManager(formdatamanager.icFormDataManager):
         for record in records:
             wx_rec = [u''] * ctrl.GetColumnCount()
             for colname, value in record.items():
-                if type(colname) in (str, unicode):
+                if isinstance(colname, str):
                     # Колонка задается именем
                     if colname in self_col_names:
                         i_colname = self_col_names.index(colname)
@@ -452,7 +452,7 @@ class icFormManager(formdatamanager.icFormDataManager):
                 accord[ctrl_name] = ctrl_name
             elif issubclass(ctrl.__class__, wx.CheckBox):
                 accord[ctrl_name] = ctrl_name
-            elif issubclass(ctrl.__class__, wx.DatePickerCtrl):
+            elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):
                 accord[ctrl_name] = ctrl_name
             elif issubclass(ctrl.__class__, wx.DirPickerCtrl):
                 accord[ctrl_name] = ctrl_name
@@ -544,9 +544,9 @@ class icFormManager(formdatamanager.icFormDataManager):
             else:
                 # Обновляем конкретные строки
                 for i_col, value in enumerate(data_list[idx-1]):
-                    ctrl.SetTextValue(value if type(value) in (unicode, str) else str(value), idx-1, i_col)
+                    ctrl.SetTextValue(value if isinstance(value, str) else str(value), idx-1, i_col)
                 for i_col, value in enumerate(data_list[idx]):
-                    ctrl.SetTextValue(value if type(value) in (unicode, str) else str(value), idx, i_col)
+                    ctrl.SetTextValue(value if isinstance(value, str) else str(value), idx, i_col)
             ctrl.SelectRow(idx - 1)
             return True
         else:
@@ -584,9 +584,9 @@ class icFormManager(formdatamanager.icFormDataManager):
             else:
                 # Обновляем конкретные строки
                 for i_col, value in enumerate(data_list[idx-1]):
-                    ctrl.SetStringItem(idx-1, i_col, value if type(value) in (unicode, str) else str(value))
+                    ctrl.SetStringItem(idx-1, i_col, value if isinstance(value, str) else str(value))
                 for i_col, value in enumerate(data_list[idx]):
-                    ctrl.SetStringItem(idx, i_col, value if type(value) in (unicode, str) else str(value))
+                    ctrl.SetStringItem(idx, i_col, value if isinstance(value, str) else str(value))
             ctrl.Select(idx - 1)
             return True
         else:
@@ -654,9 +654,9 @@ class icFormManager(formdatamanager.icFormDataManager):
             else:
                 # Обновляем конкретные строки
                 for i_col, value in enumerate(data_list[idx]):
-                    ctrl.SetTextValue(value if type(value) in (unicode, str) else str(value), idx, i_col)
+                    ctrl.SetTextValue(value if isinstance(value, str) else str(value), idx, i_col)
                 for i_col, value in enumerate(data_list[idx+1]):
-                    ctrl.SetTextValue(value if type(value) in (unicode, str) else str(value), idx+1, i_col)
+                    ctrl.SetTextValue(value if isinstance(value, str) else str(value), idx+1, i_col)
             ctrl.SelectRow(idx + 1)
             return True
         else:
@@ -694,9 +694,9 @@ class icFormManager(formdatamanager.icFormDataManager):
             else:
                 # Обновляем конкретные строки
                 for i_col, value in enumerate(data_list[idx]):
-                    ctrl.SetStringItem(idx, i_col, value if type(value) in (unicode, str) else str(value))
+                    ctrl.SetStringItem(idx, i_col, value if isinstance(value, str) else str(value))
                 for i_col, value in enumerate(data_list[idx+1]):
-                    ctrl.SetStringItem(idx+1, i_col, value if type(value) in (unicode, str) else str(value))
+                    ctrl.SetStringItem(idx+1, i_col, value if isinstance(value, str) else str(value))
             ctrl.Select(idx + 1)
             return True
         else:
@@ -875,11 +875,11 @@ class icFormManager(formdatamanager.icFormDataManager):
             for i, value in enumerate(row):
                 if value is None:
                     value = u''
-                elif type(value) in (int, float, long):
+                elif type(value) in (int, float):
                     value = str(value)
+                # elif isinstance(value, str):
+                #    value = unicode(value, config.DEFAULT_ENCODING)
                 elif isinstance(value, str):
-                    value = unicode(value, config.DEFAULT_ENCODING)
-                elif isinstance(value, unicode):
                     pass
                 else:
                     value = str(value)
@@ -1680,8 +1680,8 @@ class icFormManager(formdatamanager.icFormDataManager):
         elif issubclass(ctrl.__class__, wx.TextCtrl):
             ctrl.SetValue('')
             result = True
-        elif issubclass(ctrl.__class__, wx.DatePickerCtrl):
-            if ctrl.GetExtraStyle() & wx.DP_ALLOWNONE:
+        elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):
+            if ctrl.GetExtraStyle() & wx.adv.DP_ALLOWNONE:
                 ctrl.SetValue(None)
             else:
                 wx_date = ic_time.pydate2wxdate(ic_time.Today())

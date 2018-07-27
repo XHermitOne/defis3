@@ -12,20 +12,19 @@ from ic.utils import resource
 from ic.utils import util
 from ic.dlg import ic_dlg
 from ic.utils import ic_cache
+from ic.log import log
 
 from ic.storage import storesrc
 
 from ic.components import icwidget
 from ic.components import icResourceParser
 
-from ic.engine import ic_user
-from ic.kernel import io_prnt
 from . import icspravstorage
 from NSI.nsi_dlg import icspraveditdlg
 from NSI.nsi_dlg import icspravchoicetreedlg
 
 # Версия
-__version__ = (0, 0, 1, 4)
+__version__ = (0, 1, 1, 1)
 
 # Спецификация
 SPC_IC_SPRAV = {'type': 'SpravDefault',
@@ -57,8 +56,8 @@ class icSpravInterface:
         """
         self._sprav_manager = SpravManager_
 
-        if isinstance(Name_, unicode):
-            Name_ = Name_.encode()
+        # if isinstance(Name_, unicode):
+        #    Name_ = Name_.encode()
 
         self._name = Name_
 
@@ -487,7 +486,7 @@ class icSpravPrototype(icSpravInterface):
             else:
                 result = IC_HLP_OK
         except:
-            log.error(u'СПРАВОЧНИК [%s] Ошибка в методе Hlp' % self._name)
+            log.fatal(u'СПРАВОЧНИК [%s] Ошибка в методе Hlp' % self._name)
             result = IC_HLP_FAILED_TYPE_SPRAV
 
         return result, res_val, self.getFields(field, res_val)
@@ -514,7 +513,7 @@ class icSpravPrototype(icSpravInterface):
             else:
                 log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self.getName(), result))
         except:
-            log.error(u'Ошибка выбора записи справочника <%s>' % self.getName())
+            log.fatal(u'Ошибка выбора записи справочника <%s>' % self.getName())
         return None
 
     def choice_code(self, parent=None, *args, **kwargs):
@@ -550,7 +549,7 @@ class icSpravPrototype(icSpravInterface):
                 for key in Fields_.keys():
                     fld_sprav = Fields_[key]
                     res_val[key] = rec[fld_sprav]
-            elif type(Fields_) in (str, unicode):
+            elif isinstance(Fields_, str):
                 res_val = rec[Fields_]
             elif isinstance(Fields_, tuple) or isinstance(Fields_, list):
                 res_val = dict([(field_name, rec[field_name]) for field_name in Fields_])
@@ -706,7 +705,7 @@ class icSpravPrototype(icSpravInterface):
             result = coderror.IC_CTRL_FAILED
             log.info('CTRL: NOT_FOUND val=%s' % val)
         except:
-            log.error(u'СПРАВОЧНИК [%s] Ошибка контроля' % self.name)
+            log.fatal(u'СПРАВОЧНИК [%s] Ошибка контроля' % self.name)
             result = coderror.IC_CTRL_FAILED_TYPE_SPRAV
 
         return result, res_val
@@ -757,8 +756,9 @@ class icSpravPrototype(icSpravInterface):
         Код родительского уровня.
         @param Cod_: Код.
         """
-        return ''.join(filter(lambda subcod: bool(subcod),
-                       self.StrCode2ListCode(Cod_))[:-1])
+        # return ''.join(filter(lambda subcod: bool(subcod),
+        #               self.StrCode2ListCode(Cod_))[:-1])
+        return ''.join([subcode for subcode in self.StrCode2ListCode(Cod_) if bool(subcode)][:-1])
 
     def updateRec(self, Cod_, RecDict_, DateTime_=None, ClearCache_=False):
         """
@@ -984,8 +984,8 @@ class icSpravPrototype(icSpravInterface):
                     mngr = self.getSpravManager()
                     ref_sprav = mngr.getSpravByName(ref)
                     if ref and not ref_sprav:
-                        log.info(u'ERROR. Not Found referer sprav <%s>' % ref)
-                        raise
+                        log.warning(u'Не найдена ссылка на справочник <%s>' % ref)
+                        # raise
                     if ref_sprav:
                         try:
                             ref_prnt_cod = ''.join(self._get_refspr_parent_cod(prnt_cod))
@@ -993,7 +993,7 @@ class icSpravPrototype(icSpravInterface):
                             name = ref_sprav.Find(ref_cod)
                             df = {'name': name}
                         except:
-                            log.error(u'Find <name> in ref sprav ERROR!')
+                            log.fatal(u'Ошибка поиска <name> в ссылочном справочнике')
                     else:
                         df = {'name': cd}
 

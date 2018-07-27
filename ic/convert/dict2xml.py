@@ -9,7 +9,7 @@ import sys
 import time
 from xml.sax import saxutils
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 # Удалять 'Cyr' из имен шрифтов для Linux систем
 # т.к. в Linux все шрифты unicode
@@ -57,15 +57,10 @@ class icDICT2XMLWriter(saxutils.XMLGenerator):
         self.time_start = 0
 
     def _my_write(self, text):
-        # if isinstance(text,str):
-        #    self._out.write(text)
-        # else:
-        #    self._out.write(text.encode(self._encoding,saxutils._error_handling
-
-        if not isinstance(text, unicode):
+        if not isinstance(text, str):
             # ВНИМАНИЕ! Записываться в файл должен только unicode иначе падает
             # при сохранении русских букв
-            text = unicode(str(text), 'utf-8')
+            text = str(text)
         
         try: 
             self._out.write(text)
@@ -78,13 +73,13 @@ class icDICT2XMLWriter(saxutils.XMLGenerator):
             # ВНИМАНИЕ! Записываться в файл должен только unicode иначе падает
             # при сохранении русских букв
             if sys.platform[:3].lower() == 'win':
-                if isinstance(value, unicode):
-                    value = value.encode(self._encoding)
+                # if isinstance(value, unicode):
+                #    value = value.encode(self._encoding)
                 txt = ' %s=%s' % (name, saxutils.quoteattr(value))
             else:
                 txt = u' %s=%s' % (name, saxutils.quoteattr(value))
-            if isinstance(txt, unicode):
-                txt = txt.encode(self._encoding)
+            if isinstance(txt, str):
+                # txt = txt.encode(self._encoding)
                 self._my_write(txt)
 
         if auto_close:
@@ -104,13 +99,11 @@ class icDICT2XMLWriter(saxutils.XMLGenerator):
         # Дописать новый отступ
         self._my_write('\n'+self.break_line)
 
-        # attrs=dict([(item[0],unicode(item[1],self._encoding)) for item in attrs.items()])
         for item in attrs.items():
-            if not isinstance(item[1], unicode):
-                attrs[item[0]] = unicode(str(item[1]), self._encoding)
+            if not isinstance(item[1], str):
+                attrs[item[0]] = str(item[1])   # self._encoding
         self._startElement(name, attrs, auto_close)
         self.break_line += '  '
-        # self._my_write('\n'+self.break_line)
 
     def endElementLevel(self, name, auto_close=False):
         """
@@ -135,8 +128,8 @@ class icDICT2XMLWriter(saxutils.XMLGenerator):
         self._my_write('\n'+self.break_line)
 
         for item in attrs.items():
-            if not isinstance(item[1], unicode):
-                attrs[item[0]] = unicode(str(item[1]), self._encoding)
+            if not isinstance(item[1], str):
+                attrs[item[0]] = str(item[1])   # self._encoding
         self._startElement(name, attrs, auto_close)
 
     def endElement(self, name, auto_close=False):
@@ -144,13 +137,7 @@ class icDICT2XMLWriter(saxutils.XMLGenerator):
         Конец тега.
         @name: Имя, закрываемого тега.
         """
-        # Дописать новый отступ
-        # self._my_write('\n'+self.break_line)
-
         self._endElement(name, auto_close)
-
-        # if self.break_line:
-        #    self.break_line=self.break_line[:-1]
 
 
 class icDict2XmlssWriter(icDICT2XMLWriter):
@@ -272,7 +259,6 @@ class icDict2XmlssWriter(icDICT2XMLWriter):
         self.startElementLevel('Borders', {})
 
         # Границы
-        # borders=[element for element in data['children'] if element['name']=='Border']
         for border in data['children']:
             self.setBorder(border)
 
@@ -315,12 +301,12 @@ class icDict2XmlssWriter(icDICT2XMLWriter):
                 font_name = font_name.replace(' Cyr', '')
             attr['ss:FontName'] = font_name
         if 'Outline' in data:
-            if type(data['Outline']) not in (str, unicode):
+            if not isinstance(data['Outline'], str):
                 attr['ss:Outline'] = str(int(bool(data['Outline'])))
             else:
                 attr['ss:Outline'] = str(int(eval(data['Outline'])))
         if 'Shadow' in data:
-            if type(data['Shadow']) not in (str, unicode):
+            if not isinstance(data['Shadow'], str):
                 attr['ss:Shadow'] = str(int(bool(data['Shadow'])))
             else:
                 attr['ss:Shadow'] = str(int(eval(data['Shadow'])))
@@ -346,8 +332,7 @@ class icDict2XmlssWriter(icDICT2XMLWriter):
             attrs['ss:Color'] = str(data['Color'])
         if 'PatternColor' in data:
             attrs['ss:PatternColor'] = str(data['PatternColor'])
-        # else:
-        #    attr['ss:PatternColor']='Automatic'
+
         if 'Pattern' in data:
             attrs['ss:Pattern'] = str(data['Pattern'])
         else:
@@ -514,8 +499,6 @@ class icDict2XmlssWriter(icDICT2XMLWriter):
             attrs['ss:AutoFitHeight'] = str(data['AutoFitHeight'])
         if 'Hidden' in data:
             attrs['ss:Hidden'] = str(data['Hidden'])
-        # if data.has_key('Span'):
-        #    attrs['ss:Span']=str(data['Span'])
         if 'StyleID' in data:
             attrs['ss:StyleID'] = str(data['StyleID'])
         if 'AutoFitHeight' in data:
@@ -605,8 +588,8 @@ class icDict2XmlssWriter(icDICT2XMLWriter):
 
         self.startElement('Data', attrs, not bool(value))
 
-        if not isinstance(value, unicode):
-            value = unicode(str(value), self._encoding)
+        if not isinstance(value, str):
+            value = str(value)  # self._encoding)
         if value:
             value = saxutils.escape(value)
             self.characters(value)

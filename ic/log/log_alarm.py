@@ -24,7 +24,7 @@ import datetime
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
-__version__ = (0, 0, 0, 5)
+__version__ = (0, 1, 1, 1)
 
 # Модуль конфигурации
 CONFIG = None
@@ -184,8 +184,8 @@ def alarm(sMsg, source=None, alarm_type=None, alarm_dt=None):
     if alarm_type is None:
         alarm_type = 'INFO'
     # Сообщение привести к юникоду
-    if not isinstance(sMsg, unicode):
-        sMsg = unicode(str(sMsg), CONFIG.DEFAULT_ENCODING)
+    if not isinstance(sMsg, str):
+        sMsg = str(sMsg)    # CONFIG.DEFAULT_ENCODING)
 
     connection = connect(CONFIG)
     table = create_alarm_table(connection)
@@ -264,10 +264,10 @@ def fatal(sMsg, source=None):
     try:
         msg = sMsg+u'\n'+trace_txt
     except UnicodeDecodeError:
-        if not isinstance(sMsg, unicode):
-            sMsg = unicode(sMsg, CONFIG.DEFAULT_ENCODING)
-        if not isinstance(trace_txt, unicode):
-            trace_txt = unicode(trace_txt, CONFIG.DEFAULT_ENCODING)
-        msg = sMsg+u'\n'+trace_txt
+        if not isinstance(sMsg, str):
+            sMsg = str(sMsg)    # CONFIG.DEFAULT_ENCODING)
+        if not isinstance(trace_txt, str):
+            trace_txt = str(trace_txt)  # CONFIG.DEFAULT_ENCODING)
+        msg = sMsg + u'\n' + trace_txt
 
     return alarm(msg, source, u'FATAL')

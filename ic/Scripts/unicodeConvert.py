@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import traceback, sys
-import wx
+import traceback
+import sys
+import os
+import os.path
+
 from ic.utils import ic_res
 from ic.utils import ic_util
-from ic.utils import ic_file
+
+
+__version__ = (0, 1, 1, 1)
 
 PRJ_NAME = 'work_flow'
 
@@ -26,8 +31,8 @@ def LogLastError(beg_msg, logType=0, msg_encoding='utf-8'):
 
     if last >= 0:
         lt = trace[last]
-        if not isinstance(beg_msg, unicode):
-            beg_msg = unicode(beg_msg, msg_encoding)
+        if not isinstance(beg_msg, str):
+            beg_msg = str(beg_msg)  # msg_encoding
         msg = beg_msg + u' in file: %s, func: %s, line: %i, text: \n%s\ntype:%s\ncomments:%s' % (lt[0], lt[2], lt[1],
                                                                                                  lt[3], str(ltype),
                                                                                                  str(sys.exc_info()))
@@ -41,13 +46,17 @@ def _toUnicodeResourcePyWalk(args, CurDir_, CurNames_):
     py_files = [x for x in [os.path.join(CurDir_, x) for x in CurNames_] if os.path.isfile(x) and os.path.splitext(x)[1] == '.py']
 
     for py_file in py_files:
+        f = None
+        text = u''
         try:
-            f = open(py_file, 'rb')
+            f = open(py_file, 'rt')
             text = f.read()
             f.close()
         except:
             print('ERROR open file', py_file)
-            f.close()
+            if f:
+                f.close()
+
         n1 = text.find('###BEGIN')
         n = text.find('resource=')
         n_x = text.find('resource =')
@@ -70,7 +79,7 @@ def _toUnicodeResourcePyWalk(args, CurDir_, CurNames_):
             except:
                 print('Error read', py_file, ' : ', replace_dict_txt)
         elif n1 > 0 and n2 > 0 and n_x > 0:
-           print('!>', py_file)
+            print('!>', py_file)
 
 
 def toUnicodeResourcePy():
@@ -78,7 +87,7 @@ def toUnicodeResourcePy():
     Перекодировать все ресурсы в py файлах в unicode.
     """
     scan_dir = '/home/xhermit/develop/rep_py/rep_py/work/defis/%s/%s/' % (PRJ_NAME, PRJ_NAME)
-    return ic_file.Walk(scan_dir, _toUnicodeResourcePyWalk, ())
+    return os.walk(scan_dir, _toUnicodeResourcePyWalk, ())
 
 
 RESOURCE_EXT = ['.frm', '.mtd', '.tab', '.src', '.mnu', '.odb', '.win', '.acc']
@@ -89,13 +98,16 @@ def _toUnicodeResourceWalk(args, CurDir_, CurNames_):
     res_files = [x for x in [os.path.join(CurDir_, x) for x in CurNames_] if os.path.isfile(x) and os.path.splitext(x)[1].lower() in RESOURCE_EXT]
 
     for res_file in res_files:
+        f = None
+        text = u''
         try:
             f = open(res_file, 'rb')
             text = f.read()
             f.close()
         except:
             print('ERROR open file', res_file)
-            f.close()
+            if f:
+                f.close()
 
         replace_dict_txt = text.strip()
         try:
@@ -119,7 +131,7 @@ def toUnicodeResource():
     Перекодировать все ресурсы в unicode.
     """
     scan_dir = '/home/xhermit/develop/rep_py/rep_py/work/defis/%s/%s/' % (PRJ_NAME, PRJ_NAME)
-    return ic_file.Walk(scan_dir, _toUnicodeResourceWalk, ())
+    return os.walk(scan_dir, _toUnicodeResourceWalk, ())
 
 
 def toUnicodeProject():

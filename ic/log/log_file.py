@@ -19,9 +19,9 @@ import os
 import os.path
 import datetime
 
-import log
+from . import log
 
-__version__ = (0, 0, 1, 6)
+__version__ = (0, 1, 1, 1)
 
 # Типы сообщений
 INFO_LOG_TYPE = 'INFO'
@@ -99,8 +99,8 @@ def get_records_log_file(sLogFileName, tLogTypes=LOG_TYPES,
                 if check_filter_record(record, tLogTypes, dtStartFilter, dtStopFilter, tFilters, sFilterLogic):
                     records.append(record)
             else:
-                if isinstance(line, str):
-                    line = unicode(line, encoding)
+                # if isinstance(line, str):
+                #    line = str(line, encoding)
                 # record['text'] = record.get('text', u'') + LINE_SEPARATOR + line
                 record['text'] = record.get('text', u'') + line
                 record['short'] += (u'...' if not record.get('short', u'').endswith(u'...') else u'')
@@ -164,12 +164,6 @@ def parse_msg_record(line, encoding=DEFAULT_ENCODING):
     # Переведем все в unicode
     try:
         if isinstance(msg, str):
-            msg = unicode(msg, encoding)
-    except:
-        log.fatal(u'Ошибка перевода строки в unicode')
-        msg = u''
-    try:
-        if isinstance(msg, unicode):
             short_msg = msg[:MSG_LEN_LIMIT] + (u'...' if len(msg) > MSG_LEN_LIMIT else u'')
     except:
         log.fatal(u'Ошибка перевода строки в unicode')

@@ -103,8 +103,8 @@ class icXML2DICTReader(xml.sax.handler.ContentHandler):
         """
         Попытка приведения типов данных.
         """
-        if type(value) is unicode:
-            value = value.encode(self.encoding)
+        # if isinstance(value, str):
+        #    value = value.encode(self.encoding)
             
         try:
             # Попытка приведения типа

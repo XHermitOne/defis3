@@ -15,7 +15,7 @@ DEFAULT_LOG_FILENAME = log.CONFIG.LOG_FILENAME if log.CONFIG else './log.txt'
 DEFAULT_LOG_DATETIME_FMT = '%Y.%m.%d %H:%M:%S'
 
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 def log_to_file(txt, filename=DEFAULT_LOG_FILENAME, datetime_fmt=DEFAULT_LOG_DATETIME_FMT):
@@ -27,14 +27,14 @@ def log_to_file(txt, filename=DEFAULT_LOG_FILENAME, datetime_fmt=DEFAULT_LOG_DAT
     """
     f = None
     try:
-        f = open(filename, 'a')
+        f = open(filename, 'at')
         now_time = time.strftime(datetime_fmt, time.localtime(time.time()))
         now_time += ':\n'
         f.write(now_time)
 
-        if isinstance(txt, unicode):
-            import sys
-            txt = txt.encode(sys.getfilesystemencoding())
+        # if isinstance(txt, str):
+        #    import sys
+        #    txt = txt.encode(sys.getfilesystemencoding())
 
         f.write(txt)
         f.write('\n')
@@ -54,9 +54,9 @@ def log_cmd(cmd, txt_ctrl=None):
         Если указывается, то вывод лога производим в wxTextControl,
         иначе вывод будет производиться в текстовый файл.
     """
-    if isinstance(cmd, unicode):
-        import sys
-        cmd = cmd.encode(sys.getfilesystemencoding())
+    # if isinstance(cmd, unicode):
+    #    import sys
+    #    cmd = cmd.encode(sys.getfilesystemencoding())
     result = os.popen3(cmd)
     if txt_ctrl:
         log_to_ctrl(txt_ctrl, result)

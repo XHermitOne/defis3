@@ -8,7 +8,10 @@
 import traceback
 import sys
 from ic.dlg.msgbox import MsgBox
+
 from . import log
+
+__version__ = (0, 1, 1, 1)
 
 IC_CONSOLE_LOGTYPE = 0
 IC_FILE_LOGTYPE = 1
@@ -29,6 +32,7 @@ def MsgLastError(parent, beg_msg):
     trace = traceback.extract_tb(sys.exc_traceback)
     last = len(trace) - 1
 
+    msg = u''
     if last >= 0:
         msg = genTxtLastError(beg_msg)
         MsgBox(parent, msg)
@@ -56,13 +60,13 @@ def genTxtLastError_depricate(beg_msg, msg_encoding='utf-8'):
 
     if last >= 0:
         lt = trace[last]
-        if not isinstance(beg_msg, unicode):
-            beg_msg = unicode(beg_msg, msg_encoding)
+        if not isinstance(beg_msg, str):
+            beg_msg = str(beg_msg)  # msg_encoding)
         file_info = lt[0]
         func_info = lt[2]
         txt_info = lt[3]
-        if not isinstance(txt_info, unicode):
-            txt_info = unicode(str(txt_info), msg_encoding)
+        if not isinstance(txt_info, str):
+            txt_info = str(txt_info)    # msg_encoding
             
         sys_info = sys.exc_info()
         if hasattr(sys_info[1], 'strerror'):
@@ -73,9 +77,9 @@ def genTxtLastError_depricate(beg_msg, msg_encoding='utf-8'):
         msg = beg_msg + u''' in file: %s, func: %s, line: %i, 
         text: 
             %s
-        type:%s
-        comments:%s''' % (file_info, func_info,
-                          lt[1], txt_info, ltype, sys_info_msg)
+        type: %s
+        comments: %s''' % (file_info, func_info,
+                           lt[1], txt_info, ltype, sys_info_msg)
     return msg
 
 
@@ -83,21 +87,21 @@ def _to_unicode(String_, DefaultCP_='utf-8'):
     """
     Подбор кодировки для превращения строки в юникод.
     """
-    if isinstance(String_, unicode):
+    if isinstance(String_, str):
         return String_
     elif not isinstance(String_, str):
         String_ = str(String_)
 
     u_str = u''
     try:
-        u_str = unicode(String_, DefaultCP_)
+        u_str = str(String_)    # DefaultCP_
     except:
         if sys.platform[:3].lower() == 'win':
             # Windows
-            u_str = unicode(String_, 'cp1251')
+            u_str = str(String_)    # 'cp1251'
         else:
             # Linux
-            u_str = unicode(String_, 'koi8-r')
+            u_str = str(String_)    # 'koi8-r'
     return u_str
 
 
@@ -112,6 +116,7 @@ def LogLastError(beg_msg, logType = 0, msg_encoding='utf-8'):
     trace = traceback.extract_tb(sys.exc_traceback)
     last = len(trace) - 1
 
+    msg = u''
     if last >= 0:
         msg = genTxtLastError(beg_msg, msg_encoding)
         toLog(msg, logType)
@@ -127,7 +132,6 @@ def toLog(msg, logType = 0):
     @type logType: C{int}
     @param logType: Тип лога (0 - консоль, 1 - файл, 2 - окно лога, 3 - окно сообщений)
     """
-
     if logType == IC_FILE_LOGTYPE:
         pass
     elif logType == IC_WIN_LOGTYPE:

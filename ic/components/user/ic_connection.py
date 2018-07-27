@@ -78,7 +78,7 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-class icConnection(icwidget.icSimple,parentModule.icConnection):
+class icConnection(icwidget.icSimple, parentModule.icConnection):
     """
     Описание пользовательского компонента СВЯЗЬ СИГНАЛЬНО-СЛОТНОЙ СИСТЕМЫ.
 
@@ -131,14 +131,15 @@ class icConnection(icwidget.icSimple,parentModule.icConnection):
         #   !!! Конструктор наследуемого класса !!!
         #   Необходимо вставить реальные параметры конструкора.
         #   На этапе генерации их не всегда можно определить.
+        first_signal = None
         try:
-            first_signal = filter(lambda item: item.type in ('WxSignal', 'ChangeAttrSignal', 'PostFuncSignal'),
-                                  self.components.values())[0]
+            signals = [signal for signal in self.components.values() if signal.type in ('WxSignal', 'ChangeAttrSignal', 'PostFuncSignal')]
+            first_signal = signals[0]
         except IndexError:
-            log.warning(u'CONNECTION CREATE ERROR! Connection has\'t signal <%s>' % self.name)
+            log.warning(u'Соединение <%s> не имеет сигналов' % self.name)
         slot_list = [item for item in self.components.values() if item.type in ('SimpleSlot',)]
         if not slot_list:
-            log.warning(u'CONNECTION CREATE ERROR! Connection has\'t slots <%s>' % self.name)
+            log.warning(u'Соединение <%s> не имеет слотов' % self.name)
             
         parentModule.icConnection.__init__(self, first_signal, slot_list)
 
@@ -146,10 +147,10 @@ class icConnection(icwidget.icSimple,parentModule.icConnection):
         kernel = ic_user.icGetRunner()
         if kernel:
             log.info(u'>>> Регистрируем соединение first_signal = <%s>, slot_list = <%s>' % (first_signal,
-                                                                                                   slot_list))
+                                                                                             slot_list))
             kernel.add_connection_lst([self])
         else:
-            log.info(u'WARNING! Ядро системы не инициализировано')
+            log.warning(u'Ядро системы не инициализировано')
 
     def childCreator(self, bCounter, progressDlg):
         """

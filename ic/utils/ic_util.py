@@ -598,7 +598,7 @@ def findChildResByName(ChildrenRes_, ChildName_):
         описания с таким именем не найдено, то возвращается -1.
     """
     try:
-        return map(lambda child: child['name'], ChildrenRes_).index(ChildName_)
+        return [child['name'] for child in ChildrenRes_].index(ChildName_)
     except ValueError:
         return -1
 

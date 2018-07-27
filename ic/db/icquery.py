@@ -13,11 +13,10 @@ import ic.utils.ic_util
 from ic.utils import resource
 from ic.log import log
 from ic.utils import txtgen
-from ic.utils import ic_str
 
 import ic.interfaces.icdataclassinterface as icdataclassinterface
 
-__version__ = (0, 0, 2, 3)
+__version__ = (0, 1, 1, 1)
 
 # Спецификации
 # Результат запроса (словарно-списковое представление)
@@ -32,7 +31,7 @@ def getQueryTableFields(Query_):
     @param Query_: Имя запроса/dataset объект.
     """
     try:
-        if type(Query_) in (str, unicode):
+        if isinstance(Query_, str):
             # Сначала получить dataset
             dataset = icsqlalchemydataset.getDataset(Query_)
         else:
@@ -69,7 +68,7 @@ def getQueryTable(Query_, PostFilter_=None):
     """
     try:
         log.info(u'getQueryTable: НАЧАЛО')
-        if type(Query_) in (str, unicode):
+        if isinstance(Query_, str):
             # Сначала получить dataset
             dataset = icsqlalchemydataset.getDataset(Query_)
             dataset.clearChangeRowBuff(-1)
