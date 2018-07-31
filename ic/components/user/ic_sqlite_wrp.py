@@ -29,7 +29,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.utils import ic_util
 
-import ic.db.icsqlalchemy as ic_tab
+from ic.db import icdb
 
 #   Тип компонента
 ic_class_type = icDefInf._icDatasetType
@@ -42,7 +42,7 @@ ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
         
-ic_class_spc = {'type': ic_tab.SQLITE_DB_TYPE,
+ic_class_spc = {'type': icdb.SQLITE_DB_TYPE,
                 'name': 'default', 
                 'activate': True,
                 'init_expr': None,
@@ -62,7 +62,7 @@ ic_class_spc = {'type': ic_tab.SQLITE_DB_TYPE,
                                    icDefInf.EDT_CHOICE: ['encoding'],
                                    icDefInf.EDT_CHECK_BOX: ['convert_unicode'],
                                    },
-                '__parent__': ic_tab.SPC_IC_SQLITEDB,
+                '__parent__': icdb.SPC_IC_SQLITEDB,
                 '__attr_hlp__': {'path': u'Путь к файлу БД',
                                  'filename': u'Имя файла БД',
                                  'encoding': u'Кодировка БД',
@@ -87,10 +87,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
-class icSQLiteDB(icwidget.icSimple,ic_tab.icSQLAlchemyDB):
+class icSQLiteDB(icwidget.icSimple, icdb.icSQLAlchemyDB):
     """
     БД SQLite.
     """
@@ -121,6 +121,6 @@ class icSQLiteDB(icwidget.icSimple,ic_tab.icSQLAlchemyDB):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        ic_tab.icSQLAlchemyDB.__init__(self, component)
+        icdb.icSQLAlchemyDB.__init__(self, component)
         # Установить тип БД
-        self._db_type = ic_tab.SQLITE_DB_TYPE
+        self._db_type = icdb.SQLITE_DB_TYPE

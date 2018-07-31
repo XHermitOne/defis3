@@ -10,8 +10,8 @@ try:
 except ImportError:
     pass
     
-from ic.kernel import io_prnt
 from ic.interfaces import icsourceinterface
+from ic.log import log
 
 # Константы
 # Тип БД

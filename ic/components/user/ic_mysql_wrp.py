@@ -32,7 +32,8 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.utils import ic_util
-from ic.db import icsqlalchemy as ic_tab
+
+from ic.db import icdb
 
 #   Тип компонента
 ic_class_type = icDefInf._icDatasetType
@@ -44,7 +45,7 @@ ic_class_name = 'icMySQL'
 ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'type': ic_tab.MYSQL_DB_TYPE,
+ic_class_spc = {'type': icdb.MYSQL_DB_TYPE,
                 'name': 'default', 
                 'activate': True,
                 'init_expr': None,
@@ -72,7 +73,7 @@ ic_class_spc = {'type': ic_tab.MYSQL_DB_TYPE,
                                    icDefInf.EDT_TEXTDICT: ['query'],
                                    icDefInf.EDT_CHECK_BOX: ['convert_unicode'],
                                    },
-                '__parent__': ic_tab.SPC_IC_MYSQL,
+                '__parent__': icdb.SPC_IC_MYSQL,
                 '__attr_hlp__': {'user': u'Имя пользователя',
                                  'dbname': u'Имя БД',
                                  'password': u'Пароль',
@@ -100,10 +101,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 1, 1, 1)
 
 
-class icMySQL(icwidget.icSimple, ic_tab.icSQLAlchemyDB):
+class icMySQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
     """
     БД MySQL.
     """
@@ -134,7 +135,7 @@ class icMySQL(icwidget.icSimple, ic_tab.icSQLAlchemyDB):
         component = util.icSpcDefStruct(self.component_spc, component)
         
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        ic_tab.icSQLAlchemyDB.__init__(self, component)
+        icdb.icSQLAlchemyDB.__init__(self, component)
         
         # Установить тип БД
-        self._db_type = ic_tab.MYSQL_DB_TYPE
+        self._db_type = icdb.MYSQL_DB_TYPE

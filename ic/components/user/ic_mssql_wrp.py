@@ -21,6 +21,7 @@
 """
 
 import wx
+
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -29,7 +30,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.utils import ic_util
 
-import ic.db.icsqlalchemy as ic_tab
+from ic.db import icdb
 
 #   Тип компонента
 ic_class_type = icDefInf._icDatasetType
@@ -41,7 +42,7 @@ ic_class_name = 'icMSSQL'
 ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'type': ic_tab.MSSQL_DB_TYPE,
+ic_class_spc = {'type': icdb.MSSQL_DB_TYPE,
                 'name': 'default', 
                 'activate': True,
                 'init_expr': None,
@@ -65,7 +66,7 @@ ic_class_spc = {'type': ic_tab.MSSQL_DB_TYPE,
                                    icDefInf.EDT_CHOICE: ['encoding'],
                                    icDefInf.EDT_CHECK_BOX: ['convert_unicode'],
                                    },
-                '__parent__': ic_tab.SPC_IC_MSSQL,
+                '__parent__': icdb.SPC_IC_MSSQL,
                 '__attr_hlp__': {'user': u'Имя пльзователя',
                                  'dbname': u'Имя БД',
                                  'password': u'Пароль',
@@ -92,10 +93,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
-class icMSSQL(icwidget.icSimple, ic_tab.icSQLAlchemyDB):
+class icMSSQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
     """
     БД MSSQL.
     """
@@ -126,4 +127,4 @@ class icMSSQL(icwidget.icSimple, ic_tab.icSQLAlchemyDB):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        ic_tab.icSQLAlchemyDB.__init__(self, component)
+        icdb.icSQLAlchemyDB.__init__(self, component)
