@@ -3,109 +3,112 @@
 # Пакеты необходимые для работы проектов на Python:
 # Тестирование проводилось на Ubuntu 18.04.LTS
 
+sudo apt install --assume-yes python3-pip
+
 # Анализаторы кода Python
 apt show pylint3 | grep Package
 apt show pylint3 | grep Version
-sudo apt install pylint3
+sudo apt install --assume-yes pylint3
 
 apt show python3-pep8 | grep Package
 apt show python3-pep8 | grep Version
-sudo apt install python3-pep8
+sudo apt install --assume-yes python3-pep8
 
 # Модули ОС
 apt show smbfs-utils | grep Package
 apt show smbfs-utils | grep Version
-sudo apt install smbfs-utils
+sudo apt install --assume-yes smbfs-utils
 
 apt show cifs-utils | grep Package
 apt show cifs-utils | grep Version
-sudo apt install cifs-utils
+sudo apt install --assume-yes cifs-utils
 
 apt show smbclient | grep Package
 apt show smbclient | grep Version
-sudo apt install smbclient
+sudo apt install --assume-yes smbclient
 
 apt show indicator-applet-complete | grep Package
 apt show indicator-applet-complete | grep Version
-sudo apt install indicator-applet-complete
+sudo apt install --assume-yes indicator-applet-complete
 
 apt show ttf-mscorefonts-installer | grep Package
 apt show ttf-mscorefonts-installer | grep Version
-sudo apt install ttf-mscorefonts-installer
+sudo apt install --assume-yes ttf-mscorefonts-installer
 
 apt show python3-apt | grep Package
 apt show python3-apt | grep Version
-sudo apt install python3-apt
+sudo apt install --assume-yes python3-apt
 
 # Работа с консолью
 apt show python3-dialog | grep Package
 apt show python3-dialog | grep Version
-sudo apt install python3-dialog
+sudo apt install --assume-yes python3-dialog
 
 apt show python3-urwid | grep Package
 apt show python3-urwid | grep Version
-sudo apt install python3-urwid
+sudo apt install --assume-yes python3-urwid
 
 apt show curl | grep Package
 apt show curl | grep Version
-sudo apt install curl
+sudo apt install --assume-yes curl
 
 # wxPython
 # В текущей версии ставиться через pip3
 # apt show python3-wxgtk4.0 | grep Package
 # apt show python3-wxgtk4.0 | grep Version
-# sudo apt install python3-wxgtk4.0
+# sudo apt install --assume-yes python3-wxgtk4.0
+pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 
 apt show python3-six | grep Package
 apt show python3-six | grep Version
-sudo apt install python3-six
+sudo apt install --assume-yes python3-six
 
 apt show python3-matplotlib | grep Package
 apt show python3-matplotlib | grep Version
-sudo apt install python3-matplotlib
+sudo apt install --assume-yes python3-matplotlib
 
 # Нет в репозитариях
 # apt show python3-wxmpl | grep Package
 # apt show python3-wxmpl | grep Version
-# sudo apt install python3-wxmpl
+# sudo apt install --assume-yes python3-wxmpl
 
 # БД
 apt show python3-psycopg2 | grep Package
 apt show python3-psycopg2 | grep Version
-sudo apt install python3-psycopg2
+sudo apt install --assume-yes python3-psycopg2
 
 apt show python3-sqlalchemy | grep Package
 apt show python3-sqlalchemy | grep Version
-sudo apt install python3-sqlalchemy
+sudo apt install --assume-yes python3-sqlalchemy
 
 apt show python3-pyodbc | grep Package
 apt show python3-pyodbc | grep Version
-sudo apt install unixodbc unixodbc-dev freetds-bin freetds-dev tdsodbc python3-pyodbc
+sudo apt install --assume-yes unixodbc unixodbc-dev freetds-bin freetds-dev tdsodbc python3-pyodbc
 
 # Office
 apt show unococnv | grep Package
 apt show unococnv | grep Version
-sudo apt install unoconv
+sudo apt install --assume-yes unoconv
 
 apt show python3-sane | grep Package
 apt show python3-sane | grep Version
-sudo apt install python3-sane
+sudo apt install --assume-yes python3-sane
 
 apt show python3-reportlab | grep Package
 apt show python3-reportlab | grep Version
-sudo apt install python3-reportlab
+sudo apt install --assume-yes python3-reportlab
 
 apt show python3-pypdf2 | grep Package
 apt show python3-pypdf2 | grep Version
-sudo apt install python3-pypdf2
+sudo apt install --assume-yes python3-pypdf2
 
 apt show python3-odf | grep Package
 apt show python3-odf | grep Version
-sudo apt install python3-odf python-odf-doc
+sudo apt install --assume-yes python3-odf python-odf-doc
 
 apt show libreoffice-java-common | grep Package
 apt show libreoffice-java-common | grep Version
-sudo apt install libreoffice-java-common
+sudo apt install --assume-yes libreoffice-java-common
 
 # В конце отобразим список установленных пакетов
 
