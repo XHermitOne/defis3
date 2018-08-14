@@ -16,10 +16,11 @@ https://github.com/rdunklau/Gedit-checkpython.git
 """
 
 import os
+
 from ic.interfaces import icideinterface
 from ic.log import log
 
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 EXT_ENCODING_PARAM_FMT = '--encoding=%s'
 EXT_PYTHON_EDITOR_FMT = 'gedit %s %s &'
@@ -68,4 +69,3 @@ class icExtPythonEditor(icideinterface.icIDEInterface):
             os.system(cmd)
         except:
             log.fatal(u'Ошибка открытия файла <%s> в IDE' % filename)
-

@@ -7,10 +7,7 @@ import wx
 
 from ic.imglib import common as imglib
 from ic.utils import ic_file
-from ic.utils import ic_exec
-from ic.utils import filefunc
-from ic import config
-from ic.log import log
+from ic.editor import wxfb_manager
 
 from . import prj_node
 
@@ -19,28 +16,8 @@ __version__ = (0, 1, 1, 1)
 _ = wx.GetTranslation
 
 
-def run_wxformbuilder(filename=None):
-    """
-    Запуск wxFormBuilder.
-    @param filename: Файл открываемый в wxFormBuilder.
-        Если не указан, то ничего не открывается.
-    @return: True/False
-    """
-    cmd = None
-    if os.path.exists('/bin/wxformbuilder') or os.path.exists('/usr/bin/wxformbuilder'):
-        cmd = 'wxformbuilder %s&' % filename if filename else 'wxformbuilder &'
-    else:
-        alter_wxfb_path = filefunc.normal_path(config.ALTER_WXFORMBUILDER)
-        if os.path.exists(alter_wxfb_path):
-            cmd = '%s %s&' % (alter_wxfb_path, filename) if filename else '%s &' % alter_wxfb_path
-        else:
-            log.warning(u'Альтернативный путь запуска wxFormBuilder <%s> не найден' % alter_wxfb_path)
-
-    if cmd:
-        ic_exec.icSysCmd(cmd)
-
-
-class PrjWXFormBuilderProject(prj_node.PrjNode):
+class PrjWXFormBuilderProject(prj_node.PrjNode,
+                              wxfb_manager.icWXFormBuilderManager):
     """
     Проект wxFormBuilder.
     """
@@ -63,14 +40,14 @@ class PrjWXFormBuilderProject(prj_node.PrjNode):
         """
         filename = self.getPath()
         if os.path.exists(filename):
-            run_wxformbuilder(filename)
+            self.open_project(filename)
         return True
 
     def create(self):
         """ 
         Функция создания.
         """
-        run_wxformbuilder()
+        self.create_project()
         return True
 
     def delete(self):

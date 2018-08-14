@@ -20,6 +20,7 @@ from ic.utils import util
 from ic.dlg import ic_dlg
 from ic.editor import ext_python_editor
 from ic.log import log
+from ic.editor import wxfb_manager
 
 from . import prj_node
 from . import prj_resource
@@ -912,7 +913,7 @@ class PrjImageModule(PrjModule):
 Модули библиотеки образов генерируются в редакторе библиотеки образов.''')
 
 
-class PrjFBModule(PrjModule):
+class PrjFBModule(PrjModule, wxfb_manager.icWXFormBuilderManager):
     """
     Модуль форм wxFormBuilder.
     """
@@ -942,6 +943,7 @@ class PrjFBModule(PrjModule):
         """
         if not self.readonly:
             popup_menu = flatmenu.FlatMenu()
+
             popup_menuitem_id = wx.NewId()
             item = flatmenu.FlatMenuItem(popup_menu, popup_menuitem_id,
                                          u'Сгенерировать модуль формы...', u'Сгенерировать модуль формы...',
@@ -949,6 +951,14 @@ class PrjFBModule(PrjModule):
             popup_menu.AppendItem(item)
             ctrl = self._root.getParent()
             ctrl.Bind(wx.EVT_MENU, self.onGenFormModuleMenuItem, id=popup_menuitem_id)
+
+            popup_menuitem_id = wx.NewId()
+            item = flatmenu.FlatMenuItem(popup_menu, popup_menuitem_id,
+                                         u'Адаптация модуля форм wxFormBuilder', u'Адаптация модуля форм wxFormBuilder',
+                                         normalBmp=imglib.imgConvert)
+            popup_menu.AppendItem(item)
+            ctrl.Bind(wx.EVT_MENU, self.onAdaptFormModuleMenuItem, id=popup_menuitem_id)
+
             popup_menu.Popup(wx.GetMousePosition(), ctrl)
 
     def onGenFormModuleMenuItem(self, event):
@@ -963,6 +973,16 @@ class PrjFBModule(PrjModule):
         prj_root = self.getRoot()
         prj_root.openPrj(prj_root.getPrjFileName())
         prj_root.getParent().Refresh()
+        event.Skip()
+
+    def onAdaptFormModuleMenuItem(self, event):
+        """
+        Запуск адаптации модуля формы wxFormBuilder.
+        """
+        fb_py_module_filename = self.getFullModuleFileName()
+        result = self.adaptation_form_py(fb_py_module_filename)
+        if not result:
+            ic_dlg.icWarningBox(u'ОШИБКА', u'Ошибка адаптации модуля формы wxFormBuilder')
         event.Skip()
 
 
