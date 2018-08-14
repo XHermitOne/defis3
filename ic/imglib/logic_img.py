@@ -1,38 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Библиотека образов.
 """
-#--- Imports ---
+
+# --- Imports ---
 from wx import ImageFromStream, BitmapFromImage
 from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
+import io
+
+# --- Image Library File ---
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#--- BEGIN logic_between
+# --- BEGIN logic_between
 def getlogic_betweenData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01SIDAT8\x8d\xedSMK\x02Q\x14=o\xa6\x88\xa4\xc0$u\x08*\x08kZD\xbf\xa0&\
 \xfa\x11\xad\xda\xcc\xaaE+A\x8cj!\xb8l\xfa\x05.\xdcE\xb40"Z\xf4\x0f\xc2\x02#\
@@ -49,24 +32,29 @@ def getlogic_betweenData():
 \x9f\x11\x8dF\xb9,\xcb<\x12\x89\xb8\xfb\xff\xbf\x807\x0e\xbc\x984\x8e\xb8=\
 \x00\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_betweenBitmap():
     return BitmapFromImage(getlogic_betweenImage())
 
+
 def getlogic_betweenImage():
-    stream = cStringIO.StringIO(getlogic_betweenData())
+    stream = io.BytesIO(getlogic_betweenData())
     return ImageFromStream(stream)
+
 
 def getlogic_betweenIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_betweenBitmap())
     return icon
 
-logic_between=getlogic_betweenBitmap()
 
-#--- END logic_between
-#--- BEGIN logic_contain
+logic_between = getlogic_betweenBitmap()
+# --- END logic_between
+
+
+# --- BEGIN logic_contain
 def getlogic_containData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xfdIDAT8\x8d\xed\x92=N\xc3P\x10\x84g\xdf\xbb\x01p\x07N\x10h\x90\xac\
 $"\xae\x01\x8b\xc2@\r\x04|\x82HT\xf9\x81\xca\x12\xa6B(r\x81\x1f\xe0\xb8 \xb9\
@@ -80,48 +68,58 @@ $"\xae\x01\x8b\xc2@\r\x04|\x82HT\xf9\x81\xca\x12\xa6B(r\x81\x1f\xe0\xb8 \xb9\
 \x9b(B\x1c\xc7\xd8X_[@\xe4\xff\x95\xeb\x03\xbe\x01\x8e\xfff\x98.R\x80X\x00\
 \x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_containBitmap():
     return BitmapFromImage(getlogic_containImage())
 
+
 def getlogic_containImage():
-    stream = cStringIO.StringIO(getlogic_containData())
+    stream = io.BytesIO(getlogic_containData())
     return ImageFromStream(stream)
+
 
 def getlogic_containIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_containBitmap())
     return icon
 
-logic_contain=getlogic_containBitmap()
 
-#--- END logic_contain
-#--- BEGIN logic_equal
+logic_contain = getlogic_containBitmap()
+# --- END logic_contain
+
+
+# --- BEGIN logic_equal
 def getlogic_equalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00UIDAT8\x8dcddbf\xa0\x040Q\xa4{x\x18\xc0\x82\xcc).*\xfc\xff\xef\xdf?\
 \x86?\x7f\xfe0\xfc\xf9\xf3\x87\xe1\xef\xdf\xbfp6\x8c\xbfr\xd5jFd=\x8c\x03\
 \x1e\x0b(^\x08\xf0\xf7\xfb\x8f\xeedd\xfe\x9f?\x7f\x18\xce_\xb88\xc8\xbc0j\
 \x00\x15\x0c\x00\x00\x90\xe984\x0c\xf9W)\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_equalBitmap():
     return BitmapFromImage(getlogic_equalImage())
 
+
 def getlogic_equalImage():
-    stream = cStringIO.StringIO(getlogic_equalData())
+    stream = io.BytesIO(getlogic_equalData())
     return ImageFromStream(stream)
+
 
 def getlogic_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_equalBitmap())
     return icon
 
-logic_equal=getlogic_equalBitmap()
 
-#--- END logic_equal
-#--- BEGIN logic_great
+logic_equal = getlogic_equalBitmap()
+# --- END logic_equal
+
+
+# --- BEGIN logic_great
 def getlogic_greatData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xc3IDAT8\x8d\xdd\x93;\x0e\x82P\x10E\xef\x03\x97\xc2\x02(i)h\xe4\x19\
 u\x0fT\x14j\xcf\x06\xd4FL\xd4\xc6oH\xe8\xfd\x80%K`-\xb4\xaf\xbav6\xf8TBl\x9c\
@@ -133,24 +131,29 @@ u\x0fT\x14j\xcf\x06\xd4FL\xd4\xc6oH\xe8\xfd\x80%K`-\xb4\xaf\xbav6\xf8TBl\x9c\
 \x99?\xfd\x85&\xf3\x00\x9c1@\xe8\xe8z\xf9\xb6\x00\x00\x00\x00IEND\xaeB`\x82'\
  
 
+
 def getlogic_greatBitmap():
     return BitmapFromImage(getlogic_greatImage())
 
+
 def getlogic_greatImage():
-    stream = cStringIO.StringIO(getlogic_greatData())
+    stream = io.BytesIO(getlogic_greatData())
     return ImageFromStream(stream)
+
 
 def getlogic_greatIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_greatBitmap())
     return icon
 
-logic_great=getlogic_greatBitmap()
 
-#--- END logic_great
-#--- BEGIN logic_great_or_equal
+logic_great = getlogic_greatBitmap()
+# --- END logic_great
+
+
+# --- BEGIN logic_great_or_equal
 def getlogic_great_or_equalData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01%IDAT8\x8d\xad\x93\xbbN\x84P\x14E\xf7\x05\xc3\x1fP\x92\xd0\xd2\xa9-\
 \x185\xa1\xf21HC\xc4D-hT~EM|&\x14:*\x12\x82R\xcc0\xa3\xc5\xf4\xfc\x01\x7f\
@@ -166,24 +169,29 @@ n\x03\\_]\xd2\xeb\xcb\x90\xe6\x05\xb0\xb6\x08\x8f\x0f\xf7T\x14\x05\x14E\xc1\
 z\x87\x19\xc7\xf7\xbf\x83y\xf4\xff\x9fiQ\xfd\x00\x1f\x1e`\xabJ#\xd5Y\x00\x00\
 \x00\x00IEND\xaeB`\x82" 
 
+
 def getlogic_great_or_equalBitmap():
     return BitmapFromImage(getlogic_great_or_equalImage())
 
+
 def getlogic_great_or_equalImage():
-    stream = cStringIO.StringIO(getlogic_great_or_equalData())
+    stream = io.BytesIO(getlogic_great_or_equalData())
     return ImageFromStream(stream)
+
 
 def getlogic_great_or_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_great_or_equalBitmap())
     return icon
 
-logic_great_or_equal=getlogic_great_or_equalBitmap()
 
-#--- END logic_great_or_equal
-#--- BEGIN logic_into
+logic_great_or_equal = getlogic_great_or_equalBitmap()
+# --- END logic_great_or_equal
+
+
+# --- BEGIN logic_into
 def getlogic_intoData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01(IDAT8\x8d\xdd\x92\xcdJ\x02\x01\x00\x84\xbf]\xbbf\xa8\xa5\xbb\xcb\
 \xca\xae\x9ahe&]\xba\xf5\x00\xf5\x00A\xbdBG\xdf\xa6C\xa7N\xf9\x16\xe9\xa1@-6\
@@ -199,24 +207,29 @@ R\xd3-[\xffKQ#0\x91\xd8N\x06\xd2-\x0f\x81s\x9a\xcb|0\xc3\x08\x82\xe8`\x1e\
 \x08\xae\xc41\x07\xb7X=\x13\xd9\xa3qqR\x12~\x01\xfe\xaa\xff\xff\xc1\x02\x00\
 \xbe\x01v\x87g\xa4\x93\xae5J\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getlogic_intoBitmap():
     return BitmapFromImage(getlogic_intoImage())
 
+
 def getlogic_intoImage():
-    stream = cStringIO.StringIO(getlogic_intoData())
+    stream = io.BytesIO(getlogic_intoData())
     return ImageFromStream(stream)
+
 
 def getlogic_intoIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_intoBitmap())
     return icon
 
-logic_into=getlogic_intoBitmap()
 
-#--- END logic_into
-#--- BEGIN logic_is_not_null
+logic_into = getlogic_intoBitmap()
+# --- END logic_into
+
+
+# --- BEGIN logic_is_not_null
 def getlogic_is_not_nullData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01TIDAT8\x8d\xc5\x93=K\xc3P\x14\x86\xdf$\x15C\x9b\x12\xc35Ck\x07\xab\
 \x11\xd7N\xfe\x08qru\xf5\x03G\x07\x17\'qW\xd0.\xea\xa2N\xfa\x1b$?@\x85"\x88\
@@ -233,24 +246,29 @@ Wh\xa0x\xce\xd0q\xe2\xb0O.\x85-\x08\x00\x00\x98_\x9b\xe5\xd7\xb9[\xbc\xdc\
 \xfb i\x15\x93\x994\x8e\xb7\xec\x9f\xdd\xc1o\xe3\xff\x7f\xa1o\xc0;\xc4Iw\xbe\
 \x91\xea\xaf\xeb\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_is_not_nullBitmap():
     return BitmapFromImage(getlogic_is_not_nullImage())
 
+
 def getlogic_is_not_nullImage():
-    stream = cStringIO.StringIO(getlogic_is_not_nullData())
+    stream = io.BytesIO(getlogic_is_not_nullData())
     return ImageFromStream(stream)
+
 
 def getlogic_is_not_nullIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_is_not_nullBitmap())
     return icon
 
-logic_is_not_null=getlogic_is_not_nullBitmap()
 
-#--- END logic_is_not_null
-#--- BEGIN logic_is_null
+logic_is_not_null = getlogic_is_not_nullBitmap()
+# --- END logic_is_not_null
+
+
+# --- BEGIN logic_is_null
 def getlogic_is_nullData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x15IDAT8\x8dcddbf\xa0\x040Q\xa4\x9b\x1a\x06\xb0`\x13\\\xb8`\xfe\xff\
 7o\xde0|\xf8\xf0\x81\x81\x9b\x9b\x9bAXX\x98!5-\x9d\x91(\x17L\x9e4\xf1\xff\
@@ -265,24 +283,29 @@ def getlogic_is_nullData():
 \xd3\x01V\x03H\x01\x03\x9f\x17(6\x00\x00\x7f\xbePrba\x8e\x9b\x00\x00\x00\x00\
 IEND\xaeB`\x82' 
 
+
 def getlogic_is_nullBitmap():
     return BitmapFromImage(getlogic_is_nullImage())
 
+
 def getlogic_is_nullImage():
-    stream = cStringIO.StringIO(getlogic_is_nullData())
+    stream = io.BytesIO(getlogic_is_nullData())
     return ImageFromStream(stream)
+
 
 def getlogic_is_nullIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_is_nullBitmap())
     return icon
 
-logic_is_null=getlogic_is_nullBitmap()
 
-#--- END logic_is_null
-#--- BEGIN logic_lesser
+logic_is_null = getlogic_is_nullBitmap()
+# --- END logic_is_null
+
+
+# --- BEGIN logic_lesser
 def getlogic_lesserData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd9IDAT8\x8d\xd5\x931\x0e\x82@\x10E\xff\xecZ\xc0E\xa8\xb9\x00\t4J"\
 \x1e\x80V<\x07b\xa3V4\xea\x11H\xe8\x14-H\xd4\x16\xee\x005=G\x18+\x1b\xdd\xd5\
@@ -294,24 +317,29 @@ def getlogic_lesserData():
 \x19\x12R/ !\x91e\x19\xbb\xae\xcba\x18rY\x96J\xd1G\xc1\xb3\xa2(b\xcb\xb2\xd4\
 \x9d\xfc\xff_\x18,x\x00\x02\xc9By)\x0b9\x15\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_lesserBitmap():
     return BitmapFromImage(getlogic_lesserImage())
 
+
 def getlogic_lesserImage():
-    stream = cStringIO.StringIO(getlogic_lesserData())
+    stream = io.BytesIO(getlogic_lesserData())
     return ImageFromStream(stream)
+
 
 def getlogic_lesserIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_lesserBitmap())
     return icon
 
-logic_lesser=getlogic_lesserBitmap()
 
-#--- END logic_lesser
-#--- BEGIN logic_lesser_or_equal
+logic_lesser = getlogic_lesserBitmap()
+# --- END logic_lesser
+
+
+# --- BEGIN logic_lesser_or_equal
 def getlogic_lesser_or_equalData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x19IDAT8\x8d\xd5\x93?N\x84`\x10\xc5\xdf@\x02\t\xe5RQ\xd2\x12\xb5R\
 \x1a*B\xa2\x06\xed\x14\xed\x84p\x03\xf5\x02\xfe9\x80\xae6\xb2\xda\xa8$t$,\
@@ -326,24 +354,29 @@ n!\xe0\xf8\xc8\xe3\xa2(0\xbe\xbb'UU\x11E\x11\xc6\xb77\xc3\x10\x12\xc4_J\xd3\
 \xb3eY\xecy^\xef\xef$\x88\x8b\x013\xf9\xbe\xcf\xba\xae\xf7C\xfe\xcf1\r\xd57\
 \x12\xb4W\xd1mk\xff\xb6\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getlogic_lesser_or_equalBitmap():
     return BitmapFromImage(getlogic_lesser_or_equalImage())
 
+
 def getlogic_lesser_or_equalImage():
-    stream = cStringIO.StringIO(getlogic_lesser_or_equalData())
+    stream = io.BytesIO(getlogic_lesser_or_equalData())
     return ImageFromStream(stream)
+
 
 def getlogic_lesser_or_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_lesser_or_equalBitmap())
     return icon
 
-logic_lesser_or_equal=getlogic_lesser_or_equalBitmap()
 
-#--- END logic_lesser_or_equal
-#--- BEGIN logic_mask
+logic_lesser_or_equal = getlogic_lesser_or_equalBitmap()
+# --- END logic_lesser_or_equal
+
+
+# --- BEGIN logic_mask
 def getlogic_maskData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x0cIDAT8\x8d\xed\x92\xbdJ\xc4P\x10\x85\xcf\xbdW\xf0\t\x82y\x01\xb1\
 \x0f\x04\x82&\x04m%H i\xb2>\x81\xfa\x02k+\xe8\x82\xabM:WL,\x12-\x02\xfb\x83\
@@ -358,24 +391,29 @@ def getlogic_maskData():
 \x18\xc6\xea\x92\xffW\xee.\xf0\x05\xfcTl+\xa96\x90\x96\x00\x00\x00\x00IEND\
 \xaeB`\x82' 
 
+
 def getlogic_maskBitmap():
     return BitmapFromImage(getlogic_maskImage())
 
+
 def getlogic_maskImage():
-    stream = cStringIO.StringIO(getlogic_maskData())
+    stream = io.BytesIO(getlogic_maskData())
     return ImageFromStream(stream)
+
 
 def getlogic_maskIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_maskBitmap())
     return icon
 
-logic_mask=getlogic_maskBitmap()
 
-#--- END logic_mask
-#--- BEGIN logic_not_and
+logic_mask = getlogic_maskBitmap()
+# --- END logic_mask
+
+
+# --- BEGIN logic_not_and
 def getlogic_not_andData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xacIDAT8\x8d\xc5\x93\xcfj\x1aq\x14\x85\xbf\x994a\x06K%\x13\x1c\xa7\
 \x1df\xe1_\xc4M\x14\x17u\xef\xaeM\x8b\x9b\xb4\xcd&\xfb\xbc\x8aO\x10\xdf\xa1\
@@ -396,24 +434,29 @@ w\xef\xa5`\x04\xdf\xf71\x0c\x83R\xa9\x84eYL\xeauTU%yx\xc8\x8b\x9d\x1d~\x9c\
 \x1f>~\x92\xfe\x00\xfcm\xfd\xff_\xd8\x18\xf0\x1b\xf9\x19\x9b\xd0\xb1G/\x9b\
 \x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_not_andBitmap():
     return BitmapFromImage(getlogic_not_andImage())
 
+
 def getlogic_not_andImage():
-    stream = cStringIO.StringIO(getlogic_not_andData())
+    stream = io.BytesIO(getlogic_not_andData())
     return ImageFromStream(stream)
+
 
 def getlogic_not_andIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_not_andBitmap())
     return icon
 
-logic_not_and=getlogic_not_andBitmap()
 
-#--- END logic_not_and
-#--- BEGIN logic_not_between
+logic_not_and = getlogic_not_andBitmap()
+# --- END logic_not_and
+
+
+# --- BEGIN logic_not_between
 def getlogic_not_betweenData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x83IDAT8\x8d\xcd\x92\xbbK[a\x14\xc0\x7f\xdfwc\xc5\x16\xa9\xa6U\xb4\
 \xa0\xb4\xa0htp\r\xb4\xd5\xc1Mp\x12\xdc\xa4C\xc6\xcc\x81\x90!}\x17\x97\x8c)t\
@@ -432,24 +475,29 @@ _n&0\xde\xb9\x1eG\x01\xb6f\x08j\x06[3l\xb9\x07\x94\xca\x15\x9e<~$\x00\x0f\
 \xcdf%\x91HH&\x93\x91?s\x95v\xce&hD.\xfe\x95\x1b\x06\xfc\x02\x1d\x0f\xa6J\
 \xd3\x89t\x05\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_not_betweenBitmap():
     return BitmapFromImage(getlogic_not_betweenImage())
 
+
 def getlogic_not_betweenImage():
-    stream = cStringIO.StringIO(getlogic_not_betweenData())
+    stream = io.BytesIO(getlogic_not_betweenData())
     return ImageFromStream(stream)
+
 
 def getlogic_not_betweenIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_not_betweenBitmap())
     return icon
 
-logic_not_between=getlogic_not_betweenBitmap()
 
-#--- END logic_not_between
-#--- BEGIN logic_not_contain
+logic_not_between = getlogic_not_betweenBitmap()
+# --- END logic_not_between
+
+
+# --- BEGIN logic_not_contain
 def getlogic_not_containData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x01IDAT8\x8d\xed\x92\xbdJ\xc4P\x10\x85\xcf\xbd\xb72O\x90"d\x1f \x85\
 i\xf2S\xa4\x0b\xfeB\x8a\x85\xa4I\xaf\xeb\xdfs\xa8\xfd\xadvIi\x12\xc5Fm,vA\
@@ -463,24 +511,29 @@ i\xf2S\xa4\x0b\xfeB\x8a\x85\xa4I\xaf\xeb\xdfs\xa8\xfd\xadvIi\x12\xc5Fm,vA\
 \xedPH\x05\xd7u\xe98\x0em\xdb\xa6\xd6zK\xf7\xff\xca\xe3\r\xbe\x00O\xa5f\xdeU\
 lT=\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_not_containBitmap():
     return BitmapFromImage(getlogic_not_containImage())
 
+
 def getlogic_not_containImage():
-    stream = cStringIO.StringIO(getlogic_not_containData())
+    stream = io.BytesIO(getlogic_not_containData())
     return ImageFromStream(stream)
+
 
 def getlogic_not_containIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_not_containBitmap())
     return icon
 
-logic_not_contain=getlogic_not_containBitmap()
 
-#--- END logic_not_contain
-#--- BEGIN logic_not_equal
+logic_not_contain = getlogic_not_containBitmap()
+# --- END logic_not_contain
+
+
+# --- BEGIN logic_not_equal
 def getlogic_not_equalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd2IDAT8\x8d\xa5\x93M\x0e\x820\x10\x85\xfb\xb3\xe26\\\x80\r$,\xb5\
 \xa7\xb0.Q\xcf\xa1\xe8\x96\xaa{5\x01\x12\x126\x1cB{\x17\x96\x03\xe3J\x03\xca\
@@ -493,24 +546,29 @@ def getlogic_not_equalData():
 \xb6\x07\x8b)\xe3\xf5!N\xa9\xd9\xbf\xf1\r\x82\xddl\x9d~\xd14,\x00\x00\x00\
 \x00IEND\xaeB`\x82' 
 
+
 def getlogic_not_equalBitmap():
     return BitmapFromImage(getlogic_not_equalImage())
 
+
 def getlogic_not_equalImage():
-    stream = cStringIO.StringIO(getlogic_not_equalData())
+    stream = io.BytesIO(getlogic_not_equalData())
     return ImageFromStream(stream)
+
 
 def getlogic_not_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_not_equalBitmap())
     return icon
 
-logic_not_equal=getlogic_not_equalBitmap()
 
-#--- END logic_not_equal
-#--- BEGIN logic_not_into
+logic_not_equal = getlogic_not_equalBitmap()
+# --- END logic_not_equal
+
+
+# --- BEGIN logic_not_into
 def getlogic_not_intoData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x1dIDAT8\x8d\xdd\x92\xddJ\xc2\x00\x00\x85\xbfM1\x98M\'*\x08\xa2\xb2\
 \xcd\xbf\xbdBt\xd5+\xd4\x93\xd4M\xbdM\xdd\xd73\x14t\xa7\xc3\xbf\xe9\xa6\xe2n\
@@ -525,24 +583,29 @@ def getlogic_not_intoData():
 \xe18\xc8\xd5*q\xc3 \xec\xf7\t\\\x97c]\xe7\xec\xf1I\xf8\x05\xf8\xab\xfe\xff\
 \x07\x07\x00\xf8\x069\xc2grM\x14\xf4\xe6\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_not_intoBitmap():
     return BitmapFromImage(getlogic_not_intoImage())
 
+
 def getlogic_not_intoImage():
-    stream = cStringIO.StringIO(getlogic_not_intoData())
+    stream = io.BytesIO(getlogic_not_intoData())
     return ImageFromStream(stream)
+
 
 def getlogic_not_intoIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_not_intoBitmap())
     return icon
 
-logic_not_into=getlogic_not_intoBitmap()
 
-#--- END logic_not_into
-#--- BEGIN logic_not_mask
+logic_not_into = getlogic_not_intoBitmap()
+# --- END logic_not_into
+
+
+# --- BEGIN logic_not_mask
 def getlogic_not_maskData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x10IDAT8\x8d\xed\x92\xb1J\xc3P\x14\x86\xffs\xafK\xea\\\xe8V\xba\x04\
 \xba\x06\x02\x1dRJ\xe9\x9a\x0c\x19\xe2\x10}\x02\xeb\x8bt\x0e\x11\x85\xd0;56\
@@ -557,24 +620,29 @@ i\xcaG\xc7ae\x0cEiL&\x13\xe6y\xce\xaf\x0cDil6\x1bFQ\xc40\x0c\x19\x04\x01EiTI\
 \xd7\xeb\xb1\xdb\xed~J\xfe_\xb9\xbd\xe0\x03\x9e\xebm\x9f\xfc\xe8\xae\x87\x00\
 \x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_not_maskBitmap():
     return BitmapFromImage(getlogic_not_maskImage())
 
+
 def getlogic_not_maskImage():
-    stream = cStringIO.StringIO(getlogic_not_maskData())
+    stream = io.BytesIO(getlogic_not_maskData())
     return ImageFromStream(stream)
+
 
 def getlogic_not_maskIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_not_maskBitmap())
     return icon
 
-logic_not_mask=getlogic_not_maskBitmap()
 
-#--- END logic_not_mask
-#--- BEGIN logic_not_or
+logic_not_mask = getlogic_not_maskBitmap()
+# --- END logic_not_mask
+
+
+# --- BEGIN logic_not_or
 def getlogic_not_orData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xc6IDAT8\x8d\xc5\x93MO\x1aa\x14\x85\x9f\x19\xbe\xde\x81\x19\x06H\
 \x00\x176\x1amX\xba\xa7]ta\\\x1a\x9a\xb4\xfe\x83\xf6\x87\xb5{w\x96\xd6mc\xd2\
@@ -595,24 +663,29 @@ m\xee\x8f\x8e0\xb2Y\xca\x1b\x1b\xa4t\x9d\xe4\xc1\xc1|\x06}\xc7\xc1Z^f\x12EL\
 \xaf\xc7C\x14\x914MD\xa5\x82V\xab\xf1\xea\xdd{\xed\x0f\xc0\xdf\xea\xff\xff\
 \xc2\xc2\x80\xdf\xfcK\xc0A\xb2&\xb7\x1d\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_not_orBitmap():
     return BitmapFromImage(getlogic_not_orImage())
 
+
 def getlogic_not_orImage():
-    stream = cStringIO.StringIO(getlogic_not_orData())
+    stream = io.BytesIO(getlogic_not_orData())
     return ImageFromStream(stream)
+
 
 def getlogic_not_orIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_not_orBitmap())
     return icon
 
-logic_not_or=getlogic_not_orBitmap()
 
-#--- END logic_not_or
-#--- BEGIN logic_or
+logic_not_or = getlogic_not_orBitmap()
+# --- END logic_not_or
+
+
+# --- BEGIN logic_or
 def getlogic_orData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xdaIDAT8\x8d\xc5\x93\xbfk\x13q\x18\xc6?\x97\xa4Mm.\xb9\xbb\xa6i\x92\
 &*\x94\nE\x906\xba\n\x0eQ(\n.\xe2 \xd2\xa1\xe0\xa8\xfe9n\x82\xa3V\xc7\x82\
@@ -634,24 +707,29 @@ i\xfa\xb8(/\x1c\x03\xa4\xde)?[y\xd8\xcdu\x9eRhm\xd0\x16\r\xe4Q\x85\xe0\xd0\
 \x08\xf6\xf7\x0e\x96m"\x87CL*S\\\n/r\xfb\xca=\xe9\x0f\xc0\xdf\xea\xff\xff\
 \xc2\xc0\x80_\xde\x10\xca\xc7h\xe9.\xa9\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_orBitmap():
     return BitmapFromImage(getlogic_orImage())
 
+
 def getlogic_orImage():
-    stream = cStringIO.StringIO(getlogic_orData())
+    stream = io.BytesIO(getlogic_orData())
     return ImageFromStream(stream)
+
 
 def getlogic_orIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_orBitmap())
     return icon
 
-logic_or=getlogic_orBitmap()
 
-#--- END logic_or
-#--- BEGIN logic_right_equal
+logic_or = getlogic_orBitmap()
+# --- END logic_or
+
+
+# --- BEGIN logic_right_equal
 def getlogic_right_equalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x19IDAT8\x8d\xd5\x93=N\xc3@\x10\x85\xdf8\x1c\x01EQbn\xe1\x06\x90\
 \xaf\xe0\xd2\x82@gh\x80\x13DI\x11\x82R\x04*\x88i]\xb8\xb0\x80\x0es\x18\x8a4H\
@@ -666,24 +744,29 @@ def getlogic_right_equalData():
 \xbe\xf1:\xad9\x98im\xfd"1\xa39\x98\xd5\xf6`\xbb\xf7\xcaE\x07\xf4\xff?\xd37_\
 \x02\x85\xf4\xa1\x85a\xf6\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_right_equalBitmap():
     return BitmapFromImage(getlogic_right_equalImage())
 
+
 def getlogic_right_equalImage():
-    stream = cStringIO.StringIO(getlogic_right_equalData())
+    stream = io.BytesIO(getlogic_right_equalData())
     return ImageFromStream(stream)
+
 
 def getlogic_right_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_right_equalBitmap())
     return icon
 
-logic_right_equal=getlogic_right_equalBitmap()
 
-#--- END logic_right_equal
-#--- BEGIN logic_left_equal
+logic_right_equal = getlogic_right_equalBitmap()
+# --- END logic_right_equal
+
+
+# --- BEGIN logic_left_equal
 def getlogic_left_equalData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01%IDAT8\x8d\xd5\x93\xb1N\x83P\x14\x86\xff\x03>\x82i*\xed3\xa8\xaf\xd0\
 \xb0(23\x10u)\xe8\xa8\xae\x8d\x1d\x8c\x06\x9d`\x06u%j\xc2\xaa\xd5\'q\xe8bR\
@@ -698,24 +781,29 @@ def getlogic_left_equalData():
 \xa75\x1c\xff\xaa\x91$\xcf#0Z\xc3qm\xcf\xab\x83W.\x0f\xb8\xa9\xe8\xff\x7f\
 \xa6o\xc5\x89\x8d\x1d\xa2!\xf7\xae\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_left_equalBitmap():
     return BitmapFromImage(getlogic_left_equalImage())
 
+
 def getlogic_left_equalImage():
-    stream = cStringIO.StringIO(getlogic_left_equalData())
+    stream = io.BytesIO(getlogic_left_equalData())
     return ImageFromStream(stream)
+
 
 def getlogic_left_equalIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_left_equalBitmap())
     return icon
 
-logic_left_equal=getlogic_left_equalBitmap()
 
-#--- END logic_left_equal
-#--- BEGIN logic_and
+logic_left_equal = getlogic_left_equalBitmap()
+# --- END logic_left_equal
+
+
+# --- BEGIN logic_and
 def getlogic_andData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xb9IDAT8\x8d\xc5\x93\xbfk\x13q\x18\xc6?\xdf\xb4K\xa1\xf6\xda\xe8\
 \xe5\xae\\\x8f\x9a\x9f\x84\x806!KV\t\x82h\x95L\xea\xd2\xd1\xc5\xc5\xcd\xc9\
@@ -736,18 +824,21 @@ f\xb3\xb4\xdb\xedi@\xaf\xd7C\xd7\xf5@<\xf6\x1c\x96\x96\x97\x18\x8e|\x16\xa5\
 \xbc}E\xa7\xfe\x95x<N>\x9f\xa7P(\xf0\xf8\xc9S\xf1\x07\xe0o\xeb\xff\xff\xc2\
 \xcc\x80\xdfj\xfe\x99"n\xc9\xa1\x95\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getlogic_andBitmap():
     return BitmapFromImage(getlogic_andImage())
 
+
 def getlogic_andImage():
-    stream = cStringIO.StringIO(getlogic_andData())
+    stream = io.BytesIO(getlogic_andData())
     return ImageFromStream(stream)
+
 
 def getlogic_andIcon():
     icon = EmptyIcon()
     icon.CopyFromBitmap(getlogic_andBitmap())
     return icon
 
-logic_and=getlogic_andBitmap()
 
-#--- END logic_and
+logic_and = getlogic_andBitmap()
+# --- END logic_and

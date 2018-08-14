@@ -21,7 +21,11 @@ CONTAIN_SIGNATURE = '(..)'
 
 # Замены для адаптации модуля
 ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo', dst='# import wx.combo'),
+                       dict(compare=STARTSWITH_SIGNATURE, src='import wx.xrc', dst='import wx.adv'),
                        dict(compare=STARTSWITH_SIGNATURE, src='import wx.calendar', dst='# import wx.calendar'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.calendar.', dst='wx.adv.'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.combo.', dst='wx.adv.'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.DatePickerCtrl', dst='wx.adv.DatePickerCtrl'),
                        )
 
 
@@ -150,8 +154,8 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
                     new_line = new_line.replace(replacement['src'], replacement['dst'])
                 elif signature == CONTAIN_SIGNATURE and replacement['src'] in new_line:
                     new_line = new_line.replace(replacement['src'], replacement['dst'])
-                else:
-                    log.warning(u'Не распознанная сигнатура <%s> автозамены адаптации модуля' % str(signature))
+                # else:
+                #    log.warning(u'Не распознанная сигнатура <%s> автозамены адаптации модуля' % str(signature))
             lines[i] = new_line
 
         # Запись линий в результирующий модуль

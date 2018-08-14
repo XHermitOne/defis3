@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 import wx.lib.masked
 
 ###########################################################################
@@ -22,7 +22,7 @@ class icDateTimeCtrlProtoDepricate ( wx.Panel ):
 		
 		bSizer7 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.dateEdit = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_ALLOWNONE|wx.DP_DEFAULT )
+		self.dateEdit = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_ALLOWNONE|wx.DP_DEFAULT )
 		bSizer7.Add( self.dateEdit, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		self.timeEdit = wx.lib.masked.TimeCtrl(self, -1, name="24hCtrl", fmt24hr=True)
@@ -52,7 +52,7 @@ class icDateTimeCtrlProto ( wx.Panel ):
 		
 		sbSizer1 = wx.StaticBoxSizer( wx.StaticBox( self, wx.ID_ANY, u"Дата" ), wx.HORIZONTAL )
 		
-		self.dateEdit = wx.DatePickerCtrl( sbSizer1.GetStaticBox(), wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_ALLOWNONE|wx.DP_DEFAULT )
+		self.dateEdit = wx.adv.DatePickerCtrl( sbSizer1.GetStaticBox(), wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_ALLOWNONE|wx.DP_DEFAULT )
 		sbSizer1.Add( self.dateEdit, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 0 )
 		
 		

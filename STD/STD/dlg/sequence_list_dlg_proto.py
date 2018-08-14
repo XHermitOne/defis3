@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 from STD.usercomponents import icsequencelistbox
 
 ###########################################################################
