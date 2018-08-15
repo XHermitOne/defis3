@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Библиотека образов.
 """
+
 #--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
-import cStringIO
+import wx
+import io
 #--- Image Library File ---
+
+
 #--- BEGIN clrPic
 def getclrPicData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x0e\x00\x00\x00\x0e\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x0e\x00\x00\x00\x0e\x08\x06\
 \x00\x00\x00\x1fH-\xd1\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\x00\
 \x02&IDAT(\x91U\x92MkSA\x18\x85\x9fyg\xe6\xceMb\x13R\x08\xc5`%\x16\x8d\x7f\
 \xa0\xa0\xe2V\x7f\xb5;\xc1B\xa1\xba\x8e]4\xa1\xa9\xd1\xf6F\xd3\xa6M\xef\xe7\
@@ -33,20 +36,23 @@ def getclrPicData():
 \x85\x06X\xadV\x8b^\xb7[\x9c\xcd\xe7}\x11\xdd\xb1\xc6\x00\x91\xa6\xae\xc9\
 \xf3\r\xf3\xf9\x9co_\x8f\xb2\xd04\x9f\xa7\'\'G\xff}\x15`0\x18\x0c\xbb\xdd\
 \xdeXD\x8f\xd2V\xbaC\x8c\x14eq\xee\xbd\x9f]\xaf\xd7\xc7Y\x96=\x9e\xfc/\xc2\
-\xcc\tb\x06`\x81\xc8\x00\x00\x00\x00IEND\xaeB`\x82' 
+\xcc\tb\x06`\x81\xc8\x00\x00\x00\x00IEND\xaeB`\x82"
+
 
 def getclrPicBitmap():
-    return BitmapFromImage(getclrPicImage())
+    return wx.Bitmap(getclrPicImage())
+
 
 def getclrPicImage():
-    stream = cStringIO.StringIO(getclrPicData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getclrPicData())
+    return wx.Image(stream)
+
 
 def getclrPicIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getclrPicBitmap())
     return icon
 
-clrPic=getclrPicBitmap()
 
+clrPic = getclrPicBitmap()
 #--- END clrPic

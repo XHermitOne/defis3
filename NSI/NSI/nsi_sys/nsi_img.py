@@ -6,8 +6,7 @@
 """
 
 # --- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+import wx
 import io
 # --- Image Library File ---
 
@@ -31,16 +30,16 @@ def getenumData():
 
 
 def getenumBitmap():
-    return BitmapFromImage(getenumImage())
+    return wx.Bitmap(getenumImage())
 
 
 def getenumImage():
     stream = io.BytesIO(getenumData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getenumIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getenumBitmap())
     return icon
 
@@ -72,16 +71,16 @@ END\xaeB`\x82'
 
 
 def getdb_sqlBitmap():
-    return BitmapFromImage(getdb_sqlImage())
+    return wx.Bitmap(getdb_sqlImage())
 
 
 def getdb_sqlImage():
     stream = io.BytesIO(getdb_sqlData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getdb_sqlIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getdb_sqlBitmap())
     return icon
 
@@ -111,16 +110,16 @@ def getlevelData():
 
 
 def getlevelBitmap():
-    return BitmapFromImage(getlevelImage())
+    return wx.Bitmap(getlevelImage())
 
 
 def getlevelImage():
     stream = io.BytesIO(getlevelData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlevelIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlevelBitmap())
     return icon
 
@@ -146,16 +145,16 @@ k\x10QPW?/xu\xea\xda\x1eR\xea\xcd\x1a%X/\xf7\xa0\x10\x98\x93\x94x\x01\x12f\
 
 
 def getcase_closeBitmap():
-    return BitmapFromImage(getcase_closeImage())
+    return wx.Bitmap(getcase_closeImage())
 
 
 def getcase_closeImage():
     stream = io.BytesIO(getcase_closeData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcase_closeIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcase_closeBitmap())
     return icon
 
@@ -180,16 +179,16 @@ x!O\xe4\xdf\x12\xed>f\tT\xe8\xf6\x92\x06H\xfb^\x9b\xb6\x80\x9cG\xcdb\x8c\x0c\
 
 
 def getcase_openBitmap():
-    return BitmapFromImage(getcase_openImage())
+    return wx.Bitmap(getcase_openImage())
 
 
 def getcase_openImage():
     stream = io.BytesIO(getcase_openData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcase_openIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcase_openBitmap())
     return icon
 
@@ -217,16 +216,16 @@ def getspravData():
 
 
 def getspravBitmap():
-    return BitmapFromImage(getspravImage())
+    return wx.Bitmap(getspravImage())
 
 
 def getspravImage():
     stream = io.BytesIO(getspravData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getspravIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getspravBitmap())
     return icon
 
@@ -252,16 +251,16 @@ def getFolderCloseData():
 
 
 def getFolderCloseBitmap():
-    return BitmapFromImage(getFolderCloseImage())
+    return wx.Bitmap(getFolderCloseImage())
 
 
 def getFolderCloseImage():
     stream = io.BytesIO(getFolderCloseData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getFolderCloseIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getFolderCloseBitmap())
     return icon
 
@@ -290,16 +289,16 @@ t\x14EIDD\xb6\xe5\x90\xb1m\xbd\xb8<\x07\xf0\xfd\x1b\xd8X\xaf\xe3\xf5\xe5S\
 
 
 def getFolderOpenBitmap():
-    return BitmapFromImage(getFolderOpenImage())
+    return wx.Bitmap(getFolderOpenImage())
 
 
 def getFolderOpenImage():
     stream = io.BytesIO(getFolderOpenData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getFolderOpenIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getFolderOpenBitmap())
     return icon
 
@@ -326,16 +325,16 @@ def getDBCalendarData():
 
 
 def getDBCalendarBitmap():
-    return BitmapFromImage(getDBCalendarImage())
+    return wx.Bitmap(getDBCalendarImage())
 
 
 def getDBCalendarImage():
     stream = io.BytesIO(getDBCalendarData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getDBCalendarIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getDBCalendarBitmap())
     return icon
 
@@ -366,16 +365,16 @@ on\x0e \xfdgr\xa6\x0e\x84\x183\xa4\xac\x18\xfe,1\x8e\x9b\xc2\x8c\xa4\x121L\
 
 
 def getNSILevelBitmap():
-    return BitmapFromImage(getNSILevelImage())
+    return wx.Bitmap(getNSILevelImage())
 
 
 def getNSILevelImage():
     stream = io.BytesIO(getNSILevelData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getNSILevelIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getNSILevelBitmap())
     return icon
 
@@ -407,16 +406,16 @@ def getNSISpravData():
 
 
 def getNSISpravBitmap():
-    return BitmapFromImage(getNSISpravImage())
+    return wx.Bitmap(getNSISpravImage())
 
 
 def getNSISpravImage():
     stream = io.BytesIO(getNSISpravData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getNSISpravIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getNSISpravBitmap())
     return icon
 

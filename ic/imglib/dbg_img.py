@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Библиотека образов.
 """
-#--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
-#--- BEGIN Debug
+
+# --- Imports ---
+import wx
+import io
+# --- Image Library File ---
+
+
+# --- BEGIN Debug
 def getDebugData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01HIDAT8\x8d\x8d\x93?OB1\x14\xc5\x7f\xb7\x8f\xe1}\x03\xb770\xb9h\xc2\
 \x0c\x83\x8b3\x1b\x93a\xd3\xb7\xbc\xcdD\x06\xd4A\xed\x80\t\x1b\x0b\xba\x9a\
@@ -27,24 +30,29 @@ def getDebugData():
 \xaf\x04rR\x97\xde\xea\x89\xe5:XE^\x13\xa5\xd8\xab\x17D\x05\xb2\xa9\xb1\xf6r\
 \xb0\r\x7fI\xa9\x8c<\xe1\x1e\xcd\xf2\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getDebugBitmap():
-    return BitmapFromImage(getDebugImage())
+    return wx.Bitmap(getDebugImage())
+
 
 def getDebugImage():
-    stream = cStringIO.StringIO(getDebugData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getDebugData())
+    return wx.Image(stream)
+
 
 def getDebugIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getDebugBitmap())
     return icon
 
-Debug=getDebugBitmap()
 
-#--- END Debug
-#--- BEGIN DbgPrompt
+Debug = getDebugBitmap()
+# --- END Debug
+
+
+# --- BEGIN DbgPrompt
 def getDbgPromptData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01<IDAT8\x8d\x8d\x92\xb1N\x02A\x10\x86\xbf\xdd\xa3\xb87\xb0\xbb\x82\
 \xcaF\x13j(l\xac\xe9\xa8\x0c\xed6\xd7S\xa0\x86\xa8[P\\w\x8f`BB\xc7\x03\x98\
@@ -60,24 +68,29 @@ def getDbgPromptData():
 \xc2s\t\xdcW\x17\xcbT\xb5lT\x81a}T\xe0\x10\xbc\xcfvI\xe0\x14\xf8P\xfe\x02Kl\
 \x9e>\x1dkG)\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getDbgPromptBitmap():
-    return BitmapFromImage(getDbgPromptImage())
+    return wx.Bitmap(getDbgPromptImage())
+
 
 def getDbgPromptImage():
-    stream = cStringIO.StringIO(getDbgPromptData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getDbgPromptData())
+    return wx.Image(stream)
+
 
 def getDbgPromptIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getDbgPromptBitmap())
     return icon
 
-DbgPrompt=getDbgPromptBitmap()
 
-#--- END DbgPrompt
-#--- BEGIN DbgStart
+DbgPrompt = getDbgPromptBitmap()
+# --- END DbgPrompt
+
+
+# --- BEGIN DbgStart
 def getDbgStartData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01pIDAT8\x8d\x8d\x931K\x03A\x10\x85\xbf\xd9K\x91\x7f 6W\xa4\xb2\nX\xdb\
 Xh-6Vba\xe15\xe9\x04-\xa2\x9eQ\xb7\xb0H\x97&\nV\x82`\xe3\x0fP\xcb\xf4r\xb5(\
@@ -94,24 +107,29 @@ Xh-6Vba\xe15\xe9\x04-\xa2\x9eQ\xb7\xb0H\x97&\nV\x82`\xe3\x0fP\xcb\xf4r\xb5(\
 \x01\xe0jm\x95\xda\xc0\xb2\xc0\xf0%\xcae\xf0\x17\xf9\xfb\xc7Q\x8b%\xbb_3=\
 \x92<\x0e\x9f\xe8\xf0\xacRB \xd5\xab\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getDbgStartBitmap():
-    return BitmapFromImage(getDbgStartImage())
+    return wx.Bitmap(getDbgStartImage())
+
 
 def getDbgStartImage():
-    stream = cStringIO.StringIO(getDbgStartData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getDbgStartData())
+    return wx.Image(stream)
+
 
 def getDbgStartIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getDbgStartBitmap())
     return icon
 
-DbgStart=getDbgStartBitmap()
 
-#--- END DbgStart
-#--- BEGIN DbgStop
+DbgStart = getDbgStartBitmap()
+# --- END DbgStart
+
+
+# --- BEGIN DbgStop
 def getDbgStopData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01wIDAT8\x8d\x8d\x93-L\x03A\x10\x85\xbf\xd9+I\r\x8e\x84\x90@\x05\x1e\
 \x85\xc4 \n\x02C\x82@\x11\x12\x049S\x87@\x1c\xd0\xf2\xb3\x02Q\x87\xa1\xa2\nE\
@@ -130,24 +148,29 @@ D\xe2\\\x968.\xe3\x1c\xec\xeen\xf0\xf6\xf6\x0e@.\xd7ao\xff@\x002?\x89\xd6Z\
 \x87\xd9NEx\x9d\x8b\xfd\xe18\x1cu\xda\x10|\x02\x98\xf9\xb4\x8a^{\xed\x8f\x00\
 \x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getDbgStopBitmap():
-    return BitmapFromImage(getDbgStopImage())
+    return wx.Bitmap(getDbgStopImage())
+
 
 def getDbgStopImage():
-    stream = cStringIO.StringIO(getDbgStopData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getDbgStopData())
+    return wx.Image(stream)
+
 
 def getDbgStopIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getDbgStopBitmap())
     return icon
 
-DbgStop=getDbgStopBitmap()
 
-#--- END DbgStop
-#--- BEGIN StepInto
+DbgStop = getDbgStopBitmap()
+# --- END DbgStop
+
+
+# --- BEGIN StepInto
 def getStepIntoData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x7fIDAT8\x8d\x95\x92=K\xc4@\x10\x86\x9f\xe4\x84\xf3\x03;\xed\xb4\
 \xb4\xb7\xb5\xb1\xb2\xb4\xb1\xd0J,N\t(\x87\xbf!\xbd\xd8\xc8\xe1\xc7)\x16b\
@@ -166,24 +189,29 @@ def getStepIntoData():
 \x06\x9d\x9f\x05;\xca\xff\x8d\xcc(;n\xc9\xd9\xa9]K\x8f\xbf?\xe8\x0b\x1f\xe8\
 \x07\x7f\x01P}v\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getStepIntoBitmap():
-    return BitmapFromImage(getStepIntoImage())
+    return wx.Bitmap(getStepIntoImage())
+
 
 def getStepIntoImage():
-    stream = cStringIO.StringIO(getStepIntoData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getStepIntoData())
+    return wx.Image(stream)
+
 
 def getStepIntoIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getStepIntoBitmap())
     return icon
 
-StepInto=getStepIntoBitmap()
 
-#--- END StepInto
-#--- BEGIN StepOver
+StepInto = getStepIntoBitmap()
+# --- END StepInto
+
+
+# --- BEGIN StepOver
 def getStepOverData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xa0IDAT8\x8d\x95\x93\xbfK\x1cA\x1c\xc5?3\'^\x95J\t\x16Z\xda\x8b\xd8\
 H \x95\x84\x14J*--T\x0e"\xfe\x0f\x9e\x95\xff\x80\\\xcc\xc6\\a\xa9\x90\xcaJ\
@@ -203,24 +231,29 @@ H \x95\x84\x14J*--T\x0e"\xfe\x0f\x9e\x95\xff\x80\\\xcc\xc6\\a\xa9\x90\xcaJ\
 \xc0{~#}~\xe6P&\xa2~\xec\x9c\xca@\x9f\xaf\xe0\x1f\x97\x0b3\xfeG+p.\x00\x00\
 \x00\x00IEND\xaeB`\x82' 
 
+
 def getStepOverBitmap():
-    return BitmapFromImage(getStepOverImage())
+    return wx.Bitmap(getStepOverImage())
+
 
 def getStepOverImage():
-    stream = cStringIO.StringIO(getStepOverData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getStepOverData())
+    return wx.Image(stream)
+
 
 def getStepOverIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getStepOverBitmap())
     return icon
 
-StepOver=getStepOverBitmap()
 
-#--- END StepOver
-#--- BEGIN StepReturn
+StepOver = getStepOverBitmap()
+# --- END StepOver
+
+
+# --- BEGIN StepReturn
 def getStepReturnData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01xIDAT8\x8d\x95\x93?O\x021\x18\x87\x9f\xde)\x10\x136\x07\x07?\x8ear"\
 \xead\x18\x08\xb9\x89\xf0\x15\x94\xc9D\xc3b\x08\xeai\x1c\x1cu\xe0\x03\xc8dds\
@@ -239,24 +272,29 @@ R7WG\x13\xa3\x06\xae=\xb8\xd6\x01\xaf\xde\x1d \xf1M\x9a\xfey\xf3\xfc~m\xdfV\
 \xa7\x9d\xbe\x11\x8e;)\xa3p\\q\xd2\xbe[\xf8\xa5g\xc57E\x8c\xe5\xf1\xf7="\x9a\
 \x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getStepReturnBitmap():
-    return BitmapFromImage(getStepReturnImage())
+    return wx.Bitmap(getStepReturnImage())
+
 
 def getStepReturnImage():
-    stream = cStringIO.StringIO(getStepReturnData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getStepReturnData())
+    return wx.Image(stream)
+
 
 def getStepReturnIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getStepReturnBitmap())
     return icon
 
-StepReturn=getStepReturnBitmap()
 
-#--- END StepReturn
-#--- BEGIN Breakpoint
+StepReturn = getStepReturnBitmap()
+# --- END StepReturn
+
+
+# --- BEGIN Breakpoint
 def getBreakpointData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01JIDAT8\x8d\x95\x92=k\xc2P\x14\x86\xdf$\x82\xc5.\x0e]\x1d\xfb\x0f\\K\
 \xc8R:T:\xd9\xb1S\xe9\x0f\xf0\x878\x88\xf4#ur\xacS\xb1C\xe9\x12,\xf4\x8ft\
@@ -273,24 +311,29 @@ MEN\xa2\x05&`\xf6\xb3\xa9\xd0\xa0\xedsJ\xd8E\xca\x04\x00\xe0yG\x90R\xc2?\xf3\
 \xad@\xa1\xa0^?=\x08\xb0\n\x1c\xd7s\x1e\xba\x9f\xf6;\xfe\x91_2\x9e\xe9\x8cK\
 \x02\xf5q\x00\x00\x00\x00IEND\xaeB`\x82" 
 
+
 def getBreakpointBitmap():
-    return BitmapFromImage(getBreakpointImage())
+    return wx.Bitmap(getBreakpointImage())
+
 
 def getBreakpointImage():
-    stream = cStringIO.StringIO(getBreakpointData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getBreakpointData())
+    return wx.Image(stream)
+
 
 def getBreakpointIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getBreakpointBitmap())
     return icon
 
-Breakpoint=getBreakpointBitmap()
 
-#--- END Breakpoint
-#--- BEGIN Breakpoints
+Breakpoint = getBreakpointBitmap()
+# --- END Breakpoint
+
+
+# --- BEGIN Breakpoints
 def getBreakpointsData():
-    return "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x85IDAT8\x8d\x95\x93\xcdJ\xdcP\x18\x86\x9fd\x84\xa9\xa20\x0b]z\x07^\
 \x832\x1bQP\x04E7\x85\x82 \xfe@U\xc8\xae\x05+s\x03\xb3P\xd1i:\xa50\x9b\x82\
@@ -309,24 +352,29 @@ O\xe56;\x9e\xc2m\xb6\x8a\x1d|(\x0f\x12\xaa.n\xb3\xd5\x07q<\xc5w\xf7\x07\x12g\
 \xe7g\x0e\xfc\x87X'G79\xf8\xd7\xf5\x17\x08H\xea\x02\x83\x11c\x10\x00\x00\x00\
 \x00IEND\xaeB`\x82" 
 
+
 def getBreakpointsBitmap():
-    return BitmapFromImage(getBreakpointsImage())
+    return wx.Bitmap(getBreakpointsImage())
+
 
 def getBreakpointsImage():
-    stream = cStringIO.StringIO(getBreakpointsData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getBreakpointsData())
+    return wx.Image(stream)
+
 
 def getBreakpointsIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getBreakpointsBitmap())
     return icon
 
-Breakpoints=getBreakpointsBitmap()
 
-#--- END Breakpoints
-#--- BEGIN ClearBreakpoints
+Breakpoints = getBreakpointsBitmap()
+# --- END Breakpoints
+
+
+# --- BEGIN ClearBreakpoints
 def getClearBreakpointsData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01yIDAT8\x8d\x8d\x92\xbdJ\x03A\x14F\xcf\xee\x06\x02\xa2 H|\x83Tjg)\xfe\
 \x94\x16AP\xb4\x11\x04A\xd4\xc2\x1fH\xa7\xa0\x92\x17\xb0P\tI\x14\x844V\xe6\
@@ -345,24 +393,29 @@ tW8\xdbT\x94\xce\xca\xf1\x820\\\xbbk\x90m\xaa\x1fp\xb1t\x8a\xe8h\x9f\x00"\
 \x12\xc0\xd8\xd8Hlo\x9er1\xefR\x88]\xe9\x9ew\x04\xd9\xc8.\x8a\xd3\xe1b\x00\
 \x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getClearBreakpointsBitmap():
-    return BitmapFromImage(getClearBreakpointsImage())
+    return wx.Bitmap(getClearBreakpointsImage())
+
 
 def getClearBreakpointsImage():
-    stream = cStringIO.StringIO(getClearBreakpointsData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getClearBreakpointsData())
+    return wx.Image(stream)
+
 
 def getClearBreakpointsIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getClearBreakpointsBitmap())
     return icon
 
-ClearBreakpoints=getClearBreakpointsBitmap()
 
-#--- END ClearBreakpoints
-#--- BEGIN Variables
+ClearBreakpoints = getClearBreakpointsBitmap()
+# --- END ClearBreakpoints
+
+
+# --- BEGIN Variables
 def getVariablesData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x95IDAT8\x8d\x9d\x92\xbdN\x1bA\x14\x85\xbf\xd9EY\xa0\r\x8aR\xd8\xe5\
 v\x94\x16\r\xad;\\\xa6L\x952/\x11\xf2\x0e\x91\x93\x86\xce%\xa5\xf3\x02\x91i\
@@ -382,24 +435,29 @@ v\x94\x16\r\xad;\\\xa6L\x952/\x11\xf2\x0e\x91\x93\x86\xce%\xa5\xf3\x02\x91i\
 \xe5\xbe:\xe8\x8e&\x00\xc8\x9a\x19\x80\xc6 u\x1et~\xaa6\x00L\x14\x9b\xcf\x9f\
 \xbe\xe9s\x00\xff\x01=Y&\x93>n\xbc\x98\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getVariablesBitmap():
-    return BitmapFromImage(getVariablesImage())
+    return wx.Bitmap(getVariablesImage())
+
 
 def getVariablesImage():
-    stream = cStringIO.StringIO(getVariablesData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getVariablesData())
+    return wx.Image(stream)
+
 
 def getVariablesIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getVariablesBitmap())
     return icon
 
-Variables=getVariablesBitmap()
 
-#--- END Variables
-#--- BEGIN Watch
+Variables = getVariablesBitmap()
+# --- END Variables
+
+
+# --- BEGIN Watch
 def getWatchData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x9cIDAT8\x8d\x8d\x92?o\xd3P\x14\xc5\x7fv*E\xad\xc4\x94\xaab \xa3\
 \xb7\x8cV\x17V\xb6f\xcc\xc8D\xb7~\t\xca\x07\xe8\x86\x02K7\xc6\x8e\xe9\x17@t\
@@ -419,21 +477,21 @@ def getWatchData():
 \xbaI\x1ao`# \x8e\xa3\xcd%\xff\xa3-\x80 \xec\x04\x1f\xde\x7fn\xe7{\x82~\x03\
 \xa3s+\xb2\xa8C6"\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getWatchBitmap():
-    return BitmapFromImage(getWatchImage())
+    return wx.Bitmap(getWatchImage())
+
 
 def getWatchImage():
-    stream = cStringIO.StringIO(getWatchData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getWatchData())
+    return wx.Image(stream)
+
 
 def getWatchIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getWatchBitmap())
     return icon
 
-Watch=getWatchBitmap()
 
-#--- END Watch
-
-
-
+Watch = getWatchBitmap()
+# --- END Watch

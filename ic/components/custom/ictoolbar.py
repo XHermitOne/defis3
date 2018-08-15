@@ -435,11 +435,11 @@ def test(par=0):
     import cStringIO
     
     def getBitmap(imgDataString):
-        return wx.BitmapFromImage(getImage(imgDataString))
+        return wx.Bitmap(getImage(imgDataString))
 
     def getImage(imgDataString):
         stream = cStringIO.StringIO(imgDataString)
-        return wx.ImageFromStream(stream)
+        return wx.wx.Image(stream)
 
     imgLastData = '''\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x0c\x00\x00\x00\x0c\x08\x06\
 \x00\x00\x00Vu\\\xe7\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\x00\

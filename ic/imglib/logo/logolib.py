@@ -4,8 +4,8 @@
 Библиотека образов.
 """
 #--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+
+import wx
 import cStringIO
 #--- Image Library File ---
 #--- BEGIN splashwarn
@@ -689,14 +689,14 @@ B@\x18\x11\x02\xc2\x88\x10\x10F\x84\x800"\x04\x84\x99*e\x077 \x89\x95\x10\
 B`\x82' 
 
 def getsplashwarnBitmap():
-    return BitmapFromImage(getsplashwarnImage())
+    return Bitmap(getsplashwarnImage())
 
 def getsplashwarnImage():
     stream = cStringIO.StringIO(getsplashwarnData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getsplashwarnIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getsplashwarnBitmap())
     return icon
 

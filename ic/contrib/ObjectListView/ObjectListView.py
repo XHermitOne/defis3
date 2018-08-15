@@ -4323,7 +4323,7 @@ def _getSmallUpArrowBitmap():
     if 'phoenix' in wx.PlatformInfo:
         return wx.Bitmap(wx.Image(stream))
     else:
-        return wx.BitmapFromImage(wx.ImageFromStream(stream))
+        return wx.Bitmap(wx.wx.Image(stream))
 
 
 def _getSmallDownArrowData():
@@ -4341,7 +4341,7 @@ def _getSmallDownArrowBitmap():
     if 'phoenix' in wx.PlatformInfo:
         return wx.Bitmap(wx.Image(stream))
     else:
-        return wx.BitmapFromImage(wx.ImageFromStream(stream))
+        return wx.Bitmap(wx.wx.Image(stream))
 
 
 #

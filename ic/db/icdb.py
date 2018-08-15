@@ -187,6 +187,31 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             db_url = self.getDBUrl()
         return checkDBConnect(db_url)
 
+    def checkOnline(self):
+        """
+        Проверка текущей связи с БД
+        @return: True - связь установлена / False - связь разорвана по какой либо причине.
+        """
+        if self._connection is None:
+            # Не определена связь в принципе
+            return False
+
+        is_connect = False
+        if engine:
+            connection = None
+            try:
+                connection = self._connection.connect()
+                result = connection.execute('SELECT 1').fetchall()
+                if result:
+                    is_connect = True
+                connection.close()
+            except:
+                if connection:
+                    connection.close()
+                log.fatal(u'Ошибка определения онлайн состояния связи с БД')
+                is_connect = False
+        return is_connect
+
     def load_ini_par(self, res):
         """
         Загрузка параметров соединения из ini файла.

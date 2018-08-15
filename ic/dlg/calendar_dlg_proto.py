@@ -8,8 +8,8 @@
 ###########################################################################
 
 import wx
-import wx.xrc
-import wx.calendar
+import wx.adv
+# import wx.calendar
 
 ###########################################################################
 ## Class icCalendarDialogProto
@@ -24,7 +24,7 @@ class icCalendarDialogProto ( wx.Dialog ):
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.calendar_control = wx.calendar.CalendarCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.calendar.CAL_SHOW_HOLIDAYS )
+		self.calendar_control = wx.adv.CalendarCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.CAL_SHOW_HOLIDAYS )
 		bSizer1.Add( self.calendar_control, 0, wx.ALL, 5 )
 		
 		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )

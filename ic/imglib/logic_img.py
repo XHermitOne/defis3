@@ -6,8 +6,7 @@
 """
 
 # --- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+import wx
 import io
 
 # --- Image Library File ---
@@ -34,16 +33,16 @@ def getlogic_betweenData():
 
 
 def getlogic_betweenBitmap():
-    return BitmapFromImage(getlogic_betweenImage())
+    return wx.Bitmap(getlogic_betweenImage())
 
 
 def getlogic_betweenImage():
     stream = io.BytesIO(getlogic_betweenData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_betweenIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_betweenBitmap())
     return icon
 
@@ -70,16 +69,16 @@ $"\xae\x01\x8b\xc2@\r\x04|\x82HT\xf9\x81\xca\x12\xa6B(r\x81\x1f\xe0\xb8 \xb9\
 
 
 def getlogic_containBitmap():
-    return BitmapFromImage(getlogic_containImage())
+    return wx.Bitmap(getlogic_containImage())
 
 
 def getlogic_containImage():
     stream = io.BytesIO(getlogic_containData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_containIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_containBitmap())
     return icon
 
@@ -99,16 +98,16 @@ def getlogic_equalData():
 
 
 def getlogic_equalBitmap():
-    return BitmapFromImage(getlogic_equalImage())
+    return wx.Bitmap(getlogic_equalImage())
 
 
 def getlogic_equalImage():
     stream = io.BytesIO(getlogic_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_equalBitmap())
     return icon
 
@@ -133,16 +132,16 @@ u\x0fT\x14j\xcf\x06\xd4FL\xd4\xc6oH\xe8\xfd\x80%K`-\xb4\xaf\xbav6\xf8TBl\x9c\
 
 
 def getlogic_greatBitmap():
-    return BitmapFromImage(getlogic_greatImage())
+    return wx.Bitmap(getlogic_greatImage())
 
 
 def getlogic_greatImage():
     stream = io.BytesIO(getlogic_greatData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_greatIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_greatBitmap())
     return icon
 
@@ -171,16 +170,16 @@ z\x87\x19\xc7\xf7\xbf\x83y\xf4\xff\x9fiQ\xfd\x00\x1f\x1e`\xabJ#\xd5Y\x00\x00\
 
 
 def getlogic_great_or_equalBitmap():
-    return BitmapFromImage(getlogic_great_or_equalImage())
+    return wx.Bitmap(getlogic_great_or_equalImage())
 
 
 def getlogic_great_or_equalImage():
     stream = io.BytesIO(getlogic_great_or_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_great_or_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_great_or_equalBitmap())
     return icon
 
@@ -209,16 +208,16 @@ R\xd3-[\xffKQ#0\x91\xd8N\x06\xd2-\x0f\x81s\x9a\xcb|0\xc3\x08\x82\xe8`\x1e\
 
 
 def getlogic_intoBitmap():
-    return BitmapFromImage(getlogic_intoImage())
+    return wx.Bitmap(getlogic_intoImage())
 
 
 def getlogic_intoImage():
     stream = io.BytesIO(getlogic_intoData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_intoIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_intoBitmap())
     return icon
 
@@ -248,16 +247,16 @@ Wh\xa0x\xce\xd0q\xe2\xb0O.\x85-\x08\x00\x00\x98_\x9b\xe5\xd7\xb9[\xbc\xdc\
 
 
 def getlogic_is_not_nullBitmap():
-    return BitmapFromImage(getlogic_is_not_nullImage())
+    return wx.Bitmap(getlogic_is_not_nullImage())
 
 
 def getlogic_is_not_nullImage():
     stream = io.BytesIO(getlogic_is_not_nullData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_is_not_nullIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_is_not_nullBitmap())
     return icon
 
@@ -285,16 +284,16 @@ IEND\xaeB`\x82'
 
 
 def getlogic_is_nullBitmap():
-    return BitmapFromImage(getlogic_is_nullImage())
+    return wx.Bitmap(getlogic_is_nullImage())
 
 
 def getlogic_is_nullImage():
     stream = io.BytesIO(getlogic_is_nullData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_is_nullIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_is_nullBitmap())
     return icon
 
@@ -319,16 +318,16 @@ def getlogic_lesserData():
 
 
 def getlogic_lesserBitmap():
-    return BitmapFromImage(getlogic_lesserImage())
+    return wx.Bitmap(getlogic_lesserImage())
 
 
 def getlogic_lesserImage():
     stream = io.BytesIO(getlogic_lesserData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_lesserIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_lesserBitmap())
     return icon
 
@@ -356,16 +355,16 @@ n!\xe0\xf8\xc8\xe3\xa2(0\xbe\xbb'UU\x11E\x11\xc6\xb77\xc3\x10\x12\xc4_J\xd3\
 
 
 def getlogic_lesser_or_equalBitmap():
-    return BitmapFromImage(getlogic_lesser_or_equalImage())
+    return wx.Bitmap(getlogic_lesser_or_equalImage())
 
 
 def getlogic_lesser_or_equalImage():
     stream = io.BytesIO(getlogic_lesser_or_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_lesser_or_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_lesser_or_equalBitmap())
     return icon
 
@@ -393,16 +392,16 @@ def getlogic_maskData():
 
 
 def getlogic_maskBitmap():
-    return BitmapFromImage(getlogic_maskImage())
+    return wx.Bitmap(getlogic_maskImage())
 
 
 def getlogic_maskImage():
     stream = io.BytesIO(getlogic_maskData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_maskIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_maskBitmap())
     return icon
 
@@ -436,16 +435,16 @@ w\xef\xa5`\x04\xdf\xf71\x0c\x83R\xa9\x84eYL\xeauTU%yx\xc8\x8b\x9d\x1d~\x9c\
 
 
 def getlogic_not_andBitmap():
-    return BitmapFromImage(getlogic_not_andImage())
+    return wx.Bitmap(getlogic_not_andImage())
 
 
 def getlogic_not_andImage():
     stream = io.BytesIO(getlogic_not_andData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_not_andIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_not_andBitmap())
     return icon
 
@@ -477,16 +476,16 @@ _n&0\xde\xb9\x1eG\x01\xb6f\x08j\x06[3l\xb9\x07\x94\xca\x15\x9e<~$\x00\x0f\
 
 
 def getlogic_not_betweenBitmap():
-    return BitmapFromImage(getlogic_not_betweenImage())
+    return wx.Bitmap(getlogic_not_betweenImage())
 
 
 def getlogic_not_betweenImage():
     stream = io.BytesIO(getlogic_not_betweenData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_not_betweenIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_not_betweenBitmap())
     return icon
 
@@ -513,16 +512,16 @@ lT=\x00\x00\x00\x00IEND\xaeB`\x82'
 
 
 def getlogic_not_containBitmap():
-    return BitmapFromImage(getlogic_not_containImage())
+    return wx.Bitmap(getlogic_not_containImage())
 
 
 def getlogic_not_containImage():
     stream = io.BytesIO(getlogic_not_containData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_not_containIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_not_containBitmap())
     return icon
 
@@ -548,16 +547,16 @@ def getlogic_not_equalData():
 
 
 def getlogic_not_equalBitmap():
-    return BitmapFromImage(getlogic_not_equalImage())
+    return wx.Bitmap(getlogic_not_equalImage())
 
 
 def getlogic_not_equalImage():
     stream = io.BytesIO(getlogic_not_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_not_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_not_equalBitmap())
     return icon
 
@@ -585,16 +584,16 @@ def getlogic_not_intoData():
 
 
 def getlogic_not_intoBitmap():
-    return BitmapFromImage(getlogic_not_intoImage())
+    return wx.Bitmap(getlogic_not_intoImage())
 
 
 def getlogic_not_intoImage():
     stream = io.BytesIO(getlogic_not_intoData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_not_intoIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_not_intoBitmap())
     return icon
 
@@ -622,16 +621,16 @@ i\xcaG\xc7ae\x0cEiL&\x13\xe6y\xce\xaf\x0cDil6\x1bFQ\xc40\x0c\x19\x04\x01EiTI\
 
 
 def getlogic_not_maskBitmap():
-    return BitmapFromImage(getlogic_not_maskImage())
+    return wx.Bitmap(getlogic_not_maskImage())
 
 
 def getlogic_not_maskImage():
     stream = io.BytesIO(getlogic_not_maskData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_not_maskIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_not_maskBitmap())
     return icon
 
@@ -665,16 +664,16 @@ m\xee\x8f\x8e0\xb2Y\xca\x1b\x1b\xa4t\x9d\xe4\xc1\xc1|\x06}\xc7\xc1Z^f\x12EL\
 
 
 def getlogic_not_orBitmap():
-    return BitmapFromImage(getlogic_not_orImage())
+    return wx.Bitmap(getlogic_not_orImage())
 
 
 def getlogic_not_orImage():
     stream = io.BytesIO(getlogic_not_orData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_not_orIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_not_orBitmap())
     return icon
 
@@ -709,16 +708,16 @@ i\xfa\xb8(/\x1c\x03\xa4\xde)?[y\xd8\xcdu\x9eRhm\xd0\x16\r\xe4Q\x85\xe0\xd0\
 
 
 def getlogic_orBitmap():
-    return BitmapFromImage(getlogic_orImage())
+    return wx.Bitmap(getlogic_orImage())
 
 
 def getlogic_orImage():
     stream = io.BytesIO(getlogic_orData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_orIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_orBitmap())
     return icon
 
@@ -746,16 +745,16 @@ def getlogic_right_equalData():
 
 
 def getlogic_right_equalBitmap():
-    return BitmapFromImage(getlogic_right_equalImage())
+    return wx.Bitmap(getlogic_right_equalImage())
 
 
 def getlogic_right_equalImage():
     stream = io.BytesIO(getlogic_right_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_right_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_right_equalBitmap())
     return icon
 
@@ -783,16 +782,16 @@ def getlogic_left_equalData():
 
 
 def getlogic_left_equalBitmap():
-    return BitmapFromImage(getlogic_left_equalImage())
+    return wx.Bitmap(getlogic_left_equalImage())
 
 
 def getlogic_left_equalImage():
     stream = io.BytesIO(getlogic_left_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_left_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_left_equalBitmap())
     return icon
 
@@ -826,16 +825,16 @@ f\xb3\xb4\xdb\xedi@\xaf\xd7C\xd7\xf5@<\xf6\x1c\x96\x96\x97\x18\x8e|\x16\xa5\
 
 
 def getlogic_andBitmap():
-    return BitmapFromImage(getlogic_andImage())
+    return wx.Bitmap(getlogic_andImage())
 
 
 def getlogic_andImage():
     stream = io.BytesIO(getlogic_andData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlogic_andIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlogic_andBitmap())
     return icon
 

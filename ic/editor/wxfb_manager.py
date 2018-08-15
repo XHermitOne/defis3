@@ -170,3 +170,17 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
             if file_obj:
                 file_obj.close()
         return False
+
+
+def adapt_wxformbuilder_py(py_filename):
+    """
+    Адаптация сгенерированного модуля Python для использования в программе
+    с текущей версией wxPython.
+    Движок DEFIS ориентирован и отлажен только с конкретной версией wxPython.
+    Поэтому адаптация производится к этой конкретной версии wxPython.
+    @param py_filename: Полное имя сгенерированного модуля формы средствами wxFormBuilder.
+    @return: True - адаптация прошла без ошибок / False - ошибка адаптации модуля.
+    """
+    manager = icWXFormBuilderManager()
+    result = manager.adaptation_form_py(py_filename)
+    return result

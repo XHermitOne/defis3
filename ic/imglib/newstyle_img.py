@@ -6,10 +6,8 @@
 """
 
 # --- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+import wx
 import io
-
 # --- Image Library File ---
 
 
@@ -47,16 +45,16 @@ def getpageBlueData():
 
 
 def getpageBlueBitmap():
-    return BitmapFromImage(getpageBlueImage())
+    return wx.Bitmap(getpageBlueImage())
 
 
 def getpageBlueImage():
     stream = io.BytesIO(getpageBlueData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getpageBlueIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getpageBlueBitmap())
     return icon
 
@@ -96,16 +94,16 @@ Qq\x00\x97\x9e\xa6\xdc*\xa8\xdf\xaf\xd3T\xef &K)3\xd7\xf0\xb4\x1d\xcam\xac`\
     
 
 def getpageCommentBitmap():
-    return BitmapFromImage(getpageCommentImage())
+    return wx.Bitmap(getpageCommentImage())
 
 
 def getpageCommentImage():
     stream = io.BytesIO(getpageCommentData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getpageCommentIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getpageCommentBitmap())
     return icon
 
@@ -150,16 +148,16 @@ r\xec\x98\x8c\xa6\r\x12\x8fG9w\xfe\xb37\xdc\xbf\xadoo}\xe3\x94\xcb\xbbG\x01s\
 
 
 def getpageDemoBitmap():
-    return BitmapFromImage(getpageDemoImage())
+    return wx.Bitmap(getpageDemoImage())
 
 
 def getpageDemoImage():
     stream = io.BytesIO(getpageDemoData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getpageDemoIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getpageDemoBitmap())
     return icon
 
@@ -202,16 +200,16 @@ B`\x82'
 
 
 def getpageGreenBitmap():
-    return BitmapFromImage(getpageGreenImage())
+    return wx.Bitmap(getpageGreenImage())
 
 
 def getpageGreenImage():
     stream = io.BytesIO(getpageGreenData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getpageGreenIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getpageGreenBitmap())
     return icon
 
@@ -258,16 +256,16 @@ o\xbe\xfeV&\x12\x7fP,n\xd3\xden\xd1\xd5u\x86p8L\xad\xcf/\xfe\xcd\xfe\r=\x97)\
 
 
 def getpagePropBitmap():
-    return BitmapFromImage(getpagePropImage())
+    return wx.Bitmap(getpagePropImage())
 
 
 def getpagePropImage():
     stream = io.BytesIO(getpagePropData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getpagePropIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getpagePropBitmap())
     return icon
 
@@ -310,16 +308,16 @@ Ya\xb0\xfb\xaa\x98\x1d\x1aD\x9b~\xcd\xcah\x10\xbb\x01LV\x0b\xe4r`4A&\xce\xd5\
 
 
 def getpageRedBitmap():
-    return BitmapFromImage(getpageRedImage())
+    return wx.Bitmap(getpageRedImage())
 
 
 def getpageRedImage():
     stream = io.BytesIO(getpageRedData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getpageRedIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getpageRedBitmap())
     return icon
 
@@ -347,16 +345,16 @@ def getuserData():
 
 
 def getuserBitmap():
-    return BitmapFromImage(getuserImage())
+    return wx.Bitmap(getuserImage())
 
 
 def getuserImage():
     stream = io.BytesIO(getuserData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getuserIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getuserBitmap())
     return icon
 
@@ -393,16 +391,16 @@ def gettoolsData():
 
 
 def gettoolsBitmap():
-    return BitmapFromImage(gettoolsImage())
+    return wx.Bitmap(gettoolsImage())
 
 
 def gettoolsImage():
     stream = io.BytesIO(gettoolsData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def gettoolsIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(gettoolsBitmap())
     return icon
 
@@ -425,16 +423,16 @@ v\xb3_\xa4\xf1;4.\xb4~bM\x1c:8tet\xc3\xa11)\xd6R\xd0x7\x08\xef\xdc\x03(\x95i\
 
 
 def getfileBitmap():
-    return BitmapFromImage(getfileImage())
+    return wx.Bitmap(getfileImage())
 
 
 def getfileImage():
     stream = io.BytesIO(getfileData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfileIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfileBitmap())
     return icon
 
@@ -463,16 +461,16 @@ def getfolderData():
 
 
 def getfolderBitmap():
-    return BitmapFromImage(getfolderImage())
+    return wx.Bitmap(getfolderImage())
 
 
 def getfolderImage():
     stream = io.BytesIO(getfolderData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfolderIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfolderBitmap())
     return icon
 
@@ -502,16 +500,16 @@ E\xe8t\xb2\x95s\x02\x887]@eO)*\x00fS\x12AkS\x18\x88$\xb8\xda\x90\x18C\x14\
 
 
 def getfolderOpenBitmap():
-    return BitmapFromImage(getfolderOpenImage())
+    return wx.Bitmap(getfolderOpenImage())
 
 
 def getfolderOpenImage():
     stream = io.BytesIO(getfolderOpenData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfolderOpenIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfolderOpenBitmap())
     return icon
 
@@ -543,16 +541,16 @@ g\xdec\xe6\xed\x8ead\xb2,c\x99\xa5\xd0@n^\xb2\xe3\xb9\xf14\xbe\xbal\x19\x0bu\
 
 
 def getpropertyBitmap():
-    return BitmapFromImage(getpropertyImage())
+    return wx.Bitmap(getpropertyImage())
 
 
 def getpropertyImage():
     stream = io.BytesIO(getpropertyData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getpropertyIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getpropertyBitmap())
     return icon
 
@@ -579,16 +577,16 @@ s\x96sQ\x0c\xfd\x9fy\x0e\x85O0\x16888\x18\xbek\x1cc\xe0\x9co\xc5\xf0=\xf1\
 
 
 def getprotectBitmap():
-    return BitmapFromImage(getprotectImage())
+    return wx.Bitmap(getprotectImage())
 
 
 def getprotectImage():
     stream = io.BytesIO(getprotectData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getprotectIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getprotectBitmap())
     return icon
 
@@ -623,16 +621,16 @@ def getfile_ubData():
 
 
 def getfile_ubBitmap():
-    return BitmapFromImage(getfile_ubImage())
+    return wx.Bitmap(getfile_ubImage())
 
 
 def getfile_ubImage():
     stream = io.BytesIO(getfile_ubData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfile_ubIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfile_ubBitmap())
     return icon
 
@@ -669,16 +667,16 @@ t8\xe7n@\xd7\xcb\x14+\x034<a\xf7\xa8\xc6\xceY\xdc\x83+\xe0\xfe\x9f\x81_\xeb;\
 
 
 def getfolder_ubBitmap():
-    return BitmapFromImage(getfolder_ubImage())
+    return wx.Bitmap(getfolder_ubImage())
 
 
 def getfolder_ubImage():
     stream = io.BytesIO(getfolder_ubData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfolder_ubIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfolder_ubBitmap())
     return icon
 
@@ -717,16 +715,16 @@ V\xf0?G\x7f\x00\xdb\x8c\xf8\xef\x1f\x16\xb6<\x00\x00\x00\x00IEND\xaeB`\x82'
 
 
 def getprotect_ubBitmap():
-    return BitmapFromImage(getprotect_ubImage())
+    return wx.Bitmap(getprotect_ubImage())
 
 
 def getprotect_ubImage():
     stream = io.BytesIO(getprotect_ubData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getprotect_ubIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getprotect_ubBitmap())
     return icon
 
@@ -758,16 +756,16 @@ j\x05\xd2J\xd3r\xb1\xe7I\x1c\xbc\xdd\xe6p\x7f+\x84a\x9do\xee\x9f\x96\xbcP$\
 
 
 def getexpXPBitmap():
-    return BitmapFromImage(getexpXPImage())
+    return wx.Bitmap(getexpXPImage())
 
 
 def getexpXPImage():
     stream = io.BytesIO(getexpXPData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getexpXPIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getexpXPBitmap())
     return icon
 
@@ -800,16 +798,16 @@ Lm\x17\xe3\xba\x97+\xf0J\xff\xfa\xb0r\xb02\xd6J!\xc82T\x19\xde\x9c\xe5\x9a\
 
 
 def getcloseXPBitmap():
-    return BitmapFromImage(getcloseXPImage())
+    return wx.Bitmap(getcloseXPImage())
 
 
 def getcloseXPImage():
     stream = io.BytesIO(getcloseXPData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcloseXPIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcloseXPBitmap())
     return icon
 
@@ -839,16 +837,16 @@ def getminXPData():
 
 
 def getminXPBitmap():
-    return BitmapFromImage(getminXPImage())
+    return wx.Bitmap(getminXPImage())
 
 
 def getminXPImage():
     stream = io.BytesIO(getminXPData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getminXPIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getminXPBitmap())
     return icon
 
@@ -867,16 +865,16 @@ IEND\xaeB`\x82'
 
 
 def getextEditor2Bitmap():
-    return BitmapFromImage(getextEditor2Image())
+    return wx.Bitmap(getextEditor2Image())
 
 
 def getextEditor2Image():
     stream = io.BytesIO(getextEditor2Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getextEditor2Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getextEditor2Bitmap())
     return icon
 
@@ -904,16 +902,16 @@ def getelementData():
 
 
 def getelementBitmap():
-    return BitmapFromImage(getelementImage())
+    return wx.Bitmap(getelementImage())
 
 
 def getelementImage():
     stream = io.BytesIO(getelementData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getelementIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getelementBitmap())
     return icon
 
@@ -948,16 +946,16 @@ of\xde\xfb\xdf7\xef\xbd\x9d\xe7\xefk\x00\x10 \t\xc0#<\xd2\xfa\xfaN\xf2@-\x17\
 
 
 def getwordBitmap():
-    return BitmapFromImage(getwordImage())
+    return wx.Bitmap(getwordImage())
 
 
 def getwordImage():
     stream = io.BytesIO(getwordData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getwordIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getwordBitmap())
     return icon
 
@@ -990,16 +988,16 @@ def getexcelData():
 
 
 def getexcelBitmap():
-    return BitmapFromImage(getexcelImage())
+    return wx.Bitmap(getexcelImage())
 
 
 def getexcelImage():
     stream = io.BytesIO(getexcelData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getexcelIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getexcelBitmap())
     return icon
 
@@ -1029,16 +1027,16 @@ def getfirstData():
 
 
 def getfirstBitmap():
-    return BitmapFromImage(getfirstImage())
+    return wx.Bitmap(getfirstImage())
 
 
 def getfirstImage():
     stream = io.BytesIO(getfirstData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfirstIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfirstBitmap())
     return icon
 
@@ -1068,16 +1066,16 @@ T\xa5\xb0\x93\xf3F\xb9?,\xa0X\xb9\xa4\xb0\xbe\xe8\x8d\xe3\xde\xff\xfbL\x7f\
 
 
 def getlastBitmap():
-    return BitmapFromImage(getlastImage())
+    return wx.Bitmap(getlastImage())
 
 
 def getlastImage():
     stream = io.BytesIO(getlastData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlastIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlastBitmap())
     return icon
 
@@ -1105,16 +1103,16 @@ l\xf0\x07\x06yA\xe4"Kb\xb8\x7f\xc2=m\xa7]\xc338}\xcf\x89+~\xe1\x84\x03\xe7|\
 
 
 def getnextBitmap():
-    return BitmapFromImage(getnextImage())
+    return wx.Bitmap(getnextImage())
 
 
 def getnextImage():
     stream = io.BytesIO(getnextData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnextIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnextBitmap())
     return icon
 
@@ -1140,16 +1138,16 @@ def getnewdocData():
 
 
 def getnewdocBitmap():
-    return BitmapFromImage(getnewdocImage())
+    return wx.Bitmap(getnewdocImage())
 
 
 def getnewdocImage():
     stream = io.BytesIO(getnewdocData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnewdocIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnewdocBitmap())
     return icon
 
@@ -1177,16 +1175,16 @@ m\xaex\x85\xf5\x1d\x9a5=M7\x94!\x95\x9e\xbaN\xef\x9a.X\r\xdc,\xce\xc4\x08\
 
 
 def getprevBitmap():
-    return BitmapFromImage(getprevImage())
+    return wx.Bitmap(getprevImage())
 
 
 def getprevImage():
     stream = io.BytesIO(getprevData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getprevIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getprevBitmap())
     return icon
 
@@ -1221,16 +1219,16 @@ j8\x03U\xd0}\xb83_\xb5\nbJ\xb4\x1e\xe7\x00\xd5J\x95L\x15\x97e\x8c\xfa\xa3\
 
 
 def getprintdocBitmap():
-    return BitmapFromImage(getprintdocImage())
+    return wx.Bitmap(getprintdocImage())
 
 
 def getprintdocImage():
     stream = io.BytesIO(getprintdocData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getprintdocIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getprintdocBitmap())
     return icon
 
@@ -1261,16 +1259,16 @@ PY\x82{\x00\xf1*<30x\xec\xd3j'<\xdc>C\x04\xfd\x9b>f\xe6\x98\x0b\xed^\xd6\xa0\
 
 
 def getsavedocBitmap():
-    return BitmapFromImage(getsavedocImage())
+    return wx.Bitmap(getsavedocImage())
 
 
 def getsavedocImage():
     stream = io.BytesIO(getsavedocData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getsavedocIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getsavedocBitmap())
     return icon
 
@@ -1304,16 +1302,16 @@ n\xce\xf7\xb2\xb1*\x88\xbf\xf6\xffD\x08\xd7_T\xa5)T\x13\xc9\xdb\\\xb1\xbd\
 
 
 def getsearchBitmap():
-    return BitmapFromImage(getsearchImage())
+    return wx.Bitmap(getsearchImage())
 
 
 def getsearchImage():
     stream = io.BytesIO(getsearchData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getsearchIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getsearchBitmap())
     return icon
 
@@ -1350,16 +1348,16 @@ W\xcd\xab\x8f)\xca\xffC\x8d\x9b\x0f\x1f\xa0\x1c\xa9\xf3\xe2\x13\x81v\x88:\
 
 
 def gethelpBitmap():
-    return BitmapFromImage(gethelpImage())
+    return wx.Bitmap(gethelpImage())
 
 
 def gethelpImage():
     stream = io.BytesIO(gethelpData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def gethelpIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(gethelpBitmap())
     return icon
 
@@ -1408,16 +1406,16 @@ T\x93\x15[*\x81T(\xd4D\xc7\xa2\xf0\xcb8\xba\xb1\xef\xc9%\x93\xa8\x15\x8d9\
 
 
 def getexit16Bitmap():
-    return BitmapFromImage(getexit16Image())
+    return wx.Bitmap(getexit16Image())
 
 
 def getexit16Image():
     stream = io.BytesIO(getexit16Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getexit16Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getexit16Bitmap())
     return icon
 
@@ -1463,16 +1461,16 @@ c`\x02V\x08\x97\x15\xc1Yvc\x9e\xf9\x89\x1e\x8b\xadv\xc03\xdb\xb5\xba\xe1\xfb\
 
 
 def getcontexthelp16Bitmap():
-    return BitmapFromImage(getcontexthelp16Image())
+    return wx.Bitmap(getcontexthelp16Image())
 
 
 def getcontexthelp16Image():
     stream = io.BytesIO(getcontexthelp16Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcontexthelp16Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcontexthelp16Bitmap())
     return icon
 
@@ -1506,16 +1504,16 @@ T\x18\xf8\x04q\x19\xfb\xbb\x9b\xf5U\x16\xbco\xd1r\x9eb\xf8r\x1e[\x01\xcc!!\
 
 
 def getopendocBitmap():
-    return BitmapFromImage(getopendocImage())
+    return wx.Bitmap(getopendocImage())
 
 
 def getopendocImage():
     stream = io.BytesIO(getopendocData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getopendocIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getopendocBitmap())
     return icon
 
@@ -1558,16 +1556,16 @@ ND\xaeB`\x82'
 
 
 def getopenfolderBitmap():
-    return BitmapFromImage(getopenfolderImage())
+    return wx.Bitmap(getopenfolderImage())
 
 
 def getopenfolderImage():
     stream = io.BytesIO(getopenfolderData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getopenfolderIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getopenfolderBitmap())
     return icon
 
@@ -1601,16 +1599,16 @@ def getfolderData():
 
 
 def getfolderBitmap():
-    return BitmapFromImage(getfolderImage())
+    return wx.Bitmap(getfolderImage())
 
 
 def getfolderImage():
     stream = io.BytesIO(getfolderData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfolderIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfolderBitmap())
     return icon
 
@@ -1648,16 +1646,16 @@ q\x90\xe2 t\xb2qj&\xb1\xa5\x93S#"\xa4[\xd3\xc9\xb1\xe9\x96\xe2\xf2\x02\x1d\
 
 
 def getcheck_onBitmap():
-    return BitmapFromImage(getcheck_onImage())
+    return wx.Bitmap(getcheck_onImage())
 
 
 def getcheck_onImage():
     stream = io.BytesIO(getcheck_onData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcheck_onIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcheck_onBitmap())
     return icon
 
@@ -1685,16 +1683,16 @@ def getcheck_offData():
 
 
 def getcheck_offBitmap():
-    return BitmapFromImage(getcheck_offImage())
+    return wx.Bitmap(getcheck_offImage())
 
 
 def getcheck_offImage():
     stream = io.BytesIO(getcheck_offData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcheck_offIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcheck_offBitmap())
     return icon
 
@@ -1727,16 +1725,16 @@ def getradio_offData():
 
 
 def getradio_offBitmap():
-    return BitmapFromImage(getradio_offImage())
+    return wx.Bitmap(getradio_offImage())
 
 
 def getradio_offImage():
     stream = io.BytesIO(getradio_offData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getradio_offIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getradio_offBitmap())
     return icon
 
@@ -1775,16 +1773,16 @@ E\xbb\x13\x93\xa4\xca\xea\xbb:\xd6x\x00\xc4\xc9\x88\xe3\x93\x94{\x8f\xbe\x16\
 
 
 def getradio_onBitmap():
-    return BitmapFromImage(getradio_onImage())
+    return wx.Bitmap(getradio_onImage())
 
 
 def getradio_onImage():
     stream = io.BytesIO(getradio_onData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getradio_onIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getradio_onBitmap())
     return icon
 
@@ -1808,16 +1806,16 @@ Jb\x07uYS\x97\x15\xdb\xfdqt\x14\t"\xf0C}[A\x17\x15I\x02\xd6L\x12 QgS\x15E@\
 
 
 def getadd_grpBitmap():
-    return BitmapFromImage(getadd_grpImage())
+    return wx.Bitmap(getadd_grpImage())
 
 
 def getadd_grpImage():
     stream = io.BytesIO(getadd_grpData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getadd_grpIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getadd_grpBitmap())
     return icon
 
@@ -1838,16 +1836,16 @@ def getadd_ifData():
 
 
 def getadd_ifBitmap():
-    return BitmapFromImage(getadd_ifImage())
+    return wx.Bitmap(getadd_ifImage())
 
 
 def getadd_ifImage():
     stream = io.BytesIO(getadd_ifData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getadd_ifIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getadd_ifBitmap())
     return icon
 
@@ -1881,16 +1879,16 @@ f\xb3\xb4\xdb\xedi@\xaf\xd7C\xd7\xf5@<\xf6\x1c\x96\x96\x97\x18\x8e|\x16\xa5\
 
 
 def getand_logicBitmap():
-    return BitmapFromImage(getand_logicImage())
+    return wx.Bitmap(getand_logicImage())
 
 
 def getand_logicImage():
     stream = io.BytesIO(getand_logicData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getand_logicIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getand_logicBitmap())
     return icon
 
@@ -1925,16 +1923,16 @@ i\xfa\xb8(/\x1c\x03\xa4\xde)?[y\xd8\xcdu\x9eRhm\xd0\x16\r\xe4Q\x85\xe0\xd0\
 
 
 def getor_logicBitmap():
-    return BitmapFromImage(getor_logicImage())
+    return wx.Bitmap(getor_logicImage())
 
 
 def getor_logicImage():
     stream = io.BytesIO(getor_logicData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getor_logicIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getor_logicBitmap())
     return icon
 
@@ -1968,16 +1966,16 @@ w\xef\xa5`\x04\xdf\xf71\x0c\x83R\xa9\x84eYL\xeauTU%yx\xc8\x8b\x9d\x1d~\x9c\
 
 
 def getnot_and_logicBitmap():
-    return BitmapFromImage(getnot_and_logicImage())
+    return wx.Bitmap(getnot_and_logicImage())
 
 
 def getnot_and_logicImage():
     stream = io.BytesIO(getnot_and_logicData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnot_and_logicIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnot_and_logicBitmap())
     return icon
 
@@ -2011,16 +2009,16 @@ m\xee\x8f\x8e0\xb2Y\xca\x1b\x1b\xa4t\x9d\xe4\xc1\xc1|\x06}\xc7\xc1Z^f\x12EL\
 
 
 def getnot_or_logicBitmap():
-    return BitmapFromImage(getnot_or_logicImage())
+    return wx.Bitmap(getnot_or_logicImage())
 
 
 def getnot_or_logicImage():
     stream = io.BytesIO(getnot_or_logicData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnot_or_logicIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnot_or_logicBitmap())
     return icon
 
@@ -2050,16 +2048,16 @@ def getclearData():
 
 
 def getclearBitmap():
-    return BitmapFromImage(getclearImage())
+    return wx.Bitmap(getclearImage())
 
 
 def getclearImage():
     stream = io.BytesIO(getclearData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getclearIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getclearBitmap())
     return icon
 
@@ -2088,16 +2086,16 @@ v!\xa8h\xb6H\xfe\xbf\x83\x10\x98\x9a\x1d0\xc0/4\x84\x98p\x01h\x9b\xe8\x00\
 
 
 def getfilter_constructorBitmap():
-    return BitmapFromImage(getfilter_constructorImage())
+    return wx.Bitmap(getfilter_constructorImage())
 
 
 def getfilter_constructorImage():
     stream = io.BytesIO(getfilter_constructorData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfilter_constructorIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfilter_constructorBitmap())
     return icon
 
@@ -2117,16 +2115,16 @@ def getequalData():
 
 
 def getequalBitmap():
-    return BitmapFromImage(getequalImage())
+    return wx.Bitmap(getequalImage())
 
 
 def getequalImage():
     stream = io.BytesIO(getequalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getequalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getequalBitmap())
     return icon
 
@@ -2152,16 +2150,16 @@ def getnot_equalData():
 
 
 def getnot_equalBitmap():
-    return BitmapFromImage(getnot_equalImage())
+    return wx.Bitmap(getnot_equalImage())
 
 
 def getnot_equalImage():
     stream = io.BytesIO(getnot_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnot_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnot_equalBitmap())
     return icon
 
@@ -2186,16 +2184,16 @@ u\x0fT\x14j\xcf\x06\xd4FL\xd4\xc6oH\xe8\xfd\x80%K`-\xb4\xaf\xbav6\xf8TBl\x9c\
 
 
 def getgreatBitmap():
-    return BitmapFromImage(getgreatImage())
+    return wx.Bitmap(getgreatImage())
 
 
 def getgreatImage():
     stream = io.BytesIO(getgreatData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getgreatIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getgreatBitmap())
     return icon
 
@@ -2224,16 +2222,16 @@ z\x87\x19\xc7\xf7\xbf\x83y\xf4\xff\x9fiQ\xfd\x00\x1f\x1e`\xabJ#\xd5Y\x00\x00\
 
 
 def getgreat_or_equalBitmap():
-    return BitmapFromImage(getgreat_or_equalImage())
+    return wx.Bitmap(getgreat_or_equalImage())
 
 
 def getgreat_or_equalImage():
     stream = io.BytesIO(getgreat_or_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getgreat_or_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getgreat_or_equalBitmap())
     return icon
 
@@ -2258,16 +2256,16 @@ def getlesserData():
 
 
 def getlesserBitmap():
-    return BitmapFromImage(getlesserImage())
+    return wx.Bitmap(getlesserImage())
 
 
 def getlesserImage():
     stream = io.BytesIO(getlesserData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlesserIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlesserBitmap())
     return icon
 
@@ -2295,16 +2293,16 @@ n!\xe0\xf8\xc8\xe3\xa2(0\xbe\xbb'UU\x11E\x11\xc6\xb77\xc3\x10\x12\xc4_J\xd3\
 
 
 def getlesser_or_equalBitmap():
-    return BitmapFromImage(getlesser_or_equalImage())
+    return wx.Bitmap(getlesser_or_equalImage())
 
 
 def getlesser_or_equalImage():
     stream = io.BytesIO(getlesser_or_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlesser_or_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlesser_or_equalBitmap())
     return icon
 
@@ -2334,16 +2332,16 @@ def getbetweenData():
 
 
 def getbetweenBitmap():
-    return BitmapFromImage(getbetweenImage())
+    return wx.Bitmap(getbetweenImage())
 
 
 def getbetweenImage():
     stream = io.BytesIO(getbetweenData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getbetweenIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getbetweenBitmap())
     return icon
 
@@ -2375,16 +2373,16 @@ _n&0\xde\xb9\x1eG\x01\xb6f\x08j\x06[3l\xb9\x07\x94\xca\x15\x9e<~$\x00\x0f\
 
 
 def getnot_betweenBitmap():
-    return BitmapFromImage(getnot_betweenImage())
+    return wx.Bitmap(getnot_betweenImage())
 
 
 def getnot_betweenImage():
     stream = io.BytesIO(getnot_betweenData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnot_betweenIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnot_betweenBitmap())
     return icon
 
@@ -2411,16 +2409,16 @@ $"\xae\x01\x8b\xc2@\r\x04|\x82HT\xf9\x81\xca\x12\xa6B(r\x81\x1f\xe0\xb8 \xb9\
 
 
 def getcontainBitmap():
-    return BitmapFromImage(getcontainImage())
+    return wx.Bitmap(getcontainImage())
 
 
 def getcontainImage():
     stream = io.BytesIO(getcontainData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcontainIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcontainBitmap())
     return icon
 
@@ -2447,16 +2445,16 @@ lT=\x00\x00\x00\x00IEND\xaeB`\x82'
 
 
 def getnot_containBitmap():
-    return BitmapFromImage(getnot_containImage())
+    return wx.Bitmap(getnot_containImage())
 
 
 def getnot_containImage():
     stream = io.BytesIO(getnot_containData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnot_containIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnot_containBitmap())
     return icon
 
@@ -2484,16 +2482,16 @@ def getleft_equalData():
 
 
 def getleft_equalBitmap():
-    return BitmapFromImage(getleft_equalImage())
+    return wx.Bitmap(getleft_equalImage())
 
 
 def getleft_equalImage():
     stream = io.BytesIO(getleft_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getleft_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getleft_equalBitmap())
     return icon
 
@@ -2521,16 +2519,16 @@ def getright_equalData():
 
 
 def getright_equalBitmap():
-    return BitmapFromImage(getright_equalImage())
+    return wx.Bitmap(getright_equalImage())
 
 
 def getright_equalImage():
     stream = io.BytesIO(getright_equalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getright_equalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getright_equalBitmap())
     return icon
 
@@ -2558,16 +2556,16 @@ def getmaskData():
 
 
 def getmaskBitmap():
-    return BitmapFromImage(getmaskImage())
+    return wx.Bitmap(getmaskImage())
 
 
 def getmaskImage():
     stream = io.BytesIO(getmaskData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getmaskIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getmaskBitmap())
     return icon
 
@@ -2595,16 +2593,16 @@ i\xcaG\xc7ae\x0cEiL&\x13\xe6y\xce\xaf\x0cDil6\x1bFQ\xc40\x0c\x19\x04\x01EiTI\
 
 
 def getnot_maskBitmap():
-    return BitmapFromImage(getnot_maskImage())
+    return wx.Bitmap(getnot_maskImage())
 
 
 def getnot_maskImage():
     stream = io.BytesIO(getnot_maskData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnot_maskIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnot_maskBitmap())
     return icon
 
@@ -2632,16 +2630,16 @@ IEND\xaeB`\x82'
 
 
 def getis_nullBitmap():
-    return BitmapFromImage(getis_nullImage())
+    return wx.Bitmap(getis_nullImage())
 
 
 def getis_nullImage():
     stream = io.BytesIO(getis_nullData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getis_nullIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getis_nullBitmap())
     return icon
 
@@ -2671,16 +2669,16 @@ Wh\xa0x\xce\xd0q\xe2\xb0O.\x85-\x08\x00\x00\x98_\x9b\xe5\xd7\xb9[\xbc\xdc\
 
 
 def getis_not_nullBitmap():
-    return BitmapFromImage(getis_not_nullImage())
+    return wx.Bitmap(getis_not_nullImage())
 
 
 def getis_not_nullImage():
     stream = io.BytesIO(getis_not_nullData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getis_not_nullIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getis_not_nullBitmap())
     return icon
 
@@ -2709,16 +2707,16 @@ R\xd3-[\xffKQ#0\x91\xd8N\x06\xd2-\x0f\x81s\x9a\xcb|0\xc3\x08\x82\xe8`\x1e\
 
 
 def getintoBitmap():
-    return BitmapFromImage(getintoImage())
+    return wx.Bitmap(getintoImage())
 
 
 def getintoImage():
     stream = io.BytesIO(getintoData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getintoIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getintoBitmap())
     return icon
 
@@ -2745,16 +2743,16 @@ def getnot_intoData():
 
 
 def getnot_intoBitmap():
-    return BitmapFromImage(getnot_intoImage())
+    return wx.Bitmap(getnot_intoImage())
 
 
 def getnot_intoImage():
     stream = io.BytesIO(getnot_intoData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnot_intoIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnot_intoBitmap())
     return icon
 
@@ -2780,16 +2778,16 @@ def getitem_closed2Data():
 
 
 def getitem_closed2Bitmap():
-    return BitmapFromImage(getitem_closed2Image())
+    return wx.Bitmap(getitem_closed2Image())
 
 
 def getitem_closed2Image():
     stream = io.BytesIO(getitem_closed2Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getitem_closed2Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getitem_closed2Bitmap())
     return icon
 
@@ -2813,16 +2811,16 @@ def getitem_opened2Data():
 
 
 def getitem_opened2Bitmap():
-    return BitmapFromImage(getitem_opened2Image())
+    return wx.Bitmap(getitem_opened2Image())
 
 
 def getitem_opened2Image():
     stream = io.BytesIO(getitem_opened2Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getitem_opened2Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getitem_opened2Bitmap())
     return icon
 
@@ -2843,16 +2841,16 @@ def getitem_emptyData():
 
 
 def getitem_emptyBitmap():
-    return BitmapFromImage(getitem_emptyImage())
+    return wx.Bitmap(getitem_emptyImage())
 
 
 def getitem_emptyImage():
     stream = io.BytesIO(getitem_emptyData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getitem_emptyIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getitem_emptyBitmap())
     return icon
 
@@ -2885,16 +2883,16 @@ d(1&|\x13\xb1]E^\xa4~\xc0\xe8\x9aaqr\xc9`{\x04\xc6\xa0IQU4A\x10\xa1ZV\xd860\
 
 
 def getitem_closedBitmap():
-    return BitmapFromImage(getitem_closedImage())
+    return wx.Bitmap(getitem_closedImage())
 
 
 def getitem_closedImage():
     stream = io.BytesIO(getitem_closedData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getitem_closedIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getitem_closedBitmap())
     return icon
 
@@ -2927,16 +2925,16 @@ IEND\xaeB`\x82'
 
 
 def getitem_openedBitmap():
-    return BitmapFromImage(getitem_openedImage())
+    return wx.Bitmap(getitem_openedImage())
 
 
 def getitem_openedImage():
     stream = io.BytesIO(getitem_openedData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getitem_openedIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getitem_openedBitmap())
     return icon
 
@@ -2976,16 +2974,16 @@ def getpasteData():
 
 
 def getpasteBitmap():
-    return BitmapFromImage(getpasteImage())
+    return wx.Bitmap(getpasteImage())
 
 
 def getpasteImage():
     stream = io.BytesIO(getpasteData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getpasteIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getpasteBitmap())
     return icon
 
@@ -3022,16 +3020,16 @@ A\x07(Tj"gG-\x96\x9e\x9f\xe1\x98e\xb3v3\xcf\xce\xafm\xee\xbcX\x00@\xda&B\x18\
 
 
 def getadd_16Bitmap():
-    return BitmapFromImage(getadd_16Image())
+    return wx.Bitmap(getadd_16Image())
 
 
 def getadd_16Image():
     stream = io.BytesIO(getadd_16Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getadd_16Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getadd_16Bitmap())
     return icon
 
@@ -3070,16 +3068,16 @@ J\xcbK|\xce\xbf\xc7\xb4,\x17\x97\xf2\x12(\x80\xa6H\x82=\xa10\xa8m\xf0\xf6V\
 
 
 def getcancel_16Bitmap():
-    return BitmapFromImage(getcancel_16Image())
+    return wx.Bitmap(getcancel_16Image())
 
 
 def getcancel_16Image():
     stream = io.BytesIO(getcancel_16Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcancel_16Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcancel_16Bitmap())
     return icon
 
@@ -3108,16 +3106,16 @@ def getlink_objData():
 
 
 def getlink_objBitmap():
-    return BitmapFromImage(getlink_objImage())
+    return wx.Bitmap(getlink_objImage())
 
 
 def getlink_objImage():
     stream = io.BytesIO(getlink_objData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getlink_objIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getlink_objBitmap())
     return icon
 
@@ -3146,16 +3144,16 @@ t\x85\xa8\xd6hhnji\xea\xc3\xf4\x05\xfa\x04A\x10B-\r\xd5`\x12]DCH\xc5\xc2\xca\
 
 
 def getinterfaceBitmap():
-    return BitmapFromImage(getinterfaceImage())
+    return wx.Bitmap(getinterfaceImage())
 
 
 def getinterfaceImage():
     stream = io.BytesIO(getinterfaceData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getinterfaceIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getinterfaceBitmap())
     return icon
 
@@ -3190,16 +3188,16 @@ U\x03\xfb\x00^\xb7V,\x88\x10D\xf1> AH\x9cCDQ\t\x04QT\x04\x11\xc1T\x10Un]\x9d\
 
 
 def getxpgridBitmap():
-    return BitmapFromImage(getxpgridImage())
+    return wx.Bitmap(getxpgridImage())
 
 
 def getxpgridImage():
     stream = io.BytesIO(getxpgridData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getxpgridIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getxpgridBitmap())
     return icon
 
@@ -3236,16 +3234,16 @@ Y\\y\x0c\xc0\xec\x85\x13\xbcx\xf5\x0e3\x83\x9bk\xcf\xf7\xcd\xb2K\xca\xaa\xea\
 
 
 def getszdialogBitmap():
-    return BitmapFromImage(getszdialogImage())
+    return wx.Bitmap(getszdialogImage())
 
 
 def getszdialogImage():
     stream = io.BytesIO(getszdialogData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getszdialogIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getszdialogBitmap())
     return icon
 
@@ -3276,16 +3274,16 @@ def getflat_imagebookData():
 
 
 def getflat_imagebookBitmap():
-    return BitmapFromImage(getflat_imagebookImage())
+    return wx.Bitmap(getflat_imagebookImage())
 
 
 def getflat_imagebookImage():
     stream = io.BytesIO(getflat_imagebookData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getflat_imagebookIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getflat_imagebookBitmap())
     return icon
 
@@ -3314,16 +3312,16 @@ X!xy\x9d\x1b\xdd\xba0\x9be\x1c\x9d]o\xf8\xb6!\xee\xc60\x9ed\xb6\x065\x135\
 
 
 def getadd_rowBitmap():
-    return BitmapFromImage(getadd_rowImage())
+    return wx.Bitmap(getadd_rowImage())
 
 
 def getadd_rowImage():
     stream = io.BytesIO(getadd_rowData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getadd_rowIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getadd_rowBitmap())
     return icon
 
@@ -3360,16 +3358,16 @@ IDE\xe2\xb6L\xf4\xf4\xc8\x8b\x9b\xf7DG\x10\x9d\x8cK\xdf\x13-\xab\x02,\x1c\
 
 
 def getdel_rowBitmap():
-    return BitmapFromImage(getdel_rowImage())
+    return wx.Bitmap(getdel_rowImage())
 
 
 def getdel_rowImage():
     stream = io.BytesIO(getdel_rowData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getdel_rowIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getdel_rowBitmap())
     return icon
 
@@ -3403,16 +3401,16 @@ def getedit_rowData():
 
 
 def getedit_rowBitmap():
-    return BitmapFromImage(getedit_rowImage())
+    return wx.Bitmap(getedit_rowImage())
 
 
 def getedit_rowImage():
     stream = io.BytesIO(getedit_rowData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getedit_rowIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getedit_rowBitmap())
     return icon
 
@@ -3448,16 +3446,16 @@ h\xff\x0e\x01\x10\xbb=&\xb6\xbfx\xc4R\xb4\xb7= \xb1w\x9b\xd0wG\x01p\xae\x8d\
 
 
 def getdis_del_rowBitmap():
-    return BitmapFromImage(getdis_del_rowImage())
+    return wx.Bitmap(getdis_del_rowImage())
 
 
 def getdis_del_rowImage():
     stream = io.BytesIO(getdis_del_rowData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getdis_del_rowIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getdis_del_rowBitmap())
     return icon
 
@@ -3481,16 +3479,16 @@ def getadd_condData():
 
 
 def getadd_condBitmap():
-    return BitmapFromImage(getadd_condImage())
+    return wx.Bitmap(getadd_condImage())
 
 
 def getadd_condImage():
     stream = io.BytesIO(getadd_condData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getadd_condIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getadd_condBitmap())
     return icon
 
@@ -3516,16 +3514,16 @@ def getdel_condData():
 
 
 def getdel_condBitmap():
-    return BitmapFromImage(getdel_condImage())
+    return wx.Bitmap(getdel_condImage())
 
 
 def getdel_condImage():
     stream = io.BytesIO(getdel_condData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getdel_condIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getdel_condBitmap())
     return icon
 
@@ -3553,16 +3551,16 @@ Z\xd5\x7f\xa2\xc1\x0c\x00\xae/\xae\x88\x08\x88\xa3\x18\xda*\xb4U\xa0\xed\x04\
 
 
 def getdata_filterBitmap():
-    return BitmapFromImage(getdata_filterImage())
+    return wx.Bitmap(getdata_filterImage())
 
 
 def getdata_filterImage():
     stream = io.BytesIO(getdata_filterData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getdata_filterIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getdata_filterBitmap())
     return icon
 
@@ -3598,16 +3596,16 @@ D\xaeB`\x82'
 
 
 def getschemeBitmap():
-    return BitmapFromImage(getschemeImage())
+    return wx.Bitmap(getschemeImage())
 
 
 def getschemeImage():
     stream = io.BytesIO(getschemeData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getschemeIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getschemeBitmap())
     return icon
 
@@ -3632,16 +3630,16 @@ t\x81cu\x05\x92\x08\xd1`\xfe\xeb\x05`\x9cF\xe9\xe9\xf5C[6/5\xd1\xf3\xc7\xb6\
 
 
 def gettreeToParentBitmap():
-    return BitmapFromImage(gettreeToParentImage())
+    return wx.Bitmap(gettreeToParentImage())
 
 
 def gettreeToParentImage():
     stream = io.BytesIO(gettreeToParentData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def gettreeToParentIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(gettreeToParentBitmap())
     return icon
 
@@ -3686,16 +3684,16 @@ w$\x85k\\\'\xea\xd6\x08\x86b\x9f_\xf9\xc2?\xd7\xa4#\xec\xa5\xae\xac\x86\xa5\
 
 
 def getusers7Bitmap():
-    return BitmapFromImage(getusers7Image())
+    return wx.Bitmap(getusers7Image())
 
 
 def getusers7Image():
     stream = io.BytesIO(getusers7Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getusers7Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getusers7Bitmap())
     return icon
 
@@ -3718,16 +3716,16 @@ def getalign_leftData():
 
 
 def getalign_leftBitmap():
-    return BitmapFromImage(getalign_leftImage())
+    return wx.Bitmap(getalign_leftImage())
 
 
 def getalign_leftImage():
     stream = io.BytesIO(getalign_leftData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getalign_leftIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getalign_leftBitmap())
     return icon
 
@@ -3750,16 +3748,16 @@ c\xf0[\xbf\x8b5\x07\xea\n+\xe2G\xc0\x8a\x18\xb8e0\xeaIXJ\xf9\x0cP\xc5\x02\
 
 
 def getalign_rightBitmap():
-    return BitmapFromImage(getalign_rightImage())
+    return wx.Bitmap(getalign_rightImage())
 
 
 def getalign_rightImage():
     stream = io.BytesIO(getalign_rightData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getalign_rightIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getalign_rightBitmap())
     return icon
 
@@ -3782,16 +3780,16 @@ p\xe5C[\xcb\xf2h\x1d5\xfc\xbeU"\x02\x11\x99\xfe\\\n4\xb2\x88@DL\x91\x93\x80&\
 
 
 def getalign_topBitmap():
-    return BitmapFromImage(getalign_topImage())
+    return wx.Bitmap(getalign_topImage())
 
 
 def getalign_topImage():
     stream = io.BytesIO(getalign_topData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getalign_topIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getalign_topBitmap())
     return icon
 
@@ -3815,16 +3813,16 @@ def getalign_bottomData():
 
 
 def getalign_bottomBitmap():
-    return BitmapFromImage(getalign_bottomImage())
+    return wx.Bitmap(getalign_bottomImage())
 
 
 def getalign_bottomImage():
     stream = io.BytesIO(getalign_bottomData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getalign_bottomIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getalign_bottomBitmap())
     return icon
 
@@ -3846,16 +3844,16 @@ def getalign_hcenterData():
 
 
 def getalign_hcenterBitmap():
-    return BitmapFromImage(getalign_hcenterImage())
+    return wx.Bitmap(getalign_hcenterImage())
 
 
 def getalign_hcenterImage():
     stream = io.BytesIO(getalign_hcenterData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getalign_hcenterIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getalign_hcenterBitmap())
     return icon
 
@@ -3877,16 +3875,16 @@ D\xaeB`\x82'
 
 
 def getalign_vcenterBitmap():
-    return BitmapFromImage(getalign_vcenterImage())
+    return wx.Bitmap(getalign_vcenterImage())
 
 
 def getalign_vcenterImage():
     stream = io.BytesIO(getalign_vcenterData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getalign_vcenterIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getalign_vcenterBitmap())
     return icon
 
@@ -3908,16 +3906,16 @@ Ig&WK6\xc6\x80y\x1e\x87*\x80,3\x06 kZ$r\xd6\x07\x90\x13\x03\xb7}\xcbm\x1c\
 
 
 def getexpandBitmap():
-    return BitmapFromImage(getexpandImage())
+    return wx.Bitmap(getexpandImage())
 
 
 def getexpandImage():
     stream = io.BytesIO(getexpandData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getexpandIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getexpandBitmap())
     return icon
 
@@ -3938,16 +3936,16 @@ def getgrowData():
 
 
 def getgrowBitmap():
-    return BitmapFromImage(getgrowImage())
+    return wx.Bitmap(getgrowImage())
 
 
 def getgrowImage():
     stream = io.BytesIO(getgrowData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getgrowIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getgrowBitmap())
     return icon
 
@@ -3973,16 +3971,16 @@ B`\x82'
 
 
 def getproportionalBitmap():
-    return BitmapFromImage(getproportionalImage())
+    return wx.Bitmap(getproportionalImage())
 
 
 def getproportionalImage():
     stream = io.BytesIO(getproportionalData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getproportionalIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getproportionalBitmap())
     return icon
 
@@ -4017,16 +4015,16 @@ z\x9dL&\xcb\xe5\xb2\xd3\xe94\x0cC\xd7\xf5\xc9dr\x000\xc6\xd3\xe9\xd4d2q\x1c\
 
 
 def getrefresh3Bitmap():
-    return BitmapFromImage(getrefresh3Image())
+    return wx.Bitmap(getrefresh3Image())
 
 
 def getrefresh3Image():
     stream = io.BytesIO(getrefresh3Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getrefresh3Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getrefresh3Bitmap())
     return icon
 

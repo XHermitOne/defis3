@@ -5,8 +5,8 @@
 """
 print('Load Image Library',str(__file__))
 # --- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+
+import wx
 import cStringIO
 # --- Image Library File ---
 # --- BEGIN brightness
@@ -41,14 +41,14 @@ F\xbd\xf9\xdd\'\xfd\xdeVd\x8b\xb7\x1e\x18\x87\xc0k\x13\x02uU\xd6\xe3\xb4q\
 \x8e\xe8\xcc\xab\xfe\x03!\nt\x85\x01\rN\xb9\x00\x00\x00\x00IEND\xaeB`\x82' 
 
 def getbrightnessBitmap():
-    return BitmapFromImage(getbrightnessImage())
+    return Bitmap(getbrightnessImage())
 
 def getbrightnessImage():
     stream = cStringIO.StringIO(getbrightnessData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getbrightnessIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getbrightnessBitmap())
     return icon
 

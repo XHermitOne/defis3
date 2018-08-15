@@ -4,8 +4,8 @@
 Библиотека образов.
 """
 #--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+
+import wx
 import cStringIO
 #--- Image Library File ---
 
@@ -54,14 +54,14 @@ D\xdcf\x14\x81\x1c\xb8\x9di\x9aV\xd6V\xd6\xd6\xd6\xba\xdd\xae+9\x00\xcc\x17B\
  
 
 def getindLeftBgrPicBitmap():
-    return BitmapFromImage(getindLeftBgrPicImage())
+    return Bitmap(getindLeftBgrPicImage())
 
 def getindLeftBgrPicImage():
     stream = cStringIO.StringIO(getindLeftBgrPicData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getindLeftBgrPicIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getindLeftBgrPicBitmap())
     return icon
 
@@ -83,14 +83,14 @@ def getgrayPtrnData():
 \x0cC\x18\x86n\x9f\x1d\xe6\xaf\x83oG\x19\x00\x00\x00\x00IEND\xaeB`\x82'
 
 def getgrayPtrnBitmap():
-    return BitmapFromImage(getgrayPtrnImage())
+    return Bitmap(getgrayPtrnImage())
 
 def getgrayPtrnImage():
     stream = cStringIO.StringIO(getgrayPtrnData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getgrayPtrnIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getgrayPtrnBitmap())
     return icon
 
@@ -138,14 +138,14 @@ X,,*\xe5\xd2c*\'\xbc\xba\xd7\xef\xf7\xe3\xe7\x87\x8fP\xaf\xd7\xd1l6\xff3PQ\
 \xa2\xa4\xe5\x00\x00\x00\x00IEND\xaeB`\x82'
 
 def getgraphPicBtnBitmap():
-    return BitmapFromImage(getgraphPicBtnImage())
+    return Bitmap(getgraphPicBtnImage())
 
 def getgraphPicBtnImage():
     stream = cStringIO.StringIO(getgraphPicBtnData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getgraphPicBtnIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getgraphPicBtnBitmap())
     return icon
 
@@ -170,14 +170,14 @@ C\xce\xa6t\x99)_\xde\xf9\xf92S\xbe\xecQ|X\xd7U\xdd\xe0&\xe7}\xbe\xec\xfb|y\
 \x82'
 
 def getindBgrPicBitmap():
-    return BitmapFromImage(getindBgrPicImage())
+    return Bitmap(getindBgrPicImage())
 
 def getindBgrPicImage():
     stream = cStringIO.StringIO(getindBgrPicData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getindBgrPicIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getindBgrPicBitmap())
     return icon
 
@@ -207,14 +207,14 @@ i1\x10\xa1\xcc\x80\xffX\xe0R5\xe3\xf2\x90h\xeb\'`\x7fF\xc8\x83\x93\xfb\xaeV\
 END\xaeB`\x82'
 
 def gettitle2Bitmap():
-    return BitmapFromImage(gettitle2Image())
+    return Bitmap(gettitle2Image())
 
 def gettitle2Image():
     stream = cStringIO.StringIO(gettitle2Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def gettitle2Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(gettitle2Bitmap())
     return icon
 
@@ -270,14 +270,14 @@ B\x89D\xa2},\xef\x19i\xb5\x9a\x87\xf7\xef\xdb\xb7y\xcf\xde=\x18H&\xc1\x0b<\
 \x00\x00IEND\xaeB`\x82'
 
 def getclrPic3Bitmap():
-    return BitmapFromImage(getclrPic3Image())
+    return Bitmap(getclrPic3Image())
 
 def getclrPic3Image():
     stream = cStringIO.StringIO(getclrPic3Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getclrPic3Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getclrPic3Bitmap())
     return icon
 
@@ -293,14 +293,14 @@ def getextEditorData():
 \x8bI\x12\x9d\x8a\xe3\xa0\xc8\x00\x00\x00\x00IEND\xaeB`\x82' 
 
 def getextEditorBitmap():
-    return BitmapFromImage(getextEditorImage())
+    return Bitmap(getextEditorImage())
 
 def getextEditorImage():
     stream = cStringIO.StringIO(getextEditorData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getextEditorIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getextEditorBitmap())
     return icon
 
@@ -317,14 +317,14 @@ def getextEditor2Data():
 IEND\xaeB`\x82' 
 
 def getextEditor2Bitmap():
-    return BitmapFromImage(getextEditor2Image())
+    return Bitmap(getextEditor2Image())
 
 def getextEditor2Image():
     stream = cStringIO.StringIO(getextEditor2Data())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 def getextEditor2Icon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getextEditor2Bitmap())
     return icon
 

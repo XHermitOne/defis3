@@ -26,8 +26,7 @@ _ImageLibraryFileTemplate = '''#!/usr/bin/env python3
 \"\"\"
 
 # --- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+import wx
 import io
 
 '''
@@ -38,16 +37,16 @@ def get%sData():
 
 
 def get%sBitmap():
-    return BitmapFromImage(get%sImage())
+    return wx.Bitmap(get%sImage())
 
 
 def get%sImage():
     stream = io.BytesIO(get%sData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def get%sIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(get%sBitmap())
     return icon
 

@@ -45,12 +45,12 @@ from ic.PropertyEditor import icDefInf
 
 
 def getBitmap(img_data):
-    return wx.BitmapFromImage(getImage(img_data))
+    return wx.Bitmap(getImage(img_data))
 
 
 def getImage(img_data):
     stream = io.BytesIO(img_data)
-    return wx.ImageFromStream(stream)
+    return wx.wx.Image(stream)
 
 
 imgcard = 'GIF (*.gif)|*.gif|JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp|All files (*.*)|*.*'

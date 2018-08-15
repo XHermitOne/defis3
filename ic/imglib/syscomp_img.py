@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Библиотека образов.
 """
-#--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
 
-#--- BEGIN recordset
+# --- Imports ---
+import wx
+import io
+# --- Image Library File ---
+
+
+# --- BEGIN recordset
 def getrecordsetData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x06IDAT8\x8d\xa5\x91\xbdj\x14Q\x14\xc7\x7f\xf3!\xc2\x9a\xa4P\x8c\
 \xae\x1b\x9b\xb52\xd8H$Q\xb4\xf0\t\x12D\x10\xb4\xb5\x9e\x07\x08,\x16+X\xa6\
@@ -35,18 +37,21 @@ def getrecordsetData():
 \x93n\xb7K\xd5\xb2,\x1b\xf9\xb5\xb5\xb5\x13\xb9\x99\x99\x196\x9e\xdd\xf76\
 \xca\xf8\x0f_\xfc?\xecF\x1a,\x15\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getrecordsetBitmap():
-    return BitmapFromImage(getrecordsetImage())
+    return wx.Bitmap(getrecordsetImage())
+
 
 def getrecordsetImage():
-    stream = cStringIO.StringIO(getrecordsetData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getrecordsetData())
+    return wx.Image(stream)
+
 
 def getrecordsetIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getrecordsetBitmap())
     return icon
 
-recordset=getrecordsetBitmap()
 
+recordset = getrecordsetBitmap()
 #--- END recordset

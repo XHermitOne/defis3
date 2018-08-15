@@ -3,17 +3,16 @@
 """
 Библиотека образов.
 """
-#--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
+
+# --- Imports ---
+import wx
+import io
+# --- Image Library File ---
 
 
-
-#--- BEGIN addRec
+# --- BEGIN addRec
 def getaddRecData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xebIDAT8\x8d\xa5\x93\xd1m\xc20\x10\x86?\'Q\xc5\x080\x06EY\x02\xc4\
 \x14y@jw\xe8SW@B\x80\xa7@\xb0\xc4\xc96[\xb4#DQT\xf7\xa1\nm\x12l#\xf5\x97\xfc\
@@ -26,24 +25,29 @@ j&O\x13\x9e\xd1\x00\\\xa6\xef\xbf\x15\xeb\xa1\xc0\xa0\x83EY*\x80n\x16\x00\
 \x08D:\xd8\x8a\x1d\x11R\x88\x0e1Ul\xc5\x85\x87\x08\x8f\xfd\x85\x7f\xbb\xf0\r\
 -EX^\xe0\xb6zJ\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getaddRecBitmap():
-    return BitmapFromImage(getaddRecImage())
+    return wx.Bitmap(getaddRecImage())
+
 
 def getaddRecImage():
-    stream = cStringIO.StringIO(getaddRecData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getaddRecData())
+    return wx.Image(stream)
+
 
 def getaddRecIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getaddRecBitmap())
     return icon
 
-addRec=getaddRecBitmap()
 
-#--- END addRec
-#--- BEGIN delRec
+addRec = getaddRecBitmap()
+# --- END addRec
+
+
+# --- BEGIN delRec
 def getdelRecData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xd5IDAT8\x8d\xbd\x92M\n\xc20\x18D_l\x0fa/!Z\xe9)\xc4C\xb8\x10\xc5\
 \xfbT\x04\x11\x17\x1eA\xc4C\x94F)\xf4\x0cu\xed\xae\xa0\xd4MS\xd2\xbf\xa4+g\
@@ -56,24 +60,29 @@ def getdelRecData():
 \xa4\xbe\x03\x7f\xab\xf0\x03\x95\xef]m&8l\x80\x00\x00\x00\x00IEND\xaeB`\x82'\
  
 
+
 def getdelRecBitmap():
-    return BitmapFromImage(getdelRecImage())
+    return wx.Bitmap(getdelRecImage())
+
 
 def getdelRecImage():
-    stream = cStringIO.StringIO(getdelRecData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getdelRecData())
+    return wx.Image(stream)
+
 
 def getdelRecIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getdelRecBitmap())
     return icon
 
-delRec=getdelRecBitmap()
 
-#--- END delRec
-#--- BEGIN updateRec
+delRec = getdelRecBitmap()
+# --- END delRec
+
+
+# --- BEGIN updateRec
 def getupdateRecData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xbaIDAT8\x8d\xdd\x91\xc1\x11\x820\x00\x047\tE`\x17\x0c\x8eU8\xd6aE<\
 )\xc1\x97edHR\x81o\x9f\x14`\x88\x0f\x0c \x0e\x04\xbe\xde/3\xd9\xcb]N\x08\xa9\
@@ -85,24 +94,29 @@ def getupdateRecData():
 \xb2\xc2\xa2\x81\xd16\t\xc3_Tx\x03\xe5\xe6Z\x06b`YR\x00\x00\x00\x00IEND\xaeB\
 `\x82' 
 
+
 def getupdateRecBitmap():
-    return BitmapFromImage(getupdateRecImage())
+    return wx.Bitmap(getupdateRecImage())
+
 
 def getupdateRecImage():
-    stream = cStringIO.StringIO(getupdateRecData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getupdateRecData())
+    return wx.Image(stream)
+
 
 def getupdateRecIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getupdateRecBitmap())
     return icon
 
-updateRec=getupdateRecBitmap()
 
-#--- END updateRec
-#--- BEGIN schema
+updateRec = getupdateRecBitmap()
+# --- END updateRec
+
+
+# --- BEGIN schema
 def getschemaData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xfcIDAT8\x8d\x9dRKN\xc30\x10}\xe3t\x91\xcb\x80H\xa5.\xb8\r\xd2\xc8\
 \xa2J\x14\xb5G)\xd0V%M$N\x03\x8bJ\t\x82\xcbt\xc5tA\xeb8v\xec"F\x9a\x85\xe7\
@@ -116,24 +130,29 @@ def getschemaData():
 \x8aGe\x18\xfa\x17?\xcb\x18\x14\x85\x9ac;\xb8z\xcac \xf6\xfb\x04\xe0\x1ap@\
 \xb6v\xf4\xcb\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getschemaBitmap():
-    return BitmapFromImage(getschemaImage())
+    return wx.Bitmap(getschemaImage())
+
 
 def getschemaImage():
-    stream = cStringIO.StringIO(getschemaData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getschemaData())
+    return wx.Image(stream)
+
 
 def getschemaIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getschemaBitmap())
     return icon
 
-schema=getschemaBitmap()
 
-#--- END schema
-#--- BEGIN finance
+schema = getschemaBitmap()
+# --- END schema
+
+
+# --- BEGIN finance
 def getfinanceData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x84IDAT8\x8d\x8d\x92OK\x02a\x10\xc6\x7f\x9b\x1e\xc2=x\x88.{\x8b\x12\
 \x84$\\\xd1K\x17[\xba\xd4\x17\xe8\x1c\x88\x19\xf4\x19\xfas\xea\xe8\xd9\x12\
@@ -153,18 +172,21 @@ def getfinanceData():
 \xb3\x13)\xddM\x1a1\x80\xc3#\xc3\xfdL?-!\xad\xdc\xf0qRM\x00\x00\x00\x00IEND\
 \xaeB`\x82' 
 
+
 def getfinanceBitmap():
-    return BitmapFromImage(getfinanceImage())
+    return wx.Bitmap(getfinanceImage())
+
 
 def getfinanceImage():
-    stream = cStringIO.StringIO(getfinanceData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getfinanceData())
+    return wx.Image(stream)
+
 
 def getfinanceIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfinanceBitmap())
     return icon
 
-finance=getfinanceBitmap()
 
-#--- END finance
+finance = getfinanceBitmap()
+# --- END finance

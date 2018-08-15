@@ -5,8 +5,7 @@
 """
 
 # --- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+import wx
 import io
 # --- Image Library File ---
 
@@ -36,16 +35,16 @@ Z\xad\x95\r\x1e\xc4y\xca\xfb\xe7n\xbe|\xbeE\xb6\xd7\xc39\x07\xc0\xb5\xb9\x1b\
 
 
 def getstyle_spravsBitmap():
-    return BitmapFromImage(getstyle_spravsImage())
+    return wx.Bitmap(getstyle_spravsImage())
 
 
 def getstyle_spravsImage():
     stream = io.BytesIO(getstyle_spravsData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getstyle_spravsIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getstyle_spravsBitmap())
     return icon
 
@@ -83,16 +82,16 @@ C\xa9\x94\xe2\xd5\xf88\x15\x89\x045\xd5\xd5\x94\'\x12h\xad\t\xc3\x90\xd9\xdf\
 
 
 def getstyle_spravBitmap():
-    return BitmapFromImage(getstyle_spravImage())
+    return wx.Bitmap(getstyle_spravImage())
 
 
 def getstyle_spravImage():
     stream = io.BytesIO(getstyle_spravData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getstyle_spravIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getstyle_spravBitmap())
     return icon
 
@@ -129,16 +128,16 @@ w\xce\xc4\x99sFTY\xbcZ\xa5P\xbc\xd9\x7f\xf0"\x9d4%\xf3\x9e\x93\xd3\xd3\x00\
 
 
 def getstyle_nsi_levelBitmap():
-    return BitmapFromImage(getstyle_nsi_levelImage())
+    return wx.Bitmap(getstyle_nsi_levelImage())
 
 
 def getstyle_nsi_levelImage():
     stream = io.BytesIO(getstyle_nsi_levelData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getstyle_nsi_levelIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getstyle_nsi_levelBitmap())
     return icon
 
@@ -174,16 +173,16 @@ D~MDF\xae\xc8\xa9\x12\xd1\xe1\xf9\xe2>\x1d\xcc\xbd\x17w7\t\x10\x04\x01\xce\
 
 
 def getstyle_sprav_comboBitmap():
-    return BitmapFromImage(getstyle_sprav_comboImage())
+    return wx.Bitmap(getstyle_sprav_comboImage())
 
 
 def getstyle_sprav_comboImage():
     stream = io.BytesIO(getstyle_sprav_comboData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getstyle_sprav_comboIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getstyle_sprav_comboBitmap())
     return icon
 

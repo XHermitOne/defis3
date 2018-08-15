@@ -6,8 +6,7 @@
 """
 
 # --- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+import wx
 import io
 # --- Image Library File ---
 
@@ -36,16 +35,16 @@ ND\xaeB`\x82'
 
 
 def getplus_small_whiteBitmap():
-    return BitmapFromImage(getplus_small_whiteImage())
+    return wx.Bitmap(getplus_small_whiteImage())
 
 
 def getplus_small_whiteImage():
     stream = io.BytesIO(getplus_small_whiteData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getplus_small_whiteIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getplus_small_whiteBitmap())
     return icon
 
@@ -72,16 +71,16 @@ def getcross_smallData():
 
 
 def getcross_smallBitmap():
-    return BitmapFromImage(getcross_smallImage())
+    return wx.Bitmap(getcross_smallImage())
 
 
 def getcross_smallImage():
     stream = io.BytesIO(getcross_smallData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getcross_smallIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getcross_smallBitmap())
     return icon
 
@@ -117,16 +116,16 @@ q\xc1u\xdd\xe50\x0cq]w\xb9\xd1h\xbc\xe0\xdf\x12\x11\xc6\xff\x83R\n\xad5Zk\
 
 
 def getnode_insert_previousBitmap():
-    return BitmapFromImage(getnode_insert_previousImage())
+    return wx.Bitmap(getnode_insert_previousImage())
 
 
 def getnode_insert_previousImage():
     stream = io.BytesIO(getnode_insert_previousData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnode_insert_previousIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnode_insert_previousBitmap())
     return icon
 
@@ -166,16 +165,16 @@ c\xadVku\xff\xf7g\x0cdo\x96\xef\xdc\xb8\xe8=~\x90\x87\xd5\xd3\x93\xd9\xf0\
 
 
 def getnode_select_childBitmap():
-    return BitmapFromImage(getnode_select_childImage())
+    return wx.Bitmap(getnode_select_childImage())
 
 
 def getnode_select_childImage():
     stream = io.BytesIO(getnode_select_childData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnode_select_childIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnode_select_childBitmap())
     return icon
 
@@ -211,16 +210,16 @@ $\xb3\x07i\x9a\xd2\xe9t\x10\x91\xe7"\xbd\x1c\xf9\xfc\xc8\xdd\xb7\x1f\x03\xe7\
 
 
 def getnode_select_allBitmap():
-    return BitmapFromImage(getnode_select_allImage())
+    return wx.Bitmap(getnode_select_allImage())
 
 
 def getnode_select_allImage():
     stream = io.BytesIO(getnode_select_allData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnode_select_allIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnode_select_allBitmap())
     return icon
 
@@ -256,16 +255,16 @@ def getnode_delete_previousData():
 
 
 def getnode_delete_previousBitmap():
-    return BitmapFromImage(getnode_delete_previousImage())
+    return wx.Bitmap(getnode_delete_previousImage())
 
 
 def getnode_delete_previousImage():
     stream = io.BytesIO(getnode_delete_previousData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnode_delete_previousIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnode_delete_previousBitmap())
     return icon
 
@@ -305,16 +304,16 @@ N&h\xb7\xdb\xa4\x93\x03\xe4\xde\xed\xa6F\xaexs\xe7/\xd3n\xb7)\x97\xcb\xbd\
 
 
 def getnode_selectBitmap():
-    return BitmapFromImage(getnode_selectImage())
+    return wx.Bitmap(getnode_selectImage())
 
 
 def getnode_selectImage():
     stream = io.BytesIO(getnode_selectData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getnode_selectIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getnode_selectBitmap())
     return icon
 
@@ -356,16 +355,16 @@ m\xb8\xb6,\xe4e\xd5\xd9\xcdri\xcfb\xd9\xea\xe0y\xc1|\\Q\xe6\xbf\xeb\x15\x10\
 
 
 def getbroomBitmap():
-    return BitmapFromImage(getbroomImage())
+    return wx.Bitmap(getbroomImage())
 
 
 def getbroomImage():
     stream = io.BytesIO(getbroomData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getbroomIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getbroomBitmap())
     return icon
 
@@ -392,16 +391,16 @@ l\x01\x99\xa4\xd7\x1f\x01\xbf\xd5\xdfW\xb91\xe0\x03\xf8\x07]%\x12\xb6=\xa0\
 
 
 def getplus_smallBitmap():
-    return BitmapFromImage(getplus_smallImage())
+    return wx.Bitmap(getplus_smallImage())
 
 
 def getplus_smallImage():
     stream = io.BytesIO(getplus_smallData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getplus_smallIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getplus_smallBitmap())
     return icon
 
@@ -443,16 +442,16 @@ ne}\x80M\xb5\xc9\xc8\xd8U\x1f`\xf1m\xe1\xa4\x02c\x0cB\x08\x00\r\xa0\x94\xda3\
 
 
 def getfunnel__plusBitmap():
-    return BitmapFromImage(getfunnel__plusImage())
+    return wx.Bitmap(getfunnel__plusImage())
 
 
 def getfunnel__plusImage():
     stream = io.BytesIO(getfunnel__plusData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfunnel__plusIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfunnel__plusBitmap())
     return icon
 
@@ -491,16 +490,16 @@ W*\xc3\x0e\xb4\xd6\x08!\x00"\x800\x0c\xbb_\xb5f\x1ej\xcf+\x95Q\xf6\xcf\x1d\
 
 
 def getfunnel__minusBitmap():
-    return BitmapFromImage(getfunnel__minusImage())
+    return wx.Bitmap(getfunnel__minusImage())
 
 
 def getfunnel__minusImage():
     stream = io.BytesIO(getfunnel__minusData())
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def getfunnel__minusIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfunnel__minusBitmap())
     return icon
 

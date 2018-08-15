@@ -7,8 +7,8 @@
 
 # Подключение библиотек
 # Функции необходимые для получения объектов из серилизованной строки
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+
+import wx
 import io
 
 from ic.imglib import common
@@ -113,7 +113,7 @@ class icSerializedImagePrototype:
         """
         img = self.getImage()
         if img:
-            return BitmapFromImage(img)
+            return Bitmap(img)
         return None
 
     def getImage(self):
@@ -123,7 +123,7 @@ class icSerializedImagePrototype:
         body = self.getBody()
         if body: 
             stream = io.BytesIO(body)
-            return ImageFromStream(stream)
+            return wx.Image(stream)
         return None
 
     def getIcon(self):
@@ -132,7 +132,7 @@ class icSerializedImagePrototype:
         """
         bmp = self.getBitmap()
         if bmp:
-            icon = EmptyIcon()
+            icon = wx.Icon()
             icon.CopyFromBitmap(bmp)
             return icon
         return None

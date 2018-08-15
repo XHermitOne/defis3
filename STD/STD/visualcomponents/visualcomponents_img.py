@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Библиотека образов.
 """
-print('Load Image Library',str(__file__))
-#--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
 
-#--- BEGIN imgSpeedometer
+# --- Imports ---
+import wx
+import io
+# --- Image Library File ---
+
+
+# --- BEGIN imgSpeedometer
 def getimgSpeedometerData():
     return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
@@ -24,22 +25,27 @@ F\xb7\xe2\xabk\x93\x93\xbb\x97\xa1\x17r\x1f\xb1\xa8+Y\xde\xd7_]\xb5\xc9I\x86\
 \x90\x8a\x82\x0b\x80\x00\x10f\x96POp\x02;6\x80\xb0;\x00\xfa\xf9o|\x02-\xa4\\\
 \xf0]\xcb\xf2%\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getimgSpeedometerBitmap():
-    return BitmapFromImage(getimgSpeedometerImage())
+    return wx.Bitmap(getimgSpeedometerImage())
+
 
 def getimgSpeedometerImage():
-    stream = cStringIO.StringIO(getimgSpeedometerData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getimgSpeedometerData())
+    return wx.Image(stream)
+
 
 def getimgSpeedometerIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getimgSpeedometerBitmap())
     return icon
 
-imgSpeedometer=getimgSpeedometerBitmap()
 
-#--- END imgSpeedometer
-#--- BEGIN Agent
+imgSpeedometer = getimgSpeedometerBitmap()
+# --- END imgSpeedometer
+
+
+# --- BEGIN Agent
 def getAgentData():
     return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
@@ -59,18 +65,20 @@ M\x01\x08\xc3\xb0\x01\x11\xf1|\x9e\x17O\xba^\xaf+\x90<\xcf\t\xc3\xb0\x8d_\
 \xff\xbdl6\xc6pqy\xea\x8c\x17\x97\xa7\xadM\xe4\'\xd6\xbf\xeb\x0bg[\xbd\xdd\
 \xf8H\xa3\x8a\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getAgentBitmap():
-    return BitmapFromImage(getAgentImage())
+    return wx.Bitmap(getAgentImage())
+
 
 def getAgentImage():
-    stream = cStringIO.StringIO(getAgentData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getAgentData())
+    return wx.Image(stream)
+
 
 def getAgentIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getAgentBitmap())
     return icon
 
-Agent=getAgentBitmap()
-
-#--- END Agent
+Agent = getAgentBitmap()
+# --- END Agent

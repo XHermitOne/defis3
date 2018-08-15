@@ -168,6 +168,13 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         """
         return self.data_source
         
+    def checkOnlineConnect(self):
+        """
+        Проверка связи с источником данных.
+        @return: True - связь установлена / False - связь разорвана по какой либо причине.
+        """
+        return self.data_source.checkOnline() if self.data_source else False
+
     def getSQLTxt(self, **kwargs):
         """
         Текст SQL запроса.

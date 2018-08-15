@@ -10,8 +10,8 @@ import os
 import zlib
 import io
 
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
+
+import wx
 
 import tempfile                 # Работа со временными файлами
 from wx.tools import img2img    # Функции серилизации образов wx
@@ -123,7 +123,7 @@ def imageFromData(ImageData_):
     @param ImageData_: Данные строки серилизованной картинки.
     """
     stream = io.BytesIO(ImageData_)
-    return ImageFromStream(stream)
+    return wx.Image(stream)
 
 
 def bitmapFromData(ImageData_):
@@ -132,7 +132,7 @@ def bitmapFromData(ImageData_):
     @param ImageData_: Данные строки серилизованной картинки.
     """
     image = imageFromData(ImageData_)
-    return BitmapFromImage(image)
+    return Bitmap(image)
 
 
 def iconFromData(ImageData_):
@@ -140,6 +140,6 @@ def iconFromData(ImageData_):
     Создание wx.Icon из строки серилизованной картинки.
     @param ImageData_: Данные строки серилизованной картинки.
     """
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(bitmapFromData(ImageData_))
     return icon

@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Библиотека образов.
 """
-print('Load Image Library',str(__file__))
-#--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
-#--- BEGIN folder
+
+# --- Imports ---
+import wx
+import io
+# --- Image Library File ---
+
+
+# --- BEGIN folder
 def getfolderData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01wIDAT8\x8d\x8d\x92\xb1J\\A\x14\x86\xbf{f/\x98\xc5*\xa0\x85\x95F,,R\
 \x05_\xc0\xc2\xd6g\xb0Ql\xc4\x17\x08\x12\x82`)6\x96\xd6\tD\xb0H#\xf8\x04"\
@@ -30,24 +32,29 @@ XE\\\x15m\xef\xb3\x8d\x01\xd4\x08j K?a\xbf\x01Y\x8b>\xb7\xe2A\xd7\x98\x92e\
 \xa1\xf9)\x16?\r2Z\xf9\tJ\xeb\xec\x0f\xa7\xeb\xdb\xac\x02W\xff\x01Y\x85\x13\
 \xfe\x12\x84K\x88\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getfolderBitmap():
-    return BitmapFromImage(getfolderImage())
+    return wx.Bitmap(getfolderImage())
+
 
 def getfolderImage():
-    stream = cStringIO.StringIO(getfolderData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getfolderData())
+    return wx.Image(stream)
+
 
 def getfolderIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfolderBitmap())
     return icon
 
-folder=getfolderBitmap()
 
-#--- END folder
-#--- BEGIN folder_open
+folder = getfolderBitmap()
+# --- END folder
+
+
+# --- BEGIN folder_open
 def getfolder_openData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x02\x1bIDAT8\x8d\x8d\x93\xcbK\x94Q\x18\x87\x9f\xef\x929vQfJ\x08\\XiIm\
 \x02\xa3\x95\xabvAA\x9b\x16\xb5\x13Z\x04-\xfa\x07"P\x02\xfb\'\xa4\xb5`0\xd0\
@@ -72,24 +79,29 @@ def getfolder_openData():
 \xf8\xe0C1\'/F~\xadT\xba\xf2s\xb5t\xd3\x8c~\xa0\x0c\xed\xf0\xbf\xe3/rQ\x96\
 \x83\xba\x8ec\xbe\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getfolder_openBitmap():
-    return BitmapFromImage(getfolder_openImage())
+    return wx.Bitmap(getfolder_openImage())
+
 
 def getfolder_openImage():
-    stream = cStringIO.StringIO(getfolder_openData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getfolder_openData())
+    return wx.Image(stream)
+
 
 def getfolder_openIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getfolder_openBitmap())
     return icon
 
-folder_open=getfolder_openBitmap()
 
-#--- END folder_open
-#--- BEGIN document
+folder_open = getfolder_openBitmap()
+# --- END folder_open
+
+
+# --- BEGIN document
 def getdocumentData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x93IDAT8\x8d\x8d\xd0\xbdj\x1bA\x14\x86\xe1\xf7\x9c\x99`D\xa2\xd2\
 \x82\xa4Oc\xdf\x85R\xa7\xcbE\xe4&b\x83I\x91:\x04\xe2\xda\xa0.7\x10\x0c\x01u*\
@@ -108,24 +120,29 @@ f\xd4f\xd41b)\xb5\x1b\xb3,\xe3\xea\xfa\xfa# \xc0\xefF\xd4h\xc6\xfa\x91\x18#V\
 \x9cc^\x14G7\x93\xc9\x00\xe8y\xa0\x07\x0c\xfe\xdc\xdd=\xbc:=\xfd\xc2\x7fL\\.\
 \x1f\x80\x01\x10\xfe\x02\x98\\\xdevs(\xe9(\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getdocumentBitmap():
-    return BitmapFromImage(getdocumentImage())
+    return wx.Bitmap(getdocumentImage())
+
 
 def getdocumentImage():
-    stream = cStringIO.StringIO(getdocumentData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getdocumentData())
+    return wx.Image(stream)
+
 
 def getdocumentIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getdocumentBitmap())
     return icon
 
-document=getdocumentBitmap()
 
-#--- END document
-#--- BEGIN book_open
+document = getdocumentBitmap()
+# --- END document
+
+
+# --- BEGIN book_open
 def getbook_openData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\xd5IDAT8\x8d\xad\x93Mk\x13A\x18\xc7\x7f3\x99\xddd7\xaf\xad\xa9\xa8\
 \xad\xc5\xda\x83!b?\x80\x87\xe2%\xc7\\\x94z\xf0\xe0\xad~\x04A\x10\xda\x0f\
@@ -148,18 +165,21 @@ f\xea\x1f\x08\\\x07\x7f\xe4\xe2\x1f\xbaDG\xeft\x14\xb9"\xfd\x96\xa80\xfd\xba\
 .0\xf8\xdd\x80\xd6\x9a\xef2\xed\xcd\n\xbf\xf7r\x8d\x00\x00\x00\x00IEND\xaeB`\
 \x82' 
 
+
 def getbook_openBitmap():
-    return BitmapFromImage(getbook_openImage())
+    return wx.Bitmap(getbook_openImage())
+
 
 def getbook_openImage():
-    stream = cStringIO.StringIO(getbook_openData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getbook_openData())
+    return wx.Image(stream)
+
 
 def getbook_openIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getbook_openBitmap())
     return icon
 
-book_open=getbook_openBitmap()
 
-#--- END book_open
+book_open = getbook_openBitmap()
+# --- END book_open
