@@ -13,7 +13,7 @@ from ic.db import icsqlalchemy
 from . import persistent
 
 # Версия
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 # --- Функции ---
 _WORK_SQL_STORAGE = dict()
@@ -119,7 +119,7 @@ class icWorkSQLStorageContainer(object):
         return self._all[TabName_]
             
 
-class icWorkSQLStorage(object, icWorkStorageInterface):
+class icWorkSQLStorage(icWorkStorageInterface):
     """
     SQL хранилище/БД всяких бизнес объектов.
     """
