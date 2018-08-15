@@ -21,6 +21,7 @@ from ic import config
 from . import listctrl_manager
 from . import treectrl_manager
 from . import toolbar_manager
+from . import validate_manger
 
 
 __version__ = (0, 1, 1, 1)
@@ -28,7 +29,8 @@ __version__ = (0, 1, 1, 1)
 
 class icPanelManager(listctrl_manager.icListCtrlManager,
                      treectrl_manager.icTreeCtrlManager,
-                     toolbar_manager.icToolBarManager):
+                     toolbar_manager.icToolBarManager,
+                     validate_manger.icValidateManager):
     """
     Менеджер WX панели.
     В самом общем случае в этот класс перенесены функции работы
@@ -38,35 +40,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     менеджеров, которые работают с панелями для управления
     записями/объектами.
     """
-    def get_ctrl_value(self, ctrl):
-        """
-        Получить значение контрола не зависимо от типа.
-        @param ctrl: Объект контрола.
-        @return: Значение контрола.
-        """
-        value = None
-        if issubclass(ctrl.__class__, wx.Window) and ctrl.IsEnabled():
-            if hasattr(ctrl, 'getValue'):
-                # Обработка пользовательских контролов
-                # Обычно все пользовательские контролы имеют
-                # метод получения данных <getValue>
-                value = ctrl.getValue()
-            elif issubclass(ctrl.__class__, wx.CheckBox):
-                value = ctrl.IsChecked()
-            elif issubclass(ctrl.__class__, wx.TextCtrl):
-                value = ctrl.GetValue()
-            elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):
-                wx_dt = ctrl.GetValue()
-                value = ic_time.wxdatetime2pydatetime(wx_dt)
-            elif issubclass(ctrl.__class__, wx.DirPickerCtrl):
-                value = ctrl.GetPath()
-            elif issubclass(ctrl.__class__, wx.SpinCtrl):
-                value = ctrl.GetValue()
-            elif issubclass(ctrl.__class__, wx.dataview.DataViewListCtrl):
-                value = self._get_wxDataViewListCtrl_data(ctrl)
-            else:
-                log.warning(u'icFormManager. Получение данных контрола <%s> не поддерживается' % ctrl.__class__.__name__)
-        return value
+    # ВНИМАНИЕ! Метод get_ctrl_value определен в validate_manger.icValidateManager
 
     def set_ctrl_value(self, ctrl, value):
         """
