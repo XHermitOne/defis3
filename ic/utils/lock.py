@@ -477,15 +477,21 @@ def _UnLockFileWalk(args, CurDir_, CurNames_):
     # Выбрать только свои файлы-блокировки
     for cur_file in lock_files:
         lock_record = ReadLockRecord(cur_file)
-        if not user_name:
-            if lock_record['computer'] == computer_name:
-                os.remove(cur_file)
-                log.info(u'Блокировка снята <%s>' % cur_file)
+
+        if isinstance(lock_record, str) and not lock_record.strip():
+            # Если запись блокировки - пустая строка,
+            # то просто удаляем блокировку как ничейную
+            os.remove(cur_file)
+            log.warning(u'Снята не определенная блокировка <%s>' % cur_file)
         else:
-            if lock_record['computer'] == computer_name and \
-               lock_record['user'] == user_name:
-                os.remove(cur_file)
-                log.info(u'Блокировка снята <%s>' % cur_file)
+            if not user_name:
+                if lock_record['computer'] == computer_name:
+                    os.remove(cur_file)
+                    log.info(u'Блокировка снята <%s>' % cur_file)
+            else:
+                if lock_record['computer'] == computer_name and lock_record['user'] == user_name:
+                    os.remove(cur_file)
+                    log.info(u'Блокировка снята <%s>' % cur_file)
 
 
 def UnLockAllFile(LockDir_, ComputerName_=None, UserName_=None):
