@@ -9,16 +9,12 @@
 import os
 import zlib
 import io
-
-
 import wx
-
 import tempfile                 # Работа со временными файлами
 from wx.tools import img2img    # Функции серилизации образов wx
 from wx.tools import img2py     # Функции серилизации образов wx
 
 from . import ic_bmp
-from ic.utils import ic_file
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -132,7 +128,7 @@ def bitmapFromData(ImageData_):
     @param ImageData_: Данные строки серилизованной картинки.
     """
     image = imageFromData(ImageData_)
-    return Bitmap(image)
+    return wx.Bitmap(image)
 
 
 def iconFromData(ImageData_):

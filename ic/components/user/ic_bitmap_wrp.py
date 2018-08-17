@@ -20,7 +20,10 @@
     компонент (ic_can_contain = -1).
 """
 
+import os
+import os.path
 import wx
+
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -28,7 +31,6 @@ from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 from ic.utils import coderror
-from ic.utils import ic_file
 from ic.dlg import ic_dlg
 
 from ic.bitmap import icimg2py
@@ -78,13 +80,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
 
-### EDITOR_FUNCS_BLOCK
 
 # --- Функции редактирования
-
-
 def _draw_picture_by_filename(dc, rect, img_body):
     """
     Отрисовать картинку в гриде редактора свойств с указанием имени файла образа.
@@ -100,7 +99,7 @@ def _draw_picture_by_filename(dc, rect, img_body):
         width = min(rect_width, bmp_width)
         height = min(rect_height, bmp_height)
 
-        dc.SetBrush(wx.Brush(wx.LIGHT_GREY, wx.SOLID))
+        dc.SetBrush(wx.Brush(wx.LIGHT_GREY, wx.BRUSHSTYLE_SOLID))
         dc.Clear()
         dc.Blit(x, y, width, height, memDC, 0, 0, wx.COPY, True)
         return True

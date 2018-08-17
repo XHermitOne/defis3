@@ -16,14 +16,14 @@ _ = wx.GetTranslation
 __version__ = (0, 1, 1, 1)
 
 
-class icEditUserProperty(wx.propgrid.PyStringProperty):
+class icEditUserProperty(wx.propgrid.StringProperty):
     """
     Редактор пользовательского свойства,
         определяемого компонентом
     """
 
     def __init__(self, label, name=wx.propgrid.PG_LABEL, value=''):
-        wx.propgrid.PyStringProperty.__init__(self, label, name, value)
+        wx.propgrid.StringProperty.__init__(self, label, name, value)
 
         self.property_edit_manager = None
 
@@ -33,10 +33,11 @@ class icEditUserProperty(wx.propgrid.PyStringProperty):
     def GetEditor(self):
         """
         Set editor to have button.
+        ВНИМАНИЕ! Это указание типа редактора свойства.
+        В данном случае это текстовый редактор с кнопкой
         """
-        # ВНИМАНИЕ! Это указание типа редактора свойства.
-        # В данном случае это текстовый редактор с кнопкой
-        return 'TextCtrlAndButton'
+        # return 'TextCtrlAndButton'
+        return 'TrivialPropertyEditor'
 
     def _get_edit_dlg(self, attr, value, pos=wx.DefaultPosition, size=wx.DefaultSize,
                       style=0, propEdt=None, *arg, **kwarg):

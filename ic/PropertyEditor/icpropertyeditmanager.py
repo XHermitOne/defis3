@@ -224,7 +224,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             value_list = []
             if name == 'style':
                 if spc and '__styles__' in spc:
-                    choice_list = spc['__styles__'].keys() if spc['__styles__'] else []
+                    choice_list = list(spc['__styles__'].keys()) if spc['__styles__'] else []
                     codes = [spc['__styles__'][key] for key in choice_list]
                 else:
                     choice_list = []
@@ -232,7 +232,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
                 styles = spc['__styles__'] if spc.get('__styles__', None) else {}
                 value_list = self._get_combin_value_list(value, styles)
             elif name == 'flag':
-                choice_list = icDefInf.ICSizerFlag.keys()
+                choice_list = list(icDefInf.ICSizerFlag.keys())
                 codes = [icDefInf.ICSizerFlag[key] for key in choice_list]
                 value_list = self._get_combin_value_list(value, icDefInf.ICSizerFlag)
             else:
@@ -303,6 +303,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
                 value = str(value)
             wx_property = icedituserproperty.icEditUserProperty(name, value=value)
             wx_property.setPropertyEditManager(self)
+            self.SetPropertyEditor(wx_property, wx_property.GetEditor())
 
         elif property_type == icDefInf.EDT_RO_TEXTFIELD:
             # Read-Only текстовое поле
