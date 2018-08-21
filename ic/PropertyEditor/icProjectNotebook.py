@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+Модуль нотебука проекта.
+"""
+
 import wx
 import os
 import sys
@@ -10,9 +14,14 @@ try:
 except:
     dirName = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-sys.path.append(os.path.split(dirName)[0])
+dir_name = os.path.split(dirName)[0]
+if dir_name not in sys.path:
+    sys.path.append(dir_name)
 
 import wx.lib.agw.flatnotebook as fnb
+
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 

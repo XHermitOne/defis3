@@ -167,7 +167,8 @@ class PrjRoot(ImpNode.PrjImportSys):
         # импорта модулей
         if self.getPrjFileName():
             prj_dir = os.path.dirname(self.getPrjFileName())
-            sys.path.append(prj_dir)
+            if prj_dir not in sys.path:
+                sys.path.append(prj_dir)
         
     def Default(self):
         """

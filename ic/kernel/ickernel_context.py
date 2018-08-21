@@ -135,11 +135,12 @@ class icKernelContext(icContext.BaseContext):
             PrjDir_ = os.path.normpath(PrjDir_)
         
             # Прописать для импорта родительскую папку проекта
-            if PrjDir_ not in sys.path:
-                sys.path.append(PrjDir_)
             parent_prj_dir = os.path.dirname(PrjDir_)
             if parent_prj_dir not in sys.path:
                 sys.path.append(parent_prj_dir)
+            # Прописать папку проекта для импорта
+            if PrjDir_ not in sys.path:
+                sys.path.append(PrjDir_)
 
             log.info(u'vvvvvvvvvvvvvvvvvvvvvvvv')
             log.info(u'Окружение системы. Пути:')
