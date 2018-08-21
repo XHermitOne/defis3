@@ -7,7 +7,7 @@
 
 from ic.log import log
 
-__version__ = (0, 0, 3, 1)
+__version__ = (0, 1, 1, 1)
 
 # Проверка наличия обрамляющих сигнатур топика
 DO_CONTROL_TOPIC_SIGNATURES = True

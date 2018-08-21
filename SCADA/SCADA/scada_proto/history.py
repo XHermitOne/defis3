@@ -7,6 +7,8 @@
 Для упрощения называемых ИСТОРИЕЙ.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 class icHistoryProto(object):
     """

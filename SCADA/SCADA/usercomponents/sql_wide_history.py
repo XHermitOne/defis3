@@ -9,7 +9,6 @@
 from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
 
-from ic.db import icsqlalchemy
 from ic.utils import util
 from ic.log import log
 from ic.bitmap import ic_bmp
@@ -18,7 +17,7 @@ from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
-from . import history
+from SCADA.scada_proto import history
 
 # --- Спецификация ---
 SPC_IC_SQLWIDEHISTORY = {'table': None,     # Таблица БД
@@ -74,7 +73,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования

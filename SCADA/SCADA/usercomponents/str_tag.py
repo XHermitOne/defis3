@@ -26,7 +26,7 @@ from ic.utils import coderror
 from ic.dlg import ic_dlg
 from ic.utils import ic_util
 
-from . import scada_tag
+from SCADA.scada_proto import scada_tag
 
 DEFAULT_ENCODING = 'utf-8'
 
@@ -85,7 +85,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 4)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования

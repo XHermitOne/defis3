@@ -17,7 +17,7 @@ from ic.bitmap import ic_bmp
 from ic.utils import coderror
 from ic.dlg import ic_dlg
 
-from . import scada_tag
+from SCADA.scada_proto import scada_tag
 
 # --- Спецификация ---
 SPC_IC_FLOAT_SCADA_TAG = {'min_value': None,
@@ -78,7 +78,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 5)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования

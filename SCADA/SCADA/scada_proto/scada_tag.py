@@ -8,7 +8,7 @@
 from ic.log import log
 from ic.components import icwidget
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 # --- Спецификация ---
 # Типы данных тега

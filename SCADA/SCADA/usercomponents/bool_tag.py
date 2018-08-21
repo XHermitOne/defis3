@@ -17,7 +17,7 @@ from ic.bitmap import ic_bmp
 from ic.utils import coderror
 from ic.dlg import ic_dlg
 
-from . import scada_tag
+from SCADA.scada_proto import scada_tag
 
 # --- Спецификация ---
 SPC_IC_BOOL_SCADA_TAG = {'units': '',

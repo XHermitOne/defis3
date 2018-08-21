@@ -23,7 +23,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.bitmap import ic_bmp
 
-from . import node
+from SCADA.scada_proto import node
 
 # --- Спецификация ---
 SPC_IC_MEMORY_NODE = {'__parent__': icwidget.SPC_IC_SIMPLE,
@@ -69,7 +69,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 7)
+__version__ = (0, 1, 1, 1)
 
 
 class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
