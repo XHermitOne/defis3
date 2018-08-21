@@ -642,7 +642,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         """
         import ic.utils.ic_exec as ic_exec
 
-        ic_exec.CreateRunApp(AppDir_)
+        # ic_exec.CreateRunApp(AppDir_)
         
         # Коммандная строка
         dbg_mode_cmd = ''
@@ -657,13 +657,14 @@ class PrjRoot(ImpNode.PrjImportSys):
         if self.debug_mode:
             dbg_mode_cmd = '-dbg'
 
+        ic_engine_path = os.path.join(os.path.dirname(AppDir_), 'ic', 'engine')
         if ic_util.isOSWindowsPlatform():
-            cmd = '\"%s/python.exe\" \"%s/run.py\" -run %s \"%s/\" -s %s' % (sys.prefix, AppDir_,
+            cmd = '\"%s/python.exe\" \"%s/run.py\" -run %s \"%s/\" -s %s' % (sys.prefix, ic_engine_path,
                                                                              dbg_mode_cmd, PrjPath_, username)
         else:
-            cmd = '%s %s/run.py -run %s %s/ -s %s' % (sys.executable, AppDir_, dbg_mode_cmd, PrjPath_, username)
+            cmd = '%s %s/run.py -run %s %s/ -s %s' % (sys.executable, ic_engine_path, dbg_mode_cmd, PrjPath_, username)
             
-        log.info(u'RUN PROJECT: <%s>' % cmd)
+        log.info(u'Запуск проекта <%s>' % cmd)
         ic_exec.RunTask(cmd)
         
     def run(self):
