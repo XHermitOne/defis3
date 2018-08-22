@@ -8,10 +8,15 @@
 import os
 import os.path
 import wx
+import wx.adv
 from wx.lib.wordwrap import wordwrap
+
 from ic.engine import ic_user
 from ic.utils import ic_extend
 from ic import config
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 # Текст копирайта по умолчанию
 DEFAULT_COPYRIGHT = u'(C) 2002 Alexander Kolchanov and Andrei Okoneshnikov'
@@ -37,22 +42,25 @@ def _show_about_box(parent, name, version, description,
     @param license: Текст лицензии.
     @param icon: Объект wx.Icon иконки программы.
     """
-    info = wx.AboutDialogInfo()
-    info.Name = name
-    info.Version = version
-    info.Copyright = copyright
-    info.Description = wordwrap(description, 350, wx.ClientDC(parent))
-    if web_site_url:
-        info.WebSite = (web_site_url,
-                        web_site_label if web_site_label else web_site_url)
-    info.Developers = list(authors)
+    try:
+        info = wx.adv.AboutDialogInfo()
+        info.Name = name
+        info.Version = version
+        info.Copyright = copyright
+        info.Description = wordwrap(description, 350, wx.ClientDC(parent))
+        if web_site_url:
+            info.WebSite = (web_site_url,
+                            web_site_label if web_site_label else web_site_url)
+        info.Developers = list(authors)
 
-    info.License = wordwrap(license, 500, wx.ClientDC(parent))
-    if isinstance(icon, wx.Icon):
-        info.Icon = icon
+        info.License = wordwrap(license, 500, wx.ClientDC(parent))
+        if isinstance(icon, wx.Icon):
+            info.Icon = icon
 
-    # Then we call wx.AboutBox giving it that info object
-    wx.AboutBox(info)
+        # Then we call wx.AboutBox giving it that info object
+        wx.adv.AboutBox(info)
+    except:
+        log.fatal(u'Ошибка отображения окна <О программе...>')
 
 
 def showAbout(parent=None, name=None, version=None, description=None,
@@ -94,9 +102,6 @@ def showAbout(parent=None, name=None, version=None, description=None,
     if description is None:
         try:
             description = prj_package.__doc__
-            if isinstance(description, str):
-                description = unicode(description,
-                                      config.DEFAULT_ENCODING)
         except AttributeError:
             description = u''
 

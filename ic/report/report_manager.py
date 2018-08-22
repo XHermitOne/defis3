@@ -69,17 +69,20 @@ class icReportManager(object):
         """
         Запуск режима конструирования отчетов.
         """
-        if os.path.exists(self._report_exec_filename):
-            cmd = '%s %s --editor --path=%s &' % (sys.executable,
-                                                  self._report_exec_filename,
-                                                  self.getReportDir())
-            try:
-                log.info(u'Запуск внешней программы <%s>' % cmd)
-                os.system(cmd)
-            except:
-                log.fatal(u'Запуск программы <icReport> в режиме конструктора отчетов: <%s>' % cmd)
-        else:
-            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        try:
+            if os.path.exists(self._report_exec_filename):
+                cmd = '%s %s --editor --path=%s &' % (sys.executable,
+                                                      self._report_exec_filename,
+                                                      self.getReportDir())
+                try:
+                    log.info(u'Запуск внешней программы <%s>' % cmd)
+                    os.system(cmd)
+                except:
+                    log.fatal(u'Запуск программы <icReport> в режиме конструктора отчетов: <%s>' % cmd)
+            else:
+                log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        except:
+            log.fatal(u'Ошибка запуска режима конструктора отчетов')
 
     def getReportDir(self):
         """
@@ -123,23 +126,26 @@ class icReportManager(object):
         @param variables: Словарь переменных для заполнения отчета.
         @return: True/False.
         """
-        if os.path.exists(self._report_exec_filename):
-            cmd = '%s %s --print=%s --path=%s' % (sys.executable,
-                                                  self._report_exec_filename,
-                                                  report_filename,
-                                                  self.getReportDir())
-            cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
-                                      stylelib_filename, variables)
-            # if isinstance(cmd, unicode):
-            #    cmd = cmd.encode(config.DEFAULT_ENCODING)
-            msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
-            try:
-                log.info(u'Запуск внешней программы <%s>' % msg_cmd)
-                os.system(cmd)
-            except:
-                log.fatal(u'Запуск программы <icReport> в режиме печати отчета: <%s>' % msg_cmd)
-        else:
-            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        try:
+            if os.path.exists(self._report_exec_filename):
+                cmd = '%s %s --print=%s --path=%s' % (sys.executable,
+                                                      self._report_exec_filename,
+                                                      report_filename,
+                                                      self.getReportDir())
+                cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
+                                          stylelib_filename, variables)
+                # if isinstance(cmd, unicode):
+                #    cmd = cmd.encode(config.DEFAULT_ENCODING)
+                msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
+                try:
+                    log.info(u'Запуск внешней программы <%s>' % msg_cmd)
+                    os.system(cmd)
+                except:
+                    log.fatal(u'Запуск программы <icReport> в режиме печати отчета: <%s>' % msg_cmd)
+            else:
+                log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        except:
+            log.fatal(u'Ошибка печати отчета <%s>' % report_filename)
 
     def report_preview(self, report_filename,
                        db_url=None, sql=None, command=None,
@@ -156,23 +162,26 @@ class icReportManager(object):
         @param variables: Словарь дополнительных переменных.
         @return: True/False.
         """
-        if os.path.exists(self._report_exec_filename):
-            cmd = '%s %s --preview=%s --path=%s' % (sys.executable,
-                                                    self._report_exec_filename,
-                                                    report_filename,
-                                                    self.getReportDir())
-            cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
-                                      stylelib_filename, variables)
-            # if isinstance(cmd, unicode):
-            #    cmd = cmd.encode(config.DEFAULT_ENCODING)
-            msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
-            try:
-                log.info(u'Запуск внешней программы <%s>' % msg_cmd)
-                os.system(cmd)
-            except:
-                log.fatal(u'Запуск программы <icReport> в режиме предварительного просмотра отчета: <%s>' % msg_cmd)
-        else:
-            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        try:
+            if os.path.exists(self._report_exec_filename):
+                cmd = '%s %s --preview=%s --path=%s' % (sys.executable,
+                                                        self._report_exec_filename,
+                                                        report_filename,
+                                                        self.getReportDir())
+                cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
+                                          stylelib_filename, variables)
+                # if isinstance(cmd, unicode):
+                #    cmd = cmd.encode(config.DEFAULT_ENCODING)
+                msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
+                try:
+                    log.info(u'Запуск внешней программы <%s>' % msg_cmd)
+                    os.system(cmd)
+                except:
+                    log.fatal(u'Запуск программы <icReport> в режиме предварительного просмотра отчета: <%s>' % msg_cmd)
+            else:
+                log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        except:
+            log.fatal(u'Ошибка предварительного просмотра отчета <%s>' % report_filename)
 
     def report_export(self, report_filename,
                       db_url=None, sql=None, command=None,
@@ -189,23 +198,26 @@ class icReportManager(object):
         @param variables: Словарь дополнительных переменных.
         @return: True/False.
         """
-        if os.path.exists(self._report_exec_filename):
-            cmd = '%s %s --export=%s --path=%s' % (sys.executable,
-                                                   self._report_exec_filename,
-                                                   report_filename, self.getReportDir())
+        try:
+            if os.path.exists(self._report_exec_filename):
+                cmd = '%s %s --export=%s --path=%s' % (sys.executable,
+                                                       self._report_exec_filename,
+                                                       report_filename, self.getReportDir())
 
-            cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
-                                      stylelib_filename, variables)
-            # if isinstance(cmd, unicode):
-            #    cmd = cmd.encode(config.DEFAULT_ENCODING)
-            msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
-            try:
-                log.info(u'Запуск внешней программы <%s>' % msg_cmd)
-                os.system(cmd)
-            except:
-                log.fatal(u'Запуск программы <icReport> в режиме экспорта отчета: <%s>' % msg_cmd)
-        else:
-            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+                cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
+                                          stylelib_filename, variables)
+                # if isinstance(cmd, unicode):
+                #    cmd = cmd.encode(config.DEFAULT_ENCODING)
+                msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
+                try:
+                    log.info(u'Запуск внешней программы <%s>' % msg_cmd)
+                    os.system(cmd)
+                except:
+                    log.fatal(u'Запуск программы <icReport> в режиме экспорта отчета: <%s>' % msg_cmd)
+            else:
+                log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        except:
+            log.fatal(u'Ошибка экспорта отчета <%s>' % report_filename)
 
     def post_select_action(self, report_filename, parent=None,
                            db_url=None, sql=None, command=None,
@@ -224,23 +236,26 @@ class icReportManager(object):
         @param variables: Словарь дополнительных переменных.
         @return: True/False.
         """
-        if os.path.exists(self._report_exec_filename):
-            cmd = '%s %s --select=%s --path=%s' % (sys.executable,
-                                                   self._report_exec_filename,
-                                                   report_filename,
-                                                   self.getReportDir())
-            cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
-                                      stylelib_filename, variables)
-            # if isinstance(cmd, unicode):
-            #    cmd = cmd.encode(config.DEFAULT_ENCODING)
-            msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
-            try:
-                log.info(u'Запуск внешней программы <%s>' % msg_cmd)
-                os.system(cmd)
-            except:
-                log.fatal(u'Запуск программы <icReport> в режиме выбора действия над отчетом отчета: <%s>' % msg_cmd)
-        else:
-            log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        try:
+            if os.path.exists(self._report_exec_filename):
+                cmd = '%s %s --select=%s --path=%s' % (sys.executable,
+                                                       self._report_exec_filename,
+                                                       report_filename,
+                                                       self.getReportDir())
+                cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
+                                          stylelib_filename, variables)
+                # if isinstance(cmd, unicode):
+                #    cmd = cmd.encode(config.DEFAULT_ENCODING)
+                msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
+                try:
+                    log.info(u'Запуск внешней программы <%s>' % msg_cmd)
+                    os.system(cmd)
+                except:
+                    log.fatal(u'Запуск программы <icReport> в режиме выбора действия над отчетом отчета: <%s>' % msg_cmd)
+            else:
+                log.warning(u'Запускаемый модуль программы <icReport> : <%s> не найден' % self._report_exec_filename)
+        except:
+            log.fatal(u'Ошибка режима выбора действия с отчетом <%s>' % report_filename)
 
     def _addCmdVars(self, cmd, variables=None):
         """
@@ -340,32 +355,35 @@ class icReportManager(object):
         @param variables: Словарь дополнительных переменных.
         @return: True/False.
         """
-        if parent is None:
-            parent = wx.GetApp().GetTopWindow()
-
-        description = self.getReportDescription(report_filename)
-        dlg = None
         try:
-            dlg = icreportactiondlg.icReportActionDialog(parent)
-            dlg.setReportNameTitle(description)
-            dlg.ShowModal()
-            result = dlg.getSelectedAction()
-            dlg.Destroy()
-            dlg = None
+            if parent is None:
+                parent = wx.GetApp().GetTopWindow()
 
-            if result == icreportactiondlg.PRINT_ACTION_ID:
-                return self.report_print(report_filename, db_url=db_url, sql=sql,
-                                         command=command, stylelib_filename=stylelib_filename, variables=variables)
-            elif result == icreportactiondlg.PREVIEW_ACTION_ID:
-                return self.report_preview(report_filename, db_url=db_url, sql=sql,
-                                           command=command, stylelib_filename=stylelib_filename, variables=variables)
-            elif result == icreportactiondlg.EXPORT_ACTION_ID:
-                return self.report_export(report_filename, db_url=db_url, sql=sql,
-                                          command=command, stylelib_filename=stylelib_filename, variables=variables)
-        except:
-            if dlg:
+            description = self.getReportDescription(report_filename)
+            dlg = None
+            try:
+                dlg = icreportactiondlg.icReportActionDialog(parent)
+                dlg.setReportNameTitle(description)
+                dlg.ShowModal()
+                result = dlg.getSelectedAction()
                 dlg.Destroy()
-            log.error(u'Ошибка выбора действия над отчетом <%s>' % report_filename)
+                dlg = None
+
+                if result == icreportactiondlg.PRINT_ACTION_ID:
+                    return self.report_print(report_filename, db_url=db_url, sql=sql,
+                                             command=command, stylelib_filename=stylelib_filename, variables=variables)
+                elif result == icreportactiondlg.PREVIEW_ACTION_ID:
+                    return self.report_preview(report_filename, db_url=db_url, sql=sql,
+                                               command=command, stylelib_filename=stylelib_filename, variables=variables)
+                elif result == icreportactiondlg.EXPORT_ACTION_ID:
+                    return self.report_export(report_filename, db_url=db_url, sql=sql,
+                                              command=command, stylelib_filename=stylelib_filename, variables=variables)
+            except:
+                if dlg:
+                    dlg.Destroy()
+                log.fatal(u'Ошибка выбора действия над отчетом <%s>' % report_filename)
+        except:
+            log.fatal(u'Ошибка выбора действия над отчетом <%s>' % report_filename)
         return False
 
     def getReportResourceFilename(self, report_filename='', report_dir=''):

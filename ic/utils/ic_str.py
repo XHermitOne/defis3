@@ -8,7 +8,7 @@
 import random
 import string
 
-__version__ = (0, 0, 3, 1)
+__version__ = (0, 1, 1, 1)
 
 # Элементы псевдографики
 PSEUDOGRAPH = (u'│', u'─', u'┌', u'┐', u'└', u'┘', u'├', u'┤', u'┬', u'┴', u'┼')
@@ -183,7 +183,7 @@ def cmpLowerU(str1, str2):
     """
     Сравнивает два символа в нижнем регистре.
     """
-    for i in xrange(min(len(str1), len(str2))):
+    for i in range(min(len(str1), len(str2))):
         s1 = str1[i]
         s2 = str2[i]
         if s1 in u_rusRegLowerLst and s2 in u_rusRegLowerLst:
@@ -216,17 +216,19 @@ def str2unicode(String_, CP_='utf-8'):
     @param CP_: Кодовая страница строки.
     @return: Строка в юникоде.
     """
-    if isinstance(String_, unicode):
+    if isinstance(String_, str):
         return String_
+    elif isinstance(String_, bytes):
+        return String_.decode(CP_)
     else:
-        return unicode(str(String_), CP_)
+        str(String_)
 
 
 def isLATText(Text_):
     """
     Текст написан в латинице?
     """
-    if type(Text_) in (str, unicode):
+    if isinstance(Text_, str):
         rus_chr = [c for c in Text_ if ord(c) > 128]
         return not bool(rus_chr)
     # Это не строка
@@ -242,7 +244,7 @@ def isLAT_DigitText(sText):
     @return: True - текст состоит из латинских букв, цифр и знака подчеркивания.
         False - во всех других случаях.
     """
-    if type(sText) in (str, unicode):
+    if isinstance(sText, str):
         return all([c.isdigit() or c == u'_' or c in string.ascii_letters for c in sText])
     # Это не строка
     return False
@@ -252,19 +254,22 @@ def isRUSText(Text_):
     """ 
     Строка с рускими буквами?
     """
-    if type(Text_) in (str, unicode):
+    if isinstance(Text_, str):
         rus_chr = [c for c in Text_ if ord(c) > 128]
         return bool(rus_chr)
     # Это не строка
     return False
 
+
 def _rus2lat(Text_, TranslateDict_):
     """
     Перевод русских букв в латинские по словарю замен.
     """
-    if not isinstance(Text_, unicode):
+    if isinstance(Text_, bytes):
+        Text_ = Text_.decode('utf-8')
+    elif not isinstance(Text_, str):
         # Привести к юникоду
-        Text_ = unicode(Text_, 'utf-8')
+        Text_ = str(Text_)
         
     txt_list = list(Text_)
     txt_list = [TranslateDict_.setdefault(ch, ch) for ch in txt_list]
@@ -286,7 +291,8 @@ def rus2lat(Text_):
     Перевод русских букв в латинские.
     """
     return _rus2lat(Text_, RUS2LATDict)
-    
+
+
 RUS2LATKeyboardDict = {u'а': 'f', u'б': '_', u'в': 'd', u'г': 'u', u'д': 'l', u'е': 't', u'ё': '_', u'ж': '_',
                        u'з': 'p', u'и': 'b', u'й': 'q', u'к': 'r', u'л': 'k', u'м': 'v', u'н': 'y', u'о': 'j',
                        u'п': 'g', u'р': 'h', u'с': 'c', u'т': 'n', u'у': 'e', u'ф': 'a', u'х': '_', u'ц': 'w',
@@ -398,13 +404,11 @@ def toUnicode(Value_, CP_='utf-8'):
     @param Value_: Значение.
     @param CP_: Кодовая страница для строк.
     """
-    if isinstance(Value_, unicode):
+    if isinstance(Value_, str):
         return Value_
-    elif isinstance(Value_, str):
-        return unicode(Value_, CP_)
-    else:
-        return unicode(str(Value_), CP_)
-    return None
+    elif isinstance(Value_, bytes):
+        return Value_.decode(CP_)
+    return str(Value_)
 
 
 def recode_text(txt, src_codepage='cp1251', dst_codepage='utf-8'):
@@ -416,9 +420,8 @@ def recode_text(txt, src_codepage='cp1251', dst_codepage='utf-8'):
     @return: Перекодированный текст в новой кодировке.
     """
     unicode_txt = toUnicode(txt, src_codepage)
-    if isinstance(unicode_txt, unicode):
+    if isinstance(unicode_txt, str):
         return unicode_txt.encode(dst_codepage)
-
     # Не смогли перекодировать текст
     return None
 
@@ -431,7 +434,7 @@ def txt_find_words(txt, *words):
     @param words: Искомые слова.
     @return: True (есть такие слова в тексте)/False (слова не найдены).
     """
-    if not isinstance(txt, unicode):
+    if not isinstance(txt, str):
         txt = toUnicode(txt)
     find = False
     for word in words:
@@ -481,7 +484,7 @@ def is_serial_zero(txt):
 
 
 def random_string(length):
-    return ''.join([random.choice(string.lowercase) for i in range(length)])
+    return ''.join([random.choice(string.ascii_lowercase) for i in range(length)])
 
 
 def limit_len_text(txt, length,  filler=u' '):
@@ -495,7 +498,7 @@ def limit_len_text(txt, length,  filler=u' '):
     @param filler: Символ-наполнитель.
     @return: Отредактированный текст определенной длины.
     """
-    if type(txt) not in (str, unicode):
+    if not isinstance(txt, str):
         txt = str(txt)
 
     if len(filler) > 1:
@@ -540,7 +543,7 @@ def isMultiLineTxt(txt=u''):
     @param txt: Текст.
     @return: True - Текст многостроный, False - текст - одна строка, None - ошибка.
     """
-    if type(txt) not in (str, unicode):
+    if not isinstance(txt, str):
         # Если тип не соответствует тексту, то ошибка
         return None
 
@@ -606,8 +609,8 @@ DEFIS_LOGO_TXT = u'''
          "╠╫╫╫╫╫╫╦»             »     »╦╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫Ñ`
           "░╫╫╫╫╫╫╦»                ,µ╦╫╫╫╫╫╫╫░╙```""""""╙╙╙╙╙╙╙╙"`
            `╨╫╫╫╫╫╫╫╦╥╥µµµµµµµuuµµ╦╦╦╫╫╫╫╫╫╫░░`  
-            `╚╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫░`    DEFIS version %s
-             `╚╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫░░`   Copyright %s
-               ╙╙╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨"
-                           ``````````````
+            `╚╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫░`    
+             `╚╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫╫░░`   
+               ╙╙╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨╨"      DEFIS version %s
+                           ``````````````   Copyright %s
 '''

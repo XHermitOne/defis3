@@ -8,13 +8,14 @@
 # --- Imports ---
 import os
 import os.path
+
 from .ic_extend import save_file_text
 from .ic_extend import load_file_text
 from . import ic_extend
 from . import ic_str
 from ic.log import log
 
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_ENCODING = 'utf-8'
 

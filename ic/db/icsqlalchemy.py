@@ -538,8 +538,8 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         if self.dataclass is not None:
             tab_name = self.dataclass.name
-            if isinstance(tab_name, str):
-                tab_name = tab_name.encode()
+            # if isinstance(tab_name, str):
+            #    tab_name = tab_name.encode()
             return tab_name
         return None
 

@@ -16,7 +16,7 @@ import os.path
 from ic.log import log
 from . import ic_str
 
-__version__ = (0, 0, 5, 2)
+__version__ = (0, 1, 1, 1)
 
 VAR_PATTERN = r'(\{\{.*?\}\})'
 
@@ -112,12 +112,12 @@ def is_genered(txt):
     @param txt: Тест.
     @return: True - есть замены, False - замен нет.
     """
-    if type(txt) not in (str, unicode):
+    if not isinstance(txt, str):
         return False
 
-    if isinstance(txt, str):
+    if isinstance(txt, bytes):
         # Для корректной проверки необходимо преобразовать в Unicode
-        txt = unicode(txt, DEFAULT_ENCODING)
+        txt = txt.decode(DEFAULT_ENCODING)
     return REPLACE_NAME_START in txt and REPLACE_NAME_END in txt
 
 
@@ -159,19 +159,15 @@ def gen_txt_file(sTxtTemplateFilename, sTxtOutputFilename, dContext=None, output
         log.debug(u'Кодовая страница шаблона <%s>' % template_encoding)
 
         # Шаблон необходимо проебразовать в юникод перед заполнением
-        template_txt = unicode(template_txt, template_encoding)
+        template_txt = ic_str.toUnicode(template_txt, template_encoding)
     except:
         log.fatal(u'Ошибка преобразования текста шаблона в Unicode')
         return False
 
     # Генерация текста по шаблону
     gen_txt = gen(template_txt, dContext)
-    if isinstance(gen_txt, unicode):
-        # Перед записью необходимо обратно перекодировать текст
-        if output_encoding is None:
-            gen_txt = gen_txt.encode(template_encoding)
-        else:
-            gen_txt = gen_txt.encode(output_encoding)
+
+    file_encoding = template_encoding if output_encoding is None output_encoding
 
     # Запись текста в выходной результирующий файл
     output_filename = os.path.abspath(sTxtOutputFilename)
@@ -181,7 +177,7 @@ def gen_txt_file(sTxtTemplateFilename, sTxtOutputFilename, dContext=None, output
             log.info(u'Создание папки <%s>' % output_path)
             os.makedirs(output_path)
 
-        output_file = open(output_filename, 'wt+')
+        output_file = open(output_filename, 'wt+', encoding=file_encoding)
         output_file.write(gen_txt)
         output_file.close()
         # Дополнительная проверка на существующий выходной файл

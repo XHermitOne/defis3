@@ -6,8 +6,8 @@
 программы генераторов отчетов icReport.
 """
 
-__version__ = (0, 0, 5, 3)
-
 from . import report_manager
+
+__version__ = (0, 1, 1, 1)
 
 REPORT_MANAGER = report_manager.icReportManager()

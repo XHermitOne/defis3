@@ -22,10 +22,16 @@ CONTAIN_SIGNATURE = '(..)'
 # Замены для адаптации модуля
 ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo', dst='# import wx.combo'),
                        dict(compare=STARTSWITH_SIGNATURE, src='import wx.xrc', dst='import wx.adv'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.combo.', dst='wx.adv.'),
+                       # Calendar
                        dict(compare=STARTSWITH_SIGNATURE, src='import wx.calendar', dst='# import wx.calendar'),
                        dict(compare=CONTAIN_SIGNATURE, src='wx.calendar.', dst='wx.adv.'),
-                       dict(compare=CONTAIN_SIGNATURE, src='wx.combo.', dst='wx.adv.'),
+                       # DatePickerCtrl
                        dict(compare=CONTAIN_SIGNATURE, src='wx.DatePickerCtrl', dst='wx.adv.DatePickerCtrl'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.DP_DEFAULT', dst='wx.adv.DP_DEFAULT'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_DATE_CHANGED', dst='wx.adv.EVT_DATE_CHANGED'),
+                       # Bitmap
+                       dict(compare=CONTAIN_SIGNATURE, src='.Ok()', dst='.IsOk()'),
                        )
 
 
@@ -183,4 +189,8 @@ def adapt_wxformbuilder_py(py_filename):
     """
     manager = icWXFormBuilderManager()
     result = manager.adaptation_form_py(py_filename)
+    if result:
+        log.info(u'Адаптация Python модуля wxFormBuilder <%s> прошла успешно' % py_filename)
+    else:
+        log.warning(u'Адаптация Python модуля wxFormBuilder <%s> закончилась неудачно' % py_filename)
     return result
