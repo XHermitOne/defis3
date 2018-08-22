@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+  <Styles>
+    <Style ss:ID="ce1">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
+      <Interior ss:Color="#99ccff"/>
+    </Style>
+    <Style ss:ID="ce2">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
+      <Interior ss:Color="#99ccff"/>
+    </Style>
+    <Style ss:ID="ce3">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Courier New"/>
+      <Interior ss:Color="#99ccff"/>
+    </Style>
+    <Style ss:ID="ce4">
+      <Alignment ss:Horizontal="Center" ss:WrapText="1" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce5">
+      <Alignment ss:Horizontal="Center" ss:WrapText="1" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce6">
+      <Alignment ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior ss:Color="#cccccc"/>
+    </Style>
+    <Style ss:ID="ce7">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior ss:Color="#eeeeee"/>
+    </Style>
+    <Style ss:ID="ce8">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Left" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Right" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce9">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce10">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="8"/>
+      <Interior ss:Color="#99ccff"/>
+    </Style>
+    <Style ss:ID="ce12">
+      <Alignment ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="12" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce13">
+      <Alignment ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Bottom" ss:Weight="0.99"/>
+      </Borders>
+      <Font ss:Size="10" ss:Bold="1" ss:FontName="Arial"/>
+      <Interior ss:Color="#eeeeee"/>
+    </Style>
+    <Style ss:ID="ce14">
+      <Font ss:Size="10" ss:FontName="Arial"/>
+    </Style>
+    <Style ss:ID="ce15">
+      <Font ss:Size="12" ss:Bold="1" ss:FontName="Arial"/>
+    </Style>
+    <Style ss:ID="ce16">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+      <Borders>
+        <Border ss:Color="#000000" ss:LineStyle="Continuous" ss:Position="Top" ss:Weight="0.99"/>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Arial"/>
+      <Interior/>
+    </Style>
+    <Style ss:ID="ce17">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Courier New1"/>
+      <Interior ss:Color="#666699"/>
+    </Style>
+    <Style ss:ID="ce18">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+      </Borders>
+      <Font ss:Size="10" ss:FontName="Courier New1"/>
+      <Interior ss:Color="#666699"/>
+    </Style>
+    <Style ss:ID="ce19">
+      <Alignment/>
+      <Borders>
+      </Borders>
+      <Font ss:FontName="Courier New"/>
+      <Interior ss:Color="#666699"/>
+    </Style>
+    <Style ss:ID="ce20">
+      <Font ss:Size="8"/>
+    </Style>
+    <Style ss:ID="Default">
+      <Font/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="rep_tmpl">
+    <Table>
+      <Column ss:Width="33.544" ss:StyleID="ce2"/>
+      <Column ss:Width="92.008" ss:StyleID="ce10"/>
+      <Column ss:Width="94.528" ss:StyleID="ce10"/>
+      <Column ss:Width="136.696" ss:StyleID="ce10"/>
+      <Column ss:Width="251.104" ss:StyleID="ce10"/>
+      <Column ss:Width="159.068" ss:StyleID="ce17"/>
+      <Column ss:Width="63.224" ss:Span="249" ss:StyleID="ce20"/>
+      <Row ss:Height="14.812">
+        <Cell ss:StyleID="ce1">
+          <Data ss:Type="String">Отчет списка документов за период дат</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[description]</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="14.812">
+        <Cell>
+          <Data ss:Type="String">.ODS</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[generator]</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="14.728">
+        <Cell>
+          <Data ss:Type="String">URL: postgresql+psycopg2://archivier:archivier@10.0.0.30:5432/library</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[data_source]</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="23.548">
+        <Cell ss:MergeDown="0" ss:MergeAcross="4" ss:StyleID="ce3">
+          <Data ss:Type="String">PY: doc_ext.query_daterange_doc.search_doc_data()</Data>
+        </Cell>
+        <Cell ss:Index="6">
+          <Data ss:Type="String">[query]</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.6">
+        <Cell ss:MergeDown="0" ss:MergeAcross="4" ss:StyleID="ce4">
+          <Data ss:Type="String">Список документов</Data>
+        </Cell>
+        <Cell ss:Index="6" ss:MergeDown="2" ss:MergeAcross="0" ss:StyleID="ce18">
+          <Data ss:Type="String">[header]</Data>
+        </Cell>
+        <Cell ss:StyleID="Default"/>
+        
+      </Row>
+      <Row ss:Height="12.6">
+        <Cell ss:StyleID="ce5"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:StyleID="ce12"/>
+        
+        <Cell ss:Index="7" ss:StyleID="Default"/>
+        
+      </Row>
+      <Row ss:Height="12.6">
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">№</Data>
+        </Cell>
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">Номер документа</Data>
+        </Cell>
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">Наименование</Data>
+        </Cell>
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">Тип документа</Data>
+        </Cell>
+        <Cell ss:StyleID="ce6">
+          <Data ss:Type="String">Контрагент</Data>
+        </Cell>
+        <Cell ss:Index="7" ss:StyleID="Default"/>
+        
+      </Row>
+      <Row ss:Height="12.6">
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce7">
+          <Data ss:Type="String">Дата:</Data>
+        </Cell>
+        <Cell ss:Index="3" ss:StyleID="ce13">
+          <Data ss:Type="String">['doc_date']</Data>
+        </Cell>
+        <Cell ss:StyleID="ce13"/>
+        
+        <Cell ss:StyleID="ce13"/>
+        
+        <Cell ss:StyleID="ce19">
+          <Data ss:Type="String">[head_grp] ['doc_date']</Data>
+        </Cell>
+        <Cell ss:StyleID="Default"/>
+        
+      </Row>
+      <Row ss:Height="12.6">
+        <Cell ss:StyleID="ce8">
+          <Data ss:Type="String">[^N^]</Data>
+        </Cell>
+        <Cell ss:StyleID="ce8">
+          <Data ss:Type="String">['n_doc']</Data>
+        </Cell>
+        <Cell ss:StyleID="ce8">
+          <Data ss:Type="String">['doc_name']</Data>
+        </Cell>
+        <Cell ss:StyleID="ce8">
+          <Data ss:Type="String">['doc_typ']</Data>
+        </Cell>
+        <Cell ss:StyleID="ce8">
+          <Data ss:Type="String">['contragent']</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[detail]</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="12.6">
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce9">
+          <Data ss:Type="String">Документов за дату:</Data>
+        </Cell>
+        <Cell ss:Index="3" ss:StyleID="ce15">
+          <Data ss:Type="String">[^SUM({doc_count})^]</Data>
+        </Cell>
+        <Cell ss:StyleID="ce16"/>
+        
+        <Cell ss:StyleID="ce16"/>
+        
+        <Cell ss:StyleID="ce19">
+          <Data ss:Type="String">[foot_grp] ['doc_date']</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="17.192">
+        <Cell ss:MergeDown="0" ss:MergeAcross="1" ss:StyleID="ce9">
+          <Data ss:Type="String">Всего документов:</Data>
+        </Cell>
+        <Cell ss:Index="3" ss:StyleID="ce15">
+          <Data ss:Type="String">[^N^]</Data>
+        </Cell>
+        <Cell ss:StyleID="ce14"/>
+        
+        <Cell ss:StyleID="ce14"/>
+        
+        <Cell>
+          <Data ss:Type="String">[footer]</Data>
+        </Cell>
+      </Row>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <PageSetup>
+        <Layout x:Orientation="Landscape"/>
+        <PageMargins x:Right="28.0" x:Bottom="28.0" x:Top="28.0" x:Left="28.0"/>
+      </PageSetup>
+      <Print>
+        <PaperSizeIndex>9</PaperSizeIndex>
+      </Print>
+    </WorksheetOptions>
+  </Worksheet>
+</Workbook>

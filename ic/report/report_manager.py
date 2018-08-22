@@ -244,8 +244,6 @@ class icReportManager(object):
                                                        self.getReportDir())
                 cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
                                           stylelib_filename, variables)
-                # if isinstance(cmd, unicode):
-                #    cmd = cmd.encode(config.DEFAULT_ENCODING)
                 msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
                 try:
                     log.info(u'Запуск внешней программы <%s>' % msg_cmd)
