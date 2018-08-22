@@ -23,7 +23,7 @@ SPC_IC_FLATMENUITEM = {'label': 'item',        # Надпись
                        'kind': 'normal',       # Вид пункта меню
                        }
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icFlatMenuItemPrototype(flatmenu.FlatMenuItem):

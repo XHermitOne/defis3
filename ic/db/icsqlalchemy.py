@@ -1384,8 +1384,8 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 if 'activate' not in field or int(field['activate']):
                     # Имя поля(не должно быть unicode)
                     fld_name = field['name']
-                    if isinstance(fld_name, str):
-                        fld_name = fld_name.encode()
+                    # if isinstance(fld_name, str):
+                    #    fld_name = fld_name.encode()
 
                     if field['type'] == 'Field':
                         try:

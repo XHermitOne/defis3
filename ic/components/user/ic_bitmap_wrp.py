@@ -32,6 +32,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.utils import coderror
 from ic.dlg import ic_dlg
+from ic.log import log
 
 from ic.bitmap import icimg2py
 from ic.bitmap import icimagelibrary as parentModule
@@ -55,8 +56,8 @@ ic_class_spc = {'type': 'Bitmap',
                 '__styles__': ic_class_styles,
                 '__lists__': {},
                 '__events__': {},
-                '__attr_types__': {icDefInf.EDT_RO_TEXTFIELD: ['_body'],
-                                   icDefInf.EDT_USER_PROPERTY: ['file_name'],
+                '__attr_types__': {icDefInf.EDT_IMG: ['file_name'],
+                                   # icDefInf.EDT_RO_TEXTFIELD: ['_body'],
                                    },
                 '__parent__': icwidget.SPC_IC_SIMPLE,
                 '__attr_hlp__': {'file_name': u'Имя файла картинки',
@@ -83,7 +84,11 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 # --- Функции редактирования
+# ВНИМАНИЕ! Функции необходимы
+# в случае, когда серилизованное тело образа хранится в ресурсе.
+
 def _draw_picture_by_filename(dc, rect, img_body):
     """
     Отрисовать картинку в гриде редактора свойств с указанием имени файла образа.
@@ -157,12 +162,18 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     if attr == 'file_name':
         if value and os.path.exists(value):
-            # Серилизованная строка
-            srlz_string = icimg2py.getImgFileData(value)
-            # Т.к. функция создания серилизованной строки
-            # создает строку для вставки ее в код
-            # надо сделать над ней eval
-            body = eval(srlz_string)
+            body = None
+            try:
+                # Серилизованная строка
+                srlz_string = icimg2py.getImgFileData(value)
+
+                log.debug(str(srlz_string))
+                # Т.к. функция создания серилизованной строки
+                # создает строку для вставки ее в код
+                # надо сделать над ней eval
+                body = eval(srlz_string)
+            except:
+                log.fatal(u'Ошибка серилизации файла образа <%s>' % value)
             propEdt.setPropertyValue('_body', body, False)
             return coderror.IC_CTRL_OK
 
@@ -173,11 +184,11 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     """
     if attr == 'file_name':
         return text
-    
-### END_EDITOR_FUNCS_BLOCK
+
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-class icBitmap(icwidget.icSimple, parentModule.icSerializedImagePrototype):
+class icBitmap(icwidget.icSimple, parentModule.icImageLibManager):
     """
     Образ/Картинка.
     """
@@ -208,6 +219,6 @@ class icBitmap(icwidget.icSimple, parentModule.icSerializedImagePrototype):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        self._body = component['_body']
-        self.file_name = component['file_name']
-        parentModule.icSerializedImagePrototype.__init__(self, self.name, self._body)
+        parentModule.icImageLibManager.__init__(self)
+
+        self.setFileName(component['file_name'])

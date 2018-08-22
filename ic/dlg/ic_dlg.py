@@ -121,7 +121,7 @@ def icImageDlg(Parent_=None, DefaultImgDir_=None):
         if dlg.ShowModal() == wx.ID_OK:
             ret = dlg.GetFile()
     except:
-        log.fatal(u'Путь: <%s>' % DefaultImgDir_)
+        log.fatal(u'Ошибка диалога выбора графического файла. Путь: <%s>' % DefaultImgDir_)
         
     if dlg:
         dlg.Destroy()

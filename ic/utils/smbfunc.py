@@ -7,13 +7,14 @@
 
 import os
 import os.path
+import shutil
 import smbclient
-import urlparse
+import urllib.parse
 
 from ic.log import log
 from ic.utils import ic_file
 
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_WORKGROUP = 'WORKGROUP'
 
@@ -54,7 +55,7 @@ def smb_download_file(download_urls=None, filename=None, out_path=None, re_write
     if download_urls is None:
         log.warning(u'Не определены пути поиска файла на SMB ресурсах')
         return False
-    elif isinstance(download_urls, str) or isinstance(download_urls, unicode):
+    elif isinstance(download_urls, str):
         # У нас 1 URL
         download_urls = [download_urls]
 
@@ -65,7 +66,7 @@ def smb_download_file(download_urls=None, filename=None, out_path=None, re_write
     smb = None
     for download_url in download_urls:
         try:
-            url = urlparse.urlparse(download_url)
+            url = urllib.parse.urlparse(download_url)
             download_server = url.hostname
             download_share = url.path.split(os.path.sep)[1]
             download_username = url.username

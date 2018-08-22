@@ -16,28 +16,25 @@ _ = wx.GetTranslation
 __version__ = (0, 1, 1, 1)
 
 
-class icEditUserProperty(wx.propgrid.StringProperty):
+class icEditUserPropertyEditor(wx.propgrid.PGTextCtrlAndButtonEditor):
     """
     Редактор пользовательского свойства,
-        определяемого компонентом
+        определяемого компонентом.
     """
+    property_edit_manager = None
 
-    def __init__(self, label, name=wx.propgrid.PG_LABEL, value=''):
-        wx.propgrid.StringProperty.__init__(self, label, name, value)
-
-        self.property_edit_manager = None
-
+    @classmethod
     def setPropertyEditManager(self, manager):
         self.property_edit_manager = manager
 
+    @classmethod
     def GetEditor(self):
         """
         Set editor to have button.
         ВНИМАНИЕ! Это указание типа редактора свойства.
         В данном случае это текстовый редактор с кнопкой
         """
-        # return 'TextCtrlAndButton'
-        return 'TrivialPropertyEditor'
+        return 'TextCtrlAndButton'
 
     def _get_edit_dlg(self, attr, value, pos=wx.DefaultPosition, size=wx.DefaultSize,
                       style=0, propEdt=None, *arg, **kwarg):
@@ -68,6 +65,7 @@ class icEditUserProperty(wx.propgrid.StringProperty):
                 edtFunc = getattr(modl, 'get_user_property_editor')
                 value = edtFunc(attr, value, pos, size,
                                 style, propEdt, *arg, **kwarg)
+                # log.debug(u'Значение: %s, Атрибут %s' % (str(value), attr))
                 return str(value)
             except:
                 log.fatal(u'Ошибка вызова пользовательского редактора свойства <%s>' % attr)
@@ -75,20 +73,20 @@ class icEditUserProperty(wx.propgrid.StringProperty):
             log.warning(u'Не определен объект редактора свойств')
         return ''
 
-    def OnEvent(self, propgrid, primaryEditor, event):
-        """
-        Обработчик событий редактора свойства.
-        @param propgrid:
-        @param primaryEditor:
-        @param event:
-        @return:
-        """
-        if event.GetEventType() == wx.wxEVT_COMMAND_BUTTON_CLICKED:
-            value = self._get_edit_dlg(self.GetName(), self.GetValue(),
-                                       self.property_edit_manager)
-            self.SetValueInEvent(value)
-            return True
-        return False
+    # def OnEvent(self, propgrid, primaryEditor, event):
+    #    """
+    #    Обработчик событий редактора свойства.
+    #    @param propgrid:
+    #    @param primaryEditor:
+    #    @param event:
+    #    @return:
+    #    """
+    #    if event.GetEventType() == wx.wxEVT_COMMAND_BUTTON_CLICKED:
+    #        value = self._get_edit_dlg(self.GetName(), self.GetValue(),
+    #                                   self.property_edit_manager)
+    #        self.SetValueInEvent(value)
+    #        return True
+    #    return False
 
     def ValueToString(self, value, flags):
         return str(value)
@@ -150,3 +148,104 @@ class icEditUserProperty(wx.propgrid.StringProperty):
             return True, value
         else:
             return False
+
+    # --- Переопределеяемые методы родительского редактора ----
+    def CreateControls(self, propgrid, property, pos, sz):
+        """
+        Create the actual wxPython controls here for editing the
+            property value.
+
+            You must use propgrid.GetPanel() as parent for created controls.
+
+            Return value is either single editor control or tuple of two
+            editor controls, of which first is the primary one and second
+            is usually a button.
+        """
+        try:
+            x, y = pos
+            w, h = sz
+
+            # Make room for button
+            bw = propgrid.GetRowHeight()
+            w -= bw
+
+            s = property.GetDisplayedString();
+
+            self.tc = wx.TextCtrl(propgrid.GetPanel(), wx.propgrid.PG_SUBID1, s,
+                                  (x, y), (w, h),
+                                  wx.TE_PROCESS_ENTER)
+            btn = wx.Button(propgrid.GetPanel(), wx.propgrid.PG_SUBID2, '...',
+                            (x+w, y),
+                            (bw, h), wx.WANTS_CHARS)
+            return wx.propgrid.PGWindowList(self.tc, btn)
+        except:
+            log.fatal(u'Ошибка создания контролов редактора свойств <%s>' % self.__class__.__name__)
+
+    #def UpdateControl(self, property, ctrl):
+    #    ctrl.SetValue(property.GetDisplayedString())
+
+    #def DrawValue(self, dc, rect, property, text):
+    #    if not property.IsValueUnspecified():
+    #        dc.DrawText(property.GetDisplayedString(), rect.x+5, rect.y)
+
+    def OnEvent(self, propgrid, property, ctrl, event):
+        """
+        Обработчик событий редактора свойства.
+        Return True if modified editor value should be committed to
+            the property. To just mark the property value modified, call
+            propgrid.EditorsValueWasModified().
+        """
+        if not ctrl:
+            return False
+
+        evtType = event.GetEventType()
+
+        if evtType == wx.wxEVT_COMMAND_BUTTON_CLICKED:
+            value = self._get_edit_dlg(attr=property.GetName(), value=self.tc.GetValue(),
+                                       propEdt=self.property_edit_manager)
+            property.SetValueInEvent(value)
+            return True
+        # elif evtType == wx.wxEVT_COMMAND_TEXT_ENTER:
+        #     if propgrid.IsEditorsValueModified():
+        #         return True
+        # elif evtType == wx.wxEVT_COMMAND_TEXT_UPDATED:
+        #     #
+        #     # Pass this event outside wxPropertyGrid so that,
+        #     # if necessary, program can tell when user is editing
+        #     # a textctrl.
+        #     event.Skip()
+        #     event.SetId(propgrid.GetId())
+        #
+        #     propgrid.EditorsValueWasModified()
+        #     return False
+
+        return False
+
+    #def GetValueFromControl(self, property, ctrl):
+    #    """
+    #    Return tuple (wasSuccess, newValue), where wasSuccess is True if
+    #        different value was acquired successfully.
+    #    """
+    #    tc = ctrl
+    #    textVal = tc.GetValue()
+
+    #    if property.UsesAutoUnspecified() and not textVal:
+    #        return True, None
+
+    #    res, value = property.StringToValue(textVal, wx.propgrid.PG_FULL_VALUE)
+
+    #    # Changing unspecified always causes event (returning
+    #    # True here should be enough to trigger it).
+    #    if not res and value is None:
+    #        res = True
+
+    #    return res, value
+
+    # def SetValueToUnspecified(self, property, ctrl):
+    #    ctrl.Remove(0, len(ctrl.GetValue()))
+
+    #def SetControlStringValue(self, property, ctrl, text):
+    #    ctrl.SetValue(text)
+
+    #def OnFocus(self, property, ctrl):
+    #    ctrl.SetSelection(-1, -1)

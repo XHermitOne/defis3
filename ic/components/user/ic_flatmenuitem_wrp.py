@@ -22,6 +22,7 @@
 
 import wx
 from wx.lib.agw import flatmenu
+
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -34,6 +35,7 @@ from ic.engine import icflatmenuitem
 from ic.engine import icflatmenu
 from ic.utils import coderror
 from ic.dlg import ic_dlg
+from ic.log import log
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType
@@ -287,6 +289,10 @@ class icFlatMenuItem(icwidget.icWidget, icflatmenuitem.icFlatMenuItemPrototype):
 
         bitmap_obj = self.GetKernel().Create(bmp_psp)
         bmp = bitmap_obj.getBitmap()
+        if bmp:
+            log.debug(u'Создание картинки для пункта меню <%s>' % self.getName())
+        else:
+            log.debug(u'Не определена картинка для пункта меню <%s>' % self.getName())
         return bmp
 
     def getPic1(self):

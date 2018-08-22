@@ -37,7 +37,8 @@ VISUAL_PROPERTIES = ('flag', 'proportion', 'size', 'position', 'border', 'span')
 DEFAULT_ENCODE = 'utf-8'
 
 # Список пользовательских расширенных редакторов свойств
-CUSTOM_PROPERTY_EDITORS = (icpyscriptproperty.icPyScriptPropertyEditor, )
+CUSTOM_PROPERTY_EDITORS = (icpyscriptproperty.icPyScriptPropertyEditor,
+                           icedituserproperty.icEditUserPropertyEditor)
 
 
 class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
@@ -301,9 +302,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             # определяемого компонентом
             if not isinstance(value, str):
                 value = str(value)
-            wx_property = icedituserproperty.icEditUserProperty(name, value=value)
-            wx_property.setPropertyEditManager(self)
-            self.SetPropertyEditor(wx_property, wx_property.GetEditor())
+            wx_property = wx.propgrid.LongStringProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_RO_TEXTFIELD:
             # Read-Only текстовое поле
@@ -314,7 +313,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
 
         elif property_type == icDefInf.EDT_IMG:
             # Редактор изображений
-            wx_property = wx.propgrid.ImageFileProperty(name)
+            wx_property = wx.propgrid.ImageFileProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_FILE:
             # Редактор выбора файла
@@ -385,6 +384,10 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
                     # Связывать расширенный редактор со свойством можно только после добавления
                     # свойства
                     self.SetPropertyEditor(attr, icpyscriptproperty.icPyScriptPropertyEditor.__name__)
+                elif edt_type == icDefInf.EDT_USER_PROPERTY:
+                    # Связывать расширенный редактор со свойством можно только после добавления
+                    # свойства
+                    self.SetPropertyEditor(attr, icedituserproperty.icEditUserPropertyEditor.__name__)
 
         events_page = self.AddPage(u'Events/События', imglib.imgEvents)
 

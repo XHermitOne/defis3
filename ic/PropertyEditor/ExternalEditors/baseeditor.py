@@ -5,6 +5,8 @@
 Модуль содержит базовый класс для внешних редакторов.
 """
 
+import os.path
+
 from ic.utils import coderror
 import wx.lib.dialogs
 from ic.utils import ic_uuid
@@ -229,6 +231,9 @@ class icImageEdt(icBaseEdt):
         Функция контроля значения.
         @param value: Контролируемое значение.
         """
+        if isinstance(value, str):
+            if os.path.exists(value):
+                return coderror.IC_CTRL_OK
         return coderror.IC_CTRL_FAILED_IGNORE
 
 
@@ -254,7 +259,6 @@ class icFileEdt(icBaseEdt):
         @param value: Контролируемое значение.
         """
         if isinstance(value, str):
-            import os.path
             if os.path.isabs(value):
                 return coderror.IC_CTRL_OK
         return coderror.IC_CTRL_FAILED_IGNORE
@@ -282,7 +286,6 @@ class icDirEdt(icBaseEdt):
         @param value: Контролируемое значение.
         """
         if isinstance(value, str):
-            import os.path
             if os.path.isabs(value):
                 return coderror.IC_CTRL_OK
         return coderror.IC_CTRL_FAILED_IGNORE

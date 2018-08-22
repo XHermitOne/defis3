@@ -130,7 +130,7 @@ RegEditorClasses([baseeditor.icCheckBoxEdt,
                   baseeditor.icROTextEdt,
                   baseeditor.icTextListEdt,
                   baseeditor.icUserEdt,
-                  # baseeditor.icImageEdt,
+                  baseeditor.icImageEdt,
                   baseeditor.icFileEdt,
                   baseeditor.icDirEdt,
                   ])

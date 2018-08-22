@@ -12,10 +12,10 @@ import wx.propgrid
 from ic.log import log
 
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
-class icPyScriptPropertyEditor(wx.propgrid.PyTextCtrlEditor):
+class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
     """
     Редактор атрибута/свойства/события компонента в виде скрипта Python.
     """
@@ -34,32 +34,35 @@ class icPyScriptPropertyEditor(wx.propgrid.PyTextCtrlEditor):
         @param sz:
         @return:
         """
-        # Create and populate buttons-subwindow
-        buttons = wx.propgrid.PGMultiButton(propGrid, sz)
+        try:
+            x, y = pos
+            w, h = sz
 
-        # Add two regular buttons
-        buttons.AddButton('..')
-        buttons.AddButton('>')
+            # Create the 'primary' editor control (textctrl in this case)
+            tc = wx.TextCtrl(propGrid.GetPanel(), -1, '',
+                             (x, y), (2048, h), wx.BORDER_NONE)
 
-        # Create the 'primary' editor control (textctrl in this case)
-        wnd = self.CallSuperMethod('CreateControls',
-                                   propGrid,
-                                   property,
-                                   pos,
-                                   buttons.GetPrimarySize())
+            # Create and populate buttons-subwindow
+            buttons = wx.propgrid.PGMultiButton(propGrid, sz)
 
-        # Finally, move buttons-subwindow to correct position and make sure
-        # returned wxPGWindowList contains our custom button list.
-        buttons.Finalize(propGrid, pos)
+            # Add two regular buttons
+            buttons.AddButton('..')
+            buttons.AddButton('>')
 
-        # We must maintain a reference to any editor objects we created
-        # ourselves. Otherwise they might be freed prematurely. Also,
-        # we need it in OnEvent() below, because in Python we cannot "cast"
-        # result of wxPropertyGrid.GetEditorControlSecondary() into
-        # PGMultiButton instance.
-        self.buttons = buttons
+            # Finally, move buttons-subwindow to correct position and make sure
+            # returned wxPGWindowList contains our custom button list.
+            buttons.Finalize(propGrid, pos)
 
-        return wnd, buttons
+            # We must maintain a reference to any editor objects we created
+            # ourselves. Otherwise they might be freed prematurely. Also,
+            # we need it in OnEvent() below, because in Python we cannot "cast"
+            # result of wxPropertyGrid.GetEditorControlSecondary() into
+            # PGMultiButton instance.
+            self.buttons = buttons
+
+            return wx.propgrid.PGWindowList(tc, buttons)
+        except:
+            log.fatal(u'Ошибка создания контролов редактора свойства Python <%s>' % self.__class__.__name__)
 
     def OnEvent(self, propGrid, prop, ctrl, event):
         """
@@ -91,7 +94,7 @@ class icPyScriptPropertyEditor(wx.propgrid.PyTextCtrlEditor):
 
                 return result  # Return false since value did not change
 
-        return self.CallSuperMethod('OnEvent', propGrid, prop, ctrl, event)
+        return wx.propgrid.PGTextCtrlEditor.OnEvent(self, propGrid, prop, ctrl, event)
 
     def create_on_event(self, property, property_name=None):
         """
