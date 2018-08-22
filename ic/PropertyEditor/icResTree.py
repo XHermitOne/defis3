@@ -213,7 +213,7 @@ def InitObjectsInfo(bRefresh=False):
                                 modl.ic_can_contain,
                                 modl.ic_can_not_contain, modl)
         except:
-            log.error(u'MODULE IMPORT ERROR: module= <%s>' % modl)
+            log.error(u'Ошибка импорта модуля <%s>' % modl)
 
     # Чистим словарь групп
     icDefInf.ClearUserGroup()
@@ -868,7 +868,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             if 'win2' in res and data != res['win2']:
                 nameList.append(res['win2']['name'])
         except:
-            log.fatal(u'No parent in icResTree.GetChildNameList()')
+            log.fatal(u'Ошибка в icResTree.GetChildNameList()')
 
         return nameList
 
@@ -907,7 +907,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             else:
                 log.warning(u'Файл помощи <%s> не найден' % fileDoc)
         except:
-            log.fatal(u'View Help Error!')
+            log.fatal(u'Ошибка просмотра помощи')
 
     def _initPicDict(self):
         """
@@ -1276,6 +1276,8 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             fn = self.GetResEditor().get_obj_module_name(data['obj_module'])
             if os.path.isfile(fn):
                 return self.GetResEditor().OpenIDEFile(fn)
+            else:
+                log.warning(u'Не найден файл <%s> модуля объекта' % fn)
 
         # Если модуль объекта не определен предлагаем создать его
         if 1:
@@ -2015,7 +2017,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         if not rn:
             rn = self.file
 
-        rn = rn.replace('\\', '/')
+        rn = os.path.normpath(rn)   # .replace('\\', '/')
         if rn:
             p, nm = os.path.split(rn)
             fn = os.path.join(p, nm.replace('.', '_')+'.py')
@@ -2050,12 +2052,19 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         # Определяем имя модуля ресурса.
         fn = self.get_res_module_name(rn)
         if os.path.isfile(fn):
+            log.debug(u'Имя файла модуля ресурса <%s>' % fn)
             return fn
 
         txt = resource.genResModuleHead(rn, fn)
-        file_obj = open(fn, 'wb')
-        file_obj.write(txt)
-        file_obj.close()
+        file_obj = None
+        try:
+            file_obj = open(fn, 'wt', encoding=ic.config.DEFAULT_ENCODING)
+            file_obj.write(txt)
+            file_obj.close()
+        except:
+            log.fatal(u'Ошибка сохранения файла <%s>' % fn)
+            if file_obj:
+                file_obj.close()
         return fn
 
     def create_obj_module(self, name, fn=None):
@@ -2068,7 +2077,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             return fn
 
         txt = resource.genObjModuleHead(name, fn)
-        f = open(fn, 'wb')
+        f = open(fn, 'wt', encoding=ic.config.DEFAULT_ENCODING)
         f.write(txt)
         f.close()
         return fn
@@ -2305,11 +2314,8 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         """
         Признак того, что ресурс хранится в питоновском модуле.
         """
-        if path and os.path.split(path)[1].endswith('.py'):
-            return True
-        else:
-            return False
-            
+        return path and os.path.split(path)[1].endswith('.py')
+
     def LoadRes(self, path, formName=None):
         """
         Загружает ресурсное описание.
@@ -2345,13 +2351,14 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                     dlg = wx.SingleChoiceDialog(self,
                                                 u'Выберите форму', u'Форма', list(_res.keys()),
                                                 wx.OK | wx.CANCEL)
+                    key = None
                     try:
                         if dlg.ShowModal() == wx.ID_OK:
                             key = dlg.GetStringSelection()
                             self.res = _res[key]
                             self._formName = key
                     except:
-                        key = None
+                        pass
 
                     dlg.Destroy()
                     if key is None:
@@ -2385,11 +2392,12 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         res_name = None
         if py_filename is None:
             if self.file and '.py' in self.file:
-                py_filename = self.file.replace('\\', '/')
+                py_filename = os.path.normpath(self.file)   # .replace('\\', '/')
             elif self.file:
-                res_name = self.file.replace('\\', '/')
+                res_name = os.path.normpath(self.file)  # .replace('\\', '/')
                 py_filename = None
 
+        # log.debug(u'Открытие файла модуля <%s> ресурса <%s>' % (py_filename, res_name))
         if py_filename is None and res_name:
             py_filename = self.create_res_module(res_name)
             py_path, py_name = os.path.split(py_filename)
@@ -2401,6 +2409,8 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         if py_filename:
             self.OpenIDEFile(py_filename)
             return True
+        else:
+            log.warning(u'Не определен файл модуля ресурса')
         return False
 
     def OnPyScript(self, evt):
@@ -2409,6 +2419,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         питоновского модуля.
         """
         self.open_ide_py_module()
+        # evt.Skip()
 
     def OpenIDEFile(self, fl):
         """
@@ -2417,10 +2428,15 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         ide = self.GetIDEInterface()
         if ide:
             alreadyopen = ide.GetAlreadyOpen()
-            if fl not in alreadyopen:
-                ide.OpenFile(fl, True)
+            if alreadyopen:
+                if fl not in alreadyopen:
+                    ide.OpenFile(fl, True)
+                else:
+                    ide.SelectFile(fl)
             else:
-                ide.SelectFile(fl)
+                ide.OpenFile(fl, True)
+        else:
+            log.warning(u'Не определен объект IDE для открытия файла <%s>' % fl)
 
     def OnGraphEditor(self, evt):
         """

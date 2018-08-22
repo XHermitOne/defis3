@@ -153,7 +153,7 @@ class PrjImportSystems(PrjImportFolder):
     def setRoot(self, Root_):
         prj_node.PrjNode.setRoot(self, Root_)
         self.res_editor = self.getRoot().getParent().res_editor
-        self.ide = self.getRoot().getParent().ide
+        self.ide = self.getRoot().getParent().getIDE()
 
     def getSubSytems(self):
         """
@@ -597,7 +597,7 @@ class PrjImportSys(PrjNotImportSys):
         Редактирование импортируемой системы/
         редактирование __init__.py файла.
         """
-        ide = self.getParentRoot().getParent().ide
+        ide = self.getParentRoot().getParent().getIDE()
         if ide:
             imp_path = self.getPath()
             if not imp_path:

@@ -8,6 +8,9 @@
 import wx
 import os
 import sys
+import wx.lib.agw.flatnotebook as fnb
+
+from ic.log import log
 
 try:
     dirName = os.path.dirname(os.path.abspath(__file__))
@@ -17,8 +20,6 @@ except:
 dir_name = os.path.split(dirName)[0]
 if dir_name not in sys.path:
     sys.path.append(dir_name)
-
-import wx.lib.agw.flatnotebook as fnb
 
 
 __version__ = (0, 1, 1, 1)
@@ -58,6 +59,9 @@ class icProjectNB(fnb.FlatNotebook):
     def init_notebook(self, prj_edt, res_edt, ifs):
         """
         Инициализация нотебука.
+        @param prj_edt: Редактор проекта.
+        @param res_edt: Редактор ресурса.
+        @param ifs: Объект, реализующий интерфейс IDE.
         """
         prj_edt.type = 'PrjTree'
         self.add_project_page(prj_edt)
@@ -69,6 +73,12 @@ class icProjectNB(fnb.FlatNotebook):
         self.SetResourceEditor(res_edt)
         
         # Устанавливаем указатель на IDE
+        if ifs is None:
+            log.warning(u'Определяем объект IDE из редактора проекта')
+            ifs = prj_edt.getIDE()
+
+        if ifs is None:
+            log.warning(u'Не определен объект, реализующий интерфейс IDE')
         res_edt.SetIDEInterface(ifs)
         # Устанавливаем указатель на панель групп
         res_edt.tree.SetPanelGroup(self)

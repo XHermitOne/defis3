@@ -336,7 +336,7 @@ class PrjModules(prj_node.PrjFolder):
         """
         Редактирование пакета(редактирование __init__.py файла).
         """
-        ide = self.getRoot().getParent().ide
+        ide = self.getRoot().getParent().getIDE()
         if ide:
             py_file = os.path.join(os.path.dirname(self.getRoot().getPrjFileName()),
                                    '__init__.py')
@@ -344,6 +344,8 @@ class PrjModules(prj_node.PrjFolder):
             if not ide.SelectFile(py_file):
                 return ide.OpenFile(py_file, True, readonly=self.readonly)
             return True
+        else:
+            log.warning(u'Не определен IDE для редактирования модуля')
             
     def unlockAllPyFiles(self):
         """
@@ -441,7 +443,7 @@ class PrjPackage(prj_node.PrjFolder):
         """
         Редактирование пакета(редактирование __init__.py файла).
         """
-        ide = self.getRoot().getParent().ide
+        ide = self.getRoot().getParent().getIDE()
         if ide:
             pack_dir = self.getPath()
             py_file = os.path.join(pack_dir, '__init__.py')
@@ -454,7 +456,9 @@ class PrjPackage(prj_node.PrjFolder):
                                self.getRoot().lock_dir)
                 return ide.OpenFile(py_file, True, readonly=self.readonly)
             return True
-            
+        else:
+            log.warning(u'Не определен IDE для редактирования модуля')
+
     def unlockAllPyFiles(self):
         """
         Разблокировать все *.py файлы.
@@ -475,7 +479,7 @@ class PrjPackage(prj_node.PrjFolder):
         # И в конце удалить папку пакета, если она есть
         package = self.getPath()
         # Выгрузить из редакторов
-        self.getRoot().getParent().ide.CloseFile(os.path.join(package, '__init__.py'))
+        self.getRoot().getParent().getIDE().CloseFile(os.path.join(package, '__init__.py'))
 
         # Удалить все блокировки
         self.getRoot().unlockAllPyFilesInIDE()
@@ -611,7 +615,7 @@ class PrjModule(prj_node.PrjNode):
         if os.path.isfile(old_py_file):
             os.rename(old_py_file, new_py_file)
             # Закрыть модуль для редактирования
-            ide = self.getRoot().getParent().ide
+            ide = self.getRoot().getParent().getIDE()
             ide.CloseFile(old_py_file)
             # И опять открыть
             self.edit()
@@ -629,12 +633,7 @@ class PrjModule(prj_node.PrjNode):
         log.info(u'Редактирование модуля python <%s>' % py_file)
 
         # Определяем IDE
-        ide = self.getRoot().getParent().ide
-        if ide is None:
-            log.warning(u'Не определен IDE для редактрования модуля <%s>' % py_file)
-            log.info(u'Используется внешний редактор модулей Python')
-            ide = ext_python_editor.icExtPythonEditor()
-
+        ide = self.getRoot().getParent().getIDE()
         if ide:
             # Сначала разблокировать все модули
             self.getRoot().unlockAllPyFilesInIDE()
@@ -667,6 +666,8 @@ class PrjModule(prj_node.PrjNode):
                                                                   py_dir, self.name, 'py', bEnable=True)
 
             return ide.OpenFile(py_file, True, readonly=self.readonly)
+        else:
+            log.warning(u'Не определен IDE для редактирования модуля')
 
         return False
 
@@ -702,7 +703,7 @@ class PrjModule(prj_node.PrjNode):
         module_name = os.path.join(self.getModulePath(), self.name+self.ext)
 
         # Выгрузить из редакторов
-        self.getRoot().getParent().ide.CloseFile(module_name)
+        self.getRoot().getParent().getIDE().CloseFile(module_name)
         res_file_name = self.getRoot().getParent().res_editor.GetResFileName()
         if res_file_name and ic_file.SamePathWin(module_name, res_file_name):
             self.getRoot().getParent().res_editor.CloseResource()

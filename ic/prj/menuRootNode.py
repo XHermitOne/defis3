@@ -369,11 +369,13 @@ class icMenuRootNode(flatmenu.FlatMenu):
             return False
 
         node = self._Parent
-        ide = node.getParent().ide
+        ide = node.getParent().getIDE()
         if ide:
             if not ide.SelectFile(filename):
                 return ide.OpenFile(filename, True, readonly=False)
             return True
+        else:
+            log.warning(u'Не определен IDE для редактирования модуля <%s>' % filename)
         return False
 
     def OnPopupHelp(self, event):

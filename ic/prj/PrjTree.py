@@ -13,6 +13,7 @@ from ic.components import icwidget
 from . import prj_root
 from ic.bitmap import ic_bmp
 from ic.log import log
+from ic.editor import ext_python_editor
 
 __version__ = (0, 1, 1, 1)
 
@@ -182,8 +183,12 @@ class PrjTree(wx.TreeCtrl):
         self.setRoot()
 
     def getIDE(self):
+        if self.ide is None:
+            log.warning(u'Не определен IDE для редактрования модулей проекта')
+            log.warning(u'Используется внешний редактор модулей Python')
+            self.ide = ext_python_editor.icExtPythonEditor()
         return self.ide
-    
+
     def getIDEFrame(self):
         return self.ide_frame
     

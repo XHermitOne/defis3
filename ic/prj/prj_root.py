@@ -141,7 +141,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         Разблокировать модуль.
         @param PyFileName_: Имя модуля.
         """
-        ide = self.getParent().ide
+        ide = self.getParent().getIDE()
         # Если файл не открыт в редакторе, то удалить блокировку
         if ide and not ide.IsOpenedFile(PyFileName_):
             py_file_name = os.path.splitext(os.path.basename(PyFileName_))[0]
@@ -690,7 +690,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         try:
             import ic
             p, fl = os.path.split(self.getRoot().getPrjFileName())
-            p = p.replace('\\', '/')
+            p = os.path.normpath(p)     # .replace('\\', '/')
             filename = os.path.join(os.path.dirname(p), 'run.py')
             icp, icf = os.path.split(ic.__file__)
             dbg = os.path.join(icp, 'Scripts', 'debug.py')
@@ -711,7 +711,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         Редактирование модуля - точки входа в систему -
         редактирование run.py файла.
         """
-        ide = self.getParent().ide
+        ide = self.getParent().getIDE()
         if ide:
             imp_path = self.getRoot().getPrjFileName()
 
@@ -719,12 +719,14 @@ class PrjRoot(ImpNode.PrjImportSys):
                 return False
 
             imp_path, fl = os.path.split(imp_path)
-            imp_path = imp_path.replace('\\', '/')
+            imp_path = os.path.normpath(imp_path)   # .replace('\\', '/')
             py_file = os.path.join(os.path.dirname(imp_path), 'run.py')
             
             if not ide.SelectFile(py_file):
                 return ide.OpenFile(py_file, True, readonly=False)
             return True
+        else:
+            log.warning(u'Не определен IDE для редактирования модулей')
 
     def _debugWinPDB_old(self):
         """
