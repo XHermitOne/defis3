@@ -80,8 +80,8 @@ class icMenuDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigner
         """
         Создание меню по ресурсу.
         """
-        from ic.engine import ic_menu
-        menu=ic_menu.icMenu(None,MenuName_,MenuResource_,Window_=self)
+        from ic.engine import ext_func_menu
+        menu=ext_func_menu.icMenu(None, MenuName_, MenuResource_, Window_=self)
         return menu
         
     def OnMouseClick(self,event):

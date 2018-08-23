@@ -31,7 +31,7 @@ from ic.utils import coderror
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
-import ic.engine.ic_menu as ic_menu
+from ic.engine import icmenuitem
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType
@@ -43,7 +43,7 @@ ic_class_name = 'icMenuItem'
 ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-SPC_IC_MENUITEM_WRP = ic_menu.SPC_IC_MENUITEM
+SPC_IC_MENUITEM_WRP = icmenuitem.SPC_IC_MENUITEM
 SPC_IC_MENUITEM_WRP['__parent__'] = icwidget.SPC_IC_WIDGET
 
 ic_class_spc = {'type': 'MenuItem',
@@ -55,8 +55,8 @@ ic_class_spc = {'type': 'MenuItem',
 
                 '__styles__': ic_class_styles,
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
-                                                            'description', 'caption', 'hot_key',
-                                                            'hint', 'help'],
+                                                            'description', 'label', 'hot_key',
+                                                            'short_help', 'help'],
                                    icDefInf.EDT_CHECK_BOX: ['activate', 'enabled',
                                                             'checkable', 'checked', 'radio'],
                                    icDefInf.EDT_USER_PROPERTY: ['bitmap'],
@@ -82,7 +82,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
@@ -123,7 +123,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icMenuItem(icwidget.icWidget, ic_menu.icMenuItem):
+class icMenuItem(icwidget.icWidget, icmenuitem.icMenuItem):
     """
     Пункт меню.
     """
@@ -154,4 +154,4 @@ class icMenuItem(icwidget.icWidget, ic_menu.icMenuItem):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
-        ic_menu.icMenuItem.__init__(self, parent, component['name'], component, context=evalSpace)
+        icmenuitem.icMenuItem.__init__(self, parent, component['name'], component, context=evalSpace)

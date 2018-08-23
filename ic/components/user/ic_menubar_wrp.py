@@ -27,7 +27,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-import ic.engine.ic_menu as ic_menu
+from ic.engine import icmenubar
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType
@@ -39,7 +39,7 @@ ic_class_name = 'icMenuBar'
 ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-SPC_IC_MENUBAR_WRP = ic_menu.SPC_IC_MENUBAR
+SPC_IC_MENUBAR_WRP = icmenubar.SPC_IC_MENUBAR
 SPC_IC_MENUBAR_WRP['__parent__'] = icwidget.SPC_IC_WIDGET
 
 ic_class_spc = {'type': 'MenuBar',
@@ -75,10 +75,10 @@ ic_can_contain = ['Menu']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
-class icMenuBar(icwidget.icWidget, ic_menu.icMenuBar):
+class icMenuBar(icwidget.icWidget, icmenubar.icMenuBar):
     """
     Горизонтальное меню.
     """
@@ -109,7 +109,7 @@ class icMenuBar(icwidget.icWidget, ic_menu.icMenuBar):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
-        ic_menu.icMenuBar.__init__(self, parent, component['name'], None, component)
+        icmenubar.icMenuBar.__init__(self, parent, component['name'], None, component)
 
     @staticmethod
     def GetDesigner():

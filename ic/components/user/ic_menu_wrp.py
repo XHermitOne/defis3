@@ -27,7 +27,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-import ic.engine.ic_menu as ic_menu
+from ic.engine import icmenu
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType
@@ -39,7 +39,7 @@ ic_class_name = 'icMenu'
 ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-SPC_IC_MENU_WRP = ic_menu.SPC_IC_MENU
+SPC_IC_MENU_WRP = icmenu.SPC_IC_MENU
 SPC_IC_MENU_WRP['__parent__'] = icwidget.SPC_IC_WIDGET
 
 ic_class_spc = {'type': 'Menu',
@@ -49,16 +49,16 @@ ic_class_spc = {'type': 'Menu',
                 '_uuid': None,
                 'child': [],
                 
-                'caption': 'new_menu',
+                'label': 'default',
 
                 '__styles__': ic_class_styles,
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
-                                                            'description', 'caption'],
+                                                            'description', 'labe;'],
                                    icDefInf.EDT_CHECK_BOX: ['activate'],
                                    },
                 '__events__': {},
                 '__parent__': SPC_IC_MENU_WRP,
-                '__attr_hlp__': {'caption': u'Надпись меню',
+                '__attr_hlp__': {'label': u'Надпись меню',
                                  },
                 }
 
@@ -79,10 +79,10 @@ ic_can_contain = ['Menu', 'MenuItem']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
-class icMenu(icwidget.icWidget, ic_menu.icMenu):
+class icMenu(icwidget.icWidget, icmenu.icMenu):
     """
     Выпадающее меню.
     """
@@ -113,7 +113,7 @@ class icMenu(icwidget.icWidget, ic_menu.icMenu):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
-        ic_menu.icMenu.__init__(self, parent, component['name'], component)
+        icmenu.icMenu.__init__(self, parent, component['name'], component)
 
     @staticmethod
     def GetDesigner():
