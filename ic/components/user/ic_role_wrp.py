@@ -80,7 +80,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
@@ -118,8 +118,8 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
         choice = getPermissionsChoiceList()
         val = str_to_val_user_property(attr, value, propEdt, *arg, **kwarg)
         ret = multiChoiceEdt.get_user_property_editor(val, pos, size, style, propEdt,
-                                                      title=_('Permissions'),
-                                                      edt_txt=_('Select permissions:'), choice=choice)
+                                                      title=u'Разрешения',
+                                                      edt_txt=u'Выберите разрешения', choice=choice)
 
     if ret is None:
         return value

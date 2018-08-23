@@ -244,6 +244,17 @@ def getFileExt(FileName_):
     return os.path.splitext(FileName_)[1]
 
 
+def get_current_dir():
+    """
+    Текущая папка.
+    Относительнай путь считается от папки defis.
+    @return:
+    """
+    cur_dir = os.path.dirname(os.path.dirname(ic.config.__file__))
+    log.debug(u'Текущая папка определена как <%s>' % cur_dir)
+    return cur_dir
+
+
 def getRelativePath(Path_):
     """
     Относительный путь.
@@ -251,7 +262,7 @@ def getRelativePath(Path_):
     @param Path_: Путь.
     """
     Path_ = os.path.normpath(Path_)
-    cur_dir = os.path.dirname(os.path.dirname(ic.config.__file__))
+    cur_dir = get_current_dir()
     return Path_.replace(cur_dir, '.').strip()
 
 
@@ -261,10 +272,11 @@ def getAbsolutePath(Path_):
     @param Path_: Путь.
     """
     try:
-        cur_dir = os.path.dirname(os.path.dirname(ic.config.__file__))
-        if Path_.startswith('.'):
-            Path_ = os.path.join(cur_dir, Path_[1:])
-        # Path_ = os.path.abspath(Path_)
+        cur_dir = get_current_dir()
+        if Path_.startswith('..'):
+            Path_ = os.path.join(os.path.dirname(cur_dir), Path_[2+len(os.path.sep):])
+        elif Path_.startswith('.'):
+            Path_ = os.path.join(cur_dir, Path_[1+len(os.path.sep):])
         Path_ = os.path.normpath(Path_)
         return Path_
     except:

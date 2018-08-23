@@ -224,13 +224,13 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
                     log.info(u'\t[+] Загрузка из <%s>' % filepcl)
                     return obj
                 except IOError:
-                    log.error(u'\t[-] Ошибка открытия файла <%s> в readAndEvalFile' % filepcl)
+                    log.fatal(u'\t[-] Ошибка открытия файла <%s> в readAndEvalFile' % filepcl)
                 except:
                     if fpcl:
                         fpcl.close()
                     log.fatal(u'Ошибка открытия файла <%s> в readAndEvalFile' % filepcl)
         except OSError:
-            log.warning(u'Ошибка файла <%s>' % filename)
+            log.fatal(u'Ошибка файла <%s>' % filename)
         #   Пытаемся прочитать cPickle, если не удается считаем, что в файле
         #   хранится текст. Читаем его, выполняем, полученный объект сохраняем
         #   на диске для последующего использования
@@ -270,7 +270,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
         pickle.dump(obj, fpcl, PICKLE_PROTOCOL)
         fpcl.close()
     except IOError:
-        log.error(u'\t[*] Ошибка открытия файла <%s> в readAndEvalFile' % filename)
+        log.fatal(u'\t[*] Ошибка открытия файла <%s> в readAndEvalFile' % filename)
         obj = None
     except:
         log.fatal(u'\t[*] Ошибка чтения файла <%s> в readAndEvalFile' % filename)

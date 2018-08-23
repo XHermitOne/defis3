@@ -514,7 +514,9 @@ class icUserPrototype(icbaseuser.icRootUser):
         user_login = None
         # Если файла ресурсов нет, тогда вход в систему не возможен
         if not os.path.isfile(self._ResFile):
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Файл прав пользователей не найден.')
+            err_msg = u'Файл прав пользователей <%s> не найден.' % self._ResFile
+            log.warning(err_msg)
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', err_msg)
             return False
         sys_enter = False   # Флаг входа в систему
         
@@ -791,7 +793,11 @@ class icLoginManager(object):
         return self._users_resource
     
     def GetUserResource(self, name):
-        return self._users_resource.get(name, None)
+        try:
+            return self._users_resource.get(name, None)
+        except:
+            log.fatal(u'Ошибка определения ресурса пользователя')
+        return None
     
     def _getAutoLogin(self, UserName_=None, Password_=None):
         """

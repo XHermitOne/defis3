@@ -30,7 +30,7 @@ def check_wx_dead_object(func):
 
     def wrapper(self, *args, **kwargs):
         if not self:
-            print('<%s> is dead' % self)
+            log.warning(u'Объект <%s> разрушен' % self, bForcePrint=True)
             return empty(self)
         return func(self, *args, **kwargs)
     return wrapper
