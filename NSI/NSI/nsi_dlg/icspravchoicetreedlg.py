@@ -496,7 +496,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         rec_dict = self.sprav.getStorage()._getSpravFieldDict(record)
         code = rec_dict['cod']
         item = self.sprav_treeListCtrl.AppendItem(parent_item, code)
-        self.sprav_treeListCtrl.SetPyData(item, rec_dict)
+        self.sprav_treeListCtrl.SetItemData(item, rec_dict)
         # Заполнение колонок
         for i, field_name in enumerate(self.sprav_field_names[1:]):
             value = rec_dict.get(field_name, u'')

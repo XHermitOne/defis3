@@ -141,7 +141,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             new_item = self.root
         else:
             new_item = self.AppendItem(item, DEFAULT_ITEM_LABEL, wnd=add_button)
-        self.SetPyData(new_item, 'group')   # Прописать тип элемента
+        self.SetItemData(new_item, 'group')   # Прописать тип элемента
         
         # Установить контролы на новом элементе
         self.SetItemWindow(new_item, logic_combobox, 1)
@@ -188,7 +188,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         self.Bind(wx.EVT_BUTTON, self.onDelButtonMouseClick, del_button)
         
         new_item = self.AppendItem(item, DEFAULT_ITEM_LABEL, wnd=del_button)
-        self.SetPyData(new_item, 'compare')     # Прописать тип элемента
+        self.SetItemData(new_item, 'compare')     # Прописать тип элемента
         
         # Установить контролы на новом элементе
         self.SetItemWindow(new_item, requisite_combobox, 1)

@@ -20,14 +20,12 @@
     компонент (ic_can_contain = -1).
 """
 
-import wx
 from ic.components import icwidget
-from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-import ic.engine.ictoolbar as ic_tool
+from ic.engine import ictoolbar
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType
@@ -53,7 +51,7 @@ ic_class_spc = {'type': 'MenuToolBar',
                                    icDefInf.EDT_SIZE: ['size'],
                                    },
 
-                '__parent__': ic_tool.SPC_IC_TOOLBAR,
+                '__parent__': ictoolbar.SPC_IC_TOOLBAR,
                 }
 
 #   Имя иконки класса, которые располагаются в директории 
@@ -73,7 +71,7 @@ ic_can_contain = ['Tool']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 class icMenuToolBar(icwidget.icSimple):

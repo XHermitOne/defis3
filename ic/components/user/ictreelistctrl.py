@@ -206,7 +206,7 @@ class icTreeListCtrl(icwidget.icWidget, parentModule.TreeListCtrl, metaCtrl.Meta
                 nm = self.getElementName(el, indx)
                 child = self.AppendItem(root, nm, id_pic)
                 self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-                self.SetPyData(child, (level+start_level, el))
+                self.SetItemData(child, (level+start_level, el))
 
                 self.addBranch(child, el, level+1, start_level)
                 
@@ -247,13 +247,13 @@ class icTreeListCtrl(icwidget.icWidget, parentModule.TreeListCtrl, metaCtrl.Meta
                 
                 child = self.AppendItem(root, nm, id_pic)
                 self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-                self.SetPyData(child, (level+start_level, el))
+                self.SetItemData(child, (level+start_level, el))
                         
                 self.addBranch(child, 0, level+1, start_level)
         else:
             child = self.AppendItem(root, str(res), self.fileidx)
             self.SetItemImage(child, self.curidx, which=wx.TreeItemIcon_Expanded)
-            self.SetPyData(child, (level+start_level, res))
+            self.SetItemData(child, (level+start_level, res))
             
         return root
 

@@ -291,7 +291,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
             if not cod_mask or cod.find(cod_mask) == 0:
                 bret = True
                 child = self.AppendItem(parent_item, name)
-                self.SetPyData(child, row)
+                self.SetItemData(child, row)
                 self._codItemDict[cod] = child
                 
                 for indx in range(2, len(row)):
@@ -373,7 +373,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
         """
         Установить запись элемента.
         """
-        self.SetPyData(Item_, Row_)
+        self.SetItemData(Item_, Row_)
         
     def setSelectionRow(self, Row_):
         """

@@ -147,7 +147,7 @@ class icSpravTreeComboPopup(wx.ComboPopup):
 
         item = self.tree.AppendItem(parent, value)
         if data is not None:
-            self.tree.SetPyData(item, data)
+            self.tree.SetItemData(item, data)
         return item
 
     def hasHiddenItem(self, parentItem):
@@ -302,7 +302,7 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
             item.Check(True)
 
         if data is not None:
-            self.tree.SetPyData(item, data)
+            self.tree.SetItemData(item, data)
         return item
 
     def GetStringValue(self):

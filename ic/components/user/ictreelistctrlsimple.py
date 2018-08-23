@@ -217,7 +217,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
             nm = self.getElementName(el, indx)
             child = self.AppendItem(root, nm, id_pic)
             self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-            self.SetPyData(child, (level+start_level, el))
+            self.SetItemData(child, (level+start_level, el))
 
             self.addBranch(child, el, level+1, start_level)
         
@@ -239,7 +239,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
 
                 child = self.AppendItem(root, nm, id_pic)
                 self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-                self.SetPyData(child, (level+start_level, el))
+                self.SetItemData(child, (level+start_level, el))
                 
                 self.addBranch(child, el, level+1, start_level)
             else:
@@ -264,7 +264,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
             
             child = self.AppendItem(root, str(res), id_pic)
             self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-            self.SetPyData(child, (level+start_level, res))
+            self.SetItemData(child, (level+start_level, res))
             
         return root
 
@@ -392,7 +392,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
         else:
             self.treeDict = treeDict
         
-        self.SetPyData(self.root, (-1, treeDict))
+        self.SetItemData(self.root, (-1, treeDict))
         self.DeleteChildren(self.root)
         
         if treeDict is not None:

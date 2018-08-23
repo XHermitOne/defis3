@@ -363,7 +363,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         # В случае многострочных наименования выделять только первую строку
         name = [line.strip() for line in name.split(u'\n')][0]
         item = self.sprav_treeCtrl.AppendItem(parent_item, name)
-        self.sprav_treeCtrl.SetPyData(item, rec_dict)
+        self.sprav_treeCtrl.SetItemData(item, rec_dict)
         
         code = rec_dict['cod']
         if self.sprav.isSubCodes(code):
@@ -513,7 +513,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         """
         find_item = self.find_sprav_tree_item(parent_item, sprav_code)
         if find_item:
-            self.sprav_treeCtrl.SetPyData(find_item, sprav_record)
+            self.sprav_treeCtrl.SetItemData(find_item, sprav_record)
             self.sprav_treeCtrl.SetItemText(find_item, sprav_record['name'])
 
     def refresh_sprav_list_item(self, sprav_code=None, sprav_record=None):
@@ -558,7 +558,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         @param new_record: Новая добавляемая запись.
         """
         item = self.sprav_treeCtrl.AppendItem(parent_item, new_record['name'])
-        self.sprav_treeCtrl.SetPyData(item, new_record)
+        self.sprav_treeCtrl.SetItemData(item, new_record)
 
     def add_sprav_list_item(self, new_record=None):
         """

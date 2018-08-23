@@ -7,16 +7,15 @@
 
 # --- Подключение библиотек ---
 import wx
-from os.path import *
+import os.path
 
-from . import ext_func_menu
-import ic.utils.ic_exec
-import ic.utils.ic_util
+from ic.utils import ic_exec
+from ic.utils import ic_util
 from ic.bitmap import ic_bmp
 from ic.log import log
-import ic.utils.ic_res
 
 from ic.kernel import icobject
+from . import icmenuitem
 
 __version__ = (0, 1, 1, 1)
 
@@ -26,38 +25,28 @@ VERT_ORIENT = 0
 FLOAT_TOOLBAR = 1
 NOFLOAT_TOOLBAR = 0
 
-# Описание ключей
-RES_TOOL_TOOLS = 'child'    # <список инструментов, список словарей>
-
-RES_TOOL_TITLE = 'title'    # <заголовок панели, строка>
-RES_TOOL_POS = 'pos'        # <позиция панели инструментов по умолчанию, целое >
-RES_TOOL_SIZE = 'size'      # <размер панели инструментов по умолчанию, целое >
-RES_TOOL_ORIENTATION = 'orientation'    # <ориентация панели инструментов, флаг (0-горизонтальная,1-вертикальная)>
-RES_TOOL_FLOAT = 'float'    # <признак плавающей панели инструментов, флаг (0-неперемещаемая/1-перемещаемая)>
-RES_TOOL_ITEM = 'item'      # <имя прикрепленного пункта меню, строка>
-
 # Спецификации:
-SPC_IC_TOOLBAR = {ext_func_menu.RES_MENU_DESCRIPTION: '',
-                  RES_TOOL_TITLE: '',  # Заголовок
-                  RES_TOOL_POS: (0, 0),  # Координаты размещения панели инструментов
-                  RES_TOOL_SIZE: (-1, -1),  # Размеры панели инструментов
-                  RES_TOOL_ORIENTATION: HORIZ_ORIENT,  # Ориентация
-                  RES_TOOL_FLOAT: NOFLOAT_TOOLBAR,  # Признак плавающей панели инструментов
-                  RES_TOOL_TOOLS: [],  # Список инструментов
+SPC_IC_TOOLBAR = {'description': '',
+                  'title': '',  # Заголовок
+                  'pos': (0, 0),  # Координаты размещения панели инструментов
+                  'size': (-1, -1),  # Размеры панели инструментов
+                  'orientation': HORIZ_ORIENT,  # Ориентация
+                  'float': NOFLOAT_TOOLBAR,  # Признак плавающей панели инструментов
+                  'child': [],  # Список инструментов
                   }
 
-SPC_IC_TOOL = {ext_func_menu.RES_MENU_DESCRIPTION: '',
-               RES_TOOL_ITEM: '',  # Имя прикрепленного пункта меню.
-               ext_func_menu.RES_MENU_HINT: '',  # <подсказка отображаемая в статусной строке, строка >,
-               ext_func_menu.RES_MENU_ENABLED: 1,  # <признак включеного/выключенного инструмента, флаг (0/1)>,
-               ext_func_menu.RES_MENU_CHECKABLE: 0,  # <признак помечаемого инструмента, флаг (0/1)>,
-               ext_func_menu.RES_MENU_CHECKED: 0,  # <признак отметки инструмента, флаг (0/1)>,
-               ext_func_menu.RES_MENU_RADIO: 0,  # <признак переключаемого инструмента, флаг (0/1)>,
-               ext_func_menu.RES_MENU_IMAGE: '',  # <файл значка инструмента, строка>,
-               ext_func_menu.RES_MENU_HELP: '',  # <файл помощи по F1, строка>,
-               ext_func_menu.RES_MENU_ACTION: {},  # <действие при щелчке на инструмента, словарь функции>,
-               ext_func_menu.RES_MENU_CHECKON: {},  # <действие при отметке инструмента, словарь функции>,
-               ext_func_menu.RES_MENU_CHECKOFF: {},  # <действие при разметке инструмента, словарь функции>,
+SPC_IC_TOOL = {'description': '',
+               'item': '',  # Имя прикрепленного пункта меню.
+               'short_help': '',  # <подсказка отображаемая в статусной строке, строка >,
+               'enabled': 1,  # <признак включеного/выключенного инструмента, флаг (0/1)>,
+               'checkable': 0,  # <признак помечаемого инструмента, флаг (0/1)>,
+               'checked': 0,  # <признак отметки инструмента, флаг (0/1)>,
+               'radio': 0,  # <признак переключаемого инструмента, флаг (0/1)>,
+               'image': '',  # <файл значка инструмента, строка>,
+               'help': '',  # <файл помощи по F1, строка>,
+               'onAction': {},  # <действие при щелчке на инструмента, словарь функции>,
+               'onCheckOn': {},  # <действие при отметке инструмента, словарь функции>,
+               'onCheckOff': {},  # <действие при разметке инструмента, словарь функции>,
                }
 
 
@@ -134,7 +123,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     
         try:
             # Расширение структуры до спецификации
-            ToolBarStruct_ = ic.utils.ic_util.SpcDefStruct(SPC_IC_TOOLBAR, ToolBarStruct_)
+            ToolBarStruct_ = ic_util.SpcDefStruct(SPC_IC_TOOLBAR, ToolBarStruct_)
 
             self._Name = Name_
             self._ResData = ResData_
@@ -143,28 +132,28 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             
             top = 0
             left = 0
-            if RES_TOOL_POS in ToolBarStruct_ and ToolBarStruct_[RES_TOOL_POS]:
-                left = ToolBarStruct_[RES_TOOL_POS][0]
-                top = ToolBarStruct_[RES_TOOL_POS][1]
+            if 'pos' in ToolBarStruct_ and ToolBarStruct_['pos']:
+                left = ToolBarStruct_['pos'][0]
+                top = ToolBarStruct_['pos'][1]
             pos = wx.Point(left, top)
             width = 0
             height = 0
-            if RES_TOOL_SIZE in ToolBarStruct_ and ToolBarStruct_[RES_TOOL_SIZE]:
-                width = ToolBarStruct_[RES_TOOL_SIZE][0]
-                height = ToolBarStruct_[RES_TOOL_SIZE][1]
+            if 'size' in ToolBarStruct_ and ToolBarStruct_['size']:
+                width = ToolBarStruct_['size'][0]
+                height = ToolBarStruct_['size'][1]
             if width < 0 and height < 0:
                 size = wx.Size(-1, 20)
             else:
                 size = wx.Size(width, height)
             style = wx.TB_FLAT | wx.TB_DOCKABLE
-            if RES_TOOL_ORIENTATION in ToolBarStruct_ and ToolBarStruct_[RES_TOOL_ORIENTATION] is not None and \
-               ToolBarStruct_[RES_TOOL_ORIENTATION] == VERT_ORIENT:
+            if 'orientation' in ToolBarStruct_ and ToolBarStruct_['orientation'] is not None and \
+               ToolBarStruct_['orientation'] == VERT_ORIENT:
                 style |= wx.TB_VERTICAL
             else:
                 style |= wx.TB_HORIZONTAL
             title = ''
-            if RES_TOOL_TITLE in ToolBarStruct_ and ToolBarStruct_[RES_TOOL_TITLE] is not None:
-                title = ToolBarStruct_[RES_TOOL_TITLE]
+            if 'title' in ToolBarStruct_ and ToolBarStruct_['title'] is not None:
+                title = ToolBarStruct_['title']
 
             # Вызов конструктора предка
             wx.ToolBar.__init__(self, self._Window, self._Window.GetId(),
@@ -175,8 +164,8 @@ class icToolBar(wx.ToolBar, icobject.icObject):
 
             # По умолчанию панель инструментов не плавающая
             tool_float = 0
-            if RES_TOOL_FLOAT in ToolBarStruct_ and ToolBarStruct_[RES_TOOL_FLOAT] is not None:
-                tool_float = ToolBarStruct_[RES_TOOL_FLOAT]
+            if 'float' in ToolBarStruct_ and ToolBarStruct_['float'] is not None:
+                tool_float = ToolBarStruct_['float']
             # Установить заголовок
             self.SetTitle(title)
 
@@ -199,8 +188,8 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             # Перед загрузкой удалить все
             self.RemoveAll()
 
-            for tool in ToolBarStruct_[RES_TOOL_TOOLS]:
-                if RES_TOOL_ITEM in tool and tool[RES_TOOL_ITEM]:
+            for tool in ToolBarStruct_['child']:
+                if 'item' in tool and tool['item']:
                     # Присоединить инструмент к пункту меню
                     toolbar_link = self.AddToLinkToolBar(tool)
                 else:
@@ -259,7 +248,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             if not ToolItem_:
                 return None
 
-            item_name = ToolItem_[RES_TOOL_ITEM]
+            item_name = ToolItem_['item']
             item = self._MainMenu.FindItemByAlias(item_name)
             # Если инструмент с таким именем уже существует,  то не создавать его
             tool = self.FindToolByAlias(item_name)
@@ -337,38 +326,38 @@ class icToolBar(wx.ToolBar, icobject.icObject):
         """
         try:
             # Расширение структуры до спецификации
-            ToolStruct_ = ic.utils.ic_util.SpcDefStruct(SPC_IC_TOOL, ToolStruct_)
+            ToolStruct_ = ic_util.SpcDefStruct(SPC_IC_TOOL, ToolStruct_)
             # Добавить новый инструмент на панель
             tool = None
             tool_id = wx.NewId()
-            if ext_func_menu.RES_MENU_HINT in ToolStruct_ and ToolStruct_[ext_func_menu.RES_MENU_HINT] is not None:
-                tool_hint = ToolStruct_[ext_func_menu.RES_MENU_HINT]
+            if 'short_help' in ToolStruct_ and ToolStruct_['short_help'] is not None:
+                tool_hint = ToolStruct_['short_help']
             else:
                 tool_hint = ''
-            if ext_func_menu.RES_MENU_ACTION in ToolStruct_:
-                tool_tools_action = ToolStruct_[ext_func_menu.RES_MENU_ACTION]
+            if 'onAction' in ToolStruct_:
+                tool_tools_action = ToolStruct_['onAction']
             else:
                 tool_tools_action = {}
-            if ext_func_menu.RES_MENU_CHECKON in ToolStruct_:
-                tool_tools_check_on = ToolStruct_[ext_func_menu.RES_MENU_CHECKON]
+            if 'onCheckOn' in ToolStruct_:
+                tool_tools_check_on = ToolStruct_['onCheckOn']
             else:
                 tool_tools_check_on = {}
-            if ext_func_menu.RES_MENU_CHECKOFF in ToolStruct_:
-                tool_tools_check_off = ToolStruct_[ext_func_menu.RES_MENU_CHECKOFF]
+            if 'onCheckOff' in ToolStruct_:
+                tool_tools_check_off = ToolStruct_['onCheckOff']
             else:
                 tool_tools_check_off = {}
             
             # Если новый пункт не разделитель, тогда это обычный пункт
-            if tool_hint == ext_func_menu.MENU_SEPARATOR:
+            if tool_hint == icmenuitem.MENU_SEPARATOR:
                 # Новый пункт-разделитель
                 self.AddSeparator()
             else:
                 # Определить образ
                 # (ЕСЛИ ОБРАЗА НЕТ, ТО ДОБАВЛЕНИЕ ИНСТРУМЕНТА НЕ ПРОИЗОЙДЕТ)
-                if ext_func_menu.RES_MENU_IMAGE in ToolStruct_:
-                    if ToolStruct_[ext_func_menu.RES_MENU_IMAGE] != '' and ToolStruct_[ext_func_menu.RES_MENU_IMAGE] is not None:
-                        if os.path.isfile(ToolStruct_[ext_func_menu.RES_MENU_IMAGE]):
-                            tool_image = ic_bmp.icCreateBitmap(ToolStruct_[ext_func_menu.RES_MENU_IMAGE])
+                if 'image' in ToolStruct_:
+                    if ToolStruct_['image'] != '' and ToolStruct_['image'] is not None:
+                        if os.path.isfile(ToolStruct_['image']):
+                            tool_image = ic_bmp.createBitmap(ToolStruct_['image'])
                         else:
                             return None
                     else:
@@ -376,8 +365,8 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 else:
                     return None
 
-                if ext_func_menu.RES_MENU_CHECKABLE in ToolStruct_ and ToolStruct_[ext_func_menu.RES_MENU_CHECKABLE] is not None and \
-                   ToolStruct_[ext_func_menu.RES_MENU_CHECKABLE]:
+                if 'checkable' in ToolStruct_ and ToolStruct_['checkable'] is not None and \
+                   ToolStruct_['checkable']:
                     tool = self.AddCheckTool(tool_id, tool_image, wx.NullBitmap, '', tool_hint)
                     # Добавить в список методов
                     if tool_tools_check_on != {}:
@@ -385,16 +374,16 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                     if tool_tools_check_off != {}:
                         self._tools_check_off[tool_id] = tool_tools_check_off
                 else:
-                    if ext_func_menu.RES_MENU_RADIO in ToolStruct_ and ToolStruct_[ext_func_menu.RES_MENU_RADIO] is not None and \
-                       ToolStruct_[ext_func_menu.RES_MENU_RADIO]:
+                    if 'radio' in ToolStruct_ and ToolStruct_['radio'] is not None and \
+                       ToolStruct_['radio']:
                         tool = self.AddRadioTool(tool_id, tool_image, wx.NullBitmap, '', tool_hint)
                     else:
                         # Создать простой инструмент
                         tool = self.AddSimpleTool(tool_id, tool_image, '', tool_hint)
                 # Проверки на блокировку инструмента
                 tool_enabled = 1
-                if ext_func_menu.RES_MENU_ENABLED in ToolStruct_ and ToolStruct_[ext_func_menu.RES_MENU_ENABLED] is not None and \
-                   not ToolStruct_[ext_func_menu.RES_MENU_ENABLED]:
+                if 'enabled' in ToolStruct_ and ToolStruct_['enabled'] is not None and \
+                   not ToolStruct_['enabled']:
                     tool_enabled = 0
                 # Проверка на ограничение доступа к функциональному ресурсу
                 # if not ic_acc.icCanAuthent(ic_acc.ACCESS_USE, ToolName_, ic_acc.ACC_TOOLITEM, False):
@@ -440,7 +429,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 if tool_kind != wx.ITEM_RADIO:
                     tool_image = Item_.GetBitmap()
                 else:
-                    tool_image = wx.ArtProvider_GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16, 16))
+                    tool_image = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16, 16))
 
                 if tool_kind == wx.ITEM_CHECK:
                     tool = self.AddCheckTool(tool_id, tool_image, wx.NullBitmap, '', tool_hint)
@@ -489,11 +478,11 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             # Если это инструмент, тогда выполнить его
             if tool_id in self._tools_action and self._tools_action[tool_id] is not None:
                 # Выполнение метода
-                ic.utils.ic_exec.ExecuteMethod(self._tools_action[tool_id], self)
+                ic_exec.ExecuteMethod(self._tools_action[tool_id], self)
             if tool_state:
                 if tool_id in self._tools_check_off and self._tools_check_off[tool_id] is not None:
                     # Выполнение метода
-                    result = ic.utils.ic_exec.ExecuteMethod(self._tools_check_on[tool_id], self)
+                    result = ic_exec.ExecuteMethod(self._tools_check_on[tool_id], self)
                     # Проверка выполнения метода
                     if result is not None:
                         # Если метод запрещает переключение,
@@ -503,7 +492,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             else:
                 if tool_id in self._tools_check_on and self._tools_check_on[tool_id] is not None:
                     # Выполнение метода
-                    result = ic.utils.ic_exec.ExecuteMethod(self._tools_check_off[tool_id], self)
+                    result = ic_exec.ExecuteMethod(self._tools_check_off[tool_id], self)
                     # Проверка выполнения метода
                     if result is not None:
                         # Если метод запрещает переключение,

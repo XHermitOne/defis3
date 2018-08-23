@@ -71,7 +71,7 @@ class MetaTreeCtrlInterface:
                 nm = self.getElementName(el, indx)
                 child = self.AppendItem(root, nm, id_pic)
                 self.SetItemImage(child, id_exp_pic, wx.TreeItemIcon_Expanded)
-                self.SetPyData(child, (level+start_level, el))
+                self.SetItemData(child, (level+start_level, el))
 
                 self.addBranch(child, el, level+1, start_level)
                 
@@ -104,12 +104,12 @@ class MetaTreeCtrlInterface:
                 
                 child = self.AppendItem(root, nm, id_pic)
                 self.SetItemImage(child, id_exp_pic, wx.TreeItemIcon_Expanded)
-                self.SetPyData(child, (level+start_level, el))
+                self.SetItemData(child, (level+start_level, el))
                 self.addBranch(child, 0, level+1, start_level)
         else:
             child = self.AppendItem(root, str(res), self.fileidx)
             self.SetItemImage(child, self.curidx, wx.TreeItemIcon_Expanded)
-            self.SetPyData(child, (level+start_level, res))
+            self.SetItemData(child, (level+start_level, res))
 
         return root
         
@@ -225,7 +225,7 @@ class MetaTreeCtrlInterface:
         else:
             self.treeDict = treeDict
         
-        self.SetPyData(self.root, (-1, treeDict))
+        self.SetItemData(self.root, (-1, treeDict))
         self.DeleteChildren(self.root)
         
         if treeDict:
@@ -273,7 +273,7 @@ class MetaTreeCtrlInterface:
                 new_obj = prnt_obj.Add(id, obj.name)
                 child = self.AppendItem(item, new_obj.name, self.fldridx)
                 self.SetItemImage(child, self.fldropenidx, which=wx.TreeItemIcon_Expanded)
-                self.SetPyData(child, (level+1, new_obj))
+                self.SetItemData(child, (level+1, new_obj))
 
                 #   Инициализируем документ, если он есть
                 ifs = new_obj.GetComponentInterface()

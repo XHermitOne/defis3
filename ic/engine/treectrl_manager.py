@@ -102,7 +102,7 @@ class icTreeCtrlManager(object):
             treelist_ctrl.SetItemText(parent_item, label, i + 1)
 
         # Прикрепляем данные к элементу дерева
-        treelist_ctrl.SetPyData(parent_item, node)
+        treelist_ctrl.SetItemData(parent_item, node)
 
         # Дополнительная обработка
         if ext_func:
@@ -165,7 +165,7 @@ class icTreeCtrlManager(object):
                 ext_func(treelist_ctrl, item, record)
 
             # Прикрепляем данные к элементу дерева
-            treelist_ctrl.SetPyData(item, record)
+            treelist_ctrl.SetItemData(item, record)
 
             if '__children__' in record and record['__children__']:
                 for child in record['__children__']:

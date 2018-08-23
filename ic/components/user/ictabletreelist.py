@@ -336,7 +336,7 @@ class icTableTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
             if not cod_mask or prnt_cod == cod_mask:
                 bret = True
                 child = self.AppendItem(parent_item, name)
-                self.SetPyData(child, row)
+                self.SetItemData(child, row)
                 st = self.GetStateRow(row, level)
 
                 #   Заполняем дополнительные поля

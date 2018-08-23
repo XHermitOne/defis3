@@ -207,7 +207,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         child = self.AppendItem(root, res['name'] + st, ct_type=node_ct_type)
         self.SetItemImage(child, id_pic, which=wx.TreeItemIcon_Normal)
         self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-        self.SetPyData(child, (level+start_level, res))
+        self.SetItemData(child, (level+start_level, res))
         if '__record__' in res:
             self.setItemRecord(child, res['__record__'])
 
@@ -360,7 +360,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             self.tree = Tree_
         
         self.DeleteChildren(self.root)
-        self.SetPyData(self.root, (-1, Tree_))
+        self.SetItemData(self.root, (-1, Tree_))
         
         if Tree_ is not None:
             try:

@@ -155,7 +155,7 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
         child = self.AppendItem(root, res['name'] + st, ct_type=res.get('__type__', 0))
         self.SetItemImage(child, id_pic, which=wx.TreeItemIcon_Normal)
         self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-        self.SetPyData(child, (level+start_level, res))
+        self.SetItemData(child, (level+start_level, res))
         self.setItemRecord(child, res['__record__'])
         
         # Обработка дочерних элементов

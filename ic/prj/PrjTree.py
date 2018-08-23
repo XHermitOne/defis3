@@ -301,7 +301,7 @@ class PrjTree(wx.TreeCtrl):
             if img_extended_idx >= 0:
                 self.SetItemImage(Root_, img_extended_idx, wx.TreeItemIcon_Expanded)
             
-            self.SetPyData(Root_, Node_)
+            self.SetItemData(Root_, Node_)
         else:
             # ВНИМАНИЕ! Когда поставил этот print
             # прекратилась ошибка <Segmentation Fault>
@@ -311,7 +311,7 @@ class PrjTree(wx.TreeCtrl):
             if img_extended_idx >= 0:
                 self.SetItemImage(Root_, img_extended_idx, wx.TreeItemIcon_Expanded)
             # Связать компонент с вновь добавленным узлом
-            self.SetPyData(Root_, Node_)
+            self.SetItemData(Root_, Node_)
             
         # Установить цвет
         self.SetItemTextColour(Root_, txt_color)

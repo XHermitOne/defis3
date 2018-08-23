@@ -421,7 +421,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         self.bSelInGraphEdt = True
 
         self.root = self.AddRoot(u'Метаданные')
-        self.SetPyData(self.root, component)
+        self.SetItemData(self.root, component)
         self.SetItemImage(self.root, self.fldridx, wx.TreeItemIcon_Normal)
         self.SetItemImage(self.root, self.fldropenidx, wx.TreeItemIcon_Expanded)
 
@@ -494,7 +494,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         else:
             self.SetItemTextColour(root, wx.Colour(*icDefInf.ACTIVATE_COLOR))
 
-        self.SetPyData(root, res)
+        self.SetItemData(root, res)
         self._dictResTreeId[self._treeItemId] = root
 
         BUFF_TREE_ID_LIST.append(res['name'])
@@ -652,7 +652,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             if item:
                 data = self.GetPyData(item)
                 data[property] = value
-                self.SetPyData(item, data)
+                self.SetItemData(item, data)
 
             if bRefresh:
                 item = item or self.root
