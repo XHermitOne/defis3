@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -76,7 +76,7 @@ class icBalansImportManager(icImportManagerInterface):
         Инициализация внутреннего состояния менеджера.
         """
         # Используемые справочники
-        sprav_manager = ic.metadata.ayan_archive.mtd.nsi_archive.create()
+        sprav_manager = ic.metadata.archive.mtd.nsi_archive.create()
         self.contragent_sprav = sprav_manager.getSpravByName('nsi_c_agent')        
 
     def setPackScanPanel(self, pack_scan_panel):
@@ -104,7 +104,7 @@ class icBalansImportManager(icImportManagerInterface):
         Поиск кода контрагента по наименованию и ИНН.
         """
         if contragent_sprav is None:
-            sprav_manager = ic.metadata.ayan_archive.mtd.nsi_archive.create()
+            sprav_manager = ic.metadata.archive.mtd.nsi_archive.create()
             contragent_sprav = sprav_manager.getSpravByName('nsi_c_agent')
         
         name = name.strip()

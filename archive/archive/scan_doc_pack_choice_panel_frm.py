@@ -1,13 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Модуль ресурса </mnt/defis/defis/ayan_archive/ayan_archive/scan_doc_pack_choice_panel.frm>.
+Модуль ресурса </mnt/defis/defis/archive/archive/scan_doc_pack_choice_panel.frm>.
 """
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/scan_doc_pack_choice_panel.frm
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/scan_doc_pack_choice_panel.frm
 # -----------------------------------------------------------------------------
-# Name:        /mnt/defis/defis/ayan_archive/ayan_archive/scan_doc_pack_choice_panel_frm.py
+# Name:        /mnt/defis/defis/archive/archive/scan_doc_pack_choice_panel_frm.py
 # Purpose:     Модуль ресурса.
 #
 # Author:      <Создан генератором форм>

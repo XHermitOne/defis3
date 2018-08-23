@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -10,8 +10,8 @@ import os
 import os.path
 import datetime
 import wx
-from ayan_archive.forms import edit_doc_form_proto
-from ayan_archive.forms import new_doc_panel
+from archive.forms import edit_doc_form_proto
+from archive.forms import new_doc_panel
 
 import ic
 from ic import log
@@ -20,7 +20,7 @@ from ic import ic_bmp
 from ic import ic_file
 from ic.dlg import ic_dlg
 from work_flow.doc_sys import icdocselectdlg
-from ayan_archive.forms import search_doc_form
+from archive.forms import search_doc_form
 from ic.scanner import scanner_manager
 
 # Version

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -12,14 +12,14 @@ import os.path
 import wx
 import sqlalchemy
 
-from ayan_archive.forms import search_doc_form_proto
-from ayan_archive.forms import edit_doc_form
-from ayan_archive.forms import scheme_doc_form
+from archive.forms import search_doc_form_proto
+from archive.forms import edit_doc_form
+from archive.forms import scheme_doc_form
 from ic import ic_bmp
 from ic import log
 from ic import ic_dlg
 import ic
-from ayan_archive.forms import search_doc_form
+from archive.forms import search_doc_form
 
 # Version
 __version__ = (0, 0, 2, 1)

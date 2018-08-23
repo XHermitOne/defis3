@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/ayan_archive/ayan_archive/scan_document_pack.mtd>
-File            </mnt/defis/defis/ayan_archive/ayan_archive/scan_document_pack_mtd.py>
+Resource module </mnt/defis/defis/archive/archive/scan_document_pack.mtd>
+File            </mnt/defis/defis/archive/archive/scan_document_pack_mtd.py>
 Description     <Resource module>
 """
 
@@ -21,7 +21,7 @@ from ic.utils import ic_time
 from ic.engine import ic_user
 from ic.interfaces import icmanagerinterface
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/scan_document_pack.mtd
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/scan_document_pack.mtd
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

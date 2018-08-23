@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -23,9 +23,9 @@ from ic.utils import txtgen
 from ic.utils import ic_time
 from ic.utils import ic_uuid
 from ic.scanner import scanner_manager
-from ayan_archive.forms import new_doc_form_proto
+from archive.forms import new_doc_form_proto
 from work_flow.doc_sys import icdocselectdlg
-from ayan_archive.forms import search_doc_form
+from archive.forms import search_doc_form
 from ic.engine import form_manager
 
 # Version

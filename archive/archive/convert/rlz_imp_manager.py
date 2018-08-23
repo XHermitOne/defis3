@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -196,7 +196,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             cur_year = cur_dt.year
 
             if self.pack_doc is None:
-                self.pack_doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+                self.pack_doc = ic.metadata.archive.mtd.scan_document_pack.create()
                 self.pack_doc.GetManager().init()
 
             result1 = self._import_rlz_docs_file(cur_year, cur_dt.month, n_warehouse, 
@@ -315,7 +315,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         # Номер склада берем из имени файла
         n_warehouse = int(os.path.splitext(os.path.basename(dbf_filename))[0][-3:])
 
-        doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         # Сначала удалить данные из таблицы за указанный период по определенному складу
@@ -398,7 +398,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         spc_dbf = dbf.icDBFFileReadOnly(spc_dbf_filename)
         spc_idx_records = spc_dbf.getIndexRecsByField('NDOC')
 
-        doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         # Сначала удалить данные из таблицы за указанный период по определенному складу
@@ -471,7 +471,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         # ВНИМАНИЕ! Приходные документы по 8-му складу добавлять услуги
@@ -581,7 +581,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа ТОРГ12.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         # ВНИМАНИЕ! Приходные документы по 8-му складу добавлять услуги
@@ -677,7 +677,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         doc_typ = None
@@ -771,7 +771,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         @return: Список словарей новых записей документов ТТН.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         balans_ndoc = unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()

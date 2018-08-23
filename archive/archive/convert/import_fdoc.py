@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -103,7 +103,7 @@ def import_docs(dt_begin, dt_end, n_warehouse, is_input=False):
         cur_dt = min_dt + datetime.timedelta(days=i_day)        
         cur_year = cur_dt.year
         
-        pack_doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        pack_doc = ic.metadata.archive.mtd.scan_document_pack.create()
         pack_doc.GetManager().init()
         
         result1 = import_rlz_docs(cur_year, cur_dt.month, n_warehouse, 
@@ -240,7 +240,7 @@ def import_zatraty_docs(cur_year, is_input=False):
     """
     log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ ЗАТРАТ НА ПРОИЗВОДСТВО ---')
 
-    pack_doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+    pack_doc = ic.metadata.archive.mtd.scan_document_pack.create()
     pack_doc.GetManager().init()
         
     result1 = import_ztr7601_docs(cur_year, is_input, pack_doc)
@@ -369,7 +369,7 @@ def import_material_docs(cur_year, n_warehouse, is_input=False):
     """
     log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ <МАТЕРИАЛЫ> ---')
 
-    pack_doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+    pack_doc = ic.metadata.archive.mtd.scan_document_pack.create()
     pack_doc.GetManager().init()
         
     result = import_mt_docs(cur_year, n_warehouse, is_input, pack_doc)

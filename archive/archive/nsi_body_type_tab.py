@@ -1,15 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/ayan_archive/ayan_archive/nsi_body_type.tab>
-File            </mnt/defis/defis/ayan_archive/ayan_archive/nsi_body_type_tab.py>
+Resource module </mnt/defis/defis/archive/archive/nsi_body_type.tab>
+File            </mnt/defis/defis/archive/archive/nsi_body_type_tab.py>
 Description     <Resource module>
 """
 
 from ic.interfaces import icmanagerinterface
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/nsi_body_type.tab
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/nsi_body_type.tab
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

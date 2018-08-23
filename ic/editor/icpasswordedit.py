@@ -115,19 +115,12 @@ class icPasswordEditDialog(wx.Dialog):
         try:
             _title = u'Определение пароля'
             
-            pre = wx.PreDialog()
-            pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-            pre.Create(parent_,-1, title=_title,
-                       pos=wx.DefaultPosition, size=wx.Size(300, 200))
-
-            # This next step is the most important, it turns this Python
-            # object into the real wrapper of the dialog (instead of pre)
-            # as far as the wxPython extension is concerned.
-            self.PostCreate(pre)
+            wx.Dialog.__init__(self, parent_, -1, title=_title,
+                               pos=wx.DefaultPosition, size=wx.Size(300, 200))
 
             icon_img = ic_bmp.getSysImg('imgKey')
             if icon_img:
-                icon = wx.IconFromBitmap(icon_img)
+                icon = wx.Icon(icon_img)
                 self.SetIcon(icon)
 
             self._boxsizer = wx.BoxSizer(wx.VERTICAL)

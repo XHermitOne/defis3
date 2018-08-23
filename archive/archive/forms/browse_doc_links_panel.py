@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -7,7 +7,6 @@
 """
 
 import wx
-import browse_doc_links_proto
 
 import ic
 from ic.log import log
@@ -16,6 +15,10 @@ from ic.dlg import ic_dlg
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
 from ic.engine import form_manager
+
+from . import browse_doc_links_proto
+
+__version__ = (0, 1, 1, 1)
 
 
 class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, form_manager.icFormManager):
@@ -37,10 +40,10 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
             record = self.links_treeListCtrl.GetPyData(selected_item)
             if record:
                 doc_uuid = record['uuid']
-                doc = ic.metadata.ayan_archive.mtd.scan_document.create()
+                doc = ic.metadata.archive.mtd.scan_document.create()
                 doc.load_obj(doc_uuid)
                 log.debug(u'Редактирование документа UUID <%s>' % doc_uuid)            
-                from ayan_archive.forms import edit_doc_form
+                from archive.forms import edit_doc_form
                 
                 result = edit_doc_form.edit_doc_dlg(doc=doc)
                 if result:
@@ -62,7 +65,7 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
             record = self.links_treeListCtrl.GetPyData(selected_item)
             if record:
                 filename = record['file_name']
-                doc = ic.metadata.ayan_archive.mtd.scan_document.create()
+                doc = ic.metadata.archive.mtd.scan_document.create()
                 doc.GetManager().view_scan_file(filename)               
             else:
                 log.warning(u'Нет прикрепленных данных к элементу дерева')
@@ -133,7 +136,7 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
         if doc_uuid is None:
             doc_uuid = self.doc_uuid
             
-        doc = ic.metadata.ayan_archive.mtd.scan_document.create()
+        doc = ic.metadata.archive.mtd.scan_document.create()
         doc.load_obj(doc_uuid)
         links_data = doc.GetManager().get_doc_links(doc)
         self.init_tree(links_data, doc_uuid)

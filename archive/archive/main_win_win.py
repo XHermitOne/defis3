@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/ayan_archive/ayan_archive/main_win.win>
-File            </mnt/defis/defis/ayan_archive/ayan_archive/main_win_win.py>
+Resource module </mnt/defis/defis/archive/archive/main_win.win>
+File            </mnt/defis/defis/archive/archive/main_win_win.py>
 Description     <Resource module>
 """
 
@@ -11,12 +11,12 @@ import ic
 from ic.dlg import ic_dlg
 from ic.utils import system
 from ic.interfaces import icmanagerinterface
-from ayan_archive.forms import print_doc_form
+from archive.forms import print_doc_form
 
-from ayan_archive.convert import import_sprvent
-from ayan_archive import valid_catalog
+from archive.convert import import_sprvent
+from archive import valid_catalog
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/main_win.win
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/main_win.win
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS
@@ -53,7 +53,7 @@ class icMainWinManager(icmanagerinterface.icWidgetManager):
         Функция инициализации приложения/главного окна.
         """
         # Проверка наличия уже запущенной копии программы
-        if system.getActiveProcessCount('defis/ayan_archive/run.py') > 1:
+        if system.getActiveProcessCount('defis/archive/run.py') > 1:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Уже запущена одна копия программы')
             ic.closeAppForce()
             return
@@ -61,7 +61,7 @@ class icMainWinManager(icmanagerinterface.icWidgetManager):
         # Перед началом работы проверить наличие примонтированной папки каталога
         # Если папка пустая, то дальнейшая работа безсмыслена
         if not valid_catalog.validZipDocCatalog():
-            zipdoc_dir = ic.settings.ayan_archive.SETTINGS.zipdoc_dir.get()
+            zipdoc_dir = ic.settings.archive.SETTINGS.zipdoc_dir.get()
             msg = u'Не подключен каталог документов <%s>. Дальнейшая работа не возможна' % zipdoc_dir
             ic_dlg.icErrBox(u'ОШИБКА', msg)
             ic.closeAppForce()

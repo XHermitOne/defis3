@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -22,7 +22,7 @@ from ic.utils import ic_time
 
 from ic.engine import form_manager
 
-from ayan_archive.convert import import_fdoc
+from archive.convert import import_fdoc
 from STD.queries import filter_generate
 from . import new_doc_panel
 from . import group_manipulation_dlg
@@ -103,8 +103,8 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
         """
         doc_indexes = self.getCheckedItems_list_ctrl(self.docs_listCtrl)
         if doc_indexes:
-            doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
-            archive_doc = ic.metadata.ayan_archive.mtd.scan_document.create()
+            doc = ic.metadata.archive.mtd.scan_document_pack.create()
+            archive_doc = ic.metadata.archive.mtd.scan_document.create()
             pack_result = True
             for doc_idx in doc_indexes:
                 doc_uuid = self.documents[doc_idx]['uuid']
@@ -143,7 +143,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
             doc = ic.metadata.THIS.mtd.scan_document_pack.create()
             doc.load_obj(doc_uuid)
             log.debug(u'Редактирование документа UUID <%s>' % doc_uuid)
-            from ayan_archive.forms import edit_doc_form
+            from archive.forms import edit_doc_form
             result = edit_doc_form.edit_doc_dlg(doc=doc)
             if result:
                 doc.save_obj()
@@ -205,7 +205,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
         """
         Обработчик импорта документов из БАЛАНСА.
         """
-        popup_menu = ic.metadata.ayan_archive.mnu.import_select_popup_menu.create()
+        popup_menu = ic.metadata.archive.mnu.import_select_popup_menu.create()
         popup_menu.GetManager().setPackScanPanel(self)
         popup_menu.popupByTool(self.import_tool)
         event.Skip()
@@ -423,7 +423,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
             log.warning(u'Обновление списка документов. Не корректный диапазон дат')
             return 
         
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         
         dt_compare = filter_generate.create_filter_compare_requisite('doc_date', '>..<', 
                                                                      dt_begin.strftime(DEFAULT_DB_DATE_FMT),
@@ -508,7 +508,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
             log.warning(u'Ошибка сканирования пакета документов')
             return
         
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         
         if check_idx_list:
             for i, item_idx in enumerate(check_idx_list):
@@ -744,7 +744,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
         self.initListCtrl()
         
         # Используемые справочники
-        sprav_manager = ic.metadata.ayan_archive.mtd.nsi_archive.create()
+        sprav_manager = ic.metadata.archive.mtd.nsi_archive.create()
         self.contragent_sprav = sprav_manager.getSpravByName('nsi_c_agent')
 
         self.documents = list()

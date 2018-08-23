@@ -33,7 +33,7 @@ from ic import log
 from ic.interfaces import icmanagerinterface
 from ic.dlg import ic_dlg
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/scan_document.mtd
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/scan_document.mtd
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS
@@ -48,7 +48,7 @@ DATE_FMT = '%Y-%m-%m'
 NONE_DATE_FMT = 'XXXX-XX-XX'
 
 # Используемые справочники
-ARCHIVE_SPRAV_MANAGER = ic.metadata.ayan_archive.mtd.nsi_archive.create()
+ARCHIVE_SPRAV_MANAGER = ic.metadata.archive.mtd.nsi_archive.create()
 CONTRAGENT_SPRAV = ARCHIVE_SPRAV_MANAGER.getSpravByName('nsi_c_agent')
 
 

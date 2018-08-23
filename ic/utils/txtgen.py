@@ -167,7 +167,7 @@ def gen_txt_file(sTxtTemplateFilename, sTxtOutputFilename, dContext=None, output
     # Генерация текста по шаблону
     gen_txt = gen(template_txt, dContext)
 
-    file_encoding = template_encoding if output_encoding is None output_encoding
+    file_encoding = template_encoding if output_encoding is None else output_encoding
 
     # Запись текста в выходной результирующий файл
     output_filename = os.path.abspath(sTxtOutputFilename)

@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/ayan_archive/ayan_archive/user_menubar.mnu>
-File            </mnt/defis/defis/ayan_archive/ayan_archive/user_menubar_mnu.py>
+Resource module </mnt/defis/defis/archive/archive/user_menubar.mnu>
+File            </mnt/defis/defis/archive/archive/user_menubar_mnu.py>
 Description     <Resource module>
 """
 
@@ -12,11 +12,11 @@ import os.path
 import sqlalchemy
 
 import ic
-from ayan_archive import admin_menubar_mnu
+from archive import admin_menubar_mnu
 # from ic.interfaces import icmanagerinterface
-from ayan_archive.forms import new_doc_panel
-from ayan_archive.forms import search_doc_form
-from ayan_archive.forms import print_doc_form
+from archive.forms import new_doc_panel
+from archive.forms import search_doc_form
+from archive.forms import print_doc_form
 from ic.dlg import about_box
 from ic.utils import datefunc
 from ic.utils import ic_file
@@ -24,7 +24,7 @@ from ic.dlg import std_dlg
 from ic.dlg import ic_dlg
 from ic.log import log
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/user_menubar.mnu
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/user_menubar.mnu
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS
@@ -105,7 +105,7 @@ class icUserMenuBarManager(admin_menubar_mnu.icAdminMenuBarManager):
         ic_file.delAllFilesFilter(del_path, *file_masks)
         
         # Удалить записи из таблицы пакетной обработки
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_of_month), str(last_day))
@@ -134,7 +134,7 @@ class icUserMenuBarManager(admin_menubar_mnu.icAdminMenuBarManager):
         ic_file.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,
@@ -170,7 +170,7 @@ class icUserMenuBarManager(admin_menubar_mnu.icAdminMenuBarManager):
         ic_file.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,
@@ -207,7 +207,7 @@ class icUserMenuBarManager(admin_menubar_mnu.icAdminMenuBarManager):
         ic_file.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,

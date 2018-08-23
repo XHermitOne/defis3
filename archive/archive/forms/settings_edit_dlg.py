@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -6,7 +6,7 @@
 """
 
 import wx
-from ayan_archive.forms import settings_form_proto
+from archive.forms import settings_form_proto
 import ic
 
 # Version

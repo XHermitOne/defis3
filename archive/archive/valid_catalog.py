@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -21,7 +21,7 @@ def validZipDocCatalog(zipdoc_dir=None):
     """
     try:
         if zipdoc_dir is None:
-            zipdoc_dir = ic.settings.ayan_archive.SETTINGS.zipdoc_dir.get()
+            zipdoc_dir = ic.settings.archive.SETTINGS.zipdoc_dir.get()
         is_valid_dir = validZipDocDir(zipdoc_dir)
         is_empty_dir = isEmptyDir(zipdoc_dir)
         is_doc_catalog_dir = os.path.exists(os.path.join(zipdoc_dir, 'doc_catalog'))
@@ -37,7 +37,7 @@ def validZipDocDir(zipdoc_dir=None):
     @return: True/False.
     """
     if zipdoc_dir is None:
-        zipdoc_dir = ic.settings.ayan_archive.SETTINGS.zipdoc_dir.get()
+        zipdoc_dir = ic.settings.archive.SETTINGS.zipdoc_dir.get()
     return os.path.exists(zipdoc_dir)
     
 

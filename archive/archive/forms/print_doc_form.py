@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -9,23 +9,24 @@ import sys
 import os
 import os.path
 import wx
+import wx.adv
 import sqlalchemy
 
-from ayan_archive.forms import search_doc_form_proto
-from ayan_archive.forms import edit_doc_form
-from ayan_archive.forms import scheme_doc_form
+from archive.forms import search_doc_form_proto
+from archive.forms import edit_doc_form
+from archive.forms import scheme_doc_form
 from ic import ic_bmp
 from ic import log
 from ic import ic_dlg
 from ic.utils import ic_time
 import ic
-from ayan_archive.forms import search_doc_form
+from archive.forms import search_doc_form
 from ic.dlg import ic_printer_dlg
 from ic.utils import printerfunc
 from ic.engine import form_manager
 
 # Version
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 DB_DATE_FMT = '%Y-%m-%d'
 
@@ -47,13 +48,13 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         # self.autocomplit.LoadDict()     # Загрузить частотные словари для авто заполнений
 
         # Необходимо перепривязать обработчики
-        self.search_crit_panel.start_datePicker.Bind(wx.EVT_DATE_CHANGED, self.onStartDatePickerChanged)
-        self.search_crit_panel.end_datePicker.Bind(wx.EVT_DATE_CHANGED, self.onEndDatePickerChanged)
+        self.search_crit_panel.start_datePicker.Bind(wx.adv.EVT_DATE_CHANGED, self.onStartDatePickerChanged)
+        self.search_crit_panel.end_datePicker.Bind(wx.adv.EVT_DATE_CHANGED, self.onEndDatePickerChanged)
         self.search_crit_panel.date_checkBox.Bind(wx.EVT_CHECKBOX, self.onDateCheckBox)
         self.search_crit_panel.one_date_checkBox.Bind(wx.EVT_CHECKBOX, self.onOneDateCheckBox)
 
-        self.search_crit_panel.obj_start_datePicker.Bind(wx.EVT_DATE_CHANGED, self.onObjStartDatePickerChanged)
-        self.search_crit_panel.obj_end_datePicker.Bind(wx.EVT_DATE_CHANGED, self.onObjEndDatePickerChanged)
+        self.search_crit_panel.obj_start_datePicker.Bind(wx.adv.EVT_DATE_CHANGED, self.onObjStartDatePickerChanged)
+        self.search_crit_panel.obj_end_datePicker.Bind(wx.adv.EVT_DATE_CHANGED, self.onObjEndDatePickerChanged)
         self.search_crit_panel.obj_date_checkBox.Bind(wx.EVT_CHECKBOX, self.onObjDateCheckBox)
         self.search_crit_panel.obj_one_date_checkBox.Bind(wx.EVT_CHECKBOX, self.onObjOneDateCheckBox)
 
@@ -64,22 +65,6 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         self.search_crit_panel.clear_button.Bind(wx.EVT_BUTTON, self.onClearButtonClick)
         self.search_crit_panel.search_button.Bind(wx.EVT_BUTTON, self.onSearchButtonClick)
 
-        # self.search_crit_panel.tag9_textCtrl.Bind(wx.EVT_TEXT, self.onAutoComplitText)
-
-    #def __del__(self, *args, **kwargs):
-    #    """
-    #    Деструктор.
-    #    """
-    #    self.autocomplit.SaveDict()     # Сохранить частотные словари для авто заполнений
-        
-    #def onAutoComplitText(self, event):
-    #    """
-    #    Автозаполнение для текстовых полей.
-    #    """
-    #    txt_ctrl = event.GetEventObject()
-    #    self.autocomplit.AutoTextFill(txt_ctrl)
-    #    event.Skip()
-        
     def onAllCheckBox(self, event):
         """
         Установка/Снятие отметки выделения всех найденных документов.
@@ -90,14 +75,6 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
             self.docs_listCtrl.CheckItem(i, check=check)
 
         event.Skip()
-
-    #def onSearchButtonClick(self, event):
-    #    """
-    #    Обработчик кнопки <Искать>.
-    #    """
-    #    search_doc_form.icSearchDocPanelCtrl.onSearchButtonClick(self, event)
-    #    # Заполмнить введенные слова для авто заполнения
-    #    self.autocomplit.AddTextFill(self.search_crit_panel.tag9_textCtrl)        
 
     def print_scan_document(self, doc_filename, printer_name):
         """
@@ -185,9 +162,12 @@ def open_print_search_doc_page(main_win=None):
     Открыть страницу поиска/печати документа из архива.
     @param main_win: Главное окно приложения.
     """
-    if main_win is None:
-        main_win = ic.getMainWin()
+    try:
+        if main_win is None:
+            main_win = ic.getMainWin()
 
-    page = icPrintDocPanel(parent=main_win)
-    main_win.AddOrgPage(page, u'Поиск документов')
+        page = icPrintDocPanel(parent=main_win)
+        main_win.AddOrgPage(page, u'Поиск документов')
+    except:
+        log.fatal(u'Ошибка открытия страницы поиска/печати документа архива')
     return

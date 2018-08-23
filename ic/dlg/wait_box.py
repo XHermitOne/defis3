@@ -8,14 +8,14 @@
 import os
 import os.path
 import wx
-import wx.animate
-import thread
+import wx.adv
+import _thread
 import time
 
 # Задержка между кадрами
 FRAME_DELAY = 0.3
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 ic_wait_process_dlg = None
@@ -36,12 +36,13 @@ def wait_func(parent, message,
     global ic_wait_process_dlg
     
     wait_result = [None]
+    art_gif = None
     if not art_frames:
         # Определить кадры по умолчанию
         cur_dir = os.path.dirname(__file__)
         if not cur_dir:
             cur_dir = os.getcwd()
-        wait_dir = os.path.join(cur_dir, 'img', 'wait/')
+        wait_dir = os.path.join(cur_dir, 'img', 'wait')
         art_gif = os.path.join(wait_dir, 'spinner.gif')
 
     if parent is None:
@@ -50,7 +51,7 @@ def wait_func(parent, message,
     wait_box.set_result_list(wait_result)
 
     # Запустить функцию ожидания
-    thread.start_new(wait_box.run, (function, func_args, func_kwargs))
+    _thread.start_new(wait_box.run, (function, func_args, func_kwargs))
     wait_box.ShowModal()
     wait_box.Destroy()
     ic_wait_process_dlg = None
@@ -85,25 +86,14 @@ class icWaitBox(wx.Dialog):
         if parent is None:
             style = wx.STAY_ON_TOP
             
-        # Instead of calling wx.Dialog.__init__ we precreate the dialog
-        # so we can set an extra style that must be set before
-        # creation, and then we create the GUI object using the Create
-        # method.
-        pre = wx.PreDialog()
-        pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-        pre.Create(parent, -1, size=wx.Size(220, 34), style=style)
-
-        # This next step is the most important, it turns this Python
-        # object into the real wrapper of the dialog (instead of pre)
-        # as far as the wxPython extension is concerned.
-        self.PostCreate(pre)
+        wx.Dialog.__init__(self, parent, -1, size=wx.Size(220, 34), style=style)
 
         self.msg = wx.StaticText(self, -1, message)
         self._lastTime = time.clock()
 
-        self.ani = wx.animate.Animation(art)
-        self.ani_ctrl = wx.animate.AnimationCtrl(self, -1, self.ani)
-        self.ani_ctrl.SetUseWindowBackgroundColour()
+        self.ani = wx.adv.Animation(art)
+        self.ani_ctrl = wx.adv.AnimationCtrl(self, -1, self.ani)
+        self.ani_ctrl.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWFRAME))
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(self.ani_ctrl, 0, wx.ALL | wx.ALIGN_CENTER, 5)
@@ -153,7 +143,7 @@ class icWaitBox(wx.Dialog):
         result = function(*args, **kwargs)
         self._running = False
         # Сбросить в результирующий список
-        if type(self._result_list) == type([]):
+        if isinstance(self._result_list, list):
             self._result_list[0] = result
             
     def set_label(self, label=None):
@@ -175,6 +165,7 @@ def test():
     result = wait_func(None, u'Ожидание длинное  ', funcA)
     app.MainLoop()
     print(u'Result: <%s>' % result)
+
 
 if __name__ == '__main__':
     test()

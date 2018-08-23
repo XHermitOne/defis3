@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -185,7 +185,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
         Инициализация контролов.
         """
         if doc is None:
-            doc = ic.metadata.ayan_archive.mtd.scan_document.create()
+            doc = ic.metadata.archive.mtd.scan_document.create()
             doc_uuid = self.getCurrentDocUUID()
             doc.load_obj(doc_uuid)
         # Колонки списка связей
@@ -243,7 +243,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
                 
         doc = None
         if doc_uuid:
-            doc = ic.metadata.ayan_archive.mtd.scan_document.create()
+            doc = ic.metadata.archive.mtd.scan_document.create()
             doc.load_obj(doc_uuid)            
         return doc
         
@@ -581,7 +581,7 @@ def open_correct_doc_panel(parent=None):
     sql = get_sql_correct_filter(parent)
     if sql:
         # Отфильтровать записи
-        db = ic.metadata.ayan_archive.src.archive_db.create()
+        db = ic.metadata.archive.src.archive_db.create()
         recordset = db.executeSQL(sql, to_dict=True)
         doc_uuid_lst = [rec['uuid'] for rec in recordset['__data__']] if recordset else list()
         

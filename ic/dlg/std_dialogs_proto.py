@@ -8,8 +8,8 @@
 ###########################################################################
 
 import wx
-import wx.xrc
-import wx.calendar
+import wx.adv
+# import wx.calendar
 
 ###########################################################################
 ## Class calendarDialogProto
@@ -24,7 +24,7 @@ class calendarDialogProto ( wx.Dialog ):
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.calendarCtrl = wx.calendar.CalendarCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.calendar.CAL_SHOW_HOLIDAYS )
+		self.calendarCtrl = wx.adv.CalendarCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.CAL_SHOW_HOLIDAYS )
 		bSizer1.Add( self.calendarCtrl, 0, wx.ALL, 5 )
 		
 		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
@@ -307,14 +307,14 @@ class dateRangeDialogProto ( wx.Dialog ):
 		self.m_staticText3.Wrap( -1 )
 		fgSizer2.Add( self.m_staticText3, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.firstDatePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.firstDatePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		fgSizer2.Add( self.firstDatePicker, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
 		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"по:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText31.Wrap( -1 )
 		fgSizer2.Add( self.m_staticText31, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.lastDatePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.lastDatePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		fgSizer2.Add( self.lastDatePicker, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -340,8 +340,8 @@ class dateRangeDialogProto ( wx.Dialog ):
 		
 		# Connect Events
 		self.concrete_date_checkBox.Bind( wx.EVT_CHECKBOX, self.onConcreteDateCheckBox )
-		self.firstDatePicker.Bind( wx.EVT_DATE_CHANGED, self.onFirstDateChanged )
-		self.lastDatePicker.Bind( wx.EVT_DATE_CHANGED, self.onLastDateChanged )
+		self.firstDatePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onFirstDateChanged )
+		self.lastDatePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onLastDateChanged )
 		self.cancelButton.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
 		self.okButton.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
 	

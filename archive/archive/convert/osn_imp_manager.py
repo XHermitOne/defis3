@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -131,7 +131,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ <Основные средства> ---')
 
         if self.pack_doc is None:
-            self.pack_doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            self.pack_doc = ic.metadata.archive.mtd.scan_document_pack.create()
             self.pack_doc.GetManager().init()
         
         result = self._import_os_docs_file(cur_year, base_filename, is_nds, self.pack_doc)
@@ -196,7 +196,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
 
         base_filename = os.path.basename(dbf_filename)
 
-        doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()            
+        doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         # Запускаем загрузку
@@ -282,7 +282,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         str_n_doc = unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
@@ -358,7 +358,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         str_n_doc = unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
@@ -435,7 +435,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         str_n_doc = unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
@@ -524,7 +524,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         # Создаемо только по определенным бух.справкам
@@ -618,7 +618,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         # Создаем только по определенным бух.справкам

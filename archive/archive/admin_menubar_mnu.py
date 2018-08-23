@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/ayan_archive/ayan_archive/admin_menubar.mnu>
-File            </mnt/defis/defis/ayan_archive/ayan_archive/admin_menubar_mnu.py>
+Resource module </mnt/defis/defis/archive/archive/admin_menubar.mnu>
+File            </mnt/defis/defis/archive/archive/admin_menubar_mnu.py>
 Description     <Resource module>
 """
 
@@ -17,9 +17,9 @@ from ic.utils import datefunc
 from ic.utils import ic_file
 from ic.interfaces import icmanagerinterface
 
-from ayan_archive.forms import ctrl_doc_form
+from archive.forms import ctrl_doc_form
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/admin_menubar.mnu
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/admin_menubar.mnu
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS
@@ -126,7 +126,7 @@ class icAdminMenuBarManager(icmanagerinterface.icWidgetManager):
         """
         Редактирование настроек.
         """
-        from ayan_archive.forms import settings_edit_dlg
+        from archive.forms import settings_edit_dlg
         settings_edit_dlg.edit_settings_dlg()
         event.Skip()
 
@@ -187,7 +187,7 @@ class icAdminMenuBarManager(icmanagerinterface.icWidgetManager):
         """
         Коррекция отсканированных документов.
         """
-        from ayan_archive.forms import correct_doc_panel
+        from archive.forms import correct_doc_panel
         
         correct_doc_panel.open_correct_doc_panel()
 
@@ -197,9 +197,9 @@ class icAdminMenuBarManager(icmanagerinterface.icWidgetManager):
         """
         Пакетная обработка отсканированных документов.
         """
-        from ayan_archive.forms import pack_scan_doc_panel
+        from archive.forms import pack_scan_doc_panel
         pack_scan_doc_panel.open_pack_scan_doc_page()
-        # obj = ic.metadata.ayan_archive.mtd.scan_doc_pack.create()
+        # obj = ic.metadata.archive.mtd.scan_doc_pack.create()
         # obj.Browse(ParentForm_=ic.getMainWin())
         event.Skip()
 
@@ -234,7 +234,7 @@ class icAdminMenuBarManager(icmanagerinterface.icWidgetManager):
         ic_file.delAllFilesFilter(del_path, *file_masks)
         
         # Удалить записи из таблицы пакетной обработки
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_of_month), str(last_day))
@@ -263,7 +263,7 @@ class icAdminMenuBarManager(icmanagerinterface.icWidgetManager):
         ic_file.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,
@@ -299,7 +299,7 @@ class icAdminMenuBarManager(icmanagerinterface.icWidgetManager):
         ic_file.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,
@@ -336,7 +336,7 @@ class icAdminMenuBarManager(icmanagerinterface.icWidgetManager):
         ic_file.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
-        doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,

@@ -6,15 +6,16 @@
 """
 
 # --- Подключение библиотек ---
+import os
+import os.path
 import wx
 
 from ic.log import log
 
 from ic.bitmap import ic_bmp
-from ic.utils import ic_file
 from ic.utils import ic_util
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -46,7 +47,7 @@ def icPassportChoiceDlg(Win_=None, Prj_=None):
             # Удаляем созданное родительское окно
             if win_clear:
                 Win_.Destroy()
-            log.info(u'<<<PASSPORT>> <%s> type <%s>' % (result, type(result)))
+            log.debug(u'Выбор паспорта %s' % result)
             return result
     
     finally:
@@ -82,7 +83,7 @@ def icPassportListDlg(Win_=None, Prj_=None, Default_=None):
             # Удаляем созданное родительское окно
             if win_clear:
                 Win_.Destroy()
-            log.info(u'<<<PASSPORTS>> <%s> type <%s>' % (result, type(result)))
+            log.debug(u'Выбор паспорта %s' % result)
             return result
     
     finally:
@@ -227,19 +228,12 @@ class icPassportChoiceDialog(wx.Dialog):
         try:
             _title = u'Определение паспорта объекта'
             
-            pre = wx.PreDialog()
-            pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-            pre.Create(parent_, -1, title=_title,
-                       pos=wx.DefaultPosition, size=wx.Size(800, 400))
-
-            # This next step is the most important, it turns this Python
-            # object into the real wrapper of the dialog (instead of pre)
-            # as far as the wxPython extension is concerned.
-            self.PostCreate(pre)
+            wx.Dialog.__init__(self, parent_, -1, title=_title,
+                               pos=wx.DefaultPosition, size=wx.Size(800, 400))
 
             icon_img = ic_bmp.getSysImg('imgEdtPassport')
             if icon_img:
-                icon = wx.IconFromBitmap(icon_img)
+                icon = wx.Icon(icon_img)
                 self.SetIcon(icon)
 
             self._boxsizer = wx.BoxSizer(wx.VERTICAL)
@@ -469,19 +463,12 @@ class icPassportListDialog(wx.Dialog):
         try:
             _title = u'Определение паспортов объектов'
             
-            pre = wx.PreDialog()
-            pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-            pre.Create(parent_, -1, title=_title,
-                       pos=wx.DefaultPosition, size=wx.Size(800, 400))
-
-            # This next step is the most important, it turns this Python
-            # object into the real wrapper of the dialog (instead of pre)
-            # as far as the wxPython extension is concerned.
-            self.PostCreate(pre)
+            wx.Dialog.__init__(self, parent_, -1, title=_title,
+                               pos=wx.DefaultPosition, size=wx.Size(800, 400))
 
             icon_img = ic_bmp.getSysImg('imgEdtPassport')
             if icon_img:
-                icon = wx.IconFromBitmap(icon_img)
+                icon = wx.Icon(icon_img)
                 self.SetIcon(icon)
 
             self._boxsizer = wx.BoxSizer(wx.VERTICAL)

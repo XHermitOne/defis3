@@ -17,6 +17,7 @@ from . import ic_extend
 from . import util
 from . import ic_str
 
+__version__ = (0, 1, 1, 1)
 
 # Формат для генерации текста модуля формы
 GEN_PY_MODULE_FMT = u'''#!/usr/bin/env python3
@@ -76,11 +77,14 @@ def %s(title=u''):
     \"\"\"
     @param title: Заголовок страницы нотебука главного окна.
     \"\"\"
-    main_win = ic.getMainWin()
+    try:
+        main_win = ic.getMainWin()
         
-    panel = %s(main_win)
-    panel.init()
-    main_win.AddPage(panel, title)    
+        panel = %s(main_win)
+        panel.init()
+        main_win.AddPage(panel, title)
+    except:
+        log.fatal(u'Ошибка')    
 '''
 
 
@@ -90,14 +94,17 @@ def %s(parent=None):
     @param parent: Родительское окно.
     @return: True/False.
     \"\"\"
-    if parent is None:
-        parent = ic.getMainWin()
+    try:
+        if parent is None:
+            parent = ic.getMainWin()
 
-    dlg = %s(parent)
-    dlg.init()
-    result = dlg.ShowModal()
-    if result == wx.ID_OK:
-        return True
+        dlg = %s(parent)
+        dlg.init()
+        result = dlg.ShowModal()
+        if result == wx.ID_OK:
+            return True
+    except:
+        log.fatal(u'Ошибка')
     return False
 '''
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -8,7 +8,7 @@
 import os
 import os.path
 
-from ayan_archive.forms import scheme_doc_form_proto
+from archive.forms import scheme_doc_form_proto
 import ic
 from ic.log import log
 from ic.engine import form_manager
@@ -49,7 +49,7 @@ class icSchemeDocPanel(scheme_doc_form_proto.icSchemeDocPanelProto,
             doc = ic.metadata.THIS.mtd.scan_document.create()
             doc.load_obj(doc_uuid)
             log.debug(u'Редактирование документа UUID <%s>' % doc_uuid)            
-            from ayan_archive.forms import edit_doc_form
+            from archive.forms import edit_doc_form
             result = edit_doc_form.edit_doc_dlg(doc=doc)
             if result:
                 doc.save_obj()

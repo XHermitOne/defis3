@@ -137,7 +137,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		self.doc_type_checkBox = wx.CheckBox( self.crit_scrolledWindow, wx.ID_ANY, u"Тип документа:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer4.Add( self.doc_type_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'ayan_archive'),),  'level_enable': 1})
+		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1})
 		self.doc_type_ctrl.Enable( False )
 		
 		bSizer4.Add( self.doc_type_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -145,7 +145,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		self.entity_checkBox = wx.CheckBox( self.crit_scrolledWindow, wx.ID_ANY, u"Подразделение:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer4.Add( self.entity_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_entity', None, 'nsi_archive.mtd', 'ayan_archive'),),  'level_enable': 1})
+		self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_entity', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1})
 		self.entity_ctrl.Enable( False )
 		
 		bSizer4.Add( self.entity_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -158,7 +158,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		self.contragent_checkBox = wx.CheckBox( self.crit_scrolledWindow, wx.ID_ANY, u"Контрагенты:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer5.Add( self.contragent_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.contragent_ctrl = spravmultiplechoicecomboctrl.icSpravMultipleChoiceComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'ayan_archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name']})
+		self.contragent_ctrl = spravmultiplechoicecomboctrl.icSpravMultipleChoiceComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name']})
 		self.contragent_ctrl.Enable( False )
 		
 		bSizer5.Add( self.contragent_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )

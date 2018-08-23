@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/ayan_archive/ayan_archive/import_select_popup_menu.mnu>
-File            </mnt/defis/defis/ayan_archive/ayan_archive/import_select_popup_menu_mnu.py>
+Resource module </mnt/defis/defis/archive/archive/import_select_popup_menu.mnu>
+File            </mnt/defis/defis/archive/archive/import_select_popup_menu_mnu.py>
 Description     <Resource module>
 """
 
@@ -13,13 +13,13 @@ from ic.log import log
 from ic.log import iclogbrowser
 from ic.dlg import ic_dlg
 
-from ayan_archive.convert import rlz_imp_manager
-from ayan_archive.convert import ztr_imp_manager
-from ayan_archive.convert import mt_imp_manager
-from ayan_archive.convert import osn_imp_manager
+from archive.convert import rlz_imp_manager
+from archive.convert import ztr_imp_manager
+from archive.convert import mt_imp_manager
+from archive.convert import osn_imp_manager
 
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/import_select_popup_menu.mnu
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/import_select_popup_menu.mnu
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

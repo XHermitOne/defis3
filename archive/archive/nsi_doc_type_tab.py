@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/ayan_archive/ayan_archive/nsi_doc_type.tab>
-File            </mnt/defis/defis/ayan_archive/ayan_archive/nsi_doc_type_tab.py>
+Resource module </mnt/defis/defis/archive/archive/nsi_doc_type.tab>
+File            </mnt/defis/defis/archive/archive/nsi_doc_type_tab.py>
 Description     <Resource module>
 """
 
@@ -14,7 +14,7 @@ from ic.db import dbf
 from ic.utils import ic_str
 from ic.interfaces import icmanagerinterface
 
-### RESOURCE_MODULE: /mnt/defis/defis/ayan_archive/ayan_archive/nsi_doc_type.tab
+### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/nsi_doc_type.tab
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS
@@ -25,7 +25,7 @@ __version__ = (0, 0, 0, 1)
 DBF_DEFAULT_ENCODE = 'cp866'
 
 # Полное имя файла SPRAV.DBF (Справочник БАЛАНС+)
-SPRAV_DBF_FILENAME = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'SPRAV.DBF') if os.path.dirname(__file__) else  '/mnt/defis/defis/ayan_archive/db/SPRAV.DBF'
+SPRAV_DBF_FILENAME = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'SPRAV.DBF') if os.path.dirname(__file__) else  '/mnt/defis/defis/archive/db/SPRAV.DBF'
 
 SPRAV_TYPE_CODES = (161, 162, 163, 164, 165, 166, 167, 168, 169,
                     171, 172, 173, 174, 175, 176, 177, 178, 179,

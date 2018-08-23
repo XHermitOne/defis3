@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -103,7 +103,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ ЗАТРАТ НА ПРОИЗВОДСТВО ---')
 
         if self.pack_doc is None:
-            self.pack_doc = ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            self.pack_doc = ic.metadata.archive.mtd.scan_document_pack.create()
             # self.pack_doc.GetManager().init()
         
         result1 = self._import_ztr7601_docs_file(cur_year, is_input, self.pack_doc,
@@ -201,7 +201,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         if cur_year is None:
             cur_year = DT_TODAY.year
         
-        doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()       
+        doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
         
         # Запускаем загрузку
@@ -323,7 +323,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         str_n_doc = unicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
@@ -430,7 +430,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         alt_n_doc = unicode(record['N_DOGOV'], DBF_DEFAULT_ENCODE).strip()
@@ -526,7 +526,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         @return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
-            doc = self.pack_doc if self.pack_doc else ic.metadata.ayan_archive.mtd.scan_document_pack.create()
+            doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
 
         alt_n_doc = unicode(record['N_DOGOV'], DBF_DEFAULT_ENCODE).strip()
