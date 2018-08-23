@@ -244,24 +244,28 @@ def getFileExt(FileName_):
     return os.path.splitext(FileName_)[1]
 
 
-def icRelativePath(Path_):
+def getRelativePath(Path_):
     """
     Относительный путь.
+    Относительнай путь считается от папки defis.
     @param Path_: Путь.
     """
-    Path_ = Path_.replace('\\', '/')
-    cur_dir = os.getcwd()
-    return Path_.replace(cur_dir, './').strip()
+    Path_ = os.path.normpath(Path_)
+    cur_dir = os.path.dirname(os.path.dirname(ic.config.__file__))
+    return Path_.replace(cur_dir, '.').strip()
 
 
-def icAbsolutePath(Path_):
+def getAbsolutePath(Path_):
     """
     Абсолютный путь.
     @param Path_: Путь.
     """
     try:
-        Path_ = os.path.abspath(Path_)
-        Path_ = Path_.replace('\\', '/').lower().strip()
+        cur_dir = os.path.dirname(os.path.dirname(ic.config.__file__))
+        if Path_.startswith('.'):
+            Path_ = os.path.join(cur_dir, Path_[1:])
+        # Path_ = os.path.abspath(Path_)
+        Path_ = os.path.normpath(Path_)
         return Path_
     except:
         log.fatal(u'Ошибка определения абсолютного пути <%s>' % Path_)
@@ -337,7 +341,7 @@ def PathFile(Path_, File_):
 
     Path_ = os.path.normpath(Path_)
     File_ = os.path.normpath(File_)
-    relative_path = icRelativePath(Path_)
+    relative_path = getRelativePath(Path_)
     # Этот путь уже присутствует в имени файла
     if File_.find(Path_) != -1 or File_.find(relative_path) != -1:
         return File_

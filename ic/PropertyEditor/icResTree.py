@@ -2721,7 +2721,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if self._formName in [None, ''] or (self._formName in _res.keys() and bAsk and ic_dlg.icAskDlg(u'ВНИМАНИЕ',
                                                                                                            u'Форма c таким именем уже существует, переписать?') != wx.ID_YES):
                 # Ввод нового имени формы
-                dlg = wx.TextEntryDialog(frame, 
+                dlg = wx.TextEntryDialog(self,
                                          u'Введите имя формы', u'', u'')
                 if self._formName not in [None, '']:
                     dlg.SetValue(self._formName)

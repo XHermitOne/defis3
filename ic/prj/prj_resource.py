@@ -159,8 +159,8 @@ class PrjResource(prj_node.PrjNode):
         prj_file_name = self.getRoot().getPrjFileName()
         if prj_file_name is None:
             prj_name = self.getRoot().prj_res_manager.getPrjRootName().strip()
-            return ic_file.icAbsolutePath(prj_name,
-                                          os.path.dirname(self.getRoot().getPrjFileName()))
+            return ic_file.getAbsolutePath(prj_name,
+                                           os.path.dirname(self.getRoot().getPrjFileName()))
         else:
             return os.path.split(prj_file_name)[0].strip()
 
