@@ -74,7 +74,7 @@ RIGHT_ALIGN = 0
 
 DEFAULT_DBF_ENCODING = 'cp866'
 
-__version__ = (0, 0, 3, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icDBFFilePrototype:
@@ -1585,8 +1585,8 @@ class icDBFFileReadOnly(icDBFFilePrototype):
             except:
                 self.Close()
                 log.fatal(
-                    u'Ошибка фильтрации записей DBF файла <%s> поля <%s> по значению <%s>' % (self.getDBFFileName(),
-                                                                                              sFieldName, sValue))
+                    u'Ошибка фильтрации записей DBF файла <%s> поля <%s>' % (self.getDBFFileName(),
+                                                                             sFieldName))
             return dict()
 
         def getRecNo(self):

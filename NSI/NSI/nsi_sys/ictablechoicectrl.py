@@ -7,14 +7,12 @@
 
 # Подключение библиотек
 import wx
-# import wx.combo
 
 from ic.log import log
 from ic.components import icwidget
-# from ic.utils import coderror
 from ic.utils import ic_str
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 # Спецификация
 SPC_IC_TABLECHOICECTRL = {'table': None,  # Паспорт таблицы/запроса источника данных

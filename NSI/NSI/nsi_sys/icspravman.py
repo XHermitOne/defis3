@@ -11,6 +11,7 @@
 
 # Подключение библиотек
 import wx
+
 import ic
 from ic.log import log
 from ic.dlg import ic_dlg
@@ -19,7 +20,7 @@ from ic.kernel import icexceptions
 from ic.engine import ic_user
 
 # Версия
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 # Константы
@@ -138,7 +139,7 @@ class icSpravManagerPrototype(icSpravManagerInterface):
         """
         Провера на не 0.
         """
-        return type(self) != type(None)
+        return self is not None
 
     def __getattr__(self, name):
         """

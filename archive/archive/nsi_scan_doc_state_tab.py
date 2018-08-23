@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/archive/archive/nsi_scan_doc_state.tab>
-File            </mnt/defis/defis/archive/archive/nsi_scan_doc_state_tab.py>
+Resource module </mnt/defis/defis3/archive/archive/nsi_scan_doc_state.tab>
+File            </mnt/defis/defis3/archive/archive/nsi_scan_doc_state_tab.py>
 Description     <Resource module>
 """
 
 import copy
 from ic.interfaces import icmanagerinterface
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/nsi_scan_doc_state.tab
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/nsi_scan_doc_state.tab
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

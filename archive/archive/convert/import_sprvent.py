@@ -13,7 +13,7 @@
 import os
 import os.path
 import smbclient
-import urlparse
+import urllib.parse
 
 from ic.log import log
 import ic
@@ -21,7 +21,7 @@ from ic.utils import ic_file
 from ic.utils import filefunc
 
 # Version
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 DEFAULT_WORKGROUP = 'WORKGROUP'
@@ -34,7 +34,7 @@ LOCAL_SPRVENT_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'SPRVENT.VNT')
 
 # Список путей поиска DBF файла справочника
 FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/NSI/SPRVENT.VNT',
-                 #'smb://xhermit@TELEMETRIA/share/install/SPRVENT.VNT',
+                 # 'smb://xhermit@TELEMETRIA/share/install/SPRVENT.VNT',
                  )
 
 
@@ -51,7 +51,7 @@ def smb_download_sprvent(download_urls=None):
     smb = None
     for download_url in download_urls:
         try:
-            url = urlparse.urlparse(download_url)
+            url = urllib.parse.urlparse(download_url)
             download_server = url.hostname
             download_share = url.path.split(os.path.sep)[1]
             download_username = url.username
@@ -123,7 +123,7 @@ def import_sprvent():
             # Скопировать VNT в DBF
             if os.path.exists(dbf_filename):
                 os.remove(dbf_filename)
-            ic_file.CopyFile(vnt_filename, dbf_filename)
+            ic_file.icCopyFile(vnt_filename, dbf_filename)
             
             # Это другой файл
             tab = ic.metadata.THIS.tab.nsi_c_agent.create()
@@ -150,7 +150,7 @@ def test():
     smb_download_sprvent()
     
     filefunc.is_same_file_length(LOCAL_SPRVENT_FILENAME, 
-                 LOCAL_SPRVENT_FILENAME.replace('.VNT', '.DBF'))
+                                 LOCAL_SPRVENT_FILENAME.replace('.VNT', '.DBF'))
     
     
 if __name__ == '__main__':

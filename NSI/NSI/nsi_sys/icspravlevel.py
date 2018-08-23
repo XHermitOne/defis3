@@ -8,7 +8,7 @@ from ic.components import icwidget
 from ic.log import log
 
 # Версия
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Спецификация ---
@@ -118,19 +118,19 @@ class icSpravLevelInterface:
         """
         pass
 
-    def getAddCtrl(self,*args,**kwargs):
+    def getAddCtrl(self, *args, **kwargs):
         """
         Функция дополнительного контроля на добавление записи в справочник.
         """
         return None
         
-    def getUpdateCtrl(self,*args,**kwargs):
+    def getUpdateCtrl(self, *args, **kwargs):
         """
         Функция дополнительного контроля на обновление/изменение записи в справочник.
         """
         return None
 
-    def getDelCtrl(self,*args,**kwargs):
+    def getDelCtrl(self, *args, **kwargs):
         """
         Функция дополнительного контроля на удаление записи из справочника.
         """

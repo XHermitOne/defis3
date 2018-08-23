@@ -345,12 +345,12 @@ def getFormFromBuffer(formName, subsys, parent, flt=''):
                 bff.pop(key_frm)
                 frm = None
             
-            log.info('\t[+] Form <%s> returned from buffer.' % formName)
+            log.info(u'\t[+] Форма <%s> получена из буфера' % formName)
             return frm
         else:
-            log.info('key_frm=%s already is activated; struct=<%s>' % (key_frm, str(bff[key_frm])))
+            log.warning(u'Ключ key_frm=%s уже активирован. struct=<%s>' % (key_frm, str(bff[key_frm])))
     except:
-        log.error('\t[!] Form <%s> is not found in buffer.' % formName)
+        log.fatal(u'\t[!] Ошибка получения формы <%s> из буфера' % formName)
     
     return None
 
@@ -434,9 +434,9 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
                 return frm
             return None
     except KeyError:
-        ic_dlg.icMsgBox(u'ОШИБКА', _('Form <%s> is not found in resource: <%s>') % (formName, fileRes))
+        ic_dlg.icMsgBox(u'ОШИБКА', u'Форма <%s> не найдена в ресурсе <%s>' % (formName, fileRes))
     except:
-        log.fatal(_('Create form error'))
+        log.fatal(u'Ошибка сборки формы <%s>' % formName)
     
     return frm
 
@@ -588,7 +588,7 @@ def ResultForm(formName, fileRes=None, filter={}, logType=0,
         except:
             pass
 
-        log.info(u'Dialog return value <%s> ok: %s' % (val, wx.ID_OK))
+        log.info(u'Возвращаемое значение диалоговой формой <%s> - %s' % (val, wx.ID_OK))
 
         if val in [0, wx.ID_OK]:
             if 'result' in frm.evalSpace:
@@ -643,7 +643,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
             max_elements += 10
         progress.icOpenProgressBar(_('Create form: <%s>') % objRes['name'], 0, max_elements+1)
     else:
-        log.debug(_('Create form: <%s>') % objRes['name'])
+        log.debug(u'Сборка объекта <%s>' % objRes['name'])
 
     if parent:
         try:
@@ -676,7 +676,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
                         after = evalSpace['_dict_obj'][ob.moveAfterInTabOrder]
                         ob.MoveAfterInTabOrder(after)
                 except:
-                    log.error('CREATE TAB ORDER ERROR')
+                    log.fatal(u'Ошибка создания очереди табуляции')
 
         #   Посылаем сообщение о том, что форма создана для обычных объектов
         # Буфер объектов, которым сообщение onInit послано. Создаем буфер, чтобы
@@ -689,7 +689,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
                     ob.PostOnInitEvent()
                     post_buff_lst.append(ob)
             except AttributeError:
-                log.warning(u'### PostOnInitEvent() AttributeError <resource> obj: <%s>' % str(ob))
+                log.warning(u'Ошибка атрибута ### PostOnInitEvent() AttributeError <resource> obj: <%s>' % str(ob))
 
         #   Для объектов входящих в составной объект
         if '_interfaces' in evalSpace:
@@ -702,7 +702,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
                             ob.PostOnInitEvent()
                             post_buff_lst.append(ob)
                     except AttributeError:
-                        log.warning(u'### PostOnInitEvent() AttributeError <resource> obj: <%s>' % ob)
+                        log.warning(u'Ошибка атрибута ### PostOnInitEvent() AttributeError <resource> obj: <%s>' % ob)
     except:
         log.fatal(u'Создание формы (icBuildObject):')
         ic_dlg.icFatalBox(u'ОШИБКА', u'Создание формы (icBuildObject):')
@@ -712,7 +712,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
     if bIndicator:
         progress.icCloseProgressBar()
     else:
-        log.debug(_('End create form: <%s>') % objRes['name'])
+        log.debug(u'Завершена сборка объекта <%s>' % objRes['name'])
 
     return obj
 
@@ -836,7 +836,7 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
                 evalSpace['_root_obj'] = wxw
         return wxw
     except:
-        log.fatal('ERROR USER TYPE PARSE: <%s> mod=<%s>' % (component['type'], modl))
+        log.fatal(u'Ошибка сборки объекта компонента <%s> mod=<%s>' % (component['type'], modl))
 
 
 def icResourceParser(parent, components, sizer=None, logType=0,
@@ -993,7 +993,7 @@ def icResourceParser(parent, components, sizer=None, logType=0,
                         try:
                             edt.AddObject(wxw)
                         except:
-                            log.error('### AddOject Error: <%s> edt=%s' % (wxw, edt))
+                            log.error(u'### Ошибка добавления объекта в контекст <%s> edt=%s' % (wxw, edt))
                 
             # Заполнение контейнеров
             if wxw is not None and parent is not None and name and component['type'] != 'Table':
@@ -1090,7 +1090,7 @@ def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, cl
             return icBuildObject(parent, res, evalSpace=context, id=kwargs.get('id', None))
         return None
     except:
-        log.fatal('CREATE OBJECT ERROR: [%s . %s]' % (ResName_, ResExt_))
+        log.fatal(u'Ошибка сборки объекта [%s . %s]' % (ResName_, ResExt_))
         return None
 
 

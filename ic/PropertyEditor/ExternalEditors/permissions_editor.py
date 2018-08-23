@@ -1,27 +1,33 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-""" Панель управления разрешениями на действие."""
-from ic.kernel import io_prnt
+"""
+Панель управления разрешениями на действие.
+"""
+
 from ic.utils import coderror
 
+__version__ = (0, 1, 1, 1)
+
+
 class icPermissionsEdt(object):
-    """ Класс редактора панели управления разрещениями на действия."""
+    """
+    Класс редактора панели управления разрещениями на действия.
+    """
+
     @staticmethod
     def get_user_property_editor(value, pos, size, style, propEdt, *arg, **kwarg):
-        """ Стандартная функция для вызова пользовательских редакторов 
+        """
+        Стандартная функция для вызова пользовательских редакторов
         свойств (EDT_USER_PROPERTY).
         """
-#        #if value:
-#        parent = propEdt.GetPropertyGrid().GetView().GetParent()
-#        value=icPasswordExternalEdt.str_to_val_user_property(value, propEdt)            
-#        res = icpasswordedit.icPasswordEditDlg(parent,None,value)
-#        icPasswordExternalEdt._is_external_edit=True
-#        return str(res)
-            
+        pass
+
     @staticmethod
     def property_editor_ctrl(value, propEdt, *arg, **kwarg):
-        """ Функция контроля."""
+        """
+        Функция контроля.
+        """
         return coderror.IC_CTRL_OK
     
     @staticmethod
@@ -29,16 +35,5 @@ class icPermissionsEdt(object):
         """
         Стандартная функция преобразования текста в значение.
         """
-        # Превращаем текс в картеж (представление паспорта)
-        try:
-            #if type(text) in (type(''),type(u'')):
-            #    try:
-            #        value = eval(text)
-            #    except:
-            #        value = text
-            #else:
-            value = text
-        except:
-            log.error('>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
-            return None
+        value = text
         return value

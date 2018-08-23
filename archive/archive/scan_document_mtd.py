@@ -33,7 +33,7 @@ from ic import log
 from ic.interfaces import icmanagerinterface
 from ic.dlg import ic_dlg
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/scan_document.mtd
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/scan_document.mtd
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

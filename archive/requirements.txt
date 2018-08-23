@@ -2,7 +2,7 @@ python-wxgtk3.0 - инструкция по установке в readme.txt и�
 python-psycopg2 - sudo apt-get install python-psycopg2
 python-sqlalchemy - sudo apt-get install python-sqlalchemy
 python-six - sudo apt-get install python-six
-ic - sudo cp /mnt/defis/defis/ic.pth /usr/lib/python2.7/dist-packages
+ic - sudo cp /mnt/defis/defis3/ic.pth /usr/lib/python2.7/dist-packages
 tesseract - sudo apt-get install tesseract-ocr tesseract-ocr-rus
 unococnv - sudo apt-get install unoconv
 python-sane - sudo apt-get install python-sane

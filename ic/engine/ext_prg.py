@@ -23,7 +23,7 @@ import wx
 from ic.log import log
 from ic.utils import system
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 FILE_PKG_DIRNAME = os.path.dirname(__file__) if os.path.dirname(__file__) else os.getcwd()

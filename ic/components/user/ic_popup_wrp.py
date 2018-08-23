@@ -27,7 +27,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 import copy
-import ic.engine.ic_popup as ic_popup
+import ic.engine.icpopupmenu as ic_popup
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType

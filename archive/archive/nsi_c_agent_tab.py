@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/archive/archive/nsi_c_agent.tab>
-File            </mnt/defis/defis/archive/archive/nsi_c_agent_tab.py>
+Resource module </mnt/defis/defis3/archive/archive/nsi_c_agent.tab>
+File            </mnt/defis/defis3/archive/archive/nsi_c_agent_tab.py>
 Description     <Resource module>
 """
 
@@ -15,7 +15,7 @@ from ic.utils import ic_str
 from ic import ic_dlg
 from ic.interfaces import icmanagerinterface
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/nsi_c_agent.tab
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/nsi_c_agent.tab
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS
@@ -32,7 +32,7 @@ DEFAULT_KPP_CODE = '---------'
 DEFAULT_INN_CODE_FMT = '%010d'
 
 # Полное имя файла SPRAV.DBF (Справочник БАЛАНС+)
-SPRAV_DBF_FILENAME = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'SPRVENT.DBF') if os.path.dirname(__file__) else  '/mnt/defis/defis/archive/db/SPRVENT.DBF'
+SPRAV_DBF_FILENAME = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'SPRVENT.DBF') if os.path.dirname(__file__) else  '/mnt/defis/defis3/archive/db/SPRVENT.DBF'
 
 
 class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):

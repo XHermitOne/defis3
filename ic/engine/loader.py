@@ -11,13 +11,13 @@ import sqlalchemy as sa
 from sqlalchemy import orm
 from sqlalchemy.orm import interfaces as orm_ifs
 
-from ic.kernel import io_prnt
 from ic.utils import ic_res
 from ic.utils import lock as lockmod
+from ic.log import log
 from . import ic_user
 
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class Resources(object):
@@ -44,19 +44,19 @@ def mapclass(sysdb, tab_name=None):
     """
     tab_name = tab_name or 'resource_tab'
     resources_tab = sa.Table(tab_name, sysdb.getMetaData(),
-        sa.Column('res_id', sa.Integer, sa.Sequence('%s_id_seq' % tab_name), primary_key=True),
-        sa.Column('path', sa.String(), nullable=False),
-        sa.Column('computer', sa.String(), nullable=True),
-        sa.Column('user', sa.String(), nullable=True),
-        sa.Column('last_modified', sa.DateTime, onupdate=sa.func.current_timestamp()),
-        sa.Column('res', sa.PickleType(0), nullable=False),
-        sa.Column('lock', sa.Boolean(), default=False),
-        sa.Column('ttl', sa.Integer, nullable=True),
-    )
+                             sa.Column('res_id', sa.Integer, sa.Sequence('%s_id_seq' % tab_name), primary_key=True),
+                             sa.Column('path', sa.String(), nullable=False),
+                             sa.Column('computer', sa.String(), nullable=True),
+                             sa.Column('user', sa.String(), nullable=True),
+                             sa.Column('last_modified', sa.DateTime, onupdate=sa.func.current_timestamp()),
+                             sa.Column('res', sa.PickleType(0), nullable=False),
+                             sa.Column('lock', sa.Boolean(), default=False),
+                             sa.Column('ttl', sa.Integer, nullable=True),
+                             )
     orm.clear_mappers()
     orm.mapper(Resources, resources_tab, extension=ResEventExtension(),
                properties={'_res': orm.deferred(resources_tab.c.res)})
-    log.info('MAP Resource Loader class.')
+    log.info(u'Замаппирован класс таблицы <%s>' % tab_name)
     return resources_tab, Resources
 
 
@@ -66,10 +66,10 @@ class ResEventExtension(orm_ifs.MapperExtension):
 
 def todbpath(func):
     def wrap(self, path, *arg, **kwarg):
-        path = path.replace('\\','/').replace('//','/')
-        lst = path.split('/')
+        path = os.path.normpath(path)
+        lst = path.split(os.path.sep)
         if len(lst) > 1:
-            path = '/'.join(lst[-2:])
+            path = os.path.sep.join(lst[-2:])
         return func(self, path, *arg, **kwarg)
     return wrap
 
@@ -106,14 +106,14 @@ class icLoader(object):
             tab_name = ic.load_ini_param('SYSDB', 'sys_table_name')
             self.sysdb = ic_postgres_wrp.icPostgreSQL(None)
             self.systab, self.syscls = mapclass(self.sysdb, tab_name)
-            log.info('(+) INIT SYSDB:%s, %s, %s' % (self.sysdb, self.systab, self.syscls))
+            log.info(u'(+) Инициализация SYSDB: %s, %s, %s' % (self.sysdb, self.systab, self.syscls))
             if not self.systab.exists():
                 self.systab.create()
-                log.info('(+) CREATE SYSTEM TABLE: %s' % self.systab)
+                log.info(u'(+) Создание системной таблицы %s' % self.systab)
             self.dbstore = ic.load_ini_param('RESOURCE', 'dbstore').strip()
         except:
-            log.error('')
-            log.info('(!) SYSDB ERROR. POSSIBLE INVALID CONNECTION PARAMETERS IN <PRJNAME>.INI FILE.')
+            log.fatal(u'')
+            log.warning(u'(!) Ошибка SYSDB. Не корректные параметры подключения в prjname.ini')
         
     def init_db_auth(self):
         """
@@ -152,14 +152,14 @@ class icLoader(object):
             
             if self.sysdb:
                 self.systab, self.syscls = mapclass(self.sysdb, sys_table_name)
-                log.info('(+) DB INIT SYSDB:%s, %s, %s' % (self.sysdb, self.systab, self.syscls))
+                log.info(u'(+) Инициализация SYSDB: %s, %s, %s' % (self.sysdb, self.systab, self.syscls))
                 if not self.systab.exists():
                     self.systab.create()
-                    log.info('(+) CREATE SYSTEM TABLE: %s' % self.systab)
+                    log.info(u'(+) Создание системной таблицы %s' % self.systab)
                 self.dbstore = dbstore
         except:
-            log.error('')
-            log.info('(!) SYSDB ERROR. POSSIBLE INVALID CONNECTION PARAMETERS IN <PRJNAME>.PRO FILE.')
+            log.fatal(u'Ошибка')
+            log.info(u'(!) Ошибка SYSDB. Не корректные параметры подключения в prjname.pro')
         
     def is_db_store(self, path=None):
         """
@@ -179,7 +179,7 @@ class icLoader(object):
             lst = session.query(self.syscls).filter_by(path=path).all()
             if lst:
                 obj = lst[0]
-                log.info('Load resource from DB')
+                log.info(u'Загрузка ресурса из БД')
                 return obj.res
 
     @todbpath
@@ -195,7 +195,7 @@ class icLoader(object):
             lst = session.query(self.syscls).filter_by(path=path).all()
             if not lst and flag:
                 self.save_db_res(path, 'LOCKREC', block=True, ttl=ttl)
-                log.info('.lock resource %s' % path)
+                log.info(u'Блокировка ресурса %s' % path)
             elif lst:
                 obj = lst[0]
                 obj.lock = flag
@@ -205,9 +205,9 @@ class icLoader(object):
                 session.add(obj)
                 session.flush()
                 if flag:
-                    log.info('.lock resource %s' % path)
+                    log.info(u'Ресурс <%s> заблокирован' % path)
                 else:
-                    log.info('.unlock resource %s' % path)
+                    log.info(u'Рессурс <%s> разблокирован' % path)
                 return True
         return False
 
@@ -225,7 +225,7 @@ class icLoader(object):
                 if lst:
                     session.delete(lst[0])
                     session.flush()
-                    log.info('.unlock and delete resource %s' % path)
+                    log.info(u'Разблокирован ресурс <%s>' % path)
             else:
                 return self.lock_db(path, False)
 
@@ -338,7 +338,7 @@ class icLoader(object):
         lst = session.query(self.syscls).filter_by(path=path).all()
         if lst:
             obj = lst[0]
-            dct = {'computer': obj.computer, 'user':obj.user}
+            dct = {'computer': obj.computer, 'user': obj.user}
             return dct
 
     def get_lock_rec(self, path):
@@ -373,7 +373,7 @@ class icLoader(object):
         obj.last_modified = datetime.datetime.now()
         session.add(obj)
         session.flush()
-        log.info('Save resource to DB')
+        log.info(u'Сохранен ресурс в БД')
         return obj
 
     def save_file_res(self, path, res):

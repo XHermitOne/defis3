@@ -6,14 +6,16 @@
 """
 
 # --- Подключение библиотек ---
+import os
+import os.path
 import wx
 from wx.lib.agw import aui
 
-from ic.kernel import io_prnt
-from ic.utils import ic_file
-
 from ic.components import icwidget
 from ic.components import icResourceParser
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 # --- Основные константы ---
 AUI_PANE_DIRECTIONS = ['Top', 'Right', 'Bottom', 'Left', 'Center']
@@ -52,9 +54,6 @@ SPC_IC_AUIPANE = {'title': None,         # Заголовок
                                    'visible': u'Видимость при старте',
                                    },
                   }
-
-
-__version__ = (0, 0, 0, 2)
 
 
 class icAUIPanePrototype:

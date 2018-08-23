@@ -6,13 +6,13 @@
 """
 
 # Подключение библиотек
+import os
+import os.path
 import wx
 from wx.lib.agw import aui
 
 from ic.log import log
 from ic.utils import util
-from ic.utils import ic_file
-from ic.kernel import io_prnt
 
 from . import ic_win
 from . import ic_menu
@@ -22,7 +22,7 @@ from . import ic_user
 
 from ic.components import icResourceParser
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 # Основные константы
 # Градиент заголовков AUI панелей
@@ -241,7 +241,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
                 
                 if Image_ is None:
                     Image_ = wx.NullBitmap
-                if type(Title_) not in (str, unicode):
+                if not isinstance(Title_, str):
                     log.warning(u'Не допустимый тип <%s> заголовка страницы нотебука' % type(Title_))
                     Title_ = str(Title_)
 
@@ -274,7 +274,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
         @param not_dublicate: Не открывать страницу с таким же именем?
         """
         select = DefaultPage_ == -1
-        if type(Page_) in (str, unicode):
+        if isinstance(Page_, str):
             res_name, res_ext = os.path.splitext(Page_)
             # По умолчанию ресурс форм: *.frm
             if not res_ext:
@@ -379,7 +379,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
         @param PaneName_: Имя дочерней AUI панели.
         """
         pane = self.GetChildByName(PaneName_)
-        if type(Page_) in (str, unicode):
+        if isinstance(Page_, str):
             res_name, res_ext = os.path.splitext(Page_)
             # По умолчанию ресурс форм: *.frm
             if not res_ext:

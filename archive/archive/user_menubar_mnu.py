@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/archive/archive/user_menubar.mnu>
-File            </mnt/defis/defis/archive/archive/user_menubar_mnu.py>
+Resource module </mnt/defis/defis3/archive/archive/user_menubar.mnu>
+File            </mnt/defis/defis3/archive/archive/user_menubar_mnu.py>
 Description     <Resource module>
 """
 
@@ -24,7 +24,7 @@ from ic.dlg import std_dlg
 from ic.dlg import ic_dlg
 from ic.log import log
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/user_menubar.mnu
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/user_menubar.mnu
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

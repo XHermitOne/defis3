@@ -11,7 +11,7 @@ from wx.lib.agw import aui
 from ic.log import log
 from ic.dlg import ic_dlg
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icAUINotebook(aui.AuiNotebook):

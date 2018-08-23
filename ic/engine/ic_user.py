@@ -20,7 +20,7 @@ from ic.kernel import icexceptions
 from . import glob_variables
 from ic.utils import ic_file
 
-__version__ = (0, 0, 3, 2)
+__version__ = (0, 1, 1, 1)
 
 
 def getKernel():
@@ -389,7 +389,7 @@ def getPrjRoot():
         if kernel:
             kernel_prj_root = kernel.GetContext().getPrjRoot()
             if kernel_prj_root:
-                log.info(u'KERNEL: <%s>\tPROJECT: <%s>' % (kernel, kernel_prj_root))
+                log.info(u'Ядро <%s>\tПроект <%s>' % (kernel, kernel_prj_root))
                 return kernel_prj_root
             else:
                 log.warning(u'Не инициализирован проект в контексте ядра системы')

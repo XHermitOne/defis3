@@ -194,7 +194,7 @@ class icSpravInterface:
                     else:
                         log.warning(u'ОШИБКА! Не определенный тип БД %s СПРАВОЧНИКА %s' % (db_res['type'], self.getName()))
                 except:
-                    log.error(u'Ошибка создания хранилища справочников %s %s' % (db_name, self.getTableName()))
+                    log.fatal(u'Ошибка создания хранилища справочников <%s>. Таблица <%s>' % (db_name, self.getTableName()))
         else:
             # База данных не указана, поэтому считаем что по умолчанию
             # это SQL БД и таблица сама определяет в какой БД ей храниться

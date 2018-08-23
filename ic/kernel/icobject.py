@@ -351,11 +351,11 @@ class icObject(object):
         """
         Переопределяем доступ к атрибуту.
         """
-        class_obj = object.__getattribute__(self, '__class__')
+        # class_obj = object.__getattribute__(self, '__class__')
         object.__setattr__(self, name, value)
 
         if wxfunc.isWxDeadObject(self):
-            print('%s Is WX Dead Object' % class_obj)
+            # print('%s Is WX Dead Object' % class_obj)
             return
 
         try:

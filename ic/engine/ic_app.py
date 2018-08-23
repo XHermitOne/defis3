@@ -6,10 +6,11 @@
 """
 
 # --- Подключение библиотек ---
+import os
+import os.path
 import locale
 import wx
 
-from ic.utils import ic_file
 from ic.kernel import ickernel
 from ic.log import log
 
@@ -55,5 +56,5 @@ class icWXApp(wx.App, ickernel.icKernel):
             file_name, file_ext = os.path.splitext(BehaviourResourceFileName_)
             return icResourceParser.icCreateObject(file_name, file_ext[1:])
         except:
-            log.error(u'Ошибка установки поведения системы из файла: <%s>' % BehaviourResourceFileName_)
-            return None
+            log.fatal(u'Ошибка установки поведения системы из файла: <%s>' % BehaviourResourceFileName_)
+        return None

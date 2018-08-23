@@ -4,25 +4,16 @@
 Хранилище справочников.
 """
 
-# Версия
-__version__ = (0, 0, 0, 1)
-
-#--- Подключение библиотек ---
-
-from ic.components import icwidget
-
-from ic.utils import ic_time
-from ic.log import ic_log
-#from ic.db import ic_sqlobjtab
-#import NSI.nsi_sys.icspravstorage as icspravstorage
-#import NSI.nsi_sys.icodb_spravobject.IODBNsi as IODBNsi
-from . import icspravstorage
-from .icodb_spravobject import IODBNsi
+# --- Подключение библиотек ---
 import time
 
-#--- Спецификация ---
-#--- Функции ---
-#--- Классы ---
+from . import icspravstorage
+from .icodb_spravobject import IODBNsi
+
+# Версия
+__version__ = (0, 1, 1, 1)
+
+
 class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
     """
     Класс SQL хранилища справочника.
@@ -99,7 +90,7 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
         """
         return self._bLog
         
-    def setLevelTable(self,LevelCod_,Table_):
+    def setLevelTable(self, LevelCod_, Table_):
         """
         Сохранить таблицу данных уровня.
         @param LevelCod_: Код, запрашиваемого уровня.
@@ -114,11 +105,10 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
         if not LevelCod_:
             LevelCod_ = ''
             
-        level=self.getSpravParent().getLevelByCod(LevelCod_).getNext()
+        level = self.getSpravParent().getLevelByCod(LevelCod_).getNext()
         if level:
-            level_len=len(LevelCod_) + level.getCodLen()
+            level_len = len(LevelCod_) + level.getCodLen()
         else:
-            #ic_log.icLogErr('Не опрделен уровень кода <%s> справочник' % (LevelCod_,self.getSpravParent().getName()))
             return False
         
         lst = []
@@ -129,15 +119,15 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
         for r in Table_:
             codUpdDct[r[0]] = r
             
-        codLst = range(len(self.metaSprav.value.data))
+        codLst = list(range(len(self.metaSprav.value.data)))
         # Удаляем старые записи
         for i, r in enumerate(self.metaSprav.value.data):
             codLst[i] = r[0]
             
-            if not r[0].startswith(LevelCod_) or (len(r[0]) <> level_len):
+            if not r[0].startswith(LevelCod_) or (len(r[0]) != level_len):
                 lst.append(r)
             # Словарь измененных значений
-            elif r[0] in codUpdDct and codUpdDct[r[0]] <> r:
+            elif r[0] in codUpdDct and codUpdDct[r[0]] != r:
                 updDct[r[0]] = codUpdDct[r[0]]#r
             
         # Добавляем измененные
@@ -166,8 +156,7 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
             self.metaSpravLog.value.log = logDct
             self.metaSpravLog.setValueChanged(True)
             self.metaSpravLog.Save()
-        #ic_log.icToLog('Лог: %s' % self.metaSpravLog.value.log)
-        
+
     def SetLogMode(self, bLog=True):
         """
         Устанавливает режим работы с логом.

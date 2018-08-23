@@ -12,9 +12,9 @@ from . import ic_menu
 import ic.utils.ic_exec
 import ic.utils.ic_util
 from ic.utils import ic_res
-from ic.kernel import io_prnt
+from ic.log import log
 
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 # --- Основные константы ---
 # --- Описание ключей ---
@@ -74,15 +74,15 @@ def CreateICPopupMenu(Win_, Name_, PopupData_):
         elif isinstance(PopupData_, dict):
             popup_struct = PopupData_[Name_]
         else:
-            log.info(u'Ошибка создания всплывающего меню <%s>' % Name_)
+            log.warning(u'Ошибка создания всплывающего меню <%s>' % Name_)
             return None
         if popup_struct == {}:
-            log.info(u'Всплывающее меню <%s> не найдено!' % Name_)
+            log.warning(u'Всплывающее меню <%s> не найдено' % Name_)
             return None
         return icPopupMenu(Name_, popup_struct, PopupData_, Win_)
     except:
-        log.info(u'Ошибка создания всплывающего меню <%s>' % Name_)
-        return None
+        log.fatal(u'Ошибка создания всплывающего меню <%s>' % Name_)
+    return None
 
 
 class icPopupMenu(ic_menu.icMenu):
@@ -132,7 +132,7 @@ class icPopupMenu(ic_menu.icMenu):
             if RES_POPUP_TITLEFUNC in MenuStruct_ and MenuStruct_[RES_POPUP_TITLEFUNC] is not None:
                 self._TitleFunc = MenuStruct_[RES_POPUP_TITLEFUNC]
         except:
-            log.info(u'Ошибка создания всплываюшего меню!')
+            log.fatal(u'Ошибка создания всплываюшего меню')
 
     def DoMenu(self, MenuItems_):
         """
@@ -143,15 +143,15 @@ class icPopupMenu(ic_menu.icMenu):
         try:
             # Проверка аргументов
             if not MenuItems_:
-                log.info(u'Не определены пункты меню!')
+                log.warning(u'Не определены пункты меню')
                 return None
             # Перед загрузкой удалить все
             self.RemoveAll()
             menu = self.AddToLoadMenu(MenuItems_)
             return menu
         except:
-            log.info(u'Ошибка загрузки меню!')
-            return None
+            log.fatal(u'Ошибка загрузки меню')
+        return None
 
     def AddToLoadMenu(self, MenuItems_):
         """
@@ -174,8 +174,8 @@ class icPopupMenu(ic_menu.icMenu):
                 self.AppendMenuItem(self, item_name, item_struct)
             return self
         except:
-            log.fatal(u'Ошибка загрузки меню:')
-            return None
+            log.fatal(u'Ошибка загрузки меню')
+        return None
 
     def AppendMenuItem(self, Menu_, ItemName_, ItemStruct_):
         """
@@ -205,7 +205,7 @@ class icPopupMenu(ic_menu.icMenu):
                 elif isinstance(self._ResData, dict):
                     subitem_struct = self._ResData[cur_item]
                 else:
-                    log.info(u'Ошибка добавления пункта меню')
+                    log.warning(u'Ошибка добавления пункта меню')
                     return None
                 # Здесь рекурсия, так прикольней
                 self.AppendMenuItem(subitem, cur_item, subitem_struct)
@@ -233,7 +233,7 @@ class icPopupMenu(ic_menu.icMenu):
             # очистить реестр
             self.ClearReg()
         except:
-            pass
+            log.fatal(u'Ошибка очистки меню')
 
     def OnOpenPopup(self, event):
         """
@@ -242,6 +242,7 @@ class icPopupMenu(ic_menu.icMenu):
         try:
             self.DoOpenMethod()
         except:
+            log.fatal(u'Ошибка открытия всплывающего меню')
             event.Skip()
 
     def OnClosePopup(self, event):
@@ -280,7 +281,7 @@ class icPopupMenu(ic_menu.icMenu):
             if Win_ is not None:
                 Win_.PopupMenu(self, wx.Point(X_, Y_))
         except:
-            pass
+            log.fatal(u'Ошибка открытия всплывающего меню')
         
     # --- Функции-свойства ---
     def GetWindow(self):

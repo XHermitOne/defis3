@@ -79,6 +79,6 @@ class icMultiChoiceUserEdt(passportobj.ic_user_property_editor):
             else:
                 value = text
         except:
-            log.error(u'>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
+            log.fatal(u'Ошибка >>> str_to_val_user_property в eval(text): text=%s' % text)
             return None
         return value

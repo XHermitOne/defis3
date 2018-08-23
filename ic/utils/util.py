@@ -383,7 +383,7 @@ def transform_to_func(expr, compileKey=None):
     end = '''
     globals().update(locals()); return _resultEval
 _ret = __f__%s()
-if _ret <> None:
+if _ret != None:
     _resultEval = _ret
 ''' % fs
     return beg.replace('\r\n', '\n') + '\n    '+expr.replace('\n', '\n    ') + end.replace('\r\n', '\n')
@@ -452,6 +452,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
             MyExec('import %s.debug as debugModul' % subsys)
             newSpace = eval('debugModul.f_%s(_esp)' % compileKey, globSpace, evalSpace)
             evalSpace.update(newSpace)
+            ret = None
             if '_resultEval' in evalSpace:
                 ret = evalSpace['_resultEval']
 
@@ -459,6 +460,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
             return coderror.IC_EVAL_OK, ret
         except:
             log.error(msg)
+            log.fatal()
             log.warning(u'''ВНИМАНИЕ! 
             Если GetManager(self) возвращает None, 
             то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
@@ -496,8 +498,9 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
                         ret = evalSpace['_resultEval']
         except:
             if msg is not None:
-                ret = u'EXEC[EVAL] EXCEPTION IN %s: exec(%s)' % (msg, expr)
+                ret = u'Ошибка выполнения блока кода/выражения %s: exec(%s)' % (msg, expr)
                 log.error(ret)
+                log.fatal()
                 log.warning(u'''ВНИМАНИЕ! 
                 Если GetManager(self) возвращает None, 
                 то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
@@ -529,8 +532,9 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
             except:
                 bSuccess = coderror.IC_EVAL_ERROR
                 if msg is not None:
-                    ret = u'EXEC EXCEPTION IN %s: exec(%s)' % (msg, expr)
+                    ret = u'Ошибка выполнения блока кода %s: exec(%s)' % (msg, expr)
                     log.error(ret)
+                    log.fatal()
                     log.warning(u'''ВНИМАНИЕ! 
                     Если GetManager(self) возвращает None, 
                     то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
@@ -877,6 +881,7 @@ def isAcivateRes(res, evalSpace):
         elif res['activate'] == 0:
             bActivated = False
     return bActivated
+
 
 # SPC_IC_KEY_ACTION = {...}
 SPC_IC_KEY_ACTION = {'name': 'key',

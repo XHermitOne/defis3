@@ -5,14 +5,11 @@
 Источник данных справочника в виде дерева.
 """
 
-# Version
-__version__ = (0, 0, 0, 3)
-
-# Imports
 import ic
 from ic.interfaces import ictreedatasourceinterface
 
-from ic.utils import util
+# Version
+__version__ = (0, 1, 1, 1)
 
 
 def _str2unicode(Str_):
@@ -20,10 +17,11 @@ def _str2unicode(Str_):
     Т.к. мы ориентированы на контролы отображающие юникод,
     тогда надо делать корректное преобразование строк.
     """
-    if isinstance(Str_, unicode):
+    if isinstance(Str_, str):
         return Str_
-    else:
-        return unicode(str(Str_), 'utf-8')
+    elif isinstance(Str_, bytes):
+        return Str_.decode('utf-8')
+    return str(Str_)
 
 
 class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterface):

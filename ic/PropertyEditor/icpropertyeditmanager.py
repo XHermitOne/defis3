@@ -302,7 +302,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             # определяемого компонентом
             if not isinstance(value, str):
                 value = str(value)
-            wx_property = wx.propgrid.LongStringProperty(name, value=value)
+            wx_property = wx.propgrid.StringProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_RO_TEXTFIELD:
             # Read-Only текстовое поле
@@ -594,8 +594,8 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         if name == 'name':
             lst = tree.GetChildNameList(tree.GetSelection())
             if value in lst:
-                ic_dlg.icMsgBox(u'Контроль  значения',
-                                u'Имя <%s> уже существует. Введите другое.' % value, self)
+                ic_dlg.icWarningBox(u'Контроль  значения',
+                                    u'Имя <%s> уже существует. Введите другое.' % value)
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             else:
                 tree.SetItemText(tree.GetSelection(), res['type']+': '+value)
@@ -605,16 +605,16 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             cls = icDefInf.GetEditorClass(typ)
             ret = cls.Ctrl(value, attr=name, propEdt=self)
             if typ is None:
-                ic_dlg.icMsgBox(u'Контроль  значения',
-                                u'Не известный тип атрибута: <%s>' % value, self)
+                ic_dlg.icWarningBox(u'Контроль  значения',
+                                    u'Не известный тип атрибута: <%s>' % value)
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret == coderror.IC_CTRL_FAILED:
-                ic_dlg.icMsgBox(u'Контроль  значения',
-                                u'Не корректный тип значения: <%s>. Свойство <%s>' % (value, name), self)
+                ic_dlg.icWarningBox(u'Контроль  значения',
+                                    u'Не корректный тип значения: <%s>. Свойство <%s>' % (value, name))
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret is None:
-                ic_dlg.icMsgBox(u'Контроль  значения',
-                                u'Ошибка записи значения: <%s> Свойство <%s>' % (value, name), self)
+                ic_dlg.icWarningBox(u'Контроль  значения',
+                                    u'Ошибка записи значения: <%s> Свойство <%s>' % (value, name))
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret == coderror.IC_CTRL_FAILED_IGNORE:
                 pass

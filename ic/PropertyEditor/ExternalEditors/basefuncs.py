@@ -5,7 +5,7 @@
 Модуль содержит набор функций, используемых во внешних редакторах свойств.
 """
 
-#   Функции для арботы со стилями
+__version__ = (0, 1, 1, 1)
 
 
 def getStyleDict(style, allstyles):
@@ -20,8 +20,6 @@ def getStyleDict(style, allstyles):
     @return: Стиль компонента.
         - B{Пример}:C{'wx.DEFAULT':1, 'wx.APP':0, ...}
     """
-    
-    #style = component['style']
     if not allstyles:
         return {}
         
@@ -49,4 +47,3 @@ def getStyleDict(style, allstyles):
             dict[key] = 0
 
     return dict
-

@@ -8,11 +8,10 @@
 from . import passportobj
 
 from ic.editor import icpasswordedit
-from ic.kernel import io_prnt
 from ic.utils import coderror
 from ic.dlg import ic_dlg
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icPasswordExternalEdt(passportobj.ic_user_property_editor):
@@ -61,9 +60,5 @@ class icPasswordExternalEdt(passportobj.ic_user_property_editor):
         Стандартная функция преобразования текста в значение.
         """
         # Превращаем текс в картеж (представление паспорта)
-        try:
-            value = text
-        except:
-            log.error(u'>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
-            return None
+        value = text
         return value

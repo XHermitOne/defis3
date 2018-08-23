@@ -38,7 +38,6 @@ class icSpravMultipleChoiceComboCtrlProto(wx.ComboCtrl):
     Класс компонента множественного выбора справочника через стандартный
     механизм диалогового окна выбора/поиска.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
@@ -75,9 +74,9 @@ class icSpravMultipleChoiceComboCtrlProto(wx.ComboCtrl):
         wx.ComboCtrl.Enable(self, *args, **kwargs)
 
         if not self.IsEnabled():
-            self.SetBackgroundColour(wx.Colour(236, 234, 233))
+            self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVECAPTION))
         else:
-            self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT))
+            self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
 
     def makeCustomButton(self):
         """

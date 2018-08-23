@@ -48,7 +48,7 @@ import ic.bitmap.ic_color as ic_color
 import ic.utils.ic_exec
 from ic.utils import ic_mode
 import ic.utils.ic_util
-from . import ic_note
+from . import icnotebook
 from ic.dlg import ic_splsh
 from ic.log import log
 from ic.log import iclog
@@ -551,7 +551,7 @@ class icMainWindow(wx.Frame):
                 try:
                     icon = wx.Icon(ico_file_name, wx.BITMAP_TYPE_ICO)
                 except:
-                    log.error(u'Ошибка инициализации иконки <%s> главного окна. Файл не ICO формата.' % ico_file_name)
+                    log.fatal(u'Ошибка инициализации иконки <%s> главного окна. Файл не ICO формата.' % ico_file_name)
                     return None
             else:
                 log.warning(u'Иконка главного окна <%s> не найдена' % ico_file_name)
@@ -786,10 +786,10 @@ class icMainWindow(wx.Frame):
                 if self.area_split:
                     if self._h_area_splitter is None:
                         self._createAreaSplitter()
-                    self._MainNotebook = ic_note.icMainNotebook(self._h_area_splitter)
+                    self._MainNotebook = icnotebook.icMainNotebook(self._h_area_splitter)
                     self.setCentralPanel(self._MainNotebook)
                 else:
-                    self._MainNotebook = ic_note.icMainNotebook(self)
+                    self._MainNotebook = icnotebook.icMainNotebook(self)
             # Добавить страницу
             return self._MainNotebook.addPage(Page_, Title_, OpenExists_,
                                               Image_, CanClose_, OpenScript_,

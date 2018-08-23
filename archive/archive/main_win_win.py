@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/archive/archive/main_win.win>
-File            </mnt/defis/defis/archive/archive/main_win_win.py>
+Resource module </mnt/defis/defis3/archive/archive/main_win.win>
+File            </mnt/defis/defis3/archive/archive/main_win_win.py>
 Description     <Resource module>
 """
 
@@ -16,13 +16,13 @@ from archive.forms import print_doc_form
 from archive.convert import import_sprvent
 from archive import valid_catalog
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/main_win.win
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/main_win.win
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS
 
 #   Version
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icMainWinManager(icmanagerinterface.icWidgetManager):

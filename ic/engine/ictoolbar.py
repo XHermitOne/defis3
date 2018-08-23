@@ -13,10 +13,12 @@ from . import ic_menu
 import ic.utils.ic_exec
 import ic.utils.ic_util
 from ic.bitmap import ic_bmp
-from ic.kernel import io_prnt
+from ic.log import log
 import ic.utils.ic_res
 
 from ic.kernel import icobject
+
+__version__ = (0, 1, 1, 1)
 
 # --- Основные константы ---
 HORIZ_ORIENT = 1
@@ -59,9 +61,6 @@ SPC_IC_TOOL = {ic_menu.RES_MENU_DESCRIPTION: '',
                }
 
 
-__version__ = (0, 0, 0, 2)
-
-
 def CreateICToolBar(Win_, MenuBar_, Name_, ToolbarData_):
     """
     Функция создает из ресурса панель инструментов.
@@ -79,8 +78,8 @@ def CreateICToolBar(Win_, MenuBar_, Name_, ToolbarData_):
             return None
         return icToolBar(Win_, MenuBar_, Name_, ToolbarData_)
     except:
-        log.error(u'Ошибка создания панели инструментов %s!' % Name_)
-        return None
+        log.fatal(u'Ошибка создания панели инструментов %s' % Name_)
+    return None
 
 
 def CreateICToolBars(Win_, MenuBar_, Names_, ToolbarData_):
@@ -183,7 +182,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
 
             self.DoToolBar(ToolBarStruct_)
         except:
-            log.error(u'Ошибка создания объекта панели инструментов %s!' % self._Name)
+            log.fatal(u'Ошибка создания объекта панели инструментов %s!' % self._Name)
 
     def DoToolBar(self, ToolBarStruct_):
         """
@@ -215,8 +214,8 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 self.Realize()
             return self
         except:
-            log.error(u'Ошибка загрузки панели инструментов!')
-            return None
+            log.fatal(u'Ошибка загрузки панели инструментов')
+        return None
 
     def AddToLoadToolBar(self, ToolItem_):
         """
@@ -245,8 +244,8 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 self.AppendTool(tool_name, tool)
             return self
         except:
-            log.error(u'Ошибка загрузки панели инструментов %s!' % self._Name)
-            return None
+            log.fatal(u'Ошибка загрузки панели инструментов %s' % self._Name)
+        return None
 
     def AddToLinkToolBar(self, ToolItem_):
         """
@@ -269,8 +268,8 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 self.AppendToolByItem(item_name, item)
             return self
         except:
-            log.error(u'Ошибка добавления инструментов в панель %s!' % self._Name)
-            return None
+            log.fatal(u'Ошибка добавления инструментов в панель %s' % self._Name)
+        return None
 
     def RemoveAll(self):
         """
@@ -286,7 +285,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             self._tools_check_on.clear()
             self._tools_check_off.clear()
         except:
-            log.error(u'Ошибка удаления инструментов из панели %s!' % self._Name)
+            log.fatal(u'Ошибка удаления инструментов из панели %s!' % self._Name)
 
     def FindToolByAlias(self, Name_):
         """
@@ -368,7 +367,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 # (ЕСЛИ ОБРАЗА НЕТ, ТО ДОБАВЛЕНИЕ ИНСТРУМЕНТА НЕ ПРОИЗОЙДЕТ)
                 if ic_menu.RES_MENU_IMAGE in ToolStruct_:
                     if ToolStruct_[ic_menu.RES_MENU_IMAGE] != '' and ToolStruct_[ic_menu.RES_MENU_IMAGE] is not None:
-                        if isfile(ToolStruct_[ic_menu.RES_MENU_IMAGE]):
+                        if os.path.isfile(ToolStruct_[ic_menu.RES_MENU_IMAGE]):
                             tool_image = ic_bmp.icCreateBitmap(ToolStruct_[ic_menu.RES_MENU_IMAGE])
                         else:
                             return None
@@ -411,8 +410,8 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 self.Register(tool, tool_id, ToolName_)
                 return tool
         except:
-            log.error(u'Ошибка создания инструмента %s!' % ToolName_)
-            return None
+            log.fatal(u'Ошибка создания инструмента %s!' % ToolName_)
+        return None
 
     def AppendToolByItem(self, ItemName_, Item_):
         """
@@ -421,6 +420,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
         @param Item_: Объект пункта меню.
         @return: Возвращает указатель на инструмент или None в случае ошибки.
         """
+        tool = None
         try:
             # Проверка аргументов
             if Item_ is None and ItemName_ != '':
@@ -442,7 +442,6 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 else:
                     tool_image = wx.ArtProvider_GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16, 16))
 
-                tool = None
                 if tool_kind == wx.ITEM_CHECK:
                     tool = self.AddCheckTool(tool_id, tool_image, wx.NullBitmap, '', tool_hint)
                     # Синхронизировать изображение
@@ -470,15 +469,14 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 # Установить взаимную связь инструмента и пункта меню
                 self._tool_item[tool_id] = Item_
                 Item_.LinkTool(self, tool_id)
-                return tool
             else:
                 # Новый пункт-разделитель
                 self.AddSeparator()
                 return None
             return tool 
         except:
-            log.error(u'Ошибка создания инструмента %s по пункту меню!' % ItemName_)
-            return None
+            log.fatal(u'Ошибка создания инструмента %s по пункту меню' % ItemName_)
+        return None
 
     def OnToolClick(self, event):
         """
@@ -493,7 +491,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 # Выполнение метода
                 ic.utils.ic_exec.ExecuteMethod(self._tools_action[tool_id], self)
             if tool_state:
-                if tool_id in self._tools_check_off.has_key() and self._tools_check_off[tool_id] is not None:
+                if tool_id in self._tools_check_off and self._tools_check_off[tool_id] is not None:
                     # Выполнение метода
                     result = ic.utils.ic_exec.ExecuteMethod(self._tools_check_on[tool_id], self)
                     # Проверка выполнения метода
@@ -513,6 +511,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                         if not result:
                             self.ToggleTool(tool_id, True)
         except:
+            log.fatal(u'Ошибка обработчика инструмента панели инструментов')
             event.Skip()
 
     def OnToolItemClick(self, event):
@@ -535,6 +534,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             # Выполнение действия
             item.DoAction()
         except:
+            log.fatal(u'Ошибка обработчика кнопки панели инструментов')
             event.Skip()
 
     # --- Функции-свойства ---

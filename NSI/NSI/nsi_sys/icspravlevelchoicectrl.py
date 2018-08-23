@@ -7,12 +7,11 @@
 
 import wx
 
-from ic.kernel import io_prnt
-from ic.utils import coderror
 from ic.components import icwidget
+from ic.log import log
 
 # Version
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_CODE_DELIMETER = u' '
 DEFAULT_ENCODING = 'utf-8'

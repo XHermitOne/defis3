@@ -32,7 +32,7 @@ SPC_IC_FLATMENUBAR = {'renderer': None,    # Стиль отрисовки
                       }
 
 # Версия
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
@@ -102,7 +102,7 @@ class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
         return None
 
     def GetSeparatorCols(self):
-        return wx.Colour(241, 249, 255), wx.Colour(106, 140, 203)
+        return wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENUTEXT), wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU)
 
     def DrawToolbar(self, dc, rect):
         """
@@ -121,7 +121,7 @@ class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
 
         counter = 0
         # Get all the toolbar items
-        for i in xrange(len(self._tbButtons)):
+        for i in range(len(self._tbButtons)):
             tbItem = self._tbButtons[i]._tbItem
             # the button width depends on its type
             if tbItem.IsSeparator():
@@ -245,7 +245,7 @@ class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
                     except:
                         pass
 
-        for j in xrange(counter, len(self._tbButtons)):
+        for j in range(counter, len(self._tbButtons)):
             if self._tbButtons[j]._tbItem.IsCustomControl():
                 control = self._tbButtons[j]._tbItem.GetCustomControl()
                 control.Hide()
@@ -274,6 +274,7 @@ def simple_test():
 
     frame.Show()
     app.MainLoop()
+
 
 if __name__ == '__main__':
     simple_test()

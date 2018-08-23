@@ -45,13 +45,13 @@ import ic.utils.ic_exec
 import ic.bitmap.ic_color as ic_color
 import ic.utils.ic_util
 import ic.utils.util
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.bitmap import ic_bmp
 from . import icUser
 
 import ic
 
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
 
 # --- Основные константы ---
 # Символ разделителя в надписи пункта
@@ -119,7 +119,7 @@ SPC_IC_MENUITEM = {'type': 'MenuItem',
                    RES_MENU_ACTION: None,      # Блок кода на выбор пункта
                    RES_MENU_CHECKON: None,     # Блок кода на пометку пункта
                    RES_MENU_CHECKOFF: None,    # Блок кода на разметку пункта
-                   #'__parent__':ic.components.icwidget.SPC_IC_WIDGET,
+                   # '__parent__':ic.components.icwidget.SPC_IC_WIDGET,
                    }
 
 
@@ -135,8 +135,8 @@ def CreateICMenuBar(Win_, Name_, MenubarData_):
     try:
         return icMenuBar(Win_, Name_, None, MenubarData_)
     except:
-        log.error(u'Ошибка создания меню <%s>!' % Name_)
-        return None
+        log.fatal(u'Ошибка создания меню <%s>!' % Name_)
+    return None
 
 
 def AppendICMenuBar(Win_, Name_, MenubarData_, MenuBar_=None):
@@ -180,8 +180,8 @@ def AppendICMenuBar(Win_, Name_, MenubarData_, MenuBar_=None):
             MenuBar_.AddToLoadMenu(menu_items)
             return MenuBar_
     except:
-        log.error(u'Ошибка создания меню <%s>!' % Name_)
-        return None
+        log.fatal(u'Ошибка создания меню <%s>!' % Name_)
+    return None
 
 
 def appendMenuBar(Win_, Name_, MenubarData_, MenuBar_=None, RunnerResource_=None):
@@ -239,8 +239,8 @@ def appendMenuBar(Win_, Name_, MenubarData_, MenuBar_=None, RunnerResource_=None
             MenuBar_.AddToLoadMenu(menu_items)
             return MenuBar_
     except:
-        log.error(u'Ошибка создания меню <%s>!' % Name_)
-        return None
+        log.fatal(u'Ошибка создания меню <%s>!' % Name_)
+    return None
         
 
 # --- Описания классов ---
@@ -248,7 +248,6 @@ class icMenuBar(wx.MenuBar):
     """
     Класс горизонтального меню.
     """
-
     def __init__(self, Win_, Name_, MenuItems_, ResData_):
         """
         Конструктор.
@@ -316,8 +315,8 @@ class icMenuBar(wx.MenuBar):
             #     но не будет отображатся в окне.
             return self
         except:
-            log.error(u'Ошибка загрузки меню')
-            return None
+            log.fatal(u'Ошибка загрузки меню')
+        return None
  
     def AddToLoadMenu(self, MenuItems_):
         """
@@ -343,8 +342,8 @@ class icMenuBar(wx.MenuBar):
                         self.Register(item)
             return self
         except:
-            log.error(u'Ошибка загрузки горизонтального меню <%s>' % self._Name)
-            return None
+            log.fatal(u'Ошибка загрузки горизонтального меню <%s>' % self._Name)
+        return None
 
     def AppendMenuItem(self, Menu_, ItemName_, ItemStruct_):
         """
@@ -409,7 +408,7 @@ class icMenuBar(wx.MenuBar):
             # очистить реестр
             self.ClearReg()
         except:
-            log.error(u'Ошибка очистки меню <%s>' % self._Name)
+            log.fatal(u'Ошибка очистки меню <%s>' % self._Name)
 
     def FindMenuByAlias(self, Name_):
         """
@@ -608,7 +607,7 @@ class icMenu(wx.Menu):
 
             self.DoMenu(MenuStruct_[RES_MENU_ITEMS])
         except:
-            log.error(u'Ошибка создания выпадающего меню!')
+            log.fatal(u'Ошибка создания выпадающего меню!')
 
     def getParentWindow(self):
         """
@@ -643,8 +642,8 @@ class icMenu(wx.Menu):
 
             return self
         except:
-            log.error(u'Ошибка загрузки выпадающего меню')
-            return None
+            log.fatal(u'Ошибка загрузки выпадающего меню')
+        return None
 
     def AppendMenuByStruct(self, MenuName_, MenuStruct_):
         """
@@ -1039,7 +1038,7 @@ class icMenuItem(wx.MenuItem):
 
             self._SelfChecked = self.is_checked()
         except:
-            log.error(u'Ошибка создания пункта меню <%s>' % self._Name)
+            log.fatal(u'Ошибка создания пункта меню <%s>' % self._Name)
 
     def GetContext(self):
         return None
@@ -1055,7 +1054,7 @@ class icMenuItem(wx.MenuItem):
             if item_kind == wx.ITEM_SEPARATOR:
                 return
 
-            if Image_ and type(Image_) in (str, unicode):
+            if Image_ and isinstance(Image_, str):
                 eval_space = self.context or ic.utils.util.InitEvalSpace({'MENUITEM': self})
                 ret, img = ic.utils.util.ic_eval(Image_, evalSpace=eval_space)
                 if not ret:
@@ -1073,9 +1072,8 @@ class icMenuItem(wx.MenuItem):
                 #    пункта к меню. Иначе она не будет отображаться!
                 self.SetBitmap(img)
         except:
-            log.error(u'Ошибка установки образа для пункта меню <%s>!' % Image_)
-            return
-        
+            log.fatal(u'Ошибка установки образа для пункта меню <%s>!' % Image_)
+
     def setBitmap(self, BmpPsp_):
         """
         Функция установки картинки пункта меню.
@@ -1100,8 +1098,7 @@ class icMenuItem(wx.MenuItem):
                 #    пункта к меню. Иначе она не будет отображаться!
                 self.SetBitmap(img)
         except:
-            log.error(u'Ошибка установки картинки %s для пункта меню %s!' % (BmpPsp_, self.GetID()))
-            return
+            log.fatal(u'Ошибка установки картинки %s для пункта меню %s' % (BmpPsp_, self.GetID()))
 
     def DoAction(self):
         """
@@ -1134,8 +1131,8 @@ class icMenuItem(wx.MenuItem):
             if item_id == self.GetID():
                 self.DoAction()
         except:
-            log.error(u'Ошибка выполнения команды:')
-            event.Skip()
+            log.fatal(u'Ошибка выполнения команды:')
+        event.Skip()
 
     def ToggleOffRadio(self):
         """
@@ -1266,7 +1263,7 @@ class icMenuItem(wx.MenuItem):
                     else:
                         self._SelfChecked = True
         except:
-            raise   # Повторная генерация исключения
+            log.fatal(u'Ошибка выполнения обработчика пункта меню <%s>' % self.GetID())
 
     def is_checked(self):
         if self.IsCheckable():

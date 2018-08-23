@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*- 
 
 ###########################################################################
-## Python code generated with wxFormBuilder (version Feb 16 2016)
+## Python code generated with wxFormBuilder (version Dec 21 2016)
 ## http://www.wxformbuilder.org/
 ##
 ## PLEASE DO "NOT" EDIT THIS FILE!
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 from NSI.usercomponents import spravtreecomboctrl
 from NSI.usercomponents import spravmultiplechoicecomboctrl
 from ic.components.user import icchecklistctrl
@@ -43,7 +43,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		bSizer2.Add( self.docnum_radioBox, 0, wx.ALL, 5 )
 		
 		
-		bSizer2.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer2.AddSpacer( 5 )
 		
 		self.m_staticText13 = wx.StaticText( self.crit_scrolledWindow, wx.ID_ANY, u"№ документа контрагента:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText13.Wrap( -1 )
@@ -69,7 +69,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		self.m_staticText10.Wrap( -1 )
 		bSizer22.Add( self.m_staticText10, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.start_datePicker = wx.DatePickerCtrl( self.crit_scrolledWindow, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.start_datePicker = wx.adv.DatePickerCtrl( self.crit_scrolledWindow, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		self.start_datePicker.Enable( False )
 		
 		bSizer22.Add( self.start_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -78,7 +78,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		self.m_staticText9.Wrap( -1 )
 		bSizer22.Add( self.m_staticText9, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.end_datePicker = wx.DatePickerCtrl( self.crit_scrolledWindow, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.end_datePicker = wx.adv.DatePickerCtrl( self.crit_scrolledWindow, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		self.end_datePicker.Enable( False )
 		
 		bSizer22.Add( self.end_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -89,7 +89,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		bSizer22.Add( self.one_date_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer22.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer22.AddSpacer( 5 )
 		
 		self.obj_date_checkBox = wx.CheckBox( self.crit_scrolledWindow, wx.ID_ANY, u"Дата док. контрагента", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer22.Add( self.obj_date_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -98,7 +98,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		self.m_staticText101.Wrap( -1 )
 		bSizer22.Add( self.m_staticText101, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.obj_start_datePicker = wx.DatePickerCtrl( self.crit_scrolledWindow, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.obj_start_datePicker = wx.adv.DatePickerCtrl( self.crit_scrolledWindow, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		self.obj_start_datePicker.Enable( False )
 		
 		bSizer22.Add( self.obj_start_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -107,7 +107,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		self.m_staticText91.Wrap( -1 )
 		bSizer22.Add( self.m_staticText91, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.obj_end_datePicker = wx.DatePickerCtrl( self.crit_scrolledWindow, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.obj_end_datePicker = wx.adv.DatePickerCtrl( self.crit_scrolledWindow, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		self.obj_end_datePicker.Enable( False )
 		
 		bSizer22.Add( self.obj_end_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -270,7 +270,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		bSizer11.Add( self.clear_button, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer11.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer11.AddSpacer( 5 )
 		
 		self.search_button = wx.Button( self, wx.ID_ANY, u"Искать", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer11.Add( self.search_button, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -285,12 +285,12 @@ class icSearchCritPanelProto ( wx.Panel ):
 		
 		# Connect Events
 		self.date_checkBox.Bind( wx.EVT_CHECKBOX, self.onDateCheckBox )
-		self.start_datePicker.Bind( wx.EVT_DATE_CHANGED, self.onStartDatePickerChanged )
-		self.end_datePicker.Bind( wx.EVT_DATE_CHANGED, self.onEndDatePickerChanged )
+		self.start_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onStartDatePickerChanged )
+		self.end_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onEndDatePickerChanged )
 		self.one_date_checkBox.Bind( wx.EVT_CHECKBOX, self.onOneDateCheckBox )
 		self.obj_date_checkBox.Bind( wx.EVT_CHECKBOX, self.onObjDateCheckBox )
-		self.obj_start_datePicker.Bind( wx.EVT_DATE_CHANGED, self.onObjStartDatePickerChanged )
-		self.obj_end_datePicker.Bind( wx.EVT_DATE_CHANGED, self.onObjEndDatePickerChanged )
+		self.obj_start_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onObjStartDatePickerChanged )
+		self.obj_end_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onObjEndDatePickerChanged )
 		self.obj_one_date_checkBox.Bind( wx.EVT_CHECKBOX, self.onObjOneDateCheckBox )
 		self.doc_type_checkBox.Bind( wx.EVT_CHECKBOX, self.onDocTypeCheckBox )
 		self.entity_checkBox.Bind( wx.EVT_CHECKBOX, self.onEntityCheckBox )
@@ -402,7 +402,7 @@ class icSearchDocPanelProto ( wx.Panel ):
 		
 		self.search_count_staticText = wx.StaticText( self.docs_panel1, wx.ID_ANY, u"-", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.search_count_staticText.Wrap( -1 )
-		self.search_count_staticText.SetFont( wx.Font( 14, 70, 90, 92, False, wx.EmptyString ) )
+		self.search_count_staticText.SetFont( wx.Font( 14, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, wx.EmptyString ) )
 		
 		bSizer30.Add( self.search_count_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
@@ -720,7 +720,7 @@ class icPrintDocPanelProto ( wx.Panel ):
 		
 		self.search_count_staticText = wx.StaticText( self.docs_panel, wx.ID_ANY, u"-", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.search_count_staticText.Wrap( -1 )
-		self.search_count_staticText.SetFont( wx.Font( 14, 70, 90, 92, False, wx.EmptyString ) )
+		self.search_count_staticText.SetFont( wx.Font( 14, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, wx.EmptyString ) )
 		
 		bSizer30.Add( self.search_count_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
@@ -853,7 +853,7 @@ class icCtrlDocPanelProto ( wx.Panel ):
 		
 		self.search_count_staticText = wx.StaticText( self.docs_panel, wx.ID_ANY, u"-", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.search_count_staticText.Wrap( -1 )
-		self.search_count_staticText.SetFont( wx.Font( 14, 70, 90, 92, False, wx.EmptyString ) )
+		self.search_count_staticText.SetFont( wx.Font( 14, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, wx.EmptyString ) )
 		
 		bSizer30.Add( self.search_count_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		

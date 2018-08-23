@@ -18,7 +18,7 @@ SPC_IC_FLATMENUTOOL = {'short_help': None,  # Всплывающая подск�
                        'onSelected': None,  # Блок кода на выбор инструмента
                        }
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icFlatMenuToolPrototype(object):

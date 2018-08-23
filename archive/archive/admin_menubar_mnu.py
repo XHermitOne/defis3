@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/archive/archive/admin_menubar.mnu>
-File            </mnt/defis/defis/archive/archive/admin_menubar_mnu.py>
+Resource module </mnt/defis/defis3/archive/archive/admin_menubar.mnu>
+File            </mnt/defis/defis3/archive/archive/admin_menubar_mnu.py>
 Description     <Resource module>
 """
 
@@ -19,7 +19,7 @@ from ic.interfaces import icmanagerinterface
 
 from archive.forms import ctrl_doc_form
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/admin_menubar.mnu
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/admin_menubar.mnu
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

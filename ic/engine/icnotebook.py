@@ -10,9 +10,9 @@ import wx
 
 import ic.utils.ic_exec
 from ic.bitmap import ic_bmp
-from ic.kernel import io_prnt
+from ic.log import log
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 # --- Основные константы ---
 OPEN_CODE_IDX = 0
@@ -55,7 +55,7 @@ class icMainNotebook(wx.Notebook):
             # Индекс текущей страницы
             self._cur_selected_page = -1
         except:
-            log.error(u'Ошибка создания объекта главного органайзера')
+            log.fatal(u'Ошибка создания объекта главного органайзера')
 
     def addPage(self, Page_, Title_, OpenExists_=False, Image_=None,
                 CanClose_=True, OpenScript_=None, CloseScript_=None, DefaultPage_=-1):
@@ -93,12 +93,12 @@ class icMainNotebook(wx.Notebook):
             self._page_attr.append([OpenScript_, CloseScript_, CanClose_])
             if Image_ not in self._img_name:
                 if not Image_:
-                    img = wx.ArtProvider_GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER, (16, 16))
+                    img = wx.ArtProvider.GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER, (16, 16))
                 else:
                     # Создание образа
                     img = ic_bmp.icCreateBitmap(Image_, False)
                     if img is None:
-                        img = wx.ArtProvider_GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER, (16, 16))
+                        img = wx.ArtProvider.GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER, (16, 16))
 
                 # Добавление образа
                 img_idx = self._img_list.Add(img)
@@ -130,8 +130,8 @@ class icMainNotebook(wx.Notebook):
 
             return ret
         except:
-            log.error(u'Ошибка добавления страницы в органайзер.')
-            return None
+            log.fatal(u'Ошибка добавления страницы в органайзер.')
+        return None
 
     def deletePage(self, Index_):
         """
@@ -167,8 +167,8 @@ class icMainNotebook(wx.Notebook):
             self.Refresh()
             return result
         except:
-            log.error(u'deletePage')
-            return None
+            log.fatal(u'deletePage')
+        return None
     
     def deleteAllPages(self):
         """
@@ -221,11 +221,10 @@ class icMainNotebook(wx.Notebook):
                 if i_new_page >= 0:
                     if self._page_attr[i_new_page][OPEN_CODE_IDX] is not None:
                         ic.utils.ic_exec.ExecuteMethod(self._page_attr[i_new_page][OPEN_CODE_IDX], self)
-            # ЗДЕСЬ ОБЯЗАТЕЛЬНО ДОЛЖЕН БЫТЬ Skip() ИНАЧЕ ОБЪЕКТ ГЛЮЧИТ!!!
-            event.Skip()
         except:
-            log.error(u'Ошибка функции изменения страницы.')
-            event.Skip()
+            log.fatal(u'Ошибка функции изменения страницы.')
+        # ЗДЕСЬ ОБЯЗАТЕЛЬНО ДОЛЖЕН БЫТЬ Skip() ИНАЧЕ ОБЪЕКТ ГЛЮЧИТ!!!
+        event.Skip()
 
     def OnRightClick(self, event):
         """
@@ -235,14 +234,14 @@ class icMainNotebook(wx.Notebook):
             std_popup_menu = wx.Menu()
             # Пункты навигации
             id_ = wx.NewId()
-            bmp = wx.ArtProvider_GetBitmap(wx.ART_GO_BACK, wx.ART_MENU, (16, 16))
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_BACK, wx.ART_MENU, (16, 16))
             item = wx.MenuItem(std_popup_menu, id_, u'Предыдущая страница')
             item.SetBitmap(bmp)
             std_popup_menu.AppendItem(item)
             self.Bind(wx.EVT_MENU, self.OnPrevPage, id=id_)
 
             id_ = wx.NewId()
-            bmp = wx.ArtProvider_GetBitmap(wx.ART_GO_FORWARD, wx.ART_MENU, (16, 16))
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_MENU, (16, 16))
             item = wx.MenuItem(std_popup_menu, id_, u'Следующая страница')
             item.SetBitmap(bmp)
             std_popup_menu.AppendItem(item)
@@ -251,7 +250,7 @@ class icMainNotebook(wx.Notebook):
             std_popup_menu.AppendSeparator()
             # Закрытие страницы
             id_ = wx.NewId()
-            bmp = wx.ArtProvider_GetBitmap(wx.ART_DELETE, wx.ART_MENU, (16, 16))
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_MENU, (16, 16))
             item = wx.MenuItem(std_popup_menu, id_, u'Закрыть')
             item.SetBitmap(bmp)
             std_popup_menu.AppendItem(item)
@@ -267,7 +266,7 @@ class icMainNotebook(wx.Notebook):
             self.PopupMenu(std_popup_menu, wx.Point(event.GetX(), event.GetY()))
             std_popup_menu.Destroy()
         except:
-            log.error(u'Ошибка вывода стандартного меню страницы')
+            log.fatal(u'Ошибка вывода стандартного меню страницы')
             event.Skip()
     
     def OnClosePage(self, event):
@@ -284,7 +283,7 @@ class icMainNotebook(wx.Notebook):
                     if self.GetPageCount() == 0:
                         self._cur_selected_page = -1
         except:
-            log.error(u'Ошибка закрытия страницы')
+            log.fatal(u'Ошибка закрытия страницы')
             event.Skip()
 
     def OnPrevPage(self, event):
@@ -294,7 +293,7 @@ class icMainNotebook(wx.Notebook):
         try:
             self.AdvanceSelection(False)
         except:
-            log.info(u'Ошибка переключения страницы')
+            log.fatal(u'Ошибка переключения страницы')
             event.Skip()
 
     def OnNextPage(self, event):
@@ -304,7 +303,7 @@ class icMainNotebook(wx.Notebook):
         try:
             self.AdvanceSelection(True)
         except:
-            log.info(u'Ошибка переключения страницы')
+            log.fatal(u'Ошибка переключения страницы')
             event.Skip()
 
     # --- Свойства ---
@@ -316,7 +315,7 @@ class icMainNotebook(wx.Notebook):
             if 0 <= self._cur_selected_page < self.GetPageCount():
                 return self.GetPage(self._cur_selected_page)
         except:
-            log.info(u'Ошибка определения объекта текущей страницы')
+            log.fatal(u'Ошибка определения объекта текущей страницы')
         return None
 
     def SetPageImg(self, Image_, NPage_):
@@ -339,7 +338,7 @@ class icMainNotebook(wx.Notebook):
                 img_idx = self._img_name[Image_]
             return self.SetPageImage(NPage_, img_idx)
         except:
-            log.error(u'Ошибка установки картинки страницы')
+            log.fatal(u'Ошибка установки картинки страницы')
 
     def getMainWin(self, CurObj_=None):
         """

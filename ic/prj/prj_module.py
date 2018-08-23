@@ -984,6 +984,8 @@ class PrjFBModule(PrjModule, wxfb_manager.icWXFormBuilderManager):
         result = self.adaptation_form_py(fb_py_module_filename)
         if not result:
             ic_dlg.icWarningBox(u'ОШИБКА', u'Ошибка адаптации модуля формы wxFormBuilder')
+        else:
+            ic_dlg.icMsgBox(u'АДАПТАЦИЯ', u'Адаптация модуля <%s> прошла успешно' % fb_py_module_filename)
         event.Skip()
 
 

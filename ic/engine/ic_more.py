@@ -10,7 +10,9 @@ import ic.iccomponents.icmenutree
 
 from . import ic_menu
 import ic.utils.ic_res
-from ic.kernel import io_prnt
+from ic.log import log
+
+__version__ = (0, 1, 1, 1)
 
 
 def MenuToTree(Tree_, Name_, Index_, Data_):
@@ -91,5 +93,4 @@ def MenuToTree(Tree_, Name_, Index_, Data_):
 
         return tree
     except:
-        log.error(u'Ошибка перекодировки описания движка в описание дерева')
-        raise
+        log.fatal(u'Ошибка перекодировки описания движка в описание дерева')

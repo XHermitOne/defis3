@@ -853,7 +853,9 @@ class icSimple(icobject.icObject):
                     self.GetContext()['__manager_object'] = self._manager
             else:
                 log.warning(u'Не определен класс менеджера компонента <%s> модуль: <%s>' % (self.__class__.__name__,
-                                                                                                   res_module))
+                                                                                            res_module))
+        else:
+            log.warning(u'Не определен модуль ресурса объекта <%s>' % self.getName())
 
     def get_manager(self):
         """
@@ -963,7 +965,7 @@ class icSimple(icobject.icObject):
         if self.evalSpace and self.resource:
             for attr in icDefInf.icContainerAttr:
                 if attr in self.resource and isinstance(self.resource[attr], list):
-                    lst = range(len(self.resource[attr]))
+                    lst = list(range(len(self.resource[attr])))
                     for indx, res in enumerate(self.resource[attr]):
                         if 'alias' in res and not res['alias'] in [None, '', 'None']:
                             name = res['alias']

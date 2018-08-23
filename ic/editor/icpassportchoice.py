@@ -49,7 +49,8 @@ def icPassportChoiceDlg(Win_=None, Prj_=None):
                 Win_.Destroy()
             log.debug(u'Выбор паспорта %s' % result)
             return result
-    
+    except:
+        log.fatal(u'Ошибка выбора паспорта объекта')
     finally:
         if dlg:
             dlg.Destroy()
@@ -85,7 +86,8 @@ def icPassportListDlg(Win_=None, Prj_=None, Default_=None):
                 Win_.Destroy()
             log.debug(u'Выбор паспорта %s' % result)
             return result
-    
+    except:
+        log.fatal(u'Ошибка выбора списка паспортов объекта')
     finally:
         if dlg:
             dlg.Destroy()
@@ -211,7 +213,8 @@ class icPassportChoicePanel(wx.Panel):
                 res_name = res_name[1:]
 
         unicode_psp = ((type_name, obj_name, interface, res_name, subsys_name),)
-        self._passport = ic_util.encode_unicode_struct(unicode_psp)
+        # self._passport = ic_util.encode_unicode_struct(unicode_psp)
+        self._passport = unicode_psp
 
 
 class icPassportChoiceDialog(wx.Dialog):
@@ -310,14 +313,14 @@ class icPassportListPanel(wx.Panel):
             bmp = ic_bmp.getSysImg('imgPlus')
             if bmp is None:
                 bmp = wx.NullBitmap
-            self._toolbar.AddTool(id=id_, bitmap=bmp, shortHelpString=_('Add'))
+            self._toolbar.AddTool(id_, 'Add', bmp, shortHelp=_('Add'))
             self.Bind(wx.EVT_TOOL, self.OnAddPassport, id=id_)
 
             id_ = wx.NewId()
             bmp = ic_bmp.getSysImg('imgMinus')
             if bmp is None:
                 bmp = wx.NullBitmap
-            self._toolbar.AddTool(id=id_, bitmap=bmp, shortHelpString=_('Delete'))
+            self._toolbar.AddTool(id_, 'Delete', bmp, shortHelp=_('Delete'))
             self.Bind(wx.EVT_TOOL, self.OnDelPassport, id=id_)
 
             self._toolbar.AddSeparator()
@@ -326,7 +329,7 @@ class icPassportListPanel(wx.Panel):
             bmp = ic_bmp.getSysImg('imgEdit')
             if bmp is None:
                 bmp = wx.NullBitmap
-            self._toolbar.AddTool(id=id_, bitmap=bmp, shortHelpString=_('Edit'))
+            self._toolbar.AddTool(id_, 'Edit', bmp, shortHelp=_('Edit'))
             self.Bind(wx.EVT_TOOL, self.OnEditPassport, id=id_)
             
             self._toolbar.AddSeparator()
@@ -335,14 +338,14 @@ class icPassportListPanel(wx.Panel):
             bmp = ic_bmp.getSysImg('imgUp')
             if bmp is None:
                 bmp = wx.NullBitmap
-            self._toolbar.AddTool(id=id_, bitmap=bmp, shortHelpString=_('Move up'))
+            self._toolbar.AddTool(id_, 'MoveUp', bmp, shortHelp=_('Move up'))
             self.Bind(wx.EVT_TOOL, self.OnMoveUpPassport, id=id_)
             
             id_ = wx.NewId()
             bmp = ic_bmp.getSysImg('imgDown')
             if bmp is None:
                 bmp = wx.NullBitmap
-            self._toolbar.AddTool(id=id_, bitmap=bmp, shortHelpString=_('Move down'))
+            self._toolbar.AddTool(id_, 'MoveDown', bmp, shortHelp=_('Move down'))
             self.Bind(wx.EVT_TOOL, self.OnMoveDownPassport, id=id_)
             
             self._toolbar.Realize()

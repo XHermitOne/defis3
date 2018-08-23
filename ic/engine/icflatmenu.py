@@ -10,7 +10,7 @@ import wx
 from wx.lib.agw import flatmenu
 
 # Версия
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 # --- Спецификации ---
 SPC_IC_FLATMENU = {'label': 'menu',    # Надпись

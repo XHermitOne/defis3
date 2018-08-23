@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/archive/archive/doc_cataloger.mtd>
-File            </mnt/defis/defis/archive/archive/doc_cataloger_mtd.py>
+Resource module </mnt/defis/defis3/archive/archive/doc_cataloger.mtd>
+File            </mnt/defis/defis3/archive/archive/doc_cataloger_mtd.py>
 Description     <Resource module>
 """
 
 from ic.interfaces import icmanagerinterface
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/doc_cataloger.mtd
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/doc_cataloger.mtd
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

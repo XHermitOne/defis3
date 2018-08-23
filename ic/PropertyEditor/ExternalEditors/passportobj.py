@@ -110,7 +110,7 @@ class icObjectPassportUserEdt(ic_user_property_editor):
             else:
                 value = text
         except:
-            log.fatal(u'>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
+            log.fatal(u'Ошибка >>> str_to_val_user_property в eval(text): text=%s' % text)
             return None
         return value
 
@@ -129,7 +129,7 @@ class icObjectPassportListUserEdt(ic_user_property_editor):
             parent = propEdt
             value = icObjectPassportListUserEdt.str_to_val_user_property(value, propEdt)
             res = icpassportchoice.icPassportListDlg(parent, None, value)
-            log.debug(u'passports = %s' % res)
+            log.debug(u'Выбранные паспорта = %s' % res)
             return str(res)
 
     @staticmethod
@@ -170,6 +170,6 @@ class icObjectPassportListUserEdt(ic_user_property_editor):
             else:
                 value = text
         except:
-            log.fatal(u'>>> str_to_val_user_property ERROR in eval(text): text=%s' % text)
+            log.fatal(u'Ошибка >>> str_to_val_user_property в eval(text): text=%s' % text)
             return None
         return value

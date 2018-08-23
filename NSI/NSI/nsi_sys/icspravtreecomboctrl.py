@@ -71,7 +71,6 @@ class icSpravTreeComboPopup(wx.ComboPopup):
     """
     Выпадающее дерево справочника.
     """
-
     def Init(self):
         self.root_name = None
         self.value = None
@@ -260,7 +259,6 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
     Выпадающее дерево справочника c возможностью выбора произвольного списка
     элементов.
     """
-
     def Create(self, parent):
         self.parent = parent
         self.tree = BoxTree(parent, style=wx.TR_HIDE_ROOT
@@ -385,7 +383,6 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
         if src:
             for cod in Code_.split(','):
                 cod = cod.strip()
-                # self.curitem = self.find_tree_item(cod)
                 record = src.find_record(cod)
                 if record:
                     if AltCodeField_ is not None:
@@ -566,13 +563,6 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
         """
         Надпись в контроле, соответствующая данному элементу.
         """
-        # По умолчанию надпис: Код+Наименование
-        # if item_data._data[2]:
-        #     cod = u'%s (%s)' % (item_data._data[2], item_data._data[0])
-        # else:
-        #     cod = item_data._data[0]
-        # return u'%s %s' % (cod, item_data.getDescription())
-
         # Изменено для тупых пользователей: Наименование
         return item_data.getDescription()
 
@@ -675,7 +665,6 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
             if child.hasChildren():
                 # Если есть дочерние элементы у текущего элемента,
                 # то сделать фиктивный элемент.
-                # self._combo_popup.AddItem(TREE_HIDDEN_ITEM_LABEL, parent=item)
                 self._addTree(child, ParentItem_=item)
 
         self._cur_data_item = None
@@ -789,12 +778,6 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
 
         code = Value_
         self.set_selected_sprav_code(code)
-        # label = self.findItem(code, True)
-        #
-        # if label:
-        #     self.SetValue(label)
-        # else:
-        #     self.SetValue(u'')
         return True
 
     def getValue(self):

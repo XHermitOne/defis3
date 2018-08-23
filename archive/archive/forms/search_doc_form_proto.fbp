@@ -172,7 +172,7 @@
                                 <property name="border">2</property>
                                 <property name="flag">wxEXPAND</property>
                                 <property name="proportion">0</property>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer2</property>
                                     <property name="orient">wxHORIZONTAL</property>
@@ -1766,11 +1766,11 @@
                                     </object>
                                 </object>
                             </object>
-                            <object class="sizeritem" expanded="0">
+                            <object class="sizeritem" expanded="1">
                                 <property name="border">2</property>
                                 <property name="flag">wxEXPAND</property>
                                 <property name="proportion">0</property>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer3</property>
                                     <property name="orient">wxHORIZONTAL</property>
@@ -1951,11 +1951,11 @@
                                     </object>
                                 </object>
                             </object>
-                            <object class="sizeritem" expanded="0">
+                            <object class="sizeritem" expanded="1">
                                 <property name="border">2</property>
                                 <property name="flag">wxEXPAND</property>
                                 <property name="proportion">0</property>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer4</property>
                                     <property name="orient">wxHORIZONTAL</property>
@@ -2068,7 +2068,7 @@
                                             <property name="center_pane">0</property>
                                             <property name="class"></property>
                                             <property name="close_button">1</property>
-                                            <property name="construction">self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_doc_type&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;ayan_archive&apos;),),  &apos;level_enable&apos;: 1})</property>
+                                            <property name="construction">self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_doc_type&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;archive&apos;),),  &apos;level_enable&apos;: 1})</property>
                                             <property name="context_help"></property>
                                             <property name="context_menu">1</property>
                                             <property name="declaration"></property>
@@ -2241,7 +2241,7 @@
                                             <property name="center_pane">0</property>
                                             <property name="class"></property>
                                             <property name="close_button">1</property>
-                                            <property name="construction">self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_entity&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;ayan_archive&apos;),),  &apos;level_enable&apos;: 1})</property>
+                                            <property name="construction">self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_entity&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;archive&apos;),),  &apos;level_enable&apos;: 1})</property>
                                             <property name="context_help"></property>
                                             <property name="context_menu">1</property>
                                             <property name="declaration"></property>
@@ -2308,11 +2308,11 @@
                                     </object>
                                 </object>
                             </object>
-                            <object class="sizeritem" expanded="0">
+                            <object class="sizeritem" expanded="1">
                                 <property name="border">2</property>
                                 <property name="flag">wxEXPAND</property>
                                 <property name="proportion">0</property>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer5</property>
                                     <property name="orient">wxHORIZONTAL</property>
@@ -2425,7 +2425,7 @@
                                             <property name="center_pane">0</property>
                                             <property name="class"></property>
                                             <property name="close_button">1</property>
-                                            <property name="construction">self.contragent_ctrl = spravmultiplechoicecomboctrl.icSpravMultipleChoiceComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_c_agent&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;ayan_archive&apos;),), &apos;view_fields&apos;: [&apos;inn&apos;, &apos;kpp&apos;, &apos;full_name&apos;], &apos;search_fields&apos;: [&apos;inn&apos;, &apos;kpp&apos;, &apos;full_name&apos;]})</property>
+                                            <property name="construction">self.contragent_ctrl = spravmultiplechoicecomboctrl.icSpravMultipleChoiceComboCtrl(parent=self.crit_scrolledWindow, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_c_agent&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;archive&apos;),), &apos;view_fields&apos;: [&apos;inn&apos;, &apos;kpp&apos;, &apos;full_name&apos;], &apos;search_fields&apos;: [&apos;inn&apos;, &apos;kpp&apos;, &apos;full_name&apos;]})</property>
                                             <property name="context_help"></property>
                                             <property name="context_menu">1</property>
                                             <property name="declaration"></property>
@@ -4306,7 +4306,7 @@
                 </object>
             </object>
         </object>
-        <object class="Panel" expanded="0">
+        <object class="Panel" expanded="1">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg"></property>
@@ -4358,16 +4358,16 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer13</property>
                 <property name="orient">wxVERTICAL</property>
                 <property name="permission">none</property>
-                <object class="sizeritem" expanded="0">
+                <object class="sizeritem" expanded="1">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND</property>
                     <property name="proportion">1</property>
-                    <object class="wxSplitterWindow" expanded="0">
+                    <object class="wxSplitterWindow" expanded="1">
                         <property name="BottomDockable">1</property>
                         <property name="LeftDockable">1</property>
                         <property name="RightDockable">1</property>
@@ -4451,8 +4451,8 @@
                         <event name="OnSplitterSashPosChanging"></event>
                         <event name="OnSplitterUnsplit"></event>
                         <event name="OnUpdateUI"></event>
-                        <object class="splitteritem" expanded="0">
-                            <object class="wxPanel" expanded="0">
+                        <object class="splitteritem" expanded="1">
+                            <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -4526,7 +4526,7 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer141</property>
                                     <property name="orient">wxVERTICAL</property>
@@ -4619,8 +4619,8 @@
                                 </object>
                             </object>
                         </object>
-                        <object class="splitteritem" expanded="0">
-                            <object class="wxPanel" expanded="0">
+                        <object class="splitteritem" expanded="1">
+                            <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -4694,16 +4694,16 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer151</property>
                                     <property name="orient">wxVERTICAL</property>
                                     <property name="permission">none</property>
-                                    <object class="sizeritem" expanded="0">
+                                    <object class="sizeritem" expanded="1">
                                         <property name="border">5</property>
                                         <property name="flag">wxEXPAND</property>
                                         <property name="proportion">0</property>
-                                        <object class="wxToolBar" expanded="0">
+                                        <object class="wxToolBar" expanded="1">
                                             <property name="BottomDockable">1</property>
                                             <property name="LeftDockable">1</property>
                                             <property name="RightDockable">1</property>
@@ -5021,11 +5021,11 @@
                                             <event name="OnUpdateUI"></event>
                                         </object>
                                     </object>
-                                    <object class="sizeritem" expanded="0">
+                                    <object class="sizeritem" expanded="1">
                                         <property name="border">5</property>
                                         <property name="flag">wxEXPAND</property>
                                         <property name="proportion">0</property>
-                                        <object class="wxBoxSizer" expanded="0">
+                                        <object class="wxBoxSizer" expanded="1">
                                             <property name="minimum_size"></property>
                                             <property name="name">bSizer30</property>
                                             <property name="orient">wxHORIZONTAL</property>
@@ -8759,11 +8759,11 @@
                                             <event name="OnUpdateUI"></event>
                                         </object>
                                     </object>
-                                    <object class="sizeritem" expanded="0">
+                                    <object class="sizeritem" expanded="1">
                                         <property name="border">5</property>
                                         <property name="flag">wxEXPAND</property>
                                         <property name="proportion">0</property>
-                                        <object class="wxBoxSizer" expanded="0">
+                                        <object class="wxBoxSizer" expanded="1">
                                             <property name="minimum_size"></property>
                                             <property name="name">bSizer30</property>
                                             <property name="orient">wxHORIZONTAL</property>

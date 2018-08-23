@@ -461,9 +461,9 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         if self.dataclass is not None:
             if IsID_:
-                result = [column.name.encode() for column in self.dataclass.columns]
+                result = [column.name for column in self.dataclass.columns]
             else:
-                result = [column.name.encode() for column in self.dataclass.columns if column.name != u'id']
+                result = [column.name for column in self.dataclass.columns if column.name != u'id']
         else:
             res = self.getResource()
             if IsID_:
@@ -538,8 +538,6 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         if self.dataclass is not None:
             tab_name = self.dataclass.name
-            # if isinstance(tab_name, str):
-            #    tab_name = tab_name.encode()
             return tab_name
         return None
 
@@ -640,8 +638,8 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             else:
                 return Value_
         else:
-            if isinstance(Value_, str):
-                return Value_.encode(DEFAULT_DB_ENCODING)
+            if isinstance(Value_, bytes):
+                return Value_.decode(DEFAULT_DB_ENCODING)
         try:
             return str(Value_)
         except TypeError:
@@ -761,7 +759,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         for item in RecData_.items():
             if isinstance(item[0], str):
-                new_item = item[0].encode()
+                new_item = item[0]
                 del RecData_[item[0]]
                 RecData_[new_item] = item[1]
         return RecData_
@@ -1003,9 +1001,9 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 del Struct_[key]
                 Struct_[key_new] = value_new
 
-        elif isinstance(Struct_, str):
+        elif isinstance(Struct_, bytes):
             # Строка юникод
-            return Struct_.encode(DEFAULT_DB_ENCODING)
+            return Struct_.decode(DEFAULT_DB_ENCODING)
 
         else:
             # Оставить без изменений все другие типы
@@ -1384,8 +1382,6 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 if 'activate' not in field or int(field['activate']):
                     # Имя поля(не должно быть unicode)
                     fld_name = field['name']
-                    # if isinstance(fld_name, str):
-                    #    fld_name = fld_name.encode()
 
                     if field['type'] == 'Field':
                         try:
@@ -1535,7 +1531,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 # Создание класса
                 mapperclass_name = self.dataclass.name
                 if isinstance(mapperclass_name, str):
-                    mapperclass_name = mapperclass_name.encode()
+                    mapperclass_name = mapperclass_name
                 self._mapper_class = type(mapperclass_name, (object,), {})
 
                 field_names = [fld['name'] for fld in self.getResource()['child'] if fld['type'] == FIELD_TYPE]

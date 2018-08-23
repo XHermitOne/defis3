@@ -15,12 +15,13 @@
 """
 
 # --- Подключение пакетов ---
+import os
+import os.path
 import wx
 
-from . import ic_win
 from . import icUser
 
-from . import ic_popup 
+from . import icpopupmenu
 import ic.utils.ic_res
 import ic.utils.resource
 
@@ -43,7 +44,7 @@ def GetPrjSubSysDirs(PrjDir_):
     Заполнение списка происходит по файлу *.pro.
     @param PrjDir_: Папка проекта.
     """
-    root_prj_dir = ic.utils.os.path.dirname(PrjDir_)
+    root_prj_dir = os.path.dirname(PrjDir_)
     pro_files = ic.utils.ic_file.GetFilesByExt(PrjDir_, '.pro')
     if pro_files:
         pro_file = pro_files[0]
@@ -58,7 +59,7 @@ def GetSubSysDirs(PrjDir_):
         Заполнение списка происходит по файлу *.pro.
     @param PrjDir_: Папка проекта.
     """
-    root_prj_dir = ic.utils.os.path.dirname(PrjDir_)
+    root_prj_dir = os.path.dirname(PrjDir_)
     pro_files = ic.utils.ic_file.GetFilesByExt(PrjDir_, '.pro')
     if pro_files:
         pro_file = pro_files[0]
@@ -267,7 +268,7 @@ class icApp(ic_app.icWXApp):
         @param Owner_: объект-хозяин, к которому прикрепляется меню.
         @return: Возвращает ссылку на объект всплывающего меню.
         """
-        popup = ic_popup.CreateICPopupMenu(Owner_, Name_, self._ResFile)
+        popup = icpopupmenu.CreateICPopupMenu(Owner_, Name_, self._ResFile)
         # Зарегистрировать его
         if popup is not None:
             self._PopupMenus.append(popup) 

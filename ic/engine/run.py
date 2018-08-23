@@ -6,13 +6,17 @@
 """
 
 import sys
-import ic.engine.main
 import os.path
 
+import ic.engine.main
+
+__version__ = (0, 1, 1, 1)
+
+
 if not sys.argv[1:]:
-    path = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')
-    main_sys = path.split('/')[-1]
-    args = ['-run', '-dbg', '%s/%s/' % (path, main_sys), '-s']
+    path = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
+    main_sys = path.split(os.path.sep)[-1]
+    args = ['-run', '-dbg', os.path.join(path, main_sys), '-s']
     ic.engine.main.main(args)
 else:
     ic.engine.main.run()

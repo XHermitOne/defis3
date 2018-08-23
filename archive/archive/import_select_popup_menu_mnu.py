@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Resource module </mnt/defis/defis/archive/archive/import_select_popup_menu.mnu>
-File            </mnt/defis/defis/archive/archive/import_select_popup_menu_mnu.py>
+Resource module </mnt/defis/defis3/archive/archive/import_select_popup_menu.mnu>
+File            </mnt/defis/defis3/archive/archive/import_select_popup_menu_mnu.py>
 Description     <Resource module>
 """
 
@@ -19,7 +19,7 @@ from archive.convert import mt_imp_manager
 from archive.convert import osn_imp_manager
 
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/import_select_popup_menu.mnu
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/import_select_popup_menu.mnu
 
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS

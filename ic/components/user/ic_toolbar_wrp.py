@@ -27,7 +27,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-import ic.engine.ic_tool as ic_tool
+import ic.engine.ictoolbar as ic_tool
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType

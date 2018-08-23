@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 """
-Модуль ресурса </mnt/defis/defis/archive/archive/scan_doc_pack_choice_panel.frm>.
+Модуль ресурса </mnt/defis/defis3/archive/archive/scan_doc_pack_choice_panel.frm>.
 """
 
-### RESOURCE_MODULE: /mnt/defis/defis/archive/archive/scan_doc_pack_choice_panel.frm
+### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/scan_doc_pack_choice_panel.frm
 # -----------------------------------------------------------------------------
-# Name:        /mnt/defis/defis/archive/archive/scan_doc_pack_choice_panel_frm.py
+# Name:        /mnt/defis/defis3/archive/archive/scan_doc_pack_choice_panel_frm.py
 # Purpose:     Модуль ресурса.
 #
 # Author:      <Создан генератором форм>

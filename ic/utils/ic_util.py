@@ -379,14 +379,16 @@ def ReCodeString(String_, StringCP_, NewCP_):
         # Закодировать строку в восьмеричном/шестнадцатеричном виде.
         return icOctHexString(String_, NewCP_)
 
+    string = String_
     if isinstance(String_, str):
         if StringCP_.upper() != 'UNICODE':
             string = String_
-
     elif isinstance(String_, str):
         string = String_
-        
-    return string.encode(NewCP_)
+    elif isinstance(String_, bytes):
+        string = String_.decode(NewCP_)
+
+    return string
 
 
 def icOctHexString(String_, Code_):
@@ -654,10 +656,10 @@ def get_check_summ(Value_):
     @param Value_: Переменная, которая м.б. представлена в виде строки.
     @return: Возвращает md5 контрольную сумму или None в случае ошибки.
     """
-    check_sum = None
+    check_summ = None
     try:
         val = str(Value_)
-        check_summ = hashlib.md5(val.encode()).hexdigest()
+        check_summ = hashlib.md5(val).hexdigest()
     except:
         log.fatal(u'Ошибка определения контрольной суммы')
     return check_summ

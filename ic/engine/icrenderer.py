@@ -77,7 +77,6 @@ class icRendererXPPrototype(RendererBase):
         """
         Colors rectangle according to the XP theme.
         """
-
         # switch according to the status
         if wx.VERSION >= (2, 8, 11, 0, ''):
             if state == ControlFocus:
@@ -107,7 +106,6 @@ class icRendererXPPrototype(RendererBase):
         """
         Colors rectangle according to the XP theme.
         """
-
         # switch according to the status
         if state == ControlFocus:
             penColor = color
@@ -127,7 +125,6 @@ class icRendererXPPrototype(RendererBase):
         """
         Draws the menu bar background according to the active theme.
         """
-
         # For office style, we simple draw a rectangle with a gradient colouring
         artMgr = ArtManager.Get()
         vertical = artMgr.GetMBVerticalGradient()

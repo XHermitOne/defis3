@@ -9,7 +9,7 @@
 import wx
 from wx.lib.agw import aui
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icAUIManager(aui.AuiManager):

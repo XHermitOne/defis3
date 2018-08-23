@@ -14,9 +14,10 @@ from ic.utils import resource
 from ic.log import log
 from ic.utils import ic_uuid
 from ic.db import icsqlalchemy
+from ic.db import icdb
 
 # Версия
-__version__ = (0, 1, 3, 3)
+__version__ = (1, 1, 1, 1)
 
 
 class icSpravStorageInterface:
@@ -306,7 +307,7 @@ class icSpravSQLStorage(icSpravStorageInterface):
                 pathRes = resource.getSubsysPath(DBSubSys_)
             
             db_res = resource.icGetRes(DBName_, 'src', pathRes=pathRes, nameRes=DBName_)
-            db = icsqlalchemy.icSQLAlchemyDB(db_res)
+            db = icdb.icSQLAlchemyDB(db_res)
         
         # Таблица данных
         self._tab = icsqlalchemy.icSQLAlchemyTabClass(TabName_, DB_=db, SubSys_=TabSubSys_)
@@ -573,7 +574,7 @@ class icSpravSQLStorage(icSpravStorageInterface):
         """
         Конвертация кода в unicod.
         """
-        if not type(cod) in (str, unicode):
+        if not isinstance(cod, str):
             return str(cod)
         return cod
 
@@ -727,16 +728,14 @@ class icSpravSQLStorage(icSpravStorageInterface):
         Сравнение двух значений с учетом unicode.
         """
         # Внимание! Проверять нужно только строковые представления!
-        if isinstance(Value1_, unicode) or isinstance(Value2_, unicode):
+        if isinstance(Value1_, str) or isinstance(Value2_, str):
             # Если хотя бы одно значение в unicode
             # то сравнивать нужно unicode
             encoding = self._tab.db.getEncoding()
-            val1 = Value1_ if isinstance(Value1_, unicode) else unicode(str(Value1_), encoding)
-            val2 = Value2_ if isinstance(Value2_, unicode) else unicode(str(Value2_), encoding)
+            val1 = str(Value1_) if not isinstance(Value1_, bytes) else Value1_.decode(encoding)
+            val2 = str(Value2_) if not isinstance(Value2_, bytes) else Value2_.decode(encoding)
             return val1 == val2
-        else:
-            return str(Value1_) == str(Value2_)
-        return False
+        return str(Value1_) == str(Value2_)
 
     def _inTableIsRecord(self, Table_, Record_, Fields_=None):
         """
@@ -808,8 +807,10 @@ class icSpravSQLStorage(icSpravStorageInterface):
             return ['cod', 'name', 's1', 's2', 's3', 'n1', 'n2', 'n3', 'f1', 'f2', 'f3', 'access']
 
     def _str(self, Value_):
-        if not isinstance(Value_, unicode):
-            return unicode(str(Value_), self._tab.db.getEncoding())
+        if isinstance(Value_, bytes):
+            return Value_.decode(self._tab.db.getEncoding())
+        elif not isinstance(Value_, str):
+            return str(Value_)
         return Value_
 
     def _int(self, Value_):
@@ -899,7 +900,7 @@ class icSpravSQLStorage(icSpravStorageInterface):
             # Имя таблицы данных
             tab_name = self._tab.getDBTableName()
 
-            if type(FieldValue_) in (str, unicode):
+            if isinstance(FieldValue_, str):
                 field_val_str = '\''+FieldValue_+'\''
             else:
                 field_val_str = str(FieldValue_)
@@ -921,7 +922,7 @@ class icSpravSQLStorage(icSpravStorageInterface):
             return recs
         except:
             log.fatal(u'Ошибка определения словаря записи по значению %s поля %s' % (FieldValue_, FieldName_))
-            log.debug('SQL: <%s>' % sql)
+            log.error('SQL: <%s>' % sql)
             return None
 
     def _getRecByFldValDatetime(self, FieldName_, FieldValue_, DateTime_):
@@ -1179,7 +1180,7 @@ class icSpravSQLStorage(icSpravStorageInterface):
                         else:
                             # Несколько полей сортировки
                             sql = sql.order_by(*[getattr(self._tab.c, field_name) if not is_desc else getattr(self._tab.c, field_name).desc() for field_name in order_by])
-                    elif type(order_by) in (str, unicode):
+                    elif isinstance(order_by, str):
                         # Одно поле сортировки
                         sql = sql.order_by(getattr(self._tab.c, order_by) if not is_desc else icsqlalchemy.desc(getattr(self._tab.c, order_by)))
                     else:

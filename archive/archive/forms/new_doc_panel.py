@@ -29,7 +29,7 @@ from archive.forms import search_doc_form
 from ic.engine import form_manager
 
 # Version
-__version__ = (0, 0, 3, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_SCAN_FILENAME = os.path.join(ic_file.getPrjProfilePath(),
                                      'scan_filename.pdf')
@@ -41,7 +41,7 @@ DEFAULT_SCAN_BMP_FILENAMES = ('/usr/share/icons/gnome/48x48/devices/scanner.png'
 DEFAULT_DATE_FMT = '%Y.%m.%d'
 
 # Не текстовые символы (не должны попадать в текст документа)
-NOT_TXT_SYMBOLS = [unichr(c) for c in range(0x2500, 0x25A0)]
+NOT_TXT_SYMBOLS = [chr(c) for c in range(0x2500, 0x25A0)]
 
 
 def gen_scan_filename(doc, file_ext='.pdf'):
@@ -205,7 +205,8 @@ class icDocCardPanelManager():
         doc_txt = os.popen3(cmd)[1].read()
         
         # Перевести текст в юникод
-        doc_txt = unicode(doc_txt, ic.config.DEFAULT_ENCODING)
+        if isinstance(doc_txt, bytes):
+            doc_txt = doc_txt.decode(ic.config.DEFAULT_ENCODING)
         
         # Удалить все не нужные символы
         for c in NOT_TXT_SYMBOLS:
@@ -444,7 +445,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
                     
                     if isinstance(value, datetime.datetime):
                         value = value.strftime(DEFAULT_DATE_FMT)
-                    elif not isinstance(value, str) and not isinstance(value, unicode):
+                    elif not isinstance(value, str):
                         value = str(value)
                     
                     if i == 0:

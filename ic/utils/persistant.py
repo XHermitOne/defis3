@@ -22,7 +22,7 @@ from ic.log import log
 _ = wx.GetTranslation
 
 
-__version__ = (1, 0, 1, 2)
+__version__ = (1, 1, 1, 1)
 
 
 class icPersistant:
@@ -92,7 +92,7 @@ class icPersistant:
         """
         local_dir = ic_file.getPrjProfilePath() if res_path is None else res_path
         full_file_name = os.path.join(local_dir, res_name.replace(':', '_')+'.'+res_type)
-        log.debug('>>> Persistant getRes: name=%s, dir=%s, filename=%s' % (self.name, local_dir, full_file_name))
+        log.debug(u'Получение ресурса >>> name=%s, dir=%s, filename=%s' % (self.name, local_dir, full_file_name))
         if os.path.exists(full_file_name):
             return util.readAndEvalFile(full_file_name)
         return None
@@ -109,7 +109,7 @@ class icPersistant:
             przBuff = self.przBuff
         
         ret = self.setRes(self._model, self.res_path, self.name, self.res_type)
-        log.debug(u'>>> Persistant SAVE: name=%s, result=%s' % (self.name, str(ret)))
+        log.debug(u'Сохранение объекта в хранилище >>> name=%s, result=%s' % (self.name, str(ret)))
         return ret
         
     def setRes(self, res, res_path, res_name, res_type='var'):
@@ -133,13 +133,13 @@ class icPersistant:
                     ic_res.SaveResourcePickle(full_file_name, res)
                     lock.UnLockFile(lock_file_name)
                 except:
-                    log.fatal(u'Save resource file error: %s' % full_file_name)
+                    log.fatal(u'Ошибка сохранение ресурсного файла <%s>' % full_file_name)
                     lock.UnLockFile(lock_file_name)
             else:
-                log.warning(u'Persistant file <%s> is locked to write.' % full_file_name)
+                log.warning(u'Файл <%s> заблокирован для записи' % full_file_name)
                 return False
             
             return True
         except:
-            log.fatal(u'PERSISTANT ERROR')
+            log.fatal(u'Ошибка установки ресурса')
             return False

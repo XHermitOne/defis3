@@ -11,7 +11,7 @@ import ic
 from ic.log import log
 
 # Version
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 def validZipDocCatalog(zipdoc_dir=None):
@@ -48,4 +48,4 @@ def isEmptyDir(dirname):
     """
     if not os.path.exists(dirname):
         return True
-    return os.listdir(dirname) < 2
+    return len(os.listdir(dirname)) < 2
