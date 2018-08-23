@@ -8,29 +8,25 @@
 # --- Подключение библиотек ---
 import wx
 
-from . import ext_func_menu
 import ic.utils.ic_exec
 import ic.utils.ic_util
 from ic.utils import ic_res
 from ic.log import log
 
+from . import icmenu
+
 __version__ = (0, 1, 1, 1)
 
-# --- Основные константы ---
-# --- Описание ключей ---
-RES_POPUP_TITLE = 'title'   # <краткий текст заголовка меню по умолчанию, строка>
-RES_POPUP_TITLEREADONLY = 'title_readonly'  # <флаг заголовка, флаг (0 -статический/1-динамический)>
-RES_POPUP_TITLEFUNC = 'title_exp'   # <выражение для формирования заголовка, блок кода>
 
 # Спецификации:
-SPC_IC_POPUPMENU = {ext_func_menu.RES_MENU_DESCRIPTION: '',
-                    RES_POPUP_TITLE: '',  # Заголовок по умолчанию
-                    RES_POPUP_TITLEREADONLY: True,  # Признак статического заголовка
-                    RES_POPUP_TITLEFUNC: None,  # Блок кода на определение динамического заголовка
-                    ext_func_menu.RES_MENU_HOTKEY: '',  # Горячая клавиша
-                    ext_func_menu.RES_MENU_OPEN: None,  # Блок кода на открытие меню
-                    ext_func_menu.RES_MENU_CLOSE: None,  # Блок кода на закрытие меню
-                    ext_func_menu.RES_MENU_ITEMS: [],  # Вложенные пункты
+SPC_IC_POPUPMENU = {'description': '',
+                    'title': '',  # Заголовок по умолчанию
+                    'title_readonly': True,  # Признак статического заголовка
+                    'title_exp': None,  # Блок кода на определение динамического заголовка
+                    'hot_key': '',  # Горячая клавиша
+                    'on_open': None,  # Блок кода на открытие меню
+                    'on_close': None,  # Блок кода на закрытие меню
+                    'child': [],  # Вложенные пункты
                     }
 
 
@@ -85,7 +81,7 @@ def CreateICPopupMenu(Win_, Name_, PopupData_):
     return None
 
 
-class icPopupMenu(ext_func_menu.icMenu):
+class icPopupMenu(icmenu.icMenu):
     """
     Класс всплывающего меню. Наследуется от icMenu.
     """
@@ -111,26 +107,26 @@ class icPopupMenu(ext_func_menu.icMenu):
             MenuStruct_ = ic.utils.ic_util.SpcDefStruct(SPC_IC_POPUPMENU, MenuStruct_)
 
             # Вызов конструктора родителя
-            ext_func_menu.icMenu.__init__(self, None, MenuName_, MenuStruct_)
+            icmenu.icMenu.__init__(self, None, MenuName_, MenuStruct_)
             # Инициализация внутренних параметров
             self._ResData = ResData_
             self._Window = Win_
             # Установка обработчиков событий
-            if ext_func_menu.RES_MENU_ITEMS in MenuStruct_ and MenuStruct_[ext_func_menu.RES_MENU_ITEMS] is not None:
-                self.DoMenu(MenuStruct_[ext_func_menu.RES_MENU_ITEMS])
+            if 'child' in MenuStruct_ and MenuStruct_['child'] is not None:
+                self.DoMenu(MenuStruct_['child'])
 
             # Установка остальных атибутов всплывающег меню
-            if RES_POPUP_TITLE in MenuStruct_ and MenuStruct_[RES_POPUP_TITLE] is not None:
+            if 'title' in MenuStruct_ and MenuStruct_['title'] is not None:
                 # ВНИМАНИЕ!!! Добавление заголовка необходимо производить
                 # после добавления всех пунктов меню
-                self.SetTitle(MenuStruct_[RES_POPUP_TITLE])
-            if ext_func_menu.RES_MENU_HOTKEY in MenuStruct_ and MenuStruct_[ext_func_menu.RES_MENU_HOTKEY] is not None:
-                self._HotKey = MenuStruct_[ext_func_menu.RES_MENU_HOTKEY]
+                self.SetTitle(MenuStruct_['title'])
+            if 'hot_key' in MenuStruct_ and MenuStruct_['hot_key'] is not None:
+                self._HotKey = MenuStruct_['hot_key']
             # Установить параметры заголовка
-            if RES_POPUP_TITLEREADONLY in MenuStruct_ and MenuStruct_[RES_POPUP_TITLEREADONLY] is not None:
-                self._TitleReadOnly = MenuStruct_[RES_POPUP_TITLEREADONLY]
-            if RES_POPUP_TITLEFUNC in MenuStruct_ and MenuStruct_[RES_POPUP_TITLEFUNC] is not None:
-                self._TitleFunc = MenuStruct_[RES_POPUP_TITLEFUNC]
+            if 'title_readonly' in MenuStruct_ and MenuStruct_['title_readonly'] is not None:
+                self._TitleReadOnly = MenuStruct_['title_readonly']
+            if 'title_exp' in MenuStruct_ and MenuStruct_['title_exp'] is not None:
+                self._TitleFunc = MenuStruct_['title_exp']
         except:
             log.fatal(u'Ошибка создания всплываюшего меню')
 
@@ -185,21 +181,21 @@ class icPopupMenu(ext_func_menu.icMenu):
         @param ItemStruct_: структура пункта.
         """
         # Если надпись у объекта не определена, то не обрабатывать его
-        if ext_func_menu.RES_MENU_CAPTION in ItemStruct_ and ItemStruct_[ext_func_menu.RES_MENU_CAPTION] is not None:
-            item_caption = ItemStruct_[ext_func_menu.RES_MENU_CAPTION]
+        if 'label' in ItemStruct_ and ItemStruct_['label'] is not None:
+            item_caption = ItemStruct_['label']
         else:
             return
         # Если ниже по уровню есть еще пункты, то
-        if ext_func_menu.RES_MENU_ITEMS in ItemStruct_ and ItemStruct_[ext_func_menu.RES_MENU_ITEMS]:
+        if 'child' in ItemStruct_ and ItemStruct_['child']:
             # Если меню с таким именем уже существует,  то не создавать его
             subitem = Menu_.FindMenuItemByAlias(ItemName_)
             find = True
             if subitem is None:
                 find = False
                 # Создать подменю и заполнить его
-                subitem = ext_func_menu.icMenu(Menu_, ItemName_, ItemStruct_)
+                subitem = icmenu.icMenu(Menu_, ItemName_, ItemStruct_)
             item_id = subitem.GetID()
-            for cur_item in ItemStruct_[ext_func_menu.RES_MENU_ITEMS]:
+            for cur_item in ItemStruct_['child']:
                 if isinstance(self._ResData, str):
                     subitem_struct = ic_res.LoadObjStruct(ic_res.RES_IDX_MENU_ITEM, cur_item, self._ResData)
                 elif isinstance(self._ResData, dict):

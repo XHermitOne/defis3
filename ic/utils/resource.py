@@ -29,7 +29,7 @@ _ = wx.GetTranslation
 #   Указатель на пользовательское хранилище
 USER_OBJECT_STORAGE = None
 
-IC_DOC_PATH = '%s%sic%sdoc%shtml' % (os.getcwd(), os.path.sep, os.path.sep, os.path.sep)
+IC_DOC_PATH = os.path.join('.', 'ic', 'doc', 'html')
 
 
 # Функции определения ресурсных файлов системы

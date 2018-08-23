@@ -22,12 +22,11 @@
 
 import wx
 from ic.components import icwidget
-from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 import copy
-import ic.engine.icpopupmenu as ic_popup
+from ic.engine import icpopupmenu
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType
@@ -39,7 +38,7 @@ ic_class_name = 'icPopupMenu'
 ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-SPC_IC_POPUPMENU = copy.deepcopy(ic_popup.SPC_IC_POPUPMENU)
+SPC_IC_POPUPMENU = copy.deepcopy(icpopupmenu.SPC_IC_POPUPMENU)
 SPC_IC_POPUPMENU['__parent__'] = icwidget.SPC_IC_SIMPLE
 
 ic_class_spc = {'type': 'PopupMenu',
@@ -72,7 +71,7 @@ ic_can_contain = ['Menu', 'MenuItem']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icPopupMenu(icwidget.icSimple, wx.PopupWindow):

@@ -880,15 +880,16 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         data = self.GetPyData(item)
         # Создаем окно помощи
         try:
-            doc_path = os.path.dirname(ic.utils.resource.icGetICPath())
+            doc_path = os.path.dirname(resource.icGetICPath())
             from ic.components import icIEHtmlWin
             # Старый способ
             if 'docstr' in data:
-                fileDoc = doc_path + os.sep + data['docstr']
+                fileDoc = os.path.join(doc_path, data['docstr'])
             elif '__doc__' in data and data['__doc__']:
-                fileDoc = doc_path + os.sep + data['__doc__']
+                fileDoc = os.path.join(doc_path, data['__doc__'])
             else:
-                fileDoc = doc_path + os.sep + 'ic.components.ic'+data['type'].lower()+'-module.html'
+                html_filename = 'ic.components.ic'+data['type'].lower()+'-module.html'
+                fileDoc = os.path.join(doc_path, html_filename)
 
             print(fileDoc)
             if os.path.isfile(fileDoc):
@@ -2894,7 +2895,11 @@ def editor_main(par=0, path=None):
     # ---------------------------------------------------------------------------
     # Устанавливаем окружение
     # до файлов с документацией
-    ic.utils.resource.IC_DOC_PATH = os.getcwd().replace('PropertyEditor', '')+'doc'
+    try:
+        resource.IC_DOC_PATH = os.path.join(os.path.dirname(ic.__file__), 'doc')
+    except:
+        log.fatal(u'Ошибка инициализации папки документации')
+
     # Путь к файлам ресурсов
     if not path:
         path = os.path.join(ic.config.PROFILE_PATH, 'prj')
