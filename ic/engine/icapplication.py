@@ -31,7 +31,7 @@ from ic.kernel import icexceptions
 from ic.utils import lock  # Модуль необходим для удаления файлов-блокировок
 import ic.imglib.common as imglib
 from ic.dlg import ic_dlg
-from . import ic_app
+from . import icwxapplication
 from ic.utils import ic_util
 from ic.log import log
 
@@ -68,7 +68,7 @@ def GetSubSysDirs(PrjDir_):
     return []
 
 
-class icApp(ic_app.icWXApp):
+class icApp(icwxapplication.icWXApp):
     """
     Класс приложения(ДВИЖКА СИСТЕМЫ).
     """
@@ -96,7 +96,7 @@ class icApp(ic_app.icWXApp):
         # Пользователь
         self._User = None
         
-        ic_app.icWXApp.__init__(self)
+        icwxapplication.icWXApp.__init__(self)
 
     def OnInit(self):
         """
@@ -135,7 +135,7 @@ class icApp(ic_app.icWXApp):
         if self._MainWindow is not None:
             # Закрыть само главное окно
             self._MainWindow.Close()
-        return ic_app.icWXApp.Stop(self)
+        return icwxapplication.icWXApp.Stop(self)
        
     def Login(self, User_=None, Password_=None, DBMode_='-s'):
         """

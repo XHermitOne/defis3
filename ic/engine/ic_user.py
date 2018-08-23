@@ -256,10 +256,10 @@ def icEditorLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
     """
     Основная запускаемая функция.
     """
-    from ic.engine import icApp
+    from ic.engine import icapplication
     from . import icUser
 
-    app = icApp.icApp()
+    app = icapplication.icApp()
 
     kernel = ickernel.createEditorKernel()
     glob_variables.set_glob_var('KERNEL', kernel)

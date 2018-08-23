@@ -68,10 +68,10 @@ def createRuntimeKernel():
     """
     Создание и регистрация ядра в режиме исполнения.
     """
-    from ic.engine import icApp
+    from ic.engine import icapplication
     from ic.engine import glob_variables
     # Определить ядро
-    kernel = glob_variables.set_glob_var('KERNEL', icApp.icApp())
+    kernel = glob_variables.set_glob_var('KERNEL', icapplication.icApp())
     log.info(u'[KERNEL] CREATE RUNTIME KERNEL !')
     return kernel
 
