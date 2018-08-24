@@ -32,7 +32,7 @@ from ic.interfaces import icmanagerinterface
 ### RESOURCE_MODULE_IMPORTS
 
 #   Version
-__version__ = (0, 0, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icUserMenuBarManager(icmanagerinterface.icWidgetManager):

@@ -27,7 +27,7 @@ from archive import user_menubar_mnu
 ### RESOURCE_MODULE_IMPORTS
 
 #   Version
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
