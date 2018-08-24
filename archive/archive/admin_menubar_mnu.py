@@ -15,9 +15,11 @@ from ic.dlg import std_dlg
 from ic.dlg import ic_dlg
 from ic.utils import datefunc
 from ic.utils import ic_file
-from ic.interfaces import icmanagerinterface
+# from ic.interfaces import icmanagerinterface
 
 from archive.forms import ctrl_doc_form
+
+from archive import user_menubar_mnu
 
 ### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/admin_menubar.mnu
 
@@ -28,7 +30,7 @@ from archive.forms import ctrl_doc_form
 __version__ = (0, 0, 1, 2)
 
 
-class icAdminMenuBarManager(icmanagerinterface.icWidgetManager):
+class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
 
     def onInit(self, evt):
         pass

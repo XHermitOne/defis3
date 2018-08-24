@@ -12,7 +12,6 @@ import os.path
 import sqlalchemy
 
 import ic
-from archive import admin_menubar_mnu
 # from ic.interfaces import icmanagerinterface
 from archive.forms import new_doc_panel
 from archive.forms import search_doc_form
@@ -23,6 +22,9 @@ from ic.utils import ic_file
 from ic.dlg import std_dlg
 from ic.dlg import ic_dlg
 from ic.log import log
+from ic.interfaces import icmanagerinterface
+
+# from archive import admin_menubar_mnu
 
 ### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/user_menubar.mnu
 
@@ -33,7 +35,7 @@ from ic.log import log
 __version__ = (0, 0, 2, 2)
 
 
-class icUserMenuBarManager(admin_menubar_mnu.icAdminMenuBarManager):
+class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
 
     def onInit(self, evt):
         pass
@@ -45,7 +47,7 @@ class icUserMenuBarManager(admin_menubar_mnu.icAdminMenuBarManager):
         Обработчик выбора меню <Новый документ>
         """
         main_win = ic.getMainWin()
-        page = new_doc_panel.icNewArchiveDocPanel(parent = main_win)
+        page = new_doc_panel.icNewArchiveDocPanel(parent=main_win)
         page.init()
         main_win.AddOrgPage(page, u'Регистрация новых документов')
         event.Skip()
