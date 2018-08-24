@@ -37,10 +37,11 @@ def GetMakeFileTime(FileName_):
 
 def MakeDirs(Path_):
     """
-    Создает каталоги и не ругается.
+    Корректное создание каталогов по цепочке.
     """
     try:
-        return os.makedirs(Path_)
+        if not os.path.exists(Path_):
+            return os.makedirs(Path_)
     except:
         log.fatal(u'Ошибка создания каталога <%s>' % Path_)
 

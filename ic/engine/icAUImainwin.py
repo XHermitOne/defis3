@@ -15,10 +15,10 @@ from ic.log import log
 from ic.utils import util
 
 from . import ic_win
-from . import ext_func_menu
 from . import icAUImanager
 from . import icAUInotebook
 from . import ic_user
+from . import icmenubar
 
 from ic.components import icResourceParser
 
@@ -403,5 +403,5 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
         """
         Установить горизонтальное меню.
         """
-        if issubclass(MenuBar_.__class__, ext_func_menu.icMenuBar):
+        if issubclass(MenuBar_.__class__, icmenubar.icMenuBar):
             ic_win.icMainWindow.setMenuBar(self, MenuBar_)

@@ -134,7 +134,7 @@ class icKernel(icBaseKernel):
     @decorators.to_passport
     def getResByPsp(self, passport):
         """
-        Возвращает ресурса объекта по его паспорту.
+        Возвращает ресурс объекта по его паспорту.
         @type passport: C{icObjectPassport}
         @param passport: идентификатор описания (паспорт) объекта.
         """

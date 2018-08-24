@@ -212,8 +212,16 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         Имя ресурсного файла пользователей.
         """
+        if self._ResFile:
+            return ic_file.getAbsolutePath(self._ResFile)
         return self._ResFile
     
+    def setUserResFileName(self, ResFile_):
+        """
+        Установить ресурсный файл.
+        """
+        self._ResFile = ResFile_
+
     def getUsersResource(self):
         """
         Полностью структура ресурса файла пользователей.
@@ -281,8 +289,9 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         try:
             if ResFile_ is not None:
-                self._ResFile = ResFile_
-            access_dict = util.readAndEvalFile(self._ResFile, bRefresh=True)
+                self.setUserResFileName(ResFile_)
+            res_filename = self.getUserResFileName()
+            access_dict = util.readAndEvalFile(res_filename, bRefresh=True)
 
             # Запомнить имя ...
             self._UserName = UserName_
@@ -512,9 +521,11 @@ class icUserPrototype(icbaseuser.icRootUser):
         @return: Возвращает True, если вход в систему успешный.
         """
         user_login = None
+        res_filename = self.getUserResFileName()
+
         # Если файла ресурсов нет, тогда вход в систему не возможен
-        if not os.path.isfile(self._ResFile):
-            err_msg = u'Файл прав пользователей <%s> не найден.' % self._ResFile
+        if not os.path.exists(res_filename):
+            err_msg = u'Файл прав пользователей <%s> не найден.' % res_filename
             log.warning(err_msg)
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', err_msg)
             return False
@@ -541,7 +552,7 @@ class icUserPrototype(icbaseuser.icRootUser):
             icbaseuser.icRootUser.Login(self,
                                         user_login[ic_dlg.LOGIN_USER_IDX],
                                         user_login[ic_dlg.LOGIN_PASSWORD_IDX])
-            log.info(u'ROOT SYSTEM ENTER...OK')
+            log.info(u'Вход в систему с правами Администратора...OK')
             return True
 
         # Переопределить пользователя по умолчани.
@@ -556,15 +567,19 @@ class icUserPrototype(icbaseuser.icRootUser):
             if bAutoLogin:
                 raise
             else:
-                ic_dlg.icMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
+                ic_dlg.icMsgBox(u'Вход в систему',
+                                u'Неправильный пользователь или пароль. Доступ запрещен.')
         except icexceptions.LoginErrorException:
-            ic_dlg.icMsgBox(u'Вход в систему', u'Пользователь %s уже зарегистрирован в системе. Вход в систему запрещен.' % user_login[0])
+            ic_dlg.icMsgBox(u'Вход в систему',
+                            u'Пользователь %s уже зарегистрирован в системе. Вход в систему запрещен.' % user_login[0])
         except icexceptions.LoginDBExclusiveException:
-            ic_dlg.icMsgBox(u'Вход в систему', u'БД открыта в монопольном режиме другим пользователем. Вход в систему запрещен.')
+            ic_dlg.icMsgBox(u'Вход в систему',
+                            u'БД открыта в монопольном режиме другим пользователем. Вход в систему запрещен.')
         except icexceptions.LoginWorkTimeException:
-            ic_dlg.icMsgBox(u'Вход в систему', u'Попытка входа в систему в не регламентированное время пользователем %s. Вход в систему запрещен.' % user_login[0])
+            ic_dlg.icMsgBox(u'Вход в систему',
+                            u'Попытка входа в систему в не регламентированное время пользователем %s. Вход в систему запрещен.' % user_login[0])
         except:
-            log.fatal(u'ERROR USER LOGIN RECORD: <%s> ' % user_login)
+            log.fatal(u'Ошибка входа пользователя в систему. Параметры входа <%s> ' % user_login)
             raise
                 
         return sys_enter
@@ -617,7 +632,8 @@ class icUserPrototype(icbaseuser.icRootUser):
             if UserName_ == '' or UserName_ is None or UserName_ == self._UserName:
                 return self._UserRequisit
             else:
-                access_dict = util.readAndEvalFile(self._ResFile)
+                res_filename = self.getUserResFileName()
+                access_dict = util.readAndEvalFile(res_filename)
                 return self.CutUserRequisit(access_dict, UserName_)
         except:
             log.fatal(u'Ошибка опеределения реквизитов доступа к системным ресурсам пользователя')
@@ -736,12 +752,6 @@ class icUserPrototype(icbaseuser.icRootUser):
             return None
         except:
             return None
-
-    def SetResFile(self, ResFile_):
-        """
-        Установить ресурсный файл.
-        """
-        self._ResFile = ResFile_
 
 
 class icUserGroup(icUserPrototype):

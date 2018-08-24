@@ -249,16 +249,25 @@ class icApp(icwxapplication.icWXApp):
     def _createMainMenu(self, MenuBarsPsp_):
         """
         Создание/Сборка главного горизонтального меню.
+        @param MenuBarsPsp_: Список паспортов линеек горизонтальных меню для сборки.
         """
+        # Сборка полного ресурса линейки горизонтального меню
+        menubar_res = None
         for menubar_psp in MenuBarsPsp_:
             if menubar_psp:
-                menubar = self.Create(menubar_psp, parent=self._MainWindow)
-                if self._MainMenu is None:
-                    self._MainMenu = menubar
+                if menubar_res is None:
+                    menubar_res = self.getResByPsp(menubar_psp)
                 else:
-                    self._MainMenu.appendMenuBar(menubar)
+                    ext_menubar_res = self.getResByPsp(menubar_psp)
+                    menubar_res['child'] += ext_menubar_res['child']
             else:
-                log.warning(u'Не определено горизонтальное меню')
+                log.warning(u'Не определен паспорт горизонтального меню')
+
+        # Создание объекта линейки горизонтального меню по собранному ресурсу
+        menubar = self.createObjBySpc(parent=self._MainWindow, res=menubar_res)
+
+        if self._MainMenu is None:
+            self._MainMenu = menubar
         return self._MainMenu
 
     def LoadPopupMenu(self, Name_, Owner_):
