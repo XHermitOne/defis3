@@ -2153,8 +2153,8 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         if self.GetResource() and self.isToggleEnable():
             self.OnSave(None)
 
-        fname = '%s/%s.%s' % (filePath, fileName, fileExt)
-        fname = fname.replace('\\', '/').replace('//', '/')
+        fname = os.path.join(filePath, '%s.%s' % (fileName, fileExt))
+        fname = os.path.normpath(fname)
         self.LoadRes(fname, nameRes)
         #
         if isinstance(self.parent, icProjectNB):
@@ -2185,7 +2185,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 shutil.copyfile(oldFileName, fileName)
                 os.remove(oldFileName)
             except:
-                log.error(u'###')
+                log.fatal(u'Ошибка переноса файла <%s> -> <%s>' % (oldFileName, fileName))
                 return False
         else:
             res = util.readAndEvalFile(oldFileName, bRefresh=True)
@@ -2199,7 +2199,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                     obj_res['name'] = nameRes
                     obj_res['res_module'] = new_mod.split('/')[-1]
 
-                res = {}
+                res = dict()
                 res[nameRes] = obj_res
 
             else:

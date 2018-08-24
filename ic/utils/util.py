@@ -210,7 +210,8 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
         #   наличие скомпилированного файла, по времени последней модификации.
         try:
             if (os.path.isfile(filepcl) and not os.path.isfile(filename)) or \
-                    (os.path.getmtime(filename) < os.path.getmtime(filepcl)):
+                    (os.path.exists(filepcl) and os.path.exists(filename) and
+                     os.path.getmtime(filename) < os.path.getmtime(filepcl)):
                 #   Пытаеся прочитать сохраненную структуру если время последней
                 #   модификации текстового представления меньше, времени
                 #   последней модификации транслированного варианта.

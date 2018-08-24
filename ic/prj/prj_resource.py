@@ -282,10 +282,10 @@ class PrjResource(prj_node.PrjNode):
                 else:
                     lock_rec = ic_res.getLockResRecord(res_name, res_file,
                                                        res_ext, self.getRoot().lock_dir)
-                    ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
-                                    u'Resource <%s> is locked by user <%s>. Computer: <%s>.' % (res_name,
-                                                                                                lock_rec['user'], 
-                                                                                                lock_rec['computer']))
+                    ic_dlg.icWarningBox(u'БЛОКИРОВКА',
+                                        u'Ресурс <%s> заблокирован пользователем <%s> с компьютера <%s>.' % (res_name,
+                                                                                                             lock_rec['user'],
+                                                                                                             lock_rec['computer']))
                     # Открыть только для чтения
                     self.readonly = True
                     return res_editor.SetResource(res_name, res_path, res_file, res_ext,
