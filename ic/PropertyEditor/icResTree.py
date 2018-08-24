@@ -2207,10 +2207,17 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 return False
 
             # Сохраняем измененный ресурс
+            f = None
             try:
-                f = open(fileName, 'wb')
+                f = open(fileName, 'wt', encoding=ic.config.DEFAULT_ENCODING)
                 f.write(str(res))
                 f.close()
+            except:
+                log.fatal(u'Ошибка сохранения файла ресурса <%s>' % fileName)
+                if f:
+                    f.close()
+                    f = None
+            try:
                 log.info(u'Переименовать ресурс <%s> в <%s>' % (oldFileName, fileName))
                 self.file = fileName
                 self.res = obj_res
@@ -2239,7 +2246,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 # Убираем ресурс из буфера
                 util.clearResourceBuff()
             except:
-                log.fatal(u'Ошибка создания файла <%s>' % fileName)
+                log.fatal(u'Ошибка переименования файла ресурса <%s>' % fileName)
                 return False
 
         return True

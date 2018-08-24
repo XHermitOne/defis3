@@ -77,20 +77,27 @@ def icCopyFile(FileName_, NewFileName_, Rewrite_=True):
     """
     try:
         # --- Проверка существования файла-источника ---
-        if not os.path.isfile(FileName_):
-            ic_dlg.icWarningBox(u'ОШИБКА', u'Файл <%s> не существует.' % FileName_)
+        if not os.path.exists(FileName_):
+            msg = u'Копирование <%s> -> <%s>. Файл <%s> не существует.' % (FileName_, NewFileName_, FileName_)
+            log.warning(msg)
+            ic_dlg.icWarningBox(u'ОШИБКА', msg)
             return False
+
+        MakeDirs(os.path.dirname(NewFileName_))
+
         # --- Проверка перезаписи уже существуещего файла ---
         # Выводить сообщение что файл уже существует?
         if not Rewrite_:
             # Файл уже существует?
-            if os.path.isfile(NewFileName_):
+            if os.path.exists(NewFileName_):
                 if ic_dlg.icAskDlg(u'КОПИРВАНИЕ',
                                    u'Файл <%s> уже существует. Переписать?' % NewFileName_) == wx.NO:
                     return False
+        else:
+            if os.path.exists(NewFileName_):
+                os.remove(NewFileName_)
 
         # --- Реализация копирования файла ---
-        MakeDirs(os.path.dirname(NewFileName_))
         if os.path.exists(FileName_) and os.path.exists(NewFileName_) and os.path.samefile(FileName_, NewFileName_):
             log.warning(u'Попытка скопировать файл <%s> самого в себя' % FileName_)
         else:

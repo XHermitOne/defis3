@@ -210,7 +210,7 @@ class PrjNode:
         @return: Возвращает указатель узел.
         """
         new_node = self.__class__(self._Parent)
-        new_node.name = self.name+ic_res.getNewID()
+        new_node.name = self.name + ic_res.getNewID()
         new_node.description = self.description
         return new_node
 

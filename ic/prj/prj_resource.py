@@ -14,6 +14,7 @@ import os.path
 from ic.imglib import common as imglib
 from ic.utils import ic_file
 from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import util
 from ic.dlg import ic_dlg
 from ic.log import log
@@ -212,7 +213,7 @@ class PrjResource(prj_node.PrjNode):
             # не создавать ресурс, а вывести сообщение.
             if self.getRoot().prj_res_manager.isResByNameANDType(res_name, res_ext):
                 ic_dlg.icMsgBox(u'ВНИМАНИЕ!', 
-                                u'Ресурс/папка <%s> существует в проекте!' % res_name)
+                                u'Ресурс/папка <%s.%s> существует в проекте!' % (res_name, res_ext))
                 return None
             # Добавить ресурс в ресурс проекта
             self.getRoot().prj_res_manager.addRes(res_name, res_ext, self._Parent.name)
@@ -368,9 +369,14 @@ class PrjResource(prj_node.PrjNode):
         ic_file.icCopyFile(res_file_name, copy_res_file_name)
         # Кроме копирования файла необходимо
         # поменять имя ресурса в этом файле
-        res = ic_res.ReadAndEvalFile(copy_res_file_name)
+        # ВНИМАНИЕ! Здесь нельзя использовать readAndEval,
+        # т.к. эта функция создает *_pkl.* файл.
+        # Работаем только с текстовым представлением
+        res = resfunc.LoadResourceText(copy_res_file_name)
         res[node.name] = res[self.name]
         del res[self.name]
+        # Поменять наименование объекта
+        res[node.name]['name'] = node.name
         copy_res_file = None
         try:
             copy_res_file = open(copy_res_file_name, 'wt')
@@ -379,7 +385,7 @@ class PrjResource(prj_node.PrjNode):
         except:
             if copy_res_file:
                 copy_res_file.close()
-            log.error()
+            log.fatal(u'Ошибка сохранения файла <%s>' % copy_res_file_name)
         return node
         
     def paste(self, Node_):
@@ -390,18 +396,18 @@ class PrjResource(prj_node.PrjNode):
         # Поменять расширение у bak файлов.
         res_file_name = os.path.join(Node_.getResPath(),
                                      Node_.getResFileName()+'.bak')
-        res_pkl_file_name = os.path.join(Node_.getResPath(),
-                                         Node_.getResFileName()+'_pkl.bak')
         to_res_file_name = os.path.join(self.getResPath(),
                                         Node_.getResFileName()+'.'+Node_.typ)
-        to_res_pkl_file_name = os.path.join(self.getResPath(),
-                                            Node_.getResFileName()+'_pkl.'+Node_.typ)
-        
-        ic_file.icCopyFile(res_file_name, to_res_file_name)
-        ic_file.icCopyFile(res_pkl_file_name, to_res_pkl_file_name)
-        
+
+        try:
+            os.rename(res_file_name, to_res_file_name)
+            log.debug(u'Переименование файла <%s> -> <%s>' % (res_file_name, to_res_file_name))
+        except:
+            log.fatal(u'Ошибка переименования файла <%s> -> <%s>' % (res_file_name, to_res_file_name))
+
         # Прописать его в проекте
         self.getRoot().prj_res_manager.addRes(Node_.name, Node_.typ, self._Parent.name)
+        self.getRoot().prj_res_manager.save()
         # Вставить в проект
         return prj_node.PrjNode.paste(self, Node_)
         

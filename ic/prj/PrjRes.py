@@ -270,7 +270,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         """
         if CurFolder_ is None:
             CurFolder_ = self.getPrjRoot()
-        ok=False
+        ok = False
         for folder in CurFolder_:
             folder_name = list(folder.keys())[0]
             # Проверять только папки
