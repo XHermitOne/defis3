@@ -47,7 +47,7 @@ import ic.components.icResourceParser as prs
 from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
 from ic.utils import coderror
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.PropertyEditor import icDefInf
 
 import work_flow.doc_sys.icdocument as parentModule
@@ -232,11 +232,10 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'TABRequisite', 'REFRequisite',
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
+
 
 # Функции редактирования
-
-
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).

@@ -45,7 +45,7 @@ from work_flow.work_sys import persistent
 
 
 # Версия
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 # --- Спецификация ---
 SPC_IC_DOCUMENT = {'type': 'Document',
