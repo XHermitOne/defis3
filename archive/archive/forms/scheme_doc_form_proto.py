@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 from ic.components.user import icsimpleoglviewer
 
 ###########################################################################

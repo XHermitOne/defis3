@@ -72,7 +72,7 @@ class icChoicePrinterDlg(printer_dlg_proto.icChoicePrinterDlgProto):
                 img_idx = self.network_printer_idx
             else:
                 img_idx = self.printer_idx
-            self.printer_listCtrl.InsertImageStringItem(sys.maxint, printer_name, img_idx)
+            self.printer_listCtrl.InsertImageStringItem(sys.maxsize, printer_name, img_idx)
 
         # Выделить принтер по умолчанию
         if default_idx >= 0:

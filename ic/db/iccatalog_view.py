@@ -55,7 +55,7 @@ class BaseCatalogView(object):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated, id=-1)
         
     def OnItemActivated(self, evt):
-        indx = evt.m_itemIndex
+        indx = evt.Index
         item = self.GetObjectAt(indx)
         prnt = cat.get_parent_path(item.path)
         if isinstance(item, BackItem):

@@ -112,6 +112,8 @@ apt show libreoffice-java-common | grep Package
 apt show libreoffice-java-common | grep Version
 sudo apt install --assume-yes libreoffice-java-common
 
+sudo apt --fix-broken install --assume-yes
+
 # В конце отобразим список установленных пакетов
 
 echo

@@ -522,7 +522,7 @@ class icListCtrlManager(object):
                     value = str(value)
 
                 if i == 0:
-                    row_idx = ctrl.InsertStringItem(sys.maxint, value)
+                    row_idx = ctrl.InsertStringItem(sys.maxsize, value)
                 else:
                     ctrl.SetStringItem(row_idx, i, value)
 
@@ -780,7 +780,7 @@ class icListCtrlManager(object):
         @return: Индекс выбранного элемента или -1 если ничего не выбрано.
         """
         if isinstance(obj, wx.ListEvent):
-            return obj.m_itemIndex
+            return obj.Index
         elif isinstance(obj, wx.ListCtrl):
             return obj.GetFirstSelected()
         elif isinstance(obj, wx.dataview.DataViewListCtrl):

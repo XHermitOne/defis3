@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 from NSI.usercomponents import spravtreecomboctrl
 from NSI.usercomponents import spravchoicecomboctrl
 from ic.components.user import icchecklistctrl
@@ -55,7 +55,7 @@ class icEditDocPanelProto ( wx.Panel ):
 		self.m_staticText6.Wrap( -1 )
 		bSizer3.Add( self.m_staticText6, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.doc_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.doc_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		bSizer3.Add( self.doc_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.m_staticText21 = wx.StaticText( self, wx.ID_ANY, u"№ док. контрагента:", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -69,7 +69,7 @@ class icEditDocPanelProto ( wx.Panel ):
 		self.m_staticText61.Wrap( -1 )
 		bSizer3.Add( self.m_staticText61, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.obj_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.obj_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		bSizer3.Add( self.obj_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -372,14 +372,14 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		self.m_staticText27.Wrap( -1 )
 		bSizer20.Add( self.m_staticText27, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.start_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.start_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		bSizer20.Add( self.start_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.m_staticText28 = wx.StaticText( self, wx.ID_ANY, u"-", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText28.Wrap( -1 )
 		bSizer20.Add( self.m_staticText28, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.end_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.end_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		bSizer20.Add( self.end_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		sort_radioBoxChoices = [ u"По номеру документа", u"По наименованию контрагента", u"По дате документа", u"По инвентарному номеру (ОС)" ]
@@ -414,7 +414,7 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		bSizer14.Add( self.doc_count_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer14.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer14.AddSpacer( 5 )
 		
 		self.m_staticText13 = wx.StaticText( self, wx.ID_ANY, u"Сканируемых листов:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText13.Wrap( -1 )
@@ -427,7 +427,7 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		bSizer14.Add( self.page_count_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer14.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer14.AddSpacer( 5 )
 		
 		
 		bSizer12.Add( bSizer14, 0, wx.EXPAND, 5 )
@@ -450,8 +450,8 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		self.tag_choice.Bind( wx.EVT_CHOICE, self.onTagChoice )
 		self.ext_tag_choice.Bind( wx.EVT_CHOICE, self.onTagChoice )
 		self.clear_contragent_bpButton.Bind( wx.EVT_BUTTON, self.onClearContragentButtonClick )
-		self.start_datePicker.Bind( wx.EVT_DATE_CHANGED, self.onStartDateChanged )
-		self.end_datePicker.Bind( wx.EVT_DATE_CHANGED, self.onEndDateChanged )
+		self.start_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onStartDateChanged )
+		self.end_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onEndDateChanged )
 		self.sort_radioBox.Bind( wx.EVT_RADIOBOX, self.onSortRadioBox )
 		self.group_radioBox.Bind( wx.EVT_RADIOBOX, self.onGroupRadioBox )
 	

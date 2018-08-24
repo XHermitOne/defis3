@@ -319,7 +319,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
                 value = str(value)
 
             if i == 0:
-                row_idx = self.doc_card_panel.link_listCtrl.InsertStringItem(sys.maxint, value, i)
+                row_idx = self.doc_card_panel.link_listCtrl.InsertStringItem(sys.maxsize, value, i)
             else:
                 self.doc_card_panel.link_listCtrl.SetStringItem(row_idx, i, value)
 

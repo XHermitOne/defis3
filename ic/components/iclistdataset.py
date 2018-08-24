@@ -320,7 +320,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         self.SetFocus()
         evt.Skip()
         result = True
-        self.currentItem = evt.m_itemIndex
+        self.currentItem = evt.Index
         #   Формируем пространство имен
         self.evalSpace['evt'] = evt
         self.evalSpace['row'] = self.currentItem
@@ -353,7 +353,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         """
         Активация (Enter/DobleClick) строки.
         """
-        currentItem = evt.m_itemIndex
+        currentItem = evt.Index
         rowData = []
         #   Формируем пространство имен
         self.evalSpace['evt'] = evt

@@ -125,7 +125,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
         self.evalSpace['self'] = self
         self.evalSpace['evt'] = event
         self.evalSpace['event'] = event
-        self.evalSpace['CHECK'] = self.IsChecked(event.m_itemIndex) if event else check
+        self.evalSpace['CHECK'] = self.IsChecked(event.Index) if event else check
         self.evalSpace['ITEM'] = self.GetFirstSelected() if index_item is None else index_item
 
         self.eval_attr('on_toggle_item')
@@ -136,7 +136,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
         """
         Обработчик активации элемента списка.
         """
-        self.ToggleItem(event.m_itemIndex)
+        self.ToggleItem(event.Index)
         self.onToggleItem(event)
 
     def OnCheckItem(self, index_item, flag):
@@ -152,7 +152,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
         """
         Обработчик выделения элемента списка.
         """
-        selected_item_idx = event.m_itemIndex if event else self.GetFirstSelected()
+        selected_item_idx = event.Index if event else self.GetFirstSelected()
         self.evalSpace['self'] = self
         self.evalSpace['evt'] = event
         self.evalSpace['event'] = event

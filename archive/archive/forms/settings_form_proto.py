@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 
 ###########################################################################
 ## Class icSettingsDlgProto
@@ -49,7 +49,7 @@ class icSettingsDlgProto ( wx.Dialog ):
 		bSizer3.Fit( self.m_panel2 )
 		self.settings_listbook.AddPage( self.m_panel2, u"Основные", True )
 		settings_listbookBitmap = wx.ArtProvider.GetBitmap( wx.ART_FILE_OPEN, wx.ART_MENU )
-		if ( settings_listbookBitmap.Ok() ):
+		if ( settings_listbookBitmap.IsOk() ):
 			settings_listbookImages.Add( settings_listbookBitmap )
 			self.settings_listbook.SetPageImage( settings_listbookIndex, settings_listbookIndex )
 			settings_listbookIndex += 1

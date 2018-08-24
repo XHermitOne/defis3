@@ -305,7 +305,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
                 value = str(value)
 
             if i == 0:
-                row_idx = self.edit_doc_panel.link_listCtrl.InsertStringItem(sys.maxint, value, i)
+                row_idx = self.edit_doc_panel.link_listCtrl.InsertStringItem(sys.maxsize, value, i)
             else:
                 self.edit_doc_panel.link_listCtrl.SetStringItem(row_idx, i, value)
         

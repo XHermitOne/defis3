@@ -21,7 +21,7 @@ import ic
 from ic.utils import ic_time
 
 # Version
-__version__ = (0, 0, 3, 1)
+__version__ = (0, 1, 1, 1)
 
 
 DEFAULT_DATE_FMT = '%Y.%m.%d'
@@ -289,7 +289,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
         """
         self.docs_listCtrl.DeleteAllItems()
         for record in self.documents:
-            row_idx = self.docs_listCtrl.InsertStringItem(sys.maxint, record.get('n_doc', u''))
+            row_idx = self.docs_listCtrl.InsertStringItem(sys.maxsize, record.get('n_doc', u''))
             
             str_doc_date = record['doc_date'].strftime(DEFAULT_DATE_FMT) if record.get('doc_date', None) else u''
             self.docs_listCtrl.SetStringItem(row_idx, 1, str_doc_date)
@@ -302,11 +302,11 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
             self.docs_listCtrl.SetStringItem(row_idx, 4, record.get('doc_name', u''))
             
             description = record.get('description', u'')
-            description = description if type(description) in (str, unicode) else u''
+            description = description if isinstance(description, str) else u''
             self.docs_listCtrl.SetStringItem(row_idx, 5, description)
             
             comment = record.get('comment', u'')
-            comment = comment if type(comment) in (str, unicode) else u''
+            comment = comment if isinstance(comment, str) else u''
             self.docs_listCtrl.SetStringItem(row_idx, 6, comment)
 
     def onViewToolClicked(self, event):

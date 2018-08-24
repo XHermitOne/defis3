@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 from NSI.usercomponents import spravtreecomboctrl
 from NSI.usercomponents import spravchoicecomboctrl
 
@@ -54,7 +54,7 @@ class icNewDocPanelProto ( wx.Panel ):
 		self.m_staticText6.Wrap( -1 )
 		bSizer3.Add( self.m_staticText6, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.doc_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.doc_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		bSizer3.Add( self.doc_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -73,7 +73,7 @@ class icNewDocPanelProto ( wx.Panel ):
 		self.m_staticText61.Wrap( -1 )
 		bSizer31.Add( self.m_staticText61, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.obj_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.obj_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		bSizer31.Add( self.obj_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -390,14 +390,14 @@ class icCorrectFilterDlgProto ( wx.Dialog ):
 		self.m_staticText10.Wrap( -1 )
 		bSizer13.Add( self.m_staticText10, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.begin_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.begin_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		bSizer13.Add( self.begin_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.m_staticText11 = wx.StaticText( self, wx.ID_ANY, u"Конечная дата создания документа:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText11.Wrap( -1 )
 		bSizer13.Add( self.m_staticText11, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.end_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.end_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		bSizer13.Add( self.end_datePicker, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -425,8 +425,8 @@ class icCorrectFilterDlgProto ( wx.Dialog ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.begin_datePicker.Bind( wx.EVT_DATE_CHANGED, self.onBeginDateChanged )
-		self.end_datePicker.Bind( wx.EVT_DATE_CHANGED, self.onEndDateChanged )
+		self.begin_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onBeginDateChanged )
+		self.end_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onEndDateChanged )
 		self.cancel_button.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
 		self.ok_button.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
 	

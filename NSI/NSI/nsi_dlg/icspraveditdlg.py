@@ -426,7 +426,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
             value = [line.strip() for line in value.split(u'\n')][0]
 
             if i == 0:
-                list_item = self.recs_listCtrl.InsertStringItem(sys.maxint, value, i)
+                list_item = self.recs_listCtrl.InsertStringItem(sys.maxsize, value, i)
                 self._list_ctrl_dataset.append(record)
             else:
                 self.recs_listCtrl.SetStringItem(list_item, i, value)                    

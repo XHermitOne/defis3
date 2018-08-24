@@ -174,7 +174,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
             if i_string:
                 self.SetStringItem(index, i_string, str(cell_str))
             else:
-                index = self.InsertStringItem(sys.maxint, str(cell_str))
+                index = self.InsertStringItem(sys.maxsize, str(cell_str))
         return index
 
     def getStringsByCol(self, *Columns_):
@@ -269,7 +269,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
         """
         Обрабатываем выбор строки списка.
         """
-        self.currentItem = evt.m_itemIndex
+        self.currentItem = evt.Index
         self.evalSpace['evt'] = evt
         self.evalSpace[self.name+'_currentItem'] = self.currentItem
         self.eval_attr('selected')

@@ -147,7 +147,7 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
                 code = record[0]
                 name = record[1]
 
-                index = self.sprav_list_ctrl.InsertStringItem(sys.maxint, code)
+                index = self.sprav_list_ctrl.InsertStringItem(sys.maxsize, code)
                 self.sprav_list_ctrl.SetStringItem(index, 1, name)
             self.sprav_list_ctrl.SetColumnWidth(0, wx.LIST_AUTOSIZE)
             self.sprav_list_ctrl.SetColumnWidth(1, wx.LIST_AUTOSIZE)
@@ -217,7 +217,7 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
         """
         Обработчик двойного клика на элементе списка.
         """
-        current_item = event.m_itemIndex
+        current_item = event.Index
         self.setSelectedCode(self.sprav_list_ctrl.GetItemText(current_item))
         dataset = self._sprav.getStorage().getLevelTable(self._selected_code)
         if dataset:
@@ -230,7 +230,7 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
         """
         Обработчик выбора элемента списка.
         """
-        current_item = event.m_itemIndex
+        current_item = event.Index
         self.setSelectedCode(self.sprav_list_ctrl.GetItemText(current_item))
         event.Skip()
 
