@@ -110,11 +110,34 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             log.fatal(u'Ошибка получения ведомый контрол списка для отображения списка документов')
         return None
 
+    def setSlaveListCtrlByPsp(self, list_ctrl_psp=None):
+        """
+        Установить ведомый контрол списка для отображения списка документов по его паспорту.
+        @param list_ctrl_psp: Паспорт контрола списка для отображения списка документов.
+        """
+        if not list_ctrl_psp:
+            log.warning(u'Не определен паспорт контрола списка для отображения списка документов')
+            return
+
+        try:
+            kernel = ic_user.getKernel()
+            if kernel:
+                list_ctrl = kernel.Create(list_ctrl_psp)
+                self.setSlaveListCtrl(list_ctrl)
+            else:
+                log.error(u'Не определен объект ядра для создания объекта %s' % list_ctrl_psp)
+        except:
+            log.fatal(u'Ошибка установки контрола списка %s для управления им' % list_ctrl_psp)
+
     def setSlaveDocumentByPsp(self, document_psp):
         """
         Установить ведомый объект документа для управления им по его паспорту.
         @param document_psp: Паспорт объекта документа.
         """
+        if not document_psp:
+            log.warning(u'Не определен паспорт ведомого документа для менеджера навигации')
+            return
+
         try:
             kernel = ic_user.getKernel()
             if kernel:

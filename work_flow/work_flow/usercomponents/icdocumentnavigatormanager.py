@@ -98,13 +98,22 @@ ic_class_spc = dict({'type': 'DocumentNavigatorManager',
                      'activate': True,
                      'init_expr': None,
                      '_uuid': None,
+
+                     'document': None,
+                     'list_ctrl': None,
+                     'columns': None,
+
                      '__attr_types__': {0: ['name', 'type'],
                                         icDefInf.EDT_TEXTFIELD: ['description'],
-                                        icDefInf.EDT_USER_PROPERTY: [],
+                                        icDefInf.EDT_USER_PROPERTY: ['document', 'list_ctrl'],
+                                        icDefInf.EDT_PY_SCRIPT: ['columns'],
                                         },
                      '__events__': {},
                      '__parent__': parentModule.SPC_IC_DOCUMENT_NAVIGATOR_MANAGER,
-                     '__attr_hlp__': {},
+                     '__attr_hlp__': {'document': u'Документ, обрабатываемый менеджером',
+                                      'list_ctrl': u'Объект спискового контрола для отображения списка документов',
+                                      'columns': u'Список колонок спискового контрола'
+                                      },
                      })
 
 ic_class_spc['__styles__'] = ic_class_styles
@@ -135,7 +144,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
     """
     ret = None
-    if attr in ('db', ):
+    if attr in ('document', 'list_ctrl'):
         ret = pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
 
     if ret is None:
@@ -148,13 +157,12 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     Стандартная функция контроля.
     """
-    if attr in ('db',):
+    if attr in ('document',):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
-            # parent = propEdt.GetPropertyGrid().GetView()
             parent = propEdt
-            if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+            if not ret[0][0] in ('Document', 'NodeDocument'):
+                ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является документом.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         else:
@@ -162,13 +170,21 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt
             ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
                             u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
+    elif attr in ('list_ctrl',):
+        ret = str_to_val_user_property(attr, value, propEdt)
+        if ret:
+            parent = propEdt
+            if not ret[0][0] in ('ListCtrl', 'Grid'):
+                ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является списковым контролом', parent)
+                return coderror.IC_CTRL_FAILED_IGNORE
+            return coderror.IC_CTRL_OK
 
 
 def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     """
     Стандартная функция преобразования текста в значение.
     """
-    if attr in ('db', ):
+    if attr in ('document', 'list_ctrl'):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
@@ -223,6 +239,27 @@ class icDocumentNavigatorManager(icwidget.icSimple,
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
 
+        # Инициализация документа
+        doc_psp = self.getDocumentPsp()
+        if doc_psp:
+            self.setSlaveDocumentByPsp(doc_psp)
+        else:
+            log.warning(u'Не определен паспорт ведомого документа для менеджера навигации <%s>' % self.getName())
+
+        # Инициализация контрола списка
+        list_ctrl_psp = self.getListCtrlPsp()
+        if list_ctrl_psp:
+            self.setSlaveListCtrlByPsp(list_ctrl_psp)
+        else:
+            log.warning(u'Не определен паспорт ведомого контрола списка для менеджера навигации <%s>' % self.getName())
+
+        # Инициализация колонок
+        columns = self.getColumns()
+        if columns and (isinstance(columns, list) or isinstance(columns, tuple)):
+            self.setDocListCtrlColumns(*columns)
+        else:
+            log.warning(u'Не определен список колонок ведомого контрола списка для менеджера навигации <%s>' % self.getName())
+
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
@@ -230,3 +267,20 @@ class icDocumentNavigatorManager(icwidget.icSimple,
         return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
                                     bCounter=bCounter, progressDlg=progressDlg)
 
+    def getDocumentPsp(self):
+        """
+        Паспорт управляемого документа.
+        """
+        return self.getICAttr('document')
+
+    def getListCtrlPsp(self):
+        """
+        Паспорт управляемого контрола списка.
+        """
+        return self.getICAttr('list_ctrl')
+
+    def getColumns(self):
+        """
+        Список описания колонок.
+        """
+        return self.getICAttr('columns')
