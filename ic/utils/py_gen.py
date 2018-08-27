@@ -127,6 +127,7 @@ def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
         можно затереть изменения в файлах.
     @return: Имя результирующего файла или None, если произошла ошибка генерации.  
     """
+    log.debug(u'Запуск генерации Python модуля <%s> по <%s>' % (output_filename, wxFB_module_filename))
     if not os.path.exists(wxFB_module_filename):
         log.warning(u'Генерация Python модуля. Файл <%s> не существует' % wxFB_module_filename)
         return None
@@ -175,14 +176,17 @@ def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
             src_class = getattr(fb_module, src_class_name)
 
             src_class_methods = [getattr(src_class, var_name) for var_name in dir(src_class)]
-            src_class_events = [method for method in src_class_methods if inspect.ismethod(method) and
+            src_class_events = [method for method in src_class_methods if inspect.isfunction(method) and
                                 method.__name__ != '__init__' and
-                                'event' in method.func_code.co_varnames and
-                                method.func_code.co_argcount == 2]
+                                'event' in method.__code__.co_varnames and
+                                method.__code__.co_argcount == 2]
+            # log.debug(u'События класса: %s' % str(src_class_events))
             # Способ получения исходного кода из объекта функции-+
             #                                                    v
             body_functions = u'\n'.join([u'\n'.join(inspect.getsourcelines(class_method)[0]) for class_method in src_class_events])
             body_functions = body_functions.replace(u'\t', u'    ').replace(u'( ', u'(').replace(u' )', u')')
+            log.debug(u'Добавленны функции в класс:')
+            log.debug(body_functions)
 
             # Функция вызова формы
             frm_body_function = u''
