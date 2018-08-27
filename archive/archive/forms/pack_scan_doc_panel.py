@@ -17,7 +17,9 @@ from ic.log import log
 from ic.dlg import std_dlg
 from ic.dlg import ic_dlg
 from ic.dlg import quick_entry_panel
+
 from . import group_manipulation_dlg
+from . import new_doc_panel
 
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
@@ -37,7 +39,8 @@ class icQuickEntryPackScanPanel(edit_doc_form_proto.icQuickEntryPackScanPanelPro
 
 
 class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
-                         form_manager.icFormManager):
+                         form_manager.icFormManager,
+                         new_doc_panel.icDocCardPanelManager):
     """
     Форма пакетной обработки документов.
     """
@@ -91,21 +94,35 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                                         (u'Наименование', 150),
                                         ('Контрагент', 500)))
 
+    def getScanDocCount(self):
+        """
+        Определить количество сканируемых документов.
+        """
+        check_idx_list = self.getCheckedItems_list_ctrl(ctrl=self.docs_listCtrl)
+        return len(check_idx_list)
+
+    def getScanPageCount(self):
+        """
+        Определить количество сканируемых страниц.
+        """
+        check_idx_list = self.getCheckedItems_list_ctrl(ctrl=self.docs_listCtrl)
+        dataset = self.doc_navigator.getDocDataset()
+        scan_pages = [dataset[idx].get('n_scan_pages', 0) for idx in check_idx_list]
+        return sum(scan_pages)
+
     def onArchiveToolClicked(self, event):
         """
         Обработчик передачи пакета в архив.
         """
         doc_indexes = self.getCheckedItems_list_ctrl(self.docs_listCtrl)
         if doc_indexes:
-            doc = ic.metadata.archive.mtd.scan_document_pack.create()
             archive_doc = ic.metadata.archive.mtd.scan_document.create()
             pack_result = True
             for doc_idx in doc_indexes:
-                doc_uuid = self.documents[doc_idx]['uuid']
-                doc.load_obj(doc_uuid)
+                doc = self.doc_navigator.getSlaveDocument(index=doc_idx)
                 scan_filename = doc.getRequisiteValue('file_name')
                 if scan_filename and os.path.exists(scan_filename):
-                    result = doc.remove_to(archive_doc, doc_uuid=doc_uuid,
+                    result = doc.remove_to(archive_doc, doc_uuid=doc.getUUID(),
                                            requisite_replace={'scan_doc_to': 'scan_doc_pack_to',
                                                               'scan_doc_from': 'scan_doc_pack_from'})
                     if not result:
@@ -114,8 +131,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
                     pack_result = pack_result and result
                 else:
-                    msg = u'Файл скана отсутствует в карточке документа <%s>. Перенос не выполнен' % doc.getRequisiteValue(
-                        'n_doc')
+                    n_doc = doc.getRequisiteValue('n_doc')
+                    msg = u'Файл скана отсутствует в карточке документа <%s>. Перенос не выполнен' % n_doc
                     log.warning(msg)
                     ic_dlg.icWarningBox(u'ВНИМАНИЕ', msg)
                     pack_result = False
@@ -156,9 +173,9 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 is_duplex = value.get('is_duplex', None)
                 is_duplex = bool(is_duplex) if is_duplex else False
 
-                doc = ic.metadata.THIS.mtd.scan_document_pack.create()
                 for i in range(n_begin, n_end + 1):
-                    doc_uuid = self.documents[i]['uuid']
+                    doc = self.doc_navigator.getSlaveDocument(index=i)
+                    doc_uuid = doc.getUUID()
                     self._set_doc_pages_and_duplex(i, doc, doc_uuid,
                                                    n_pages, is_duplex)
 
@@ -184,10 +201,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         """
         idx = self.getItemSelectedIdx(self.docs_listCtrl)
         if idx != -1:
-            document = self.documents[idx]
-            doc_uuid = document['uuid']
-            doc = ic.metadata.THIS.mtd.scan_document_pack.create()
-            doc.load_obj(doc_uuid)
+            document = self.doc_navigator.getSlaveDocument(index=idx)
             n_pages = std_dlg.getIntegerDlg(self, u'СКАНИРОВАНИЕ',
                                             u'Укажите количество страниц документа',
                                             1, 500)
@@ -195,13 +209,13 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                                                   u'Сканирование листа с 2-ч сторон?',
                                                   choices=(u'НЕТ', u'ДА'))
             if n_pages:
-                doc.setRequisiteValue('n_scan_pages', n_pages)
+                document.setRequisiteValue('n_scan_pages', n_pages)
 
             if is_duplex is not None:
-                doc.setRequisiteValue('is_duplex', is_duplex)
+                document.setRequisiteValue('is_duplex', is_duplex)
 
             if n_pages or is_duplex is not None:
-                doc.save_obj()
+                document.save_obj()
                 self.doc_navigator.refreshtDocListCtrlRows()
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
@@ -235,19 +249,18 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         scan_manager = ic.getScanManager()
         check_idx_list = self.getCheckedItems_list_ctrl(ctrl=self.docs_listCtrl)
         log.debug(u'Список индексов сканированных документов в пакете %s' % check_idx_list)
+        dataset = self.doc_navigator.getDocDataset()
         # ВНИМАНИЕ! У нас указываются листы. Если указывается дуплекс, то
         # количество страниц увеличивается в 2 раза
         scan_filenames = [(os.path.join(scan_manager.getScanPath(), 'scan%04d.pdf' % i),
-                           int(self.documents[item_idx]['n_scan_pages']) * (
-                               2 if bool(self.documents[item_idx]['is_duplex']) else 1),
-                           bool(self.documents[item_idx]['is_duplex'])) for i, item_idx in enumerate(check_idx_list)]
+                           int(dataset[item_idx]['n_scan_pages']) * (
+                               2 if bool(dataset[item_idx]['is_duplex']) else 1),
+                           bool(dataset[item_idx]['is_duplex'])) for i, item_idx in enumerate(check_idx_list)]
         scan_result = scan_manager.do_scan_pack(*scan_filenames)
         if not scan_result:
             event.Skip()
             log.warning(u'Ошибка сканирования пакета документов')
             return
-
-        doc = ic.metadata.archive.mtd.scan_document_pack.create()
 
         if check_idx_list:
             for i, item_idx in enumerate(check_idx_list):
@@ -255,15 +268,14 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 if not os.path.exists(scan_filename):
                     log.warning(u'Файл скана <%s> не найден' % scan_filename)
                     continue
-                doc_uuid = self.documents[item_idx]['uuid']
-                doc.load_obj(doc_uuid)
-                result = self.put_doc_catalog(doc, scan_filename)
+                document = self.doc_navigator.getSlaveDocument(index=item_idx)
+                result = self.put_doc_catalog(document, scan_filename)
                 if result:
-                    doc.save_obj()
+                    document.save_obj()
 
             ic_dlg.icMsgBox(u'СКАНИРОВАНИЕ',
                             u'Сканирование пакета документов завершено успешно')
-            self.refreshDocList()
+            self.doc_navigator.refreshtDocListCtrlRows()
 
         event.Skip()
 
@@ -280,29 +292,27 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
         event.Skip()
 
+    def _viewDoc(self, document):
+        """
+        Просмотр документа.
+        @param document: Объект документа.
+        @return:
+        """
+        doc_filename = document.getRequisiteValue('file_name')
+        if doc_filename and os.path.exists(doc_filename):
+            self.viewDocFile(doc_filename)
+        else:
+            if doc_filename:
+                ic_dlg.icWarningBox(u'ВНИМАНИЕ!',
+                                    u'Не найден файл скана <%s> документа для просмотра' % doc_filename)
+            else:
+                ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Отсутствует файл скана документа')
+
     def onViewToolClicked(self, event):
         """
         Обработчик просмотра документа.
         """
-        idx = self.docs_listCtrl.GetFirstSelected()
-        if idx != -1:
-            document = self.documents[idx]
-            doc_uuid = document['uuid']
-            doc = ic.metadata.THIS.mtd.scan_document_pack.create()
-            doc.load_obj(doc_uuid)
-            log.debug(u'Просмотр документа UUID <%s>' % doc_uuid)
-            doc_filename = doc.getRequisiteValue('file_name')
-            if doc_filename and os.path.exists(doc_filename):
-                self.viewDocFile(doc_filename)
-            else:
-                if doc_filename:
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ!',
-                                        u'Не найден файл скана <%s> документа для просмотра' % doc_filename)
-                else:
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Отсутствует файл скана документа')
-        else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
-
+        self.doc_navigator.viewDocument(view_form_method=self._viewDoc)
         event.Skip()
 
     def _show_quick_entry_dlg(self, item_idx):
@@ -310,8 +320,9 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         Отобразить окно быстрого ввода.
         @param item_idx: Индекс выбранного элемента.
         """
+        dataset = self.doc_navigator.getDocDataset()
         # Получить текущую запись
-        doc_rec = self.documents[item_idx]
+        doc_rec = dataset[item_idx]
         # Подготовить данные для редактирования
         values = dict(docname_staticText=u'%d. %s' % (item_idx + 1, doc_rec['doc_name']),
                       ndoc_staticText=doc_rec['n_doc'],
@@ -354,7 +365,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         @param is_duplex: Признак дуплекса.
         """
         if doc is None:
-            doc = ic.metadata.THIS.mtd.scan_document_pack.create()
+            doc = self.doc_navigator.getSlaveDocument()
 
         if doc_uuid is None:
             doc_uuid = doc.getUUID()
@@ -364,11 +375,12 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                        n_scan_pages=int(n_scan_pages),
                        is_duplex=int(is_duplex))
 
+        dataset = self.doc_navigator.getDocDataset()
         # Обновить только одну строку списка
-        self.documents[item_idx]['n_scan_pages'] = int(n_scan_pages)
-        self.documents[item_idx]['is_duplex'] = int(is_duplex)
+        dataset[item_idx]['n_scan_pages'] = int(n_scan_pages)
+        dataset[item_idx]['is_duplex'] = int(is_duplex)
 
-        rec = self.documents[item_idx]
+        rec = dataset[item_idx]
 
         row = (item_idx + 1, rec['n_scan_pages'],
                u'+' if rec['is_duplex'] else u'',

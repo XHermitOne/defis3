@@ -156,16 +156,60 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         setattr(self, DOC_NAVIGATOR_SLAVE_LIST_CTRL_NAME, document)
 
-    def getSlaveDocument(self):
+    def _getDocIndex(self, UUID=None, index=None):
+        """
+        Определить индекс в датасете документа по UUID или по индексу в dataset.
+        @param UUID: UUID документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @return: ИНдекс объект документа.
+        """
+        # Определение индекса документа
+        idx = -1
+        if UUID:
+            uuids = [doc.get('uuid', None) for doc in dataset]
+            try:
+                idx = uuids.index(UUID)
+            except:
+                log.error(u'UUID документа <%s> не найден' % UUID)
+        elif index:
+            idx = index
+        else:
+            # Текущий выбранный элемент
+            list_ctrl = self.getSlaveListCtrl()
+            idx = self.getItemSelectedIdx(list_ctrl)
+        return idx
+
+    def getSlaveDocument(self, UUID=None, index=None):
         """
         Получить ведомый объект документа для управления им.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
         @return: Объект документа.
         """
+        document = None
         try:
-            return getattr(self, DOC_NAVIGATOR_SLAVE_LIST_CTRL_NAME)
+            document = getattr(self, DOC_NAVIGATOR_SLAVE_LIST_CTRL_NAME)
         except:
             log.fatal(u'Ошибка получения ведомый объект документа для управления им')
-        return None
+
+        dataset = self.getDocDataset()
+
+        # Определение индекса документа
+        idx = self._getDocIndex(UUID=UUID, index=index)
+
+        if idx != -1:
+            doc_requisites = dataset[idx]
+            if document:
+                doc_uuid = doc_requisites.get('uuid', None)
+                if doc_uuid:
+                    document.load_obj(doc_uuid)
+
+        return document
 
     def updateDocDataset(self, ext_filter=None):
         """
@@ -193,6 +237,20 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         except:
             log.fatal(u'Ошибка получения текущего заполненного списка документов')
         return list()
+
+    def setDocDatasetRecord(self, index, doc_requisites):
+        """
+        Установить запись в датасете по индексу.
+        @param index: Индекс записи в датасете.
+        @param doc_requisites: Сохраняемый словарь значений реквизитов документа.
+        @return: Обновленный список dataset.
+        """
+        dataset = self.getDocDataset()
+        if index >= len(dataset):
+            dataset.append(doc_requisites)
+        else:
+            dataset[index] = doc_requisites
+        return dataset
 
     def setDocListCtrlColumns(self, *columns):
         """
@@ -284,7 +342,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     # --- Функции оперирования документом ---
     def viewDocument(self, UUID=None, index=None, view_form_method=None):
         """
-        пПросмотр документа.
+        Просмотр документа.
         Документ может задаваться по UUID или по индексу в dataset.
         @param UUID: UUID редактируемого документа.
         @param index: Индекс документа в dataset.
@@ -295,33 +353,14 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             Если не определен, то вызывается document.View().
         @return: True/False
         """
-        dataset = self.getDocDataset()
-
-        # Определение индекса документа
-        if UUID:
-            uuids = [doc.get('uuid', None) for doc in dataset]
-            try:
-                idx = uuids.index(UUID)
-            except:
-                log.error(u'UUID документа <%s> не найден' % UUID)
-                return False
-        elif index:
-            idx = index
-        else:
-            list_ctrl = self.getSlaveListCtrl()
-            idx = self.getItemSelectedIdx(list_ctrl)
-
-        if idx != -1:
-            document = dataset[idx]
-            doc_uuid = document['uuid']
-            doc = self.getSlaveDocument()
-            doc.load_obj(doc_uuid)
-            log.debug(u'Просмотр документа UUID <%s>' % doc_uuid)
+        document = self.getSlaveDocument(UUID=UUID, index=index)
+        if document:
+            log.debug(u'Просмотр документа UUID <%s>' % document.getUUID())
 
             if view_form_method:
-                result = view_form_method(doc)
+                result = view_form_method(document)
             else:
-                result = doc.View()
+                result = document.View()
             return result
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
@@ -340,43 +379,50 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             Если не определен, то вызывается document.Edit().
         @return: True/False
         """
-        dataset = self.getDocDataset()
-
-        # Определение индекса документа
-        if UUID:
-            uuids = [doc.get('uuid', None) for doc in dataset]
-            try:
-                idx = uuids.index(UUID)
-            except:
-                log.error(u'UUID документа <%s> не найден' % UUID)
-                return False
-        elif index:
-            idx = index
-        else:
-            list_ctrl = self.getSlaveListCtrl()
-            idx = self.getItemSelectedIdx(list_ctrl)
-
-        if idx != -1:
-            document = dataset[idx]
-            doc_uuid = document['uuid']
-            doc = self.getSlaveDocument()
-            doc.load_obj(doc_uuid)
-            log.debug(u'Редактирование документа UUID <%s>' % doc_uuid)
+        document = self.getSlaveDocument(UUID=UUID, index=index)
+        if document:
+            log.debug(u'Редактирование документа UUID <%s>' % document.getUUID())
 
             if edit_form_method:
-                result = edit_form_method(doc)
+                result = edit_form_method(document)
             else:
-                result = doc.Edit()
+                result = document.Edit()
 
             if result:
-                doc.save_obj()
+                document.save_obj()
+                # Определение индекса документа
+                idx = self._getDocIndex(UUID=UUID, index=index)
                 # Обновить выделенный документ после радактирования
-                dataset[idx] = doc.getRequisiteData()
+                self.setDocDatasetRecord(index=idx, doc_requisites=document.getRequisiteData())
                 # Обновить список документов если нормально отредактировали документ
                 self.refreshtDocListCtrlRows()
             return result
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
         return False
+
+    def sumDocument(self, doc_requisite):
+        """
+        Выполнить суммирование по реквизиту всех документов списка.
+        @param doc_requisite: Имя реквизита, по которому производится суммирование.
+        @return: Расчетная сумма.
+        """
+        dataset = self.getDocDataset()
+        result_sum = 0.0
+        try:
+            requisite_values = [doc_requisites.get(doc_requisite, 0.0) for doc_requisites in dataset]
+            requisite_values = [value if isinstance(value, int) or isinstance(value, float) else float(value) for value in requisite_values]
+            result_sum = sum(requisite_values)
+        except:
+            log.fatal(u'Ошибка суммирования по реквизиту <%s> всех документов списка' % doc_requisite)
+        return result_sum
+
+    def countDocument(self):
+        """
+        Выполнить подсчет количества всех документов списка.
+        @return: Расчетное количество.
+        """
+        dataset = self.getDocDataset()
+        return len(dataset)
 
     # --- Дополнительные функции ---
