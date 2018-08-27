@@ -15,13 +15,13 @@ next - Переход на следующий документ в списке
 move_to - Перемещение документа по индексу в списке
 move_up - Перемещение документа вверх по списку
 move_down - Перемещение документа вниз по списку
+find - Поиск документа в списке документов, начиная с текущего
+filter - Применить фильтр к списку документов
 sort - Сортировка списка документов в заданной последовательности
 reverse - Обратная сортировка списка документов в заданной последовательности
-find - Поиск документа в списке документов, начиная с текущего
 copy - Получить копию текущего документа в Clipboard
 paste - Вставить копию документа в список из Clipboard'а
 clone - Клонировать документ через Clipboard, но с другим UUID
-filter - Применить фильтр к списку документов
 
 Функции оперирования документом:
 view - Режим просмотра текущего документа
@@ -182,7 +182,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             idx = self.getItemSelectedIdx(list_ctrl)
         return idx
 
-    def getSlaveDocument(self, UUID=None, index=None):
+    def getSlaveDocument(self, UUID=None, index=None, bLoad=False):
         """
         Получить ведомый объект документа для управления им.
         Документ может задаваться по UUID или по индексу в dataset.
@@ -190,6 +190,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         @param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
+        @param bLoad: Загрузить реквизиты документа из БД?
         @return: Объект документа.
         """
         document = None
@@ -208,7 +209,12 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             if document:
                 doc_uuid = doc_requisites.get('uuid', None)
                 if doc_uuid:
-                    document.load_obj(doc_uuid)
+                    if bLoad:
+                        # Загружаем из БД
+                        document.load_obj(doc_uuid)
+                    else:
+                        # Просто берем из буфера
+                        document.setRequisiteData(doc_requisites)
 
         return document
 
@@ -425,6 +431,97 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         last_idx = self.getItemCount(self.getSlaveListCtrl()) - 1
         idx = last_idx if idx > last_idx else idx
         self.selectItem(index=idx)
+
+    def moveTo(self, fromUUID=None, fromIndex=None, toIndex=None, bRefresh=True):
+        """
+        Перемещение документа с индекса fromindex на индекс toIndex в списке документов.
+        @param fromUUID: UUID перемещаемого документа если необходимо.
+        @param fromIndex: Индекс перемещаемого документа в списке документов.
+        @param toIndex: Новый индекс документа.
+        @param bRefresh: Сделать автоматическое обновление.
+        @return: Новый индекс документа.
+        """
+        dataset = self.getDocDataset()
+        from_idx = self._getDocIndex(UUID=fromUUID, index=fromIndex)
+        last_idx = self.getItemCount(self.getSlaveListCtrl()) - 1
+
+        if isinstance(toIndex, int) and 0 <= toIndex <= last_idx:
+            dataset[toIndex] = dataset[from_idx]
+            del dataset[fromIndex]
+            if bRefresh:
+                self.refreshtDocListCtrlRows()
+
+    def moveDown(self, fromUUID=None, fromIndex=None, stepIndex=1, bRefresh=True):
+        """
+        Перемещение документа с индекса fromindex на stepIndex ниже в списке документов.
+        @param fromUUID: UUID перемещаемого документа если необходимо.
+        @param fromIndex: Индекс перемещаемого документа в списке документов.
+        @param stepIndex: Шаг индекса. На сколько сделать перемещение.
+        @param bRefresh: Сделать автоматическое обновление.
+        @return: Новый индекс документа.
+        """
+        dataset = self.getDocDataset()
+        from_idx = self._getDocIndex(UUID=fromUUID, index=fromIndex)
+        last_idx = self.getItemCount(self.getSlaveListCtrl()) - 1
+        to_idx = max(min(from_idx - stepIndex, last_idx), 0)
+
+        dataset[to_idx] = dataset[from_idx]
+        del dataset[fromIndex]
+
+        if bRefresh:
+            self.refreshtDocListCtrlRows()
+
+    def moveUp(self, fromUUID=None, fromIndex=None, stepIndex=1, bRefresh=True):
+        """
+        Перемещение документа с индекса fromindex на stepIndex выше в списке документов.
+        @param fromUUID: UUID перемещаемого документа если необходимо.
+        @param fromIndex: Индекс перемещаемого документа в списке документов.
+        @param stepIndex: Шаг индекса. На сколько сделать перемещение.
+        @param bRefresh: Сделать автоматическое обновление?
+        @return: Новый индекс документа.
+        """
+        dataset = self.getDocDataset()
+        from_idx = self._getDocIndex(UUID=fromUUID, index=fromIndex)
+        last_idx = self.getItemCount(self.getSlaveListCtrl()) - 1
+        to_idx = max(min(from_idx + stepIndex, last_idx), 0)
+
+        dataset[to_idx] = dataset[from_idx]
+        del dataset[fromIndex]
+
+        if bRefresh:
+            self.refreshtDocListCtrlRows()
+
+    def findDoc(self, requisite=None, value=None, fromUUID=None, fromIndex=None, bSelect=True):
+        """
+        Поиск документа по значению реквизита начиная с текущего.
+        @param requisite: Имя реквизита по которому надо производить поиск.
+        @param value: Искомое значение.
+        @param fromUUID: UUID текущего документа если необходимо.
+        @param fromIndex: Индекс текущего документа в списке документов.
+        @param bSelect: Автоматически выделить искомый документ в списке?
+        @return: Индекс искомого документа или -1, если не найден документ.
+        """
+        from_idx = self._getDocIndex(UUID=fromUUID, index=fromIndex)
+        last_idx = self.getItemCount(self.getSlaveListCtrl()) - 1
+        for idx in range(from_idx, last_idx):
+            document = self.getSlaveDocument(index=idx)
+            requisite_value = document.getRequisiteValue(requisite)
+            if isinstance(requisite_value, str):
+                # Проверка на вхождение подстроки в строку
+                if str(value) in requisite_value:
+                    if bSelect:
+                        self.selectItem_list_ctrl(self.getSlaveListCtrl(), item_idx=idx)
+                    return idx
+            else:
+                # Проверка на точное совпадение
+                if value == requisite_value:
+                    if bSelect:
+                        self.selectItem_list_ctrl(self.getSlaveListCtrl(), item_idx=idx)
+                    return idx
+        # Ничего не найдено
+        if ic_dlg.icAskBox(u'ПОИСК', u'Документ не найден в списке. Начать поиск с начала?'):
+            return self.findDoc(requisite, value, fromIndex=0, bSelect=bSelect)
+        return -1
 
     # --- Функции оперирования документом ---
     def viewDocument(self, UUID=None, index=None, view_form_method=None):
