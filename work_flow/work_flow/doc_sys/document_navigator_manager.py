@@ -363,6 +363,68 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                                   oddBackgroundColour=wx.LIGHT_GREY)
 
     # --- Функции движения ---
+    def selectItem(self, UUID=None, index=None):
+        """
+        Передвинуть фокус к ...
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID редактируемого документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @return: Новый индекс.
+        """
+        idx = self._getDocIndex(UUID=UUID, index=index)
+        if idx > -1:
+            list_ctrl = self.getSlaveListCtrl()
+            if list_ctrl:
+                self.selectItem_list_ctrl(ctrl=list_ctrl, item_idx=idx)
+            else:
+                log.warning(u'Не определен контрол списка манеджера навигации документов')
+        return idx
+
+    def selectFirst(self):
+        """
+        Передвинуть фокус на первый элемент списка.
+        """
+        return self.selectItem(index=0)
+
+    def selectLast(self):
+        """
+        Передвинуть фокус на последний элемент списка.
+        """
+        last_idx = self.getItemCount(self.getSlaveListCtrl()) - 1
+        return self.selectItem(index=last_idx)
+
+    def selectPrev(self, UUID=None, index=None):
+        """
+        Передвинуть фокус на предыдущий элемент списка.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID редактируемого документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @return: Новый индекс.
+        """
+        idx = self._getDocIndex(UUID=UUID, index=index)
+        idx -= 1
+        idx = 0 if idx < 0 else idx
+        self.selectItem(index=idx)
+
+    def selectNext(self, UUID=None, index=None):
+        """
+        Передвинуть фокус на следующий элемент списка.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID редактируемого документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @return: Новый индекс.
+        """
+        idx = self._getDocIndex(UUID=UUID, index=index)
+        idx += 1
+        last_idx = self.getItemCount(self.getSlaveListCtrl()) - 1
+        idx = last_idx if idx > last_idx else idx
+        self.selectItem(index=idx)
 
     # --- Функции оперирования документом ---
     def viewDocument(self, UUID=None, index=None, view_form_method=None):
