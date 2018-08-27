@@ -29,7 +29,7 @@ GEN_PY_MODULE_FMT = u'''#!/usr/bin/env python3
 \"\"\"
 
 import wx
-import %s
+from . import %s
 
 import ic
 from ic.log import log
@@ -37,6 +37,8 @@ from ic.log import log
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
 from ic.engine import form_manager
+
+__version__ = (0, 0, 0, 1)
 
 
 class %s(%s.%s, form_manager.icFormManager):

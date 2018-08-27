@@ -161,8 +161,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt
-            if not ret[0][0] in ('Document', 'NodeDocument'):
-                ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является документом.', parent)
+            if not ret[0][0] in ('Document', 'NodeDocument', 'BusinessObj', 'StateObj'):
+                ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является документом/бизнес объектом.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         else:

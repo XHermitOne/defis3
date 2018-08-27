@@ -74,6 +74,7 @@ import types
 from ic.log import log
 from ic.engine import listctrl_manager
 from ic.engine import ic_user
+from ic.dlg import ic_dlg
 
 # Версия
 __version__ = (0, 1, 1, 1)
@@ -278,3 +279,104 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         list_ctrl = self.getSlaveListCtrl()
         self.setRows_list_ctrl(list_ctrl, rows=rows)
 
+    # --- Функции движения ---
+
+    # --- Функции оперирования документом ---
+    def viewDocument(self, UUID=None, index=None, view_form_method=None):
+        """
+        пПросмотр документа.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID редактируемого документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @param view_form_method: Метод вызова формы просмотра документа.
+            Может задаваться фукнцией.
+            Если не определен, то вызывается document.View().
+        @return: True/False
+        """
+        dataset = self.getDocDataset()
+
+        # Определение индекса документа
+        if UUID:
+            uuids = [doc.get('uuid', None) for doc in dataset]
+            try:
+                idx = uuids.index(UUID)
+            except:
+                log.error(u'UUID документа <%s> не найден' % UUID)
+                return False
+        elif index:
+            idx = index
+        else:
+            list_ctrl = self.getSlaveListCtrl()
+            idx = self.getItemSelectedIdx(list_ctrl)
+
+        if idx != -1:
+            document = dataset[idx]
+            doc_uuid = document['uuid']
+            doc = self.getSlaveDocument()
+            doc.load_obj(doc_uuid)
+            log.debug(u'Просмотр документа UUID <%s>' % doc_uuid)
+
+            if view_form_method:
+                result = view_form_method(doc)
+            else:
+                result = doc.View()
+            return result
+        else:
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
+        return False
+
+    def editDocument(self, UUID=None, index=None, edit_form_method=None):
+        """
+        Редактирование документа.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID редактируемого документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @param edit_form_method: Метод вызова формы редактирования документа.
+            Может задаваться фукнцией.
+            Если не определен, то вызывается document.Edit().
+        @return: True/False
+        """
+        dataset = self.getDocDataset()
+
+        # Определение индекса документа
+        if UUID:
+            uuids = [doc.get('uuid', None) for doc in dataset]
+            try:
+                idx = uuids.index(UUID)
+            except:
+                log.error(u'UUID документа <%s> не найден' % UUID)
+                return False
+        elif index:
+            idx = index
+        else:
+            list_ctrl = self.getSlaveListCtrl()
+            idx = self.getItemSelectedIdx(list_ctrl)
+
+        if idx != -1:
+            document = dataset[idx]
+            doc_uuid = document['uuid']
+            doc = self.getSlaveDocument()
+            doc.load_obj(doc_uuid)
+            log.debug(u'Редактирование документа UUID <%s>' % doc_uuid)
+
+            if edit_form_method:
+                result = edit_form_method(doc)
+            else:
+                result = doc.Edit()
+
+            if result:
+                doc.save_obj()
+                # Обновить выделенный документ после радактирования
+                dataset[idx] = doc.getRequisiteData()
+                # Обновить список документов если нормально отредактировали документ
+                self.refreshtDocListCtrlRows()
+            return result
+        else:
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
+        return False
+
+    # --- Дополнительные функции ---

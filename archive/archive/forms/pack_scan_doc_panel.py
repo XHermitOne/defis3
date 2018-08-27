@@ -6,20 +6,40 @@
 Сгенерирован проектом DEFIS по модулю формы-прототипа wxFormBuider.
 """
 
+import os
+import os.path
 import wx
-import pack_scan_doc_panel_proto
+from . import pack_scan_doc_panel_proto
+from . import edit_doc_form_proto
 
 import ic
 from ic.log import log
+from ic.dlg import std_dlg
+from ic.dlg import ic_dlg
+from ic.dlg import quick_entry_panel
+from . import group_manipulation_dlg
 
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
 from ic.engine import form_manager
 
+__version__ = (0, 1, 1, 1)
 
-class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto, form_manager.icFormManager):
+DEFAULT_DB_DATE_FMT = '%Y-%m-%d'
+DEFAULT_DATE_FMT = '%d.%m.%Y'
+
+
+class icQuickEntryPackScanPanel(edit_doc_form_proto.icQuickEntryPackScanPanelProto):
     """
-    Форма .
+    Панель быстрого ввода.
+    """
+    pass
+
+
+class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
+                         form_manager.icFormManager):
+    """
+    Форма пакетной обработки документов.
     """
     def __init__(self, *args, **kwargs):
         """
@@ -27,60 +47,342 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto, form
         """
         pack_scan_doc_panel_proto.icPackScanDocPanelProto.__init__(self, *args, **kwargs)
 
+        # Режим быстрого ввода
+        self.quick_entry_mode = False
+
     def init(self):
         """
         Инициализация панели.
         """
         self.init_img()
         self.init_ctrl()
-        
+
+        # Инициализация навигатора документов
+        self.doc_navigator = ic.metadata.archive.mtd.pack_scan_doc_navigator.create()
+        self.doc_navigator.setSlaveListCtrl(self.docs_listCtrl)
+
     def init_img(self):
         """
         Инициализация изображений.
         """
-        pass
-        
+        self.setLibImages_ToolBar(tool_bar=self.ctrl_toolBar,
+                                  import_tool='import.png',
+                                  view_tool='eye.png',
+                                  edit_tool='document--pencil.png',
+                                  scan_tool='scanner.png',
+                                  archive_tool='file_manager.png',
+                                  n_pages_tool='document-number.png',
+                                  quick_tool='application-run.png',
+                                  group_tool='document-task.png')
+
     def init_ctrl(self):
         """
         Инициализация контролов.
         """
-        pass
-        
-    def onArchiveToolClicked(self, event):
+        # Добавить колонки в список
+        self.setColumns_list_ctrl(ctrl=self.docs_listCtrl,
+                                  cols=((u'№', 80),
+                                        ('Лист.', 40),
+                                        ('2 стор.', 40),
+                                        (u'№ док.', 150),
+                                        (u'Дата док.', 80),
+                                        (u'№ док. контрагента', 200),
+                                        (u'Дата контрагента', 80),
+                                        (u'Наименование', 150),
+                                        ('Контрагент', 500)))
 
+    def onArchiveToolClicked(self, event):
+        """
+        Обработчик передачи пакета в архив.
+        """
+        doc_indexes = self.getCheckedItems_list_ctrl(self.docs_listCtrl)
+        if doc_indexes:
+            doc = ic.metadata.archive.mtd.scan_document_pack.create()
+            archive_doc = ic.metadata.archive.mtd.scan_document.create()
+            pack_result = True
+            for doc_idx in doc_indexes:
+                doc_uuid = self.documents[doc_idx]['uuid']
+                doc.load_obj(doc_uuid)
+                scan_filename = doc.getRequisiteValue('file_name')
+                if scan_filename and os.path.exists(scan_filename):
+                    result = doc.remove_to(archive_doc, doc_uuid=doc_uuid,
+                                           requisite_replace={'scan_doc_to': 'scan_doc_pack_to',
+                                                              'scan_doc_from': 'scan_doc_pack_from'})
+                    if not result:
+                        ic_dlg.icWarningBox(u'ВНИМАНИЕ',
+                                            u'Ошибка переноса документа <%s> в архив' % doc.getRequisiteValue('n_doc'))
+
+                    pack_result = pack_result and result
+                else:
+                    msg = u'Файл скана отсутствует в карточке документа <%s>. Перенос не выполнен' % doc.getRequisiteValue(
+                        'n_doc')
+                    log.warning(msg)
+                    ic_dlg.icWarningBox(u'ВНИМАНИЕ', msg)
+                    pack_result = False
+
+            if pack_result:
+                ic_dlg.icMsgBox(u'АРХИВ',
+                                u'Пакет документов перенесен в архив')
+            self.doc_navigator.refreshtDocListCtrlRows()
         event.Skip()
 
     def onEditToolClicked(self, event):
-
+        """
+        Обработчик редактирования карточки документа.
+        """
+        from archive.forms import edit_doc_form
+        self.doc_navigator.editDocument(edit_form_method=edit_doc_form.edit_doc_dlg)
         event.Skip()
 
     def onGroupToolClicked(self, event):
+        """
+        Обработчик инструмента групповой настройки параметров сканирования документа.
+        """
+        pos = self.getToolLeftBottomPoint(self.ctrl_toolBar, self.group_tool)
+        value = group_manipulation_dlg.show_group_manipulation_dlg(self,
+                                                                   n_max=self.docs_listCtrl.GetItemCount(),
+                                                                   position=pos)
+        if value:
+            n_begin = value.get('n_begin', 1)
+            n_begin = n_begin - 1 if n_begin else 0
+            n_end = value.get('n_end', self.docs_listCtrl.GetItemCount())
+            n_end = n_end - 1 if n_end else self.docs_listCtrl.GetItemCount() - 1
+            self.checkItems_list_ctrl(self.docs_listCtrl, value.get('on_off', False),
+                                      n_begin, n_end)
+
+            if value.get('n_pages', None) or value.get('is_duplex', None):
+                n_pages = value.get('n_pages', None)
+                n_pages = int(n_pages) if n_pages else 1
+                is_duplex = value.get('is_duplex', None)
+                is_duplex = bool(is_duplex) if is_duplex else False
+
+                doc = ic.metadata.THIS.mtd.scan_document_pack.create()
+                for i in range(n_begin, n_end + 1):
+                    doc_uuid = self.documents[i]['uuid']
+                    self._set_doc_pages_and_duplex(i, doc, doc_uuid,
+                                                   n_pages, is_duplex)
+
+            # Количество документов и страниц в обработке
+            self.doc_count_staticText.SetLabel(str(self.getScanDocCount()))
+            self.page_count_staticText.SetLabel(str(self.getScanPageCount()))
 
         event.Skip()
 
     def onImportToolClicked(self, event):
+        """
+        Обработчик импорта документов из БАЛАНСА.
+        """
+        popup_menu = ic.metadata.archive.mnu.import_select_popup_menu.create()
+        popup_menu.GetManager().setPackScanPanel(self)
+        popup_menu.popupByTool(self.import_tool)
 
         event.Skip()
 
     def onNPagesToolClicked(self, event):
+        """
+        Обработчик инструмента установки количества страниц документа.
+        """
+        idx = self.getItemSelectedIdx(self.docs_listCtrl)
+        if idx != -1:
+            document = self.documents[idx]
+            doc_uuid = document['uuid']
+            doc = ic.metadata.THIS.mtd.scan_document_pack.create()
+            doc.load_obj(doc_uuid)
+            n_pages = std_dlg.getIntegerDlg(self, u'СКАНИРОВАНИЕ',
+                                            u'Укажите количество страниц документа',
+                                            1, 500)
+            is_duplex = std_dlg.getRadioChoiceDlg(self, u'СКАНИРОВАНИЕ',
+                                                  u'Сканирование листа с 2-ч сторон?',
+                                                  choices=(u'НЕТ', u'ДА'))
+            if n_pages:
+                doc.setRequisiteValue('n_scan_pages', n_pages)
 
+            if is_duplex is not None:
+                doc.setRequisiteValue('is_duplex', is_duplex)
+
+            if n_pages or is_duplex is not None:
+                doc.save_obj()
+                self.doc_navigator.refreshtDocListCtrlRows()
+        else:
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
         event.Skip()
 
     def onQuickToolClicked(self, event):
+        """
+        Обработчик вкл./выкл. режима быстрого ввода.
+        """
+        self.quick_entry_mode = event.IsChecked()
+        # Выключаем инструменты ввода
+        self.ctrl_toolBar.EnableTool(self.n_pages_tool.GetId(), not self.quick_entry_mode)
+        self.ctrl_toolBar.EnableTool(self.edit_tool.GetId(), not self.quick_entry_mode)
+
+        item_selected_idx = self.getItemSelectedIdx(self.docs_listCtrl)
+        if self.quick_entry_mode and item_selected_idx == -1:
+            # Если включен режим и никакой документ не выбран, то
+            # Выбираем первый элемент списка и открываем окно ввода
+            self.docs_listCtrl.Select(0)
+        elif self.quick_entry_mode and item_selected_idx >= 0:
+            # Если выбран элемент, то просто отобразить окно быстрого ввода для
+            # этого документа
+            self._show_quick_entry_dlg(item_selected_idx)
 
         event.Skip()
 
     def onScanToolClicked(self, event):
+        """
+        Обработчик запуска сканирования документов.
+        """
+        scan_manager = ic.getScanManager()
+        check_idx_list = self.getCheckedItems_list_ctrl(ctrl=self.docs_listCtrl)
+        log.debug(u'Список индексов сканированных документов в пакете %s' % check_idx_list)
+        # ВНИМАНИЕ! У нас указываются листы. Если указывается дуплекс, то
+        # количество страниц увеличивается в 2 раза
+        scan_filenames = [(os.path.join(scan_manager.getScanPath(), 'scan%04d.pdf' % i),
+                           int(self.documents[item_idx]['n_scan_pages']) * (
+                               2 if bool(self.documents[item_idx]['is_duplex']) else 1),
+                           bool(self.documents[item_idx]['is_duplex'])) for i, item_idx in enumerate(check_idx_list)]
+        scan_result = scan_manager.do_scan_pack(*scan_filenames)
+        if not scan_result:
+            event.Skip()
+            log.warning(u'Ошибка сканирования пакета документов')
+            return
+
+        doc = ic.metadata.archive.mtd.scan_document_pack.create()
+
+        if check_idx_list:
+            for i, item_idx in enumerate(check_idx_list):
+                scan_filename, n_pages, is_duplex = scan_filenames[i]
+                if not os.path.exists(scan_filename):
+                    log.warning(u'Файл скана <%s> не найден' % scan_filename)
+                    continue
+                doc_uuid = self.documents[item_idx]['uuid']
+                doc.load_obj(doc_uuid)
+                result = self.put_doc_catalog(doc, scan_filename)
+                if result:
+                    doc.save_obj()
+
+            ic_dlg.icMsgBox(u'СКАНИРОВАНИЕ',
+                            u'Сканирование пакета документов завершено успешно')
+            self.refreshDocList()
 
         event.Skip()
 
     def onToggleCheckBox(self, event):
+        """
+        Обработчик вкл./выкл. документов в обработку.
+        """
+        check = event.IsChecked()
+        self.checkAllItems_list_ctrl(self.docs_listCtrl, check)
+
+        # Количество документов и страниц в обработке
+        self.doc_count_staticText.SetLabel(str(self.getScanDocCount()))
+        self.page_count_staticText.SetLabel(str(self.getScanPageCount()))
 
         event.Skip()
 
     def onViewToolClicked(self, event):
+        """
+        Обработчик просмотра документа.
+        """
+        idx = self.docs_listCtrl.GetFirstSelected()
+        if idx != -1:
+            document = self.documents[idx]
+            doc_uuid = document['uuid']
+            doc = ic.metadata.THIS.mtd.scan_document_pack.create()
+            doc.load_obj(doc_uuid)
+            log.debug(u'Просмотр документа UUID <%s>' % doc_uuid)
+            doc_filename = doc.getRequisiteValue('file_name')
+            if doc_filename and os.path.exists(doc_filename):
+                self.viewDocFile(doc_filename)
+            else:
+                if doc_filename:
+                    ic_dlg.icWarningBox(u'ВНИМАНИЕ!',
+                                        u'Не найден файл скана <%s> документа для просмотра' % doc_filename)
+                else:
+                    ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Отсутствует файл скана документа')
+        else:
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
 
         event.Skip()
+
+    def _show_quick_entry_dlg(self, item_idx):
+        """
+        Отобразить окно быстрого ввода.
+        @param item_idx: Индекс выбранного элемента.
+        """
+        # Получить текущую запись
+        doc_rec = self.documents[item_idx]
+        # Подготовить данные для редактирования
+        values = dict(docname_staticText=u'%d. %s' % (item_idx + 1, doc_rec['doc_name']),
+                      ndoc_staticText=doc_rec['n_doc'],
+                      docdate_staticText=doc_rec['doc_date'].strftime(DEFAULT_DATE_FMT) if doc_rec['doc_date'] else u'',
+                      cagent_ndoc_staticText=u'Данные контрагента: ' + (doc_rec['n_obj'] if doc_rec['n_obj'] else u''),
+                      cagent_docdate_staticText=(u'от ' + doc_rec['obj_date'].strftime(DEFAULT_DATE_FMT)) if doc_rec['obj_date'] else u'',
+                      npages_spinCtrl=doc_rec['n_scan_pages'],
+                      duplex_checkBox=bool(doc_rec['is_duplex']))
+        # Вызываем окно быстрого ввода
+        edit_result = quick_entry_panel.quick_entry_edit_dlg(self,
+                                                             title=u'Режим быстрого ввода',
+                                                             size=wx.Size(525, 240),
+                                                             quick_entry_panel_class=icQuickEntryPackScanPanel,
+                                                             defaults=values)
+        if edit_result == quick_entry_panel.GO_PREV_ITEM_CMD:
+            # Переход к предыдущему элементу
+            self.selectItem_list_ctrl(ctrl=self.docs_listCtrl,
+                                      item_idx=item_idx - 1)
+        elif edit_result == quick_entry_panel.GO_NEXT_ITEM_CMD:
+            # Переход к следующему элементу
+            self.selectItem_list_ctrl(ctrl=self.docs_listCtrl,
+                                      item_idx=item_idx + 1)
+        elif edit_result is not None:
+            # Обновить в БД отредактированные данные
+            self._set_doc_pages_and_duplex(item_idx, doc_uuid=doc_rec['uuid'],
+                                           n_scan_pages=edit_result['npages_spinCtrl'],
+                                           is_duplex=edit_result['duplex_checkBox'])
+            # Перейти на следущую строку
+            self.selectItem_list_ctrl(ctrl=self.docs_listCtrl,
+                                      item_idx=item_idx + 1)
+
+    def _set_doc_pages_and_duplex(self, item_idx, doc=None, doc_uuid=None,
+                                  n_scan_pages=1, is_duplex=False):
+        """
+        Установить количество сканированных страниц и признак дуплекса в документе.
+        @param item_idx: Индекс текущего элемента списка, соответствующего документу.
+        @param doc: Объект документа.
+        @param doc_uuid: UUID документа.
+        @param n_scan_pages: Количество сканируемых страниц.
+        @param is_duplex: Признак дуплекса.
+        """
+        if doc is None:
+            doc = ic.metadata.THIS.mtd.scan_document_pack.create()
+
+        if doc_uuid is None:
+            doc_uuid = doc.getUUID()
+
+        # Обновить в БД отредактированные данные
+        doc.update_obj(doc_uuid,
+                       n_scan_pages=int(n_scan_pages),
+                       is_duplex=int(is_duplex))
+
+        # Обновить только одну строку списка
+        self.documents[item_idx]['n_scan_pages'] = int(n_scan_pages)
+        self.documents[item_idx]['is_duplex'] = int(is_duplex)
+
+        rec = self.documents[item_idx]
+
+        row = (item_idx + 1, rec['n_scan_pages'],
+               u'+' if rec['is_duplex'] else u'',
+               rec['n_doc'],
+               rec['doc_date'].strftime(DEFAULT_DB_DATE_FMT),
+               rec['n_obj'],
+               rec['obj_date'].strftime(DEFAULT_DB_DATE_FMT) if rec['obj_date'] else u'',
+               rec['doc_name'],
+               rec['c_agent'])
+        self.setRow_list_ctrl(ctrl=self.docs_listCtrl,
+                              row_idx=item_idx,
+                              row=row,
+                              evenBackgroundColour=wx.WHITE,
+                              oddBackgroundColour=wx.LIGHT_GREY)
 
 
 def show_pack_scan_doc_panel(title=u''):
@@ -96,3 +398,18 @@ def show_pack_scan_doc_panel(title=u''):
     except:
         log.fatal(u'Ошибка')    
 
+
+def open_pack_scan_doc_page(main_win=None, title=u'Пакетная обработка документов'):
+    """
+    Открыть страницу пакетной обработки и сканирования документов.
+    @param main_win: Главное окно приложения.
+    """
+    try:
+        if main_win is None:
+            main_win = ic.getMainWin()
+
+        page = icPackScanDocPanel(parent=main_win)
+        page.init()
+        main_win.AddOrgPage(page, title)
+    except:
+        log.fatal(u'Ошибка открытия страницы пакетной обработки')
