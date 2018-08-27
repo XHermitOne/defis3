@@ -14,7 +14,7 @@ from ic.utils import ic_str
 from ic.utils import util
 from ic.engine import ic_user
 from ic.utils import ic_uuid
-from ic import io_prnt
+from ic.log import log
 from ic.dlg import ic_dlg
 
 from ic.db import icsqlalchemy

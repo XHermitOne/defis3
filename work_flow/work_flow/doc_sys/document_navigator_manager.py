@@ -169,6 +169,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         # Определение индекса документа
         idx = -1
         if UUID:
+            dataset = self.getDocDataset()
             uuids = [doc.get('uuid', None) for doc in dataset]
             try:
                 idx = uuids.index(UUID)
@@ -218,11 +219,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         return document
 
-    def updateDocDataset(self, ext_filter=None):
+    def updateDocDataset(self):
         """
         Обновление списка документов.
-        @param ext_filter: Дополнительный фильтр документов.
-            Если фильтр не указан, то беруться все документы.
         @return: Полученный список документов.
         """
         # Очистить список датасета
@@ -244,6 +243,49 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         except:
             log.fatal(u'Ошибка получения текущего заполненного списка документов')
         return list()
+
+    def setDocDataset(self, dataset):
+        """
+        Установить текущий заполненный список документов.
+        @return: Текущий заполненный список документов.
+        """
+        try:
+            setattr(self, DOC_NAVIGATOR_DATASET_NAME, dataset)
+            return getattr(self, DOC_NAVIGATOR_DATASET_NAME)
+        except:
+            log.fatal(u'Ошибка установки текущего заполненного списка документов')
+        return list()
+
+    def getDocDatasetFilter(self):
+        """
+        Текущий фильтр списка документов.
+        @return: Текущий заполненный список документов.
+        """
+        try:
+            document = self.getSlaveDocument()
+            return document.getFilter()
+        except:
+            log.fatal(u'Ошибка получения текущего фильтра списка документов')
+        return None
+
+    def setDocDatasetFilter(self, doc_filter=None):
+        """
+        Текущий фильтр списка документов.
+        @param doc_filter: Фильтр документов.
+            Для создания фильтров надо пользоваться
+                функциями из STD.queries.filter_generate.
+                Функции генерации фильтров для вызова
+                из функций прикладного уровня.
+            Использование:
+                create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
+        @return: Текущий заполненный список документов.
+        """
+        try:
+            document = self.getSlaveDocument()
+            return document.setFilter(doc_filter)
+        except:
+            log.fatal(u'Ошибка получения текущего фильтра списка документов')
+        return None
 
     def setDocDatasetRecord(self, index, doc_requisites):
         """
@@ -522,6 +564,77 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         if ic_dlg.icAskBox(u'ПОИСК', u'Документ не найден в списке. Начать поиск с начала?'):
             return self.findDoc(requisite, value, fromIndex=0, bSelect=bSelect)
         return -1
+
+    def filterDocs(self, doc_filter=None, bRefresh=True):
+        """
+        Отфильтровать список документов.
+        @param doc_filter: Словарь значений реквизитов фильтров.
+            Если None, то берется текущий фильтр бизнес объектов.
+            Для создания фильтров надо пользоваться
+            функциями из STD.queries.filter_generate.
+            Функции генерации фильтров для вызова
+            из функций прикладного уровня.
+            Использование:
+                create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
+        @return: Возвращает список-dataset объектов, соответствующих заданному фильтру.
+        """
+        self.setDocDatasetFilter(doc_filter)
+        dataset = self.updateDocDataset()
+        if bRefresh:
+            self.refreshtDocListCtrlRows()
+        return dataset
+
+    def sortDocs(self, *sort_fields):
+        """
+        Сортировка списка документов.
+        @param sort_fields: Список порядка сортировки списка документов.
+            В качестве поля сортировки может выступать имя реквизита или
+            функция или lambda выражение.
+            В случае функции или lambda-выражения они должны принимать
+            в качестве аргумента словарь записи документа и возвращать
+            значение по которому будет производиться сортитровка.
+        @return: Отсортированный список документов.
+        """
+        dataset = self.getDocDataset()
+
+        do_refresh = False
+        try:
+            dataset = sorted(dataset,
+                             key=lambda rec: [rec[field] if isinstance(field, str) else field(rec) for field in sort_fields],
+                             reverse=False)
+            do_refresh = True
+        except:
+            log.fatal(u'Ошибка сортировки списка документов')
+
+        if do_refresh:
+            self.setDocDataset(dataset)
+            self.refreshtDocListCtrlRows()
+
+    def sortReverseDocs(self, *sort_fields):
+        """
+        Обратная сортировка списка документов.
+        @param sort_fields: Список порядка сортировки списка документов.
+            В качестве поля сортировки может выступать имя реквизита или
+            функция или lambda выражение.
+            В случае функции или lambda-выражения они должны принимать
+            в качестве аргумента словарь записи документа и возвращать
+            значение по которому будет производиться сортитровка.
+        @return: Отсортированный список документов.
+        """
+        dataset = self.getDocDataset()
+
+        do_refresh = False
+        try:
+            dataset = sorted(dataset,
+                             key=lambda rec: [rec[field] if isinstance(field, str) else field(rec) for field in sort_fields],
+                             reverse=True)
+            do_refresh = True
+        except:
+            log.fatal(u'Ошибка обратной сортировки списка документов')
+
+        if do_refresh:
+            self.setDocDataset(dataset)
+            self.refreshtDocListCtrlRows()
 
     # --- Функции оперирования документом ---
     def viewDocument(self, UUID=None, index=None, view_form_method=None):
