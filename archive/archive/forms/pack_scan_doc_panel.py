@@ -380,21 +380,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         dataset[item_idx]['n_scan_pages'] = int(n_scan_pages)
         dataset[item_idx]['is_duplex'] = int(is_duplex)
 
-        rec = dataset[item_idx]
-
-        row = (item_idx + 1, rec['n_scan_pages'],
-               u'+' if rec['is_duplex'] else u'',
-               rec['n_doc'],
-               rec['doc_date'].strftime(DEFAULT_DB_DATE_FMT),
-               rec['n_obj'],
-               rec['obj_date'].strftime(DEFAULT_DB_DATE_FMT) if rec['obj_date'] else u'',
-               rec['doc_name'],
-               rec['c_agent'])
-        self.setRow_list_ctrl(ctrl=self.docs_listCtrl,
-                              row_idx=item_idx,
-                              row=row,
-                              evenBackgroundColour=wx.WHITE,
-                              oddBackgroundColour=wx.LIGHT_GREY)
+        self.doc_navigator.refreshtDocListCtrlRow(index=item_idx)
 
 
 def show_pack_scan_doc_panel(title=u''):

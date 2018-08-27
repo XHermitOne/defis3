@@ -70,6 +70,7 @@ help - Вызов помощи по документу или списку до�
 """
 
 import types
+import wx
 
 from ic.log import log
 from ic.engine import listctrl_manager
@@ -335,7 +336,31 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             rows = self.getDocListCtrlRows(dataset)
 
         list_ctrl = self.getSlaveListCtrl()
-        self.setRows_list_ctrl(list_ctrl, rows=rows)
+        self.setRows_list_ctrl(list_ctrl, rows=rows,
+                               evenBackgroundColour=wx.WHITE,
+                               oddBackgroundColour=wx.LIGHT_GREY)
+
+    def refreshtDocListCtrlRow(self, index=None, row=None):
+        """
+        Обновление списка строк контрола отображения списка документов.
+        @param index: Индекс обновляемой строки.
+            Если не определен, то берется индекс текущего выбранного элемента.
+        @param row: Строка в виде списка.
+            Если не определен, то заполняется автоматически по датасету.
+        @return: True/False.
+        """
+        list_ctrl = self.getSlaveListCtrl()
+        if index is None:
+            index = self.getItemSelectedIdx(list_ctrl)
+
+        if index > -1:
+            if row is None:
+                dataset = self.getDocDataset()
+                row = self.getDocListCtrlRows(dataset)[index]
+
+            self.setRow_list_ctrl(list_ctrl, row_idx=index, row=row,
+                                  evenBackgroundColour=wx.WHITE,
+                                  oddBackgroundColour=wx.LIGHT_GREY)
 
     # --- Функции движения ---
 
