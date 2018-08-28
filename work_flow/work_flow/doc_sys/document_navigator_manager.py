@@ -77,12 +77,18 @@ from ic.log import log
 from ic.engine import listctrl_manager
 from ic.engine import ic_user
 from ic.dlg import ic_dlg
+from ic.components import icwidget
 
 # Версия
 __version__ = (0, 1, 1, 1)
 
 # Спецификация
-SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {}
+SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {'document': None,
+                                     'list_ctrl': None,
+                                     'columns': None,
+
+                                     '__parent__': icwidget.SPC_IC_SIMPLE,
+                                     }
 
 # Наименования внутренних атрибутов менеджера
 DOC_NAVIGATOR_SLAVE_LIST_CTRL_NAME = '__document_navigator_slave_list_ctrl'

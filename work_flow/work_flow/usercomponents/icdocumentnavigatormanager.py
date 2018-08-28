@@ -226,7 +226,9 @@ class icDocumentNavigatorManager(icwidget.icSimple,
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icDocumentNavigatorManagerProto.__init__(self, parent)
+        # Родительский класс icDocumentNavigatorManagerProto не имеет конструктора.
+        # Вызывать конструктор не нужно
+        # parentModule.icDocumentNavigatorManagerProto.__init__(self, parent)
 
         # Свойства компонента
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
