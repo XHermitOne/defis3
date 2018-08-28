@@ -36,7 +36,7 @@ validate - Режим проверки корректности заполнен
 errors - Просмотр списка ошибок заполнения документа
 import - Режим импорта документа из внешнего источника/файла
 export - Режим экспорта документа во внешний источник/файл
-send - Отправить документа по почте
+send - Отправить документ по почте
 save - Сохранение текущего документа в БД
 save_all - Сохранение всех документов списка в БД
 load - Загрузка текущего документа из БД
@@ -70,6 +70,7 @@ help - Вызов помощи по документу или списку до�
 """
 
 import types
+import uuid
 import wx
 
 from ic.log import log
@@ -299,6 +300,20 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             dataset.append(doc_requisites)
         else:
             dataset[index] = doc_requisites
+        return dataset
+
+    def insertDocDatasetRecord(self, index, doc_requisites):
+        """
+        Вставить запись в датасете по индексу.
+        @param index: Индекс записи в датасете.
+        @param doc_requisites: Сохраняемый словарь значений реквизитов документа.
+        @return: Обновленный список dataset.
+        """
+        dataset = self.getDocDataset()
+        if index >= len(dataset) or index < 0:
+            dataset.append(doc_requisites)
+        else:
+            dataset.insert(index, doc_requisites)
         return dataset
 
     def setDocListCtrlColumns(self, *columns):
@@ -636,8 +651,70 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             self.setDocDataset(dataset)
             self.refreshtDocListCtrlRows()
 
+    def copyDoc(self, UUID=None, index=None):
+        """
+        Копировать документ в клипбоард.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID редактируемого документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @return: Скопированный словарь значений реквизитов документа.
+        """
+        idx = self._getDocIndex(UUID=UUID, index=index)
+        doc_requisites = None
+        if idx > -1:
+            dataset = self.getDocDataset()
+            doc_requisites = dataset[idx]
+            txt_data_obj = wx.TextDataObject()
+            txt_data_obj.SetText(str(doc_requisites))
+            if wx.TheClipboard.Open():
+                wx.TheClipboard.SetData(txt_data_obj)
+                wx.TheClipboard.Close()
+            else:
+                msg = u'Ошибка открытия клипбоарда'
+                log.warning(msg)
+                ic_dlg.icWarningBox(u'ОШИБКА', msg)
+        return doc_requisites
+
+    def pasteDoc(self, index=None):
+        """
+        Вставить документ из клипбоарда в датасет.
+        @param index: Индекс документа в dataset.
+            Если index не указываются,
+            то берется текущий выделенный документ.
+        @return: Скопированный словарь значений реквизитов документа.
+        """
+        doc_requisites = None
+        if not wx.TheClipboard.IsOpened():
+            do = wx.TextDataObject()
+            wx.TheClipboard.Open()
+            success = wx.TheClipboard.GetData(do)
+            wx.TheClipboard.Close()
+            if success:
+                doc_requisites = eval(do.GetText())
+                # ВНИМАНИЕ! Необходимо поменять UUID документа при вставке
+                # чтобы документы различались
+                doc_requisites['uuid'] = str(uuid.uuid4())
+            else:
+                log.warning(u'Клипбоард пуст')
+
+        if doc_requisites:
+            idx = self._getDocIndex(index=index)
+            self.insertDocDatasetRecord(idx, doc_requisites)
+
+    def cloneDoc(self, UUID=None, index=None):
+        """
+        Клонироваь документа в списке документов.
+        @param UUID:
+        @param index:
+        @return:
+        """
+        self.copyDoc(UUID=UUID, index=index)
+        self.pasteDoc(index=index + 1)
+
     # --- Функции оперирования документом ---
-    def viewDocument(self, UUID=None, index=None, view_form_method=None):
+    def viewDoc(self, UUID=None, index=None, view_form_method=None):
         """
         Просмотр документа.
         Документ может задаваться по UUID или по индексу в dataset.
@@ -663,7 +740,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
         return False
 
-    def editDocument(self, UUID=None, index=None, edit_form_method=None):
+    def editDoc(self, UUID=None, index=None, edit_form_method=None):
         """
         Редактирование документа.
         Документ может задаваться по UUID или по индексу в dataset.
@@ -698,7 +775,227 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
         return False
 
-    def sumDocument(self, doc_requisite):
+    def updateDoc(self, UUID=None, index=None, update_form_method=None):
+        """
+        Обновить документ. По умолчанию обновляется из БД.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID редактируемого документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @param update_form_method: Метод вызова формы обновления документа.
+            Может задаваться фукнцией.
+            Если не определен, то вызывается document.load_obj().
+        @return: True/False
+        """
+        document = self.getSlaveDocument(UUID=UUID, index=index)
+        if document:
+            log.debug(u'Обновление документа UUID <%s>' % document.getUUID())
+
+            if update_form_method:
+                result = update_form_method(document)
+            else:
+                doc_requisites = document.load_obj()
+                idx = self._getDocIndex(UUID=UUID, index=index)
+                self.setDocDatasetRecord(idx, doc_requisites)
+                result = True
+
+            if result:
+                # Обновить список документов если нормально отредактировали документ
+                self.refreshtDocListCtrlRows()
+            return result
+        else:
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для обновления')
+        return False
+
+    def createDoc(self, create_form_method=None):
+        """
+        Создать документ.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param create_form_method: Метод вызова формы создания документа.
+            Может задаваться фукнцией.
+            Если не определен, то вызывается document.Add().
+        @return: True/False.
+        """
+        document = self.getSlaveDocument()
+        log.debug(u'Создание документа')
+
+        if create_form_method:
+            result = create_form_method(document)
+        else:
+            result = document.Add()
+
+        if result:
+            # Обновить список документов если нормально выполнили действие над документ
+            self.refreshtDocListCtrlRows()
+        return result
+
+    def deleteDoc(self, UUID=None, index=None, delete_form_method=None):
+        """
+        Удалить документ.
+        Документ может задаваться по UUID или по индексу в dataset.
+        @param UUID: UUID редактируемого документа.
+        @param index: Индекс документа в dataset.
+            Если ни UUID ни index не указываются,
+            то берется текущий выделенный документ.
+        @param delete_form_method: Метод вызова формы удаления документа.
+            Может задаваться фукнцией.
+            Если не определен, то вызывается document.Del().
+        @return: True/False
+        """
+        document = self.getSlaveDocument(UUID=UUID, index=index)
+        if document:
+            log.debug(u'Удаление документа UUID <%s>' % document.getUUID())
+
+            if delete_form_method:
+                result = delete_form_method(document)
+            else:
+                result = document.Del()
+
+            if result:
+                # Обновить список документов если нормально отредактировали документ
+                self.refreshtDocListCtrlRows()
+            return result
+        else:
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для удаления')
+        return False
+
+    def insertDoc(self, UUID=None, index=None, insert_form_method=None):
+        """
+        """
+        log.warning(u'Метод <insertDoc> не реализован')
+
+    def printDoc(self, UUID=None, index=None, print_form_method=None):
+        """
+        """
+        log.warning(u'Метод <printDoc> не реализован')
+
+    def printAllDoc(self, print_form_method=None):
+        """
+        """
+        log.warning(u'Метод <printAllDoc> не реализован')
+
+    def validateDoc(self, UUID=None, index=None, validate_form_method=None):
+        """
+        """
+        log.warning(u'Метод <validateDoc> не реализован')
+
+    def errorsDoc(self, UUID=None, index=None, errors_form_method=None):
+        """
+        """
+        log.warning(u'Метод <errorsDoc> не реализован')
+
+    def importDoc(self, UUID=None, index=None, import_form_method=None):
+        """
+        """
+        log.warning(u'Метод <importDoc> не реализован')
+
+    def exportDoc(self, UUID=None, index=None, import_form_method=None):
+        """
+        """
+        log.warning(u'Метод <exportDoc> не реализован')
+
+    def sendDoc(self, UUID=None, index=None, send_form_method=None):
+        """
+        """
+        log.warning(u'Метод <sendDoc> не реализован')
+
+    def saveDoc(self, UUID=None, index=None, save_form_method=None):
+        """
+        """
+        log.warning(u'Метод <saveDoc> не реализован')
+
+    def saveAllDoc(self, save_form_method=None):
+        """
+        """
+        log.warning(u'Метод <saveAllDoc> не реализован')
+
+    def loadDoc(self, UUID=None, index=None, load_form_method=None):
+        """
+        """
+        log.warning(u'Метод <loadDoc> не реализован')
+
+    def loadAllDoc(self, load_form_method=None):
+        """
+        """
+        log.warning(u'Метод <loadAllDoc> не реализован')
+
+    def showDoc(self, UUID=None, index=None, show_form_method=None):
+        """
+        """
+        log.warning(u'Метод <showDoc> не реализован')
+
+    def schemeDoc(self, UUID=None, index=None, scheme_form_method=None):
+        """
+        """
+        log.warning(u'Метод <schemeDoc> не реализован')
+
+    def runDoc(self, UUID=None, index=None, run_form_method=None):
+        """
+        """
+        log.warning(u'Метод <runDoc> не реализован')
+
+    def stopDoc(self, UUID=None, index=None, stop_form_method=None):
+        """
+        """
+        log.warning(u'Метод <stopDoc> не реализован')
+
+    def doDoc(self, UUID=None, index=None, do_form_method=None):
+        """
+        """
+        log.warning(u'Метод <doDoc> не реализован')
+
+    def undoDoc(self, UUID=None, index=None, undo_form_method=None):
+        """
+        """
+        log.warning(u'Метод <undoDoc> не реализован')
+
+    def openDoc(self, UUID=None, index=None, open_form_method=None):
+        """
+        """
+        log.warning(u'Метод <openDoc> не реализован')
+
+    def closeDoc(self, UUID=None, index=None, close_form_method=None):
+        """
+        """
+        log.warning(u'Метод <closeDoc> не реализован')
+
+    def linkDoc(self, UUID=None, index=None, link_form_method=None):
+        """
+        """
+        log.warning(u'Метод <linkDoc> не реализован')
+
+    def unlinkDoc(self, UUID=None, index=None, unlink_form_method=None):
+        """
+        """
+        log.warning(u'Метод <unlinkDoc> не реализован')
+
+    def checkDoc(self, UUID=None, index=None, check_form_method=None):
+        """
+        """
+        log.warning(u'Метод <checkDoc> не реализован')
+
+    def uncheckDoc(self, UUID=None, index=None, uncheck_form_method=None):
+        """
+        """
+        log.warning(u'Метод <uncheckDoc> не реализован')
+
+    def attachDoc(self, UUID=None, index=None, attach_form_method=None):
+        """
+        """
+        log.warning(u'Метод <attachDoc> не реализован')
+
+    def detachDoc(self, UUID=None, index=None, detach_form_method=None):
+        """
+        """
+        log.warning(u'Метод <detachDoc> не реализован')
+
+    def calcDoc(self, doc_requisite):
+        """
+        """
+        log.warning(u'Метод <calcDoc> не реализован')
+
+    def sumDoc(self, doc_requisite):
         """
         Выполнить суммирование по реквизиту всех документов списка.
         @param doc_requisite: Имя реквизита, по которому производится суммирование.
@@ -714,7 +1011,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             log.fatal(u'Ошибка суммирования по реквизиту <%s> всех документов списка' % doc_requisite)
         return result_sum
 
-    def countDocument(self):
+    def countDoc(self):
         """
         Выполнить подсчет количества всех документов списка.
         @return: Расчетное количество.
@@ -722,4 +1019,38 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         dataset = self.getDocDataset()
         return len(dataset)
 
+    def extendDoc(self, UUID=None, index=None, extend_form_method=None):
+        """
+        """
+        log.warning(u'Метод <extendDoc> не реализован')
+
+    def uploadDoc(self, UUID=None, index=None, upload_form_method=None):
+        """
+        """
+        log.warning(u'Метод <uploadDoc> не реализован')
+
+    def downloadDoc(self, UUID=None, index=None, download_form_method=None):
+        """
+        """
+        log.warning(u'Метод <downloadDoc> не реализован')
+
     # --- Дополнительные функции ---
+    def viewRequisites(self):
+        """
+        """
+        log.warning(u'Метод <viewRequisites> не реализован')
+
+    def etc(self):
+        """
+        """
+        log.warning(u'Метод <etc> не реализован')
+
+    def editSettings(self):
+        """
+        """
+        log.warning(u'Метод <editSettings> не реализован')
+
+    def showHelp(self):
+        """
+        """
+        log.warning(u'Метод <showHelp> не реализован')
