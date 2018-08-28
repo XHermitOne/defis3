@@ -7,6 +7,8 @@
 
 import wx
 
+from ic.log import log
+
 __version__ = (0, 1, 1, 1)
 
 
@@ -91,3 +93,54 @@ def isWxPython4():
     @return: True - wxPython версии 4 и выше / False - другая версия wxPython.
     """
     return wx.MAJOR_VERSION >= 4
+
+
+def showInfoWindow(parent=None, ctrl=None, x=-1, y=-1, info_text=u'',
+                   backgroundColour=None):
+    """
+    Отобразить текст информации в всплывающем окне.
+    @param parent: Родительское окно для отображения всплыващего окна.
+    @param ctrl: Контрол, к которому приклеплено всплывающее окно.
+    @param x: Координата X вывода всплывающего окна.
+        Если не определено, то берется левая граница контрола.
+    @param y: Координата Y вывода всплывающего окна.
+        Если не определено, то берется нижняя граница контрола.
+    @param info_text: Текст информационного сообщения.
+    @param backgroundColour: Цвет фона окна.
+        Если не определен, то берется 'CADET BLUE'.
+    @return: Функция возвращает созданное всплывающее окно
+        или None в случае ошибки.
+    """
+    try:
+        if ctrl:
+            x_offset, y_offset = ctrl.ClientToScreen((0, 0))
+            if x <= 0:
+                x = x_offset
+            if y <= 0:
+                y = y_offset
+
+        if x <= 0:
+            x = 0
+        if y <= 0:
+            y = 0
+
+        if parent is None:
+            parent = wx.GetApp().GetTopWindow()
+
+        popup_win = wx.PopupWindow(parent, wx.SIMPLE_BORDER)
+        panel = wx.Panel(popup_win)
+        panel.SetBackgroundColour('CADET BLUE')
+
+        static_txt = wx.StaticText(panel, -1, info_text, pos=(10, 10))
+
+        size = static_txt.GetBestSize()
+        popup_win.SetSize((size.width + 20, size.height + 20))
+        panel.SetSize((size.width + 20, size.height + 20))
+
+        height = ctrl.GetSize().height if ctrl else 0
+        popup_win.Position(wx.Point(x, y), (0, height))
+        popup_win.Show()
+        return popup_win
+    except:
+        log.fatal(u'Ошибка отображения информационного всплывающего окна')
+    return None
