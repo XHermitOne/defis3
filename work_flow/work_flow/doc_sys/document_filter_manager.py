@@ -225,13 +225,26 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
         """
         pass
 
-    def refreshFilter(self):
+    def refreshFilterDocs(self, logic_ctrl=None):
         """
         Обновить список документов в соответствии с выбранными фильтрами.
+        @param logic_ctrl: Контрол управления логикой фильтра.
+            Контролом может служить CheckBox или RadioBox.
+            Первый элемент [0] всегда считается AND.
+            Второй элемент [1] считается как OR.
         @return: True/False.
         """
         try:
-            return True
+            logic = 'AND'
+            if issubclass(logic_ctrl.__class__, wx.CheckBox):
+                logic = 'OR' if logic_ctrl.IsChecked() else 'AND'
+            elif issubclass(logic_ctrl.__class__, wx.RadioBox):
+                logic = 'OR' if logic_ctrl.GetSelected() else 'AND'
+            else:
+                log.warning(u'Не поддерживаемый тип контрола <%s> управления связующей логикой фильтра' % logic_ctrl.__class__.__name__)
+
+            cur_filter = self.buildFilter(logic=logic)
+            return self.filterDocs(filter_list=cur_filter)
         except:
             log.fatal(u'Ошибка обновления списка документов по фильтру')
         return False
