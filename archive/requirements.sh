@@ -17,7 +17,10 @@ sudo apt install --assume-yes git
 sudo apt install --assume-yes smbclient
 pip3 install PySmbClient
 
-pip3 install dbfpy
+# pip3 install dbfpy
+git clone https://github.com/phargogh/dbfpy3
+sudo python3 ./dbfpy3/setup.py install
+
 pip3 install dbfread
 
 sudo apt --fix-broken install --assume-yes

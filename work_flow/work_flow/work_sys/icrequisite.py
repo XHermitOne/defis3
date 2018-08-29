@@ -52,11 +52,13 @@
 """
 
 # --- Подключение библиотек ---
+import os
+import os.path
+
 import ic
 
 from ic.utils import util
 from ic.utils import resource
-from ic.utils import ic_file
 from ic.utils import ic_util
 from ic.log import log
 
@@ -68,7 +70,7 @@ from STD.queries import filter_builder_env
 from ic.components.user import ic_field_wrp
 
 # Версия
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 1, 1, 1)
 
 # --- Specifications ---
 SPC_IC_REQUISITE = dict({'type': 'Requisite',
@@ -621,7 +623,7 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
             name = sprav.Find(self._value)
             if name is None:
                 name = ''
-            elif type(name) not in (str, unicode):
+            elif not isinstance(name, str):
                 name = str(name)
             return name
         return str(self._value) if self._value is not None else ''

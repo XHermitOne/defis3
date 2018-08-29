@@ -21,12 +21,12 @@ wx.ListCtrl, wx.DataListView и т.п.
 
 import wx
 
-import quick_entry_panel_ctrl_proto
+from . import quick_entry_panel_ctrl_proto
 
 from ic.engine import form_manager
 from ic.log import log
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 GO_PREV_ITEM_CMD = -1
 GO_NEXT_ITEM_CMD = 1

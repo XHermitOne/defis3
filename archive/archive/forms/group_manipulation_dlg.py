@@ -7,7 +7,7 @@
 """
 
 import wx
-import group_manipulation_dlg_proto
+from . import group_manipulation_dlg_proto
 
 import ic
 from ic.log import log
@@ -15,6 +15,8 @@ from ic.log import log
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
 from ic.engine import form_manager
+
+__version__ = (0, 1, 1, 1)
 
 
 class icGroupManipulationDlg(group_manipulation_dlg_proto.icGroupManipulationDlgProto, 

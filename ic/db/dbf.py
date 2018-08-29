@@ -17,7 +17,7 @@ try:
     from . import pyDBF
     is_pyd_import = True
 except ImportError:
-    import dbfpy.dbf
+    import dbfpy3.dbf
     is_pyd_import = False
 
 # Константы
@@ -861,7 +861,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
         if DBFFileName_:
             self._dbf_file_name = DBFFileName_
         if self._dbf_file_name:
-            self._dbf = dbfpy.dbf.Dbf(DBFFileName_, new=ReCreate_)
+            self._dbf = dbfpy3.dbf.Dbf(DBFFileName_, new=ReCreate_)
             # Добавить поля
             fields = [(fld['name'].upper(), fld['type'], fld['len'], fld['decimal']) for fld in DBFStruct_ ]
             self._dbf.addField(*fields)
@@ -880,7 +880,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
         if DBFFileName_:
             self._dbf_file_name = DBFFileName_
         if self._dbf_file_name:
-            self._dbf = dbfpy.dbf.Dbf(self._dbf_file_name)
+            self._dbf = dbfpy3.dbf.Dbf(self._dbf_file_name)
             self._cur_rec_no = 0
             return True
         return False

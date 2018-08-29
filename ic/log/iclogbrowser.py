@@ -21,15 +21,15 @@ import datetime
 import os
 import os.path
 import wx
-import log_browser_proto
+from . import log_browser_proto
 
-import log_file
-import log
+from . import log_file
+from . import log
 
 from ic.utils import ic_time
 
 # Version
-__version__ = (0, 0, 3, 6)
+__version__ = (0, 1, 1, 1)
 
 TIME_FMT = '%H:%M:%S'
 
@@ -342,7 +342,7 @@ class icLogBrowserPanelManager:
             record = None
         if record:
             full_msg = record.get('text', record.get('short', u''))
-            dt_title = u'Время: ' + unicode(str(record.get('dt', '')), log_file.DEFAULT_ENCODING)
+            dt_title = u'Время: ' + str(record.get('dt', u''))
             title = LOG_TYPE_LABELS.get(record.get('type', u''), u'') + u'. ' + dt_title
             icon = LOG_TYPE_ICONS.get(record.get('type', u''), wx.ICON_HAND)
             wx.MessageBox(full_msg, title, style=wx.OK | icon)

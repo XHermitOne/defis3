@@ -61,7 +61,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         self.init_ctrl()
 
         # Инициализация навигатора документов
-        self.doc_navigator = ic.metadata.archive.mtd.pack_scan_doc_navigator.create()
+        self.doc_navigator = ic.metadata.archive.mtd.pack_scan_doc_form_manager.create()
         self.doc_navigator.setSlaveListCtrl(self.docs_listCtrl)
 
     def init_img(self):
