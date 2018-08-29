@@ -56,7 +56,7 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
         """
         item = self.GetSelection()
         if item.IsOk():
-            return self.GetPyData(item)
+            return self.GetItemData(item)
         return None
 
     def OnSelChanged(self, evt):

@@ -366,7 +366,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
         """
         # make a custom bitmap showing "..."
         bw, bh = 14, 16
-        bmp = wx.EmptyBitmap(bw, bh)
+        bmp = wx.Bitmap(bw, bh)
         dc = wx.MemoryDC(bmp)
 
         # clear to a specific background colour

@@ -34,13 +34,13 @@ __version__ = (0, 1, 1, 1)
 TIME_FMT = '%H:%M:%S'
 
 LOG_TYPE_COLOURS = {
-                    log_file.INFO_LOG_TYPE: wx.NamedColour('DARKGREEN'),
-                    log_file.WARNING_LOG_TYPE: wx.NamedColour('GOLDENROD'),
-                    log_file.ERROR_LOG_TYPE: wx.NamedColour('RED4'),
-                    log_file.FATAL_LOG_TYPE: wx.NamedColour('RED3'),
-                    log_file.DEBUG_LOG_TYPE: wx.NamedColour('BLUE4'),
-                    log_file.DEBUG_SERVICE_LOG_TYPE: wx.NamedColour('CYAN4'),
-                    log_file.SERVICE_LOG_TYPE: wx.NamedColour('CYAN4'),
+                    log_file.INFO_LOG_TYPE: wx.Colour('DARKGREEN'),
+                    log_file.WARNING_LOG_TYPE: wx.Colour('GOLDENROD'),
+                    log_file.ERROR_LOG_TYPE: wx.Colour('RED4'),
+                    log_file.FATAL_LOG_TYPE: wx.Colour('RED3'),
+                    log_file.DEBUG_LOG_TYPE: wx.Colour('BLUE4'),
+                    log_file.DEBUG_SERVICE_LOG_TYPE: wx.Colour('CYAN4'),
+                    log_file.SERVICE_LOG_TYPE: wx.Colour('CYAN4'),
                     }
 
 LOG_TYPE_LABELS = {

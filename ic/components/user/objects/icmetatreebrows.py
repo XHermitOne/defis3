@@ -111,7 +111,7 @@ class MetaTreeBrows(icobjectinterface.icObjectInterface):
         leftPanel = self.GetNameObj('leftPanel')
         pos = split.GetSashPosition()
         item = evt.GetItem()
-        level, data = tree.GetPyData(item)
+        level, data = tree.GetItemData(item)
 
         #   Предварительно сохраняем
         if self.ILeftPanel and self.ILeftPanel.metaObj.isMyLock():

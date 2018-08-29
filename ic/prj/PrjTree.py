@@ -338,7 +338,7 @@ class PrjTree(wx.TreeCtrl):
         # Добавить компонент в описание родительского компонента
         root = self.GetItemParent(item)
         if root:
-            self.GetPyData(root).addChild(Node_)
+            self.GetItemData(root).addChild(Node_)
         self.Expand(self.GetSelection())
         return item
 
@@ -354,7 +354,7 @@ class PrjTree(wx.TreeCtrl):
         # Добавить компонент в описание родительского компонента
         root = self.GetItemParent(item)
         if root:
-            self.GetPyData(root).addChild(Node_)
+            self.GetItemData(root).addChild(Node_)
         return item
 
     def getSelectionNode(self):
@@ -362,7 +362,7 @@ class PrjTree(wx.TreeCtrl):
         Получить текущий выбранный узел дерева.
         """
         item_id = self.GetSelection()
-        return self.GetPyData(item_id)
+        return self.GetItemData(item_id)
 
     def delSelectionNode(self):
         """
@@ -380,7 +380,7 @@ class PrjTree(wx.TreeCtrl):
         if Root_ is None:
             Root_ = self.GetRootItem()
 
-        node = self.GetPyData(Root_)
+        node = self.GetItemData(Root_)
         # Сначала обновить рут, а затем все дочерние узлы.
         node_class = node.getClassType().split('.')[-1]
         # Надпись
@@ -405,7 +405,7 @@ class PrjTree(wx.TreeCtrl):
         """
         selection = self.GetSelection()
         if selection:
-            node = self.GetPyData(selection)
+            node = self.GetItemData(selection)
             # Сначала обновить рут, а затем все дочерние узлы.
             self.SetItemText(selection,
                              node.getClassType()+' : '+node.name)
@@ -437,7 +437,7 @@ class PrjTree(wx.TreeCtrl):
             # отобразить меню
             if hit_item[1] & wx.TREE_HITTEST_ONITEMLABEL:
                 if self.GetSelection() == hit_item[0]:
-                    node = self.GetPyData(item)
+                    node = self.GetItemData(item)
                     if node:
                         node.onNodePopup(event)
 
@@ -456,7 +456,7 @@ class PrjTree(wx.TreeCtrl):
                 self._helpWin = None
                 
             item = event.GetItem()
-            node = self.GetPyData(item)
+            node = self.GetItemData(item)
             if node and node.isShowPopupHelp():
                 help_txt = node.getPopupHelpText()
                 if help_txt:
@@ -472,7 +472,7 @@ class PrjTree(wx.TreeCtrl):
         Активация элемента дерева.
         """
         item = event.GetItem()
-        node = self.GetPyData(item)
+        node = self.GetItemData(item)
         if node:
             node.onNodeActivated(event)
         event.Skip()
@@ -538,7 +538,7 @@ class PrjTree(wx.TreeCtrl):
             self.editItemLabel=False
             # индеск элемента в структуре PRO
             item = event.GetItem()
-            node = self.GetPyData(item)
+            node = self.GetItemData(item)
             node.rename(self.GetItemText(item), label)
             # Обновить дерево проекта
             self.Refresh()
@@ -571,7 +571,7 @@ class PrjTree(wx.TreeCtrl):
         Раскрытие узла по +.
         """
         item = event.GetItem()
-        node = self.GetPyData(item)
+        node = self.GetItemData(item)
         if node.__class__.__name__ == 'PrjImportSys' and not node.isBuild():
             try:
                 # Затем построить дерево подсистемы
@@ -627,7 +627,7 @@ class icPrjTreeViewer(PrjTree):
         if self._Prj:
             try:
                 item = event.GetItem()
-                node = self.GetPyData(item)
+                node = self.GetItemData(item)
                 splitter = self.GetParent()
                 viewer = node.getViewer(splitter)
                 # Подменить окно

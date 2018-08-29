@@ -320,7 +320,7 @@ def pydate2wxdate(date):
     assert isinstance(date, (datetime.datetime, datetime.date))
     tt = date.timetuple()
     dmy = (tt[2], tt[1]-1, tt[0])
-    return wx.DateTimeFromDMY(*dmy)
+    return wx.DateTime.FromDMY(*dmy)
 
 
 def wxdate2pydate(date):
@@ -352,7 +352,7 @@ def pydatetime2wxdatetime(dt):
     tt = dt.timetuple()
     dmy = (tt[2], tt[1]-1, tt[0])
     hms = (tt[2], tt[1]-1, tt[0])
-    result = wx.DateTimeFromDMY(*dmy)
+    result = wx.DateTime.FromDMY(*dmy)
     result.SetHour(hms[0])
     result.SetMinute(hms[1])
     result.SetSecond(hms[2])

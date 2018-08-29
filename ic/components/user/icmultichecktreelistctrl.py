@@ -169,7 +169,7 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
         """
         cod = cod or []
         if item != self.GetRootItem():
-            lev, res = self.GetPyData(item)
+            lev, res = self.GetItemData(item)
             cod.insert(0, res['name'])
             return self.get_item_cod(item.GetParent(), cod)
         return cod
@@ -183,7 +183,7 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
         lst = lst or []
         for item in root.GetChildren():
             st = self.get_state(item)
-            lev, res = self.GetPyData(item)
+            lev, res = self.GetItemData(item)
             lst.append((res['name'], st, self.get_item_cod(item)))
             self.get_check_list(lst, item)
         return lst

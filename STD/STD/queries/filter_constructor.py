@@ -476,7 +476,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         item_data = {}
         
         # Добавить сам элемент
-        type_item = self.GetPyData(Item_)
+        type_item = self.GetItemData(Item_)
         if type_item == 'group':
             # Группа
             item_data['type'] = type_item

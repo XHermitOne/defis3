@@ -366,7 +366,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
         Вернуть запись выбранного элемента.
         """
         selection_item = self.GetSelection()
-        row = self.GetPyData(selection_item)
+        row = self.GetItemData(selection_item)
         return row
     
     def setItemRow(self, Item_, Row_):
@@ -387,7 +387,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
         Вернуть код выбранного элемента.
         """
         selection_item = self.GetSelection()
-        row = self.GetPyData(selection_item)
+        row = self.GetItemData(selection_item)
         if row is None:
             return None
         return row[0]
@@ -409,7 +409,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
                 # Перебор всех дочерних элементов
                 child, cookie = self.GetFirstChild(CurItem_)
                 if child.IsOk():
-                    row = self.GetPyData(child)
+                    row = self.GetItemData(child)
                     table.append(row)
                     # Если дочерний элемент имеет подъэлементы,
                     # то обработать его
@@ -418,7 +418,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
                 while 1:
                     child, cookie = self.GetNextChild(CurItem_, cookie)
                     if child.IsOk():
-                        row = self.GetPyData(child)
+                        row = self.GetItemData(child)
                         table.append(row)
                         # Если дочерний элемент имеет подъэлементы,
                         # то обработать его

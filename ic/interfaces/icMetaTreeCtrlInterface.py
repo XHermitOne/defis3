@@ -120,7 +120,7 @@ class MetaTreeCtrlInterface:
         item, cookie = self.GetFirstChild(parent_item)
 
         if item.IsOk():
-            lev, data = self.GetPyData(item)
+            lev, data = self.GetItemData(item)
             if data == metaObj:
                 return item
         
@@ -129,7 +129,7 @@ class MetaTreeCtrlInterface:
             item, cookie = self.GetNextChild(parent_item, cookie)
             
             if item.IsOk():
-                lev, data = self.GetPyData(item)
+                lev, data = self.GetItemData(item)
                 if data == metaObj:
                     return item
             else:
@@ -268,7 +268,7 @@ class MetaTreeCtrlInterface:
             if obj.GetUniqId() == id:
                 
                 item = self.GetSelection()
-                level, prnt_obj = self.GetPyData(item)
+                level, prnt_obj = self.GetItemData(item)
                 id = None
                 new_obj = prnt_obj.Add(id, obj.name)
                 child = self.AppendItem(item, new_obj.name, self.fldridx)
@@ -297,7 +297,7 @@ class MetaTreeCtrlInterface:
         Клонирование объекта плана.
         """
         item = self.GetSelection()
-        level, data = self.GetPyData(item)
+        level, data = self.GetItemData(item)
         clone = data.Clone()
         self.ReLoadParentItemData(item)
     
@@ -305,7 +305,7 @@ class MetaTreeCtrlInterface:
         """
         """
         item = self.GetSelection()
-        level, data = self.GetPyData(item)
+        level, data = self.GetItemData(item)
         self.bObjBuff = data.copyChildren()
 
     def OnDelItem(self, evt):
@@ -314,7 +314,7 @@ class MetaTreeCtrlInterface:
         """
         item = self.GetSelection()
         prnt_item = self.GetItemParent(item)
-        level, prnt_obj = self.GetPyData(item)
+        level, prnt_obj = self.GetItemData(item)
         prnt_obj.Del()
         self._delItemList.append(item)
         self.Delete(item)
@@ -327,7 +327,7 @@ class MetaTreeCtrlInterface:
         """
         root = evt.GetItem()
         if self.treeDict:
-            level, res = self.GetPyData(root)
+            level, res = self.GetItemData(root)
             self.DeleteChildren(root)
             
             t1 = time.clock()
@@ -363,7 +363,7 @@ class MetaTreeCtrlInterface:
         #   компонентов, которые можно добавлять в текущий объект
         if self.treeDict and not isinstance(self.treeDict, dict):
 
-            level, obj = self.GetPyData(itm)
+            level, obj = self.GetItemData(itm)
             lst = obj.getMyContainerMetaItems()
             
             for cob in lst:
@@ -386,7 +386,7 @@ class MetaTreeCtrlInterface:
         menuObj.AppendMenu(id, u'Добавить объект', menuGroup)
 
         if self.treeDict and not isinstance(self.treeDict, dict) and itm != self.root:
-            level, obj = self.GetPyData(itm)
+            level, obj = self.GetItemData(itm)
             id = icwidget.icNewId()
             item = wx.MenuItem(menuObj, id, u'Удалить объект')
             item.SetBitmap(common.imgDeleteRed)
@@ -418,7 +418,7 @@ class MetaTreeCtrlInterface:
         """
         """
         item = self.GetSelection()
-        level, data = self.GetPyData(item)
+        level, data = self.GetItemData(item)
         #   Обновляем дерево
         if data.pastChildren():
             self.ReLoadParentItemData(item)
@@ -471,13 +471,13 @@ class MetaTreeCtrlInterface:
         lst = []
         
         if child.IsOk():
-            lev, data = self.GetPyData(child)
+            lev, data = self.GetItemData(child)
             lst.append((child, data))
             while 1:
                 child, ck = self.GetNextChild(prnt_item, ck)
                 
                 if child.IsOk():
-                    lev, data = self.GetPyData(child)
+                    lev, data = self.GetItemData(child)
                     lst.append((child, data))
                 else:
                     break

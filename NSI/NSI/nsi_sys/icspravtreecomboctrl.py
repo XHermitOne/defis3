@@ -195,7 +195,7 @@ class icSpravTreeComboPopup(wx.ComboPopup):
         """
         item = self.curitem
         if item:
-            data_item = self.tree.GetPyData(item)
+            data_item = self.tree.GetItemData(item)
             # ВНИМАНИЕ! Здесь необходимо проверять
             # есть ли прикрепленные к узлу данные
             # Проверка должна производиться только на None
@@ -238,7 +238,7 @@ class icSpravTreeComboPopup(wx.ComboPopup):
         """
         if item is None:
             item = self.tree.GetRootItem()
-        data = self.tree.GetPyData(item)
+        data = self.tree.GetItemData(item)
         # print item, data, data.getCode() if data is not None else ''
         if data is not None and data.getCode() == code:
             return item
@@ -368,7 +368,7 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
         Получить выбранный код справочника.
         @param AltCodeField_: Поле хранения альтернативного кода.
         """
-        lst = [self.tree.GetPyData(item).getCode() for item in self.check_items]
+        lst = [self.tree.GetItemData(item).getCode() for item in self.check_items]
         return u','.join(lst)
 
     def set_selected_sprav_code(self, src, Code_, AltCodeField_=None):
@@ -681,7 +681,7 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
             # Удалить скрытый элемент
             self._combo_popup.tree.DeleteChildren(item)
             # Добавить ветку дерева
-            data_item = self._combo_popup.tree.GetPyData(item)
+            data_item = self._combo_popup.tree.GetItemData(item)
             if data_item:
                 self._addBranch(data_item, item)
 

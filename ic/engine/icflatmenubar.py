@@ -150,7 +150,7 @@ class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
 
                 # Place a separator bitmap
                 h = 16
-                bmp = wx.EmptyBitmap(12, h)
+                bmp = wx.Bitmap(12, h)
                 mem_dc = wx.MemoryDC()
                 mem_dc.SelectObject(bmp)
                 mem_dc.SetPen(wx.BLACK_PEN)

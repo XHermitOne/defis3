@@ -223,7 +223,7 @@ The bottom of the red rectangle should be immediately below this."""
             # WordWrapRenderer.DrawTruncatedString(dc, self.text, rect,
             # wx.ALIGN_CENTER_HORIZONTAL,s ellipse=wx.CENTER)
 
-            #bmp = wx.EmptyBitmap(rect[0]+rect[2], rect[1]+rect[3])
+            #bmp = wx.Bitmap(rect[0]+rect[2], rect[1]+rect[3])
             #mdc = wx.MemoryDC(bmp)
             # mdc.SetBackground(wx.Brush("white"))
             # mdc.Clear()

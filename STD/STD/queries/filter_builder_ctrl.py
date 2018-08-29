@@ -42,7 +42,7 @@ class icCustomComboCtrl(wx.ComboCtrl):
         """
         # make a custom bitmap showing "..."
         bw, bh = 14, 16
-        bmp = wx.EmptyBitmap(bw, bh)
+        bmp = wx.Bitmap(bw, bh)
         dc = wx.MemoryDC(bmp)
 
         # clear to a specific background colour
@@ -258,7 +258,7 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
                 if img and isinstance(img, str):
                     img = ic_bmp.getSysImg(img)
             if img is None:
-                img = wx.EmptyBitmap(DEFAULT_IMG_WIDTH, DEFAULT_IMG_HEIGHT)
+                img = wx.Bitmap(DEFAULT_IMG_WIDTH, DEFAULT_IMG_HEIGHT)
             
             self.Append(description, img, name)
   

@@ -552,7 +552,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             self.editor.res = res_obj
             self.addBranch(item, res_obj)
         else:
-            res = self.GetPyData(item)
+            res = self.GetItemData(item)
             if 'child' in res:
                 res['child'].append(res_obj)
                 self.addBranch(item, res_obj)
@@ -623,7 +623,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if self.GetResEditor().graphEditor:
             pnl = self.GetResEditor().graphEditor.GetEditorPanel()
             item = self.lastSel
-            iditem = self.GetPyData(item)['__item_id']
+            iditem = self.GetItemData(item)['__item_id']
             # Изменяем свойство объекта
             if not pnl.ChangeItemProperty(iditem, property, value) and pnl.isItemInEditor(iditem):
                 # Если свойство напрямую изменить нельзя, то делаем
@@ -650,7 +650,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         try:
             item = self._dictResTreeId.get(id, None)
             if item:
-                data = self.GetPyData(item)
+                data = self.GetItemData(item)
                 data[property] = value
                 self.SetItemData(item, data)
 
@@ -691,9 +691,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if item == self.root:
             return
 
-        data = self.GetPyData(item)
+        data = self.GetItemData(item)
         parent_item = self.GetItemParent(item)
-        res = self.GetPyData(parent_item)
+        res = self.GetItemData(parent_item)
         
         # Проверяем можно удалить объект из ресурса или нет
         # сначало проверяем у родителя
@@ -735,7 +735,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         @rtype: C{bool}
         @return: Признак успешного поиска.
         """
-        data = self.GetPyData(item)
+        data = self.GetItemData(item)
         for key, val in data.items():
             if isinstance(val, str) and findStr in val.lower():
                 self.EnsureVisible(item)
@@ -772,7 +772,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         else:
             child, ck = self.lastfindItem
 
-            data = self.GetPyData(child)
+            data = self.GetItemData(child)
             _type = data['type']
             _name = data['name']
 
@@ -807,7 +807,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         """
         try:
             item = self._dictResTreeId[id]
-            data = self.GetPyData(item)
+            data = self.GetItemData(item)
         except:
             log.error(u'GetIdObj ERROR')
 
@@ -851,9 +851,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         nameList = []
         try:
-            data = self.GetPyData(item)
+            data = self.GetItemData(item)
             parent_item = self.GetItemParent(item)
-            res = self.GetPyData(parent_item)
+            res = self.GetItemData(parent_item)
 
             if 'child' in res:
                 for x in res['child']:
@@ -877,7 +877,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         Помощь.
         """
         item = self.GetSelection()
-        data = self.GetPyData(item)
+        data = self.GetItemData(item)
         # Создаем окно помощи
         try:
             doc_path = os.path.dirname(resource.icGetICPath())
@@ -967,9 +967,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         if child == item:
             pos = 0
-            if not self.GetPyData(child)['type'] in ['cell_attr', 'label_attr']:
+            if not self.GetItemData(child)['type'] in ['cell_attr', 'label_attr']:
                 _copyList.append(child)
-                _dataList.append(copy.deepcopy(self.GetPyData(child)))
+                _dataList.append(copy.deepcopy(self.GetItemData(child)))
                 _labelList.append(self.GetItemText(child))
 
         count = 0
@@ -981,9 +981,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                 if child == item:
                     pos = count
                 if pos >= 0:
-                    if not self.GetPyData(child)['type'] in ['cell_attr', 'label_attr']:
+                    if not self.GetItemData(child)['type'] in ['cell_attr', 'label_attr']:
                         _copyList.append(child)
-                        _dataList.append(copy.deepcopy(self.GetPyData(child)))
+                        _dataList.append(copy.deepcopy(self.GetItemData(child)))
                         _labelList.append(self.GetItemText(child))
             else:
                 break
@@ -1104,7 +1104,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if not item:
             return
 
-        data = self.GetPyData(item)
+        data = self.GetItemData(item)
         # Если ресурс пуст, то в корень можно добавить описание любого объекта
         if item == self.root and self.editor.res is None:
             info = (-1, -1, -1, {}, -1, [], None)
@@ -1256,7 +1256,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             ic_dlg.icMsgBox(u'СООБЩЕНИЕ', u'Класс <%s> в модуле <%s>' % (className, module_name))
             # Удаляем из ресурса служебную информацию
             item = self.GetSelection()
-            data = self.GetPyData(item)
+            data = self.GetItemData(item)
             res = copy.deepcopy(data)
             text = resource.genClassFromRes(className, res)
             f = open(module_name, 'wb')
@@ -1270,7 +1270,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         Создание модуля объекта.
         """
         item = self.GetSelection()
-        data = self.GetPyData(item)
+        data = self.GetItemData(item)
         fn = None
         # Если модуль объекта определен, открываем его
         if data['obj_module']:
@@ -1357,7 +1357,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             compType = dlg_inp.GetValue()
             import ic.utils.modulGenerator as gen
             item = self.GetSelection()
-            data = self.GetPyData(item)
+            data = self.GetItemData(item)
             res = copy.deepcopy(data)
 
             gen.GenComponent(compType, res=res)
@@ -1399,15 +1399,15 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             return
 
         item = self.GetSelection()
-        setCopyBuffEdt(self.GetPyData(item))
+        setCopyBuffEdt(self.GetItemData(item))
 
     def OnCopyChildItems(self, evt):
         if not self.editor.isToggleEnable():
             return
         item = self.GetSelection()
-        data = self.GetPyData(item)
+        data = self.GetItemData(item)
         if 'child' in data and data['child']:
-            setCopyBuffEdt(self.GetPyData(item))
+            setCopyBuffEdt(self.GetItemData(item))
         else:
             wx.MessageBox(u'Компонент не имеет дочерних элементов')
 
@@ -1446,7 +1446,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         # Берем объект из буффера
         insObj = getCopyBuffEdt()
         item = self.GetSelection()
-        res = self.GetPyData(item)
+        res = self.GetItemData(item)
         lst = insObj.get('child', [])
         for el in lst:
             res_obj = copy.deepcopy(el)
@@ -1473,7 +1473,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         sel = self.GetSelection()
         item = self.GetItemParent(sel)
-        res = self.GetPyData(item)
+        res = self.GetItemData(item)
 
         if self._isCanContain(res['type'], insObj['type']) and res != self.resource:
             self.InsItem(sel, copy.deepcopy(insObj))
@@ -1494,7 +1494,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         sel = self.GetSelection()
         item = self.GetItemParent(sel)
-        res = self.GetPyData(item)
+        res = self.GetItemData(item)
 
         if self._isCanContain(res['type'], insObj['type']) and res != self.resource:
             self.InsItem(sel, copy.deepcopy(insObj), 1)
@@ -1514,7 +1514,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         sel = self.GetSelection()
         item = self.GetItemParent(sel)
-        res = self.GetPyData(item)
+        res = self.GetItemData(item)
 
         if self._isCanContain(res['type'], insObj['type']) and res != self.resource:
             self.InsItem(sel, copy.deepcopy(insObj), 2)
@@ -1529,7 +1529,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         id = evt.GetId()
         obj_type = self.menuDict[id]
         item = self.GetSelection()
-        res = self.GetPyData(item)
+        res = self.GetItemData(item)
 
         spc_res = ObjectsInfo[obj_type][3]
         res_obj = copy.deepcopy(spc_res)
@@ -1554,7 +1554,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if not item:
             return
 
-        data = self.GetPyData(item)
+        data = self.GetItemData(item)
         if data and '__item_id' in data:
             iditem = data['__item_id']
 
@@ -1574,7 +1574,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                     data['docstr'] = spc['docstr']
                 # Заполняем редактор новыми свойствами
                 prnt_item = self.GetItemParent(item)
-                prnt_res = self.GetPyData(prnt_item)
+                prnt_res = self.GetItemData(prnt_item)
                 self.editor.notebook.GetPropertyEditor().setResource(data, spc, prnt_res)
 
                 # В графическом редакторе находим нужный объект и делаем его текущим
@@ -1646,7 +1646,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         Устанавливает цвет текста в зависимости от атрибута <activate>.
         """
         ck = 0
-        data = self.GetPyData(parent)
+        data = self.GetItemData(parent)
         if data is None:
             return
 
@@ -2315,7 +2315,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             pnl = self.graphEditor.GetEditorPanel()
             item = self.tree.lastSel
             if pnl and item:
-                iditem = self.tree.GetPyData(item)['__item_id']
+                iditem = self.tree.GetItemData(item)['__item_id']
                 pnl.SelectObjId(iditem)
 
     def is_res_module(self, path):

@@ -53,7 +53,7 @@ def icStampedText(Win_, Text_, FontName_=DEFAULT_TEXT_FONT):
         canvas = wx.MemoryDC()
         canvas.SetFont(text_font)
         text_width, text_height = canvas.GetTextExtent(Text_)
-        bmp = wx.EmptyBitmap(text_width+2, text_height+2)
+        bmp = wx.Bitmap(text_width+2, text_height+2)
         canvas.SelectObject(bmp)
        
         # Непосредственно сама отрисовка

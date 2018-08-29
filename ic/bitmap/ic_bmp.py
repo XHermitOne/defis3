@@ -89,7 +89,7 @@ def createEmptyBitmap(Width_, Height_, PhoneColor_):
     """
     try:
         # Пустой квадратик
-        bmp = wx.EmptyBitmap(Width_, Height_)
+        bmp = wx.Bitmap(Width_, Height_)
         # Создать объект контекста устройства
         dc = wx.MemoryDC()
         # Выбрать объект для контекста

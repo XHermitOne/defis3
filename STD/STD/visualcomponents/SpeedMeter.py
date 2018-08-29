@@ -241,7 +241,7 @@ class BufferedWindow(wx.Window):
         # current drawing in it, so it can be used to save the image to
         # a file, or whatever.
 
-        # This seems required on MacOS, it doesn't like wx.EmptyBitmap with
+        # This seems required on MacOS, it doesn't like wx.Bitmap with
         # size = (0, 0)
         # Thanks to Gerard Grazzini
         
@@ -251,7 +251,7 @@ class BufferedWindow(wx.Window):
             if self.Height == 0:
                 self.Height = 1
         
-        self._Buffer = wx.EmptyBitmap(self.Width, self.Height)
+        self._Buffer = wx.Bitmap(self.Width, self.Height)
         self.UpdateDrawing()
 
 
@@ -410,7 +410,7 @@ class SpeedMeter(BufferedWindow):
                           float(new_dim[1]) / self.dim[1]])
 
         # Create An Empty Bitmap
-        self.faceBitmap = wx.EmptyBitmap(size.width, size.height)
+        self.faceBitmap = wx.Bitmap(size.width, size.height)
         
         dc.BeginDrawing()
 

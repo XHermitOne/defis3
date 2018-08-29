@@ -37,7 +37,7 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
         """
         selected_item = self.links_treeListCtrl.GetSelection()
         if selected_item:
-            record = self.links_treeListCtrl.GetPyData(selected_item)
+            record = self.links_treeListCtrl.GetItemData(selected_item)
             if record:
                 doc_uuid = record['uuid']
                 doc = ic.metadata.archive.mtd.scan_document.create()
@@ -62,7 +62,7 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
         """
         selected_item = self.links_treeListCtrl.GetSelection()
         if selected_item:
-            record = self.links_treeListCtrl.GetPyData(selected_item)
+            record = self.links_treeListCtrl.GetItemData(selected_item)
             if record:
                 filename = record['file_name']
                 doc = ic.metadata.archive.mtd.scan_document.create()

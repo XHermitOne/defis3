@@ -414,7 +414,7 @@ class ObjectListView(wx.ListCtrl):
             if 'phoenix' in wx.PlatformInfo:
                 bitmap = wx.Bitmap(size, size)
             else:
-                bitmap = wx.EmptyBitmap(size, size)
+                bitmap = wx.Bitmap(size, size)
             dc = wx.MemoryDC(bitmap)
             dc.Clear()
 
@@ -613,9 +613,9 @@ class ObjectListView(wx.ListCtrl):
             normalImage = normalImage or wx.Bitmap(
                 *self.normalImageList.GetSize(0))
         else:
-            smallImage = smallImage or wx.EmptyBitmap(
+            smallImage = smallImage or wx.Bitmap(
                 *self.smallImageList.GetSize(0))
-            normalImage = normalImage or wx.EmptyBitmap(
+            normalImage = normalImage or wx.Bitmap(
                 *self.normalImageList.GetSize(0))
 
         self.smallImageList.AddNamedImage(name, smallImage)
@@ -2760,7 +2760,7 @@ class GroupListView(FastObjectListView):
             if 'phoenix' in wx.PlatformInfo:
                 bitmap = wx.Bitmap(size, size)
             else:
-                bitmap = wx.EmptyBitmap(size, size)
+                bitmap = wx.Bitmap(size, size)
             dc = wx.MemoryDC(bitmap)
             dc.SetBackground(wx.Brush(self.groupBackgroundColour))
             dc.Clear()

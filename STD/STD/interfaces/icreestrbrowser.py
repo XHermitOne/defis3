@@ -121,7 +121,7 @@ class ReestrBrowser(icobjectinterface.icObjectInterface):
         obj=None
         pos = split.GetSashPosition()
         item = evt.GetItem()
-        level, data = tree.GetPyData(item)
+        level, data = tree.GetItemData(item)
         #self.rootPanel = None
         
         #   Предварительно сохраняем

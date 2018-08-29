@@ -546,7 +546,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
 
         # Заполнение пустого уровня
         if not self.sprav_treeListCtrl.ItemHasChildren(item):
-            record = self.sprav_treeListCtrl.GetPyData(item)
+            record = self.sprav_treeListCtrl.GetItemData(item)
             code = record['cod']
             self.set_sprav_level_tree(item, code)
   
@@ -558,7 +558,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         @return: Найденный элемент дерева или None, если элемент не найден. 
         """
         # Поискать код в текущем элементе
-        record = self.sprav_treeListCtrl.GetPyData(parent_item)
+        record = self.sprav_treeListCtrl.GetItemData(parent_item)
         if record:
             if sprav_code == record['cod']:
                 return parent_item
@@ -567,7 +567,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         find_result = None
         child_item, cookie = self.sprav_treeListCtrl.GetFirstChild(parent_item)
         while child_item.IsOk():
-            record = self.sprav_treeListCtrl.GetPyData(child_item)
+            record = self.sprav_treeListCtrl.GetItemData(child_item)
             if record:
                 if sprav_code == record['cod']:
                     find_result = child_item
@@ -615,7 +615,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         """
         item = self.sprav_treeListCtrl.GetSelection()
         if item and item.IsOk():
-            record = self.sprav_treeListCtrl.GetPyData(item)
+            record = self.sprav_treeListCtrl.GetItemData(item)
             return record.get('cod', None) if record is not None else None
         return None
     
@@ -762,7 +762,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         """
         item = event.GetItem()
         if item:
-            record = self.sprav_treeListCtrl.GetPyData(item)
+            record = self.sprav_treeListCtrl.GetItemData(item)
             if record and ic_str.isMultiLineTxt(record['name']):
                 # Если текст многостроковый, то выводить
                 # дополнительное всплывающее окно

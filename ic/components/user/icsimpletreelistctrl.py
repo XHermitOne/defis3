@@ -360,7 +360,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
             Или None в случае ошибки.
         """
         try:
-            item_py_data = self.GetPyData(Item_)
+            item_py_data = self.GetItemData(Item_)
             if item_py_data is None:
                 return None
             res = item_py_data[1]
@@ -525,7 +525,7 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
         """
         Обновление дерева.
         """
-        return self.LoadTree(self.GetPyData(self.root)[1])
+        return self.LoadTree(self.GetItemData(self.root)[1])
     
     def getItemChildren(self, Item_=None):
         """

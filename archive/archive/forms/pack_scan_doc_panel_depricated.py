@@ -482,10 +482,10 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
         for i, doc_rec in enumerate(self.documents):
             if doc_rec['file_name'] and os.path.exists(doc_rec['file_name']):
                 self.setRowForegroundColour_list_ctrl(self.docs_listCtrl, 
-                                                      i, wx.NamedColour('DARKGREEN'))
+                                                      i, wx.Colour('DARKGREEN'))
             else:
                 self.setRowForegroundColour_list_ctrl(self.docs_listCtrl, 
-                                                      i, wx.NamedColour('DARKGOLDENROD'))
+                                                      i, wx.Colour('DARKGOLDENROD'))
         # Количество документов и страниц в обработке
         self.doc_count_staticText.SetLabel(str(self.getScanDocCount()))
         self.page_count_staticText.SetLabel(str(self.getScanPageCount()))

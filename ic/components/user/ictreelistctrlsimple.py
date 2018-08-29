@@ -312,7 +312,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
             Или None в случае ошибки.
         """
         try:
-            res = self.GetPyData(Item_)[1]
+            res = self.GetItemData(Item_)[1]
             if isinstance(res, dict) and '__record__' in res:
                 return res['__record__']
             return None
@@ -447,7 +447,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
         """
         Обновление дерева.
         """
-        return self.LoadTree(self.GetPyData(self.root)[1])
+        return self.LoadTree(self.GetItemData(self.root)[1])
     
     def getItemChildren(self, Item_=None):
         """
@@ -546,7 +546,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
         """
         root = event.GetItem()
         if self.treeDict:
-            level, res = self.GetPyData(root)
+            level, res = self.GetItemData(root)
             self.DeleteChildren(root)
             
             self.addBranch(root, res, 0, level+1)
