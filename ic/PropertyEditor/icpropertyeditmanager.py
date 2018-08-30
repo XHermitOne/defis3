@@ -313,6 +313,8 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
 
         elif property_type == icDefInf.EDT_IMG:
             # Редактор изображений
+            if not isinstance(value, str):
+                value = u''
             wx_property = wx.propgrid.ImageFileProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_FILE:
