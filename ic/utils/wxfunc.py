@@ -144,3 +144,12 @@ def showInfoWindow(parent=None, ctrl=None, x=-1, y=-1, info_text=u'',
     except:
         log.fatal(u'Ошибка отображения информационного всплывающего окна')
     return None
+
+
+def isCreateApp():
+    """
+    Проверка создали объект приложения WX.
+    @return: True - Да объект приложения создан / False - Нет.
+    """
+    app = wx.GetApp()
+    return app is not None
