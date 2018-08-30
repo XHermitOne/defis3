@@ -31,6 +31,9 @@ ic_class_spc = dict({'type': 'DocumentFormManager',
                      '_uuid': None,
 
                      '__attr_types__': {0: ['name', 'type'],
+                                        icDefInf.EDT_TEXTFIELD: ['description'],
+                                        icDefInf.EDT_USER_PROPERTY: ['document', 'list_ctrl'],
+                                        icDefInf.EDT_PY_SCRIPT: ['columns'],
                                         },
                      '__events__': {},
                      '__parent__': parentModule.SPC_IC_DOCUMENT_FORM_MANAGER,
@@ -57,6 +60,11 @@ ic_can_not_contain = None
 
 #   Версия компонента
 __version__ = (0, 1, 1, 1)
+
+# Функции редактирования
+get_user_property_editor = icdocumentfiltermanager.get_user_property_editor
+property_editor_ctrl = icdocumentfiltermanager.property_editor_ctrl
+str_to_val_user_property = icdocumentfiltermanager.str_to_val_user_property
 
 
 class icDocumentFormManager(icdocumentfiltermanager.icDocumentFilterManager,

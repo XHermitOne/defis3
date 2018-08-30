@@ -592,9 +592,9 @@ def genResModuleHead(rn, fn, descr=_('Resource module'), ver=u'(0, 0, 0, 1)'):
 # -*- coding: utf-8 -*-
 
 \"\"\"
-Resource module <%s>
-File            <%s>
-Description     <%s>
+Модуль      <%s>
+Файл        <%s>
+Описание    <%s>
 \"\"\"
 
 from ic.interfaces import icmanagerinterface
@@ -618,7 +618,7 @@ class %s(icmanagerinterface.icWidgetManager):
 
 manager_class = %s
 ''' % (rn, fn, descr, rn, ver, mngr, mngr)
-    return mod_txt.encode('utf-8')
+    return mod_txt
 
 
 def genObjModuleHead(on, fn, descr=_('Object module'), ver=u'(0, 0, 0, 1)'):
@@ -634,15 +634,16 @@ def genObjModuleHead(on, fn, descr=_('Object module'), ver=u'(0, 0, 0, 1)'):
 # -*- coding: utf-8 -*-
 
 \"\"\"
-Object module   <%s>
-File            <%s>
-Description     <%s>
+Объект   <%s>
+Файл     <%s>
+Описание <%s>
+Время    <%s>
 \"\"\"
 
 #   Version
 __version__ = %s
 ''' % (on, fn, descr, st, ver)
-    return mod_txt.encode('utf-8')
+    return mod_txt
 
 
 def getICObjectResource(path):

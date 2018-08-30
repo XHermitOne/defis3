@@ -155,7 +155,8 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icExtSpravTreeChoice(parentModule.icSpravTreeComboCtrlPrototype, icwidget.icWidget):
+class icExtSpravTreeChoice(parentModule.icExtSpravTreeChoicePrototype,
+                           icwidget.icWidget):
     """
     Описание пользовательского компонента.
 
@@ -198,7 +199,7 @@ class icExtSpravTreeChoice(parentModule.icSpravTreeComboCtrlPrototype, icwidget.
         view_all = self.getViewAll()
         complex_load = self.getComplexLoad()
 
-        parentModule.icSpravTreeComboCtrlPrototype.__init__(self,
+        parentModule.icExtSpravTreeChoicePrototype.__init__(self,
                                                             parent, id,
                                                             size=self.size, pos=self.position, style=self.style,
                                                             popup_type=component['popup_type'],
