@@ -8,7 +8,7 @@
 # Подключение библиотек
 import wx
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_ENCODINT_STR = '<Default Encoding>'
 

@@ -18,7 +18,7 @@ import wx.lib.imagebrowser
 from ic.log import log
 
 
-__version__ = (0, 2, 1, 1)
+__version__ = (1, 1, 1, 1)
 
 
 def icFileDlg(Win_=None, Title_='', Filter_='', DefaultPath_=''):
