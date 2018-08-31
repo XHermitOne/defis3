@@ -73,7 +73,7 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
 
 
 GEANY_EXEC_FILENAME = '/usr/bin/geany'
-GEANY_EXT_PYTHON_EDITOR_FMT = 'geany %s %s &'
+GEANY_EXT_PYTHON_EDITOR_FMT = 'geany --no-msgwin %s %s &'
 
 
 class icGeanyPythonEditor(icideinterface.icIDEInterface):

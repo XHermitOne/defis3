@@ -1819,7 +1819,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         self.tree.parseTree(self.res)
         self.tree.Expand(self.tree.root)
 
-        self.SplitHorizontally(panel, panel2, 100)
+        self.SplitHorizontally(panel, panel2, 350)
 
         self.toolbar = wx.ToolBar(panel, icwidget.icNewId(), pos=(0, 0), size=(300, -1),
                                   style=TBFLAGS)
@@ -2879,7 +2879,7 @@ class ResourseEditorFrame2(wx.Frame):
         """
         Конструктра.
         """
-        wx.Frame.__init__(self, parent, -1, title, size, pos, style)
+        wx.Frame.__init__(self, parent, -1, title, size=size, pos=pos, style=style)
         self._edt = GetProjectEditor(self)
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
@@ -2913,14 +2913,16 @@ def editor_main(par=0, path=None):
 
     # ---------------------------------------------------------------------------
     evalSpace = icwidget.icResObjContext()
-    frame = ResourseEditorFrame2(None, -1, u'Менеджер проекта', size=(350, 500),
+    # Позиция и размер для панели определяем слева
+    pos = wx.Point(0, 0)
+    dw, dh = wx.DisplaySize()
+    size = wx.Size(350, dh)
+    frame = ResourseEditorFrame2(None, -1, u'Менеджер проекта', pos=pos, size=size,
                                  style=wx.DEFAULT_FRAME_STYLE | wx.CLIP_CHILDREN)
     frame.SetIcon(common.icoFormEditor)
 
     app.SetTopWindow(frame)
     frame.Show()
-    frame.SetSize((450, 600))
-    frame.SetPosition((200, 50))
     app.MainLoop()
 
 
