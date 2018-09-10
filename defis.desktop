@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Defis
+Type=Application
+Terminal=true
+Name[ru_RU]=Defis
+Exec=/mnt/defis/defis3/editor.sh
+Icon=/mnt/defis/defis3/ic/imglib/common/ic.png
+Comment[ru_RU]=

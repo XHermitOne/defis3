@@ -8,6 +8,7 @@
 import os
 import sys
 import imp
+
 from ic.log import log
 
 __versiom__ = (0, 1, 1, 1)
@@ -80,7 +81,11 @@ def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
     if name_space is None or not isinstance(name_space, dict):
         name_space = {}
 
+    # Определяем флаг что блок кода производит вызов функции
+    is_exec_func = '(' in sCode and ')' in sCode
+    # Элементы импорта
     func_import = sCode.split('(')[0].split('.')
+    # Имя модуля или функции для работы с импортированным объектом
     func_mod = '.'.join(func_import[:-1])
 
     if bReImport:
@@ -91,6 +96,7 @@ def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
         import_str = 'import ' + func_mod
         try:
             exec(import_str)
+            log.info(u'Импорт функции/модуля <%s>' % import_str)
         except:
             log.fatal(u'Ошибка импорта <%s>' % import_str)
             raise
@@ -105,11 +111,13 @@ def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
             log.warning(u'Не поддерживаемый тип <%s> дополнительных аргументов функции <%s>' % (type(kwargs), sCode))
 
     # Выполнение функции
-    try:
-        result = eval(sCode, globals(), name_space)
-    except:
-        log.fatal(u'Ошибка выполнения выражения <%s>' % sCode)
-        raise
+    if is_exec_func:
+        try:
+            result = eval(sCode, globals(), name_space)
+        except:
+            log.fatal(u'Ошибка выполнения выражения <%s>' % sCode)
+            raise
+    else:
+        log.warning(u'Не определен вызов функции в блоке кода <%s>' % sCode)
 
     return result
-

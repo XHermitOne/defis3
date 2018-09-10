@@ -10,10 +10,11 @@ import os
 import os.path
 import hashlib
 import fnmatch
+import shutil
 import pwd
 from . import util
 
-__version__ = (0, 0, 7, 1)
+__version__ = (0, 1, 1, 1)
 
 
 def createTxtFile(FileName_,Txt_=None):
@@ -156,3 +157,125 @@ def normal_path(path, sUserName=None):
     """
     home_dir = get_home_path(sUserName)
     return os.path.abspath(os.path.normpath(path.replace('~', home_dir)))
+
+
+def copyFile(sFileName, sNewFileName, bRewrite=True):
+    """
+    Создает копию файла с новым именем.
+    @type sFileName: C{string}
+    @param sFileName: Полное имя файла.
+    @type sNewFileName: C{string}
+    @param sNewFileName: Новое имя файла.
+    @type bRewrite: C{bool}
+    @param bRewrite: True-если новый файл уже существует,
+        то переписать его молча. False-если новый файл уже существует,
+        то не перезаписывать его а оставить старый.
+    @return: Возвращает результат выполнения операции True/False.
+    """
+    try:
+        # Проверка существования файла-источника
+        if not os.path.isfile(sFileName):
+            print('WARNING! File %s not exist for copy' % sFileName)
+            return False
+
+        # Проверка перезаписи уже существуещего файла
+        if not bRewrite:
+            print('WARNING! File %s exist and not rewrite' % sFileName)
+            return False
+
+        # Создать результирующую папку
+        dir = os.path.dirname(sNewFileName)
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        shutil.copyfile(sFileName, sNewFileName)
+        return True
+    except IOError:
+        print('ERROR! Copy file %s I/O error' % sFileName)
+        return False
+
+
+def copyToDir(sFileName, sDestDir, bRewrite=True):
+    """
+    Копировать файл в папку.
+    @type sFileName: C{string}
+    @param sFileName: Имя файла.
+    @type sDestDir: C{string}
+    @param sDestDir: Папка в которую необходимо скопировать.
+    @type bRewrite: C{bool}
+    @param bRewrite: True-если новый файл уже существует,
+        то переписать его молча. False-если новый файл уже существует,
+        то не перезаписывать его а оставить старый.
+    @return: Возвращает результат выполнения операции True/False.
+    """
+    return copyFile(sFileName,
+                    os.path.normpath(sDestDir+'/'+os.path.basename(sFileName)), bRewrite)
+
+
+def changeExt(sFileName, sNewExt):
+    """
+    Поменять у файла расширение.
+    @type sFileName: C{string}
+    @param sFileName_: Полное имя файла.
+    @type sNewExt: C{string}
+    @param sNewExt: Новое расширение файла (Например: '.bak').
+    @return: Возвращает новое полное имя файла.
+    """
+    try:
+        new_name = os.path.splitext(sFileName)[0]+sNewExt
+        if os.path.isfile(new_name):
+            os.remove(new_name)     # если файл существует, то удалить
+        if os.path.exists(sFileName):
+            os.rename(sFileName, new_name)
+            return new_name
+    except:
+        print('ERROR! Change ext file %s' % sFileName)
+        raise
+    return None
+
+
+def fileList(sDir):
+    """
+    Список файлов в директории с полными путями.
+    @param sDir: Исходная директория.
+    @return: Список файлов.
+    """
+    return [norm_path(sDir+'/'+filename) for filename in os.listdir(norm_path(sDir))]
+
+
+def norm_path(sPath, sDelim=os.path.sep):
+    """
+    Удалить двойные разделител из пути.
+    @type sPath: C{string}
+    @param sPath: Путь
+    @type sDelim: C{string}
+    @param sDelim: Разделитель пути
+    """
+    sPath = sPath.replace('~', getHomeDir())
+    dbl_delim = sDelim + sDelim
+    while dbl_delim in sPath:
+        sPath = sPath.replace(dbl_delim, sDelim)
+    return sPath
+
+
+def getHomeDir():
+    """
+    Папка HOME.
+    @return: Строку-путь до папки пользователя.
+    """
+    return get_home_path()
+
+
+def getProfilePath(profile_dirname=u''):
+    """
+    Папка сохраненных параметров программы.
+        Находиться в HOME/{{PROFILE_DIRNAME}}.
+        Функция сразу провеяет если этой папки нет,
+        то создает ее.
+    @param profile_dirname: Имя папки профиля. Если не определена то берется домашняя папка.
+    """
+    home_dir = getHomeDir()
+
+    profile_path = os.path.normpath(os.path.join(home_dir, profile_dirname))
+    if not os.path.exists(profile_path):
+        os.makedirs(profile_path)
+    return profile_path

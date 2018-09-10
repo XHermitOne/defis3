@@ -17,7 +17,7 @@ except ImportError:
     # Для Python 3
     import subprocess as get_procesess_module
 
-__version__ = (0, 0, 4, 1)
+__version__ = (0, 1, 1, 1)
 
 
 def getPlatform():
