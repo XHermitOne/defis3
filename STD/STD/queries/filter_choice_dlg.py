@@ -54,7 +54,7 @@ class icFilterChoiceDlgProto ( wx.Dialog ):
 		bSizer4.Add( self.limit_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer4.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer4.AddSpacer( 5 )
 		
 		self.addButton = wx.Button( self, wx.ID_ANY, u"Добавить...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer4.Add( self.addButton, 0, wx.ALL, 5 )

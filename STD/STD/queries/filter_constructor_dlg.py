@@ -84,7 +84,7 @@ class icFilterConstructorDialog(wx.Dialog):
         """
         try:
             _title = u'Конструктор фильтров'
-            
+
             wx.Dialog.__init__(self, parent, -1, title=_title,
                                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
                                pos=wx.DefaultPosition, size=wx.Size(900, 400))
@@ -102,9 +102,9 @@ class icFilterConstructorDialog(wx.Dialog):
                 self.SetIcon(icon)
 
             self._boxsizer = wx.BoxSizer(wx.VERTICAL)
-            
+
             self._button_boxsizer = wx.BoxSizer(wx.HORIZONTAL)
-            
+
             # Кнопка -OK-
             id_ = wx.NewId()
             self._ok_button = wx.Button(self, id_, u'OK', size=wx.Size(-1, -1))
@@ -126,21 +126,21 @@ class icFilterConstructorDialog(wx.Dialog):
             if Env_:
                 # Устанивить окружение работы конструктора фильтров
                 self._filter_constructor_ctrl.setEnvironment(Env_)
-                
+
             # Если надо то установить редатируемый список паспортов
             if DefaultFilterData_:
                 self._filter_constructor_ctrl.setFilterData(DefaultFilterData_)
             else:
                 self._filter_constructor_ctrl.setDefault()
-            
+
             self._boxsizer.Add(self._filter_constructor_ctrl, 1, wx.EXPAND | wx.GROW, 0)
             self._boxsizer.Add(self._button_boxsizer, 0, wx.ALIGN_RIGHT, 10)
 
             self.SetSizer(self._boxsizer)
             self.SetAutoLayout(True)
         except:
-            log.error(u'Ошибка создания объекта диалогового окна конструктора фильтров')
-        
+            log.fatal(u'Ошибка создания объекта диалогового окна конструктора фильтров')
+
     def OnOK(self, event):
         """
         Обработчик нажатия кнопки -OK-.
@@ -166,7 +166,7 @@ def test(parent=None):
     """
     Функция тестирования.
     """
-    print('TEST ... START') 
+    print('TEST ... START')
     app = wx.PySimpleApp()
 
     import copy
@@ -178,21 +178,21 @@ def test(parent=None):
 
     env = filter_builder_env.FILTER_ENVIRONMENT
     env['requisites'] = []
-    
+
     requisite1 = copy.deepcopy(filter_builder_env.FILTER_REQUISITE)
     requisite1['name'] = 'Name'
     requisite1['description'] = u'Название'
     requisite1['type'] = filter_builder_env.REQUISITE_TYPE_STR
     requisite1['funcs'] = list(filter_builder_env.DEFAULT_STRING_FUNCS)
     env['requisites'].append(requisite1)
-    
+
     requisite2 = copy.deepcopy(filter_builder_env.FILTER_REQUISITE)
     requisite2['name'] = 'Cost'
     requisite2['description'] = u'Цена'
     requisite1['type'] = filter_builder_env.REQUISITE_TYPE_FLOAT
     requisite2['funcs'] = list(filter_builder_env.DEFAULT_NUMBER_FUNCS)
     env['requisites'].append(requisite2)
-    
+
     default_filter = {'name': 'AND', 'type': 'group', 'children': [{'requisite': 'Name',
                                                                     'type': 'compare', 'arg_1': u'qweer',
                                                                     'func': 'equal',
@@ -200,7 +200,7 @@ def test(parent=None):
                                                                    {'requisite': 'Cost', 'type': 'compare',
                                                                     'arg_1': u'1000', 'func': 'lesser',
                                                                     '__sql__': ('cost', '<', '1000')}], 'logic': 'AND'}
-    
+
     result = icFilterConstructorDlg(parent, DefaultFilterData_=default_filter, Env_=env)
     print('TEST ... RESULT:', result)
     app.MainLoop()
