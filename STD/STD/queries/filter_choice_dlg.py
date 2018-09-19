@@ -29,15 +29,15 @@ class icFilterChoiceDlgProto ( wx.Dialog ):
 		bSizer2.Add( self.logicRadioBox, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		self.m_toolBar1 = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.sort_tool = self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"Сортировать по возрастанию", wx.ArtProvider.GetBitmap( u"gtk-sort-ascending", wx.ART_OTHER ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сортировать по возрастанию", u"Сортировать по возрастанию", None ) 
+		self.sort_tool = self.m_toolBar1.AddTool( wx.ID_ANY, u"Сортировать по возрастанию", wx.ArtProvider.GetBitmap( u"gtk-sort-ascending", wx.ART_OTHER ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сортировать по возрастанию", u"Сортировать по возрастанию", None ) 
 		
-		self.sort_reverse_tool = self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"Сортировать по убыванию", wx.ArtProvider.GetBitmap( u"gtk-sort-descending", wx.ART_OTHER ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сортировать по убыванию", u"Сортировать по убыванию", None ) 
+		self.sort_reverse_tool = self.m_toolBar1.AddTool( wx.ID_ANY, u"Сортировать по убыванию", wx.ArtProvider.GetBitmap( u"gtk-sort-descending", wx.ART_OTHER ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сортировать по убыванию", u"Сортировать по убыванию", None ) 
 		
 		self.m_toolBar1.AddSeparator()
 		
-		self.move_up_tool = self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"Переместить вверх", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_OTHER ), wx.NullBitmap, wx.ITEM_NORMAL, u"Переместить вверх", u"Переместить вверх", None ) 
+		self.move_up_tool = self.m_toolBar1.AddTool( wx.ID_ANY, u"Переместить вверх", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_OTHER ), wx.NullBitmap, wx.ITEM_NORMAL, u"Переместить вверх", u"Переместить вверх", None ) 
 		
-		self.move_down_tool = self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"Переместить вниз", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_OTHER ), wx.NullBitmap, wx.ITEM_NORMAL, u"Переместить вниз", u"Переместить вниз", None ) 
+		self.move_down_tool = self.m_toolBar1.AddTool( wx.ID_ANY, u"Переместить вниз", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_OTHER ), wx.NullBitmap, wx.ITEM_NORMAL, u"Переместить вниз", u"Переместить вниз", None ) 
 		
 		self.m_toolBar1.Realize() 
 		

@@ -21,12 +21,14 @@
 """
 
 import wx
+
 from ic.dlg import ic_dlg
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.bitmap import ic_bmp
 from ic.PropertyEditor import icDefInf
+from ic.log import log
 
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -108,7 +110,7 @@ ic_can_contain = ['SpravLevel']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 # Функции редактирования
 
@@ -246,15 +248,19 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         db_psp = self.getICAttr('db')
         if db_psp:
             return db_psp[0][1]
+        else:
+            log.warning(u'Не определена БД хранения справочника <%s>' % self.name)
         return None
 
     def getDBResSubSysName(self):
         """
         Имя подсистемы ресурса БД.
         """
-        tab_psp = self.getICAttr('db')
-        if tab_psp:
-            return tab_psp[0][-1]
+        db_psp = self.getICAttr('db')
+        if db_psp:
+            return db_psp[0][-1]
+        else:
+            log.warning(u'Не определена БД хранения справочника <%s>' % self.name)
         return None
 
     def getTableName(self):
@@ -264,6 +270,8 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         tab_psp = self.getICAttr('table')
         if tab_psp:
             return tab_psp[0][1]
+        else:
+            log.warning(u'Не определена таблица хранения справочника <%s>' % self.name)
         return None
 
     def getTabResSubSysName(self):
@@ -273,6 +281,8 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         tab_psp = self.getICAttr('table')
         if tab_psp:
             return tab_psp[0][-1]
+        else:
+            log.warning(u'Не определена таблица хранения справочника <%s>' % self.name)
         return None
 
     def getDBPsp(self):

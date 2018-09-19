@@ -199,7 +199,8 @@ class icSpravInterface:
             # База данных не указана, поэтому считаем что по умолчанию
             # это SQL БД и таблица сама определяет в какой БД ей храниться
             # SQL-ная БД
-            self._storage = icspravstorage.icSpravSQLStorage(self, None, self.getTableName())
+            self._storage = icspravstorage.icSpravSQLStorage(SpravParent_=self, DBName_=None,
+                                                             TabName_=self.getTableName())
 
         if ShowMsg_ and not self._storage:
             ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Не определено хранилище справочника: %s БД: %s Таблица: %s' % (self.getName(),

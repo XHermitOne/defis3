@@ -34,6 +34,8 @@ ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo',
                        dict(compare=CONTAIN_SIGNATURE, src='.Ok()', dst='.IsOk()'),
                        # Sizers
                        dict(compare=CONTAIN_SIGNATURE, src='.AddSpacer( ( 0, 0), 1, wx.EXPAND,', dst='.AddSpacer('),
+                       # ToolBar
+                       dict(compare=CONTAIN_SIGNATURE, src='.AddLabelTool(', dst='.AddTool('),
                        )
 
 
