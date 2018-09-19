@@ -55,6 +55,17 @@ def get_login():
         return os.environ.get('SUDO_USER', None)
 
 
+def getComputerName():
+    """
+    Имя компютера. Без перекодировки.
+    @return: Получить имя компьютера в сети.
+        Имя компьютера возвращается в utf-8 кодировке.
+    """
+    import socket
+    comp_name = socket.gethostname()
+    return comp_name
+
+
 def getPythonMajorVersion():
     """
     Мажорная версия Python.
