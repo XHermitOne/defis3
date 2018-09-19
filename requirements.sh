@@ -85,7 +85,9 @@ apt show python3-pyodbc | grep Package
 apt show python3-pyodbc | grep Version
 sudo apt install --assume-yes unixodbc unixodbc-dev freetds-bin freetds-dev tdsodbc python3-pyodbc
 
-pip3 install dbfpy
+# pip3 install dbfpy
+# Работу с DBF везде необходимо делать через JDBC
+pip3 install JayDeBeApi3
 
 # Office
 apt show unococnv | grep Package

@@ -115,6 +115,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         try:
             return getattr(self, DOC_NAVIGATOR_SLAVE_LIST_CTRL_NAME)
+        except AttributeError:
+            # Не определен контрол списка
+            pass
         except:
             log.fatal(u'Ошибка получения ведомый контрол списка для отображения списка документов')
         return None
@@ -151,7 +154,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             kernel = ic_user.getKernel()
             if kernel:
                 document = kernel.Create(document_psp)
-                setattr(self, DOC_NAVIGATOR_SLAVE_LIST_CTRL_NAME, document)
+                setattr(self, DOC_NAVIGATOR_SLAVE_DOCUMENT_NAME, document)
             else:
                 log.error(u'Не определен объект ядра для создания объекта %s' % document_psp)
         except:
@@ -162,7 +165,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         Установить ведомый объект документа для управления им.
         @param document: Объект документа.
         """
-        setattr(self, DOC_NAVIGATOR_SLAVE_LIST_CTRL_NAME, document)
+        setattr(self, DOC_NAVIGATOR_SLAVE_DOCUMENT_NAME, document)
 
     def _getDocIndex(self, UUID=None, index=None):
         """
@@ -203,7 +206,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         document = None
         try:
-            document = getattr(self, DOC_NAVIGATOR_SLAVE_LIST_CTRL_NAME)
+            document = getattr(self, DOC_NAVIGATOR_SLAVE_DOCUMENT_NAME)
         except:
             log.fatal(u'Ошибка получения ведомый объект документа для управления им')
 
@@ -247,6 +250,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         try:
             return getattr(self, DOC_NAVIGATOR_DATASET_NAME)
+        except AttributeError:
+            # не определен датасет
+            pass
         except:
             log.fatal(u'Ошибка получения текущего заполненного списка документов')
         return list()
@@ -334,6 +340,16 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         setattr(self, DOC_NAVIGATOR_SLAVE_LIST_COLUMNS_NAME, columns)
 
+        # Если определены колонки и определен контрол списка,
+        # то установить колонки в контрол
+        list_ctrl = self.getSlaveListCtrl()
+        doc = self.getSlaveDocument()
+        if list_ctrl and columns and doc:
+            cols = [dict(label=doc.findRequisite(column).getLabel(),
+                         width=wx.LIST_AUTOSIZE) if isinstance(column, str) else dict(label=u'Колонка %d' % (i+1),
+                                                                                      width=wx.LIST_AUTOSIZE) for i, column in enumerate(columns)]
+            self.setColumns_list_ctrl(list_ctrl, cols=cols)
+
     def getDocListCtrlColumns(self):
         """
         Определение колонок спискового контрола.
@@ -346,6 +362,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         try:
             return getattr(self, DOC_NAVIGATOR_SLAVE_LIST_COLUMNS_NAME)
+        except AttributeError:
+            # Не определен список колонок
+            pass
         except:
             log.fatal(u'Ошибка получения колонок спискового контрола')
         return list()
