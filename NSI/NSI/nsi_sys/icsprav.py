@@ -192,15 +192,20 @@ class icSpravInterface:
                         from . import icodb_spravstorage
                         self._storage = icodb_spravstorage.icSpravODBStorage(self, db_name, self.getTableName())
                     else:
-                        log.warning(u'ОШИБКА! Не определенный тип БД %s СПРАВОЧНИКА %s' % (db_res['type'], self.getName()))
+                        log.warning(u'Не определенный тип БД %s СПРАВОЧНИКА %s' % (db_res['type'],
+                                                                                   self.getName()))
                 except:
-                    log.fatal(u'Ошибка создания хранилища справочников <%s>. Таблица <%s>' % (db_name, self.getTableName()))
+                    log.fatal(u'Ошибка создания хранилища справочников <%s>. Таблица <%s>' % (db_name,
+                                                                                              self.getTableName()))
         else:
             # База данных не указана, поэтому считаем что по умолчанию
             # это SQL БД и таблица сама определяет в какой БД ей храниться
             # SQL-ная БД
-            self._storage = icspravstorage.icSpravSQLStorage(SpravParent_=self, DBName_=None,
-                                                             TabName_=self.getTableName())
+            try:
+                self._storage = icspravstorage.icSpravSQLStorage(SpravParent_=self, DBName_=None,
+                                                                 TabName_=self.getTableName())
+            except:
+                log.fatal(u'Ошибка создания SQL хранилища справочника <%s>' % self.getName())
 
         if ShowMsg_ and not self._storage:
             ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Не определено хранилище справочника: %s БД: %s Таблица: %s' % (self.getName(),
