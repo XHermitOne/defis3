@@ -412,29 +412,41 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             rows.append(tuple(row))
         return rows
 
-    def refreshtDocListCtrlRows(self, rows=None):
+    def refreshtDocListCtrlRows(self, rows=None, auto_size_columns=False):
         """
         Обновление списка строк контрола отображения списка документов.
         @param rows: Список строк.
             Если не определен, то заполняется автоматически по датасету.
+        @param auto_size_columns: Установить автообразмеривание колонок.
         @return: True/False.
         """
         if rows is None:
-            dataset = self.getDocDataset()
+            # При обновление всех строки лучше обновить весь датасет
+            dataset = self.updateDocDataset()
             rows = self.getDocListCtrlRows(dataset)
 
-        list_ctrl = self.getSlaveListCtrl()
-        self.setRows_list_ctrl(list_ctrl, rows=rows,
-                               evenBackgroundColour=wx.WHITE,
-                               oddBackgroundColour=wx.LIGHT_GREY)
+        if not rows:
+            log.warning(u'Пустой список строк для отображения датасета')
 
-    def refreshtDocListCtrlRow(self, index=None, row=None):
+        list_ctrl = self.getSlaveListCtrl()
+        row_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
+        self.setRows_list_ctrl(list_ctrl, rows=rows,
+                               evenBackgroundColour=row_colour,
+                               oddBackgroundColour=wx.Colour(row_colour.Red()/3*2,
+                                                             row_colour.Green()/3*2,
+                                                             row_colour.Blue()/3*2))
+        if auto_size_columns:
+            # Установить автообразмеривание колонок чтобу исключить обрезание информации
+            self.setColumnsAutoSize_list_ctrl(list_ctrl)
+
+    def refreshtDocListCtrlRow(self, index=None, row=None, auto_size_columns=False):
         """
         Обновление списка строк контрола отображения списка документов.
         @param index: Индекс обновляемой строки.
             Если не определен, то берется индекс текущего выбранного элемента.
         @param row: Строка в виде списка.
             Если не определен, то заполняется автоматически по датасету.
+        @param auto_size_columns: Установить автообразмеривание колонок.
         @return: True/False.
         """
         list_ctrl = self.getSlaveListCtrl()
@@ -443,12 +455,20 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         if index > -1:
             if row is None:
+                # При обновление одной строки работаем с существующим датасетом
                 dataset = self.getDocDataset()
                 row = self.getDocListCtrlRows(dataset)[index]
 
+            row_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
             self.setRow_list_ctrl(list_ctrl, row_idx=index, row=row,
-                                  evenBackgroundColour=wx.WHITE,
-                                  oddBackgroundColour=wx.LIGHT_GREY)
+                                  evenBackgroundColour=row_colour,
+                                  oddBackgroundColour=wx.Colour(row_colour.Red()/3*2,
+                                                                row_colour.Green()/3*2,
+                                                                row_colour.Blue()/3*2))
+
+        if auto_size_columns:
+            # Установить автообразмеривание колонок чтобу исключить обрезание информации
+            self.setColumnsAutoSize_list_ctrl(list_ctrl)
 
     # --- Функции движения ---
     def selectItem(self, UUID=None, index=None):

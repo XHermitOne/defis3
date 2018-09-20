@@ -147,6 +147,8 @@ class icListCtrlManager(object):
 
         if isinstance(ctrl, wx.dataview.DataViewListCtrl):
             self.refresh_DataViewListCtrl(ctrl, data_list, columns)
+        elif isinstance(ctrl, wx.ListCtrl):
+            self.refresh_ListCtrl(ctrl, data_list, columns)
         else:
             log.warning(u'Обновление списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
 
