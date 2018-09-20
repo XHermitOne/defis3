@@ -37,7 +37,8 @@ def get_passport_check_sum(passport, asUUID=True):
     @return: Строка контрольной суммы.
     """
     data = str(passport)
-    data = hashlib.md5.md5(data).hexdigest()
+    encode_data = data.encode()
+    data = hashlib.md5(encode_data).hexdigest()
     if asUUID:
         data = data[:8]+'-'+data[8:12]+'-'+data[12:16]+'-'+data[16:20]+'-'+data[20:]
     return data

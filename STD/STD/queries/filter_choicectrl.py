@@ -507,14 +507,14 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
                     res[self.getUUID()] = self._filter
                     ic_res.SaveResourcePickle(filter_filename, res)
                 else:
-                    log.warning(u'Error resource file <%s>' % filter_filename)
+                    log.warning(u'Ошибка ресурсного файла <%s>' % filter_filename)
                     return False
             else:
                 # Просто записать в файл
                 res = {self.getUUID(): self._filter}
                 ic_res.SaveResourcePickle(filter_filename, res)
         else:
-            log.warning(u'Not define save filter file')
+            log.warning(u'Не определен файл для сохранения фильтра')
             return False
         return True
 
@@ -532,14 +532,21 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
         if filter_filename and os.path.exists(filter_filename):
             res = ic_res.LoadResource(filter_filename)
             if res:
+                if self.getUUID() not in res:
+                    log.warning(u'Не найдены фильтры для комбобокса <%s> в файле <%s>!' % (self.getUUID(),
+                                                                                           filter_filename))
+                    self.saveFilter(filter_filename)
+                    return
+
                 filter_data = res.get(self.getUUID(), None)
                 if filter_data:
                     self.setFilter(filter_data)
                 else:
-                    log.warning(u'Not fond filters for combo box <%s> in file <%s>!' % (self.getUUID(),
-                                                                                               filter_filename))
+                    log.warning(u'Не определен фильтр для комбобокса <%s> в файле <%s>!' % (self.getUUID(),
+                                                                                            filter_filename))
         else:
-            log.warning(u'Filters file <%s> not exists!' % filter_filename)
+            log.warning(u'Файл хранения фильтров <%s> не найден' % filter_filename)
+            self.saveFilter(filter_filename)
 
     def setFilter(self, filter_data):
         """
