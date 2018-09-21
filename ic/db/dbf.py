@@ -743,6 +743,9 @@ class icDBFFilePYD(icDBFFilePrototype):
         """
         Получить текущую запись в виде словаря.
         """
+        if self.IsDelRec():
+            log.warning(u'Обращение к записи DBF помеченной на удаление')
+            return None
         return dict([(self.getFieldName(field_num),
                     self.getFieldByNum(field_num)) for field_num in range(self.FieldCount())])
         
@@ -1136,6 +1139,10 @@ class icDBFFileDBFPY(icDBFFilePrototype):
         Получить текущую запись в виде словаря.
         """
         cur_record = self._get_current_record()
+        if cur_record.deleted:
+            log.warning(u'Обращение к записи DBF помеченной на удаление')
+            return None
+
         if cur_record:
             return cur_record.asDict()
         return None
@@ -1455,9 +1462,9 @@ class icDBFFileReadOnly(icDBFFilePrototype):
             """
             Помечена запись как удаленная?
             """
-            #cur_record = self._get_current_record()
-            #if cur_record:
-            #    return cur_record.deleted
+            # cur_record = self._get_current_record()
+            # if cur_record:
+            #     return cur_record.deleted
             return False
 
         def getRecDict(self):
@@ -1465,6 +1472,11 @@ class icDBFFileReadOnly(icDBFFilePrototype):
             Получить текущую запись в виде словаря.
             """
             cur_record = self._get_current_record()
+
+            if self.IsDelRec():
+                log.warning(u'Обращение к записи DBF помеченной на удаление')
+                return None
+
             if cur_record:
                 return dict(cur_record)
             return None
