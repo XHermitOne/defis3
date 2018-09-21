@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 
 """
-Базовый класс управления формами.
+Базовый класс управления программными объектами.
 """
 
 import wx
 
-__version__ = (0, 0, 0, 2)
+from ic.log import log
+
+
+__version__ = (0, 1, 1, 1)
 
 
 class icManagerInterface(object):
@@ -25,9 +28,17 @@ class icManagerInterface(object):
         wx.CallAfter(self.PostInit)
 
     def set_object(self, obj):
+        """
+        Управляемый менеджером объект.
+        """
         self.obj = obj
 
     def get_object(self):
+        """
+        Управляемый менеджером объект.
+        """
+        if self.obj is None:
+            log.warning(u'Не определен управляемый объект для менеджера <%s>' % self.__class__.__name__)
         return self.obj
 
     def GetObject(self, name):
