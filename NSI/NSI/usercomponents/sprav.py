@@ -29,6 +29,7 @@ import ic.components.icResourceParser as prs
 from ic.bitmap import ic_bmp
 from ic.PropertyEditor import icDefInf
 from ic.log import log
+from ic.engine import ic_user
 
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -272,7 +273,8 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
             return tab_psp[0][1]
         else:
             log.warning(u'Не определена таблица хранения справочника <%s>' % self.name)
-        return None
+        # По умолчанию имя таблицы хранения справочника такое же как у справочника
+        return self.getName()
 
     def getTabResSubSysName(self):
         """
@@ -283,7 +285,8 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
             return tab_psp[0][-1]
         else:
             log.warning(u'Не определена таблица хранения справочника <%s>' % self.name)
-        return None
+        # Считаем что текущий проект и есть нужная подсистема по умолчанию
+        return ic_user.getPrjName()
 
     def getDBPsp(self):
         """

@@ -283,6 +283,27 @@ class icSpravStorageInterface:
         """
         return list()
 
+    def getTableName(self):
+        """
+        Имя таблицы справочника.
+        """
+        sprav = self.getSpravParent()
+        return sprav.getTableName() if sprav else None
+
+    def getDBPsp(self):
+        """
+        Паспорт БД хранения справочника.
+        """
+        sprav = self.getSpravParent()
+        return sprav.getDBPsp() if sprav else None
+
+    def getDescription(self):
+        """
+        Описание компонента.
+        """
+        sprav = self.getSpravParent()
+        return sprav.getDescription() if sprav else u''
+
 
 class icSpravSQLStorage(icSpravStorageInterface,
                         gen_nsi_table_res.icSpravTableResGenerator):
@@ -314,7 +335,9 @@ class icSpravSQLStorage(icSpravStorageInterface,
             db = icdb.icSQLAlchemyDB(db_res)
         
         # Таблица данных
-        self._tab = icsqlalchemy.icSQLAlchemyTabClass(TabName_, DB_=db, SubSys_=TabSubSys_)
+        # self._tab = icsqlalchemy.icSQLAlchemyTabClass(TabName_, DB_=db, SubSys_=TabSubSys_)
+        self._tab = None
+        self._tab = self.getTable()
         # Таблица данных, изменненных во времени
         tab_time_name = self.getTabTimeName()
         
@@ -348,7 +371,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
         """
         if self._tab is None:
             tab_res = self._createTableResource()
-            self._tab = self.GetKernel().createObjBySpc(parent=None, res=tab_res)
+            sprav = self.getSpravParent()
+            self._tab = sprav.GetKernel().createObjBySpc(parent=None, res=tab_res) if sprav else None
         return self._tab
 
     # Объект таблицы справочника

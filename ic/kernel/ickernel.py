@@ -206,6 +206,10 @@ class icKernel(icBaseKernel):
         """
         Создает объект по ресурсному описанию.
         """
+        if not res:
+            log.error(u'ЯДРО. Не определен ресурс для создания объекта')
+            return None
+
         obj = prs.icBuildObject(parent, res, evalSpace=context, id=id)
         if obj:
             resName = res['name']

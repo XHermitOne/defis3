@@ -25,12 +25,14 @@ class icSpravTableResGenerator():
         """
         Имя таблицы справочника.
         """
+        log.error(u'Не определен метод определения имени таблицы хранения справочника')
         return None
 
     def getDBPsp(self):
         """
         Паспорт БД хранения справочника.
         """
+        log.error(u'Не определен метод определения БД таблицы хранения справочника')
         return None
 
     def getDescription(self):
