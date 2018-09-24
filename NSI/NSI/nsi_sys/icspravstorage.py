@@ -17,6 +17,7 @@ from ic.db import icsqlalchemy
 from ic.db import icdb
 from ic.engine import ic_user
 from ic.utils import ic_extend
+from . import gen_nsi_table_res
 
 # Версия
 __version__ = (1, 1, 1, 1)
@@ -283,7 +284,8 @@ class icSpravStorageInterface:
         return list()
 
 
-class icSpravSQLStorage(icSpravStorageInterface):
+class icSpravSQLStorage(icSpravStorageInterface,
+                        gen_nsi_table_res.icSpravTableResGenerator):
     """
     Класс SQL хранилища справочника.
     """
@@ -344,6 +346,9 @@ class icSpravSQLStorage(icSpravStorageInterface):
         """
         Объект таблицы справочника.
         """
+        if self._tab is None:
+            tab_res = self._createTableResource()
+            self._tab = self.GetKernel().createObjBySpc(parent=None, res=tab_res)
         return self._tab
 
     # Объект таблицы справочника
