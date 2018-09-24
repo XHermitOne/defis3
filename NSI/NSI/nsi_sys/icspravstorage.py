@@ -15,6 +15,8 @@ from ic.log import log
 from ic.utils import ic_uuid
 from ic.db import icsqlalchemy
 from ic.db import icdb
+from ic.engine import ic_user
+from ic.utils import ic_extend
 
 # Версия
 __version__ = (1, 1, 1, 1)
@@ -854,13 +856,21 @@ class icSpravSQLStorage(icSpravStorageInterface):
         fld_names = self.getSpravFieldNames()
         fld_dict = {}
         for i_fld, fld_name in enumerate(fld_names):
+            value = None
             try:
-                fld_dict[fld_name] = FieldValues_[i_fld]
+                value = FieldValues_[i_fld]
+                fld_dict[fld_name] = value
             except IndexError:
                 # Не все поля есть в гриде
                 if self._tab:
                     if self._tab.isFieldDefault(fld_name):
-                        fld_dict[fld_name] = self._tab.getFieldDefault(fld_name)
+                        value = self._tab.getFieldDefault(fld_name)
+                        fld_dict[fld_name] = value
+
+            if fld_name == 'computer' and not value:
+                fld_dict[fld_name] = ic_extend.getComputerName()
+            if fld_name == 'username' and not value:
+                fld_dict[fld_name] = ic_user.getCurUserName()
         return fld_dict
 
     def getRecByFieldValue(self, FieldName_, FieldValue_, DateTime_=None):
@@ -1035,6 +1045,11 @@ class icSpravSQLStorage(icSpravStorageInterface):
                     if len(recs):
                         if 'id' in RecDict_:
                             del RecDict_['id']
+                        if 'computer' in RecDict_ and not RecDict_['computer']:
+                            RecDict_['computer'] = ic_extend.getComputerName()
+                        if 'username' in RecDict_ and not RecDict_['username']:
+                            RecDict_['username'] = ic_user.getCurUserName()
+
                         self._tab.update(id=recs[0][0], **RecDict_)
                     else:
                         # Нет записи с таким кодом
@@ -1056,6 +1071,10 @@ class icSpravSQLStorage(icSpravStorageInterface):
                     if len(recs):
                         if 'id' in RecDict_:
                             del RecDict_['id']
+                        if 'computer' in RecDict_ and not RecDict_['computer']:
+                            RecDict_['computer'] = ic_extend.getComputerName()
+                        if 'username' in RecDict_ and not RecDict_['username']:
+                            RecDict_['username'] = ic_user.getCurUserName()
                         self._tab.update(recs[0][0], **RecDict_)
                     else:
                         # Нет записи с таким кодом
@@ -1086,17 +1105,26 @@ class icSpravSQLStorage(icSpravStorageInterface):
         fld_names = self.getSpravFieldNames()
         fld_dict = {}
         for fld_name in fld_names:
+            value = None
             try:
-                fld_dict[fld_name] = RecDict_[fld_name]
+                value = RecDict_[fld_name]
+                fld_dict[fld_name] = value
             except KeyError:
                 # Не все поля есть
                 if self._tab:
                     if fld_name == 'uuid':
                         # Если uuid не определен, то сгенерировать его
-                        fld_dict[fld_name] = ic_uuid.get_uuid()
+                        value = ic_uuid.get_uuid()
+                        fld_dict[fld_name] = value
                     else:
                         if self._tab.isFieldDefault(fld_name):
-                            fld_dict[fld_name] = self._tab.getFieldDefault(fld_name)
+                            value = self._tab.getFieldDefault(fld_name)
+                            fld_dict[fld_name] = value
+            if fld_name == 'computer' and not value:
+                fld_dict[fld_name] = ic_extend.getComputerName()
+            if fld_name == 'username' and not value:
+                fld_dict[fld_name] - ic_user.getCurUserName()
+
         return fld_dict
 
     def clear(self):
