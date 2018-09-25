@@ -30,7 +30,7 @@ from STD.queries import filter_generate
 
 
 # Version
-__version__ = (0, 0, 5, 4)
+__version__ = (0, 1, 1, 1)
 
 
 class icObjPersistentPrototype:
@@ -1150,7 +1150,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     fields_spc = child_requisite._createFieldsSpc()
                     if fields_spc is None:
                         log.warning(u'Не определена спецификация поля при создании таблицы хранимого объекта')
-                    tab_res['child'] += fields_spc
+                    tab_res['child'].append(fields_spc)
                 elif issubclass(child_requisite.__class__, icObjPersistent):
                     # Это спецификация табличной части
                     child_requisite._createTableResource(TableName_)

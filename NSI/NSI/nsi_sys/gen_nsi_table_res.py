@@ -56,37 +56,37 @@ class icSpravTableResGenerator():
         tab_res = self._createTabSpc(sTableName)
 
         fields_spc = self._createFieldSpc('type', sFieldDescription=u'Тип справочника')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('cod', sFieldDescription=u'Код справочника')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('name', sFieldDescription=u'Наименование')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('count', 'I', sFieldDescription=u'Количество ссылок на элемент справочника')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('access', sFieldDescription=u'Права доступа')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('computer', sFieldDescription=u'Компьютер')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('username', sFieldDescription=u'Пользователь')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('s1', 'T', sFieldDescription=u'Строка 1. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('s2', 'T', sFieldDescription=u'Строка 2. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('s3', 'T', sFieldDescription=u'Строка 3. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('n1', 'I', sFieldDescription=u'Целое 1. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('n2', 'I', sFieldDescription=u'Целое 2. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('n3', 'I', sFieldDescription=u'Целое 3. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('f1', 'F', sFieldDescription=u'Вещественное 1. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('f2', 'F', sFieldDescription=u'Вещественное 2. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
         fields_spc = self._createFieldSpc('f3', 'F', sFieldDescription=u'Вещественное 3. Резерв.')
-        tab_res['child'] += fields_spc
+        tab_res['child'].append(fields_spc)
 
         return tab_res
 
@@ -104,7 +104,7 @@ class icSpravTableResGenerator():
         tab_spc['description'] = ic_str.str2unicode(self.getDescription())
         tab_spc['table'] = sTableName.lower()
         tab_spc['source'] = self.getDBPsp()
-        tab_spc['children'] = []  # Список имен подчиненных таблиц
+        tab_spc['children'] = list()  # Список имен подчиненных таблиц
 
         tab_spc['child'] = list()
         return tab_spc
@@ -151,9 +151,11 @@ class icSpravTableResGenerator():
         # создание ресурса таблицы
         is_res = prj_res_ctrl.isRes(sTableName, 'tab')
         if sTableName and not is_res:
+            log.info(u'Создание ресурса таблицы <%s>' % sTableName)
             table_res = self._createTabRes(sTableName)
             # Сохранить ресурс
             prj_res_ctrl.saveRes(sTableName, 'tab', table_res)
+            return table_res
         elif sTableName and is_res:
             return prj_res_ctrl.loadRes(sTableName, 'tab')
         else:
