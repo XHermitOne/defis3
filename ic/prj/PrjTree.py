@@ -14,6 +14,7 @@ from . import prj_root
 from ic.bitmap import ic_bmp
 from ic.log import log
 from ic.editor import ext_python_editor
+from ic.PropertyEditor import icDefInf
 
 __version__ = (0, 1, 1, 1)
 
@@ -218,7 +219,7 @@ class PrjTree(wx.TreeCtrl):
                 self.Expand(self._Root)
             return True
         except:
-            log.error(u'Build project tree error!')
+            log.fatal(u'Ошибка построения дерева проекта')
             return False
 
     def getRoot(self):
@@ -290,10 +291,10 @@ class PrjTree(wx.TreeCtrl):
             txt = Node_.name.strip()
 
         # Определить цвет
-        txt_color = wx.Colour(0, 0, 0)
+        txt_color = wx.Colour(*icDefInf.getActivateColour())
         # Установить элемент/узел дерева
         if not self._Root:
-            log.info(u'Add root <%s>' % txt)
+            log.info(u'Добавление корневого элемента дерева проекта <%s>' % txt)
             self._Root = self.AddRoot(txt)
             Root_ = self._Root
             # Установить картинки у корневого элемента
@@ -586,8 +587,8 @@ class PrjTree(wx.TreeCtrl):
                 for child in node.getChildren():
                     self.AddBranch(item, child)
             except:
-                log.error(u'Open subsystem error')
-                wx.MessageBox(u'Open subsystem error',
+                log.fatal(u'Ошибка открытия подсистемы')
+                wx.MessageBox(u'Ошибка открытия подсистемы',
                               u'ОШИБКА',
                               wx.OK | wx.ICON_ERROR)
         

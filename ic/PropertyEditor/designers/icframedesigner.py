@@ -167,8 +167,8 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
             pen = wx.Pen('BLACK')
             dc.SetPen(pen)
             step = 10
-            for y in xrange(int((height-H)/step)-1):
-                for x in xrange(int(width/step)-1):
+            for y in range(int((height-H)/step)-1):
+                for x in range(int(width/step)-1):
                     dc.DrawPoint((x+1)*step, (y+1)*step+H)
         # Рисуем круглые углы
         if 0:

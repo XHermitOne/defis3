@@ -192,7 +192,7 @@ class PropNotebookEdt:
                     #   По состоянию родителя определяем изменять цвет текста
                     #   или нет
                     prnt = tree.GetItemParent(tree.GetSelection())
-                    if old != value and tree.GetItemTextColour(prnt) != wx.Colour(*icDefInf.DEACTIVATE_COLOR):
+                    if old != value and tree.GetItemTextColour(prnt) != wx.Colour(*icDefInf.getDeactivateColour()):
                         tree.SetTextColor(tree.GetSelection())
         return ret
 

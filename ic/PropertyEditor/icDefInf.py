@@ -356,14 +356,24 @@ def GetGroupIdByName(name):
 
 ObjectGroupsMenuStruct = []
 
+
 # -------------------------------------------------------------------------------
 #   Цвета текста активных и неактивных объектов
-ACTIVATE_COLOR = (0, 0, 0)
-DEACTIVATE_COLOR = (150, 150, 150)
+def getActivateColour():
+    """
+    Цвет текста активных объектов.
+    """
+    return tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))[:-1] if wx.GetApp() else (0, 0, 0)
 
-#   Функции для арботы со стилями
+
+def getDeactivateColour():
+    """
+    Цвет текста не активных объектов.
+    """
+    return tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT))[:-1] if wx.GetApp() else (164, 164, 164)
 
 
+#   Функции для работы со стилями
 def getStyleDict(style, allstyles):
     """
     Возвращает стиль компонента в виде словаря.

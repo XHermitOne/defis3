@@ -489,10 +489,10 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         # Устанавливем цвет узлов
         if not bActive or ('activate' in res and res['activate'] in ['0', 'False']):
-            self.SetItemTextColour(root, wx.Colour(*icDefInf.DEACTIVATE_COLOR))
+            self.SetItemTextColour(root, wx.Colour(*icDefInf.getDeactivateColour()))
             bActive = False
         else:
-            self.SetItemTextColour(root, wx.Colour(*icDefInf.ACTIVATE_COLOR))
+            self.SetItemTextColour(root, wx.Colour(*icDefInf.getActivateColour()))
 
         self.SetItemData(root, res)
         self._dictResTreeId[self._treeItemId] = root
@@ -1651,10 +1651,10 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             return
 
         if not bActive or ('activate' in data and data['activate'] in [0, '0', 'False']):
-            self.SetItemTextColour(parent, wx.Colour(*icDefInf.DEACTIVATE_COLOR))
+            self.SetItemTextColour(parent, wx.Colour(*icDefInf.getDeactivateColour()))
             bActive = False
         else:
-            self.SetItemTextColour(parent, wx.Colour(*icDefInf.ACTIVATE_COLOR))
+            self.SetItemTextColour(parent, wx.Colour(*icDefInf.getActivateColour()))
 
         # Создаем список дочерних элементов
         while 1:
