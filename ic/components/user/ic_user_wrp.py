@@ -93,8 +93,8 @@ ic_class_spc = {'type': 'User',
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
-ic_class_pic = '@common.imgEdtUser'
-ic_class_pic2 = '@common.imgEdtUser'
+ic_class_pic = '@common.imgUser'
+ic_class_pic2 = '@common.imgUser'
 
 #   Путь до файла документации
 ic_class_doc = 'ic/doc/ic.components.user.ic_user_wrp.icUser-class.html'
