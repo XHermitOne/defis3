@@ -106,8 +106,8 @@ ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('tag.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('tag.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('tag-label-black.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('tag-label-black.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

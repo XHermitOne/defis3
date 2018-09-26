@@ -29,7 +29,7 @@ import ic.components.icResourceParser as prs
 # from work_flow.work_sys import workflow_img
 from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
-from ic.kernel import io_prnt
+from ic.log import log
 
 import work_flow.work_sys.icbusinessobj as parentModule
 from work_flow.work_sys import icworkstorage
@@ -119,8 +119,8 @@ ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('box.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('box.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('ic_box.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('ic_box.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
@@ -134,7 +134,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'TABRequisite', 'REFRequisite']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 # Функции редактирования
 

@@ -8,10 +8,10 @@
 ВНИМАНИЕ! Библиотека образов пополняется из источников (PNG 16x16):
 1. Библиотека FatCow
     http://www.fatcow.com/free-icons
-2. Библиотека famfamfam_silk
-    http://www.famfamfam.com/lab/icons/silk/
-3. Библиотека иконок fugue-icons
+2. Библиотека иконок fugue-icons
     http://p.yusukekamiyamane.com/
+3. Библиотека famfamfam_silk
+    http://www.famfamfam.com/lab/icons/silk/
 4. Иконки темы GNOME
     ftp://ftp.gnome.org/pub/gnome/sources/gnome-icon-theme/
 5. Иконки темы Tango
@@ -574,8 +574,8 @@ def img_init():
     imgRename = wx.Image(os.path.join(path, 'textfield_rename.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgProperty = wx.Image(os.path.join(path, 'property-blue.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgAdvanced = wx.Image(os.path.join(path, 'advanced.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgForma = wx.Image(os.path.join(path, 'application-form.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgMain = wx.Image(os.path.join(path, 'application-blue.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgForma = wx.Image(os.path.join(path, 'application_form.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgMain = wx.Image(os.path.join(path, 'application.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgMenu = wx.Image(os.path.join(path, 'ui-menu.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgDb = wx.Image(os.path.join(path, 'database.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgExport = wx.Image(os.path.join(path, 'document-export.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
@@ -605,15 +605,15 @@ def img_init():
     imgTrashFull = wx.Image(os.path.join(path, 'delete_all.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgFilter = wx.Image(os.path.join(path, 'funnel.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
 
-    imgFolder = wx.Image(os.path.join(path, 'folder.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgFolderOpen = wx.Image(os.path.join(path, 'folder-open.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgFolder = wx.Image(os.path.join(path, 'folder_small_normal_hover.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgFolderOpen = wx.Image(os.path.join(path, 'folderopen_small_normal_hover.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgInputFolder = wx.Image(os.path.join(path, 'folder-import.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgInputFolderOpen = wx.Image(os.path.join(path, 'folder-import.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgOutputFolder = wx.Image(os.path.join(path, 'folder-export.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgOutputFolderOpen = wx.Image(os.path.join(path, 'folder-export.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     
-    imgPackageClose = wx.Image(os.path.join(path, 'folder.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgPackageOpen = wx.Image(os.path.join(path, 'folder-open.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgPackageClose = imgFolder
+    imgPackageOpen = imgFolderOpen
     # imgHelp = wx.Image(os.path.join(path, 'question-white.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgHelp = wx.ArtProvider.GetBitmap(wx.ART_HELP, wx.ART_MENU)
     imgHelpBook = wx.Image(os.path.join(path, 'book-question.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
@@ -632,7 +632,7 @@ def img_init():
     imgGoPrevPage = wx.ArtProvider.GetBitmap(wx.ART_GO_BACK, wx.ART_MENU)
     imgGoNextPage = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_MENU)
     imgGoHomePage = wx.ArtProvider.GetBitmap(wx.ART_GO_HOME, wx.ART_MENU)
-    imgRefreshPage = wx.Image(os.path.join(path, 'arrow-circle-double.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgRefreshPage = wx.Image(os.path.join(path, 'arrow_refresh.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     # imgStopPage = wx.Image(os.path.join(path, 'cross-circle.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgStopPage = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_MENU)
     # imgSearchPage = wx.Image(os.path.join(path, 'magnifier.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
@@ -665,12 +665,12 @@ def img_init():
     imgEdtPanel = wx.Image(os.path.join(path, 'ui-panel.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtDataLink = wx.Image(os.path.join(path, 'plugin_link.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtGrid = wx.Image(os.path.join(path, 'ui-scroll-pane-table.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtDBGrid = wx.Image(os.path.join(path, 'table-money.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtDBGrid = wx.Image(os.path.join(path, 'table_money.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtObjGrid = wx.Image(os.path.join(path, 'table--arrow.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtBoxSizer = wx.Image(os.path.join(path, 'layout-3.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtStaticBoxSizer = wx.Image(os.path.join(path, 'layout-2.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtImport = wx.Image(os.path.join(path, 'import.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtCell = wx.Image(os.path.join(path, 'table-select.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtCell = wx.Image(os.path.join(path, 'table_select.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtSizerSpacer = wx.Image(os.path.join(path, 'arrow-resize.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtSeparator = wx.Image(os.path.join(path, 'ui-separator.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtTextField = wx.Image(os.path.join(path, 'ui-text-field.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
@@ -691,22 +691,22 @@ def img_init():
     imgEdtMenuBar = wx.Image(os.path.join(path, 'ui-combo-box-blue.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtMenu = wx.Image(os.path.join(path, 'ui-menu.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtMenuItem = wx.Image(os.path.join(path, 'ui-menu-blue.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtMainWin = wx.Image(os.path.join(path, 'application-blue.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtSQLite = wx.Image(os.path.join(path, 'database-sql.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtPostgreSQL = wx.Image(os.path.join(path, 'database-sql.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtMSSQL = wx.Image(os.path.join(path, 'database-sql.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtMainWin = wx.Image(os.path.join(path, 'application.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtSQLite = wx.Image(os.path.join(path, 'database_gear.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtPostgreSQL = wx.Image(os.path.join(path, 'database_gear.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtMSSQL = wx.Image(os.path.join(path, 'database_gear.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtODBC = wx.Image(os.path.join(path, 'sql.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtCOMSrv = wx.Image(os.path.join(path, 'zone.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtCOMClient = wx.Image(os.path.join(path, 'zone-share.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtTable = wx.Image(os.path.join(path, 'table.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtTabView = wx.Image(os.path.join(path, 'table-rotate.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtQuery = wx.Image(os.path.join(path, 'ic_lightning.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtField = wx.Image(os.path.join(path, 'table-join-column.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtField = wx.Image(os.path.join(path, 'table_select_column.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtLink = wx.Image(os.path.join(path, 'chain.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtSQLDB = wx.Image(os.path.join(path, 'database-sql.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtDBScheme = wx.Image(os.path.join(path, 'tables-relation.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtSQLDB = wx.Image(os.path.join(path, 'database_gear.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtDBScheme = wx.Image(os.path.join(path, 'table_relationship.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtDBModel = wx.Image(os.path.join(path, 'tables-stacks.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtDBLink = wx.Image(os.path.join(path, 'tables-relation.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtDBLink = wx.Image(os.path.join(path, 'table_relationship.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtStorageSrc = wx.Image(os.path.join(path, 'database-share.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtObjStorage = wx.Image(os.path.join(path, 'database.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtMetaComponent = wx.Image(os.path.join(path, 'plugin.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
@@ -773,8 +773,8 @@ def img_init():
     imgEdtPrj = wx.Image(os.path.join(path, 'bricks.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtImgBrowser = wx.Image(os.path.join(path, 'photo-album.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtEnv = wx.Image(os.path.join(path, 'page_white_world.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtUser = wx.Image(os.path.join(path, 'user.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtUsers = wx.Image(os.path.join(path, 'users.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtUser = imgUser
+    imgEdtUsers = imgUsers
     imgEdtReport = wx.Image(os.path.join(path, 'report.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtReportXML = wx.Image(os.path.join(path, 'page_excel.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtReports = wx.Image(os.path.join(path, 'report_stack.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
@@ -786,10 +786,10 @@ def img_init():
     imgEdtInterface = wx.Image(os.path.join(path, 'document-node.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtTemplate = wx.Image(os.path.join(path, 'document-code.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtMethod = wx.Image(os.path.join(path, 'category-item.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtPlugin = wx.Image(os.path.join(path, 'plug.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtPluginIn = wx.Image(os.path.join(path, 'plug--plus.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtPluginOut = wx.Image(os.path.join(path, 'plug--minus.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtPluginNot = wx.Image(os.path.join(path, 'plug--exclamation.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtPlugin = wx.Image(os.path.join(path, 'connect.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtPluginIn = wx.Image(os.path.join(path, 'connect.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtPluginOut = wx.Image(os.path.join(path, 'disconnect.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtPluginNot = wx.Image(os.path.join(path, 'disconnect.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     
     # Картинки прикладных систем
     imgArrowIndicator = wx.Image(os.path.join(path, 'dashboard.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
