@@ -114,7 +114,7 @@ class icMenuImpSysNode(flatmenu.FlatMenu):
         link_id = wx.NewId()
         # Связь с подсистемой
         item = flatmenu.FlatMenuItem(self, link_id,
-                                     u'Подключить систему', u'Подключить систему',
+                                     u'Подключить подсистему', u'Подключить подсистему',
                                      normalBmp=imglib.imgEdtPluginIn)
         self.AppendItem(item)
         prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnLinkSubSys, id=link_id)
@@ -166,7 +166,7 @@ class icMenuNotImpSysNode(flatmenu.FlatMenu):
         # Переподключить подсистему
         link_id = wx.NewId()
         item = flatmenu.FlatMenuItem(self, link_id,
-                                     u'Подключить систему', u'Подключить систему',
+                                     u'Подключить подсистему', u'Подключить подсистему',
                                      normalBmp=imglib.imgEdtPluginIn)
         self.AppendItem(item)
         prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnLinkSubSys, id=link_id)
