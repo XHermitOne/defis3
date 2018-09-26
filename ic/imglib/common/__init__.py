@@ -789,7 +789,7 @@ def img_init():
     imgEdtPlugin = wx.Image(os.path.join(path, 'connect.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtPluginIn = wx.Image(os.path.join(path, 'connect.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgEdtPluginOut = wx.Image(os.path.join(path, 'disconnect.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    imgEdtPluginNot = wx.Image(os.path.join(path, 'disconnect.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+    imgEdtPluginNot = wx.Image(os.path.join(path, 'error.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     
     # Картинки прикладных систем
     imgArrowIndicator = wx.Image(os.path.join(path, 'dashboard.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
