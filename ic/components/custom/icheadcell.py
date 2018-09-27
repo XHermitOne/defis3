@@ -51,7 +51,7 @@
 """
 
 import wx
-import wx.grid as  gridlib
+import wx.grid as gridlib
 
 import ic.components.icgrid as icgrid
 from ic.components import icwidget
@@ -61,8 +61,6 @@ from ic.PropertyEditor import icDefInf
 import ic.utils.graphicUtils as graphicUtils
 from ic.utils import util
 from ic.log import log
-
-__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
@@ -141,7 +139,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 0, 0, 4)
+__version__ = (1, 1, 1, 1)
 
 
 # Кнопка сортировки по убыванию
@@ -161,7 +159,6 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
     """
     Стандартное представление ячейки шапки.
     """
-
     labelDelta = 1
 
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace={},
@@ -218,17 +215,17 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
         self.SetLabel(label)
         self.SetPosition(pos)
         font = parent.GetFont()
-        if not font.Ok():
+        if not font.IsOk():
             font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
         wx.PyControl.SetFont(self, font)
 
         self.defBackClr = parent.GetBackgroundColour()
-        if not self.defBackClr.Ok():
+        if not self.defBackClr.IsOk():
             self.defBackClr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE)
         self.SetBackgroundColour(self.defBackClr)
 
         clr = parent.GetForegroundColour()
-        if not clr.Ok():
+        if not clr.IsOk():
             clr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT)
         self.SetForegroundColour(clr)
 
@@ -282,8 +279,8 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
         if ret:
             self.borderStyle = val
             
-        if not self.borderStyle or not isinstance(self.borderStyle, wx.SOLID):
-            self.borderStyle = wx.SOLID
+        if not self.borderStyle or not isinstance(self.borderStyle, wx.PENSTYLE_SOLID):
+            self.borderStyle = wx.PENSTYLE_SOLID
 
         #   Тип штриховки фона
         self.backgroundType = component['backgroundType']

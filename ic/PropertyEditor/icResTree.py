@@ -2456,12 +2456,18 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def open_formeditor_doc(self):
         ide = self.GetIDEInterface()
         if ide:
+            main_win = ide.GetIDEFrame()
+            if main_win is None:
+                msg = u'Не определено окно IDE. Редактор форм не может быть запущен в IDE.'
+                log.warning(msg)
+                ic_dlg.icWarningBox(u'ОШИБКА', msg)
+                return
+
             icResourceParser.ClearComponentModulDict()
             icResourceParser.setEditorPoint(self)
             edt = ide.OpenFormEditor(copy.deepcopy(self.res), self)
             icResourceParser.setDesignMode(False)
             self.graphEditor = edt or self.graphEditor
-            main_win = ide.GetIDEFrame()
             mgr = main_win.GetFrameManager()
             if self.graphEditor and not self._toolpanel:
                 self._toolpanel = self.graphEditor.CreateToolPanel(ObjectsInfo=GetObjectsInfo(), parent=main_win)

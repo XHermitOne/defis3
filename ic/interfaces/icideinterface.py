@@ -263,3 +263,11 @@ class icIDEInterface:
         """
         """
         return self._ide
+
+    def OpenFormEditor(self, res, res_editor=None, *arg, **kwarg):
+        """
+        Открыть редактор форм для редактирования ресурса.
+        @param res: Ресурсное описание.
+        @param res_editor: Указатель на редактор ресурсов.
+        """
+        pass

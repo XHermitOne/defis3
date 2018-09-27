@@ -31,13 +31,13 @@
 
 import wx
 import  wx.grid as  gridlib
+
 import ic.components.icgrid as icgrid
 from ic.components.icwidget import icBase, icWidget, SPC_IC_WIDGET
 from ic.utils.util import icSpcDefStruct, getICAttr
 from ic.components.icfont import icFont
-from ic.log.iclog import LogLastError
 from . import icheadcell
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.PropertyEditor import icDefInf
 
 SPC_IC_HEAD = {'type': 'Head',
@@ -88,11 +88,12 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBar', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 0, 0, 3)
+__version__ = (1, 1, 1, 1)
 
 
-def sortCell(x, y):
+def depricated_sortCell(x, y):
     """
+    Функция сортировки.
     """
     if x.span == (1, 1) and y.span == (1, 1):
         X_row, X_col = x.position
@@ -111,6 +112,13 @@ def sortCell(x, y):
         return 1
     else:
         return 0
+
+
+def sortCell(cell):
+    """
+    Функция сортировки ячеек.
+    """
+    return str(cell.span) + str(cell.position)
 
 
 class icHeader(icBase, wx.ScrolledWindow):
@@ -268,10 +276,11 @@ class icHeader(icBase, wx.ScrolledWindow):
         try:
             self.sz.Add(cell, pos, cell.span, cell.add_style)
         except:
-            log.fatal(u'ADD ERROR')
+            log.fatal(u'Ошибка добавления ячейки в сайзер')
             
         self.parAddList.append(cell)
-        self.parAddList.sort(sortCell)
+        # self.parAddList.sort(sortCell)
+        self.parAddList = sorted(self.parAddList, key=sortCell)
         self.sz.Layout()
 
     def GetMaxRow(self):
@@ -330,7 +339,11 @@ class icHeader(icBase, wx.ScrolledWindow):
         Переконструирует шапку.
         """
         for obj in self.parAddList:
-            self.sz.Remove(obj)
+            obj_idx = self.parAddList.index(obj)
+            if 0 <= obj_idx < self.sz.GetItemCount():
+                self.sz.Remove(obj_idx)
+            else:
+                log.warning(u'Ошибка удаления ячейки шапки из сайзера. Индекс <%s>' % str(obj_idx))
         
         for indx, obj in enumerate(self.parAddList):
 
@@ -347,7 +360,7 @@ class icHeader(icBase, wx.ScrolledWindow):
             try:
                 self.sz.Add(obj, pos, obj.span, obj.add_style)
             except:
-                log.warning(u'wxGridBagSize cell (%s : %s) is busy' % (pos[0], pos[1]))
+                log.warning(u'wxGridBagSize ячейка (%s : %s) занята' % (pos[0], pos[1]))
 
         self.sz.Layout()
         self.Refresh()
@@ -369,7 +382,7 @@ class icHeader(icBase, wx.ScrolledWindow):
             return
 
         clr = self.GetBackgroundColour()
-        backBrush = wx.Brush(clr, wx.SOLID)
+        backBrush = wx.Brush(clr, wx.BRUSHSTYLE_SOLID)
 
         if wx.Platform == '__WXMAC__' and clr == self.defBackClr:
             # if colour is still the default then use the striped background on Mac

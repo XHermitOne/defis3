@@ -784,7 +784,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
                 try:
                     value, point = setTempl(templ, value, -1)
                 except:
-                    MsgLastError(self.parent, u'Exception in setTempl()')
+                    log.fatal(u'Ошибка в setTempl')
         except:
             log.fatal(u'Ошибка в GetValue')
             value = ''
@@ -937,11 +937,8 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
         @return: Возвращает признак того, что данная ячейка содержит значение определенного тип
         @rtype: C{bool}
         """
-        colType = string.split(self.dataTypes[col], ':')[0]
-        if typeName == colType:
-            return True
-        else:
-            return False
+        colType = self.dataTypes[col].split(':')[0]
+        return typeName == colType
 
     def CanSetValueAs(self, row, col, typeName):
         """

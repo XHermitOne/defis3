@@ -8,7 +8,7 @@
 import time
 import os.path
 import wx
-import wx.wizard as wiz
+import wx.adv
 
 from ic.utils import resource
 from ic.PropertyEditor import icDefInf
@@ -140,7 +140,9 @@ def CreatUserClass(discr, file_templ=None):
                     if not func:
                         func = 'On_' + attr
                     text += ot + 'def %s(self, evt):' % func + '\n'
-                    text += ot + u'    """Event %s, attribute=%s"""' % (tp, attr) + '\n'
+                    text += ot + u'    """\n'
+                    text += ot + u'    Event %s, attribute=%s' % (tp, attr) + '\n'
+                    text += ot + u'    """\n'
                     text += ot + '    self.evalSpace[\'evt\'] = evt\n'
                     text += ot + '    self.evalSpace[\'self\'] = self\n'
                     text += ot + '    ret, val = self.eval_attr(\'%s\')' % attr + '\n'
@@ -198,10 +200,10 @@ def makePageTitle2(wizPg, title):
     return sizer
 
 
-class TitledPage(wiz.WizardPageSimple):
+class TitledPage(wx.adv.WizardPageSimple):
 
     def __init__(self, parent, title):
-        wiz.WizardPageSimple.__init__(self, parent)
+        wx.adv.WizardPageSimple.__init__(self, parent)
         self.sizer = makePageTitle2(self, title)
         self._row = 3
 
@@ -260,10 +262,10 @@ def makeEditModulPage(wizPg, title):
     return sizer
 
 
-class FirstPage(wiz.PyWizardPage):
+class FirstPage(wx.adv.PyWizardPage):
 
     def __init__(self, parent, title):
-        wiz.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         self.sizer = makeFirstPage(self, title)
         self.next = self.prev = None
 
@@ -280,10 +282,10 @@ class FirstPage(wiz.PyWizardPage):
         return self.prev
 
 
-class AttrPage(wiz.PyWizardPage):
+class AttrPage(wx.adv.PyWizardPage):
 
     def __init__(self, parent, title):
-        wiz.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         self.sizer = makeAttrPage(self, title)
         self.next = self.prev = None
 
@@ -300,10 +302,10 @@ class AttrPage(wiz.PyWizardPage):
         return self.prev
 
 
-class MsgPage(wiz.PyWizardPage):
+class MsgPage(wx.adv.PyWizardPage):
 
     def __init__(self, parent, title):
-        wiz.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         self.sizer = makeMsgPage(self, title)
         self.next = self.prev = None
 
@@ -330,7 +332,7 @@ class MsgPage(wiz.PyWizardPage):
         """
         first = self.GetPrev().GetPrev()
         dct = first.sizer.evalSpace['_dict_obj']
-        spc = {}
+        spc = dict()
         spc['__events__'] = {}
         spc['__attr_types__'] = {}
         spc['__parent__'] = 'icwidget.SPC_IC_WIDGET'
@@ -403,10 +405,10 @@ class MsgPage(wiz.PyWizardPage):
         return text_mod
 
 
-class EditModulPage(wiz.PyWizardPage):
+class EditModulPage(wx.adv.PyWizardPage):
 
     def __init__(self, parent, title):
-        wiz.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         self.sizer = makeEditModulPage(self, title)
         self.editor = self.sizer.evalSpace['_dict_obj']['Editor']
         self.modulName = self.sizer.evalSpace['_dict_obj']['ModulName']
@@ -452,7 +454,7 @@ def RunWizard(parent):
     """
     Create the wizard and the pages.
     """
-    wizard = wiz.Wizard(parent, -1, _('Create Component Wizard'), common.imgUserCompWizard)
+    wizard = wx.adv.Wizard(parent, -1, _('Create Component Wizard'), common.imgUserCompWizard)
     page1 = FirstPage(wizard, _('Base parameters'))
     page2 = AttrPage(wizard, _('Class attributes'))
     page3 = MsgPage(wizard, _('Event attributes'))

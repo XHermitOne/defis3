@@ -71,6 +71,14 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
         except:
             log.fatal(u'Ошибка открытия файла <%s> в IDE' % filename)
 
+    def OpenFormEditor(self, res, res_editor=None, *arg, **kwarg):
+        """
+        Открыть редактор форм для редактирования ресурса.
+        @param res: Ресурсное описание.
+        @param res_editor: Указатель на редактор ресурсов.
+        """
+        log.error(u'Не реализован дизайнер форм в IDE <%s>' % self.__class__.__name__)
+
 
 GEANY_EXEC_FILENAME = '/usr/bin/geany'
 GEANY_EXT_PYTHON_EDITOR_FMT = 'geany --no-msgwin %s %s &'
@@ -128,6 +136,14 @@ class icGeanyPythonEditor(icideinterface.icIDEInterface):
         @param fileName: Имя файла.
         """
         pass
+
+    def OpenFormEditor(self, res, res_editor=None, *arg, **kwarg):
+        """
+        Открыть редактор форм для редактирования ресурса.
+        @param res: Ресурсное описание.
+        @param res_editor: Указатель на редактор ресурсов.
+        """
+        log.error(u'Не реализован дизайнер форм в IDE <%s>' % self.__class__.__name__)
 
 
 if os.path.exists(GEANY_EXEC_FILENAME):

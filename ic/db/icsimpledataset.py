@@ -137,7 +137,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         self.bBof = False
         self.bEof = False
 
-        self.listFld = range(len(self.description))
+        self.listFld = list(range(len(self.description)))
 
         for indx, fld in enumerate(self.description):
             self.listFld[indx] = fld['name']
