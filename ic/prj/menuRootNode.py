@@ -497,5 +497,5 @@ class icMenuRootNode(flatmenu.FlatMenu):
         """
         Вызов wxFormBuilder.
         """
-        from . import prj_fb
-        prj_fb.run_wxformbuilder()
+        from ic.editor import wxfb_manager
+        wxfb_manager.run_wxformbuilder()
