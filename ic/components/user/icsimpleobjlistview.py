@@ -54,8 +54,8 @@ ic_class_spc = {'type': 'SimpleObjectListView',
                 'init_expr': None,
                 '_uuid': None,
 
-                'evenRowsBackColor': (160, 160, 160),
-                'oddRowsBackColor': (224, 224, 224),
+                'evenRowsBackColor': None,
+                'oddRowsBackColor': None,
 
                 'data_src': None,  # Паспорт источника данных
                 'get_dataset': None,   # Функция получения данных в виде списка словарей
@@ -205,8 +205,8 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
                                              sortable=self.sortable,
                                              useAlternateBackColors=True)
         # Цвет фона линий четных/не четных
-        self.evenRowsBackColor = self.getICAttr('evenRowsBackColor')
-        self.oddRowsBackColor = self.getICAttr('oddRowsBackColor')
+        self.evenRowsBackColor = self.getEvenRowsBGColour()
+        self.oddRowsBackColor = self.getOddRowsBGColour()
 
         self._data_src_obj = None
 
@@ -223,6 +223,20 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         # По умолчанию после создания объекта обновить
         # его наполнение
         self.refreshDataset()
+
+    def getEvenRowsBGColour(self):
+        """
+        Цвет фона четных строк.
+        """
+        colour = self.getICAttr('evenRowsBackColor')
+        return colour if colour else tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]
+
+    def getOddRowsBGColour(self):
+        """
+        Цвет фона не четных строк.
+        """
+        colour = self.getICAttr('oddRowsBackColor')
+        return colour if colour else tuple([int(c / 3 * 2) for c in tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]])
 
     def getDataSource(self):
         """
@@ -327,7 +341,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
                 # этот набор из источника данных
                 DatasetList_ = self.getDatasetFromDataSource(self.data_src, data_src_filter)
         if DatasetList_ is None:
-            log.warning(u'Not define DATASET for object <%s>' % self.name)
+            log.warning(u'Не определен DATASET для объекта <%s>' % self.name)
         else:
             if self.isICAttrValue('conv_dataset'):
                 # Определена функция преобразования датасета
@@ -426,6 +440,20 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         """
         return len(self.columns)
 
+    def getRowTextColour(self):
+        """
+        Цвет текста строки.
+        """
+        colour = self.getICAttr('row_text_color')
+        return colour if colour else wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOXTEXT)
+
+    def getRowBGColour(self):
+        """
+        Цвет фона строки.
+        """
+        colour = self.getICAttr('row_background_color')
+        return colour if colour else None
+
     def rowFormatterFunction(self, list_item, record):
         """
         Функция раскраски строк списка.
@@ -433,8 +461,8 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         @param record: Словарь записи.
         """
         self.context['RECORD'] = record
-        text_colour = self.getICAttr('row_text_color')
-        bg_colour = self.getICAttr('row_background_color')
+        text_colour = self.getRowTextColour()
+        bg_colour = self.getRowBGColour()
 
         if text_colour and isinstance(text_colour, wx.Colour):
             list_item.SetTextColour(text_colour)

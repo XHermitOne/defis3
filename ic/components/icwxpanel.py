@@ -117,7 +117,7 @@ class icWXPanel(icWidget, wx.Panel):
                 testObj.Show(True)
                 testObj.SetFocus()
         except:
-            log.error()
+            log.fatal()
     
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None, *arg, **kwarg):
@@ -157,21 +157,16 @@ class icWXPanel(icWidget, wx.Panel):
         #   Признак скругленных границ формы
         self.is_round_border = False
         
-        pre = wx.PrePanel()
-        bCreate = pre.Create(parent, id, pos, size, style=style, name=self.name)
+        wx.Panel.__init__(self, parent=parent, id=id, pos=pos, size=size, style=style, name=self.name)
 
         if fgr is not None:
-            pre.SetForegroundColour(wx.Colour(fgr[0], fgr[1], fgr[2]))
+            self.SetForegroundColour(wx.Colour(fgr[0], fgr[1], fgr[2]))
         if bgr is not None:
-            pre.SetBackgroundColour(wx.Colour(bgr[0], bgr[1], bgr[2]))
+            self.SetBackgroundColour(wx.Colour(bgr[0], bgr[1], bgr[2]))
         else:
             clr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE)
-            pre.SetBackgroundColour(clr)
-        # This next step is the most important, it turns this Python
-        # object into the real wrapper of the dialog (instead of pre)
-        # as far as the wxPython extension is concerned.
-        self.PostCreate(pre)
-        
+            self.SetBackgroundColour(clr)
+
         self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
         self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
         self.Bind(wx.EVT_SIZE, self.OnPanelSize)
@@ -224,12 +219,12 @@ class icWXPanel(icWidget, wx.Panel):
         bgr_prnt = self.GetParent().GetBackgroundColour()
         
         if d > 0 and (self.is_editor_mode or self.is_round_border):
-            backBrush = wx.Brush(bgr_prnt, wx.SOLID)
+            backBrush = wx.Brush(bgr_prnt, wx.BRUSHSTYLE_SOLID)
         else:
-            backBrush = wx.Brush(bgr, wx.SOLID)
+            backBrush = wx.Brush(bgr, wx.BRUSHSTYLE_SOLID)
             
         dc.SetBackground(backBrush)
-        dc.SetBrush(wx.Brush(bgr, wx.SOLID))
+        dc.SetBrush(wx.Brush(bgr, wx.BRUSHSTYLE_SOLID))
         dc.Clear()
 
         if self.is_editor_mode:

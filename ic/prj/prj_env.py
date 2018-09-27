@@ -44,9 +44,10 @@ class PrjEnv(prj_node.PrjNode):
         icsettings.setProjectSettingsToEnvironment(prj_name,
                                                    ReDefine_=True)
         
-        self.designer = icenvironmenteditor.icEnvironmentEditDlg(self.getRoot().getParent().ide_frame,
+        self.designer = icenvironmenteditor.icEnvironmentEditDlg(parent=self.getRoot().getPrjTreeCtrl(),
                                                                  ProjectRoot_=self.getRoot())
         self.designer.design()
+        self.designer = None
 
     def onNodeActivated(self, event):
         """

@@ -143,7 +143,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return multiChoiceEdt.str_to_val_user_property(text, propEdt)
 
 
-class icRole(icwidget.icSimple,icrole.icRole):
+class icRole(icwidget.icSimple, icrole.icRole):
     """
     Роль.
     """

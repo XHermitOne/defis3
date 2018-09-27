@@ -336,8 +336,13 @@ def AbsolutePath(sPath, sCurDir=None):
     @param sCurDir: Текущий путь.
     """
     try:
+        if not sPath:
+            log.error(u'Не определен путь для приведения к абсолютному виду')
+            return None
+
         # Нормализация текущего пути
         sCurDir = getCurDirPrj(sCurDir)
+
         # Коррекция самого пути
         sPath = os.path.abspath(sPath.replace('./', sCurDir).strip())
         return sPath

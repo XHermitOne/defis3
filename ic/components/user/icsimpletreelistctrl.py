@@ -33,7 +33,8 @@ wx.EVT_TREE_KEY_DOWN, а не wx.EVT_KEY_DOWN, как у других компо
     компонент (ic_can_contain = -1).
 """
 import wx
-import wx.lib.agw.hypertreelist as parentModule
+import wx.lib.agw.hypertreelist
+import wx.lib.gizmos as parentModule
 from wx.lib.agw import customtreectrl
 
 from ic.utils import ic_str
@@ -125,8 +126,8 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-class icColTreeInfo(parentModule.TreeListColumnInfo):
-    def __init__(self, input='', width=parentModule._DEFAULT_COL_WIDTH, flag=wx.ALIGN_LEFT,
+class icColTreeInfo(wx.lib.agw.hypertreelist.TreeListColumnInfo):
+    def __init__(self, input='', width=wx.lib.agw.hypertreelist._DEFAULT_COL_WIDTH, flag=wx.ALIGN_LEFT,
                  image=-1, shown=True, colour=None, edit=False):
         if isinstance(input, str):
             self._text = input
@@ -151,7 +152,8 @@ class icColTreeInfo(parentModule.TreeListColumnInfo):
             self._font = input._font
 
 
-class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
+# class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
+class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
     """
     Описание пользовательского компонента.
     @type component_spc: C{dictionary}
@@ -193,12 +195,9 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
         for key in [el for el in component.keys() if not el.startswith('__')]:
             setattr(self, key, component[key])
 
-        if wx.VERSION < (2, 8, 11, 0, ''):
-            parentModule.HyperTreeList.__init__(self, parent, id, self.position, self.size,
-                                                style=self.style)
-        else:
-            parentModule.HyperTreeList.__init__(self, parent, id, self.position, self.size,
-                                                agwStyle=self.style, style=self.style)
+        parentModule.TreeListCtrl.__init__(self, parent, id, self.position, self.size,
+                                           # agwStyle=self.style,
+                                           style=self.style)
         self.setVistaStyle()
 
         if self.foregroundColor is not None:
@@ -232,9 +231,9 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
             if len(self.wcols) > indx:
                 w = self.wcols[indx]
             else:
-                w = parentModule._DEFAULT_COL_WIDTH
-                
-            colInfo = icColTreeInfo(label, w, wx.ALIGN_LEFT, -1, True, None, False)            
+                w = wx.lib.agw.hypertreelist._DEFAULT_COL_WIDTH
+
+            colInfo = icColTreeInfo(label, w, wx.ALIGN_LEFT, -1, True, None, False)
             self.AddColumnInfo(colInfo)
 
         #   Определяем корень
@@ -525,7 +524,8 @@ class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
         """
         Обновление дерева.
         """
-        return self.LoadTree(self.GetItemData(self.root)[1])
+        item_data = self.GetItemData(self.root)[1]
+        return self.LoadTree(item_data)
     
     def getItemChildren(self, Item_=None):
         """

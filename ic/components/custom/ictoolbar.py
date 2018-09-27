@@ -387,10 +387,10 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
             kind = wx.ITEM_NORMAL
             if component['isToggle']: 
                 kind = wx.ITEM_CHECK
-            self.DoAddTool(bitmap=bitmap, id=id, label=component['label'],
-                           kind=kind, longHelp=component['longHelpString'],
-                           bmpDisabled=dis_bitmap,
-                           shortHelp=component['shortHelpString'])
+            self.AddTool(bitmap=bitmap, toolId=id, label=component['label'],
+                         kind=kind, longHelp=component['longHelpString'],
+                         bmpDisabled=dis_bitmap,
+                         shortHelp=component['shortHelpString'])
 
         self.Bind(wx.EVT_TOOL, self.OnToolClick, id=id)
         self._onToolDict[id] = component['onTool']

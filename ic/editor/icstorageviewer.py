@@ -10,7 +10,7 @@ import ic.components.icResourceParser as prs
 from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.engine import ic_user
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
@@ -19,7 +19,7 @@ from ic.engine import ic_user
 resource={'activate': 1, 'obj_module': None, 'show': 1, 'recount': None, 'refresh': None, 'border': 0, 'size': (500, 400), 'style': 536877056, 'foregroundColor': None, 'span': (1, 1), 'title': u'\u0425\u0440\u0430\u043d\u0438\u043b\u0438\u0449\u0435 \u043f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0445:', 'component_module': None, 'proportion': 0, 'source': None, 'backgroundColor': None, 'type': u'Dialog', 'res_module': None, 'description': None, 'onClose': None, '_uuid': u'c2503029d51fe455f7189c0fc5cce99d', 'moveAfterInTabOrder': u'', 'killFocus': None, 'flag': 0, 'child': [{'hgap': 0, 'style': 0, 'activate': 1, 'obj_module': None, 'description': None, 'position': (0, 0), 'component_module': None, 'type': u'BoxSizer', '_uuid': u'1b8806cf6c2d638c25d3c59ff3c112d6', 'proportion': 0, 'name': u'DefaultName_1481', 'alias': None, 'flag': 8192, 'init_expr': None, 'child': [{'activate': 1, 'obj_module': None, 'show': 1, 'labels': [u'\u0418\u043c\u044f', u'\u0417\u043d\u0430\u0447\u0435\u043d\u0438\u0435', u'\u041f\u0440\u0430\u0432\u0430 \u0434\u043e\u0441\u0442\u0443\u043f\u0430', u'\u041a\u043b\u044e\u0447 \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043a\u0438'], 'refresh': None, 'selectChanged': None, 'border': 0, 'titleRoot': u'\u041f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0435', 'treeDict': {}, 'moveAfterInTabOrder': u'', 'foregroundColor': None, 'span': (1, 1), 'component_module': None, 'proportion': 1, 'source': u'', 'itemExpanded': None, 'size': (-1, -1), 'type': u'SimpleTreeListCtrl', 'res_module': None, 'description': None, '_uuid': u'afd222b95c66f2028577b8c94351c2a0', 'style': 0, 'flag': 8192, 'recount': None, 'itemCollapsed': None, 'backgroundColor': None, 'name': u'view_treectrl', 'wcols': [100, 300, 100, 100], 'keyDown': None, 'alias': None, 'itemActivated': None, 'init_expr': None, 'position': (-1, -1), 'onInit': None}, {'activate': 1, 'obj_module': None, 'show': 1, 'attach_focus': False, 'mouseClick': u"GetObject('storageViewerDialog').Close()", 'font': {}, 'border': 0, 'size': (-1, -1), 'style': 0, 'foregroundColor': None, 'span': (1, 1), 'component_module': None, 'proportion': 0, 'label': u'\u0417\u0430\u043a\u0440\u044b\u0442\u044c', 'source': None, 'mouseDown': None, 'backgroundColor': None, 'type': u'Button', 'res_module': None, 'description': None, '_uuid': u'8d35cc64bd3403c924cf9ca2d9f62a0e', 'userAttr': None, 'moveAfterInTabOrder': u'', 'flag': 2304, 'recount': None, 'name': u'close_button', 'mouseUp': None, 'keyDown': None, 'alias': None, 'init_expr': None, 'position': (-1, -1), 'onInit': None, 'refresh': None, 'mouseContextDown': None}], 'span': (1, 1), 'res_module': None, 'border': 0, 'layout': u'vertical', 'vgap': 0, 'size': (-1, -1)}], 'setFocus': None, 'name': u'storageViewerDialog', 'keyDown': None, 'alias': None, 'init_expr': None, 'position': (-1, -1), 'onInit': None}
 
 #   Версия объекта
-__version__ = (1, 0, 0, 3)
+__version__ = (1, 1, 1, 1)
 ###END SPECIAL BLOCK
 
 #   Имя класса
@@ -42,7 +42,7 @@ class icStorageViewerDlg(icobjectinterface.icObjectInterface):
             variables = self._storageConvert(var_storage)
             viewer.LoadTree(variables)
         except:
-            log.error(u'Ошибка инициализации дерева просмотра хранилища переменных.')
+            log.fatal(u'Ошибка инициализации дерева просмотра хранилища переменных.')
 
     ###BEGIN EVENT BLOCK
     ###END EVENT BLOCK

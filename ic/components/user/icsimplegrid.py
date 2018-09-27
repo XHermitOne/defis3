@@ -30,7 +30,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 import wx.lib.mixins.gridlabelrenderer as glr
-from ic.utils import ic_util
+from ic.utils import ic_str
 
 from ic.dlg import ic_dlg
 
@@ -264,7 +264,7 @@ class icSimpleGrid(icwidget.icWidget,
             self.EnableEditing(not self.readonly)
         
         #   Регистрация обработчиков событий
-        self.Bind(parentModule.EVT_GRID_CELL_CHANGE, self.OnCellChange)
+        self.Bind(parentModule.EVT_GRID_CELL_CHANGED, self.OnCellChange)
         self.Bind(parentModule.EVT_GRID_SELECT_CELL, self.OnCellSelect)
         self.Bind(parentModule.EVT_GRID_CELL_LEFT_DCLICK, self.OnDClick)
         self.Bind(parentModule.EVT_GRID_LABEL_LEFT_CLICK, self.OnLabelClick)
@@ -410,7 +410,7 @@ class icSimpleGrid(icwidget.icWidget,
         for i_row, row in enumerate(Table_):
             for i_col, cell in enumerate(row):
                 if i_col < self.GetNumberCols():
-                    cell_txt = ic_util.toUnicode(cell)
+                    cell_txt = ic_str.toUnicode(cell)
                     self.SetCellValue(i_row, i_col, cell_txt)
     
     def setRowLabels(self, RowLabels_):
@@ -445,7 +445,7 @@ class icSimpleGrid(icwidget.icWidget,
         col_count = self.GetNumberCols()
         for i, wcol in enumerate(WCols_):
             if i < col_count:
-                self.SetColSize(i, wcol)
+                self.SetColSize(i, int(wcol))
             else:
                 break
 

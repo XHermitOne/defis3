@@ -352,7 +352,11 @@ class icObject(object):
         Переопределяем доступ к атрибуту.
         """
         # class_obj = object.__getattribute__(self, '__class__')
-        object.__setattr__(self, name, value)
+        try:
+            object.__setattr__(self, name, value)
+        except AttributeError:
+            log.error(u'Ошибка установки атрибута <%s>. Значение <%s>' % (name, str(value)))
+            raise
 
         if wxfunc.isWxDeadObject(self):
             # print('%s Is WX Dead Object' % class_obj)
