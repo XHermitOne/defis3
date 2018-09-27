@@ -53,7 +53,7 @@ class icMenuImpNode(flatmenu.FlatMenu):
             # Обновление подсистем
             refresh_id = wx.NewId()
             item = flatmenu.FlatMenuItem(self, refresh_id,
-                                         u'Обновить подсистему', u'Обновить подсистему',
+                                         u'Обновить подсистемы', u'Обновить подсистемы',
                                          normalBmp=imglib.imgRefreshPage)
             self.AppendItem(item)
             prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRefreshSubSys, id=refresh_id)
