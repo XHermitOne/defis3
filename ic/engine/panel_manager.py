@@ -29,7 +29,7 @@ __version__ = (0, 1, 1, 1)
 
 # Список имен, которые необходимо пропустить при обаботке соответствий
 # имен контролов и значений контролов
-SKIP_ACCORD_NAMES = ('Handle', 'EventHandler')
+SKIP_ACCORD_NAMES = ('Handle', 'EventHandler', 'Parent', 'GrandParent')
 
 
 class icPanelManager(listctrl_manager.icListCtrlManager,
