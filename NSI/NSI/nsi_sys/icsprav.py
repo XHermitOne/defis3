@@ -709,7 +709,7 @@ class icSpravPrototype(icSpravInterface):
                     return result, res_val
             # Не найдено
             result = coderror.IC_CTRL_FAILED
-            log.info('CTRL: NOT_FOUND val=%s' % val)
+            log.warning(u'Не найден код <%s> в справочнике <%s>' % (val, self.getName()))
         except:
             log.fatal(u'СПРАВОЧНИК [%s] Ошибка контроля' % self.name)
             result = coderror.IC_CTRL_FAILED_TYPE_SPRAV
