@@ -6,5 +6,5 @@ Type=Application
 Terminal=true
 Name[ru_RU]=Defis
 Exec=/mnt/defis/defis3/editor.sh
-Icon=/mnt/defis/defis3/ic/imglib/common/ic.png
+Icon=/mnt/defis/defis3/ic/imglib/logo/icon.png
 Comment[ru_RU]=

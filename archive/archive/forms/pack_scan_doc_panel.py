@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Модуль формы <icPackScanDocPanelProto>. 
+Модуль формы <icPackScanDocPanelProto>.
 Сгенерирован проектом DEFIS по модулю формы-прототипа wxFormBuider.
 """
 
@@ -350,6 +350,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
             self._set_doc_pages_and_duplex(item_idx, doc_uuid=doc_rec['uuid'],
                                            n_scan_pages=edit_result['npages_spinCtrl'],
                                            is_duplex=edit_result['duplex_checkBox'])
+            self.checkItems_list_ctrl(ctrl=self.docs_listCtrl,
+                                      n_begin=item_idx, n_end=item_idx)
             # Перейти на следущую строку
             self.selectItem_list_ctrl(ctrl=self.docs_listCtrl,
                                       item_idx=item_idx + 1)
@@ -389,12 +391,12 @@ def show_pack_scan_doc_panel(title=u''):
     """
     try:
         main_win = ic.getMainWin()
-        
+
         panel = icPackScanDocPanel(main_win)
         panel.init()
         main_win.AddPage(panel, title)
     except:
-        log.fatal(u'Ошибка')    
+        log.fatal(u'Ошибка')
 
 
 def open_pack_scan_doc_page(main_win=None, title=u'Пакетная обработка документов'):

@@ -123,3 +123,12 @@ def exit_force():
     Принудительное закрытие программы
     """
     sys.exit(0)
+
+
+def beep(count=1):
+    """
+    Воспроизвести системный звук.
+    @param count: Количество повторений.
+    """
+    for i in range(count):
+        print('\a')

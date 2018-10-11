@@ -59,6 +59,8 @@ sudo apt install --assume-yes curl
 # sudo apt install --assume-yes python3-wxgtk4.0
 pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 
+pip3 install objectlistview
+
 apt show python3-six | grep Package
 apt show python3-six | grep Version
 sudo apt install --assume-yes python3-six
