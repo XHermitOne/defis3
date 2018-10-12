@@ -7,12 +7,13 @@
 
 import os
 import os.path
-import email
 import smtplib
+import email.message
+import mimetypes
 
 from ic.log import log
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 EMAIL_ADR_DELIMETER = u';'
 DEFAULT_ENCODING = 'utf-8'
@@ -66,7 +67,7 @@ class icEMailSender(object):
         @param authent: Метод аутентификации.
         """
         self.from_adr = from_adr
-        self.to_adr = to_adr.split(EMAIL_ADR_DELIMETER) if type(to_adr) in (str, unicode) else to_adr
+        self.to_adr = to_adr.split(EMAIL_ADR_DELIMETER) if isinstance(to_adr, str) else to_adr
         self.subject = subject
         self.body = body
         self.attache_files = attache_files
@@ -92,10 +93,11 @@ class icEMailSender(object):
         """
         Перекодировка строки из одной кодовой страницы в другую.
         """
-        if isinstance(txt, str):
-            return unicode(txt, from_codepage).encode(to_codepage)
-        elif isinstance(txt, unicode):
+        if isinstance(txt, bytes):
+            return txt.decode(to_codepage)
+        elif isinstance(txt, str):
             return txt.encode(to_codepage)
+        return str(txt)
 
     def _do_cmd_list(self, cmd_list, mode=os.P_WAIT):
         """
@@ -207,34 +209,44 @@ class icEMailSender(object):
         authent = self.authent if authent is None else authent
 
         # Проверка типов входных аргументов
-        assert type(from_adr) in (str, unicode)
+        assert isinstance(from_adr, str)
         assert type(to_adr) in (list, tuple)
-        assert type(attache_files) in (list, tuple)
+        if attache_files:
+            assert type(attache_files) in (list, tuple, None)
 
         # Создать сообщение
-        msg = email.MIMEMultipart.MIMEMultipart()
+        msg = email.message.EmailMessage()
+        msg.set_content(body)
 
-        msg['From'] = self._encode(from_adr, DEFAULT_ENCODING, self.encoding)
-        msg['To'] = self._encode(email.Utils.COMMASPACE.join(to_adr), DEFAULT_ENCODING, self.encoding)
-        msg['Date'] = email.Utils.formatdate(localtime=True)
-        msg['Subject'] = self._encode(subject, DEFAULT_ENCODING, self.encoding)
-        msg.attach(email.MIMEText.MIMEText(self._encode(body, DEFAULT_ENCODING, self.encoding)))
+        msg['Subject'] = subject
+        msg['From'] = from_adr
+        msg['To'] = to_adr
 
         # Если файлы не определены, то посмотреть в папке исходящих файлов
         if not attache_files and self.outbox_dir:
             attache_files = self.get_outbox_filenames()
 
         # Прикрепление файлов
-        for filename in attache_files:
-            part = email.MIMEBase.MIMEBase('application', 'octet-stream')
-            part.set_payload(open(filename, 'rb').read())
-            email.Encoders.encode_base64(part)
-            part.add_header('Content-Disposition',
-                            'attachment; filename="%s"' % os.path.basename(filename))
-            msg.attach(part)
+        if attache_files:
+            for filename in attache_files:
+                with open(filename, 'rb') as attachment_file:
+                    file_data = attachment_file.read()
+                # Guess the content type based on the file's extension.  Encoding
+                # will be ignored, although we should check for simple things like
+                # gzip'd or compressed files.
+                ctype, encoding = mimetypes.guess_type(filename)
+                if ctype is None or encoding is not None:
+                    # No guess could be made, or the file is encoded (compressed), so
+                    # use a generic bag-of-bits type.
+                    ctype = 'application/octet-stream'
+                maintype, subtype = ctype.split('/', 1)
+                msg.add_attachment(file_data,
+                                   maintype=maintype,
+                                   subtype=subtype,
+                                   filename=filename)
 
-            file_size = os.stat(filename).st_size
-            log.info(u'Файл <%s> (%s) прикреплен к письму' % (filename, file_size))
+                file_size = os.stat(filename).st_size
+                log.info(u'Файл <%s> (%s) прикреплен к письму' % (filename, file_size))
 
         msg_txt = msg.as_string()
 
@@ -258,7 +270,6 @@ class icEMailSender(object):
             smtp.close()
 
             log.info(u'Письмо от %s к %s отправленно' % (from_adr, to_adr))
-
         except smtplib.SMTPException:
             log.fatal(u'SMTP. Ошибка отправки письма')
             return False
@@ -273,6 +284,7 @@ class icEMailSender(object):
                     except:
                         log.fatal(u'Ошибка удаления файла <%s>' % file_name)
                         return False
+
         return True
 
     def get_outbox_filenames(self, outbox_dir=None):
@@ -294,9 +306,26 @@ class icEMailSender(object):
 def send_mail(*args, **kwargs):
     """
     Отсылка письма из коммандной строки.
+    @param from_adr: Адрес отправителя.
+    @param to_adr: Адрес/адреса получаетелей.
+        Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.
+    @param subject: Заголовок письма.
+    @param body: Тело письма,
+    @param attache_files: Список прикрепляемых файлов.
+    @param smtp_server: Адрес SMTP сервера.
+    @param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
+    @param login: Логин пользователя SMTP сервера.
+    @param password: Пароль пользователя SMTP сервера.
+    @param enable_send: Вкл./выкл. отправки писем.
+    @param encoding: Кодировка писем. По умолчанию UTF-8.
+    @param outbox_dir: Папка исходящих файлов.
+    @param auto_del_files: Автоматически удалять прикрепляемые файлы после отправки?
+    @param prev_send_cmd: Комманда, выполняемая перед отправкой письма.
+    @param post_send_cmd: Комманда, выполняемая после отправки письма.
+    @param connect_protect: Защита соединения.
+    @param authent: Метод аутентификации.
+    @return: True/False.
     """
     mail_sender = icEMailSender(*args, **kwargs)
     result = mail_sender.send_mail()
     return result
-
-

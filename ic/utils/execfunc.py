@@ -8,6 +8,8 @@
 import os
 import sys
 import imp
+import subprocess
+import locale
 
 from ic.log import log
 
@@ -121,3 +123,30 @@ def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
         log.warning(u'Не определен вызов функции в блоке кода <%s>' % sCode)
 
     return result
+
+
+def exec_sys_cmd(command, split_lines=False):
+    """
+    Выполнить системную комманду и получить результат ее выполнения.
+    @param command: Системная комманда.
+    @param split_lines: Произвести разделение на линии?
+    @return: Если нет разделения по линиям, то возвращается текст который
+        отображается в консоли.
+        При разбитии по линиям возвращается список выводимых строк.
+        В случае ошибки возвращается None.
+    """
+    try:
+        cmd = command.strip().split(' ')
+        console_encoding = locale.getpreferredencoding()
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        if split_lines:
+            b_lines = process.stdout.readlines()
+            lines = [line.decode(console_encoding).strip() for line in b_lines]
+            return lines
+        else:
+            b_text = process.stdout.read()
+            text = b_text.decode(console_encoding)
+            return text
+    except:
+        log.fatal(u'Ошибка выполнения системной комманды <%s>' % command)
+    return None
