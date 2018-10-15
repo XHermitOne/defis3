@@ -9,23 +9,24 @@ import os
 import os.path
 import jaydebeapi
 
-# Типы поддерживаемых БД
-JDBC_TYPES = ('DBF', 'MSSQL', 'POSTGRESQL')
+from ic.interfaces import icsourceinterface
+from ic.log import log
 
-#
+# Поддерживаемые типы JDBC драйверов
+JDBC_TYPES = ('DBF', 'MSSQL', 'POSTGRESQL')
 JAVA_DRIVER_CLASS = {'DBF': 'com.hxtt.sql.dbf.DBFDriver',
                      'MSSQL': 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
+                     'POSTGRESQL': 'org.postgresql.Driver',
                      }
 
-# Путь к папке с драйверами JDBC
-JDBC_DRIVER_DIR = os.path.join(os.path.dirname(__file__), 'JDBC')
-
-# Файлы драйверов JDBC
+JDBC_DRIVER_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'JDBC')
 JDBC_DRIVER_FILENAME = {'DBF': os.path.join(JDBC_DRIVER_DIR, 'DBF_JDBC40.jar'),
-                        'MSSQL': os.path.join(JDBC_DRIVER_DIR, 'sqljdbc4.jar')}
+                        'MSSQL': os.path.join(JDBC_DRIVER_DIR, 'sqljdbc4.jar'),
+                        'POSTGRESQL': os.path.join(JDBC_DRIVER_DIR, 'postgresql-42.2.5.jar'),
+                        }
 
 
-class icJDBC():
+class icJDBC(icsourceinterface.icSourceInterface):
     """
     Класс поддержки доступа к данным через JDBC.
     """

@@ -3,6 +3,19 @@
 
 """
 Модуль функций установки связи с БД через ODBC.
+
+Using an ODBC driver
+
+Microsoft have written and distributed multiple ODBC drivers for SQL Server:
+
+    {SQL Server} - released with SQL Server 2000
+    {SQL Native Client} - released with SQL Server 2005 (also known as version 9.0)
+    {SQL Server Native Client 10.0} - released with SQL Server 2008
+    {SQL Server Native Client 11.0} - released with SQL Server 2012
+    {ODBC Driver 11 for SQL Server} - supports SQL Server 2005 through 2014
+    {ODBC Driver 13 for SQL Server} - supports SQL Server 2005 through 2016
+    {ODBC Driver 13.1 for SQL Server} - supports SQL Server 2008 through 2016
+    {ODBC Driver 17 for SQL Server} - supports SQL Server 2008 through 2017
 """
 
 try:
