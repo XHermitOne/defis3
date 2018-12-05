@@ -11,6 +11,19 @@ import os.path
 
 from .ic_extend import save_file_text
 from .ic_extend import load_file_text
+
+# Эти функции добавлены для возможности
+# импортировать их из этого модуля
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+from .ic_extend import load_file_unicode
+from .ic_extend import recode_text_file
+from .ic_extend import text_file_append
+from .ic_extend import text_file_find
+from .ic_extend import text_file_replace
+from .ic_extend import text_file_subdelete
+from .ic_extend import text_file_subreplace
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 from . import ic_extend
 from . import ic_str
 from ic.log import log

@@ -74,6 +74,8 @@ NORMAL_COLOR_TEXT = '\x1b[0m'       # normal
 
 NOT_INIT_LOG_SYS_MSG = u'Не инициализирована система журналирования'
 
+LOG_DATETIME_FMT = '%Y-%m-%d %H:%M:%S'
+
 
 def print_color_txt(sTxt, sColor=NORMAL_COLOR_TEXT):
     if isinstance(sTxt, str):
@@ -162,7 +164,7 @@ def init(mConfig=None, sLogFileName=None):
         
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(levelname)s %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S',
+                        datefmt=LOG_DATETIME_FMT,
                         filename=sLogFileName,
                         filemode='a')
     # ВНИМАНИЕ! сразу выставить права для записи/чтения для всех
