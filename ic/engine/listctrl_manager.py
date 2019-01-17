@@ -20,6 +20,8 @@ from ic import config
 
 __version__ = (0, 1, 1, 1)
 
+DEFAULT = 'default'
+
 
 class icListCtrlManager(object):
     """
@@ -494,7 +496,7 @@ class icListCtrlManager(object):
         return False
 
     def appendRow_ListCtrl(self, ctrl, row=(),
-                           evenBackgroundColour=None, oddBackgroundColour=None):
+                           evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT):
         """
         Добавить строку в контрол wx.ListCtrl.
         @param ctrl: Объект контрола wx.ListCtrl.
@@ -531,17 +533,17 @@ class icListCtrlManager(object):
             if row_idx != -1:
                 if evenBackgroundColour and not (row_idx % 2):
                     # Добавляемая строка четная?
-                    ctrl.SetItemBackgroundColour(row_idx, evenBackgroundColour)
+                    ctrl.SetItemBackgroundColour(row_idx, self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT else evenBackgroundColour)
                 elif oddBackgroundColour and (row_idx % 2):
                     # Добавляемая строка не четная?
-                    ctrl.SetItemBackgroundColour(row_idx, oddBackgroundColour)
+                    ctrl.SetItemBackgroundColour(row_idx, self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT else oddBackgroundColour)
             return True
         except:
             log.fatal(u'Ошибка добавления строки %s в контрол wx.ListCtrl' % str(row))
         return False
 
     def appendRow_list_ctrl(self, ctrl=None, row=(),
-                            evenBackgroundColour=None, oddBackgroundColour=None):
+                            evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT):
         """
         Добавить строку в контрол списка.
         @param ctrl: Объект контрола.
@@ -566,7 +568,7 @@ class icListCtrlManager(object):
         return False
 
     def setRow_list_ctrl(self, ctrl=None, row_idx=-1, row=(),
-                         evenBackgroundColour=None, oddBackgroundColour=None,
+                         evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
                          doSavePos=False):
         """
         Установить строку контрола списка.
@@ -604,10 +606,10 @@ class icListCtrlManager(object):
                 ctrl.SetStringItem(row_idx, i, item_str)
                 if evenBackgroundColour and not (row_idx % 2):
                     # Четная строка?
-                    ctrl.SetItemBackgroundColour(row_idx, evenBackgroundColour)
+                    ctrl.SetItemBackgroundColour(row_idx, self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT else evenBackgroundColour)
                 elif oddBackgroundColour and (row_idx % 2):
                     # Не четная строка?
-                    ctrl.SetItemBackgroundColour(row_idx, oddBackgroundColour)
+                    ctrl.SetItemBackgroundColour(row_idx, self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT else oddBackgroundColour)
             if cursor_pos not in (None, -1) and cursor_pos < row_count:
                 ctrl.Select(cursor_pos)
             return True
@@ -616,7 +618,7 @@ class icListCtrlManager(object):
         return False
 
     def setRows_list_ctrl(self, ctrl=None, rows=(),
-                          evenBackgroundColour=None, oddBackgroundColour=None,
+                          evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
                           doSavePos=False):
         """
         Установить строки в контрол списка.
@@ -897,4 +899,17 @@ class icListCtrlManager(object):
         log.warning(u'Объект типа <%s> не поддерживается вкл./выкл. элментов контрола' % ctrl.__class__.__name__)
         return None
 
+    def defaultEvenRowsBGColour(self):
+        """
+        Цвет фона четных строк по умолчанию.
+        """
+        colour = tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]
+        return wx.Colour(*colour)
+
+    def defaultOddRowsBGColour(self):
+        """
+        Цвет фона не четных строк по умолчанию.
+        """
+        colour = tuple([int(c / 3 * 2) for c in tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]])
+        return wx.Colour(*colour)
 
