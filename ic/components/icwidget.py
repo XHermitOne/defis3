@@ -1984,6 +1984,44 @@ class icWidget(icBase, icEvent):
         else:
             return self
 
+    def findGrandParent(self, parent_class, cur_object=None, is_subclass=True):
+        """
+        Определить родительский объект по типу.
+        Поиск производится рекурсивно по дереву агрегации объектов.
+        @param parent_class: Класс родительского объекта:
+            wx.Dialog, wx.Frame, wx.Panel и т.п.
+        @param cur_object: Текущий проверяемый объект.
+            Если None, то берется self.
+        @param is_subclass: True - Проверять на наследственность от класса.
+            False - Проверять на полное совпадение.
+        @return: Родительский объект, соответствующий типу или None
+            если такой объект не найден.
+        """
+        if cur_object is None:
+            cur_object = self
+
+        parent = cur_object.GetParent()
+        if parent:
+            try:
+                if is_subclass:
+                    # Проверять на наследственность от класса
+                    if issubclass(parent.__class__, parent_class):
+                        # Нашли
+                        return parent
+                else:
+                    # Проверять на полное совпадение
+                    if parent.__class__ == parent_class:
+                        # Нашли
+                        return parent
+
+                # Продолжаем поиск
+                return self.findGrandParent(parent_class, parent, is_subclass)
+            except:
+                log.fatal(u'Ошибка определения родительского объекта <%s> по типу <%s>' % (self.name,
+                                                                                           parent_class.__name__))
+                return None
+        return None
+
 
 class icShortHelpString(wx.PopupWindow):
     """
