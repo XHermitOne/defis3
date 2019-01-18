@@ -57,6 +57,10 @@ sudo apt install --assume-yes curl
 # apt show python3-wxgtk4.0 | grep Package
 # apt show python3-wxgtk4.0 | grep Version
 # sudo apt install --assume-yes python3-wxgtk4.0
+# Обновление:
+# pip3 install wxPython --upgrade
+# Удаление:
+# pip3 uninstall wxPython
 pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 
 pip3 install objectlistview

@@ -100,10 +100,14 @@ ic_class_spc = {'type': 'SimpleTreeListCtrl',
                                'itemExpanded': ('wx.EVT_TREE_ITEM_EXPANDED', 'OnItemExpanded', False),
                                'selectChanged': ('wx.EVT_TREE_SEL_CHANGED', 'OnSelectChanged', False),
                                'itemActivated': ('wx.EVT_TREE_ITEM_ACTIVATED', 'OnItemActivated', False),
-                               'itemChecked': ('castomtree.EVT_TREE_ITEM_CHECKED', 'OnItemChecked', False),
+                               'itemChecked': ('customtree.EVT_TREE_ITEM_CHECKED', 'OnItemChecked', False),
                                'keyDown': ('wx.EVT_TREE_KEY_DOWN', 'OnTreeListKeyDown', False),
                                },
                 '__parent__': icwidget.SPC_IC_WIDGET,
+                '__attr_hlp__': {'titleRoot': u'Надпись корневого элемента',
+                                 'labels': u'Надписи колонок',
+                                 'wcols': u'Ширины колонок',
+                                 },
                 }
 
 #   Имя иконки класса, которые располагаются в директории
@@ -124,6 +128,8 @@ ic_can_not_contain = None
 
 #   Версия компонента
 __version__ = (0, 1, 1, 1)
+
+WAIT_LOAD_LABEL = u'Загрузка...'
 
 
 class icColTreeInfo(wx.lib.agw.hypertreelist.TreeListColumnInfo):
@@ -152,7 +158,6 @@ class icColTreeInfo(wx.lib.agw.hypertreelist.TreeListColumnInfo):
             self._font = input._font
 
 
-# class icSimpleTreeListCtrl(parentModule.HyperTreeList, icwidget.icWidget):
 class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
     """
     Описание пользовательского компонента.
@@ -253,7 +258,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
         self.Bind(customtreectrl.EVT_TREE_ITEM_CHECKED, self.OnItemChecked)
         self.BindICEvt()
 
-        self.textload = wx.StaticText(self._main_win, -1, label=_('Load data ...'), pos=(70, 70))
+        self.textload = wx.StaticText(self._main_win, -1, label=WAIT_LOAD_LABEL, pos=(70, 70))
         self.textload.Show(False)
         
         #   Создаем дочерние компоненты
@@ -293,7 +298,15 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
         """
         selection_item = self.GetSelection()
         return self.GetItemText(selection_item)
-    
+
+    def getItemLabelByRecord(self, record):
+        """
+        Определеить надпись элемента дерева по данным привязанным к элементу.
+        @param record: Запись, прикрепленная к элементу дерева.
+        @return: Надпись элемента дерева.
+        """
+        return (str(record.get('name', u'') if isinstance(record, dict) else record[1])) or u''
+
     def addNode(self, root, res, level=0, start_level=0, sort_children=True):
         """
         Добавить дочерние узлы, описанные словарем.
@@ -301,13 +314,13 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
         id_pic, id_exp_pic = self._getPicturesId(res)
         
         if len(self.labels) == 1 and len(res['__record__']) > 1:
-            st = u'  ' + (str(res['__record__'][1]) or u'')
+            st = u'  ' + self.getItemLabelByRecord(res['__record__'])
         else:
             st = u''
         child = self.AppendItem(root, res['name']+st, ct_type=res.get('__type__', 0))
         self.SetItemImage(child, id_pic, which=wx.TreeItemIcon_Normal)
         self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-        self.SetItemData(child, (level+start_level, res))
+        self.setItemData(child, (level+start_level, res))
         self.setItemRecord(child, res['__record__'])
         
         # Обработка дочерних элементов
@@ -359,7 +372,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
             Или None в случае ошибки.
         """
         try:
-            item_py_data = self.GetItemData(Item_)
+            item_py_data = self.getItemData(Item_)
             if item_py_data is None:
                 return None
             res = item_py_data[1]
@@ -459,7 +472,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
             self.tree = Tree_
         
         self.DeleteChildren(self.root)
-        self.SetItemData(self.root, (-1, Tree_))
+        self.setItemData(self.root, (-1, Tree_))
         
         if Tree_ is not None:
             for node in Tree_:
@@ -524,7 +537,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
         """
         Обновление дерева.
         """
-        item_data = self.GetItemData(self.root)[1]
+        item_data = self.getItemData(self.root)[1]
         return self.LoadTree(item_data)
     
     def getItemChildren(self, Item_=None):
@@ -787,7 +800,28 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
         Определить является ли корень выделенным.
         """
         return self.IsSelected(self.GetRootItem())
-        
+
+    def setItemData(self, item, data):
+        """
+        Привязать данные к элементу дерева.
+        В последующих версиях wxPython убрали функции SetItemData и GetItemData
+        из TreeListCtrl.
+        Эти методы заменяют их.
+        @param item: Элемент дерева.
+        @param data: Прикрепляемые данные.
+        """
+        return self._main_win.SetItemData(item, data)
+
+    def getItemData(self, item):
+        """
+        Получить прикрепленные данные к элементу дерева.
+        В последующих версиях wxPython убрали функции SetItemData и GetItemData
+        из TreeListCtrl.
+        @param item: Элемент дерева.
+        @return: Прикрепленные данные к элементу дерева или None в случае ошибки.
+        """
+        return self._main_win.GetItemData(item)
+
     # --- Обработчики событий ---
     def OnItemExpanded(self, event):
         """
@@ -897,8 +931,6 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
         from ic.utils import delayedres
         pr = delayedres.DelayedFunction(self.load_data, view_func or self.view_data, func, *arg, **kwarg)
         pr.start()
-    
-    #   Обработчики событий
 
 
 def __load_data(tree=None):

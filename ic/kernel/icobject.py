@@ -343,6 +343,7 @@ class icObject(object):
                 except AttributeError:
                     pass
 
+        # Если не контролируемый атрибут, то получить доступ к нему напрямую
         val = super(icObject, self).__getattribute__(name)
 
         return val
