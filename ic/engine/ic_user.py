@@ -480,6 +480,18 @@ def getCurUser():
     return getKernel().GetAuthUser()
 
 
+def isAdministratorCurUser(admin_role_names=('admins', 'administrators',
+                                             'Admins', 'Administrators')):
+    """
+    Проверка является ли текущий пользователь администратором системы.
+    @param admin_role_names: Список имено ролей администраторов.
+    @return: True/False.
+    """
+    cur_user = getCurUser()
+    is_admin = [cur_user.isRole(role_name) for role_name in admin_role_names]
+    return any(is_admin)
+
+
 def get_res_name_list(*arg, **kwarg):
     """
     ФУНКЦИИ РАБОТЫ С ПРОЕКТОМ.
