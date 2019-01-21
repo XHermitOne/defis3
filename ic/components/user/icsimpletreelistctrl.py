@@ -45,6 +45,8 @@ from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.dlg import ic_dlg
 from ic.log import log
+from ic.engine import treectrl_manager
+from ic.engine import listctrl_manager
 
 _ = wx.GetTranslation
 
@@ -130,6 +132,7 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 WAIT_LOAD_LABEL = u'Загрузка...'
+DEFAULT = 'default'
 
 
 class icColTreeInfo(wx.lib.agw.hypertreelist.TreeListColumnInfo):
@@ -158,7 +161,9 @@ class icColTreeInfo(wx.lib.agw.hypertreelist.TreeListColumnInfo):
             self._font = input._font
 
 
-class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
+class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
+                           treectrl_manager.icTreeCtrlManager,
+                           listctrl_manager.icListCtrlManager):
     """
     Описание пользовательского компонента.
     @type component_spc: C{dictionary}
@@ -307,6 +312,30 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
         """
         return (str(record.get('name', u'') if isinstance(record, dict) else record[1])) or u''
 
+    def setRowColourLines(self, evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT):
+        """
+        Раскрасить четные и не четные строки.
+        @param evenBackgroundColour: Цвет фона четных строк.
+        @param oddBackgroundColour: Цвет фона нечетных строк.
+        @return: True/False.
+        """
+        return self.setRowsBackgroundColour(self._main_win, evenBackgroundColour, oddBackgroundColour)
+
+    def setItemColour(self, fg_colour=None, bg_colour=None, requirement=None):
+        """
+        Установить цвет элементов дерева в контроле по определенному условию.
+        @param fg_colour: Цвет текста, если условие выполненно.
+        @param bg_colour: Цвет фона, если условие выполненно.
+        @param requirement: lambda выражение, формата:
+            lambda item: ...
+            Которое возвращает True/False.
+            Если True, то установка цвета будет сделана.
+            False - строка не расцвечивается.
+        @return: True/False.
+        """
+        return self.setItemColour_requirement(self, fg_colour=fg_colour, bg_colour=bg_colour,
+                                              requirement=requirement, item=None)
+
     def addNode(self, root, res, level=0, start_level=0, sort_children=True):
         """
         Добавить дочерние узлы, описанные словарем.
@@ -449,7 +478,21 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
     def GetCount(self):
         tree = self.GetMainWindow()
         return tree.GetCount()
-    
+
+    def defaultEvenRowsBGColour(self):
+        """
+        Цвет фона четных строк по умолчанию.
+        """
+        colour = tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]
+        return wx.Colour(*colour)
+
+    def defaultOddRowsBGColour(self):
+        """
+        Цвет фона не четных строк по умолчанию.
+        """
+        colour = tuple([int(c / 3 * 2) for c in tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]])
+        return wx.Colour(*colour)
+
     def LoadTree(self, Tree_=None, AutoSelect_=True, AutoExpand_=True):
         """
         Заполняем дерево.
@@ -539,35 +582,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
         """
         item_data = self.getItemData(self.root)[1]
         return self.LoadTree(item_data)
-    
-    def getItemChildren(self, Item_=None):
-        """
-        Список дочерних элементов узла дерева.
-        @param Item_: Узел/элемент дерева. Если None, то корневой элемент.
-        @return: Список дочерних элементов узла дерева 
-            или None в случае ошибки.
-        """
-        try:
-            # Определить узел
-            if Item_ is None:
-                Item_ = self.root
-                
-            # Список дочерних элементов
-            children = []
 
-            children_count = self.GetChildrenCount(Item_, False)
-            for i in range(children_count):
-                if i == 0:
-                    child, cookie = self.GetFirstChild(Item_)
-                else:
-                    child, cookie = self.GetNextChild(Item_, cookie)
-                if child.IsOk():
-                    children.append(child)
-            return children
-        except:
-            log.error(u'ОШИБКА компонента <%s> метода определения списка дочерних элементов' % self.name)
-            return None
-        
     def findItemColumnString(self, string, curItem=None, columns=None, curColIdx=0, bILike=True):
         """
         Функция ищет подстроку в массиве данных.
@@ -614,7 +629,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
                             return curItem, find_col_idx
                         
             # Обработка дочерних элементов
-            children = self.getItemChildren(curItem)
+            children = self.getItemChildren(self, curItem)
             if children:
                 for child in children:
                     result = self.findItemColumnString(string, child, columns, 0, bILike)
@@ -717,7 +732,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
                     return curItem
                         
             # Обработка дочерних элементов
-            children = self.getItemChildren(curItem)
+            children = self.getItemChildren(self, curItem)
             if children:
                 for child in children:
                     result = self.findItemString(string, child, bILike)
@@ -879,7 +894,10 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget):
     def HideHeader(self):
         self._headerHeight = 0
         self.DoHeaderLayout()
-    
+
+    def getItemChildrenList(self, item=None):
+        return self.getItemChildren(self, item)
+
     def SetCheckRadio(self, selection=0):
         """
         Устанавливаем тип checkbox/radiobox картинок.

@@ -913,3 +913,26 @@ class icListCtrlManager(object):
         colour = tuple([int(c / 3 * 2) for c in tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]])
         return wx.Colour(*colour)
 
+    def setRowsBackgroundColour(self, ctrl, evenBackgroundColour=DEFAULT,
+                                oddBackgroundColour=DEFAULT):
+        """
+        Просто раскрасить фон четных и не четных строк.
+        @param ctrl: Объект контрола wx.ListCtrl.
+        @param evenBackgroundColour: Цвет фона четных строк.
+        @param oddBackgroundColour: Цвет фона нечетных строк.
+        @return: True - все прошло нормально / False - какая-то ошибка.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол для установки цвета')
+            return False
+
+        for row_idx in range(ctrl.GetItemCount()):
+            if evenBackgroundColour and not (row_idx % 2):
+                # Добавляемая строка четная?
+                ctrl.SetItemBackgroundColour(row_idx,
+                                             self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT else evenBackgroundColour)
+            elif oddBackgroundColour and (row_idx % 2):
+                # Добавляемая строка не четная?
+                ctrl.SetItemBackgroundColour(row_idx,
+                                             self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT else oddBackgroundColour)
+

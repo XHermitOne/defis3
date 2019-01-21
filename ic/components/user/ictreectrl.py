@@ -29,6 +29,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 import ic.interfaces.icMetaTreeCtrlInterface as metaCtrl
+from ic.engine import treectrl_manager
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -63,6 +64,9 @@ ic_class_spc = {'type': 'TreeCtrl',
                 'activated': None,
                 'onRightClick': None,
                 'onExpand': None,
+                'onCollapse': None,
+                'selectChanged': None,
+                'itemActivated': None,
                 'treeDict': {},
 
                 '__styles__': ic_class_styles,
@@ -70,9 +74,15 @@ ic_class_spc = {'type': 'TreeCtrl',
                                    icDefInf.EDT_TEXTDICT: ['treeDict'],
                                    },
                 '__events__': {'onRightClick': ('wx.EVT_TREE_ITEM_RIGHT_CLICK', 'OnRightClick', False),
-                               'onExpand': ('wx.EVT_TREE_ITEM_EXPANDED', 'OnExpand'),
+                               'onExpand': ('wx.EVT_TREE_ITEM_EXPANDED', 'OnExpand', False),
+                               'onCollapse': ('wx.EVT_TREE_ITEM_COLLAPSED', 'OnCollapse', False),
+                               'selectChanged': ('wx.EVT_TREE_SEL_CHANGED', 'OnSelectChanged', False),
+                               'itemActivated': ('wx.EVT_TREE_ITEM_ACTIVATED', 'OnItemActivated', False),
+                               'keyDown': ('wx.EVT_TREE_KEY_DOWN', 'OnTreeListKeyDown', False),
                                },
                 '__parent__': icwidget.SPC_IC_WIDGET,
+                '__attr_hlp__': {'titleRoot': u'Надпись корневого элемента',
+                                 },
                 }
                     
 
@@ -104,7 +114,9 @@ class treeItemData:
         pass
 
 
-class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl, metaCtrl.MetaTreeCtrlInterface):
+class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
+                 metaCtrl.MetaTreeCtrlInterface,
+                 treectrl_manager.icTreeCtrlManager):
     """
     Описание пользовательского компонента.
 
@@ -161,10 +173,15 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl, metaCtrl.MetaTreeCtrl
         metaCtrl.MetaTreeCtrlInterface.__init__(self)
 
         #   Регистрация обработчиков событий
-        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelected)
-        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnActivated)
         self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.OnExpand)
-        self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.OnRightClick)
+        self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.OnCollapse)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelectChanged)
+        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnItemActivated)
+        # self.Bind(wx.EVT_TREE_KEY_DOWN, self.OnTreeListKeyDown)
+        # self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelected)
+        # self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnActivated)
+        # self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.OnExpand)
+        # self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.OnRightClick)
         self.BindICEvt()
         
     def isDict(self, res):
@@ -173,7 +190,109 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl, metaCtrl.MetaTreeCtrl
         """
         return isinstance(res, dict)
 
+    def getTitleRoot(self):
+        """
+        Надпись корневого элемента.
+        @return:
+        """
+        return self.getICAttr('titleRoot')
+
+    def setTree(self, tree_data, label=None, expand_root=True, expand_all=False):
+        """
+        Установить данные дерева.
+        @param tree_data: Данные дерева:
+            Каждый узел дерева - словарь.
+            Дочерние элементы находяться в ключе '__children__' в виде списка.
+            Если корневой узел данных является списком,
+            то в контроле присутствует несколько корневых узлов.
+        @param label: Ключ для определения надписи элемента дерева.
+        @param expand_root: Произвести автоматическое распахивание корневого элемента?
+        @param expand_all: Произвести автоматическое распахивание
+            всех дочерних элементовкорневого элемента?
+        @return: True/False.
+        """
+        result = self.setTree_TreeCtrl(self, tree_data, label=label)
+        title_root = self.getTitleRoot()
+        self.setRootTitle(self, title_root)
+        if expand_root:
+            # Произвести автоматическое распахивание корневого элемента
+            self.expandChildren(self, all_children=expand_all)
+
+        return result
+
+    def setItemColour(self, fg_colour=None, bg_colour=None, requirement=None):
+        """
+        Установить цвет элементов дерева в контроле по определенному условию.
+        @param fg_colour: Цвет текста, если условие выполненно.
+        @param bg_colour: Цвет фона, если условие выполненно.
+        @param requirement: lambda выражение, формата:
+            lambda item: ...
+            Которое возвращает True/False.
+            Если True, то установка цвета будет сделана.
+            False - строка не расцвечивается.
+        @return:
+        """
+        return self.setItemColour_requirement(ctrl=self, fg_colour=fg_colour,
+                                              bg_colour=bg_colour, requirement=requirement,
+                                              item=None)
+
+    def setItemData(self, item, data):
+        """
+        Привязать данные к элементу дерева.
+        @param item: Элемент дерева.
+        @param data: Прикрепляемые данные.
+        """
+        return self.SetItemData(item, data)
+
+    def getItemData(self, item):
+        """
+        Получить прикрепленные данные к элементу дерева.
+        @param item: Элемент дерева.
+        @return: Прикрепленные данные к элементу дерева или None в случае ошибки.
+        """
+        return self.GetItemData(item)
+
+    # Другое наименование метода
+    getItemRecord = getItemData
+    
     #   Обработчики событий
+    def OnExpand(self, event):
+        """
+        Разворачивание узла.
+        """
+        self.eval_event('onExpand', event, True)
+
+    def OnCollapse(self, event):
+        """
+        Сворачивание узла.
+        """
+        self.eval_event('onCollapse', event, True)
+
+    def OnSelectChanged(self, event):
+        """
+        Изменение выделенного узла.
+        """
+        select_item = event.GetItem()
+        # self._last_selection = None
+        # if select_item:
+        #     self._last_selection = self.getItemPath(self, select_item)
+
+        # --- НАЧАЛО: БЛОК ИСПРАВЛЕНИЯ БАГИ ПОЯВЛЕНИЯ ВТОРОГО КУРСОРА В ДЕРЕВЕ ---
+        if not self.HasFlag(wx.TR_MULTIPLE):
+            selections = self.GetSelections()
+            if len(selections) > 1:
+                for selection in selections:
+                    if selection != select_item:
+                        selection.SetHilight(0)
+                        self._main_win.RefreshLine(selection)
+        # --- КОНЕЦ: БЛОК ИСПРАВЛЕНИЯ БАГИ ПОЯВЛЕНИЯ ВТОРОГО КУРСОРА В ДЕРЕВЕ ---
+        self.eval_event('selectChanged', event, True)
+
+    def OnItemActivated(self, event):
+        """
+        Активизация узла.
+        """
+        self.eval_event('itemActivated', event, True)
 
 
 def test(par=0):

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Библиотека блокировок.
+Библиотека функций блокировок.
 Формат:
 Информация о координатах блокировок (таблица/запись) храняться:
 таблица: имя директории
@@ -18,7 +18,7 @@ import stat
 
 from . import ic_util
 from . import ic_str
-import ic.engine.ic_user
+from ic.engine import ic_user
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -44,6 +44,9 @@ ERROR_CODE2MESSAGE = {1: u'Таблица заблокирована. Не во�
                       5: u'',                           # №5
                       99: u'Не известная ошибка.'       # 99
                       }
+
+UNKNOWN_USER = u'Пользователь не определен'
+UNKNOWN_COMPUTER = u'Компьютер не определен'
 
 
 # --- Функции ---
@@ -242,7 +245,7 @@ def getLockDir():
     """
     Определить папку блокировок.
     """
-    lock_dir = ic.engine.ic_user.icGet('LOCK_DIR')
+    lock_dir = ic_user.icGet('LOCK_DIR')
     if not lock_dir:
         log.warning(u'Не определена папка блокировок. Используется папка по умолчанию <%s>' % LOCK_DIR)
         return LOCK_DIR
@@ -522,8 +525,10 @@ class icLockSystem:
         @param LockDir_: Папка блокировки.
         """
         if LockDir_ is None:
-            LockDir_ = LOCK_DIR
-        
+            lock_dir = getLockDir()
+            LockDir_ = lock_dir if os.path.exists(lock_dir) else LOCK_DIR
+
+        log.info(u'Система блокировки. Используется директория блокировки <%s>' % LockDir_)
         self._LockDir = LockDir_
         
     # --- Папочные блокировки ---
@@ -605,7 +610,27 @@ class icLockSystem:
         """
         lock_file_name = self._getLockFileName(LockName_)
         return ReadLockRecord(lock_file_name)
-    
+
+    def getLockUsername(self, LockName_):
+        """
+        Определить имя пользователя блокировки.
+        @param LockName_: Имя блокировки.
+        """
+        if self.isLockFileRes(LockName_):
+            lock_rec = self.getLockRec(LockName_)
+            return lock_rec.get('user', UNKNOWN_USER)
+        return UNKNOWN_USER
+
+    def getLockComputer(self, LockName_):
+        """
+        Определить имя компьютера блокировки.
+        @param LockName_: Имя блокировки.
+        """
+        if self.isLockFileRes(LockName_):
+            lock_rec = self.getLockRec(LockName_)
+            return lock_rec.get('computer', UNKNOWN_COMPUTER)
+        return UNKNOWN_COMPUTER
+
     # --- Общие функции блокировки ---
     def isLockRes(self, LockName_):
         """
