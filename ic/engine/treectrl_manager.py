@@ -560,3 +560,35 @@ class icTreeCtrlManager(object):
         except:
             log.fatal(u'Ошибка определение пути элемента объекта <%s>' % str(tree_ctrl))
         return None
+
+    def findItem_requirement(self, ctrl=None, requirement=None, item=None):
+        """
+        Поиск элемента дерева по требованию.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @param requirement: lambda выражение, формата:
+            lambda item: ...
+            Которое возвращает True/False.
+            Если True, то элемент удовлетворяет критерию поиска.
+            False - строка не удовлетворяет.
+        @param item: Текущий обрабатываемый элемент дерева.
+        @return: Найденный элемент или None если не найден элемент.
+        """
+        if ctrl is None:
+            log.warning(u'Не указан контрол wx.TreeCtrl для поиска элемента дерева')
+            return False
+
+        if requirement is None:
+            log.warning(u'Не определено условие поиска элемента дерева')
+            return False
+
+        for child in self.getItemChildren(ctrl=ctrl, item=item):
+            is_found = requirement(child)
+            if is_found:
+                return child
+
+            # Рекурсивно обработать дочерние элементы
+            if ctrl.ItemHasChildren(child):
+                found_item = self.findItem_requirement(ctrl, requirement=requirement, item=child)
+                if found_item:
+                    return found_item
+        return None

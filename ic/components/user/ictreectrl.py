@@ -254,7 +254,19 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
 
     # Другое наименование метода
     getItemRecord = getItemData
-    
+
+    def findItem(self, requirement=None):
+        """
+        Поиск элемента дерева по требованию.
+        @param requirement: lambda выражение, формата:
+            lambda item: ...
+            Которое возвращает True/False.
+            Если True, то элемент удовлетворяет критерию поиска.
+            False - строка не удовлетворяет.
+        @return: Найденный элемент или None если не найден элемент.
+        """
+        return self.findItem_requirement(ctrl=self, requirement=requirement)
+
     #   Обработчики событий
     def OnExpand(self, event):
         """
