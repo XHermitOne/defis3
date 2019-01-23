@@ -936,3 +936,44 @@ class icListCtrlManager(object):
                 ctrl.SetItemBackgroundColour(row_idx,
                                              self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT else oddBackgroundColour)
 
+    def findRowIdx_requirement(self, ctrl=None, rows=(), requirement=None, auto_select=False):
+        """
+        Наити индекс строки списка по определенному условию.
+        @param ctrl: Объект контрола.
+        @param rows: Список строк.
+        @param requirement: lambda выражение, формата:
+            lambda i, row: ...
+            Которое возвращает True/False.
+            Если True, то считаем что строка удовлетворяет условию.
+            False - строка не удовлетворяет.
+        @param auto_select: Произвести автоматическое выделение строки в контроле
+        @return: индекс найденной строки или None если строка не найдена.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол для поиска строки')
+            return False
+        if requirement is None:
+            log.warning(u'Не определено условие для поиска строки')
+            return False
+
+        for i, row in enumerate(rows):
+            is_found = requirement(i, row)
+            if is_found:
+                if auto_select:
+                    self.selectItem_list_ctrl(ctrl, item_idx=i, is_focus=True, deselect_prev=True)
+                return i
+        return True
+
+    def selectRow_requirement(self, ctrl=None, rows=(), requirement=None):
+        """
+        Наити и выделить индекс строки списка по определенному условию.
+        @param ctrl: Объект контрола.
+        @param rows: Список строк.
+        @param requirement: lambda выражение, формата:
+            lambda i, row: ...
+            Которое возвращает True/False.
+            Если True, то считаем что строка удовлетворяет условию.
+            False - строка не удовлетворяет.
+        @return: индекс найденной строки или None если строка не найдена.
+        """
+        return self.findRowIdx_requirement(ctrl=ctrl, rows=rows, requirement=requirement)
