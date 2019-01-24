@@ -242,7 +242,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
         @param item: Элемент дерева.
         @param data: Прикрепляемые данные.
         """
-        return self.SetItemData(item, data)
+        return self.setItemData_TreeCtrl(self, item, data)
 
     def getItemData(self, item):
         """
@@ -250,7 +250,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
         @param item: Элемент дерева.
         @return: Прикрепленные данные к элементу дерева или None в случае ошибки.
         """
-        return self.GetItemData(item)
+        return self.getItemData_TreeCtrl(self, item)
 
     # Другое наименование метода
     getItemRecord = getItemData

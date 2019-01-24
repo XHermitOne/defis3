@@ -60,7 +60,7 @@ class icTreeCtrlManager(object):
                                        ext_func=ext_func)
 
         if do_expand_all:
-            treelist_ctrl.ExpandAll(treelist_ctrl.GetRootItem())
+            treelist_ctrl.ExpandAll()
         return True
 
     def setTree_TreeListCtrl(self, treelist_ctrl=None, tree_data=None, columns=(),
@@ -203,6 +203,43 @@ class icTreeCtrlManager(object):
         except:
             log.fatal(u'Ошибка добавления ветки в узел дерева контрола wx.TreeListCtrl.')
         return False
+
+    def getItemData_TreeCtrl(self, ctrl=None, item=None):
+        """
+        Получить прикрепленные данные к элементу дерева.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @param item: Элемент дерева. Если None, то берется корневой элемент дерева.
+        @return: Прикрепленные данные к элементу дерева или None в случае ошибки.
+        """
+        if ctrl is None:
+            log.warning(u'Не указан контрол wx.TreeCtrl для определения прикрепленных данных к элементу')
+            return None
+
+        if item is None:
+            item = ctrl.GetRootItem()
+        return ctrl.GetItemData(item)
+
+    # Другое наименование метода
+    getItemRecord_TreeCtrl = getItemData_TreeCtrl
+
+    def setItemData_TreeCtrl(self, ctrl=None, item=None, data=None):
+        """
+        Прикрепить данные к элементу дерева.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @param item: Элемент дерева. Если None, то берется корневой элемент дерева.
+        @param data: Прикрепляемые данные.
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не указан контрол wx.TreeCtrl для прикрепления данных к элементу')
+            return False
+
+        if item is None:
+            item = ctrl.GetRootItem()
+        return ctrl.SetItemData(item, data)
+
+    # Другое наименование метода
+    setItemRecord_TreeCtrl = setItemData_TreeCtrl
 
     def getItemChildren(self, ctrl=None, item=None):
         """
@@ -347,7 +384,7 @@ class icTreeCtrlManager(object):
                                    label=label, ext_func=ext_func)
 
         if do_expand_all:
-            tree_ctrl.ExpandAll(tree_ctrl.GetRootItem())
+            tree_ctrl.ExpandAll()
         return True
 
     def setTree_TreeCtrl(self, tree_ctrl=None, tree_data=None, label=None,
