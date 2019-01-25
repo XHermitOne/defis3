@@ -8,8 +8,8 @@
 ###########################################################################
 
 import wx
-import wx.adv
-# import wx.calendar
+import wx.xrc
+import wx.calendar
 
 ###########################################################################
 ## Class calendarDialogProto
@@ -24,7 +24,7 @@ class calendarDialogProto ( wx.Dialog ):
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.calendarCtrl = wx.adv.CalendarCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.CAL_SHOW_HOLIDAYS )
+		self.calendarCtrl = wx.calendar.CalendarCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.calendar.CAL_SHOW_HOLIDAYS )
 		bSizer1.Add( self.calendarCtrl, 0, wx.ALL, 5 )
 		
 		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
@@ -307,14 +307,14 @@ class dateRangeDialogProto ( wx.Dialog ):
 		self.m_staticText3.Wrap( -1 )
 		fgSizer2.Add( self.m_staticText3, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.firstDatePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
+		self.firstDatePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
 		fgSizer2.Add( self.firstDatePicker, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
 		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"по:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText31.Wrap( -1 )
 		fgSizer2.Add( self.m_staticText31, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.lastDatePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
+		self.lastDatePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
 		fgSizer2.Add( self.lastDatePicker, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -340,8 +340,8 @@ class dateRangeDialogProto ( wx.Dialog ):
 		
 		# Connect Events
 		self.concrete_date_checkBox.Bind( wx.EVT_CHECKBOX, self.onConcreteDateCheckBox )
-		self.firstDatePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onFirstDateChanged )
-		self.lastDatePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onLastDateChanged )
+		self.firstDatePicker.Bind( wx.EVT_DATE_CHANGED, self.onFirstDateChanged )
+		self.lastDatePicker.Bind( wx.EVT_DATE_CHANGED, self.onLastDateChanged )
 		self.cancelButton.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
 		self.okButton.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
 	
@@ -826,6 +826,60 @@ class checkBoxMaxiDialogProto ( wx.Dialog ):
 		# Connect Events
 		self.cancelButton.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
 		self.okButton.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onCancelButtonClick( self, event ):
+		event.Skip()
+	
+	def onOkButtonClick( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class checkListBoxDialogProto
+###########################################################################
+
+class checkListBoxDialogProto ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор элементов", pos = wx.DefaultPosition, size = wx.Size( 579,598 ), style = wx.DEFAULT_DIALOG_STYLE )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer33 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.label_staticText = wx.StaticText( self, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.label_staticText.Wrap( -1 )
+		bSizer33.Add( self.label_staticText, 0, wx.ALL, 5 )
+		
+		items_checkListChoices = []
+		self.items_checkList = wx.CheckListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, items_checkListChoices, 0 )
+		bSizer33.Add( self.items_checkList, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		bSizer35 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.cancel_button = wx.Button( self, wx.ID_ANY, u"Отмена", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer35.Add( self.cancel_button, 0, wx.ALL, 5 )
+		
+		self.ok_button = wx.Button( self, wx.ID_ANY, u"ОК", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer35.Add( self.ok_button, 0, wx.ALL, 5 )
+		
+		
+		bSizer33.Add( bSizer35, 0, wx.ALIGN_RIGHT, 5 )
+		
+		
+		self.SetSizer( bSizer33 )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.cancel_button.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
+		self.ok_button.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
 	
 	def __del__( self ):
 		pass

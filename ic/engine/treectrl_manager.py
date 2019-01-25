@@ -222,6 +222,24 @@ class icTreeCtrlManager(object):
     # Другое наименование метода
     getItemRecord_TreeCtrl = getItemData_TreeCtrl
 
+    def getSelectedItemData_TreeCtrl(self, ctrl=None):
+        """
+        Данные выбранного элемента дерева.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @return: Данные выбранного элемента дерева или None в случае ошибки.
+        """
+        if ctrl is None:
+            log.warning(u'Не указан контрол wx.TreeCtrl для определения прикрепленных данных к элементу')
+            return None
+
+        selected_item = ctrl.GetSelection()
+        if selected_item:
+            return self.getItemData_TreeCtrl(ctrl=ctrl, item=selected_item)
+        return None
+
+    # Другое наименование метода
+    getSelectedItemRecord_TreeCtrl = getSelectedItemData_TreeCtrl
+
     def setItemData_TreeCtrl(self, ctrl=None, item=None, data=None):
         """
         Прикрепить данные к элементу дерева.
@@ -240,6 +258,25 @@ class icTreeCtrlManager(object):
 
     # Другое наименование метода
     setItemRecord_TreeCtrl = setItemData_TreeCtrl
+
+    def setSelectedItemData_TreeCtrl(self, ctrl=None, data=None):
+        """
+        Установить данные выбранного элемента дерева.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @param data: Устанавливаемые данные.
+        @return: Данные выбранного элемента дерева или None в случае ошибки.
+        """
+        if ctrl is None:
+            log.warning(u'Не указан контрол wx.TreeCtrl для установки прикрепленных данных к элементу')
+            return None
+
+        selected_item = ctrl.GetSelection()
+        if selected_item:
+            return self.setItemData_TreeCtrl(ctrl=ctrl, item=selected_item, data=data)
+        return None
+
+    # Другое наименование метода
+    setSelectedItemRecord_TreeCtrl = setSelectedItemData_TreeCtrl
 
     def getItemChildren(self, ctrl=None, item=None):
         """
