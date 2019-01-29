@@ -570,19 +570,25 @@ class icLockSystem:
             log.fatal(u'Ошибка определения имени файла блокировки')
         return lock_file_name
         
-    def lockFileRes(self, LockName_, LockRec_=None):
+    def lockFileRes(self, LockName_, LockRec_=None, unLockMy=True):
         """
         Поставить блокировку в виде файла.
         @param LockName_: Имя блокировки.
             М.б. реализовано в виде списка имен,
             что определяет путь к файлу.
         @param LockRec_: Запись блокировки.
+        @param unLockMy: Автоматическая разблокировка моих блокировок?
         """
         lock_file_name = self._getLockFileName(LockName_)
         if LockRec_ is None:
             import ic.engine.ic_user
             LockRec_ = {'computer': ComputerName(),
                         'user': ic.engine.ic_user.icGet('UserName')}
+
+        if unLockMy and self.isMyLockRes(LockName_, LockRec_):
+            # Это мной поставленная блокировка. Поэтому мы можем снять ее
+            self.unLockFileRes(LockName_)
+
         return LockFile(lock_file_name, LockRec_)
         
     def unLockFileRes(self, LockName_):
@@ -595,11 +601,33 @@ class icLockSystem:
         lock_file_name = self._getLockFileName(LockName_)
         return UnLockFile(lock_file_name)
 
-    def isLockFileRes(self, LockName_):
+    def isMyLockRes(self, LockName_, LockRec_=None):
+        """
+        Проверка является ли ресурс заблокирован мной.
+        @param LockName_: Имя блокировки.
+        @param LockRec_: Запись блокировки.
+        @return: True - ресурс заблокирован мной,
+            False - ресурс вообще не заблокирован или заблокирован не мной.
+        """
+        if LockRec_ is None:
+            import ic.engine.ic_user
+            LockRec_ = {'computer': ComputerName(),
+                        'user': ic.engine.ic_user.icGet('UserName')}
+
+        # Если ресурс заблокирован надо посмотреть кто его заблокировал
+        lock_rec = self.getLockRec(LockName_)
+        return lock_rec == LockRec_
+
+    def isLockFileRes(self, LockName_, unLockMy=True):
         """
         Существует ли файловая блокировка с именем.
         @param LockName_: Имя блокировки.
+        @param unLockMy: Автоматическая разблокировка моих блокировок?
         """
+        if unLockMy and self.isMyLockRes(LockName_):
+            # Это мной поставленная блокировка. Поэтому мы можем снять ее
+            self.unLockFileRes(LockName_)
+
         lock_file_name = self._getLockFileName(LockName_)
         return IsLockedFile(lock_file_name)
     

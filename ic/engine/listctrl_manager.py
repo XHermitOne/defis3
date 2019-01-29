@@ -526,9 +526,11 @@ class icListCtrlManager(object):
                     value = str(value)
 
                 if i == 0:
-                    row_idx = ctrl.InsertStringItem(sys.maxsize, value)
+                    # row_idx = ctrl.InsertStringItem(sys.maxsize, value)
+                    row_idx = ctrl.InsertItem(sys.maxsize, value)
                 else:
-                    ctrl.SetStringItem(row_idx, i, value)
+                    # ctrl.SetStringItem(row_idx, i, value)
+                    ctrl.SetItem(row_idx, i, value)
 
             if row_idx != -1:
                 if evenBackgroundColour and not (row_idx % 2):
@@ -789,6 +791,9 @@ class icListCtrlManager(object):
             return obj.GetFirstSelected()
         elif isinstance(obj, wx.dataview.DataViewListCtrl):
             return obj.GetSelectedRow()
+        elif isinstance(obj, wx.CheckListBox) or isinstance(obj, wx.ListBox):
+            idx = obj.GetSelection()
+            return -1 if idx == wx.NOT_FOUND else idx
 
         log.warning(u'Объект типа <%s> не поддерживается как определитель выбранного элемента контрола' % obj.__class__.__name__)
         return -1
@@ -823,6 +828,14 @@ class icListCtrlManager(object):
                 log.fatal(u'Ошибка индекса <%d> контрола списка <%s>' % (item_idx, ctrl.__class__.__name__))
                 return False
             return True
+        elif isinstance(ctrl, wx.CheckListBox) or isinstance(ctrl, wx.ListBox):
+            if (0 > item_idx) or (item_idx >= ctrl.GetCount()):
+                log.warning(u'Не корректный индекс <%d> контрола списка <%s>' % (item_idx, ctrl.__class__.__name__))
+                return False
+            if deselect_prev:
+                ctrl.SetSelection(self.getItemSelectedIdx(ctrl), 0)
+            ctrl.SetSelection(item_idx)
+            return True
         else:
             log.warning(u'Объект типа <%s> не поддерживается для выбора элемента контрола' % ctrl.__class__.__name__)
         return False
@@ -842,6 +855,8 @@ class icListCtrlManager(object):
         elif isinstance(obj, wx.dataview.DataViewListCtrl):
             log.warning(u'ВНИМАНИЕ! В этой версии wxPython не реализована функция получения количества элементов для контрола <%s>' % obj.__class__.__name__)
             return 0
+        elif isinstance(obj, wx.CheckListBox) or isinstance(obj, wx.ListBox):
+            return obj.GetCount()
 
         log.warning(u'Объект типа <%s> не поддерживается как определитель количества элементов контрола' % obj.__class__.__name__)
         return 0
@@ -882,21 +897,75 @@ class icListCtrlManager(object):
             for i in range(n_begin, n_end + 1):
                 ctrl.CheckItem(i, check=check)
             return True
+        elif isinstance(ctrl, wx.CheckListBox):
+            if n_begin < 0:
+                n_begin = 0
+            if n_end < 0:
+                n_end = ctrl.GetCount() - 1
+            for i in range(n_begin, n_end + 1):
+                ctrl.Check(i, check=check)
+            return True
 
         log.warning(u'Объект типа <%s> не поддерживается вкл./выкл. элментов контрола' % ctrl.__class__.__name__)
         return False
 
-    def getCheckedItems_list_ctrl(self, ctrl):
+    def getCheckedItems_list_ctrl(self, ctrl, check_selected=False):
         """
         Получить список индексов помеченных/отмеченных элементов контрола списка.
         @param ctrl: Объект контрола списка элементов.
+        @param check_selected: Считать выделенный элемент списка как помеченный?
+            Если да, то выделенный элемент считается помеченным только когда
+            ни один другой элемент не помечен.
         @return: Список индексов помеченных элементов контрола списка.
             Либо None в случае ошибки.
         """
-        if isinstance(ctrl, wx.ListCtrl):
-            return [i for i in range(ctrl.GetItemCount()) if ctrl.IsChecked(i)]
+        try:
+            if isinstance(ctrl, wx.ListCtrl):
+                indexes = [i for i in range(ctrl.GetItemCount()) if ctrl.IsChecked(i)]
+            elif isinstance(ctrl, wx.CheckListBox):
+                indexes = [i for i in range(ctrl.GetCount()) if ctrl.IsChecked(i)]
+            else:
+                log.warning(
+                    u'Объект типа <%s> не поддерживается вкл./выкл. элментов контрола' % ctrl.__class__.__name__)
+                return None
 
-        log.warning(u'Объект типа <%s> не поддерживается вкл./выкл. элментов контрола' % ctrl.__class__.__name__)
+            if not indexes and check_selected:
+                selected = self.getItemSelectedIdx(ctrl)
+                if selected >= 0:
+                    indexes = [selected]
+            return indexes
+        except:
+            log.fatal(u'Ошибка определения индексов отмеченных элементов контрола <%s>' % ctrl.__class__.__name__)
+        return None
+
+    def getCheckedItemRecords_list_ctrl(self, ctrl, records, check_selected=False):
+        """
+        Получить список помеченных/отмеченных записей элементов контрола списка.
+        @param ctrl: Объект контрола списка элементов.
+        @param records: Список записей.
+        @param check_selected: Считать выделенный элемент списка как помеченный?
+            Если да, то выделенный элемент считается помеченным только когда
+            ни один другой элемент не помечен.
+        @return: Список записей помеченных элементов контрола списка.
+            Либо None в случае ошибки.
+        """
+        try:
+            if isinstance(ctrl, wx.ListCtrl):
+                check_records = [records[i] for i in range(ctrl.GetItemCount()) if ctrl.IsChecked(i)]
+            elif isinstance(ctrl, wx.CheckListBox):
+                check_records = [records[i] for i in range(ctrl.GetCount()) if ctrl.IsChecked(i)]
+            else:
+                log.warning(
+                    u'Объект типа <%s> не поддерживается вкл./выкл. элментов контрола' % ctrl.__class__.__name__)
+                return None
+
+            if not check_records and check_selected:
+                selected = self.getItemSelectedIdx(ctrl)
+                if selected >= 0:
+                    check_records = [self.records[selected]]
+            return check_records
+        except:
+            log.fatal(u'Ошибка определения отмеченных записей контрола <%s>' % ctrl.__class__.__name__)
         return None
 
     def defaultEvenRowsBGColour(self):
