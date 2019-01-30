@@ -64,6 +64,7 @@ ic_class_spc = {'type': 'FlatMenuItem',
                 'pic2': None,          # Образ выключенного пункта
                 'onSelected': None,    # Блок кода на выбор пункта
                 'kind': 'normal',      # Вид пункта меню
+                'show': True,       # Признак отображения пункта меню
 
                 '__styles__': ic_class_styles,
                 '__lists__': {'kind': icflatmenuitem.IC_ITEM_KIND,
@@ -86,6 +87,7 @@ ic_class_spc = {'type': 'FlatMenuItem',
                                  'pic2': u'Образ выключенного пункта',
                                  'onSelected': u'Блок кода на выбор пункта',
                                  'kind': u'Вид пункта меню',
+                                 'show': u'Признак отображения пункта меню',
                                  },
                 }
 
@@ -215,6 +217,12 @@ class icFlatMenuItem(icwidget.icWidget, icflatmenuitem.icFlatMenuItemPrototype):
         """
         Добавить пункт в родительское меню.
         """
+        show = self.getShow()
+        if not show:
+            # Если пункт меню не отображается,
+            # то не добавляем его в родительское меню
+            return
+
         if Parent_:
             if issubclass(Parent_.__class__, icflatmenu.icFlatMenuPrototype):
                 # Добавляем в выпадающее меню
@@ -273,6 +281,12 @@ class icFlatMenuItem(icwidget.icWidget, icflatmenuitem.icFlatMenuItemPrototype):
             return wx.ITEM_RADIO
         # Вид пункта меню не определен
         return None
+
+    def getShow(self):
+        """
+        Признак отображения пукта меню.
+        """
+        return self.getICAttr('show')
 
     def _createPicBmp(self, bmp_psp):
         """

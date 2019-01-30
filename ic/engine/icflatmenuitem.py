@@ -21,6 +21,7 @@ SPC_IC_FLATMENUITEM = {'label': 'item',        # Надпись
                        'pic2': None,           # Образ выключенного пункта
                        'onSelected': None,     # Блок кода на выбор пункта
                        'kind': 'normal',       # Вид пункта меню
+                       'show': True,           # Признак отображения пункта меню
                        }
 
 __version__ = (0, 1, 1, 1)
