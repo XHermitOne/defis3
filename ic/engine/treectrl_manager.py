@@ -666,3 +666,30 @@ class icTreeCtrlManager(object):
                 if found_item:
                     return found_item
         return None
+
+    def selectItem(self, ctrl, item=None, select=True):
+        """
+        Выбор элемента дерева.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @param item: Элемент дерева. Если item - None, то берется корневой элемент.
+        @param select: True - выбрать элемент. False - наоборот снять выбор.
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не указан контрол wx.TreeCtrl для выбора элемента дерева')
+            return False
+
+        if item is None:
+            item = ctrl.GetRootItem()
+
+        ctrl.SelectItem(item, select=select)
+        return True
+
+    def selectRoot(self, ctrl, select=True):
+        """
+        Выбор корневого элемента дерева.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @param select: True - выбрать элемент. False - наоборот снять выбор.
+        @return: True/False.
+        """
+        return self.selectItem(ctrl, select=select)
