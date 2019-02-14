@@ -10,7 +10,7 @@ from .cf_obj import iccfobject
 
 from ic.log import log
 
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 class icCFAnalyzer:
@@ -50,7 +50,7 @@ class icCFAnalyzer:
         if root:
             for child in root.children:
                 obj = dict()
-                name = unicode(str(child.name), 'utf-8') if not isinstance(child.name, unicode) else child.name
+                name = str(child.name) if not isinstance(child.name, str) else child.name
                 obj['name'] = name
                 obj['img'] = child.getImage()
                 obj['img_exp'] = child.getImageExpand()

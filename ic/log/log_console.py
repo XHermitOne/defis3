@@ -5,7 +5,8 @@
 Функции логирования с использованием консоли.
 """
 
-import os
+# import os
+import subprocess
 import time
 import wx
 
@@ -54,14 +55,16 @@ def log_cmd(cmd, txt_ctrl=None):
         Если указывается, то вывод лога производим в wxTextControl,
         иначе вывод будет производиться в текстовый файл.
     """
-    # if isinstance(cmd, unicode):
-    #    import sys
-    #    cmd = cmd.encode(sys.getfilesystemencoding())
-    result = os.popen3(cmd)
-    if txt_ctrl:
-        log_to_ctrl(txt_ctrl, result)
-    else:
-        log_to_file(cmd2Txt(result))
+    try:
+        # result = os.popen3(cmd)
+        log.info(u'Запуск комманды <%s>' % cmd)
+        result = subprocess.Popen(cmd.split(u' '))
+        if txt_ctrl:
+            log_to_ctrl(txt_ctrl, result.stdout)
+        else:
+            log_to_file(cmd2Txt(result.stdout))
+    except:
+        log.fatal(u'Ошибка в функции <log_cmd>')
 
 
 def cmd2Txt(cmd):

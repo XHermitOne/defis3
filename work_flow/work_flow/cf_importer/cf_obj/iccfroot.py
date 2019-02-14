@@ -43,7 +43,9 @@ class icCFRoot(iccfobject.icCFObject):
             if not os.path.exists(cf_root_filename):
                 cf_root_filename = os.path.join(os.path.abspath(self.cf_dir), 'root')
             if not os.path.exists(cf_root_filename):
-                log.warning(u'Не найден файл <%s>' % cf_root_filename)
+                msg = u'Ошибка парсинга CF файла. Не найден файл <%s>. Для Linux проверте установку библиотеки libboost-all-dev' % cf_root_filename
+                log.warning(msg)
+                # ic_dlg.icWarningBox(u'ОШИБКА', msg)
                 return
 
             cf_root_res = iccfresource.icCFResource(cf_root_filename)

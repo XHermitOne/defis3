@@ -4,12 +4,12 @@
 """
 """
 
-# Version
-__version__ = (0, 0, 1, 2)
-
 import wx
 import wx.lib.delayedresult as delayedresult
 import thread
+
+# Version
+__version__ = (0, 1, 1, 1)
 
 
 class DelayedFunction(object):

@@ -13,7 +13,7 @@ from . import icWizardPanelProto
 from ic.dlg import ic_dlg
 # from ic.log import util
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icParsePanel(icWizardPanelProto.icParsePanelPrototype):

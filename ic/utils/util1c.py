@@ -12,7 +12,7 @@ import imp
 import wx
 
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 # Наполнитель позиций при отображении вложенности пунктов в компоненте списка
 DEFAULT_PADDING = '....'
@@ -51,10 +51,10 @@ def StructToTxt(Struct_, Level_=0, PADDING=DEFAULT_PADDING):
             # Появляется косяк с разделителем папок в именах путей
             # Проверка на кавычки
             txt = txt+'\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
-        elif isinstance(obj_type, unicode):
-            # Появляется косяк с разделителем папок в именах путей
-            # Проверка на кавычки
-            txt = txt+'u\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
+        # elif isinstance(obj_type, unicode):
+        #     # Появляется косяк с разделителем папок в именах путей
+        #     # Проверка на кавычки
+        #     txt = txt+'u\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
         else:
             txt += str(Struct_)
 
@@ -138,7 +138,7 @@ def getModuleDoc(ModuleFileName_):
             if wx.Platform == '__WXGTK__':
                 return module.__doc__
             elif wx.Platform == '__WXMSW__':
-                return unicode(module.__doc__, 'utf-8')
+                return str(module.__doc__, 'utf-8')
             else:
                 return module.__doc__
     except:
@@ -166,9 +166,10 @@ def encodeText(Text_, SrcCP_=None, DstCP_='utf-8'):
     """
     if (DstCP_ is None) or (DstCP_.lower() == 'unicode'):
         if isinstance(Text_, str):
-            return unicode(Text_, SrcCP_)
-        elif isinstance(Text_, unicode):
+            # return str(Text_, SrcCP_)
             return Text_
+        # elif isinstance(Text_, unicode):
+        #     return Text_
         return Text_
 
     if isinstance(Text_, str):
