@@ -19,6 +19,8 @@ STARTSWITH_SIGNATURE = '..)'
 ENDSWITH_SIGNATURE = '(..'
 CONTAIN_SIGNATURE = '(..)'
 
+COMMENT_COMMAND_SIGNATIRE = '#'
+
 # Замены для адаптации модуля
 ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo', dst='# import wx.combo'),
                        dict(compare=STARTSWITH_SIGNATURE, src='import wx.xrc', dst='import wx.adv'),
@@ -39,6 +41,8 @@ ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo',
                        dict(compare=CONTAIN_SIGNATURE, src='.AddLabelTool(', dst='.AddTool('),
                        # Wizard
                        dict(compare=CONTAIN_SIGNATURE, src='wx.wizard', dst='wx.adv'),
+                       # TextCtrl
+                       dict(compare=CONTAIN_SIGNATURE, src='.SetMaxLength', dst=COMMENT_COMMAND_SIGNATIRE),
                        )
 
 
@@ -60,7 +64,7 @@ def get_wxformbuilder_executable():
 def run_wxformbuilder(filename=None, do_generate=False, language=None):
     """
     Запуск wxFormBuilder.
-        Для более подроного описания параметров запуска wxFormBuilder, запустите:
+        Для более подробного описания параметров запуска wxFormBuilder, запустите:
         wxformbuilder --help
     @param filename: Файл открываемый в wxFormBuilder.
         Если не указан, то ничего не открывается.
@@ -130,6 +134,18 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
             log.fatal(u'Ошибка генерации файла проекта wxFormBuilder <%s>' % prj_filename)
         return False
 
+    def _replace_adaptation(self, line, replacement_src, replacement_dst):
+        """
+        Произвести замену в линии модуля.
+        @param line: Строка линии модуля.
+        @param replacement_src: Исходная замена.
+        @param replacement_dst: Результирующая замена.
+        @return: Измененная строка модуля.
+        """
+        if replacement_dst == COMMENT_COMMAND_SIGNATIRE:
+            return COMMENT_COMMAND_SIGNATIRE + line
+        return line.replace(replacement_src, replacement_dst)
+
     def adaptation_form_py(self, py_filename):
         """
         Адаптация сгенерированного модуля Python для использования в программе
@@ -162,11 +178,11 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
             for replacement in ADAPTATION_REPLACES:
                 signature = replacement.get('compare', None)
                 if signature == STARTSWITH_SIGNATURE and new_line.startswith(replacement['src']):
-                    new_line = new_line.replace(replacement['src'], replacement['dst'])
+                    new_line = self._replace_adaptation(new_line, replacement['src'], replacement['dst'])
                 elif signature == ENDSWITH_SIGNATURE and new_line.endswith(replacement['src']):
-                    new_line = new_line.replace(replacement['src'], replacement['dst'])
+                    new_line = self._replace_adaptation(new_line, replacement['src'], replacement['dst'])
                 elif signature == CONTAIN_SIGNATURE and replacement['src'] in new_line:
-                    new_line = new_line.replace(replacement['src'], replacement['dst'])
+                    new_line = self._replace_adaptation(new_line, replacement['src'], replacement['dst'])
                 # else:
                 #    log.warning(u'Не распознанная сигнатура <%s> автозамены адаптации модуля' % str(signature))
             lines[i] = new_line

@@ -9,7 +9,7 @@ import wx
 
 from ic.log import log
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icImgList:
@@ -73,6 +73,21 @@ class icImgList:
         return self.getImgIdx(id), self.getImgExtendedIdx(id)
     
     def setImg(self, img, img_idx=-1):
+        """
+        Добавить картинку компонента в список образов.
+        @param img: Имя файла образа компонента или сам образ.
+        @param img_idx: Указание на какое место поместить картинку.
+        @return: Возвращает индекс соответствующий этому образу.
+        """
+        try:
+            return self._setImg(img, img_idx)
+        except:
+            if issubclass(img.__class__, wx.Bitmap):
+                log.error('Размер картинки (%s x %s)' % (img.GetWidth(), img.GetHeight()))
+            log.fatal('Ошибка добавления картинки.')
+        return -1
+
+    def _setImg(self, img, img_idx=-1):
         """
         Добавить картинку компонента в список образов.
         @param img: Имя файла образа компонента или сам образ.

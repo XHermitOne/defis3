@@ -8,7 +8,7 @@
 import os
 
 import wx
-import wx.wizard
+import wx.adv
 
 from ic.log import log
 
@@ -18,7 +18,7 @@ from . import icparsepanel
 from . import icsmarttreelistctrl
 
 
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Functions ---
@@ -36,7 +36,7 @@ def makeStdPageTitle(wizPg, title):
 
 
 # --- Classes ---
-class icCFParsePage(wx.wizard.PyWizardPage):
+class icCFParsePage(wx.adv.PyWizardPage):
     """
     Страница парсинга CF файла конфигурации 1с.
     """
@@ -46,7 +46,7 @@ class icCFParsePage(wx.wizard.PyWizardPage):
         @param parent: Родительский визард, в который вставляется страница.
         @param title: Заголовок страницы.
         """
-        wx.wizard.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         
         self.next = None
         self.prev = None
@@ -100,7 +100,7 @@ class icCFParsePage(wx.wizard.PyWizardPage):
                                        txt_ctrl=self.cf_parse_panel.logTxt)
 
 
-class icCFChoicePage(wx.wizard.PyWizardPage):
+class icCFChoicePage(wx.adv.PyWizardPage):
     """
     Страница выбора метаобъектов конфигурации 1с для изменения.
     """
@@ -110,7 +110,7 @@ class icCFChoicePage(wx.wizard.PyWizardPage):
         @param parent: Родительский визард, в который вставляется страница.
         @param title: Заголовок страницы.
         """
-        wx.wizard.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         
         self.next = None
         self.prev = None
@@ -182,7 +182,7 @@ class icCFChoicePage(wx.wizard.PyWizardPage):
             metaobject.gen_resource()
 
         
-class icCFEndPage(wx.wizard.PyWizardPage):
+class icCFEndPage(wx.adv.PyWizardPage):
     """
     Страница окончания установки.
     """
@@ -193,7 +193,7 @@ class icCFEndPage(wx.wizard.PyWizardPage):
         @param title: Заголовок страницы.
         @param txt: Текст.
         """
-        wx.wizard.PyWizardPage.__init__(self, parent)
+        wx.adv.PyWizardPage.__init__(self, parent)
         
         self.next = None
         self.prev = None

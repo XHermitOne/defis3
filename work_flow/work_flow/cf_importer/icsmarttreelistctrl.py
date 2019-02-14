@@ -34,11 +34,12 @@ from ic.log import log
 from ic.utils import ic_str
 from ic.dlg import ic_dlg
 from ic.utils import ic_util
+from ic.bitmap import ic_bmp
 
 _ = wx.GetTranslation
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_ENCODING = 'utf-8'
 
@@ -46,7 +47,7 @@ DEFAULT_ENCODING = 'utf-8'
 class icColTreeInfo(hypertreelist.TreeListColumnInfo):
     def __init__(self, input='', width=hypertreelist._DEFAULT_COL_WIDTH, flag=wx.ALIGN_LEFT,
                  image=-1, shown=True, colour=None, edit=False):
-        if type(input) in (str, unicode):
+        if isinstance(input, str):
             self._text = input
             self._width = width
             self._flag = flag
@@ -105,19 +106,19 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         # Последняя найденная колонка
         self._last_find_col_idx = 0
 
-        from . import newstyle_img
         isz = (16, 16)
         # Установка списка образов компонентов
         self._img_list = img_lst.icImgList(self, isz[0], isz[1])
-        self.fldridx, self.fldropenidx = self._img_list.setImgIdx('FOLDER', newstyle_img.folder, newstyle_img.openfolder)
-        self.fileidx = self._img_list.setImgIdx('NEW_DOC', newstyle_img.newdoc)[0]
-        self.curidx = self._img_list.setImgIdx('PAGE_COMMENT', newstyle_img.pageComment)[0]
-        self.AssignImageList(self._img_list.getImageList())
+        self.fldridx, self.fldropenidx = self._img_list.setImgIdx('FOLDER', ic_bmp.createLibraryBitmap('folder_small_normal_hover.png'),
+                                                                  ic_bmp.createLibraryBitmap('folderopen_small_normal_hover.png'))
+        self.fileidx = self._img_list.setImgIdx('NEW_DOC', ic_bmp.createLibraryBitmap('new.png'))[0]
+        self.curidx = self._img_list.setImgIdx('PAGE_COMMENT', ic_bmp.createLibraryBitmap('page.png'))[0]
+        self.GetMainWindow().AssignImageList(self._img_list.getImageList())
         
         self.labels = labels if labels is not None else []
 
         # Установки колонок
-        self.SetMainColumn(0)   # the one with the tree in it...
+        self.GetMainWindow().SetMainColumn(0)   # the one with the tree in it...
         
         for indx, label in enumerate(self.labels):
             # Перевод подписей колонок в строковое представление
@@ -140,15 +141,15 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         if 'imgExpRoot' in kwargs and kwargs['imgExpRoot']:
             self.imgExpRoot = kwargs['imgExpRoot']
         
-        self.root = self.AddRoot(self.titleRoot)
+        self.root = self.GetMainWindow().AddRoot(self.titleRoot)
         if self.imgRoot is None:
-            self.SetItemImage(self.root, self.fldridx, which=wx.TreeItemIcon_Normal)
-            self.SetItemImage(self.root, self.fldropenidx, which=wx.TreeItemIcon_Expanded)
+            self.GetMainWindow().SetItemImage(self.root, self.fldridx, which=wx.TreeItemIcon_Normal)
+            self.GetMainWindow().SetItemImage(self.root, self.fldropenidx, which=wx.TreeItemIcon_Expanded)
         else:
             root_img_idx = self._img_list.setImgIdx('ROOT', self.imgRoot, self.imgExpRoot)
-            self.SetItemImage(self.root, root_img_idx[0], which=wx.TreeItemIcon_Normal)
+            self.GetMainWindow().SetItemImage(self.root, root_img_idx[0], which=wx.TreeItemIcon_Normal)
             if root_img_idx[1] >= 0:
-                self.SetItemImage(self.root, root_img_idx[1], which=wx.TreeItemIcon_Expanded)
+                self.GetMainWindow().SetItemImage(self.root, root_img_idx[1], which=wx.TreeItemIcon_Expanded)
 
         self.SetCheckRadio()
         if 'hideHeader' in kwargs and kwargs['hideHeader']:
@@ -177,20 +178,20 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         """
         Установка стиля Vista. Стиль по умолчанию.
         """
-        self.EnableSelectionVista(True)        
+        self.GetMainWindow().EnableSelectionVista(True)
 
     def expandAllRoot(self):
         """
         Раскрыть всю ветку от корня.
         """
-        return self.ExpandAll()
+        return self.GetMainWindow().ExpandAll()
         
     def getSelectionName(self):
         """
         Имя выбранного узла.
         """
-        selection_item = self.GetSelection()
-        return self.GetItemText(selection_item)
+        selection_item = self.GetMainWindow().GetSelection()
+        return self.GetMainWindow().GetItemText(selection_item)
     
     def addNode(self, root, res, level=0, start_level=0, is_progress=False):
         """
@@ -200,14 +201,14 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         id_pic, id_exp_pic = self._getPicturesId(res)
         
         if len(self.labels) == 1 and len(res['__record__']) > 1:
-            st = u'  ' + (unicode(res['__record__'][1]) or '')
+            st = u'  ' + (str(res['__record__'][1]) or '')
         else:
             st = u''
         node_ct_type = int(res.get('checkable', 0)) if 'checkable' in res else res.get('__type__', 0)
-        child = self.AppendItem(root, res['name'] + st, ct_type=node_ct_type)
-        self.SetItemImage(child, id_pic, which=wx.TreeItemIcon_Normal)
-        self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-        self.SetItemData(child, (level+start_level, res))
+        child = self.GetMainWindow().AppendItem(root, res['name'] + st, ct_type=node_ct_type)
+        self.GetMainWindow().SetItemImage(child, id_pic, which=wx.TreeItemIcon_Normal)
+        self.GetMainWindow().SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
+        self.GetMainWindow().SetItemData(child, (level+start_level, res))
         if '__record__' in res:
             self.setItemRecord(child, res['__record__'])
 
@@ -258,9 +259,10 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         """
         if Record_ and self.isList(Record_):
             for idx, value in enumerate(Record_[1:]):
-                if not isinstance(value, unicode):
-                    value = unicode(str(value), DEFAULT_ENCODING)
-                self.SetItemText(Item_, value, idx+1)
+                if not isinstance(value, str):
+                    # value = unicode(str(value), DEFAULT_ENCODING)
+                    value = str(value)
+                self.GetMainWindow().SetItemText(Item_, value, idx+1)
         return Item_
         
     def getItemRecord(self, Item_):
@@ -271,7 +273,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             Или None в случае ошибки.
         """
         try:
-            item_py_data = self.GetItemData(Item_)
+            item_py_data = self.GetMainWindow().GetItemData(Item_)
             if item_py_data is None:
                 return None
             res = item_py_data[1]
@@ -288,7 +290,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         @return: Возвращает список строк записи узла. 
             Или None в случае ошибки.
         """
-        selection_item = self.GetSelection()
+        selection_item = self.GetMainWindow().GetSelection()
         return self.getItemRecord(selection_item)
         
     def setLabelCols(self, LabelCols_):
@@ -298,7 +300,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         @return: Возвращает результат выполнения функции True/False.
         """
         try:
-            col_count = self.GetColumnCount()
+            col_count = self.GetMainWindow().GetColumnCount()
             for i_col, col_label in enumerate(LabelCols_):
                 if i_col < col_count:
                     self.SetColumnText(i_col, col_label)
@@ -313,7 +315,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         """
         Возвращает имя элемента списка.
         """
-        return u'element %s:' % unicode(indx)
+        return u'element %s:' % str(indx)
         
     def isDict(self, res):
         """
@@ -331,8 +333,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         """
         Полностью очистить содержимо корневого элемента.
         """
-        root = self.GetRootItem()
-        return self.DeleteChildren(root)
+        root = self.GetMainWindow().GetRootItem()
+        return self.GetMainWindow().DeleteChildren(root)
         
     def GetCount(self):
         tree = self.GetMainWindow()
@@ -352,15 +354,15 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         # Если включен автовыбор элемента
         # то сначала сбросить выделение всех элементов
         if AutoSelect_:
-            self.UnselectAll()
+            self.GetMainWindow().UnselectAll()
             
         if Tree_ is None:
             Tree_ = self.tree
         else:
             self.tree = Tree_
         
-        self.DeleteChildren(self.root)
-        self.SetItemData(self.root, (-1, Tree_))
+        self.GetMainWindow().DeleteChildren(self.root)
+        self.GetMainWindow().SetItemData(self.root, (-1, Tree_))
         
         if Tree_ is not None:
             try:
@@ -383,13 +385,13 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             if self._last_selection:
                 self.selectItemPath(self._last_selection)
             else:
-                if not self.IsSelected(self.root):
-                    self.SelectItem(self.root)
+                if not self.GetMainWindow().IsSelected(self.root):
+                    self.GetMainWindow().SelectItem(self.root)
                 
         # Авторазворачивание верхнего уровня
         if AutoExpand_:
             try:
-                self.Expand(self.root)
+                self.GetMainWindow().Expand(self.root)
             except:
                 log.fatal()
 
@@ -405,13 +407,13 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         if CurItem_ is None:
             CurItem_ = self.root
         if ItemPath_:
-            cur_item = self.FindItem(CurItem_, ItemPath_[0])
+            cur_item = self.GetMainWindow().FindItem(CurItem_, ItemPath_[0])
             # Есть дочерние элементы
             if ItemPath_[1:]:
-                self.Expand(cur_item)
+                self.GetMainWindow().Expand(cur_item)
             return self.selectItemPath(ItemPath_[1:], cur_item)
-        if not self.IsSelected(CurItem_):
-            return self.SelectItem(CurItem_)
+        if not self.GetMainWindow().IsSelected(CurItem_):
+            return self.GetMainWindow().SelectItem(CurItem_)
         return None
         
     def getItemPath(self, Item_, Path_=None):
@@ -420,12 +422,12 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         @param Item_: Элемент дерева.
         @param Path_: Текущий заполненный путь.
         """
-        parent = self.GetItemParent(Item_)
+        parent = self.GetMainWindow().GetItemParent(Item_)
         # Если есть родительский элемент, то вызвать рекурсивно
         if parent:
             if Path_ is None:
                 Path_ = []
-            Path_.insert(-1, self.GetItemText(Item_))
+            Path_.insert(-1, self.GetMainWindow().GetItemText(Item_))
             return self.getItemPath(parent, Path_)
         return Path_        
         
@@ -433,7 +435,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         """
         Обновление дерева.
         """
-        return self.LoadTree(self.GetItemData(self.root)[1])
+        return self.LoadTree(self.GetMainWindow().GetItemData(self.root)[1])
     
     def getItemChildren(self, Item_=None):
         """
@@ -450,12 +452,12 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             # Список дочерних элементов
             children = []
 
-            children_count = self.GetChildrenCount(Item_, False)
+            children_count = self.GetMainWindow().GetChildrenCount(Item_, False)
             for i in range(children_count):
                 if i == 0:
-                    child, cookie = self.GetFirstChild(Item_)
+                    child, cookie = self.GetMainWindow().GetFirstChild(Item_)
                 else:
-                    child, cookie = self.GetNextChild(Item_, cookie)
+                    child, cookie = self.GetMainWindow().GetNextChild(Item_, cookie)
                 if child.IsOk():
                     children.append(child)
             return children
@@ -497,11 +499,11 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                         # Получить значение поля
                         if bILike:
                             # Без учета регистра?
-                            value = ic_str.icUpper(unicode(cur_item_rec[col]))
+                            value = ic_str.icUpper(str(cur_item_rec[col]))
                             find_str = ic_str.icUpper(string)
                             find_col_idx = i
                         else:
-                            value = unicode(cur_item_rec[col])
+                            value = str(cur_item_rec[col])
                             find_str = string
                             find_col_idx = i
                         # Проверка на совпадение подстроки
@@ -555,7 +557,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             на точное соответствие.
         @return: Возвращает номер элемента дерева, где найдена искомая строка.
         """
-        cur_item = self.GetSelection()
+        cur_item = self.GetMainWindow().GetSelection()
         cur_item.Expand()
 
         if not cur_item.IsOk():
@@ -568,7 +570,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         if find_result is not None:
             item, find_col_idx = find_result
             self._last_find_col_idx = find_col_idx + 1
-            self.SelectItem(item)
+            self.GetMainWindow().SelectItem(item)
         else:
             if ic_dlg.icAskDlg(u'ПОИСК',
                                u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
@@ -577,7 +579,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                 if find_result is not None:
                     item, find_col_idx = find_result
                     self._last_find_col_idx = find_col_idx + 1
-                    self.SelectItem(item)
+                    self.GetMainWindow().SelectItem(item)
         return None
         
     def findItemString(self, string, curItem=None, bILike=True):
@@ -674,7 +676,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             на точное соответствие.
         @return: Возвращает номер элемента дерева, где найдена искомая строка.
         """
-        cur_item = self.GetSelection()
+        cur_item = self.GetMainWindow().GetSelection()
 
         if not cur_item.IsOk():
             cur_item = None
@@ -684,21 +686,21 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         find_item = self.findItemString(string, curItem=cur_item, bILike=bILike)
 
         if find_item is not None:
-            self.SelectItem(find_item)
+            self.GetMainWindow().SelectItem(find_item)
         else:
             if ic_dlg.icAskDlg(u'ПОИСК',
                                u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
                 # Начать поиск сначала
                 find_item = self.findItemString(string, None, bILike)
                 if find_item is not None:
-                    self.SelectItem(find_item)
+                    self.GetMainWindow().SelectItem(find_item)
         return None
         
     def isRootSelected(self):
         """
         Определить является ли корень выделенным.
         """
-        return self.IsSelected(self.GetRootItem())
+        return self.GetMainWindow().IsSelected(self.GetMainWindow().GetRootItem())
         
     # --- Обработчики событий ---
     def OnItemExpanded(self, event):
@@ -724,12 +726,12 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             
         # --- НАЧАЛО: БЛОК ИСПРАВЛЕНИЯ БАГИ ПОЯВЛЕНИЯ ВТОРОГО КУРСОРА В ДЕРЕВЕ ---
         if not self.HasFlag(wx.TR_MULTIPLE):
-            selections = self.GetSelections()
+            selections = self.GetMainWindow().GetSelections()
             if len(selections) > 1:
                 for selection in selections:
                     if selection != select_item:
                         selection.SetHilight(0)
-                        self._main_win.RefreshLine(selection)
+                        self.GetMainWindow().RefreshLine(selection)
         # --- КОНЕЦ: БЛОК ИСПРАВЛЕНИЯ БАГИ ПОЯВЛЕНИЯ ВТОРОГО КУРСОРА В ДЕРЕВЕ ---
         
     def OnItemActivated(self, event):
@@ -743,7 +745,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         Выбор узла.
         """
         item = event.GetItem()
-        self.checkItemChildren(item, self.IsItemChecked(item))
+        self.checkItemChildren(item, self.GetMainWindow().IsItemChecked(item))
         event.Skip()
         
     def OnTreeListKeyDown(self, event):
@@ -764,7 +766,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         Устанавливаем тип checkbox/radiobox картинок.
         """
         if selection == 0:
-            self.SetImageListCheck(13, 13)
+            self.GetMainWindow().SetImageListCheck(13, 13)
         else:
             from . import newstyle_img
             il = wx.ImageList(16, 16)
@@ -772,7 +774,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             il.Add(newstyle_img.check_off)
             il.Add(newstyle_img.radio_on)
             il.Add(newstyle_img.radio_off)
-            self.SetImageListCheck(16, 16, il)        
+            self.GetMainWindow().SetImageListCheck(16, 16, il)
         
     def _testTree(self):
         """
@@ -780,10 +782,10 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         print('TEST SIMPLE TREE LIST CTRL')
         for x in range(5):
             txt = 'Item %d' % x
-            child = self.AppendItem(self.root, txt)
-            self.SetItemText(child, txt + '(c1)')
-            self.SetItemImage(child, self.fldridx, which=wx.TreeItemIcon_Normal)
-            self.SetItemImage(child, self.fldropenidx, which=wx.TreeItemIcon_Expanded)
+            child = self.GetMainWindow().AppendItem(self.root, txt)
+            self.GetMainWindow().SetItemText(child, txt + '(c1)')
+            self.GetMainWindow().SetItemImage(child, self.fldridx, which=wx.TreeItemIcon_Normal)
+            self.GetMainWindow().SetItemImage(child, self.fldropenidx, which=wx.TreeItemIcon_Expanded)
     
     def load_data(self, func, *arg, **kwarg):
         self.begin_load()
@@ -797,24 +799,24 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         Получить список выбранных элементов дерева.
         """
         if Item_ is None:
-            Item_ = self.GetRootItem()
+            Item_ = self.GetMainWindow().GetRootItem()
 
         check_list = []
         
         if Item_.HasChildren():
             for child in Item_.GetChildren():
-                check_data = {'name': self.GetItemText(child),
+                check_data = {'name': self.GetMainWindow().GetItemText(child),
                               '__record__': self.getItemRecord(child),
-                              'check': self.IsItemChecked(child),
+                              'check': self.GetMainWindow().IsItemChecked(child),
                                }
 
                 if child.HasChildren():
                     check_data['children'] = self.getItemCheckList(child)
                 check_list.append(check_data)                
         else:
-            check_data = {'name': self.GetItemText(Item_),
+            check_data = {'name': self.GetMainWindow().GetItemText(Item_),
                           '__record__': self.getItemRecord(Item_),
-                          'check': self.IsItemChecked(Item_),
+                          'check': self.GetMainWindow().IsItemChecked(Item_),
                           }
             return check_data
         
@@ -827,11 +829,11 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         @param Check_: True - установить отметку, False - убрать отметку.
         """
         if Item_ is None:
-            Item_ = self.GetRootItem()
+            Item_ = self.GetMainWindow().GetRootItem()
             
         if Item_.HasChildren():
             for child in Item_.GetChildren():
-                self.CheckItem(child, Check_)
+                self.GetMainWindow().CheckItem(child, Check_)
                 self.checkItemChildren(child, Check_)
         
     def LoadData(self, func=None, *arg, **kwarg):

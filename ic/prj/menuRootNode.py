@@ -491,7 +491,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
             # Обновление дерева проектов
             self._Parent.getRoot().getParent().Refresh()
         except:
-            log.error(u'Ошибка запуска визарда импорта метаобъектов 1С')
+            log.fatal(u'Ошибка запуска визарда импорта метаобъектов 1С')
 
     def OnWXFormBuilder(self, event):
         """

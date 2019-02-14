@@ -11,7 +11,7 @@ import os.path
 import copy
 
 import wx
-import wx.wizard
+import wx.adv
 
 from . import about
 
@@ -21,7 +21,7 @@ __date__ = about.__date__
 
 
 # --- Classes ---
-class icCFWizard(wx.wizard.Wizard):
+class icCFWizard(wx.adv.Wizard):
     """
     Визард импортера метаобъектов конфигурации 1с.
     """
@@ -44,13 +44,13 @@ class icCFWizard(wx.wizard.Wizard):
         title = u'Импорт метаобъектов конфигурации 1С: '
         if title:
             title += ' '+cf_filename
-        wx.wizard.Wizard.__init__(self, None, -1, title, self.wizard_img)
+        wx.adv.Wizard.__init__(self, None, -1, title, self.wizard_img)
         
         # Список порядка следования страниц
         self.page_order = []
         
-        self.Bind(wx.wizard.EVT_WIZARD_PAGE_CHANGED, self.on_changed)
-        self.Bind(wx.wizard.EVT_WIZARD_PAGE_CHANGING, self.on_changing)
+        self.Bind(wx.adv.EVT_WIZARD_PAGE_CHANGED, self.on_changed)
+        self.Bind(wx.adv.EVT_WIZARD_PAGE_CHANGING, self.on_changing)
         
         # Внутренне окружение визарда инсталяции
         self.environment = {}
