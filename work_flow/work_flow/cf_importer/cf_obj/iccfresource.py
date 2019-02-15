@@ -8,9 +8,11 @@
 import os
 import os.path
 import re
+import string
 
 from ic.log import log
 from ic.utils import ic_util
+from ic.utils import ic_str
 
 __version__ = (0, 1, 1, 1)
 
@@ -20,6 +22,10 @@ RE_BINARY_PATTERN = r',([0-9a-zA-Z+!?/=\s]*)=]'
 RE_BASE64_PATTERN = r'#base64:([0-9a-zA-Z+!?/=\s]*)]'
 
 RESOURCE_PREFIX = '\xef\xbb\xbf'
+
+DEFAULT_FILE_ENCODING = 'utf-8'
+
+VALID_SYMBOLS = string.printable + ic_str.RUS_LETTERS
 
 
 class icCFResource:
@@ -50,21 +56,25 @@ class icCFResource:
             f_res = None
             txt_data = u''
             try:
-                f_res = open(self.cf_res_filename)
+                f_res = open(self.cf_res_filename, 'rt', encoding=DEFAULT_FILE_ENCODING)
                 txt_data = f_res.read()
+                # ВНИМАНИЕ! Здесь необходимо удалить все символы, которые
+                # не смогут быть распарсенными коммандой eval.
+                # В файлах могут попадать не печатные символы
+                txt_data = ''.join([symb for symb in txt_data if symb in VALID_SYMBOLS])
                 f_res.close()
             except:
                 if f_res:
                     f_res.close()
                 f_res = None
-                log.fatal()
+                log.fatal(u'Ошибка чтения файла <%s>' % self.cf_res_filename)
             
             try:    
                 self.data = self._parseTxt2Data(txt_data)
             except:
-                log.fatal(u'ERROR: Parse resource file: <%s>' % self.cf_res_filename)
+                log.fatal(u'Ошибка парсинга ресурсного файла: <%s>' % self.cf_res_filename)
         else:
-            log.warning(u'ERROR: CF resource file <%s> not found!' % self.cf_res_filename)
+            log.warning(u'CF ресурсный файл <%s> не найден' % self.cf_res_filename)
         
     def _parseTxt2Data(self, txt_data):
         """
@@ -115,7 +125,7 @@ class icCFResource:
         try:
             data = eval(txt_data)
         except:
-            log.fatal(u'ERROR! Resource syntax error: <%s>' % txt_data)
+            log.fatal(u'Синтаксическая ошибка ресурса <%s>' % txt_data)
             data = None
         
         return data

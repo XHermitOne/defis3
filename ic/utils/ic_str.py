@@ -10,6 +10,12 @@ import string
 
 __version__ = (0, 1, 1, 1)
 
+# Список русских букв
+RUS_LETTERS_LOWER = u'абвгдеёжзийклмнопрстуфхцчшщьыъэюя'
+RUS_LETTERS_UPPER = u'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ'
+RUS_LETTERS = RUS_LETTERS_LOWER + RUS_LETTERS_UPPER
+
+
 # Элементы псевдографики
 PSEUDOGRAPH = (u'│', u'─', u'┌', u'┐', u'└', u'┘', u'├', u'┤', u'┬', u'┴', u'┼')
 

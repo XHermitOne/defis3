@@ -58,7 +58,8 @@ def log_cmd(cmd, txt_ctrl=None):
     try:
         # result = os.popen3(cmd)
         log.info(u'Запуск комманды <%s>' % cmd)
-        result = subprocess.Popen(cmd.split(u' '))
+        cmd_list = [elem.strip('"') for elem in cmd.split(u' ')]
+        result = subprocess.Popen(cmd_list)
         if txt_ctrl:
             log_to_ctrl(txt_ctrl, result.stdout)
         else:
@@ -102,6 +103,9 @@ def log_to_ctrl(txt_ctrl, cmd=None):
     @param txt_ctrl: Объект wxTextCtrl для логирования.
     @param cmd: Текст комманды.
     """
+    if txt_ctrl is None:
+        log.warning(u'Не определен объект для логирования')
+
     if cmd:
         if not isinstance(cmd, tuple):
             # Обработка результат popen

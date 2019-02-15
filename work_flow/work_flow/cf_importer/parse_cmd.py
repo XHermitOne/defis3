@@ -13,6 +13,7 @@ import shutil
 from ic.log import log
 from ic.log import log_console
 from ic.dlg import ic_dlg
+from ic.dlg import wait_box
 
 
 #
@@ -29,6 +30,7 @@ def gen_cf_dir(cf_filename):
     return os.path.join(os.path.dirname(cf_filename), os.path.basename(cf_filename).replace('.', '_'))
 
 
+# @wait_box.wait_noparentdeco
 def run_parser(v8unpack_filename, cf_filename, cf_dirname, txt_ctrl=None):
     """
     Запуск парсера на исполнение.
@@ -50,8 +52,9 @@ def run_parser(v8unpack_filename, cf_filename, cf_dirname, txt_ctrl=None):
     try:
         cmd = '%s -PARSE "%s" "%s"' % (v8unpack_filename, cf_filename, cf_dirname)
 
-        log.info(u'RUN COMMAND: <%s>' % cmd)
-        log_console.log_cmd(cmd, txt_ctrl=txt_ctrl)
+        # log.info(u'RUN COMMAND: <%s>' % cmd)
+        # log_console.log_cmd(cmd, txt_ctrl=txt_ctrl)
+        os.system(cmd)
         return True
     except:
         log.fatal(u'Ошибка выполнения парсинга конфигурационного файла <%s>' % cf_filename)

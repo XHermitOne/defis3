@@ -158,13 +158,15 @@ class icWaitBox(wx.Dialog):
 
 
 def test():
+    @wait_noparentdeco
     def funcA():
         time.sleep(5)
 
     app = wx.PySimpleApp()
-    result = wait_func(None, u'Ожидание длинное  ', funcA)
+    # result = wait_func(None, u'Ожидание длинное  ', funcA)
+    funcA()
     app.MainLoop()
-    print(u'Result: <%s>' % result)
+    # print(u'Result: <%s>' % result)
 
 
 if __name__ == '__main__':

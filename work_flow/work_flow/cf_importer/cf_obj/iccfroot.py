@@ -5,6 +5,7 @@
 Класс корневого элемента конфигурации.
 """
 
+import time
 import os
 import os.path
 
@@ -17,7 +18,7 @@ from ic.log import log
 from ic.dlg import ic_dlg
 import ic
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icCFRoot(iccfobject.icCFObject):
@@ -33,18 +34,20 @@ class icCFRoot(iccfobject.icCFObject):
         self.img_filename = os.path.join(os.path.dirname(os.path.dirname(__file__)),
                                          'img', '1c.png')
 
-    @wait_box.wait_noparentdeco
+    # @wait_box.wait_noparentdeco
     def build(self):
         """
         Инициализировать объект и создать все его дочерние объекты.
         """
         try:
+            log.debug(u'Запуск построения дерева метеданных 1С')
             cf_root_filename = os.path.join(os.path.abspath(self.cf_dir), 'metadata', 'root')
             if not os.path.exists(cf_root_filename):
                 cf_root_filename = os.path.join(os.path.abspath(self.cf_dir), 'root')
             if not os.path.exists(cf_root_filename):
                 msg = u'Ошибка парсинга CF файла. Не найден файл <%s>. Для Linux проверте установку библиотеки libboost-all-dev' % cf_root_filename
                 log.warning(msg)
+                time.sleep(1)
                 # ic_dlg.icWarningBox(u'ОШИБКА', msg)
                 return
 
