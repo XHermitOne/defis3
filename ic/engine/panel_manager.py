@@ -531,3 +531,17 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         return self.set_panel_data(self, data_dict, *ctrl_names)
 
+    def isDarkSysTheme(self):
+        """
+        Проверка является ли системная тема ОС темной.
+        Эта функция необходима для определения цвета текста контролов.
+        @return: True - темная тема / False - светлая
+        """
+        if not hasattr(self, '__is_dark_sys_theme'):
+            # Цвет темы будем определять отностительно цвета окна
+            win_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
+            sum_rgb = win_colour.Red() + win_colour.Green() + win_colour.Blue()
+            # log.debug(u'Сумма: %d %s' % (sum_rgb, str(win_colour)))
+            # Это сумма 128+128+128 ------------------------V
+            setattr(self, '__is_dark_sys_theme', sum_rgb < 384)
+        return getattr(self, '__is_dark_sys_theme')

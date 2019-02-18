@@ -148,6 +148,8 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
         # Установить заголовок диалогового окна
         self.SetTitle(title)
 
+        self.init_ctrl()
+
         # Запомнить параметры выбора элементов
         self.items = items
         self.label = label
@@ -160,6 +162,29 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
         if self.record_sort:
             self.records.sort(key=self.record_sort)
         self.init_record_list_ctrl(records, columns)
+
+    def init_ctrl(self):
+        """
+        Инициализация контролов.
+        """
+        if self.isDarkSysTheme():
+            self.browse_panel.on_label_staticText.SetForegroundColour(wx.GREEN)
+            self.browse_panel.off_label_staticText.SetForegroundColour(wx.RED)
+            self.browse_panel.on_all_button.SetForegroundColour(wx.GREEN)
+            self.browse_panel.off_all_button.SetForegroundColour(wx.RED)
+            self.browse_panel.on_button.SetForegroundColour(wx.GREEN)
+            self.browse_panel.off_button.SetForegroundColour(wx.RED)
+            self.browse_panel.on_checkList.SetForegroundColour(wx.GREEN)
+            self.browse_panel.off_checkList.SetForegroundColour(wx.RED)
+        else:
+            self.browse_panel.on_label_staticText.SetForegroundColour(wx.Colour('DARKGREEN'))
+            self.browse_panel.off_label_staticText.SetForegroundColour(wx.Colour('DARKRED'))
+            self.browse_panel.on_all_button.SetForegroundColour(wx.Colour('DARKGREEN'))
+            self.browse_panel.off_all_button.SetForegroundColour(wx.Colour('DARKRED'))
+            self.browse_panel.on_button.SetForegroundColour(wx.Colour('DARKGREEN'))
+            self.browse_panel.off_button.SetForegroundColour(wx.Colour('DARKRED'))
+            self.browse_panel.on_checkList.SetForegroundColour(wx.Colour('DARKGREEN'))
+            self.browse_panel.off_checkList.SetForegroundColour(wx.Colour('DARKRED'))
 
     def get_records(self):
         """

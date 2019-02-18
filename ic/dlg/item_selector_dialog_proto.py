@@ -39,11 +39,11 @@ class icItemSelectorPanelProto ( wx.Panel ):
 		
 		bSizer4 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText1 = wx.StaticText( self.selector_panel, wx.ID_ANY, u"Присутствуют", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText1.Wrap( -1 )
-		self.m_staticText1.SetForegroundColour( wx.Colour( 0, 128, 0 ) )
+		self.on_label_staticText = wx.StaticText( self.selector_panel, wx.ID_ANY, u"Присутствуют", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.on_label_staticText.Wrap( -1 )
+		self.on_label_staticText.SetForegroundColour( wx.Colour( 0, 128, 0 ) )
 		
-		bSizer4.Add( self.m_staticText1, 0, wx.ALL, 5 )
+		bSizer4.Add( self.on_label_staticText, 0, wx.ALL, 5 )
 		
 		on_checkListChoices = []
 		self.on_checkList = wx.CheckListBox( self.selector_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, on_checkListChoices, 0 )
@@ -85,11 +85,11 @@ class icItemSelectorPanelProto ( wx.Panel ):
 		
 		bSizer6 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_staticText2 = wx.StaticText( self.selector_panel, wx.ID_ANY, u"Отсутствуют", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText2.Wrap( -1 )
-		self.m_staticText2.SetForegroundColour( wx.Colour( 128, 0, 0 ) )
+		self.off_label_staticText = wx.StaticText( self.selector_panel, wx.ID_ANY, u"Отсутствуют", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.off_label_staticText.Wrap( -1 )
+		self.off_label_staticText.SetForegroundColour( wx.Colour( 128, 0, 0 ) )
 		
-		bSizer6.Add( self.m_staticText2, 0, wx.ALL, 5 )
+		bSizer6.Add( self.off_label_staticText, 0, wx.ALL, 5 )
 		
 		off_checkListChoices = []
 		self.off_checkList = wx.CheckListBox( self.selector_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, off_checkListChoices, 0 )
