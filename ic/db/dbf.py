@@ -74,7 +74,7 @@ RIGHT_ALIGN = 0
 
 DEFAULT_DBF_ENCODING = 'cp866'
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icDBFFilePrototype:
@@ -1139,6 +1139,9 @@ class icDBFFileDBFPY(icDBFFilePrototype):
         Получить текущую запись в виде словаря.
         """
         cur_record = self._get_current_record()
+        if cur_record is None:
+            log.warning(u'Не определена текущая запись DBF файла')
+            return None
         if cur_record.deleted:
             log.warning(u'Обращение к записи DBF помеченной на удаление')
             return None

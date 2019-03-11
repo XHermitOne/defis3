@@ -36,25 +36,25 @@ class icImportManagerInterface(object):
     """
     Общий интерфейс для всех менеджеров импорта документов.
     """
-    
+
     def init(self):
         """
         Инициализация внутреннего состояния менеджера.
         """
         log.warning(u'Метод инициализации не реализован в менеджере <%s>' % self.__class__.__name__)
-        
+
     def import_docs(self):
         """
         Общий метод загрузки документов.
         """
         log.warning(u'Метод загрузки документов не реализован в менеджере <%s>' % self.__class__.__name__)
-    
-    
+
+
 class icBalansImportManager(icImportManagerInterface):
     """
     Класс общий для всех менеджеров импорта документов из БАЛАНС+.
     """
-    
+
     def __init__(self, pack_scan_panel=None, dbf_find_smb_urls=()):
         """
         Конструктор.
@@ -68,7 +68,7 @@ class icBalansImportManager(icImportManagerInterface):
 
         # Документ пакетной обработки
         self.pack_doc = None
-        
+
         self.contragent_sprav = None
 
     def init(self):
@@ -77,7 +77,7 @@ class icBalansImportManager(icImportManagerInterface):
         """
         # Используемые справочники
         sprav_manager = ic.metadata.archive.mtd.nsi_archive.create()
-        self.contragent_sprav = sprav_manager.getSpravByName('nsi_c_agent')        
+        self.contragent_sprav = sprav_manager.getSpravByName('nsi_c_agent')
 
     def setPackScanPanel(self, pack_scan_panel):
         """
@@ -96,9 +96,9 @@ class icBalansImportManager(icImportManagerInterface):
         if download_urls is None:
             download_urls = self.dbf_find_smb_urls
 
-        return smbfunc.smb_download_file(download_urls, filename=dbf_filename, 
+        return smbfunc.smb_download_file(download_urls, filename=dbf_filename,
                                          out_path=dst_path)
-      
+
     def find_contragent_code(self, contragent_sprav, name, inn, kpp, balance_cod):
         """
         Поиск кода контрагента по наименованию и ИНН.
@@ -106,11 +106,11 @@ class icBalansImportManager(icImportManagerInterface):
         if contragent_sprav is None:
             sprav_manager = ic.metadata.archive.mtd.nsi_archive.create()
             contragent_sprav = sprav_manager.getSpravByName('nsi_c_agent')
-        
+
         name = name.strip()
         inn = inn.strip() if inn else inn
         kpp = kpp.strip() if kpp else kpp
-        
+
         find_codes = list()
         if balance_cod:
             # Ищем только по балансовскому коду
@@ -123,7 +123,7 @@ class icBalansImportManager(icImportManagerInterface):
         else:
             # Ищем только по ИНН и наименованию
             find_codes = contragent_sprav.getStorage().find_code(name=name, inn=inn)
-        
+
         len_find_codes = len(find_codes)
         if len_find_codes == 1:
             return find_codes[0]
@@ -132,8 +132,52 @@ class icBalansImportManager(icImportManagerInterface):
             log.warning(msg)
         else:
             log.warning(u'Не найден в справочнике контрагент <%s>. Код БАЛАНС+: %s.' %(name, balance_cod))
-        return None    
-    
+        return None
+
+    def find_doc_type_code(self, typ_doc, in_out):
+        """
+        Поиск кода типа документа.
+        """
+        if typ_doc.upper() == u'СЧЕТ-ФАКТУРА':
+            return '2001000000000' if not in_out else '1001000000000'
+        return None
+
+    def get_doc_type_subcode(self, typ_doc, in_out):
+        """
+        Поиск кода типа документа.
+        """
+        if typ_doc.upper() == u'СЧЕТ-ФАКТУРА':
+            return u'СФ'
+        return u''
+
+    def get_sector_subcode(self, sType):
+        """
+        Поиск кода участка.
+        """
+        if sType.upper() == u'RLZ':
+            return u'РЛЗ'
+        elif sType.upper() == u'MTS':
+            return u'МТ'
+        elif sType.upper() == u'ZTR':
+            return u'ЗТР'
+        elif sType.upper() == u'OSN':
+            return u'ОС'
+        return u''
+
+    def get_sector_name(self, sType):
+        """
+        Поиск наименования участка.
+        """
+        if sType.upper() == u'RLZ':
+            return u'Реализация'
+        elif sType.upper() == u'MTS':
+            return u'Материалы'
+        elif sType.upper() == u'ZTR':
+            return u'Затраты на производство'
+        elif sType.upper() == u'OSN':
+            return u'Основные средства'
+        return u''
+
     def gen_contragent_code(self, inn, kpp, i=0):
         """
         Генерация кода контрагента по инн + кпп.
@@ -147,7 +191,7 @@ class icBalansImportManager(icImportManagerInterface):
             inn = DEFAULT_INN_CODE_FMT % i
         # Учитываем что у ИП может отсутствовать КПП
         kpp = kpp.strip() if kpp and kpp.strip() else DEFAULT_KPP_CODE
-            
+
         code = '-' * (12 - len(inn)) + inn + kpp
         return code
 
@@ -165,12 +209,12 @@ class icBalansImportManager(icImportManagerInterface):
         else:
             log.warning(u'Найдено несколько документов <%s> <%s> за %s %s' % (doc_type, n_doc, dt_doc, find_uuid))
             # Берем только первую счет фактуру
-            tab.del_where_transact(sqlalchemy.or_(*[tab.c.uuid==cur_uuid for cur_uuid in find_uuid]), 
+            tab.del_where_transact(sqlalchemy.or_(*[tab.c.uuid==cur_uuid for cur_uuid in find_uuid]),
                                    transaction=transaction)
             find_uuid = find_uuid[0]
-            
+
         return find_uuid
-        
+
     def is_correct_contragent_code(self, contragent_code):
         """
         Контроль на не корректный код контрагента.
@@ -181,7 +225,7 @@ class icBalansImportManager(icImportManagerInterface):
             return (contragent_code is not None) and bool(contragent_code.strip()) and (len(contragent_code) == 21)
         except:
             return False
-        
+
     def import_docs(self):
         """
         Общий метод загрузки документов.
@@ -191,15 +235,14 @@ class icBalansImportManager(icImportManagerInterface):
             result = self._import_docs()
             if result and ic_dlg.icAskBox(u'Загрузка', u'Загрузка документов завершена. Показать журнал загрузки?'):
                 iclogbrowser.show_log_browser_dlg(tLogTypes=('SERVICE',),
-                                                  dtStartFilter=start_dt, 
+                                                  dtStartFilter=start_dt,
                                                   dtStopFilter=datetime.datetime.now())
         except:
             log.fatal(u'Ошибка импорта документов.')
-            
+
     def _import_docs(self):
         """
         Общий метод загрузки документов.
         """
         log.warning(u'Метод загрузки документов не реализован в менеджере <%s>' % self.__class__.__name__)
-    
-    
+

@@ -69,7 +69,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
             # Необходимо заново сгенерировать имя файла скана, т.к.
             # имя файла может быть не корректным
             file_ext = os.path.splitext(scan_filename)[1]
-            
+
             new_scan_filename = new_doc_panel.gen_scan_filename(self.document, file_ext)
             new_scan_filename = os.path.join(os.path.dirname(scan_filename),
                                              new_scan_filename)
@@ -78,7 +78,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
             new_scan_filename = new_doc_panel.gen_scan_filename(self.document, DEFAULT_SCAN_FILE_EXT)
             new_scan_filename = os.path.join(os.path.dirname(new_doc_panel.DEFAULT_SCAN_FILENAME),
                                              new_scan_filename)
-        
+
         # Перед сканированием удалить сканированный ранее файл
         if os.path.exists(new_doc_panel.DEFAULT_SCAN_FILENAME):
             try:
@@ -86,11 +86,11 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
                 os.remove(new_doc_panel.DEFAULT_SCAN_FILENAME)
             except:
                 log.fatal(u'Ошибка удаления файла <%s>' % new_doc_panel.DEFAULT_SCAN_FILENAME)
-        
+
         # Запуск сканирования
         scanner_mgr = scanner_manager.icScannerManager()
         result = scanner_mgr.do_scan_export(new_doc_panel.DEFAULT_SCAN_FILENAME)
-        
+
         if result and os.path.exists(new_doc_panel.DEFAULT_SCAN_FILENAME):
             # Если файл существует, то значит сканирование прошло успешно
             # Необходимо скопировать в новый файл
@@ -105,9 +105,9 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         else:
             log.warning(u'Файл сканирования <%s> не найден' % new_doc_panel.DEFAULT_SCAN_FILENAME)
             self.edit_doc_panel.scan_filename_staticText.SetLabel(os.path.basename(scan_filename))
-            
+
         event.Skip()
-        
+
     def valid_link(self, doc_uuid):
         """
         Проверка корректности добавляемой ссылки на документ.
@@ -117,7 +117,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         @return: True - все ок. False - нельзя добавлять ссылку на объект.
         """
         return (doc_uuid is not None) and (doc_uuid not in self._link_to_uuids) and doc_uuid != self.document.getUUID()
-        
+
     def valid_links(self, docs_uuid):
         """
         Проверка корректности списка добавляемых ссылок на документы.
@@ -125,7 +125,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         @return: True - все ок. False - нельзя добавлять ссылку на объект.
         """
         return min([self.valid_link(doc_uuid) for doc_uuid in docs_uuid])
-    
+
     def onAddLinkButtonClick(self, event):
         """
         Обработчик кнопки <Добавить>.
@@ -135,19 +135,19 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
                                c_agent=self.document.getRequisiteValue('c_agent'),
                                entity=self.document.getRequisiteValue('entity'))
         docs_uuid = search_doc_form.choice_docs_dlg(prev_filter=requisites_filter)
-        
+
         if docs_uuid:
             for doc_uuid in docs_uuid:
                 doc_data = doc.loadRequisiteData(doc_uuid)
                 if not self.valid_link(doc_uuid):
                     log.warning(u'Попытка добавления уже существующей связи с документом')
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ', 
+                    ic_dlg.icWarningBox(u'ВНИМАНИЕ',
                                         u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'),
                                         parent=self)
                     continue
-            
+
                 self._link_to_uuids.append(doc_uuid)
-            
+
                 self._addLinkCtrl(doc, doc_uuid)
 
         event.Skip()
@@ -172,8 +172,8 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         txt = self.docname_textCtrl.GetValue()
         if txt:
             txt = txt[0].capitalize() + txt[1:]
-        self.docname_textCtrl.ChangeValue(txt)            
-        self.docname_textCtrl.SetSelection(*selection)            
+        self.docname_textCtrl.ChangeValue(txt)
+        self.docname_textCtrl.SetSelection(*selection)
 
     def setEditDoc(self, document):
         """
@@ -188,7 +188,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         bmp = ic_bmp.findBitmap(*new_doc_panel.DEFAULT_SCAN_BMP_FILENAMES)
         if bmp:
             self.edit_doc_panel.scan_bpButton.SetBitmap(bmp)
-        
+
         # Колонки списка связей
         requisites = [requisite for requisite in self.document.getChildrenRequisites() if requisite.isDescription()]
         for i, requisite in enumerate(requisites):
@@ -208,7 +208,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         scan_filename = self.document.getRequisiteValue('file_name')
         base_scan_filename = os.path.basename(scan_filename) if scan_filename else u''
         self.edit_doc_panel.scan_filename_staticText.SetLabel(base_scan_filename)
-        
+
         n_doc = self.document.getRequisiteValue('n_doc')
         if n_doc is None:
             log.warning(u'Не определен номер документа')
@@ -217,30 +217,30 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
             return
 
         n_obj = self.document.getRequisiteValue('n_obj')
-        
+
         self.edit_doc_panel.ndoc_textCtrl.SetValue(n_doc)
         self.edit_doc_panel.nobj_textCtrl.SetValue(n_obj)
-        
+
         doc_date = self.document.getRequisiteValue('doc_date')
         wx_doc_date = ic_time.pydate2wxdate(doc_date)
         self.edit_doc_panel.doc_datePicker.SetValue(wx_doc_date)
-        
+
         obj_date = self.document.getRequisiteValue('obj_date')
         wx_obj_date = ic_time.pydate2wxdate(obj_date) if obj_date else wx_doc_date
         self.edit_doc_panel.obj_datePicker.SetValue(wx_obj_date)
 
         self.edit_doc_panel.docname_textCtrl.SetValue(self.document.getRequisiteValue('doc_name'))
-        
+
         doc_type_code = self.document.getRequisiteValue('doc_type')
         log.debug(u'Edit. Установка данных. Код вида документа <%s>' % doc_type_code)
         self.edit_doc_panel.doc_type_ctrl.setValue(doc_type_code)
-        
+
         self.edit_doc_panel.contragent_ctrl.setValue(self.document.getRequisiteValue('c_agent'))
-        
+
         entity_code = self.document.getRequisiteValue('entity')
         log.debug(u'Edit. Установка данных. Код подразделения <%s>' % entity_code)
         self.edit_doc_panel.entity_ctrl.setValue(entity_code)
-        
+
         description = self.document.getRequisiteValue('description')
         self.edit_doc_panel.description_textCtrl.SetValue(description if description else u'')
         comment = self.document.getRequisiteValue('comment')
@@ -270,7 +270,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         """
         if links_to is None:
             links_to = list()
-            
+
         for link_to in links_to:
             self._addLinkCtrl(doc, link_to['link_to'] if 'link_to' in link_to else link_to)
 
@@ -278,7 +278,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         requisites = [requisite for requisite in doc.getChildrenRequisites() if requisite.isDescription()]
         for i in range(len(requisites)):
             self.edit_doc_panel.link_listCtrl.SetColumnWidth(i, wx.LIST_AUTOSIZE)
-        
+
     def _addLinkCtrl(self, doc, link_to):
         """
         Добавить связь в контрол списка.
@@ -287,10 +287,10 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         """
         if link_to not in self._link_to_uuids:
             self._link_to_uuids.append(link_to)
-        
+
         doc.load_obj(link_to)
         requisites = [requisite for requisite in doc.getChildrenRequisites() if requisite.isDescription()]
-        
+
         row_idx = 0
         for i, requisite in enumerate(requisites):
 
@@ -308,7 +308,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
                 row_idx = self.edit_doc_panel.link_listCtrl.InsertStringItem(sys.maxsize, value, i)
             else:
                 self.edit_doc_panel.link_listCtrl.SetStringItem(row_idx, i, value)
-        
+
     def init(self):
         """
         Общая инициализация диалогового окна.
@@ -370,7 +370,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         tags = [tag if tag else u'' for tag in tags]
         tags = ';'.join(tags)
         links_to = self._link_to_uuids
-        return dict(n_doc=docnum, n_obj=n_obj, 
+        return dict(n_doc=docnum, n_obj=n_obj,
                     doc_date=docdate, obj_date=objdate,
                     doc_name=docname,
                     doc_type=doctype, c_agent=contragent, entity=entity,
@@ -450,7 +450,7 @@ def edit_doc_dlg(parent=None, doc=None):
 
     # Запрет на редактирование ошибочных документов
     if not valid_edit_doc(parent, doc):
-        return False 
+        return False
 
     dlg = icEditDocDlg(parent=parent)
     dlg.setEditDoc(doc)
@@ -458,3 +458,13 @@ def edit_doc_dlg(parent=None, doc=None):
     result = dlg.ShowModal()
 
     return result == wx.ID_OK
+
+
+def edit_document_dlg(doc=None, parent=None):
+    """
+    Редактирование документа в диалоговом окне.
+    @param doc: Объект редактируемого документа.
+    @param parent: Родительское окно диалогового окна редактирования.
+    @return: True/False.
+    """
+    return edit_doc_dlg(parent, doc)

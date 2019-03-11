@@ -789,6 +789,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             то берется текущий выделенный документ.
         @param edit_form_method: Метод вызова формы редактирования документа.
             Может задаваться фукнцией.
+            В качестве первого аргумента функция должна принимать объект документа.
             Если не определен, то вызывается document.Edit().
         @return: True/False
         """

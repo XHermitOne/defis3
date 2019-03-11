@@ -62,6 +62,10 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
         # Инициализация навигатора документов
         self.doc_navigator = ic.metadata.archive.mtd.pack_scan_doc_form_manager.create()
+        self.doc_navigator.setDocListCtrlColumns('nn', 'n_scan_pages', lambda rec: '+' if rec['is_duplex'] else '',
+                                                 'n_doc', lambda rec: rec['doc_date'].strftime(DEFAULT_DATE_FMT),
+                                                 'n_obj', lambda rec: rec['obj_date'].strftime(DEFAULT_DATE_FMT),
+                                                 'doc_name', 'c_agent')
         self.doc_navigator.setSlaveListCtrl(self.docs_listCtrl)
 
     def init_img(self):
@@ -148,7 +152,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         Обработчик редактирования карточки документа.
         """
         from archive.forms import edit_doc_form
-        self.doc_navigator.editDoc(edit_form_method=edit_doc_form.edit_doc_dlg)
+        self.doc_navigator.editDoc(edit_form_method=edit_doc_form.edit_document_dlg)
         event.Skip()
 
     def onGroupToolClicked(self, event):
@@ -315,6 +319,12 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         self.doc_navigator.viewDoc(view_form_method=self._viewDoc)
         event.Skip()
 
+    def onSelectDocItem(self, event):
+        """
+        Обработчик выбора документа.
+        """
+        event.Skip()
+
     def _show_quick_entry_dlg(self, item_idx):
         """
         Отобразить окно быстрого ввода.
@@ -383,6 +393,12 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         dataset[item_idx]['is_duplex'] = int(is_duplex)
 
         self.doc_navigator.refreshtDocListCtrlRow(index=item_idx)
+
+    def refreshDocList(self):
+        """
+        Обновление списка документов.
+        """
+        self.doc_navigator.refreshtDocListCtrlRows()
 
 
 def show_pack_scan_doc_panel(title=u''):
