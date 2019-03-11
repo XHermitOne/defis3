@@ -846,7 +846,7 @@ class icObjPersistent(icObjPersistentPrototype):
         @param Tab_: Объект/таблица, в который будет сохраняться запись.
         """
         # Таблица данных
-        if isinstance(Tab_, str) or isinstance(Tab_, unicode):
+        if isinstance(Tab_, str):
             # Таблица данных передается в виде имени
             if Tab_ == self.getTableName():
                 # Таблица задается именем таблицы
@@ -1147,7 +1147,7 @@ class icObjPersistent(icObjPersistentPrototype):
             for child_requisite in children_requisites:
                 if issubclass(child_requisite.__class__, icAttrPersistent):
                     # Это реквизит
-                    fields_spc = child_requisite._createFieldsSpc()
+                    fields_spc = child_requisite._createFieldSpc()
                     if fields_spc is None:
                         log.warning(u'Не определена спецификация поля при создании таблицы хранимого объекта')
                     tab_res['child'].append(fields_spc)

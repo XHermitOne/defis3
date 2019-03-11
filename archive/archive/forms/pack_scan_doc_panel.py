@@ -189,7 +189,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         """
         Обработчик импорта документов из БАЛАНСА.
         """
-        popup_menu = ic.metadata.archive.mnu.import_select_popup_menu.create()
+        popup_menu = ic.metadata.archive.mnu.load_select_popup_menu.create()
         popup_menu.GetManager().setPackScanPanel(self)
         popup_menu.popupByTool(self.import_tool)
 

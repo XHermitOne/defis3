@@ -23,29 +23,29 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.import_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_NEW, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Импортировать из ПО БАЛАНС+", u"Импортировать из ПО БАЛАНС+", None ) 
+		self.import_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_NEW, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Импортировать из ПО БАЛАНС+", u"Импортировать из ПО БАЛАНС+", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.group_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-indent", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Групповая обработка", u"Групповая обработка", None ) 
+		self.group_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-indent", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Групповая обработка", u"Групповая обработка", None ) 
 		
 		self.toggle_checkBox = wx.CheckBox( self.ctrl_toolBar, wx.ID_ANY, u"Вкл./Выкл. все", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.ctrl_toolBar.AddControl( self.toggle_checkBox )
-		self.n_pages_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-dnd-multiple", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Количество страниц", u"Количество страниц", None ) 
+		self.n_pages_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-dnd-multiple", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Количество страниц", u"Количество страниц", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.view_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
+		self.view_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
 		
-		self.edit_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактирование", u"Редактирование", None ) 
+		self.edit_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактирование", u"Редактирование", None ) 
 		
-		self.quick_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_REPORT_VIEW, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_CHECK, u"Режим быстрого ввода", u"Режим быстрого ввода", None ) 
+		self.quick_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_REPORT_VIEW, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_CHECK, u"Режим быстрого ввода", u"Режим быстрого ввода", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.scan_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-preferences", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сканирование", u"Сканирование", None ) 
+		self.scan_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-preferences", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сканирование", u"Сканирование", None ) 
 		
-		self.archive_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_TO_PARENT, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Переместить в архив", u"Переместить в архив", None ) 
+		self.archive_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_TO_PARENT, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Переместить в архив", u"Переместить в архив", None ) 
 		
 		self.ctrl_toolBar.Realize() 
 		

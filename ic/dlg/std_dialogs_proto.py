@@ -8,8 +8,8 @@
 ###########################################################################
 
 import wx
-import wx.xrc
-import wx.calendar
+import wx.adv
+# import wx.calendar
 
 ###########################################################################
 ## Class calendarDialogProto
@@ -20,11 +20,11 @@ class calendarDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Календарь", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.calendarCtrl = wx.calendar.CalendarCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.calendar.CAL_SHOW_HOLIDAYS )
+		self.calendarCtrl = wx.adv.CalendarCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.CAL_SHOW_HOLIDAYS )
 		bSizer1.Add( self.calendarCtrl, 0, wx.ALL, 5 )
 		
 		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
@@ -71,7 +71,7 @@ class yearDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор года", pos = wx.DefaultPosition, size = wx.Size( 351,110 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer3 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -132,7 +132,7 @@ class monthDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор месяца", pos = wx.DefaultPosition, size = wx.Size( 390,110 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer6 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -198,7 +198,7 @@ class monthRangeDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор периода", pos = wx.DefaultPosition, size = wx.Size( 393,165 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer6 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -284,7 +284,7 @@ class dateRangeDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор периода", pos = wx.DefaultPosition, size = wx.Size( 391,184 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer6 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -307,14 +307,14 @@ class dateRangeDialogProto ( wx.Dialog ):
 		self.m_staticText3.Wrap( -1 )
 		fgSizer2.Add( self.m_staticText3, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.firstDatePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.firstDatePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		fgSizer2.Add( self.firstDatePicker, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
 		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"по:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText31.Wrap( -1 )
 		fgSizer2.Add( self.m_staticText31, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.lastDatePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.lastDatePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		fgSizer2.Add( self.lastDatePicker, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -340,8 +340,8 @@ class dateRangeDialogProto ( wx.Dialog ):
 		
 		# Connect Events
 		self.concrete_date_checkBox.Bind( wx.EVT_CHECKBOX, self.onConcreteDateCheckBox )
-		self.firstDatePicker.Bind( wx.EVT_DATE_CHANGED, self.onFirstDateChanged )
-		self.lastDatePicker.Bind( wx.EVT_DATE_CHANGED, self.onLastDateChanged )
+		self.firstDatePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onFirstDateChanged )
+		self.lastDatePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onLastDateChanged )
 		self.cancelButton.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
 		self.okButton.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
 	
@@ -375,7 +375,7 @@ class NSIListDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор значения справочника", pos = wx.DefaultPosition, size = wx.Size( 586,570 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer13 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -426,7 +426,7 @@ class integerDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Целое значение", pos = wx.DefaultPosition, size = wx.Size( 509,134 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -485,7 +485,7 @@ class radioChoiceDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор элемента", pos = wx.DefaultPosition, size = wx.Size( 566,133 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer19 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -539,7 +539,7 @@ class intRangeDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Диапазон номеров", pos = wx.DefaultPosition, size = wx.Size( 536,152 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer21 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -618,7 +618,7 @@ class checkBoxDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор элементов", pos = wx.DefaultPosition, size = wx.Size( 753,130 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.Size( -1,130 ), wx.DefaultSize )
+		self.SetSizeHints( wx.Size( -1,130 ), wx.DefaultSize )
 		
 		bSizer19 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -695,7 +695,7 @@ class radioChoiceMaxiDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор элемента", pos = wx.DefaultPosition, size = wx.Size( 566,503 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer19 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -747,7 +747,7 @@ class checkBoxMaxiDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор элементов", pos = wx.DefaultPosition, size = wx.Size( 525,601 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.Size( -1,130 ), wx.DefaultSize )
+		self.SetSizeHints( wx.Size( -1,130 ), wx.DefaultSize )
 		
 		bSizer19 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -848,7 +848,7 @@ class checkListBoxDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор элементов", pos = wx.DefaultPosition, size = wx.Size( 579,598 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer33 = wx.BoxSizer( wx.VERTICAL )
 		

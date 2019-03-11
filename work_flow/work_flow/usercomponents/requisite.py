@@ -121,7 +121,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icRequisite(parentModule.icRequisitePrototype, icwidget.icSimple):

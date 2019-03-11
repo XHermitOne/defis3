@@ -133,7 +133,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 # Функции редактирования
 
@@ -216,6 +216,10 @@ class icNSIRequisite(parentModule.icNSIRequisitePrototype, icwidget.icSimple):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         parentModule.icNSIRequisitePrototype.__init__(self, parent)
+
+        # Обязательные параметры для генерации таблицы
+        self.type_val = 'T'
+        self.len = None
         
         # Свойства компонента
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)

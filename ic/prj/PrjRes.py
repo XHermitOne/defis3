@@ -242,7 +242,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
             self.getPrjRoot().append({NewFolderName_: []})
             return True
             
-        ok=False
+        ok = False
         for folder in CurFolder_:
             folder_name = list(folder.keys())[0]
             # Проверять только папки
@@ -412,6 +412,9 @@ class icPrjRes(resManager.ResourceManagerInterface):
                     return res_name, res[res_name]
                 elif res_name == ResName_ and ResType_ is None:
                     return res_name, res[res_name]
+
+        if ret_res is None:
+            log.warning(u'Не найден ресурс <%s.%s> %s' % (ResName_, ResType_, str(CurFolder_)))
         return ret_res
 
     def getImportSystems(self):
@@ -448,7 +451,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
 
     def getPrjRoot(self):
         """
-        Корневая папкя проекта.
+        Корневая папка проекта.
         """
         if not self._prj:
             self.newPrj(DEFAULT_PRJ_NAME)

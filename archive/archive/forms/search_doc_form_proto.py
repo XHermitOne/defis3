@@ -371,21 +371,21 @@ class icSearchDocPanelProto ( wx.Panel ):
 		bSizer151 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar1 = wx.ToolBar( self.docs_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool1 = self.ctrl_toolBar1.AddLabelTool( wx.ID_ANY, u"Свернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
+		self.collapse_tool1 = self.ctrl_toolBar1.AddTool( wx.ID_ANY, u"Свернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
 		
-		self.expand_tool1 = self.ctrl_toolBar1.AddLabelTool( wx.ID_ANY, u"Развернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
-		
-		self.ctrl_toolBar1.AddSeparator()
-		
-		self.view_tool1 = self.ctrl_toolBar1.AddLabelTool( wx.ID_ANY, u"Просмотр", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
-		
-		self.edit_tool1 = self.ctrl_toolBar1.AddLabelTool( wx.ID_ANY, u"Редактирование", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактирование", u"Редактирование", None ) 
+		self.expand_tool1 = self.ctrl_toolBar1.AddTool( wx.ID_ANY, u"Развернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
 		
 		self.ctrl_toolBar1.AddSeparator()
 		
-		self.scheme_tool1 = self.ctrl_toolBar1.AddLabelTool( wx.ID_ANY, u"Схема связей", wx.ArtProvider.GetBitmap( u"gtk-dnd-multiple", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Схема связей", u"Схема связей", None ) 
+		self.view_tool1 = self.ctrl_toolBar1.AddTool( wx.ID_ANY, u"Просмотр", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
 		
-		self.links_tool = self.ctrl_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-unindent", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Связи документа", u"Связи документа", None ) 
+		self.edit_tool1 = self.ctrl_toolBar1.AddTool( wx.ID_ANY, u"Редактирование", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактирование", u"Редактирование", None ) 
+		
+		self.ctrl_toolBar1.AddSeparator()
+		
+		self.scheme_tool1 = self.ctrl_toolBar1.AddTool( wx.ID_ANY, u"Схема связей", wx.ArtProvider.GetBitmap( u"gtk-dnd-multiple", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Схема связей", u"Схема связей", None ) 
+		
+		self.links_tool = self.ctrl_toolBar1.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-unindent", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Связи документа", u"Связи документа", None ) 
 		
 		self.ctrl_toolBar1.Realize() 
 		
@@ -465,7 +465,7 @@ class icSearchDocDlgProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Поиск и выбор документа", pos = wx.DefaultPosition, size = wx.Size( 967,814 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer16 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -486,9 +486,9 @@ class icSearchDocDlgProto ( wx.Dialog ):
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self.docs_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
+		self.collapse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
 		
-		self.expand_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
+		self.expand_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
 		
 		self.ctrl_toolBar.Realize() 
 		
@@ -558,7 +558,7 @@ class icChoiceDocsDlgProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Поиск и выбор документов", pos = wx.DefaultPosition, size = wx.Size( 1328,814 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer16 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -579,9 +579,9 @@ class icChoiceDocsDlgProto ( wx.Dialog ):
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self.docs_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
+		self.collapse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
 		
-		self.expand_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
+		self.expand_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
@@ -679,31 +679,31 @@ class icPrintDocPanelProto ( wx.Panel ):
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self.docs_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Свернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
+		self.collapse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Свернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
 		
-		self.expand_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Развернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
-		
-		self.ctrl_toolBar.AddSeparator()
-		
-		self.view_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Просмотр", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
-		
-		self.edit_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Редактирование", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактирование", u"Редактирование", None ) 
+		self.expand_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Развернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.scheme_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Схема связей", wx.ArtProvider.GetBitmap( u"gtk-dnd-multiple", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Схема связей", u"Схема связей", None ) 
+		self.view_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Просмотр", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
 		
-		self.links_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-unindent", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Связи документа", u"Связи документа", None ) 
+		self.edit_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Редактирование", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактирование", u"Редактирование", None ) 
+		
+		self.ctrl_toolBar.AddSeparator()
+		
+		self.scheme_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Схема связей", wx.ArtProvider.GetBitmap( u"gtk-dnd-multiple", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Схема связей", u"Схема связей", None ) 
+		
+		self.links_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-unindent", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Связи документа", u"Связи документа", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
 		self.all_checkBox = wx.CheckBox( self.ctrl_toolBar, wx.ID_ANY, u"Выбрать все", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.ctrl_toolBar.AddControl( self.all_checkBox )
-		self.print_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Печать", wx.ArtProvider.GetBitmap( wx.ART_PRINT, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Печать", u"Печать", None ) 
+		self.print_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Печать", wx.ArtProvider.GetBitmap( wx.ART_PRINT, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Печать", u"Печать", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.report_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_REPORT_VIEW, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Список документов", u"Список документов", None ) 
+		self.report_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_REPORT_VIEW, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Список документов", u"Список документов", None ) 
 		
 		self.ctrl_toolBar.Realize() 
 		
@@ -816,27 +816,27 @@ class icCtrlDocPanelProto ( wx.Panel ):
 		bSizer15 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self.docs_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Свернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
+		self.collapse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Свернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
 		
-		self.expand_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Развернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
+		self.expand_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Развернуть", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.view_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Просмотр", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
+		self.view_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Просмотр", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
 		
-		self.edit_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Редактирование", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактирование", u"Редактирование", None ) 
+		self.edit_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Редактирование", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактирование", u"Редактирование", None ) 
 		
-		self.del_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удаление", u"Удаление", None ) 
+		self.del_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удаление", u"Удаление", None ) 
 		
 		self.all_checkBox = wx.CheckBox( self.ctrl_toolBar, wx.ID_ANY, u"Выбрать все", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.ctrl_toolBar.AddControl( self.all_checkBox )
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.scheme_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Схема связей", wx.ArtProvider.GetBitmap( u"gtk-dnd-multiple", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Схема связей", u"Схема связей", None ) 
+		self.scheme_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Схема связей", wx.ArtProvider.GetBitmap( u"gtk-dnd-multiple", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Схема связей", u"Схема связей", None ) 
 		
-		self.links_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-unindent", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Связи документа", u"Связи документа", None ) 
+		self.links_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-unindent", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Связи документа", u"Связи документа", None ) 
 		
-		self.clear_links_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-clear", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удаление не существующих ссылок", u"Удаление не существующих ссылок", None ) 
+		self.clear_links_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-clear", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удаление не существующих ссылок", u"Удаление не существующих ссылок", None ) 
 		
 		self.ctrl_toolBar.Realize() 
 		

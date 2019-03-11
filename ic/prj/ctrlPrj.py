@@ -76,8 +76,11 @@ class icProjectResController:
         """
         self.makeFolderOther()
         if self._PrjRes:
-            res_ref = self._PrjRes.getResRef(ResName_, ResType_,
-                                             self._PrjRes.getFolderBody(OTHER_PRJ_FOLDER_NAME))
+            # ВНИМАНИЕ! Производится глобальный поиск ресурса
+            # а не только в папке <Дополнительные>
+            # res_ref = self._PrjRes.getResRef(ResName_, ResType_,
+            #                                  self._PrjRes.getFolderBody(OTHER_PRJ_FOLDER_NAME))
+            res_ref = self._PrjRes.getResRef(ResName_, ResType_)
             return self._loadResFile(*res_ref)
         return None
 
