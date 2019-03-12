@@ -30,6 +30,7 @@ from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.dlg import ic_dlg
 from ic.log import log
+from ic.engine import treectrl_manager
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -99,10 +100,12 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
-class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
+class SpravTreeList(icwidget.icWidget,
+                    parentModule.TreeListCtrl,
+                    treectrl_manager.icTreeCtrlManager):
     """
     Класс представления структурного справочника в виде дерева.
 
@@ -291,7 +294,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
             if not cod_mask or cod.find(cod_mask) == 0:
                 bret = True
                 child = self.AppendItem(parent_item, name)
-                self.SetItemData(child, row)
+                self.setItemData_tree(ctrl=self, item=child, data=row)
                 self._codItemDict[cod] = child
                 
                 for indx in range(2, len(row)):
@@ -366,14 +369,14 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
         Вернуть запись выбранного элемента.
         """
         selection_item = self.GetSelection()
-        row = self.GetItemData(selection_item)
+        row = self.getItemData_tree(ctrl=self, item=selection_item)
         return row
     
     def setItemRow(self, Item_, Row_):
         """
         Установить запись элемента.
         """
-        self.SetItemData(Item_, Row_)
+        self.setItemData_tree(ctrl=self, item=Item_, data=Row_)
         
     def setSelectionRow(self, Row_):
         """
@@ -387,7 +390,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
         Вернуть код выбранного элемента.
         """
         selection_item = self.GetSelection()
-        row = self.GetItemData(selection_item)
+        row = self.getItemData_tree(ctrl=self, item=selection_item)
         if row is None:
             return None
         return row[0]
@@ -409,7 +412,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
                 # Перебор всех дочерних элементов
                 child, cookie = self.GetFirstChild(CurItem_)
                 if child.IsOk():
-                    row = self.GetItemData(child)
+                    row = self.getItemData_tree(ctrl=self, item=child)
                     table.append(row)
                     # Если дочерний элемент имеет подъэлементы,
                     # то обработать его
@@ -418,7 +421,7 @@ class SpravTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
                 while 1:
                     child, cookie = self.GetNextChild(CurItem_, cookie)
                     if child.IsOk():
-                        row = self.GetItemData(child)
+                        row = self.getItemData_tree(ctrl=self, item=child)
                         table.append(row)
                         # Если дочерний элемент имеет подъэлементы,
                         # то обработать его

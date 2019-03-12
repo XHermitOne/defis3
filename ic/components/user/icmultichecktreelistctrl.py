@@ -155,7 +155,7 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
         child = self.AppendItem(root, res['name'] + st, ct_type=res.get('__type__', 0))
         self.SetItemImage(child, id_pic, which=wx.TreeItemIcon_Normal)
         self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-        self.SetItemData(child, (level+start_level, res))
+        self.setItemData_tree(ctrl=self, item=child, data=(level+start_level, res))
         self.setItemRecord(child, res['__record__'])
         
         # Обработка дочерних элементов
@@ -169,7 +169,7 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
         """
         cod = cod or []
         if item != self.GetRootItem():
-            lev, res = self.GetItemData(item)
+            lev, res = self.getItemData_tree(ctrl=self, item=item)
             cod.insert(0, res['name'])
             return self.get_item_cod(item.GetParent(), cod)
         return cod
@@ -183,7 +183,7 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
         lst = lst or []
         for item in root.GetChildren():
             st = self.get_state(item)
-            lev, res = self.GetItemData(item)
+            lev, res = self.getItemData_tree(ctrl=self, item=item)
             lst.append((res['name'], st, self.get_item_cod(item)))
             self.get_check_list(lst, item)
         return lst

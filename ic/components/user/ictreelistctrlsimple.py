@@ -37,6 +37,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
+from ic.engine import treectrl_manager
 from ic.log import ic_log
 
 #   Тип компонента
@@ -107,10 +108,12 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
-class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
+class icTreeListCtrlSimple(icwidget.icWidget,
+                           parentModule.TreeListCtrl,
+                           treectrl_manager.icTreeCtrlManager):
     """
     Описание пользовательского компонента.
 
@@ -217,7 +220,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
             nm = self.getElementName(el, indx)
             child = self.AppendItem(root, nm, id_pic)
             self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-            self.SetItemData(child, (level+start_level, el))
+            self.setItemData_tree(ctrl=self, item=child, data=(level+start_level, el))
 
             self.addBranch(child, el, level+1, start_level)
         
@@ -239,7 +242,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
 
                 child = self.AppendItem(root, nm, id_pic)
                 self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-                self.SetItemData(child, (level+start_level, el))
+                self.setItemData_tree(ctrl=self, item=child, data=(level+start_level, el))
                 
                 self.addBranch(child, el, level+1, start_level)
             else:
@@ -264,7 +267,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
             
             child = self.AppendItem(root, str(res), id_pic)
             self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-            self.SetItemData(child, (level+start_level, res))
+            self.setItemData_tree(ctrl=self, item=child, data=(level+start_level, res))
             
         return root
 
@@ -312,7 +315,8 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
             Или None в случае ошибки.
         """
         try:
-            res = self.GetItemData(Item_)[1]
+            item_data = self.getItemData_tree(ctrl=self, item=Item_)
+            res = item_data[1]
             if isinstance(res, dict) and '__record__' in res:
                 return res['__record__']
             return None
@@ -392,7 +396,7 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
         else:
             self.treeDict = treeDict
         
-        self.SetItemData(self.root, (-1, treeDict))
+        self.setItemData_tree(ctrl=self, item=self.root, data=(-1, treeDict))
         self.DeleteChildren(self.root)
         
         if treeDict is not None:
@@ -447,7 +451,8 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
         """
         Обновление дерева.
         """
-        return self.LoadTree(self.GetItemData(self.root)[1])
+        tree_data = self.getItemData_tree(ctrl=self, item=self.root)
+        return self.LoadTree(tree_data[1])
     
     def getItemChildren(self, Item_=None):
         """
@@ -539,14 +544,14 @@ class icTreeListCtrlSimple(icwidget.icWidget, parentModule.TreeListCtrl):
             ic_log.icLogErr(u'ОШИБКА компонента %s метода поиска узла по строке' % self.name)
             return None
         
-    #--- Обработчики событий ---
+    # --- Обработчики событий ---
     def OnItemExpanded(self, event):
         """
         Разворачивание узла.
         """
         root = event.GetItem()
         if self.treeDict:
-            level, res = self.GetItemData(root)
+            level, res = self.getItemData_tree(ctrl=self, item=root)
             self.DeleteChildren(root)
             
             self.addBranch(root, res, 0, level+1)

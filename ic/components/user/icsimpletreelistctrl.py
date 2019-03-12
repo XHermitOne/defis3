@@ -825,7 +825,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         @param item: Элемент дерева.
         @param data: Прикрепляемые данные.
         """
-        return self._main_win.SetItemData(item, data)
+        return self.setItemData_tree(ctrl=self, item=item, data=data)
 
     def getItemData(self, item):
         """
@@ -835,7 +835,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         @param item: Элемент дерева.
         @return: Прикрепленные данные к элементу дерева или None в случае ошибки.
         """
-        return self._main_win.GetItemData(item)
+        return self.getItemData_tree(ctrl=self, item=item)
 
     # --- Обработчики событий ---
     def OnItemExpanded(self, event):

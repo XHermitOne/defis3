@@ -30,7 +30,7 @@ from ic.log import log
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.dlg.msgbox import MsgBox
+from ic.engine import treectrl_manager
 
 #   Тип компонента
 ic_class_type = icDefInf._icComboType
@@ -100,7 +100,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # --- Идентификаторы состояний строки
 ROW_STATE_NORMAL = 0
@@ -122,7 +122,9 @@ def _example_state_func(row):
     return ROW_STATE_NORMAL
 
 
-class icTableTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
+class icTableTreeList(icwidget.icWidget,
+                      parentModule.TreeListCtrl,
+                      treectrl_manager.icTreeCtrlManager):
     """
     Класс представления таблицы в виде дерева. Используется для отображения
     небольших таблиц (максимум несколько тысяч записей), поскольку все записи
@@ -336,7 +338,7 @@ class icTableTreeList(icwidget.icWidget, parentModule.TreeListCtrl):
             if not cod_mask or prnt_cod == cod_mask:
                 bret = True
                 child = self.AppendItem(parent_item, name)
-                self.SetItemData(child, row)
+                self.setItemData_tree(ctrl=self, item=child, data=row)
                 st = self.GetStateRow(row, level)
 
                 #   Заполняем дополнительные поля

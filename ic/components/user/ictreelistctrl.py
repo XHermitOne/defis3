@@ -100,10 +100,12 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
-class icTreeListCtrl(icwidget.icWidget, parentModule.TreeListCtrl, metaCtrl.MetaTreeCtrlInterface):
+class icTreeListCtrl(icwidget.icWidget,
+                     parentModule.TreeListCtrl,
+                     metaCtrl.MetaTreeCtrlInterface):
     """
     Описание пользовательского компонента.
 
@@ -206,7 +208,7 @@ class icTreeListCtrl(icwidget.icWidget, parentModule.TreeListCtrl, metaCtrl.Meta
                 nm = self.getElementName(el, indx)
                 child = self.AppendItem(root, nm, id_pic)
                 self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-                self.SetItemData(child, (level+start_level, el))
+                self.setItemData_tree(ctrl=self, item=child, data=(level+start_level, el))
 
                 self.addBranch(child, el, level+1, start_level)
                 
@@ -247,13 +249,13 @@ class icTreeListCtrl(icwidget.icWidget, parentModule.TreeListCtrl, metaCtrl.Meta
                 
                 child = self.AppendItem(root, nm, id_pic)
                 self.SetItemImage(child, id_exp_pic, which=wx.TreeItemIcon_Expanded)
-                self.SetItemData(child, (level+start_level, el))
+                self.setItemData_tree(ctrl=self, item=child, data=(level+start_level, el))
                         
                 self.addBranch(child, 0, level+1, start_level)
         else:
             child = self.AppendItem(root, str(res), self.fileidx)
             self.SetItemImage(child, self.curidx, which=wx.TreeItemIcon_Expanded)
-            self.SetItemData(child, (level+start_level, res))
+            self.setItemData_tree(ctrl=self, item=child, data=(level+start_level, res))
             
         return root
 
