@@ -19,7 +19,7 @@ from ic.utils import wxfunc
 from ic.engine import form_manager
 
 # Версия
-__version__ = (0, 0, 8, 4)
+__version__ = (0, 1, 1, 3)
 
 # Текст фиктивного элемента дерева
 TREE_ITEM_LABEL = u'...'
@@ -357,7 +357,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             #                      V
             i = abs(sort_column) - 1
             sort_field = self.sprav_field_names[i]
-        elif isinstance(sort_column, str) or isinstance(sort_column, unicode):
+        elif isinstance(sort_column, str):
             if sort_column.startswith(SORT_REVERSE_SIGN):
                 sort_field = sort_column[1:]
             else:
@@ -383,7 +383,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             # первую колонку с индексом 0. Т.к. -0 нет.
             #                         V
             return abs(sort_column) - 1
-        elif isinstance(sort_column, str) or isinstance(sort_column, unicode):
+        elif isinstance(sort_column, str):
             if sort_column.startswith(SORT_REVERSE_SIGN):
                 sort_field = sort_column[1:]
             else:
@@ -405,7 +405,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         """
         if isinstance(sort_column, int):
             return sort_column < 0
-        elif isinstance(sort_column, str) or isinstance(sort_column, unicode):
+        elif isinstance(sort_column, str):
             return sort_column.startswith(SORT_REVERSE_SIGN)
         # По умолчанию обычная сортировка по возрастанию
         return False
@@ -496,14 +496,14 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         rec_dict = self.sprav.getStorage()._getSpravFieldDict(record)
         code = rec_dict['cod']
         item = self.sprav_treeListCtrl.AppendItem(parent_item, code)
-        self.sprav_treeListCtrl.SetItemData(item, rec_dict)
+        self.setItemData_TreeCtrl(ctrl=self.sprav_treeListCtrl, item=item, data=rec_dict)
         # Заполнение колонок
         for i, field_name in enumerate(self.sprav_field_names[1:]):
             value = rec_dict.get(field_name, u'')
             # Проверка типов
             if value is None:
                 value = u''
-            elif type(value) not in (str, unicode):
+            elif not isinstance(value, str):
                 value = str(value)
             self.sprav_treeListCtrl.SetItemText(item, value, i+1)            
         
@@ -528,7 +528,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             
         find_item = None
         child_item, cookie = self.sprav_treeListCtrl.GetFirstChild(cur_item)
-        while child_item.IsOk():
+        while child_item and child_item.IsOk():
             if item_text == self.sprav_treeListCtrl.GetItemText(child_item):
                 find_item = child_item
                 break
@@ -546,7 +546,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
 
         # Заполнение пустого уровня
         if not self.sprav_treeListCtrl.ItemHasChildren(item):
-            record = self.sprav_treeListCtrl.GetItemData(item)
+            record = self.getItemData_tree(ctrl=self.sprav_treeListCtrl, item=item)
             code = record['cod']
             self.set_sprav_level_tree(item, code)
   
@@ -558,7 +558,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         @return: Найденный элемент дерева или None, если элемент не найден. 
         """
         # Поискать код в текущем элементе
-        record = self.sprav_treeListCtrl.GetItemData(parent_item)
+        record = self.getItemData_tree(ctrl=self.sprav_treeListCtrl, item=parent_item)
         if record:
             if sprav_code == record['cod']:
                 return parent_item
@@ -567,7 +567,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         find_result = None
         child_item, cookie = self.sprav_treeListCtrl.GetFirstChild(parent_item)
         while child_item.IsOk():
-            record = self.sprav_treeListCtrl.GetItemData(child_item)
+            record = self.getItemData_tree(ctrl=self.sprav_treeListCtrl, item=child_item)
             if record:
                 if sprav_code == record['cod']:
                     find_result = child_item
@@ -615,7 +615,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         """
         item = self.sprav_treeListCtrl.GetSelection()
         if item and item.IsOk():
-            record = self.sprav_treeListCtrl.GetItemData(item)
+            record = self.getItemData_tree(ctrl=self.sprav_treeListCtrl, item=item)
             return record.get('cod', None) if record is not None else None
         return None
     
@@ -762,7 +762,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         """
         item = event.GetItem()
         if item:
-            record = self.sprav_treeListCtrl.GetItemData(item)
+            record = self.getItemData_tree(ctrl=self.sprav_treeListCtrl, item=item)
             if record and ic_str.isMultiLineTxt(record['name']):
                 # Если текст многостроковый, то выводить
                 # дополнительное всплывающее окно
@@ -877,10 +877,10 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         elif isinstance(sort_column, int) and sort_column < 0:
             i_col = self.get_sort_field_idx(sort_column)
             self.sprav_treeListCtrl.SetColumnImage(i_col, self.sort_descending_img)
-        elif type(sort_column) in (str, unicode) and not sort_column.startswith(SORT_REVERSE_SIGN):
+        elif isinstance(sort_column, str) and not sort_column.startswith(SORT_REVERSE_SIGN):
             i_col = self.get_sort_field_idx(sort_column)
             self.sprav_treeListCtrl.SetColumnImage(i_col, self.sort_ascending_img)
-        elif type(sort_column) in (str, unicode) and sort_column.startswith(SORT_REVERSE_SIGN):
+        elif isinstance(sort_column, str) and sort_column.startswith(SORT_REVERSE_SIGN):
             i_col = self.get_sort_field_idx(sort_column)
             self.sprav_treeListCtrl.SetColumnImage(i_col, self.sort_descending_img)
         return True
@@ -914,7 +914,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
                 # Сортировка по другой колонке
                 # Отключить сортировку предыдущей колонки
                 prev_col = -1
-                if type(self.sort_column) in (str, unicode):
+                if isinstance(self.sort_column, str):
                     prev_col_name = self.sort_column if not self.sort_column.startswith(SORT_REVERSE_SIGN) else self.sort_column[1:]
                     prev_col = self.sprav_field_names.index(prev_col_name)
                 elif isinstance(self.sort_column, int):

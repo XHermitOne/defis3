@@ -6,13 +6,15 @@
 """
 
 # Подключение библиотек
-# import wx
+import wx
+import wx.dataview
+import wx.gizmos
 
 from ic.log import log
 from ic.utils import ic_str
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 2)
 
 UNKNOWN = u'Не определено'
 
@@ -204,7 +206,7 @@ class icTreeCtrlManager(object):
             log.fatal(u'Ошибка добавления ветки в узел дерева контрола wx.TreeListCtrl.')
         return False
 
-    def getItemData_TreeCtrl(self, ctrl=None, item=None):
+    def getItemData_tree(self, ctrl=None, item=None):
         """
         Получить прикрепленные данные к элементу дерева.
         @param ctrl: Контрол wx.TreeCtrl.
@@ -217,12 +219,19 @@ class icTreeCtrlManager(object):
 
         if item is None:
             item = ctrl.GetRootItem()
-        return ctrl.GetItemData(item)
+        if isinstance(ctrl, wx.TreeCtrl):
+            return ctrl.GetItemData(item)
+        elif isinstance(ctrl, wx.dataview.TreeListCtrl) or isinstance(ctrl, wx.gizmos.TreeListCtrl):
+            return ctrl.GetMainWindow().GetItemData(item)
+        else:
+            log.warning(u'Не поддерживаемый тип древовидного контрола <%s>' % ctrl.__class__.__name__)
+        return False
 
     # Другое наименование метода
-    getItemRecord_TreeCtrl = getItemData_TreeCtrl
+    getItemData_TreeCtrl = getItemData_tree
+    getItemRecord_TreeCtrl = getItemData_tree
 
-    def getSelectedItemData_TreeCtrl(self, ctrl=None):
+    def getSelectedItemData_tree(self, ctrl=None):
         """
         Данные выбранного элемента дерева.
         @param ctrl: Контрол wx.TreeCtrl.
@@ -234,13 +243,14 @@ class icTreeCtrlManager(object):
 
         selected_item = ctrl.GetSelection()
         if selected_item:
-            return self.getItemData_TreeCtrl(ctrl=ctrl, item=selected_item)
+            return self.getItemData_tree(ctrl=ctrl, item=selected_item)
         return None
 
     # Другое наименование метода
-    getSelectedItemRecord_TreeCtrl = getSelectedItemData_TreeCtrl
+    getSelectedItemData_TreeCtrl = getSelectedItemData_tree
+    getSelectedItemRecord_TreeCtrl = getSelectedItemData_tree
 
-    def setItemData_TreeCtrl(self, ctrl=None, item=None, data=None):
+    def setItemData_tree(self, ctrl=None, item=None, data=None):
         """
         Прикрепить данные к элементу дерева.
         @param ctrl: Контрол wx.TreeCtrl.
@@ -254,12 +264,19 @@ class icTreeCtrlManager(object):
 
         if item is None:
             item = ctrl.GetRootItem()
-        return ctrl.SetItemData(item, data)
+        if isinstance(ctrl, wx.TreeCtrl):
+            return ctrl.SetItemData(item, data)
+        elif isinstance(ctrl, wx.dataview.TreeListCtrl) or isinstance(ctrl, wx.gizmos.TreeListCtrl):
+            return ctrl.GetMainWindow().SetItemData(item, data)
+        else:
+            log.warning(u'Не поддерживаемый тип древовидного контрола <%s>' % ctrl.__class__.__name__)
+        return False
 
     # Другое наименование метода
-    setItemRecord_TreeCtrl = setItemData_TreeCtrl
+    setItemData_TreeCtrl = setItemData_tree
+    setItemRecord_TreeCtrl = setItemData_tree
 
-    def setSelectedItemData_TreeCtrl(self, ctrl=None, data=None):
+    def setSelectedItemData_tree(self, ctrl=None, data=None):
         """
         Установить данные выбранного элемента дерева.
         @param ctrl: Контрол wx.TreeCtrl.
@@ -272,11 +289,12 @@ class icTreeCtrlManager(object):
 
         selected_item = ctrl.GetSelection()
         if selected_item:
-            return self.setItemData_TreeCtrl(ctrl=ctrl, item=selected_item, data=data)
+            return self.setItemData_tree(ctrl=ctrl, item=selected_item, data=data)
         return None
 
     # Другое наименование метода
-    setSelectedItemRecord_TreeCtrl = setSelectedItemData_TreeCtrl
+    setSelectedItemData_TreeCtrl = setSelectedItemData_tree
+    setSelectedItemRecord_TreeCtrl = setSelectedItemData_tree
 
     def getItemChildren(self, ctrl=None, item=None):
         """
