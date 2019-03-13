@@ -25,7 +25,7 @@ from . import toolbar_manager
 from . import validate_manger
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Список имен, которые необходимо пропустить при обаботке соответствий
 # имен контролов и значений контролов
@@ -259,6 +259,19 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         @param panel: Объект панели.
         @return: Словарь соответствий контролов ввода.
         """
+        try:
+            return self._find_panel_accord(panel)
+        except:
+            log.fatal(u'Ошибка поиска на панели контролов ввода и определение их как словарь соответствий')
+        return dict()
+
+    def _find_panel_accord(self, panel):
+        """
+        Найти на панели контролы ввода на панели и определить
+        их как словарь соответствий.
+        @param panel: Объект панели.
+        @return: Словарь соответствий контролов ввода.
+        """
         accord = dict()
         if not issubclass(panel.__class__, wx.Window):
             log.warning(u'Панель <%s> не является наследником wx.Windows. Не возможно определить соответствия' % panel.__class__.__name__)
@@ -271,19 +284,18 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
             # log.debug(u'Добавление контрола <%s> в словарь соответствий' % ctrl_name)
             ctrl = getattr(panel, ctrl_name)
             # log.debug(u'Тип <%s>' % str(type(ctrl)))
-            if isinstance(ctrl, types.InstanceType):
-                if issubclass(ctrl.__class__, wx.TextCtrl):
-                    accord[ctrl_name] = ctrl_name
-                elif issubclass(ctrl.__class__, wx.SpinCtrl):
-                    accord[ctrl_name] = ctrl_name
-                elif issubclass(ctrl.__class__, wx.CheckBox):
-                    accord[ctrl_name] = ctrl_name
-                elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):
-                    accord[ctrl_name] = ctrl_name
-                elif issubclass(ctrl.__class__, wx.DirPickerCtrl):
-                    accord[ctrl_name] = ctrl_name
-                elif issubclass(ctrl.__class__, wx.dataview.DataViewListCtrl):
-                    accord[ctrl_name] = ctrl_name
+            if isinstance(ctrl, wx.TextCtrl):
+                accord[ctrl_name] = ctrl_name
+            elif isinstance(ctrl, wx.SpinCtrl):
+                accord[ctrl_name] = ctrl_name
+            elif isinstance(ctrl, wx.CheckBox):
+                accord[ctrl_name] = ctrl_name
+            elif isinstance(ctrl, wx.adv.DatePickerCtrl):
+                accord[ctrl_name] = ctrl_name
+            elif isinstance(ctrl, wx.DirPickerCtrl):
+                accord[ctrl_name] = ctrl_name
+            elif isinstance(ctrl, wx.dataview.DataViewListCtrl):
+                accord[ctrl_name] = ctrl_name
 
         return accord
 
