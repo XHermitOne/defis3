@@ -17,7 +17,7 @@ from ic.utils import ic_util
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_ENCODE = 'utf-8'
 

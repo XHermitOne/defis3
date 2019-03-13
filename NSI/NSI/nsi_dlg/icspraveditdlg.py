@@ -9,7 +9,7 @@ import sys
 import wx
 import wx.propgrid
 import ic
-from ic import log
+from ic.log import log
 from ic.dlg import ic_dlg
 from ic.utils import ic_time
 from ic import ic_bmp
@@ -23,7 +23,7 @@ from . import iceditcodeproperty
 from ic.engine import form_manager
 
 # Version
-__version__ = (0, 0, 2, 3)
+__version__ = (0, 1, 1, 2)
 
 # Не редактируемые поля таблицы справочника
 NOT_EDITABLE_FIELDS = ('type', 'count', 'access')
@@ -363,7 +363,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         # В случае многострочных наименования выделять только первую строку
         name = [line.strip() for line in name.split(u'\n')][0]
         item = self.sprav_treeCtrl.AppendItem(parent_item, name)
-        self.sprav_treeCtrl.SetItemData(item, rec_dict)
+        self.setItemData_tree(ctrl=self.sprav_treeCtrl, item=item, data=rec_dict)
         
         code = rec_dict['cod']
         if self.sprav.isSubCodes(code):
@@ -452,7 +452,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         
         child_item, cookie = self.sprav_treeCtrl.GetFirstChild(tree_item)
         while child_item.IsOk():
-            record = self.sprav_treeCtrl.GetItemData(child_item)
+            record = self.getItemData_tree(ctrl=self.sprav_treeCtrl, item=child_item)
 
             self.add_sprav_list_row(record, False)
             
@@ -500,7 +500,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
 
         # Заполнение пустого уровня
         if not self.sprav_treeCtrl.ItemHasChildren(item):
-            record = self.sprav_treeCtrl.GetItemData(item)
+            record = self.getItemData_tree(ctrl=self.sprav_treeCtrl, item=item)
             code = record['cod']
             self.set_sprav_level_tree(item, code)
         
@@ -513,7 +513,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         """
         find_item = self.find_sprav_tree_item(parent_item, sprav_code)
         if find_item:
-            self.sprav_treeCtrl.SetItemData(find_item, sprav_record)
+            self.setItemData_tree(ctrl=self.sprav_treeCtrl, item=find_item, data=sprav_record)
             self.sprav_treeCtrl.SetItemText(find_item, sprav_record['name'])
 
     def refresh_sprav_list_item(self, sprav_code=None, sprav_record=None):
@@ -558,7 +558,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         @param new_record: Новая добавляемая запись.
         """
         item = self.sprav_treeCtrl.AppendItem(parent_item, new_record['name'])
-        self.sprav_treeCtrl.SetItemData(item, new_record)
+        self.setItemData_tree(ctrl=self.sprav_treeCtrl, item=item, data=new_record)
 
     def add_sprav_list_item(self, new_record=None):
         """
@@ -575,7 +575,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         @return: Найденный элемент дерева или None, если элемент не найден. 
         """
         # Поискать код в текущем элементе
-        record = self.sprav_treeCtrl.GetItemData(parent_item)
+        record = self.getItemData_tree(ctrl=self.sprav_treeCtrl, item=parent_item)
         if record:
             if sprav_code == record['cod']:
                 return parent_item
@@ -584,7 +584,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         find_result = None
         child_item, cookie = self.sprav_treeCtrl.GetFirstChild(parent_item)
         while child_item.IsOk():
-            record = self.sprav_treeCtrl.GetItemData(child_item)
+            record = self.getItemData_tree(ctrl=self.sprav_treeCtrl, item=child_item)
             if record:
                 if sprav_code == record['cod']:
                     find_result = child_item
@@ -701,7 +701,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         tab = self.sprav.getTable()
         default_record = tab.getDefaultRecDict()
         # Установить код по умолчанию
-        parent_rec = self.sprav_treeCtrl.GetItemData(self.sprav_treeCtrl.GetSelection())
+        parent_rec = self.getItemData_tree(ctrl=self.sprav_treeCtrl, item=self.sprav_treeCtrl.GetSelection())
         struct_parent_code = self.sprav.StrCode2ListCode(parent_rec['cod']) if parent_rec else list()
         struct_parent_code = [sub_code for sub_code in struct_parent_code if sub_code]
         level = self.sprav.getLevelByIdx(len(struct_parent_code))
