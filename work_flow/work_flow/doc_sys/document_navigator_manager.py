@@ -80,7 +80,7 @@ from ic.dlg import ic_dlg
 from ic.components import icwidget
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 2)
 
 # Спецификация
 SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {'document': None,
@@ -135,10 +135,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         except:
             log.fatal(u'Ошибка установки контрола списка %s для управления им' % list_ctrl_psp)
 
-    def setSlaveDocumentByPsp(self, document_psp):
+    def setSlaveDocumentByPsp(self, document_psp, bAutoUpdate=True):
         """
         Установить ведомый объект документа для управления им по его паспорту.
         @param document_psp: Паспорт объекта документа.
+        @param bAutoUpdate: Автоматически обновить датавет по документу.
         """
         if not document_psp:
             log.warning(u'Не определен паспорт ведомого документа для менеджера навигации')
@@ -149,17 +150,22 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             if kernel:
                 document = kernel.Create(document_psp)
                 self.__document_navigator_slave_document = document
+                if bAutoUpdate:
+                    self.updateDocDataset()
             else:
                 log.error(u'Не определен объект ядра для создания объекта %s' % document_psp)
         except:
             log.fatal(u'Ошибка установки документа %s для управления им' % document_psp)
 
-    def setSlaveDocument(self, document):
+    def setSlaveDocument(self, document, bAutoUpdate=True):
         """
         Установить ведомый объект документа для управления им.
         @param document: Объект документа.
+        @param bAutoUpdate: Автоматически обновить датавет по документу.
         """
         self.__document_navigator_slave_document = document
+        if bAutoUpdate:
+            self.updateDocDataset()
 
     def _getDocIndex(self, UUID=None, index=None):
         """
@@ -203,6 +209,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             document = self.__document_navigator_slave_document
         except:
             log.fatal(u'Ошибка получения ведомый объект документа для управления им')
+
+        if UUID is None and index is None:
+            # ВНИМАНИЕ! Запрос не конкретного документа, объекта для
+            # управления документами!
+            return document
 
         dataset = self.getDocDataset()
 
@@ -275,7 +286,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             log.fatal(u'Ошибка получения текущего фильтра списка документов')
         return None
 
-    def setDocDatasetFilter(self, doc_filter=None):
+    def setDocDatasetFilter(self, doc_filter=None, bAutoUpdate=True):
         """
         Текущий фильтр списка документов.
         @param doc_filter: Фильтр документов.
@@ -285,11 +296,15 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 из функций прикладного уровня.
             Использование:
                 create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
+        @param bAutoUpdate: Автоматически обновить датавет по документу.
         @return: Текущий заполненный список документов.
         """
         try:
             document = self.getSlaveDocument()
-            return document.setFilter(doc_filter)
+            result = document.setFilter(doc_filter)
+            if bAutoUpdate:
+                self.updateDocDataset()
+            return result
         except:
             log.fatal(u'Ошибка получения текущего фильтра списка документов')
         return None
@@ -406,7 +421,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             rows.append(tuple(row))
         return rows
 
-    def refreshtDocListCtrlRows(self, rows=None, auto_size_columns=False):
+    def refreshDocListCtrlRows(self, rows=None, auto_size_columns=False):
         """
         Обновление списка строк контрола отображения списка документов.
         @param rows: Список строк.
@@ -428,12 +443,13 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                                evenBackgroundColour=row_colour,
                                oddBackgroundColour=wx.Colour(row_colour.Red()/3*2,
                                                              row_colour.Green()/3*2,
-                                                             row_colour.Blue()/3*2))
+                                                             row_colour.Blue()/3*2),
+                               doSavePos=True)
         if auto_size_columns:
             # Установить автообразмеривание колонок чтобу исключить обрезание информации
             self.setColumnsAutoSize_list_ctrl(list_ctrl)
 
-    def refreshtDocListCtrlRow(self, index=None, row=None, auto_size_columns=False):
+    def refreshDocListCtrlRow(self, index=None, row=None, auto_size_columns=False):
         """
         Обновление списка строк контрола отображения списка документов.
         @param index: Индекс обновляемой строки.
@@ -458,11 +474,35 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                                   evenBackgroundColour=row_colour,
                                   oddBackgroundColour=wx.Colour(row_colour.Red()/3*2,
                                                                 row_colour.Green()/3*2,
-                                                                row_colour.Blue()/3*2))
+                                                                row_colour.Blue()/3*2),
+                                  doSavePos=True)
 
         if auto_size_columns:
             # Установить автообразмеривание колонок чтобу исключить обрезание информации
             self.setColumnsAutoSize_list_ctrl(list_ctrl)
+
+    def refreshSortDocListCtrlRows(self, rows=None, auto_size_columns=False,
+                                    sort_fields=None, bReverseSort=False):
+        """
+        Обновление списка строк контрола отображения списка документов.
+        @param rows: Список строк.
+            Если не определен, то заполняется автоматически по датасету.
+        @param auto_size_columns: Установить автообразмеривание колонок.
+        @param sort_fields: Сортировка списка документов по полям.
+            Если не указано, то сортировка не производиться.
+        @param bReverseSort: Произвести обратную сортировку?
+        @return: True/False.
+        """
+        if sort_fields is None:
+            # Не надо производить сортировку просто обновить
+            log.warning(u'Не определены поля сортировки. Сортировка документов не произведена')
+            return self.refreshDocListCtrlRow(rows, auto_size_columns)
+
+        if not bReverseSort:
+            self.sortDocs(*sort_fields)
+        else:
+            self.sortReverseDocs(*sort_fields)
+        return True
 
     # --- Функции движения ---
     def selectItem(self, UUID=None, index=None):
@@ -653,8 +693,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         do_refresh = False
         try:
+            log.info(u'Сортировка списка документов по полям %s' % str(sort_fields))
             dataset = sorted(dataset,
-                             key=lambda rec: [rec[field] if isinstance(field, str) else field(rec) for field in sort_fields],
+                             key=lambda rec: [(rec[field] if isinstance(field, str) else field(rec)) for field in sort_fields],
                              reverse=False)
             do_refresh = True
         except:
@@ -662,7 +703,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         if do_refresh:
             self.setDocDataset(dataset)
-            self.refreshtDocListCtrlRows()
+            rows = self.getDocListCtrlRows(dataset)
+            self.refreshDocListCtrlRows(rows=rows)
+        return dataset
 
     def sortReverseDocs(self, *sort_fields):
         """
@@ -679,6 +722,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         do_refresh = False
         try:
+            log.info(u'Обратная сортировка списка документов по полям %s' % str(sort_fields))
             dataset = sorted(dataset,
                              key=lambda rec: [rec[field] if isinstance(field, str) else field(rec) for field in sort_fields],
                              reverse=True)
@@ -688,7 +732,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         if do_refresh:
             self.setDocDataset(dataset)
-            self.refreshtDocListCtrlRows()
+            rows = self.getDocListCtrlRows(dataset)
+            self.refreshDocListCtrlRows(rows=rows)
+        return dataset
 
     def copyDoc(self, UUID=None, index=None):
         """

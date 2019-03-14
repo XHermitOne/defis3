@@ -146,7 +146,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
             if pack_result:
                 ic_dlg.icMsgBox(u'АРХИВ',
                                 u'Пакет документов перенесен в архив')
-            self.doc_navigator.refreshtDocListCtrlRows()
+            self.refreshDocList()
         event.Skip()
 
     def onEditToolClicked(self, event):
@@ -222,7 +222,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
             if n_pages or is_duplex is not None:
                 document.save_obj()
-                self.doc_navigator.refreshtDocListCtrlRows()
+                self.refreshDocList(bAutoUpdate=True)
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
         event.Skip()
@@ -281,7 +281,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
             ic_dlg.icMsgBox(u'СКАНИРОВАНИЕ',
                             u'Сканирование пакета документов завершено успешно')
-            self.doc_navigator.refreshtDocListCtrlRows()
+            self.refreshDocList()
 
         event.Skip()
 
@@ -394,13 +394,17 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         dataset[item_idx]['n_scan_pages'] = int(n_scan_pages)
         dataset[item_idx]['is_duplex'] = int(is_duplex)
 
-        self.doc_navigator.refreshtDocListCtrlRow(index=item_idx)
+        self.doc_navigator.refreshDocListCtrlRow(index=item_idx)
 
-    def refreshDocList(self):
+    def refreshDocList(self, bAutoUpdate=False):
         """
         Обновление списка документов.
+        @param bAutoUpdate: Произвести обновление датасета из БД?
         """
-        self.doc_navigator.refreshtDocListCtrlRows()
+        if bAutoUpdate:
+            self.doc_navigator.updateDocDataset()
+
+        self.doc_navigator.refreshSortDocListCtrlRows(sort_fields=('nn', ))
 
         # Расцветка строк
         for i, doc_rec in enumerate(self.doc_navigator.getDocDataset()):

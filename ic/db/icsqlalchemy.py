@@ -52,7 +52,7 @@ from ic.components import icwidget
 
 from . import icdb
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 # Типы таблиц
 TABLE_TYPE = 'Table'
@@ -1503,7 +1503,11 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 child_tab = self.getChildTable(child_tabname)
                 if child_tab:
                     # Определить список дочерних идентификаторов
-                    where = sqlalchemy.and_(getattr(child_tab.c, child_tab.getLinkIdFieldName(self)) == Id_)
+                    try:
+                        where = sqlalchemy.and_(getattr(child_tab.c, child_tab.getLinkIdFieldName(self)) == Id_)
+                    except AttributeError:
+                        log.error(u'Ошибка обработки дочерней таблицы <%s>' % child_tabname)
+                        raise
                     recs = child_tab.get_where(where)
                     if recs and recs.rowcount:
                         child_records = recs.fetchall()

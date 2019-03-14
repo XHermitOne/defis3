@@ -11,7 +11,7 @@ from ic.engine import form_manager
 from . import document_filter_manager
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Спецификация
 SPC_IC_DOCUMENT_FORM_MANAGER = {'__parent__': document_filter_manager.SPC_IC_DOCUMENT_FILTER_MANAGER,
