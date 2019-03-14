@@ -6,22 +6,28 @@
 """
 
 import wx
-import wx.grid as gridlib
+import wx.adv
+import wx.grid
 import time
 import string
 
+__version__ = (0, 1, 1, 2)
 
-class BrFontRenderer(gridlib.PyGridCellRenderer):
+
+class BrFontRenderer(wx.grid.PyGridCellRenderer):
     def __init__(self, table, color='black', font='ARIAL', fontsize=8):
         """
         Render data in the specified color and font and fontsize
         """
-        gridlib.PyGridCellRenderer.__init__(self)
+        wx.grid.PyGridCellRenderer.__init__(self)
         self.table = table
         self.color = color
-        self.font = wx.Font(fontsize, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, font)
-        self.selectedBrush = wx.Brush('blue', wx.SOLID)
-        self.normalBrush = wx.Brush(wx.WHITE, wx.SOLID)
+        self.font = wx.Font(fontsize,
+                            wx.FONTFAMILY_DEFAULT,
+                            wx.FONTSTYLE_NORMAL,
+                            wx.FONTWEIGHT_NORMAL, 0, font)
+        self.selectedBrush = wx.Brush('blue', wx.BRUSHSTYLE_SOLID)
+        self.normalBrush = wx.Brush(wx.WHITE, wx.BRUSHSTYLE_SOLID)
         self.colSize = None
         self.rowSize = 50
 
@@ -36,11 +42,11 @@ class BrFontRenderer(gridlib.PyGridCellRenderer):
         dc.SetBackgroundMode(wx.SOLID)
         
         if isSelected:
-            dc.SetBrush(wx.Brush(wx.BLUE, wx.SOLID))
-            dc.SetPen(wx.Pen(wx.BLUE, 1, wx.SOLID))
+            dc.SetBrush(wx.Brush(wx.BLUE, wx.BRUSHSTYLE_SOLID))
+            dc.SetPen(wx.Pen(wx.BLUE, 1, wx.PENSTYLE_SOLID))
         else:
-            dc.SetBrush(wx.Brush(wx.WHITE, wx.SOLID))
-            dc.SetPen(wx.Pen(wx.WHITE, 1, wx.SOLID))
+            dc.SetBrush(wx.Brush(wx.WHITE, wx.BRUSHSTYLE_SOLID))
+            dc.SetPen(wx.Pen(wx.WHITE, 1, wx.PENSTYLE_SOLID))
         dc.DrawRectangleRect(rect)
 
         text = self.table.GetValue(row, col)
@@ -75,7 +81,7 @@ class BrFontRenderer(gridlib.PyGridCellRenderer):
         dc.DestroyClippingRegion()
 
 
-class icGridCellDateEditor(wx.grid.PyGridCellEditor):
+class icGridCellDateEditor(wx.grid.GridCellEditor):
     """
     Редактор дат.
     """
@@ -84,15 +90,15 @@ class icGridCellDateEditor(wx.grid.PyGridCellEditor):
         Конструктор.
         """
         self._evtHandler = None
-        gridlib.PyGridCellEditor.__init__(self)
+        wx.grid.GridCellEditor.__init__(self)
 
     def Create(self, parent, id, evtHandler):
         """
         Called to create the control, which must derive from wx.Control.
         """
-        self._tc = wx.DatePickerCtrl(parent,
-                                     dt=wx.DefaultDateTime,
-                                     style=wx.DP_DEFAULT)
+        self._tc = wx.adv.DatePickerCtrl(parent,
+                                         dt=wx.DefaultDateTime,
+                                         style=wx.adv.DP_DEFAULT)
         self.SetControl(self._tc)
         self._evtHandler = evtHandler
         self._blockHandle = False
@@ -216,14 +222,14 @@ class icGridCellDateEditor(wx.grid.PyGridCellEditor):
 from . import icextendedcomboctrl
 
 
-class icDatasetComboCellEditor(gridlib.PyGridCellEditor):
+class icDatasetComboCellEditor(wx.grid.GridCellEditor):
     """
     Расширенный комбинированный редактор ячейки.
     Используется в гриде редактирования свойств объекта в конфигураторе.
     """
 
     def __init__(self):
-        gridlib.PyGridCellEditor.__init__(self)
+        wx.grid.GridCellEditor.__init__(self)
 
     def Create(self, parent, id, evtHandler):
         """
@@ -346,7 +352,7 @@ class icDatasetComboCellEditor(gridlib.PyGridCellEditor):
 DEFAULT_NSI_DELIM = ' | '
 
 
-class icGridCellNSIEditor(wx.grid.PyGridCellEditor):
+class icGridCellNSIEditor(wx.grid.GridCellEditor):
     """
     Редактор выбора значения из справочника.
     """
@@ -357,7 +363,7 @@ class icGridCellNSIEditor(wx.grid.PyGridCellEditor):
         @param NSIPassport: Паспорт справочника.
         """
         self._evtHandler = None
-        gridlib.PyGridCellEditor.__init__(self)
+        wx.grid.GridCellEditor.__init__(self)
 
     def Create(self, parent, id, evtHandler):
         """

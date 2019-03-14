@@ -7,7 +7,9 @@
 
 import wx
 from . import resource
-from ic.kernel import io_prnt
+from ic.log import log
+
+__version__ = (0, 1, 1, 2)
 
 _ = wx.GetTranslation
 
@@ -103,7 +105,7 @@ def dictFilterToSQL(flt, tables, _id='id'):
     @type flt: C{dictionary}
     @param flt: Словарь задающий структурный фильтр.
     """
-    if type(flt) in (str, unicode):
+    if isinstance(flt, str):
         return flt
     if not isinstance(flt, dict):
         log.info(_('Unexpected filter type. Must be srting type or dictionary.'))
@@ -113,7 +115,7 @@ def dictFilterToSQL(flt, tables, _id='id'):
     for fld in flt:
         val = flt[fld]
         if not isinstance(val, list) and not isinstance(val, tuple):
-            if type(val) in (str, unicode):
+            if isinstance(val, str):
                 val = '"'+val+'"'
             if condition == '':
                 condition = ' %s=%s ' % (fld, val)
@@ -123,7 +125,7 @@ def dictFilterToSQL(flt, tables, _id='id'):
             s = ''
             cur = 1
             for x in val:
-                if type(x) in (str, unicode):
+                if isinstance(x, str):
                     if s == '':
                         s = ' substr(%s, %d, %d)=\'%s\' ' % (fld, cur, len(x), x)
                     else:
@@ -193,7 +195,7 @@ def replSQLObjNamesToSQL(query, dictRepl):
     @rtype: C{string}
     @return: SQL выражение на фильтрацию объектов класса данных.
     """
-    if type(query) not in (str, unicode):
+    if isinstance(query, str):
         return None
     #   Сортируем в порядке убывание длины с ключа, для того чтобы не возникло ситуации,
     #   когда более короткое ключевое слово инициирует замену в более длинном.
@@ -244,7 +246,7 @@ def isInFilteredVal(flt, fld, value, isVerSize=True):
     else:
         cur = 0
         for x in filt:
-            if type(x) in (str, unicode):
+            if isinstance(x, str):
                 if value[cur:cur+len(x)] != x:
                     return False
                 else:
@@ -259,7 +261,7 @@ def isInFilteredVal(flt, fld, value, isVerSize=True):
         if isVerSize:
             cur = 0
             for x in filt:
-                if type(x) in (str, unicode):
+                if isinstance(x, str):
                     cur += len(x)
                 elif isinstance(x, int):
                     cur += x
@@ -307,7 +309,7 @@ def InitValidValue(flt, fld, value):
         cur = 0
         ret = ''
         for x in filt:
-            if type(x) in (str, unicode):
+            if isinstance(x, str):
                 ret += x
                 cur += len(x)
             elif isinstance(x, int):

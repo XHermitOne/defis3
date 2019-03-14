@@ -134,7 +134,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 # --- Функции редактирования
@@ -239,11 +239,11 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         self.AddControl(self.txtCtrl)
         
         self.id_first = wx.NewId()
-        self.AddTool(bitmap=common.imgFirstData, id=self.id_first)
+        self.AddTool(self.id_first, u'first', common.imgFirstData)
         self.Bind(wx.EVT_TOOL, self.OnFirstData, id=self.id_first)
         
         self.id_prev = wx.NewId()
-        self.AddTool(bitmap=common.imgPrevData, id=self.id_prev)
+        self.AddTool(self.id_prev, u'prev', common.imgPrevData)
         self.Bind(wx.EVT_TOOL, self.OnPrevData, id=self.id_prev)
         
         self.id_cursor = wx.NewId()
@@ -261,11 +261,11 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
 
         try:
             self.id_next = wx.NewId()
-            self.AddTool(bitmap=common.imgNextData, id=self.id_next)
+            self.AddTool(self.id_next, u'next', common.imgNextData)
             self.Bind(wx.EVT_TOOL, self.OnNextData, id=self.id_next)
             
             self.id_last = wx.NewId()
-            self.AddTool(bitmap=common.imgLastData, id=self.id_last)
+            self.AddTool(self.id_last, u'last', common.imgLastData)
             self.Bind(wx.EVT_TOOL, self.OnLastData, id=self.id_last)
             
             if self.dataset is not None:
@@ -284,17 +284,17 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
     
             if self.buttonAdd:
                 self.id_add = wx.NewId()
-                self.AddTool(bitmap=common.imgPlus, id=self.id_add, shortHelpString=u'Добавить')
+                self.AddTool(self.id_add, 'add', common.imgPlus, shortHelpString=u'Добавить')
                 self.Bind(wx.EVT_TOOL, self.OnAddData, id=self.id_add)
                 
             if self.buttonUpdate:
                 self.id_update = wx.NewId()
-                self.AddTool(bitmap=common.imgCheck, id=self.id_update, shortHelpString=u'Сохранить')
+                self.AddTool(self.id_update, u'update', common.imgCheck, shortHelpString=u'Сохранить')
                 self.Bind(wx.EVT_TOOL, self.OnUpdateData, id=self.id_update)
                 
             if self.buttonDel:
                 self.id_del = wx.NewId()
-                self.AddTool(bitmap=common.imgMinus, id=self.id_del, shortHelpString=u'Удалить')
+                self.AddTool(self.id_del, u'del', common.imgMinus, shortHelpString=u'Удалить')
                 self.Bind(wx.EVT_TOOL, self.OnDelData, id=self.id_del)
             
             self.AddSeparator()
@@ -311,19 +311,19 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
             self.AddSeparator()
             
             self.id_search = wx.NewId()
-            self.AddTool(bitmap=common.imgSearchData, id=self.id_search, shortHelpString=u'Поиск')
+            self.AddTool(self.id_search, u'search', common.imgSearchData, shortHelpString=u'Поиск')
             self.Bind(wx.EVT_TOOL, self.OnSearchData, id=self.id_search)
 
             self.AddSeparator()
 
             if self.buttonHelp:
                 self.id_help = wx.NewId()
-                self.AddTool(bitmap=common.imgHelp, id=self.id_help, shortHelpString=u'Помощь')
+                self.AddTool(self.id_help, u'help', common.imgHelp, shortHelpString=u'Помощь')
                 self.Bind(wx.EVT_TOOL, self.OnHelp, id=self.id_help)
 
             if self.buttonPrint:
                 self.id_print = wx.NewId()
-                self.AddTool(bitmap=common.imgPrint, id=self.id_print, shortHelpString=u'Печать')
+                self.AddTool(self.id_print, u'print', common.imgPrint, shortHelpString=u'Печать')
                 self.Bind(wx.EVT_TOOL, self.OnPrint, id=self.id_print)
         except:
             pass

@@ -144,7 +144,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 0, 2, 2)
+__version__ = (1, 1, 2, 2)
 
 
 class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
@@ -284,9 +284,23 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
             для включения любого флага границы.
         """
         if isinstance(obj, icspacesizer.icSpaceSizer):
-            size = tuple(obj.GetSize())
-            return wx.BoxSizer.AddSpacer(self, size, proportion, flag, border)
+            size = obj.GetSize()
+            return self.AddSpacer(size[1] if self.isVertical() else size[0])
         return wx.BoxSizer.Add(self, obj, proportion, flag, border)
+
+    def isVertical(self):
+        """
+        Вертикальная ориентация?
+        @return: True/False.
+        """
+        return self.GetOrientation() == wx.VERTICAL
+
+    def isHorizontal(self):
+        """
+        Горизонтальная ориентация?
+        @return: True/False.
+        """
+        return self.GetOrientation() == wx.HORIZONTAL
 
 
 def test(par=0):

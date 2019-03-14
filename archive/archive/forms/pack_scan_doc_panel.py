@@ -68,6 +68,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                                                  'doc_name', 'c_agent')
         self.doc_navigator.setSlaveListCtrl(self.docs_listCtrl)
 
+        self.refreshDocList()
+
     def init_img(self):
         """
         Инициализация изображений.
@@ -205,7 +207,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         """
         idx = self.getItemSelectedIdx(self.docs_listCtrl)
         if idx != -1:
-            document = self.doc_navigator.getSlaveDocument(index=idx)
+            document = self.doc_navigator.getSlaveDocument(index=idx, bLoad=True)
             n_pages = std_dlg.getIntegerDlg(self, u'СКАНИРОВАНИЕ',
                                             u'Укажите количество страниц документа',
                                             1, 500)
@@ -399,6 +401,15 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         Обновление списка документов.
         """
         self.doc_navigator.refreshtDocListCtrlRows()
+
+        # Расцветка строк
+        for i, doc_rec in enumerate(self.doc_navigator.getDocDataset()):
+            if doc_rec['file_name'] and os.path.exists(doc_rec['file_name']):
+                self.setRowForegroundColour_list_ctrl(self.docs_listCtrl,
+                                                      i, wx.Colour('DARKGREEN'))
+            else:
+                self.setRowForegroundColour_list_ctrl(self.docs_listCtrl,
+                                                      i, wx.Colour('DARKGOLDENROD'))
 
 
 def show_pack_scan_doc_panel(title=u''):

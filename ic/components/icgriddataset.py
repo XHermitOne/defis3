@@ -81,7 +81,7 @@ ic_can_contain = ['GridCell']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 #   Атрибуты редактируемых ячеек
 icAttrEditCell = {'backgroundColor': (255, 255, 255),
@@ -250,7 +250,7 @@ def GetColFromName(cols, name):
             i += 1
 
 
-class icGridDatasetData(wx.grid.PyGridTableBase):
+class icGridDatasetData(wx.grid.GridTableBase):
     """
     Класс описания и доступа к данным. Доступ к данным осуществляется через объект
     icTable, который является интерфейсом к реальному источнику данных. Интерфейс
@@ -388,7 +388,7 @@ class icGridDatasetData(wx.grid.PyGridTableBase):
         self.oldEditRow = None
         #   Определяется self.dataset и заполняются служебные структуры
         self.defData(self.cols, dataset)
-        wx.grid.PyGridTableBase.__init__(self)
+        wx.grid.GridTableBase.__init__(self)
         #   Добавляем в пространство имен объект доступа к данным
         evalSpace['data'] = self.dataset
         evalSpace['dataset'] = self.dataset

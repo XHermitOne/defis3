@@ -139,7 +139,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 # Кнопка сортировки по убыванию
@@ -155,7 +155,7 @@ mark_shith_x = 4
 mark_shith_y = 5
 
 
-class icHeadCell(icwidget.icWidget, wx.PyControl):
+class icHeadCell(icwidget.icWidget, wx.Control):
     """
     Стандартное представление ячейки шапки.
     """
@@ -210,7 +210,7 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
         style = style | wx.ST_NO_AUTORESIZE | wx.NO_BORDER
         
         # ----------------------------------------------------------------------
-        wx.PyControl.__init__(self, parent, id, pos, size, style, name=self.name)
+        wx.Control.__init__(self, parent, id, pos, size, style, name=self.name)
         # ----------------------------------------------------------------------
         self.SetLabel(label)
         self.SetPosition(pos)
@@ -572,14 +572,25 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
                                              (self.topColor or bgr, self.rightColor or bgr,
                                               self.bottomColor or bgr, self.leftColor or bgr),
                                              self._corners, self.backgroundType)
-        
+
     def Draw(self, dc):
         """
         Функция рисует ячейку.
         @type dc: C{wx.DC}
         @param dc: Контекст устройства.
         """
-        dc.BeginDrawing()
+        try:
+            return self._draw(dc)
+        except:
+            log.fatal(u'Ошибка отрисовки ячейки заголовочной части')
+
+    def _draw(self, dc):
+        """
+        Функция рисует ячейку.
+        @type dc: C{wx.DC}
+        @param dc: Контекст устройства.
+        """
+        # dc.BeginDrawing()
         clr = self.GetBackgroundColour()
         clr2 = self.bgr2
         
@@ -589,7 +600,7 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
         else:
             bgr_clr = clr
             
-        backBrush = wx.Brush(bgr_clr, wx.SOLID)
+        backBrush = wx.Brush(bgr_clr, wx.BRUSHSTYLE_SOLID)
         dc.SetBackground(backBrush)
         dc.SetTextForeground(self.GetForegroundColour())
         width, height = self.GetClientSize()
@@ -638,21 +649,21 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
             penBound = wx.Pen((150, 150, 150))
             # Колока не сортирована
             if self.sortDirection == 0:
-                brush = wx.Brush(clr, wx.SOLID)
+                brush = wx.Brush(clr, wx.BRUSHSTYLE_SOLID)
                 dc.SetBrush(brush)
                 dc.DrawPolygon(SortMarkPointsDark, mark_shith_x+st, mark_shith_y+st)
                 dc.SetPen(penBound)
                 dc.DrawLines(SortMarkPointsLight, mark_shith_x+st, mark_shith_y+st)
             # Колонка отсортирована по убыванию
             elif self.sortDirection < 0:
-                brush = wx.Brush((100, 100, 100), wx.SOLID)
+                brush = wx.Brush((100, 100, 100), wx.BRUSHSTYLE_SOLID)
                 dc.SetBrush(brush)
                 dc.DrawPolygon(SortMarkPointsDark, mark_shith_x+st, mark_shith_y+st)
                 dc.SetPen(penBound)
                 dc.DrawLines(SortMarkPointsLight, mark_shith_x+st, mark_shith_y+st)
             # Колонка отсортирована по возрастанию
             else:
-                brush = wx.Brush((100, 100, 100), wx.SOLID)
+                brush = wx.Brush((100, 100, 100), wx.BRUSHSTYLE_SOLID)
                 dc.SetBrush(brush)
                 dc.DrawPolygon(SortMarkPointsDarkUp, mark_shith_x+st, mark_shith_y+st)
                 dc.SetPen(penBound)
@@ -668,12 +679,12 @@ class icHeadCell(icwidget.icWidget, wx.PyControl):
         if self.bButton and self._buttonEnter:
             dz = 2
             clr = self.cursorColor
-            pen = wx.Pen(clr, 1, wx.SOLID)
+            pen = wx.Pen(clr, 1, wx.PENSTYLE_SOLID)
             dc.SetPen(pen)
             dc.SetBrush(wx.TRANSPARENT_BRUSH)
             dc.DrawRectangle(0+st+dz, 0+st+dz, width-2*st-2*dz-1, height-2*st-2*dz-1)
 
-        dc.EndDrawing()
+        # dc.EndDrawing()
         
     def OnPaint(self, event):
         dc = wx.PaintDC(self)

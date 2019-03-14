@@ -31,6 +31,7 @@
 import ic
 from ic.utils import ic_uuid
 from ic.utils import ic_util
+from ic.log import log
 from ic.interfaces import icdatasetinterface
 
 import work_flow.work_sys.icworkbase as icworkbase
@@ -39,7 +40,7 @@ from work_flow.work_sys import form_generator
 from STD.queries import filter_convert
 
 # Версия
-__version__ = (0, 0, 4, 2)
+__version__ = (0, 0, 4, 3)
 
 
 # Спецификация
@@ -466,7 +467,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                         add_ok = self.validInit(requisite_values=init_values) if self.isValidInit() else True
                         if add_ok:
                             uuid_new_obj = self.addRequisiteData(init_values)
-                            ic.log.info(u'Автодобавление объекта [%s] в <%s>' % (uuid_new_obj, self.name))
+                            log.info(u'Автодобавление объекта [%s] в <%s>' % (uuid_new_obj, self.name))
 
                 # ВНИМАНИЕ!
                 # Обязательно удалять форму после использования, а то
@@ -478,12 +479,12 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                     add_ok = self.validInit(requisite_values=init_values) if self.isValidInit() else True
                     if add_ok:
                         uuid_new_obj = self.addRequisiteData(init_values)
-                        ic.log.info(u'Автодобавление объекта [%s] в <%s>' % (uuid_new_obj, self.name))
+                        log.info(u'Автодобавление объекта [%s] в <%s>' % (uuid_new_obj, self.name))
 
             # Сохранение реквизитов не произошло
             return init_values
         except:
-            ic.log.error(u'Ошибка  инициализации БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.error(u'Ошибка  инициализации БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
         return None
 
     Add = Init
@@ -542,7 +543,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             return obj_uuid
         except:
-            ic.log.error(u'Ошибка режима поиска БИЗНЕС-ОБЪЕКТА %s' % self.name)
+            log.error(u'Ошибка режима поиска БИЗНЕС-ОБЪЕКТА %s' % self.name)
         
     def Choice(self, ParentForm_=None, Context_=None,
                choice_form_psp=None):
@@ -594,7 +595,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             return obj_uuid
         except:
-            ic.log.error(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.error(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
 
     def Browse(self, ParentForm_=None, Context_=None,
                choice_form_psp=None):
@@ -630,7 +631,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             obj = ic.getKernel().Create(psp, parent=ParentForm_, context=Context_)
             ic.getKernel().GetContext().getMainWin().AddOrgPage(obj, self.description)
         except:
-            ic.log.error(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.error(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
 
     def Edit(self, ParentForm_=None, Context_=None, UUID_=None,
              edit_form_psp=None):
@@ -704,7 +705,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             return ok_save
         except:
-            ic.log.error(u'Ошибка редактирования БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.error(u'Ошибка редактирования БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
 
         # Снять блокировку
         self.stopEdit()
@@ -764,7 +765,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             return ok
         except:
-            ic.log.error(u'Ошибка просмотра БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.error(u'Ошибка просмотра БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
         return False        
     
     def Print(self, Report_=None, Preview_=False, evalSpace=None):
@@ -787,7 +788,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             False - удаление отменено по какойто причине
         """
         if UUID_ is None:
-            ic.log.warning(u'Не определен объект для удаления')
+            log.warning(u'Не определен объект для удаления')
             return False
 
         # Определить можно ли удалить объект
@@ -827,8 +828,12 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         """
         if UUID_ is not None:
             self.uuid = UUID_   # Запомнить идентификатор документа
-        storage = self.getWorkStorage()
-        storage.saveObject(self)
+        # log.debug(u'Запись объекта <%s>' % self.uuid)
+        if self.uuid is None:
+            log.warning(u'Не определен UUID объекта. Запись не возможна')
+        else:
+            storage = self.getWorkStorage()
+            storage.saveObject(self)
 
     # Другое наименование метода
     # ВНИМАНИЕ! Метод нельзя называть save, т.к.
@@ -936,7 +941,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         try:
             return self._getRequisiteData()
         except:
-            ic.log.error(u'ОШИБКА определения словаря данных ДОКУМЕНТЫ <%s>' % self.name)
+            log.error(u'ОШИБКА определения словаря данных ДОКУМЕНТЫ <%s>' % self.name)
             return None
 
     def _getRequisiteData(self, ParentID_=None):
@@ -1013,7 +1018,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             result = self.save(obj_uuid, RequisiteData_)
             return result
         except:
-            ic.log.error(u'ОШИБКА сохранения словаря данных объекта <%s>' % self.name)
+            log.error(u'ОШИБКА сохранения словаря данных объекта <%s>' % self.name)
             return None
 
     def loadRequisiteData(self, UUID_=None):
@@ -1045,7 +1050,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             
             return requisite_data
         except:
-            ic.log.error(u'ОШИБКА загрузки словаря данных объекта <%s>' % self.name)
+            log.error(u'ОШИБКА загрузки словаря данных объекта <%s>' % self.name)
             return None
 
     def _setRequisiteData(self, RequisiteData_):
@@ -1063,7 +1068,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             False-не удачно,None-ошибка.
         """
         if not RequisiteData_:
-            ic.log.warning(u'Не заполнен словарь реквизитов для сохранения в бизнес объекте <%s>' % self.name)
+            log.warning(u'Не заполнен словарь реквизитов для сохранения в бизнес объекте <%s>' % self.name)
             return False
 
         try:
@@ -1082,19 +1087,19 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                     req_name = requisite.getName()
                     req_data_name = req_tab_name if req_tab_name in RequisiteData_ else req_name
                 else:
-                    ic.log.info(u'Не определен тип реквизита <%s>' % requisite)
+                    log.info(u'Не определен тип реквизита <%s>' % requisite)
                     return False
                 
                 if req_data_name in RequisiteData_:
                     requisite.setValue(RequisiteData_[req_data_name])
                 else:
-                    ic.log.warning(u'Не определено значение реквизита <%s>. Используется значение по умолчанию' % req_data_name)
+                    log.warning(u'Не определено значение реквизита <%s>. Используется значение по умолчанию' % req_data_name)
                     # Если данные в словаре значений не определены,
                     # тогда значение реквизита установить по умолчанию
                     requisite.setValue(requisite.getDefault())
             return True
         except:
-            ic.log.error(u'Ошибка в функции _setRequisiteData объекта <%s>' % self.name)
+            log.error(u'Ошибка в функции _setRequisiteData объекта <%s>' % self.name)
             return None
 
     setRequisiteData = _setRequisiteData
@@ -1127,7 +1132,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             result = self.add(obj_uuid, RequisiteData_)
             return obj_uuid
         except:
-            ic.log.error(u'ОШИБКА сохранения словаря данных объекта <%s>' % self.name)
+            log.error(u'ОШИБКА сохранения словаря данных объекта <%s>' % self.name)
             return None
 
     def startEdit(self, UUID_=None):
@@ -1214,7 +1219,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             requisite.setValue(value)
             return True
         else:
-            ic.log.warning(u'Не определен реквизит <%s> в объекте <%s>' % (requisite_name, self.name))
+            log.warning(u'Не определен реквизит <%s> в объекте <%s>' % (requisite_name, self.name))
         return False
 
     def getRequisiteValue(self, requisite_name):
@@ -1227,7 +1232,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         if requisite:
             return requisite.getValue()
         else:
-            ic.log.warning(u'Не определен реквизит <%s> в объекте <%s>' % (requisite_name, self.name))
+            log.warning(u'Не определен реквизит <%s> в объекте <%s>' % (requisite_name, self.name))
         return None
 
     def getChildRequisite(self, requisite_name):

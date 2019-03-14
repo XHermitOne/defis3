@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 
 ###########################################################################
 ## Class icQuickEntryPanelCtrlProto
@@ -22,27 +22,27 @@ class icQuickEntryPanelCtrlProto ( wx.Panel ):
 		panel_Sizer = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.prev_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Предыдущий элемент", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Предыдущий элемент", u"Предыдущий элемент", None ) 
+		self.prev_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Предыдущий элемент", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Предыдущий элемент", u"Предыдущий элемент", None ) 
 		
-		self.next_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Следующий элемент", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Следующий элемент", u"Следующий элемент", None ) 
-		
-		self.ctrl_toolBar.AddSeparator()
-		
-		self.cancel_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Отмена ввода", wx.ArtProvider.GetBitmap( wx.ART_CROSS_MARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Отмена ввода", u"Отмена ввода", None ) 
-		
-		self.ok_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Подтверждение ввода", wx.ArtProvider.GetBitmap( wx.ART_TICK_MARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Подтверждение ввода", u"Подтверждение ввода", None ) 
-		
-		self.default_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Значения по умолчанию", wx.ArtProvider.GetBitmap( wx.ART_UNDO, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Значения по умолчанию", u"Значения по умолчанию", None ) 
+		self.next_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Следующий элемент", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Следующий элемент", u"Следующий элемент", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.add_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Добавить", wx.ArtProvider.GetBitmap( wx.ART_ADD_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Добавить", u"Добавить", None ) 
+		self.cancel_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Отмена ввода", wx.ArtProvider.GetBitmap( wx.ART_CROSS_MARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Отмена ввода", u"Отмена ввода", None ) 
 		
-		self.del_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Удалить", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удалить", u"Удалить", None ) 
+		self.ok_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Подтверждение ввода", wx.ArtProvider.GetBitmap( wx.ART_TICK_MARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Подтверждение ввода", u"Подтверждение ввода", None ) 
+		
+		self.default_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Значения по умолчанию", wx.ArtProvider.GetBitmap( wx.ART_UNDO, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Значения по умолчанию", u"Значения по умолчанию", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.help_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Помощь", wx.ArtProvider.GetBitmap( wx.ART_HELP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Помощь", u"Помощь", None ) 
+		self.add_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Добавить", wx.ArtProvider.GetBitmap( wx.ART_ADD_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Добавить", u"Добавить", None ) 
+		
+		self.del_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Удалить", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удалить", u"Удалить", None ) 
+		
+		self.ctrl_toolBar.AddSeparator()
+		
+		self.help_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Помощь", wx.ArtProvider.GetBitmap( wx.ART_HELP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Помощь", u"Помощь", None ) 
 		
 		self.ctrl_toolBar.Realize() 
 		

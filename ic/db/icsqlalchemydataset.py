@@ -82,7 +82,7 @@ import ic.utils.translate as translate
 from ic.utils.coderror import *
 # from ic.log.iclog import MsgLastError, LogLastError
 from ic.dlg.msgbox import MsgBox
-from ic.kernel import io_prnt
+from ic.log import log
 
 from . import icdataset
 
@@ -156,7 +156,7 @@ msgEvalAttrError = ''' eval_attr(...)
 '''
 
 #   Версия компонента
-__version__ = (1, 0, 1, 3)
+__version__ = (1, 1, 2, 2)
 
 
 class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
@@ -195,7 +195,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             query = translate.convQueryToSQL(query, ls)
             return query
         except:
-            io_prnt.ouErr(u'cinvert ERROR in Query: <%s>' % query)
+            log.fatal(u'cinvert ERROR in Query: <%s>' % query)
             return old
             
     def GetIDataclass(self):
@@ -425,7 +425,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         self.indexFld = {}
 
         #   Список полей
-        self.listFld = range(len(self.scheme))
+        self.listFld = list(range(len(self.scheme)))
         
         #   Заполняем словарь индексов полей и список полей
         for indx, fld in enumerate(self.scheme):
@@ -649,7 +649,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             bSortExpr = True
         
         #   Создаем список идентификаторов буферезируемых строк
-        idLst = [self.getId(cur) for cur in xrange(beg+1, rec+1)]
+        idLst = [self.getId(cur) for cur in range(beg+1, rec+1)]
 
         if not idLst or (idLst and None in idLst):
             self.bufferPageDict = {}
@@ -778,7 +778,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 return value
                     
         except:
-            log.error('Error in field = \'%s\'' % fieldName)
+            log.fatal(u'Ошибка. Поле <%s>' % fieldName)
         
         return None
 
@@ -795,7 +795,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         info = self.getFieldInfo(fieldName)
         pt = self.pointType(info)
         
-        if type(value) in (str, unicode):
+        if isinstance(value, str):
             value = value.strip()
                                 
         if pt == 'D':
@@ -910,11 +910,11 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                         else:
                             ctrl_val = int(ctrl_ret)
                     except:
-                        log.error(u'INVALID RETURN CODE in CtrlVal')
+                        log.fatal(u'Ошибка в CtrlVal')
                         ctrl_val = IC_CTRL_OK
                         
                     if ctrl_val == IC_CTRL_FAILED:
-                        log.warning(u'control Error cod=IC_CTRL_FAILED')
+                        log.warning(u'Ошибка контроля cod=IC_CTRL_FAILED')
                         val = None
         
         return ctrl_val, val
@@ -983,7 +983,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
 
                 return ctrl_val
         except:
-            log.error('Error in \'%s\'' % fieldName)
+            log.fatal(u'Ошибка. Поле <%s>' % fieldName)
         
         return None
     
@@ -1028,7 +1028,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             #   производится по имени таблицы и идентификатору записи
             try:
                 id_name = self.GetIDataclass().getIdName()
-            except AtributeError:
+            except AttributeError:
                 id = 'id'
 
             id = list(self.rowBuff)[-1][0]
@@ -1081,7 +1081,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                         
                 return ctrl_val
         except:
-            log.error('Error in set(\'%s\')' % values)
+            log.fatal(u'Ошибка при обновлении. Значения %s' % values)
         
         return None
     
@@ -1404,7 +1404,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                     log.info(u'addRecord Rollback on <post_init>')
                     return False
         except:
-            log.error(u'Error in AddRecord')
+            log.афефд(u'Ошибка в AddRecord')
             return False
         
         return True
@@ -1471,7 +1471,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             if self.post_del_rec:
                 self.eval_attr('post_del')
         except:
-            log.error(u'DELETE RECORD ERROR')
+            log.fatal(u'Ошибка удаления записи')
             codDel = IC_DEL_FAILED
             
         return codDel
@@ -1546,7 +1546,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             
             #   Если в фильтре задано выражение для соритровки, то чистим список
             #   выражений для сортировки по умолчанию self._sortExprList
-            if type(filter_tab) in (str, unicode) and 'order' in filter_tab.replace('ORDER', 'order').replace('Order', 'order'):
+            if isinstance(filter_tab, str) and 'order' in filter_tab.replace('ORDER', 'order').replace('Order', 'order'):
                 self._sortExprList = []
                 
             self.FilterFields(filter_tab)
@@ -1663,7 +1663,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             MsgBox(None, u'Поле %s в класс данных %s не определенно' % (fldName, self.name))
             return False
         
-        if type(val) in (str, unicode):
+        if isinstance(val, str):
             conv_val = ' + val + '
         else:
             conv_val = val
@@ -1708,7 +1708,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             self.filter = filter_tab
             
             #   Если фильтр является SQL выражением, то вызываем стандартный метод фильтрации
-            if type(filter_tab) in (str, unicode):
+            if isinstance(filter_tab, str):
                 self.FilterData(filter_tab, bReplNames=bReplNames)
                 
             #   Если фильтр является словарем, то создаем SQL выражение
@@ -1720,7 +1720,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 return True
 
         except:
-            log.error(u'Filter ERROR in filter:%s' % filter_tab)
+            log.fatal(u'Ошибка фильтрации. Фильтр %s' % filter_tab)
         
         return False
         
@@ -2120,13 +2120,13 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             if id in self.bufferPageDict:
                 dict = self.bufferPageDict[id]
             elif len(self.bufferPageDict.keys()) > 0:
-                log.info(u'DEL row from indexBuff id=%s' % id)
+                # log.info(u'DEL row from indexBuff id=%s' % id)
                 self._del_indexBuff[cursor] = id
         except KeyError:
-            log.error(u'KEY ERROR in getDict row=%d, id=%d' % (cursor, id))
+            log.fatal(u'Ошибка ключа в getDict row=%d, id=%d' % (cursor, id))
             dict = None
         except:
-            log.error(u'ERROR in getDict row=%d, autocomit=' % cursor)
+            log.fatal(u'Ошибка в getDict row=%d, autocomit=' % cursor)
             dict = None
             
         return dict
@@ -2180,7 +2180,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 if self._isSortDESC:
                     self.indexBuff.reverse()
         except:
-            log.error(u'Error in buffIndexes filter=%s' % self._filterQuery)
+            log.fatal(u'Ошибка в buffIndexes filter=%s' % self._filterQuery)
             self._bInvalidFilter = True
             self.indexBuff = []
             self.oldMaxId = - 1
@@ -2375,7 +2375,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             return prop
         
         except:
-            log.error(u'Error in getPropList SQL:%s' % s)
+            log.fatal(u'Ошибка в getPropList SQL: %s' % s)
             
     def setParentIdDict(self, prnts):
         """
@@ -2457,12 +2457,12 @@ def getDataset(className, subsys=None, logType=0, evalSpace=None):
     try:
         subsys_path = resource.getSubsysPath(subsys)
         res = resource.icGetRes(className, 'tab', subsys_path)
-        dataset = icSQLObjDataSet(-1, res, logType=logType, evalSpace=evalSpace)
+        dataset = icSQLAlchemyDataSet(-1, res, logType=logType, evalSpace=evalSpace)
         
         evalSpace['self'] = dataset
         dataset.eval_attr('init_expr')
     except:
-        log.error(u'Ошибка при создании объекта данных \'%s\' подсистемы \'%s\'' % (className, subsys_path))
+        log.fatal(u'Ошибка при создании объекта данных \'%s\' подсистемы \'%s\'' % (className, subsys_path))
         
     return dataset
 

@@ -343,17 +343,17 @@ class icWorkSQLStorage(icWorkStorageInterface):
             requisite_dict = doc_table.getDefaultRecDict()
             requisite_dict.update(Obj_.getRequisiteData())
             try:
-                log.info(u'WorkStorage SAVE RECORD %s' % requisite_dict.keys())
+                log.info(u'WorkStorage Сохранение записи %s' % str(requisite_dict.keys()))
             except UnicodeDecodeError:
-                log.warning(u'UnicodeDecodeError. WorkStorage SAVE RECORD')
+                log.warning(u'UnicodeDecodeError. WorkStorage Сохранение записи...')
 
             save_rec = dict([(str(fld_name), value) for fld_name, value in requisite_dict.items() if not isinstance(value, list)])
             if not doc_table.count(doc_table.c.uuid == Obj_.getUUID()):
                 # Добавить
                 try:
-                    log.info(u'WorkStorage ADD RECORD %s' % save_rec.keys())
+                    log.info(u'WorkStorage Добавление записи %s' % str(save_rec.keys()))
                 except UnicodeDecodeError:
-                    log.warning(u'UnicodeDecodeError. WorkStorage ADD RECORD')
+                    log.warning(u'UnicodeDecodeError. WorkStorage Добавление записи...')
 
                 doc_table.add_rec_transact(rec=save_rec,
                                            transaction=transaction)
