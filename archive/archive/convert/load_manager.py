@@ -19,7 +19,7 @@ from ic.dlg import ic_dlg
 import ic
 
 # Version
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 0, 1, 2)
 
 # Functions
 
@@ -173,5 +173,6 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         """
         self._load_doc(doc_dbf_filename, sFileType)
 
+        # log.debug(u'Обновление списка документов...%s' % u'ДА' if self.pack_scan_panel else u'НЕТ')
         if self.pack_scan_panel:
-            self.pack_scan_panel.refreshDocList()
+            self.pack_scan_panel.refreshDocList(True)
