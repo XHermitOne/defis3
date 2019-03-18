@@ -8,6 +8,7 @@
 # --- Подключение библиотек ---
 import os
 import os.path
+import tempfile
 import shutil
 import compileall
 import wx.adv
@@ -455,7 +456,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
         """
         try:
             prj_name = self.getPrjName()
-            temp_dir = os.path.join(os.path.dirname(os.tmpnam()), prj_name)
+            temp_dir = os.path.join(os.path.dirname(tempfile.mktemp()), prj_name)
             if os.path.exists(temp_dir):
                 log.info(u'INSTALL WIZARD DELETE TEMP DIR <%s>' % temp_dir)
                 shutil.rmtree(temp_dir)

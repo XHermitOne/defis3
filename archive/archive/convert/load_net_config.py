@@ -14,9 +14,9 @@ SMB_SRC_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz
 ARCHIVE_DIRNAME = 'ARHIV'
 
 # Результирующая папка для загрузки
-DEST_PATH = '/mnt/defis3/archive/db'
+DEST_PATH = '/mnt/defis/defis3/archive/db'
 
 # Расширение результирующего файла, после загрузки
 DEST_FILE_EXT = '.DBF'
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)

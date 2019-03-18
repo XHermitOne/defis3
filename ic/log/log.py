@@ -53,11 +53,12 @@ import sys
 import logging
 import os
 import os.path
+import tempfile
 import stat
 import traceback
 import locale
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Кодировка коммандной оболочки по умолчанию
 DEFAULT_ENCODING = sys.stdout.encoding if sys.platform.startswith('win') else locale.getpreferredencoding()
@@ -155,7 +156,7 @@ def init(mConfig=None, sLogFileName=None):
         return
     
     if sLogFileName is None:
-        sLogFileName = CONFIG.LOG_FILENAME if hasattr(CONFIG, 'LOG_FILENAME') else os.tmpnam()
+        sLogFileName = CONFIG.LOG_FILENAME if hasattr(CONFIG, 'LOG_FILENAME') else tempfile.mktemp()
         
     # Создать папку логов если она отсутствует
     log_dirname = os.path.normpath(os.path.dirname(sLogFileName))

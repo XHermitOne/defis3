@@ -3,10 +3,18 @@
 
 """ 
 Функции работы с файлами на расшаренных ресурсах SAMBA.
+
+URL SMB ресурса задается в следующем формате:
+smb://[[<domain>;]<username>[:<password>]@]<server>[:<port>][/[<share>[/[<path>]]]
+
+Например:
+smb://workgroup;user:password@server/share/folder/file.txt
 """
 
 import os
 import os.path
+import tempfile
+import fnmatch
 import shutil
 import smbclient
 import urllib.parse
@@ -14,7 +22,7 @@ import urllib.parse
 from ic.log import log
 from ic.utils import ic_file
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 2)
 
 DEFAULT_WORKGROUP = 'WORKGROUP'
 
@@ -36,7 +44,20 @@ def smb_url_path_split(smb_url):
     return path_list
 
 
-def smb_download_file(download_urls=None, filename=None, out_path=None, re_write=True):
+def get_smb_path_from_url(url):
+    """
+    Определить путь к SMB ресурсу по URL.
+    @param url: URL samba ресурса.
+    @return: Путь к samba ресурсу выбранный из URL.
+    """
+    url = urllib.parse.urlparse(url)
+    path_list = smb_url_path_split(url)
+    path_list = path_list[2:]
+    smb_path = os.path.join(*path_list)
+    return smb_path
+
+
+def smb_download_file(download_urls=None, filename=None, out_path=None, re_write=True, smb=None):
     """
     Найти и загрузить файл.
     @param download_urls: Список путей поиска файла.
@@ -50,6 +71,7 @@ def smb_download_file(download_urls=None, filename=None, out_path=None, re_write
         '/2017/FDOC/RC001.DCM'
     @param out_path: Локальный путь для сохранения файла.
     @param re_write: Перезаписать локальный файл, если он уже существует?
+    @param smb: Объект samba ресурса в случае уже открытого ресурса.
     @return: True - Произошла загрузка, False - ничего не загружено.
     """
     if download_urls is None:
@@ -63,28 +85,15 @@ def smb_download_file(download_urls=None, filename=None, out_path=None, re_write
         out_path = ic_file.getPrjProfilePath()
 
     result = False
-    smb = None
+    do_close = False
     for download_url in download_urls:
         try:
-            url = urllib.parse.urlparse(download_url)
-            download_server = url.hostname
-            download_share = url.path.split(os.path.sep)[1]
-            download_username = url.username
-            download_password = url.password
-
-            smb = smbclient.SambaClient(server=download_server,
-                                        share=download_share,
-                                        username=download_username,
-                                        password=download_password,
-                                        domain=DEFAULT_WORKGROUP)
-
-            log.info(u'Установлена связь с SMB ресурсом')
-            log.info(u'\tсервер <%s>' % download_server)
-            log.info(u'\tпапка <%s>' % download_share)
-            log.info(u'\tпользователь <%s>' % download_username)
-            log.info(u'\tURL <%s>' % download_url)
+            if smb is None:
+                smb = smb_connect(download_url)
+                do_close = True
 
             # Получить имена загружаемых файлов
+            url = urllib.parse.urlparse(download_url)
             path_list = smb_url_path_split(url)
             if filename is None:
                 filename = path_list[-1]
@@ -130,19 +139,19 @@ def smb_download_file(download_urls=None, filename=None, out_path=None, re_write
                 log.fatal(u'SMB. Ошибка загрузки SMB файла <%s>' % download_file)
                 result = False
 
-            smb.close()
-            smb = None
+            if do_close:
+                smb_disconnect(smb)
             break
         except:
-            if smb:
-                smb.close()
+            if do_close:
+                smb_disconnect(smb)
             log.fatal(u'Ошибка загрузки файла <%s> из SMB ресурса <%s>' % (filename, download_url))
             result = False
 
     return result
 
 
-def smb_download_file_rename(download_urls=None, filename=None, dst_filename=None, re_write=True):
+def smb_download_file_rename(download_urls=None, filename=None, dst_filename=None, re_write=True, smb=None):
     """
     Найти и загрузить файл с переименованием.
     @param download_urls: Список путей поиска файла.
@@ -156,11 +165,12 @@ def smb_download_file_rename(download_urls=None, filename=None, dst_filename=Non
         '/2017/FDOC/RC001.DCM'
     @param dst_filename: Новое полное наименование для сохранения файла.
     @param re_write: Перезаписать локальный файл, если он уже существует?
+    @param smb: Объект samba ресурса в случае уже открытого ресурса.
     @return: True - Произошла загрузка, False - ничего не загружено.
     """
     # Сначала просто загрузим файл
-    tmp_path = os.tmpnam()
-    result = smb_download_file(download_urls, filename, tmp_path, re_write)
+    tmp_path = tempfile.mktemp()
+    result = smb_download_file(download_urls, filename, tmp_path, re_write, smb)
 
     if result:
         new_filename = None
@@ -178,3 +188,95 @@ def smb_download_file_rename(download_urls=None, filename=None, dst_filename=Non
             log.fatal(u'Ошибка переименования файла <%s> -> <%s>' % (new_filename, dst_filename))
 
     return False
+
+
+def smb_connect(url):
+    """
+    Соединиться с samba ресурсом.
+    @param url: URL samba ресурса.
+    @return: Объект SAMBA ресурса или None в случае ошибки.
+    """
+    smb = None
+    try:
+        smb_url = urllib.parse.urlparse(url)
+        download_server = smb_url.hostname
+        download_share = smb_url.path.split(os.path.sep)[1]
+        download_username = smb_url.username
+        download_password = smb_url.password
+
+        smb = smbclient.SambaClient(server=download_server,
+                                    share=download_share,
+                                    username=download_username,
+                                    password=download_password,
+                                    domain=DEFAULT_WORKGROUP)
+
+        log.info(u'Установлена связь с SMB ресурсом')
+        log.info(u'\tсервер <%s>' % download_server)
+        log.info(u'\tпапка <%s>' % download_share)
+        log.info(u'\tпользователь <%s>' % download_username)
+        log.info(u'\tURL <%s>' % str(url))
+    except:
+        log.fatal(u'Ошибка соединения с samba ресурсом. URL <%s>' % str(url))
+    return smb
+
+
+def smb_disconnect(smb):
+    """
+    Закрыть соединение с samba ресурсом.
+    @param smb: Объект SAMBA ресурса.
+    @return: True/False.
+    """
+    try:
+        if smb:
+            log.info(u'Закрыто соединение с SMB ресурсом')
+            smb.close()
+            return True
+    except:
+        log.fatal(u'Ошибка закрытия соединения с samba ресурсом')
+    return False
+
+
+def smb_listdir_filename(url=None, filename_pattern=None, smb=None):
+    """
+    Список файлов SMB ресурса.
+    @param url: URL samba ресурса.
+    @param filename_pattern: Выбрать имена файлов по указанному шаблону.
+        Шаблон файлов указывается как *.DBF например.
+    @param smb: Объект samba ресурса в случае уже открытого ресурса.
+    @return: Список имен файлов samba ресурса.
+        Функция возвращает только имена файлов.
+        Имена папок не включаются в список.
+    """
+    filenames = list()
+
+    if url is None:
+        log.warning(u'Не указан URL samba ресурса для определения списка файлов')
+        return filenames
+
+    smb_path = get_smb_path_from_url(url)
+    # log.debug(u'Папка SMB ресурса <%s>' % smb_path)
+    try:
+        if smb is not None:
+            # Ресурс уже открыт
+            filenames = smb.listdir(smb_path)
+        else:
+            try:
+                smb = smb_connect(url)
+                filenames = smb.listdir(smb_path)
+                smb_disconnect(smb)
+            except:
+                smb_disconnect(smb)
+                log.fatal(u'Ошибка получения списка файлов samba ресурса. URL <%s>' % url)
+    except:
+        log.fatal(u'Ошибка получения списка файлов samba ресурса')
+
+    # ВНИМАНИЕ! В библиотеке smbclient возможна ошибка
+    # с получением корректных имен файлов:
+    # В конец имени файла добавляется '                           N'
+    # Здесь пытаемся нивелировать эту ошибку
+    filenames = [filename.strip('                           N').strip() for filename in filenames]
+    log.debug(u'SMB. Список файлов %s' % str(filenames))
+    if filename_pattern:
+        filenames = [filename for filename in filenames if fnmatch.fnmatch(filename, filename_pattern)]
+        log.debug(u'SMB. Отфильтрованные файлы %s' % str(filenames))
+    return filenames

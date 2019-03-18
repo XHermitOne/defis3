@@ -9,6 +9,7 @@
 import wx
 import os
 import os.path
+import tempfile
 import shutil   # Для реализации высокоуровневых функций работы с файлами
 import sys
 import time
@@ -20,7 +21,7 @@ from ic.dlg import ic_dlg
 
 import ic.config
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 _ = wx.GetTranslation
 
@@ -627,7 +628,7 @@ def getTempFileName(Prefix_=None):
     """
     Генерируемое имя временного файла
     """
-    return os.tempnam(getTempDir(), Prefix_)
+    return tempfile.mkdtemp(getTempDir(), Prefix_)
 
 
 def getHomePath():
