@@ -8,7 +8,7 @@ Description     <Resource module>
 """
 
 import os
-import os.path 
+import os.path
 import sqlalchemy
 
 import ic
@@ -32,7 +32,7 @@ from ic.interfaces import icmanagerinterface
 ### RESOURCE_MODULE_IMPORTS
 
 #   Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
@@ -85,19 +85,19 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
             # Нажата отмена
             event.Skip()
             return
-        
+
         last_day = datefunc.get_last_day_of_month(year=first_day_of_month.year,
                                                   month=first_day_of_month.month)
 
         # Удалить файлы
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db', 
+        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db',
                                 str(first_day_of_month.year))
-        
+
         str_month = '%X' % first_day_of_month.month
         del_path = os.path.join(dst_path, 'FDOC')
         file_masks = ('R0*.DBF', 'R0*.DCM',
                       'R%s*.DBF' % str_month, 'R%s*.DCM' % str_month,
-                      'TI%s*.DBF' % str_month, 'TI%s*.DCM' % str_month, 
+                      'TI%s*.DBF' % str_month, 'TI%s*.DCM' % str_month,
                       'TO%s*.DBF' % str_month, 'TO%s*.DCM' % str_month)
         ic_file.delAllFilesFilter(del_path, *file_masks)
 
@@ -105,18 +105,18 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
         file_masks = ('SB%s111.DBF' % str_month, 'SB%s111.DCB' % str_month,
                       'SB%s111.DSB' % str_month, 'SB%s111S.DBF' % str_month)
         ic_file.delAllFilesFilter(del_path, *file_masks)
-        
+
         # Удалить записи из таблицы пакетной обработки
         doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
-        
+
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_of_month), str(last_day))
         log.debug(u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_of_month), str(last_day)))
-        tab.del_where(tab.c.doc_date.between(first_day_of_month, last_day))        
-        
+        tab.del_where(tab.c.doc_date.between(first_day_of_month, last_day))
+
         ic_dlg.icMsgBox(u'УДАЛЕНИЕ', msg+u' успешно завершено')
         event.Skip()
-        
+
     def onClearZtrDocsMenuItemSelected(self, event):
         """
         ЗАТРАТЫ. Удаление данных пакетной обработки за год.
@@ -126,11 +126,11 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
             # Нажата отмена
             event.Skip()
             return
-        
+
         # Удалить файлы
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db', 
+        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db',
                                 str(clear_year.year))
-        
+
         del_path = os.path.join(dst_path, 'FDOC')
         file_masks = ('BS0Z76.DBF', 'BS0Z76.DBS', 'BS7606.DBF', 'BS7606.DBS')
         ic_file.delAllFilesFilter(del_path, *file_masks)
@@ -138,7 +138,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
         # Удалить записи из таблицы пакетной обработки
         doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
-        
+
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,
                                                          month=1)
         last_day_year = datefunc.get_last_day_of_month(year=clear_year.year,
@@ -146,11 +146,11 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
 
         tab.del_where(sqlalchemy.and_(tab.c.doc_date.between(first_day_year, last_day_year),
                                       tab.c.n_doc.ilike(u'ЗТР.%')))
-        
+
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
         ic_dlg.icMsgBox(u'УДАЛЕНИЕ', msg+u' успешно завершено')
         event.Skip()
-        
+
     def onClearMtDocsMenuItemSelected(self, event):
         """
         МАТЕРИАЛЫ. Удаление данных пакетной обработки за год.
@@ -160,13 +160,13 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
             # Нажата отмена
             event.Skip()
             return
-        
+
         # Удалить файлы
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db', 
+        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db',
                                 str(clear_year.year))
-        
+
         del_path = os.path.join(dst_path, 'FDOC')
-        file_masks = ('MI*.DBF', 'MI*.DCM', 'MI*.DCS', 
+        file_masks = ('MI*.DBF', 'MI*.DCM', 'MI*.DCS',
                       'MO*.DBF', 'MO*.DCM', 'MO*.DCS',
                       'BS6068.DBF', 'BS6068.DBS',)
         ic_file.delAllFilesFilter(del_path, *file_masks)
@@ -174,7 +174,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
         # Удалить записи из таблицы пакетной обработки
         doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
-        
+
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,
                                                          month=1)
         last_day_year = datefunc.get_last_day_of_month(year=clear_year.year,
@@ -182,7 +182,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
 
         tab.del_where(sqlalchemy.and_(tab.c.doc_date.between(first_day_year, last_day_year),
                                       tab.c.n_doc.ilike(u'МТ.%')))
-        
+
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
         ic_dlg.icMsgBox(u'УДАЛЕНИЕ', msg+u' успешно завершено')
         event.Skip()
@@ -196,13 +196,13 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
             # Нажата отмена
             event.Skip()
             return
-        
+
         # Удалить файлы
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db', 
+        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db',
                                 str(clear_year.year))
-        
+
         del_path = os.path.join(dst_path, 'FDOC')
-        file_masks = ('OSN*.DBF', 'OSN*.DCO', 
+        file_masks = ('OSN*.DBF', 'OSN*.DCO',
                       'ROSN*.DBF', 'ROSN*.DCM',
                       'XS*.DBF', 'XS*.DBS',
                       'PLO153.DBF', 'PLO153.PLD')
@@ -211,7 +211,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
         # Удалить записи из таблицы пакетной обработки
         doc = ic.metadata.archive.mtd.scan_document_pack.create()
         tab = doc.getTable()
-        
+
         first_day_year = datefunc.get_first_day_of_month(year=clear_year.year,
                                                          month=1)
         last_day_year = datefunc.get_last_day_of_month(year=clear_year.year,
@@ -219,10 +219,21 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
 
         tab.del_where(sqlalchemy.and_(tab.c.doc_date.between(first_day_year, last_day_year),
                                       tab.c.n_doc.ilike(u'ОС.%')))
-        
+
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
         ic_dlg.icMsgBox(u'УДАЛЕНИЕ', msg+u' успешно завершено')
         event.Skip()
+
+    def onPackDocMenuItemSelected(self, event):
+        """
+        Пакетная обработка отсканированных документов.
+        """
+        from archive.forms import pack_scan_doc_panel
+        pack_scan_doc_panel.open_pack_scan_doc_page()
+        # obj = ic.metadata.archive.mtd.scan_doc_pack.create()
+        # obj.Browse(ParentForm_=ic.getMainWin())
+        event.Skip()
+
 
     ###END EVENT BLOCK
 

@@ -21,8 +21,8 @@ try:
     from . import pyDBF
     is_pyd_import = True
 except ImportError:
-    import dbfpy3.dbf
     is_pyd_import = False
+
 
 # Константы
 # Коды ошибок:
@@ -78,7 +78,7 @@ RIGHT_ALIGN = 0
 
 DEFAULT_DBF_ENCODING = 'cp866'
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 2, 1)
 
 
 class icDBFFilePrototype:
@@ -868,6 +868,12 @@ class icDBFFileDBFPY(icDBFFilePrototype):
         if DBFFileName_:
             self._dbf_file_name = DBFFileName_
         if self._dbf_file_name:
+            try:
+                import dbfpy3.dbf
+            except ImportError:
+                log.error(u'Ошибка импорта dbfpy3.dbf')
+                return False
+
             self._dbf = dbfpy3.dbf.Dbf(DBFFileName_, new=ReCreate_)
             # Добавить поля
             fields = [(fld['name'].upper(), fld['type'], fld['len'], fld['decimal']) for fld in DBFStruct_ ]
@@ -887,6 +893,12 @@ class icDBFFileDBFPY(icDBFFilePrototype):
         if DBFFileName_:
             self._dbf_file_name = DBFFileName_
         if self._dbf_file_name:
+            try:
+                import dbfpy3.dbf
+            except ImportError:
+                log.error(u'Ошибка импорта dbfpy3.dbf')
+                return False
+
             self._dbf = dbfpy3.dbf.Dbf(self._dbf_file_name)
             self._cur_rec_no = 0
             return True
