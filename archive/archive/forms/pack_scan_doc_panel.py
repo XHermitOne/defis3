@@ -25,10 +25,11 @@ from . import new_doc_panel
 # используется менеджер форм <form_manager.icFormManager>
 from ic.engine import form_manager
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_DB_DATE_FMT = '%Y-%m-%d'
 DEFAULT_DATE_FMT = '%d.%m.%Y'
+NONE_DATE = '00.00.0000'
 
 
 class icQuickEntryPackScanPanel(edit_doc_form_proto.icQuickEntryPackScanPanelProto):
@@ -63,8 +64,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         # Инициализация навигатора документов
         self.doc_navigator = ic.metadata.archive.mtd.pack_scan_doc_form_manager.create()
         self.doc_navigator.setDocListCtrlColumns('nn', 'n_scan_pages', lambda rec: '+' if rec['is_duplex'] else '',
-                                                 'n_doc', lambda rec: rec['doc_date'].strftime(DEFAULT_DATE_FMT),
-                                                 'n_obj', lambda rec: rec['obj_date'].strftime(DEFAULT_DATE_FMT),
+                                                 'n_doc', lambda rec: rec['doc_date'].strftime(DEFAULT_DATE_FMT) if rec['doc_date'] else NONE_DATE,
+                                                 'n_obj', lambda rec: rec['obj_date'].strftime(DEFAULT_DATE_FMT) if rec['obj_date'] else NONE_DATE,
                                                  'doc_name', 'c_agent')
         self.doc_navigator.setSlaveListCtrl(self.docs_listCtrl)
 
@@ -297,6 +298,14 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         self.page_count_staticText.SetLabel(str(self.getScanPageCount()))
 
         event.Skip()
+
+    def onToggleDocItem(self, event):
+        """
+        Обработчик вкл./выкл. документа в обработку.
+        """
+        # Количество документов и страниц в обработке
+        self.doc_count_staticText.SetLabel(str(self.getScanDocCount()))
+        self.page_count_staticText.SetLabel(str(self.getScanPageCount()))
 
     def _viewDoc(self, document):
         """

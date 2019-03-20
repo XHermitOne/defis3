@@ -391,7 +391,7 @@
             <property name="minimum_size"></property>
             <property name="name">yearDialogProto</property>
             <property name="pos"></property>
-            <property name="size">351,110</property>
+            <property name="size">351,130</property>
             <property name="style">wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP</property>
             <property name="subclass"></property>
             <property name="title">Выбор года</property>

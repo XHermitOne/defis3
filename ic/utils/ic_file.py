@@ -21,7 +21,7 @@ from ic.dlg import ic_dlg
 
 import ic.config
 
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 2, 1)
 
 _ = wx.GetTranslation
 
@@ -710,3 +710,14 @@ def getRootProjectDir():
     prj_dir = getProjectDir()
     return os.path.dirname(prj_dir)
 
+def getHomeDir():
+    """
+    Папка HOME.
+    """
+    if sys.platform[:3].lower() == 'win':
+        home_dir = os.environ['HOMEDRIVE']+os.environ['HOMEPATH']
+        home_dir = home_dir.replace('\\', '/')
+    else:
+        home_dir = os.environ['HOME']
+    return home_dir
+    

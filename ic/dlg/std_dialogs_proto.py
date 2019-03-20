@@ -69,7 +69,7 @@ class calendarDialogProto ( wx.Dialog ):
 class yearDialogProto ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор года", pos = wx.DefaultPosition, size = wx.Size( 351,110 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор года", pos = wx.DefaultPosition, size = wx.Size( 351,130 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
 		
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
