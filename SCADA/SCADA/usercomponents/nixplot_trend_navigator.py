@@ -140,3 +140,4 @@ class icNixplotTrendNavigator(icwidget.icWidget,
         if not pens:
             log.warning(u'Не определены перья тренда <%s>' % self.name)
         return pens
+

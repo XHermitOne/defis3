@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 from . import nixplot_trend_proto
 
 ###########################################################################
@@ -31,7 +31,7 @@ class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
 		bSizer2.Add( self.print_bpButton, 0, wx.ALL, 5 )
 		
 		
-		bSizer2.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer2.AddSpacer( 5 )
 		
 		self.legend_bpButton = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( wx.ART_INFORMATION, wx.ART_TOOLBAR ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		bSizer2.Add( self.legend_bpButton, 0, wx.ALL, 5 )
@@ -60,7 +60,7 @@ class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
 		bSizer7.Add( self.up_bpButton, 0, wx.ALL, 5 )
 		
 		
-		bSizer7.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer7.AddSpacer( 5 )
 		
 		self.zoom_in_bpButton = wx.BitmapButton( self.trend_panel, wx.ID_ANY, wx.ArtProvider.GetBitmap( u"gtk-zoom-in", wx.ART_TOOLBAR ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		bSizer7.Add( self.zoom_in_bpButton, 0, wx.ALL, 5 )
@@ -69,7 +69,7 @@ class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
 		bSizer7.Add( self.zoom_out_bpButton, 0, wx.ALL, 5 )
 		
 		
-		bSizer7.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer7.AddSpacer( 5 )
 		
 		self.down_bpButton = wx.BitmapButton( self.trend_panel, wx.ID_ANY, wx.ArtProvider.GetBitmap( u"gtk-go-down", wx.ART_TOOLBAR ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		bSizer7.Add( self.down_bpButton, 0, wx.ALL, 5 )
@@ -107,7 +107,7 @@ class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
 		bSizer4.Add( self.prev_bpButton, 0, wx.ALL, 5 )
 		
 		
-		bSizer4.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer4.AddSpacer( 5 )
 		
 		self.time_zoom_out_bpButton = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( u"gtk-zoom-out", wx.ART_TOOLBAR ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		bSizer4.Add( self.time_zoom_out_bpButton, 0, wx.ALL, 5 )
@@ -116,7 +116,7 @@ class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
 		bSizer4.Add( self.time_zoom_in_bpButton, 0, wx.ALL, 5 )
 		
 		
-		bSizer4.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer4.AddSpacer( 5 )
 		
 		self.next_bpButton = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( u"gtk-go-forward", wx.ART_TOOLBAR ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		bSizer4.Add( self.next_bpButton, 0, wx.ALL, 5 )
@@ -136,6 +136,8 @@ class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
 		self.print_bpButton.Bind( wx.EVT_BUTTON, self.onPrintButtonClick )
 		self.legend_bpButton.Bind( wx.EVT_BUTTON, self.onLegendButtonClick )
 		self.settings_bpButton.Bind( wx.EVT_BUTTON, self.onSettingsButtonClick )
+		self.trend.Bind( wx.EVT_PAINT, self.onTrendPain )
+		self.trend.Bind( wx.EVT_SIZE, self.onTrendSize )
 		self.up_bpButton.Bind( wx.EVT_BUTTON, self.onUpButtonClick )
 		self.zoom_in_bpButton.Bind( wx.EVT_BUTTON, self.onZoomInButtonClick )
 		self.zoom_out_bpButton.Bind( wx.EVT_BUTTON, self.onZoomOutButtonClick )
@@ -162,6 +164,12 @@ class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
 		event.Skip()
 	
 	def onSettingsButtonClick( self, event ):
+		event.Skip()
+	
+	def onTrendPain( self, event ):
+		event.Skip()
+	
+	def onTrendSize( self, event ):
 		event.Skip()
 	
 	def onUpButtonClick( self, event ):

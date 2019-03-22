@@ -199,7 +199,7 @@ class icMPLTrendProto(wx.Panel):
         # Отображение подписи временнй шкалы в удобном виде
         self.figure.autofmt_xdate()
 
-    def _draw_empty(self):
+    def draw_empty(self):
         """
         Отрисовка пустого тренда.
         """
@@ -256,10 +256,10 @@ class icMPLTrendProto(wx.Panel):
 
             if not not_empty:
                 # Если тренд пустой, то отрисовать пустой тренд
-                self._draw_empty()
+                self.draw_empty()
         else:
             # Если перья не определены то просто отобразить тренд
-            self._draw_empty()
+            self.draw_empty()
 
     def getPens(self):
         """

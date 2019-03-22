@@ -10,6 +10,7 @@
 import os.path
 import wx
 import datetime
+import uuid
 
 from ic.log import log
 from ic.utils import ic_file
@@ -62,10 +63,16 @@ class icNixplotTrendProto(wx.Panel):
         """
         wx.Panel.__init__(self, *args, **kwargs)
 
+        # ВНИМАНИЕ! У каждого тренда есть свой собственный идентификатор
+        # для того чтобы не пересекались отображения с другими трендами
+        self.__trend_uuid = str(uuid.uuid4())
+        # Имя файла кадра
+        self.__frame_filename = None
+
         self.canvas = wx.StaticBitmap(self)
 
         self.sizer = wx.BoxSizer(wx.VERTICAL)
-        self.sizer.Add(self.canvas, 1, wx.LEFT | wx.TOP | wx.GROW)
+        self.sizer.Add(self.canvas, 1, wx.LEFT | wx.TOP | wx.GROW | wx.EXPAND)
         self.SetSizer(self.sizer)
         self.Fit()
 
@@ -78,6 +85,35 @@ class icNixplotTrendProto(wx.Panel):
                                                        datetime.datetime.min.time())
 
         self.setDefaults()
+
+    def __del__(self):
+        """
+        Деструктор класса.
+        """
+        # Необходимо удалять за собой кадры
+        frame_filename = self.getFrameFileName()
+        if os.path.exists(frame_filename):
+            try:
+                os.remove(frame_filename)
+            except:
+                log.fatal(u'Ошибка удаления файла кадра тренда')
+
+    def getTrendUUID(self):
+        """
+        Идентификатор тренда-объекта.
+        ВНИМАНИЕ! У каждого тренда есть свой собственный идентификатор
+        для того чтобы не пересекались отображения с другими трендами
+        """
+        return self.__trend_uuid
+
+    def getFrameFileName(self):
+        """
+        Имя файла кадра.
+        """
+        if self.__frame_filename is None:
+            obj_uuid = self.getTrendUUID()
+            self.__frame_filename = os.path.join(DEFAULT_NIXPLOT_FRAME_PATH, obj_uuid + '.png')
+        return self.__frame_filename
 
     def _convertDate(self, dt):
         """
@@ -145,7 +181,7 @@ class icNixplotTrendProto(wx.Panel):
                         'datetime': 'DT',
                         'exponent': 'E'}
 
-    def _draw_frame(self, size=(0, 0), x_format='time', y_format='numeric', scene=None,
+    def draw_frame(self, size=(0, 0), x_format='time', y_format='numeric', scene=None,
                     points=None):
         """
         Отрисовка кадра данных тренда.
@@ -157,8 +193,7 @@ class icNixplotTrendProto(wx.Panel):
         @return: Имя файла отрисованного кадра или None в случае ошибки.
         """
         cmd = '%s --PNG ' % NIXPLOT_FILENAME
-        obj_uuid = self.GetUUID() if hasattr(self, 'GetUUID') else 'frame'
-        frame_filename = os.path.join(DEFAULT_NIXPLOT_FRAME_PATH, obj_uuid + '.png')
+        frame_filename = self.getFrameFileName()
 
         if os.path.exists(frame_filename):
             try:
@@ -206,11 +241,15 @@ class icNixplotTrendProto(wx.Panel):
             log.warning(u'Файл кадра <%s> Nixplot тренда не найден' % frame_filename)
         return None
 
-    def _draw_empty(self):
+    def draw_empty(self, size=None):
         """
         Отрисовка пустого тренда.
         """
-        frame_filename = self._draw_frame(size=tuple(self.canvas.GetSize()))
+        if size is None:
+            # size = self.canvas.GetSize()
+            size = self.GetSize()
+        log.debug(u'Отрисовка пустого тренда. Размер %s' % str(size))
+        frame_filename = self.draw_frame(size=tuple(size))
         if frame_filename:
             bmp = ic_bmp.createBitmap(frame_filename)
             self.canvas.SetBitmap(bmp)
@@ -229,10 +268,11 @@ class icNixplotTrendProto(wx.Panel):
 
         return list()
 
-    def draw(self, redraw=True):
+    def draw(self, redraw=True, size=None):
         """
         Основной метод отрисовки тренда.
         @param redraw: Принудительная прорисовка.
+        @param size: Размер.
         """
         pens = self.getPens()
 
@@ -263,10 +303,10 @@ class icNixplotTrendProto(wx.Panel):
 
             if not not_empty:
                 # Если тренд пустой, то отрисовать пустой тренд
-                self._draw_empty()
+                self.draw_empty(size=size)
         else:
             # Если перья не определены то просто отобразить тренд
-            self._draw_empty()
+            self.draw_empty(size=size)
 
     def getPens(self):
         """

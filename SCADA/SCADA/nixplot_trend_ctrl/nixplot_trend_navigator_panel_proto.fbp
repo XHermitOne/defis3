@@ -648,7 +648,7 @@
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>
                                         <event name="OnUpdateUI"></event>
-                                        <object class="wxBoxSizer" expanded="0">
+                                        <object class="wxBoxSizer" expanded="1">
                                             <property name="minimum_size"></property>
                                             <property name="name">bSizer5</property>
                                             <property name="orient">wxHORIZONTAL</property>
@@ -729,12 +729,12 @@
                                                     <event name="OnMotion"></event>
                                                     <event name="OnMouseEvents"></event>
                                                     <event name="OnMouseWheel"></event>
-                                                    <event name="OnPaint"></event>
+                                                    <event name="OnPaint">onTrendPain</event>
                                                     <event name="OnRightDClick"></event>
                                                     <event name="OnRightDown"></event>
                                                     <event name="OnRightUp"></event>
                                                     <event name="OnSetFocus"></event>
-                                                    <event name="OnSize"></event>
+                                                    <event name="OnSize">onTrendSize</event>
                                                     <event name="OnUpdateUI"></event>
                                                 </object>
                                             </object>
