@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Компонент временного графика. Тренд.
-Компонент реализован на утилите nixplot.
+Панель навигации тренда на базе утилиты nixplot.
 """
 
 import wx
@@ -17,6 +16,7 @@ from ic.utils import util
 from ic.bitmap import ic_bmp
 
 from SCADA.nixplot_trend_ctrl import nixplot_trend_proto
+from SCADA.nixplot_trend_ctrl import nixplot_trend_navigator_proto
 
 
 # --- Спецификация ---
@@ -28,13 +28,13 @@ DEFAULT_FORMATS = (nixplot_trend_proto.DEFAULT_TIME_FMT,
 ic_class_type = icDefInf._icUserType
 
 #   Имя класса
-ic_class_name = 'icNixplotTrend'
+ic_class_name = 'icNixplotTrendNavigator'
 
 #   Описание стилей компонента
 ic_class_styles = 0
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'type': 'NixplotTrend',
+ic_class_spc = {'type': 'NixplotTrendNavigator',
                 'name': 'default',
                 'child': [],
                 'activate': True,
@@ -46,13 +46,13 @@ ic_class_spc = {'type': 'NixplotTrend',
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
                                                             ],
                                    },
-                '__parent__': nixplot_trend_proto.SPC_IC_NIXPLOT_TREND,
+                '__parent__': nixplot_trend_navigator_proto.SPC_IC_NIXPLOT_TREND_NAVIGATOR,
                 }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('diagramm.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('diagramm.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('chart_curve_edit.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('chart_curve_edit.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
@@ -69,8 +69,8 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-class icNixplotTrend(icwidget.icWidget,
-                     nixplot_trend_proto.icNixplotTrendProto):
+class icNixplotTrendNavigator(icwidget.icWidget,
+                              nixplot_trend_navigator_proto.icNixplotTrendNavigatorProto):
     """
     Компонент временного графика. Тренд.
     Компонент реализован на утилите nixplot.
@@ -118,7 +118,7 @@ class icNixplotTrend(icwidget.icWidget,
         #   !!! Конструктор наследуемого класса !!!
         #   Необходимо вставить реальные параметры конструкора.
         #   На этапе генерации их не всегда можно определить.
-        nixplot_trend_proto.icNixplotTrendProto.__init__(self, parent)
+        nixplot_trend_navigator_proto.icNixplotTrendNavigatorProto.__init__(self, parent)
 
         #   Создаем дочерние компоненты
         self.childCreator(bCounter, progressDlg)

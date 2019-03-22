@@ -4,9 +4,7 @@ sudo apt install --assume-yes python3-pip
 
 sudo apt install --assume-yes nfs-kernel-server nfs-common
 
-sudo apt install libwxgtk3.0-dev libwxgtk-media3.0-dev libwxgtk-webview3.0-dev
-# pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
-pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
+pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 sudo apt install --assume-yes python3-psycopg2
 sudo apt install --assume-yes python3-sqlalchemy
 sudo apt install --assume-yes python3-six
