@@ -35,6 +35,10 @@ DEFAULT_DATETIME_FMT = '%d.%m.%Y-%H:%M:%S'
 MIN_FRAME_WIDTH = 640
 MIN_FRAME_HEIGHT = 480
 
+# Типы файлов кадра
+PNG_FILE_TYPE = 'PNG'
+PDF_FILE_TYPE = 'PDF'
+
 # --- Спецификация ---
 SPC_IC_NIXPLOT_TREND = {'x_format': 'time',     # Формат представления данных оси X
                         'y_format': 'numeric',  # Формат представления данных оси Y
@@ -86,17 +90,25 @@ class icNixplotTrendProto(wx.Panel):
 
         self.setDefaults()
 
-    def __del__(self):
+        # Текущая сцена тренда - Границы окна сцены в данных предметной области.
+        # Представляется в виде кортежа (X1, Y1, X2, Y2)
+        self._cur_scene = None
+
+        # ВНИМАНИЕ! Если необходимо удалить/освободить
+        # ресуры при удалении контрола, то необходимо воспользоваться
+        # событием wx.EVT_WINDOW_DESTROY
+        self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
+
+    def onDestroy(self, event):
         """
-        Деструктор класса.
+        При удалении панели. Обработчик события.
+        ВНИМАНИЕ! Если необходимо удалить/освободить
+        ресуры при удалении контрола, то необходимо воспользоваться
+        событием wx.EVT_WINDOW_DESTROY.
         """
-        # Необходимо удалять за собой кадры
-        frame_filename = self.getFrameFileName()
-        if os.path.exists(frame_filename):
-            try:
-                os.remove(frame_filename)
-            except:
-                log.fatal(u'Ошибка удаления файла кадра тренда')
+        self.del_frame(self.getFrameFileName(PNG_FILE_TYPE))
+        self.del_frame(self.getFrameFileName(PDF_FILE_TYPE))
+        event.Skip()
 
     def getTrendUUID(self):
         """
@@ -106,14 +118,22 @@ class icNixplotTrendProto(wx.Panel):
         """
         return self.__trend_uuid
 
-    def getFrameFileName(self):
+    def getFrameFileName(self, file_type=PNG_FILE_TYPE):
         """
         Имя файла кадра.
         """
-        if self.__frame_filename is None:
+        file_ext = '.' + file_type.lower()
+        if self.__frame_filename is None or not self.__frame_filename.endswith(file_ext):
             obj_uuid = self.getTrendUUID()
-            self.__frame_filename = os.path.join(DEFAULT_NIXPLOT_FRAME_PATH, obj_uuid + '.png')
+            self.__frame_filename = os.path.join(DEFAULT_NIXPLOT_FRAME_PATH, obj_uuid + file_ext)
         return self.__frame_filename
+
+    def getCurScene(self):
+        """
+        Текущая сцена тренда - Границы окна сцены в данных предметной области.
+        Представляется в виде кортежа (X1, Y1, X2, Y2)
+        """
+        return self._cur_scene
 
     def _convertDate(self, dt):
         """
@@ -174,6 +194,26 @@ class icNixplotTrendProto(wx.Panel):
             except:
                 log.warning(u'Ошибка создания папки <%s>' % DEFAULT_NIXPLOT_FRAME_PATH)
 
+    def del_frame(self, frame_filename=None):
+        """
+        Удалить файл кадра
+        @param frame_filename: Имя файла кадра тренда.
+        @return: True/False.
+        """
+        if frame_filename is None:
+            frame_filename = self.getFrameFileName()
+
+        if os.path.exists(frame_filename):
+            try:
+                os.remove(frame_filename)
+                log.info(u'Удален файл кадра тренда <%s>' % frame_filename)
+                return True
+            except OSError:
+                log.error(u'Ошибка удаления файла кадра <%s>' % frame_filename)
+        else:
+            log.warning(u'Файл кадра тренда <%s> не найден' % frame_filename)
+        return False
+
     # Словарь замены форматов шкал
     _Fmt2NixplotType = {'numeric': 'N',
                         'time': 'T',
@@ -181,8 +221,8 @@ class icNixplotTrendProto(wx.Panel):
                         'datetime': 'DT',
                         'exponent': 'E'}
 
-    def draw_frame(self, size=(0, 0), x_format='time', y_format='numeric', scene=None,
-                    points=None):
+    def draw_frame(self, size=(0, 0), x_format='time', y_format='numeric',
+                   scene=None, points=None):
         """
         Отрисовка кадра данных тренда.
         @param size: Размер кадра в точках.
@@ -192,16 +232,53 @@ class icNixplotTrendProto(wx.Panel):
         @param points: Список точек графика.
         @return: Имя файла отрисованного кадра или None в случае ошибки.
         """
-        cmd = '%s --PNG ' % NIXPLOT_FILENAME
-        frame_filename = self.getFrameFileName()
+        try:
+            if scene is None:
+                scene = self._cur_scene
 
-        if os.path.exists(frame_filename):
-            try:
-                os.remove(frame_filename)
-                log.info(u'Удален файл кадра <%s>' % frame_filename)
-            except OSError:
-                log.warning(u'Ошибка удаления файла кадра <%s>' % frame_filename)
-                return None
+            return self._draw_frame(size=size, x_format=x_format, y_format=y_format,
+                                    scene=scene, points=points, file_type=PNG_FILE_TYPE)
+        except:
+            log.fatal(u'Ошибка отрисовки кадра')
+        return None
+
+    def report_frame(self, size=(0, 0), x_format='time', y_format='numeric',
+                     scene=None, points=None):
+        """
+        Отрисовка кадра данных тренда в виде отчета PDF.
+        @param size: Размер кадра в точках.
+        @param x_format: Формат шкалы X.
+        @param y_format: Формат шкалы Y.
+        @param scene: Границы окна сцены в данных предметной области.
+        @param points: Список точек графика.
+        @return: Имя файла отрисованного кадра или None в случае ошибки.
+        """
+        try:
+            if scene is None:
+                scene = self._cur_scene
+
+            return self._draw_frame(size=size, x_format=x_format, y_format=y_format,
+                                    scene=scene, points=points, file_type=PDF_FILE_TYPE)
+        except:
+            log.fatal(u'Ошибка отрисовки кадра в виде отчета')
+        return None
+
+    def _draw_frame(self, size=(0, 0), x_format='time', y_format='numeric', scene=None,
+                    points=None, file_type=PNG_FILE_TYPE):
+        """
+        Отрисовка кадра данных тренда.
+        @param size: Размер кадра в точках.
+        @param x_format: Формат шкалы X.
+        @param y_format: Формат шкалы Y.
+        @param scene: Границы окна сцены в данных предметной области.
+        @param points: Список точек графика.
+        @return: Имя файла отрисованного кадра или None в случае ошибки.
+        """
+        cmd = '%s --%s ' % (NIXPLOT_FILENAME, file_type)
+
+        frame_filename = self.getFrameFileName(file_type)
+        # log.debug(u'Файл кадра: %s' % frame_filename)
+        self.del_frame(frame_filename)
 
         cmd += '--out=%s ' % frame_filename
 
@@ -218,16 +295,16 @@ class icNixplotTrendProto(wx.Panel):
 
         if scene is not None:
             if scene[0] != scene[2] and scene[1] != scene[3]:
-                scene_points_str = '%s/%s,%s/%s' % (DEFAULT_TIME_FMT % scene[0] if isinstance(scene[0], datetime.datetime) else float(scene[0]),
+                scene_points_str = '%s/%s,%s/%s' % (scene[0].strftime(DEFAULT_TIME_FMT) if isinstance(scene[0], datetime.datetime) else float(scene[0]),
                                                     float(scene[1]),
-                                                    DEFAULT_TIME_FMT % scene[2] if isinstance(scene[2], datetime.datetime) else float(scene[2]),
+                                                    scene[2].strftime(DEFAULT_TIME_FMT) if isinstance(scene[2], datetime.datetime) else float(scene[2]),
                                                     float(scene[3]))
                 cmd += '--scene=%s ' % scene_points_str
 
         if points is not None:
             points_lst = list()
             for point in points:
-                points_lst.append('%s/%s' % (DEFAULT_TIME_FMT % point[0] if isinstance(point[0], datetime.datetime) else float(point[0]),
+                points_lst.append('%s/%s' % (point[0].strftime(DEFAULT_TIME_FMT) if isinstance(point[0], datetime.datetime) else float(point[0]),
                                              float(point[1])))
             if points_lst:
                 points_str = ','.join(points_lst)
@@ -236,6 +313,7 @@ class icNixplotTrendProto(wx.Panel):
         log.info(u'Запуск комманды: <%s>' % cmd)
         os.system(cmd)
         if os.path.exists(frame_filename):
+            self.set_frame(frame_filename)
             return frame_filename
         else:
             log.warning(u'Файл кадра <%s> Nixplot тренда не найден' % frame_filename)
@@ -250,10 +328,20 @@ class icNixplotTrendProto(wx.Panel):
             size = self.GetSize()
         log.debug(u'Отрисовка пустого тренда. Размер %s' % str(size))
         frame_filename = self.draw_frame(size=tuple(size))
-        if frame_filename:
+        self.set_frame(frame_filename)
+
+    def set_frame(self, frame_filename=None):
+        """
+        Установить кадр.
+        @param frame_filename: Полное имя файла кадра.
+        @return: True/False.
+        """
+        if frame_filename and os.path.exists(frame_filename) and frame_filename.endswith(PNG_FILE_TYPE.lower()):
             bmp = ic_bmp.createBitmap(frame_filename)
             self.canvas.SetBitmap(bmp)
             self.canvas.Refresh()
+            return True
+        return False
 
     def getPenData(self, pen_index=0):
         """
@@ -282,23 +370,28 @@ class icNixplotTrendProto(wx.Panel):
             # Признак не пустого тренда
             not_empty = False
             for pen in pens:
-                if pen:
-                    line_data = pen.getLineData()
-                    if line_data:
-                        time_data = [point[0] for point in line_data]
-                        time_float = matplotlib.dates.date2num(time_data)
-                        y_data = [point[1] for point in line_data]
-                        rgb_str = pen.getColourStr()
+                try:
+                    if pen:
+                        line_data = pen.getLineData()
+                        if line_data:
+                            # rgb_str = pen.getColourStr()
+                            time_data = [point[0] for point in line_data]
+                            y_data = [point[1] for point in line_data]
+                            if redraw:
+                                self._cur_scene = (min(time_data), min(y_data),
+                                                   max(time_data), max(y_data))
+                                self.draw_frame(size=size, points=line_data,
+                                                scene=self._cur_scene)
+                            not_empty = True
+                        else:
+                            log.warning(u'Пустые значения NixplotTrend <%s>' % self.name)
+                            not_empty = not_empty or False
 
-                        self.axes.plot(time_float, y_data, color=rgb_str)
-                        if redraw:
-                            self.figure.canvas.draw()
-                        not_empty = True
                     else:
-                        log.warning(u'Пустые значения NixplotTrend <%s>' % self.name)
-                        not_empty = not_empty or False
-                else:
-                    log.warning(u'Не определено перо тренда <%s>' % self.name)
+                        log.warning(u'Не определено перо тренда <%s>' % self.name)
+                        not_empty = False
+                except:
+                    log.fatal(u'Ошибка отрисовки тренда')
                     not_empty = False
 
             if not not_empty:
@@ -312,6 +405,7 @@ class icNixplotTrendProto(wx.Panel):
         """
         Список перьев тренда.
         """
+        log.warning(u'Не определен метод получения перьев')
         return list()
 
 

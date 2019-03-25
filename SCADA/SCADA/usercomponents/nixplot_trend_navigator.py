@@ -40,6 +40,8 @@ ic_class_spc = {'type': 'NixplotTrendNavigator',
                 'activate': True,
                 '_uuid': None,
 
+                'show_legend': False,
+
                 '__styles__': ic_class_styles,
                 '__events__': {},
                 '__lists__': {'time_axis_fmt': list(DEFAULT_FORMATS)},
@@ -121,9 +123,15 @@ class icNixplotTrendNavigator(icwidget.icWidget,
         nixplot_trend_navigator_proto.icNixplotTrendNavigatorProto.__init__(self, parent)
 
         #   Создаем дочерние компоненты
-        self.childCreator(bCounter, progressDlg)
+        # self.childCreator(bCounter, progressDlg)
+
+        # Перья определенные в навигаторе передаем тренду
+        self.setPens(self.child)
 
         self.draw()
+
+        # Установить переключатель легенды
+        self.setIsShowLegend(self.show_legend)
 
     def childCreator(self, bCounter=False, progressDlg=None):
         """
@@ -132,11 +140,21 @@ class icNixplotTrendNavigator(icwidget.icWidget,
         return prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
                                     bCounter=bCounter, progressDlg=progressDlg)
 
+    def setPens(self, pens):
+        """
+        Установить перья тренда.
+        @param pens: Описания перьев.
+        @return: True/False.
+        """
+        # Заполнить легенду
+        self.setLegend(pens)
+        return self.trend.setPens(pens)
+
     def getPens(self):
         """
         Список перьев тренда.
         """
-        pens = self.get_children_lst()
+        pens = self.trend.get_children_lst()
         if not pens:
             log.warning(u'Не определены перья тренда <%s>' % self.name)
         return pens

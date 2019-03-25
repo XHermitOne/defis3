@@ -42,7 +42,7 @@
             <property name="minimum_size"></property>
             <property name="name">icNixPlotTrendNavigatorPanelProto</property>
             <property name="pos"></property>
-            <property name="size">874,640</property>
+            <property name="size">888,726</property>
             <property name="subclass"></property>
             <property name="tooltip"></property>
             <property name="window_extra_style"></property>
@@ -50,7 +50,7 @@
             <property name="window_style">wxTAB_TRAVERSAL</property>
             <event name="OnAuiFindManager"></event>
             <event name="OnAuiPaneButton"></event>
-            <event name="OnAuiPaneClose"></event>
+            <event name="OnAuiPaneClose">onNavigatorAuiPaneClose</event>
             <event name="OnAuiPaneMaximize"></event>
             <event name="OnAuiPaneRestore"></event>
             <event name="OnAuiRender"></event>
@@ -303,7 +303,7 @@
                                 <property name="aui_row"></property>
                                 <property name="best_size"></property>
                                 <property name="bg"></property>
-                                <property name="bitmap">Load From Art Provider; wxART_INFORMATION; wxART_TOOLBAR</property>
+                                <property name="bitmap">Load From Art Provider; gtk-justify-fill; wxART_TOOLBAR</property>
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
@@ -533,8 +533,8 @@
                                 <property name="pin_button">1</property>
                                 <property name="pos"></property>
                                 <property name="resize">Resizable</property>
-                                <property name="sashgravity">0.0</property>
-                                <property name="sashpos">480</property>
+                                <property name="sashgravity">0</property>
+                                <property name="sashpos">560</property>
                                 <property name="sashsize">-1</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
@@ -567,7 +567,7 @@
                                 <event name="OnRightDown"></event>
                                 <event name="OnRightUp"></event>
                                 <event name="OnSetFocus"></event>
-                                <event name="OnSize"></event>
+                                <event name="OnSize">onTrendSplitterSize</event>
                                 <event name="OnSplitterDClick"></event>
                                 <event name="OnSplitterSashPosChanged"></event>
                                 <event name="OnSplitterSashPosChanging"></event>
@@ -673,7 +673,7 @@
                                                     <property name="center_pane">0</property>
                                                     <property name="class"></property>
                                                     <property name="close_button">1</property>
-                                                    <property name="construction">self.trend = nixplot_trend_proto.icNixplotTrendProto(parent=self.trend_panel, id=wx.NewId())</property>
+                                                    <property name="construction">self.trend = nixplot_trend.icNixplotTrend(parent=self.trend_panel, id=wx.NewId())</property>
                                                     <property name="context_help"></property>
                                                     <property name="context_menu">1</property>
                                                     <property name="declaration"></property>
@@ -688,7 +688,7 @@
                                                     <property name="gripper">0</property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="include">from . import nixplot_trend_proto</property>
+                                                    <property name="include">from SCADA.usercomponents import nixplot_trend</property>
                                                     <property name="max_size"></property>
                                                     <property name="maximize_button">0</property>
                                                     <property name="maximum_size"></property>

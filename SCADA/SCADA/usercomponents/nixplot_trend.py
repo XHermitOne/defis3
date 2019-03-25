@@ -132,6 +132,15 @@ class icNixplotTrend(icwidget.icWidget,
         return prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
                                     bCounter=bCounter, progressDlg=progressDlg)
 
+    def setPens(self, pens):
+        """
+        Установить перья тренда.
+        @param pens: Описания перьев.
+        @return: True/False.
+        """
+        self.child = pens
+        self.childCreator()
+
     def getPens(self):
         """
         Список перьев тренда.
