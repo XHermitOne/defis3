@@ -40,7 +40,7 @@ from work_flow.work_sys import form_generator
 from STD.queries import filter_convert
 
 # Версия
-__version__ = (0, 0, 4, 3)
+__version__ = (0, 1, 2, 1)
 
 
 # Спецификация
@@ -1067,6 +1067,8 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         @return: Возвращает True-установка прошла удачно, 
             False-не удачно,None-ошибка.
         """
+        RequisiteData_ = self._correctRequisiteData(RequisiteData_)
+        
         if not RequisiteData_:
             log.warning(u'Не заполнен словарь реквизитов для сохранения в бизнес объекте <%s>' % self.name)
             return False
@@ -1104,6 +1106,39 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
     setRequisiteData = _setRequisiteData
 
+    def _correctRequisiteData(self, requisite_data=None):
+        """
+        ВНИМАНИЕ! Перед установкой необходимо скорректировать данные реквизитов.
+        Для того чтобы в реквизиты NSI попадали коды справочников а не их надписи.
+        Ключи кодов справочников начинаются с _ и имеют более высокий приоритет.
+        @param requisite_data: Словарь значений реквизитов.
+            Словарь реквизитов представлен в виде 
+                {
+                'имя реквизита':значение реквизита,
+                '_имя реквизита справочника': код справочника,
+                ...
+                'имя спецификации документа':[список словарей реквизитов],
+                ...
+                }
+        @return: Откорректированный для установки словарь значений реквизитов.
+        """
+        if requisite_data is None:
+            requisite_data = dict()
+        
+        # Берем только имена реквизитов без имен полей кодов
+        requisite_names = [requisite_name for requisite_name in list(requisite_data.keys()) if not requisite_name.startswith('_')]
+        for requisite_name in requisite_names:
+            code_requisite_name = '_' + requisite_name
+            if code_requisite_name in requisite_data:
+                requisite_data[requisite_name] = requisite_data[code_requisite_name]
+                del requisite_data[code_requisite_name]
+                
+            if isinstance(requisite_data[requisite_name], list):
+                # Обработка табличных реквизитов
+                for i, record in enumerate(requisite_data[requisite_name]):
+                    requisite_data[requisite_name][i] = self._correctRequisiteData(record)
+        return requisite_data
+        
     def addRequisiteData(self, RequisiteData_=None):
         """
         Создать новую запись со всеми реквизиты объекта в хранилище. 
@@ -1121,8 +1156,6 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         @return: Возвращает True-сохранение прошло удачно, False-не удачно,None-ошибка.
         """
         try:
-            if RequisiteData_ is None:
-                RequisiteData_ = {}
             self._setRequisiteData(RequisiteData_)
                 
             if 'uuid' in RequisiteData_:

@@ -52,6 +52,10 @@ apt show curl | grep Package
 apt show curl | grep Version
 sudo apt install --assume-yes curl
 
+apt show libsdl1.2debian | grep Package
+apt show libsdl1.2debian | grep Version
+sudo apt install --assume-yes libsdl1.2debian
+
 # wxPython
 # В текущей версии ставиться через pip3
 # apt show python3-wxgtk4.0 | grep Package

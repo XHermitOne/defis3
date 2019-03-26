@@ -10,6 +10,7 @@ import sys
 import os
 import os.path
 import wx
+import wx.adv
 import sqlalchemy
 
 from archive.forms import search_doc_form_proto
@@ -39,8 +40,8 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
 
         self.init()
 
-        self.search_crit_panel.start_datePicker.Bind(wx.EVT_DATE_CHANGED, self.onStartDatePickerChanged)
-        self.search_crit_panel.end_datePicker.Bind(wx.EVT_DATE_CHANGED, self.onEndDatePickerChanged)
+        self.search_crit_panel.start_datePicker.Bind(wx.adv.EVT_DATE_CHANGED, self.onStartDatePickerChanged)
+        self.search_crit_panel.end_datePicker.Bind(wx.adv.EVT_DATE_CHANGED, self.onEndDatePickerChanged)
         self.search_crit_panel.date_checkBox.Bind(wx.EVT_CHECKBOX, self.onDateCheckBox)
         self.search_crit_panel.one_date_checkBox.Bind(wx.EVT_CHECKBOX, self.onOneDateCheckBox)
 

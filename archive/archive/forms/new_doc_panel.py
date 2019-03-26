@@ -29,7 +29,7 @@ from archive.forms import search_doc_form
 from ic.engine import form_manager
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_SCAN_FILENAME = os.path.join(ic_file.getPrjProfilePath(),
                                      'scan_filename.pdf')
@@ -83,7 +83,7 @@ def put_doc_catalog(doc, scan_filename, doRemoveScan=True):
     cataloger = ic.metadata.THIS.mtd.doc_cataloger.create()
     cataloger.put_object(doc_filename, do_remove=doRemoveScan)
     new_filename = cataloger.getLastObjPath()
-    log.debug(u'Файл размещен в каталоге <%s>' % new_filename)
+    log.info(u'Файл размещен в каталоге <%s>' % new_filename)
     doc.setRequisiteValue('file_name', new_filename)
 
     #if doRemoveScan:

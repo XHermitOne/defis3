@@ -351,7 +351,7 @@ class icWorkSQLStorage(icWorkStorageInterface):
             if not doc_table.count(doc_table.c.uuid == Obj_.getUUID()):
                 # Добавить
                 try:
-                    log.info(u'WorkStorage Добавление записи %s' % str(save_rec.keys()))
+                    log.info(u'WorkStorage Добавление записи объекта <%s>' % Obj_.getUUID())
                 except UnicodeDecodeError:
                     log.warning(u'UnicodeDecodeError. WorkStorage Добавление записи...')
 

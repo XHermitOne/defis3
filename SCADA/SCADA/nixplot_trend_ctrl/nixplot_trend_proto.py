@@ -566,6 +566,7 @@ class icNixplotTrendProto(wx.Panel):
             scene_min_y = int(min_y / self._y_precision) * self._y_precision
             scene_max_time = datetime.datetime.utcfromtimestamp((int(max_timestamp / x_precision_timestamp) + 1) * x_precision_timestamp)
             scene_max_y = (int(max_y / self._y_precision) + 1) * self._y_precision
+
             log.debug(u'Адаптация сцены:')
             log.debug(u'\tmin data x: %s' % min(time_data))
             log.debug(u'\tmin data y: %s' % min_y)

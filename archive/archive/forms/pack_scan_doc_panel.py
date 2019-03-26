@@ -130,8 +130,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 scan_filename = doc.getRequisiteValue('file_name')
                 if scan_filename and os.path.exists(scan_filename):
                     result = doc.remove_to(archive_doc, doc_uuid=doc.getUUID(),
-                                           requisite_replace={'scan_doc_to': 'scan_doc_pack_to',
-                                                              'scan_doc_from': 'scan_doc_pack_from'})
+                                           requisite_replace={'scan_doc_to': 'pack_doc_scan_to',
+                                                              'scan_doc_from': 'pack_doc_scan_from'})
                     if not result:
                         ic_dlg.icWarningBox(u'ВНИМАНИЕ',
                                             u'Ошибка переноса документа <%s> в архив' % doc.getRequisiteValue('n_doc'))
@@ -282,7 +282,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
             ic_dlg.icMsgBox(u'СКАНИРОВАНИЕ',
                             u'Сканирование пакета документов завершено успешно')
-            self.refreshDocList()
+            self.refreshDocList(True)
 
         event.Skip()
 

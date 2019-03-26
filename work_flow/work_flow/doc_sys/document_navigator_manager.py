@@ -229,7 +229,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                         # Загружаем из БД
                         document.load_obj(doc_uuid)
                     else:
-                        # Просто берем из буфера
+                        # Просто берем из буфера. Обязательно определяем UUID
+                        # log.debug(u'Установка реквизитов документа %s' % str(doc_requisites))
+                        document.setUUID(doc_uuid)
                         document.setRequisiteData(doc_requisites)
 
         return document
