@@ -33,6 +33,9 @@ ic_class_name = 'icNixplotTrend'
 #   Описание стилей компонента
 ic_class_styles = 0
 
+DEFAULT_X_FORMATS = ('time', 'date', 'datetime')
+DEFAULT_Y_FORMATS = ('numeric', )
+
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'NixplotTrend',
                 'name': 'default',
@@ -40,11 +43,24 @@ ic_class_spc = {'type': 'NixplotTrend',
                 'activate': True,
                 '_uuid': None,
 
+                'x_format': nixplot_trend_proto.DEFAULT_X_FORMAT,  # Формат представления данных оси X
+                'y_format': nixplot_trend_proto.DEFAULT_Y_FORMAT,  # Формат представления данных оси Y
+                'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
+                'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
+                'x_tunes': nixplot_trend_proto.DEFAULT_X_TUNES,     # Возможные настройки шкалы X
+                'y_tunes': nixplot_trend_proto.DEFAULT_Y_TUNES,     # Возможные настройки шкалы Y
+                'x_precision': nixplot_trend_proto.DEFAULT_X_PRECISION,  # Цена деления сетки тренда по шкале X
+                'y_precision': nixplot_trend_proto.DEFAULT_Y_PRECISION,  # Цена деления сетки тренда по шкале Y
+
                 '__styles__': ic_class_styles,
                 '__events__': {},
-                '__lists__': {'time_axis_fmt': list(DEFAULT_FORMATS)},
+                '__lists__': {'x_format': list(DEFAULT_X_FORMATS),
+                              'y_format': list(DEFAULT_Y_FORMATS),
+                              },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
-                                                            ],
+                                                            'x_precision', 'y_precision'],
+                                   icDefInf.EDT_CHOICE: ['x_format', 'y_format'],
+                                   icDefInf.EDT_TEXTLIST: ['x_tunes', 'y_tunes'],
                                    },
                 '__parent__': nixplot_trend_proto.SPC_IC_NIXPLOT_TREND,
                 }
@@ -123,6 +139,19 @@ class icNixplotTrend(icwidget.icWidget,
         #   Создаем дочерние компоненты
         self.childCreator(bCounter, progressDlg)
 
+        # Инициализация внутренного состояния контрола:
+        # Текущая сцена тренда - Границы окна сцены в данных предметной области.
+        # Представляется в виде кортежа (X1, Y1, X2, Y2)
+        self.setScene(self.scene_min[0], self.scene_min[1], self.scene_max[0], self.scene_max[1])
+
+        # Шкалы настройки
+        self.setTunes(self.x_tunes, self.y_tunes)
+        # Цена деления
+        self.setPrecisions(self.x_precision, self.y_precision)
+        # Формат шкал
+        self.setFormats(self.x_format, self.y_format)
+
+        # отрисовать в соответствии с внутренним состоянием
         self.draw()
 
     def childCreator(self, bCounter=False, progressDlg=None):

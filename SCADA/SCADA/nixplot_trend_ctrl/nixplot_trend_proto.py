@@ -10,6 +10,7 @@
 import os.path
 import wx
 import datetime
+import time
 import uuid
 
 from ic.log import log
@@ -39,16 +40,37 @@ MIN_FRAME_HEIGHT = 480
 PNG_FILE_TYPE = 'PNG'
 PDF_FILE_TYPE = 'PDF'
 
+# Возможные настройки шкал по умолчанию
+DEFAULT_X_TUNES = ('00:00:10', '00:00:20', '00:00:30', '00:01:00', '00:05:00', '00:20:00', '00:30:00', '01:00:00')
+DEFAULT_Y_TUNES = (1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0)
+
+# Цена деления по умолчанию
+DEFAULT_X_PRECISION = '01:00:00'
+DEFAULT_Y_PRECISION = '1.0'
+
+# Формат шкал по умолчанию
+DEFAULT_X_FORMAT = 'time'
+DEFAULT_Y_FORMAT = 'numeric'
+
 # --- Спецификация ---
-SPC_IC_NIXPLOT_TREND = {'x_format': 'time',     # Формат представления данных оси X
-                        'y_format': 'numeric',  # Формат представления данных оси Y
-                        'scene_min': (0.0, 0.0),    # Минимальное значение видимой сцены тренда
-                        'scene_max': (0.0, 0.0),    # Максимальное значение видимой сцены тренда
+SPC_IC_NIXPLOT_TREND = {'x_format': DEFAULT_X_FORMAT,   # Формат представления данных оси X
+                        'y_format': DEFAULT_Y_FORMAT,   # Формат представления данных оси Y
+                        'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
+                        'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
+                        'x_tunes': DEFAULT_X_TUNES,     # Возможные настройки шкалы X
+                        'y_tunes': DEFAULT_Y_TUNES,     # Возможные настройки шкалы Y
+                        'x_precision': DEFAULT_X_PRECISION, # Цена деления сетки тренда по шкале X
+                        'y_precision': DEFAULT_Y_PRECISION, # Цена деления сетки тренда по шкале Y
+
                         '__parent__': icwidget.SPC_IC_WIDGET,
                         '__attr_hlp__': {'x_format': u'Формат представления данных оси X',
                                          'y_format': u'Формат представления данных оси Y',
                                          'scene_min': u'Минимальное значение видимой сцены тренда',
                                          'scene_max': u'Максимальное значение видимой сцены тренда',
+                                         'x_tunes': u'Возможные настройки шкалы X',
+                                         'y_tunes': u'Возможные настройки шкалы Y',
+                                         'x_precision': u'Цена деления сетки тренда по шкале X',
+                                         'y_precision': u'Цена деления сетки тренда по шкале Y',
                                          },
                         }
 
@@ -94,10 +116,127 @@ class icNixplotTrendProto(wx.Panel):
         # Представляется в виде кортежа (X1, Y1, X2, Y2)
         self._cur_scene = None
 
+        # Шкалы настройки
+        self._x_tunes = DEFAULT_X_TUNES
+        self._y_tunes = DEFAULT_Y_TUNES
+        # Цена деления
+        self._x_precision = DEFAULT_X_PRECISION
+        self._y_precision = DEFAULT_Y_PRECISION
+        # Формат шкал
+        self._x_format = DEFAULT_X_FORMAT
+        self._y_format = DEFAULT_Y_FORMAT
+
         # ВНИМАНИЕ! Если необходимо удалить/освободить
         # ресуры при удалении контрола, то необходимо воспользоваться
         # событием wx.EVT_WINDOW_DESTROY
         self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
+
+    def setScene(self, min_x=None, min_y=None, max_x=None, max_y=None):
+        """
+        Установить текущую сцену тренда.
+        @param min_x: Минимальное значение по оси X.
+        @param min_y: Минимальное значение по оси Y.
+        @param max_x: Максимальное значение по оси X.
+        @param max_y: Максимальное значение по оси Y.
+        @return: Текущая сцена тренда.
+        """
+        if self._cur_scene is None:
+            self._cur_scene = ('00:00:00', 0.0, '12:00:00', 0.0)
+
+        scene = list(self._cur_scene)
+        if min_x:
+            scene[0] = min_x
+        if min_y:
+            scene[1] = min_y
+        if max_x:
+            scene[2] = max_x
+        if max_y:
+            scene[3] = max_y
+        self._cur_scene = tuple(scene)
+        return self._cur_scene
+
+    def setTunes(self, x_tunes=None, y_tunes=None):
+        """
+        Установить шкалы настройки.
+        @param x_tunes: Шкала настройки по оси X.
+            Если None, то шкала не устанавливается.
+        @param y_tunes: Шкала настройки по оси Y.
+            Если None, то шкала не устанавливается.
+        @return: Кортеж (x_tunes, y_tunes) текущих шкал настройки.
+        """
+        if x_tunes is not None:
+            self._x_tunes = x_tunes
+        if y_tunes is not None:
+            self._y_tunes = y_tunes
+        return self._x_tunes, self._y_tunes
+
+    def setFormats(self, x_format=None, y_format=None):
+        """
+        Установить форматы шкал.
+        @param x_format: Формат шкалы оси X.
+            Если None, то формат не устанавливается.
+        @param y_format: Формат шкалы оси Y.
+            Если None, то формат не устанавливается.
+        @return: Кортеж (x_format, y_format) текущих форматов.
+        """
+        if x_format is not None:
+            self._x_format = x_format
+        if y_format is not None:
+            self._y_format = y_format
+        return self._x_format, self._y_format
+
+    def _str2dt(self, time_value=None, time_format=DEFAULT_X_FORMAT, bToTimeDelta=False):
+        """
+        Преобразование строкового представления значений
+        временной шкалы в datetime вид.
+        @param time_value: Строковое представление даты-вермени.
+        @param time_format: Формат представления.
+        @param bToTimeDelta: Преобразовать в datetime.timedelta?
+        @return: datetime.datetime/datetime.timedelta, соответствующий строковому представлению.
+        """
+        if time_format == 'time':
+            time_format = DEFAULT_TIME_FMT
+            dt = datetime.datetime.strptime(time_value, time_format)
+            if bToTimeDelta:
+                return datetime.timedelta(hours=dt.hour, minutes=dt.minute, seconds=dt.second)
+        elif time_format == 'date':
+            time_format = DEFAULT_DATE_FMT
+            dt = datetime.datetime.strptime(time_value, time_format)
+            if bToTimeDelta:
+                return datetime.timedelta(days=dt.day)
+        elif time_format == 'datetime':
+            time_format = DEFAULT_DATETIME_FMT
+            dt = datetime.datetime.strptime(time_value, time_format)
+            if bToTimeDelta:
+                return datetime.timedelta(days=dt.day,
+                                          hours=dt.hour, minutes=dt.minute, seconds=dt.second)
+        else:
+            dt = datetime.datetime.strptime(time_value, time_format)
+            if bToTimeDelta:
+                return datetime.timedelta(days=dt.day,
+                                          hours=dt.hour, minutes=dt.minute, seconds=dt.second)
+        return dt
+
+    def setPrecisions(self, x_precision=None, y_precision=None):
+        """
+        Установить цену деления по осям.
+        @param x_precision: Цена деления оси X.
+            Если None, то цена деления не устанавливается.
+        @param y_precision: Цена деления оси Y.
+            Если None, то цена деления не устанавливается.
+        @return: Кортеж (x_precision, y_precision) текущих цен деления.
+        """
+        if x_precision is not None:
+            if isinstance(x_precision, str):
+                # Цена деления задается строкой
+                # необходимо правильно преобразовать
+                x_precision = self._str2dt(x_precision, self._x_format, bToTimeDelta=True)
+            self._x_precision = x_precision
+        if y_precision is not None:
+            if not isinstance(y_precision, float):
+                y_precision = float(y_precision)
+            self._y_precision = y_precision
+        return self._x_precision, self._y_precision
 
     def onDestroy(self, event):
         """
@@ -375,11 +514,8 @@ class icNixplotTrendProto(wx.Panel):
                         line_data = pen.getLineData()
                         if line_data:
                             # rgb_str = pen.getColourStr()
-                            time_data = [point[0] for point in line_data]
-                            y_data = [point[1] for point in line_data]
                             if redraw:
-                                self._cur_scene = (min(time_data), min(y_data),
-                                                   max(time_data), max(y_data))
+                                self._cur_scene = self.adaptScene(line_data)
                                 self.draw_frame(size=size, points=line_data,
                                                 scene=self._cur_scene)
                             not_empty = True
@@ -407,6 +543,122 @@ class icNixplotTrendProto(wx.Panel):
         """
         log.warning(u'Не определен метод получения перьев')
         return list()
+
+    def adaptScene(self, graph_data=None):
+        """
+        Адаптировать текущую сцену для отображения по данным графика.
+        @param graph_data: Список точек графика.
+            [(x1, y1), (x2, y2), ... (xN, yN)]
+        @return: Текущая сцена тренда.
+        """
+        if not graph_data:
+            log.warning(u'Не определены данные графика для адаптации сцены для отображения тренда')
+        else:
+            time_data = [point[0] for point in graph_data]
+            y_data = [point[1] for point in graph_data]
+            min_timestamp = time.mktime(min(time_data).timetuple())
+            max_timestamp = time.mktime(max(time_data).timetuple())
+            x_precision_timestamp = self._x_precision.total_seconds() if isinstance(self._x_precision, datetime.timedelta) else time.mktime(self._x_precision.timetuple())
+            min_y = min(y_data)
+            max_y = max(y_data)
+
+            scene_min_time = datetime.datetime.utcfromtimestamp(int(min_timestamp / x_precision_timestamp) * x_precision_timestamp)
+            scene_min_y = int(min_y / self._y_precision) * self._y_precision
+            scene_max_time = datetime.datetime.utcfromtimestamp((int(max_timestamp / x_precision_timestamp) + 1) * x_precision_timestamp)
+            scene_max_y = (int(max_y / self._y_precision) + 1) * self._y_precision
+            log.debug(u'Адаптация сцены:')
+            log.debug(u'\tmin data x: %s' % min(time_data))
+            log.debug(u'\tmin data y: %s' % min_y)
+            log.debug(u'\tmax data x: %s' % max(time_data))
+            log.debug(u'\tmax data y: %s' % max_y)
+            log.debug(u'\ttime precision: %s' % str(self._x_precision))
+            log.debug(u'\ty precision: %s' % str(self._y_precision))
+            log.debug(u'\tmin time: %s' % str(scene_min_time))
+            log.debug(u'\tmin y: %s' % str(scene_min_y))
+            log.debug(u'\tmax time: %s' % str(scene_max_time))
+            log.debug(u'\tmax y: %s' % str(scene_max_y))
+
+            self._cur_scene = (scene_min_time, scene_min_y, scene_max_time, scene_max_y)
+
+        return self._cur_scene
+
+    def zoomX(self, step=1, redraw=True):
+        """
+        Увеличить цену деления оси X в соответствии со шкалой настройки.
+        @param step: Шаг по шкале настройки
+            >0 - увеличение
+            <0 - уменьшение
+        @param redraw: Произвести перерисовку кадра тренда?
+        @return: True/False.
+        """
+        try:
+            prev_idx = self._x_tunes.index(self._x_precision)
+        except:
+            log.fatal(u'Ошибка определения цены деления <%s> на шкале настройки' % str(self._x_precision))
+            prev_idx = 0
+        next_idx = min(len(self._x_tunes), max(0, prev_idx + step))
+        self._x_precision = self._x_tunes[next_idx]
+
+        if redraw:
+            self.draw_frame()
+        return True
+
+    def zoomY(self, step=1, redraw=True):
+        """
+        Увеличить цену деления оси Y в соответствии со шкалой настройки.
+        @param step: Шаг по шкале настройки
+            >0 - увеличение
+            <0 - уменьшение
+        @param redraw: Произвести перерисовку кадра тренда?
+        @return: True/False.
+        """
+        try:
+            prev_idx = self._y_tunes.index(self._y_precision)
+        except:
+            log.fatal(u'Ошибка определения цены деления <%s> на шкале настройки' % str(self._y_precision))
+            prev_idx = 0
+        next_idx = min(len(self._y_tunes), max(0, prev_idx + step))
+        self._y_precision = self._y_tunes[next_idx]
+
+        if redraw:
+            self.draw_frame()
+        return True
+
+    def moveSceneX(self, step=1, redraw=True):
+        """
+        Передвижение сцены по оси X на указанное количество цены деления.
+        @param step: Количество цен деления для передвижения
+            >0 - увеличение
+            <0 - уменьшение
+        @param redraw: Произвести перерисовку кадра тренда?
+        @return: True/False.
+        """
+        self._cur_scene = (self._cur_scene[0] + step*self._x_precision,
+                           self._cur_scene[1],
+                           self._cur_scene[2] + step * self._x_precision,
+                           self._cur_scene[3])
+
+        if redraw:
+            self.draw_frame()
+        return True
+
+    def moveSceneY(self, step=1, redraw=True):
+        """
+        Передвижение сцены по оси Y на указанное количество цены деления.
+        @param step: Количество цен деления для передвижения
+            >0 - увеличение
+            <0 - уменьшение
+        @param redraw: Произвести перерисовку кадра тренда?
+        @return: True/False.
+        """
+        self._cur_scene = (self._cur_scene[0],
+                           self._cur_scene[1] + step*self._y_precision,
+                           self._cur_scene[2],
+                           self._cur_scene[3] + step * self._y_precision)
+
+        if redraw:
+            self.draw_frame()
+        return True
 
 
 def test():

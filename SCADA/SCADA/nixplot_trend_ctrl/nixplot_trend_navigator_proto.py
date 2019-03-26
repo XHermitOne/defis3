@@ -182,6 +182,74 @@ class icNixplotTrendNavigatorProto(nixplot_trend_navigator_panel_proto.icNixPlot
         ic_dlg.icWarningBox(u'НАСТРОЙКИ', u'Эта функция пока не реализована')
         event.Skip()
 
+    def onUpButtonClick(self, event):
+        """
+        Передвижение сцены вверх.
+        """
+        self.getTrend().moveSceneY(step=1)
+        event.Skip()
+
+    def onDownButtonClick(self, event):
+        """
+        Передвижение сцены вниз.
+        """
+        self.getTrend().moveSceneY(step=-1)
+        event.Skip()
+
+    def onZoomInButtonClick(self, event):
+        """
+        Увеличение цены деления по Y.
+        """
+        self.getTrend().zoomY(step=1)
+        event.Skip()
+
+    def onZoomOutButtonClick(self, event):
+        """
+        Уменьшение цены деления по Y.
+        """
+        self.getTrend().zoomY(step=-1)
+        event.Skip()
+
+    def onFirstButtonClick(self, event):
+        """
+        Передвижение сцены к началу данных.
+        """
+        event.Skip()
+
+    def onLastButtonClick(self, event):
+        """
+        Передвижение сцены к концу данных.
+        """
+        event.Skip()
+
+    def onPrevButtonClick(self, event):
+        """
+        Передвижение сцены влево.
+        """
+        self.getTrend().moveSceneX(step=-1)
+        event.Skip()
+
+    def onNextButtonClick(self, event):
+        """
+        Передвижение сцены вправо.
+        """
+        self.getTrend().moveSceneX(step=1)
+        event.Skip()
+
+    def onTimeZoomInButtonClick(self, event):
+        """
+        Увеличение цены деления по временной шкале (шкала X).
+        """
+        self.getTrend().zoomX(step=1)
+        event.Skip()
+
+    def onTimeZoomOutButtonClick(self, event):
+        """
+        Уменьшение цены деления по временной шкале (шкала X).
+        """
+        self.getTrend().zoomX(step=-1)
+        event.Skip()
+
 
 def test():
     """
