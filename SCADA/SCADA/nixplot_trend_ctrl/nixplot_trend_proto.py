@@ -5,6 +5,8 @@
 Компонент временного графика. Тренд.
 Абстрактный класс.
 Компонент реализован на базе утилиты nixplot.
+
+Тренд позволяет отображать данные только в пределах суток.
 """
 
 import os.path
@@ -140,16 +142,23 @@ class icNixplotTrendProto(wx.Panel):
         @param max_y: Максимальное значение по оси Y.
         @return: Текущая сцена тренда.
         """
+        # Адаптация сцены по данным
         if self._cur_scene is None:
-            self._cur_scene = ('00:00:00', 0.0, '12:00:00', 0.0)
+            pen_data = self.getPenData(pen_index=0)
+            self._cur_scene = self.adaptScene(pen_data)
+
+        if self._cur_scene is None:
+            # Адаптация закончилась безуспешно
+            self._cur_scene = (datetime.datetime.now().replace(hour=0, minute=0, second=0), 0.0,
+                               datetime.datetime.now().replace(hour=23, minute=59, second=59), 100.0)
 
         scene = list(self._cur_scene)
         if min_x:
-            scene[0] = min_x
+            scene[0] = self._str2dt(min_x, self._x_format) if isinstance(min_x, str) else min_x
         if min_y:
             scene[1] = min_y
         if max_x:
-            scene[2] = max_x
+            scene[2] = self._str2dt(max_x, self._x_format) if isinstance(max_x, str) else max_x
         if max_y:
             scene[3] = max_y
         self._cur_scene = tuple(scene)
@@ -184,6 +193,28 @@ class icNixplotTrendProto(wx.Panel):
         if y_format is not None:
             self._y_format = y_format
         return self._x_format, self._y_format
+
+    def _dt2str(self, dt_value=None, time_format=DEFAULT_X_FORMAT):
+        """
+        Преобразование datetime в строковый вид согласно формату.
+        @param dt_value: Значение datetime.datetime или datetime.timedelta.
+        @param time_format: Формат представления.
+        @return: Отформатированная строка значений datetime.
+        """
+        if time_format == 'time':
+            time_format = DEFAULT_TIME_FMT
+        elif time_format == 'date':
+            time_format = DEFAULT_DATE_FMT
+        elif time_format == 'datetime':
+            time_format = DEFAULT_DATETIME_FMT
+
+        if isinstance(dt_value, datetime.datetime) or isinstance(dt_value, datetime.date):
+            return dt_value.strftime(time_format)
+        elif isinstance(dt_value, datetime.timedelta):
+            return ic_time.strfdelta(dt_value, fmt='{H:02}h {M:02}m {S:02}s')
+        else:
+            log.warning(u'Не поддерживаемый тип временных значений <%s>' % dt_value.__class__.__name__)
+        return ''
 
     def _str2dt(self, time_value=None, time_format=DEFAULT_X_FORMAT, bToTimeDelta=False):
         """
@@ -432,13 +463,20 @@ class icNixplotTrendProto(wx.Panel):
             if width > 0 and height > 0:
                 cmd += '--width=%s --height=%s ' % (width, height)
 
-        if scene is not None:
-            if scene[0] != scene[2] and scene[1] != scene[3]:
-                scene_points_str = '%s/%s,%s/%s' % (scene[0].strftime(DEFAULT_TIME_FMT) if isinstance(scene[0], datetime.datetime) else float(scene[0]),
-                                                    float(scene[1]),
-                                                    scene[2].strftime(DEFAULT_TIME_FMT) if isinstance(scene[2], datetime.datetime) else float(scene[2]),
-                                                    float(scene[3]))
-                cmd += '--scene=%s ' % scene_points_str
+        # Выставить сцену
+        if scene is None:
+            scene = self._cur_scene
+
+        if scene[0] != scene[2] and scene[1] != scene[3]:
+            scene_points_str = '%s/%s,%s/%s' % (scene[0].strftime(DEFAULT_TIME_FMT) if isinstance(scene[0], datetime.datetime) else scene[0],
+                                                float(scene[1]),
+                                                scene[2].strftime(DEFAULT_TIME_FMT) if isinstance(scene[2], datetime.datetime) else scene[2],
+                                                float(scene[3]))
+            cmd += '--scene=%s ' % scene_points_str
+
+        # Выставить цену деления
+        # cmd += '--dx=%s ' % self._dt2str(self._x_precision, self._x_format)
+        # cmd += '--dy=%s ' % str(self._y_precision)
 
         if points is not None:
             points_lst = list()
@@ -501,6 +539,9 @@ class icNixplotTrendProto(wx.Panel):
         @param redraw: Принудительная прорисовка.
         @param size: Размер.
         """
+        if size is None:
+            size = self.GetSize()
+
         pens = self.getPens()
 
         if pens:
@@ -515,7 +556,6 @@ class icNixplotTrendProto(wx.Panel):
                         if line_data:
                             # rgb_str = pen.getColourStr()
                             if redraw:
-                                self._cur_scene = self.adaptScene(line_data)
                                 self.draw_frame(size=size, points=line_data,
                                                 scene=self._cur_scene)
                             not_empty = True
@@ -551,6 +591,9 @@ class icNixplotTrendProto(wx.Panel):
             [(x1, y1), (x2, y2), ... (xN, yN)]
         @return: Текущая сцена тренда.
         """
+        if graph_data is None:
+            graph_data = self.getPenData(pen_index=0)
+
         if not graph_data:
             log.warning(u'Не определены данные графика для адаптации сцены для отображения тренда')
         else:
@@ -562,10 +605,16 @@ class icNixplotTrendProto(wx.Panel):
             min_y = min(y_data)
             max_y = max(y_data)
 
-            scene_min_time = datetime.datetime.utcfromtimestamp(int(min_timestamp / x_precision_timestamp) * x_precision_timestamp)
+            scene_min_time = datetime.datetime.fromtimestamp(int(min_timestamp / x_precision_timestamp) * x_precision_timestamp)
             scene_min_y = int(min_y / self._y_precision) * self._y_precision
-            scene_max_time = datetime.datetime.utcfromtimestamp((int(max_timestamp / x_precision_timestamp) + 1) * x_precision_timestamp)
+            scene_max_time = datetime.datetime.fromtimestamp((int(max_timestamp / x_precision_timestamp) + 1) * x_precision_timestamp)
             scene_max_y = (int(max_y / self._y_precision) + 1) * self._y_precision
+
+            # ВНИМАНИЕ! Тренд позволяет просматривать данные только в пределах суток
+            # Поэтому мы ограничиваем максимальное значение временной шкалы
+            limit_scene_time_max = scene_min_time.replace(hour=23, minute=59, second=59)
+            if scene_max_time > limit_scene_time_max:
+                scene_max_time = limit_scene_time_max
 
             log.debug(u'Адаптация сцены:')
             log.debug(u'\tmin data x: %s' % min(time_data))
@@ -601,7 +650,7 @@ class icNixplotTrendProto(wx.Panel):
         self._x_precision = self._x_tunes[next_idx]
 
         if redraw:
-            self.draw_frame()
+            self.draw(redraw=redraw)
         return True
 
     def zoomY(self, step=1, redraw=True):
@@ -622,7 +671,7 @@ class icNixplotTrendProto(wx.Panel):
         self._y_precision = self._y_tunes[next_idx]
 
         if redraw:
-            self.draw_frame()
+            self.draw(redraw=redraw)
         return True
 
     def moveSceneX(self, step=1, redraw=True):
@@ -640,7 +689,7 @@ class icNixplotTrendProto(wx.Panel):
                            self._cur_scene[3])
 
         if redraw:
-            self.draw_frame()
+            self.draw(redraw=redraw)
         return True
 
     def moveSceneY(self, step=1, redraw=True):
@@ -658,7 +707,7 @@ class icNixplotTrendProto(wx.Panel):
                            self._cur_scene[3] + step * self._y_precision)
 
         if redraw:
-            self.draw_frame()
+            self.draw(redraw=redraw)
         return True
 
 

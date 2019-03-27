@@ -128,7 +128,7 @@ class icNixplotTrendNavigator(icwidget.icWidget,
         # Перья определенные в навигаторе передаем тренду
         self.setPens(self.child)
 
-        self.draw()
+        # self.draw()
 
         # Установить переключатель легенды
         self.setIsShowLegend(self.show_legend)
@@ -154,8 +154,5 @@ class icNixplotTrendNavigator(icwidget.icWidget,
         """
         Список перьев тренда.
         """
-        pens = self.trend.get_children_lst()
-        if not pens:
-            log.warning(u'Не определены перья тренда <%s>' % self.name)
-        return pens
+        return self.trend.getPens()
 

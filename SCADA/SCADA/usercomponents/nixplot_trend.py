@@ -4,6 +4,8 @@
 """
 Компонент временного графика. Тренд.
 Компонент реализован на утилите nixplot.
+
+Тренд позволяет отображать данные только в пределах суток.
 """
 
 import wx
@@ -140,9 +142,6 @@ class icNixplotTrend(icwidget.icWidget,
         self.childCreator(bCounter, progressDlg)
 
         # Инициализация внутренного состояния контрола:
-        # Текущая сцена тренда - Границы окна сцены в данных предметной области.
-        # Представляется в виде кортежа (X1, Y1, X2, Y2)
-        self.setScene(self.scene_min[0], self.scene_min[1], self.scene_max[0], self.scene_max[1])
 
         # Шкалы настройки
         self.setTunes(self.x_tunes, self.y_tunes)
@@ -151,8 +150,12 @@ class icNixplotTrend(icwidget.icWidget,
         # Формат шкал
         self.setFormats(self.x_format, self.y_format)
 
+        # Текущая сцена тренда - Границы окна сцены в данных предметной области.
+        # Представляется в виде кортежа (X1, Y1, X2, Y2)
+        self.setScene(self.scene_min[0], self.scene_min[1], self.scene_max[0], self.scene_max[1])
+
         # отрисовать в соответствии с внутренним состоянием
-        self.draw()
+        # self.draw()
 
     def childCreator(self, bCounter=False, progressDlg=None):
         """
@@ -167,8 +170,11 @@ class icNixplotTrend(icwidget.icWidget,
         @param pens: Описания перьев.
         @return: True/False.
         """
+        self.components['child'] = pens
         self.child = pens
         self.childCreator()
+
+        self.adaptScene()
 
     def getPens(self):
         """
