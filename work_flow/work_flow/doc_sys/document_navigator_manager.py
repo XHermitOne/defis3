@@ -185,10 +185,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 idx = uuids.index(UUID)
             except:
                 log.error(u'UUID документа <%s> не найден' % UUID)
-        elif index:
+        elif index is not None:
             idx = index
         else:
             # Текущий выбранный элемент
+            log.warning(u'Выбран текущий документ')
             list_ctrl = self.getSlaveListCtrl()
             idx = self.getItemSelectedIdx(list_ctrl)
         return idx
@@ -211,7 +212,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             log.fatal(u'Ошибка получения ведомый объект документа для управления им')
 
         if UUID is None and index is None:
-            # ВНИМАНИЕ! Запрос не конкретного документа, объекта для
+            # ВНИМАНИЕ! Запрос не конкретного документа, а объекта для
             # управления документами!
             return document
 
@@ -233,6 +234,8 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                         # log.debug(u'Установка реквизитов документа %s' % str(doc_requisites))
                         document.setUUID(doc_uuid)
                         document.setRequisiteData(doc_requisites)
+                else:
+                    log.warning(u'Не определен UUID документа по индексу <%s>' % idx)
 
         return document
 

@@ -155,7 +155,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         Обработчик редактирования карточки документа.
         """
         from archive.forms import edit_doc_form
-        self.doc_navigator.editDoc(edit_form_method=edit_doc_form.edit_document_dlg)
+        self.doc_navigator.editDoc(index=, edit_form_method=edit_doc_form.edit_document_dlg)
         event.Skip()
 
     def onGroupToolClicked(self, event):
@@ -276,6 +276,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                     log.warning(u'Файл скана <%s> не найден' % scan_filename)
                     continue
                 document = self.doc_navigator.getSlaveDocument(index=item_idx)
+                log.debug(u'UUID сканируемого документа <%s>' % document.getUUID())
                 result = self.put_doc_catalog(document, scan_filename)
                 if result:
                     document.save_obj()

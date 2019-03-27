@@ -24,7 +24,7 @@ from archive.forms import search_doc_form
 from ic.scanner import scanner_manager
 
 # Version
-__version__ = (0, 0, 3, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_DATE_FMT = '%Y.%m.%d'
 
@@ -211,8 +211,9 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
 
         n_doc = self.document.getRequisiteValue('n_doc')
         if n_doc is None:
-            log.warning(u'Не определен номер документа')
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Ошибка данных документа', parent=self)
+            msg = u'Не определен номер документа'
+            log.warning(msg)
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Ошибка данных документа: %s' % msg, parent=self)
             # При ошибке данных документа вообще не отображать
             return
 
@@ -426,8 +427,9 @@ def valid_edit_doc(parent=None, doc=None):
     """
     n_doc = doc.getRequisiteValue('n_doc')
     if n_doc is None:
-        log.warning(u'Контроль данных редактируемого документа. Не определен номер документа')
-        ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Ошибка данных документа', parent=parent)
+        msg = u'Контроль данных редактируемого документа. Не определен номер документа'
+        log.warning(msg)
+        ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Ошибка данных документа: %s' % msg, parent=parent)
         # При ошибке данных документа вообще не отображать
         return False
     return True

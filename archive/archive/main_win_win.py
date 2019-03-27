@@ -22,7 +22,7 @@ from archive import valid_catalog
 ### RESOURCE_MODULE_IMPORTS
 
 #   Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icMainWinManager(icmanagerinterface.icWidgetManager):
@@ -53,7 +53,7 @@ class icMainWinManager(icmanagerinterface.icWidgetManager):
         Функция инициализации приложения/главного окна.
         """
         # Проверка наличия уже запущенной копии программы
-        if system.getActiveProcessCount('defis/archive/run.py') > 1:
+        if system.getActiveProcessCount('archivarius') > 1:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Уже запущена одна копия программы')
             ic.closeAppForce()
             return

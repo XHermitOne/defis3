@@ -12,14 +12,9 @@ import datetime
 from ic.log import log
 from . import load_net_config
 from ic.utils import smbfunc
+from ic.utils import filefunc
 
-__version__ = (0, 1, 1, 2)
-
-
-# Папки с данными для архива. Здесь указывается год-----------------------------------------V
-ARCH_SMB_URLS_FMT = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/#RLZ/%d/ARHIV',
-                     'smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/#MTS/%d/ARHIV',
-                     )
+__version__ = (0, 1, 2, 1)
 
 
 def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
@@ -56,9 +51,19 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
                         log.debug(u'Загрузка файла <%s>...%s' % (filename, u'ДА' if result else u'НЕТ'))
                         smb_results.append(result)
                 smbfunc.smb_disconnect(smb)
-                results[i] = all(smb_results)
             else:
-                log.warning(u'Не поддерживаемый тип источника данных. URL <%s>' % url)
+                # Загрузка из локальной папки
+                for pattern in file_patterns:
+                    # Список имен загружаемых файлов
+                    filenames = filefunc.get_dir_filename_list(url, pattern)
+
+                    for filename in filenames:
+                        base_filename = os.path.splitext(filename)[0] + dst_file_ext
+                        new_filename = os.path.join(dst_path, base_filename)
+                        result = filefunc.copyFile(filename, new_filename)
+                        log.debug(u'Копирование файла <%s> -> <%s> ... %s' % (filename, new_filename,  u'ДА' if result else u'НЕТ'))
+                        smb_results.append(result)
+            results[i] = all(smb_results)                
     except:
         log.fatal(u'Ошибка загрузки файлов')
 
@@ -77,5 +82,5 @@ def download_archive_files(archive_year=None):
     if isinstance(archive_year, datetime.date) or isinstance(archive_year, datetime.datetime):
         archive_year = archive_year.year
 
-    urls = [url_fmt % archive_year for url_fmt in ARCH_SMB_URLS_FMT]
+    urls = [url_fmt % archive_year for url_fmt in load_net_config.ARCH_SMB_URLS_FMT]
     return download_all_dbf(urls=urls, dst_file_ext='_%d.DBF' % archive_year)
