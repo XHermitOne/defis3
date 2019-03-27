@@ -116,6 +116,17 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             log.fatal(u'Ошибка получения ведомый контрол списка для отображения списка документов')
         return None
 
+    def getSlaveListCtrlSelectedIdx(self):
+        """
+        Взять индекс текущего выбранного документа.
+        @return: Индекс текущего выбранного документа.
+            Или -1 в случае ошибки.
+        """
+        list_ctrl = self.getSlaveListCtrl()
+        if list_ctrl:
+            return self.getItemSelectedIdx(list_ctrl)
+        return -1
+
     def setSlaveListCtrlByPsp(self, list_ctrl_psp=None):
         """
         Установить ведомый контрол списка для отображения списка документов по его паспорту.
@@ -252,6 +263,24 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         except:
             log.fatal(u'Ошибка обновления списка документов')
         return self.__document_navigator_dataset
+
+    def getSelectedSlaveDocumentUUID(self):
+        """
+        Получить UUID выбранного документа.
+        @return: UUID выбранного документа.
+            Либо None, если ничего не выбрано.
+        """
+        dataset = self.getDocDataset()
+
+        # Определение индекса документа
+        idx = self.getSlaveListCtrlSelectedIdx()
+
+        doc_uuid = None
+        if idx != -1:
+            doc_requisites = dataset[idx]
+            doc_uuid = doc_requisites.get('uuid', None)
+        return doc_uuid
+
 
     def getDocDataset(self):
         """
