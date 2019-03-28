@@ -686,7 +686,7 @@ class icGnuplotTrendProto(wx.Panel):
         @param redraw: Произвести перерисовку кадра тренда?
         @return: True/False.
         """
-        self._cur_scene = (self._cur_scene[0] + step*self._x_precision,
+        self._cur_scene = (self._cur_scene[0] + step * self._x_precision,
                            self._cur_scene[1],
                            self._cur_scene[2] + step * self._x_precision,
                            self._cur_scene[3])
@@ -705,7 +705,7 @@ class icGnuplotTrendProto(wx.Panel):
         @return: True/False.
         """
         self._cur_scene = (self._cur_scene[0],
-                           self._cur_scene[1] + step*self._y_precision,
+                           self._cur_scene[1] + step * self._y_precision,
                            self._cur_scene[2],
                            self._cur_scene[3] + step * self._y_precision)
 
