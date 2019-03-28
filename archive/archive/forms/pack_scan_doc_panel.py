@@ -155,7 +155,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         Обработчик редактирования карточки документа.
         """
         from archive.forms import edit_doc_form
-        self.doc_navigator.editDoc(index=, edit_form_method=edit_doc_form.edit_document_dlg)
+        self.doc_navigator.editDoc(edit_form_method=edit_doc_form.edit_document_dlg)
         event.Skip()
 
     def onGroupToolClicked(self, event):

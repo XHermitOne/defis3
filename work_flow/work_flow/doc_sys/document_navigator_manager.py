@@ -80,7 +80,7 @@ from ic.dlg import ic_dlg
 from ic.components import icwidget
 
 # Версия
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 3, 1)
 
 # Спецификация
 SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {'document': None,
@@ -280,7 +280,6 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             doc_requisites = dataset[idx]
             doc_uuid = doc_requisites.get('uuid', None)
         return doc_uuid
-
 
     def getDocDataset(self):
         """
@@ -829,6 +828,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         @param index:
         @return:
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         self.copyDoc(UUID=UUID, index=index)
         self.pasteDoc(index=index + 1)
 
@@ -846,6 +849,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             Если не определен, то вызывается document.View().
         @return: True/False
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         document = self.getSlaveDocument(UUID=UUID, index=index)
         if document:
             log.debug(u'Просмотр документа UUID <%s>' % document.getUUID())
@@ -873,6 +880,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             Если не определен, то вызывается document.Edit().
         @return: True/False
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         document = self.getSlaveDocument(UUID=UUID, index=index)
         if document:
             log.debug(u'Редактирование документа UUID <%s>' % document.getUUID())
@@ -908,6 +919,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             Если не определен, то вызывается document.load_obj().
         @return: True/False
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         document = self.getSlaveDocument(UUID=UUID, index=index)
         if document:
             log.debug(u'Обновление документа UUID <%s>' % document.getUUID())
@@ -963,6 +978,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             Если не определен, то вызывается document.Del().
         @return: True/False
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         document = self.getSlaveDocument(UUID=UUID, index=index)
         if document:
             log.debug(u'Удаление документа UUID <%s>' % document.getUUID())
@@ -988,6 +1007,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def printDoc(self, UUID=None, index=None, print_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <printDoc> не реализован')
 
     def printAllDoc(self, print_form_method=None):
@@ -998,6 +1021,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def validateDoc(self, UUID=None, index=None, validate_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <validateDoc> не реализован')
 
     def errorsDoc(self, UUID=None, index=None, errors_form_method=None):
@@ -1018,11 +1045,19 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def sendDoc(self, UUID=None, index=None, send_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <sendDoc> не реализован')
 
     def saveDoc(self, UUID=None, index=None, save_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <saveDoc> не реализован')
 
     def saveAllDoc(self, save_form_method=None):
@@ -1033,6 +1068,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def loadDoc(self, UUID=None, index=None, load_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <loadDoc> не реализован')
 
     def loadAllDoc(self, load_form_method=None):
@@ -1043,71 +1082,127 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def showDoc(self, UUID=None, index=None, show_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <showDoc> не реализован')
 
     def schemeDoc(self, UUID=None, index=None, scheme_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <schemeDoc> не реализован')
 
     def runDoc(self, UUID=None, index=None, run_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <runDoc> не реализован')
 
     def stopDoc(self, UUID=None, index=None, stop_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <stopDoc> не реализован')
 
     def doDoc(self, UUID=None, index=None, do_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <doDoc> не реализован')
 
     def undoDoc(self, UUID=None, index=None, undo_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <undoDoc> не реализован')
 
     def openDoc(self, UUID=None, index=None, open_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <openDoc> не реализован')
 
     def closeDoc(self, UUID=None, index=None, close_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <closeDoc> не реализован')
 
     def linkDoc(self, UUID=None, index=None, link_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <linkDoc> не реализован')
 
     def unlinkDoc(self, UUID=None, index=None, unlink_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <unlinkDoc> не реализован')
 
     def checkDoc(self, UUID=None, index=None, check_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <checkDoc> не реализован')
 
     def uncheckDoc(self, UUID=None, index=None, uncheck_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <uncheckDoc> не реализован')
 
     def attachDoc(self, UUID=None, index=None, attach_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <attachDoc> не реализован')
 
     def detachDoc(self, UUID=None, index=None, detach_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <detachDoc> не реализован')
 
     def calcDoc(self, doc_requisite):
@@ -1147,11 +1242,19 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def uploadDoc(self, UUID=None, index=None, upload_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <uploadDoc> не реализован')
 
     def downloadDoc(self, UUID=None, index=None, download_form_method=None):
         """
         """
+        if UUID is None and index is None:
+            # Если документ не идентифицирован, то берем выбранный в списке
+            UUID = self.getSelectedSlaveDocumentUUID()
+
         log.warning(u'Метод <downloadDoc> не реализован')
 
     # --- Дополнительные функции ---
