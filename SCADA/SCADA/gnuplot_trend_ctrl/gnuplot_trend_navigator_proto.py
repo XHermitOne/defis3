@@ -19,7 +19,7 @@ from ic.utils import printerfunc
 from . import gnuplot_trend_navigator_panel_proto
 
 # --- Спецификация ---
-SPC_IC_NIXPLOT_TREND_NAVIGATOR = {
+SPC_IC_GNUPLOT_TREND_NAVIGATOR = {
                                   'show_legend': False,
                                   '__parent__': icwidget.SPC_IC_WIDGET,
                                   '__attr_hlp__': {
@@ -35,7 +35,7 @@ VIEW_REPORT_FILE_FMT = 'evince %s &'
 # PRINT_REPORT_FILE_FMT = 'evince --preview %s &'
 
 
-class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icNixPlotTrendNavigatorPanelProto,
+class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplotTrendNavigatorPanelProto,
                                    panel_manager.icPanelManager):
     """
     Панель навигации тренда на базе утилиты gnuplot.
@@ -46,7 +46,7 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icNixPlot
         """
         Конструктор.
         """
-        gnuplot_trend_navigator_panel_proto.icNixPlotTrendNavigatorPanelProto.__init__(self, *args, **kwargs)
+        gnuplot_trend_navigator_panel_proto.icGnuplotTrendNavigatorPanelProto.__init__(self, *args, **kwargs)
 
         # Переключатель отображения легенды
         self.__is_show_legend = False

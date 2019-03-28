@@ -19,6 +19,7 @@ from ic.utils import ic_time
 from ic.bitmap import ic_bmp
 
 from ic.components import icwidget
+from . import gnuplot_manager
 
 # Полное имя файла утилиты gnuplot
 GNUPLOT_FILENAME = 'gnuplot'
@@ -38,6 +39,8 @@ MIN_FRAME_HEIGHT = 480
 # Типы файлов кадра
 PNG_FILE_TYPE = 'PNG'
 PDF_FILE_TYPE = 'PDF'
+
+DATA_FILE_EXT = '.dat'
 
 # Возможные настройки шкал по умолчанию
 DEFAULT_X_TUNES = ('00:00:10', '00:00:20', '00:00:30', '00:01:00', '00:05:00', '00:20:00', '00:30:00', '01:00:00')
@@ -125,6 +128,13 @@ class icGnuplotTrendProto(wx.Panel):
         self._x_format = DEFAULT_X_FORMAT
         self._y_format = DEFAULT_Y_FORMAT
 
+        # Менеджер утилиты gnuplot
+        self.__gnuplot_manager = gnuplot_manager.icGnuplotManager()
+        self.__gnuplot_manager.enableGrid()
+        self.__gnuplot_manager.enableLegend(False)
+        self.__gnuplot_manager.enableXTime()
+        self.__gnuplot_manager.enableXTextVertical()
+
         # ВНИМАНИЕ! Если необходимо удалить/освободить
         # ресуры при удалении контрола, то необходимо воспользоваться
         # событием wx.EVT_WINDOW_DESTROY
@@ -191,6 +201,21 @@ class icGnuplotTrendProto(wx.Panel):
             self._y_format = y_format
         return self._x_format, self._y_format
 
+    def _get_dt_format(self, time_format=DEFAULT_X_FORMAT):
+        """
+        Привести к единому виду формат временных значений.
+        @param time_format: Формат представления.
+        @return: Формат
+        """
+        dt_format = time_format
+        if time_format == 'time':
+            dt_format = DEFAULT_TIME_FMT
+        elif time_format == 'date':
+            dt_format = DEFAULT_DATE_FMT
+        elif time_format == 'datetime':
+            dt_format = DEFAULT_DATETIME_FMT
+        return dt_format
+
     def _dt2str(self, dt_value=None, time_format=DEFAULT_X_FORMAT):
         """
         Преобразование datetime в строковый вид согласно формату.
@@ -198,12 +223,7 @@ class icGnuplotTrendProto(wx.Panel):
         @param time_format: Формат представления.
         @return: Отформатированная строка значений datetime.
         """
-        if time_format == 'time':
-            time_format = DEFAULT_TIME_FMT
-        elif time_format == 'date':
-            time_format = DEFAULT_DATE_FMT
-        elif time_format == 'datetime':
-            time_format = DEFAULT_DATETIME_FMT
+        time_format = self._get_dt_format(time_format)
 
         if isinstance(dt_value, datetime.datetime) or isinstance(dt_value, datetime.date):
             return dt_value.strftime(time_format)
@@ -222,24 +242,23 @@ class icGnuplotTrendProto(wx.Panel):
         @param bToTimeDelta: Преобразовать в datetime.timedelta?
         @return: datetime.datetime/datetime.timedelta, соответствующий строковому представлению.
         """
+        dt_format = self._get_dt_format(time_format)
+
         if time_format == 'time':
-            time_format = DEFAULT_TIME_FMT
-            dt = datetime.datetime.strptime(time_value, time_format)
+            dt = datetime.datetime.strptime(time_value, dt_format)
             if bToTimeDelta:
                 return datetime.timedelta(hours=dt.hour, minutes=dt.minute, seconds=dt.second)
         elif time_format == 'date':
-            time_format = DEFAULT_DATE_FMT
-            dt = datetime.datetime.strptime(time_value, time_format)
+            dt = datetime.datetime.strptime(time_value, dt_format)
             if bToTimeDelta:
                 return datetime.timedelta(days=dt.day)
         elif time_format == 'datetime':
-            time_format = DEFAULT_DATETIME_FMT
-            dt = datetime.datetime.strptime(time_value, time_format)
+            dt = datetime.datetime.strptime(time_value, dt_format)
             if bToTimeDelta:
                 return datetime.timedelta(days=dt.day,
                                           hours=dt.hour, minutes=dt.minute, seconds=dt.second)
         else:
-            dt = datetime.datetime.strptime(time_value, time_format)
+            dt = datetime.datetime.strptime(time_value, dt_format)
             if bToTimeDelta:
                 return datetime.timedelta(days=dt.day,
                                           hours=dt.hour, minutes=dt.minute, seconds=dt.second)
@@ -273,8 +292,12 @@ class icGnuplotTrendProto(wx.Panel):
         ресуры при удалении контрола, то необходимо воспользоваться
         событием wx.EVT_WINDOW_DESTROY.
         """
-        self.del_frame(self.getFrameFileName(PNG_FILE_TYPE))
-        self.del_frame(self.getFrameFileName(PDF_FILE_TYPE))
+        frame_filename = self.getFrameFileName(PNG_FILE_TYPE)
+        self.del_frame(frame_filename)
+        frame_filename = self.getFrameFileName(PDF_FILE_TYPE)
+        self.del_frame(frame_filename)
+        dat_filename = os.path.splitext(frame_filename)[0] + DATA_FILE_EXT
+        ic_file.removeFile(dat_filename)
         event.Skip()
 
     def getTrendUUID(self):
@@ -370,16 +393,7 @@ class icGnuplotTrendProto(wx.Panel):
         if frame_filename is None:
             frame_filename = self.getFrameFileName()
 
-        if os.path.exists(frame_filename):
-            try:
-                os.remove(frame_filename)
-                log.info(u'Удален файл кадра тренда <%s>' % frame_filename)
-                return True
-            except OSError:
-                log.error(u'Ошибка удаления файла кадра <%s>' % frame_filename)
-        else:
-            log.warning(u'Файл кадра тренда <%s> не найден' % frame_filename)
-        return False
+        return ic_file.removeFile(frame_filename)
 
     # Словарь замены форматов шкал
     _Fmt2GnuplotType = {'numeric': 'N',
@@ -441,53 +455,41 @@ class icGnuplotTrendProto(wx.Panel):
         @param points: Список точек графика.
         @return: Имя файла отрисованного кадра или None в случае ошибки.
         """
-        cmd = '%s --%s ' % (GNUPLOT_FILENAME, file_type)
-
         frame_filename = self.getFrameFileName(file_type)
+        graph_filename = os.path.splitext(frame_filename)[0] + DATA_FILE_EXT
         # log.debug(u'Файл кадра: %s' % frame_filename)
         self.del_frame(frame_filename)
 
-        cmd += '--out=%s ' % frame_filename
-
-        xtype = self._Fmt2GnuplotType.get(x_format, 'T')
-        ytype = self._Fmt2GnuplotType.get(y_format, 'N')
-        cmd += '--xtype=%s --ytype=%s ' % (xtype, ytype)
-
-        if size is not None:
-            width, height = size
-            width = max(width, MIN_FRAME_WIDTH)
-            height = max(height, MIN_FRAME_HEIGHT)
-            if width > 0 and height > 0:
-                cmd += '--width=%s --height=%s ' % (width, height)
+        dt_format = self._get_dt_format(x_format)
+        self.__gnuplot_manager.setTimeFormat(dt_format)
+        self.__gnuplot_manager.setXFormat(dt_format)
 
         # Выставить сцену
         if scene is None:
             scene = self._cur_scene
 
         if scene[0] != scene[2] and scene[1] != scene[3]:
-            scene_points_str = '%s/%s,%s/%s' % (scene[0].strftime(DEFAULT_TIME_FMT) if isinstance(scene[0], datetime.datetime) else scene[0],
-                                                float(scene[1]),
-                                                scene[2].strftime(DEFAULT_TIME_FMT) if isinstance(scene[2], datetime.datetime) else scene[2],
-                                                float(scene[3]))
-            cmd += '--scene=%s ' % scene_points_str
+            self.__gnuplot_manager.setXRange(self._dt2str(scene[0], x_format),
+                                             self._dt2str(scene[2], x_format))
 
-        # Выставить цену деления
-        # cmd += '--dx=%s ' % self._dt2str(self._x_precision, self._x_format)
-        # cmd += '--dy=%s ' % str(self._y_precision)
+        self.__gnuplot_manager.enableOutputPNG()
+        self.__gnuplot_manager.setOutputFilename(frame_filename)
+        if size is not None:
+            width, height = size
+            width = max(width, MIN_FRAME_WIDTH)
+            height = max(height, MIN_FRAME_HEIGHT)
+            if width > 0 and height > 0:
+                self.__gnuplot_manager.setOutputSize(width, height)
 
         if points is not None:
-            points_lst = list()
-            for point in points:
-                points_lst.append('%s/%s' % (point[0].strftime(DEFAULT_TIME_FMT) if isinstance(point[0], datetime.datetime) else float(point[0]),
-                                             float(point[1])))
-            if points_lst:
-                points_str = ','.join(points_lst)
-                cmd += '--pen0=%s ' % points_str
+            points_lst = [dict(x=point[0].strftime(DEFAULT_TIME_FMT) if isinstance(point[0], datetime.datetime) else float(point[0]),
+                               point1=float(point[1])) for point in points]
+            self.__gnuplot_manager.saveGraphData(graph_filename, points_lst, ('point1',))
 
-        log.info(u'Запуск комманды: <%s>' % cmd)
-        os.system(cmd)
+        self.__gnuplot_manager.setPlot(graph_filename, 1)
+        self.__gnuplot_manager.gen()
+
         if os.path.exists(frame_filename):
-            self.set_frame(frame_filename)
             return frame_filename
         else:
             log.warning(u'Файл кадра <%s> Gnuplot тренда не найден' % frame_filename)
@@ -510,6 +512,9 @@ class icGnuplotTrendProto(wx.Panel):
         @param frame_filename: Полное имя файла кадра.
         @return: True/False.
         """
+        if frame_filename is None:
+            frame_filename = self.getFrameFileName()
+
         if frame_filename and os.path.exists(frame_filename) and frame_filename.endswith(PNG_FILE_TYPE.lower()):
             bmp = ic_bmp.createBitmap(frame_filename)
             self.canvas.SetBitmap(bmp)
@@ -555,6 +560,7 @@ class icGnuplotTrendProto(wx.Panel):
                             if redraw:
                                 self.draw_frame(size=size, points=line_data,
                                                 scene=self._cur_scene)
+                            self.set_frame()
                             not_empty = True
                         else:
                             log.warning(u'Пустые значения GnuplotTrend <%s>' % self.name)

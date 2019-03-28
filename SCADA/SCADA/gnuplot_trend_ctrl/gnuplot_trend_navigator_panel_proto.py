@@ -9,13 +9,13 @@
 
 import wx
 import wx.adv
-from SCADA.usercomponents import nixplot_trend
+from SCADA.usercomponents import gnuplot_trend
 
 ###########################################################################
-## Class icNixPlotTrendNavigatorPanelProto
+## Class icGnuplotTrendNavigatorPanelProto
 ###########################################################################
 
-class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
+class icGnuplotTrendNavigatorPanelProto ( wx.Panel ):
 	
 	def __init__( self, parent ):
 		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 888,726 ), style = wx.TAB_TRAVERSAL )
@@ -52,7 +52,7 @@ class icNixPlotTrendNavigatorPanelProto ( wx.Panel ):
 		self.trend_panel = wx.Panel( self.trend_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer5 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.trend = nixplot_trend.icNixplotTrend(parent=self.trend_panel, id=wx.NewId())
+		self.trend = gnuplot_trend.icGnuplotTrend(parent=self.trend_panel, id=wx.NewId())
 		bSizer5.Add( self.trend, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		bSizer7 = wx.BoxSizer( wx.VERTICAL )

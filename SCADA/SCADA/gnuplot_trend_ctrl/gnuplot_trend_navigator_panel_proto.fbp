@@ -40,7 +40,7 @@
             <property name="id">wxID_ANY</property>
             <property name="maximum_size"></property>
             <property name="minimum_size"></property>
-            <property name="name">icgnuplotTrendNavigatorPanelProto</property>
+            <property name="name">icGnuplotTrendNavigatorPanelProto</property>
             <property name="pos"></property>
             <property name="size">888,726</property>
             <property name="subclass"></property>
@@ -673,7 +673,7 @@
                                                     <property name="center_pane">0</property>
                                                     <property name="class"></property>
                                                     <property name="close_button">1</property>
-                                                    <property name="construction">self.trend = gnuplot_trend.icgnuplotTrend(parent=self.trend_panel, id=wx.NewId())</property>
+                                                    <property name="construction">self.trend = gnuplot_trend.icGnuplotTrend(parent=self.trend_panel, id=wx.NewId())</property>
                                                     <property name="context_help"></property>
                                                     <property name="context_menu">1</property>
                                                     <property name="declaration"></property>

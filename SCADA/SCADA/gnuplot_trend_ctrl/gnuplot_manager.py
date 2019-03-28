@@ -25,6 +25,9 @@ eog ./trend.png
 """
 
 import os
+import os.path
+import datetime
+
 from ic.log import log
 from ic.utils import txtfunc
 
@@ -147,6 +150,17 @@ class icGnuplotManager(object):
         cmd = 'set xrange[\'%s\':\'%s\']' % (x_start, x_stop)
         return self._appendCommand(cmd, cmd_sign)
 
+    def setYRange(self, y_start, y_stop):
+        """
+        Установить диапазон значений оси Y.
+        @param y_start: Начальное значение диапазона.
+        @param y_stop: Конечное значение диапазона.
+        @return: True/False.
+        """
+        cmd_sign = 'set yrange'
+        cmd = 'set yrange[%f:%f]' % (float(y_start), float(y_stop))
+        return self._appendCommand(cmd, cmd_sign)
+
     def enableXTextVertical(self, enable=True):
         """
         Вкл./Выкл. вывода текста оси X вертикально.
@@ -202,7 +216,7 @@ class icGnuplotManager(object):
         @return: True/False.
         """
         cmd = 'set nokey'
-        return self._enableCommand(cmd, enable)
+        return self._enableCommand(cmd, not enable)
 
     def setLineStyle(self, n_line=1, line_type=1, line_width=1, point_type=3, line_color='red'):
         """
@@ -230,7 +244,13 @@ class icGnuplotManager(object):
         @return: True/False.
         """
         cmd_sign = 'plot '
-        cmd = 'plot \'%s\' using 1:%d with lines linestyle 1' % (graph_filename, int(count))
+
+        if os.path.exists(graph_filename):
+            cmd = 'plot \'%s\' using 1:%d with lines linestyle 1' % (graph_filename, int(count) + 1)
+        else:
+            # Если нет данных, то просто вывести абстрактный график
+            log.warning(u'Не найден файл данных графиков <%s>' % graph_filename)
+            cmd = 'plot [-pi:pi] sin(x), cos(x)'
 
         # Команда отрисовки графиков может быть только последней коммандой
         if not self.commands:
@@ -264,7 +284,7 @@ class icGnuplotManager(object):
         txt = ''
         for record in graph_data:
             x = record.get('x', 0)
-            x_str = str(x) if self.__x_format is None else x.strftime(self.__x_format)
+            x_str = str(x) if self.__x_format is None else (x.strftime(self.__x_format) if isinstance(x, datetime.datetime) else str(x))
             record_list = [x_str] + [str(record.get(field, 0)) for field in fields]
             record_txt = ' '.join(record_list)
             txt += record_txt + '\n'
@@ -281,9 +301,13 @@ class icGnuplotManager(object):
     def runCommands(self):
         """
         Запуск генерации.
+        Другое наименование метода - gen
         @return: True/False.
         """
         cmd = self.getRunCommand()
         log.info(u'Выполнение комманды <%s>' % cmd)
         os.system(cmd)
         return True
+
+    # Другое наименование метода
+    gen = runCommands

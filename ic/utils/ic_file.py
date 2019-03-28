@@ -21,7 +21,7 @@ from ic.dlg import ic_dlg
 
 import ic.config
 
-__version__ = (1, 1, 2, 1)
+__version__ = (1, 1, 3, 1)
 
 _ = wx.GetTranslation
 
@@ -526,6 +526,26 @@ def IsSubDir(Dir1_, Dir2_):
             find = IsSubDir(Dir1_, cur_sub_dir)
             if find:
                 return find
+    return False
+
+
+def removeFile(filename=None):
+    """
+    Удалить файл.
+    @param filename: Имя удаляемого файла.
+    @return: True/False.
+    """
+    if os.path.exists(filename):
+        try:
+            os.remove(filename)
+            log.info(u'Удален файл <%s>' % filename)
+            return True
+        except OSError:
+            log.error(u'Ошибка удаления файла <%s>' % filename)
+        except:
+            log.fatal(u'Ошибка удаления файла <%s>' % filename)
+    else:
+        log.warning(u'Удаление. Файл <%s> не найден' % filename)
     return False
 
 
