@@ -34,7 +34,7 @@ __version__ = (0, 1, 1, 2)
 DEFAULT_SCAN_FILENAME = os.path.join(ic_file.getPrjProfilePath(),
                                      'scan_filename.pdf')
 
-DEFAULT_SCAN_BMP_FILENAMES = ('/usr/share/icons/gnome/48x48/devices/scanner.png',                              
+DEFAULT_SCAN_BMP_FILENAMES = ('/usr/share/icons/gnome/48x48/devices/scanner.png',
                               '/usr/share/icons/Adwaita/48x48/devices/scanner.png',
                               '/usr/share/icons/HighContrast/48x48/devices/scanner.png')
 
@@ -52,7 +52,7 @@ def gen_scan_filename(doc, file_ext='.pdf'):
     if doc_date:
         doc_year = doc_date.year
     else:
-        doc_year = 'XXXX'        
+        doc_year = 'XXXX'
     doc_uuid = doc.getUUID() if doc.getUUID() else ic_uuid.get_uuid()
     scan_filename = '%s.%s.%s.%s%s' % (doc.getRequisiteValue('c_agent'),
                                        doc_year,
@@ -69,7 +69,7 @@ def put_doc_catalog(doc, scan_filename, doRemoveScan=True):
     @param scan_filename: Имя файла сканированого документа.
     @param doRemoveScan: Удалить промежуточный файл скана?
     @return: True/False.
-    """                
+    """
     file_ext = os.path.splitext(scan_filename)[1]
     doc_filename = gen_scan_filename(doc, file_ext)
     doc_filename = os.path.join(os.path.dirname(scan_filename), doc_filename)
@@ -77,9 +77,9 @@ def put_doc_catalog(doc, scan_filename, doRemoveScan=True):
     #if os.path.exists(doc_filename):
     #    ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Сканированный файл <%s> уже зарегистрирован в БД. Скан не сохраняется' % doc_filename)
     #    return False
-        
+
     ic_file.icCopyFile(scan_filename, doc_filename)
-    
+
     cataloger = ic.metadata.THIS.mtd.doc_cataloger.create()
     cataloger.put_object(doc_filename, do_remove=doRemoveScan)
     new_filename = cataloger.getLastObjPath()
@@ -94,15 +94,15 @@ def put_doc_catalog(doc, scan_filename, doRemoveScan=True):
     #        os.remove(doc_filename)
     #    except:
     #        log.fatal(u'Ошибка удаления файла <%s>' % doc_filename)
-        
+
     return True
-    
-    
+
+
 class icDocCardPanelManager():
     """
     Менеджер панели карточки документа.
     """
-    
+
     def valid(self, data):
         """
         Валидация. Проверка правильности заполнения экранной формы.
@@ -114,36 +114,36 @@ class icDocCardPanelManager():
             filename = data['file_name'].strip()
             if not filename:
                 # Если не определен файл документа
-                ic_dlg.icErrBox(u'ОШИБКА', 
+                ic_dlg.icErrBox(u'ОШИБКА',
                                 u'Не определен файл регистрируемого документа')
                 return False
             elif not os.path.exists(filename):
                 # Если не существует файл документа
-                ic_dlg.icErrBox(u'ОШИБКА', 
+                ic_dlg.icErrBox(u'ОШИБКА',
                                 u'Файл регистрируемого документа <%s> не существует' % filename)
                 return False
             elif not data['doc_name'].strip():
                 # Если не определено имя документа
-                ic_dlg.icErrBox(u'ОШИБКА', 
+                ic_dlg.icErrBox(u'ОШИБКА',
                                 u'Имя документа не определено')
                 return False
             elif not data['n_doc'].strip():
                 # Если не определен номер документа
-                ic_dlg.icErrBox(u'ОШИБКА', 
+                ic_dlg.icErrBox(u'ОШИБКА',
                                 u'Не определен номер документа')
                 return False
             elif not data.get('doc_type', None):
                 # Если не определен тип документа
-                # То валидация не проходит, т.к. тип документа присутствует в 
+                # То валидация не проходит, т.к. тип документа присутствует в
                 # имени файла скана
-                ic_dlg.icErrBox(u'ОШИБКА', 
+                ic_dlg.icErrBox(u'ОШИБКА',
                                 u'Не определен тип документа')
                 return False
             elif not data.get('c_agent', None):
                 # Если не определен контрагент
-                # То валидация не проходит, т.к. контрагент присутствует в 
+                # То валидация не проходит, т.к. контрагент присутствует в
                 # имени файла скана
-                ic_dlg.icErrBox(u'ОШИБКА', 
+                ic_dlg.icErrBox(u'ОШИБКА',
                                 u'Не определен контрагент документа')
                 return False
             return True
@@ -158,7 +158,7 @@ class icDocCardPanelManager():
         @param scan_filename: Имя файла сканированого документа.
         @param doRemoveScan: Удалить промежуточный файл скана?
         @return: True/False.
-        """                
+        """
         return put_doc_catalog(doc, scan_filename, doRemoveScan)
 
     def valid_link(self, doc_uuid):
@@ -189,31 +189,31 @@ class icDocCardPanelManager():
         if not os.path.exists(doc_filename):
             log.warning(u'Определение текста документа. Файл <%s> не найден.' % doc_filename)
             return u''
-        
+
         file_ext = os.path.splitext(doc_filename)[1]
-        
+
         sprav_manager = ic.metadata.THIS.mtd.nsi_archive.create()
         sprav = sprav_manager.getSpravByName('nsi_body_type')
-        
+
         code = ic_str.limit_len_text(file_ext.replace('.', '').upper(), 4, '-')
         cmd = sprav.Find(code, 's2')
-        replaces = {'FILENAME': doc_filename, 
+        replaces = {'FILENAME': doc_filename,
                     'PROFILE_DIR': ic_file.getPrjProfilePath()}
         cmd = txtgen.gen(cmd, replaces)
         log.info(u'Run command <%s>' % cmd)
-        
+
         doc_txt = os.popen3(cmd)[1].read()
-        
+
         # Перевести текст в юникод
         if isinstance(doc_txt, bytes):
             doc_txt = doc_txt.decode(ic.config.DEFAULT_ENCODING)
-        
+
         # Удалить все не нужные символы
         for c in NOT_TXT_SYMBOLS:
             doc_txt = doc_txt.replace(c, u'')
-        
+
         return doc_txt
-   
+
     def viewDocFile(self, doc_filename):
         """
         Просмотр файла отсканированного документа.
@@ -232,8 +232,8 @@ class icDocCardPanelManager():
             log.warning(u'Не поддерживаемый тип файла <%s>' % doc_file_ext)
         if cmd:
             os.system(cmd)
-        
-    
+
+
 class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
                            icDocCardPanelManager,
                            form_manager.icFormManager):
@@ -244,36 +244,36 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         """
         Конструктор.
         """
-        form_manager.icFormManager.__init__(self)    
+        form_manager.icFormManager.__init__(self)
         new_doc_form_proto.icNewDocPanelProto.__init__(self, *args, **kwargs)
-   
+
     def init(self):
         """
         Инициализация панели.
-        """ 
+        """
         self.autocomplit.LoadDict()     # Загрузить частотные словари для авто заполнений
-        
+
         # Список UUID документов с которыми связан текущий документ
         self._link_to_uuids = list()
-        
+
         bmp = ic_bmp.findBitmap(*DEFAULT_SCAN_BMP_FILENAMES)
         if bmp:
             self.scan_bpButton.SetBitmap(bmp)
-        
+
         doc = ic.metadata.THIS.mtd.scan_document.create()
         requisites = [requisite for requisite in doc.getChildrenRequisites() if requisite.isDescription()]
         for i, requisite in enumerate(requisites):
-            self.link_listCtrl.InsertColumn(i, requisite.getLabel(), 
+            self.link_listCtrl.InsertColumn(i, requisite.getLabel(),
                                             width=wx.LIST_AUTOSIZE)
-            
+
         doc_dir = ic.settings.THIS.SETTINGS.doc_dir.get()
         doc_dir = ic.getHomeDir() if doc_dir is None else doc_dir
         self.select_filePicker.SetInitialDirectory(doc_dir)
-            
+
     def get_ctrl_data(self):
         """
         Получить данные из контролов в виде словаря.
-        """    
+        """
         data = dict()
         data['file_name'] = self.select_filePicker.GetPath()
         data['n_doc'] = self.ndoc_textCtrl.GetValue()
@@ -300,7 +300,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         tags = [tag for tag in tags if tag]
         data['tags'] = ';'.join(tags)
         data['link_to'] = self._link_to_uuids
-        return data        
+        return data
 
     def reg_doc(self, doc_data):
         """
@@ -314,12 +314,12 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
             return
         else:
             log.debug(u'Регистрация файла <%s>' % doc_data['file_name'])
-        
+
         log.debug(u'Регистрация документа. Вид: <%s> Подразделение: <%s>' % (doc_data['doc_type'], doc_data['entity']))
         doc = ic.metadata.THIS.mtd.scan_document.create()
 
-        doc.setRequisiteValue('n_doc', doc_data['n_doc'])        
-        doc.setRequisiteValue('n_obj', doc_data['n_obj'])        
+        doc.setRequisiteValue('n_doc', doc_data['n_doc'])
+        doc.setRequisiteValue('n_obj', doc_data['n_obj'])
         doc.setRequisiteValue('doc_date', doc_data['doc_date'])
         doc.setRequisiteValue('obj_date', doc_data['obj_date'])
         doc.setRequisiteValue('doc_name', doc_data['doc_name'])
@@ -330,26 +330,26 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         doc.setRequisiteValue('entity', doc_data['entity'])
 
         #tags = doc_data['tags'].split(';')
-        #tags += [u'']*(10-len(tags))        
+        #tags += [u'']*(10-len(tags))
         doc.setRequisiteValue('tags', doc_data['tags'])
-        
+
         file_ext = os.path.splitext(doc_data['file_name'])[1]
-        doc.setRequisiteValue('body_type', 
+        doc.setRequisiteValue('body_type',
                               ic_str.limit_len_text(file_ext.upper(), 4, '-'))
-        
+
         doc.setRequisiteValue('file_name', doc_data['file_name'])
-        
+
         # А теперь размещаем объект в каталоге
         self.put_doc_catalog(doc, doc_data['file_name'])
-        
+
         # body_txt = self._getDocText(doc_data['file_name'])
         # doc.setRequisiteValue('txt_body', body_txt)
         # log.debug(u'Текст документа <%s>' % body_txt)
 
-        doc.setRequisiteValue('scan_doc_to', 
+        doc.setRequisiteValue('scan_doc_to',
                               [dict(link_to=doc_uuid) for doc_uuid in self._link_to_uuids])
-        doc.setRequisiteValue('scan_doc_from', list())        
-        
+        doc.setRequisiteValue('scan_doc_from', list())
+
         # Настроить обоюдную связь с другими документами
         for link_doc_uuid in self._link_to_uuids:
             link_doc = ic.metadata.THIS.mtd.scan_document.create()
@@ -357,9 +357,9 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
             requisite = link_doc.getRequisite('scan_doc_from')
             requisite.addRow(link_from=doc.getUUID())
             link_doc.save_obj()
-        
-        doc.do_operation('create')              
-     
+
+        doc.do_operation('create')
+
     def clear_ctrl_data(self):
         """
         Очистить контролы для заполнения следующего документа.
@@ -369,7 +369,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         self.nobj_textCtrl.SetValue(u'')
         # self.doc_datePicker.SetValue(ic_time.pydate2wxdate(datetime.date.today()))
         self.docname_textCtrl.SetValue(u'')
-        
+
         # Отключил очистку контролов справочника типа документа и
         # справочника подразделения по просьбе архивариуса
         # После регистрации будет оставаться предыдущее значение для
@@ -378,10 +378,10 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         # self.doc_type_ctrl.setValue(None)
         # self.entity_ctrl.setValue(None)
         self.contragent_ctrl.setValue(None)
-        
+
         self.description_textCtrl.SetValue(u'')
         self.comment_textCtrl.SetValue(u'')
-        
+
         self.tag0_textCtrl.SetValue(u'')
         self.tag1_textCtrl.SetValue(u'')
         self.tag2_textCtrl.SetValue(u'')
@@ -392,72 +392,72 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         self.tag7_textCtrl.SetValue(u'')
         self.tag8_textCtrl.SetValue(u'')
         self.tag9_textCtrl.SetValue(u'')
-        
+
         self.link_listCtrl.DeleteAllItems()
-        
+
     def onRegButtonClick(self, event):
         """
         Обработчик кномпки <Зарегистрировать>.
         """
-        self.saveAutoComplit()
-        
+        # self.saveAutoComplit()
+
         ctrl_data = self.get_ctrl_data()
         if self.valid(ctrl_data):
             # Валидация прошла успешно можно регистрировать документ
             self.reg_doc(ctrl_data)
             self.clear_ctrl_data()
-            
-            ic_dlg.icMsgBox(u'РЕГИСТРАЦИЯ', 
+
+            ic_dlg.icMsgBox(u'РЕГИСТРАЦИЯ',
                             u'Новый документ <%s> зарегистрирован в БД.' % ctrl_data.get('n_doc', u''))
-            #if not ic_dlg.icAskBox(u'РЕГИСТРАЦИЯ', 
+            #if not ic_dlg.icAskBox(u'РЕГИСТРАЦИЯ',
             #                       u'Новый документ <%s> зарегистрирован в БД. Продолжить регистрацию?' % ctrl_data.get('n_doc', u'')):
             #    main_win = ic.getMainWin()
             #    main_win.delPageByTitle(u'Регистрация новых документов')
-        
+
         event.Skip()
-    
+
     def onAddLinkButtonClick(self, event):
         """
         Добавление связи с документом.
         """
         doc = ic.metadata.THIS.mtd.scan_document.create()
         docs_uuid = search_doc_form.choice_docs_dlg()
-        
-        if docs_uuid:            
+
+        if docs_uuid:
             for doc_uuid in docs_uuid:
                 doc_data = doc.loadRequisiteData(doc_uuid)
-                
+
                 if not self.valid_link(doc_uuid):
                     log.warning(u'Попытка добавления уже существующей связи с документом')
                     ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'))
                     continue
-            
+
                 self._link_to_uuids.append(doc_uuid)
-            
+
                 requisites = [requisite for requisite in doc.getChildrenRequisites() if requisite.isDescription()]
                 row_idx = 0
                 for i, requisite in enumerate(requisites):
-                
+
                     if requisite.__class__.__name__ == 'icNSIRequisite':
                         value = requisite.getStrData()
                     else:
                         value = requisite.getValue()
-                    
+
                     if isinstance(value, datetime.datetime):
                         value = value.strftime(DEFAULT_DATE_FMT)
                     elif not isinstance(value, str):
                         value = str(value)
-                    
+
                     if i == 0:
                         row_idx = self.link_listCtrl.InsertStringItem(sys.maxsize, value, i)
                     else:
                         self.link_listCtrl.SetStringItem(row_idx, i, value)
                 # Обновить размер колонок
                 for i in range(len(requisites)):
-                    self.link_listCtrl.SetColumnWidth(i, wx.LIST_AUTOSIZE)        
-            
+                    self.link_listCtrl.SetColumnWidth(i, wx.LIST_AUTOSIZE)
+
         event.Skip()
-        
+
     def onDelLinkButtonClick(self, event):
         """
         Удаление связи с документом.
@@ -466,9 +466,9 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         if idx != -1:
             del self._link_to_uuids[idx]
             self.link_listCtrl.DeleteItem(idx)
-            
-        event.Skip()        
-        
+
+        event.Skip()
+
     def onScanButtonClick(self, event):
         """
         Запуск сканирования.
@@ -479,7 +479,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
             os.remove(DEFAULT_SCAN_FILENAME)
         # Запуск сканирования
         result = scanner_mgr.do_scan_export(DEFAULT_SCAN_FILENAME)
-        
+
         if result and os.path.exists(DEFAULT_SCAN_FILENAME):
             # Если файл существует, то значит сканирование прошло успешно
             self.select_filePicker.SetInitialDirectory(os.path.dirname(DEFAULT_SCAN_FILENAME))
@@ -487,9 +487,9 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         else:
             log.warning(u'Файл сканирования не найден')
             self.select_filePicker.SetPath(u'')
-        
-        event.Skip()                
-        
+
+        event.Skip()
+
     def onDocNameText(self, event):
         """
         Ввод текста наименования документа.
@@ -497,9 +497,9 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         # Автозаполнение
         txt_ctrl = event.GetEventObject()
         self.autocomplit.AutoTextFill(txt_ctrl, 'docname_textCtrl')
-        
+
         event.Skip()
-        
+
     def doCapitalizeDocName(self):
         """
         Наименование документа сделать с большой буквы.
@@ -509,89 +509,89 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         txt = self.docname_textCtrl.GetValue()
         if txt:
             txt = txt[0].capitalize() + txt[1:]
-        self.docname_textCtrl.ChangeValue(txt)            
-        self.docname_textCtrl.SetSelection(*selection)            
-        
+        self.docname_textCtrl.ChangeValue(txt)
+        self.docname_textCtrl.SetSelection(*selection)
+
     def onTag0Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag0_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag0_textCtrl')
         event.Skip()
 
     def onTag1Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag1_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag1_textCtrl')
         event.Skip()
 
     def onTag2Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag2_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag2_textCtrl')
         event.Skip()
 
     def onTag3Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag3_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag3_textCtrl')
         event.Skip()
 
     def onTag4Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag4_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag4_textCtrl')
         event.Skip()
 
     def onTag5Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag5_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag5_textCtrl')
         event.Skip()
-        
+
     def onTag6Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag6_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag6_textCtrl')
         event.Skip()
 
     def onTag7Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag7_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag7_textCtrl')
         event.Skip()
-        
+
     def onTag8Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag8_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag8_textCtrl')
         event.Skip()
 
     def onTag9Text(self, event):
         """
         Авто заполнение тегов.
         """
-        txt_ctrl = event.GetEventObject()
-        self.autocomplit.AutoTextFill(txt_ctrl, 'tag9_textCtrl')
+        #txt_ctrl = event.GetEventObject()
+        #self.autocomplit.AutoTextFill(txt_ctrl, 'tag9_textCtrl')
         event.Skip()
-        
+
     def saveAutoComplit(self):
         """
         Сохранить авто заполнения.
@@ -608,4 +608,4 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
                                               tag7_textCtrl=self.tag7_textCtrl,
                                               tag8_textCtrl=self.tag8_textCtrl,
                                               tag9_textCtrl=self.tag9_textCtrl)
-        
+

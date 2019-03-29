@@ -49,8 +49,8 @@ ic_class_spc = {'type': 'GnuplotTrend',
                 'y_format': gnuplot_trend_proto.DEFAULT_Y_FORMAT,  # Формат представления данных оси Y
                 'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
                 'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
-                'x_tunes': gnuplot_trend_proto.DEFAULT_X_TUNES,     # Возможные настройки шкалы X
-                'y_tunes': gnuplot_trend_proto.DEFAULT_Y_TUNES,     # Возможные настройки шкалы Y
+                # 'x_tunes': gnuplot_trend_proto.DEFAULT_X_TUNES,     # Возможные настройки шкалы X
+                # 'y_tunes': gnuplot_trend_proto.DEFAULT_Y_TUNES,     # Возможные настройки шкалы Y
                 'x_precision': gnuplot_trend_proto.DEFAULT_X_PRECISION,  # Цена деления сетки тренда по шкале X
                 'y_precision': gnuplot_trend_proto.DEFAULT_Y_PRECISION,  # Цена деления сетки тренда по шкале Y
 
@@ -144,7 +144,7 @@ class icGnuplotTrend(icwidget.icWidget,
         # Инициализация внутренного состояния контрола:
 
         # Шкалы настройки
-        self.setTunes(self.x_tunes, self.y_tunes)
+        # self.setTunes(self.x_tunes, self.y_tunes)
         # Цена деления
         self.setPrecisions(self.x_precision, self.y_precision)
         # Формат шкал

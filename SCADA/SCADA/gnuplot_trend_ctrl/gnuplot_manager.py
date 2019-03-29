@@ -32,7 +32,7 @@ from ic.log import log
 from ic.utils import txtfunc
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Разделитель комманд gnuplot
 COMMAND_DELIMETER = ';'
@@ -170,14 +170,17 @@ class icGnuplotManager(object):
         cmd = 'set xtics rotate'
         return self._enableCommand(cmd, enable)
 
-    def enableOutputPNG(self, enable=True):
+    def setOutputPNG(self, background_color=None):
         """
         Вкл./Выкл. вывода графика в формате PNG.
-        @param enable: True - включить/False - выключить.
+        @param background_color: Цвет фона PNG.
         @return: True/False.
         """
+        cmd_sign = 'set terminal png'
         cmd = 'set terminal png'
-        return self._enableCommand(cmd, enable)
+        if background_color is not None:
+            cmd += ' background rgb \'%s\'' % background_color
+        return self._appendCommand(cmd, cmd_sign)
 
     def setOutputSize(self, width, height):
         """
@@ -311,3 +314,43 @@ class icGnuplotManager(object):
 
     # Другое наименование метода
     gen = runCommands
+
+    def setBorderColour(self, line_color):
+        """
+        Установить цвет обрамления графика.
+        @param line_color: Цвет линии.
+        @return: True/False.
+        """
+        cmd_sign = 'set border linecolor'
+        cmd = 'set border linecolor rgb \'%s\'' % line_color
+        return self._appendCommand(cmd, cmd_sign)
+
+    def setGridColour(self, line_color):
+        """
+        Установить цвет сетки графика.
+        @param line_color: Цвет линии.
+        @return: True/False.
+        """
+        cmd_sign = 'set grid linecolor'
+        cmd = 'set grid linecolor rgb \'%s\'' % line_color
+        return self._appendCommand(cmd, cmd_sign)
+
+    def setXTextColour(self, text_color):
+        """
+        Установить цвет надписей шкалы X графика.
+        @param text_color: Цвет надписей.
+        @return: True/False.
+        """
+        cmd_sign = 'set xtics textcolor'
+        cmd = 'set xtics textcolor rgb \'%s\'' % text_color
+        return self._appendCommand(cmd, cmd_sign)
+
+    def setYTextColour(self, text_color):
+        """
+        Установить цвет надписей шкалы Y графика.
+        @param text_color: Цвет надписей.
+        @return: True/False.
+        """
+        cmd_sign = 'set ytics textcolor'
+        cmd = 'set ytics textcolor rgb \'%s\'' % text_color
+        return self._appendCommand(cmd, cmd_sign)

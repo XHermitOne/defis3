@@ -21,6 +21,8 @@ from ic.bitmap import ic_bmp
 from ic.components import icwidget
 from . import gnuplot_manager
 
+# MAX_Y_VALUE = 10000.0
+
 # Полное имя файла утилиты gnuplot
 GNUPLOT_FILENAME = 'gnuplot'
 
@@ -43,8 +45,8 @@ PDF_FILE_TYPE = 'PDF'
 DATA_FILE_EXT = '.dat'
 
 # Возможные настройки шкал по умолчанию
-DEFAULT_X_TUNES = ('00:00:10', '00:00:20', '00:00:30', '00:01:00', '00:05:00', '00:20:00', '00:30:00', '01:00:00')
-DEFAULT_Y_TUNES = (1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0)
+# DEFAULT_X_TUNES = ('00:00:10', '00:00:20', '00:00:30', '00:01:00', '00:05:00', '00:20:00', '00:30:00', '01:00:00')
+# DEFAULT_Y_TUNES = (1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0)
 
 # Цена деления по умолчанию
 DEFAULT_X_PRECISION = '01:00:00'
@@ -59,8 +61,8 @@ SPC_IC_GNUPLOT_TREND = {'x_format': DEFAULT_X_FORMAT,   # Формат пред�
                         'y_format': DEFAULT_Y_FORMAT,   # Формат представления данных оси Y
                         'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
                         'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
-                        'x_tunes': DEFAULT_X_TUNES,     # Возможные настройки шкалы X
-                        'y_tunes': DEFAULT_Y_TUNES,     # Возможные настройки шкалы Y
+                        # 'x_tunes': DEFAULT_X_TUNES,     # Возможные настройки шкалы X
+                        # 'y_tunes': DEFAULT_Y_TUNES,     # Возможные настройки шкалы Y
                         'x_precision': DEFAULT_X_PRECISION,     # Цена деления сетки тренда по шкале X
                         'y_precision': DEFAULT_Y_PRECISION,     # Цена деления сетки тренда по шкале Y
 
@@ -69,8 +71,8 @@ SPC_IC_GNUPLOT_TREND = {'x_format': DEFAULT_X_FORMAT,   # Формат пред�
                                          'y_format': u'Формат представления данных оси Y',
                                          'scene_min': u'Минимальное значение видимой сцены тренда',
                                          'scene_max': u'Максимальное значение видимой сцены тренда',
-                                         'x_tunes': u'Возможные настройки шкалы X',
-                                         'y_tunes': u'Возможные настройки шкалы Y',
+                                         # 'x_tunes': u'Возможные настройки шкалы X',
+                                         # 'y_tunes': u'Возможные настройки шкалы Y',
                                          'x_precision': u'Цена деления сетки тренда по шкале X',
                                          'y_precision': u'Цена деления сетки тренда по шкале Y',
                                          },
@@ -119,8 +121,8 @@ class icGnuplotTrendProto(wx.Panel):
         self._cur_scene = None
 
         # Шкалы настройки
-        self._x_tunes = DEFAULT_X_TUNES
-        self._y_tunes = DEFAULT_Y_TUNES
+        # self._x_tunes = DEFAULT_X_TUNES
+        # self._y_tunes = DEFAULT_Y_TUNES
         # Цена деления
         self._x_precision = DEFAULT_X_PRECISION
         self._y_precision = DEFAULT_Y_PRECISION
@@ -171,20 +173,20 @@ class icGnuplotTrendProto(wx.Panel):
         self._cur_scene = tuple(scene)
         return self._cur_scene
 
-    def setTunes(self, x_tunes=None, y_tunes=None):
-        """
-        Установить шкалы настройки.
-        @param x_tunes: Шкала настройки по оси X.
-            Если None, то шкала не устанавливается.
-        @param y_tunes: Шкала настройки по оси Y.
-            Если None, то шкала не устанавливается.
-        @return: Кортеж (x_tunes, y_tunes) текущих шкал настройки.
-        """
-        if x_tunes is not None:
-            self._x_tunes = x_tunes
-        if y_tunes is not None:
-            self._y_tunes = y_tunes
-        return self._x_tunes, self._y_tunes
+    # def setTunes(self, x_tunes=None, y_tunes=None):
+    #     """
+    #     Установить шкалы настройки.
+    #     @param x_tunes: Шкала настройки по оси X.
+    #         Если None, то шкала не устанавливается.
+    #     @param y_tunes: Шкала настройки по оси Y.
+    #         Если None, то шкала не устанавливается.
+    #     @return: Кортеж (x_tunes, y_tunes) текущих шкал настройки.
+    #     """
+    #     if x_tunes is not None:
+    #         self._x_tunes = x_tunes
+    #     if y_tunes is not None:
+    #         self._y_tunes = y_tunes
+    #     return self._x_tunes, self._y_tunes
 
     def setFormats(self, x_format=None, y_format=None):
         """
@@ -471,9 +473,15 @@ class icGnuplotTrendProto(wx.Panel):
         if scene[0] != scene[2] and scene[1] != scene[3]:
             self.__gnuplot_manager.setXRange(self._dt2str(scene[0], x_format),
                                              self._dt2str(scene[2], x_format))
+            self.__gnuplot_manager.setYRange(float(scene[1]), float(scene[3]))
 
-        self.__gnuplot_manager.enableOutputPNG()
+        self.__gnuplot_manager.setOutputPNG(background_color='black')
         self.__gnuplot_manager.setOutputFilename(frame_filename)
+        self.__gnuplot_manager.setBorderColour('#A9A9A9')   # darkgray
+        self.__gnuplot_manager.setGridColour('#A9A9A9')     # darkgray
+        self.__gnuplot_manager.setXTextColour('#008B8B')    # darkcyan
+        self.__gnuplot_manager.setYTextColour('#008B8B')    # darkcyan
+
         if size is not None:
             width, height = size
             width = max(width, MIN_FRAME_WIDTH)
@@ -644,13 +652,11 @@ class icGnuplotTrendProto(wx.Panel):
         @param redraw: Произвести перерисовку кадра тренда?
         @return: True/False.
         """
-        try:
-            prev_idx = self._x_tunes.index(self._x_precision)
-        except:
-            log.fatal(u'Ошибка определения цены деления <%s> на шкале настройки' % str(self._x_precision))
-            prev_idx = 0
-        next_idx = min(len(self._x_tunes), max(0, prev_idx + step))
-        self._x_precision = self._x_tunes[next_idx]
+        self._cur_scene = (self._cur_scene[0],
+                           self._cur_scene[1],
+                           max(self._cur_scene[2] + step * self._x_precision,
+                               self._cur_scene[0] + self._x_precision),
+                           self._cur_scene[3])
 
         if redraw:
             self.draw(redraw=redraw)
@@ -665,13 +671,10 @@ class icGnuplotTrendProto(wx.Panel):
         @param redraw: Произвести перерисовку кадра тренда?
         @return: True/False.
         """
-        try:
-            prev_idx = self._y_tunes.index(self._y_precision)
-        except:
-            log.fatal(u'Ошибка определения цены деления <%s> на шкале настройки' % str(self._y_precision))
-            prev_idx = 0
-        next_idx = min(len(self._y_tunes), max(0, prev_idx + step))
-        self._y_precision = self._y_tunes[next_idx]
+        self._cur_scene = (self._cur_scene[0],
+                           self._cur_scene[1],
+                           self._cur_scene[2],
+                           max(self._cur_scene[3] + step * self._y_precision, self._y_precision))
 
         if redraw:
             self.draw(redraw=redraw)

@@ -198,16 +198,16 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
 
     def onZoomInButtonClick(self, event):
         """
-        Увеличение цены деления по Y.
+        Масштабирование. Увеличение.
         """
-        self.getTrend().zoomY(step=1)
+        self.getTrend().zoomY(step=-1)
         event.Skip()
 
     def onZoomOutButtonClick(self, event):
         """
-        Уменьшение цены деления по Y.
+        Масштабирование. Уменьшение.
         """
-        self.getTrend().zoomY(step=-1)
+        self.getTrend().zoomY(step=1)
         event.Skip()
 
     def onFirstButtonClick(self, event):
@@ -238,16 +238,16 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
 
     def onTimeZoomInButtonClick(self, event):
         """
-        Увеличение цены деления по временной шкале (шкала X).
+        Масштабирование. Увеличение по временной шкале (шкала X).
         """
-        self.getTrend().zoomX(step=1)
+        self.getTrend().zoomX(step=-1)
         event.Skip()
 
     def onTimeZoomOutButtonClick(self, event):
         """
-        Уменьшение цены деления по временной шкале (шкала X).
+        Масштабирование. Уменьшение по временной шкале (шкала X).
         """
-        self.getTrend().zoomX(step=-1)
+        self.getTrend().zoomX(step=1)
         event.Skip()
 
 
