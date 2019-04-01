@@ -23,10 +23,12 @@ from SCADA.scada_proto import history
 SPC_IC_SQLWIDEHISTORY = {'table': None,     # Таблица БД
                          'get_tab_name': None,  # Метод определения имени таблицы
                          'rec_filter': None,    # Дополнительная функция фильтрации исторических данных
+                         'dt_fieldname': 'dt',  # Наименование поля времменного значения
                          '__parent__': icwidget.SPC_IC_SIMPLE,
                          '__attr_help__': {'table': u'Паспорт таблицы хранения исторических данных',
                                            'get_tab_name': u'Метод определения имени таблицы',
                                            'rec_filter': u'Дополнительная функция фильтрации исторических данных',
+                                           'dt_fieldname': u'Наименование поля времменного значения',
                                            },
                          }
 
@@ -73,7 +75,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
+
+# Имя поля временных значений по умолчанию
+DEFAULT_DT_FIELDNAME = 'dt'
 
 
 # Функции редактирования
@@ -185,6 +190,14 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
         """
         return self.getICAttr('get_tab_name')
 
+    def getDTFieldName(self):
+        """
+        Определить имя поля с временными значениями таблицы исторических данных в БД.
+        @return: Имя поля.
+        """
+        dt_fieldname = self.getICAttr('dt_fieldname')
+        return dt_fieldname if dt_fieldname else DEFAULT_DT_FIELDNAME
+
     def getTable(self, table_name=None):
         """
         Объект таблицы исторических данных.
@@ -266,7 +279,8 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
         tab = self.getTable()
         log.debug(u'Чтение исторических данных из таблицы <%s>' % tab.getDBTableName())
         if tab:
-            recordset = tab.select(tab.dataclass.c.dt.between(start_dt, stop_dt))
+            dt_field = getattr(tab.dataclass.c, self.getDTFieldName())
+            recordset = tab.select(dt_field.between(start_dt, stop_dt))
             records = [dict(record) for record in recordset]
 
             if rec_filter:
@@ -297,7 +311,8 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
             Или None в случае ошибки.
         """
         records = self.get(start_dt, stop_dt, rec_filter=rec_filter)
-        tag_data = [(rec.get('dt', None), rec.get(tag_name, 0)) for rec in records]
+        dt_fieldname = self.getDTFieldName()
+        tag_data = [(rec.get(dt_fieldname, None), rec.get(tag_name, 0)) for rec in records]
         # Обязательно отсортировать по времени
         tag_data.sort()
         return tag_data
