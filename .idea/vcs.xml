@@ -4,5 +4,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/archive/dbfpy3" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ayan_dealer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ic/report/icreport" vcs="Git" />
   </component>
 </project>
