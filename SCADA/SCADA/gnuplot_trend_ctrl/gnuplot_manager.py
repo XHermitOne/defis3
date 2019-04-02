@@ -212,7 +212,7 @@ class icGnuplotManager(object):
         @param background_color: Цвет фона PNG.
         @return: True/False.
         """
-        # self._deleteCommand('set terminal pdf')
+        self._deleteCommand('set terminal pdf')
         cmd_sign = 'set terminal png'
         cmd = 'set terminal png'
         if background_color is not None:
@@ -226,7 +226,7 @@ class icGnuplotManager(object):
             По умолчанию белый.
         @return: True/False.
         """
-        # self._deleteCommand('set terminal png')
+        self._deleteCommand('set terminal png')
         cmd_sign = 'set terminal pdf'
         cmd = 'set terminal pdf'
         if background_color is not None:
@@ -240,7 +240,7 @@ class icGnuplotManager(object):
         @param height: Высота.
         @return: True/False.
         """
-        # self._deleteCommand('set term pdf monochrome size')
+        self._deleteCommand('set term pdf monochrome size')
         cmd_sign = 'set term png size'
         cmd = 'set term png size %d, %d' % (int(width), int(height))
         return self._appendCommand(cmd, cmd_sign)
@@ -252,7 +252,7 @@ class icGnuplotManager(object):
         @param height: Высота.
         @return: True/False.
         """
-        # self._deleteCommand('set term png size')
+        self._deleteCommand('set term png size')
         cmd_sign = 'set term pdf monochrome size'
         cmd = 'set term pdf monochrome size %d, %d' % (int(width), int(height))
         return self._appendCommand(cmd, cmd_sign)
@@ -327,6 +327,8 @@ class icGnuplotManager(object):
         if not self.commands:
             self.commands.append(cmd)
         else:
+            self._deleteCommand(cmd_sign)
+
             last_cmd = self.commands[-1]
             if last_cmd.startswith(cmd_sign):
                 self.commands[-1] = cmd
