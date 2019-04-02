@@ -134,6 +134,7 @@ class icGnuplotTrendNavigatorPanelProto ( wx.Panel ):
 		
 		# Connect Events
 		self.Bind( wx.aui.EVT_AUI_PANE_CLOSE, self.onNavigatorAuiPaneClose )
+		self.Bind( wx.EVT_SIZE, self.onNavigatorSize )
 		self.view_bpButton.Bind( wx.EVT_BUTTON, self.onViewButtonClick )
 		self.print_bpButton.Bind( wx.EVT_BUTTON, self.onPrintButtonClick )
 		self.legend_bpButton.Bind( wx.EVT_BUTTON, self.onLegendButtonClick )
@@ -158,6 +159,9 @@ class icGnuplotTrendNavigatorPanelProto ( wx.Panel ):
 	
 	# Virtual event handlers, overide them in your derived class
 	def onNavigatorAuiPaneClose( self, event ):
+		event.Skip()
+	
+	def onNavigatorSize( self, event ):
 		event.Skip()
 	
 	def onViewButtonClick( self, event ):

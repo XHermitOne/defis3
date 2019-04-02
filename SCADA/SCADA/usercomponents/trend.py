@@ -87,7 +87,7 @@ ic_can_not_contain = None
 __version__ = (0, 0, 0, 3)
 
 
-class icTrendProto(parentModule.PlotCanvas):
+class icTrendPlotCanvas(parentModule.PlotCanvas):
     """
     Объект временного графика. Тренд.
     """
@@ -154,7 +154,7 @@ class icTrendProto(parentModule.PlotCanvas):
         return list()
 
 
-class icTrend(icwidget.icWidget, icTrendProto):
+class icTrend(icwidget.icWidget, icTrendPlotCanvas):
     """
     Объект временного графика. Тренд.
 
@@ -202,7 +202,7 @@ class icTrend(icwidget.icWidget, icTrendProto):
         #   !!! Конструктор наследуемого класса !!!
         #   Необходимо вставить реальные параметры конструкора.
         #   На этапе генерации их не всегда можно определить.
-        icTrendProto.__init__(self, parent)
+        icTrendPlotCanvas.__init__(self, parent)
 
         #   Создаем дочерние компоненты
         self.childCreator(bCounter, progressDlg)

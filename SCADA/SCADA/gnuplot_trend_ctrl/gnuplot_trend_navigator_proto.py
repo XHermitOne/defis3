@@ -250,6 +250,13 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
         self.getTrend().zoomX(step=1)
         event.Skip()
 
+    # def onNavigatorSize(self, event):
+    #     """
+    #     Изменение размера панели навигатора.
+    #     """
+    #     self.showLegend(self.__is_show_legend)
+    #     event.Skip()
+
 
 def test():
     """

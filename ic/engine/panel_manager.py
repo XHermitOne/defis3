@@ -490,6 +490,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         elif resize_panel == 1:
             split_mode = splitter.GetSplitMode()
             sash_pos = splitter.GetSize().GetHeight() if split_mode == wx.SPLIT_HORIZONTAL else splitter.GetSize().GetWidth()
+            log.debug(u'Свертывание панели <%d>' % sash_pos)
             splitter.SetSashPosition(sash_pos - 1)
         else:
             log.warning(u'Не корректный индекс сворачиваемой панели')
@@ -530,6 +531,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         if resize_panel == 0:
             splitter.SetSashPosition(last_sash_position)
         elif resize_panel == 1:
+            log.debug(u'Развертывание панели <%d>' % last_sash_position)
             splitter.SetSashPosition(last_sash_position)
         else:
             log.warning(u'Не корректный индекс сворачиваемой панели')
