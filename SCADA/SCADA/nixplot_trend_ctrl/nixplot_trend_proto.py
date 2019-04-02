@@ -22,17 +22,14 @@ from ic.bitmap import ic_bmp
 
 from ic.components import icwidget
 
+from SCADA.scada_proto import trend_proto
+
 # Полное имя файла утилиты nixplot
 PACKAGE_PATH = os.path.dirname(__file__) if os.path.dirname(__file__) else '.'
 NIXPLOT_FILENAME = os.path.join(PACKAGE_PATH, 'nixplot')
 
 # Папка размещения кадров трендов
 DEFAULT_NIXPLOT_FRAME_PATH = os.path.join(ic_file.getProfilePath(), 'nixplot')
-
-# Форматы используемые для отображения временной шкалы
-DEFAULT_TIME_FMT = '%H:%M:%S'
-DEFAULT_DATE_FMT = '%d.%m.%Y'
-DEFAULT_DATETIME_FMT = '%d.%m.%Y-%H:%M:%S'
 
 # Минимальные размеры кадра
 MIN_FRAME_WIDTH = 640
@@ -50,13 +47,9 @@ DEFAULT_Y_TUNES = (1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0)
 DEFAULT_X_PRECISION = '01:00:00'
 DEFAULT_Y_PRECISION = '1.0'
 
-# Формат шкал по умолчанию
-DEFAULT_X_FORMAT = 'time'
-DEFAULT_Y_FORMAT = 'numeric'
-
 # --- Спецификация ---
-SPC_IC_NIXPLOT_TREND = {'x_format': DEFAULT_X_FORMAT,   # Формат представления данных оси X
-                        'y_format': DEFAULT_Y_FORMAT,   # Формат представления данных оси Y
+SPC_IC_NIXPLOT_TREND = {'x_format': trend_proto.DEFAULT_X_FORMAT,   # Формат представления данных оси X
+                        'y_format': trend_proto.DEFAULT_Y_FORMAT,   # Формат представления данных оси Y
                         'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
                         'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
                         'x_tunes': DEFAULT_X_TUNES,     # Возможные настройки шкалы X
@@ -77,10 +70,10 @@ SPC_IC_NIXPLOT_TREND = {'x_format': DEFAULT_X_FORMAT,   # Формат пред�
                         }
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
-class icNixplotTrendProto(wx.Panel):
+class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     """
     Базовый класс временного графика. Тренд.
     """
@@ -104,13 +97,7 @@ class icNixplotTrendProto(wx.Panel):
         self.SetSizer(self.sizer)
         self.Fit()
 
-        self.start_datetime = None
-        self.stop_datetime = None
-        today = datetime.date.today()
-        self.start_datetime = datetime.datetime.combine(today,
-                                                        datetime.datetime.min.time())
-        self.stop_datetime = datetime.datetime.combine(today+datetime.timedelta(days=1),
-                                                       datetime.datetime.min.time())
+        trend_proto.icTrendProto.__init__(self, *args, **kwargs)
 
         self.setDefaults()
 
@@ -125,8 +112,8 @@ class icNixplotTrendProto(wx.Panel):
         self._x_precision = DEFAULT_X_PRECISION
         self._y_precision = DEFAULT_Y_PRECISION
         # Формат шкал
-        self._x_format = DEFAULT_X_FORMAT
-        self._y_format = DEFAULT_Y_FORMAT
+        self._x_format = trend_proto.DEFAULT_X_FORMAT
+        self._y_format = trend_proto.DEFAULT_Y_FORMAT
 
         # ВНИМАНИЕ! Если необходимо удалить/освободить
         # ресуры при удалении контрола, то необходимо воспользоваться
@@ -193,60 +180,6 @@ class icNixplotTrendProto(wx.Panel):
         if y_format is not None:
             self._y_format = y_format
         return self._x_format, self._y_format
-
-    def _dt2str(self, dt_value=None, time_format=DEFAULT_X_FORMAT):
-        """
-        Преобразование datetime в строковый вид согласно формату.
-        @param dt_value: Значение datetime.datetime или datetime.timedelta.
-        @param time_format: Формат представления.
-        @return: Отформатированная строка значений datetime.
-        """
-        if time_format == 'time':
-            time_format = DEFAULT_TIME_FMT
-        elif time_format == 'date':
-            time_format = DEFAULT_DATE_FMT
-        elif time_format == 'datetime':
-            time_format = DEFAULT_DATETIME_FMT
-
-        if isinstance(dt_value, datetime.datetime) or isinstance(dt_value, datetime.date):
-            return dt_value.strftime(time_format)
-        elif isinstance(dt_value, datetime.timedelta):
-            return ic_time.strfdelta(dt_value, fmt='{H:02}h {M:02}m {S:02}s')
-        else:
-            log.warning(u'Не поддерживаемый тип временных значений <%s>' % dt_value.__class__.__name__)
-        return ''
-
-    def _str2dt(self, time_value=None, time_format=DEFAULT_X_FORMAT, bToTimeDelta=False):
-        """
-        Преобразование строкового представления значений
-        временной шкалы в datetime вид.
-        @param time_value: Строковое представление даты-вермени.
-        @param time_format: Формат представления.
-        @param bToTimeDelta: Преобразовать в datetime.timedelta?
-        @return: datetime.datetime/datetime.timedelta, соответствующий строковому представлению.
-        """
-        if time_format == 'time':
-            time_format = DEFAULT_TIME_FMT
-            dt = datetime.datetime.strptime(time_value, time_format)
-            if bToTimeDelta:
-                return datetime.timedelta(hours=dt.hour, minutes=dt.minute, seconds=dt.second)
-        elif time_format == 'date':
-            time_format = DEFAULT_DATE_FMT
-            dt = datetime.datetime.strptime(time_value, time_format)
-            if bToTimeDelta:
-                return datetime.timedelta(days=dt.day)
-        elif time_format == 'datetime':
-            time_format = DEFAULT_DATETIME_FMT
-            dt = datetime.datetime.strptime(time_value, time_format)
-            if bToTimeDelta:
-                return datetime.timedelta(days=dt.day,
-                                          hours=dt.hour, minutes=dt.minute, seconds=dt.second)
-        else:
-            dt = datetime.datetime.strptime(time_value, time_format)
-            if bToTimeDelta:
-                return datetime.timedelta(days=dt.day,
-                                          hours=dt.hour, minutes=dt.minute, seconds=dt.second)
-        return dt
 
     def setPrecisions(self, x_precision=None, y_precision=None):
         """
@@ -468,9 +401,9 @@ class icNixplotTrendProto(wx.Panel):
             scene = self._cur_scene
 
         if scene[0] != scene[2] and scene[1] != scene[3]:
-            scene_points_str = '%s/%s,%s/%s' % (scene[0].strftime(DEFAULT_TIME_FMT) if isinstance(scene[0], datetime.datetime) else scene[0],
+            scene_points_str = '%s/%s,%s/%s' % (scene[0].strftime(trend_proto.DEFAULT_TIME_FMT) if isinstance(scene[0], datetime.datetime) else scene[0],
                                                 float(scene[1]),
-                                                scene[2].strftime(DEFAULT_TIME_FMT) if isinstance(scene[2], datetime.datetime) else scene[2],
+                                                scene[2].strftime(trend_proto.DEFAULT_TIME_FMT) if isinstance(scene[2], datetime.datetime) else scene[2],
                                                 float(scene[3]))
             cmd += '--scene=%s ' % scene_points_str
 
@@ -481,7 +414,7 @@ class icNixplotTrendProto(wx.Panel):
         if points is not None:
             points_lst = list()
             for point in points:
-                points_lst.append('%s/%s' % (point[0].strftime(DEFAULT_TIME_FMT) if isinstance(point[0], datetime.datetime) else float(point[0]),
+                points_lst.append('%s/%s' % (point[0].strftime(trend_proto.DEFAULT_TIME_FMT) if isinstance(point[0], datetime.datetime) else float(point[0]),
                                              float(point[1])))
             if points_lst:
                 points_str = ','.join(points_lst)
@@ -576,13 +509,6 @@ class icNixplotTrendProto(wx.Panel):
         else:
             # Если перья не определены то просто отобразить тренд
             self.draw_empty(size=size)
-
-    def getPens(self):
-        """
-        Список перьев тренда.
-        """
-        log.warning(u'Не определен метод получения перьев')
-        return list()
 
     def adaptScene(self, graph_data=None):
         """

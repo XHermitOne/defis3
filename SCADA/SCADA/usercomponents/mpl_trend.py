@@ -22,19 +22,11 @@ from ic.components import icResourceParser as prs
 from ic.log import log
 from ic.utils import util
 from ic.bitmap import ic_bmp
-from ic.utils import ic_time
 
+from SCADA.scada_proto import trend_proto
 
 # --- Спецификация ---
-# Форматы используемые для отображения временной шкалы
-DEFAULT_TIME_FMT = '%H:%M:%S'
-DEFAULT_DATE_FMT = '%d.%m.%Y'
-DEFAULT_DATETIME_FMT = '%d.%m.%Y-%H:%M:%S'
-DEFAULT_FORMATS = (DEFAULT_TIME_FMT,
-                   DEFAULT_DATETIME_FMT,
-                   DEFAULT_DATE_FMT)
-
-SPC_IC_MPLTREND = {'time_axis_fmt': DEFAULT_TIME_FMT,   # Формат данных оси времени
+SPC_IC_MPLTREND = {'time_axis_fmt': trend_proto.DEFAULT_TIME_FMT,   # Формат данных оси времени
                    'show_grid': True,   # Отображать сетку?
                    '__parent__': icwidget.SPC_IC_WIDGET,
                    '__attr_hlp__': {'time_axis_fmt': u'Формат данных оси времени',
@@ -60,7 +52,7 @@ ic_class_spc = {'type': 'MPLTrend',
 
                 '__styles__': ic_class_styles,
                 '__events__': {},
-                '__lists__': {'time_axis_fmt': list(DEFAULT_FORMATS)},
+                '__lists__': {'time_axis_fmt': list(trend_proto.DEFAULT_DT_FORMATS)},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
                                                             ],
                                    icDefInf.EDT_CHOICE: ['time_axis_fmt'],
@@ -86,10 +78,10 @@ ic_can_contain = ['TrendPen']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 1, 2, 1)
 
 
-class icMPLTrendProto(wx.Panel):
+class icMPLTrendProto(wx.Panel, trend_proto.icTrendProto):
     """
     Базовый класс временного графика. Тренд.
     """
@@ -109,63 +101,9 @@ class icMPLTrendProto(wx.Panel):
         self.SetSizer(self.sizer)
         self.Fit()
 
-        self.start_datetime = None
-        self.stop_datetime = None
-        today = datetime.date.today()
-        self.start_datetime = datetime.datetime.combine(today,
-                                                        datetime.datetime.min.time())
-        self.stop_datetime = datetime.datetime.combine(today+datetime.timedelta(days=1),
-                                                       datetime.datetime.min.time())
+        trend_proto.icTrendProto.__init__(self, *args, **kwargs)
 
         self.setDefaults()
-
-    def _convertDate(self, dt):
-        """
-        Корректное преобразование типа даты в datetime.datetime.
-        @param dt: Дата.
-        @return: Дата-время.
-        """
-        new_dt = None
-        if isinstance(dt, datetime.date):
-            # Если дата задается datetime.date
-            # то сделать перевод в datetime.datetime
-            new_dt = datetime.datetime.combine(dt,
-                                               datetime.datetime.min.time())
-        elif isinstance(dt, wx.DateTime):
-            new_dt = ic_time.wxdatetime2pydatetime(dt)
-        elif dt is None:
-            new_dt = datetime.datetime.now()
-        elif isinstance(dt, datetime.datetime):
-            new_dt = dt
-        else:
-            assert isinstance(dt, (datetime.datetime, datetime.date))
-        return new_dt
-
-    def setStartDT(self, new_dt):
-        """
-        Начальная дата-время тренда.
-        @param new_dt: Новое значение.
-        """
-        self.start_datetime = self._convertDate(new_dt)
-
-    def getStartDT(self):
-        """
-        Начальная дата-время тренда.
-        """
-        return self.start_datetime
-
-    def setStopDT(self, new_dt):
-        """
-        Конечная дата-время тренда.
-        @param new_dt: Новое значение.
-        """
-        self.stop_datetime = self._convertDate(new_dt)
-
-    def getStopDT(self):
-        """
-        Конечная дата-время тренда.
-        """
-        return self.stop_datetime
 
     def getTimeFormat(self):
         """
@@ -208,19 +146,6 @@ class icMPLTrendProto(wx.Panel):
         self.axes.plot(time_float, [1])
         self.figure.canvas.draw()
 
-    def getPenData(self, pen_index=0):
-        """
-        Данные соответствующие перу.
-        @param pen_index: Индекс пера. По умолчанию берется первое перо.
-        @return: Список (Время, Значение)
-        """
-        pens = self.getPens()
-
-        if pens and pen_index < len(pens):
-            return pens[pen_index].getLineData()
-
-        return list()
-
     def draw(self, redraw=True):
         """
         Основной метод отрисовки тренда.
@@ -260,25 +185,6 @@ class icMPLTrendProto(wx.Panel):
         else:
             # Если перья не определены то просто отобразить тренд
             self.draw_empty()
-
-    def getPens(self):
-        """
-        Список перьев тренда.
-        """
-        return list()
-
-    def setHistory(self, history):
-        """
-        Поменять источник данных для всех перьев тренда.
-        @param history: Объект исторических данных - источника данных.
-        @return: True/False.
-        """
-        pens = self.getPens()
-
-        result = True
-        for pen in pens:
-            result = result and pen.setHistory(history)
-        return result
 
 
 class icMPLTrend(icwidget.icWidget, icMPLTrendProto):

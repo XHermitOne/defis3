@@ -19,13 +19,9 @@ from ic.utils import util
 from ic.bitmap import ic_bmp
 
 from SCADA.nixplot_trend_ctrl import nixplot_trend_proto
-
+from SCADA.scada_proto import trend_proto
 
 # --- Спецификация ---
-DEFAULT_FORMATS = (nixplot_trend_proto.DEFAULT_TIME_FMT,
-                   nixplot_trend_proto.DEFAULT_DATETIME_FMT,
-                   nixplot_trend_proto.DEFAULT_DATE_FMT)
-
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
 
@@ -45,8 +41,8 @@ ic_class_spc = {'type': 'NixplotTrend',
                 'activate': True,
                 '_uuid': None,
 
-                'x_format': nixplot_trend_proto.DEFAULT_X_FORMAT,  # Формат представления данных оси X
-                'y_format': nixplot_trend_proto.DEFAULT_Y_FORMAT,  # Формат представления данных оси Y
+                'x_format': trend_proto.DEFAULT_X_FORMAT,  # Формат представления данных оси X
+                'y_format': trend_proto.DEFAULT_Y_FORMAT,  # Формат представления данных оси Y
                 'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
                 'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
                 'x_tunes': nixplot_trend_proto.DEFAULT_X_TUNES,     # Возможные настройки шкалы X
@@ -84,7 +80,7 @@ ic_can_contain = ['TrendPen']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icNixplotTrend(icwidget.icWidget,

@@ -21,6 +21,8 @@ from ic.bitmap import ic_bmp
 from ic.components import icwidget
 from . import gnuplot_manager
 
+from SCADA.scada_proto import trend_proto
+
 # MAX_Y_VALUE = 10000.0
 
 # Полное имя файла утилиты gnuplot
@@ -28,11 +30,6 @@ GNUPLOT_FILENAME = 'gnuplot'
 
 # Папка размещения кадров трендов
 DEFAULT_GNUPLOT_FRAME_PATH = os.path.join(ic_file.getProfilePath(), 'gnuplot')
-
-# Форматы используемые для отображения временной шкалы
-DEFAULT_TIME_FMT = '%H:%M:%S'
-DEFAULT_DATE_FMT = '%d.%m.%Y'
-DEFAULT_DATETIME_FMT = '%d.%m.%Y-%H:%M:%S'
 
 # Минимальные размеры кадра
 MIN_FRAME_WIDTH = 640
@@ -52,13 +49,9 @@ DATA_FILE_EXT = '.dat'
 DEFAULT_X_PRECISION = '01:00:00'
 DEFAULT_Y_PRECISION = '1.0'
 
-# Формат шкал по умолчанию
-DEFAULT_X_FORMAT = 'time'
-DEFAULT_Y_FORMAT = 'numeric'
-
 # --- Спецификация ---
-SPC_IC_GNUPLOT_TREND = {'x_format': DEFAULT_X_FORMAT,   # Формат представления данных оси X
-                        'y_format': DEFAULT_Y_FORMAT,   # Формат представления данных оси Y
+SPC_IC_GNUPLOT_TREND = {'x_format': trend_proto.DEFAULT_X_FORMAT,   # Формат представления данных оси X
+                        'y_format': trend_proto.DEFAULT_Y_FORMAT,   # Формат представления данных оси Y
                         'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
                         'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
                         # 'x_tunes': DEFAULT_X_TUNES,     # Возможные настройки шкалы X
@@ -79,10 +72,10 @@ SPC_IC_GNUPLOT_TREND = {'x_format': DEFAULT_X_FORMAT,   # Формат пред�
                         }
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
-class icGnuplotTrendProto(wx.Panel):
+class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     """
     Базовый класс временного графика. Тренд.
     """
@@ -106,13 +99,7 @@ class icGnuplotTrendProto(wx.Panel):
         self.SetSizer(self.sizer)
         self.Fit()
 
-        self.start_datetime = None
-        self.stop_datetime = None
-        today = datetime.date.today()
-        self.start_datetime = datetime.datetime.combine(today,
-                                                        datetime.datetime.min.time())
-        self.stop_datetime = datetime.datetime.combine(today+datetime.timedelta(days=1),
-                                                       datetime.datetime.min.time())
+        trend_proto.icTrendProto.__init__(self, *args, **kwargs)
 
         self.setDefaults()
 
@@ -120,15 +107,12 @@ class icGnuplotTrendProto(wx.Panel):
         # Представляется в виде кортежа (X1, Y1, X2, Y2)
         self._cur_scene = None
 
-        # Шкалы настройки
-        # self._x_tunes = DEFAULT_X_TUNES
-        # self._y_tunes = DEFAULT_Y_TUNES
         # Цена деления
         self._x_precision = DEFAULT_X_PRECISION
         self._y_precision = DEFAULT_Y_PRECISION
         # Формат шкал
-        self._x_format = DEFAULT_X_FORMAT
-        self._y_format = DEFAULT_Y_FORMAT
+        self._x_format = trend_proto.DEFAULT_X_FORMAT
+        self._y_format = trend_proto.DEFAULT_Y_FORMAT
 
         # Менеджер утилиты gnuplot
         self.__gnuplot_manager = gnuplot_manager.icGnuplotManager()
@@ -173,21 +157,6 @@ class icGnuplotTrendProto(wx.Panel):
         self._cur_scene = tuple(scene)
         return self._cur_scene
 
-    # def setTunes(self, x_tunes=None, y_tunes=None):
-    #     """
-    #     Установить шкалы настройки.
-    #     @param x_tunes: Шкала настройки по оси X.
-    #         Если None, то шкала не устанавливается.
-    #     @param y_tunes: Шкала настройки по оси Y.
-    #         Если None, то шкала не устанавливается.
-    #     @return: Кортеж (x_tunes, y_tunes) текущих шкал настройки.
-    #     """
-    #     if x_tunes is not None:
-    #         self._x_tunes = x_tunes
-    #     if y_tunes is not None:
-    #         self._y_tunes = y_tunes
-    #     return self._x_tunes, self._y_tunes
-
     def setFormats(self, x_format=None, y_format=None):
         """
         Установить форматы шкал.
@@ -202,69 +171,6 @@ class icGnuplotTrendProto(wx.Panel):
         if y_format is not None:
             self._y_format = y_format
         return self._x_format, self._y_format
-
-    def _get_dt_format(self, time_format=DEFAULT_X_FORMAT):
-        """
-        Привести к единому виду формат временных значений.
-        @param time_format: Формат представления.
-        @return: Формат
-        """
-        dt_format = time_format
-        if time_format == 'time':
-            dt_format = DEFAULT_TIME_FMT
-        elif time_format == 'date':
-            dt_format = DEFAULT_DATE_FMT
-        elif time_format == 'datetime':
-            dt_format = DEFAULT_DATETIME_FMT
-        return dt_format
-
-    def _dt2str(self, dt_value=None, time_format=DEFAULT_X_FORMAT):
-        """
-        Преобразование datetime в строковый вид согласно формату.
-        @param dt_value: Значение datetime.datetime или datetime.timedelta.
-        @param time_format: Формат представления.
-        @return: Отформатированная строка значений datetime.
-        """
-        time_format = self._get_dt_format(time_format)
-
-        if isinstance(dt_value, datetime.datetime) or isinstance(dt_value, datetime.date):
-            return dt_value.strftime(time_format)
-        elif isinstance(dt_value, datetime.timedelta):
-            return ic_time.strfdelta(dt_value, fmt='{H:02}h {M:02}m {S:02}s')
-        else:
-            log.warning(u'Не поддерживаемый тип временных значений <%s>' % dt_value.__class__.__name__)
-        return ''
-
-    def _str2dt(self, time_value=None, time_format=DEFAULT_X_FORMAT, bToTimeDelta=False):
-        """
-        Преобразование строкового представления значений
-        временной шкалы в datetime вид.
-        @param time_value: Строковое представление даты-вермени.
-        @param time_format: Формат представления.
-        @param bToTimeDelta: Преобразовать в datetime.timedelta?
-        @return: datetime.datetime/datetime.timedelta, соответствующий строковому представлению.
-        """
-        dt_format = self._get_dt_format(time_format)
-
-        if time_format == 'time':
-            dt = datetime.datetime.strptime(time_value, dt_format)
-            if bToTimeDelta:
-                return datetime.timedelta(hours=dt.hour, minutes=dt.minute, seconds=dt.second)
-        elif time_format == 'date':
-            dt = datetime.datetime.strptime(time_value, dt_format)
-            if bToTimeDelta:
-                return datetime.timedelta(days=dt.day)
-        elif time_format == 'datetime':
-            dt = datetime.datetime.strptime(time_value, dt_format)
-            if bToTimeDelta:
-                return datetime.timedelta(days=dt.day,
-                                          hours=dt.hour, minutes=dt.minute, seconds=dt.second)
-        else:
-            dt = datetime.datetime.strptime(time_value, dt_format)
-            if bToTimeDelta:
-                return datetime.timedelta(days=dt.day,
-                                          hours=dt.hour, minutes=dt.minute, seconds=dt.second)
-        return dt
 
     def setPrecisions(self, x_precision=None, y_precision=None):
         """
@@ -326,54 +232,6 @@ class icGnuplotTrendProto(wx.Panel):
         Представляется в виде кортежа (X1, Y1, X2, Y2)
         """
         return self._cur_scene
-
-    def _convertDate(self, dt):
-        """
-        Корректное преобразование типа даты в datetime.datetime.
-        @param dt: Дата.
-        @return: Дата-время.
-        """
-        new_dt = None
-        if isinstance(dt, datetime.date):
-            # Если дата задается datetime.date
-            # то сделать перевод в datetime.datetime
-            new_dt = datetime.datetime.combine(dt,
-                                               datetime.datetime.min.time())
-        elif isinstance(dt, wx.DateTime):
-            new_dt = ic_time.wxdatetime2pydatetime(dt)
-        elif dt is None:
-            new_dt = datetime.datetime.now()
-        elif isinstance(dt, datetime.datetime):
-            new_dt = dt
-        else:
-            assert isinstance(dt, (datetime.datetime, datetime.date))
-        return new_dt
-
-    def setStartDT(self, new_dt):
-        """
-        Начальная дата-время тренда.
-        @param new_dt: Новое значение.
-        """
-        self.start_datetime = self._convertDate(new_dt)
-
-    def getStartDT(self):
-        """
-        Начальная дата-время тренда.
-        """
-        return self.start_datetime
-
-    def setStopDT(self, new_dt):
-        """
-        Конечная дата-время тренда.
-        @param new_dt: Новое значение.
-        """
-        self.stop_datetime = self._convertDate(new_dt)
-
-    def getStopDT(self):
-        """
-        Конечная дата-время тренда.
-        """
-        return self.stop_datetime
 
     def setDefaults(self):
         """
@@ -463,7 +321,7 @@ class icGnuplotTrendProto(wx.Panel):
         self.del_frame(frame_filename)
 
         dt_format = self._get_dt_format(x_format)
-        self.__gnuplot_manager.setTimeFormat(dt_format)
+        self.__gnuplot_manager.setTimeFormat()
         self.__gnuplot_manager.setXFormat(dt_format)
 
         # Выставить сцену
@@ -471,8 +329,8 @@ class icGnuplotTrendProto(wx.Panel):
             scene = self._cur_scene
 
         if scene[0] != scene[2] and scene[1] != scene[3]:
-            self.__gnuplot_manager.setXRange(self._dt2str(scene[0], x_format),
-                                             self._dt2str(scene[2], x_format))
+            self.__gnuplot_manager.setXRange(self._dt2str(scene[0], gnuplot_manager.DATETIME_GRAPH_DATA_FMT),
+                                             self._dt2str(scene[2], gnuplot_manager.DATETIME_GRAPH_DATA_FMT))
             self.__gnuplot_manager.setYRange(float(scene[1]), float(scene[3]))
 
         self.__gnuplot_manager.setOutputPNG(background_color='black')
@@ -490,7 +348,7 @@ class icGnuplotTrendProto(wx.Panel):
                 self.__gnuplot_manager.setOutputSize(width, height)
 
         if points is not None:
-            points_lst = [dict(x=point[0].strftime(DEFAULT_TIME_FMT) if isinstance(point[0], datetime.datetime) else float(point[0]),
+            points_lst = [dict(x=point[0] if isinstance(point[0], datetime.datetime) else float(point[0]),
                                point1=float(point[1])) for point in points]
             self.__gnuplot_manager.saveGraphData(graph_filename, points_lst, ('point1',))
 
@@ -529,19 +387,6 @@ class icGnuplotTrendProto(wx.Panel):
             self.canvas.Refresh()
             return True
         return False
-
-    def getPenData(self, pen_index=0):
-        """
-        Данные соответствующие перу.
-        @param pen_index: Индекс пера. По умолчанию берется первое перо.
-        @return: Список (Время, Значение)
-        """
-        pens = self.getPens()
-
-        if pens and pen_index < len(pens):
-            return pens[pen_index].getLineData()
-
-        return list()
 
     def draw(self, redraw=True, size=None):
         """
@@ -588,13 +433,6 @@ class icGnuplotTrendProto(wx.Panel):
             # Если перья не определены то просто отобразить тренд
             self.draw_empty(size=size)
 
-    def getPens(self):
-        """
-        Список перьев тренда.
-        """
-        log.warning(u'Не определен метод получения перьев')
-        return list()
-
     def adaptScene(self, graph_data=None):
         """
         Адаптировать текущую сцену для отображения по данным графика.
@@ -628,6 +466,8 @@ class icGnuplotTrendProto(wx.Panel):
                 scene_max_time = limit_scene_time_max
 
             log.debug(u'Адаптация сцены:')
+            log.debug(u'\tdata x: %s' % str(time_data))
+            log.debug(u'\tdata y: %s' % str(y_data))
             log.debug(u'\tmin data x: %s' % min(time_data))
             log.debug(u'\tmin data y: %s' % min_y)
             log.debug(u'\tmax data x: %s' % max(time_data))
@@ -640,6 +480,9 @@ class icGnuplotTrendProto(wx.Panel):
             log.debug(u'\tmax y: %s' % str(scene_max_y))
 
             self._cur_scene = (scene_min_time, scene_min_y, scene_max_time, scene_max_y)
+
+            self.setStartDT(scene_min_time)
+            self.setStopDT(scene_min_time)
 
         return self._cur_scene
 

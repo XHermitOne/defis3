@@ -32,12 +32,14 @@ from ic.log import log
 from ic.utils import txtfunc
 
 # Версия
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 # Разделитель комманд gnuplot
 COMMAND_DELIMETER = ';'
 
 GNUPLOT_COMMAND_FMT = 'gnuplot -e \"%s\"'
+
+DATETIME_GRAPH_DATA_FMT = '%Y-%m-%d %H:%M:%S'
 
 
 class icGnuplotManager(object):
@@ -121,6 +123,12 @@ class icGnuplotManager(object):
             Если None, то установка формата исключается из списка комманд.
         @return: True/False.
         """
+        global DATETIME_GRAPH_DATA_FMT
+        if dt_format is None:
+            dt_format = DATETIME_GRAPH_DATA_FMT
+        else:
+            DATETIME_GRAPH_DATA_FMT = dt_format
+
         cmd_sign = 'set timefmt'
         cmd = 'set timefmt \'%s\'' % dt_format
         return self._appendCommand(cmd, cmd_sign)
@@ -246,10 +254,14 @@ class icGnuplotManager(object):
         @param count: Количество графиков.
         @return: True/False.
         """
+        global DATETIME_GRAPH_DATA_FMT
         cmd_sign = 'plot '
 
         if os.path.exists(graph_filename):
-            cmd = 'plot \'%s\' using 1:%d with lines linestyle 1' % (graph_filename, int(count) + 1)
+            # ВНИМАНИЕ! Если время разбито на дату и время, то количество в секции using увеличивается
+            #                                                        V
+            using_count = int(count) + 1 + DATETIME_GRAPH_DATA_FMT.count(' ')
+            cmd = 'plot \'%s\' using 1:%d with lines linestyle 1' % (graph_filename, using_count)
         else:
             # Если нет данных, то просто вывести абстрактный график
             log.warning(u'Не найден файл данных графиков <%s>' % graph_filename)
@@ -269,6 +281,8 @@ class icGnuplotManager(object):
     def saveGraphData(self, graph_filename, graph_data=(), fields=()):
         """
         Записать данные графиков в файл данных.
+        ВНИМАНИЕ! По умолчанию временные данные в файл
+            записываются в формате DATETIME_GRAPH_DATA_FMT.
         @param graph_filename: Полное имя файла данных графиков.
         @param graph_data: Список словарей данных графиков.
             [
@@ -284,10 +298,13 @@ class icGnuplotManager(object):
             ['Имя графика 1', 'Имя графика 2', ... 'Имя графика N']
         @return: True/False.
         """
+        global DATETIME_GRAPH_DATA_FMT
+
         txt = ''
         for record in graph_data:
             x = record.get('x', 0)
-            x_str = str(x) if self.__x_format is None else (x.strftime(self.__x_format) if isinstance(x, datetime.datetime) else str(x))
+            # x_str = str(x) if self.__x_format is None else (x.strftime(self.__x_format) if isinstance(x, datetime.datetime) else str(x))
+            x_str = x.strftime(DATETIME_GRAPH_DATA_FMT) if isinstance(x, datetime.datetime) else str(x)
             record_list = [x_str] + [str(record.get(field, 0)) for field in fields]
             record_txt = ' '.join(record_list)
             txt += record_txt + '\n'

@@ -15,14 +15,10 @@ from ic.log import log
 from ic.utils import util
 from ic.bitmap import ic_bmp
 
-from SCADA.gnuplot_trend_ctrl import gnuplot_trend_proto
 from SCADA.gnuplot_trend_ctrl import gnuplot_trend_navigator_proto
 
 
 # --- Спецификация ---
-DEFAULT_FORMATS = (gnuplot_trend_proto.DEFAULT_TIME_FMT,
-                   gnuplot_trend_proto.DEFAULT_DATETIME_FMT,
-                   gnuplot_trend_proto.DEFAULT_DATE_FMT)
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -44,7 +40,6 @@ ic_class_spc = {'type': 'GnuplotTrendNavigator',
 
                 '__styles__': ic_class_styles,
                 '__events__': {},
-                '__lists__': {'time_axis_fmt': list(DEFAULT_FORMATS)},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
                                                             ],
                                    },
@@ -68,7 +63,7 @@ ic_can_contain = ['TrendPen']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icGnuplotTrendNavigator(icwidget.icWidget,
