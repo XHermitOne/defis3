@@ -52,7 +52,7 @@ from ic.components import icwidget
 
 from . import icdb
 
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 # Типы таблиц
 TABLE_TYPE = 'Table'
@@ -261,7 +261,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     log.debug(u'Получение таблицы <%s> из буфера' % tab_name)
                     # Проверить таблицу на изменение структуры
                     # Если структура изменена, тогда сигнализировать ошибку
-                    fields_with_id_count = len(TabRes_['child'])+1
+                    fields_with_id_count = len([fld for fld in TabRes_['child'] if fld.get('activate', True)])+1
                     if len(metadata.tables[tab_name].columns) != fields_with_id_count:
                         log.warning(u'Ошибка создания таблицы <%s>!' % tab_name)
                         ic_dlg.icWarningBox(u'ВНИМАНИЕ',
