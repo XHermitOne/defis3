@@ -32,7 +32,7 @@ from ic.log import log
 from ic.utils import txtfunc
 
 # Версия
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 3, 1)
 
 # Разделитель комманд gnuplot
 COMMAND_DELIMETER = ';'
@@ -55,6 +55,14 @@ class icGnuplotManager(object):
         self.commands = list()
 
         self.__x_format = None
+
+    def clearCommands(self):
+        """
+        Очистить список комманд.
+        @return: True/False.
+        """
+        self.commands = list()
+        return True
 
     def _findCommand(self, command_word):
         """
@@ -91,6 +99,26 @@ class icGnuplotManager(object):
                 # Если команда не найдена, то просто заменяем ее
                 self.commands.append(command)
         return True
+
+    def _deleteCommand(self, command_word=None):
+        """
+        Произвести удаление комманды из списка комманд.
+        Если в списке найдена комманда по ключевому слову, то она удаляется.
+        @param command_word: Ключевое слово.
+            Если None, то просто происходит добавление команды в список.
+        @return: True/False.
+        """
+        if command_word is None:
+            return False
+        else:
+            # Сначала производим поис уже существующей команды
+            # в списке по ключевому слову
+            find_idx = self._findCommand(command_word)
+            if find_idx >= 0:
+                # Если есть таккая команда, то заменяем ее
+                del self.commands[find_idx]
+                return True
+        return False
 
     def _enableCommand(self, command, enable=True):
         """
@@ -184,21 +212,49 @@ class icGnuplotManager(object):
         @param background_color: Цвет фона PNG.
         @return: True/False.
         """
+        # self._deleteCommand('set terminal pdf')
         cmd_sign = 'set terminal png'
         cmd = 'set terminal png'
         if background_color is not None:
             cmd += ' background rgb \'%s\'' % background_color
         return self._appendCommand(cmd, cmd_sign)
 
-    def setOutputSize(self, width, height):
+    def setOutputPDF(self, background_color=None):
         """
-        Установить размер результирующей картинки.
+        Вкл./Выкл. вывода графика в формате PDF.
+        @param background_color: Цвет фона PDF.
+            По умолчанию белый.
+        @return: True/False.
+        """
+        # self._deleteCommand('set terminal png')
+        cmd_sign = 'set terminal pdf'
+        cmd = 'set terminal pdf'
+        if background_color is not None:
+            cmd += ' background rgb \'%s\'' % background_color
+        return self._appendCommand(cmd, cmd_sign)
+
+    def setOutputSizePNG(self, width, height):
+        """
+        Установить размер результирующей картинки PNG.
         @param width: Ширина.
         @param height: Высота.
         @return: True/False.
         """
+        # self._deleteCommand('set term pdf monochrome size')
         cmd_sign = 'set term png size'
         cmd = 'set term png size %d, %d' % (int(width), int(height))
+        return self._appendCommand(cmd, cmd_sign)
+
+    def setOutputSizePDF(self, width, height):
+        """
+        Установить размер результирующей картинки PDF.
+        @param width: Ширина.
+        @param height: Высота.
+        @return: True/False.
+        """
+        # self._deleteCommand('set term png size')
+        cmd_sign = 'set term pdf monochrome size'
+        cmd = 'set term pdf monochrome size %d, %d' % (int(width), int(height))
         return self._appendCommand(cmd, cmd_sign)
 
     def setOutputFilename(self, out_filename):

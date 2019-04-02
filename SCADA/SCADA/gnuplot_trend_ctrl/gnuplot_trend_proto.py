@@ -23,8 +23,6 @@ from . import gnuplot_manager
 
 from SCADA.scada_proto import trend_proto
 
-# MAX_Y_VALUE = 10000.0
-
 # Полное имя файла утилиты gnuplot
 GNUPLOT_FILENAME = 'gnuplot'
 
@@ -41,10 +39,6 @@ PDF_FILE_TYPE = 'PDF'
 
 DATA_FILE_EXT = '.dat'
 
-# Возможные настройки шкал по умолчанию
-# DEFAULT_X_TUNES = ('00:00:10', '00:00:20', '00:00:30', '00:01:00', '00:05:00', '00:20:00', '00:30:00', '01:00:00')
-# DEFAULT_Y_TUNES = (1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0)
-
 # Цена деления по умолчанию
 DEFAULT_X_PRECISION = '01:00:00'
 DEFAULT_Y_PRECISION = '1.0'
@@ -54,8 +48,6 @@ SPC_IC_GNUPLOT_TREND = {'x_format': trend_proto.DEFAULT_X_FORMAT,   # Форма
                         'y_format': trend_proto.DEFAULT_Y_FORMAT,   # Формат представления данных оси Y
                         'scene_min': ('00:00:00', 0.0),    # Минимальное значение видимой сцены тренда
                         'scene_max': ('12:00:00', 0.0),    # Максимальное значение видимой сцены тренда
-                        # 'x_tunes': DEFAULT_X_TUNES,     # Возможные настройки шкалы X
-                        # 'y_tunes': DEFAULT_Y_TUNES,     # Возможные настройки шкалы Y
                         'x_precision': DEFAULT_X_PRECISION,     # Цена деления сетки тренда по шкале X
                         'y_precision': DEFAULT_Y_PRECISION,     # Цена деления сетки тренда по шкале Y
 
@@ -64,8 +56,6 @@ SPC_IC_GNUPLOT_TREND = {'x_format': trend_proto.DEFAULT_X_FORMAT,   # Форма
                                          'y_format': u'Формат представления данных оси Y',
                                          'scene_min': u'Минимальное значение видимой сцены тренда',
                                          'scene_max': u'Максимальное значение видимой сцены тренда',
-                                         # 'x_tunes': u'Возможные настройки шкалы X',
-                                         # 'y_tunes': u'Возможные настройки шкалы Y',
                                          'x_precision': u'Цена деления сетки тренда по шкале X',
                                          'y_precision': u'Цена деления сетки тренда по шкале Y',
                                          },
@@ -349,19 +339,29 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                                              self._dt2str(scene[2], gnuplot_manager.DATETIME_GRAPH_DATA_FMT))
             self.__gnuplot_manager.setYRange(float(scene[1]), float(scene[3]))
 
-        self.__gnuplot_manager.setOutputPNG(background_color='black')
+        if file_type == PNG_FILE_TYPE:
+            self.__gnuplot_manager.setOutputPNG(background_color='black')
+            self.__gnuplot_manager.setBorderColour('#A9A9A9')  # darkgray
+            self.__gnuplot_manager.setGridColour('#A9A9A9')  # darkgray
+            self.__gnuplot_manager.setXTextColour('#008B8B')  # darkcyan
+            self.__gnuplot_manager.setYTextColour('#008B8B')  # darkcyan
+        else:
+            self.__gnuplot_manager.setOutputPDF()
+            self.__gnuplot_manager.setBorderColour('black')
+            self.__gnuplot_manager.setGridColour('black')
+            self.__gnuplot_manager.setXTextColour('black')
+            self.__gnuplot_manager.setYTextColour('black')
         self.__gnuplot_manager.setOutputFilename(frame_filename)
-        self.__gnuplot_manager.setBorderColour('#A9A9A9')   # darkgray
-        self.__gnuplot_manager.setGridColour('#A9A9A9')     # darkgray
-        self.__gnuplot_manager.setXTextColour('#008B8B')    # darkcyan
-        self.__gnuplot_manager.setYTextColour('#008B8B')    # darkcyan
 
         if size is not None:
             width, height = size
             width = max(width, MIN_FRAME_WIDTH)
             height = max(height, MIN_FRAME_HEIGHT)
             if width > 0 and height > 0:
-                self.__gnuplot_manager.setOutputSize(width, height)
+                if file_type == PNG_FILE_TYPE:
+                    self.__gnuplot_manager.setOutputSizePNG(width, height)
+                # else:
+                #     self.__gnuplot_manager.setOutputSizePDF(width, height)
 
         if points is not None:
             points_lst = [dict(x=point[0] if isinstance(point[0], datetime.datetime) else float(point[0]),
