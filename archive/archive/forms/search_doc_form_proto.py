@@ -43,7 +43,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		bSizer2.Add( self.docnum_radioBox, 0, wx.ALL, 5 )
 		
 		
-		bSizer2.AddSpacer( 5 )
+		bSizer2.AddStretchSpacer()
 		
 		self.m_staticText13 = wx.StaticText( self.crit_scrolledWindow, wx.ID_ANY, u"№ документа контрагента:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText13.Wrap( -1 )
@@ -89,7 +89,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		bSizer22.Add( self.one_date_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer22.AddSpacer( 5 )
+		bSizer22.AddStretchSpacer()
 		
 		self.obj_date_checkBox = wx.CheckBox( self.crit_scrolledWindow, wx.ID_ANY, u"Дата док. контрагента", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer22.Add( self.obj_date_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -270,7 +270,7 @@ class icSearchCritPanelProto ( wx.Panel ):
 		bSizer11.Add( self.clear_button, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer11.AddSpacer( 5 )
+		bSizer11.AddStretchSpacer()
 		
 		self.search_button = wx.Button( self, wx.ID_ANY, u"Искать", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer11.Add( self.search_button, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )

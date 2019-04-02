@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 
 ###########################################################################
-## Python code generated with wxFormBuilder (version Feb 16 2016)
+## Python code generated with wxFormBuilder (version Dec 21 2016)
 ## http://www.wxformbuilder.org/
 ##
 ## PLEASE DO "NOT" EDIT THIS FILE!
@@ -9,7 +9,6 @@
 
 import wx
 import wx.adv
-import wx.gizmos
 
 ###########################################################################
 ## Class icBrowseDocLinksPanelProto
@@ -33,7 +32,7 @@ class icBrowseDocLinksPanelProto ( wx.Panel ):
 		
 		bSizer1.Add( self.ctrl_toolBar, 0, wx.EXPAND, 5 )
 		
-		self.links_treeListCtrl = wx.gizmos.TreeListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.links_treeListCtrl = wx.TreeListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		
 		bSizer1.Add( self.links_treeListCtrl, 1, wx.EXPAND |wx.ALL, 5 )
 		

@@ -68,7 +68,7 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		bSizer14.Add( self.doc_count_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer14.AddSpacer( 5 )
+		bSizer14.AddStretchSpacer()
 		
 		self.m_staticText13 = wx.StaticText( self, wx.ID_ANY, u"Сканируемых листов:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText13.Wrap( -1 )
@@ -81,7 +81,7 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		bSizer14.Add( self.page_count_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer14.AddSpacer( 5 )
+		bSizer14.AddStretchSpacer()
 		
 		
 		bSizer12.Add( bSizer14, 0, wx.EXPAND, 5 )

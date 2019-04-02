@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 
 ###########################################################################
-## Python code generated with wxFormBuilder (version Feb 16 2016)
+## Python code generated with wxFormBuilder (version Dec 21 2016)
 ## http://www.wxformbuilder.org/
 ##
 ## PLEASE DO "NOT" EDIT THIS FILE!
@@ -97,14 +97,14 @@ class icNewDocPanelProto ( wx.Panel ):
 		self.m_staticText5.Wrap( -1 )
 		bSizer5.Add( self.m_staticText5, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1})
+		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'ayan_archive'),),  'level_enable': 1})
 		bSizer5.Add( self.doc_type_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.m_staticText51 = wx.StaticText( self, wx.ID_ANY, u"Подразделение:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText51.Wrap( -1 )
 		bSizer5.Add( self.m_staticText51, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_entity', None, 'nsi_archive.mtd', 'archive'),), 'level_enable': 1})
+		self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_entity', None, 'nsi_archive.mtd', 'ayan_archive'),), 'level_enable': 1})
 		bSizer5.Add( self.entity_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -116,7 +116,7 @@ class icNewDocPanelProto ( wx.Panel ):
 		self.m_staticText7.Wrap( -1 )
 		bSizer6.Add( self.m_staticText7, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name']})
+		self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'ayan_archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name']})
 		bSizer6.Add( self.contragent_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -301,31 +301,31 @@ class icCorrectScanDocPanelProto ( wx.Panel ):
 		bSizer11 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.prev_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_BACK, wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_NORMAL, u"Предыдущий", u"Предыдущий", None ) 
+		self.prev_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_BACK, wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_NORMAL, u"Предыдущий", u"Предыдущий", None ) 
 		
-		self.next_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_FORWARD, wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_NORMAL, u"Следующий", u"Следующий", None ) 
-		
-		self.ctrl_toolBar.AddSeparator()
-		
-		self.view_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_NORMAL_FILE, wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
+		self.next_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_FORWARD, wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_NORMAL, u"Следующий", u"Следующий", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.edit_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_CHECK, u"Редактировать", u"Редактировать", None ) 
+		self.view_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_NORMAL_FILE, wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_NORMAL, u"Просмотр", u"Просмотр", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.save_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_FILE_SAVE, wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сохранить", u"Сохранить", None ) 
+		self.edit_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_CHECK, u"Редактировать", u"Редактировать", None ) 
+		
+		self.ctrl_toolBar.AddSeparator()
+		
+		self.save_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_FILE_SAVE, wx.ART_CMN_DIALOG ), wx.NullBitmap, wx.ITEM_NORMAL, u"Сохранить", u"Сохранить", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
 		self.card_spinCtrl = wx.SpinCtrl( self.ctrl_toolBar, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,40 ), wx.SP_ARROW_KEYS, 0, 1000, 0 )
-		self.card_spinCtrl.SetFont( wx.Font( 20, 74, 90, 92, False, "Sans" ) )
+		self.card_spinCtrl.SetFont( wx.Font( 20, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Sans" ) )
 		
 		self.ctrl_toolBar.AddControl( self.card_spinCtrl )
 		self.idx_staticText = wx.StaticText( self.ctrl_toolBar, wx.ID_ANY, u"-", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.idx_staticText.Wrap( -1 )
-		self.idx_staticText.SetFont( wx.Font( 24, 74, 90, 92, False, "Sans" ) )
+		self.idx_staticText.SetFont( wx.Font( 24, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Sans" ) )
 		
 		self.ctrl_toolBar.AddControl( self.idx_staticText )
 		self.ctrl_toolBar.Realize() 
@@ -380,7 +380,7 @@ class icCorrectFilterDlgProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Фильтр документов", pos = wx.DefaultPosition, size = wx.Size( 782,412 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 		
