@@ -398,7 +398,7 @@ class PrjPackage(prj_node.PrjFolder):
         @param new_name: Указание нового имени созданного узла.
         """
         # Ввести наименование при создании
-        if new_name is None:
+        if not new_name:
             new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
                                              Text_=u'Введите наименование пакета', Default_=self.name)
         if new_name:
@@ -598,7 +598,7 @@ class PrjModule(prj_node.PrjNode):
         @param new_name: Указание нового имени созданного узла.
         """
         # Ввести наименование при создании
-        if new_name is None:
+        if not new_name:
             new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
                                              Text_=u'Введите наименование модуля', Default_=self.name)
         if new_name:
