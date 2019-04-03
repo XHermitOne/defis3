@@ -11,7 +11,7 @@ from ic.editor import wxfb_manager
 
 from . import prj_node
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 _ = wx.GetTranslation
 
@@ -43,9 +43,10 @@ class PrjWXFormBuilderProject(prj_node.PrjNode,
             self.open_project(filename)
         return True
 
-    def create(self):
+    def create(self, new_name=None):
         """ 
         Функция создания.
+        @param new_name: Указание нового имени созданного узла.
         """
         self.create_project()
         return True

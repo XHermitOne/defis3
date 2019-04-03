@@ -1160,7 +1160,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                     menuGroup.AppendMenu(id, icDefInf.GroupsInfo[group], menuObj)
 
                 id = icwidget.icNewId()
-                menu.AppendMenu(id, u'Добавить', menuGroup)  # Добаить
+                menu.AppendMenu(id, u'Добавить', menuGroup)  # Добавить
 
             id = icwidget.icNewId()
             menu.Append(id, u'Сгенерировать компонент по ресурсу')

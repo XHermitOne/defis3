@@ -80,7 +80,7 @@ ic_can_contain = ['FlatMenu', 'FlatMenuItem']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
 
 
 class icFlatMenu(icwidget.icWidget, icflatmenu.icFlatMenuPrototype):

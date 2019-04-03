@@ -42,9 +42,10 @@ class PrjXRCResource(prj_node.PrjNode):
             ic_exec.icSysCmd(cmd)
         return True
 
-    def create(self):
+    def create(self, new_name=None):
         """ 
         Функция создания.
+        @param new_name: Указание нового имени созданного узла.
         """
         cmd = 'xrced --meta&'
         ic_exec.icSysCmd(cmd)

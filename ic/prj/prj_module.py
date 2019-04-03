@@ -27,7 +27,7 @@ from . import prj_resource
 from . import prj_fb
 from . import prj_xrc
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 _ = wx.GetTranslation
 
@@ -392,10 +392,18 @@ class PrjPackage(prj_node.PrjFolder):
         popup_menu = menuModNode.icMenuModNode(self)
         popup_menu.Popup(wx.GetMousePosition(), self._root.getParent())
 
-    def create(self):
+    def create(self, new_name=None):
         """
         Создание пакета.
+        @param new_name: Указание нового имени созданного узла.
         """
+        # Ввести наименование при создании
+        if new_name is None:
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
+                                             Text_=u'Введите наименование пакета', Default_=self.name)
+        if new_name:
+            self.name = new_name
+
         try:
             # Создание пакета ведет к созданию пакета Python.
             path = self.getPath()
@@ -403,7 +411,7 @@ class PrjPackage(prj_node.PrjFolder):
             self.getRoot().save()
             return ok
         except:
-            log.error(u'Create package error <%s>' % self.name)
+            log.fatal(u'Ошибка создания пакета <%s>' % self.name)
             return False
         
     def rename(self, OldName_, NewName_):
@@ -584,10 +592,18 @@ class PrjModule(prj_node.PrjNode):
     def getFullModuleFileName(self):
         return os.path.join(self.getPath(), self.getModuleName()+self.ext)
         
-    def create(self):
+    def create(self, new_name=None):
         """
         Функция создания модуля.
+        @param new_name: Указание нового имени созданного узла.
         """
+        # Ввести наименование при создании
+        if new_name is None:
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
+                                             Text_=u'Введите наименование модуля', Default_=self.name)
+        if new_name:
+            self.name = new_name
+
         mod_name = self.getModuleName()
         mod_path = self.getModulePath()
         # Есть уже модуль с таким именем?

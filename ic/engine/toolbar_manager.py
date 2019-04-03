@@ -12,7 +12,7 @@ from ic.log import log
 from ic.bitmap import ic_bmp
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icToolBarManager(object):
@@ -93,7 +93,7 @@ class icToolBarManager(object):
         else:
             log.warning(u'Не определена панель инструментов wxToolBar')
 
-    def getButtonLeftBottomPoint(self, button):
+    def getButtonLeftBottomPoint(self, button=None):
         """
         Определить точку левого-нижнего края кнопки.
         Используется для вызова всплывающих меню.
@@ -105,8 +105,7 @@ class icToolBarManager(object):
 
         point = button.GetPosition()
         point = button.GetParent().ClientToScreen(point)
-        point.SetY(point.y + button.GetSize().y)
-        return wx.Point(point.x, point.y)
+        return wx.Point(point.x, point.y + button.GetSize().y)
 
     def getToolLeftBottomPoint(self, toolbar, tool):
         """

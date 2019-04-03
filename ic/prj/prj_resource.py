@@ -40,7 +40,9 @@ from . import prj_node
 from . import menuPrjNode
 from . import menuImpNode
 
-__version__ = (0, 1, 1, 1)
+from . import new_metadata_resource_dlg
+
+__version__ = (0, 1, 2, 1)
 
 _ = wx.GetTranslation
 
@@ -71,9 +73,10 @@ class PrjResources(prj_node.PrjFolder):
         """
         return self.getParent() == self.getRoot()
         
-    def create(self):
+    def create(self, new_name=None):
         """
         Создать папку.
+        @param new_name: Указание нового имени созданного узла.
         """
         # Прописать в родительской папке
         self.getParent().addChild(self)
@@ -196,10 +199,18 @@ class PrjResource(prj_node.PrjNode):
         """
         return self.name.strip()
         
-    def create(self):
+    def create(self, new_name=None):
         """
         Функция создания ресурса.
+        @param new_name: Указание нового имени созданного узла.
         """
+        # Ввести наименование при создании ресурса
+        if not new_name:
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
+                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+        if new_name:
+            self.name = new_name
+
         tree_prj = self.getRoot().getParent()
         res_editor = tree_prj.res_editor
         if res_editor:
@@ -563,17 +574,18 @@ class PrjDBRes(PrjResource):
         # Шаблон для заполнения по умолчанию
         self.template = None
 
-    def create(self):
+    def create(self, new_name=None):
         """
         Создание ресурса.
+        @param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global DBTypeChoice
         self.template = DBTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                              _('Choose DB'), _('DB list:'),
+                                                              u'ТИПЫ БД', u'Выберите из списка типов БД:',
                                                               [txt for txt in DBTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
-        return PrjResource.create(self)
+        return PrjResource.create(self, new_name=new_name)
         
     def createResClass(self):
         """
@@ -716,18 +728,19 @@ class PrjWinRes(PrjResource):
         # Шаблон для заполнения по умолчанию
         self.template = ic_auimainwin.ic_class_spc
 
-    def create(self):
+    def create(self, new_name=None):
         """
         Создание ресурса.
+        @param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global WinTypeChoice
         self.template = WinTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                               _('Choose main window type'),
-                                                               _('Main window type list:'),
+                                                               u'ВИДЫ ГЛАВНОГО ОКНА',
+                                                               u'Выберите из списка типов главного окна:',
                                                                [txt for txt in WinTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
-        return PrjResource.create(self)
+        return PrjResource.create(self, new_name=new_name)
         
     def createResClass(self):
         """
@@ -769,17 +782,19 @@ class PrjMenuRes(PrjResource):
         # Шаблон для заполнения по умолчанию
         self.template = None
         
-    def create(self):
+    def create(self, new_name=None):
         """
         Создание ресурса.
+        @param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую меню будем создавать а затем создать ее
         global MenuTypeChoice
         self.template = MenuTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                                _('Choose menu type'), _('Menu type list:'),
+                                                                u'ВИДЫ ГЛАВНОГО МЕНЮ',
+                                                                u'Выберите из списка видов главного меню:',
                                                                 [txt for txt in MenuTypeChoice.keys() if isinstance(txt, str)])]
         # Создать
-        return PrjResource.create(self)
+        return PrjResource.create(self, new_name=new_name)
         
     def createResClass(self):
         """
@@ -923,3 +938,17 @@ class PrjMetaDataRes(PrjResource):
                 func()
         else:
             log.warning(u'Не предусмотрены дополнительные инструменты для ресурса <%s>' % self.getResName())
+
+    def create(self, new_name=None):
+        """
+        Функция создания ресурса.
+        @param new_name: Указание нового имени созданного узла.
+        """
+        default_name = new_name if new_name else self.name
+        new_name, res = new_metadata_resource_dlg.new_metadata_resource_dlg(parent=self.getPrjTreeCtrl(),
+                                                                            default_resource_name=default_name)
+        if res:
+            self.template = res
+
+        # Создать
+        return PrjResource.create(self, new_name=new_name)

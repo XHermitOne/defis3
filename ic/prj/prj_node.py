@@ -12,7 +12,7 @@ import wx
 from ic.imglib import common as imglib
 from ic.utils import ic_res
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class PrjNode:
@@ -135,9 +135,10 @@ class PrjNode:
         """
         pass
 
-    def create(self):
+    def create(self, new_name=None):
         """
         Функция создания ресурса.
+        @param new_name: Указание нового имени созданного узла.
         """
         return True
 
