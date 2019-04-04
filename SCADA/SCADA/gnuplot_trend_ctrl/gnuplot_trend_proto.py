@@ -575,6 +575,57 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
             self.draw(redraw=redraw)
         return True
 
+    def moveSceneFirst(self, redraw=True):
+        """
+        Передвижение сцены по оси X на первое значение тренда.
+        @param redraw: Произвести перерисовку кадра тренда?
+        @return: True/False.
+        """
+        time_width = self._cur_scene[2] - self._cur_scene[0]
+        graph_data = self.getPenData(pen_index=0)
+
+        time_data = [point[0] for point in graph_data]
+        min_timestamp = time.mktime(min(time_data).timetuple())
+        x_precision_timestamp = self._x_precision.total_seconds() if isinstance(self._x_precision,
+                                                                                datetime.timedelta) else time.mktime(self._x_precision.timetuple())
+
+        scene_min_time = datetime.datetime.fromtimestamp(
+            int(min_timestamp / x_precision_timestamp) * x_precision_timestamp)
+
+        self._cur_scene = (scene_min_time,
+                           self._cur_scene[1],
+                           scene_min_time + time_width,
+                           self._cur_scene[3])
+
+        if redraw:
+            self.draw(redraw=redraw)
+        return True
+
+    def moveSceneLast(self, redraw=True):
+        """
+        Передвижение сцены по оси Y на указанное количество цены деления.
+        @param redraw: Произвести перерисовку кадра тренда?
+        @return: True/False.
+        """
+        time_width = self._cur_scene[2] - self._cur_scene[0]
+        graph_data = self.getPenData(pen_index=0)
+
+        time_data = [point[0] for point in graph_data]
+        max_timestamp = time.mktime(max(time_data).timetuple())
+        x_precision_timestamp = self._x_precision.total_seconds() if isinstance(self._x_precision,
+                                                                                datetime.timedelta) else time.mktime(self._x_precision.timetuple())
+        scene_max_time = datetime.datetime.fromtimestamp(
+            (int(max_timestamp / x_precision_timestamp) + 1) * x_precision_timestamp)
+
+        self._cur_scene = (scene_max_time - time_width,
+                           self._cur_scene[1],
+                           scene_max_time,
+                           self._cur_scene[3])
+
+        if redraw:
+            self.draw(redraw=redraw)
+        return True
+
 
 def test():
     """

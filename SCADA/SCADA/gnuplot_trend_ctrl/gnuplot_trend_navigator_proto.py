@@ -20,7 +20,7 @@ from . import gnuplot_trend_navigator_panel_proto
 
 # --- Спецификация ---
 SPC_IC_GNUPLOT_TREND_NAVIGATOR = {
-                                  'show_legend': False,
+                                  'show_legend': True,
                                   '__parent__': icwidget.SPC_IC_WIDGET,
                                   '__attr_hlp__': {
                                                    'show_legend': u'Отображать легенду?',
@@ -215,12 +215,14 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
         """
         Передвижение сцены к началу данных.
         """
+        self.getTrend().moveSceneFirst()
         event.Skip()
 
     def onLastButtonClick(self, event):
         """
         Передвижение сцены к концу данных.
         """
+        self.getTrend().moveSceneLast()
         event.Skip()
 
     def onPrevButtonClick(self, event):

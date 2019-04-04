@@ -36,7 +36,7 @@ ic_class_spc = {'type': 'GnuplotTrendNavigator',
                 'activate': True,
                 '_uuid': None,
 
-                'show_legend': False,
+                'show_legend': True,
 
                 '__styles__': ic_class_styles,
                 '__events__': {},
