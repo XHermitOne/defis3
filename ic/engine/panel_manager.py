@@ -460,7 +460,8 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
             log.warning(u'icFormManager. Тип контрола <%s> не поддерживается для очистки значения' % ctrl.__class__.__name__)
         return result
 
-    def collapseSplitterPanel(self, splitter, toolbar=None, collapse_tool=None, expand_tool=None, resize_panel=0):
+    def collapseSplitterPanel(self, splitter, toolbar=None, collapse_tool=None, expand_tool=None,
+                              resize_panel=0, redraw=True):
         """
         Cвертывание панели сплиттера.
         @param splitter: Объект сплиттера wx.SplitterWindow.
@@ -473,6 +474,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         @param resize_panel: Индекс панели с изменяемым размером.
             0 - сворачивается/разворачивается первая панель
             1 - сворачивается/разворачивается вторая панель
+        @param redraw: Перерисовка?
         @return: True/False.
         """
         if not isinstance(splitter, wx.SplitterWindow):
@@ -483,17 +485,22 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
                 splitter.GetSashPosition())
 
         if resize_panel == 0:
+            # log.service(u'1.Схлопывание %d : %d' % (splitter.GetSashPosition(), splitter.GetId()))
             # ВНИМАНИЕ! Указывать позицию сплитера как 0 нельзя
             # иначе схлопывание панели будет не полным
             #                        v
-            splitter.SetSashPosition(1)
+            splitter.SetSashPosition(1, redraw=redraw)
+            # log.service(u'2.Схлопывание %d : %d' % (splitter.GetSashPosition(), splitter.GetId()))
         elif resize_panel == 1:
             split_mode = splitter.GetSplitMode()
             sash_pos = splitter.GetSize().GetHeight() if split_mode == wx.SPLIT_HORIZONTAL else splitter.GetSize().GetWidth()
             # log.debug(u'Свертывание панели <%d>' % sash_pos)
-            splitter.SetSashPosition(sash_pos - 1)
+            splitter.SetSashPosition(sash_pos - 1, redraw=redraw)
         else:
             log.warning(u'Не корректный индекс сворачиваемой панели')
+            return False
+
+        # splitter.UpdateSize()
 
         if toolbar:
             if collapse_tool:
@@ -502,7 +509,8 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
                 toolbar.EnableTool(expand_tool.GetId(), True)
         return True
 
-    def expandSplitterPanel(self, splitter, toolbar=None, collapse_tool=None, expand_tool=None, resize_panel=0):
+    def expandSplitterPanel(self, splitter, toolbar=None, collapse_tool=None, expand_tool=None,
+                            resize_panel=0, redraw=True):
         """
         Развертывание панели сплиттера.
         @param splitter: Объект сплиттера wx.SplitterWindow.
@@ -515,6 +523,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         @param resize_panel: Индекс панели с изменяемым размером.
             0 - сворачивается/разворачивается первая панель
             1 - сворачивается/разворачивается вторая панель
+        @param redraw: Перерисовка?
         @return: True/False.
         """
         if not isinstance(splitter, wx.SplitterWindow):
@@ -523,18 +532,25 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
 
         last_sash_position_name = '_last_sash_position_%s' % splitter.GetId()
         if not hasattr(self, last_sash_position_name):
-            log.warning(u'Не определеана предыдущее положение панели сплиттера')
+            log.warning(u'Не определено предыдущее положение панели сплиттера')
             return False
 
         last_sash_position = getattr(self, last_sash_position_name)
 
         if resize_panel == 0:
-            splitter.SetSashPosition(last_sash_position)
+            # log.service(u'1.Разворачивание %d : %d' % (splitter.GetSashPosition(), splitter.GetId()))
+            if last_sash_position != splitter.GetSashPosition():
+                splitter.SetSashPosition(last_sash_position, redraw=redraw)
+            # log.service(u'2.Разворачивание %d : %d' % (splitter.GetSashPosition(), splitter.GetId()))
         elif resize_panel == 1:
             # log.debug(u'Развертывание панели <%d>' % last_sash_position)
-            splitter.SetSashPosition(last_sash_position)
+            if last_sash_position != splitter.GetSashPosition():
+                splitter.SetSashPosition(last_sash_position, redraw=redraw)
         else:
             log.warning(u'Не корректный индекс сворачиваемой панели')
+            return False
+
+        # splitter.UpdateSize()
 
         if toolbar:
             if collapse_tool:

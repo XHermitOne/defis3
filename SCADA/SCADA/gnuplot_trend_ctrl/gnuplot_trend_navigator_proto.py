@@ -12,7 +12,7 @@ import wx
 
 from ic.components import icwidget
 from ic.log import log
-from ic.engine import panel_manager
+from ic.engine import form_manager
 from ic.dlg import ic_dlg
 from ic.utils import printerfunc
 
@@ -27,7 +27,7 @@ SPC_IC_GNUPLOT_TREND_NAVIGATOR = {
                                                    },
                                   }
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 3, 1)
 
 UNKNOWN_PEN_LABEL = u'Не определено разработчиком'
 
@@ -36,7 +36,7 @@ VIEW_REPORT_FILE_FMT = 'evince %s &'
 
 
 class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplotTrendNavigatorPanelProto,
-                                   panel_manager.icPanelManager):
+                                   form_manager.icFormManager):
     """
     Панель навигации тренда на базе утилиты gnuplot.
     Абстрактный класс.
@@ -57,8 +57,7 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
         @param is_show: True - отобразить / False - скрыть
         @return:
         """
-        self.__is_show_legend = is_show
-        return self.showLegend(self.__is_show_legend)
+        return self.showLegend(is_show)
 
     def draw(self, redraw=True):
         """
@@ -84,15 +83,15 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
             pens = self.trend.child
 
         # Очистить строки списка легенды
-        self.legend_listBox.Clear()
+        self.legend_checkList.Clear()
 
         try:
             for pen in pens:
                 pen_colour_rgb = pen.get('colour', (128, 128, 128))
                 pen_label = pen.get('legend', UNKNOWN_PEN_LABEL)
-                item = self.legend_listBox.Append(pen_label)
+                item = self.legend_checkList.Append(pen_label)
                 if isinstance(pen_colour_rgb, tuple):
-                    self.legend_listBox.SetItemForegroundColour(item, pen_colour_rgb)
+                    self.legend_checkList.SetItemForegroundColour(item, pen_colour_rgb)
                 elif isinstance(pen_colour_rgb, str):
                     log.warning(u'Не поддерживается режим установки цвета')
             return True
@@ -100,19 +99,21 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
             log.fatal(u'Ошибка заполнения легенды тренда')
         return False
 
-    def showLegend(self, is_show=True):
+    def showLegend(self, is_show=True, redraw=True):
         """
         Отобразить легенду?
         @param is_show: True - отобразить / False - скрыть
+        @param redraw: Перерисовка сплиттера.
         @return: True/False.
         """
         self.__is_show_legend = is_show
         if is_show:
-            result = self.expandSplitterPanel(splitter=self.trend_splitter, resize_panel=1)
+            result = self.expandSplitterPanel(splitter=self.trend_splitter, redraw=redraw)
         else:
-            result = self.collapseSplitterPanel(splitter=self.trend_splitter, resize_panel=1)
+            result = self.collapseSplitterPanel(splitter=self.trend_splitter, redraw=redraw)
 
-        # self.Refresh()
+        # if redraw:
+        #     self.trend_splitter.Refresh()
         return result
 
     def onLegendButtonClick(self, event):

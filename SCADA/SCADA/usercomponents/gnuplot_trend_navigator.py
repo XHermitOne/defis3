@@ -128,6 +128,22 @@ class icGnuplotTrendNavigator(icwidget.icWidget,
         # Установить переключатель легенды
         self.setIsShowLegend(self.show_legend)
 
+        # self.loadTrendSplitterSashPos()
+
+        # ВНИМАНИЕ! Если необходимо удалить/освободить
+        # ресуры при удалении контрола, то необходимо воспользоваться
+        # событием wx.EVT_WINDOW_DESTROY
+        self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
+
+    def onDestroy(self, event):
+        """
+        При удалении панели. Обработчик события.
+        ВНИМАНИЕ! Если необходимо удалить/освободить
+        ресуры при удалении контрола, то необходимо воспользоваться
+        событием wx.EVT_WINDOW_DESTROY.
+        """
+        self.saveTrendSplitterSashPos()
+
     def childCreator(self, bCounter=False, progressDlg=None):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
@@ -151,3 +167,20 @@ class icGnuplotTrendNavigator(icwidget.icWidget,
         """
         return self.trend.getPens()
 
+    def saveTrendSplitterSashPos(self):
+        """
+        Сохранить позицию сплиттера разделения легенды и тренда.
+        """
+        return self.save_ext_data(self.name, sash_pos=self.trend_splitter.GetSashPosition())
+
+    def loadTrendSplitterSashPos(self, is_update_size=True):
+        """
+        Загрузить позицию сплиттера разделения легенды и тренда.
+        @param is_update_size: Произвести обновление размера?
+        """
+        save_data = self.load_ext_data(self.name)
+        default_sash_pos = self.trend_splitter.GetSashPosition() if self.show_legend else 1
+        result = self.trend_splitter.SetSashPosition(save_data.get('sash_pos', default_sash_pos))
+        if is_update_size:
+            self.trend_splitter.UpdateSize()
+        return result

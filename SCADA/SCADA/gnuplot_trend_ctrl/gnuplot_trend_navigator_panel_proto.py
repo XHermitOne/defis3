@@ -47,8 +47,18 @@ class icGnuplotTrendNavigatorPanelProto ( wx.Panel ):
 		self.trend_splitter = wx.SplitterWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.SP_3D )
 		self.trend_splitter.SetSashGravity( 0 )
 		self.trend_splitter.Bind( wx.EVT_IDLE, self.trend_splitterOnIdle )
-		self.trend_splitter.SetMinimumPaneSize( 480 )
 		
+		self.legend_panel = wx.Panel( self.trend_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer6 = wx.BoxSizer( wx.VERTICAL )
+		
+		legend_checkListChoices = []
+		self.legend_checkList = wx.CheckListBox( self.legend_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, legend_checkListChoices, 0 )
+		bSizer6.Add( self.legend_checkList, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		self.legend_panel.SetSizer( bSizer6 )
+		self.legend_panel.Layout()
+		bSizer6.Fit( self.legend_panel )
 		self.trend_panel = wx.Panel( self.trend_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer5 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -82,18 +92,7 @@ class icGnuplotTrendNavigatorPanelProto ( wx.Panel ):
 		self.trend_panel.SetSizer( bSizer5 )
 		self.trend_panel.Layout()
 		bSizer5.Fit( self.trend_panel )
-		self.legend_panel = wx.Panel( self.trend_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		bSizer6 = wx.BoxSizer( wx.VERTICAL )
-		
-		legend_listBoxChoices = []
-		self.legend_listBox = wx.ListBox( self.legend_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, legend_listBoxChoices, wx.LB_SINGLE )
-		bSizer6.Add( self.legend_listBox, 1, wx.ALL|wx.EXPAND, 5 )
-		
-		
-		self.legend_panel.SetSizer( bSizer6 )
-		self.legend_panel.Layout()
-		bSizer6.Fit( self.legend_panel )
-		self.trend_splitter.SplitHorizontally( self.trend_panel, self.legend_panel, 560 )
+		self.trend_splitter.SplitHorizontally( self.legend_panel, self.trend_panel, 64 )
 		bSizer3.Add( self.trend_splitter, 1, wx.EXPAND, 5 )
 		
 		
@@ -216,7 +215,7 @@ class icGnuplotTrendNavigatorPanelProto ( wx.Panel ):
 		event.Skip()
 	
 	def trend_splitterOnIdle( self, event ):
-		self.trend_splitter.SetSashPosition( 560 )
+		self.trend_splitter.SetSashPosition( 64 )
 		self.trend_splitter.Unbind( wx.EVT_IDLE )
 	
 
