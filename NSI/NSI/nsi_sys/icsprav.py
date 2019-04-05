@@ -477,7 +477,7 @@ class icSpravPrototype(icSpravInterface):
                                'sprav_field': field,
                                }
             evsp = util.InitEvalSpace({'OBJ': self})
-            log.info('  .... begin:!!!!!')
+            # log.info('  .... begin:!!!!!')
             res_val = icResourceParser.ResultForm(form,
                                                   evalSpace=evsp,
                                                   parent=parentForm,
@@ -1013,6 +1013,6 @@ class icSpravPrototype(icSpravInterface):
         storage = self.getStorage()
         if storage:
             return storage.getUUIDByCod(Cod_)
-        log.info(u'У объекта справочника [%s] не определено хранилище.' % self.getName())
+        log.warning(u'У объекта справочника [%s] не определено хранилище.' % self.getName())
         return None
 

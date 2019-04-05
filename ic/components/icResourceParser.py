@@ -402,7 +402,7 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
     @rtype: C{wx.Window}
     @return: Возвращает форму.
     """
-    log.info(u'Создание формы <%s>' % formName)
+    # log.info(u'Создание формы <%s>' % formName)
     frm = None
     try:
         #   Если ресурсное описание не задано берем его из ресурсного файла
@@ -588,7 +588,7 @@ def ResultForm(formName, fileRes=None, filter={}, logType=0,
         except:
             pass
 
-        log.info(u'Возвращаемое значение диалоговой формой <%s> - %s' % (val, wx.ID_OK))
+        # log.info(u'Возвращаемое значение диалоговой формой <%s> - %s' % (val, wx.ID_OK))
 
         if val in [0, wx.ID_OK]:
             if 'result' in frm.evalSpace:
@@ -616,7 +616,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
         общего количества объектов.
     @param id: Идентификатор объекта. Если он не определен, то он генерируется автоматически.
     """
-    log.info(u'Сборка объекта <%s>' % objRes['name'])
+    # log.info(u'Сборка объекта <%s>' % objRes['name'])
     #   Подготавливае пространство имен
     if evalSpace in [None, {}]:
         evalSpace = icwidget.icResObjContext()
@@ -739,7 +739,7 @@ def createDialog(parent, id, component, logType, evalSpace):
     Функция в зависимости от режима работы (работа | редактирование)
     создает диалог.
     """
-    log.info(u'Создание объекта диалога')
+    # log.info(u'Создание объекта диалога')
     if isEditorMode():
         evalSpace['__runtime_mode'] = util.IC_RUNTIME_MODE_EDITOR
         designer = components_lib.icdialog.icDialog.GetDesigner()
@@ -773,7 +773,7 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
     @type progressDlg: C{wx.ProgressDialog}
     @param progressDlg: Указатель на идикатор создания формы.
     """
-    log.info(u'Вызов конструктора объекта <%s>' % component['name'])
+    # log.info(u'Вызов конструктора объекта <%s>' % component['name'])
     #   Вызываем конструктор
     modl = None
     try:
@@ -860,7 +860,7 @@ def icResourceParser(parent, components, sizer=None, logType=0,
     @type ids: {list | tuple}
     @param ids: Список идентификаторов объектов.
     """
-    log.info(u'Сборка объектов')
+    # log.info(u'Сборка объектов')
 
     #   Получаем указатель на индикатор и указатель главного окна (Dialog, Frame)
     main_parent = evalSpace.get('_main_parent', None)
