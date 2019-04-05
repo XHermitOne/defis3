@@ -57,6 +57,7 @@ ic_class_spc = {'type': 'MetaTree',
                 'init_expr': None,
                 '_uuid': None,
                 'child': [],
+
                 '__styles__': ic_class_styles,
                 '__events__': {},
                 '__lists__': {'storage_type': [ic_metaitem_wrp.FILE_NODE_STORAGE_TYPE,

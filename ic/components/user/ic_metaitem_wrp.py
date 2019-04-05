@@ -81,7 +81,8 @@ SPC_IC_METAITEM = {'name': 'default',       # Имя
                    'can_contain': None,     # Разрешающее правило - список типов компонентов, которые
                                             # могут содержаться в данном компоненте. -1 - означает, что любой компонент
                                             # может содержатся в данном компоненте. Вместе с переменной can_not_contain
-                                            # задает полное правило по которому определяется возможность добавления других
+                                            # задает полное правило,
+                                            # по которому определяется возможность добавления других
                                             # компонентов в данный комопнент.
                    'can_not_contain': None,     # Запрещающее правило - список типов компонентов,
                                                 # которые не могут содержаться в данном компоненте. Запрещающее правило
@@ -121,7 +122,7 @@ ic_class_type = icDefInf._icServiceType
 ic_class_name = 'icMetaItem'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'MetaItem',
@@ -141,7 +142,7 @@ ic_class_spc = {'type': 'MetaItem',
                                    icDefInf.EDT_CHOICE:['storage_type'],
                                    icDefInf.EDT_TEXTDICT:['spc','const_spc'],
                                    },
-                '__parent__':SPC_IC_METAITEM,
+                '__parent__': SPC_IC_METAITEM,
                 }
 
 #   Имя иконки класса, которые располагаются в директории
@@ -195,7 +196,7 @@ class icMetaProperty:
         """
         return not isinstance(self, None)
         
-    def __getattr__(self,name):
+    def __getattr__(self, name):
         if name in self.__dict__['const']:
             return self.__dict__['const'][name]
         elif name in self.__dict__['property']:
@@ -204,10 +205,10 @@ class icMetaProperty:
             return self.__dict__[name]
         except KeyError:
             log.warning(u'Нет ключа %s в спецификации объекта %s компонента %s среди имен %s %s' % (name,
-                                                                                                           self.__dict__['property']['name'],
-                                                                                                           self.__dict__['property']['metatype'],
-                                                                                                           str(self.__dict__['property'].keys()),
-                                                                                                           str(self.__dict__['const'].keys())))
+                                                                                                    self.__dict__['property']['name'],
+                                                                                                    self.__dict__['property']['metatype'],
+                                                                                                    str(self.__dict__['property'].keys()),
+                                                                                                    str(self.__dict__['const'].keys())))
             raise KeyError
         
     def __setattr__(self, name, value):
