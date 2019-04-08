@@ -1,0 +1,1 @@
+{'sprav_postgresql': {'activate': 1, 'name': 'sprav_postgresql', '_uuid': '42ac386f52e7cedbba501b36868902a6', 'options': '', 'port': '5432', 'host': 'x.ic.plus', 'init_expr': None, 'password': 'ic_all', 'type': 'PostgreSQLDB', 'dbname': 'ic_db', 'user': 'ic_all'}}

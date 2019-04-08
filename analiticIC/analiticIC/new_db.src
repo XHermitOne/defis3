@@ -1,0 +1,1 @@
+{'new_db': {'activate': 1, 'name': 'default', '_uuid': None, 'filename': '', 'init_expr': None, 'path': '', 'type': 'SQLiteDB'}}

@@ -1,0 +1,1 @@
+{'monitor_db': {'storage_dir': './odbstorage/monitors/', 'activate': 1, 'name': 'monitor_db', '_uuid': 'cf3e6e32b953730200903088e0487ce8', 'init_expr': None, 'type': 'ObjectStorageSource'}}

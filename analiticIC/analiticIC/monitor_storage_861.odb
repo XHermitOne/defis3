@@ -1,0 +1,1 @@
+{'monitor_storage_861': {'activate': 1, 'name': 'monitor_storage', '_uuid': '024eb037ae52ce7e85df13864b0892f3', 'storage_src': 'monitor_db', 'init_expr': None, 'type': 'ObjectStorage'}}

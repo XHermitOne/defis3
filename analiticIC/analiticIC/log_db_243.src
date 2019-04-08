@@ -1,0 +1,1 @@
+{'log_db_243': {'activate': 1, 'name': 'log_db', '_uuid': '66fbddd1f0f87b36ee9df8615c57a130', 'dbname': 'arch_log', 'host': '192.168.0.101', 'options': '', 'init_expr': None, 'password': 'andry', 'type': 'PostgreSQLDB', 'port': '5432', 'user': 'andry'}}

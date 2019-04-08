@@ -1,0 +1,1 @@
+{'log_db_postgresql': {'activate': 1, 'name': 'log_db_postgresql', '_uuid': '66fbddd1f0f87b36ee9df8615c57a130', 'dbname': 'ic_db', 'host': 'x.ic.plus', 'options': '', 'init_expr': None, 'password': 'ic_all', 'type': 'PostgreSQLDB', 'port': '5432', 'user': 'ic_all'}}

@@ -1,0 +1,1 @@
+{'sprav': {'activate': 1, 'name': 'sprav', '_uuid': '369af8ee967aeac6f86ed2fc5e1ce10c', 'filename': 'sprav.db', 'init_expr': None, 'path': './db/', 'type': 'SQLiteDB'}}

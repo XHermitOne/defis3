@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet">
+ <Styles>
+  <Style ss:Name="Normal" ss:ID="Default">
+   <Alignment ss:Vertical="Bottom"></Alignment>
+  <Borders></Borders>
+ <Font ss:FontName="Arial Cyr"></Font>
+<Interior></Interior>
+<NumberFormat></NumberFormat>
+<Protection></Protection>
+</Style>
+<Style ss:ID="x0">
+ <Alignment ss:Horizontal="Left" ss:Vertical="Center"></Alignment>
+<Borders>
+ </Borders>
+<Font ss:Size="14" ss:Color="#000000" ss:FontName="Arial Cyr"></Font>
+<Interior></Interior>
+</Style>
+<Style ss:ID="x1">
+ <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"></Alignment>
+<Borders>
+ </Borders>
+<Font ss:Size="8" ss:Color="#000000" ss:FontName="Arial Cyr"></Font>
+<Interior></Interior>
+</Style>
+<Style ss:ID="x2">
+ <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"></Alignment>
+<Borders>
+ </Borders>
+<Font ss:Size="10" ss:Color="#000000" ss:FontName="Arial Cyr"></Font>
+<Interior></Interior>
+</Style>
+<Style ss:ID="x3">
+ <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"></Alignment>
+<Borders>
+ </Borders>
+<Font ss:Size="10" ss:Color="#000000" ss:FontName="Arial Cyr"></Font>
+<Interior></Interior>
+</Style>
+<Style ss:ID="x4">
+ <Alignment ss:Horizontal="Left" ss:Vertical="Center"></Alignment>
+<Borders>
+ </Borders>
+<Font ss:Size="8" ss:Color="#000000" ss:FontName="Arial Cyr"></Font>
+<Interior></Interior>
+</Style>
+</Styles>
+<Worksheet ss:Name="test_rep1">
+ <Table>
+  <Column ss:Width="144.0"></Column>
+ <Column></Column>
+<Column></Column>
+<Column></Column>
+<Column></Column>
+<Row ss:Height="18.0">
+ <Cell ss:StyleID="x0">
+ <Data ss:Type="String">AA</Data></Cell>
+<Cell ss:Index="2" ss:StyleID="x0">
+<Data ss:Type="String">SS</Data></Cell>
+<Cell ss:StyleID="x0">
+<Data ss:Type="String">DD</Data></Cell>
+<Cell ss:StyleID="x0">
+<Data ss:Type="String">FF</Data></Cell>
+<Cell ss:StyleID="x0">
+<Data ss:Type="String">GG</Data></Cell>
+</Row>
+<Row ss:Height="13.5">
+ <Cell ss:StyleID="x1">
+ <Data ss:Type="String">Справочник офисов</Data></Cell>
+<Cell ss:Index="2" ss:StyleID="x2"></Cell>
+<Cell ss:StyleID="x2">
+<Data ss:Type="String">Office</Data></Cell>
+<Cell ss:StyleID="x3"></Cell>
+<Cell ss:StyleID="x3"></Cell>
+</Row>
+<Row ss:Height="13.5">
+ <Cell ss:StyleID="x1">
+ <Data ss:Type="String">Справочник менеджеров</Data></Cell>
+<Cell ss:Index="2" ss:StyleID="x2"></Cell>
+<Cell ss:StyleID="x2">
+<Data ss:Type="String">Menager</Data></Cell>
+<Cell ss:StyleID="x3"></Cell>
+<Cell ss:StyleID="x3"></Cell>
+</Row>
+<Row ss:Height="13.5">
+ <Cell ss:StyleID="x1">
+ <Data ss:Type="String">Справочник видов продукции</Data></Cell>
+<Cell ss:Index="2" ss:StyleID="x2"></Cell>
+<Cell ss:StyleID="x2">
+<Data ss:Type="String">Product</Data></Cell>
+<Cell ss:StyleID="x3"></Cell>
+<Cell ss:StyleID="x3"></Cell>
+</Row>
+<Row ss:Height="13.5">
+ <Cell ss:StyleID="x1">
+ <Data ss:Type="String">Тестовый справочник</Data></Cell>
+<Cell ss:Index="2" ss:StyleID="x2"></Cell>
+<Cell ss:StyleID="x2">
+<Data ss:Type="String">NSITst</Data></Cell>
+<Cell ss:StyleID="x3"></Cell>
+<Cell ss:StyleID="x3"></Cell>
+</Row>
+<Row ss:Height="13.5">
+ <Cell ss:StyleID="x1">
+ <Data ss:Type="String">Справочник регионов</Data></Cell>
+<Cell ss:Index="2" ss:StyleID="x2"></Cell>
+<Cell ss:StyleID="x2">
+<Data ss:Type="String">Region</Data></Cell>
+<Cell ss:StyleID="x3"></Cell>
+<Cell ss:StyleID="x3"></Cell>
+</Row>
+<Row ss:Height="13.5">
+ <Cell ss:StyleID="x1">
+ <Data ss:Type="String">Справочник месяцев</Data></Cell>
+<Cell ss:Index="2" ss:StyleID="x2"></Cell>
+<Cell ss:StyleID="x2">
+<Data ss:Type="String">Months</Data></Cell>
+<Cell ss:StyleID="x3"></Cell>
+<Cell ss:StyleID="x3"></Cell>
+</Row>
+<Row ss:Height="13.5">
+ <Cell ss:StyleID="x4">
+ <Data ss:Type="String">Zz</Data></Cell>
+<Cell ss:Index="2" ss:StyleID="x4">
+<Data ss:Type="String">xx</Data></Cell>
+<Cell ss:StyleID="x4">
+<Data ss:Type="String">cc</Data></Cell>
+<Cell ss:StyleID="x4">
+<Data ss:Type="String">vv</Data></Cell>
+<Cell ss:StyleID="x4">
+<Data ss:Type="String">bb</Data></Cell>
+</Row>
+</Table>
+</Worksheet>
+</Workbook>

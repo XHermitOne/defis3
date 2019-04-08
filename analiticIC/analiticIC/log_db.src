@@ -1,0 +1,1 @@
+{'log_db': {'activate': 1, 'name': 'log_db', '_uuid': '03164d7ca8fd0c5f0a656e02ef8b67dd', 'filename': 'log.db', 'init_expr': None, 'path': './db/', 'type': 'SQLiteDB'}}
