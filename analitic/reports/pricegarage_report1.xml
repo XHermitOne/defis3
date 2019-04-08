@@ -1,0 +1,826 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <LastAuthor>XHermit</LastAuthor>
+  <Created>2005-12-20T07:52:18Z</Created>
+  <Version>11.6360</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>10005</WindowHeight>
+  <WindowWidth>10005</WindowWidth>
+  <WindowTopX>120</WindowTopX>
+  <WindowTopY>135</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Arial Cyr"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s22">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="Arial Cyr"/>
+  </Style>
+  <Style ss:ID="s24">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="Arial Cyr" ss:Size="8"/>
+  </Style>
+  <Style ss:ID="s25">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="Arial Cyr" ss:Size="8"/>
+  </Style>
+  <Style ss:ID="s26">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s28">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Dot" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Dot" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Dot" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Dot" ss:Weight="1"/>
+   </Borders>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="PriceGarage">
+  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="104" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:Width="23.25"/>
+   <Column ss:Width="81"/>
+   <Column ss:Width="101.25"/>
+   <Column ss:Width="69.75"/>
+   <Column ss:Width="36.75"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:MergeAcross="4" ss:StyleID="s22"><Data ss:Type="String">Тестовый отчет</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="54">
+    <Cell ss:StyleID="s24"><Data ss:Type="String">N</Data></Cell>
+    <Cell ss:StyleID="s24"><Data ss:Type="String">Дата операции</Data></Cell>
+    <Cell ss:StyleID="s24"><Data ss:Type="String">ЕИ</Data></Cell>
+    <Cell ss:StyleID="s24"><Data ss:Type="String">Сумма</Data></Cell>
+    <Cell ss:StyleID="s24"><Data ss:Type="String">Цена</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010108</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-480.68</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">122.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010117</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-853.4</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">85.0</Data></Cell>
+    <Cell ss:Index="7" ss:StyleID="s26"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020219</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-261.96</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">118.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020218</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-1250.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">125.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010137</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-1100.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">110.0</Data></Cell>
+    <Cell ss:Index="7" ss:StyleID="s28"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010132</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-1456.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">130.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010109</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-1403.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">122.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010152</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.10</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-55.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">55.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050502</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.16</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-1859.49</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">97.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050502</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.24</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-122.22</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">97.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010102</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.24</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-117.12</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">96.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0040412</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-71.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">148.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020234</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-114.33</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">158.8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010116</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-268.75</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">91.1</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010124</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-560.14</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">110.7</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050504</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-52.22</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">108.8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050505</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-35.9</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">108.8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010143</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-58.8</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">73.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010142</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-93.74</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">74.4</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010118</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-57.33</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">73.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010114</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-24.68</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">48.4</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020245</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-47.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">112.6</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010120</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-46.12</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">54.9</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010145</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-101.64</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">60.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010115</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-208.82</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">53.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010104</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-128.76</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">75.3</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010105</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-50.16</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">80.9</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010109</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-189.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">105.1</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010108</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-155.26</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">104.2</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010117</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-61.74</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">73.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010139</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-11.26</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">51.2</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020219</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-53.73</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">99.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020227</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-34.07</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">72.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020233</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-80.72</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">130.2</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020245</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-61.93</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">112.6</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050504</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-45.7</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">108.8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050507</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-76.16</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">108.8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010128</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.10</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-312.08</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">83.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030320</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.10</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-225.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">150.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010139</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.12</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-356.35</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">51.2</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010108</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.14</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-90.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">122.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020203</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.14</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-14.04</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">117.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010112</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.14</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-180.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">91.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030319</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.14</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-212.4</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">180.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050502</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.16</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-153.26</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">97.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020234</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.16</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-161.98</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">158.8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010139</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.16</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-12.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">51.2</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050507</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.16</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-132.58</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">116.3</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010158</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.17</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-102.48</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">122.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010120</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.17</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-153.4</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">59.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010144</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.17</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-128.93</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">47.4</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020227</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.17</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-168.48</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">78.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020243</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.17</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-246.4</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">112.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030306</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.17</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-22.12</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">158.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010105</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-43.88</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">82.8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010108</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-85.13</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">113.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010136</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-94.89</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">81.8</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010139</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-129.53</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">51.2</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010144</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-45.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">44.6</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010147</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-57.28</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">72.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010153</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-88.4</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">53.9</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020220</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-37.11</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">65.1</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020222</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-236.38</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">88.4</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020225</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-167.82</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">190.7</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020237</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-47.68</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">116.3</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020244</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-66.1</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">122.4</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020248</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-121.48</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">171.1</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010131</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-69.57</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">80.9</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010150</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.18</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-9530.64</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">65.1</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020216</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.22</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-8.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">50.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010115</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.24</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-69.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">53.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020235</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.24</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-116.6</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">110.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020233</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.24</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-310.8</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">140.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010102</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.05</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-98.02</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">84.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010158</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.28</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-124.82</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">106.5</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010120</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.28</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-44.71</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">54.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030324</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.28</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-111.02</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">122.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030329</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.28</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-60.76</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">98.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020239</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.28</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-190.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">190.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020218</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.28</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-73.27</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">116.3</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0050507</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.28</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-97.69</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">116.3</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020240</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-32.46</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">137.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020243</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-96.32</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">115.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010132</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-327.5</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">125.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010136</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-225.32</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">86.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020239</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-453.59</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">182.9</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020246</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-115.5</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">175.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030319</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-367.2</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">180.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030327</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-68.4</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">190.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030335</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-183.6</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">180.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010156</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.29</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-111.6</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">60.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020220</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.30</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-142.08</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">70.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020218</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.30</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-107.25</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">110.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010102</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.30</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-115.2</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">96.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010103</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.30</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-112.84</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">91.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010115</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.30</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-266.06</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">53.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0010144</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.30</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-47.4</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">47.4</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020227</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.30</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-65.52</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">78.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0030322</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.31</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-310.42</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">187.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020216</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.02</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-3.0</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">50.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020222</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.02</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-1.76</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">88.0</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">0020222</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">2005.03.09</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">КГ </Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">-3.8</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">95.0</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <PageMargins x:Bottom="0.984251969" x:Left="0.78740157499999996"
+     x:Right="0.78740157499999996" x:Top="0.984251969"/>
+   </PageSetup>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>6</ActiveRow>
+     <ActiveCol>5</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

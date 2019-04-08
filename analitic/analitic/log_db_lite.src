@@ -1,0 +1,1 @@
+{'log_db_lite': {'activate': 1, 'name': u'log_db_lite', '_uuid': u'ab4c4b092e5eea91dde92028993c3fa0', 'filename': u'analitic.db', 'init_expr': None, 'path': u'./analitic/db/', 'type': u'SQLiteDB'}}

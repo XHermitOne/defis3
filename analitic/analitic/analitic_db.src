@@ -1,0 +1,1 @@
+{'analitic_db': {'activate': 1, 'name': u'analitic_db', '_uuid': u'8d5f25080adf231c4552cbf0e3bac8e2', 'filename': u'analitic.db', 'init_expr': None, 'path': u'./db/', 'type': u'SQLiteDB'}}

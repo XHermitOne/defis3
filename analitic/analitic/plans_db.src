@@ -1,0 +1,1 @@
+{'plans_db': {'storage_dir': u'./PlansStorage', 'activate': 1, 'name': u'plans_db', '_uuid': u'fc1e91f7cffe7040f64a04b8a01ce5ee', 'init_expr': None, 'type': u'ObjectStorageSource'}}

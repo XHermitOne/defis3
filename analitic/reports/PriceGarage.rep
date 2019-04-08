@@ -1,0 +1,430 @@
+
+{
+'upper':
+    [
+
+    ]
+,
+'args':
+    {
+
+    }
+,
+'sheet':
+    [
+    
+        [
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':None,
+                'background':None
+                }
+,
+            'top':102.0,
+            'format':None,
+            'value':'Тестовый отчет',
+            'height':25.5,
+            'width':624.0,
+            'merge_col':5,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':10.0
+                }
+,
+            'border':({'color': None, 'style': 106, 'weight': 1}, {'color': None, 'style': 106, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 106, 'weight': 1}),
+            'align':(2304, 0),
+            'left':0.0
+            }
+,
+        None,
+        None,
+        None,
+        None
+        ]
+,
+    
+        [
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':127.5,
+            'format':None,
+            'value':'N',
+            'height':108.0,
+            'width':46.5,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 2304),
+            'left':0.0
+            }
+,
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':127.5,
+            'format':None,
+            'value':'Дата операции',
+            'height':108.0,
+            'width':162.0,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 2304),
+            'left':46.5
+            }
+,
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':127.5,
+            'format':None,
+            'value':'ЕИ',
+            'height':108.0,
+            'width':202.5,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 2304),
+            'left':208.5
+            }
+,
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':127.5,
+            'format':None,
+            'value':'Сумма',
+            'height':108.0,
+            'width':139.5,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 2304),
+            'left':411.0
+            }
+,
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':127.5,
+            'format':None,
+            'value':'Цена',
+            'height':108.0,
+            'width':73.5,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 2304),
+            'left':550.5
+            }
+
+        ]
+,
+    
+        [
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':235.5,
+            'format':None,
+            'value':'[\"codt\"]',
+            'height':30.0,
+            'width':46.5,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 1024),
+            'left':0.0
+            }
+,
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':235.5,
+            'format':None,
+            'value':'[\"dtoper\"]',
+            'height':30.0,
+            'width':162.0,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 1024),
+            'left':46.5
+            }
+,
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':235.5,
+            'format':None,
+            'value':'[\"ei\"]',
+            'height':30.0,
+            'width':202.5,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 1024),
+            'left':208.5
+            }
+,
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':235.5,
+            'format':None,
+            'value':'[\"summa\"]',
+            'height':30.0,
+            'width':139.5,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 1024),
+            'left':411.0
+            }
+,
+        
+            {
+            'merge_row':1,
+            'visible':True,
+            'color':
+                {
+                'text':(0, 0, 0),
+                'background':(255, 255, 255)
+                }
+,
+            'top':235.5,
+            'format':None,
+            'value':'[\"cena\"]',
+            'height':30.0,
+            'width':73.5,
+            'merge_col':1,
+            'sum':None,
+            'font':
+                {
+                'style':'regular',
+                'name':'Arial Cyr',
+                'family':'default',
+                'faceName':'Arial Cyr',
+                'underline':False,
+                'size':8.0
+                }
+,
+            'border':({'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}, {'color': None, 'style': 100, 'weight': 1}),
+            'align':(2304, 1024),
+            'left':550.5
+            }
+
+        ]
+
+    ]
+,
+'description':'Тестовый отчет',
+'generator':'excel',
+'data_base':'log_db',
+'page_setup':
+    {
+    'margins':(20.0, 20.0, 25.0, 25.0),
+    'paper':3,
+    'orient':1
+    }
+,
+'footer':
+    {
+
+    }
+,
+'detail':
+    {
+    'row_size':1,
+    'col_size':5,
+    'col':0,
+    'row':2
+    }
+,
+'header':
+    {
+    'row_size':2,
+    'col_size':5,
+    'col':0,
+    'row':0
+    }
+,
+'xls_report':'.\analitic\reports\pricegarage.xls',
+'groups':
+    [
+
+    ]
+,
+'under':
+    [
+
+    ]
+,
+'query':'~SELECT * FROM analitic where analitic.summa<0',
+'xls_offset':(2, 4),
+'name':'PriceGarage'
+}
