@@ -1,0 +1,1 @@
+{'plan_odb': {'storage_dir': u'./ODBStorage/Plans', 'activate': 1, 'name': u'plan_odb', '_uuid': u'cc51e0f72707ac0d3051cfe2d5c0268c', 'init_expr': None, 'type': u'ObjectStorageSource'}}

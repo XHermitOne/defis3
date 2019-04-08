@@ -1,0 +1,1 @@
+{'plnas_storage': {'activate': 1, 'name': u'plnas_storage', '_uuid': u'8584c39ac092f1da0e15e35ffaef92ea', 'storage_src': u'plan_odb', 'init_expr': None, 'type': u'ObjectStorage'}}

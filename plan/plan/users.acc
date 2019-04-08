@@ -1,0 +1,1 @@
+{'admin': {'lock_time': [[], [], [], [], [], [], []], 'name': u'admin', 'main_win': ((u'MainWindow', u'main_win', None, u'main_win.win', u'test_u'),), '_uuid': u'800932731c45531faa130db205a945d6', 'on_logout': None, 'access': [], 'menubars': [], 'legacy': None, 'on_login': None, 'local_dir': u'C:/#WRK', 'password': None, 'type': u'User', 'description': None}}

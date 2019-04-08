@@ -1,0 +1,1 @@
+{'plan_modifications': {'style': 0, 'activate': 1, 'description': None, 'component_module': None, 'type': u'ModPlanManager', '_uuid': u'0782ff35a037e08e01eed80c32b2e96e', 'alias': None, 'init_expr': None, 'child': [], 'res_module': None, 'metaclass': None, 'name': u'default_1163'}}

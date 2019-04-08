@@ -1,0 +1,1 @@
+{'new_storage': {'activate': 1, 'name': u'sprav_odb_storage', '_uuid': u'f58befcfdc59a2f009d040622a5fd463', 'storage_src': u'sprav_odb', 'init_expr': None, 'type': u'ObjectStorage'}}

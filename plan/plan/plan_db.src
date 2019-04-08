@@ -1,0 +1,1 @@
+{'plan_db': {'activate': 1, 'name': u'plan_db', '_uuid': u'45a8b785e5ec8deaa6180036eca4f627', 'dbname': u'arch_log', 'host': u'192.168.0.101', 'options': u'', 'init_expr': None, 'password': u'andry', 'type': u'PostgreSQLDB', 'port': u'5432', 'user': u'andry'}}

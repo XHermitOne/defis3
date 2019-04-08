@@ -1,0 +1,1 @@
+{'new_db': {'activate': 1, 'type': u'ObjectStorageSource', 'name': u'default', '_uuid': None, 'init_expr': None}}
