@@ -1,19 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#<< Типовой шаблон пользовательского компонента >>
-
-# -----------------------------------------------------------------------------
-# Name:       icplanmodifmanager.py
-# Purpose:    Компонент описание модификации плана
-#
-# Author:     <Оконешников А.В.>
-#
-# Created:     class:Thu Mar 15 15:20:50 2007
-# RCS-ID:
-# Copyright:   (c) 2007 Infocentre
-# Licence:     $licence:<your licence>$
-# -----------------------------------------------------------------------------
 """
 Класс пользовательского визуального компонента.
 
@@ -40,14 +27,14 @@ import ic.imglib.common as common
 import ic.PropertyEditor.icDefInf as icDefInf
 from ic.kernel import ickernel
 import ic.utils.coderror as coderror
-from ic.engine import ic_user
-from ic.kernel import io_prnt
 
-from plan import plan_imglib
+from ic.bitmap import ic_bmp
+from ic.log import log
+
 try:
     from STD import igetlistdlg
-except:
-    io_prnt.outErr('Ошибка импортирования.')
+except ImportError:
+    log.error('Ошибка импортирования <from STD import igetlistdlg>')
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -56,29 +43,30 @@ ic_class_type = icDefInf._icUserType
 ic_class_name = 'PlanModif'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'PlanModif',
                 'name': 'default',
                 'metaplan':[],
                 'child': [],
+
+                '__styles__': ic_class_styles,
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],
-                                   icDefInf.EDT_USER_PROPERTY:['metaplan']},
+                                   icDefInf.EDT_USER_PROPERTY: ['metaplan'],
+                                   },
                 '__parent__':icwidget.SPC_IC_SIMPLE}
-                    
-ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = plan_imglib.DumpDB
-ic_class_pic2 = plan_imglib.DumpDB
+ic_class_pic = ic_bmp.createLibraryBitmap('server_components.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('server_components.png')
 
 #   Путь до файла документации
 ic_class_doc = 'doc/public/icplanmodifmanager.html'
 ic_class_spc['__doc__'] = ic_class_doc
-                    
+
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
 
@@ -87,13 +75,14 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0,0,0,1)
+__version__ = (0, 1, 1, 1)
 
-### EDITOR_FUNCS_BLOCK
+
+# EDITOR_FUNCS_BLOCK
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
-    
+
     @type attr: C{string}
     @param attr: Имя текущего атрибута.
     @type value: C{string}
@@ -114,43 +103,43 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
         prnt_res = tree.GetPyData(prnt)
         mt = prnt_res['metaclass']
 
-        if type(mt) == type(''):
+        if isinstance(mt, str):
             mt = str_to_val_user_property(attr, mt, propEdt, *arg, **kwarg)
-        
+
         typ, className, ifs, modl, subsys = mt[0]
         resName, extName= modl.split('.')
         cls = ickernel.get_res_interface(resName, className, extName, subsys=subsys)
         result = []
-        
+
         if cls:
             parent = propEdt.GetPropertyGrid().GetView()
-            
+
             if value:
                 chLst = str_to_val_user_property(attr, value, propEdt, *arg, **kwarg)
-                if chLst == None:
+                if chLst is None:
                     chLst = []
             else:
                 chLst = []
 
             lst = [key for key, obj in cls.getObject().components.items() if (obj.type == 'MetaItem' and not obj.type in chLst)]
-            
-            #from STD import igetlistdlg
+
+            # from STD import igetlistdlg
             dlgcls = igetlistdlg.IGetListDlg(parent)
             dlgcls.set_base_list(lst)
             dlgcls.set_choice_list(chLst[1:])
-            
+
             dlg = dlgcls.getObject()
             ret = dlg.ShowModal()
             if ret == wx.ID_OK:
                 result = dlgcls.get_result()
                 result = [cls.getObject().name] + result
-                print '>>> result=', result
             else:
                 result = chLst
-                
+
             dlg.Destroy()
         return result
-        
+
+
 def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     Стандартная функция контроля.
@@ -158,16 +147,17 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     if attr == 'metaplan':
         #   Преобразем строку к значению
         value = str_to_val_user_property(attr, value, propEdt)
-        if value == None:
+        if value is None:
             return value
 
-        if type(value)==type([]):
+        if isinstance(value, list):
             return coderror.IC_CTRL_OK
         else:
             return coderror.IC_CTRL_FAILED
-        
+
     return coderror.IC_CTRLKEY_OK
-        
+
+
 def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     """
     Стандартная функция преобразования текста в значение.
@@ -176,12 +166,12 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     try:
         value = eval(text)
     except:
-        print '>>> ERROR eval(text): text=', text
+        log.fatal(u'Ошибка определения значения по выражению <%s>' % text)
         return None
 
     return value
-    
-### END_EDITOR_FUNCS_BLOCK
+# END_EDITOR_FUNCS_BLOCK
+
 
 class PlanModif(icwidget.icSimple):
     """
@@ -189,17 +179,16 @@ class PlanModif(icwidget.icSimple):
 
     @type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
-        
+
         - B{child=[]}:
         - B{type='PlanModif'}:
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
-    
+
     def __init__(self, parent, id, component, logType = 0, evalSpace = None,
-                        bCounter=False, progressDlg=None):
+                 bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
 
@@ -224,56 +213,51 @@ class PlanModif(icwidget.icSimple):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = filter(lambda x: x.find('__') <> 0, component.keys())
-        
+        lst_keys = filter(lambda x: x.find('__') != 0, component.keys())
+
         for key in lst_keys:
             setattr(self, key, component[key])
-        
-        #   Регистрация обработчиков событий
-        
 
-        #self.BindICEvt()
+        #   Регистрация обработчиков событий
+        # self.BindICEvt()
+
         #   Создаем дочерние компоненты
-        if component.has_key('child'):
+        if 'child' in component:
             self.childCreator(bCounter, progressDlg)
-        
+
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        
         if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace = self.evalSpace,
-                                bCounter = bCounter, progressDlg = progressDlg)
-      
+            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
+                                 bCounter=bCounter, progressDlg=progressDlg)
+
     #   Обработчики событий
-    
 
 
 def test(par=0):
     """
     Тестируем пользовательский класс.
-    
+
     @type par: C{int}
     @param par: Тип консоли.
     """
-    
+
     import ic.components.ictestapp as ictestapp
-    
+
     app = ictestapp.TestApp(par)
     common.img_init()
 
     frame = wx.Frame(None, -1, 'Test')
     win = wx.Panel(frame, -1)
-    
+
     #   win = icButton(-1, win, {})
-    #ctrl_1 = StateIndicator(win, -1, {'position':(100,35), 'size':(100,30)})
-    
+    # ctrl_1 = StateIndicator(win, -1, {'position':(100,35), 'size':(100,30)})
+
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
-    """
-    Тестируем пользовательский класс.
-    """
     test()

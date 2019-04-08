@@ -143,7 +143,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # --- Классы ---
@@ -176,7 +176,7 @@ class icSimpleImageRenderer(parentModule.PyGridCellRenderer):
         else:
             DC_.SetBrush(wx.Brush(wx.WHITE, wx.SOLID))
             DC_.SetPen(wx.Pen(wx.WHITE, 1, wx.SOLID))
-        DC_.DrawRectangleRect(Rect_)
+        DC_.DrawRectangle(Rect_)
 
         # copy the image but only to the size of the grid cell
         width, height = img.GetWidth(), img.GetHeight()

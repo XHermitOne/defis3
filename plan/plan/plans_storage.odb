@@ -1,1 +1,1 @@
-{'plans_storage': {'activate': 1, 'name': u'plans_storage', '_uuid': u'8584c39ac092f1da0e15e35ffaef92ea', 'storage_src': u'plan_odb', 'init_expr': None, 'type': u'ObjectStorage'}}
+{'plans_storage': {'activate': 1, 'name': 'plans_storage', '_uuid': '8584c39ac092f1da0e15e35ffaef92ea', 'storage_src': 'plan_odb', 'init_expr': None, 'type': 'ObjectStorage', '__item_id': 0, '__attr_types__': {0: ['name', 'type', 'storage_src']}, '__styles__': {'DEFAULT': 0}, '__events__': {}, '__doc__': 'ic/doc/ic.components.user.ic_obj_storage_wrp.icObjStorage-class.html'}}

@@ -3,15 +3,16 @@
 """
 Библиотека образов.
 """
-print 'Load Image Library',str(__file__)
-#--- Imports ---
-from wx import ImageFromStream, BitmapFromImage
-from wx import EmptyIcon
-import cStringIO
-#--- Image Library File ---
-#--- BEGIN Cube
+
+# --- Imports ---
+import wx
+import io
+# --- Image Library File ---
+
+
+# --- BEGIN Cube
 def getCubeData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01>IDAT8\x8d\xc5\x93\xb1N\x02A\x10\x86\xbf;\x90D-5\xd0\xdd3P\xd8\xd2\
 \x1d\x8f`qz\x06\x18\tt\xbe\x87\xb5\xc6\x8e\x01\x12\x92-|\x85\x0b\x16D+\x8a{\
@@ -28,24 +29,29 @@ def getCubeData():
 \x8a\xaa2\x9b\xc7\xcc\xe61\xaa\xbaT^\xa9\x03[\xc1\x00\xce\xbf\xff\xc6\x1f\
 \x96X\x9e\xcev\xe49\xa1\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getCubeBitmap():
-    return BitmapFromImage(getCubeImage())
+    return wx.Bitmap(getCubeImage())
+
 
 def getCubeImage():
-    stream = cStringIO.StringIO(getCubeData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getCubeData())
+    return wx.Image(stream)
+
 
 def getCubeIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getCubeBitmap())
     return icon
 
-Cube=getCubeBitmap()
 
-#--- END Cube
-#--- BEGIN DumpDB
+Cube = getCubeBitmap()
+# --- END Cube
+
+
+# --- BEGIN DumpDB
 def getDumpDBData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x14IDAT8\x8d\xa5S\xb1\x8a\xc2@\x14\x9c\x97\xe4c\xae=,\x02\xf6i\xed\
 \xae\xb8\x13K-\xc4(\xf9\x04\xfd\x80;0!\x7f \xf6\xb6\x826*(H\xc0*\xf6b\x15\
@@ -60,24 +66,29 @@ def getDumpDBData():
 \xdf\xe3\'z\x8b\x19U\xca_\xb1\x9f\xe9-ft\x05ps\x83v|\xaa\xe6D\x00\x00\x00\
 \x00IEND\xaeB`\x82' 
 
+
 def getDumpDBBitmap():
-    return BitmapFromImage(getDumpDBImage())
+    return wx.Bitmap(getDumpDBImage())
+
 
 def getDumpDBImage():
-    stream = cStringIO.StringIO(getDumpDBData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getDumpDBData())
+    return wx.Image(stream)
+
 
 def getDumpDBIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getDumpDBBitmap())
     return icon
 
-DumpDB=getDumpDBBitmap()
 
-#--- END DumpDB
-#--- BEGIN Frame3D
+DumpDB = getDumpDBBitmap()
+# --- END DumpDB
+
+
+# --- BEGIN Frame3D
 def getFrame3DData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x00\xa9IDAT8\x8dcddbf\xa0\x040\x1a\xf2\xfe\xff\x0f\xe3\\\xf8\xca\xc2H\
 \x8c&\x03\xee?p=\x0c\x86\xbc\xff\xff3213 c\x06\x06\x86\xff\x840#\x133\x83!\
@@ -87,24 +98,29 @@ def getFrame3DData():
 \xce,f`db\x86G=I\x06\xa0kf``@$e\x06"\x93/2FI\xca\x18&\x13\t(\xce\x8d\x00\x1a\
 eX\xc5\x9dl\xaa\x10\x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getFrame3DBitmap():
-    return BitmapFromImage(getFrame3DImage())
+    return wx.Bitmap(getFrame3DImage())
+
 
 def getFrame3DImage():
-    stream = cStringIO.StringIO(getFrame3DData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getFrame3DData())
+    return wx.Image(stream)
+
 
 def getFrame3DIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getFrame3DBitmap())
     return icon
 
-Frame3D=getFrame3DBitmap()
 
-#--- END Frame3D
-#--- BEGIN Requisite
+Frame3D = getFrame3DBitmap()
+# --- END Frame3D
+
+
+# --- BEGIN Requisite
 def getRequisiteData():
-    return '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
+    return b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\
 \x00\x00\x00\x1f\xf3\xffa\x00\x00\x00\x04sBIT\x08\x08\x08\x08|\x08d\x88\x00\
 \x00\x01\x08IDAT8\x8d\x95\x93\xc1J\xc3@\x10\x86\xbfIr\xf5f\xf15\xf4\xecI\xd9\
 \xbeC\xc0\xf6.>\x8f\xd4^r2e\xf7\x1dZZ\x10\xfa4\xcdMls\xd1\xf1 +iv\x12\xf1\
@@ -118,18 +134,21 @@ g\xd4\xce\xa9I0\xdbl\xcc\xc19\x9d\xbe\x008~\x1c\x01\xb8\x9c\\\xd8s0d\xec\x9a\
 7W\x88dyr\xc3\x00\x1e\x9fn\x93OI\x0e\xcar\xf9\x06\xae\xf1\xef=\xbc\xed\xd3G\
 \x00\x00\x00\x00IEND\xaeB`\x82' 
 
+
 def getRequisiteBitmap():
-    return BitmapFromImage(getRequisiteImage())
+    return wx.Bitmap(getRequisiteImage())
+
 
 def getRequisiteImage():
-    stream = cStringIO.StringIO(getRequisiteData())
-    return ImageFromStream(stream)
+    stream = io.BytesIO(getRequisiteData())
+    return wx.Image(stream)
+
 
 def getRequisiteIcon():
-    icon = EmptyIcon()
+    icon = wx.Icon()
     icon.CopyFromBitmap(getRequisiteBitmap())
     return icon
 
-Requisite=getRequisiteBitmap()
 
-#--- END Requisite
+Requisite = getRequisiteBitmap()
+# --- END Requisite

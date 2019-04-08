@@ -66,8 +66,8 @@ ic_class_spc = {'type': 'GnuplotTrend',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('diagramm.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('diagramm.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('system-monitor.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('system-monitor.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

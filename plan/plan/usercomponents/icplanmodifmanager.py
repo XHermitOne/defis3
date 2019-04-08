@@ -25,8 +25,10 @@ import ic.utils.util as util
 import ic.components.icResourceParser as prs
 import ic.imglib.common as common
 import ic.PropertyEditor.icDefInf as icDefInf
-from plan import plan_imglib
 import ic.utils.coderror as coderror
+
+from ic.bitmap import ic_bmp
+from ic.log import log
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
@@ -55,8 +57,8 @@ ic_class_spc = {'type': 'ModPlanManager',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = plan_imglib.Cube
-ic_class_pic2 = plan_imglib.Cube
+ic_class_pic = ic_bmp.createLibraryBitmap('box_closed.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('box_closed.png')
 
 #   Путь до файла документации
 ic_class_doc = 'doc/public/icplanmodifmanager.html'
@@ -104,7 +106,6 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     Стандартная функция контроля.
     """
-    #print '>>>property_editor_ctrl attr, value=', attr, value, type(value)
     if attr == 'metaclass':
         return pspEdt.property_editor_ctrl(value, propEdt)
 #        #   Преобразем строку к значению
@@ -134,9 +135,9 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 #            print '>>> ERROR eval(text): text=', text
 #            return []
 
-    return value
-    
+    return None
 ### END_EDITOR_FUNCS_BLOCK
+
 
 class PlanModifManager(icwidget.icSimple):
     """
@@ -152,11 +153,10 @@ class PlanModifManager(icwidget.icSimple):
             Пример: ((None, IMetaplan, None, metadata/planProdaj.py, 'STIS'), <uuid>)
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType = 0, evalSpace = None,
-                        bCounter=False, progressDlg=None):
+                 bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
 
@@ -181,7 +181,7 @@ class PlanModifManager(icwidget.icSimple):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = filter(lambda x: x.find('__') <> 0, component.keys())
+        lst_keys = filter(lambda x: x.find('__') != 0, component.keys())
         
         for key in lst_keys:
             setattr(self, key, component[key])
@@ -191,7 +191,7 @@ class PlanModifManager(icwidget.icSimple):
 #            self.metaclass = kernel.Create(self.metaclass, parent, evalSpace)
         
         #   Создаем дочерние компоненты
-        if component.has_key('child'):
+        if 'child' in component:
             self.childCreator(bCounter, progressDlg)
 
     def childCreator(self, bCounter, progressDlg):
@@ -200,8 +200,8 @@ class PlanModifManager(icwidget.icSimple):
         """
         
         if self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace = self.evalSpace,
-                                bCounter = bCounter, progressDlg = progressDlg)
+            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
+                                bCounter=bCounter, progressDlg=progressDlg)
       
     def getCanContainLst(self, modifId, metatype):
         """
@@ -212,10 +212,9 @@ class PlanModifManager(icwidget.icSimple):
         lst = self.getModifLst(modifId)
         if lst and metatype in lst:
             i = lst.index(metatype)
-            if i+1 < len(lst):
+            if i + 1 < len(lst):
                 return [lst[i+1]]
-
-        return []
+        return list()
 
     def getDescrDct(self):
         """
@@ -235,7 +234,8 @@ class PlanModifManager(icwidget.icSimple):
         for obj in self.components.values():
             if obj.name == modifId:
                 return obj.metaplan
-        
+
+
 def test(par=0):
     """
     Тестируем пользовательский класс.
@@ -253,13 +253,11 @@ def test(par=0):
     win = wx.Panel(frame, -1)
     
     #   win = icButton(-1, win, {})
-    #ctrl_1 = StateIndicator(win, -1, {'position':(100,35), 'size':(100,30)})
+    # ctrl_1 = StateIndicator(win, -1, {'position':(100,35), 'size':(100,30)})
     
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
-    """
-    Тестируем пользовательский класс.
-    """
     test()
