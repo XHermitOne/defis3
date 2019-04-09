@@ -1,9 +1,9 @@
-# !/usr/bin/env python
+#!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
+
 """
 Модуль прикладной системы МОНИТОРИНГ.
 Управление просмотром и редактированием мониторов.
-Автор(ы):
 """
 
 import ic.components.user.objects.icmetatreebrows as browser
@@ -13,7 +13,7 @@ import plan.browsers as brws
 import analitic.planUtils as planUtils
 
 # Версия
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 #--- Функции ---
 def showTextMonitorBrowser():
@@ -28,14 +28,14 @@ def showTextMonitorBrowser():
         }
     metaclass = IMetaplan.IMetaplan(forms=frm)
 #    metaObj = metaclass.getObject()
-    
+
 #    brows=browser.MetaTreeBrows(ic_user.icGetMainWin(), metaObj=metaObj,
 #                                treeRootTitle='Классификация мониторов',
 #                                treeLabels=['Мониторы'])
     brows=brws.icMonitoringBrows(ic_user.icGetMainWin(), 'metadata_plan',
                             metaclass=metaclass,
-                            treeRootTitle='Классификация мониторов',
-                            treeLabels=['Мониторы'])
+                            treeRootTitle=u'Классификация мониторов',
+                            treeLabels=[u'Мониторы'])
 
     # Отключить режим редактирования
     brows.SetEditMode(False)
@@ -43,29 +43,29 @@ def showTextMonitorBrowser():
     # Устанавливает у метадерева режим мониторинга и указатель на браузер.
     metaclass.SetUserData({'mode':'monitoring', 'browserInterface':brows})
     obj=brows.getObject()
-    print 'showTextMonitorBrowser',obj
-    ic_user.icAddMainOrgPage(obj,'Табличные мониторы')
+    ic_user.icAddMainOrgPage(obj, u'Табличные мониторы')
+
 
 def showMonitorBrowser():
     """
     Вывод на экран формы редактирования мониторов.
     """
     frm = {'mYear':'analitic.interfaces.IYearTrendPanel.IYearTrendPanel',
-        'mMonth':'analitic.interfaces.IStdIndicatorPanel.IStdIndicatorPanel',
-        'mVidProd':'analitic.interfaces.IStdIndicatorPanel.IStdIndicatorPanel',
-        'mReg':'analitic.interfaces.IStdIndicatorPanel.IStdIndicatorPanel',
-        'mMenager':'analitic.interfaces.IStdIndicatorPanel.IStdIndicatorPanel'
-        }
+           'mMonth':'analitic.interfaces.IStdIndicatorPanel.IStdIndicatorPanel',
+           'mVidProd':'analitic.interfaces.IStdIndicatorPanel.IStdIndicatorPanel',
+           'mReg':'analitic.interfaces.IStdIndicatorPanel.IStdIndicatorPanel',
+           'mMenager':'analitic.interfaces.IStdIndicatorPanel.IStdIndicatorPanel'
+           }
     metaclass = IMetaplan.IMetaplan(forms=frm)
 #    metaObj = metaclass.getObject()
-    
+
 #    brows=browser.MetaTreeBrows(ic_user.icGetMainWin(), metaObj=metaObj,
 #                                treeRootTitle='Классификация мониторов',
 #                                treeLabels=['Мониторы'])
     brows=brws.icMonitoringBrows(ic_user.icGetMainWin(), 'metadata_plan',
                             metaclass=metaclass,
-                            treeRootTitle='Классификация мониторов',
-                            treeLabels=['Мониторы'])
+                            treeRootTitle=u'Классификация мониторов',
+                            treeLabels=[u'Мониторы'])
 
     # Отключить режим редактирования
     brows.SetEditMode(False)
@@ -73,8 +73,8 @@ def showMonitorBrowser():
     metaclass.SetUserData({'mode':'monitoring', 'browserInterface':brows})
     obj=brows.getObject()
     #obj.Show(True)
-    print 'showMonitorBrowser',obj
-    ic_user.icAddMainOrgPage(obj,'Просмотр индикаторов')
+    ic_user.icAddMainOrgPage(obj, u'Просмотр индикаторов')
+
 
 def showPlanBrowser():
     """
@@ -88,24 +88,25 @@ def showPlanBrowser():
 #                            treeLabels=['Планы'])
     brows=brws.icPlanBrows(None, 'metadata_plan',
                             metaclass=metaclass,
-                            treeRootTitle='Структура планов',
-                            treeLabels=['Планы'])
-                            
+                            treeRootTitle=u'Структура планов',
+                            treeLabels=[u'Планы'])
+
     #   Определяем функции пересчета модифицированных планов по базовому
     brows.recountFunc = planUtils.genModifPlan
     brows.recountModifPlanYear = planUtils.genModifPlanYear
     brows.recountAllModifPlanMnth = planUtils.genAllPlanMonth
-    
+
     # Устанавливает у метадерева указатель на браузер.
     metaclass.SetUserData({'mode':'planning', 'browserInterface':brows})
     obj=brows.getObject()
     obj.Show(True)
-    
+
+
 def loadData():
     """
     Загрузка данных-фактов.
     """
     metaclass = IMetaplan.IMetaplan()
     plan_manager=brws.icPlanMenager(metaclass)
-    
+
     planUtils.loadDataPlan(metaclass)

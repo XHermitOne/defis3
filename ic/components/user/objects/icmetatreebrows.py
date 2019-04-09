@@ -8,7 +8,7 @@ from ic.utils import util
 #import plan.interfaces.IYearEdtPanel as IYearEdtPanel
 import ic.dlg.msgbox as msgbox
 import ic.interfaces.icobjectinterface as icobjectinterface
-import ic.log.ic_log as ic_log
+from ic.log import log
 import copy
 import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
 
@@ -193,7 +193,7 @@ class MetaTreeBrows(icobjectinterface.icObjectInterface):
                     if item != tree.root:
                         self.ILeftPanel.LoadData()
                 except:
-                    ic_log.icLogErr()
+                    log.fatal(u'Ошибка загрузки данных')
                 
                 split.Unsplit()
                 split.SplitVertically(leftPanel, obj, pos)
