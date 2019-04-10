@@ -18,7 +18,7 @@ import wx.lib.imagebrowser
 from ic.log import log
 
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 
 def icFileDlg(Win_=None, Title_='', Filter_='', DefaultPath_=''):
@@ -27,6 +27,7 @@ def icFileDlg(Win_=None, Title_='', Filter_='', DefaultPath_=''):
     @param Win_: Ссылка на окно.
     @param Title_: Заголовок диалогового окна.
     @param Filter_: Фильтр файлов.
+        Например: All ZIP Files (*.zip)|*.zip
     @param DefaultPath_: Путь по умолчанию.
     @return: Возвращает полное имя выбранного файла.
     """
