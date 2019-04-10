@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-#  -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+
 """
 Модуль прикладной системы. Оценки состояния по набору индикаторов (карте).
 Используем образы некоторых известных состояний в качестве классификаторов, по которым
 определяем комплексную оцнку состояния.
-Автор(ы): Оконешников А.В.
 """
 
-# Версия
-__version__ = (0, 0, 0, 1)
-
-import ic.components.user.icarrowindicator as icarrowindicator
+from analitic.usercomponents import icarrowindicator
 import ic.bitmap.icbitmap as lib
+
+# Версия
+__version__ = (0, 1, 1, 1)
+
 
 #--- Функции
 def differece(m1, m2):
@@ -32,7 +33,7 @@ def convertValToState():
     """
     """
     pass
-    
+
 #--- Классы
 class IndGroup:
     """
@@ -41,7 +42,7 @@ class IndGroup:
     def __init__(self, valLst):
         """
         Конструктор.
-        
+
         @type valLst: C{list}
         @param valLst: Список значений индикаторов.
         """
@@ -51,7 +52,7 @@ class IndGroup:
         """
         Вычисдяется степень различия между текщей группой индикаторов и группой
         индикаторов задающей определенное состояние.
-        
+
         @type ob: C{IndGroup}
         @param ob: Группа индикаторов, с которой производится сравнение.
         """
@@ -61,7 +62,7 @@ class IndGroup:
                 D += (x - ob[i])^2
             else:
                 D += x^2
-                
+
         return D
 
 class ColorIndGroup(IndGroup):
@@ -80,7 +81,7 @@ class ColorIndGroup(IndGroup):
     def __init__(self, valLst, descr=None):
         """
         Конструктор.
-        
+
         @type valLst: C{list}
         @param valLst: Список значений индикаторов.
         @type descr: C{list}
@@ -91,10 +92,10 @@ class ColorIndGroup(IndGroup):
             self._descr = [('45%', 'RED'), ('50%', (255, 200, 0)), ('100%', 'GREEN')]
         else:
             self._descr = descr
-        
+
         #   Текущее состояние обобщенного индикаторв
         self._state = ColorIndGroup.UNDEFINE_STATE
-        
+
         IndGroup.__init__(self, valLst)
 
 def getState_RZMonitor(metaObj):
@@ -104,7 +105,7 @@ def getState_RZMonitor(metaObj):
     @type metaObj: C{icMetaItem}
     @param metaObj: Указатель на классификатор мониторов.
     """
-    
+
 def getStateImage(filename, state):
     """
     Возвращает нужную картинку в зависимости от состояния группы индикаторов.
@@ -116,7 +117,7 @@ def getStateImage(filename, state):
          ColorIndGroup.RED_STATE:'R',
          ColorIndGroup.YELLOW_STATE:'Y',
          ColorIndGroup.GREEN_STATE:'G'}
-        
+
     try:
         pref1, pref2 = d[st1], d[st2]
     except:
@@ -135,11 +136,11 @@ def getStateImage(filename, state):
 #        return lib.GetUserBitmap(filename.replace('.gif','Green.gif'), 'plan')
 #    else:
 #        return lib.GetUserBitmap(filename, 'plan')
-        
+
 def test():
     """
     """
     d = ColorIndGroup([])
-    
+
 if __name__ == '__main__':
     test()

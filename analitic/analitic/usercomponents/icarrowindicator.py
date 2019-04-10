@@ -20,24 +20,24 @@
     компонент (ic_can_contain = -1).
 """
 
-import time
 import wx
-from ic.components import icwidget
-from ic.utils import util
+import ic
+import ic.components.icwidget as icwidget
+import ic.utils.util as util
 import ic.components.icResourceParser as prs
-from ic.imglib import common
-from ic.PropertyEditor import icDefInf
-from ic.components import icfont
+import ic.imglib.common as common
+import ic.PropertyEditor.icDefInf as icDefInf
+import ic.components.icfont as icfont
 import ic.components.custom.icheadcell as icheadcell
+import analitic.indicators.icarrowindproperty as icarrowindproperty
 import analitic.indicators.icarrowindicatortrend as icarrowindicatortrend
 import analitic.indicators.icArrowIndDef as indDef
 import ic.bitmap.icbitmap as icbitmap
 import ic.utils.graphicUtils as graphicUtils
 
 from ic.db import icsqlalchemy
+import time
 import ic.dlg.msgbox as msgbox
-from ic.log import log
-import ic
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -51,7 +51,7 @@ ic_class_styles = {'DEFAULT': 0}
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'ArrowIndicator',
                 'name': 'default',
-                'label': u'Подпись',
+                'label': 'Подпись',
                 'typPar': '',
                 'cod': '',
                 'aggregationType': 'USUAL',
@@ -64,8 +64,9 @@ ic_class_spc = {'type': 'ArrowIndicator',
                 'value': None,
                 'periodIzm': None,
                 'colorRegions': '[(\'100%\', \'BLUE\')]',
+                # 'minorLabels':None,
                 'font': {},
-                'shortHelpString': u'Индикатор',
+                'shortHelpString': 'Индикатор',
                 'layout': 'horizontal',
                 'attrTime': None,
                 'attrVal': None,
@@ -75,6 +76,7 @@ ic_class_spc = {'type': 'ArrowIndicator',
                 'onColor': None,
                 'onSaveProperty': None,
                 'onLeftDblClick': None,
+
                 '__styles__': ic_class_styles,
                 '__events__': {'onGraph': ('wx.EVT_LEFT_DOWN', 'OnGraphClick', False),
                                'onLeftDblClick': ('wx.EVT_LEFT_DCLICK', 'OnLeftDblClick', False),
@@ -86,12 +88,12 @@ ic_class_spc = {'type': 'ArrowIndicator',
                                    icDefInf.EDT_CHOICE: ['aggregationType', 'aggregation'],
                                    icDefInf.EDT_TEXTDICT: ['structQuery'],
                                    },
-                '__lists__': {'aggregationType': (u'Обычный', u'День', u'Месяц', u'Квартал', u'Год'),
+                '__parent__': icwidget.SPC_IC_WIDGET,
+                '__lists__': {'aggregationType': ('Обычный', 'День', 'Месяц', 'Квартал', 'Год'),
                               'aggregationFunc': ('SUM', ),
                               },
-                '__parent__': icwidget.SPC_IC_WIDGET,
                 }
-                    
+
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = '@common.imgArrowIndicator'
@@ -100,7 +102,7 @@ ic_class_pic2 = '@common.imgArrowIndicator'
 #   Путь до файла документации
 ic_class_doc = 'public/icarrowindicator.html'
 ic_class_spc['__doc__'] = ic_class_doc
-                    
+
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
 
@@ -143,9 +145,9 @@ AGR_TYPE_MONTH = indDef.AGR_TYPE_MONTH
 AGR_TYPE_QUARTER = indDef.AGR_TYPE_QUARTER
 AGR_TYPE_YEAR = indDef.AGR_TYPE_YEAR
 AGR_TYPE_PERIOD = indDef.AGR_TYPE_PERIOD
-                        
+
 aggregationTypeDict = indDef.aggregationTypeDict
-                        
+
 #   Описание функций накопления
 AGR_FUNC_SUM = indDef.AGR_FUNC_SUM
 AGR_FUNC_MIN = indDef.AGR_FUNC_MIN
@@ -161,6 +163,7 @@ def _get_day_plan(date, cod):
     """
     """
     return 2000000.0
+
 
 aggregationFuncMap = indDef.aggregationFuncMap
 
@@ -178,7 +181,7 @@ class icIndicatorSkin:
         """
         #   Путь до папки с картинками скина
         self.path = path
-        
+
         #   Имя скина
         self.name = skinName
 
@@ -188,7 +191,7 @@ class icIndicatorSkin:
 
         #   Картинка для фона индикатора
         self.bmpBgr = None
-        
+
         #   Картинки для кнопки открытия графика
         self.bmpGraphBtnPic = None
         self.bmpGraphBtnPic2 = None
@@ -201,16 +204,16 @@ class icIndicatorSkin:
         self.regClrBtn = None
         #   Область кнопки вызова графика
         self.regGraphBtn = None
-        
+
         #   Шрифт множителя
         self.factorFont = None
-        
+
     def createBmp(self, file):
         """
         Создаем объект картинки.
         """
         return wx.Image(file, icbitmap.icBitmapType(file)).ConvertToBitmap()
-    
+
     def Load(self):
         """
         """
@@ -220,7 +223,7 @@ class icIndicatorSkin:
         """
         """
         pass
-    
+
     def DrawTextMode(self, dc, indicator):
         """
         """
@@ -236,17 +239,15 @@ class icClassicSkin(icIndicatorSkin):
         Конструктор скина.
         """
         if not path:
-            path = ic.__file__.replace('__init__.pyo',
-                                       '__init__.pyc').replace('__init__.pyc',
-                                                               'components/user/IndicatorSkins/Classic/')
+            path = ic.__file__.replace('__init__.pyo', '__init__.pyc').replace('__init__.pyc', 'components/user/IndicatorSkins/Classic/')
         icIndicatorSkin.__init__(self, 'Classic', path)
         self._isLoad = self.Load()
-        
+
     def isLoad(self):
         """
         """
         return self._isLoad
-        
+
     def Load(self, path=None):
         """
         """
@@ -254,24 +255,27 @@ class icClassicSkin(icIndicatorSkin):
             path = self.path
 
         try:
+            # self.bmpBgr = self.createBmp(path + 'clrPic.png')
+
             #   Картинки для фонов заголовка в разных режимах (развернутом/свернутом)
             self.bmpTitleBgr = self.createBmp(path + 'title2.png')
+            # self.bmpTitleBgr2 = self.createBmp(path + 'title2.png')
 
             #   Картинка для фона индикатора
             self.bmpBgr = self.createBmp(path + 'indBgrPic3.png')
-            
+
             #   Картинки для кнопки открытия графика
             self.bmpGraphBtnPic = self.createBmp(path + 'graphPicBtn.png')
             self.bmpGraphBtnPic2 = None
-    
+
             self.bmpClrBtnPic = self.createBmp(path + 'clrPic.png')
-            
-            self.factorFont = icfont.icFont({'size': 8})
+
+            self.factorFont = icfont.icFont({'size':8})
 
             return True
         except:
             return False
-    
+
     def _drawTittleBtn(self, dc, indicator, dq=0):
         """
         Отрисовывает специальные кнопки.
@@ -282,34 +286,35 @@ class icClassicSkin(icIndicatorSkin):
         br = wx.Brush(clr)
         dc.SetBrush(br)
         sx, sy = indicator.GetSize()
-        
+
         dx = 3
-        lx = sx - self.bmpClrBtnPic.GetWidth() - self.bmpGraphBtnPic.GetWidth()+dq - dx
+        # dq = 1
+        lx = sx - self.bmpClrBtnPic.GetWidth() - self.bmpGraphBtnPic.GetWidth()+dq -dx
         ly = (23 - self.bmpClrBtnPic.GetWidth())/2+dq
         dc.DrawEllipse(lx, ly,
                        self.bmpClrBtnPic.GetWidth()-2*dq, self.bmpClrBtnPic.GetHeight()-2*dq)
-        
+
         #   Подрисовываем
         dc.DrawLine(lx + self.bmpClrBtnPic.GetWidth()/2 - 4, ly,
                     lx + self.bmpClrBtnPic.GetWidth()/2 + 2, ly)
-        
+
         dc.DrawLine(lx, ly+self.bmpClrBtnPic.GetHeight()/2-3,
                     lx, ly+self.bmpClrBtnPic.GetHeight()/2+2)
 
-        lly = ly+self.bmpClrBtnPic.GetHeight()-3
+        lly = ly+self.bmpClrBtnPic.GetHeight()-3    # self.bmpClrBtnPic.GetWidth()-3
         dc.DrawLine(lx + self.bmpClrBtnPic.GetWidth()/2 - 4, lly,
                     lx + self.bmpClrBtnPic.GetWidth()/2 + 2, lly)
 
         lx += self.bmpClrBtnPic.GetWidth()-3
         dc.DrawLine(lx, ly+self.bmpClrBtnPic.GetHeight()/2-3,
                     lx, ly+self.bmpClrBtnPic.GetHeight()/2+2)
-                
+
         dc.DrawBitmap(self.bmpClrBtnPic, sx - dx - self.bmpClrBtnPic.GetWidth() - self.bmpGraphBtnPic.GetWidth(),
                       (23 - self.bmpClrBtnPic.GetWidth())/2, True)
 
         dc.DrawBitmap(self.bmpGraphBtnPic, 1 + sx - dx - self.bmpGraphBtnPic.GetWidth(),
                       (23 - self.bmpGraphBtnPic.GetWidth())/2+2, True)
-        
+
     def Draw(self, dc, indicator):
         """
         Функция рисует индикатор.
@@ -321,9 +326,9 @@ class icClassicSkin(icIndicatorSkin):
 
         clr = indicator.GetBackgroundColour()
         backBrush = wx.Brush(clr, wx.SOLID)
-        
+
         if wx.Platform == '__WXMAC__' and clr == self.defBackClr:
-            backBrush.SetMacTheme(1)
+            backBrush.SetMacTheme(1)    # 1 == kThemeBrushDialogBackgroundActive
 
         dc.SetBackground(backBrush)
         dc.SetTextForeground(indicator.GetForegroundColour())
@@ -358,69 +363,69 @@ class icClassicSkin(icIndicatorSkin):
         dc.SetFont(indicator.GetFont())
         label = indicator.GetLabel()
         style = indicator.GetWindowStyleFlag()
-                
+
         # --- Рисуем шкалу индикатора
         sx, sy = indicator.GetSize()
         dx = SHIFT_X_HORIZ
-        dy = SHIFT_Y_HORIZ+ H_MAJOR/2
-        
+        dy = SHIFT_Y_HORIZ + H_MAJOR/2
+
         majorLst = indicator.majorValues
-        
+
         if not indicator.majorLabels:
             labelLst = indicator.majorValues
         else:
             labelLst = indicator.majorLabels
-            
+
         minorLst = indicator.minorValues
         clrLst = indicator.colorRegions
 
         max = indicator.GetMaxValue()
         min = indicator.GetMinValue()
-        
+
         if indicator.GetValue():
             cursor = indicator.GetValue()/indicator.factor
         else:
             cursor = min
-        
+
         # --- Рисуем цветовые индикаторы
         x = SHIFT_X_HORIZ
         h = H_MAJOR/2
         old = 0
         y = dy
-        
+
         for i, obj in enumerate(clrLst):
             val, clr = obj
-            
+
             if isinstance(val, str):
                 v = float(val.replace('%', ''))
                 if v > 100:
                     v = 100
                 val = (max-min)*v/100
-                
+
             val = val * indicator._planFactor
             br = wx.Brush(clr)
             dc.SetBrush(br)
             pen = wx.Pen(clr)
             dc.SetPen(pen)
             w = (sx - 2*dx)*(val-old)/(max - min)
-            
+
             if i == len(clrLst)-1:
                 w = (sx - dx) - x
             dc.DrawRectangle(x, y, w+1, h)
 
-            x += w
+            x = x + w
             old = val
-        
+
         # --- Рисуем текущее значение индикатора
         clr_cur = (0, 0, 0)
         br = wx.Brush(clr_cur)
         dc.SetBrush(br)
         pen = wx.Pen(clr_cur)
         dc.SetPen(pen)
-        
+
         if cursor > max:
             cursor = max
-        
+
         if cursor > min and min != max:
             w = (sx - 2*dx)*(cursor-min)/(max - min)+1
             dc.DrawRectangle(dx, dy-h, w, h)
@@ -431,28 +436,29 @@ class icClassicSkin(icIndicatorSkin):
         dc.SetBrush(br)
         w = (sx - 2*dx)
         dc.DrawRectangle(dx, dy-h, w+1, h+1)
-        
+
         # --- Рисуем основную ось
         dc.SetTextForeground((0, 0, 0))
         br = wx.Brush(indicator.indicatorColor)
         dc.SetBrush(br)
         dc.DrawLine(dx, dy, sx - dx, dy)
-        
+
         # --- Рисуем мажорную сетку
         dp = float((sx - 2.0*dx)/(len(majorLst)-1.0))
         w, h = indicator.GetTextExtent('o')
-        
+
         for indx, val in enumerate(majorLst):
             dc.DrawLine(dx+dp*indx, dy-H_MAJOR/2, dx+dp*indx, dy+H_MAJOR/2)
-            
+
             if indx < len(labelLst):
+                # l = str(labelLst[indx])
                 if isinstance(labelLst[indx], float):
                     l = ('%1.1f' % labelLst[indx]).replace('.0', '')
                 else:
                     l = str(labelLst[indx])
-                    
+
                 dc.DrawText(l, dx+dp*indx-w*len(l)/2, dy+H_MAJOR/2)
-        
+
         # --- Рисуем минорную сетку
         dp = float((sx - 2.0*dx)/(len(minorLst)-1.0))
         for indx, val in enumerate(minorLst):
@@ -461,8 +467,8 @@ class icClassicSkin(icIndicatorSkin):
         # --- Рисуем положение планового значения
         pen = wx.Pen((250, 0, 0))
         dc.SetPen(pen)
-        plan = indicator._planFactor*max/2
-        cx = dx + (sx - 2*dx)*(plan-min)/(max - min)
+        plan = indicator._planFactor * max / 2
+        cx = dx + (sx - 2*dx)*(plan-min)/(max - min)    # +1
         dc.DrawLine(cx, dy-H_MAJOR/2, cx, dy+H_MAJOR/2)
 
         # --- Рисуем заголовок
@@ -474,15 +480,15 @@ class icClassicSkin(icIndicatorSkin):
         if self.factorFont:
             dc.SetTextForeground((0, 0, 0))
             dc.SetFont(self.factorFont)
-        
+
         if indicator.factor > 1:
             dx = (sx - w*len(str(indicator.factor)))/2
             dc.DrawText('x '+str(indicator.factor).replace('000', ' 000'), dx, SHIFT_Y_LABEL + 14)
-            
+
         # --- Рисуем светофор
         clr_pen = (255, 255, 255)
         self._drawTittleBtn(dc, indicator, 1)
-        
+
         dc.EndDrawing()
 
     def DrawTextMode(self, dc, indicator):
@@ -492,15 +498,15 @@ class icClassicSkin(icIndicatorSkin):
         dc.BeginDrawing()
         clr = indicator.GetBackgroundColour()
         backBrush = wx.Brush(clr, wx.SOLID)
-        
+
         if wx.Platform == '__WXMAC__' and clr == indicator.defBackClr:
             # if colour is still the default then use the striped background on Mac
-            backBrush.SetMacTheme(1)
+            backBrush.SetMacTheme(1)    # 1 == kThemeBrushDialogBackgroundActive
 
         dc.SetBackground(backBrush)
         dc.Clear()
         sx, sy = indicator.GetSize()
-        
+
         if self.bmpTitleBgr:
             memDC = wx.MemoryDC()
             memDC.SelectObject(self.bmpTitleBgr)
@@ -510,7 +516,7 @@ class icClassicSkin(icIndicatorSkin):
                         self.bmpTitleBgr.GetHeight(), memDC, 0, 0, wx.COPY, True)
         else:
             dc.Clear()
-        
+
         # --- Скругленные углы
         clr_ = (100, 100, 200)
         pen = wx.Pen(clr_)
@@ -522,23 +528,25 @@ class icClassicSkin(icIndicatorSkin):
                                       indicator.GetParent().GetBackgroundColour(), 0,
                                       ((100, 100, 200), (100, 100, 200), (100, 100, 200), (100, 100, 200)),
                                       (1, 1, 1, 1), 0)
-                
+
         w, h = indicator.GetTextExtent('o')
         label = indicator.GetLabel()
-        
+
         # --- Рисуем заголовок
+        # dx = (sx - w*len(label))/2
         dx = 10
         dc.SetFont(indicator.GetFont())
         dc.SetTextForeground(indicator.foregroundColor)
+        # dc.SetTextForeground(wx.Color(255,255,255))
         dc.DrawText(label, dx, SHIFT_Y_LABEL)
-        
+
         # --- Рисуем светофор
         clr_pen = (100, 100, 100)
         self._drawTittleBtn(dc, indicator, 1)
 
         self.regClrBtn = wx.Rect(sx - self.bmpClrBtnPic.GetWidth() - self.bmpGraphBtnPic.GetWidth(), 0,
                                  self.bmpClrBtnPic.GetWidth(), self.bmpClrBtnPic.GetHeight())
-        self.regGraphBtn = wx.Rect(sx-self.bmpGraphBtnPic.GetWidth(), 0,
+        self.regGraphBtn = wx.Rect(sx - self.bmpGraphBtnPic.GetWidth(), 0,
                                    self.bmpGraphBtnPic.GetWidth(), self.bmpGraphBtnPic.GetHeight())
 
         dc.EndDrawing()
@@ -550,9 +558,8 @@ def _getColor(clr):
     if isinstance(clr, str):
         try:
             clr = getattr(wx, clr)
-        #
         except:
-            log.fatal(u'INVALID COLOR NAME <%s> in _getColor()' % clr)
+            print('#### INVALID COLOR NAME <%s> in _getColor()' % clr)
             return None
     return clr
 
@@ -577,7 +584,7 @@ def GetValColor(value, min, max, clrReg, planFactor=1):
     if value > max:
         clr = clrReg[-1][1]
         return _getColor(clr)
-        
+
     if clrReg and max is not None and min is not None and value:
         for v, clr in clrReg:
             if isinstance(v, str):
@@ -611,7 +618,7 @@ def GetStateIndx(value, min, max, clrReg, planFactor=1):
     """
     if value > max:
         return len(clrReg) - 1
-        
+
     if clrReg and max is not None and min is not None and value:
         for indx, r in enumerate(clrReg):
             v, clr = r
@@ -624,7 +631,7 @@ def GetStateIndx(value, min, max, clrReg, planFactor=1):
                 return indx
 
         return len(clrReg) - 1
-        
+
     return 0
 
 
@@ -641,7 +648,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
     индикатора такми образом, чтобы плановому значению соответствовала середина
     шкалы (это сделано для того, чтобы не пересчитывать цветовые зоны индикатора,
     которые задаются в %).
-    
+
     @type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{type='ArrowIndicator'}:
@@ -669,7 +676,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             'YELLOW', 'WHITE', 'CYAN', 'GREY';
             Пример 1: ((20, 'GREEN'), (32, 'GREY'), (50, (250, 0, 0)))
             Пример 1: ((20%, 'GREEN'), ('70%', 'GREY'), ('100%', (250, 0, 0)))
-            
+
         - B{font={}}: Шрифт подписей индикатора.
         - B{attrVal=None}: Атрибут значения.
         - B{attrPlan=None}: Атрибут планового значения.
@@ -699,12 +706,12 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             Пример 1: ['2005.05.10', '2005.10.31']
             Пример 2: [None, '2005.10.31']
             Пример 3: [None, None]
-            
+
         - B{source=None}: Имя источника данных.
     """
     component_spc = ic_class_spc
-    
-    def __init__(self, parent, id, component, logType = 0, evalSpace = None,
+
+    def __init__(self, parent, id, component, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
@@ -730,28 +737,28 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') != 0]
-        
+        lst_keys = filter(lambda x: x.find('__') != 0, component.keys())
+
         for key in lst_keys:
             setattr(self, key, component[key])
 
         self.periodIzm = self.countAttr('periodIzm')
-        
+
         #   Если период не определен, то считаем что период изм. [None, time.now()]
         if not self.periodIzm:
             tt = time.gmtime()
             mm = ('00'+str(tt[1]))[-2:]
             dd = ('00'+str(tt[2]))[-2:]
             self.periodIzm = [None, '%s.%s.%s' % (tt[0], mm, dd)]
-        
+
         self.label = self.getICAttr('label')
         self.attrVal = self.getICAttr('attrVal')
         self.attrPlan = self.getICAttr('attrPlan')
         self.attrTime = self.getICAttr('attrTime')
-        
+
         if not self.label:
             self.label = ''
-            
+
         #   Внутренние переменные
         self._helpWin = None
         self.indicatorColor = (0, 0, 0)
@@ -762,7 +769,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         #   Поправочный параметр, для определения планового значения
         #   определяется как max/(2*plan)
         self._planFactor = 1
-        
+
         #   Статистика
         self._statistic = None
         #   Картеж описания функции сбора статистики
@@ -770,23 +777,23 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         #   второй         - *arg
         #   третий         - **kwarg
         self._statisticFuncPar = None
-        
+
         #   Указатель на скин индикатора
-        self.skin = icClassicSkin()
+        self.skin = icClassicSkin()#None
         if not self.skin.isLoad():
             self.skin = None
-            
+
         #   Значение индикатора
         self._value = self.countAttr('value')
         if not self._value:
             self._value = 0
-            
+
         self.majorValues = self.countAttr('majorValues')
         self.minorValues = self.countAttr('minorValues')
         self.majorLabels = self.countAttr('majorLabels')
         self.colorRegions = self.countAttr('colorRegions')
-        log.debug(u'factor type = <%s>' % type(self.factor))
-        
+        print('factor type=', type(self.factor))
+
         if not self.majorValues:
             self.majorValues = []
 
@@ -798,13 +805,15 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
 
         if not self.colorRegions:
             self.colorRegions = []
-            
+
+        # self.minorLabels = self.countAttr('minorLabels')
+
         #   !!! Конструктор наследуемого класса !!!
         #   Необходимо вставить реальные параметры конструкора.
         #   На этапе генерации их не всегда можно определить.
         style = wx.ALIGN_LEFT | wx.ST_NO_AUTORESIZE | wx.NO_BORDER
         wx.PyControl.__init__(self, parent, id, self.position, self.size, style, name=self.name)
-        
+
         #   Устанавливаем подпись
         self.SetLabel(self.label)
 
@@ -814,7 +823,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         #   Цвета текста и фона
         obj = icfont.icFont(self.font)
         self.SetFont(obj)
-           
+
         if self.backgroundColor:
             self.SetBackgroundColour(self.backgroundColor)
 
@@ -823,13 +832,11 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
 
         rw, rh = self.size
         bw, bh = self.GetBestSize()
-        if rw == -1:
-            rw = bw
-        if rh == -1:
-            rh = bh
+        if rw == -1: rw = bw
+        if rh == -1: rh = bh
         self.SetSize(wx.Size(rw, rh))
         self.SetTypePredst(2)
-        
+
         # --- Регистрация обработчиков событий
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
@@ -838,9 +845,9 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         self.Bind(wx.EVT_SIZE, self.OnSize)
         self.Bind(wx.EVT_MOTION, self.OnMove)
         self.Bind(wx.EVT_LEFT_DCLICK, self.OnLeftDblClick)
-        
+
         self.BindICEvt()
-        
+
         #   Создаем дочерние компоненты
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
@@ -850,28 +857,29 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         #   компонента блокировка отменяется в обработчике сообщения
         #   <icEvents.EVT_POST_INIT>
         self._blockEvtPoint = False
-        
+
     def aggregatePar(self, rs, t1=None, t2=None):
         """
         Функция накопления значений параметра за период.
-        
+
         @type rs: C{SQLObject.Recordset}
         @param rs: Набор отобранных записей.
-        @type t1: C{string}
-        @param t1: Имя накапливаемого параметра.
-        @type t2: C{string}
-        @param t2: Имя накапливаемого параметра плана.
+        @type par: C{string}
+        @param par: Имя накапливаемого параметра.
+        @type parPlan: C{string}
+        @param parPlan: Имя накапливаемого параметра плана.
         """
         agr_func = self.GetAggregationFunc()
-        log.debug(u'\tself.attrVal = <%s>' % self.attrVal)
-        if agr_func in aggregationFuncMap:
+        print('............. self.attrVal=', self.attrVal)
+        if aggregationFuncMap.has_key(agr_func):
+
             return aggregationFuncMap[agr_func](rs, self.attrTime, self.attrVal,
-                                                self.attrPlan, t1, t2, self.cod, self.GetDayPlanFunc())
+                    self.attrPlan, t1, t2, self.cod, self.GetDayPlanFunc())
         else:
-            log.warning(u'Invalid Func <%s> identificator' % agr_func)
-        
+            print('Invalid Func <%s> identificator' % agr_func)
+
         return None, None
-        
+
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
@@ -890,13 +898,14 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         if not self._statisticFuncPar and not self._statistic:
             msgbox.MsgBox(self, u'Нет данных')
             return
-        
+
         cls = icarrowindicatortrend.ArrowIndicatorTrend(self, self)
-        
+
         if self._statisticFuncPar:
             f, arg, kwarg = self._statisticFuncPar
+            # print 'arg=%s, kwarg=%s' % (str(arg), str(kwarg))
             self._statistic = f(*arg, **kwarg)
-        
+
         if self._statistic:
             cls.SetGraphFromData(self._statistic)
 
@@ -916,15 +925,15 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         if self._blockEvtPoint:
             return
-        
+
         dc.BeginDrawing()
 
         clr = self.GetBackgroundColour()
         backBrush = wx.Brush(clr, wx.SOLID)
-        
+
         if wx.Platform == '__WXMAC__' and clr == self.defBackClr:
             # if colour is still the default then use the striped background on Mac
-            backBrush.SetMacTheme(1)
+            backBrush.SetMacTheme(1)    # 1 == kThemeBrushDialogBackgroundActive
 
         dc.SetBackground(backBrush)
         dc.SetTextForeground(self.GetForegroundColour())
@@ -934,75 +943,77 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         dc.SetFont(self.GetFont())
         label = self.GetLabel()
         style = self.GetWindowStyleFlag()
-                
+
         # --- Рисуем шкалу индикатора
         sx, sy = self.GetSize()
         dx = SHIFT_X_HORIZ
         dy = SHIFT_Y_HORIZ + H_MAJOR/2
-        
+
         majorLst = self.majorValues
-        
+
         if not self.majorLabels:
             labelLst = self.majorValues
         else:
             labelLst = self.majorLabels
-            
+
         minorLst = self.minorValues
         clrLst = self.colorRegions
 
         max = self.GetMaxValue()
         min = self.GetMinValue()
-        
+
         if self.GetValue():
             cursor = self.GetValue()/self.factor
         else:
             cursor = min
-        
+
         # --- Рисуем цветовые индикаторы
         x = SHIFT_X_HORIZ
         h = H_MAJOR/2
         old = 0
         y = dy
-        
+
         for obj in clrLst:
             val, clr = obj
-            
+
             if isinstance(val, str):
                 v = float(val.replace('%', ''))
                 if v > 100:
                     v = 100
                 val = (max-min)*v/100
-            val *= self._planFactor
+            val = val*self._planFactor
             br = wx.Brush(clr)
             dc.SetBrush(br)
             pen = wx.Pen(clr)
             dc.SetPen(pen)
-            
+
             w = (sx - 2*dx)*(val-old)/(max - min)
-            
+
+            # dc.DrawRectangle(x, y, w+1, h)
             if isinstance(clr, str):
                 _clr = getattr(wx, clr)
                 icheadcell.DrawGradient(dc, w+1, h, _clr, icheadcell.BGR_GRAD_RIGHT, x, y, 2)
             else:
                 icheadcell.DrawGradient(dc, w+1, h, wx.Colour(*clr), icheadcell.BGR_GRAD_RIGHT, x, y, 2)
 
-            x += w
+            x = x + w
             old = val
-        
+
         # --- Рисуем текущее значение индикатора
         clr_cur = (220, 220, 220)
         br = wx.Brush(clr_cur)
         dc.SetBrush(br)
         pen = wx.Pen(clr_cur)
         dc.SetPen(pen)
-        
+
         if cursor > max:
             cursor = max
-        
+
         if cursor > min and min != max:
             w = (sx - 2*dx)*(cursor-min)/(max - min)+1
             icheadcell.DrawGradient(dc, w, h, wx.Colour(clr_cur[0], clr_cur[1], clr_cur[2]),
                                     icheadcell.BGR_GRAD_LEFT, dx, dy-h, 0.2)
+        # dc.DrawRectangle(dx, dy-h, w, h)
 
         pen = wx.Pen((0, 0, 0))
         dc.SetPen(pen)
@@ -1010,20 +1021,20 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         dc.SetBrush(br)
         w = (sx - 2*dx)
         dc.DrawRectangle(dx, dy-h, w+1, h+1)
-        
+
         # --- Рисуем основную ось
         dc.SetTextForeground((0, 0, 0))
         br = wx.Brush(self.indicatorColor)
         dc.SetBrush(br)
         dc.DrawLine(dx, dy, sx - dx, dy)
-        
+
         # --- Рисуем мажорную сетку
-        dp = float((sx - 2.0*dx)/(len(majorLst)-1.0))
+        dp = float((sx - 2.0 * dx)/(len(majorLst)-1.0))
         w, h = self.GetTextExtent('o')
-        
+
         for indx, val in enumerate(majorLst):
             dc.DrawLine(dx+dp*indx, dy-H_MAJOR/2, dx+dp*indx, dy+H_MAJOR/2)
-            
+
             if indx < len(labelLst):
                 l = str(labelLst[indx])
                 dc.DrawText(l, dx+dp*indx-w*len(l)/2, dy+H_MAJOR/2)
@@ -1032,12 +1043,12 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         dp = float((sx - 2.0*dx)/(len(minorLst)-1.0))
         for indx, val in enumerate(minorLst):
             dc.DrawLine(dx+dp*indx, dy-H_MINOR/2, dx+dp*indx, dy)
-            
+
         # --- Рисуем заголовок
         dx = (sx - w*len(label))/2
         dc.SetTextForeground(self.foregroundColor)
         dc.DrawText(label, dx, SHIFT_Y_LABEL)
-        
+
         # --- Рисуем светофор
         clr_pen = (0, 0, 0)
         clr = self.GetValColor()
@@ -1045,9 +1056,9 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         dc.SetPen(pen)
         br = wx.Brush(clr)
         dc.SetBrush(br)
-        
+
         dc.DrawRectangle(sx - WIDTH_BTN - 18, SHIFT_Y_LABEL+2, WIDTH_BTN, HEIGHT_BTN)
-        
+
         # ---  Рисуем указатель на график
         br = wx.Brush(self.backgroundColor)
         dc.SetBrush(br)
@@ -1063,13 +1074,13 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         if self._blockEvtPoint:
             return
-        
+
         # --- Рисуем светофор
         dc.BeginDrawing()
 
         clr = self.GetBackgroundColour()
         backBrush = wx.Brush(clr, wx.SOLID)
-        
+
         if wx.Platform == '__WXMAC__' and clr == self.defBackClr:
             # if colour is still the default then use the striped background on Mac
             backBrush.SetMacTheme(1) # 1 == kThemeBrushDialogBackgroundActive
@@ -1085,7 +1096,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         dc.SetPen(pen)
         br = wx.Brush(clr)
         dc.SetBrush(br)
-        
+
         dc.DrawRectangle(sx - WIDTH_BTN - 5, SHIFT_Y_LABEL, WIDTH_BTN, HEIGHT_BTN)
         dc.EndDrawing()
 
@@ -1094,28 +1105,29 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         if self._blockEvtPoint:
             return
-            
+
         dc.BeginDrawing()
         clr = self.GetBackgroundColour()
         backBrush = wx.Brush(clr, wx.SOLID)
-        
+
         if wx.Platform == '__WXMAC__' and clr == self.defBackClr:
             # if colour is still the default then use the striped background on Mac
-            backBrush.SetMacTheme(1) # 1 == kThemeBrushDialogBackgroundActive
+            backBrush.SetMacTheme(1)    # 1 == kThemeBrushDialogBackgroundActive
 
         dc.SetBackground(backBrush)
         dc.Clear()
-        
+
         sx, sy = self.GetSize()
         w, h = self.GetTextExtent('o')
         label = self.GetLabel()
-        
+
         # --- Рисуем заголовок
+        # dx = (sx - w*len(label))/2
         dx = 10
         dc.SetFont(self.GetFont())
         dc.SetTextForeground(self.foregroundColor)
         dc.DrawText(label, dx, SHIFT_Y_LABEL)
-        
+
         # --- Рисуем светофор
         clr_pen = (0, 0, 0)
         clr = self.GetValColor()
@@ -1123,9 +1135,10 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         dc.SetPen(pen)
         br = wx.Brush(clr)
         dc.SetBrush(br)
-        
+
+        # dc.DrawRectangle(sx - WIDTH_BTN - 5, SHIFT_Y_LABEL, WIDTH_BTN, HEIGHT_BTN)
         dc.DrawRectangle(sx - WIDTH_BTN - 18, SHIFT_Y_LABEL+2, WIDTH_BTN, HEIGHT_BTN)
-        
+
         # ---  Рисуем указатель на график
         br = wx.Brush(self.backgroundColor)
         dc.SetBrush(br)
@@ -1136,7 +1149,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         dc.DrawRectangle(sx - WIDTH_BTN+4+8, SHIFT_Y_LABEL+2+ 2, 2, 7)
 
         dc.EndDrawing()
-   
+
     def GetAggregationType(self):
         """
         Возвращает тип агрегации данных.
@@ -1145,7 +1158,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             ret = aggregationTypeDict[self.aggregationType]
         else:
             ret = self.aggregationType = AGR_TYPE_USUAL
-            
+
         return ret
 
     def GetAggregationTypeDict(self):
@@ -1170,35 +1183,36 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         Возвращает тип агрегации данных.
         """
         return aggregationFuncDict
-    
+
     def GetDayPlanFunc(self):
         """
         Возвращает ссылку на функцию дневных планов.
         """
         return self._dayPlanFunc
-        
+
     def GetPeriodIzm(self):
         """
         Возвращет время измерерния.
         """
         return self.periodIzm
-    
+
     def GetIDataclass(self):
         """
         Возвращает интерфейс на класс данных.
         """
         if self.source in (None, '', 'None'):
             return None
-            
+
         if self.dataset:
             return self.dataset.dataclassInterface
         elif self._dataclassI:
             return self._dataclassI
         else:
-            log.debug(u'\tCreateDataclass <%s>' % self.source)
+            print('--->>> CreateDataclass', self.source)
+            # self._dataclassI = tabclass.CreateTabClass(self.source)
             self._dataclassI = icsqlalchemy.icSQLAlchemyTabClass(self.source)
             return self._dataclassI
-        
+
     def GetMaxValue(self):
         """
         Возвращает максимальное значение шкалы индикатора.
@@ -1220,27 +1234,28 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             min = None
 
         return min
-        
+
     def GetRecordset(self, t1=None, t2=None):
         """
         Возвращает набор записей отобранных из класса данных по заданному периоду.
-        
+
         @rtype: C{SQLObject.main.SelectResults}
         @return: Возвращаем список отобранных записей.
         """
         cls = self.GetIDataclass()
-        
+
         if cls:
+            #
             rs = None
             tfld = self.attrTime
-            
+
             if tfld in ('', None, 'None'):
-                log.warning(u'INDICATOR ERROR; NOT DEFINE DATE ATTRIBUTE')
+                print('### INDICATOR ERROR; NOT DEFINE DATE ATTRIBUTE')
                 return None
-                
+
             if not t1 or not t2:
                 aggr_typ = self.GetAggregationType()
-                
+
                 #   Определяем период запроса
                 ret = self.getQueryPeriod()
                 if ret:
@@ -1248,28 +1263,30 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
                 else:
                     return None
 
+            # print '>>>>>>>> ENTER REFRESH_STATE !!!', aggr_typ, t1, t2
+
             if t1 == t2:
                 s = 'cls.q.%s==\'%s\',' % (tfld, t1)
             else:
                 s = 'cls.q.%s>=\'%s\',cls.q.%s<=\'%s\',' % (tfld, t1, tfld, t2)
-            
+
             if self.structQuery:
                 s = ''
                 for key, val in self.structQuery.items():
                     s = '%scls.q.%s==%s,' % (s, key, val)
-                
+
                 #   Делаем запрос
                 rs = eval('cls.select(AND(%s), orderBy=cls.q.%s)' % (s[:-1], self.attrTime))
             else:
                 if t1 == t2:
-                    log.debug(u'Indicator QUERY cls.select(%s), <%s>' % (s[:-1], t1))
+                    print('>>> Indicator QUERY:', 'cls.select(%s)' % s[:-1], t1)
                     rs = eval('cls.select(%s, orderBy=cls.q.%s)' % (s[:-1], self.attrTime))
                 else:
-                    log.debug(u'Indicator QUERY cls.select(AND(%s)), <%s>' % (s[:-1], t1))
+                    print('>>> Indicator QUERY:', 'cls.select(AND(%s))' % s[:-1], t1)
                     rs = eval('cls.select(AND(%s), orderBy=cls.q.%s)' % (s[:-1], self.attrTime))
 
             return rs
-            
+
     def GetValColor(self):
         """
         Возвращает цвет зоны значения индикатора.
@@ -1278,23 +1295,39 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         min = self.GetMinValue()
 
         if self.colorRegions and max is not None and min is not None and self.GetValue():
-            val = self.GetValue()/self.factor
+            val = self.GetValue() / self.factor
             return GetValColor(val, min, max, self.colorRegions, self._planFactor)
         else:
             return self.backgroundColor
+#            old = 0
+#
+#            for v, clr in self.colorRegions:
+#                if type(v) in (type(''),type(u'')):
+#                    v = float(v.replace('%', ''))
+#                    if v > 100:
+#                        v = 100
+#
+#                    v = (max-min)*(v-min)/100
+#
+#                if val <= v:
+#                        if type(clr) in (type(''),type(u'')):
+#                            clr = getattr(wx, clr)
+#                    return clr
+#
+#        return self.backgroundColor
 
     def GetValue(self):
         """
         Возвращает значение индикатора.
         """
         return self._value
-        
+
     def GetTimeField(self):
         """
         Возвращает имя поля для хранения временного параметра.
         """
         return self.attrTime
-        
+
     def GetTypePredst(self):
         """
         Возвращает тип представления.
@@ -1307,53 +1340,58 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         per = beg, end = self.GetPeriodIzm()
         aggr_typ = self.GetAggregationType()
         t1, t2 = None, None
-        
+
         if aggr_typ in (AGR_TYPE_DAY, AGR_TYPE_USUAL):
             if end:
                 t1 = t2 = end
             elif not end and beg:
                 t1 = t2 = beg
             else:
-                log.warning(u'INVALID PERIOD %s in RefreshState' % str(per))
+                print('>>> INVALID PERIOD %s in RefreshState' % str(per))
                 return None
-                
+
         elif aggr_typ == AGR_TYPE_PERIOD:
             t1, t2 = beg, end
-            
+
         elif aggr_typ == AGR_TYPE_MONTH:
             year = end[:4]
             mnth = end[5:7]
             t1 = '%s.%s.%s' % (year, mnth, '01')
+            # t2 = '%s.%s.%s' % (year, mnth, '31')
             t2 = end
-            
+
         elif aggr_typ == AGR_TYPE_QUARTER:
             year = end[:4]
             mnth = end[5:7]
-            
+
             #   I квартал
-            if int(mnth) in (1, 2, 3):
+            if int(mnth) in (1,2,3):
                 t1 = '%s.%s.%s' % (year, '01', '01')
+                # t2 = '%s.%s.%s' % (year, '03', '31')
                 t2 = end
             #   II квартал
-            elif int(mnth) in (4, 5, 6):
+            elif int(mnth) in (4,5,6):
                 t1 = '%s.%s.%s' % (year, '04', '01')
+                # t2 = '%s.%s.%s' % (year, '06', '31')
                 t2 = end
             #   III квартал
-            elif int(mnth) in (7, 8, 9):
+            elif int(mnth) in (7,8,9):
                 t1 = '%s.%s.%s' % (year, '07', '01')
+                # t2 = '%s.%s.%s' % (year, '09', '31')
                 t2 = end
             #   IV квартал
             elif int(mnth) in (10, 11, 12):
                 t1 = '%s.%s.%s' % (year, '10', '01')
+                # t2 = '%s.%s.%s' % (year, '12', '31')
                 t2 = end
 
         elif aggr_typ == AGR_TYPE_YEAR:
             year = end[:4]
             t1 = '%s.%s.%s' % (year, '01', '01')
             t2 = end
-            
+
         return t1, t2
-        
+
     # --- Обработчики событий
     def OnInit(self, evt):
         """
@@ -1364,15 +1402,15 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         self.eval_attr('onInit')
         evt.Skip()
         self._blockEvtPoint = False
-        
+
     def OnMove(self, evt):
         """
         Обработка сообщения <wx.EVT_MOTION>.
         """
         x, y = self.GetPosition()
         sx, sy = self.GetSize()
-        
-        px,py = p = evt.GetPosition()
+
+        px, py = p = evt.GetPosition()
         d = 5
         r = wx.Rect(d, d, sx-2*d, sy-2*d)
 
@@ -1380,14 +1418,14 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         if r.Inside(p):
             if self.GetValue() is None:
                 msg = u'На текущий момент нет информации'
-            elif self.shortHelpString in ['', None, 'None']:
+            elif self.shortHelpString in ['',None,'None']:
                 msg = '%s (%s)' % (str(self.GetValue()), self.ei)
             else:
                 msg = '%s (%s)\r\n%s' % (str(self.GetValue()), self.ei, self.shortHelpString)
-                
+
             if self._helpWin is None:
                 self._helpWin = icwidget.icShortHelpString(self.parent, msg,
-                                                           (x + px+15, y+20), 2000)
+                                              (x + px+15, y+20), 2000)
             else:
                 self._helpWin.bNextPeriod = True
         elif self._helpWin:
@@ -1395,10 +1433,10 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             self._helpWin.Destroy()
         else:
             self._helpWin = None
-            
+
         r_clr = wx.Rect(sx - WIDTH_BTN - 23, SHIFT_Y_LABEL+2, WIDTH_BTN, HEIGHT_BTN)
         r_grph = wx.Rect(sx - WIDTH_BTN-4, SHIFT_Y_LABEL+2, WIDTH_GRPH_BTN, HEIGHT_GRPH_BTN)
-        
+
         if r_grph.Inside(p) or r_clr.Inside(p):
             cursor = wx.StockCursor(wx.CURSOR_HAND)
         else:
@@ -1406,7 +1444,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
 
         self.SetCursor(cursor)
         evt.Skip()
-    
+
     def OnLeftDown(self, evt):
         """
         """
@@ -1414,28 +1452,31 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         self.evalSpace['self'] = self
         sx, sy = self.GetSize()
         p = evt.GetPosition()
+        # r = wx.Rect(sx - WIDTH_BTN+4, SHIFT_Y_LABEL+2, WIDTH_GRPH_BTN, HEIGHT_GRPH_BTN)
         r = wx.Rect(sx - WIDTH_BTN-4, SHIFT_Y_LABEL+2, WIDTH_GRPH_BTN, HEIGHT_GRPH_BTN)
-        
+
         if r.Inside(p):
             if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
-                
-                #   Рисуем динамику изменений наблюдаемого параметра
+                # #   Рисуем динамику изменений наблюдаемого параметра
+                # cls = icarrowindicatortrend.ArrowIndicatorTrend(self, self)
+                # if self._statistic:
+                #     cls.SetGraphFromData(self._statistic)
                 self.CreateIndicatorTrend()
-                
+
                 #   Отрабатываем пользовательский функционал
                 self.eval_attr('onGraph')
-                
+
         r_clr = wx.Rect(sx - WIDTH_BTN - 23, SHIFT_Y_LABEL+2, WIDTH_BTN, HEIGHT_BTN)
         if r_clr.Inside(p):
             typ = self.GetTypePredst()
-            
+
             if typ == TEXT_TYPE_PREDST:
                 self.SetTypePredst(LINE_TYPE_PREDST)
             else:
                 self.SetTypePredst(TEXT_TYPE_PREDST)
-                
+
             self.eval_attr('onColor')
-            
+
         evt.Skip()
 
     def OnLeftDblClick(self, evt):
@@ -1468,7 +1509,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             return
 
         typ = self.GetTypePredst()
-        
+
         if typ == TEXT_TYPE_PREDST:
             if self.skin:
                 self.skin.DrawTextMode(dc, self)
@@ -1477,22 +1518,36 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         else:
             if self.skin:
                 self.skin.Draw(dc, self)
+                # self.Draw(dc)
             else:
                 self.Draw(dc)
-    
+
     def OnRightDown(self, evt):
         """
         Обрабатываем нажатие правой кнопки мыши.
         """
         return
-        
+#        if (self.evalSpace['__runtime_mode'] <> util.IC_RUNTIME_MODE_EDITOR and
+#            self.resource['onSaveProperty']):
+#            cls = icarrowindproperty.ArrowIndProperty(self, self)
+#            dlg = cls.getObject()
+#
+#            if dlg.ShowModal() == wx.ID_OK:
+#                #   Выполняем выражения для сохранения настроек
+#                self.evalSpace['self'] = self
+#                self.evalSpace['evt'] = evt
+#                self.eval_attr('onSaveProperty')
+#
+#            dlg.Destroy()
+#        evt.Skip()
+
     def OnSize(self, evt):
         self.Refresh()
 
     def RecountScalePar(self, min=None, max=None, majorStep=None, minorStep=None, factor=None, bChangeTitles=True):
         """
         Изменяет параметры шкалы индикатора.
-        
+
         @type min: C{float}
         @param min: Минимальное значение шкалы индикатора.
         @type max: C{float}
@@ -1512,24 +1567,26 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
                 min = self.majorValues[0]
             if max is None:
                 max = self.majorValues[-1]
-                
+
             if max == min:
                 max += 1
-                
+
             if majorStep is None:
                 majorStep = float((max - min)/(len(self.majorValues)-1.0))
             if minorStep is None:
                 minorStep = float((max - min)/(len(self.minorValues)-1.0))
-                
+
         if factor is not None:
             self.factor = factor
-        
-        log.debug(u'RecountScalePar: %s, %s, %s, %s' % (min, max, majorStep, minorStep))
+
+        print('### RecountScalePar:', min, max, majorStep, minorStep)
+#        self.majorValues = range(min, max+1)[0::majorStep]
+#        self.minorValues = range(min, max+1)[0::minorStep]
 
         self.majorValues = []
         s = 0.0
         i = 0
-        
+
         #   Признаки целочисленных значений шагов мажорной и минорной сетки
         bMajorInt, bMinorInt = False, False
 
@@ -1540,6 +1597,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             if round(s) == s:
                 self.majorValues.append(s)
             else:
+                # self.majorValues.append(int(s))
                 self.majorValues.append(s)
             i += 1
             s += majorStep
@@ -1550,7 +1608,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
 
         if minorStep == 0:
             minorStep = majorStep
-        
+
         while s <= max:
             if round(s) == s:
                 self.minorValues.append(int(s))
@@ -1558,11 +1616,11 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
                 self.minorValues.append(s)
             i += 1
             s += minorStep
-            
+
         if bChangeTitles:
             self.majorLabels = self.majorValues
-            log.debug(u'LABELS - %s' % self.majorLabels)
-    
+            print(' ::::LABELS-', self.majorLabels)
+
     def RefreshState(self):
         """
         Индикатор обновляет свое представление - обращается к нужному классу данных
@@ -1571,21 +1629,22 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         rs = self.GetRecordset()
         if rs and rs.count() > 0:
             value, plan = self.aggregatePar(rs)
-            log.debug(u'VALUE, PLAN: %s, %s' % (value, plan))
-            
+            print('>>> VALUE, PLAN:', value, plan)
+
             if plan is not None:
-                val = int(plan * 2 / self.factor)
-                
+                val = int(plan*2/self.factor)
+
                 if val > 10:
-                    val = int(round(val, -(len(str(val)) - 1)))
-                    
-                log.debug(u'MAX VAL = %s %s' % (val, int(plan * 2 / self.factor)))
+                    val = int(round(val, -( len(str(val)) -1)))
+
+                print('### MAX VAL=', val, int(plan*2/self.factor))
                 self.RecountScalePar(max=val)
-                
+
             self.SetValue(value)
         else:
             self.SetValue(None)
-            
+
+        # self.Refresh()
         return True
 
     def SetState(self, value, plan=None,
@@ -1593,7 +1652,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
                  bChangeTitles=True):
         """
         Функция устанавливает состояние индикатора относительного планового значения.
-        
+
         @type value: C{float}
         @param value: Значвение индикатора.
         @type plan: C{float}
@@ -1613,26 +1672,27 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         if plan is not None:
             if factor is None:
                 factor = self.factor
-                
-            max = int(plan * 2 / factor)
+
+            max = int(plan*2/factor)
 
             if max > 10:
                 max = int(round(max, -(len(str(max)) - 1)))
             elif max == 0:
                 max = 1
-                
+
             self._planFactor = float((2*plan)/(max*factor))
-            log.debug(u'SET STATE MAX VAL, planFactor = %s, %s' % (max, self._planFactor))
+            print('### SET STATE MAX VAL, planFactor=', max, self._planFactor)
             self.RecountScalePar(min, max, majorStep, minorStep, factor, bChangeTitles)
 
         self.SetValue(value)
+        # self.Refresh()
         return True
-            
+
     def SetAggregationType(self, type):
         """
         """
         self.aggregationType = type
-        
+
     def SetAggregationFunc(self, func):
         """
         """
@@ -1643,7 +1703,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         Сохраняет ссылку на функцию дневных планов.
         """
         self._dayPlanFunc = func
-        
+
     def SetLabel(self, label):
         """
         Sets the static text label and updates the control's size to exactly
@@ -1655,7 +1715,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         if not style & wx.ST_NO_AUTORESIZE:
             self.SetSize(self.GetBestSize())
         self.Refresh()
-        
+
     def SetFont(self, font):
         """
         Sets the static text font and updates the control's size to exactly
@@ -1678,7 +1738,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         Устанвливает скин для индикатора.
         """
         self.skin = skin
-        
+
     def SetTimeField(self, fld):
         """
         Устанавливает имя поля для хранения временного параметра.
@@ -1693,7 +1753,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             self.SetSize((self.size[0], 23))
         else:
             self.SetSize(self.size)
-            
+
         self.Refresh()
         self._typePredst = typ
 
@@ -1709,19 +1769,19 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         Устанавливаем функцию по сбору статистики.
         """
         self._statisticFuncPar = (f, arg, kwarg)
-        
+
     def SetValue(self, val):
         """
         Устанавливает значение индикатора.
         """
         self._value = val
         self.Refresh()
-    
+
     def UpdateViewFromDB(self, db_name=None, bFromBuff=True):
         """
         Обновляет представление индикатора (если компонент привязан к объекту
         icGridDataset).
-        
+
         @type db_name: C{String}
         @param db_name: Имя источника данных.
         @type bFromBuff: C{bool}
@@ -1733,69 +1793,72 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:
             db_name = self.dataset.name
-            
+
         if (self.dataset is not None and self.IsShown() and self.bStatusVisible and
-           self.dataset.name == db_name):
-            
-            val = self.dataset.getNameValue(self.attrVal, bFromBuff=bFromBuff)
+                self.dataset.name == db_name):
+
+            val = self.dataset.getNameValue(self.attrVal, bFromBuff = bFromBuff)
+            # plan = self.dataset.getNameValue(self.attrPlan, bFromBuff = bFromBuff)
             self.SetValue(val)
+            # print 'REFRESH name,value =', self.name, val
             return True
 
 
 def test(par=0):
     """
     Тестируем пользовательский класс.
-    
+
     @type par: C{int}
     @param par: Тип консоли.
     """
-    
     import ic.components.ictestapp as ictestapp
-    
+
     app = ictestapp.TestApp(par)
     common.img_init()
 
     frame = wx.Frame(None, -1, 'Test')
     win = wx.Panel(frame, -1)
     skin = icClassicSkin()
-    
+
     ctrl_1 = icArrowIndicator(win, -1, {'position': (20, 20),
                                         'size': (255, 70),
-                                        'label': u'Реализация',
+                                        'label': 'Реализация',
                                         'dateIzm': '20/05/05',
                                         'value': '15',
-                                        'ei': u'кг.',
-                                        'onGraph': 'print(\'OnGraph\')',
-                                        'onSaveProperty': 'print(\'onSaveProperty\')',
-                                        'onLeftDblClick': 'print(\'onLeftDblClick\')',
-                                        'shortHelpString': u' Индикатор \r\n Проверка',
+                                        'ei': 'кг.',
+                                        'onGraph': 'print \'OnGraph\'',
+                                        'onSaveProperty': 'print \'onSaveProperty\'',
+                                        'onLeftDblClick': 'print \'onLeftDblClick\'',
+                                        'shortHelpString': ' Индикатор \r\n Проверка',
                                         'colorRegions': '((20, \'BLUE\'), (32, \'GREEN\'), (50, (230, 160, 0)))',
                                         'majorValues': '(0, 10, 20, 30, 40, 50)',
                                         'majorLabels': '(\'A\', 10, 20, 30, 40, \'C\')',
                                         'minorValues': '(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50)',
                                         'backgroundColor': (250, 250, 250),
                                         'foregroundColor': (0, 0, 200)})
+    # ctrl_1.SetSkin(skin)
 
     ctrl_2 = icArrowIndicator(win, -1, {'position': (20, 90),
                                         'size': (255, 70),
-                                        'label': u'Реализация (x 1000)',
+                                        'label': 'Реализация (x 1000)',
                                         'dateIzm': '20/05/05',
                                         'value': '35000',
                                         'factor': 1000,
-                                        'ei': u'кг.',
+                                        'ei': 'кг.',
                                         'source': 'table1',
                                         'attrVal': 'value',
                                         'attrPlan': 'plan',
-                                        'onGraph': 'print(\'OnGraph\')',
-                                        'onSaveProperty': 'print(\'onSaveProperty\')',
-                                        'shortHelpString': u' Индикатор \r\n Проверка',
+                                        'onGraph': 'print \'OnGraph\'',
+                                        'onSaveProperty': 'print \'onSaveProperty\'',
+                                        'shortHelpString': ' Индикатор \r\n Проверка',
                                         'colorRegions': '((20, \'BLUE\'), (32, \'GREEN\'), (50, (255, 0, 0)))',
                                         'majorValues': '(0, 10, 20, 30, 40, 50)',
                                         'majorLabels': '(\'A\', 10, 20, 30, 40, \'C\')',
                                         'minorValues': '(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50)',
                                         'backgroundColor': (250, 250, 250),
                                         'foregroundColor': (0, 0, 200)})
-                    
+
+    # ctrl_2.SetSkin(skin)
     frame.Show(True)
     app.MainLoop()
 

@@ -8,11 +8,11 @@
 # Версия
 __version__ = (0, 0, 0, 1)
 
-import ic.components.user.objects.icarrowindicatortrend as trendInd
+import analitic.indicators.icarrowindicatortrend as trendInd
 import ic.interfaces.icBrPnlInterface as icBrPnlInterface
 import analitic.interfaces.IStdIndicatorPanel as stdPanel
 import wx
-import ic.components.user.icarrowindicator as icarrowindicator
+import analitic.indicators.icarrowindicator as icarrowindicator
 
 #--- Классы
 class IYearTrendPanel(trendInd.ArrowIndicatorTrend, icBrPnlInterface.icBrowsPanelInterface):
