@@ -63,32 +63,32 @@ def loadInputData(InputDataDir_=None):
     
     #   Загружаем файлы по реализации
     dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.grf')
-    print '--->>>loadInputData -> <analitik>',dbf_files,InputDataDir_ #,ic_file.ListDir(InputDataDir_)
+    print('--->>>loadInputData -> <analitik>', dbf_files, InputDataDir_ ) #,ic_file.ListDir(InputDataDir_)
     for dbf_file in dbf_files:
-        print 'LOAD DATA FROM',dbf_file
+        print('LOAD DATA FROM', dbf_file)
         loadInputDataDBF(dbf_file)
         #Поменять расширение
         ic_file.icChangeExt(dbf_file,'.bak')
         
     #   Загружаем файлы по заявкам
     dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.grz')
-    print '--->>>loadInputData -> <zayavki>',dbf_files,InputDataDir_
+    print('--->>>loadInputData -> <zayavki>',dbf_files,InputDataDir_)
     for dbf_file in dbf_files:
-        print 'LOAD DATA FROM',dbf_file
+        print('LOAD DATA FROM',dbf_file)
         loadInputDataDBF(dbf_file, 'zayavki')
         #Поменять расширение
         ic_file.icChangeExt(dbf_file,'_grz.bak')
     
     #   Загружаем файлы по оплате
     dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.grp')
-    print '--->>>loadInputData -> <pay>', dbf_files,InputDataDir_
+    print('--->>>loadInputData -> <pay>', dbf_files,InputDataDir_)
     for dbf_file in dbf_files:
-        print 'LOAD DATA FROM',dbf_file
+        print('LOAD DATA FROM',dbf_file)
         loadInputDataDBF(dbf_file, 'pay')
         #Поменять расширение
         ic_file.icChangeExt(dbf_file,'_grp.bak')
     
-    print 'Refresh All Views'
+    print('Refresh All Views')
     refreshAllTabView()
         
 def loadInputDataDBF(DBFFileName_, className='analitic'):
@@ -119,7 +119,7 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
             try:
                 t_cod='%03d%04d'%(int(grp_cod),int(t_cod_str))
             except:
-                print '### ValueError GROUP,CODT=', grp_cod, t_cod_str
+                print('### ValueError GROUP,CODT=', grp_cod, t_cod_str)
                 grp_cod='000'
                 t_cod='0000'
         else:
@@ -153,14 +153,14 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
         #_syncSpravMenagers(men_cod,men_name)
         
         #Загрузка данных
-        print '.',
+        print('.')
         tab.add(dtoper=dt_oper,grup=grp_cod,codt=t_cod,
             ei=ei_name,kolf=kol,cena=cen,summa=sum,
             reg=reg_cod,mens=men_cod,
             plan_kol=None,plan_sum=None)
         
         dbf_f.Next()
-    print 'OK'
+    print('OK')
     dbf_f.Close()
 
 def syncInputDataDBF(DBFFileName_):
@@ -214,11 +214,11 @@ def refreshAllTabView():
     
     #realize_group_sum.refreshView()
     realize_sum.refreshView()
-    print ' >> refreshView <realize_sum>'
+    print(' >> refreshView <realize_sum>')
     zayavki_sum.refreshView()
-    print ' >> refreshView <zayavki_sum>'
+    print(' >> refreshView <zayavki_sum>')
     pay_sum.refreshView()
-    print ' >> refreshView <pay_sum>'
+    print(' >> refreshView <pay_sum>')
     
 def _syncSprav(Type_,Cod_,Name_):
     """

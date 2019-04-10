@@ -2539,11 +2539,12 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if ide:
                 fl = self.file.replace('\\', '/')
                 alreadyopen = ide.GetAlreadyOpen()
-                if fl in alreadyopen and not ide.GetModify(fl):
-                    ide.ReloadFile(fl)
-                elif fl in alreadyopen and ic_dlg.icAskBox(u'ВНИМАНИЕ',
-                                                           u'Будет перегружет текущий <%s> файл.\nИзменения будут потеряны.\nУверены?' % fl):
-                    ide.ReloadFile(fl)
+                if alreadyopen:
+                    if fl in alreadyopen and not ide.GetModify(fl):
+                        ide.ReloadFile(fl)
+                    elif fl in alreadyopen and ic_dlg.icAskBox(u'ВНИМАНИЕ',
+                                                               u'Будет перегружет текущий <%s> файл.\nИзменения будут потеряны.\nУверены?' % fl):
+                        ide.ReloadFile(fl)
         else:
             self.SaveRes(self.file)
 

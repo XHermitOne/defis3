@@ -39,7 +39,7 @@ from . import ic_uuid
 from ic.log import log
 import ic
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 2, 1)
 
 DEFAULT_ENCODING = 'utf-8'
 
@@ -372,12 +372,19 @@ def MyExec(s):
     exec(s)
 
 
+# Замены, которые необходимо сделать чтобы трансформация имен функций прощла корректно
+TRANSFORM_FUNC_NAME_REPLACES = {'-': '_',
+                                }
+
+
 def transform_to_func(expr, compileKey=None):
     """
     Трансформирует текст скрипта к вызову функции.
     """
     if compileKey:
         fs = compileKey
+        for src_replace, dst_replace in TRANSFORM_FUNC_NAME_REPLACES.items():
+            fs = fs.replace(src_replace, dst_replace) if src_replace in fs else fs
     else:
         fs = ''
     beg = 'def __f__%s():' % fs

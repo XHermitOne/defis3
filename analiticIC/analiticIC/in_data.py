@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
-#  -*- coding: cp1251 -*-
+#  -*- coding: utf-8 -*-
 """
-Модуль прикладной системы.
-    Организация поступления входной информации от филиалов/офисов предприятия.
-    Информация обофисах находится в НСИ справочник Office.
-    cod - 2-х символьный код офиса.
-    s1 - Маска/шаблон загружаемых файлов.
-    s2 - Функция загрузки. Например in_data.loadDataDBFStandart.
-    s3 - Папка архиваю, если определена, тогда после удачной загрузки
-        файлы будут переносится в нее. Если не определена, 
-        то файлы просто будут переименовываться в BAK файлы.
-Автор(ы): Шурик Колчанов.
+РњРѕРґСѓР»СЊ РїСЂРёРєР»Р°РґРЅРѕР№ СЃРёСЃС‚РµРјС‹.
+    РћСЂРіР°РЅРёР·Р°С†РёСЏ РїРѕСЃС‚СѓРїР»РµРЅРёСЏ РІС…РѕРґРЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё РѕС‚ С„РёР»РёР°Р»РѕРІ/РѕС„РёСЃРѕРІ РїСЂРµРґРїСЂРёСЏС‚РёСЏ.
+    РРЅС„РѕСЂРјР°С†РёСЏ РѕР±РѕС„РёСЃР°С… РЅР°С…РѕРґРёС‚СЃСЏ РІ РќРЎР СЃРїСЂР°РІРѕС‡РЅРёРє Office.
+    cod - 2-С… СЃРёРјРІРѕР»СЊРЅС‹Р№ РєРѕРґ РѕС„РёСЃР°.
+    s1 - РњР°СЃРєР°/С€Р°Р±Р»РѕРЅ Р·Р°РіСЂСѓР¶Р°РµРјС‹С… С„Р°Р№Р»РѕРІ.
+    s2 - Р¤СѓРЅРєС†РёСЏ Р·Р°РіСЂСѓР·РєРё. РќР°РїСЂРёРјРµСЂ in_data.loadDataDBFStandart.
+    s3 - РџР°РїРєР° Р°СЂС…РёРІР°СЋ, РµСЃР»Рё РѕРїСЂРµРґРµР»РµРЅР°, С‚РѕРіРґР° РїРѕСЃР»Рµ СѓРґР°С‡РЅРѕР№ Р·Р°РіСЂСѓР·РєРё
+        С„Р°Р№Р»С‹ Р±СѓРґСѓС‚ РїРµСЂРµРЅРѕСЃРёС‚СЃСЏ РІ РЅРµРµ. Р•СЃР»Рё РЅРµ РѕРїСЂРµРґРµР»РµРЅР°,
+        С‚Рѕ С„Р°Р№Р»С‹ РїСЂРѕСЃС‚Рѕ Р±СѓРґСѓС‚ РїРµСЂРµРёРјРµРЅРѕРІС‹РІР°С‚СЊСЃСЏ РІ BAK С„Р°Р№Р»С‹.
+РђРІС‚РѕСЂ(С‹): РЁСѓСЂРёРє РљРѕР»С‡Р°РЅРѕРІ.
 """
 
-# Версия
+# Р’РµСЂСЃРёСЏ
 __version__ = (0, 0, 0, 1)
 
-#--- Подключение библиотек ---
+#--- РџРѕРґРєР»СЋС‡РµРЅРёРµ Р±РёР±Р»РёРѕС‚РµРє ---
 import wx
 #import datetime
 
@@ -40,76 +40,76 @@ import ic.components.icResourceParser as prs
 import analitic.in_data as input_data
 from STD import std_dialogs
 
-#--- Функции (Устаревшие) данных ---
+#--- Р¤СѓРЅРєС†РёРё (РЈСЃС‚Р°СЂРµРІС€РёРµ) РґР°РЅРЅС‹С… ---
 def loadInputData(InputDataDir_=None):
     """
-    Загрузить входные данные в БД.
-    @param InputDataDir_: Папка в которой лежат дбфники.
+    Р—Р°РіСЂСѓР·РёС‚СЊ РІС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ РІ Р‘Р”.
+    @param InputDataDir_: РџР°РїРєР° РІ РєРѕС‚РѕСЂРѕР№ Р»РµР¶Р°С‚ РґР±С„РЅРёРєРё.
     """
     if InputDataDir_ is None:
         InputDataDir_=input_data.getInputDataDir()
-    
-    #   Загружаем файлы по реализации
+
+    #   Р—Р°РіСЂСѓР¶Р°РµРј С„Р°Р№Р»С‹ РїРѕ СЂРµР°Р»РёР·Р°С†РёРё
     dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.olp')
     dbf_files.sort()
-    print '--->>>loadInputData -> <analiticIC>',dbf_files,InputDataDir_ #,ic_file.ListDir(InputDataDir_)
+    # print '--->>>loadInputData -> <analiticIC>',dbf_files,InputDataDir_ #,ic_file.ListDir(InputDataDir_)
     for dbf_file in dbf_files:
-        print 'LOAD DATA FROM',dbf_file
+        # print 'LOAD DATA FROM',dbf_file
         loadInputDataDBF(dbf_file,'analitic')
-        #Поменять расширение
+        #РџРѕРјРµРЅСЏС‚СЊ СЂР°СЃС€РёСЂРµРЅРёРµ
         #ic_file.icChangeExt(dbf_file,'_rlz.bak')
-        
-    #   Загружаем файлы по заявкам
+
+    #   Р—Р°РіСЂСѓР¶Р°РµРј С„Р°Р№Р»С‹ РїРѕ Р·Р°СЏРІРєР°Рј
     dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.olp')
     dbf_files.sort()
-    print '--->>>loadInputData -> <zayavkiIC>',dbf_files,InputDataDir_
+    # print '--->>>loadInputData -> <zayavkiIC>',dbf_files,InputDataDir_
     for dbf_file in dbf_files:
-        print 'LOAD DATA FROM',dbf_file
+        # print 'LOAD DATA FROM',dbf_file
         loadInputDataDBF(dbf_file, 'zayavki')
-        #Поменять расширение
+        #РџРѕРјРµРЅСЏС‚СЊ СЂР°СЃС€РёСЂРµРЅРёРµ
         ic_file.icChangeExt(dbf_file,'.bak')
-        #Отметить в логе
+        #РћС‚РјРµС‚РёС‚СЊ РІ Р»РѕРіРµ
         _logInputData(dbf_file)
-    
-    #   Загружаем файлы по оплате
+
+    #   Р—Р°РіСЂСѓР¶Р°РµРј С„Р°Р№Р»С‹ РїРѕ РѕРїР»Р°С‚Рµ
 #    dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.grp')
 #    print '--->>>loadInputData -> <pay>', dbf_files,InputDataDir_
 #    for dbf_file in dbf_files:
 #        print 'LOAD DATA FROM',dbf_file
 #        loadInputDataDBF(dbf_file, 'pay')
-#        #Поменять расширение
+#        #РџРѕРјРµРЅСЏС‚СЊ СЂР°СЃС€РёСЂРµРЅРёРµ
 #        ic_file.icChangeExt(dbf_file,'_grp.bak')
-    
+
     #print 'Refresh All Views'
     #refreshAllTabView()
-        
+
 def loadInputDataDBF(DBFFileName_, className='analitic'):
     """
-    Загрузка входных данных из dbf файла.
+    Р—Р°РіСЂСѓР·РєР° РІС…РѕРґРЅС‹С… РґР°РЅРЅС‹С… РёР· dbf С„Р°Р№Р»Р°.
     """
-    ### Изменил Оконешников А.
-    #Было
+    ### РР·РјРµРЅРёР» РћРєРѕРЅРµС€РЅРёРєРѕРІ Рђ.
+    #Р‘С‹Р»Рѕ
     #res=resource.icGetRes('analitic',nameRes='analitic')
     res=resource.icGetRes(className, nameRes=className)
     ###
-    
+
     tab=ic_sqlobjtab.icSQLObjDataClass(res)
-    #Удалить данные перед загрузкой
+    #РЈРґР°Р»РёС‚СЊ РґР°РЅРЅС‹Рµ РїРµСЂРµРґ Р·Р°РіСЂСѓР·РєРѕР№
     ok=_delLoadData(DBFFileName_,tab)
     if not ok:
         return
-    
+
     #
     dbf_office_cod=ic_file.BaseName(DBFFileName_)[:2].lower()
     #print '~~~>>>',tab.dataclass._SO_columnDict
-    
+
     dbf_f=dbf.icDBFFile(DBFFileName_)
     bOpen = dbf_f.Open()
     #print 'DBF isOpen:', bOpen
     #print 'DBF RecCount',DBFFileName_,dbf_f.getRecCount()
     i=0
     while not dbf_f.EOF():
-        #Прочитать все данные из записи
+        #РџСЂРѕС‡РёС‚Р°С‚СЊ РІСЃРµ РґР°РЅРЅС‹Рµ РёР· Р·Р°РїРёСЃРё
         try:
             dt_oper=dbf_f.getDateFieldFmtByName('DTOPER',
                 '%Y.%m.%d')
@@ -121,7 +121,7 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
                 try:
                     t_cod='%03d%04d'%(int(grp_cod),int(t_cod_str))
                 except:
-                    print '### ValueError GROUP,CODT=', grp_cod, t_cod_str
+                    # print '### ValueError GROUP,CODT=', grp_cod, t_cod_str
                     grp_cod='000'
                     t_cod='0000'
             else:
@@ -146,7 +146,7 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
                 sum=float(sum_str)
             else:
                 sum=0.0
-        
+
             reg_str=dbf_f.getFieldByName('REG').strip()
             reg_cod='%04d'%(int(reg_str))
             reg_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMREG'),
@@ -157,7 +157,7 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
             men_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMMENS'),
                 'CP866','CP1251')
 
-            #Загрузка данных
+            #Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…
             i+=1
             #recs=tab.select(ic_sqlobjtab.AND(tab.q.dtoper==dt_oper,
             #    tab.q.grup==grp_cod,tab.q.summa==sum,
@@ -177,11 +177,11 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
                 plan_kol=None,plan_sum=None,
                 office_cod=dbf_office_cod)
 
-            #Синхронизация справочников
+            #РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ СЃРїСЂР°РІРѕС‡РЅРёРєРѕРІ
             _syncSpravProducts(grp_cod,grp_name,t_cod,t_name)
             _syncSpravRegions(reg_cod,reg_name)
             _syncSpravMenagers(men_cod,men_name)
-        
+
         except:
             print 'ERROR'
         dbf_f.Next()
@@ -190,15 +190,15 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
 
 def syncInputDataDBF(DBFFileName_):
     """
-    Синхронизация справочников входных данных из dbf файла.
+    РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ СЃРїСЂР°РІРѕС‡РЅРёРєРѕРІ РІС…РѕРґРЅС‹С… РґР°РЅРЅС‹С… РёР· dbf С„Р°Р№Р»Р°.
     """
     #res=resource.icGetRes('analitic',nameRes='analitic')
     #tab=ic_sqlobjtab.icSQLObjDataClass(res)
-    
+
     dbf_f=dbf.icDBFFile(DBFFileName_)
     dbf_f.Open()
     while not dbf_f.EOF():
-        #Прочитать все данные из записи
+        #РџСЂРѕС‡РёС‚Р°С‚СЊ РІСЃРµ РґР°РЅРЅС‹Рµ РёР· Р·Р°РїРёСЃРё
         dt_oper=dbf_f.getDateFieldFmtByName('DTOPER',
             '%d/%m/%Y %H:%M:%S')
         grp_cod=int(dbf_f.getFieldByName('GRUP'))
@@ -214,27 +214,27 @@ def syncInputDataDBF(DBFFileName_):
         men_cod=int(dbf_f.getFieldByName('MENS'))
         men_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMMENS'),'CP866','CP1251')
 
-        #Синхронизация справочников
+        #РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ СЃРїСЂР°РІРѕС‡РЅРёРєРѕРІ
         _syncSpravProducts(grp_cod,grp_name,t_cod,t_name)
         _syncSpravRegions(reg_cod,reg_name)
         _syncSpravMenagers(men_cod,men_name)
-        
-        #Загрузка данных
+
+        #Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…
         #print '.',
         #tab.add(dtoper=dt_oper,grup=grp_cod,codt=t_cod,
         #    ei=ei_name,kolf=kol,cena=cen,summa=sum,
         #    reg=reg_cod,mens=men_cod)
-        
+
         dbf_f.Next()
     dbf_f.Close()
 
 
 def _delLoadData(DBFFileName_,DataTab_):
     """
-    Удалить из целевой таблицы данные, соответствующие загружаемым.
+    РЈРґР°Р»РёС‚СЊ РёР· С†РµР»РµРІРѕР№ С‚Р°Р±Р»РёС†С‹ РґР°РЅРЅС‹Рµ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ Р·Р°РіСЂСѓР¶Р°РµРјС‹Рј.
     """
     try:
-        #Опреджелить дату, за которую происходит загрузка данных
+        #РћРїСЂРµРґР¶РµР»РёС‚СЊ РґР°С‚Сѓ, Р·Р° РєРѕС‚РѕСЂСѓСЋ РїСЂРѕРёСЃС…РѕРґРёС‚ Р·Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…
         day_count=getLoadDayCount()
         if day_count:
             day_count=datetime.timedelta(int(day_count))
@@ -254,7 +254,7 @@ def _delLoadData(DBFFileName_,DataTab_):
             begin_date=limit_date
 
         del_sql="""DELETE FROM %s
-        WHERE (dtoper BETWEEN '%s' AND '%s') 
+        WHERE (dtoper BETWEEN '%s' AND '%s')
             AND office_cod='%s';"""%(DataTab_.getDBTableName(),
             begin_date.strftime('%Y.%m.%d'),end_date.strftime('%Y.%m.%d'),
             dbf_office_cod)
@@ -281,18 +281,18 @@ def _delLoadData(DBFFileName_,DataTab_):
         ic_log.icLogErr()
         return False
 
-#--- Функции синхронизации справочников ---
+#--- Р¤СѓРЅРєС†РёРё СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё СЃРїСЂР°РІРѕС‡РЅРёРєРѕРІ ---
 def _syncSprav(Type_,Cod_,Name_):
     """
-    Синхронизация данных справочника.
-    @param Type: Тип справочника.
-    @param Cod_: Код.
-    @param Name_: Название.
+    РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РґР°РЅРЅС‹С… СЃРїСЂР°РІРѕС‡РЅРёРєР°.
+    @param Type: РўРёРї СЃРїСЂР°РІРѕС‡РЅРёРєР°.
+    @param Cod_: РљРѕРґ.
+    @param Name_: РќР°Р·РІР°РЅРёРµ.
     """
     s_name=nsi.FSpravBuffRepl(Type_,Cod_)
     if s_name is None:
-        #Такой вид продукции не найден
-        #Надо добавить его в справочник
+        #РўР°РєРѕР№ РІРёРґ РїСЂРѕРґСѓРєС†РёРё РЅРµ РЅР°Р№РґРµРЅ
+        #РќР°РґРѕ РґРѕР±Р°РІРёС‚СЊ РµРіРѕ РІ СЃРїСЂР°РІРѕС‡РЅРёРє
         name_=Name_.strip()
         ic_log.icToLog('NSI %s ADD %s %s'%(Type_,Cod_,name_))
         tab=ic_sqlobjtab.icSQLObjDataClass(resource.icGetRes('NsiStd',
@@ -311,55 +311,55 @@ def _syncSprav(Type_,Cod_,Name_):
 #        s_name=s_name.strip()
 #        name_=Name_.strip()
 #        if s_name<>name_ and name_:
-#            #Изменилось название
-#            #Надо синхронизировать со справочником
+#            #РР·РјРµРЅРёР»РѕСЃСЊ РЅР°Р·РІР°РЅРёРµ
+#            #РќР°РґРѕ СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ СЃРѕ СЃРїСЂР°РІРѕС‡РЅРёРєРѕРј
 #            ic_log.icToLog('NSI %s CHANGE %s %s <> %s'%(Type_,Cod_,name_,s_name))
 #            id=nsi.getSpravCodeId(Type_,Cod_)
 #            if id<>None:
 #                tab=ic_sqlobjtab.icSQLObjDataClass(resource.icGetRes('NsiStd',
 #                    nameRes='NsiStd'))
 #                tab.update(id,type=Type_,cod=Cod_,name=name_,id_nsi_list=nsi.getSpravId(Type_))
-    
+
 def _syncSpravProducts(GroupCod_,GroupName_,ProductCod_,ProductName_):
     """
-    Синхронизация данных справочника продуктов.
+    РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РґР°РЅРЅС‹С… СЃРїСЂР°РІРѕС‡РЅРёРєР° РїСЂРѕРґСѓРєС‚РѕРІ.
     """
-    #Сначала синхронизировать виды продукции
+    #РЎРЅР°С‡Р°Р»Р° СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ РІРёРґС‹ РїСЂРѕРґСѓРєС†РёРё
     cod='%03d'%(int(GroupCod_))
     _syncSprav('Product',cod,GroupName_)
-    #Затем сами продукты
+    #Р—Р°С‚РµРј СЃР°РјРё РїСЂРѕРґСѓРєС‚С‹
     #cod='%03d%04d'%(int(GroupCod_),int(ProductCod_))
     #_syncSprav('Product',cod,ProductName_)
 
 def _syncSpravRegions(RegCod_,RegName_):
     """
-    Синхронизация данных справочника регионов.
+    РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РґР°РЅРЅС‹С… СЃРїСЂР°РІРѕС‡РЅРёРєР° СЂРµРіРёРѕРЅРѕРІ.
     """
-    #Сначала синхронизировать виды продукции
+    #РЎРЅР°С‡Р°Р»Р° СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ РІРёРґС‹ РїСЂРѕРґСѓРєС†РёРё
     cod='%04d'%(int(RegCod_))
     _syncSprav('Region',cod,RegName_)
-    
+
 def _syncSpravMenagers(MenCod_,MenName_):
     """
-    Синхронизация данных справочника менеджеров.
+    РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РґР°РЅРЅС‹С… СЃРїСЂР°РІРѕС‡РЅРёРєР° РјРµРЅРµРґР¶РµСЂРѕРІ.
     """
-    #Сначала синхронизировать виды продукции
+    #РЎРЅР°С‡Р°Р»Р° СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ РІРёРґС‹ РїСЂРѕРґСѓРєС†РёРё
     cod='%03d'%(int(MenCod_))
     _syncSprav('Menager',cod,MenName_)
 
-#--- Функции загрузки ----
+#--- Р¤СѓРЅРєС†РёРё Р·Р°РіСЂСѓР·РєРё ----
 def getDateRange(DBFFileName_,DateFieldName_='DTOPER'):
     """
-    Определение загружаемого диапазона дат из DBF файла. 
-    @return: Возвращает кортеж начальной и конечной даты. 
-        Или None в случае ошибки.
+    РћРїСЂРµРґРµР»РµРЅРёРµ Р·Р°РіСЂСѓР¶Р°РµРјРѕРіРѕ РґРёР°РїР°Р·РѕРЅР° РґР°С‚ РёР· DBF С„Р°Р№Р»Р°.
+    @return: Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕСЂС‚РµР¶ РЅР°С‡Р°Р»СЊРЅРѕР№ Рё РєРѕРЅРµС‡РЅРѕР№ РґР°С‚С‹.
+        РР»Рё None РІ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё.
     """
     dbf_f=dbf.icDBFFile(DBFFileName_)
     bOpen = dbf_f.Open()
     if not bOpen:
-        ic_log.icToLog('Ошибка открытия файла %s'%(DBFFileName_))
+        ic_log.icToLog('РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° %s'%(DBFFileName_))
         return None
-    #Инициализация минимальной и максимальной даты по первой записи
+    #РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјРёРЅРёРјР°Р»СЊРЅРѕР№ Рё РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ РґР°С‚С‹ РїРѕ РїРµСЂРІРѕР№ Р·Р°РїРёСЃРё
     try:
         date_value=dbf_f.getDateFieldFmtByName(DateFieldName_,'%Y.%m.%d')
     except:
@@ -369,7 +369,7 @@ def getDateRange(DBFFileName_,DateFieldName_='DTOPER'):
 
     min_date=date_value
     max_date=date_value
-    
+
     while not dbf_f.EOF():
         try:
             date_value=dbf_f.getDateFieldFmtByName(DateFieldName_,'%Y.%m.%d')
@@ -385,15 +385,15 @@ def getDateRange(DBFFileName_,DateFieldName_='DTOPER'):
 
 def delDateRangeInDB(DataTab_,BeginDate_,EndDate_,OfficeCode_):
     """
-    Удалить временной диапазон из БД с указанием источника.
+    РЈРґР°Р»РёС‚СЊ РІСЂРµРјРµРЅРЅРѕР№ РґРёР°РїР°Р·РѕРЅ РёР· Р‘Р” СЃ СѓРєР°Р·Р°РЅРёРµРј РёСЃС‚РѕС‡РЅРёРєР°.
     """
     try:
         del_sql="""DELETE FROM %s
-        WHERE (dtoper BETWEEN '%s' AND '%s') 
+        WHERE (dtoper BETWEEN '%s' AND '%s')
             AND office_cod='%s';"""%(DataTab_.getDBTableName(),
             BeginDate_,EndDate_,
             OfficeCode_)
-        print 'SQL STRING:',del_sql
+        # print 'SQL STRING:',del_sql
         DataTab_.executeSQL(del_sql)
         return True
     except:
@@ -403,17 +403,17 @@ def delDateRangeInDB(DataTab_,BeginDate_,EndDate_,OfficeCode_):
 
 def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
     """
-    Стандартная загрузка DBF файла в БД.
+    РЎС‚Р°РЅРґР°СЂС‚РЅР°СЏ Р·Р°РіСЂСѓР·РєР° DBF С„Р°Р№Р»Р° РІ Р‘Р”.
     """
     #res=resource.icGetRes(ToTabName_, nameRes=ToTabName_)
-    
+
     tab=ic_sqlobjtab.icSQLObjTabClass(ToTabName_)
-    
+
     dbf_f=dbf.icDBFFile(DBFFileName_)
     bOpen = dbf_f.Open()
-    
-    #ic_proccess_dlg.SetProccessBoxLabel(DBFFileName_, 0,label2='Загрузка данных', value2=10)
-    #progress.icOpenThreadedProgressDlg('Загрузка данных',
+
+    #ic_proccess_dlg.SetProccessBoxLabel(DBFFileName_, 0,label2='Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…', value2=10)
+    #progress.icOpenThreadedProgressDlg('Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…',
     #    DBFFileName_,0,dbf_f.getRecCount())
     i=0
     #try:
@@ -421,7 +421,7 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
     #except:
     #    count_100=0
     while not dbf_f.EOF():
-        #Прочитать все данные из записи
+        #РџСЂРѕС‡РёС‚Р°С‚СЊ РІСЃРµ РґР°РЅРЅС‹Рµ РёР· Р·Р°РїРёСЃРё
         try:
             dt_oper=dbf_f.getDateFieldFmtByName('DTOPER',
                 '%Y.%m.%d')
@@ -433,7 +433,7 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
                 try:
                     t_cod='%03d%04d'%(int(grp_cod),int(t_cod_str))
                 except:
-                    print '### ValueError GROUP,CODT=', grp_cod, t_cod_str
+                    # print '### ValueError GROUP,CODT=', grp_cod, t_cod_str
                     grp_cod='000'
                     t_cod='0000'
             else:
@@ -458,7 +458,7 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
                 sum=float(sum_str)
             else:
                 sum=0.0
-        
+
             reg_str=dbf_f.getFieldByName('REG').strip()
             reg_cod='%04d'%(int(reg_str))
             reg_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMREG'),
@@ -469,7 +469,7 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
             men_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMMENS'),
                 'CP866','CP1251')
 
-            #Загрузка данных
+            #Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…
             i+=1
             #print i
             tab.add(dtoper=dt_oper,grup=grp_cod,codt=t_cod,
@@ -478,38 +478,38 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
                 plan_kol=None,plan_sum=None,
                 office_cod=OfficeCod_)
 
-            #Синхронизация справочников
+            #РЎРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ СЃРїСЂР°РІРѕС‡РЅРёРєРѕРІ
             _syncSpravProducts(grp_cod,grp_name,t_cod,t_name)
             _syncSpravRegions(reg_cod,reg_name)
             _syncSpravMenagers(men_cod,men_name)
-        
+
         except:
-            ic_log.icLogErr('ОШИБКА загрузки DBF %s файда в БД'%(DBFFileName_))
+            ic_log.icLogErr('РћРЁРР‘РљРђ Р·Р°РіСЂСѓР·РєРё DBF %s С„Р°Р№РґР° РІ Р‘Р”'%(DBFFileName_))
 
         ic_proccess_dlg.SetProccessBoxLabel(value=float(100.0/dbf_f.getRecCount())*i)
         i+=1
         #progress.icStepThreadedProgressDlg()
-        
+
         dbf_f.Next()
 
     #progress.icCloseThreadedProgressDlg()
-    
+
     print 'OK'
     dbf_f.Close()
 
 def preloadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
     """
-    Подготовка к загрузке.
+    РџРѕРґРіРѕС‚РѕРІРєР° Рє Р·Р°РіСЂСѓР·РєРµ.
     """
-    #Определить начальную и конечную даты загрузки
+    #РћРїСЂРµРґРµР»РёС‚СЊ РЅР°С‡Р°Р»СЊРЅСѓСЋ Рё РєРѕРЅРµС‡РЅСѓСЋ РґР°С‚С‹ Р·Р°РіСЂСѓР·РєРё
     begin_end_date=getDateRange(DBFFileName_)
     if begin_end_date is None:
         return None
     begin_date,end_date=begin_end_date
 
     tab=ic_sqlobjtab.icSQLObjTabClass(ToTabName_)
-    
-    #Удалить данные перед загрузкой
+
+    #РЈРґР°Р»РёС‚СЊ РґР°РЅРЅС‹Рµ РїРµСЂРµРґ Р·Р°РіСЂСѓР·РєРѕР№
     ok=delDateRangeInDB(tab,begin_date,end_date,OfficeCod_)
     if not ok:
         return None
@@ -517,85 +517,85 @@ def preloadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
 
 def postloadDataDBFStandart(DBFFileName_,BeginDate_,EndDate_,LogTab_):
     """
-    Действия после загрузки.
+    Р”РµР№СЃС‚РІРёСЏ РїРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё.
     """
     if LogTab_:
         LogTab_.add(date_log=ic_time.TodayFmt('%Y.%m.%d'),
             begin_date=BeginDate_,end_date=EndDate_,
             office_cod=cod,office_name=rec['name'],
             file=cur_file)
-    
+
 @ic_proccess_dlg.proccess2_noparent_deco
 def loadDataStandart():
     """
-    Стандартная загрузка входных данных по всем офисам.
+    РЎС‚Р°РЅРґР°СЂС‚РЅР°СЏ Р·Р°РіСЂСѓР·РєР° РІС…РѕРґРЅС‹С… РґР°РЅРЅС‹С… РїРѕ РІСЃРµРј РѕС„РёСЃР°Рј.
     """
-    #Сначала определить все данны справочника.
+    #РЎРЅР°С‡Р°Р»Р° РѕРїСЂРµРґРµР»РёС‚СЊ РІСЃРµ РґР°РЅРЅС‹ СЃРїСЂР°РІРѕС‡РЅРёРєР°.
     sprav=nsi.getSpravDictSimple('Office')
     if sprav is None:
         return
-    
-    #Таблица лога
+
+    #РўР°Р±Р»РёС†Р° Р»РѕРіР°
     log=ic_sqlobjtab.icSQLObjTabClass('load_log')
     for cod,rec in sprav.items():
         try:
             imp_lst=rec['s2'].split('.')
             exec 'from %s import %s as load_func'%('.'.join(imp_lst[:-1]),imp_lst[-1])
         except:
-            ic_log.icLogErr('Ошибка импорта функции загрузки %s'%(rec['s2']))
+            ic_log.icLogErr('РћС€РёР±РєР° РёРјРїРѕСЂС‚Р° С„СѓРЅРєС†РёРё Р·Р°РіСЂСѓР·РєРё %s'%(rec['s2']))
             return
-        #Взять все файлы по маске
+        #Р’Р·СЏС‚СЊ РІСЃРµ С„Р°Р№Р»С‹ РїРѕ РјР°СЃРєРµ
         files=ic_file.getFilesByMask(rec['s1'])
         files.sort()
         if files:
             begin_date,end_date=ic_time.MaxDayFmt('%Y.%m.%d'),ic_time.MinDayFmt('%Y.%m.%d')
-            
+
             i=0
             try:
                 count_100=float(100.0/len(files))
             except:
                 count_100=0
             for cur_file in files:
-                
-                #Процесс бар
-                ic_proccess_dlg.SetProccessBoxLabel(cur_file,0,label2='Загрузка данных', value2=count_100*i)
+
+                #РџСЂРѕС†РµСЃСЃ Р±Р°СЂ
+                ic_proccess_dlg.SetProccessBoxLabel(cur_file,0,label2='Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…', value2=count_100*i)
                 i+=1
 
-                #Вызов функции загрузки данных
+                #Р’С‹Р·РѕРІ С„СѓРЅРєС†РёРё Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С…
                 load_date=load_func(cur_file,rec)
-                
-                #Архивация
+
+                #РђСЂС…РёРІР°С†РёСЏ
                 if rec['s3']:
                     ic_file.copyToDir(cur_file,rec['s3'])
                     ic_file.Remove(cur_file)
                 else:
-                    #Поменять расширение
+                    #РџРѕРјРµРЅСЏС‚СЊ СЂР°СЃС€РёСЂРµРЅРёРµ
                     ic_file.icChangeExt(cur_file,'.bak')
-                #Прописать в логе
+                #РџСЂРѕРїРёСЃР°С‚СЊ РІ Р»РѕРіРµ
                 if load_date:
                     log.add(date_log=ic_time.TodayFmt('%Y.%m.%d'),
                         begin_date=load_date[0],end_date=load_date[1],
                         office_cod=cod,office_name=rec['name'],
                         file=cur_file)
-                #Зафиксировать диапазон изменений
+                #Р—Р°С„РёРєСЃРёСЂРѕРІР°С‚СЊ РґРёР°РїР°Р·РѕРЅ РёР·РјРµРЅРµРЅРёР№
                 if load_date[0]:
                     begin_date=min(begin_date,load_date[0])
                 if load_date[1]:
                     end_date=max(end_date,load_date[1])
-            #Возвратить диапазон дат изменения для последующего разноса сумм
+            #Р’РѕР·РІСЂР°С‚РёС‚СЊ РґРёР°РїР°Р·РѕРЅ РґР°С‚ РёР·РјРµРЅРµРЅРёСЏ РґР»СЏ РїРѕСЃР»РµРґСѓСЋС‰РµРіРѕ СЂР°Р·РЅРѕСЃР° СЃСѓРјРј
             if begin_date==ic_time.MaxDayFmt('%Y.%m.%d') or end_date==ic_time.MinDayFmt('%Y.%m.%d'):
-                #Загрузка не прошла должным образом
+                #Р—Р°РіСЂСѓР·РєР° РЅРµ РїСЂРѕС€Р»Р° РґРѕР»Р¶РЅС‹Рј РѕР±СЂР°Р·РѕРј
                 return None
             return (begin_date,end_date)
     return None
 
 def refreshData(date_range=None):
     """
-    Обновление данных в деревьях планов.
+    РћР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С… РІ РґРµСЂРµРІСЊСЏС… РїР»Р°РЅРѕРІ.
     """
     if date_range is None:
         date_range=std_dialogs.icDateRangeSTDDlg(ic_user.icGetMainWin())
-    
+
     if date_range:
         import analitic.planUtils as planUtils
         from analitic.metadatainterfaces import IMetaplan
@@ -604,71 +604,71 @@ def refreshData(date_range=None):
         metaclass = IMetaplan.IMetaplan()
         plan_manager=brws.icPlanMenager(metaclass)
         #metaTree=IMetaplan.IMetaplan()
-    
-        #1. Сначала необходимо разнести базовый план
+
+        #1. РЎРЅР°С‡Р°Р»Р° РЅРµРѕР±С…РѕРґРёРјРѕ СЂР°Р·РЅРµСЃС‚Рё Р±Р°Р·РѕРІС‹Р№ РїР»Р°РЅ
         begin_dt=ic_time.MonthDT(date_range[0],'%Y.%m.%d')
         end_dt=ic_time.MonthDT(date_range[1],'%Y.%m.%d')
-        
+
         while begin_dt<=end_dt:
             year=begin_dt.year
             month=begin_dt.month
             planUtils.refreshSumm(metaclass.getObject(),year,month)
             begin_dt=ic_time.setDayDT(begin_dt+ic_time.OneMonthDelta(),1)
-            
-        #2. Затем произвести разнос сумм по модификациям
+
+        #2. Р—Р°С‚РµРј РїСЂРѕРёР·РІРµСЃС‚Рё СЂР°Р·РЅРѕСЃ СЃСѓРјРј РїРѕ РјРѕРґРёС„РёРєР°С†РёСЏРј
         begin_dt=ic_time.MonthDT(date_range[0],'%Y.%m.%d')
         end_dt=ic_time.MonthDT(date_range[1],'%Y.%m.%d')
-        
+
         while begin_dt<=end_dt:
             year=begin_dt.year
             month=begin_dt.month
             planUtils.loadDataPlanModif(metaclass,year,month)
             begin_dt=ic_time.setDayDT(begin_dt+ic_time.OneMonthDelta(),1)
-    
+
 def loadData():
     """
-    Загрузка данных.
+    Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С….
     """
     date_range=loadDataStandart()
     if date_range<>None:
-        if ic_dlg.icAskDlg('Разнос сумм','Были приняты данные с %s по %s. Разнести суммы за данный период?'%(date_range[0],
+        if ic_dlg.icAskDlg('Р Р°Р·РЅРѕСЃ СЃСѓРјРј','Р‘С‹Р»Рё РїСЂРёРЅСЏС‚С‹ РґР°РЅРЅС‹Рµ СЃ %s РїРѕ %s. Р Р°Р·РЅРµСЃС‚Рё СЃСѓРјРјС‹ Р·Р° РґР°РЅРЅС‹Р№ РїРµСЂРёРѕРґ?'%(date_range[0],
             date_range[1]))==wx.YES:
 
             return refreshData(date_range)
-            
-#--- Функции специфические для каждого предприятия ---
+
+#--- Р¤СѓРЅРєС†РёРё СЃРїРµС†РёС„РёС‡РµСЃРєРёРµ РґР»СЏ РєР°Р¶РґРѕРіРѕ РїСЂРµРґРїСЂРёСЏС‚РёСЏ ---
 def loadDataIC(DBFFileName_,SpravRecDict_):
     """
-    Загрузка данных для ИнфоЦентра.
-        У всех функций загрузки д.б. единый интерфейс!!!
-    @return: Возвращает загруженный диапазон дат.
+    Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… РґР»СЏ РРЅС„РѕР¦РµРЅС‚СЂР°.
+        РЈ РІСЃРµС… С„СѓРЅРєС†РёР№ Р·Р°РіСЂСѓР·РєРё Рґ.Р±. РµРґРёРЅС‹Р№ РёРЅС‚РµСЂС„РµР№СЃ!!!
+    @return: Р’РѕР·РІСЂР°С‰Р°РµС‚ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Р№ РґРёР°РїР°Р·РѕРЅ РґР°С‚.
     """
-    
+
     begin_end_date_analitic=preloadDataDBFStandart(DBFFileName_,'analitic',SpravRecDict_['cod'])
     if begin_end_date_analitic<>None:
         loadDataDBFStandart(DBFFileName_,'analitic',SpravRecDict_['cod'])
         begin_date_analitic,end_date_analitic=begin_end_date_analitic
     else:
         begin_date_analitic,end_date_analitic=None,None
-        
+
     if preloadDataDBFStandart(DBFFileName_,'zayavki',SpravRecDict_['cod'])<>None:
         loadDataDBFStandart(DBFFileName_,'zayavki',SpravRecDict_['cod'])
-    return (begin_date_analitic,end_date_analitic)    
-    
-#--- Настроечные функции ---
+    return (begin_date_analitic,end_date_analitic)
+
+#--- РќР°СЃС‚СЂРѕРµС‡РЅС‹Рµ С„СѓРЅРєС†РёРё ---
 def saveLoadDayCount(self):
     """
-    Выбрать и сохранить диапазон загружаемых дат.
+    Р’С‹Р±СЂР°С‚СЊ Рё СЃРѕС…СЂР°РЅРёС‚СЊ РґРёР°РїР°Р·РѕРЅ Р·Р°РіСЂСѓР¶Р°РµРјС‹С… РґР°С‚.
     """
     days=prs.ResultForm('day_count_dlg',
         parent=ic_user.icGetMainWin())
     if days<>None:
         #load_day_count='0000.00.%02i'%(int(days))
         setLoadDayCount(days)
-    
+
 def getLoadDayCount():
     """
-    Определить диапазон загружаемых дат.
+    РћРїСЂРµРґРµР»РёС‚СЊ РґРёР°РїР°Р·РѕРЅ Р·Р°РіСЂСѓР¶Р°РµРјС‹С… РґР°С‚.
     """
     prj_path=ic_user.icGet('SYS_RES')
     ini_file=prj_path+'/'+ic_file.BaseName(prj_path)+'.ini'
@@ -677,9 +677,9 @@ def getLoadDayCount():
 
 def setLoadDayCount(LoadDayCount_):
     """
-    Сохранить в настроечном файле диапазон загружаемых дат.
+    РЎРѕС…СЂР°РЅРёС‚СЊ РІ РЅР°СЃС‚СЂРѕРµС‡РЅРѕРј С„Р°Р№Р»Рµ РґРёР°РїР°Р·РѕРЅ Р·Р°РіСЂСѓР¶Р°РµРјС‹С… РґР°С‚.
     """
-    #Заносить только проверенные значния
+    #Р—Р°РЅРѕСЃРёС‚СЊ С‚РѕР»СЊРєРѕ РїСЂРѕРІРµСЂРµРЅРЅС‹Рµ Р·РЅР°С‡РЅРёСЏ
     if LoadDayCount_:
         prj_path=ic_user.icGet('SYS_RES')
         ini_file=prj_path+'/'+ic_file.BaseName(prj_path)+'.ini'
@@ -688,7 +688,7 @@ def setLoadDayCount(LoadDayCount_):
 
 def receiveDataAll():
     """
-    Прием фактов.
+    РџСЂРёРµРј С„Р°РєС‚РѕРІ.
     """
     loadData()
-    
+

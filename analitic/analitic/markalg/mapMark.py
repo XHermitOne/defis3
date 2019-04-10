@@ -120,7 +120,7 @@ def getStateImage(filename, state):
     try:
         pref1, pref2 = d[st1], d[st2]
     except:
-        print 'Invalid state identificator state=:', state
+        print('Invalid state identificator state=:', state)
 
     if pref1 and pref2:
         #print 'pic name=', filename.replace('.gif',pref1+pref2+'.gif')

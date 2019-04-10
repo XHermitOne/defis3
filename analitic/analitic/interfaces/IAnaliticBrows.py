@@ -64,7 +64,7 @@ class IAnaliticBrows(icobjectinterface.icObjectInterface):
             val = grid.dataset.data[row][col]
             
             if val in (0,'0'):
-                print 'getattrFuncispZayavki ZERO', row, col
+                print('getattrFuncispZayavki ZERO', row, col)
                 attr = {'backgroundColor':(255,0,0), 'foregroundColor':(255,255,255)}
                 return attr
             else:
@@ -74,7 +74,7 @@ class IAnaliticBrows(icobjectinterface.icObjectInterface):
                 if plan > 0:
                     clr = self.GetValColor(val, 0, plan*2, self.metaObj.value.color_zones)
                     #print '>>>> val=%d, row=%d, col=%d, plan*2=%d, clr=%s' % (val, row, col, plan*2, str(clr))
-                    print '>>> type clr =', type(clr)
+                    print('>>> type clr =', type(clr))
                     if clr:
                         return {'foregroundColor':clr}
     
@@ -91,7 +91,7 @@ class IAnaliticBrows(icobjectinterface.icObjectInterface):
                 if plan > 0:
                     clr = self.GetValColor(val, 0, plan*2, self.metaObj.value.color_zones)
                     #print '>>>> val=%d, row=%d, col=%d, plan*2=%d, clr=%s' % (val, row, col, plan*2, str(clr))
-                    print '>>> type clr =', type(clr)
+                    print('>>> type clr =', type(clr))
                     if clr:
                         return {'foregroundColor':clr}
     
@@ -108,7 +108,7 @@ class IAnaliticBrows(icobjectinterface.icObjectInterface):
                 if plan > 0:
                     clr = self.GetValColor(val, 0, plan*2, self.metaObj.value.color_zones)
                     #print '>>>> val=%d, row=%d, col=%d, plan*2=%d, clr=%s' % (val, row, col, plan*2, str(clr))
-                    print '>>> type clr =', type(clr)
+                    print('>>> type clr =', type(clr))
                     if clr:
                         return {'foregroundColor':clr}
                         

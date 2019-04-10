@@ -55,7 +55,7 @@ class icSlice:
         Выполнить.
         """
         sql=self.getSQLBody()
-        print 'SLICE SQL:',sql
+        print('SLICE SQL:',sql)
         db_connection=tabclass.CreateDBConnection(resource.icGetRes(DBName_,
             'src',nameRes=DBName_))
         if db_connection:

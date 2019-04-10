@@ -50,7 +50,7 @@ class IYearTrendPanel(trendInd.ArrowIndicatorTrend, icBrPnlInterface.icBrowsPane
             self.LoadIndicator(year)
             data = stdPanel._getStatisticYearSumma(self.metaObj, self.table, lstDays)
             self.SetGraphFromData(data)
-            print '... lst=', lstDays
+            print('... lst=', lstDays)
             
             for r in data:
                 print r
@@ -80,7 +80,7 @@ class IYearTrendPanel(trendInd.ArrowIndicatorTrend, icBrPnlInterface.icBrowsPane
 
             obj.SetLabel('Реализация по месяцам (руб.) на %d год' % year)
             factor = stdPanel._getTypeFactor(self.metaObj, 2*plan)
-            print '------- factor=', factor
+            print('------- factor=', factor)
             obj.colorRegions = self.metaObj.value.color_zones
             obj.SetState(summa, plan, factor=factor)
             return True

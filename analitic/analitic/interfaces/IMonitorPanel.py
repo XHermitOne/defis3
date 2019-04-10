@@ -138,10 +138,10 @@ class IMonitorPanel:
         Гистограмма сравнения.
         """
         if self.date1 >= self.date2:
-            print '#### Warnint date2 < date1 !!!!!'
+            print('#### Warnint date2 < date1 !!!!!')
             return False
             
-        print '>>> Period=', period, ic_period_month
+        print('>>> Period=', period, ic_period_month)
         # Подготавливаем данные
         data = self.GetDataBuff()
         matplotlib.rcParams['timezone'] = 'US/Pacific'
@@ -207,7 +207,7 @@ class IMonitorPanel:
                 for indx, obj in enumerate(data):
                     cod, summa, kol, cena, ei = obj
                     _buff = [0 for x in range(N)]
-                    print '  >>> CREATING BAR for:', cod
+                    print('  >>> CREATING BAR for:', cod)
                     
                     if cod in checkLst:
                         clr = graph_color[indx]
@@ -390,7 +390,7 @@ class IMonitorPanel:
         y2 = self.date2.GetYear()
         m2 = self.date2.GetMonth()+1
         d2 = self.date2.GetDay()
-        print '>>> date2=', y2, m2, d2
+        print('>>> date2=', y2, m2, d2)
         tt2 = datetime.datetime(int(y2), int(m2), int(d2), tzinfo=tz)
         
         dates = drange(tt1, tt2, dt)
@@ -569,7 +569,7 @@ class IMonitorPanel:
         
         for obj in obj_lst:
             cod, name = obj
-            print '>>>> Prepare buff t1,t2, cod, reg, agent = ', t1,t2, cod, reg, agent
+            print('>>>> Prepare buff t1,t2, cod, reg, agent = ', t1,t2, cod, reg, agent)
             self.SetIndicatorText('Обр. запроса по: <%s> %s' % obj)
             
             if agent == '999' or not agent and reg:
@@ -622,7 +622,7 @@ class IMonitorPanel:
         """
         Обновляет информацию, отображаемую на мониторе.
         """
-        print '>>> RefreshMonitor'
+        print('>>> RefreshMonitor')
         d1, d2, oag, oreg, olstLen = self._oldPar
         
         self.date1 = self.GetNameObj('date1').GetValue()

@@ -88,7 +88,7 @@ class icMonitorNode:
         """
         monitor_dict=NSI.spravfunc.FSprav(self.sprav_type,
             self.cod,['name','s1','s2','s3'])
-        print '>>>viewMonitor',monitor_dict
+        print('>>>viewMonitor', monitor_dict)
         #Инициализировать тело монитора
         self.body=self.loadBody()
         
@@ -117,7 +117,7 @@ class icMonitorNode:
         """
         monitor_dict=NSI.spravfunc.FSprav(self.sprav_type,
             self.cod,['name','s1','s2','s3'])
-        print '>>>wizardMonitor',monitor_dict
+        print('>>>wizardMonitor', monitor_dict)
         #Инициализировать тело монитора
         self.body=self.loadBody()
         if monitor_dict['s1']:
@@ -160,7 +160,7 @@ class icMonitorNode:
         """
         monitor_dict=NSI.spravfunc.FSprav(self.sprav_type,
             self.cod,['name','s4'])
-        print '>>>viewLinkMonitor',monitor_dict
+        print('>>>viewLinkMonitor', monitor_dict)
         if monitor_dict['s4'].strip():
             links=dict(monitor_dict['s4'])
             if links.has_key(LinkAlias_):
@@ -177,7 +177,7 @@ class icMonitorNode:
         """
         monitor_dict=NSI.spravfunc.FSprav(self.sprav_type,
             self.cod,['name','s4'])
-        print '>>> wizardLinkMonitor',monitor_dict
+        print('>>> wizardLinkMonitor', monitor_dict)
         if monitor_dict['s4'].strip():
             links=dict(monitor_dict['s4'])
             if links.has_key(LinkAlias_):

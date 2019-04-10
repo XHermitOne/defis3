@@ -38,7 +38,7 @@ def GetIndicatorLst(dict_obj):
             if obj.resource['type'] == 'ArrowIndicator':
                 lst.append(obj)
         except:
-            print 'Invalid type component name, obj=', name, obj
+            print('Invalid type component name, obj=', name, obj)
     
     return lst
     
@@ -95,7 +95,7 @@ def GetIndPropStorage():
         #   Создаем узел - файл с настройками индикаторов
         if not indStorage.has_key(FileIndProperty):
             indStorage[FileIndProperty]=objstore.icFileStorage()
-            print '>>>> Create FileStorage <%s> root:%s' % (FileIndProperty, root)
+            print('>>>> Create FileStorage <%s> root:%s' % (FileIndProperty, root))
             
     return indStorage
     
@@ -124,7 +124,7 @@ def LoadIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
     if lrs > 0:
         obj = rs[0]
     else:
-        print '### Запись с кодом %s не найдена' % cod
+        print('### Запись с кодом %s не найдена' % cod)
         return None
     
     #   Заполняем минимальное значение
@@ -183,7 +183,7 @@ def LoadIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
     #   Читаем настройки
     storage = GetIndPropStorage()
     keyName = indicator.name+'_'+indicator.cod+indicator.typPar
-    print '......... KeyName=', keyName
+    print('......... KeyName=', keyName)
     stRes=None
     
     if storage and storage[FileIndProperty].has_key(keyName):
@@ -223,7 +223,7 @@ def LoadIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
         indicator.Refresh()
         return True
     else:
-        print ">>> Don't find indicator <%s> property " % keyName
+        print(">>> Don't find indicator <%s> property " % keyName)
     
     return False
     
@@ -262,7 +262,7 @@ def LoadMonitorProperties(dict_obj):
                 if 'Mass' in name:
                     obj.SetDayPlanFunc(plans.countKolDayPlan)
                 else:
-                    print '--->>> Load <plans.countSumDayPlan> function in indicator=', name, cod
+                    print('--->>> Load <plans.countSumDayPlan> function in indicator=', name, cod)
                     obj.SetDayPlanFunc(plans.countSumDayPlan)
             #obj.Refresh()
 
@@ -334,7 +334,7 @@ def SaveIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
     SaveIndicatorPropertyStorage(indicator, cod)
 
     _NsiStd = tabclass.CreateTabClass(spravfunc.getNsiStdClassName())
-    print '>>> _NsiStd=', _NsiStd
+    print('>>> _NsiStd=', _NsiStd)
     #   Находим описание нужного справочника
     rs = _NsiStd.select(AND(_NsiStd.q.type==typeSprav,
                              _NsiStd.q.cod==cod))
@@ -429,7 +429,7 @@ def SaveIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
         
         if storage:
             keyName = indicator.name+'_'+indicator.cod+indicator.typPar
-            print 'KEY:', keyName
+            print('KEY:', keyName)
             storage[FileIndProperty][keyName] = stRes
             storage.Close()
             
@@ -450,14 +450,14 @@ def AnaliticProduct(ianlt):
     item = tree.GetSelection()
     row = tree.GetPyData(item)
     cod = row[0]
-    print '---->', row, tree.idataclass
-    print '----> t1, t2:', t1, t2
+    print('---->', row, tree.idataclass)
+    print('----> t1, t2:', t1, t2)
 
     flt = "select id from %s where dtoper<='%s' and dtoper>='%s' and reg='%s' and mens='%s' and codt LIKE '%s" % (tableName, t1, t2, cod[1], '0'+cod[2], cod[3])
 
     flt += "%'"
-    print '----> tableName:', tableName
-    print '----> SQL FILTER:', flt
+    print('----> tableName:', tableName)
+    print('----> SQL FILTER:', flt)
     buff = tree.GetSpravBuff()
     
     #   Устанавливаем буфер справочника

@@ -68,7 +68,7 @@ class IMetaplan(icobjectinterface.icObjectInterface):
             
             #   Получаем список объектов у которых будем изменять ресурс
             lst = list(set(forms.keys()) | set(pics.keys()))
-            print '>>>>> Object List:', lst
+            print('>>>>> Object List:', lst)
             for name in lst:
                 res = self.GetObjectResource(nameObj=name, typeObj='MetaItem',  resource=self.res)
 
@@ -83,7 +83,7 @@ class IMetaplan(icobjectinterface.icObjectInterface):
 
         #   Папка базового плана
         self._baseStorageName = self.getObject().getStorage().getNodeDir()
-        print '..... _baseStorageName=', self._baseStorageName
+        print('..... _baseStorageName=', self._baseStorageName)
         
     ###BEGIN EVENT BLOCK
     
@@ -93,9 +93,9 @@ class IMetaplan(icobjectinterface.icObjectInterface):
         """
         data = self.GetUserData()
         if data and data['mode'] == 'monitoring':
-            print ' >>> getObject=', self.getObject()
+            print(' >>> getObject=', self.getObject())
             st = IStdIndicatorPanel.getMonitorState(metaObj)
-            print '>>> Node state:', st
+            print('>>> Node state:', st)
             return mapMark.getStateImage('calendar.gif', st)
         else:
             return lib.GetUserBitmap('calendar.gif', 'plan')

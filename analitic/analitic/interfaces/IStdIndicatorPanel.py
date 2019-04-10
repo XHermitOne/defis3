@@ -11,12 +11,12 @@ import ic.interfaces.icobjectinterface as icobjectinterface
 try:
     import analitic.genMonitor as genMonitor
 except:
-    print 'Import Error analitic.genMonitor'
+    print('Import Error analitic.genMonitor')
 
 try:
     import analitic.indicatorUtils as indicatorUtils
 except:
-    print 'Import Error analitic.indicatorUtils'
+    print('Import Error analitic.indicatorUtils')
 
 import datetime
 from pytz import timezone
@@ -26,7 +26,7 @@ import matplotlib.dates as dates
 try:
     import plan.calc_plan as calc_plan
 except:
-    print 'Import Error plan.calc_plan'
+    print('Import Error plan.calc_plan')
     
 import ic.log.ic_log as ic_log
 import ic.components.user.icarrowindicator as icarrowindicator
@@ -61,7 +61,7 @@ def _getMonthSumma(date, metaObj, tableName):
     try:
         metadict = getattr(metaObj.value, tableName)
     except AttributeError:
-        print '### AttributeError in :_getMonthSumma date=%s, tableName=%s, metaObj=%s' % (date, tableName, metaObj)
+        print('### AttributeError in :_getMonthSumma date=%s, tableName=%s, metaObj=%s' % (date, tableName, metaObj))
         return (0,0)
         
     lst = metadict.keys()
@@ -863,7 +863,7 @@ class IStdIndicatorPanel(icobjectinterface.icObjectInterface):
             if len(pathLst) > 1:
                 month = int(pathLst[1][1:])
             
-            print ' :::: date:', year, month, day
+            print(' :::: date:', year, month, day)
             year, month, day = self.SetPanelDate(int(year), month, day)
             tdate = '%s.%s.%s' % (year, ('0'+str(month))[-2:], ('0'+str(day))[-2:])
             #print ' :::: date:', tdate

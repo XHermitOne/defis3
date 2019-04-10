@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
-#  -*- coding: cp1251 -*-
+# -*- coding: utf-8 -*-
 """
-Модуль прикладной системы.
-Автор(ы): 
+РњРѕРґСѓР»СЊ РїСЂРёРєР»Р°РґРЅРѕР№ СЃРёСЃС‚РµРјС‹.
+РђРІС‚РѕСЂ(С‹):
 """
 
-# Версия
+# Р’РµСЂСЃРёСЏ
 __version__ = (0, 0, 0, 1)
 
-#--- Функции
+#--- Р¤СѓРЅРєС†РёРё
 import wx
 from ic.dlg import ic_dlg
 
 def getSQLTest():
     """
-    Определение SQL запроса для тестового отчета.
+    РћРїСЂРµРґРµР»РµРЅРёРµ SQL Р·Р°РїСЂРѕСЃР° РґР»СЏ С‚РµСЃС‚РѕРІРѕРіРѕ РѕС‚С‡РµС‚Р°.
     """
-    print 'getSQLTest'
-    if ic_dlg.icAskDlg('ЛаЛаЛа','?')==wx.YES:
+    print('getSQLTest')
+    if ic_dlg.icAskDlg('Р›Р°Р›Р°Р›Р°','?')==wx.YES:
         return 'SQL SELECT * FROM nsi_list'
     else:
         return 'SQL SELECT * FROM nsi_std'

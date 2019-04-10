@@ -93,7 +93,7 @@ def getSpravBuffDict(metaObj, bRefreshBuff=False):
                 dict[item_cls.name] = spravfunc.getReplDict(item_cls.value.sprav, 'cod', 'name')
                 #progress.icUpdateProgressBar("Буферизируем справочник: %s" % item_cls.value.sprav, i*100/len(lst))
             except:
-                print '$EXCEPTION spravfunc.getReplDict(...)', item_cls.name
+                print('$EXCEPTION spravfunc.getReplDict(...)', item_cls.name)
                 
     #        #   Задаем словарь отношений {<тип элемента>:<имя поля>, ...}
     #        try:
@@ -102,7 +102,7 @@ def getSpravBuffDict(metaObj, bRefreshBuff=False):
     #            print 'EXCEPTION item_cls.value.field', item_cls.name
         sprav_dict_buff = dict
     except:
-        print '### getSpravBuffDict ERROR:'
+        print('### getSpravBuffDict ERROR:')
         
     return dict
 
@@ -121,7 +121,7 @@ def getTypFldDict(metaObj):
         try:
             typfldDict[item_cls.name] = item_cls.value.field
         except:
-            print 'EXCEPTION item_cls.value.field', item_cls.name
+            print('EXCEPTION item_cls.value.field', item_cls.name)
     
     return typfldDict
     
@@ -165,7 +165,7 @@ def genPlanTemplate(metaObj, source, yearTempl, monthTempl=1, year=2005, month=N
     group by reg, substr(mens, 2, 4), substr(codt, 1,3)
     ORDER BY codt, reg, mens""" % (str(yearTempl)+'.' +('0'+str(monthTempl))[-2:], '%')
 
-    print 'SQL STRING:', sql
+    print('SQL STRING:', sql)
     rec = obj.queryRecs(sql)
     
     if rec:
@@ -215,7 +215,7 @@ def genPlanTemplate(metaObj, source, yearTempl, monthTempl=1, year=2005, month=N
             fo = GetOrCreateMetaPlanObj(itemObj, dict, None, init_plan_node_func, **kwarg)
             #progress.icUpdateProgressBar("Создаем необходимую структуру: %s" % fo.value.description, i*100/len(rec))
         t2 = time.clock()
-        print ' :::: change struct', t2-t1
+        print(' :::: change struct', t2-t1)
             
         #   Делаем пересчет плановых и агрегирующих сум (кроме месячных и
         #   годовых планов)
@@ -273,7 +273,7 @@ def getChildTypesByStructPlan(defPlanLst, typ):
         if i+1 < len(defPlanLst):
             return [defPlanLst[i+1]]
     except:
-        print '>>> Error Invalid Plan Node Type <%s>: %s' % (typ, defPlanLst)
+        print('>>> Error Invalid Plan Node Type <%s>: %s' % (typ, defPlanLst))
     
     return []
         
@@ -291,8 +291,8 @@ def GetOrCreateMetaPlanObj(metaObj, sprBuff, defPlanLst, init_func, **kwarg):
         tps = getChildTypesByStructPlan(defPlanLst, typ)
         
     sKeys = set(tps) & set(kwarg.keys())
-    print '----- ..... %s getCanContain()-> %s - %s:' % (typ, tps, metaObj.getCanContain())
-    print '----- ..... GetOrCreateMetaPlanObj sKeys, tps', sKeys, tps, kwarg
+    print('----- ..... %s getCanContain()-> %s - %s:' % (typ, tps, metaObj.getCanContain()))
+    print('----- ..... GetOrCreateMetaPlanObj sKeys, tps', sKeys, tps, kwarg)
     #return
     
     if len(sKeys) > 0:
@@ -302,7 +302,7 @@ def GetOrCreateMetaPlanObj(metaObj, sprBuff, defPlanLst, init_func, **kwarg):
         #   Если ключа нет, то создаем план с таким именем
         if not key in metaObj.keys():
             obj = metaObj.Add(key, tp)
-            print '>>>>:::: Add metaobj cod, typ', key, tp,obj,typ
+            print('>>>>:::: Add metaobj cod, typ', key, tp,obj,typ)
             
         else:
             obj = metaObj[key]
@@ -312,7 +312,7 @@ def GetOrCreateMetaPlanObj(metaObj, sprBuff, defPlanLst, init_func, **kwarg):
             descr = sprBuff[tp][key]
         except:
             descr = key
-            print '### KEY ERROR SPRAV BUFF in CreateObj:', tp, key
+            print('### KEY ERROR SPRAV BUFF in CreateObj:', tp, key)
             
         #   Функция инициализации объекта
         init_func(obj, descr)
@@ -439,7 +439,7 @@ def MetaPlanZeroSum(metaTree,Year_,Month_,aggregate_ctrl=None):
                 value_path[0]='m'+value_path[0]
                 SetZeroSum(year_root,source_tab_name,date_values,value_path,zeroSum)
             else:
-                print summa_path,rec
+                print(summa_path,rec)
 
         #Обнуление суммы у месяца
         #month_root.value.setProperty(**{source_tab_name:{'summa':[0,0]}})
@@ -454,7 +454,7 @@ def MetaPlanZeroSum(metaTree,Year_,Month_,aggregate_ctrl=None):
     month_root.commit()
     #month_root.SaveAllChildren()
     #year_root.savePropertyStorage()
-    print ':::zero Summ commit()',t2-t1,time.clock()-t2
+    print(':::zero Summ commit()',t2-t1,time.clock()-t2)
 
 def SetZeroSum(parentMetaObj,src_tab,date_values,value_path,set_func):
     """
@@ -636,7 +636,7 @@ def MetaPlanDeliveSum(metaTree,Year_,Month_,aggregate_ctrl=None):
     month_root.commit()
     #month_root.SaveAllChildren()
     #year_root.savePropertyStorage()
-    print ':::delive Summ commit()',t2-t1,time.clock()-t2
+    print(':::delive Summ commit()',t2-t1,time.clock()-t2)
 
 def SetDeliveSum(parentMetaObj,src_tab,date_values,value_path,summa,set_func):
     """
@@ -755,7 +755,7 @@ def planTreeToTable(metaObj, par=None, tableLst=None):
             tableLst = planTreeToTable(obj, par + (key,), tableLst)
         else:
             r = (par + (key,), (obj.value.summa, obj.value.kol))
-            print '.....................>>>', r
+            print('.....................>>>', r)
             tableLst.append(r)
         
     return tableLst
@@ -802,7 +802,7 @@ def genModifPlan(parent, ibrows, id_modif, year=None, month=None):
     """
     if None in (year, month):
         res = prs.ModalForm('MonthYearDlg', parent=parent)
-        print '......... RES=', res
+        print('......... RES=', res)
         if res == None:
             return
             
@@ -820,7 +820,7 @@ def genModifPlanYear(parent, ibrows, id_modif, year=None):
     if None in (year,):
         #res = prs.ModalForm('MonthYearDlg', parent=parent)
         year = prs.ModalForm('GetYearDlg', parent=parent)
-        print '......... RES=', year
+        print('......... RES=', year)
         if year == None:
             return
     
@@ -832,7 +832,7 @@ def genAllPlanMonth(parent, ibrows, modif_lst, month=None, year=None):
     """
     if None in (year, month):
         res = prs.ModalForm('MonthYearDlg', parent=parent)
-        print '......... RES=', res
+        print('......... RES=', res)
         if res == None:
             return
             
@@ -1319,10 +1319,10 @@ def recount_fact(metaObj, bIndicator=True, bSave=True):
         metaObj.value.analitic['summa'] = [analiticS,analiticSk]
         metaObj.value.zayavki['summa'] = [zayavkiS,zayavkiSk]
         metaObj.value.pay['summa'] = [payS,paySk]
-        print 'recount_fact::::',metaObj.name,\
+        print('recount_fact::::',metaObj.name,\
             metaObj.value.analitic['summa'],\
             metaObj.value.zayavki['summa'],\
-            metaObj.value.pay['summa']
+            metaObj.value.pay['summa'])
             
         #   Рекурсивно вычисляем суммы в родительских элементах
         recount_fact(metaObj._Parent, False, bSave)
