@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
+
 """
 Модуль прикладной системы.
-Автор(ы):
 """
 
-# Версия
-__version__ = (0, 0, 0, 1)
+import wx
 
 import analitic.indicators.icarrowindicatortrend as trendInd
 import ic.interfaces.icBrPnlInterface as icBrPnlInterface
 import analitic.interfaces.IStdIndicatorPanel as stdPanel
-import wx
 import analitic.indicators.icarrowindicator as icarrowindicator
 
-#--- Классы
+# Версия
+__version__ = (0, 1, 1, 1)
+
+
+# --- Классы
 class IYearTrendPanel(trendInd.ArrowIndicatorTrend, icBrPnlInterface.icBrowsPanelInterface):
     def __init__(self, parent, metaObj=None):
         """
@@ -44,16 +46,16 @@ class IYearTrendPanel(trendInd.ArrowIndicatorTrend, icBrPnlInterface.icBrowsPane
             year = int(self.metaObj.getPath()[0])
             
             lstDays = ['%s.%02d.%s' % (year, month+1,
-                                    wx.DateTime.GetNumberOfDaysInMonth(month, year))
-                                    for month in range(12)]
-            #print '... lst=', lstDays
+                                       wx.DateTime.GetNumberOfDaysInMonth(month, year))
+                                       for month in range(12)]
+            # print '... lst=', lstDays
             self.LoadIndicator(year)
             data = stdPanel._getStatisticYearSumma(self.metaObj, self.table, lstDays)
             self.SetGraphFromData(data)
             print('... lst=', lstDays)
             
             for r in data:
-                print r
+                print(r)
     
     def LoadIndicator(self, year):
         """
@@ -72,11 +74,11 @@ class IYearTrendPanel(trendInd.ArrowIndicatorTrend, icBrPnlInterface.icBrowsPane
         if obj and self.metaObj:
             
             # По необходимости устанавливаем заголовок индикатора
-#            if ei:
-#                obj.SetLabel('%s (%s)' % (label, ei))
-#                obj.ei = ei
-#            else:
-#                obj.SetLabel('%s (%s)' % (label, obj.ei))
+            # if ei:
+            #     obj.SetLabel('%s (%s)' % (label, ei))
+            #     obj.ei = ei
+            # else:
+            #     obj.SetLabel('%s (%s)' % (label, obj.ei))
 
             obj.SetLabel('Реализация по месяцам (руб.) на %d год' % year)
             factor = stdPanel._getTypeFactor(self.metaObj, 2*plan)
@@ -86,5 +88,3 @@ class IYearTrendPanel(trendInd.ArrowIndicatorTrend, icBrPnlInterface.icBrowsPane
             return True
 
         return False
-
-#--- Функции
