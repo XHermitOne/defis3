@@ -7,17 +7,6 @@ import calendar
 import wx
 
 try:
-    import ic.components.icResourceParser as prs
-except ImportError:
-    print('import error icResourceParser')
-    
-import ic.utils.util as util
-import ic.components.icwidget as icwidget
-
-import analitic.indicators.icArrowIndDef as indDef
-import ic.interfaces.icobjectinterface as icobjectinterface
-
-try:
     import matplotlib
     from matplotlib import pylab
     from matplotlib.dates import DayLocator, YearLocator, MonthLocator, HourLocator, MinuteLocator,\
@@ -25,6 +14,17 @@ try:
     import matplotlib.numerix as numerix
 except ImportError:
     print('import error matplotlib')
+
+try:
+    import ic.components.icResourceParser as prs
+except ImportError:
+    print('import error icResourceParser')
+    
+import ic.components.icwidget as icwidget
+
+import analitic.indicators.icArrowIndDef as indDef
+import ic.interfaces.icobjectinterface as icobjectinterface
+
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK

@@ -1,29 +1,36 @@
 #!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
+
 """
 Модуль прикладной системы.
-Автор(ы): Оконешников А.В.
 """
-#import ic.db.tabclass as tabclass
-#import NSI.spravfunc as spravfunc
-import ic.utils.util as util
-#from sqlobject import *
-#import analitic.plans as plans
-import plan.plans as plans
+
+import os
+import os.path
+
+# import ic.db.tabclass as tabclass
+# import NSI.spravfunc as spravfunc
+from ic.utils import util
+# from sqlobject import *
+# import analitic.plans as plans
 from ic.dlg import progress
-import analitic.interfaces.IAnaliticTable as IAnaliticTable
-import ic.utils.resource as resource
-import ic.storage.objstore as objstore
-import ic.utils.ic_file as ic_file
-import ic.log.ic_log as ic_log
+from ic.utils import resource
+from ic.storage import objstore
+from ic.utils import ic_file
+from ic.log import log
+
+from plan import plans
+from analitic.interfaces import IAnaliticTable
+
 # Версия
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 #   Указатель на хранилище свойств индикаторов
 indStorage = None
 FileIndProperty = 'IndProperty'
 
-#--- Функции индикаторов
+
+# --- Функции индикаторов
 def GetIndicatorLst(dict_obj):
     """
     Возвращает список индикаторов.
@@ -39,40 +46,43 @@ def GetIndicatorLst(dict_obj):
                 lst.append(obj)
         except:
             # print('Invalid type component name, obj=', name, obj)
+            log.fatal(u'Ошибка')
     
     return lst
+    
     
 def GetCodDict():
     """
     """
-    dct = { 'dayRealiz':'IRSD',
-            'monthRealiz':'IRSM',
-            'qwartRealiz':'IRSQ',
-            'yearRealiz':'IRSY',
-            'dayRealizMass':'IRVD',
-            'monthRealizMass':'IRVM',
-            'qwartRealizMass':'IRVQ',
-            'yearRealizMass':'IRVY',
+    dct = {'dayRealiz': 'IRSD',
+           'monthRealiz': 'IRSM',
+           'qwartRealiz': 'IRSQ',
+           'yearRealiz': 'IRSY',
+           'dayRealizMass': 'IRVD',
+           'monthRealizMass': 'IRVM',
+           'qwartRealizMass': 'IRVQ',
+           'yearRealizMass': 'IRVY',
             
-            'dayZajav':'IZSD',
-            'monthZajav':'IZSM',
-            'qwartZajav':'IZSQ',
-            'yearZajav':'IZSY',
-            'dayZajavMass':'IZVD',
-            'monthZajavMass':'IZVM',
-            'qwartZajavMass':'IZVQ',
-            'yearZajavMass':'IZVY',
+           'dayZajav': 'IZSD',
+           'monthZajav': 'IZSM',
+           'qwartZajav': 'IZSQ',
+           'yearZajav': 'IZSY',
+           'dayZajavMass': 'IZVD',
+           'monthZajavMass': 'IZVM',
+           'qwartZajavMass': 'IZVQ',
+           'yearZajavMass': 'IZVY',
             
-            'dayPay':'IPSD',
-            'monthPay':'IPSM',
-            'qwartPay':'IPSQ',
-            'yearPay':'IPSY',
-            'dayPayMass':'IPVD',
-            'monthPayMass':'IPVM',
-            'qwartPayMass':'IPVQ',
-            'yearPayMass':'IPVY'}
+           'dayPay': 'IPSD',
+           'monthPay': 'IPSM',
+           'qwartPay': 'IPSQ',
+           'yearPay': 'IPSY',
+           'dayPayMass': 'IPVD',
+           'monthPayMass': 'IPVM',
+           'qwartPayMass': 'IPVQ',
+           'yearPayMass': 'IPVY'}
             
     return dct
+    
     
 def CloseIndPropStorage():
     """
@@ -80,6 +90,7 @@ def CloseIndPropStorage():
     """
     if indStorage:
         indStorage.Close()
+    
         
 def GetIndPropStorage():
     """
@@ -88,17 +99,18 @@ def GetIndPropStorage():
     global indStorage
     
     if not indStorage:
-        root = ic_file.DirName(resource.icGetResPath())+'\AppStorage'
+        root = os.path.join(os.path.dirname(resource.icGetResPath()), 'AppStorage')
         indStorage = objstore.icObjectStorage(root)
         indStorage.Open()
 
         #   Создаем узел - файл с настройками индикаторов
-        if not indStorage.has_key(FileIndProperty):
-            indStorage[FileIndProperty]=objstore.icFileStorage()
+        if FileIndProperty not in indStorage:
+            indStorage[FileIndProperty] = objstore.icFileStorage()
             # print('>>>> Create FileStorage <%s> root:%s' % (FileIndProperty, root))
             
     return indStorage
-    
+
+
 def LoadIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
     """
     Востанавливает настройки индикатора из справочника индикаторов.
@@ -109,17 +121,17 @@ def LoadIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
     @param cod: Код индикатора, под которым он зарегестрирован в справочнике
         индикаторов.
     """
-    return
+    # return
     LoadIndicatorPropertyStorage(indicator, cod)
-    return
+    # return
     
     _NsiStd = tabclass.CreateTabClass(spravfunc.getNsiStdClassName())
 
     #   Находим описание нужного справочника
-    rs = _NsiStd.select(AND(_NsiStd.q.type==typeSprav,
-                             _NsiStd.q.cod==cod))
+    rs = _NsiStd.select(AND(_NsiStd.q.type == typeSprav,
+                            _NsiStd.q.cod == cod))
 
-    lrs =spravfunc.GetRecordCount(rs)
+    lrs = spravfunc.GetRecordCount(rs)
     
     if lrs > 0:
         obj = rs[0]
@@ -169,6 +181,7 @@ def LoadIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
         indicator.factor = factor
     indicator.Refresh()
 
+
 def LoadIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
     """
     Востанавливает настройки индикатора из справочника индикаторов.
@@ -179,20 +192,19 @@ def LoadIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
     @param cod: Код индикатора, под которым он зарегестрирован в справочнике
         индикаторов.
     """
-
     #   Читаем настройки
     storage = GetIndPropStorage()
     keyName = indicator.name+'_'+indicator.cod+indicator.typPar
     # print('......... KeyName=', keyName)
     stRes=None
     
-    if storage and storage[FileIndProperty].has_key(keyName):
+    if storage and keyName in storage[FileIndProperty]:
         stRes = storage[FileIndProperty][keyName]
         storage.Close()
         
     if stRes:
         #   Заполняем минимальное значение
-        #min, max = stRes['majorValues']
+        # min, max = stRes['majorValues']
     
         #   Заполняем максимальное значение
         majorStep = stRes['majorStep']
@@ -209,7 +221,7 @@ def LoadIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
         indicator.ei = stRes['ei']
         indicator.SetLabel(stRes['label'])
         
-        #indicator.source = stRes['source']
+        # indicator.source = stRes['source']
         indicator.attrVal = stRes['attrVal']
         indicator.attrPlan = stRes['attrPlan']
         indicator.attrTime = stRes['attrTime']
@@ -223,10 +235,11 @@ def LoadIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
         indicator.Refresh()
         return True
     else:
-        # print(">>> Don't find indicator <%s> property " % keyName)
+        log.warning(u'Не найдено свойство индикатора <%s>' % keyName)
     
     return False
-    
+
+
 def LoadCAMonitorProperty(monitor, cod):
     """
     Загружает настройки монитора сравнительного анализа из справочнике мониторов.
@@ -237,6 +250,8 @@ def LoadCAMonitorProperty(monitor, cod):
     @param cod: Код монитора, под которым он зарегестрирован в справочнике
         мониторов.
     """
+    pass
+
 
 def LoadMonitorProperties(dict_obj):
     """
@@ -245,12 +260,12 @@ def LoadMonitorProperties(dict_obj):
     @type dict_obj: C{dictionary}
     @param dict_obj: Словарь объектов формы.
     """
-    return
+    # return
     lst = GetIndicatorLst(dict_obj)
     codDict = GetCodDict()
     
     for name, obj in dict_obj.items():
-        if codDict.has_key(name):
+        if name in codDict:
             cod = codDict[name]
             
             #   Загружаем настройки индикатора
@@ -258,13 +273,14 @@ def LoadMonitorProperties(dict_obj):
             
             #   Устанавливаем фунцию определяющую дневной план наблюдаемого
             #   параметра
-            if not obj.cod in (None,'', 'None'):
+            if not obj.cod in (None, '', 'None'):
                 if 'Mass' in name:
                     obj.SetDayPlanFunc(plans.countKolDayPlan)
                 else:
                     # print('--->>> Load <plans.countSumDayPlan> function in indicator=', name, cod)
                     obj.SetDayPlanFunc(plans.countSumDayPlan)
-            #obj.Refresh()
+            # obj.Refresh()
+
 
 def RefreshFormRealizMonitor(dict_obj):
     """
@@ -273,19 +289,20 @@ def RefreshFormRealizMonitor(dict_obj):
     @type dict_obj: C{dictionary}
     @param dict_obj: Словарь объектов формы.
     """
+    # return
+
     #   Чистим буфера весов
-    return
     plans.ClearWBuff()
     plans.ClearPlanBuff()
     
     t = dict_obj['currentDate'].GetValue()
     yy = str(t.GetYear())
-    mm = ('00'+ str(t.GetMonth()+1))[-2:]
-    dd = ('00'+ str(t.GetDay()))[-2:]
-    t = '%s.%s.%s' % (yy,mm,dd)
+    mm = ('00' + str(t.GetMonth()+1))[-2:]
+    dd = ('00' + str(t.GetDay()))[-2:]
+    t = '%s.%s.%s' % (yy, mm, dd)
 
     lst = GetIndicatorLst(dict_obj)
-    progress.icOpenProgressBar("Обновляем состояния индикаторов",0,len(lst))
+    progress.icOpenProgressBar("Обновляем состояния индикаторов", 0, len(lst))
     
     for obj in lst:
         obj.SetPeriodIzm([None, t])
@@ -293,9 +310,10 @@ def RefreshFormRealizMonitor(dict_obj):
         try:
             obj.RefreshState()
         except:
-            ic_log.icToLog('Не удалось обновить индикатор %s' % obj.name)
+            log.fatal(u'Не удалось обновить индикатор <%s>' % obj.name)
     
     progress.icCloseProgressBar()
+
 
 def RefreshIndicatorValue(indicator):
     """
@@ -304,6 +322,8 @@ def RefreshIndicatorValue(indicator):
     @type indicator: C{icArrowIndicator}
     @param indicator: Указатель на индикатор.
     """
+    pass
+
 
 def SaveCAMonitorProperty(monitor, cod):
     """
@@ -315,8 +335,10 @@ def SaveCAMonitorProperty(monitor, cod):
     @param cod: Код монитора, под которым он зарегестрирован в справочнике
         мониторов.
     """
+    pass
 
-def SaveIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
+
+def SaveIndicatorProperty(indicator, cod, typeSprav='Indicators'):
     """
     Сохраняет настройки индикатора в справочнике индикаторов.
     
@@ -328,18 +350,17 @@ def SaveIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
     @type typeSprav: C{string}
     @param typeSprav: Тип справочника, где хранятся настройки.
     """
-    ### Экперимент
-    return
+    # return
     
     SaveIndicatorPropertyStorage(indicator, cod)
 
     _NsiStd = tabclass.CreateTabClass(spravfunc.getNsiStdClassName())
     # print('>>> _NsiStd=', _NsiStd)
     #   Находим описание нужного справочника
-    rs = _NsiStd.select(AND(_NsiStd.q.type==typeSprav,
-                             _NsiStd.q.cod==cod))
+    rs = _NsiStd.select(AND(_NsiStd.q.type == typeSprav,
+                            _NsiStd.q.cod == cod))
 
-    lrs =spravfunc.GetRecordCount(rs)
+    lrs = spravfunc.GetRecordCount(rs)
     
     if lrs > 0:
       obj = rs[0]
@@ -372,8 +393,9 @@ def SaveIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
         #   Тип и функция агрегации
         obj.s5 = str((indicator.aggregationType, indicator.aggregationFunc))
         
-        ### Экперимент
-        #SaveIndicatorPropertyStorage(indicator, cod)
+        # Экперимент
+        # SaveIndicatorPropertyStorage(indicator, cod)
+
 
 def SaveIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
     """
@@ -432,11 +454,13 @@ def SaveIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
             # print('KEY:', keyName)
             storage[FileIndProperty][keyName] = stRes
             storage.Close()
-            
-#--- Функции для вызова более подробной информации в дереве аналитики по кнопке <Подробнее>
+
+
 def AnaliticProduct(ianlt):
     """
     Аналитика в разрезе продукции.
+    Функции для вызова более подробной информации в дереве аналитики
+    по кнопке <Подробнее>.
     
     @type ianlt: C{analitic.IAnaliticTree.IAnaliticTree}
     @param ianlt: Указатель на интерфейст дерева аналитики.
@@ -461,12 +485,12 @@ def AnaliticProduct(ianlt):
     buff = tree.GetSpravBuff()
     
     #   Устанавливаем буфер справочника
-    if buff.has_key('Product'):
+    if 'Product' in buff:
         IAnaliticTable.SetProductSpravBuff(buff['Product'])
     
     idlg = IAnaliticTable.IAnaliticTable(ianlt.GetNameObj('MsgCtrl'),
-                                    tableName=className,
-                                    filter=flt)
+                                         tableName=className,
+                                         filter=flt)
     dlg = idlg.getObject()
     reg = tree.GetValFromSpravBuff('Region', cod[1]).strip()
     mens = tree.GetValFromSpravBuff('Menager', cod[2]).strip()

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
+
 import ic.components.icResourceParser as prs
 import ic.utils.util as util
 import ic.utils.coderror as coderror

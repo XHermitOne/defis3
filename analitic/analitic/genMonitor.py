@@ -1,135 +1,185 @@
 #!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
+
 """
 Функции генерации мониторов.
 """
 
-# Версия
-__version__ = (0, 0, 0, 1)
 
-#--- Подключение библиотек ---
-#from ic.db import ic_sqlobjtab
-#from ic.db import ic_tabview
+# --- Подключение библиотек ---
 from ic.prj import ctrlPrj
 from ic.dlg import ic_dlg
 
-#import NSI.spravfunc
+# import NSI.spravfunc
 
-#--- Функции ---
+# Версия
+__version__ = (0, 1, 1, 1)
 
-#--- Генерация имен ---
-def genViewZayavkiName(Type_,Cod_):
+
+# --- Функции ---
+def genViewZayavkiName(Type_, Cod_):
     """
     Генерация имен представлений по заявкам.
     """
     return 'vz'+str(Type_)+str(Cod_)
 
-def genViewRealizeName(Type_,Cod_):
+
+def genViewRealizeName(Type_, Cod_):
     """
     Генерация имен представлений по реализации.
     """
     return 'vr'+str(Type_)+str(Cod_)
 
-def genViewPayName(Type_,Cod_):
+
+def genViewPayName(Type_, Cod_):
     """
     Генерация имен представлений по оплате.
     """
     return 'vp'+str(Type_)+str(Cod_)
 
-#--- Генерация самих представлений ---
-_SpravType2SQLWhere={'Product':'SUBSTR(codt,1,3)',
-    'Menager':'mens',
-    'Region':'reg'
-    }
-def genViewZayavki(Type_,Cod_,PrototypeName_='zayavki_sum'):
+
+_SpravType2SQLWhere = {'Product': 'SUBSTR(codt,1,3)',
+                       'Menager': 'mens',
+                       'Region': 'reg',
+                       }
+
+
+def genViewZayavki(Type_, Cod_, PrototypeName_='zayavki_sum'):
     """
     Генерация представлений по заявкам.
     """
-    view_name=genViewZayavkiName(Type_,Cod_)
+    view_name = genViewZayavkiName(Type_,Cod_)
  
-    prj_res_ctrl=ctrlPrj.icProjectResController()
+    prj_res_ctrl = ctrlPrj.icProjectResController()
     prj_res_ctrl.openPrj()
     
-    #Проверка на добавление нового ресурса
-    if not prj_res_ctrl.isRes(view_name,'vid'):
-        view_res=prj_res_ctrl.loadResClone(PrototypeName_,'vid')
-        #Установка свойств
-        view_res['name']=view_name
-        view_res['table']=view_name.lower()
-        view_res['prototype']='zayavki'
-        view_res['query']="""SELECT dtoper,NULL as grup,NULL AS codt,NULL AS ei,SUM(kolf) AS kolf,NULL AS cena,SUM(summa) AS summa,NULL AS reg,NULL AS mens,NULL AS plan_kol,NULL AS plan_sum 
-    FROM zayavki 
+    # Проверка на добавление нового ресурса
+    if not prj_res_ctrl.isRes(view_name, 'vid'):
+        view_res = prj_res_ctrl.loadResClone(PrototypeName_,'vid')
+        # Установка свойств
+        view_res['name'] = view_name
+        view_res['table'] = view_name.lower()
+        view_res['prototype'] = 'zayavki'
+        view_res['query'] = '''
+SELECT 
+    dtoper,
+    NULL as grup,
+    NULL AS codt,
+    NULL AS ei,
+    SUM(kolf) AS kolf,
+    NULL AS cena,
+    SUM(summa) AS summa,
+    NULL AS reg,
+    NULL AS mens,
+    NULL AS plan_kol,
+    NULL AS plan_sum 
+FROM zayavki 
     WHERE %s LIKE('%s')
-    GROUP BY dtoper"""%(_SpravType2SQLWhere[Type_],Cod_)
-        prj_res_ctrl.saveRes(view_name,'vid',view_res)
+    GROUP BY dtoper
+    ''' % (_SpravType2SQLWhere[Type_], Cod_)
+        prj_res_ctrl.saveRes(view_name, 'vid', view_res)
     return view_name
 
-def genViewRealize(Type_,Cod_,PrototypeName_='realize_sum'):
+
+def genViewRealize(Type_, Cod_, PrototypeName_='realize_sum'):
     """
     Генерация представлений по реализации.
     """
-    view_name=genViewRealizeName(Type_,Cod_)
+    view_name = genViewRealizeName(Type_, Cod_)
  
-    prj_res_ctrl=ctrlPrj.icProjectResController()
+    prj_res_ctrl = ctrlPrj.icProjectResController()
     prj_res_ctrl.openPrj()
     
-    #Проверка на добавление нового ресурса
-    if not prj_res_ctrl.isRes(view_name,'vid'):
-        view_res=prj_res_ctrl.loadResClone(PrototypeName_,'vid')
-        #Установка свойств
-        view_res['name']=view_name
-        view_res['table']=view_name.lower()
-        view_res['prototype']='analitic'
-        view_res['query']="""SELECT dtoper,NULL as grup,NULL AS codt,NULL AS ei,SUM(kolf) AS kolf,NULL AS cena,SUM(summa) AS summa,NULL AS reg,NULL AS mens,NULL AS plan_kol,NULL AS plan_sum 
-    FROM analitic 
-    WHERE %s LIKE('%s')
-    GROUP BY dtoper"""%(_SpravType2SQLWhere[Type_],Cod_)
-        prj_res_ctrl.saveRes(view_name,'vid',view_res)
+    # Проверка на добавление нового ресурса
+    if not prj_res_ctrl.isRes(view_name, 'vid'):
+        view_res = prj_res_ctrl.loadResClone(PrototypeName_, 'vid')
+        # Установка свойств
+        view_res['name'] = view_name
+        view_res['table'] = view_name.lower()
+        view_res['prototype'] = 'analitic'
+        view_res['query'] = '''
+SELECT 
+    dtoper,
+    NULL as grup,
+    NULL AS codt,
+    NULL AS ei,
+    SUM(kolf) AS kolf,
+    NULL AS cena,
+    SUM(summa) AS summa,
+    NULL AS reg,
+    NULL AS mens,
+    NULL AS plan_kol,
+    NULL AS plan_sum 
+FROM analitic 
+WHERE %s LIKE('%s')
+GROUP BY dtoper
+    ''' % (_SpravType2SQLWhere[Type_], Cod_)
+        prj_res_ctrl.saveRes(view_name, 'vid', view_res)
     return view_name
 
-def genViewPay(Type_,Cod_,PrototypeName_='pay_sum'):
+
+def genViewPay(Type_, Cod_, PrototypeName_='pay_sum'):
     """
     Генерация представлений по оплате.
     """
-    view_name=genViewPayName(Type_,Cod_)
+    view_name = genViewPayName(Type_, Cod_)
  
-    prj_res_ctrl=ctrlPrj.icProjectResController()
+    prj_res_ctrl = ctrlPrj.icProjectResController()
     prj_res_ctrl.openPrj()
     
-    #Проверка на добавление нового ресурса
-    if not prj_res_ctrl.isRes(view_name,'vid'):
-        view_res=prj_res_ctrl.loadResClone(PrototypeName_,'vid')
-        #Установка свойств
-        view_res['name']=view_name
-        view_res['table']=view_name.lower()
-        view_res['prototype']='pay'
-        view_res['query']="""SELECT dtoper,NULL as grup,NULL AS codt,NULL AS ei,SUM(kolf) AS kolf,NULL AS cena,SUM(summa) AS summa,NULL AS reg,NULL AS mens,NULL AS plan_kol,NULL AS plan_sum 
-    FROM pay 
-    WHERE %s LIKE('%s')
-    GROUP BY dtoper"""%(_SpravType2SQLWhere[Type_],Cod_)
-        prj_res_ctrl.saveRes(view_name,'vid',view_res)
+    # Проверка на добавление нового ресурса
+    if not prj_res_ctrl.isRes(view_name, 'vid'):
+        view_res = prj_res_ctrl.loadResClone(PrototypeName_, 'vid')
+        # Установка свойств
+        view_res['name'] = view_name
+        view_res['table'] = view_name.lower()
+        view_res['prototype'] = 'pay'
+        view_res['query'] = '''
+SELECT 
+    dtoper,
+    NULL as grup,
+    NULL AS codt,
+    NULL AS ei,
+    SUM(kolf) AS kolf,
+    NULL AS cena,
+    SUM(summa) AS summa,
+    NULL AS reg,
+    NULL AS mens,
+    NULL AS plan_kol,
+    NULL AS plan_sum 
+FROM pay 
+WHERE %s LIKE('%s')
+GROUP BY dtoper
+    ''' % (_SpravType2SQLWhere[Type_], Cod_)
+        prj_res_ctrl.saveRes(view_name, 'vid', view_res)
     return view_name
 
-#--- Генерация имен полей аналитики ---
-_SpravType2AnaliticFieldName={'Product':'codt',
-    'Region':'reg',
-    'Menager':'mens'}
+
+# --- Генерация имен полей аналитики ---
+_SpravType2AnaliticFieldName = {'Product': 'codt',
+                                'Region': 'reg',
+                                'Menager': 'mens'}
+
+
 def genFieldName(Type_):
     """
     Сгенерировать имя поля аналитики по видам продукции.
     """
-    return _SpravType2AnaliticFieldName.setdefault(Type_,'dtoper')
+    return _SpravType2AnaliticFieldName.setdefault(Type_, 'dtoper')
     
-#--- Создание монитора в системе ---
-_SpravType2MonitorCode={'Product':'ПР',
-    'Region':'РГ',
-    'Menager':'МН'}
-def genMonitorCode(Type_,Cod_):
+
+# --- Создание монитора в системе ---
+_SpravType2MonitorCode = {'Product': 'ПР',
+                          'Region': 'РГ',
+                          'Menager': 'МН'}
+
+
+def genMonitorCode(Type_, Cod_):
     """
     Генерация кода монитора.
     """
-    cod_dir=_SpravType2MonitorCode.setdefault(Type_,'ПЧ')
-    _NsiStd=ic_sqlobjtab.icSQLObjTabClass(NSI.spravfunc.getNsiStdClassName())
+    cod_dir = _SpravType2MonitorCode.setdefault(Type_,'ПЧ')
+    _NsiStd = ic_sqlobjtab.icSQLObjTabClass(NSI.spravfunc.getNsiStdClassName())
     max_cod=_NsiStd.execute("""SELECT MAX(SUBSTR(cod,3,LENGTH(cod)-2)) 
         FROM nsi_std 
         WHERE type='Monitors' AND SUBSTR(cod,1,2) LIKE('%s')"""%(cod_dir))[0][0]
