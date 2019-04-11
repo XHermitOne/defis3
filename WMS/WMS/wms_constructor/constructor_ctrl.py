@@ -155,7 +155,7 @@ class icWMSTruckConstructorCtrl(wx.Panel):
         панели вида загрузки тягача.
         """
         if event:
-            print('wx.EVT_COLLAPSIBLEPANE_CHANGED: %s' % event.Collapsed)
+            # print('wx.EVT_COLLAPSIBLEPANE_CHANGED: %s' % event.Collapsed)
 
         # redo the layout
         self.Layout()
@@ -172,7 +172,7 @@ class icWMSTruckConstructorCtrl(wx.Panel):
         панели конструктора ярусов.
         """
         if event:
-            print('wx.EVT_COLLAPSIBLEPANE_CHANGED: %s' % event.Collapsed)
+            # print('wx.EVT_COLLAPSIBLEPANE_CHANGED: %s' % event.Collapsed)
 
         # redo the layout
         self.Layout()

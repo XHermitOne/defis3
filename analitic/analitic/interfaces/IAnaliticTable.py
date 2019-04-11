@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import copy
 import wx
+
 import ic.components.icResourceParser as prs
 import ic.utils.util as util
 import ic.db.icdataset as icdataset
-import copy
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK

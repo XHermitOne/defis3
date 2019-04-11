@@ -418,7 +418,7 @@ def test():
     log.init(config)
 
     txt = gen_layout_scheme_txt(DEFAULT_WINTER_1_AXLE_POS)
-    print(txt)
+    # print(txt)
 
 if __name__ == '__main__':
     test()

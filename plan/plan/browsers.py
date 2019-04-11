@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-#  -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+
 """
 Модуль прикладной системы.
-Автор(ы):
 """
-
-# Версия
-__version__ = (0, 0, 0, 1)
 
 import ic.components.user.objects.icmetatreebrows as brows
 import plan.interfaces.IManagePlans as iplan
 import plan.interfaces.IODBSprav as IODBSprav
 import ic.storage.objstore as objstore
 import ic.utils.ic_cache as ic_cache
-#--- Переменные
 
-#--- Функции
+# Версия
+__version__ = (0, 1, 1, 1)
+
+
+# --- Функции
 def getCanContainLst(modifId, metatype, bBuff=True, plan_sys = None):
     """
     Возвращает список типов компонентов, которые могут содержатся в
@@ -31,7 +31,7 @@ def getCanContainLst(modifId, metatype, bBuff=True, plan_sys = None):
     """
     #   Список, описывающий структуру модификации
     #   Пример: ['p1', 'p2', 'p3']
-    #print '<!>.....<!>', modifId, metatype
+    # print '<!>.....<!>', modifId, metatype
     lst = None
     spr = IODBSprav.getModifLst(bBuff, plan_sys=plan_sys)
     for r in spr:
@@ -48,6 +48,7 @@ def getCanContainLst(modifId, metatype, bBuff=True, plan_sys = None):
     
     return []
 
+
 def getModifIdLst(plan_sys):
     """
     Возвращает список идентификаторов модификаций планов.
@@ -58,7 +59,8 @@ def getModifIdLst(plan_sys):
     else:
         return []
 
-#--- Классы
+
+# --- Классы
 class icPlanMenager_old:
     """
     Класс менеджера планов.
@@ -93,7 +95,7 @@ class icPlanMenager_old:
         определенном компоненте - разрешающее правило. Список генерится по
         объекту описания модификации плана.
         """
-        print '================ getCanContainLst=', modifId, self.plan_sys
+        print('================ getCanContainLst=', modifId, self.plan_sys)
     
         return getCanContainLst(modifId, metatype, bBuff=True, plan_sys=self.plan_sys)
         
@@ -103,9 +105,9 @@ class icPlanMenager_old:
         """
         lst = IODBSprav.getModifLst(plan_sys=self.plan_sys)
         if not lst:
-            lst = [['m1','Модификация 1','m1','[]']]
+            lst = [['m1', 'Модификация 1', 'm1', '[]']]
             
-        #self._modificationLst = lst
+        # self._modificationLst = lst
         return dict([x[:2] for x in lst])
         
     def getModifLst(self, modifId):
@@ -142,6 +144,7 @@ class icPlanMenager_old:
             self._modifPlanId = id
             return metatree
 
+
 class icPlanMenager:
     """
     Класс менеджера планов.
@@ -157,7 +160,7 @@ class icPlanMenager:
         """
         self.plan_sys = plan_sys
         self.plan_mod = plan_mod
-        print '--------- plan_mod in icPlanMenager=', plan_mod
+        print('--------- plan_mod in icPlanMenager=', plan_mod)
         self.metaclass = metaclass
         self.metaObj = metaclass.getObject()
         self._modifPlanId = modif_id
@@ -181,9 +184,8 @@ class icPlanMenager:
         """
         if self.plan_mod:
             lst = self.plan_mod.getCanContainLst(modifId, metatype)
-            print '=====>>> getCanContainLst', lst
+            print('=====>>> getCanContainLst', lst)
             return lst
-    
         return []
 
     def getDescrDct(self):
@@ -192,7 +194,6 @@ class icPlanMenager:
         """
         if self.plan_mod:
             return self.plan_mod.getDescrDct()
-            
         return {}
             
     def getModifPlanId(self):
@@ -225,14 +226,15 @@ class icPlanMenager:
             self._modifPlanId = id
             return metatree
 
+
 class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
     """
     Базовый класс для браузеров подсистем планирования и мониторинга.
     Браузер с возможностью переключения между несколькими базами.
     """
     def __init__(self, parent, metatype=None, bPanelBuff=True, metaclass=None,
-                    treeRootTitle=None, treeLabels=None, plan_sys=None,
-                    default_id=None, **par):
+                 treeRootTitle=None, treeLabels=None, plan_sys=None,
+                 default_id=None, **par):
         """
         Конструктор.
         
@@ -255,7 +257,7 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
         icPlanMenager.__init__(self, metaclass, plan_sys=plan_sys, **par)
         
         brows.MetaTreeBrows.__init__(self, parent, metatype, bPanelBuff, metaObj,
-                                    treeRootTitle, treeLabels, **par)
+                                     treeRootTitle, treeLabels, **par)
 
         self.default_id = default_id
         
@@ -273,11 +275,11 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
             #   другую модификацию плана (другой источник, другая структура)
             #   Перегружаем методерево
             if self.setMetaplanById(id):
-                #tree = self.GetNameObj('plansTreeCtrl')
-                print '..... ReLoadRoot id=', id
+                # tree = self.GetNameObj('plansTreeCtrl')
+                print('..... ReLoadRoot id=', id)
                 tree.ReLoadRoot()
                 
-                #print '...... re variantChoice onChoice storage_name=', storage_name
+                # print '...... re variantChoice onChoice storage_name=', storage_name
         
     def intiVariantChoice(self):
         """
@@ -307,7 +309,6 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
         self.intiVariantChoice()
         ctrl = self.GetNameObj('variantChoice')
         
-        
         tree = self.GetNameObj('plansTreeCtrl')
         if tree and self.default_id:
             self.setMetaplanById(self.default_id)
@@ -316,9 +317,9 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
         else:
             ctrl.SetSelection(0)
 
-        #self.choiceFuncVariantChoice(evt)
+        # self.choiceFuncVariantChoice(evt)
 
-        #print '...... re variantChoice onInnit'
+        # print '...... re variantChoice onInnit'
         return None
         
     def RefreshTree(self):
@@ -334,12 +335,13 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
         ctrl = self.GetNameObj('variantChoice')
         ctrl.SetValue(modif_id)
 
+
 class icMonitoringBrows(icMultiSrcBrows):
     """
     Браузер для подсистемы мониторинга.
     """
     def __init__(self, parent, metatype=None, bPanelBuff=True, metaclass=None,
-                    treeRootTitle=None, treeLabels=None, plan_sys=None, **par):
+                 treeRootTitle=None, treeLabels=None, plan_sys=None, **par):
         """
         Конструктор.
         
@@ -356,7 +358,6 @@ class icMonitoringBrows(icMultiSrcBrows):
         @param plan_sys: Имя системы планирования, определяет имя хранилища, где
             будут храниться описания модификаций планов.
         """
-        
         #   Функции пересчета модификаций планов по базовому плану
         #   1. Пересчет модификации плана за один месяц
         self.recountFunc = None
@@ -366,10 +367,11 @@ class icMonitoringBrows(icMultiSrcBrows):
         self.recountAllModifPlanMnth = None
 
         icMultiSrcBrows.__init__(self, parent, metatype, bPanelBuff, metaclass,
-                    treeRootTitle, treeLabels, plan_sys=plan_sys, **par)
+                                 treeRootTitle, treeLabels, plan_sys=plan_sys, **par)
 
         self.GetNameObj('manageBtn').Show(False)
-                
+
+
 class icPlanBrows(icMultiSrcBrows):
     """
     Браузер для подсистемы планирования.
@@ -392,12 +394,11 @@ class icPlanBrows(icMultiSrcBrows):
         @param plan_sys: Имя системы планирования, определяет имя хранилища, где
             будут храниться описания модификаций планов.
         """
-        
         #   Функция пересчета модифицированного плана по базовому плану
         self.recountFunc = None
 
         icMultiSrcBrows.__init__(self, parent, metatype, bPanelBuff, metaclass,
-                    treeRootTitle, treeLabels, plan_sys=plan_sys, **par)
+                                 treeRootTitle, treeLabels, plan_sys=plan_sys, **par)
         
         self.GetNameObj('manageBtn').Show(False)
         
@@ -406,25 +407,25 @@ class icPlanBrows(icMultiSrcBrows):
         Функция обрабатывает событие <mouseClick>.
         """
         ctrl = self.GetNameObj('variantChoice')
-        print '............. self.metaclass:', self.metaclass
+        print('............. self.metaclass:', self.metaclass)
         try:
             plan_struct_lst = self.metaclass.plan_struct_lst
             
         except:
-            print 'WARRNING: Attribute Error in <self.metaclass.plan_struct_lst>'
+            print('WARRNING: Attribute Error in <self.metaclass.plan_struct_lst>')
             plan_struct_lst = None
             
         cls = iplan.IManagePlans(ctrl, metaplan_lst=plan_struct_lst, 
                                 browser=self, plan_sys = self.plan_sys)
         dlg = cls.GetNameObj('ManageDialog')
-        #print '.... dlg', dlg
+        # print '.... dlg', dlg
         
-        #cls.setRecountFunc(self._recountFunc)
+        # cls.setRecountFunc(self._recountFunc)
         
         old = ctrl.GetValue()
         dlg.ShowModal()
         self.intiVariantChoice()
-        #print '.... Can Contain List [p2,"mYear"] :', self.getCanContainLst('p2', 'mYear')
+        # print '.... Can Contain List [p2,"mYear"] :', self.getCanContainLst('p2', 'mYear')
         if old and old in ctrl.getDictRepl().keys():
             ctrl.SetValue(old)
         else:

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import copy
 import wx
+
 import ic.components.icResourceParser as prs
 import ic.utils.util as util
-import copy
 import ic.components.user.ictabletreelist as ictabletreelist
 
 ### !!!! Данный блок изменять не рекомендуется !!!!

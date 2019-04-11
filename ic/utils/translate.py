@@ -330,12 +330,12 @@ def test_InitValidValue():
     """
     flt = {'f0': 'f2', 'f1': ('ab', 'cde', 2, '123'),
            'f3_0': ['12', '34'], 'f3': [2, 'ASD', '##']}
-    print(u'--------------- Проверяем работоспособность функции <InitValidValue> -------------')
-    print('fld=%s, value=%s -> %s ' % ('f0', '', InitValidValue(flt, 'f0', '')))
-    print('fld=%s, value=%s -> %s ' % ('f0', '1234', InitValidValue(flt, 'f0', '1234')))
-    print('fld=%s, value=%s -> %s ' % ('f1', '', InitValidValue(flt, 'f1', '')))
-    print('fld=%s, value=%s -> %s ' % ('f3', '', InitValidValue(flt, 'f3', '')))
-    print('fld=%s, value=%s -> %s ' % ('f1', '12345678977777', InitValidValue(flt, 'f1', '12345678977777')))
+    # print(u'--------------- Проверяем работоспособность функции <InitValidValue> -------------')
+    # print('fld=%s, value=%s -> %s ' % ('f0', '', InitValidValue(flt, 'f0', '')))
+    # print('fld=%s, value=%s -> %s ' % ('f0', '1234', InitValidValue(flt, 'f0', '1234')))
+    # print('fld=%s, value=%s -> %s ' % ('f1', '', InitValidValue(flt, 'f1', '')))
+    # print('fld=%s, value=%s -> %s ' % ('f3', '', InitValidValue(flt, 'f3', '')))
+    # print('fld=%s, value=%s -> %s ' % ('f1', '12345678977777', InitValidValue(flt, 'f1', '12345678977777')))
 
 
 def test():
@@ -345,7 +345,7 @@ def test():
     flt = {'f0': 'f2', 'f1': ('ab', 'cde', 2, '123'),
            'f3_0': ['12', '34'], 'f3': [2, 'ASD', '##']}
     s = dictFilterToSQL(flt, 't1')
-    print('SQL:', s)
+    # print('SQL:', s)
 
 
 if __name__ == '__main__':

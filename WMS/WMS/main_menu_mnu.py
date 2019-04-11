@@ -28,7 +28,7 @@ class icMainMenuBarManager(icmanagerinterface.icWidgetManager):
     def onTestMenuItemSelected(self, event):
         """
         """
-        print('<Test constructor>')
+        # print('<Test constructor>')
         truck_constructor_panel.test_defis()        
         
     ###END EVENT BLOCK

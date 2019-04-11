@@ -734,7 +734,7 @@ def test(par=0):
     app = TestApp(par)
     frame = wx.Frame(None, -1, 'icDatasetNavigator Test')
     toolBar = icDatasetNavigator(frame, -1,
-                                 {'keyDown': 'print(\'keyDown in navigator\')'})
+                                 {'keyDown': '# print(\'keyDown in navigator\')'})
     frame.SetToolBar(toolBar)
     frame.Show(True)
     app.MainLoop()

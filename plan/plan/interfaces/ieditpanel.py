@@ -4,18 +4,17 @@
 """
 Модуль прикладной системы.
 Базовый интерфейс редактируемой панели плана.
-Автор(ы):
 """
+
 import ic.interfaces.icobjectinterface as icobjectinterface
-#from ic.dlg import progress
+# from ic.dlg import progress
 import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
 
 # Версия
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
-#--- Функции
-#--- Классы
 COL_GRID_KEY = 8
+
 
 def CountParPlan(metaObj):
     """
@@ -24,7 +23,7 @@ def CountParPlan(metaObj):
     @param metaObj: Указатель на метаобъект классификатора мониторов.
     """
     if not metaObj.isRoot():
-        #print '>>> Enter To CountParPlan', metaObj.value.metatype, metaObj.value.summa
+        # print '>>> Enter To CountParPlan', metaObj.value.metatype, metaObj.value.summa
         S = metaObj.value.summa
         Sk = metaObj.value.kol
         
@@ -32,14 +31,15 @@ def CountParPlan(metaObj):
     
     for obj in metaObj.values():
         if not metaObj.isRoot():
-            #print '   ::: name, typ:', obj.value.name, obj.value.summa, S, L
-            if S <> 0:
+            # print '   ::: name, typ:', obj.value.name, obj.value.summa, S, L
+            if S != 0:
                 obj.value.w = L*obj.value.summa/S
                 
-            if Sk <> 0:
+            if Sk != 0:
                 obj.value.w_kol = L*obj.value.kol/Sk
                 
         CountParPlan(obj)
+
 
 def CountWeightBySum(metaObj):
     """
@@ -49,10 +49,10 @@ def CountWeightBySum(metaObj):
     
     if not parentObj.isRoot():
         #   Вычисляем суммы
-        S=0
-        Sw=0
-        Sk=0
-        Swk=0
+        S = 0
+        Sw = 0
+        Sk = 0
+        Swk = 0
         lst = parentObj.values()
             
         for el in lst:
@@ -71,12 +71,12 @@ def CountWeightBySum(metaObj):
         Sp = Sw - metaObj.value.w
         Spk = Swk - metaObj.value.w_kol
         
-        if S <> 0:
+        if S != 0:
             alph = metaObj.value.summa/S
         else:
             alph = 0
             
-        if Sk <> 0:
+        if Sk != 0:
             alph_k = metaObj.value.kol/Sk
         else:
             alph_k = 0
@@ -90,7 +90,8 @@ def CountWeightBySum(metaObj):
             metaObj.value.w_kol = alph_k*Spk/(1-alph_k)
         else:
             metaObj.value.w_kol = 1
-    
+
+
 def recount_prnt(metaObj, bIndicator=True, bSave=True):
     """
     Пересчитывает суммы, весовые коэфициенты и количественные параметры
@@ -100,8 +101,8 @@ def recount_prnt(metaObj, bIndicator=True, bSave=True):
     
     if not parentObj.isRoot():
         #   Вычисляем суммы
-        S=0
-        Sk=0
+        S = 0
+        Sk = 0
         lst = parentObj.values()
             
         for el in lst:
@@ -109,14 +110,14 @@ def recount_prnt(metaObj, bIndicator=True, bSave=True):
             Sk += el.value.kol
         
         #   Пересчитываем весовой коэфициент w
-        if parentObj.value.w<>0 and parentObj.value.summa<>0:
+        if parentObj.value.w != 0 and parentObj.value.summa != 0:
             k = parentObj.value.summa/parentObj.value.w
             parentObj.value.w = S/k
         
         parentObj.value.summa = S
 
         #   Пересчитываем весовой коэфициент w_kol
-        if parentObj.value.w_kol<>0 and parentObj.value.kol<>0:
+        if parentObj.value.w_kol != 0 and parentObj.value.kol != 0:
             k = parentObj.value.kol/parentObj.value.w_kol
             parentObj.value.w_kol = Sk/k
         
@@ -129,6 +130,7 @@ def recount_prnt(metaObj, bIndicator=True, bSave=True):
     elif bSave:
         metaObj.SaveAllChildren()
 
+
 def recount_prnt_sum(metaObj, bIndicator=True, bSave=True):
     """
     Пересчитывает суммы родительских планов.
@@ -137,14 +139,14 @@ def recount_prnt_sum(metaObj, bIndicator=True, bSave=True):
     
     if not parentObj.isRoot():
         #   Вычисляем суммы
-        S=0
+        S = 0
         lst = parentObj.values()
             
         for el in lst:
             S += el.value.summa
         
         #   Пересчитываем весовой коэфициент w
-        if parentObj.value.w<>0 and parentObj.value.summa<>0:
+        if parentObj.value.w != 0 and parentObj.value.summa != 0:
             k = parentObj.value.summa/parentObj.value.w
             parentObj.value.w = S/k
         
@@ -157,6 +159,7 @@ def recount_prnt_sum(metaObj, bIndicator=True, bSave=True):
     elif bSave:
         metaObj.SaveAllChildren()
 
+
 def recount_prnt_kol(metaObj, bIndicator=True, bSave=True):
     """
     Пересчитывает суммы родительских планов в натуральных показателях.
@@ -164,14 +167,14 @@ def recount_prnt_kol(metaObj, bIndicator=True, bSave=True):
     parentObj = metaObj._Parent
     if not parentObj.isRoot():
         #   Вычисляем суммы
-        S=0
+        S = 0
         lst = parentObj.values()
             
         for el in lst:
             S += el.value.kol
         
         #   Пересчитываем весовой коэфициент w
-        if parentObj.value.w_kol<>0 and parentObj.value.kol<>0:
+        if parentObj.value.w_kol != 0 and parentObj.value.kol != 0:
             k = parentObj.value.kol/parentObj.value.w_kol
             parentObj.value.w_kol = S/k
         
@@ -183,6 +186,7 @@ def recount_prnt_kol(metaObj, bIndicator=True, bSave=True):
     #   У корневого элемента вызываем функцию синхронизации
     elif bSave:
         metaObj.SaveAllChildren()
+
 
 def recount_child_sum(metaObj, bIndicator=True):
     """
@@ -196,12 +200,13 @@ def recount_child_sum(metaObj, bIndicator=True):
         sw = reduce(lambda x,y: x+y, map(lambda x: x.value.w, lst))
             
         #   Вычисляем суммы
-        if sw <> 0:
+        if sw != 0:
             for i, el in enumerate(lst):
                 el.value.summa = el.value.w*S/sw
                 
                 #   Рекурсивно вычисляем дочерние элементы
                 recount_child_sum(el, False)
+
 
 def recount_child_kol(metaObj, bIndicator=True):
     """
@@ -215,14 +220,15 @@ def recount_child_kol(metaObj, bIndicator=True):
         sw = reduce(lambda x,y: x+y, map(lambda x: x.value.w_kol, lst))
             
         #   Вычисляем суммы
-        if sw <> 0:
+        if sw != 0:
             for i, el in enumerate(lst):
                 el.value.kol = el.value.w_kol*S/sw
                 
                 #   Рекурсивно вычисляем дочерние элементы
                 recount_child_kol(el, False)
 
-#--- Виды пересчетов
+
+# --- Виды пересчетов
 # После любых изменений
 id_recount_evt_default = 0
 # После изменения суммы или количества
@@ -232,13 +238,13 @@ id_recount_evt_changed_w = 2
 # Пересчет по требованию
 id_recount_evt_button = 3
 
-id_recount_evt_dct = {
-    id_recount_evt_default:'После любых изменений',
-    id_recount_evt_changed_summa:'После изменения суммы или количества',
-    id_recount_evt_changed_w:'После изменения коэфициентов',
-    id_recount_evt_button:'Пересчет по требованию (соотв. кнопка)'}
+id_recount_evt_dct = {id_recount_evt_default: u'После любых изменений',
+                      id_recount_evt_changed_summa: u'После изменения суммы или количества',
+                      id_recount_evt_changed_w: u'После изменения коэфициентов',
+                      id_recount_evt_button: u'Пересчет по требованию (соотв. кнопка)',
+                      }
 
-#--- Виды нормировок коэфициентов
+# --- Виды нормировок коэфициентов
 # Без нормировки
 id_norma_default = 0
 # В процентах
@@ -250,12 +256,13 @@ id_norma_max = 3
 # По минимуму - минимум 1
 id_norma_min = 4
 
-id_norma_dct = {
-    id_norma_default:'Без нормировки',
-    id_norma_procent:'В процентах',
-    id_norma1:'Нормировка на 1',
-    id_norma_max:'Нормировка по максимуму',
-    id_norma_min:'Нормировка по минимуму'}
+id_norma_dct = {id_norma_default: u'Без нормировки',
+                id_norma_procent: u'В процентах',
+                id_norma1: u'Нормировка на 1',
+                id_norma_max: u'Нормировка по максимуму',
+                id_norma_min: u'Нормировка по минимуму',
+                }
+
 
 class IEdtPanel(icobjectinterface.icObjectInterface):
     
@@ -416,7 +423,7 @@ class IEdtPanel(icobjectinterface.icObjectInterface):
         for r in data:
             name = r[0]
             
-            if self.metaObj.has_key(r[COL_GRID_KEY]):
+            if r[COL_GRID_KEY] in self.metaObj:
                 mm = self.metaObj[r[COL_GRID_KEY]]
                 old_descr = mm.value.description
                 
@@ -425,32 +432,32 @@ class IEdtPanel(icobjectinterface.icObjectInterface):
                 mm.value.summa = float(r[3])
                 mm.value.w_kol = float(r[4])
                 mm.value.kol = float(r[5])
-                print '---------------> mm.value.ei, r[6]=', mm.value.ei, r[6]
+                # print('---------------> mm.value.ei, r[6]=', mm.value.ei, r[6])
                 mm.value.ei = r[6]
                 mm.value.marja = float(r[7])
-                #mm.Save()
+                # mm.Save()
                 
-                if not bRefresh :
+                if not bRefresh:
                     bRefresh = mm.isValueChanged()
-                    print '>>> mm.isValueChanged()=', bRefresh
+                    # print('>>> mm.isValueChanged()=', bRefresh)
                     
-                    if self.itemTree and self.tree and mm.value.description <> old_descr:
+                    if self.itemTree and self.tree and mm.value.description != old_descr:
                         item = self.tree.GetMetaObjItem(mm, self.itemTree)
-                        print '>>> item=', item, mm.value.description
+                        # print('>>> item=', item, mm.value.description)
                         if item:
-                            print ' Change text:', mm.value.description
+                            # print(' Change text:', mm.value.description)
                             self.tree.SetItemText(item, mm.value.description, 0)
                     
-                if name <> r[COL_GRID_KEY]:
+                if name != r[COL_GRID_KEY]:
                     mm.rename(name)
                     bRefresh = True
         
         if bRefresh:
-            print '>>> ValChanged SaveAllChildren()-before'
+            # print('>>> ValChanged SaveAllChildren()-before')
             self.metaObj.SaveAllChildren()
-            print '>>> ValChanged SaveAllChildren()'
+            # print('>>> ValChanged SaveAllChildren()')
         elif self.metaObj.isValueChanged():
-            print '>>> ValChanged Save'
+            # print('>>> ValChanged Save')
             self.metaObj.Save()
 
         return bRefresh

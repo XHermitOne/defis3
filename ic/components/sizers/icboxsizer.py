@@ -320,8 +320,8 @@ def test(par=0):
     sz.Add(btn2)
     win.SetSizer(sz)
     frame.Show(True)
-    print(u'pos=%s, size=%s' % (sz.GetPosition(), sz.GetSize()))
-    print(u'>> pos=%s, size=%s' % (btn1.GetPosition(), btn1.GetSize()))
+    # print(u'pos=%s, size=%s' % (sz.GetPosition(), sz.GetSize()))
+    # print(u'>> pos=%s, size=%s' % (btn1.GetPosition(), btn1.GetSize()))
     app.MainLoop()
 
 

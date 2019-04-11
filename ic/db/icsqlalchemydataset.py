@@ -2470,4 +2470,4 @@ def getDataset(className, subsys=None, logType=0, evalSpace=None):
 if __name__ == '__main__':
 
     dataset = getDataset('FACTURE_ACC', 'C:/pydb/resource.tab')
-    print(str(dataset._dbColumnDict))
+    # print(str(dataset._dbColumnDict))

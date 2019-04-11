@@ -29,9 +29,9 @@ try:
 except:
     print('Import Error plan.calc_plan')
     
-import ic.log.ic_log as ic_log
-import analitic.indicators.icarrowindicator as icarrowindicator
-import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
+from ic.log import log
+from analitic.usercomponents import icarrowindicator
+from ic.dlg import ic_proccess_dlg
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK

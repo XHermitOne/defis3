@@ -29,15 +29,16 @@ import ic.imglib.common as common
 import ic.PropertyEditor.icDefInf as icDefInf
 import ic.components.icfont as icfont
 import ic.components.custom.icheadcell as icheadcell
-import analitic.indicators.icarrowindproperty as icarrowindproperty
-import analitic.indicators.icarrowindicatortrend as icarrowindicatortrend
-import analitic.indicators.icArrowIndDef as indDef
 import ic.bitmap.icbitmap as icbitmap
 import ic.utils.graphicUtils as graphicUtils
 
 from ic.db import icsqlalchemy
 import time
 import ic.dlg.msgbox as msgbox
+
+import analitic.indicators.icarrowindproperty as icarrowindproperty
+import analitic.indicators.icarrowindicatortrend as icarrowindicatortrend
+import analitic.indicators.icArrowIndDef as indDef
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType

@@ -55,7 +55,7 @@ class IManagePlans(icobjectinterface.icObjectInterface):
         #   Вызываем конструктор базового класса
         icobjectinterface.icObjectInterface.__init__(self, parent, resource)
             
-        print ' ............ metaplan list:', metaplan_lst
+        # print ' ............ metaplan list:', metaplan_lst
         if self.metaplan_lst:
             
             ctrl = self.GetNameObj('basePlanStruct')
@@ -74,16 +74,16 @@ class IManagePlans(icobjectinterface.icObjectInterface):
         """
         cls = IODBSprav.IODBSprav(None)
         sprav = cls.getObject()
-        print '****** self.plan_sys=', self.plan_sys
+        # print '****** self.plan_sys=', self.plan_sys
         if sprav.has_key(self.plan_sys):
             self.metaObj = sprav[self.plan_sys]
-            print '>>>> ..... Find plan modifications File'
+            # print '>>>> ..... Find plan modifications File'
         else:
             self.metaObj = sprav.Add(self.plan_sys, 'planModif')
-            print '>>>> ..... Create File for plan modifications'
+            # print '>>>> ..... Create File for plan modifications'
             self.metaObj.value.modifications = [['', '','','']]
             
-        print '-------- sprav:', self.metaObj.value.modifications
+        # print '-------- sprav:', self.metaObj.value.modifications
         self.LoadData(self.metaObj.value.modifications)
             
         return None
@@ -104,7 +104,7 @@ class IManagePlans(icobjectinterface.icObjectInterface):
         """
         lst = [r[0] for r in grid.dataset.data ]
         
-        if value in lst and row <> lst.index(value):
+        if value in lst and row != lst.index(value):
             msgbox.MsgBox(grid, 'Идентификатор плана %s уже существует' % value)
             return coderror.IC_CTRL_FAILED_IGNORE
             
@@ -118,11 +118,11 @@ class IManagePlans(icobjectinterface.icObjectInterface):
         try:
             lst = eval(value)
             
-            if len(lst) < 3 or lst[1] <> 'mYear' or lst[2] <> 'mMonth':
+            if len(lst) < 3 or lst[1] != 'mYear' or lst[2] != 'mMonth':
                 msgbox.MsgBox(grid, "Ошибка в описании структуры плана; 2-ым и 3-им элементом должны быть 'mYear' и 'mMonth'")
                 return coderror.IC_CTRL_FAILED_IGNORE
                 
-            if self.metaplan_lst <> None:
+            if self.metaplan_lst != None:
                 for x in lst:
                     if not x in self.metaplan_lst:
                         msgbox.MsgBox(grid, 'Тип узла <%s>. не определен в базовом плане' % x)
@@ -225,7 +225,7 @@ class IManagePlans(icobjectinterface.icObjectInterface):
         if self.metaObj:
             self.metaObj.value.modifications = self.GetNameObj('modPlanGrid').dataset.data
 
-            print '------ SaveAllChildren()', self.metaObj.value.modifications
+            # print '------ SaveAllChildren()', self.metaObj.value.modifications
             #self.metaObj.setValueChanged(True)
             self.metaObj.SaveAllChildren()
             self.metaObj.Close()
