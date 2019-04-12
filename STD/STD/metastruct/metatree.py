@@ -6,17 +6,15 @@
 Класс пользовательского визуального компонента.
 """
 
-import wx
-
-from ic.components import icwidget
-from ic.utils import util
-import ic.components.icResourceParser as prs
-from ic.PropertyEditor import icDefInf
 from ic.log import log
 
 import ic.utils.resource as resource
-from . import metaitem
 import ic.storage.objstore as objstore
+
+try:
+    from . import metaitem
+except ImportError:
+    import metaitem
 
 # --- Спецификация ---
 SPC_IC_METATREE = {'source': None,  # Хранилище дерева метакомпонентов

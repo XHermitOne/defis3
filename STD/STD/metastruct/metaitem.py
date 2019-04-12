@@ -20,8 +20,15 @@ from ic.storage import storesrc
 from ic.utils import clipboard
 from ic.log import log
 
-from . import metaattr
-from . import metaconst
+try:
+    from . import metaattr
+except ImportError:
+    import metaattr
+
+try:
+    from . import metaconst
+except ImportError:
+    import metaconst
 
 # --- Спецификация ---
 FILE_NODE_STORAGE_TYPE = 'FileNodeStorage'

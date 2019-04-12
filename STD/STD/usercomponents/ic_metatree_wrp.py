@@ -29,17 +29,12 @@ from ic.PropertyEditor import icDefInf
 from ic.log import log
 
 import ic.utils.resource as resource
-from STD.STD.metastruct import metaitem
 import ic.storage.objstore as objstore
 
-# --- Спецификация ---
-SPC_IC_METATREE = {'source': None,  # Хранилище дерева метакомпонентов
-                   '__parent__': metaitem.SPC_IC_METAITEM,
-                   '__attr_hlp__': {'source': u'Хранилище дерева метакомпонентов',
-                                    },
-                   }
+from STD.metastruct import metaitem
+from STD.metastruct import metatree
 
-# --- Описание компонента для редактора ресурса ---
+# --- Спецификация ---
 #   Тип компонента
 ic_class_type = icDefInf._icServiceType
 
@@ -69,7 +64,7 @@ ic_class_spc = {'type': 'MetaTree',
                                     icDefInf.EDT_TEXTDICT: ['spc', 'const_spc'],
                                     icDefInf.EDT_CHOICE: ['storage_type'],
                                    }, 
-                '__parent__': SPC_IC_METATREE,
+                '__parent__': metatree.SPC_IC_METATREE,
                 }
 
 #   Имя иконки класса, которые располагаются в директории 

@@ -25,7 +25,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-from STD.metastruct import metaatttr
+from STD.metastruct import metaattr
 
 # --- Спецификация ---
 #   Тип компонента
@@ -49,7 +49,7 @@ ic_class_spc = {'type': 'MetaAttr',
                 '__styles__': ic_class_styles,
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description'],
                                    },
-                '__parent__': metaatttr.SPC_IC_METAATTR,
+                '__parent__': metaattr.SPC_IC_METAATTR,
                 }
 
 #   Имя иконки класса, которые располагаются в директории 
@@ -72,7 +72,7 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-class icMetaAttr(icwidget.icSimple, metaatttr.icMetaAttrPrototype):
+class icMetaAttr(icwidget.icSimple, metaattr.icMetaAttrPrototype):
     """
     Атрибут метакомпонента.
     """
@@ -100,7 +100,7 @@ class icMetaAttr(icwidget.icSimple, metaatttr.icMetaAttrPrototype):
         @param progressDlg: Указатель на идикатор создания формы.
         """
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        metaatttr.icMetaAttrPrototype.__init__(self, component)
+        metaattr.icMetaAttrPrototype.__init__(self, component)
 
         #   Создаем дочерние компоненты
         if 'child' in component:
