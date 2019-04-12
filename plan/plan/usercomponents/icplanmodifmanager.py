@@ -36,7 +36,7 @@ from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEd
 ic_class_type = icDefInf._icUserType
 
 #   Имя класса
-ic_class_name = 'PlanModifManager'
+ic_class_name = 'icPlanModifManager'
 
 #   Описание стилей компонента
 ic_class_styles = {'DEFAULT': 0}
@@ -57,8 +57,8 @@ ic_class_spc = {'type': 'ModPlanManager',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('box_closed.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('box_closed.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('chart_organisation.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('chart_organisation.png')
 
 #   Путь до файла документации
 ic_class_doc = 'doc/public/icplanmodifmanager.html'
@@ -139,7 +139,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     return None
 
 
-class PlanModifManager(icwidget.icSimple):
+class icPlanModifManager(icwidget.icSimple):
     """
     Описание пользовательского компонента.
 

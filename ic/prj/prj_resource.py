@@ -42,7 +42,7 @@ from . import menuImpNode
 
 from . import new_metadata_resource_dlg
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 3, 1)
 
 _ = wx.GetTranslation
 
@@ -198,7 +198,27 @@ class PrjResource(prj_node.PrjNode):
         Имя ресурса.
         """
         return self.name.strip()
-        
+
+    def _setTemplateSpc(self, spc, new_name):
+        """
+        Вспомогательная функция установки шаблона заполнения ресурса по спецификации.
+        @param spc: Спецификция компонента.
+        @param new_name: Новое имя ресурса.
+        @return: True/False.
+        """
+        if spc:
+            self.template = copy.deepcopy(spc)
+            if not new_name:
+                new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
+                                                 Text_=u'Введите наименование ресурса', Default_=self.name)
+
+            # У ресурса такое имя как и у ресурса
+            self.template['name'] = new_name
+            return True
+        else:
+            self.template = None
+        return False
+
     def create(self, new_name=None):
         """
         Функция создания ресурса.
@@ -210,6 +230,9 @@ class PrjResource(prj_node.PrjNode):
                                              Text_=u'Введите наименование ресурса', Default_=self.name)
         if new_name:
             self.name = new_name
+
+        # Изменили имя - обновили шаблон ресурса
+        self._setTemplateSpc(self.template, new_name)
 
         tree_prj = self.getRoot().getParent()
         res_editor = tree_prj.res_editor
@@ -230,7 +253,7 @@ class PrjResource(prj_node.PrjNode):
             self.getRoot().prj_res_manager.addRes(res_name, res_ext, self._Parent.name)
             self.getRoot().save()
             return res_editor.CreateResource(res_name, res_path, res_file, res_ext,
-                                             copy.deepcopy(self.template), bRecreate=True)
+                                             self.template, bRecreate=True)
         return False
         
     def createResClass(self):
@@ -581,9 +604,14 @@ class PrjDBRes(PrjResource):
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global DBTypeChoice
-        self.template = DBTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                              u'ТИПЫ БД', u'Выберите из списка типов БД:',
-                                                              [txt for txt in DBTypeChoice.keys() if isinstance(txt, str)])]
+        spc = DBTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+                                                    u'ТИПЫ БД', u'Выберите из списка типов БД:',
+                                                    [txt for txt in DBTypeChoice.keys() if isinstance(txt, str)])]
+        if not new_name:
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
+                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+        self._setTemplateSpc(spc, new_name)
+
         # Создать
         return PrjResource.create(self, new_name=new_name)
         
@@ -700,7 +728,7 @@ class PrjObjStorageRes(PrjResource):
         # Тип ресурса 'tab', 'frm' и т.п.
         self.typ = 'odb'
         # Шаблон для заполнения по умолчанию
-        self.template = ic_obj_storage.ic_class_spc
+        self.template = copy.deepcopy(ic_obj_storage.ic_class_spc)
  
 
 # Словарь выбора главных окон
@@ -735,10 +763,15 @@ class PrjWinRes(PrjResource):
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global WinTypeChoice
-        self.template = WinTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                               u'ВИДЫ ГЛАВНОГО ОКНА',
-                                                               u'Выберите из списка типов главного окна:',
-                                                               [txt for txt in WinTypeChoice.keys() if isinstance(txt, str)])]
+        spc = WinTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+                                                     u'ВИДЫ ГЛАВНОГО ОКНА',
+                                                     u'Выберите из списка типов главного окна:',
+                                                     [txt for txt in WinTypeChoice.keys() if isinstance(txt, str)])]
+        if not new_name:
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
+                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+        self._setTemplateSpc(spc, new_name)
+
         # Создать
         return PrjResource.create(self, new_name=new_name)
         
@@ -775,7 +808,7 @@ class PrjMenuRes(PrjResource):
         """
         PrjResource.__init__(self, Parent_)
         self.description = u'Меню'
-        self.name = 'new_menu'
+        self.name = 'new_menubar'
         self.img = imglib.imgEdtMenuBar
         # Тип ресурса 'tab', 'frm' и т.п.
         self.typ = 'mnu'
@@ -789,10 +822,15 @@ class PrjMenuRes(PrjResource):
         """
         # Сначал спросить какую меню будем создавать а затем создать ее
         global MenuTypeChoice
-        self.template = MenuTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                                u'ВИДЫ ГЛАВНОГО МЕНЮ',
-                                                                u'Выберите из списка видов главного меню:',
-                                                                [txt for txt in MenuTypeChoice.keys() if isinstance(txt, str)])]
+        spc = MenuTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+                                                      u'ВИДЫ ГЛАВНОГО МЕНЮ',
+                                                      u'Выберите из списка видов главного меню:',
+                                                      [txt for txt in MenuTypeChoice.keys() if isinstance(txt, str)])]
+        if not new_name:
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
+                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+        self._setTemplateSpc(spc, new_name)
+
         # Создать
         return PrjResource.create(self, new_name=new_name)
         

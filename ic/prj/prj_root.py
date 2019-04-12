@@ -245,7 +245,8 @@ class PrjRoot(ImpNode.PrjImportSys):
         Новый проект.
         """
         tree_prj = self.getParent()
-        dir_prj_file_name = ic_dlg.icDirDlg(tree_prj, _('Create project'))
+        dir_prj_file_name = ic_dlg.icDirDlg(tree_prj, u'Создать проект',
+                                            DefaultPath_=ic_file.getRootDir())
         if dir_prj_file_name:
             prj_name = os.path.basename(dir_prj_file_name)
             new_prj_file_name = os.path.join(dir_prj_file_name, prj_name, prj_name+'.pro')
@@ -402,7 +403,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         """
         tree_prj = self.getParent()
         if PrjFileName_ is None:
-            prj_file = ic_dlg.icFileDlg(tree_prj, _('Open project'),
+            prj_file = ic_dlg.icFileDlg(tree_prj, u'Открыть проект',
                                         _('Project file (*.pro)|*.pro'))
         else:
             prj_file = PrjFileName_

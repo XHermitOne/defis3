@@ -27,12 +27,17 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.PropertyEditor import icDefInf
 from ic.log import log
+from ic.dlg import ic_dlg
+from ic.utils import coderror
 
 import ic.utils.resource as resource
 import ic.storage.objstore as objstore
 
 from STD.metastruct import metaitem
 from STD.metastruct import metatree
+
+# Расширенные редакторы
+from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
 # --- Спецификация ---
 #   Тип компонента
@@ -60,9 +65,10 @@ ic_class_spc = {'type': 'MetaTree',
                               },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', 
                                                             'view_form', 'edit_form', 'print_report'],
-                                    icDefInf.EDT_CHECK_BOX: ['container'],
-                                    icDefInf.EDT_TEXTDICT: ['spc', 'const_spc'],
-                                    icDefInf.EDT_CHOICE: ['storage_type'],
+                                   icDefInf.EDT_CHECK_BOX: ['container'],
+                                   icDefInf.EDT_TEXTDICT: ['spc', 'const_spc'],
+                                   icDefInf.EDT_CHOICE: ['storage_type'],
+                                   icDefInf.EDT_USER_PROPERTY: ['source'],
                                    }, 
                 '__parent__': metatree.SPC_IC_METATREE,
                 }
@@ -87,6 +93,43 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
+# Функции редактирования свойств
+def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
+    """
+    ret = None
+    if attr in ('source',):
+        ret = pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
+
+    if ret is None:
+        return value
+
+    return ret
+
+
+def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция контроля.
+    """
+    if attr in ('source',):
+        ret = str_to_val_user_property(attr, value, propEdt)
+        if ret:
+            parent = propEdt
+            if not ret[0][0] in ('ObjectStorage',):
+                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является объектным хранилищем.', ParentWin_=parent)
+                return coderror.IC_CTRL_FAILED_IGNORE
+            return coderror.IC_CTRL_OK
+
+
+def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция преобразования текста в значение.
+    """
+    if attr in ('source',):
+        return pspEdt.str_to_val_user_property(text, propEdt)
+
+
 # --- Классы ---
 class icMetaTreeEngine(metaitem.icMetaItemEngine):
     """
@@ -100,6 +143,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
         metaitem.icMetaItemEngine.__init__(self, None, Resource_)
         # Определить хранилище данных
         self._object_storage_name = None
+        self._object_storage_psp = None
         self._storage = None
   
     def getStorage(self):
@@ -107,24 +151,43 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
         Определить хранилище данных.
         """
         if self._storage is None:
-            object_storage = self.getICAttr('source')
-            return self.setStorage(object_storage)
+            object_storage_psp = self.getICAttr('source')
+            return self.setStorage(object_storage_psp)
         return self._storage
 
     def setStorage(self, ObjectStorage_):
         """
         Установка хранилища данных.
-        @param ObjectStorage_: Объект хранилища данных. Может передаваться
-            по имени и в виде готового объекта.
+        @param ObjectStorage_: Объект хранилища данных.
+            Может передаваться по имени, паспорту или и
+            в виде готового объекта.
         """
         if isinstance(ObjectStorage_, str):
             return self.setStorageByName(ObjectStorage_)
+        elif self.isPassport(ObjectStorage_):
+            return self.setStorageByPsp(ObjectStorage_)
         else:
             if self._object_storage_name != ObjectStorage_.name:
                 self._storage = ObjectStorage_
                 self._object_storage_name = ObjectStorage_.name
                 # Убить все дочерние объекты
                 self.clearBuffChildren()
+        return self._storage
+
+    def setStorageByPsp(self, ObjectStoragePsp_):
+        """
+        Установка хранилища данных по паспорту.
+        @param ObjectStoragePsp_: Паспорт объекта объектного хранилища данных.
+        """
+        if ObjectStoragePsp_ and self._object_storage_psp != ObjectStoragePsp_:
+            # Нужно создать новое хранилище
+            kernel = self.GetKernel()
+            self._storage = kernel.Create(ObjectStoragePsp_) if kernel else None
+            if self._storage:
+                self._object_storage_psp = ObjectStoragePsp_
+            # log.info(u'MetaTree %s STORAGE: %s' % (self.name, self._storage))
+            # Убить все дочерние объекты
+            self.clearBuffChildren()
         return self._storage
 
     def setStorageByName(self, ObjectStorageName_):

@@ -441,7 +441,8 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         prj_data = None
         # диалог выбора файла *.pro
         prj_file_name = ic_dlg.icFileDlg(self.getParentRoot().getParent().getIDEFrame(),
-                                         u'Выберите подсистему', u'Project file (*.pro)|*.pro')
+                                         u'Выберите подсистему', u'Project file (*.pro)|*.pro',
+                                         DefaultPath_=ic_file.getRootDir())
         if prj_file_name:
             # открыть файл *.pro
             prj_data = self.openPrjFile(prj_file_name)

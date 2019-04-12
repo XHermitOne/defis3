@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Класс пользовательского визуального компонента.
+Структурная модификация плана.
 
 @type ic_user_name: C{string}
 @var ic_user_name: Имя пользовательского класса.
@@ -20,13 +20,13 @@
 """
 
 import wx
-import ic.components.icwidget as icwidget
-import ic.utils.util as util
+
+from ic.components import icwidget
+from ic.utils import util
 import ic.components.icResourceParser as prs
-import ic.imglib.common as common
-import ic.PropertyEditor.icDefInf as icDefInf
+from ic.PropertyEditor import icDefInf
 from ic.kernel import ickernel
-import ic.utils.coderror as coderror
+from ic.utils import coderror
 
 from ic.bitmap import ic_bmp
 from ic.log import log
@@ -40,7 +40,7 @@ except ImportError:
 ic_class_type = icDefInf._icUserType
 
 #   Имя класса
-ic_class_name = 'PlanModif'
+ic_class_name = 'icPlanModif'
 
 #   Описание стилей компонента
 ic_class_styles = {'DEFAULT': 0}
@@ -56,12 +56,12 @@ ic_class_spc = {'type': 'PlanModif',
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],
                                    icDefInf.EDT_USER_PROPERTY: ['metaplan'],
                                    },
-                '__parent__':icwidget.SPC_IC_SIMPLE}
+                '__parent__': icwidget.SPC_IC_SIMPLE}
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('server_components.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('server_components.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('chart-up.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('chart-up.png')
 
 #   Путь до файла документации
 ic_class_doc = 'doc/public/icplanmodifmanager.html'
@@ -173,7 +173,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 # END_EDITOR_FUNCS_BLOCK
 
 
-class PlanModif(icwidget.icSimple):
+class icPlanModif(icwidget.icSimple):
     """
     Описание пользовательского компонента.
 
@@ -243,7 +243,7 @@ def test(par=0):
     @type par: C{int}
     @param par: Тип консоли.
     """
-
+    from ic.imglib import common
     import ic.components.ictestapp as ictestapp
 
     app = ictestapp.TestApp(par)

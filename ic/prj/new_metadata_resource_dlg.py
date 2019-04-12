@@ -16,7 +16,7 @@ from ic.engine import form_manager
 from ic.PropertyEditor import select_component_menu
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 NONE_COMPONENT_NAME = u'Компонент не определен'
 
@@ -81,10 +81,17 @@ def new_metadata_resource_dlg(parent=None, default_resource_name=None):
 
         dlg.ShowModal()
 
-        result = (dlg.name_textCtrl.GetValue(),
-                  copy.deepcopy(dlg.component_info[3]) if dlg.component_info is not None else None)
+        # Имя ресурса
+        name = dlg.name_textCtrl.GetValue()
+        # Сам ресурс
+        res = copy.deepcopy(dlg.component_info[3]) if dlg.component_info is not None else None
+        if res:
+            # У компонента такоеже имя как и у ресурса
+            res['name'] = name
+
         dlg.Destroy()
-        return result
+
+        return name, res
     except:
         log.fatal(u'Ошибка вызова диалогового окна создания ресурса метаданных')
     return None

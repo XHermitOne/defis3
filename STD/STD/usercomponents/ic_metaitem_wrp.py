@@ -70,8 +70,12 @@ ic_class_spc = {'type': 'MetaItem',
                 'init_expr': None,
                 'child': [],
                 '_uuid': None,
+
                 '__styles__': ic_class_styles,
-                '__events__': {},
+                '__events__': {'on_init': (None, 'onInit', False),
+                               'on_del': (None, 'onDel', False),
+                               'on_edit': (None, 'onEdit', False),
+                               'on_view': (None, 'onView', False),},
                 '__lists__': {'storage_type': [metaitem.FILE_NODE_STORAGE_TYPE,
                                                metaitem.FILE_STORAGE_TYPE,
                                                metaitem.DIR_STORAGE_TYPE],
@@ -145,3 +149,46 @@ class icMetaItem(icwidget.icSimple, metaitem.icMetaItemEngine):
         prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
                              bCounter=bCounter, progressDlg=progressDlg)
 
+    def onInit(self, event=None):
+        """
+        Выполнения блока кода - обработчика события.
+        Блок кода, выполняемый при создании метаобъекта.
+        """
+        context = self.GetContext()
+        context['self'] = self
+        context['evt'] = event
+        context['event'] = event
+        return self.eval_attr('on_init')
+
+    def onDel(self, event=None):
+        """
+        Выполнения блока кода - обработчика события.
+        Блок кода, выполняемый при удалении метаобъекта.
+        """
+        context = self.GetContext()
+        context['self'] = self
+        context['evt'] = event
+        context['event'] = event
+        return self.eval_attr('on_del')
+
+    def onEdit(self, event=None):
+        """
+        Выполнения блока кода - обработчика события.
+        Блок кода, выполняемый при редактировании метаобъекта.
+        """
+        context = self.GetContext()
+        context['self'] = self
+        context['evt'] = event
+        context['event'] = event
+        return self.eval_attr('on_edit')
+
+    def onView(self, event=None):
+        """
+        Выполнения блока кода - обработчика события.
+        Блок кода, выполняемый при просмотре метаобъекта.
+        """
+        context = self.GetContext()
+        context['self'] = self
+        context['evt'] = event
+        context['event'] = event
+        return self.eval_attr('on_edit')

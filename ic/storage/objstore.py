@@ -8,8 +8,9 @@
 """
 
 # --- Подключение библиотек ---
+import os
+import os.path
 
-from ic.utils import ic_exec
 from ic.utils import ic_file
 from ic.utils import ic_util
 from ic.interfaces import StorageInterface as storage_interface
@@ -23,6 +24,8 @@ OBJ_STORAGE_TYPE = 'ObjectStorage'
 SPC_IC_OBJ_STORAGE = {'type': OBJ_STORAGE_TYPE,
                       'storage_src': None,
                       }
+
+__version__ = (0, 1, 1, 1)
 
 
 # --- Функции ---
@@ -66,5 +69,7 @@ class icObjectStorage(storesrc.icObjStorageSrc,
         """
         storage_interface.icObjectStorageInterface.__init__(self, Resource_)
         self._spc = ic_util.SpcDefStruct(SPC_IC_OBJ_STORAGE, self._res)
-        self._storage_src_name = ic_exec.ExecuteCode(self._spc['storage_src'], self)
+        # self._storage_src_name = ic_exec.ExecuteCode(self._spc['storage_src'], self)
+        self._storage_src_psp = self._spc['storage_src']
+        self._storage_src_name = self._storage_src_psp[0][1]
         storesrc.icObjStorageSrc.__init__(self, self._storage_src_name)

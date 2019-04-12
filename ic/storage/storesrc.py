@@ -16,6 +16,7 @@ import os
 import os.path
 import shelve
 import copy
+import shutil
 
 import ic.utils.lock
 from ic.utils import ic_util
@@ -24,7 +25,7 @@ from ic.interfaces import StorageInterface as storage_interface
 from ic.utils import ic_exec
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # --- Константы и спецификации ---
 DEFAULT_STORAGE_DIR = ic_file.getProfilePath()
@@ -50,7 +51,7 @@ DIR_STORAGE_PROPERTY_NAME = 'property'
 OBJ_STORAGE_SRC_TYPE = 'ObjectStorageSource'
 # Спецификация вида хранения
 SPC_IC_OBJ_STORAGE_SRC = {'type': OBJ_STORAGE_SRC_TYPE,
-                          'storage_dir': 'C:/#STORAGE',
+                          'storage_dir': './db/',
                           }
 
 

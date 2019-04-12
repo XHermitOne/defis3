@@ -21,7 +21,7 @@ from ic.dlg import ic_dlg
 
 import ic.config
 
-__version__ = (1, 1, 3, 1)
+__version__ = (1, 1, 4, 1)
 
 _ = wx.GetTranslation
 
@@ -730,6 +730,7 @@ def getRootProjectDir():
     prj_dir = getProjectDir()
     return os.path.dirname(prj_dir)
 
+
 def getHomeDir():
     """
     Папка HOME.
@@ -740,4 +741,18 @@ def getHomeDir():
     else:
         home_dir = os.environ['HOME']
     return home_dir
-    
+
+
+def getRootDir():
+    """
+    Папка DEFIS.
+    @return: Путь до папки DEFIS.
+    """
+    # Берем относительно имени файла
+    package_path = os.path.dirname(__file__)
+    if package_path:
+        root_path = os.path.dirname(os.path.dirname(package_path))
+    else:
+        log.warning(u'Не определен путь к корневой папке всех проектов')
+        return u''
+    return root_path

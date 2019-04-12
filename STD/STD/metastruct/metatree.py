@@ -18,6 +18,7 @@ except ImportError:
 
 # --- Спецификация ---
 SPC_IC_METATREE = {'source': None,  # Хранилище дерева метакомпонентов
+
                    '__parent__': metaitem.SPC_IC_METAITEM,
                    '__attr_hlp__': {'source': u'Хранилище дерева метакомпонентов',
                                     },

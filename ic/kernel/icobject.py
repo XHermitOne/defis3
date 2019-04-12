@@ -481,7 +481,8 @@ class icObject(object):
         if self.context:
             return self.context.get_kernel()
         else:
-            log.warning('Not define context in object <%s>' % self)
+            log.warning(u'Не определен контекст в объекте <%s>' % self)
+        return None
             
     def GetComponentInterface(self):
         """
