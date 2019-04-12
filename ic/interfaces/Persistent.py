@@ -5,6 +5,8 @@
 Интерфейс элемента хранилища.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 class icPersistentInterface:
     """
@@ -190,16 +192,3 @@ class icPersistentInterface:
     def get(self, key, default=None):
         pass
 
-
-class icMetaComponentInterface(icPersistentInterface):
-    """
-    Интерфейс абстрактного метакомпонента.
-    Метакомпонент может сохранять свое состояние 
-    в хранилище.
-    """
-
-    def __init__(self):
-        """
-        Конструктор.
-        """
-        icPersistentInterface.__init__(self)

@@ -21,21 +21,13 @@
 
 import wx
 from ic.components import icwidget
-from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-import ic.utils.resource as resource
+from STD.metastruct import metaatttr
 
 # --- Спецификация ---
-SPC_IC_METAATTR = {'value': None,  # Значение атрибута
-                   '__parent__': icwidget.SPC_IC_SIMPLE,
-                   '__attr_hlp__': {'value': u'Значение атрибута',
-                                    },
-                   }
-
-# --- Описание компонента для редактора ресурса ---
 #   Тип компонента
 ic_class_type = icDefInf._icServiceType
 
@@ -57,7 +49,7 @@ ic_class_spc = {'type': 'MetaAttr',
                 '__styles__': ic_class_styles,
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description'],
                                    },
-                '__parent__': SPC_IC_METAATTR,
+                '__parent__': metaatttr.SPC_IC_METAATTR,
                 }
 
 #   Имя иконки класса, которые располагаются в директории 
@@ -80,39 +72,7 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-class icMetaAttrPrototype:
-    """
-    Атрибут метакомпонента.
-    """
-
-    def __init__(self, Resource_):
-        """
-        Конструктор.
-        @param Resource_: Ресурс описания.
-        """
-        self._value = None
-
-    def defaultValue(self):
-        """
-        Инициализировать значение по умолчанию.
-        """
-        self._value = self.eval_attr('value')[1]
-        return self._value
-
-    def getValue(self):
-        """
-        Получить значение.
-        """
-        return self._value
-
-    def setValue(self, Value_):
-        """
-        Установить значение.
-        """
-        self._value = Value_
-
-
-class icMetaAttr(icwidget.icSimple, icMetaAttrPrototype):
+class icMetaAttr(icwidget.icSimple, metaatttr.icMetaAttrPrototype):
     """
     Атрибут метакомпонента.
     """
@@ -140,7 +100,7 @@ class icMetaAttr(icwidget.icSimple, icMetaAttrPrototype):
         @param progressDlg: Указатель на идикатор создания формы.
         """
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        icMetaAttrPrototype.__init__(self, component)
+        metaatttr.icMetaAttrPrototype.__init__(self, component)
 
         #   Создаем дочерние компоненты
         if 'child' in component:

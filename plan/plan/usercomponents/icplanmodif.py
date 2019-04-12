@@ -48,7 +48,7 @@ ic_class_styles = {'DEFAULT': 0}
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'PlanModif',
                 'name': 'default',
-                'metaplan':[],
+                'metaplan': [],
                 'child': [],
 
                 '__styles__': ic_class_styles,

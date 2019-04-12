@@ -52,7 +52,7 @@ from ic.components import icwidget
 
 from . import icdb
 
-__version__ = (1, 1, 1, 3)
+__version__ = (1, 1, 1, 4)
 
 # Типы таблиц
 TABLE_TYPE = 'Table'
@@ -211,9 +211,12 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         Зарегистрировать БД.
         """
-        if DB_ and DB_.getMetaData():
-            self._regDB = DB_._changeDialect(self._regDB, DB_.getMetaData().bind.dialect)
-        self._regDB[DBName_] = DB_
+        if issubclass(DB_.__class__, icdb.icSQLAlchemyDB):
+            if DB_.getMetaData():
+                self._regDB = DB_._changeDialect(self._regDB, DB_.getMetaData().bind.dialect)
+            self._regDB[DBName_] = DB_
+        else:
+            log.error(u'Ошибка типа БД <%s> при регистрации' % DBName_)
 
     def _createDB(self, DBName_, DBPsp_):
         """

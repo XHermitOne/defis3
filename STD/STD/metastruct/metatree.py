@@ -4,20 +4,6 @@
 """
 Дерево метакомпонентов.
 Класс пользовательского визуального компонента.
-
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
-    могут содержаться в данном компоненте. -1 - означает, что любой компонент
-    может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
-    задает полное правило по которому определяется возможность добавления других 
-    компонентов в данный комопнент. 
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов, 
-    которые не могут содержаться в данном компоненте. Запрещающее правило
-    начинает работать если разрешающее правило разрешает добавлять любой 
-    компонент (ic_can_contain = -1).
 """
 
 import wx
@@ -25,76 +11,26 @@ import wx
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.log import log
 
 import ic.utils.resource as resource
-from . import ic_metaitem_wrp
+from . import metaitem
 import ic.storage.objstore as objstore
 
 # --- Спецификация ---
 SPC_IC_METATREE = {'source': None,  # Хранилище дерева метакомпонентов
-                   '__parent__': ic_metaitem_wrp.SPC_IC_METAITEM,
+                   '__parent__': metaitem.SPC_IC_METAITEM,
                    '__attr_hlp__': {'source': u'Хранилище дерева метакомпонентов',
                                     },
                    }
-
-# --- Описание компонента для редактора ресурса ---
-#   Тип компонента
-ic_class_type = icDefInf._icServiceType
-
-#   Имя класса
-ic_class_name = 'icMetaTree'
-
-#   Описание стилей компонента
-ic_class_styles = {'DEFAULT': 0}
-
-#   Спецификация на ресурсное описание класса
-ic_class_spc = {'type': 'MetaTree',
-                'name': 'default', 
-                'activate': True,
-                'init_expr': None,
-                '_uuid': None,
-                'child': [],
-
-                '__styles__': ic_class_styles,
-                '__events__': {},
-                '__lists__': {'storage_type': [ic_metaitem_wrp.FILE_NODE_STORAGE_TYPE,
-                                               ic_metaitem_wrp.FILE_STORAGE_TYPE,
-                                               ic_metaitem_wrp.DIR_STORAGE_TYPE],
-                              },
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', 
-                                                            'view_form', 'edit_form', 'print_report'],
-                                    icDefInf.EDT_CHECK_BOX: ['container'],
-                                    icDefInf.EDT_TEXTDICT: ['spc', 'const_spc'],
-                                    icDefInf.EDT_CHOICE: ['storage_type'],
-                                   }, 
-                '__parent__': SPC_IC_METATREE,
-                }
-
-#   Имя иконки класса, которые располагаются в директории 
-#   ic/components/user/images
-ic_class_pic = '@common.imgEdtMetaTree'
-ic_class_pic2 = '@common.imgEdtMetaTree'
-
-#   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_metatree_wrp.icMetaTree-class.html'
-ic_class_spc['__doc__'] = ic_class_doc
-                    
-#   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = ['MetaItem', 'MetaConst', 'MetaAttr']
-
-#   Список компонентов, которые не могут содержаться в компоненте, если не определен 
-#   список ic_can_contain
-ic_can_not_contain = None
 
 #   Версия компонента
 __version__ = (0, 1, 1, 1)
 
 
 # --- Классы ---
-class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
+class icMetaTreeEngine(metaitem.icMetaItemEngine):
     """
     Дерево метакомпонентов. Управление.
     """
@@ -103,7 +39,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
         Конструктор.
         @param Resource_: Ресурс описания дерева метакомпонентов.
         """
-        ic_metaitem_wrp.icMetaItemEngine.__init__(self, None, Resource_)
+        metaitem.icMetaItemEngine.__init__(self, None, Resource_)
         # Определить хранилище данных
         self._object_storage_name = None
         self._storage = None
@@ -155,7 +91,7 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
         Список компонент, которые могут быть узлами дерева.
         """
         try:
-            return dict([child for child in self.components.items() if issubclass(child[1].__class__, ic_metaitem_wrp.icMetaItemEngine)])
+            return dict([child for child in self.components.items() if issubclass(child[1].__class__, metaitem.icMetaItemEngine)])
         except:
             log.error(u'Ошибка определения списка метаклассов в метадереве %s' % self.name)
             return {}
@@ -362,48 +298,3 @@ class icMetaTreeEngine(ic_metaitem_wrp.icMetaItemEngine):
     # --- Транзакционный механизм ---
 
     # --- Поддержка интерфейса словаря ---
-
-
-class icMetaTree(icwidget.icSimple, icMetaTreeEngine):
-    """
-    Дерево метакомпонентов.
-    """
-    # Спецификаци компонента
-    component_spc = ic_class_spc
-    
-    def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
-                 bCounter=False, progressDlg=None):
-        """
-        Конструктор.
-
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
-            для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
-            общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
-        """
-        component = util.icSpcDefStruct(self.component_spc, component)
-        icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        icMetaTreeEngine.__init__(self, component)
-
-        #   Создаем дочерние компоненты
-        if 'child' in component:
-            self.childCreator(bCounter, progressDlg)
-        
-    def childCreator(self, bCounter, progressDlg):
-        """
-        Функция создает объекты, которые содержаться в данном компоненте.
-        """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
-                             bCounter=bCounter, progressDlg=progressDlg)

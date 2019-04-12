@@ -44,7 +44,7 @@ ic_class_styles = {'DEFAULT': 0}
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'ModPlanManager',
                 'name': 'default',
-                'metaclass':None,
+                'metaclass': None,
                 'child': [],
 
                 '__styles__': ic_class_styles,
@@ -52,7 +52,7 @@ ic_class_spc = {'type': 'ModPlanManager',
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],
                                    icDefInf.EDT_USER_PROPERTY: ['metaclass'],
                                    },
-                '__parent__':icwidget.SPC_IC_SIMPLE}
+                '__parent__': icwidget.SPC_IC_SIMPLE}
                     
 
 #   Имя иконки класса, которые располагаются в директории
@@ -75,7 +75,6 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-### EDITOR_FUNCS_BLOCK
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
@@ -101,7 +100,8 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
 #        res = icpassportchoice.icPassportChoiceDlg(parent)
 #        print '----> passport=', res
 #        return str(res)
-        
+
+
 def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     Стандартная функция контроля.
@@ -121,7 +121,8 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
 #            return coderror.IC_CTRL_FAILED
         
     return coderror.IC_CTRL_OK
-        
+
+
 def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     """
     Стандартная функция преобразования текста в значение.
@@ -136,7 +137,6 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 #            return []
 
     return None
-### END_EDITOR_FUNCS_BLOCK
 
 
 class PlanModifManager(icwidget.icSimple):

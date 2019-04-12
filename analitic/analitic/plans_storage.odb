@@ -1,1 +1,1 @@
-{'plans_storage': {'activate': 1, 'name': u'plans_storage', '_uuid': u'a793c3c3875ff9a3f8beeb2a8663d40d', 'storage_src': u'plans_db', 'init_expr': None, 'type': u'ObjectStorage'}}
+{'plans_storage': {'activate': 1, 'name': 'plans_storage', '_uuid': 'a793c3c3875ff9a3f8beeb2a8663d40d', 'storage_src': 'plans_db', 'init_expr': None, 'type': 'ObjectStorage', '__item_id': 0}}

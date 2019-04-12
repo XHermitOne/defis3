@@ -7,20 +7,20 @@
 
 # --- Подключение модулей ---
 import wx
-from sqlobject import *
-from sqlobject.styles import mixedToUnder
+# from sqlobject import *
+# from sqlobject.styles import mixedToUnder
 
-from ic.log.iclog import MsgLastError, LogLastError
-from ic.dlg.msgbox import *
-from ic.db import tabclass
+from ic.log import log
+from ic.dlg import msgbox
+from ic.db import icsqlalchemy
 from ic.utils.coderror import *
 from ic.utils import util
 from ic.components.icResourceParser import *
 from ic.components import icwidget
 
-from ic.dlg.ic_dlg import icAskDlg
+from ic.dlg import ic_dlg
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 # ---- Идентификаторы классов данных, используемых в НСИ
 CLASS_NSI_LIST = 'NsiList'
@@ -128,7 +128,7 @@ def FSprav(typSprav, cod, field='name', datatime=None):
     @return: Значение либо словарь значений (если поле field задает список полей).
         None, если строка с заданным кодом не найдена.
     """
-    print('FSPRAV ENTER')
+    # print('FSPRAV ENTER')
     if isinstance(field, str):
         flds = [field]
         isRetDict = False
@@ -171,7 +171,7 @@ def FSpravId(typSprav, id, field='name', datatime=None, tab=None):
     @return: Значение или словарь значений (ключи - имена полей). Если None, то
         необходимые значения не найдены.
     """
-    print('FSPRAV_ID ENTER, id=', id)
+    # print('FSPRAV_ID ENTER, id=', id)
     if isinstance(field, str):
         flds = [field]
         isRetDict = False
@@ -194,7 +194,7 @@ def FSpravId(typSprav, id, field='name', datatime=None, tab=None):
         ret = dict
     else:
         ret = dict[field]
-    print('DSpravId Result=', ret)
+    # print('DSpravId Result=', ret)
     return ret
 
 
@@ -234,7 +234,7 @@ def CtrlSprav(typSprav, val, old=None, field='name', flds=None, datatime=None, b
     try:
         #   Определяем имя класса данных справочника
         #   Создаем класс данных типов справочников
-        _NsiList = tabclass.CreateTabClass(getNsiListClassName())
+        _NsiList = icsqlalchemy.CreateTabClass(getNsiListClassName())
         
         #   Находим описание нужного справочника
         rs = _NsiList.select(_NsiList.q.type==typSprav)
@@ -247,7 +247,7 @@ def CtrlSprav(typSprav, val, old=None, field='name', flds=None, datatime=None, b
 
         #   Создаем классы данных справочника и изменяемых во времени параметров
         
-        _Sprav = tabclass.CreateTabClass(spr.tab)
+        _Sprav = icsqlalchemy.CreateTabClass(spr.tab)
         
         cnList = _NsiList._connection.getConnection()
         cnSprav = _Sprav._connection.getConnection()
@@ -312,7 +312,8 @@ def CtrlSprav(typSprav, val, old=None, field='name', flds=None, datatime=None, b
     if cnSpravT:
         cnSpravT.commit()
 
-    return (result, res_val)
+    return result, res_val
+
 
 def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True, tab=None):
     """
@@ -1092,7 +1093,7 @@ def MaxVal(cls, typSpr, field):
     rs = cls._connection.queryOne(sql)
     print(rs)
     if rs:
-        if rs[0] <> None:
+        if rs[0] != None:
             return rs[0]
     return 0
 
