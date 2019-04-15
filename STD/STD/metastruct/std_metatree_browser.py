@@ -12,12 +12,18 @@ from . import std_metatree_browser_proto
 from ic.log import log
 from ic.engine import ic_user
 from ic.engine import form_manager
+from ic.components import icwidget
 
 __version__ = (0, 1, 1, 1)
 
+# Спецификация
+SPC_IC_STDMETATREEBROWSER = {'name': 'default',
+                             '__parent__': icwidget.SPC_IC_WIDGET,
+                             }
 
-class icStdMetaTreeBrowser(std_metatree_browser_proto.icStdMetaTreeBrowserPanelProto,
-                           form_manager.icFormManager):
+
+class icStdMetaTreeBrowserProto(std_metatree_browser_proto.icStdMetaTreeBrowserPanelProto,
+                                form_manager.icFormManager):
     """
     Контрол управления мета-деревьями и мета-итемами.
     """
@@ -26,6 +32,13 @@ class icStdMetaTreeBrowser(std_metatree_browser_proto.icStdMetaTreeBrowserPanelP
         Конструктор.
         """
         std_metatree_browser_proto.icStdMetaTreeBrowserPanelProto.__init__(self, *args, **kwargs)
+
+    def setMetaTree(self, metatree=None):
+        """
+        Установить метадерево.
+        @param metatree: Объект метадерева.
+        """
+        return self.metatree_list_ctrl.setMetaTree(metatree)
 
 
 def browse_metatree_std_panel(parent=None, title=u''):
@@ -40,7 +53,7 @@ def browse_metatree_std_panel(parent=None, title=u''):
         if parent is None:
             parent = ic_user.getMainWin()
 
-        browser_panel = icStdMetaTreeBrowser(parent=parent)
+        browser_panel = icStdMetaTreeBrowserProto(parent=parent)
 
         result = ic_user.addMainNotebookPage(browser_panel, title)
         return result is not None
