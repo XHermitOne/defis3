@@ -50,11 +50,10 @@ ic_class_spc = {'type': 'MetaTreeListCtrl',
                 '_uuid': None,
                 'child': [],
 
-                'metatree': None,    # Паспорт объекта описания мета-дерева
+                'metatree': None,   # Паспорт объекта описания мета-дерева
 
                 '__styles__': ic_class_styles,
-                '__attr_types__': {0: ['name', 'type'],
-                                   icDefInf.EDT_TEXTFIELD: ['description'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'description'],
                                    icDefInf.EDT_USER_PROPERTY: ['metatree'],
                                    },
                 '__events__': {},
@@ -72,7 +71,7 @@ ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = []
+ic_can_contain = ['GridCell']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен
 #   список ic_can_contain
@@ -187,3 +186,20 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         """
         return self.getICAttr('metatree')
 
+    def getColumnLabels(self):
+        """
+        Получить надписи колонок.
+        Контрол в любом случае имеет одну колонку для отображения метадерева.
+        Переопределяемый метод.
+        @return: Список надписай колонок.
+        """
+        return [column.get('label', u'') for column in self.resource['child']]
+
+    def getColumnWidths(self):
+        """
+        Получить ширины колонок.
+        Контрол в любом случае имеет одну колонку для отображения метадерева.
+        Переопределяемый метод.
+        @return: Список ширин колонок.
+        """
+        return [column.get('width', wx.DefaultSize.GetWidth()) for column in self.resource['child']]

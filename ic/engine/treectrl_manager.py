@@ -6,17 +6,27 @@
 """
 
 # Подключение библиотек
+import hashlib
+
 import wx
 import wx.dataview
 import wx.gizmos
 
 from ic.log import log
 from ic.utils import ic_str
+from ic.bitmap import ic_bmp
 
 
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 3, 1)
 
 UNKNOWN = u'Не определено'
+
+# Размер картинок элементов дерева по умолчанию
+DEFAULT_ITEM_IMAGE_WIDTH = 16
+DEFAULT_ITEM_IMAGE_HEIGHT = 16
+DEFAULT_ITEM_IMAGE_SIZE = (DEFAULT_ITEM_IMAGE_WIDTH, DEFAULT_ITEM_IMAGE_HEIGHT)
+
+TREE_CTRL_IMAGE_LIST_CACHE_NAME = '__image_list_cache'
 
 
 class icTreeCtrlManager(object):
@@ -711,3 +721,144 @@ class icTreeCtrlManager(object):
         @return: True/False.
         """
         return self.selectItem(ctrl, select=select)
+
+    def setColumns_tree_list_ctrl(self, ctrl=None, cols=()):
+        """
+        Установить колонки в контрол TreeListCtrl.
+        @param ctrl: Объект контрола.
+        @param cols: Список описаний колонок.
+            колонка может описываться как списком
+            ('Заголовок колонки', Ширина колонки, Выравнивание)
+            так и словарем:
+            {'label': Заголовок колонки,
+            'width': Ширина колонки,
+            'align': Выравнивание}
+        @return: True - все прошло нормально / False - какая-то ошибка.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол TreeListCtrl для добавления колонок')
+            return False
+
+        if isinstance(ctrl, wx.gizmos.TreeListCtrl):
+            col_count = ctrl.GetColumnCount()
+            if col_count:
+                for i_col in range(col_count-1, -1, -1):
+                    ctrl.RemoveColumn(i_col)
+            for i_col, col in enumerate(cols):
+                if isinstance(col, dict):
+                    self.appendColumn_TreeListCtrl(ctrl, label=col.get('label', u''),
+                                                   width=col.get('width', -1),
+                                                   align=col.get('align', 'LEFT'))
+                elif isinstance(col, list) or isinstance(col, tuple):
+                    self.appendColumn_TreeListCtrl(ctrl, label=col[0], width=col[1], align=col[2])
+                else:
+                    log.warning(u'Не поддерживаемый тип данных колонки')
+            # Назначить первую колонку главной
+            ctrl.SetMainColumn(0)
+            return True
+        else:
+            log.warning(u'Добавление колонок списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
+        return False
+
+    def appendColumn_TreeListCtrl(self, ctrl, label=u'', width=-1, align='LEFT'):
+        """
+        Добавить колонку в wx.TreeListCtrl.
+        @param ctrl: Объект контрола wx.TreeListCtrl.
+        @param label: Надпись колонки.
+        @param width: Ширина колонки.
+        @param align: Выравнивание: LEFT/RIGHT.
+        @return: True - все прошло нормально / False - какая-то ошибка.
+        """
+        try:
+            if width <= 0:
+                width = wx.DefaultSize.GetWidth()
+
+            col_align = str(align).strip().upper()
+            if col_align == 'RIGHT':
+                col_format = wx.ALIGN_RIGHT
+            elif col_align == 'CENTRE':
+                col_format = wx.ALIGN_CENTRE
+            elif col_align == 'CENTER':
+                col_format = wx.ALIGN_CENTER
+            else:
+                col_format = wx.ALIGN_LEFT
+            ctrl.AddColumn(label, width=width, flag=col_format)
+            return True
+        except:
+            log.fatal(u'Ошибка добавления колонки в контрол wx.TreeListCtrl')
+        return False
+
+    def getTreeCtrlImageList(self, ctrl=None, image_width=DEFAULT_ITEM_IMAGE_WIDTH,
+                             image_height=DEFAULT_ITEM_IMAGE_HEIGHT):
+        """
+        Получить список картинок элементов контрола дерева wx.TreeCtrl/wx.TreeListCtrl.
+        @param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
+        @param image_width: Ширина картинки.
+        @param image_height: Высота картинки.
+        @return: Объект списка образов.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return None
+
+        image_list = ctrl.GetImageList()
+        if not image_list:
+            image_list = wx.ImageList(image_width, image_height)
+            # ВНИМАНИЕ! Здесь необходимо вставить хотя бы пустой Bitmap
+            # Иначе при заполнении контрол валиться
+            empty_dx = image_list.Add(ic_bmp.createEmptyBitmap(image_width, image_height))
+            ctrl.SetImageList(image_list)
+        return image_list
+
+    def getTreeCtrlImageListCache(self, ctrl=None):
+        """
+        Кеш списка образов.
+        @param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return None
+
+        if not hasattr(ctrl, TREE_CTRL_IMAGE_LIST_CACHE_NAME):
+            setattr(ctrl, TREE_CTRL_IMAGE_LIST_CACHE_NAME, dict())
+        return getattr(ctrl, TREE_CTRL_IMAGE_LIST_CACHE_NAME)
+
+    def setItemImage_tree_ctrl(self, ctrl=None, item=None, image=None):
+        """
+        Установить картинку элемента дерева.
+        @param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
+        @param item: Элемент дерева. Если None, то имеется ввиду корневой элемент.
+        @param image: Объект картинки wx.Bitmap. Если не определен, то картинка удаляется.
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return None
+
+        if item is None:
+            item = ctrl.GetRootItem()
+
+        if image is None:
+            ctrl.SetItemImage(item, None)
+        else:
+            if isinstance(image, wx.Bitmap):
+                img = image.ConvertToImage()
+                img_id = hashlib.md5(img.GetData()).hexdigest()
+            elif isinstance(image, wx.Image):
+                img_id = hashlib.md5(image.GetData()).hexdigest()
+            else:
+                log.warning(u'Не обрабатываему тип образа <%s>' % image.__class__.__name__)
+                return False
+
+            # Сначала проверяем в кеше
+            img_cache = self.getTreeCtrlImageListCache(ctrl=ctrl)
+
+            if img_id in img_cache:
+                img_idx = img_cache[img_id]
+            else:
+                image_list = self.getTreeCtrlImageList(ctrl=ctrl)
+                image_idx = image_list.Add(image)
+                # Запоминаем в кеше
+                img_cache[img_id] = image_idx
+            ctrl.SetItemImage(item, image_idx)
+        return True

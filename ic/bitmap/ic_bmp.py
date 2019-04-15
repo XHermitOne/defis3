@@ -17,7 +17,7 @@ from ic.utils import ic_file
 
 import ic.imglib.common
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_MASK_COLOUR = wx.LIGHT_GREY
 
@@ -81,13 +81,18 @@ def createBitmap(ImgFileName_, MakeMask_=False):
         return None
 
 
-def createEmptyBitmap(Width_, Height_, PhoneColor_):
+def createEmptyBitmap(Width_, Height_, PhoneColor_=None):
     """
     Создать пустой битмап.
-    @param Width_,Height_: Размер битмапа.
-    @param PhoneColor_: Цвет фона.
+    @param Width_: Ширина Bitmap.
+    @param Height_: Высота битмапа.
+    @param PhoneColor_: Цвет фона. По умолчанию используется белый.
+    @return: Пустой Bitmap заданного размера.
     """
     try:
+        if PhoneColor_ is None:
+            PhoneColor_ = wx.WHITE
+
         # Пустой квадратик
         bmp = wx.Bitmap(Width_, Height_)
         # Создать объект контекста устройства
@@ -101,7 +106,7 @@ def createEmptyBitmap(Width_, Height_, PhoneColor_):
         dc.SelectObject(wx.NullBitmap)
         return bmp
     except:
-        log.fatal()
+        log.fatal(u'Ошибка создания пустого Bitmap. Размер <%s x %s>' % (Width_, Height_))
         return None
 
 

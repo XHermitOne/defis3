@@ -43,7 +43,7 @@ from . import ic_pyed
 import ic.config
 
 _ = wx.GetTranslation
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 # Список идентификаторов дерева, храним для того, чтобы контролировать уникальность
 # идентификаторов
@@ -2515,8 +2515,9 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         """
         Загружает ресурсное описание из выбранного файла.
         """
-        dlg = wx.FileDialog(self,
-                            u'Выберите имя ресурсного файла', u'', u'', _ResCard, wx.FD_OPEN)
+        dlg = wx.FileDialog(self, u'Выберите имя ресурсного файла',
+                            defaultDir=ic_file.getRootDir(), defaultFile=u'',
+                            wildcard=_ResCard, style=wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPaths()[0]
             self.LoadRes(path)

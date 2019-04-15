@@ -9,7 +9,7 @@ import wx
 
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def is_same_wx_object(wx_obj1, wx_obj2):
@@ -61,6 +61,11 @@ def isWxDeadObject(wx_object):
     @param wx_object: WX объект.
     @return: True/False.
     """
+    if wx_object is None:
+        return True
+    if not issubclass(wx_object.__class__, wx.Object):
+        # Если класс не наследник от wx.Object, то и проверять нечего
+        return False
     return not wx_object  # avoid a PyDeadObject error
 
 

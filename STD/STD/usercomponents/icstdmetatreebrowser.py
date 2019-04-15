@@ -101,5 +101,5 @@ class icStdMetaTreeBrowser(parentModule.icStdMetaTreeBrowserProto, icwidget.icWi
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.parentModule.icStdMetaTreeBrowserProto.__init__(self, parent=parent)
+        parentModule.icStdMetaTreeBrowserProto.__init__(self, parent=parent)
 

@@ -87,7 +87,7 @@
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND</property>
                     <property name="proportion">0</property>
-                    <object class="wxToolBar" expanded="0">
+                    <object class="wxToolBar" expanded="1">
                         <property name="BottomDockable">1</property>
                         <property name="LeftDockable">1</property>
                         <property name="RightDockable">1</property>
@@ -124,7 +124,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">m_toolBar1</property>
+                        <property name="name">ctrl_toolBar</property>
                         <property name="packing">1</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
@@ -174,15 +174,15 @@
                             <property name="label">tool</property>
                             <property name="name">collapse_tool</property>
                             <property name="permission">protected</property>
-                            <property name="statusbar"></property>
-                            <property name="tooltip"></property>
+                            <property name="statusbar">Свернуть дерево плана</property>
+                            <property name="tooltip">Свернуть дерево плана</property>
                             <event name="OnAuiToolBarBeginDrag"></event>
                             <event name="OnAuiToolBarMiddleClick"></event>
                             <event name="OnAuiToolBarOverflowClick"></event>
                             <event name="OnAuiToolBarRightClick"></event>
                             <event name="OnAuiToolBarToolDropDown"></event>
                             <event name="OnMenuSelection"></event>
-                            <event name="OnToolClicked"></event>
+                            <event name="OnToolClicked">onCollapseToolClicked</event>
                             <event name="OnToolEnter"></event>
                             <event name="OnToolRClicked"></event>
                             <event name="OnUpdateUI"></event>
@@ -195,15 +195,15 @@
                             <property name="label">tool</property>
                             <property name="name">expand_tool</property>
                             <property name="permission">protected</property>
-                            <property name="statusbar"></property>
-                            <property name="tooltip"></property>
+                            <property name="statusbar">Открыть дерево плана</property>
+                            <property name="tooltip">Открыть дерево плана</property>
                             <event name="OnAuiToolBarBeginDrag"></event>
                             <event name="OnAuiToolBarMiddleClick"></event>
                             <event name="OnAuiToolBarOverflowClick"></event>
                             <event name="OnAuiToolBarRightClick"></event>
                             <event name="OnAuiToolBarToolDropDown"></event>
                             <event name="OnMenuSelection"></event>
-                            <event name="OnToolClicked"></event>
+                            <event name="OnToolClicked">onExpandToolClicked</event>
                             <event name="OnToolEnter"></event>
                             <event name="OnToolRClicked"></event>
                             <event name="OnUpdateUI"></event>

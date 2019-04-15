@@ -8,8 +8,10 @@
 
 from ic.log import log
 
-import ic.utils.resource as resource
-import ic.storage.objstore as objstore
+from ic.utils import resource
+from ic.storage import objstore
+from ic.utils import ic_util
+from ic.engine import ic_user
 
 try:
     from . import metaitem
@@ -25,7 +27,7 @@ SPC_IC_METATREE = {'source': None,  # Хранилище дерева метак
                    }
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 # --- Классы ---
@@ -55,17 +57,34 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def setStorage(self, ObjectStorage_):
         """
         Установка хранилища данных.
-        @param ObjectStorage_: Объект хранилища данных. Может передаваться
-            по имени и в виде готового объекта.
+        @param ObjectStorage_: Объект хранилища данных.
+            Может передаваться по имени, в виде паспорта и в виде готового объекта.
         """
         if isinstance(ObjectStorage_, str):
             return self.setStorageByName(ObjectStorage_)
+        elif ic_util.is_pasport(ObjectStorage_):
+            return self.setStorageByPsp(ObjectStorage_)
         else:
             if self._object_storage_name != ObjectStorage_.name:
                 self._storage = ObjectStorage_
                 self._object_storage_name = ObjectStorage_.name
                 # Убить все дочерние объекты
                 self.clearBuffChildren()
+        return self._storage
+
+    def setStorageByPsp(self, ObjectStoragePsp_):
+        """
+        Установка хранилища данных по паспорту.
+        """
+        if self._object_storage_name != ObjectStoragePsp_[0][1]:
+            kernel = ic_user.getKernel()
+            # Нужно создать новое хранилище
+            self._storage = kernel.Create(ObjectStoragePsp_)
+            if self._storage is None:
+                log.warning(u'Ошибка создания объекта хранилища по паспорту %s' % str(ObjectStoragePsp_))
+            self._object_storage_name = ObjectStoragePsp_[0][1]
+            # Убить все дочерние объекты
+            # self.clearBuffChildren()
         return self._storage
 
     def setStorageByName(self, ObjectStorageName_):

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Объект хранилища ObjectStorage.
+Объект хранилища ObjectStorage. Менеджер управления.
 
 @type ic_user_name: C{string}
 @var ic_user_name: Имя пользовательского класса.
@@ -116,6 +116,8 @@ class icObjStorage(icwidget.icSimple, objstore.icObjectStorage):
     """
     Обертка для хранилища объектов.
     """
+    # Спецификаци компонента
+    component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):

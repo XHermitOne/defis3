@@ -271,7 +271,7 @@
                                             <property name="center_pane">0</property>
                                             <property name="class"></property>
                                             <property name="close_button">1</property>
-                                            <property name="construction">self.metatree_list_ctrl = metatreelistctrl.icMetaTreeListCtrl(id=wx.NewId, component={})</property>
+                                            <property name="construction">self.metatree_list_ctrl = metatreelistctrl.icMetaTreeListCtrl(id=wx.NewId(), parent=self.metatree_panel, component={})</property>
                                             <property name="context_help"></property>
                                             <property name="context_menu">1</property>
                                             <property name="declaration"></property>

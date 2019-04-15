@@ -28,7 +28,7 @@ class icStdMetaTreeBrowserPanelProto ( wx.Panel ):
 		self.metatree_panel = wx.Panel( self.browser_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.metatree_list_ctrl = metatreelistctrl.icMetaTreeListCtrl(id=wx.NewId, component={})
+		self.metatree_list_ctrl = metatreelistctrl.icMetaTreeListCtrl(id=wx.NewId(), parent=self.metatree_panel, component={})
 		bSizer2.Add( self.metatree_list_ctrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		

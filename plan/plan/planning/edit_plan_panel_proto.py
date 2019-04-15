@@ -22,16 +22,16 @@ class icEditPlanPanelProto ( wx.Panel ):
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_toolBar1 = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool = self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
+		self.ctrl_toolBar = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
+		self.collapse_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть дерево плана", u"Свернуть дерево плана", None ) 
 		
-		self.expand_tool = self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
+		self.expand_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Открыть дерево плана", u"Открыть дерево плана", None ) 
 		
-		self.m_toolBar1.AddSeparator()
+		self.ctrl_toolBar.AddSeparator()
 		
-		self.m_toolBar1.Realize() 
+		self.ctrl_toolBar.Realize() 
 		
-		bSizer1.Add( self.m_toolBar1, 0, wx.EXPAND, 5 )
+		bSizer1.Add( self.ctrl_toolBar, 0, wx.EXPAND, 5 )
 		
 		self.plan_browser = icstdmetatreebrowser.icStdMetaTreeBrowser(id=wx.NewId(), parent=self, component={})
 		bSizer1.Add( self.plan_browser, 1, wx.ALL|wx.EXPAND, 5 )
@@ -39,8 +39,20 @@ class icEditPlanPanelProto ( wx.Panel ):
 		
 		self.SetSizer( bSizer1 )
 		self.Layout()
+		
+		# Connect Events
+		self.Bind( wx.EVT_TOOL, self.onCollapseToolClicked, id = self.collapse_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onExpandToolClicked, id = self.expand_tool.GetId() )
 	
 	def __del__( self ):
 		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onCollapseToolClicked( self, event ):
+		event.Skip()
+	
+	def onExpandToolClicked( self, event ):
+		event.Skip()
 	
 
