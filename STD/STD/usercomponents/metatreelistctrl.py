@@ -6,6 +6,8 @@
 """
 
 import wx
+
+from ic.log import log
 from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
 from ic.dlg import ic_dlg
@@ -52,12 +54,30 @@ ic_class_spc = {'type': 'MetaTreeListCtrl',
 
                 'metatree': None,   # Паспорт объекта описания мета-дерева
 
+                'on_item_collapsed': None,
+                'on_item_expanded': None,
+                'on_select_changed': None,
+                'on_item_activated': None,
+                'on_item_right_click': None,
+
                 '__styles__': ic_class_styles,
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'description'],
                                    icDefInf.EDT_USER_PROPERTY: ['metatree'],
                                    },
-                '__events__': {},
+                '__events__': {'on_item_collapsed': ('wx.EVT_TREE_ITEM_COLLAPSED', 'onItemCollapsed', False),
+                               'on_item_expanded': ('wx.EVT_TREE_ITEM_EXPANDED', 'onItemExpanded', False),
+                               'on_select_changed': ('wx.EVT_TREE_SEL_CHANGED', 'onSelectChanged', False),
+                               'on_item_activated': ('wx.EVT_TREE_ITEM_ACTIVATED', 'onItemActivated', False),
+                               'on_item_right_click': ('wx.EVT_TREE_ITEM_RIGHT_CLICK', 'onItemRightClick', False),
+                               },
                 '__parent__': parentModule.SPC_IC_METATREELISTCTRL,
+
+                '__attr_hlp__': {'on_item_collapsed': u'Обработчик сворачивания элемента',
+                                 'on_item_expanded': u'Обработчик развертывания элемента',
+                                 'on_select_changed': u'Обработчик изменения выбора',
+                                 'on_item_activated': u'Обработчик активации элемента',
+                                 'on_item_right_click': u'Обработчик клика правой кнопкой на элементе',
+                                 },
                 }
 
 
@@ -171,6 +191,12 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
 
+        #   Регистрация обработчиков событий
+        self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.onItemExpanded)
+        self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.onItemCollapsed)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onSelectChanged)
+        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onItemActivated)
+        self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.onItemRightClick)
         self.BindICEvt()
 
     def childCreator(self, bCounter, progressDlg):
@@ -203,3 +229,83 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         @return: Список ширин колонок.
         """
         return [column.get('width', wx.DefaultSize.GetWidth()) for column in self.resource['child']]
+
+    # --- Обработчики событий ---
+    def onItemExpanded(self, event):
+        """
+        Разворачивание узла.
+        """
+        self.eval_event('on_item_expanded', event, True)
+        event.Skip()
+
+    def onItemCollapsed(self, event):
+        """
+        Сворачивание узла.
+        """
+        self.eval_event('on_item_collapsed', event, True)
+        event.Skip()
+
+    def onSelectChanged(self, event):
+        """
+        Изменение выделенного узла.
+        """
+        select_item = event.GetItem()
+        self._last_selection = None
+        if select_item:
+            self._last_selection = self.getItemPath(select_item)
+
+        # --- НАЧАЛО: БЛОК ИСПРАВЛЕНИЯ БАГИ ПОЯВЛЕНИЯ ВТОРОГО КУРСОРА В ДЕРЕВЕ ---
+        if not self.HasFlag(wx.TR_MULTIPLE):
+            selections = self.GetSelections()
+            if len(selections) > 1:
+                for selection in selections:
+                    if selection != select_item:
+                        selection.SetHilight(0)
+                        self._main_win.RefreshLine(selection)
+        # --- КОНЕЦ: БЛОК ИСПРАВЛЕНИЯ БАГИ ПОЯВЛЕНИЯ ВТОРОГО КУРСОРА В ДЕРЕВЕ ---
+        self.eval_event('on_select_changed', event, True)
+        event.Skip()
+
+    def onItemActivated(self, event):
+        """
+        Активизация узла.
+        """
+        self.eval_event('on_item_activated', event, True)
+        event.Skip()
+
+    def onItemRightClick(self, event):
+        """
+        Обработчик клика правой кнопкой на элементе.
+        """
+        if self.isICAttrValue('on_item_right_click'):
+            self.eval_event('on_item_right_click', event, True)
+        else:
+            # По умолчанию производим вызов меню добавления нового элемента
+            menu = wx.Menu()
+            item = event.GetItem()
+            meta_item = self.getItemData_tree(ctrl=self, item=item)
+            label = u'Добавить <%s>' % meta_item.description
+            add_id = wx.NewId()
+            menu.Append(add_id, label)
+            self.Bind(wx.EVT_MENU, self.onAddMetaItem, id=add_id)
+            label = u'Удалить <%s>' % meta_item.description
+            del_id = wx.NewId()
+            menu.Append(del_id, label)
+            self.Bind(wx.EVT_MENU, self.onDelMetaItem, id=del_id)
+
+            self.PopupMenu(menu)
+        event.Skip()
+
+    def onAddMetaItem(self, event):
+        """
+        Обработчик добавления мета-объекта.
+        """
+        log.debug(u'Обработчик добавления мета-объекта')
+        event.Skip()
+
+    def onDelMetaItem(self, event):
+        """
+        Обработчик удаления мета-объекта.
+        """
+        log.debug(u'Обработчик удаления мета-объекта')
+        event.Skip()

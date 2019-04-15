@@ -107,7 +107,8 @@ class icMetaTreeListCtrlProto(wx.gizmos.TreeListCtrl,
 
             self._root_item = self.AddRoot(metatree.description)
             self.setItemImage_tree_ctrl(ctrl=self, item=self._root_item, image=metatree.getPic())
-            return self._build(metatree=metatree, meta_data=metatree.getStorage().items())
+            self.setItemData_tree(ctrl=self, item=self._root_item, data=metatree)
+            return self._build(metatree=metatree, meta_data=metatree.getStorage())
         except:
             log.fatal(u'Ошибка построения метадерева <%s> в контроле <%s>' % (metatree.name, self.name))
         return False
