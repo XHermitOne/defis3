@@ -122,7 +122,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icMetaTreeListCtrl(parentModule.icSpravChoiceComboCtrlProto, icwidget.icWidget):
+class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget):
     """
     Описание пользовательского компонента.
 
@@ -163,7 +163,7 @@ class icMetaTreeListCtrl(parentModule.icSpravChoiceComboCtrlProto, icwidget.icWi
         parentModule.icMetaTreeListCtrlProto.__init__(self, parent, id,
                                                       size=self.size, pos=self.position, style=self.style)
 
-        # Установить справочник
+        # Установить метадерево
         metatree_psp = self.getMetaTreePsp()
         metatree = self.GetKernel().Create(metatree_psp) if metatree_psp else None
         self.setMetaTree(metatree)
