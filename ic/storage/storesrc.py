@@ -25,7 +25,7 @@ from ic.interfaces import StorageInterface as storage_interface
 from ic.utils import ic_exec
 from ic.log import log
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # --- Константы и спецификации ---
 DEFAULT_STORAGE_DIR = ic_file.getProfilePath()
@@ -964,7 +964,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
         self.property.update(NewProperty_)
 
     def getProperty(self):
-        return dict(self.property._file)
+        return dict(self.property._file) if self.property else dict()
 
     def reloadProperty(self):
         """

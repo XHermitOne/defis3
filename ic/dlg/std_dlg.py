@@ -8,6 +8,8 @@
 import wx
 import wx.lib.calendar
 
+from . import ic_dlg
+
 try:
     from . import iccalendardlg
 except ImportError:
@@ -34,7 +36,7 @@ try:
 except ImportError:
     pass
 
-__version__ = (0, 1, 7, 1)
+__version__ = (0, 1, 8, 1)
 
 
 def getIntegerDlg(parent=None, title=None, label=None, min_value=0, max_value=100):
@@ -139,6 +141,34 @@ def getMonthDlg(parent=None):
     dlg.Destroy()
 
     return selected_month
+
+
+MONTH_CHOICES = (u'Январь', u'Февраль',
+                 u'Март', u'Апрель', u'Май',
+                 u'Июнь', u'Июль', u'Август',
+                 u'Сентябрь', u'Октябрь', u'Ноябрь',
+                 u'Декабрь')
+
+
+def getMonthNumDlg(parent=None, title=None, text=None):
+    """
+    Выбор номера месяца в диалоговом окне.
+    @param parent: Родительское окно. Если не определено, то
+        береться wx.GetApp().GetTopWindow()
+    @param title: Заоголовок диалогового окна.
+    @param text: Приглашение ввода.
+    @return: Номер месяца 1-январь ... 12-декабрь или None, если нажата <Отмена>.
+    """
+    if parent is None:
+        parent = wx.GetApp().GetTopWindow()
+
+    title = u'МЕСЯЦ' if title is None else title
+    text = u'Выберите месяц' if text is None else text
+    selected_idx = ic_dlg.icSingleChoiceIdxDlg(parent, Title_=title, Text_=text, Choice_=MONTH_CHOICES)
+    if selected_idx >= 0:
+        return selected_idx + 1
+    # Нажата ОТМЕНА
+    return None
 
 
 def getMonthRangeDlg(parent=None):

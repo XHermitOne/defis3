@@ -12,6 +12,7 @@ import wx.gizmos
 from ic.components import icwidget
 from ic.engine import treectrl_manager
 from ic.log import log
+from ic.dlg import ic_dlg
 
 __version__ = (0, 1, 1, 1)
 
@@ -108,19 +109,48 @@ class icMetaTreeListCtrlProto(wx.gizmos.TreeListCtrl,
             self._root_item = self.AddRoot(metatree.description)
             self.setItemImage_tree_ctrl(ctrl=self, item=self._root_item, image=metatree.getPic())
             self.setItemData_tree(ctrl=self, item=self._root_item, data=metatree)
-            return self._build(metatree=metatree, meta_data=metatree.getStorage())
+            storage = metatree.getStorage()
+            if storage:
+                result = self._build(parent_metaitem=metatree, meta_data=storage.items())
+
+                # Развернуть корневой элемент
+                self.expandChildren(tree_ctrl=self, item=self._root_item)
+                return result
+            else:
+                msg = u'Не определено хранилище данных метадерева <%s>' % metatree.name
+                log.warning(msg)
+                ic_dlg.icWarningBox(u'ОШИБКА', msg)
         except:
             log.fatal(u'Ошибка построения метадерева <%s> в контроле <%s>' % (metatree.name, self.name))
         return False
 
-    def _build(self, metatree, meta_data):
+    def _build(self, parent_metaitem, meta_data, parent_item=None):
         """
         Построение дерева метаобъектов.
-        @param metatree: Объект описания мета-дерева.
+        @param parent_metaitem: Родительский мета-объект.
         @param meta_data: Данные метадерева.
+        @param parent_item: Родительский элемент дерева.
+            Если None, то берется корневой элемент.
         @return: True/False.
         """
-        log.debug(u'Загруженные данные %s' % str(meta_data))
-        # item_data = metatree.
+        if parent_item is None:
+            parent_item = self.GetRootItem()
 
+        for child_name, store_obj in meta_data:
+            name = store_obj.getName()
+            properties = store_obj.getProperty()
+            meta_type = properties.get('metatype', None)
+            if meta_type:
+                child_metaitem = parent_metaitem.getContainerMetaItem(meta_type)
+                image = child_metaitem.getPic()
+                label = properties.get('name', u'')
+
+                child_item = self.AppendItem(parent_item, label)
+                self.setItemImage_tree_ctrl(ctrl=self, item=child_item, image=image)
+                self.setItemData_tree(ctrl=self, item=child_item, data=child_metaitem)
+
+                if len(store_obj):
+                    self._build(child_metaitem, store_obj, child_item)
+            else:
+                log.warning(u'Не определен тип мета-объекта хранилища <%s>' % name)
         return True

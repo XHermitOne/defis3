@@ -191,6 +191,11 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
 
+        # Кеш новых элементов.
+        # Содержит в себе соответствие
+        # идентификатор пункта меню - запись описания параметров добавления
+        self._new_metaitem_cache = dict()
+
         #   Регистрация обработчиков событий
         self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.onItemExpanded)
         self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.onItemCollapsed)
@@ -280,18 +285,29 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         if self.isICAttrValue('on_item_right_click'):
             self.eval_event('on_item_right_click', event, True)
         else:
+            # Очистить кеш
+            self._new_metaitem_cache = dict()
+
             # По умолчанию производим вызов меню добавления нового элемента
             menu = wx.Menu()
             item = event.GetItem()
             meta_item = self.getItemData_tree(ctrl=self, item=item)
-            label = u'Добавить <%s>' % meta_item.description
-            add_id = wx.NewId()
-            menu.Append(add_id, label)
-            self.Bind(wx.EVT_MENU, self.onAddMetaItem, id=add_id)
-            label = u'Удалить <%s>' % meta_item.description
-            del_id = wx.NewId()
-            menu.Append(del_id, label)
-            self.Bind(wx.EVT_MENU, self.onDelMetaItem, id=del_id)
+            meta_item_can_contain = meta_item.getCanContain()
+            for can_contain_name in meta_item_can_contain:
+                child_metaitem = meta_item.getContainerMetaItem(can_contain_name)
+                label = u'Добавить <%s>' % child_metaitem.description
+                add_id = wx.NewId()
+                menu.Append(add_id, label)
+                # Запоминаем в кеше
+                self._new_metaitem_cache[add_id] = dict(type=child_metaitem.name, item=item)
+
+                self.Bind(wx.EVT_MENU, self.onAddMetaItem, id=add_id)
+                label = u'Удалить <%s>' % child_metaitem.description
+                del_id = wx.NewId()
+                menu.Append(del_id, label)
+                self.Bind(wx.EVT_MENU, self.onDelMetaItem, id=del_id)
+                # Запоминаем в кеше
+                self._new_metaitem_cache[del_id] = dict(item=item)
 
             self.PopupMenu(menu)
         event.Skip()
@@ -300,7 +316,26 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         """
         Обработчик добавления мета-объекта.
         """
-        log.debug(u'Обработчик добавления мета-объекта')
+        # log.debug(u'Обработчик добавления мета-объекта')
+        try:
+            menuitem_id = event.GetId()
+            # Достаем из кеша
+            record = self._new_metaitem_cache.get(menuitem_id, None)
+            if record:
+                # Добавляем в дерево
+                item = record.get('item', None)
+                meta_item = self.getItemData_tree(ctrl=self, item=item)
+                child_meta_item = meta_item.Add(Type_=record.get('type', None))
+                # Добавляем новый элемент в дерева и прикрепляем метаитем к нему
+                child_item = self.AppendItem(item, child_meta_item.name)
+                self.setItemImage_tree_ctrl(ctrl=self, item=child_item, image=child_meta_item.getPic())
+                self.setItemData_tree(ctrl=self, item=child_item, data=child_meta_item)
+
+                # Распахнуть родительский элемент если необходимо
+                self.selectItem(ctrl=self, item=child_item)
+        except:
+            log.fatal(u'Ошибка добавления нового мета-объекта')
+
         event.Skip()
 
     def onDelMetaItem(self, event):

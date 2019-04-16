@@ -27,7 +27,7 @@ SPC_IC_METATREE = {'source': None,  # Хранилище дерева метак
                    }
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 # --- Классы ---
@@ -256,8 +256,8 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
                     return self.saveStoreNodeLevel(Path_[1:], MetaObject_, CurStoreLevel_[Path_[0]])
                 except:
                     log.error(u'Ошибка сохранения узла хранилища метаобъекта %s %s %s' % (Path_,
-                                                                                               CurStoreLevel_.getName(),
-                                                                                               CurStoreLevel_.keys()))
+                                                                                          CurStoreLevel_.getName(),
+                                                                                          CurStoreLevel_.keys()))
                     return None
             elif len(Path_) == 1:
                 try:
@@ -265,12 +265,14 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
                     return CurStoreLevel_[Path_[0]]
                 except:
                     log.error(u'!Ошибка сохранения узла хранилища метаобъекта %s %s %s' % (Path_,
-                                                                                                CurStoreLevel_.getName(),
-                                                                                                CurStoreLevel_.keys()))
+                                                                                           CurStoreLevel_.getName(),
+                                                                                           CurStoreLevel_.keys()))
                     return None
             elif Path_ == []:
                 CurStoreLevel_.save()
                 return CurStoreLevel_
+        else:
+            log.warning(u'Не определено хранилище для сохранения данных метадерева <%s>' % self.name)
         return None
         
     def ReLoad(self):

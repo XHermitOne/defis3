@@ -39,7 +39,7 @@ from ic.log import log
 
 _ = wx.GetTranslation
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 #   Определяем словарь компонентов, которые могут парсится
 componentModulDict = None
@@ -667,7 +667,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
             icResourceParser(parent, [objRes], logType=logType,
                              evalSpace=evalSpace, bCounter=bIndicator, ids=ids)
             obj = evalSpace['_root_obj']
-        
+
         #   Организуем очередь табуляции
         for ob in evalSpace['_dict_obj'].values():
             if issubclass(ob.__class__, icwidget.icWidget) and ob.moveAfterInTabOrder:
@@ -973,7 +973,11 @@ def icResourceParser(parent, components, sizer=None, logType=0,
                     util.ic_eval(component['init_expr'], 0, evalSpace, 'icResourceParser()<init_expr>. name:' + name)
 
             # Регистрация компонентов
-            if wxw:
+
+            # ВНИМАНИЕ! В некоторых компонентах может быть переопределена
+            # функция сравнения с пустым значением. Поэтому надо проверять
+            # непосредственно на не None
+            if wxw is not None:
                 # Регестрируем компоненты в родительском интерфейсе
                 if interface and interface in evalSpace['_interfaces']:
                     ifc = evalSpace['_interfaces'][interface]
@@ -1020,7 +1024,7 @@ def icResourceParser(parent, components, sizer=None, logType=0,
                                      'icResourceParser()<init_expr>. name:' + name)
                 
                 if 'source' in component and not component['source'] in ['', None, 'None']:
-                        evalSpace['_has_source'][name] = wxw
+                    evalSpace['_has_source'][name] = wxw
                 # Обрабатываем атрибут <show> - выражение, которое определяет
                 #     показывать компонент или скрыть
                 if 'show' in component:

@@ -90,7 +90,7 @@ SPC_IC_METAITEM = {'name': 'default',       # Имя
 
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icMetaComponentInterface(persistent.icPersistentInterface):
@@ -449,7 +449,11 @@ class icMetaItemEngine(icMetaComponentInterface, object):
             storage_node.setParentNode(ParentStoreNode_, self.name)
 
         if storage_node is not None:
-            storage_node.setProperty(self.getValue().getProperty())
+            value = self.getValue()
+            if value:
+                storage_node.setProperty(value.getProperty())
+            else:
+                log.warning(u'Не определено значение мета-объекта <%s>' % self.name)
 
         return storage_node
     
@@ -663,8 +667,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
             if container_meta_components:
                 Type_ = ic_dlg.icSingleChoiceDlg(None,
                                                  u'Возможные типы>', u'Выбирите тип объекта:',
-                                                 container_meta_components.keys())
+                                                 list(container_meta_components.keys()))
             else:
+                log.warning(u'Не опеределены типы мета-объектов')
                 return None
         if Type_:
             # Объект можно добавить в этот узел
@@ -675,7 +680,12 @@ class icMetaItemEngine(icMetaComponentInterface, object):
                 if meta_type_obj:
                     # Создать новое имя если это нужно
                     if Name_ is None:
-                        Name_ = meta_type_obj.genNewName()
+                        new_name = meta_type_obj.genNewName()
+                        if new_name is not None:
+                            Name_ = str(new_name)
+                        else:
+                            log.warning(u'Отмена добавления мета-объекта')
+                            return None
                     log.info(u'Создание метаобъекта %s метакомпонента %s родитель: %s' % (Name_, Type_,
                                                                                                 self.name))
                     new_metaobj = meta_type_obj.createMetaObj(self, Name_)
@@ -704,8 +714,8 @@ class icMetaItemEngine(icMetaComponentInterface, object):
         res = copy.deepcopy(self.resource)
         res['name'] = NewName_
 
-        obj = self.__class__(Parent_, component=res, evalSpace=self.evalSpace)
-        
+        obj = self.__class__(Parent_, id=-1, component=res, evalSpace=self.evalSpace)
+        log.debug(u'Создание мета-объекта <%s : %s>' % (NewName_, self.resource['name']))
         # Определить метатип метаобъекта, как имя метаитема
         obj.value.metatype = self.resource['name']
         # При создании метаобъекта необходимо прочитать его свойства
@@ -852,9 +862,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
         """
         if CurPath_ is None:
             CurPath_ = []
+        CurPath_.insert(0, self._name)
         if self._Parent:
             # Вставить имя метаобъека первым в списке пути
-            CurPath_.insert(0, self._name)
             return self._Parent.getPath(CurPath_)
         return CurPath_
 

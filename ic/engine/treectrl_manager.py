@@ -17,7 +17,7 @@ from ic.utils import ic_str
 from ic.bitmap import ic_bmp
 
 
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 3, 2)
 
 UNKNOWN = u'Не определено'
 
@@ -857,8 +857,8 @@ class icTreeCtrlManager(object):
                 img_idx = img_cache[img_id]
             else:
                 image_list = self.getTreeCtrlImageList(ctrl=ctrl)
-                image_idx = image_list.Add(image)
+                img_idx = image_list.Add(image)
                 # Запоминаем в кеше
-                img_cache[img_id] = image_idx
-            ctrl.SetItemImage(item, image_idx)
+                img_cache[img_id] = img_idx
+            ctrl.SetItemImage(item, img_idx)
         return True
