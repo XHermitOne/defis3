@@ -9,12 +9,11 @@ import wx
 import wx.propgrid
 
 from ic.log import log
-from ic.utils import coderror
 from ic.dlg import edit_masked_txt_dlg
 
 _ = wx.GetTranslation
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_ENCODE = 'utf-8'
 

@@ -8,7 +8,7 @@
 import sys
 import wx
 import wx.propgrid
-import ic
+
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.utils import ic_time
@@ -23,7 +23,7 @@ from . import iceditcodeproperty
 from ic.engine import form_manager
 
 # Version
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # Не редактируемые поля таблицы справочника
 NOT_EDITABLE_FIELDS = ('type', 'count', 'access')
@@ -82,7 +82,7 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
         default_value = field['default']
         if field['name'] == 'cod':
             # Проверка на соответствие типа
-            if not isinstance(default_value, str) and not isinstance(default_value, unicode):
+            if not isinstance(default_value, str):
                 try:
                     default_value = str(default_value)
                 except:
@@ -92,7 +92,7 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
             property.setPropertyGrid(self.record_propertyGrid)
         elif field['type_val'] == icsqlalchemy.TEXT_FIELD_TYPE:
             # Проверка на соответствие типа
-            if not isinstance(default_value, str) and not isinstance(default_value, unicode):
+            if not isinstance(default_value, str):
                 try:
                     default_value = str(default_value)
                 except:
@@ -125,7 +125,7 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
         else:
             # Если тип не определен то просто посмотреть в текстовом виде
             # Проверка на соответствие типа
-            if not isinstance(default_value, str) and not isinstance(default_value, unicode):
+            if not isinstance(default_value, str):
                 try:
                     default_value = str(default_value)
                 except:

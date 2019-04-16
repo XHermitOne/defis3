@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Контрол выбора элемента справочника в виде выбора кодов по уровням.
+Контрол выбора кода элемента справочника одного уровня.
 """
 
 import wx
@@ -16,7 +16,7 @@ from ic.components import icwidget
 import ic.components.icResourceParser as prs
 
 from NSI.nsi_sys import nsi_images
-import NSI.nsi_sys.icspravlevelchoicectrl as parentModule
+import NSI.nsi_sys.icspravsinglelevelchoicectrl as parentModule
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
@@ -25,13 +25,13 @@ from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEd
 ic_class_type = icDefInf._icUserType
 
 #   Имя класса
-ic_class_name = 'icSpravLevelChoiceCtrl'
+ic_class_name = 'icSpravSingleLevelChoiceCtrl'
 
 #   Описание стилей компонента
 ic_class_styles = {'DEFAULT': 0}
 
 # Спецификация на ресурсное описание класса
-ic_class_spc = dict({'type': 'SpravLevelChoiceCtrl',
+ic_class_spc = dict({'type': 'SpravSingleLevelChoiceCtrl',
                      'name': 'default',
                      'activate': True,
                      'init_expr': None,
@@ -41,19 +41,19 @@ ic_class_spc = dict({'type': 'SpravLevelChoiceCtrl',
                      'sprav': None,  # Паспорт справочника-источника данных
                      'label': None,  # Заголовок области выбора справочника
                                      # если не определена, то берется как descrption из справочника
-                     'auto_select': True,    # Производить авто заполнение
+                     'n_level': 0,   # Номер уровня справочника для выбора
 
                      'on_select_code': None,  # Код, который выполняется
                                               # при заполнении кода
 
                      '__attr_types__': {0: ['name', 'type'],
                                         icDefInf.EDT_TEXTFIELD: ['description', 'label'],
-                                        icDefInf.EDT_CHECK_BOX: ['auto_select'],
                                         icDefInf.EDT_USER_PROPERTY: ['sprav'],
+                                        icDefInf.EDT_NUMBER: ['n_level'],
                                         },
                      '__events__': {'on_select_code': (None, 'onSelectCode', False),
                                     },
-                     '__parent__': parentModule.SPC_IC_SPRAVLEVELCHOICECTRL,
+                     '__parent__': parentModule.SPC_IC_SPRAVSINGLELEVELCHOICECTRL,
                      })
 
 ic_class_spc['__styles__'] = ic_class_styles
@@ -75,11 +75,10 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 1)
+
 
 # Функции редактирования
-
-
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
@@ -119,7 +118,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icSpravLevelChoiceCtrl(parentModule.icSpravLevelChoiceCtrlProto, icwidget.icWidget):
+class icSpravSingleLevelChoiceCtrl(parentModule.icSpravSingleLevelChoiceCtrlProto, icwidget.icWidget):
     """
     Описание пользовательского компонента.
 
@@ -130,7 +129,6 @@ class icSpravLevelChoiceCtrl(parentModule.icSpravLevelChoiceCtrlProto, icwidget.
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
@@ -158,8 +156,8 @@ class icSpravLevelChoiceCtrl(parentModule.icSpravLevelChoiceCtrlProto, icwidget.
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icSpravLevelChoiceCtrlProto.__init__(self, parent, id,
-                                                          size=self.size, pos=self.position, style=self.style)
+        parentModule.icSpravSingleLevelChoiceCtrlProto.__init__(self, parent, id,
+                                                                size=self.size, pos=self.position, style=self.style)
 
         #   Создаем дочерние компоненты
         if 'child' in component:
@@ -183,11 +181,11 @@ class icSpravLevelChoiceCtrl(parentModule.icSpravLevelChoiceCtrlProto, icwidget.
         prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
                              bCounter=bCounter, progressDlg=progressDlg)
 
-    def getAutoSelect(self):
+    def getNLevel(self):
         """
-        Производить автозаполнение?
+        Индекс выбираемого уровня справочника.
         """
-        return self.getICAttr('auto_select')
+        return self.getICAttr('n_level')
 
     def onSelectCode(self):
         """

@@ -12,11 +12,11 @@ import wx
 from . import nsi_dialogs_proto
 
 import ic
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.utils import ic_util
 
 #   Version
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):

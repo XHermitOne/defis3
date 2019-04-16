@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Контрол выбора элемента справочника в виде выбора кодов по уровням.
+Контрол выбора кода элемента справочника одного уровня.
 """
 
 import wx
@@ -11,33 +11,33 @@ from ic.components import icwidget
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 DEFAULT_CODE_DELIMETER = u' '
 DEFAULT_ENCODING = 'utf-8'
 
 # Спецификация
-SPC_IC_SPRAVLEVELCHOICECTRL = {'sprav': None,  # Паспорт справочника-источника данных
-                               'label': None,  # Заголовок области выбора справочника
-                                               # если не определена, то берется как descrption из справочника
-                               'auto_select': True,    # Производить авто заполнение
+SPC_IC_SPRAVSINGLELEVELCHOICECTRL = {'sprav': None,  # Паспорт справочника-источника данных
+                                     'label': None,  # Заголовок области выбора справочника
+                                                     # если не определена, то берется как descrption из справочника
+                                     'n_level': 0,   # Номер уровня справочника для выбора
 
-                               'on_select_code': None,  # Код, который выполняется
-                                                        # при заполнении кода
+                                     'on_select_code': None,  # Код, который выполняется
+                                                              # при заполнении кода
 
-                               '__parent__': icwidget.SPC_IC_WIDGET,
+                                     '__parent__': icwidget.SPC_IC_WIDGET,
 
-                               '__attr_hlp__': {'sprav': u'Паспорт справочника-источника данных',
-                                                'label': u'Заголовок области выбора справочника, если не определена, то берется как descrption из справочника',
-                                                'auto_select': u'Производить авто заполнение',
-                                                'on_select_code': u'Блок кода, который выполняется при заполнении кода справочника',
-                                                },
-                               }
+                                     '__attr_hlp__': {'sprav': u'Паспорт справочника-источника данных',
+                                                      'label': u'Заголовок области выбора справочника, если не определена, то берется как descrption из справочника',
+                                                      'n_level': u'Номер уровня справочника для выбора',
+                                                      'on_select_code': u'Код, который выполняется при заполнении кода',
+                                                      },
+                                     }
 
 
-class icSpravLevelChoiceCtrlProto(wx.StaticBox):
+class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
     """
-    Класс компонента выбора элемента справочника в виде выбора кодов по уровням.
+    Класс компонента выбора кода элемента справочника одного уровня.
     """
 
     def __init__(self, *args, **kwargs):
@@ -67,18 +67,21 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
 
         # Объект справочника
         self._sprav = None
-        # Текущий выбранный код в списковом представлении
-        self._selected_code = []
 
-        # Зарегистрированные контролы вобора кодов по уровням
-        self._choice_ctrl_list = []
+        # Родительский код справочника в списковом представлении
+        self._parent_code = [None]
+        # Текущий выбранный код в списковом представлении
+        self._selected_code = None
+
+        # Контрол вобора кодов уровня
+        self._choice = None
 
     def getSelectedCode(self):
         return tuple(self._selected_code)
 
     def setSprav(self, sprav):
         """
-        Устанвить справочник.
+        Установить справочник.
         """
         self._sprav = sprav
 
@@ -90,29 +93,32 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
                 if hasattr(self._sprav, 'description'):
                     label = self._sprav.description
                     self.SetLabel(label)
-            # Контролы уровней
-            self._selected_code = [None] * self._sprav.getLevelCount()
-            self._choice_ctrl_list = []
-            for i, level in enumerate(self._sprav.getLevels()):
+            # Контрол уровня
+            self._selected_code = None    # * self._sprav.getLevelCount()
+            # self._choice_ctrl_list = []
+            sprav_levels = self._sprav.getLevels()
+            n_level = self.getNLevel()
+            if 0 <= n_level < self._sprav.getLevelCount():
+                level = sprav_levels[n_level]
                 description = level.description if level.description else u''
                 label = wx.StaticText(self.scrolled_win, wx.ID_ANY, description,
                                       wx.DefaultPosition, wx.DefaultSize, 0)
-                level_choices = [] if i else [(rec[0], rec[1]) for rec in self._sprav.getStorage().getLevelTable()]
+                level_choices = [(rec[0], rec[1]) for rec in self._sprav.getStorage().getLevelTable()]
                 choice_id = wx.NewId()
-                choice = wx.Choice(self.scrolled_win, choice_id,
-                                   wx.DefaultPosition, wx.DefaultSize)
+                self._choice = wx.Choice(self.scrolled_win, choice_id,
+                                         wx.DefaultPosition, wx.DefaultSize)
                 for code, name in level_choices:
-                    item = choice.Append(name)
-                    choice.SetClientData(item, code)
+                    item = self._choice.Append(name)
+                    self._choice.SetClientData(item, code)
 
                 # Запомнить индекс уровня
-                choice.level_index = i
-                choice.Bind(wx.EVT_CHOICE, self.onLevelCodeChange, id=choice_id)
-                # Зарегистрировать контрол
-                self._choice_ctrl_list.append(choice)
+                self._choice.Bind(wx.EVT_CHOICE, self.onLevelCodeChange, id=choice_id)
 
                 self.sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-                self.sizer.Add(choice, 1, wx.ALL | wx.EXPAND, 5)
+                self.sizer.Add(self._choice, 1, wx.ALL | wx.EXPAND, 5)
+            else:
+                log.warning(u'Не корректно задан индекс <%s> редактируемого уровня справочника <%s>' % (n_level, self._sprav.getName()))
+
             self.scrolled_win.Layout()
             self.sizer.Fit(self.scrolled_win)
 
@@ -122,20 +128,39 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         """
         return self._sprav
 
+    def setParentCode(self, parent_code=None):
+        """
+        Установить родительский код уровня.
+        @param parent_code: Родительский код уровня.
+            Пожет задаваться в строковом и списковом варианте.
+        @return: True/False.
+        """
+        if isinstance(parent_code, list):
+            self._parent_code = parent_code
+        elif isinstance(parent_code, tuple):
+            self._parent_code = list(parent_code)
+        elif parent_code is None:
+            self._parent_code = [None]
+        elif isinstance(parent_code, str):
+            self._parent_code = self._sprav.StrCode2ListCode(parent_code) if self._sprav else [None]
+        else:
+            log.warning(u'Не поддерживаемый тип <%s> родительского кода контрола <%s>' % (parent_code.__class__.__name__, self.name))
+            return False
+        return True
+
     def getCode(self):
         """
         Выбранный код справочника.
         """
         return ''.join([subcode for subcode in self.getSelectedCode() if subcode])
 
-    def findItemIdxByCode(self, level_index, code):
+    def findItemIdxByCode(self, code):
         """
         Найти индекс элемента списка по коду.
-        @param level_index: Индекс уровня, соответствующий списку выбора.
         @param code: Код справочника.
         @return: Индекс элемента списка или -1 если не найдено.
         """
-        choice_ctrl = self._choice_ctrl_list[level_index]
+        choice_ctrl = self._choice
         for item in range(choice_ctrl.GetCount()):
             find_code = choice_ctrl.GetClientData(item)
             if find_code == code:
@@ -158,10 +183,10 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
             # в функции selectLevelChoice. Поэтому
             # здесь инициализировать его не надо.
             selected_code = self._sprav.StrCode2ListCode(code)
-            for i, subcode in enumerate(selected_code):
-                item = self.findItemIdxByCode(i, subcode)
-                if item >= 0:
-                    self.selectLevelChoice(i, item, auto_select=False)
+            # for i, subcode in enumerate(selected_code):
+            item = self.findItemIdxByCode(selected_code)
+            if item >= 0:
+                self.selectLevelChoice(item)
             return True
         return False
 
@@ -199,24 +224,21 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         for i in range(min_index, max_index+1):
             # Очистить коды этих уровней
             self._selected_code[i] = None
-            if self._choice_ctrl_list[i]:
-                # Очистить списки контролов выбора
-                self._choice_ctrl_list[i].Clear()
+            # if self._choice_ctrl_list[i]:
+            # Очистить списки контролов выбора
+            self._choice.Clear()
         return True
 
     def clearSelect(self):
         """
         Очистить выбор контролов.
         """
-        for choice_ctrl in self._choice_ctrl_list:
-            choice_ctrl.SetSelection(wx.NOT_FOUND)
+        self._choice.SetSelection(wx.NOT_FOUND)
         return True
 
-    def initLevelChoice(self, level_index, auto_select=True):
+    def initLevelChoice(self):
         """
         Инициализировать список выбора.
-        @param level_index: Индекс уровня, соответствующий списку выбора
-        @param auto_select: Автоматический выбор первого элемента списка.
         @return: True/False.
         """
         if self._sprav.isEmpty():
@@ -225,40 +247,30 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
             log.warning(u'Пустой справочник. Не возможно инициализировать список выбора')
             return False
 
-        if level_index < 0:
-            level_index = 0
-        elif level_index >= len(self._selected_code):
-            level_index = len(self._selected_code)-1
-
         # Получить контрол выбора кода уровня
-        choice_ctrl = self._choice_ctrl_list[level_index]
+        choice_ctrl = self._choice
         if choice_ctrl:
-            str_code = ''.join(self._selected_code[:level_index])
+            str_code = ''.join(self._selected_code)
             level_choices = [(rec[0][len(str_code):], rec[1]) for rec in self._sprav.getStorage().getLevelTable(str_code)]
             for code, name in level_choices:
                 item = choice_ctrl.Append(name)
                 choice_ctrl.SetClientData(item, code)
-            if auto_select:
-                self.selectLevelChoice(level_index, auto_select=auto_select)
+            # if auto_select:
+            #     self.selectLevelChoice()
         return True
 
-    def selectLevelChoice(self, level_index, item=0, auto_select=True):
+    def selectLevelChoice(self, item=0):
         """
         Выбрать код уровня.
-        @param level_index: Индекс уровня.
         @param item: Индекс выбирамого пункта.
-        @param auto_select: Автоматический выбор первого элемента списка
-            в последующих контролах.
         @return: True/False.
         """
-        if level_index >= len(self._selected_code):
-            return False
-        choice_ctrl = self._choice_ctrl_list[level_index]
+        choice_ctrl = self._choice
         choice_ctrl.SetSelection(item)
         # Заполнить код уровня
         item_code = self.getChoiceSelectedCode(choice_ctrl, item)
         # print 'DBG. Item code:', item, item_code
-        self._selected_code[level_index] = item_code
+        self._selected_code = item_code
         # print 'DBG. Selected code', self._selected_code
 
         # Заполнили код и надо выполнить код
@@ -269,23 +281,22 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         self.clearLevelChoice(i)
         # После заполнения кода надо определить список следующего уровня
         if i < len(self._selected_code):
-            self.initLevelChoice(i, auto_select=auto_select)
+            self.initLevelChoice()
 
-    def getAutoSelect(self):
+    def getNLevel(self):
         """
-        Производить ато-заполнение?
-        @return: True/False.
+        Индекс редактируемого уровня справочника.
+        Уровни справочника индекисруются от 0.
+        @return: Индекс редактируемого уровня справочника.
         """
-        return True
+        return 0
 
     def onLevelCodeChange(self, event):
         """
         Обработчик смены кода уровня.
         """
         choice_ctrl = event.GetEventObject()
-        self.selectLevelChoice(choice_ctrl.level_index,
-                               choice_ctrl.GetSelection(),
-                               auto_select=self.getAutoSelect())
+        self.selectLevelChoice(choice_ctrl.GetSelection())
         event.Skip()
 
     def onSelectCode(self):
@@ -304,7 +315,7 @@ def test():
 
     frm = wx.Frame(None, -1)
 
-    ctrl = icSpravLevelChoiceCtrlProto(frm, -1)
+    ctrl = icSpravSingleLevelChoiceCtrlProto(frm, -1)
     ctrl.SetLabel(u'Тест')
 
     frm.Show()
