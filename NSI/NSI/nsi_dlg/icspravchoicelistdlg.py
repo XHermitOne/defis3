@@ -9,14 +9,18 @@ import sys
 import os
 import os.path
 import wx
-from . import nsi_dialogs_proto
+
+try:
+    from . import nsi_dialogs_proto
+except ImportError:
+    import nsi_dialogs_proto
 
 import ic
 from ic.log import log
 from ic.utils import ic_util
 
 #   Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):

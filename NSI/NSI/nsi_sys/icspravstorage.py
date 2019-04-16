@@ -20,7 +20,7 @@ from ic.utils import ic_extend
 from . import gen_nsi_table_res
 
 # Версия
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 2, 1)
 
 
 class icSpravStorageInterface:
@@ -456,6 +456,19 @@ class icSpravSQLStorage(icSpravStorageInterface,
             log.fatal(u'Ошибка определения таблицы данных уровня %s справочника %s.' % (LevelCod_,
                                                                                               self.getSpravParent().getName()))
             return None
+
+    def record_tuple2record_dict(self, record_tuple):
+        """
+        Преобразование записи в виде кортежа в словарь.
+        @param record_tuple: Запись в виде кортежа.
+        @return: Запись в виде словаря.
+        """
+        try:
+            field_names = self.getSpravFieldNames()
+            return dict([(field_name, record_tuple[i])for i, field_name in enumerate(field_names)])
+        except:
+            log.fatal(u'Ошибка преобразования кортежа записи %s к словарю' % str(record_tuple))
+        return dict()
 
     def _getLevelTabDatetime(self, LevelCod_, DateTime_):
         """
@@ -913,7 +926,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         try:
             recs = None
             if DateTime_ is None:
-                recs=self._getRecByFldVal(FieldName_, FieldValue_)
+                recs = self._getRecByFldVal(FieldName_, FieldValue_)
             else:
                 recs = self._getRecByFldValDatetime(FieldName_, FieldValue_, DateTime_)
 
@@ -934,8 +947,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
         @param FieldValue_: Значение поля.
         @return: Возвращает словарь записи или None в случае ошибки.
         """
+        sql = None
         try:
-            sql = None
             # Имя таблицы данных
             tab_name = self._tab.getDBTableName()
 
@@ -972,6 +985,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         @param DateTime_: Период актуальности.
         @return: Возвращает словарь записи или None в случае ошибки.
         """
+        sql = None
         try:
             if not self._tab_time:
                 log.warning(u'Для справочника [%s] не определена таблица временных значений.' % self.getSpravParent().getName())
