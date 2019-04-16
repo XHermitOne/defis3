@@ -12,6 +12,8 @@ from ic.dlg import ic_dlg
 from ic.utils import ic_util
 from ic.engine import ic_user
 
+__version__ = (0, 1, 1, 1)
+
 
 def select_single_level_choice_dlg(parent=None, sprav=None, n_level=0, parent_code=None):
     """
@@ -47,7 +49,7 @@ def select_single_level_choice_dlg(parent=None, sprav=None, n_level=0, parent_co
 
         select_idx = ic_dlg.icSingleChoiceIdxDlg(parent, sprav.getDescription(), level.getDescription(), choices)
         if select_idx >= 0:
-            selected_code = records[select_idx].get('code', None)
+            selected_code = records[select_idx].get(sprav_storage.getCodeFieldName(), None)
         return selected_code
     except:
         log.fatal(u'Ошибка выбора кода из одного уровня справочника.')

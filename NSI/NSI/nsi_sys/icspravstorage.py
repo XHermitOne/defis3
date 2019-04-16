@@ -20,7 +20,7 @@ from ic.utils import ic_extend
 from . import gen_nsi_table_res
 
 # Версия
-__version__ = (1, 1, 2, 1)
+__version__ = (1, 1, 2, 2)
 
 
 class icSpravStorageInterface:
@@ -849,6 +849,13 @@ class icSpravSQLStorage(icSpravStorageInterface,
             return ['cod', 'name']+field_names+['access']
         else:
             return ['cod', 'name', 's1', 's2', 's3', 'n1', 'n2', 'n3', 'f1', 'f2', 'f3', 'access']
+
+    def getCodeFieldName(self):
+        """
+        Имя поля кода справочника.
+        @return: Имя поля кода справочника.
+        """
+        return 'cod'
 
     def _str(self, Value_):
         if isinstance(Value_, bytes):
