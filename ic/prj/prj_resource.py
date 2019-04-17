@@ -42,7 +42,7 @@ from . import menuImpNode
 
 from . import new_metadata_resource_dlg
 
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 4, 1)
 
 _ = wx.GetTranslation
 
@@ -228,6 +228,10 @@ class PrjResource(prj_node.PrjNode):
         if not new_name:
             new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
                                              Text_=u'Введите наименование ресурса', Default_=self.name)
+            if new_name is None:
+                # Нажата ОТМЕНА
+                return False
+
         if new_name:
             self.name = new_name
 
@@ -516,6 +520,13 @@ class PrjResource(prj_node.PrjNode):
         return u''
 
 
+# Словарь выбора тиблиц
+TableTypeChoice = {u'Стандартная таблица': ic_tab.ic_class_spc,
+                   u'Таблица стандартного справочника': ic_tab.SPC_IC_NSI_TABLE,
+                   None: None,
+                   }
+
+
 class PrjTabRes(PrjResource):
     """
     Таблица.
@@ -533,6 +544,32 @@ class PrjTabRes(PrjResource):
         self.typ = 'tab'
         # Шаблон для заполнения по умолчанию
         self.template = ic_tab.ic_class_spc
+
+    def create(self, new_name=None):
+        """
+        Создание ресурса.
+        @param new_name: Указание нового имени созданного узла.
+        """
+        # Сначал спросить какую Таблицу будем создавать а затем создать ее
+        global TableTypeChoice
+        spc = TableTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+                                                       u'ТИПЫ ТАБЛИЦ', u'Выберите из списка типов таблиц:',
+                                                       [txt for txt in TableTypeChoice.keys() if isinstance(txt, str)])]
+        if spc is None:
+            # Нажата ОТМЕНА
+            return False
+
+        if not new_name:
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
+                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+            if new_name is None:
+                # Нажата ОТМЕНА
+                return False
+
+        self._setTemplateSpc(spc, new_name)
+
+        # Создать
+        return PrjResource.create(self, new_name=new_name)
 
     def delete(self):
         """
@@ -607,9 +644,15 @@ class PrjDBRes(PrjResource):
         spc = DBTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                     u'ТИПЫ БД', u'Выберите из списка типов БД:',
                                                     [txt for txt in DBTypeChoice.keys() if isinstance(txt, str)])]
+        if spc is None:
+            # Нажата ОТМЕНА
+            return False
         if not new_name:
             new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
                                              Text_=u'Введите наименование ресурса', Default_=self.name)
+            if new_name is None:
+                # Нажата ОТМЕНА
+                return False
         self._setTemplateSpc(spc, new_name)
 
         # Создать
@@ -767,9 +810,16 @@ class PrjWinRes(PrjResource):
                                                      u'ВИДЫ ГЛАВНОГО ОКНА',
                                                      u'Выберите из списка типов главного окна:',
                                                      [txt for txt in WinTypeChoice.keys() if isinstance(txt, str)])]
+        if spc is None:
+            # Нажата ОТМЕНА
+            return False
         if not new_name:
             new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
                                              Text_=u'Введите наименование ресурса', Default_=self.name)
+            if new_name is None:
+                # Нажата ОТМЕНА
+                return False
+
         self._setTemplateSpc(spc, new_name)
 
         # Создать
@@ -826,9 +876,15 @@ class PrjMenuRes(PrjResource):
                                                       u'ВИДЫ ГЛАВНОГО МЕНЮ',
                                                       u'Выберите из списка видов главного меню:',
                                                       [txt for txt in MenuTypeChoice.keys() if isinstance(txt, str)])]
+        if spc is None:
+            # Нажата ОТМЕНА
+            return False
         if not new_name:
             new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
                                              Text_=u'Введите наименование ресурса', Default_=self.name)
+            if new_name is None:
+                # Нажата ОТМЕНА
+                return False
         self._setTemplateSpc(spc, new_name)
 
         # Создать
@@ -985,6 +1041,10 @@ class PrjMetaDataRes(PrjResource):
         default_name = new_name if new_name else self.name
         new_name, res = new_metadata_resource_dlg.new_metadata_resource_dlg(parent=self.getPrjTreeCtrl(),
                                                                             default_resource_name=default_name)
+        if new_name is None and res is None:
+            # Нажата ОТМЕНА
+            return False
+
         if res:
             self.template = res
 

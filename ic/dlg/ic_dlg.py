@@ -18,7 +18,7 @@ import wx.lib.imagebrowser
 from ic.log import log
 
 
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 
 def icFileDlg(Win_=None, Title_='', Filter_='', DefaultPath_=''):
@@ -173,7 +173,7 @@ def icTextEntryDlg(Win_=None, Title_='', Text_='', Default_=''):
     @param Title_: Заголовок диалогового окна.
     @param Text_: Текст диалога.
     @param Default_: Значение по умолчанию.
-    @return: Возвращает введеную строку, если нажата отмена, то пустую строку.
+    @return: Возвращает введеную строку, если нажата отмена, то None.
     """
     dlg = None
     win_clear = False
@@ -189,7 +189,7 @@ def icTextEntryDlg(Win_=None, Title_='', Text_='', Default_=''):
         if dlg.ShowModal() == wx.ID_OK:
             txt = dlg.GetValue()
             return txt
-        return ''
+        return None
     finally:
         if dlg:
             dlg.Destroy()

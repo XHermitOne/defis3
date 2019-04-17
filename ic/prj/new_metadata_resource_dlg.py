@@ -72,6 +72,7 @@ def new_metadata_resource_dlg(parent=None, default_resource_name=None):
     @param parent: Родительское окно.
     @param default_resource_name: Имя ресурса по умолчанию.
     @return: Кортеж: (имя ресурса, ресурс выбранного компонента)
+        Либо (None, None) В случае ошибки или нажата ОТМЕНА.
     """
     try:
         dlg = icNewMetadataResourceDlg(parent=parent)
@@ -79,7 +80,11 @@ def new_metadata_resource_dlg(parent=None, default_resource_name=None):
         if default_resource_name:
             dlg.name_textCtrl.SetValue(default_resource_name)
 
-        dlg.ShowModal()
+        result = dlg.ShowModal()
+
+        if result == wx.ID_CANCEL:
+            # Нажата ОТМЕНА
+            return None, None
 
         # Имя ресурса
         name = dlg.name_textCtrl.GetValue()
@@ -94,7 +99,7 @@ def new_metadata_resource_dlg(parent=None, default_resource_name=None):
         return name, res
     except:
         log.fatal(u'Ошибка вызова диалогового окна создания ресурса метаданных')
-    return None
+    return None, None
 
 
 def test(parent=None):

@@ -19,6 +19,8 @@
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
 """
+
+import copy
 import wx
 from ic.components import icwidget
 from ic.utils import util
@@ -31,6 +33,8 @@ from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.engine import ic_user
 from ic.log import log
+
+from ic.components.user import ic_field_wrp
 
 _ = wx.GetTranslation
 
@@ -97,7 +101,73 @@ ic_can_contain = ['Field', 'Link']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 1, 2, 1)
+
+# ВНИМАНИЕ! Для таблиц хранения справочников создадим
+# предварительно заполненную спецификацию
+SPC_IC_NSI_TABLE = copy.deepcopy(ic_class_spc)
+SPC_IC_NSI_TABLE['description'] = u'Таблица хранения справочника'
+# Добавляем поля
+ic_cod_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
+ic_cod_field_spc['name'] = 'cod'
+ic_cod_field_spc['description'] = u'Код справочника'
+ic_cod_field_spc['label'] = u'Код'
+ic_cod_field_spc['type_val'] = 'T'
+
+ic_type_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
+ic_type_field_spc['name'] = 'type'
+ic_type_field_spc['description'] = u'Тип справочника'
+ic_type_field_spc['label'] = u'Тип'
+ic_type_field_spc['type_val'] = 'T'
+
+ic_name_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
+ic_name_field_spc['name'] = 'name'
+ic_name_field_spc['description'] = u'Наименование'
+ic_name_field_spc['label'] = u'Наименование'
+ic_name_field_spc['type_val'] = 'T'
+
+ic_count_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
+ic_count_field_spc['name'] = 'count'
+ic_count_field_spc['description'] = u'Количество ссылок на строку справочника'
+ic_count_field_spc['label'] = u'Счетчик'
+ic_count_field_spc['type_val'] = 'I'
+
+ic_access_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
+ic_access_field_spc['name'] = 'access'
+ic_access_field_spc['description'] = u'Права доступа'
+ic_access_field_spc['label'] = u'Доступ'
+ic_access_field_spc['type_val'] = 'T'
+
+#
+SPC_IC_NSI_TABLE['child'] = [ic_cod_field_spc,
+                             ic_type_field_spc,
+                             ic_name_field_spc,
+                             ic_count_field_spc,
+                             ic_access_field_spc]
+
+for i in range(1, 6):
+    ic_s_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
+    ic_s_field_spc['name'] = 's%d' % i
+    ic_s_field_spc['description'] = u'Текстовое значение %d' % i
+    ic_s_field_spc['label'] = u'S%d' % i
+    ic_s_field_spc['type_val'] = 'T'
+    SPC_IC_NSI_TABLE['child'].append(ic_s_field_spc)
+
+for i in range(1, 6):
+    ic_n_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
+    ic_n_field_spc['name'] = 'n%d' % i
+    ic_n_field_spc['description'] = u'Целое значение %d' % i
+    ic_n_field_spc['label'] = u'N%d' % i
+    ic_n_field_spc['type_val'] = 'I'
+    SPC_IC_NSI_TABLE['child'].append(ic_n_field_spc)
+
+for i in range(1, 6):
+    ic_f_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
+    ic_f_field_spc['name'] = 'f%d' % i
+    ic_f_field_spc['description'] = u'Вещественное значение %d' % i
+    ic_f_field_spc['label'] = u'F%d' % i
+    ic_f_field_spc['type_val'] = 'F'
+    SPC_IC_NSI_TABLE['child'].append(ic_f_field_spc)
 
 
 # --- Функции редактирования ---
