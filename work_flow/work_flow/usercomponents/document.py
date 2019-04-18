@@ -184,7 +184,16 @@ ic_class_spc = dict({'type': 'Document',
                                                                  'is_page_grp_view', 'is_page_grp_search',
                                                                  'auto_group'],
                                         },
-                     '__events__': {},
+                     '__events__': {'do_init': (None, 'doInit', False),
+                                    'do_edit': (None, 'doEdit', False),
+                                    'do_view': (None, 'doView', False),
+                                    'do_search': (None, 'doSearch', False),
+                                    'do_choice': (None, 'doChoice', False),
+                                    'valid_init': (None, 'validInit', False),
+                                    'valid_edit': (None, 'validEdit', False),
+                                    'valid_del': (None, 'validDel', False),
+                                    'on_change_state': (None, 'doOnChangeState', False),
+                                    },
                      '__parent__': parentModule.SPC_IC_DOCUMENT,
                      '__attr_hlp__': {'db': u'БД хранения данных',
                                       'auto_group': u'Автоматически создавать компоненты группировки в формах',
@@ -232,7 +241,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'TABRequisite', 'REFRequisite',
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования

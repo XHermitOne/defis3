@@ -47,8 +47,7 @@ ic_class_name = 'icBusinessObj'
 ic_class_styles = {'DEFAULT': 0}
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'__events__': {},
-                     'type': 'BusinessObj',
+ic_class_spc = dict({'type': 'BusinessObj',
                      'name': 'default',
                      'child': [],
                      'activate': 1,
@@ -112,6 +111,15 @@ ic_class_spc = dict({'__events__': {},
                                                                  'auto_group'],
                                         icDefInf.EDT_NUMBER: ['limit'],
                                         },
+                     '__events__': {'do_init': (None, 'doInit', False),
+                                    'do_edit': (None, 'doEdit', False),
+                                    'do_view': (None, 'doView', False),
+                                    'do_search': (None, 'doSearch', False),
+                                    'do_choice': (None, 'doChoice', False),
+                                    'valid_init': (None, 'validInit', False),
+                                    'valid_edit': (None, 'validEdit', False),
+                                    'valid_del': (None, 'validDel', False),
+                                    },
                      '__parent__': parentModule.SPC_IC_BUSINESSOBJ,
                      })
                     

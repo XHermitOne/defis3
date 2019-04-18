@@ -19,7 +19,7 @@ from ic.engine import ic_user
 from ic.utils import ic_extend
 
 # Версия
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 2)
 
 # Спецификация
 SPC_IC_STATEOBJ = {'type': 'StateObj',
@@ -29,6 +29,8 @@ SPC_IC_STATEOBJ = {'type': 'StateObj',
                    'on_change_state': None,
 
                    '__parent__': icbusinessobj.SPC_IC_BUSINESSOBJ,
+                   '__attr_hlp__': {'on_change_state': u'Обработчик события смены состояния объекта',
+                                    },
                    }
 
 
