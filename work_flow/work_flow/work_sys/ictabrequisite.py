@@ -1,4 +1,4 @@
-#!/usr/bin/env python3"""
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -31,7 +31,7 @@ from ic.kernel import io_prnt
 import work_flow.work_sys.icworkbase as icworkbase
 
 # Версия
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # --- Specifications ---
 SPC_IC_TAB_REQUISITE = {'type': 'TABRequisite',
@@ -56,6 +56,15 @@ SPC_IC_TAB_REQUISITE = {'type': 'TABRequisite',
                         'table': None,  # Паспорт таблицы хранения, если None то генерируется по имени реквизита
     
                         '__parent__': icworkbase.SPC_IC_WORKBASE,
+                        '__attr_hlp__': {'grp_title': u'Реквизиты могут группироваться по страницам',
+                                         'label': u'Надпись реквизита',
+
+                                         'is_init': u'Реквизит является инициализируемым пользователем',
+                                         'is_view': u'Реквизит можно просматривать на форме просмотра',
+                                         'is_edit': u'Реквизит можно редактировать на форме редактировать',
+
+                                         'table': u'Паспорт таблицы хранения, если None то генерируется по имени реквизита',
+                                         },
                         }
 
 # --- Функции ---

@@ -92,7 +92,16 @@ ic_class_spc = dict({'type': 'REFRequisite',
                                                                  'is_search', 'id_attr', 'is_description'],
                                          icDefInf.EDT_USER_PROPERTY: ['obj_psp'],
                                         },
-                     '__events__': {},
+                     '__events__': {'init': (None, None, False),
+                                    'ctrl': (None, None, False),
+                                    'del': (None, None, False),
+                                    'post_init': (None, None, False),
+                                    'post_ctrl': (None, None, False),
+                                    'post_del': (None, None, False),
+
+                                    'set_value': (None, None, False),
+                                    'get_value': (None, None, False),
+                                    },
                      '__parent__': parentModule.SPC_IC_REF_REQUISITE,
                      '__attr_hlp__': {'grp_title': u'Заголовок страницы',
                                       'label': u'Надпись реквизита',
@@ -131,7 +140,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 2)
 
 # Функции редактирования
 

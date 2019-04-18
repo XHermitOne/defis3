@@ -300,7 +300,23 @@ ic_class_spc = dict({'type': 'NodeDocument',
                                                                  'is_page_grp_view', 'is_page_grp_search',
                                                                  'auto_group'],
                                         },
-                     '__events__': {},
+                     '__events__': {'init': (None, None, False),
+                                    'ctrl': (None, None, False),
+                                    'del': (None, None, False),
+                                    'post_init': (None, None, False),
+                                    'post_ctrl': (None, None, False),
+                                    'post_del': (None, None, False),
+
+                                    'do_init': (None, 'doInit', False),
+                                    'do_edit': (None, 'doEdit', False),
+                                    'do_view': (None, 'doView', False),
+                                    'do_search': (None, 'doSearch', False),
+                                    'do_choice': (None, 'doChoice', False),
+                                    'valid_init': (None, 'validInit', False),
+                                    'valid_edit': (None, 'validEdit', False),
+                                    'valid_del': (None, 'validDel', False),
+                                    'on_change_state': (None, 'doOnChangeState', False),
+                                    },
                      '__parent__': parentModule.SPC_IC_DOCUMENT,
                      '__attr_hlp__': {'db': u'БД хранения данных',
                                       'auto_group': u'Автоматически создавать компоненты группировки в формах',
@@ -348,7 +364,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'TABRequisite', 'REFRequisite',
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 2)
 
 # Функции редактирования
 
