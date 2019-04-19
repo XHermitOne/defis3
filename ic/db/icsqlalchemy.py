@@ -52,7 +52,7 @@ from ic.components import icwidget
 
 from . import icdb
 
-__version__ = (1, 1, 1, 4)
+__version__ = (1, 1, 2, 1)
 
 # Типы таблиц
 TABLE_TYPE = 'Table'
@@ -73,11 +73,19 @@ SPC_IC_TABLE = {'type': TABLE_TYPE,
                 'table': None,
                 'import': None,
                 'filter': None,
-                'child': [],    # Имена дочерних таблиц, Если организуется каскад, то обязательно!
+                'children': [],    # Имена дочерних таблиц, Если организуется каскад, то обязательно!
                 'source': None,
                 'idx': None,
 
                 '__parent__': icwidget.SPC_IC_SIMPLE,
+                '__attr_hlp__': {'scheme': u'',
+                                 'table': u'Альтернативное наименование таблицы в БД',
+                                 'import': u'',
+                                 'filter': u'',
+                                 'source': u'Паспорт БД',
+                                 'idx': u'',
+                                 'children': u'Имена дочерних таблиц, Если организуется каскад, то обязательно!',
+                                 },
                 }
 
 # Типы данных полей
@@ -123,6 +131,8 @@ SPC_IC_FIELD = {'type': FIELD_TYPE,
                                  'label': u'Надпись в формах',
                                  'unique': u'Уникальность значения поля в таблице',
                                  'nullable': u'Поле может иметь значение NULL?',
+                                 'type_val': u'Тип хранимого значения',
+                                 'len': u'Длина хранимого значения',
                                  },
                 }
 
@@ -348,7 +358,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         name = FieldRes_['field']
         if name is None:
             name = FieldRes_['name'].lower()
-        log.info(u'Создание поля <%s>' % name)
+        # log.info(u'Создание поля <%s>' % name)
         # Проверка на корректность создания поля
         if 'activate' in FieldRes_:
             if FieldRes_['activate'] in (0, False, 'false', 'FALSE', '0'):
@@ -679,6 +689,12 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return None
         return Value_
 
+    def _bool(self, Value_):
+        try:
+            return bool(Value_)
+        except TypeError:
+            return Value_
+
     _fieldTypeConvert = {TEXT_FIELD_TYPE: _str,
                          FLOAT_FIELD_TYPE: _float,
                          INT_FIELD_TYPE: _int,
@@ -687,7 +703,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                          BINARY_FIELD_TYPE: _bin,
                          PICKLE_FIELD_TYPE: _pickle,
                          BIGINT_FIELD_TYPE: _int,
-                         BOOLEAN_FIELD_TYPE: _int,
+                         BOOLEAN_FIELD_TYPE: _bool,
                          }
 
     def _prepareRecData(self, RecData_):

@@ -39,7 +39,7 @@ from ic.log import log
 
 _ = wx.GetTranslation
 
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 #   Определяем словарь компонентов, которые могут парсится
 componentModulDict = None
@@ -643,7 +643,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
             max_elements += 10
         progress.icOpenProgressBar(_('Create form: <%s>') % objRes['name'], 0, max_elements+1)
     else:
-        log.debug(u'Сборка объекта <%s>' % objRes['name'])
+        log.info(u'Сборка объекта <%s>' % objRes['name'])
 
     if parent:
         try:
@@ -712,7 +712,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
     if bIndicator:
         progress.icCloseProgressBar()
     else:
-        log.debug(u'Завершена сборка объекта <%s>' % objRes['name'])
+        log.info(u'Завершена сборка объекта <%s>' % objRes['name'])
 
     return obj
 
@@ -909,7 +909,8 @@ def icResourceParser(parent, components, sizer=None, logType=0,
             if bCounter:
                 progress.icUpdateProgressBar(u'Создаем компонент: <%s>' % name)
             else:
-                log.debug(u'Создаем компонент: <%s> type: <%s>' % (name, component['type']))
+                # log.info(u'Создаем компонент: <%s> type: <%s>' % (name, component['type']))
+                pass
 
             # Оконные компоненты
             if parent is None and component['type'] in ('Panel', 'Window',

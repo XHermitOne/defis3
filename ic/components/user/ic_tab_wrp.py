@@ -75,7 +75,13 @@ ic_class_spc = {'type': 'Table',
                 'idx': None,
 
                 '__styles__': ic_class_styles,
-                '__events__': {},
+                '__events__': {'init': (None, None, False),
+                               'ctrl': (None, None, False),
+                               'del': (None, None, False),
+                               'post_init': (None, None, False),
+                               'post_ctrl': (None, None, False),
+                               'post_del': (None, None, False),
+                               },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['import', 'filter',
                                                             'description'],
                                    icDefInf.EDT_PY_SCRIPT: ['table'],
@@ -102,7 +108,7 @@ ic_can_contain = ['Field', 'Link']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 2, 3)
 
 # ВНИМАНИЕ! Для таблиц хранения справочников создадим
 # предварительно заполненную спецификацию

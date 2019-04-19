@@ -88,18 +88,21 @@ ic_dt_state_requisite_spc['name'] = 'dt_state'
 ic_dt_state_requisite_spc['type_val'] = 'DateTime'
 ic_dt_state_requisite_spc['description'] = u'Дата-время последней смены состояния'
 ic_dt_state_requisite_spc['label'] = u'Дата-время последней смены состояния'
+ic_dt_state_requisite_spc['default'] = u'@datetime.datetime.now()'
 
 # Спецификация реквизита имени компьютера
 ic_comp_requisite_spc = copy.deepcopy(requisite.ic_class_spc)
 ic_comp_requisite_spc['name'] = 'computer'
 ic_comp_requisite_spc['description'] = u'Компьютер'
 ic_comp_requisite_spc['label'] = u'Компьютер'
+ic_comp_requisite_spc['default'] = u'@ic.utils.system.getComputerName()'
 
 # Спецификация реквизита имени пользователя
 ic_user_requisite_spc = copy.deepcopy(requisite.ic_class_spc)
 ic_user_requisite_spc['name'] = 'username'
 ic_user_requisite_spc['description'] = u'Пользователь'
 ic_user_requisite_spc['label'] = u'Пользователь'
+ic_user_requisite_spc['default'] = u'@ic.engine.ic_user.getCurUserName()'
 
 # Спецификация объекта
 ic_class_spc = dict({'type': 'StateObj',
@@ -235,7 +238,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'TABRequisite', 'REFRequisite']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # Функции редактирования
 

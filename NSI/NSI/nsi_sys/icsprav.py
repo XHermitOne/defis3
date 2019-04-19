@@ -24,20 +24,28 @@ from NSI.nsi_dlg import icspraveditdlg
 from NSI.nsi_dlg import icspravchoicetreedlg
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Спецификация
 SPC_IC_SPRAV = {'type': 'SpravDefault',
                 'name': 'default',
                 'description': '',      # Описание справочника
-                'table': None,          # Имя таблицы храниения данных
-                'db': None,             # Имя БД хранения данных
+                'table': None,          # Паспорт таблицы храниения данных
+                'db': None,             # Паспорт БД хранения данных
                 'cache': True,          # Автоматически кэшировать?
                 'is_tab_time': False,   # Есть ли у справочника таблица временных значений?
                 'cache_frm': True,      # Автоматически кешировать формы?
                 'choice_form': 'spravChoiceDlgStd',     # Форма для просмотра и выбора кода справочника
                 'edit_form': 'spravEditDlgStd',         # Форма для редактирования справочника
                 '__parent__': icwidget.SPC_IC_SIMPLE,
+                '__attr_hlp__': {'table': u'Паспорт таблицы храниения данных',
+                                 'db': u'Паспорт БД хранения данных',
+                                 'cache': u'Автоматически кэшировать?',
+                                 'is_tab_time': u'Есть ли у справочника таблица временных значений?',
+                                 'cache_frm': u'Автоматически кешировать формы?',
+                                 'choice_form': u'Форма для просмотра и выбора кода справочника',
+                                 'edit_form': u'Форма для редактирования справочника',
+                                 },
                 }
 
 
@@ -1016,3 +1024,23 @@ class icSpravPrototype(icSpravInterface):
         log.warning(u'У объекта справочника [%s] не определено хранилище.' % self.getName())
         return None
 
+    def findCodes(self, **field_values):
+        """
+        Поиск кода по нескольким полям.
+        @param field_values: Словарь значений полей.
+            Например:
+                {
+                    'name': u'ОАО "Рога и копыта"',
+                    'inn': '1234567890',
+                    ...
+                }
+            Поиск производиться на точное сравнение по <И>.
+        @return: Список найденных кодов соответствующих искомому значению.
+            Или None в случае ошибки.
+        """
+        storage = self.getStorage()
+        if storage is not None:
+            return storage.find_code(**field_values)
+        else:
+            log.warning(u'Не определено хранилище в справочнике <%s>' % self.getName())
+        return None

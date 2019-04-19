@@ -60,7 +60,16 @@ ic_class_spc = {'type': icsqlalchemy.FIELD_TYPE,
                 'idx': None,
 
                 '__styles__': ic_class_styles,
-                '__events__': {},
+                '__events__': {'init': (None, None, False),
+                               'ctrl': (None, None, False),
+                               'del': (None, None, False),
+                               'post_init': (None, None, False),
+                               'post_ctrl': (None, None, False),
+                               'post_del': (None, None, False),
+
+                               'getvalue': (None, None, False),
+                               'setvalue': (None, None, False),
+                               },
                 '__brief_attrs__': ['name', 'type_val', 'description'],
                 '__lists__': {'store': ['', ''],
                               'type_val': list(icsqlalchemy.FIELD_VALUES_ALL_TYPES),
@@ -101,7 +110,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 2)
 
 
 class icField(icwidget.icSimple):

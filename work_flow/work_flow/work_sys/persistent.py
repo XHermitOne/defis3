@@ -809,8 +809,8 @@ class icObjPersistent(icObjPersistentPrototype):
                 session = tab.db.getSession()
                 session.begin()
 
-                if ic_mode.isDebugMode():
-                    log.info(u'Meta-object [%s] Add data: %s' % (self.name, data_dict))
+                # if ic_mode.isDebugMode():
+                #     log.info(u'Meta-object [%s] Add data: %s' % (self.name, data_dict))
 
                 result = self._addCascadeData(tab, data_dict)
                 
