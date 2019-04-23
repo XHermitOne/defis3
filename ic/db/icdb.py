@@ -38,9 +38,9 @@ from .icMySQL import SPC_IC_MYSQL
 
 import ic
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
-DB_TYPES = [SQLITE_DB_TYPE, POSTGRES_DB_TYPE, MSSQL_DB_TYPE, MYSQL_DB_TYPE]
+DB_TYPES = (SQLITE_DB_TYPE, POSTGRES_DB_TYPE, MSSQL_DB_TYPE, MYSQL_DB_TYPE)
 
 # URL. Драйверы БД
 DEFAULT_DB_URL_DRIVER = 'postgresql'
