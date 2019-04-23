@@ -23,6 +23,9 @@ ic_class_name = 'icCubeAggregate'
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'CubeAggregate',
                 'name': 'default',
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
 
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],

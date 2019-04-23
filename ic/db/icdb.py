@@ -38,7 +38,7 @@ from .icMySQL import SPC_IC_MYSQL
 
 import ic
 
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 2, 1)
 
 DB_TYPES = (SQLITE_DB_TYPE, POSTGRES_DB_TYPE, MSSQL_DB_TYPE, MYSQL_DB_TYPE)
 
@@ -342,6 +342,51 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
 
         url_obj = sqlalchemy.engine.url.URL(**url)
         return str(url_obj)
+
+    def getConnectionDict(self, DBRes_=None):
+        """
+        Создать по ресурсу БД словарь описания связи с БД.
+        Эта функция необходима для получения словаря описания связи и
+        последующем его сохранении в настроечных файлах.
+        @param DBRes_: Ресурс БД.
+        @return: Словарь атрибутов связи с БД.
+        """
+        conn_dict = dict()
+        conn_dict['drivername'] = self._connectionTypesCreate.setdefault(DBRes_['type'], None)
+        if conn_dict['drivername'] is None:
+            log.warning(u'Тип драйвера БД не поддерживается.')
+            return None
+
+        if 'user' in DBRes_:
+            conn_dict['username'] = DBRes_['user']
+        if 'password' in DBRes_:
+            conn_dict['password'] = DBRes_['password']
+        if 'host' in DBRes_:
+            conn_dict['host'] = DBRes_['host']
+        if 'port' in DBRes_:
+            conn_dict['port'] = DBRes_['port']
+        if 'dbname' in DBRes_:
+            conn_dict['database'] = DBRes_['dbname']
+        if 'filename' in DBRes_ and 'path' in DBRes_:
+            full_path = ''
+            if DBRes_['filename'] and not DBRes_['path']:
+                full_path = os.path.abspath(DBRes_['filename'])
+            elif DBRes_['filename'] and DBRes_['path']:
+                full_path = os.path.abspath(os.path.join(DBRes_['path'], DBRes_['filename']))
+            else:
+                log.warning(
+                    u'Ошибка определения файла БД: path: <%s> filename: <%s>' % (DBRes_['path'], DBRes_['filename']))
+            # Проверка существования папки БД
+            dir_path = os.path.dirname(full_path)
+            if not os.path.exists(dir_path):
+                try:
+                    os.makedirs(dir_path)
+                    log.info(u'Создана папка <%s>' % dir_path)
+                except:
+                    log.error(u'Ошибка создания папки <%s>' % dir_path)
+            conn_dict['filename'] = full_path
+
+        return conn_dict
 
     def _getConnectionArgs(self, DBRes_=None):
         """

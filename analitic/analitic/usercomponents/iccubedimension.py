@@ -23,6 +23,10 @@ ic_class_name = 'icCubeDimension'
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'CubeDimension',
                 'name': 'default',
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
+                'child': [],
 
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],

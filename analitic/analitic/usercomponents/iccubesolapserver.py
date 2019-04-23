@@ -28,6 +28,10 @@ ic_class_name = 'icCubesOLAPServer'
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'CubesOLAPServer',
                 'name': 'default',
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
+                'child': [],
 
                 'source': None,    # Паспорт объекта БД хранения OLAP кубов
                 'ini_filename': None,     # Файл настройки OLAP сервера

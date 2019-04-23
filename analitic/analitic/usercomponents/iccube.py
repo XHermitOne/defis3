@@ -23,6 +23,10 @@ ic_class_name = 'icCube'
 #   Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'Cube',
                 'name': 'default',
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
+                'child': [],
 
                 'table_name': None,  # Альтернативное название таблицы куба в БД,
                                      # Если не определено, то используется имя куба
@@ -43,7 +47,7 @@ ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = ['CubeDemension', 'CubeMeasure', 'CubeAggregate']
+ic_can_contain = ['CubeDimension', 'CubeMeasure', 'CubeAggregate']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен
 #   список ic_can_contain
