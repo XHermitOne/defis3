@@ -9,10 +9,10 @@ try:
     # Если Virtual Excel работает в окружении icReport
     from ic.std.log import log
 except ImportError:
-    # Если Virtual Excel работает в окружении icServices
-    from services.ic_std.log import log
+    # Если Virtual Excel работает в окружении ic
+    from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icVCell(icprototype.icVIndexedPrototype):

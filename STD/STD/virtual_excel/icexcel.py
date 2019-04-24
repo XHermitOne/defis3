@@ -16,13 +16,13 @@ try:
     from ic.std.convert import dict2xml
     from ic.std.log import log
 except ImportError:
-    # Если Virtual Excel работает в окружении icServices
-    from services.convert import xml2dict
-    from services.convert import dict2xml
-    from services.ic_std.log import log
+    # Если Virtual Excel работает в окружении ic
+    from ic.convert import xml2dict
+    from ic.convert import dict2xml
+    from ic.log import log
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icVExcel(icprototype.icVPrototype):

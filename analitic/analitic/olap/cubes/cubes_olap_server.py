@@ -294,3 +294,9 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
 
         json_content = dict()
         return self.save_dict_as_json(model_filename, json_content, bReWrite)
+
+    def getCubes(self):
+        """
+        Список объектов кубов OLAP сервера.
+        """
+        return list()

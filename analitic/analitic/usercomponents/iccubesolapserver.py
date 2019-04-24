@@ -17,6 +17,7 @@ from ic.utils import ic_file
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
+from ic.components import icResourceParser as prs
 
 from analitic.olap.cubes import cubes_olap_server
 
@@ -179,6 +180,17 @@ class icCubesOLAPServer(icwidget.icSimple,
 
         cubes_olap_server.icCubesOLAPServerProto.__init__(self)
 
+        #   Создаем дочерние компоненты
+        if 'child' in component:
+            self.childCreator(bCounter, progressDlg)
+
+    def childCreator(self, bCounter, progressDlg):
+        """
+        Функция создает объекты, которые содержаться в данном компоненте.
+        """
+        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
+                                    bCounter=bCounter, progressDlg=progressDlg)
+
     def getDBPsp(self):
         """
         Паспорт БД.
@@ -280,3 +292,8 @@ class icCubesOLAPServer(icwidget.icSimple,
         """
         return self.getICAttr('exec')
 
+    def getCubes(self):
+        """
+        Список объектов кубов OLAP сервера.
+        """
+        return self.component_lst

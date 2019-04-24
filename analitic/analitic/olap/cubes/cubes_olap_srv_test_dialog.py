@@ -23,6 +23,22 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
         """
         cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogProto.__init__(self, *args, **kwargs)
 
+        # Тестируемый OLAP сервер
+        self._OLAP_server = None
+
+    def setOLAPServer(self, olap_server):
+        """
+        Установить тестируемый OLAP сервер.
+        @param olap_server: OLAP сервер
+        """
+        self._OLAP_server = olap_server
+
+        if self._OLAP_server:
+            # Настраиваем контрол выбора кубов
+            choices = [cube.description if cube.description else cube.name for cube in self._OLAP_server.getCubes()]
+            self.cube_choice.Clear()
+            self.cube_choice.AppendItems(choices)
+
     def onCloseButtonClick(self, event):
         """
         Обработчик кнопки ЗАКРЫТЬ.
@@ -48,7 +64,12 @@ def show_cubes_olap_srv_test_dlg(parent=None, olap_srv=None):
         parent = app.GetTopWindow()
 
     try:
+        # Запускаем OLAP сервер
+        olap_srv.run()
+
         dlg = icCubesOLAPSrvTestDialog(parent=parent)
+        dlg.setOLAPServer(olap_srv)
+
         dlg.ShowModal()
         return True
     except:

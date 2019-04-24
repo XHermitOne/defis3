@@ -10,13 +10,13 @@ from . import paper_size
 from . import config
 
 try:
+    # Если Virtual Excel работает в окружении ic
+    from . import icexceptions
+except ImportError:
     # Если Virtual Excel работает в окружении icReport
     from ic.std import icexceptions
-except ImportError:
-    # Если Virtual Excel работает в окружении icServices
-    from services.ic_std import icexceptions
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icVWorksheet(icprototype.icVPrototype):
