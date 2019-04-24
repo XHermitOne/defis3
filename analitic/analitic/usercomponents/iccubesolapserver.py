@@ -133,6 +133,25 @@ class icCubesOLAPServer(icwidget.icSimple,
     """
     component_spc = ic_class_spc
 
+    @staticmethod
+    def TestComponentResource(res, context, parent, *arg, **kwarg):
+        """
+        Функция тестирования компонента OLAP Сервер движка Cubes в режиме редактора ресурса.
+        @param res:
+        @param context:
+        @param parent:
+        @param arg:
+        @param kwarg:
+        @return:
+        """
+        import ic
+        from ..olap.cubes import cubes_olap_srv_test_dialog
+        log.info(u'Тестирование OLAP Сервер движка Cubes <%s>. Имя файла <%s>. Расширение <%s>' % (res['name'], parent._formName,
+                                                                                                   parent.file.split('.')[1]))
+
+        olap_srv = ic.getKernel().createObjBySpc(parent=None, res=res, context=context)
+        cubes_olap_srv_test_dialog.show_cubes_olap_srv_test_dlg(parent=None, olap_srv=olap_srv)
+
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
         """
