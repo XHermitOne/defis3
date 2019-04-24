@@ -203,8 +203,11 @@ class icCubesOLAPServer(icwidget.icSimple,
         """
         if self._db is None:
             db_psp = self.getDBPsp()
-            kernel = self.GetKernel()
-            self._db = kernel.Create(db_psp)
+            if db_psp:
+                kernel = self.GetKernel()
+                self._db = kernel.Create(db_psp)
+            else:
+                log.warning(u'Не определен объект БД в <%s>' % self.getName())
         return self._db
 
     def getSrvPath(self):

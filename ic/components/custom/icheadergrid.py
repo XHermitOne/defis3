@@ -91,27 +91,27 @@ ic_can_not_contain = ['Dialog', 'Frame', 'ToolBar', 'ToolBarTool', 'DatasetNavig
 __version__ = (1, 1, 1, 1)
 
 
-def depricated_sortCell(x, y):
-    """
-    Функция сортировки.
-    """
-    if x.span == (1, 1) and y.span == (1, 1):
-        X_row, X_col = x.position
-        Y_row, Y_col = y.position
-
-        if X_row < Y_row:
-            return 1
-        elif X_row > Y_row:
-            return -1
-        else:
-            return 0
-        
-    elif x.span == (1, 1) and y.span != (1, 1):
-        return -1
-    elif x.span != (1, 1) and y.span == (1, 1):
-        return 1
-    else:
-        return 0
+# def depricated_sortCell(x, y):
+#     """
+#     Функция сортировки.
+#     """
+#     if x.span == (1, 1) and y.span == (1, 1):
+#         X_row, X_col = x.position
+#         Y_row, Y_col = y.position
+#
+#         if X_row < Y_row:
+#             return 1
+#         elif X_row > Y_row:
+#             return -1
+#         else:
+#             return 0
+#
+#     elif x.span == (1, 1) and y.span != (1, 1):
+#         return -1
+#     elif x.span != (1, 1) and y.span == (1, 1):
+#         return 1
+#     else:
+#         return 0
 
 
 def sortCell(cell):

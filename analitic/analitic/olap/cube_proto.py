@@ -31,3 +31,20 @@ class icCubeProto(object):
         # Если не определено, то используется имя куба
         self._table_name = None
 
+    def getDimensions(self):
+        """
+        Список объектов измерений
+        """
+        return list()
+
+    def getMeasures(self):
+        """
+        Список объектов мер/фактов.
+        """
+        return list()
+
+    def getAggregates(self):
+        """
+        Список объектов функций аггрегаций.
+        """
+        return list()

@@ -94,6 +94,7 @@ def getKernel():
     from ic.engine import ic_user
     return ic_user.getKernel()
 
+
 # Классы ядра
 DEFAULT_USER = 'admin'
 
@@ -140,24 +141,24 @@ class icKernel(icBaseKernel):
         """
         return resource.getResByPsp(tuple(passport))
 
-    def getResByPsp_depricated(self, passport):
-        """
-        Возвращает ресурса объекта по его паспорту.
-        @type passport: C{icObjectPassport}
-        @param passport: идентификатор описания (паспорт) объекта.
-        """
-        objType = passport.getDescrType()
-        className = passport.getDescrName()
-        resName, extName = passport.getDescrMod().split('.')
-        subsys = passport.getDescrSubsys()
-        res = resource.icGetRes(resName, extName, pathRes=resource.getSubsysPath(subsys), nameRes=resName)
-        if res and objType:
-            res_mod = res.get('res_module', None)
-            file_res = res.get('__file_res')
-            res = resource.FindResInRes(res, className, objType)
-            res['res_module'] = res_mod
-            res['__file_res'] = file_res
-        return res
+    # def getResByPsp_depricated(self, passport):
+    #     """
+    #     Возвращает ресурса объекта по его паспорту.
+    #     @type passport: C{icObjectPassport}
+    #     @param passport: идентификатор описания (паспорт) объекта.
+    #     """
+    #     objType = passport.getDescrType()
+    #     className = passport.getDescrName()
+    #     resName, extName = passport.getDescrMod().split('.')
+    #     subsys = passport.getDescrSubsys()
+    #     res = resource.icGetRes(resName, extName, pathRes=resource.getSubsysPath(subsys), nameRes=resName)
+    #     if res and objType:
+    #         res_mod = res.get('res_module', None)
+    #         file_res = res.get('__file_res')
+    #         res = resource.FindResInRes(res, className, objType)
+    #         res['res_module'] = res_mod
+    #         res['__file_res'] = file_res
+    #     return res
 
     @decorators.init_context
     @decorators.to_passport

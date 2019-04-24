@@ -8,7 +8,8 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
+import wx.stc
 
 ###########################################################################
 ## Class icCubesOLAPSrvTestDialogProto
@@ -19,7 +20,7 @@ class icCubesOLAPSrvTestDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"OLAP сервер", pos = wx.DefaultPosition, size = wx.Size( 870,631 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -44,11 +45,16 @@ class icCubesOLAPSrvTestDialogProto ( wx.Dialog ):
 		bSizer2.Add( self.func_choice, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
+		bSizer2.AddStretchSpacer()
+		
+		self.refresh_bpButton = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( u"gtk-refresh", wx.ART_TOOLBAR ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		bSizer2.Add( self.refresh_bpButton, 0, wx.ALL, 5 )
+		
+		
 		bSizer1.Add( bSizer2, 0, wx.EXPAND, 5 )
 		
-		# WARNING: wxPython code generation isn't supported for this widget yet.
-		self.json_scintilla = wx.Window( self )
-		bSizer1.Add( self.json_scintilla, 1, wx.EXPAND |wx.ALL, 5 )
+		self.json_scintilla = wx.stc.StyledTextCtrl(parent=self, id=wx.NewId())
+		bSizer1.Add( self.json_scintilla, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -65,8 +71,7 @@ class icCubesOLAPSrvTestDialogProto ( wx.Dialog ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.cube_choice.Bind( wx.EVT_CHOICE, self.onCubeChoice )
-		self.func_choice.Bind( wx.EVT_CHOICE, self.onFuncChoice )
+		self.refresh_bpButton.Bind( wx.EVT_BUTTON, self.onRefreshButtonClick )
 		self.close_button.Bind( wx.EVT_BUTTON, self.onCloseButtonClick )
 	
 	def __del__( self ):
@@ -74,10 +79,7 @@ class icCubesOLAPSrvTestDialogProto ( wx.Dialog ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
-	def onCubeChoice( self, event ):
-		event.Skip()
-	
-	def onFuncChoice( self, event ):
+	def onRefreshButtonClick( self, event ):
 		event.Skip()
 	
 	def onCloseButtonClick( self, event ):

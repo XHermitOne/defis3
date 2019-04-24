@@ -11,8 +11,14 @@ from ic.utils import util
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
+from ic.components import icResourceParser as prs
 
 from analitic.olap import cube_proto
+
+from ..olap import cube_dimension_proto
+from ..olap import cube_measure_proto
+from ..olap import cube_aggregate_proto
+
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -89,6 +95,16 @@ class icCube(icwidget.icSimple, cube_proto.icCubeProto):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         cube_proto.icCubeProto.__init__(self)
+        #   Создаем дочерние компоненты
+        if 'child' in component:
+            self.childCreator(bCounter, progressDlg)
+
+    def childCreator(self, bCounter, progressDlg):
+        """
+        Функция создает объекты, которые содержаться в данном компоненте.
+        """
+        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
+                                    bCounter=bCounter, progressDlg=progressDlg)
 
     def getTableName(self):
         """
@@ -98,3 +114,21 @@ class icCube(icwidget.icSimple, cube_proto.icCubeProto):
         if not table_name:
             table_name = self.getName()
         return table_name
+
+    def getDimensions(self):
+        """
+        Список объектов измерений
+        """
+        return [child for child in self.component_lst if isinstance(child, cube_dimension_proto.icCubeDimensionProto)]
+
+    def getMeasures(self):
+        """
+        Список объектов мер/фактов.
+        """
+        return [child for child in self.component_lst if isinstance(child, cube_measure_proto.icCubeMeasureProto)]
+
+    def getAggregates(self):
+        """
+        Список объектов функций аггрегаций.
+        """
+        return [child for child in self.component_lst if isinstance(child, cube_aggregate_proto.icCubeAggregateProto)]

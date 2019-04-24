@@ -16,6 +16,7 @@ from ic.components import icwidget
 from ic.utils import ic_file
 from ic.log import log
 from ic.utils import ini
+from ic.utils import system
 
 from STD.json import json_manager
 
@@ -59,11 +60,13 @@ SPC_IC_CUBESOLAPSERVER = {'source': None,    # Паспорт объекта Б�
 
 DEFAULT_INI_FILENAME = 'slicer.ini'
 DEFAULT_MODEL_FILENAME = 'model.json'
-START_COMMAND_FMT = '%s serve slicer.ini &'
+START_COMMAND_FMT = '%s serve %s &'
 
 DEFAULT_OLAP_SERVER_DIRNAME = ic_file.getPrjProfilePath()
 
 LOG_LEVELS = ('info', 'debug', 'warn', 'error')
+
+OLAP_SERVER_URL_FMT = 'http://%s:%d/cube/%s/%s'
 
 
 class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
@@ -96,8 +99,9 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         Команда запуска OLAP сервера.
         """
         exec_file = self.getExec()
+        ini_filename = self.getINIFileName()
 
-        command = START_COMMAND_FMT % exec_file
+        command = START_COMMAND_FMT % (exec_file, ini_filename)
         return command
 
     def run(self):
@@ -136,10 +140,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         Проверка того что OLAP сервер запущен.
         @return: True - сервер запущен, False - нет.
         """
-        log.warning(u'Не определен метод проверки запущенного OLAP сервера <%s>' % self.__class__.__name__)
-        return False
+        exec_filename = self.getExec()
+        log.info(u'Проверка запущенного OLAP сервера по <%s>' % exec_filename)
+        return system.isActiveProcess(exec_filename)
 
-    def get(self, *args, **kwargs):
+    def get_response(self, *args, **kwargs):
         """
         Запрос получения данных от сервера.
         Функция слишком общая.
@@ -147,8 +152,13 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         зависимости от входящих данных.
         @return: Запрашиваемые данные или None в случае ошибки.
         """
-        log.warning(u'Не определен метод получения данных от OLAP сервера <%s>' % self.__class__.__name__)
-        return None
+        cube_name = kwargs.get('cube_name',  self.getCubes()[0].getTableName() if self.getCubesCount() else None)
+        func_name = kwargs.get('func_name',  'aggregate')
+        url = OLAP_SERVER_URL_FMT % (self.getHost(), self.getPort(),
+                                     cube_name, func_name)
+        # url = 'http://%s:%d/cubes' % (self.getHost(), self.getPort())
+        log.debug(u'Определение JSON по URL <%s>' % url)
+        return self.get_json_as_dict_by_url(url)
 
     def getName(self):
         """
@@ -223,7 +233,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         return '*'
 
-    def save_ini(self, ini_filename=None, bReWrite=True):
+    def _save_ini(self, ini_filename=None, bReWrite=True):
         """
         Сохранить файл настройки OLAP сервера.
         @param ini_filename: Полное имя INI файла настроек OLAP сервера.
@@ -274,14 +284,27 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         #
         model_filename = self.getModelFileName()
         if model_filename:
-            model_base_filename = os.path.basename(model_filename)
-            ini_content['model']['main'] = model_base_filename
+            ini_content['models']['main'] = model_filename
         else:
             log.warning(u'Не определен файл описания кубов OLAP сервера <%s>' % self.getName())
 
         return ini.Dict2INI(ini_content, ini_filename, rewrite=bReWrite)
 
-    def save_model(self, model_filename=None, bReWrite=True):
+    def save_ini(self, ini_filename=None, bReWrite=True):
+        """
+        Сохранить файл настройки OLAP сервера.
+        @param ini_filename: Полное имя INI файла настроек OLAP сервера.
+            Если не определено, то берем имя файла из описания объекта.
+        @param bReWrite: Перезаписать существующий файл?
+        @return: True/False.
+        """
+        try:
+            return self._save_ini(ini_filename=ini_filename, bReWrite=bReWrite)
+        except:
+            log.fatal(u'Ошибка сохранения файла настройки OLAP сервера <%s>' % ini_filename)
+        return False
+
+    def _save_model(self, model_filename=None, bReWrite=True):
         """
         Сохранить файл описания кубов OLAP сервера.
         @param model_filename: Полное имя JSON файла описания кубов OLAP сервера.
@@ -292,11 +315,95 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         if model_filename is None:
             model_filename = self.getModelFileName()
 
-        json_content = dict()
+        json_content = dict(cubes=list(),
+                            dimensions=list())
+
+        # Заполнение кубов
+        for cube in self.getCubes():
+            dimensions = cube.getDimensions()
+            cube_content = dict(name=cube.getTableName(),
+                                dimensions=[dimension.getName() for dimension in dimensions])
+
+            # Заполнение фактов
+            measures = cube.getMeasures()
+            if measures:
+                if 'measures' not in cube_content:
+                    cube_content['measures'] = list()
+                for measure in measures:
+                    measure_content = dict(name=measure.getFieldName())
+                    measure_label = measure.getLabel()
+                    if measure_label:
+                        measure_content['label'] = measure_label
+
+                    cube_content['measures'].append(measure_content)
+
+            # Заполнение измерений
+            for dimension in dimensions:
+                dimension_content = dict(name=dimension.getName())
+                dimension_attributes = dimension.getAttributes()
+                if dimension_attributes:
+                    dimension_content['attributes'] = dimension_attributes
+                json_content['dimensions'].append(dimension_content)
+
+                dimension_detail_tabname = dimension.getDetailTableName()
+                if dimension_detail_tabname:
+                    dimension_detail_fldname = dimension.getDetailFieldName()
+                    if dimension_detail_fldname:
+                        if 'joins' not in cube_content:
+                            cube_content['joins'] = list()
+
+                        # Настроить связь
+                        dimension_fld_name = dimension.getFieldName()
+                        dimension_join = dict(master=dimension_fld_name,
+                                              detail='%s.%s' % (dimension_detail_tabname,
+                                                                dimension_detail_fldname))
+                        cube_content['joins'].append(dimension_join)
+
+            # Заполнение агрегаций
+            aggregates = cube.getAggregates()
+            if aggregates:
+                if 'aggregates' not in cube_content:
+                    cube_content['aggregates'] = list()
+                for aggregate in aggregates:
+                    aggregate_content = dict(name=aggregate.getName())
+                    aggregate_function = aggregate.getFunctionName()
+                    if aggregate_function:
+                        aggregate_content['function'] = aggregate_function
+                    aggregate_measure = aggregate.getMeasureName()
+                    if aggregate_measure:
+                        aggregate_content['measure'] = aggregate_measure
+                    aggregate_expression = aggregate.getExpressionCode()
+                    if aggregate_expression:
+                        aggregate_content['expression'] = aggregate_expression
+
+                    cube_content['aggregates'].append(aggregate_content)
+
+            json_content['cubes'].append(cube_content)
+
         return self.save_dict_as_json(model_filename, json_content, bReWrite)
+
+    def save_model(self, model_filename=None, bReWrite=True):
+        """
+        Сохранить файл описания кубов OLAP сервера.
+        @param model_filename: Полное имя JSON файла описания кубов OLAP сервера.
+            Если не определено, то берем имя файла из описания объекта.
+        @param bReWrite: Перезаписать существующий файл?
+        @return: True/False.
+        """
+        try:
+            return self._save_model(model_filename=model_filename, bReWrite=bReWrite)
+        except:
+            log.fatal(u'Ошибка сохранения файла описания кубов OLAP сервера <%s>' % model_filename)
+        return False
 
     def getCubes(self):
         """
         Список объектов кубов OLAP сервера.
         """
         return list()
+
+    def getCubesCount(self):
+        """
+        Количество кубов OLAP сервера.
+        """
+        return len(self.getCubes())

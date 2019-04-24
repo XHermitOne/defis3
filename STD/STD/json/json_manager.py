@@ -8,10 +8,11 @@
 import json
 import os
 import os.path
+import urllib.request
 
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icJSONManager(object):
@@ -52,7 +53,7 @@ class icJSONManager(object):
         write_file = None
         try:
             write_file = open(json_filename, 'w')
-            json.dump(data_dict, write_file)
+            json.dump(data_dict, write_file, indent=4)
             write_file.close()
             return True
         except:
@@ -60,3 +61,23 @@ class icJSONManager(object):
                 write_file.close()
             log.fatal(u'Ошибка сохранения JSON файла <%s>' % json_filename)
         return False
+
+    def get_json_as_dict_by_url(self, url):
+        """
+        Получить данные JSON  в виде словаря по URL.
+        @param url: URL адрес.
+        @return: Словарь JSON или None в случае ошибки.
+        """
+        if not url:
+            log.warning(u'Не определен URL для получения данных JSON')
+            return None
+
+        try:
+            response = urllib.request.urlopen(url)
+            json_content = response.read()
+            json_dict = json.loads(json_content)
+            return json_dict
+        except:
+            log.fatal(u'Ошибка получения данных JSON с адреса <%s>' % url)
+        return None
+

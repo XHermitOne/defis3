@@ -45,7 +45,6 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     """
     Редактор свойств компонента.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.

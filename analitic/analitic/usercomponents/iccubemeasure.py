@@ -29,8 +29,11 @@ ic_class_spc = {'type': 'CubeMeasure',
 
                 'field_name': None,  # Альтернативное название поля факта в таблице куба,
                                      # Если не определено, то используется имя объекта
+                'label': None,  # Надпись, если не определена, то берется description
+
                 '__events__': {},
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'field_name'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
+                                                            'field_name', 'label'],
                                    },
                 '__parent__': cube_measure_proto.SPC_IC_CUBEMEASURE,
                 '__lists__': {},
@@ -98,3 +101,15 @@ class icCubeMeasure(icwidget.icSimple,
         if not field_name:
             field_name = self.getName()
         return field_name
+
+    def getLabel(self):
+        """
+        Надпись, если не определена, то берется description.
+        """
+        label = self.getICAttr('label')
+        if not label:
+            label = self.getDescription()
+        if not label:
+            label = self.getName()
+        return label
+

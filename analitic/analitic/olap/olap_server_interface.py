@@ -46,7 +46,7 @@ class icOLAPServerInterface:
         self.stop()
         return self.run()
 
-    def get(self, *args, **kwargs):
+    def get_response(self, *args, **kwargs):
         """
         Запрос получения данных от сервера.
         Функция слишком общая.
