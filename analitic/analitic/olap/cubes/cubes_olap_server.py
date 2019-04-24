@@ -105,6 +105,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         Запуск сервера.
         @return: True/False.
         """
+        if self.is_running():
+            # Если сервер уже запущен, то запуск производить не надо
+            log.info(u'OLAP Сервер <%s> уже запущен' % self.getName())
+            return True
+
         self.save_ini()
         self.save_model()
 
@@ -113,6 +118,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         try:
             os.system(run_command)
             log.info(u'Выполнена комманда <%s>' % run_command)
+            return True
         except:
             log.fatal(u'Ошибка выполнения комманды <%s>' % run_command)
         return False
@@ -143,6 +149,12 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         log.warning(u'Не определен метод получения данных от OLAP сервера <%s>' % self.__class__.__name__)
         return None
+
+    def getName(self):
+        """
+        Имя объекта.
+        """
+        return u''
 
     def getDBPsp(self):
         """
@@ -257,7 +269,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             db_url = db.getDBUrl()
             ini_content['store']['url'] = db_url
         else:
-            log.warning(u'Не определена БД хранения таблицы OLAP куба')
+            log.warning(u'Не определена БД хранения таблицы OLAP куба <%s>' % self.getName())
 
         #
         model_filename = self.getModelFileName()
@@ -265,7 +277,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             model_base_filename = os.path.basename(model_filename)
             ini_content['model']['main'] = model_base_filename
         else:
-            log.warning(u'Не определен файл описания кубов OLAP сервера')
+            log.warning(u'Не определен файл описания кубов OLAP сервера <%s>' % self.getName())
 
         return ini.Dict2INI(ini_content, ini_filename, rewrite=bReWrite)
 
