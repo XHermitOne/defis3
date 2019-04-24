@@ -28,8 +28,10 @@ ic_class_spc = {'type': 'CubeDimension',
                 '_uuid': None,
                 'child': [],
 
+                'field_name': None,  # Альтернативное название поля измерения в таблице куба,
+                                     # Если не определено, то используется имя объекта
                 '__events__': {},
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'field_name'],
                                    },
                 '__parent__': cube_dimension_proto.SPC_IC_CUBEDIMENSION,
                 '__lists__': {},
@@ -88,3 +90,12 @@ class icCubeDimension(icwidget.icSimple,
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         cube_dimension_proto.icCubeDimensionProto.__init__(self)
+
+    def getFieldName(self):
+        """
+        Имя поля измерения в таблице куба.
+        """
+        field_name = self.getICAttr('field_name')
+        if not field_name:
+            field_name = self.getName()
+        return field_name

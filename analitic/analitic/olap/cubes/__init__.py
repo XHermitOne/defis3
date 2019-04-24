@@ -3,6 +3,9 @@
 
 """
 Пакет управления движком OLAP кубов Cubes.
+Оффициальный сайт:
+http://cubes.databrewery.org/
+Исходники:
 https://github.com/DataBrewery/cubes
 Также пакеты примеров кубов:
 https://github.com/DataBrewery/cubes-examples

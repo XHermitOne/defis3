@@ -89,3 +89,12 @@ class icCube(icwidget.icSimple, cube_proto.icCubeProto):
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         cube_proto.icCubeProto.__init__(self)
+
+    def getTableName(self):
+        """
+        Имя таблицы куба.
+        """
+        table_name = self.getICAttr('table_name')
+        if not table_name:
+            table_name = self.getName()
+        return table_name

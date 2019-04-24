@@ -43,7 +43,7 @@ from . import ic_pyed
 import ic.config
 
 _ = wx.GetTranslation
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 # Список идентификаторов дерева, храним для того, чтобы контролировать уникальность
 # идентификаторов
@@ -2888,6 +2888,11 @@ class ResourseEditorFrame2(wx.Frame):
         Конструктра.
         """
         wx.Frame.__init__(self, parent, -1, title, size=size, pos=pos, style=style)
+
+        # Статусная строка
+        self._status_bar = wx.StatusBar(parent=self, id=wx.NewId())
+        self.SetStatusBar(self._status_bar)
+
         self._edt = GetProjectEditor(self)
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 

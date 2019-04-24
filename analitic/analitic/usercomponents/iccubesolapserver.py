@@ -5,12 +5,15 @@
 OLAP Сервер движка Cubes OLAP Framework.
 """
 
+import os.path
+
 from ic.log import log
 from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
 from ic.utils import util
 from ic.utils import coderror
 from ic.db import icdb
+from ic.utils import ic_file
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
@@ -36,16 +39,31 @@ ic_class_spc = {'type': 'CubesOLAPServer',
                 'source': None,    # Паспорт объекта БД хранения OLAP кубов
                 'ini_filename': None,     # Файл настройки OLAP сервера
                 'model_filename': None,   # JSON Файл описания кубов OLAP сервера
-                'exec': cubes_olap_server.DEFAULT_SLICER_EXEC,  # Файл запуска OLAP сервера
+                'exec': cubes_olap_server.ALTER_SLICER_EXEC,  # Файл запуска OLAP сервера
                 'srv_path': None,     # Папка расположения файлов настроек OLAP сервера
 
+                'log_filename': None,   # Путь до файла журнала
+                'log_level': 'info',  # Уровень журналирования
+                'host': 'localhost',  # Хост сервера
+                'port': 5000,  # Порт сервера
+                'reload': True,  #
+                'prettyprint': True,  # Демонстрационные цели
+                'allow_cors_origin': '*',   # Заголовок совместного использования ресурсов. Другие
+                                            # связанные заголовки также добавляются, если эта опция присутствует.
+
                 '__events__': {},
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'ini_filename', 'model_filename', 'exec'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'ini_filename', 'model_filename', 'exec',
+                                                            'host', 'allow_cors_origin'],
                                    icDefInf.EDT_DIR: ['srv_path'],
                                    icDefInf.EDT_USER_PROPERTY: ['source'],
+                                   icDefInf.EDT_FILE: ['log_filename'],
+                                   icDefInf.EDT_TEXTLIST: ['log_level'],
+                                   icDefInf.EDT_NUMBER: ['port'],
+                                   icDefInf.EDT_CHECK_BOX: ['active', 'reload', 'prettyprint']
                                    },
                 '__parent__': cubes_olap_server.SPC_IC_CUBESOLAPSERVER,
-                '__lists__': {},
+                '__lists__': {'log_level': cubes_olap_server.LOG_LEVELS,
+                              },
                 }
 
 #   Имя иконки класса, которые располагаются в директории
@@ -141,4 +159,105 @@ class icCubesOLAPServer(icwidget.icSimple,
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         cubes_olap_server.icCubesOLAPServerProto.__init__(self)
+
+    def getDBPsp(self):
+        """
+        Паспорт БД.
+        """
+        return self.getICAttr('source')
+
+    def getDB(self):
+        """
+        Объект БД.
+        """
+        if self._db is None:
+            db_psp = self.getDBPsp()
+            kernel = self.GetKernel()
+            self._db = kernel.Create(db_psp)
+        return self._db
+
+    def getSrvPath(self):
+        """
+        Папка расположения файлов настроек OLAP сервера.
+        """
+        srv_path = self.getICAttr('srv_path')
+        if not srv_path:
+            srv_path = os.path.join(cubes_olap_server.DEFAULT_OLAP_SERVER_DIRNAME, self.getName())
+        if srv_path and not os.path.exists(srv_path):
+            # Создать папку
+            ic_file.MakeDirs(srv_path)
+        return srv_path
+
+    def getINIFileName(self):
+        """
+        Имя настроечного файла.
+        """
+        if not self._ini_filename:
+            ini_base_filename = self.getICAttr('ini_filename')
+            srv_path = self.getSrvPath()
+            self._ini_filename = os.path.join(srv_path if srv_path else os.path.join(cubes_olap_server.DEFAULT_OLAP_SERVER_DIRNAME,
+                                                                                     self.getName()),
+                                              ini_base_filename if ini_base_filename else cubes_olap_server.DEFAULT_INI_FILENAME)
+        return self._ini_filename
+
+    def getModelFileName(self):
+        """
+        Имя файла описания кубов.
+        """
+        if not self._model_filename:
+            model_base_filename = self.getICAttr('model_filename')
+            srv_path = self.getSrvPath()
+            self._model_filename = os.path.join(srv_path if srv_path else os.path.join(cubes_olap_server.DEFAULT_OLAP_SERVER_DIRNAME,
+                                                                                       self.getName()),
+                                                model_base_filename if model_base_filename else cubes_olap_server.DEFAULT_MODEL_FILENAME)
+        return self._model_filename
+
+    def getLogFileName(self):
+        """
+        Путь до файла журнала.
+        """
+        return self.getICAttr('log_filename')
+
+    def getLogLevel(self):
+        """
+        Уровень журналирования.
+        """
+        return self.getICAttr('log_level')
+
+    def getHost(self):
+        """
+        Хост сервера.
+        """
+        return self.getICAttr('host')
+
+    def getPort(self):
+        """
+        Порт сервера.
+        """
+        return self.getICAttr('port')
+
+    def isReload(self):
+        """
+        """
+        return self.getICAttr('reload')
+
+    def isPrettyPrint(self):
+        """
+        Демонстрационные цели.
+        """
+        return self.getICAttr('prettyprint')
+
+    def getAllowCorsOrigin(self):
+        """
+        Заголовок совместного использования ресурсов.
+        Другие связанные заголовки также добавляются,
+        если эта опция присутствует.
+        """
+        return self.getICAttr('allow_cors_origin')
+
+    def getExec(self):
+        """
+        Файл запуска OLAP сервера.
+        """
+        return self.getICAttr('exec')
 
