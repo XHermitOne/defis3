@@ -33,11 +33,13 @@ ic_class_spc = {'type': 'CubeDimension',
                 'detail_tabname': None,  # Имя таблицы детализации, связанной с полем таблицы куба
                 'detail_fldname': None,  # Имя поля таблицы детализации, по которому осуществляется связь
                 'attributes': None,  # Список имен полей дополнительных атрибутов
+                'label': None,  # Надпись измерения
 
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
                                                             'field_name',
-                                                            'detail_tabname', 'detail_fldname'],
+                                                            'detail_tabname', 'detail_fldname',
+                                                            'label'],
                                    icDefInf.EDT_TEXTLIST: ['attributes'],
                                    },
                 '__parent__': cube_dimension_proto.SPC_IC_CUBEDIMENSION,
@@ -118,10 +120,21 @@ class icCubeDimension(icwidget.icSimple,
         """
         Имя таблицы детализации, связанной с полем таблицы куба.
         """
-        return None
+        return self.getICAttr('detail_tabname')
 
     def getDetailFieldName(self):
         """
         Имя поля таблицы детализации, по которому осуществляется связь.
         """
-        return None
+        return self.getICAttr('detail_fldname')
+
+    def getLabel(self):
+        """
+        Надпись измерения.
+        """
+        label = self.getICAttr('label')
+        if not label:
+            label = self.getDescription()
+        if not label:
+            label = self.getName()
+        return label

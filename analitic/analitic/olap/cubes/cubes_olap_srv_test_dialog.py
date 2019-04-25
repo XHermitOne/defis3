@@ -16,7 +16,7 @@ from ic.utils import ic_util
 
 __version__ = (0, 1, 1, 1)
 
-FUNCTIONS = ('aggregate', )
+OLAP_METHODS = ('aggregate', )
 
 
 class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogProto):
@@ -69,8 +69,7 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
         # self.json_scintilla.MarkerDefine(self.icBreakpointMarker,       stc.STC_MARK_CIRCLE, 'black', 'red')
         # self.json_scintilla.MarkerDefine(self.icBreakpointBackgroundMarker, stc.STC_MARK_BACKGROUND, 'black', 'red')
 
-        self.func_choice.AppendItems(FUNCTIONS)
-        self.func_choice.SetSelection(0)
+        self.method_choice.AppendItems(OLAP_METHODS)
 
         # Тестируемый OLAP сервер
         self._OLAP_server = None
@@ -89,6 +88,21 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
             self.cube_choice.AppendItems(choices)
             if choices:
                 self.cube_choice.SetSelection(0)
+                self.method_choice.SetSelection(0)
+                self.refreshDimensionChoice(0)
+
+    def refreshDimensionChoice(self, i_cube):
+        """
+        Обновить список измерений в зависимости от выбранного куба.
+        """
+        cube = self._OLAP_server.getCubes()[i_cube] if i_cube >= 0 else None
+        if cube:
+            choices = [dimension.getLabel() for dimension in cube.getDimensions()]
+
+            self.dimension_choice.Clear()
+            self.dimension_choice.AppendItems(choices)
+            if choices:
+                self.dimension_choice.SetSelection(0)
 
     def onCloseButtonClick(self, event):
         """
@@ -104,20 +118,37 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
         if self._OLAP_server:
             i_cube = self.cube_choice.GetSelection()
             cube = self._OLAP_server.getCubes()[i_cube] if i_cube >= 0 else None
-            i_func = self.func_choice.GetSelection()
-            func_name = FUNCTIONS[i_func] if i_func >= 0 else None
+            i_func = self.method_choice.GetSelection()
+            method_name = OLAP_METHODS[i_func] if i_func >= 0 else None
+            i_dimension = self.method_choice.GetSelection()
+            dimension = (cube.getDimensions()[i_dimension] if cube else None) if i_dimension >= 0 else None
+
             result = None
-            if cube and func_name:
-                result = self._OLAP_server.get_response(cube_name=cube.getName(), func_name=func_name)
+            if cube and method_name:
+                result = self._OLAP_server.get_response(cube_name=cube.getName(), method_name=method_name,
+                                                        dimension_name=dimension.getName())
             else:
                 if not cube:
                     log.warning(u'Не определен куб для отображения')
-                if not func_name:
-                    log.warning(u'Не определена функция для отображения')
+                if not method_name:
+                    log.warning(u'Не определен метод для отображения')
 
             # self.json_scintilla.SetText(str(result))
             self.json_scintilla.ClearAll()
             self.json_scintilla.AddText(ic_util.StructToTxt(result))
+
+            if result:
+                spreadsheet = self._OLAP_server.to_spreadsheet(result)
+                log.debug(u'SpreadSheet: %s' % str(spreadsheet))
+
+        event.Skip()
+
+    def onCubeChoice(self, event):
+        """
+        Обработчик выбора куба.
+        """
+        i_cube = event.GetSelection()
+        self.refreshDimensionChoice(i_cube)
 
         event.Skip()
 

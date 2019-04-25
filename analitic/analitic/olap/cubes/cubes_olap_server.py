@@ -19,6 +19,7 @@ from ic.utils import ini
 from ic.utils import system
 
 from STD.json import json_manager
+from STD.spreadsheet import spreadsheet_manager
 
 __version__ = (0, 1, 1, 1)
 
@@ -67,6 +68,8 @@ DEFAULT_OLAP_SERVER_DIRNAME = ic_file.getPrjProfilePath()
 LOG_LEVELS = ('info', 'debug', 'warn', 'error')
 
 OLAP_SERVER_URL_FMT = 'http://%s:%d/cube/%s/%s'
+OLAP_SERVER_URL_DIMENSION_FMT = '?drilldown=%s'
+OLAP_SERVER_URL_VALUE_FMT = '?cut=%s:%s'
 
 
 class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
@@ -153,9 +156,17 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         @return: Запрашиваемые данные или None в случае ошибки.
         """
         cube_name = kwargs.get('cube_name',  self.getCubes()[0].getTableName() if self.getCubesCount() else None)
-        func_name = kwargs.get('func_name',  'aggregate')
+        func_name = kwargs.get('method_name',  'aggregate')
+        dimension_name = kwargs.get('dimension_name',  None)
+        dimension_value = kwargs.get('dimension_value',  None)
+
         url = OLAP_SERVER_URL_FMT % (self.getHost(), self.getPort(),
                                      cube_name, func_name)
+        if dimension_name:
+            url += OLAP_SERVER_URL_DIMENSION_FMT % dimension_name
+            if dimension_value:
+                url += OLAP_SERVER_URL_VALUE_FMT % (dimension_name, dimension_value)
+
         # url = 'http://%s:%d/cubes' % (self.getHost(), self.getPort())
         log.debug(u'Определение JSON по URL <%s>' % url)
         return self.get_json_as_dict_by_url(url)
@@ -407,3 +418,37 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         Количество кубов OLAP сервера.
         """
         return len(self.getCubes())
+
+    def to_spreadsheet(self, json_dict):
+        """
+        Преобразование результатов запроса к OLAP серверу к структуре SpreadSheet.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @return: Словарь структуры SpreadSheet.
+        """
+        # Объект управления структурой SpreadSheet
+        spreadsheet_mngr = spreadsheet_manager.icSpreadSheetManager()
+        # Создаем книгу
+        workbook = spreadsheet_mngr.createWorkbook()
+        # Создаем лист в книге
+        worksheet = workbook.createWorksheet()
+        # Создаем стили
+        styles = workbook.createStyles()
+        # Добавляем стили
+        for default_style_attr in spreadsheet_mngr.DEFAULT_STYLES:
+            style = styles.createStyle()
+            style.set_attributes(default_style_attr)
+
+        # Создаем таблицу
+        table = worksheet.createTable()
+        # Заполнение заголовка
+        # Создаем колонки
+        levels = json_dict.get('levels', dict())
+        aggregates = json_dict.get('aggregates', dict())
+        for level_name, level_content in levels.items():
+            first_column = spreadsheet_mngr.createDefaultColumn(table)
+            col_count = len(level_content) - 1 + len(aggregates)
+            spreadsheet_mngr.createDefaultColumns(table, count=col_count)
+
+        # Создаем строки
+
+        return spreadsheet_mngr.getData()

@@ -13,16 +13,17 @@ from ic import config
 from ic.engine import ic_user
 from ic.utils import resfunc
 from ic.utils import formdatamanager
-from ic.utils import ic_file
 
 from . import panel_manager
+from . import stored_ctrl_manager
 
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 2, 1)
 
 
 class icFormManager(formdatamanager.icFormDataManager,
-                    panel_manager.icPanelManager):
+                    panel_manager.icPanelManager,
+                    stored_ctrl_manager.icStoredCtrlManager):
     """
     Менеджер WX окна.
     ВНИМАНИЕ! Для того чтобы пользоваться менеджером
@@ -76,29 +77,3 @@ class icFormManager(formdatamanager.icFormDataManager,
 
     # Другое наименование метода
     load_ctrl = load_dlg
-
-    def save_ext_data(self, name, **kwargs):
-        """
-        Запись дополнительных данных окна.
-        @param name: Наименование файла для записи.
-        @param kwargs: Словарь данных для записи.
-        @return: True/False.
-        """
-        # Определить имя файла для хранения данных
-        res_filename = os.path.join(ic_file.getPrjProfilePath(),
-                                    name+'.ext')
-        return resfunc.SaveResourcePickle(res_filename, kwargs)
-
-    def load_ext_data(self, name):
-        """
-        Загрузка дополнительных данных окна.
-        @param name: Наименование файла хранения данных.
-        @return: Загруженные данные в виде словаря или 
-            пустой словарь если данных нет.
-        """
-        res_filename = os.path.join(ic_file.getPrjProfilePath(),
-                                    name+'.ext')
-        data = resfunc.LoadResourcePickle(res_filename)
-        if data is None:
-            data = dict()
-        return data
