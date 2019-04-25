@@ -14,6 +14,8 @@ from . import cubes_olap_srv_test_dlg
 from ic.log import log
 from ic.utils import ic_util
 
+from STD.spreadsheet import spreadsheet_view_manager
+
 __version__ = (0, 1, 1, 1)
 
 OLAP_METHODS = ('aggregate', )
@@ -73,6 +75,9 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
 
         # Тестируемый OLAP сервер
         self._OLAP_server = None
+
+        # Менеджер управления выводом структуры SpreadSheet
+        self._spreadsheet_mngr = spreadsheet_view_manager.icSpreadSheetViewManager(grid=self.spreadsheet_grid)
 
     def setOLAPServer(self, olap_server):
         """
@@ -140,6 +145,7 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
             if result:
                 spreadsheet = self._OLAP_server.to_spreadsheet(result)
                 log.debug(u'SpreadSheet: %s' % str(spreadsheet))
+                self._spreadsheet_mngr.view_spreadsheet(spreadsheet)
 
         event.Skip()
 

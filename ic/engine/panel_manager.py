@@ -10,6 +10,7 @@ import wx
 import wx.adv
 import wx.gizmos
 import wx.dataview
+import wx.grid
 import types
 
 from ic.log import log
@@ -25,7 +26,7 @@ from . import toolbar_manager
 from . import validate_manger
 
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 3, 1)
 
 # Список имен, которые необходимо пропустить при обаботке соответствий
 # имен контролов и значений контролов
@@ -596,3 +597,38 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
             # Это сумма 128+128+128 ------------------------V
             setattr(self, '__is_dark_sys_theme', sum_rgb < 384)
         return getattr(self, '__is_dark_sys_theme')
+
+    def reCreateGrid(self, grid, row_count=5, col_count=5):
+        """
+        Пересоздать грид с навым количеством строки X колонки.
+        @param grid: Объект wx.Grid.
+        @param row_count: Количество строк.
+        @param col_count: Количество колонок.
+        @return: True/False.
+        """
+        if not isinstance(grid, wx.grid.Grid):
+            log.warning(u'Ошибка типа объекта. Объект <%s> не является гридом' % grid.__class__.__name__)
+            return False
+        try:
+            prev_row_count = grid.GetNumberRows()
+            prev_col_count = grid.GetNumberCols()
+            delta_row_count = row_count - prev_row_count
+            delta_col_count = col_count - prev_col_count
+
+            # Сначала удалить все данные
+            grid.ClearGrid()
+
+            # log.debug(u'Новая сетка грида <%s x %s>' % (delta_row_count, delta_col_count))
+            if delta_col_count > 0:
+                grid.AppendCols(delta_col_count)
+            else:
+                grid.DeleteCols(prev_col_count + delta_col_count - 1, -delta_col_count)
+            if delta_row_count > 0:
+                grid.AppendRows(delta_row_count)
+            else:
+                grid.DeleteRows(prev_row_count + delta_row_count - 1, -delta_row_count)
+            # self.Layout()
+            return True
+        except:
+            log.fatal(u'Ошибка пересоздания объекта грида')
+        return False

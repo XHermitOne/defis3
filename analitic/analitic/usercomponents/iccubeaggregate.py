@@ -35,8 +35,10 @@ ic_class_spc = {'type': 'CubeAggregate',
                 'measure': None,    # Мера/Факт, которое агрегируется
                 'expression': None,     # Выражение агрегации
 
+                'label': None,  # Надпись агрегации
+
                 '__events__': {},
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'label'],
                                    icDefInf.EDT_CHOICE: ['function'],
                                    icDefInf.EDT_USER_PROPERTY: ['measure'],
                                    },
@@ -150,3 +152,16 @@ class icCubeAggregate(icwidget.icSimple,
         Выражение агрегации.
         """
         return self.getICAttr('expression')
+
+    def getLabel(self):
+        """
+        Надпись измерения.
+        Если не определено, то берется description.
+        Если и в этом случае не определено, то берем name.
+        """
+        label = self.getICAttr('label')
+        if not label:
+            label = self.getDescription()
+        if not label:
+            label = self.getName()
+        return label

@@ -13,10 +13,12 @@ __version__ = (0, 1, 1, 1)
 SPC_IC_CUBEAGGREGATE = {'function': None,   # Функция агрегации
                         'measure': None,    # Мера/Факт, которое агрегируется
                         'expression': None,     # Выражение агрегации
+                        'label': None,  # Надпись агрегации
                         '__parent__': icwidget.SPC_IC_SIMPLE,
                         '__attr_hlp__': {'function': u'Функция агрегации',
                                          'measure': u'Мера/Факт, которое агрегируется',
                                          'expression': u'Выражение агрегации',
+                                         'label': u'Надпись агрегации',
                                          },
                         }
 
@@ -46,3 +48,9 @@ class icCubeAggregateProto(object):
         Выражение агрегации.
         """
         return None
+
+    def getLabel(self):
+        """
+        Надпись агрегации.
+        """
+        return u''

@@ -105,6 +105,7 @@ class icCubeMeasure(icwidget.icSimple,
     def getLabel(self):
         """
         Надпись, если не определена, то берется description.
+        Если и в этом случае не определено, то берем name.
         """
         label = self.getICAttr('label')
         if not label:

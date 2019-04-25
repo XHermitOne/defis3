@@ -5,6 +5,8 @@
 OLAP Куб.
 """
 
+from ic.log import log
+
 from ic.components import icwidget
 
 __version__ = (0, 1, 1, 1)
@@ -48,3 +50,39 @@ class icCubeProto(object):
         Список объектов функций аггрегаций.
         """
         return list()
+
+    def findDimension(self, dimension_name):
+        """
+        Поиск объекта измерения по его имени.
+        @return: Объект измерения или None, если объект с таким именем не найден.
+        """
+        finds = [obj for obj in self.getDimensions() if obj.getName() == dimension_name]
+        if finds:
+            return finds[0]
+        else:
+            log.warning(u'Измерение с именем <%s> не найдено в кубе <%s>' % (dimension_name, self.getName()))
+        return None
+
+    def findMeasure(self, measure_name):
+        """
+        Поиск объекта меры/факта по его имени.
+        @return: Объект измерения или None, если объект с таким именем не найден.
+        """
+        finds = [obj for obj in self.getMeasures() if obj.getName() == measure_name]
+        if finds:
+            return finds[0]
+        else:
+            log.warning(u'Мера/факт с именем <%s> не найдено в кубе <%s>' % (measure_name, self.getName()))
+        return None
+
+    def findAggregate(self, aggregate_name):
+        """
+        Поиск объекта функции агрегации по его имени.
+        @return: Объект функции агрегации или None, если объект с таким именем не найден.
+        """
+        finds = [obj for obj in self.getDimensions() if obj.getName() == aggregate_name]
+        if finds:
+            return finds[0]
+        else:
+            log.warning(u'Функции агрегации с именем <%s> не найдено в кубе <%s>' % (aggregate_name, self.getName()))
+        return None

@@ -52,6 +52,13 @@ class icSpreadSheetManager(icexcel.icVExcel):
         """
         icexcel.icVExcel.__init__(self, *args, **kwargs)
 
+    def setSpreadSheetData(self, spreadsheet_data):
+        """
+        Установить данные.
+        @param spreadsheet_data: Данные структуры SpreadSheet.
+        """
+        self._data = spreadsheet_data
+
     def createDefaultColumn(self, table):
         """
         Создание колонки по умолчанию.

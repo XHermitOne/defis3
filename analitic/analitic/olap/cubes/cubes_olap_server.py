@@ -419,12 +419,20 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         return len(self.getCubes())
 
-    def to_spreadsheet(self, json_dict):
+    def _to_spreadsheet(self, json_dict, cube=None):
         """
         Преобразование результатов запроса к OLAP серверу к структуре SpreadSheet.
         @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param cube: Куб. Если не определен, то берется первый.
         @return: Словарь структуры SpreadSheet.
         """
+        if cube is None:
+            cubes = self.getCubes()
+            cube = cubes[0] if cubes else None
+            if cube is None:
+                log.warning(u'Конвертация в структуру SpreadSheet. Не определен куб.')
+                return None
+
         # Объект управления структурой SpreadSheet
         spreadsheet_mngr = spreadsheet_manager.icSpreadSheetManager()
         # Создаем книгу
@@ -434,21 +442,46 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         # Создаем стили
         styles = workbook.createStyles()
         # Добавляем стили
-        for default_style_attr in spreadsheet_mngr.DEFAULT_STYLES:
+        for default_style_attr in spreadsheet_manager.DEFAULT_STYLES:
             style = styles.createStyle()
             style.set_attributes(default_style_attr)
 
         # Создаем таблицу
         table = worksheet.createTable()
         # Заполнение заголовка
-        # Создаем колонки
         levels = json_dict.get('levels', dict())
-        aggregates = json_dict.get('aggregates', dict())
+        aggregates = json_dict.get('aggregates', list())
         for level_name, level_content in levels.items():
-            first_column = spreadsheet_mngr.createDefaultColumn(table)
-            col_count = len(level_content) - 1 + len(aggregates)
+            # Создаем колонки
+            # first_column = spreadsheet_mngr.createDefaultColumn(table)
+            col_count = len(level_content) + len(aggregates)
             spreadsheet_mngr.createDefaultColumns(table, count=col_count)
+            # Заполняем заголовок
+            row = table.createRow()
+            cell = row.createCell()
+            dimension = cube.findDimension(level_name)
+            cell.setValue(dimension.getLabel() if dimension else u'')
+            if len(level_content) > 1:
+                cell.setMerge(len(level_content) - 1, 0)
+
+            for aggregate_name in aggregates:
+                aggregate = cube.findAggregate(aggregate_name)
+                cell = row.createCell()
+                cell.setValue(aggregate.getLabel() if aggregate else u'')
 
         # Создаем строки
 
         return spreadsheet_mngr.getData()
+
+    def to_spreadsheet(self, json_dict, cube=None):
+        """
+        Преобразование результатов запроса к OLAP серверу к структуре SpreadSheet.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param cube: Куб. Если не определен, то берется первый.
+        @return: Словарь структуры SpreadSheet.
+        """
+        try:
+            return self._to_spreadsheet(json_dict=json_dict, cube=cube)
+        except:
+            log.fatal(u'Ошибка конвертации результатов запроса к OLAP серверу к структуре SpreadSheet.')
+        return None
