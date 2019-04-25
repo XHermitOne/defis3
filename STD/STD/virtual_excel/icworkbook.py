@@ -8,7 +8,7 @@ from . import icprototype
 from . import icworksheet
 from . import icstyle
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icVWorkbook(icprototype.icVPrototype):
@@ -173,3 +173,17 @@ class icVWorkbook(icprototype.icVPrototype):
         Список имен листов книги.
         """
         return [work_sheet['Name'] for work_sheet in self._attributes['children'] if work_sheet['name'] == 'Worksheet']
+
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            worksheet = self.createWorksheet()
+            worksheet.set_attributes(child)
+            worksheet.build(child)
+        return True

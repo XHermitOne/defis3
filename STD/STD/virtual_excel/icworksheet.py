@@ -16,7 +16,12 @@ except ImportError:
     # Если Virtual Excel работает в окружении icReport
     from ic.std import icexceptions
 
-__version__ = (0, 1, 1, 2)
+try:
+    from ic.log import log
+except:
+    from ic.std.log import log
+
+__version__ = (0, 1, 2, 1)
 
 
 class icVWorksheet(icprototype.icVPrototype):
@@ -231,6 +236,33 @@ class icVWorksheet(icprototype.icVPrototype):
         page_breaks = icVPageBreaks(self)
         attrs = page_breaks.create()
         return page_breaks
+
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            child_type = child.get('name', None)
+            if child_type == 'Table':
+                table = self.createTable()
+                table.set_attributes(child)
+                table.build(child)
+            elif child_type == 'WorksheetOptions':
+                options = self.createWorksheetOptions()
+                options.set_attributes(child)
+                options.build(child)
+            elif child_type == 'PageBreaks':
+                page_breaks = self.createPageBreaks()
+                page_breaks.set_attributes(child)
+                page_breaks.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
+
+        return True
 
 
 class icVTable(icprototype.icVPrototype):
@@ -677,6 +709,28 @@ class icVTable(icprototype.icVPrototype):
             return row._delElementIdxAttr(Idx_-1, 'Row')
         return False
 
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            child_type = child.get('name', None)
+            if child_type == 'Column':
+                column = self.createColumn()
+                column.set_attributes(child)
+                column.build(child)
+            elif child_type == 'Row':
+                row = self.createRow()
+                row.set_attributes(child)
+                row.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
+        return True
+
 
 class icVWorksheetOptions(icprototype.icVPrototype):
     """
@@ -735,6 +789,28 @@ class icVWorksheetOptions(icprototype.icVPrototype):
         """
         fit_to_page = [element for element in self._attributes['children'] if element['name'] == 'FitToPage']
         return bool(fit_to_page)
+
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            child_type = child.get('name', None)
+            if child_type == 'Print':
+                print_option = self.createPrint()
+                print_option.set_attributes(child)
+                print_option.build(child)
+            elif child_type == 'PageSetup':
+                page_setup = self.createPageSetup()
+                page_setup.set_attributes(child)
+                page_setup.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
+        return True
 
 
 class icVPageSetup(icprototype.icVPrototype):

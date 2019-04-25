@@ -5,7 +5,13 @@ import hashlib
 
 from . import icprototype
 
-__version__ = (0, 1, 1, 1)
+try:
+    from ic.log import log
+except:
+    from ic.std.log import log
+
+
+__version__ = (0, 1, 2, 1)
 
 COLOR_ENUM = ('#000000',)
 
@@ -398,6 +404,24 @@ class icVStyles(icprototype.icVPrototype):
             return True
         return False
 
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            child_type = child.get('name', None)
+            if child_type == 'Style':
+                style = self.createStyle()
+                style.set_attributes(child)
+                style.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
+        return True
+
 
 class icVStyle(icprototype.icVPrototype):
     """
@@ -566,6 +590,40 @@ class icVStyle(icprototype.icVPrototype):
         fmt = icVNumberFormat(self)
         attrs = fmt.create()
         return fmt
+
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            child_type = child.get('name', None)
+            if child_type == 'Alignment':
+                alignment = self.createAlignment()
+                alignment.set_attributes(child)
+                alignment.build(child)
+            elif child_type == 'Borders':
+                borders = self.createBorders()
+                borders.set_attributes(child)
+                borders.build(child)
+            elif child_type == 'Font':
+                font = self.createFont()
+                font.set_attributes(child)
+                font.build(child)
+            elif child_type == 'Interior':
+                interior = self.createInterior()
+                interior.set_attributes(child)
+                interior.build(child)
+            elif child_type == 'NumberFormat':
+                num_format = self.createNumberFormat()
+                num_format.set_attributes(child)
+                num_format.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
+        return True
 
 
 HORIZONTAL_ENUM = ('Automatic', 'Left', 'Center', 'Right', 'Fill', 'Justify',

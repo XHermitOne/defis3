@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 2, 1)
 
 PROTOTYPE_ATTR_NAMES = ('name', 'children', 'crc', 'value')
 
@@ -115,6 +115,14 @@ class icVPrototype(object):
     
     def get_parent(self):
         return self._parent
+
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        return False
 
 
 class icVIndexedPrototype(icVPrototype):

@@ -22,7 +22,7 @@ except ImportError:
     from ic.log import log
 
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 2, 1)
 
 
 class icVExcel(icprototype.icVPrototype):
@@ -283,6 +283,16 @@ class icVExcel(icprototype.icVPrototype):
         Данные.
         """
         return self._data
+
+    def setData(self, spreadsheet_data, bBuid=True):
+        """
+        Установить данные.
+        @param spreadsheet_data: Данные структуры SpreadSheet.
+        @param bBuid: Построить внутреннюю структуру объектов.
+        """
+        self._data = spreadsheet_data
+        if bBuid:
+            self.build(self._data)
 
     def get_attributes(self):
         """
@@ -892,6 +902,20 @@ class icVExcel(icprototype.icVPrototype):
                     raise
         if AutoSave_:
             self.Save()
+
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            workbook = self.createWorkbook()
+            workbook.set_attributes(child)
+            workbook.build(child)
+        return True
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ except ImportError:
     # Если Virtual Excel работает в окружении ic
     from ic.log import log
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 2, 1)
 
 
 class icVCell(icprototype.icVIndexedPrototype):
@@ -326,6 +326,24 @@ class icVCell(icprototype.icVIndexedPrototype):
         """
         data = self.getData()
         data.set_xmlns(XMLNS_)
+
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            child_type = child.get('name', None)
+            if child_type == 'Data':
+                alignment = self.createData()
+                alignment.set_attributes(child)
+                alignment.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
+        return True
 
 
 DEFAULT_PERCENTAGE_TYPE = 'Percentage'

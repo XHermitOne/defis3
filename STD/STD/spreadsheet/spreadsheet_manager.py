@@ -57,7 +57,7 @@ class icSpreadSheetManager(icexcel.icVExcel):
         Установить данные.
         @param spreadsheet_data: Данные структуры SpreadSheet.
         """
-        self._data = spreadsheet_data
+        self.setData(spreadsheet_data, bBuid=True)
 
     def createDefaultColumn(self, table):
         """

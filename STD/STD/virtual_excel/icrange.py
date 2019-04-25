@@ -6,7 +6,12 @@ import copy
 from . import icprototype
 from . import iccell
 
-__version__ = (0, 1, 1, 1)
+try:
+    from ic.log import log
+except:
+    from ic.std.log import log
+
+__version__ = (0, 1, 2, 1)
 
 RANGE_ROW_IDX = 0
 RANGE_COL_IDX = 1
@@ -485,3 +490,21 @@ class icVRow(icprototype.icVIndexedPrototype, icVRange):
             # Удалить ячейку из строки
             return cell._delElementIdxAttr(Idx_-1, 'Cell')
         return False
+
+    def build(self, data):
+        """
+        Построить все дочерние объекты.
+        @param data: Данные текущего объекта.
+        @return: True/False
+        """
+        children = data.get('children', list())
+
+        for child in children:
+            child_type = child.get('name', None)
+            if child_type == 'Cell':
+                alignment = self.createCell()
+                alignment.set_attributes(child)
+                alignment.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
+        return True
