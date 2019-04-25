@@ -8,6 +8,12 @@ from . import icprototype
 from . import icworksheet
 from . import icstyle
 
+try:
+    from ic.log import log
+except:
+    from ic.std.log import log
+
+
 __version__ = (0, 1, 2, 1)
 
 
@@ -183,7 +189,18 @@ class icVWorkbook(icprototype.icVPrototype):
         children = data.get('children', list())
 
         for child in children:
-            worksheet = self.createWorksheet()
-            worksheet.set_attributes(child)
-            worksheet.build(child)
+            child_type = child.get('name', None)
+            if child_type == 'Styles':
+                # log.debug(u'Создание Styles')
+                styles = icstyle.icVStyles(self)
+                styles.set_attributes(child)
+                styles.build(child)
+            elif child_type == 'Worksheet':
+                # log.debug(u'Создание Worksheet')
+                worksheet = icworksheet.icVWorksheet(self)
+                worksheet.set_attributes(child)
+                worksheet.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
+
         return True

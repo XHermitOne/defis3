@@ -80,7 +80,7 @@ class icCubeProto(object):
         Поиск объекта функции агрегации по его имени.
         @return: Объект функции агрегации или None, если объект с таким именем не найден.
         """
-        finds = [obj for obj in self.getDimensions() if obj.getName() == aggregate_name]
+        finds = [obj for obj in self.getAggregates() if obj.getName() == aggregate_name]
         if finds:
             return finds[0]
         else:

@@ -248,15 +248,18 @@ class icVWorksheet(icprototype.icVPrototype):
         for child in children:
             child_type = child.get('name', None)
             if child_type == 'Table':
-                table = self.createTable()
+                # log.debug(u'Создание Table')
+                table = icVTable(self)
                 table.set_attributes(child)
                 table.build(child)
             elif child_type == 'WorksheetOptions':
-                options = self.createWorksheetOptions()
+                # log.debug(u'Создание WorksheetOptions')
+                options = icVWorksheetOptions(self)
                 options.set_attributes(child)
                 options.build(child)
             elif child_type == 'PageBreaks':
-                page_breaks = self.createPageBreaks()
+                # log.debug(u'Создание PageBreaks')
+                page_breaks = icVPageBreaks(self)
                 page_breaks.set_attributes(child)
                 page_breaks.build(child)
             else:
@@ -720,11 +723,13 @@ class icVTable(icprototype.icVPrototype):
         for child in children:
             child_type = child.get('name', None)
             if child_type == 'Column':
-                column = self.createColumn()
+                # log.debug(u'Создание Column')
+                column = icrange.icVColumn(self)
                 column.set_attributes(child)
                 column.build(child)
             elif child_type == 'Row':
-                row = self.createRow()
+                # log.debug(u'Создание Row')
+                row = icrange.icVRow(self)
                 row.set_attributes(child)
                 row.build(child)
             else:
@@ -801,11 +806,13 @@ class icVWorksheetOptions(icprototype.icVPrototype):
         for child in children:
             child_type = child.get('name', None)
             if child_type == 'Print':
-                print_option = self.createPrint()
+                # log.debug(u'Создание Print')
+                print_option = icVPrint(self)
                 print_option.set_attributes(child)
                 print_option.build(child)
             elif child_type == 'PageSetup':
-                page_setup = self.createPageSetup()
+                # log.debug(u'Создание PageSetup')
+                page_setup = icVPageSetup(self)
                 page_setup.set_attributes(child)
                 page_setup.build(child)
             else:

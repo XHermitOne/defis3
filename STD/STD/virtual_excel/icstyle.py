@@ -415,7 +415,7 @@ class icVStyles(icprototype.icVPrototype):
         for child in children:
             child_type = child.get('name', None)
             if child_type == 'Style':
-                style = self.createStyle()
+                style = icVStyle(self)
                 style.set_attributes(child)
                 style.build(child)
             else:
@@ -602,23 +602,23 @@ class icVStyle(icprototype.icVPrototype):
         for child in children:
             child_type = child.get('name', None)
             if child_type == 'Alignment':
-                alignment = self.createAlignment()
+                alignment = icVAlignment(self)
                 alignment.set_attributes(child)
                 alignment.build(child)
             elif child_type == 'Borders':
-                borders = self.createBorders()
+                borders = icVBorders(self)
                 borders.set_attributes(child)
                 borders.build(child)
             elif child_type == 'Font':
-                font = self.createFont()
+                font = icVFont(self)
                 font.set_attributes(child)
                 font.build(child)
             elif child_type == 'Interior':
-                interior = self.createInterior()
+                interior = icVInterior(self)
                 interior.set_attributes(child)
                 interior.build(child)
             elif child_type == 'NumberFormat':
-                num_format = self.createNumberFormat()
+                num_format = icVNumberFormat(self)
                 num_format.set_attributes(child)
                 num_format.build(child)
             else:

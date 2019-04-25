@@ -338,7 +338,8 @@ class icVCell(icprototype.icVIndexedPrototype):
         for child in children:
             child_type = child.get('name', None)
             if child_type == 'Data':
-                alignment = self.createData()
+                # log.debug(u'Создание Data')
+                alignment = icVData(self)
                 alignment.set_attributes(child)
                 alignment.build(child)
             else:

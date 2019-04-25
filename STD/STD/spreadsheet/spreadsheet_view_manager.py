@@ -94,9 +94,10 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
         self.reCreateGrid(self._spreadsheet_grid, row_count, column_count)
 
         for i_row in range(row_count):
-            row = table.getRow(i_row)
+            # row = table.getRow(i_row)
             for i_col in range(column_count):
-                cell = row.getCellIdx(i_col)
+                cell = table.getCell(row=i_row, col=i_col)
+                # cell = row.getCellIdx(i_col)
                 if cell:
                     value = cell.getValue()
                     log.debug(u'Значение <%s> [%d x %d]' % (value, i_row, i_col))

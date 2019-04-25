@@ -292,7 +292,7 @@ class icVExcel(icprototype.icVPrototype):
         """
         self._data = spreadsheet_data
         if bBuid:
-            self.build(self._data)
+            self.build(spreadsheet_data)
 
     def get_attributes(self):
         """
@@ -912,9 +912,14 @@ class icVExcel(icprototype.icVPrototype):
         children = data.get('children', list())
 
         for child in children:
-            workbook = self.createWorkbook()
-            workbook.set_attributes(child)
-            workbook.build(child)
+            child_type = child.get('name', None)
+            if child_type == 'Workbook':
+                # log.debug(u'Создание Workbook')
+                workbook = icworkbook.icVWorkbook(self)
+                workbook.set_attributes(child)
+                workbook.build(child)
+            else:
+                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
         return True
 
 
