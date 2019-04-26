@@ -34,8 +34,8 @@ ic_class_spc = {'name': 'default',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('calendar-month.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('calendar-month.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('combo_box_calendar.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('combo_box_calendar.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
