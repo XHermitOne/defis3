@@ -11,7 +11,7 @@ except:
     from ic.std.log import log
 
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 3, 1)
 
 COLOR_ENUM = ('#000000',)
 
@@ -417,6 +417,9 @@ class icVStyles(icprototype.icVPrototype):
             if child_type == 'Style':
                 style = icVStyle(self)
                 style.set_attributes(child)
+                style_id = child.get('ID', None)
+                if style_id:
+                    style.setID(style_id)
                 style.build(child)
             else:
                 log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
@@ -460,17 +463,6 @@ class icVStyle(icprototype.icVPrototype):
         # Запомнить максимальный идентификатор стиля
         self._parent.max_style_id = new_id
         return new_id
-
-    def newID_depricated(self):
-        """
-        Генерация нового идетификатора стиля.
-        """
-        styles_id = self._parent.getStylesID()
-        i = 1
-        while ('s'+str(i)) in styles_id:
-            i += 1
-        
-        return 's'+str(i)
 
     def _delAttr(self, name):
         """
@@ -550,7 +542,47 @@ class icVStyle(icprototype.icVPrototype):
             elif element['name'] == 'NumberFormat':
                 attrs['number_format'] = element
         return attrs
-        
+
+    def getAlignmentAttrs(self):
+        """
+        Содержаение выравнивания.
+        @return: Словарь описания выравнивания или None, если не определено.
+        """
+        attrs = self.getAttrs()
+        return attrs.get('alignment', None)
+
+    def getBordersAttrs(self):
+        """
+        Содержаение обрамления.
+        @return: Словарь описания обрамления или None, если не определено.
+        """
+        attrs = self.getAttrs()
+        return attrs.get('borders', None)
+
+    def getFontAttrs(self):
+        """
+        Содержаение шрифта.
+        @return: Словарь описания шрифта или None, если не определено.
+        """
+        attrs = self.getAttrs()
+        return attrs.get('font', None)
+
+    def getInteriorAttrs(self):
+        """
+        Содержаение интерьера.
+        @return: Словарь описания интерьера или None, если не определено.
+        """
+        attrs = self.getAttrs()
+        return attrs.get('interior', None)
+
+    def getNumberFormatAttrs(self):
+        """
+        Содержаение числового формата.
+        @return: Словарь описания числового формата или None, если не определено.
+        """
+        attrs = self.getAttrs()
+        return attrs.get('number_format', None)
+
     def createAlignment(self):
         """
         Создать выравнивание.

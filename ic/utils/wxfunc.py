@@ -9,7 +9,7 @@ import wx
 
 from ic.log import log
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 2, 1)
 
 
 def is_same_wx_object(wx_obj1, wx_obj2):
@@ -76,6 +76,28 @@ def wxColour2StrHex(colour):
     @return: Строка #RRGGBB соответствующая цвету.    
     """
     return colour.GetAsString(wx.C2S_HTML_SYNTAX)
+
+
+# Другое название метода
+wxColour2StrRGB = wxColour2StrHex
+
+
+def StrHex2wxColour(rgb_colour):
+    """
+    Преобразование строки в виде #RRGGBB в цвет wxColour.
+    @param rgb_colour: Цвет в виде строки #RRGGBB.
+    @return: Цвет wx.Colour.
+    """
+    str_rgb = rgb_colour.replace('#', '')
+    red = eval('0x' + str_rgb[:2])
+    green = eval('0x' + str_rgb[2:4])
+    blue = eval('0x' + str_rgb[4:])
+    colour = wx.Colour(red, green, blue)
+    return colour
+
+
+# Другое название метода
+StrRGB2wxColour = StrHex2wxColour
 
 
 def getWxPythonMajorVersion():

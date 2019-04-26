@@ -116,7 +116,11 @@ class icVCell(icprototype.icVIndexedPrototype):
             # Взять стиль из списка стилей
             my_workbook = self.get_parent_by_name('Workbook')
             style = my_workbook.getStyles().getStyle(self._attributes['StyleID'])
-            self._attributes['StyleID'] = style.get_attributes()['ID']
+            if style:
+                self._attributes['StyleID'] = style.get_attributes()['ID']
+            else:
+                log.warning(u'Стиль <%s> не найден среди %s' % (self._attributes['StyleID'],
+                                                                str(my_workbook.getStyles().getStylesID())))
         else:
             # Создать новый стиль
             my_workbook = self.get_parent_by_name('Workbook')
@@ -374,11 +378,13 @@ class icVData(icprototype.icVPrototype):
         т. к. нет возможности отделить проценты от числовых типов
         """
         analize_type = self.get_attributes().get('Type', '').lower().title() == DEFAULT_PERCENTAGE_TYPE
-        
+
+        analize_style = False
         style = self.get_parent().getStyle()
-        number_format = style.findChildAttrsByName('NumberFormat')
-        analize_style = number_format and 'Format' in number_format and \
-            (('%' in number_format['Format']) or ('Percent' in number_format['Format']))
+        if style:
+            number_format = style.findChildAttrsByName('NumberFormat')
+            analize_style = number_format and 'Format' in number_format and \
+                (('%' in number_format['Format']) or ('Percent' in number_format['Format']))
         return analize_type or analize_style
     
     def setValue(self, Value_, Type_='String'):

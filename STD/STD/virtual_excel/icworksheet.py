@@ -469,7 +469,11 @@ class icVTable(icprototype.icVPrototype):
 
     def getCell(self, row, col):
         """
-        Получить ячейку (row,col).
+        Получить ячейку (row, col).
+        @param row: Строка 1 .. 65535.
+        @param col: Колонка 1 .. 256.
+        @return: Объект ячейки или
+            None в случае если колонка не может быть определена.
         """
         # Если координаты недопустимы, тогда ошибка
         if row <= 0:

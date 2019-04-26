@@ -6,6 +6,9 @@
 Просмотр осуществляется с помощью контрола wx.Grid.
 """
 
+import wx
+import wx.grid
+
 from ic.log import log
 from ic.utils import wxfunc
 
@@ -51,6 +54,7 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
         @param spreadsheet_data: Данные структуры SpreadSheet.
         @return: True/False.
         """
+        # log.debug(u'Просмотр SpreadSheet %s' % str(spreadsheet_data))
         if self._spreadsheet_grid is None:
             log.warning(u'Не определен wx.Grid для отображения структуры SpreadSheet')
             return False
@@ -96,15 +100,56 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
         for i_row in range(row_count):
             # row = table.getRow(i_row)
             for i_col in range(column_count):
-                cell = table.getCell(row=i_row, col=i_col)
+                # Адресация начинается с 1---V
+                cell = table.getCell(row=i_row + 1, col=i_col + 1)
+                self._set_grid_cell_style(i_row, i_col, cell.getStyle())
                 # cell = row.getCellIdx(i_col)
                 if cell:
                     value = cell.getValue()
-                    log.debug(u'Значение <%s> [%d x %d]' % (value, i_row, i_col))
+                    # log.debug(u'Значение <%s> [%d x %d]' % (value, i_row, i_col))
                     if value:
                         row_idx, col_idx, merge_down, merge_accross = cell.getRegion()
                         if merge_down > 1 or merge_accross > 1:
                             self._spreadsheet_grid.SetCellSize(row_idx, col_idx, merge_down+1, merge_accross+1)
-                        log.debug(u'Адрес <%d x %d>' % (row_idx, col_idx))
-                        self._spreadsheet_grid.SetCellValue(row_idx, col_idx, str(value))
+                        # log.debug(u'Адрес <%d x %d>' % (row_idx, col_idx))
+                        self._spreadsheet_grid.SetCellValue(row_idx - 1, col_idx - 1, str(value))
         return True
+
+    def _set_grid_cell_style(self, row, col, style):
+        """
+        Выставить атрибуты стиля ячейки грида.
+        @param row: Строка ячейки.
+        @param col: Колонка ячейки.
+        @param style: Объект стиля.
+        @return: True/False.
+        """
+        if style:
+            # Шрифт
+            font_dict = style.getFontAttrs()
+            if font_dict:
+                cell_attr = wx.grid.GridCellAttr()
+                if font_dict.get('Bold', None) in (True, 1, '1'):
+                    # Установить жирный шрифт
+                    font = wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD)
+                    cell_attr.SetFont(font)
+                self._spreadsheet_grid.SetAttr(row, col, cell_attr)
+
+                text_color = font_dict.get('Color', None)
+                if text_color:
+                    wx_colour = wxfunc.StrRGB2wxColour(text_color)
+                    self._spreadsheet_grid.SetCellTextColour(row, col, wx_colour)
+
+            # Интерьер
+            interior_dict = style.getInteriorAttrs()
+            if interior_dict:
+                rgb_color = interior_dict.get('Color', None)
+                # log.debug(u'RGB %s' % str(rgb_color))
+                if rgb_color:
+                    # Установить цвет фона
+                    wx_colour = wxfunc.StrRGB2wxColour(rgb_color)
+                    # log.debug(u'Set cell <%d x %d> colour %s' % (row, col, str(wx_colour)))
+                    self._spreadsheet_grid.SetCellBackgroundColour(row, col, wx_colour)
+            return True
+        else:
+            log.warning(u'Стиль ячейки <%d x %d> не определен.' % (row, col))
+        return False

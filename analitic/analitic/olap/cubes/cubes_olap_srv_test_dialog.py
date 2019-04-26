@@ -144,7 +144,7 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
 
             if result:
                 spreadsheet = self._OLAP_server.to_spreadsheet(result)
-                log.debug(u'SpreadSheet: %s' % str(spreadsheet))
+                # log.debug(u'SpreadSheet: %s' % str(spreadsheet))
                 self._spreadsheet_mngr.view_spreadsheet(spreadsheet)
 
         event.Skip()
