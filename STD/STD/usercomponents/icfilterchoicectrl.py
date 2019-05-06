@@ -46,7 +46,8 @@ ic_class_spc = {'name': 'default',
 
                 'onChange': None,  # Код смены фильтра
 
-                '__events__': {'onChange': (None, 'OnChange', False)},
+                '__events__': {'onChange': (None, 'OnChange', False),
+                               'get_env': (None, None, False)},
                 '__attr_types__': {0: ['name', 'type'],
                                    icDefInf.EDT_TEXTFIELD: ['save_filename'],
                                    icDefInf.EDT_PY_SCRIPT: ['get_env', 'onChange'],
@@ -77,7 +78,7 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 1, 1, 2)
 
 
 class icFilterChoiceCtrl(icwidget.icWidget, parentModule.icFilterChoiceCtrlProto):

@@ -200,14 +200,14 @@ class icSelectComponentFlatMenu(flatmenu.FlatMenu,
                 menuObj = flatmenu.FlatMenu()
                 self._menuGrp[group] = menuObj
                 # Цикл по элементам группы
-                for key in [key for key, el in self.ObjectsInfo.items() if el[0] == group]:
-                    comp_type = icResTree.ObjectsInfo[key][3]['type']
+                for name in [key for key, el in self.ObjectsInfo.items() if el[0] == group]:
+                    comp_type = icResTree.ObjectsInfo[name][3]['type']
                     if comp_type in self.ObjList and comp_type not in self.NonObjList:
                         id = wx.NewId()
-                        bitmap = icResTree.ObjectsInfo[key][1]
-                        item = flatmenu.FlatMenuItem(menuObj, id, key, '',
-                                                     wx.ITEM_NORMAL, normalBmp=bitmap)
-                        menuObj.AppendItem(item)
+                        bitmap = icResTree.ObjectsInfo[name][1]
+                        menuitem = flatmenu.FlatMenuItem(menuObj, id, label=name, normalBmp=bitmap)
+
+                        menuObj.AppendItem(menuitem)
 
                         self.menuDict[id] = comp_type
                         self.menuIdDict[comp_type] = id
@@ -248,12 +248,14 @@ def popup_component_flatmenu(parent=None, button=None):
     select_menu.init(parent)
     select_menu.create()
 
-    if button and parent:
+    if button:
         button_size = button.GetSize()
         button_point = button.GetPosition()
         button_point = button.GetParent().ClientToScreen(button_point)
 
         select_menu.SetOwnerHeight(button_size.y)
         select_menu.Popup(wx.Point(button_point.x, button_point.y), parent)
+    else:
+        select_menu.Popup(wx.GetMousePosition(), parent)
 
     return select_menu.selected_component

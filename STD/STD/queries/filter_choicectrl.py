@@ -19,7 +19,7 @@ from ic.log import log
 from . import filter_choice_dlg
 from . import filter_constructor_dlg
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 DEFAULT_LIMIT_LABEL_FMT = u'Ограничение количества объектов: %d'
 ERROR_LIMIT_LABEL_FMT = u'(!) Превышено ограничение: %d'
@@ -272,11 +272,24 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
         self.limit_staticText.SetLabel(u'')
 
     def onAddButtonClick(self, event):
-        self.GetParent().addFilter()
+        """
+        Обработчик кнопки добавления фильтра.
+        """
+        try:
+            self.GetParent().addFilter()
+        except AttributeError:
+            self.addFilter()
         event.Skip()
 
     def onDelButtonClick(self, event):
-        self.GetParent().delFilter()
+        """
+        Обработчик кнопки удаления фильтра.
+        """
+        try:
+            self.GetParent().delFilter()
+        except AttributeError:
+            self.delFilter()
+
         event.Skip()
 
     def onCancelButtonClick(self, event):
@@ -288,20 +301,89 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
         event.Skip()
 
     def onSortToolClick(self, event):
-        self.GetParent().sortFilters()
+        """
+        Обработчик кнопки сортировки фильтров.
+        """
+        try:
+            self.GetParent().sortFilters()
+        except AttributeError:
+            self.sortFilters()
         event.Skip()
 
     def onSortReverseToolClick(self, event):
-        self.GetParent().sortFilters(is_reverse=True)
+        """
+        Обработчик кнопки обратной сортировки фильтров.
+        """
+        try:
+            self.GetParent().sortFilters(is_reverse=True)
+        except AttributeError:
+            self.sortFilters(is_reverse=True)
         event.Skip()
 
     def onMoveUpToolClick(self, event):
-        self.GetParent().moveFilterUp()
+        """
+        Обработчик кнопки передвижения текущего фильтра вверх по списку фильтров.
+        """
+        try:
+            self.GetParent().moveFilterUp()
+        except AttributeError:
+            self.moveFilterUp()
         event.Skip()
 
     def onMoveDownToolClick(self, event):
-        self.GetParent().moveFilterDown()
+        """
+        Обработчик кнопки передвижения текущего фильтра вниз по списку фильтров.
+        """
+        try:
+            self.GetParent().moveFilterDown()
+        except AttributeError:
+            self.moveFilterDown()
         event.Skip()
+
+
+def get_filter_choice_dlg(parent=None, environment=None, cur_filter=None,
+                          limit=None, over_limit=None):
+    """
+    Диалоговая форма выбора фильтра.
+    @param parent: Родительское окно.
+    @param environment: Окружение, словарно-списковая структура формата
+        filter_builder_env.FILTER_ENVIRONMENT.
+    @param cur_filter: Результирующий отредактированный фильтр.
+    @param limit: Ограничение количества строк фильтруемого объекта.
+    @param over_limit: Количество строк при привышении лимита.
+    @return: Выбранный фильтр или None в случае ошибки/отмены.
+    """
+    if parent is None:
+        app = wx.GetApp()
+        parent = app.GetTopWindow()
+
+    if cur_filter is None:
+        cur_filter = dict()
+
+    result_filter = None
+    try:
+        dlg = icFilterChoiceDlg(parent=parent)
+        dlg.setEnvironment(environment)
+        dlg.setFilters(cur_filter)
+        dlg.setLimitLabel(limit, over_limit)
+        if dlg.ShowModal() == wx.ID_OK:
+            result_filter = dlg.getFilter()
+        dlg.Destroy()
+        return result_filter
+    except:
+        log.fatal(u'Ошибка диалоговой формы выбора фильтра')
+    return None
+
+
+def get_str_filter(cur_filter):
+    """
+    Фильтр в строковом представлении.
+    @return: Строка фильтра.
+    """
+    if cur_filter:
+        join_str = u' %s ' % cur_filter.get('description', u'ИЛИ')
+        return join_str.join([u'<%s>' % fltr.get('description', fltr.get('name', '...')) for fltr in cur_filter['children'] if fltr.get('check', False)])
+    return u''
 
 
 class icFilterChoiceCtrlProto(wx.ComboCtrl):

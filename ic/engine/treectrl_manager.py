@@ -15,9 +15,10 @@ import wx.gizmos
 from ic.log import log
 from ic.utils import ic_str
 from ic.bitmap import ic_bmp
+from ic.dlg import ic_dlg
 
 
-__version__ = (0, 1, 3, 2)
+__version__ = (0, 1, 4, 1)
 
 UNKNOWN = u'Не определено'
 
@@ -841,24 +842,111 @@ class icTreeCtrlManager(object):
         if image is None:
             ctrl.SetItemImage(item, None)
         else:
-            if isinstance(image, wx.Bitmap):
-                img = image.ConvertToImage()
-                img_id = hashlib.md5(img.GetData()).hexdigest()
-            elif isinstance(image, wx.Image):
-                img_id = hashlib.md5(image.GetData()).hexdigest()
-            else:
-                log.warning(u'Не обрабатываему тип образа <%s>' % image.__class__.__name__)
-                return False
+            img_idx = self.getImageIndex_tree_ctrl(ctrl=ctrl, image=image, auto_add=True)
+            ctrl.SetItemImage(item, img_idx)
+        return True
 
-            # Сначала проверяем в кеше
-            img_cache = self.getTreeCtrlImageListCache(ctrl=ctrl)
+    def getImageIndex_tree_ctrl(self, ctrl=None, image=None, auto_add=True):
+        """
+        Поиск образа в списке образов wx.TreeCtrl.
+        @param ctrl: Объект контрола дерева.
+        @param image: Объект образа.
+        @param auto_add: Автоматически добавить в список, если отсутствует?
+        @return: Индекс образа или -1 если образ не найден.
+        """
+        if image is None:
+            return -1
 
-            if img_id in img_cache:
-                img_idx = img_cache[img_id]
-            else:
+        if isinstance(image, wx.Bitmap):
+            img = image.ConvertToImage()
+            img_id = hashlib.md5(img.GetData()).hexdigest()
+        elif isinstance(image, wx.Image):
+            img_id = hashlib.md5(image.GetData()).hexdigest()
+        else:
+            log.warning(u'Не обрабатываему тип образа <%s>' % image.__class__.__name__)
+            return -1
+
+        # Сначала проверяем в кеше
+        img_cache = self.getTreeCtrlImageListCache(ctrl=ctrl)
+
+        img_idx = -1
+        if img_id in img_cache:
+            img_idx = img_cache[img_id]
+        else:
+            if auto_add:
                 image_list = self.getTreeCtrlImageList(ctrl=ctrl)
                 img_idx = image_list.Add(image)
                 # Запоминаем в кеше
                 img_cache[img_id] = img_idx
-            ctrl.SetItemImage(item, img_idx)
-        return True
+        return img_idx
+
+    def appendChildItem_tree_ctrl(self, ctrl=None, parent_item=None,
+                                  label=u'', image=None, data=None, select=True):
+        """
+        Добавить дочерний элемент дерева.
+        @param ctrl: Объект контрола дерева.
+        @param parent_item: Родительский элемент дерева.
+            Если не определен, то считается что это корневой элемент.
+        @param label: Надпись нового элемента.
+        @param image: Образ нового элемента.
+        @param data: Данные, автоматически прикрепляемые к новому элементу.
+        @param select: Автоматически выбрать новый элемент?
+        @return: Новый элемент дерева или None в случае ошибки.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return None
+
+        if parent_item is None:
+            parent_item = ctrl.GetRootItem()
+
+        img_idx = self.getImageIndex_tree_ctrl(ctrl=ctrl, image=image, auto_add=True)
+
+        if isinstance(ctrl, wx.TreeCtrl):
+            try:
+                new_item = ctrl.AppendItem(parent_item, text=label, image=img_idx, data=data)
+                if select:
+                    ctrl.SelectItem(new_item)
+                return new_item
+            except:
+                log.fatal(u'Ошибка добавления дочернего элемента')
+        else:
+            log.warning(u'Не поддерживается добавление дочернего элемента для объекта <%s>' % ctrl.__class__.__name__)
+        return None
+
+    def deleteItem_tree_ctrl(self, ctrl=None,item=None, ask=False, select=True):
+        """
+        Удалить элемент дерева.
+        @param ctrl: Объект контрола дерева.
+        @param item: Удаляемый элемент дерева.
+            Если не определен, то считается что это текущий выбранный элемент.
+        @param ask: Спросить о подтверждении удаления?
+        @param select: Автоматически выбрать новый элемент?
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return False
+
+        if item is None:
+            item = ctrl.GetSelection()
+
+        if not item:
+            log.warning(u'Текущий элемент дерева не определен для удаления')
+            return False
+
+        do_del = True
+        if ask:
+            label = ctrl.GetItemText(item)
+            do_del = ic_dlg.icAskBox(u'УДАЛЕНИЕ', u'Удалить <%s>' % label)
+
+        if do_del:
+            if isinstance(ctrl, wx.TreeCtrl):
+                ctrl.Delete(item)
+            else:
+                log.warning(u'Не обрабатываемый тип объекта контрола дерева <%s>' % ctrl.__class__.__name__)
+            return True
+        return False
+
+
+
