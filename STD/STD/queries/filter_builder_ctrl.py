@@ -77,8 +77,8 @@ class icCustomComboCtrl(wx.ComboCtrl):
         """
         pass
 
-    def getValue(self):
-        return self.GetValue()
+    def getValue(self, *args, **kwargs):
+        return self.GetValue(*args, **kwargs)
 
 
 class icCustomChoice(icCustomComboCtrl):
@@ -478,9 +478,12 @@ class icArgEdit(wx.TextCtrl):
             return Value_
         else:
             return str(Value_)
-        
-    getValue = wx.TextCtrl.GetValue
-    setValue = wx.TextCtrl.SetValue
+
+    def getValue(self, *args, **kwargs):
+        return self.GetValue(*args, **kwargs)
+
+    def setValue(self, *args, **kwargs):
+        return self.SetValue(*args, **kwargs)
 
 
 class icNumArgEdit(icArgEdit):

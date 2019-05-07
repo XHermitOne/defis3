@@ -196,7 +196,7 @@ class icFilterComboBoxProto(wx.ComboBox):
         """
         if new_filter is None:
             # Необходимо сначала сконструировать фильтр
-            new_filter = filter_constructor_dlg.icFilterConstructorDlg(self, None, self.environment)
+            new_filter = filter_constructor_dlg.get_filter_constructor_dlg(self, None, self.environment)
 
             if new_filter:
                 filter_id = self._genUUID()

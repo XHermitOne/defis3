@@ -10,6 +10,7 @@ import wx
 from ic.bitmap import ic_bmp
 from ic.log import log
 from ic.utils import util
+from ic.utils import ic_uuid
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
@@ -74,6 +75,8 @@ class icFilterTreeCtrl(icwidget.icWidget,
         """
         Конструктор.
         """
+        self._widget_psp_uuid = None
+
         # Append for specification
         component = util.icSpcDefStruct(ic_class_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -90,6 +93,21 @@ class icFilterTreeCtrl(icwidget.icWidget,
 
         # После того как определили окружение и
         # имя файла хранения фильтров можно загрузить фильтры
-        # self.loadFilter()
+        self.loadFilters()
         # self.SetValue(self.getStrFilter())
 
+    def getUUID(self):
+        """
+        Это уникальный идентификатор паспорта компонента.
+        Не изменяемый в зависимости от редактирования т.к.
+        паспорт не меняется.
+        @return: UUID строка контрольной суммы паспорта.
+        """
+        if self._widget_psp_uuid:
+            return self._widget_psp_uuid
+
+        psp = self.GetPassport()
+        if psp:
+            psp = tuple(psp)[0]
+        self._widget_psp_uuid = ic_uuid.get_passport_check_sum(psp, True)
+        return self._widget_psp_uuid

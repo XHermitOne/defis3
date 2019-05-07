@@ -7,20 +7,30 @@
 
 # Подключение библиотек
 import sys
+import hashlib
 import wx
 import wx.adv
 import wx.gizmos
 import wx.dataview
+import wx.grid
 
 from ic.log import log
 from ic.utils import ic_str
 from ic.utils import wxfunc
+from ic.bitmap import ic_bmp
 from ic import config
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 3, 1)
 
 DEFAULT = 'default'
+
+# Размер картинок элементов дерева по умолчанию
+DEFAULT_ITEM_IMAGE_WIDTH = 16
+DEFAULT_ITEM_IMAGE_HEIGHT = 16
+DEFAULT_ITEM_IMAGE_SIZE = (DEFAULT_ITEM_IMAGE_WIDTH, DEFAULT_ITEM_IMAGE_HEIGHT)
+
+LIST_CTRL_IMAGE_LIST_CACHE_NAME = '__image_list_cache'
 
 
 class icListCtrlManager(object):
@@ -470,6 +480,24 @@ class icListCtrlManager(object):
             # Назначить первую колонку главной
             ctrl.SetMainColumn(0)
             return True
+        elif isinstance(ctrl, wx.grid.Grid):
+            col_count = ctrl.GetNumberCols()
+            cols_len = len(cols)
+            if col_count < cols_len:
+                # Добавить не достающие колонки
+                ctrl.AppendCols(cols_len - col_count)
+            elif col_count > cols_len:
+                # Удалить лишние колонки
+                ctrl.DeleteCols(cols_len, cols_len - col_count)
+            for i_col, col in enumerate(cols):
+                label = col.get('label', u'')
+                width = col.get('width', wx.COL_WIDTH_AUTOSIZE)
+                # align = col.get('align', None)
+                ctrl.SetColLabelValue(i_col, label)
+                ctrl.SetColSize(i_col, width)
+                # if align:
+                #     ctrl.SetColLabelAlignment()
+            return True
         else:
             log.warning(u'Добавление колонок списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
         return False
@@ -496,19 +524,20 @@ class icListCtrlManager(object):
         return False
 
     def appendRow_ListCtrl(self, ctrl, row=(),
-                           evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT):
+                           evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
+                           auto_select=False):
         """
         Добавить строку в контрол wx.ListCtrl.
         @param ctrl: Объект контрола wx.ListCtrl.
         @param row: Список строки по полям.
         @param evenBackgroundColour: Цвет фона четных строк.
         @param oddBackgroundColour: Цвет фона нечетных строк.
+        @param auto_select: Автоматически выбрать добавленную строку?
         @return: True - все прошло нормально / False - какая-то ошибка.
         """
         if type(row) not in (list, tuple):
             log.warning(u'Не корректный тип списка строки <%s> объекта wx.ListCtrl' % type(row))
             return False
-
         try:
             row_idx = -1
             # Ограничить список количеством колонок
@@ -539,19 +568,25 @@ class icListCtrlManager(object):
                 elif oddBackgroundColour and (row_idx % 2):
                     # Добавляемая строка не четная?
                     ctrl.SetItemBackgroundColour(row_idx, self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT else oddBackgroundColour)
+
+                if auto_select:
+                    # Автоматически выбрать добавленную строку?
+                    ctrl.Select(row_idx)
             return True
         except:
             log.fatal(u'Ошибка добавления строки %s в контрол wx.ListCtrl' % str(row))
         return False
 
     def appendRow_list_ctrl(self, ctrl=None, row=(),
-                            evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT):
+                            evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
+                            auto_select=False):
         """
         Добавить строку в контрол списка.
         @param ctrl: Объект контрола.
         @param row: Список строки по полям.
         @param evenBackgroundColour: Цвет фона четных строк.
         @param oddBackgroundColour: Цвет фона нечетных строк.
+        @param auto_select: Автоматически выбрать добавленную строку?
         @return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
@@ -561,9 +596,16 @@ class icListCtrlManager(object):
         if isinstance(ctrl, wx.ListCtrl):
             return self.appendRow_ListCtrl(ctrl=ctrl, row=row,
                                            evenBackgroundColour=evenBackgroundColour,
-                                           oddBackgroundColour=oddBackgroundColour)
+                                           oddBackgroundColour=oddBackgroundColour,
+                                           auto_select=auto_select)
         elif isinstance(ctrl, wx.dataview.DataViewListCtrl):
             ctrl.AppendItem(row)
+            return True
+        elif isinstance(ctrl, wx.grid.Grid):
+            ctrl.AppendRows(1)
+            for i_col, cell in enumerate(row):
+                if cell is not None:
+                    ctrl.SetCellValue(ctrl.GetNumberRows()-1, i_col, str(cell))
             return True
         else:
             log.warning(u'Добавление колонок списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
@@ -605,7 +647,8 @@ class icListCtrlManager(object):
 
             for i, item in enumerate(row):
                 item_str = ic_str.toUnicode(item, config.DEFAULT_ENCODING)
-                ctrl.SetStringItem(row_idx, i, item_str)
+                # ctrl.SetStringItem(row_idx, i, item_str)
+                ctrl.SetItem(row_idx, i, item_str)
                 if evenBackgroundColour and not (row_idx % 2):
                     # Четная строка?
                     ctrl.SetItemBackgroundColour(row_idx, self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT else evenBackgroundColour)
@@ -1046,3 +1089,97 @@ class icListCtrlManager(object):
         @return: индекс найденной строки или None если строка не найдена.
         """
         return self.findRowIdx_requirement(ctrl=ctrl, rows=rows, requirement=requirement)
+
+    def getListCtrlImageList(self, ctrl=None, image_width=DEFAULT_ITEM_IMAGE_WIDTH,
+                             image_height=DEFAULT_ITEM_IMAGE_HEIGHT):
+        """
+        Получить список картинок элементов контрола дерева wx.ListCtrl.
+        @param ctrl: Объект контрола wx.ListCtrl.
+        @param image_width: Ширина картинки.
+        @param image_height: Высота картинки.
+        @return: Объект списка образов.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.ListCtrl')
+            return None
+
+        image_list = ctrl.GetImageList(wx.IMAGE_LIST_SMALL)
+        if not image_list:
+            image_list = wx.ImageList(image_width, image_height)
+            # ВНИМАНИЕ! Здесь необходимо вставить хотя бы пустой Bitmap
+            # Иначе при заполнении контрол валиться
+            empty_dx = image_list.Add(ic_bmp.createEmptyBitmap(image_width, image_height))
+            ctrl.SetImageList(image_list, wx.IMAGE_LIST_SMALL)
+        return image_list
+
+    def getListCtrlImageListCache(self, ctrl=None):
+        """
+        Кеш списка образов.
+        @param ctrl: Объект контрола wx.ListCtrl.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.ListCtrl')
+            return None
+
+        if not hasattr(ctrl, LIST_CTRL_IMAGE_LIST_CACHE_NAME):
+            setattr(ctrl, LIST_CTRL_IMAGE_LIST_CACHE_NAME, dict())
+        return getattr(ctrl, LIST_CTRL_IMAGE_LIST_CACHE_NAME)
+
+    def setItemImage_list_ctrl(self, ctrl=None, item=None, image=None):
+        """
+        Установить картинку элемента дерева.
+        @param ctrl: Объект контрола wx.ListCtrl.
+        @param item: Элемент списка. Если None, то имеется текущий выбранный элемент.
+        @param image: Объект картинки wx.Bitmap. Если не определен, то картинка удаляется.
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.ListCtrl')
+            return None
+
+        if item is None:
+            item = self.getItemSelectedIdx(ctrl)
+
+        if image is None:
+            ctrl.SetItemImage(item, None)
+        else:
+            if item >= 0:
+                img_idx = self.getImageIndex_list_ctrl(ctrl=ctrl, image=image, auto_add=True)
+                ctrl.SetItemImage(item, img_idx)
+            else:
+                log.warning(u'Не корректный индекс строки <%s>' % str(item))
+        return True
+
+    def getImageIndex_list_ctrl(self, ctrl=None, image=None, auto_add=True):
+        """
+        Поиск образа в списке образов wx.ListCtrl.
+        @param ctrl: Объект контрола дерева.
+        @param image: Объект образа.
+        @param auto_add: Автоматически добавить в список, если отсутствует?
+        @return: Индекс образа или -1 если образ не найден.
+        """
+        if image is None:
+            return -1
+
+        if isinstance(image, wx.Bitmap):
+            img = image.ConvertToImage()
+            img_id = hashlib.md5(img.GetData()).hexdigest()
+        elif isinstance(image, wx.Image):
+            img_id = hashlib.md5(image.GetData()).hexdigest()
+        else:
+            log.warning(u'Не обрабатываемый тип образа <%s>' % image.__class__.__name__)
+            return -1
+
+        # Сначала проверяем в кеше
+        img_cache = self.getListCtrlImageListCache(ctrl=ctrl)
+
+        img_idx = -1
+        if img_id in img_cache:
+            img_idx = img_cache[img_id]
+        else:
+            if auto_add:
+                image_list = self.getListCtrlImageList(ctrl=ctrl)
+                img_idx = image_list.Add(image)
+                # Запоминаем в кеше
+                img_cache[img_id] = img_idx
+        return img_idx

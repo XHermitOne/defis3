@@ -64,7 +64,8 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
         """
         if new_filter is None:
             # Необходимо сначала сконструировать фильтр
-            new_filter = filter_constructor_dlg.icFilterConstructorDlg(self, None, self.environment)
+            new_filter = filter_constructor_dlg.get_filter_constructor_dlg(self, None, self.environment)
+            # log.debug(u'Новый фильтр %s' % str(new_filter))
 
             if new_filter:
                 filter_id = self._genUUID()

@@ -501,7 +501,9 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             for i_col in range(3, self.GetColumnCount()):
                 arg_edit = self.GetItemWindow(Item_, i_col)
                 if arg_edit:
-                    item_data['arg_'+str(i_col-2)] = arg_edit.getValue()
+                    key = 'arg_' + str(i_col - 2)
+                    # log.debug(u'arg_edit %s' % str(arg_edit))
+                    item_data[key] = arg_edit.getValue()
 
             # Дополнительная функция получения аргументов
             if 'get_args' in func:

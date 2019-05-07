@@ -9,11 +9,13 @@
 import os
 import os.path
 
+from ic.log import log
 from ic.utils import resfunc
 from ic.utils import ic_file
+from ic.utils import ic_res
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icStoredCtrlManager(object):
@@ -45,4 +47,32 @@ class icStoredCtrlManager(object):
         if data is None:
             data = dict()
         return data
+
+    def save_data_file(self, save_filename, save_data=None):
+        """
+        Сохранить данные в конкретном файле.
+        @param save_filename: Полное имя файла сохранения.
+        @param save_data: Сохраняемые данные.
+        @return: True/False.
+        """
+        if save_filename:
+            # Просто записать в файл
+            ic_res.SaveResourcePickle(save_filename, save_data)
+        else:
+            log.warning(u'Не определен файл для сохранения фильтра')
+            return False
+        return True
+
+    def load_data_file(self, save_filename):
+        """
+        Прочитать данные из файла.
+        @param save_filename: Полное имя файла сохранения.
+        @return: Данные файла или None в случае ошибки.
+        """
+        if save_filename:
+            # Просто записать в файл
+            return ic_res.LoadResourcePickle(save_filename)
+        else:
+            log.warning(u'Не определен файл для сохранения фильтра')
+        return None
 

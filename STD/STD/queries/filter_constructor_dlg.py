@@ -25,7 +25,7 @@ except:
 __version__ = (0, 1, 1, 1)
 
 
-def icFilterConstructorDlg(ParentWin_=None, DefaultFilterData_=None, Env_=None):
+def get_filter_constructor_dlg(ParentWin_=None, DefaultFilterData_=None, Env_=None):
     """
     Функция вызова диалогового окна конструктора фильтров.
     @param ParentWin_: Родительское окно диалога конструктора фильтров.
@@ -201,7 +201,7 @@ def test(parent=None):
                                                                     'arg_1': u'1000', 'func': 'lesser',
                                                                     '__sql__': ('cost', '<', '1000')}], 'logic': 'AND'}
 
-    result = icFilterConstructorDlg(parent, DefaultFilterData_=default_filter, Env_=env)
+    result = get_filter_constructor_dlg(parent, DefaultFilterData_=default_filter, Env_=env)
     print('TEST ... RESULT:', result)
     app.MainLoop()
     print('TEST ... STOP')

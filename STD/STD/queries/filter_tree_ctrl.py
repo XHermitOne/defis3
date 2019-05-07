@@ -6,19 +6,24 @@
 """
 
 import copy
+import uuid
+import os.path
 import wx
 from wx.lib.agw import flatmenu
 
 from ic.log import log
 from ic.bitmap import ic_bmp
-from ic.engine import treectrl_manager
 from ic.dlg import ic_dlg
+from ic.utils import ic_file
+from ic.engine import treectrl_manager
+from ic.engine import stored_ctrl_manager
 
 
 # import ic
 
 # from . import filter_builder_env
 from . import filter_choicectrl
+from . import filter_indicator
 
 # from ic.PropertyEditor import select_component_menu
 
@@ -35,7 +40,9 @@ EMPTY_NODE_RECORD = {'__filter__': None, '__indicator__': None}
 
 
 class icFilterTreeCtrlProto(wx.TreeCtrl,
-                            treectrl_manager.icTreeCtrlManager):
+                            filter_indicator.icFilterIndicator,
+                            treectrl_manager.icTreeCtrlManager,
+                            stored_ctrl_manager.icStoredCtrlManager):
     """
     Контрол древовидного представления фильтров с индикаторами узлов.
     Абстрактный класс.
@@ -47,10 +54,18 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         wx.TreeCtrl.__init__(self, *args, **kwargs)
 
+        filter_indicator.icFilterIndicator.__init__(self)
+
         # По умолчанию создаем корневой элемент
         self.AddRoot(DEFAULT_ROOT_LABEL)
 
         self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.onItemRightClick)
+        # ВНИМАНИЕ! Если необходимо удалить/освободить
+        # ресуры при удалении контрола, то необходимо воспользоваться
+        # событием wx.EVT_WINDOW_DESTROY
+        self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
+
+        self._uuid = None
 
         # Имя файла хранения фильтров.
         self._filter_filename = None
@@ -62,6 +77,28 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self._limit = None
         # Количество строк при привышении лимита
         self._over_limit = None
+
+    def onDestroy(self, event):
+        """
+        При удалении панели. Обработчик события.
+        ВНИМАНИЕ! Если необходимо удалить/освободить
+        ресуры при удалении контрола, то необходимо воспользоваться
+        событием wx.EVT_WINDOW_DESTROY.
+        """
+        self.saveFilters()
+        event.Skip()
+
+    def getUUID(self):
+        if not self._uuid:
+            self._uuid = self._genUUID()
+        return self._uuid
+
+    def _genUUID(self):
+        """
+        Генерация UUID.
+        @return: UUID.
+        """
+        return str(uuid.uuid4())
 
     def onItemRightClick(self, event):
         """
@@ -116,7 +153,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
             indicator_menuitem_id = wx.NewId()
             bmp = ic_bmp.createLibraryBitmap('traffic-light.png')
-            menuitem = flatmenu.FlatMenuItem(menu, indicator_menuitem_id, u'Индикатор',
+            cur_indicator = item_data.get('__indicator__', None) if item_data else None
+            label = u'Индикатор: %s' % self.getLabelIndicator(cur_indicator) if cur_indicator else u'Индикатор'
+            menuitem = flatmenu.FlatMenuItem(menu, indicator_menuitem_id, label,
                                              normalBmp=bmp)
             menu.AppendItem(menuitem)
             self.Bind(wx.EVT_MENU, self.onIndicatorMenuItem, id=indicator_menuitem_id)
@@ -180,10 +219,48 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         Настроить индикаторы. Обработчик.
         """
         try:
-            pass
+            item_data = self.getSelectedItemData_tree(ctrl=self)
+            cur_indicator = item_data.get('__indicator__', None)
+            cur_indicator = self.editIndicator(parent=self, indicator=cur_indicator)
+            if cur_indicator:
+                item_data['__indicator__'] = cur_indicator
         except:
             log.fatal(u'Ошибка настройки индикатора')
         # event.Skip()
+
+    def saveFilters(self, save_filename=None):
+        """
+        Сохранить сведения об фильтрах в файле.
+        @param save_filename: Имя файла хранения фильтров.
+            Если не определен, то генерируется по UUID.
+        @return:
+        """
+        if save_filename:
+            save_filename = os.path.normpath(save_filename)
+        else:
+            widget_uuid = self.getUUID()
+            save_filename = os.path.join(ic_file.getPrjProfilePath(),
+                                         widget_uuid + '.dat')
+
+        filter_tree_data = None
+        return self.save_data_file(save_filename=save_filename, save_data=filter_tree_data)
+
+    def loadFilters(self, save_filename=None):
+        """
+        Загрузить фильтры.
+        @param save_filename: Имя файла хранения фильтров.
+            Если не определен, то генерируется по UUID.
+        """
+        if save_filename:
+            save_filename = os.path.normpath(save_filename)
+        else:
+            widget_uuid = self.getUUID()
+            save_filename = os.path.join(ic_file.getPrjProfilePath(),
+                                         widget_uuid + '.dat')
+
+        filter_tree_data = self.load_data_file(save_filename=save_filename)
+        # Построить дерево
+        return self.setTree_TreeCtrl(tree_ctrl=self, tree_data=filter_tree_data)
 
 
 def test():
