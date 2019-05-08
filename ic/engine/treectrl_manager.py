@@ -233,13 +233,17 @@ class icTreeCtrlManager(object):
         if item is None:
             item = ctrl.GetRootItem()
 
+        if not item.IsOk():
+            log.warning(u'Не корректный элемент дерева <%s>' % str(item))
+            return None
+
         if isinstance(ctrl, wx.TreeCtrl):
             return ctrl.GetItemData(item)
         elif isinstance(ctrl, wx.dataview.TreeListCtrl) or isinstance(ctrl, wx.gizmos.TreeListCtrl):
             return ctrl.GetMainWindow().GetItemData(item)
         else:
             log.warning(u'Не поддерживаемый тип древовидного контрола <%s>' % ctrl.__class__.__name__)
-        return False
+        return None
 
     # Другое наименование метода
     getItemData_TreeCtrl = getItemData_tree
@@ -687,9 +691,14 @@ class icTreeCtrlManager(object):
             item_data = self.getItemData_tree(ctrl=tree_ctrl, item=item)
             lPath.insert(-1, item_data)
 
-            if item is not None:
+            if item is not None and item.IsOk():
                 parent = tree_ctrl.GetItemParent(item)
-                if self.isRootItem(ctrl=tree_ctrl, item=parent):
+                if not parent.IsOk():
+                    # ВНИМАНИЕ! GetItemParent возвращает не None а
+                    # не существующий item. Поэтому необходимо делать
+                    # проверку на IsOk
+                    return lPath
+                elif self.isRootTreeItem(ctrl=tree_ctrl, item=parent):
                     parent = None
                 # Если есть родительский элемент, то вызвать рекурсивно
                 return self.getItemPathData(tree_ctrl=tree_ctrl, item=parent, lPath=lPath)
@@ -730,7 +739,7 @@ class icTreeCtrlManager(object):
                     return found_item
         return None
 
-    def selectItem(self, ctrl, item=None, select=True):
+    def selectTreeItem(self, ctrl, item=None, select=True):
         """
         Выбор элемента дерева.
         @param ctrl: Контрол wx.TreeCtrl.
@@ -748,14 +757,14 @@ class icTreeCtrlManager(object):
         ctrl.SelectItem(item, select=select)
         return True
 
-    def selectRoot(self, ctrl, select=True):
+    def selectTreeRoot(self, ctrl, select=True):
         """
         Выбор корневого элемента дерева.
         @param ctrl: Контрол wx.TreeCtrl.
         @param select: True - выбрать элемент. False - наоборот снять выбор.
         @return: True/False.
         """
-        return self.selectItem(ctrl, select=select)
+        return self.selectTreeItem(ctrl, select=select)
 
     def setColumns_tree_list_ctrl(self, ctrl=None, cols=()):
         """
@@ -1049,7 +1058,7 @@ class icTreeCtrlManager(object):
             log.fatal(u'Ошибка установки данных дерева в <%s>' % str(ctrl))
         return False
 
-    def isRootItem(self, ctrl=None, item=None):
+    def isRootTreeItem(self, ctrl=None, item=None):
         """
         Проверить является ли элемент дерева корневым.
         @param ctrl: Объект контрола дерева.
@@ -1061,3 +1070,138 @@ class icTreeCtrlManager(object):
             return False
 
         return ctrl.GetRootItem() == item
+
+    def isFirstTreeItem(self, ctrl=None, item=None):
+        """
+        Проверка является ли элемент первым на текущем уровне?
+        @param ctrl: Объект контрола дерева.
+        @param item: Элемент дерева.
+            Если не определен, то считается что это корневой элемент.
+        @return: True - первый элемент / False - нет.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return False
+
+        if item is None:
+            # Это корневой элемент. Он всегда первый
+            return True
+
+        parent_item = ctrl.GetItemParent(item)
+        if parent_item and parent_item.IsOk():
+            first_child, cookie = ctrl.GetFirstChild(parent_item)
+            # log.debug(u'Проверка на первый элемент [%s]' % str(first_child == item))
+            return first_child == item
+        elif self.isRootTreeItem(ctrl=ctrl, item=item):
+            # Это корневой элемент. Он всегда первый
+            return True
+        else:
+            log.warning(u'Не корректный элемент дерева')
+        return False
+
+    def isLastTreeItem(self, ctrl=None, item=None):
+        """
+        Проверка является ли элемент последним на текущем уровне?
+        @param ctrl: Объект контрола дерева.
+        @param item: Элемент дерева.
+            Если не определен, то считается что это корневой элемент.
+        @return: True - первый элемент / False - нет.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return False
+
+        if item is None:
+            # Это корневой элемент. Он всегда последний
+            return True
+
+        parent_item = ctrl.GetItemParent(item)
+        if parent_item and parent_item.IsOk():
+            last_child = ctrl.GetLastChild(parent_item)
+            # log.debug(u'Проверка на последний элемент [%s]' % str(last_child == item))
+            return last_child == item
+        elif self.isRootTreeItem(ctrl=ctrl, item=item):
+            # Это корневой элемент. Он всегда последний
+            return True
+        else:
+            log.warning(u'Не корректный элемент дерева')
+        return False
+
+    def getParentTreeItem(self, ctrl=None, item=None):
+        """
+        Получить родительский элемент дерева.
+        @param ctrl: Объект контрола дерева.
+        @param item: Элемент дерева.
+            Если не определен, то считается что это корневой элемент.
+        @return: Родительский элемент или None если его нет.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return None
+
+        parent_item = ctrl.GetItemParent(item)
+        return parent_item if parent_item and parent_item.IsOk() else None
+
+    def moveUpTreeItem(self, ctrl=None, item=None, auto_select=True):
+        """
+        Передвинуть элемент дерева выше в текущем списке.
+        @param ctrl: Объект контрола дерева.
+        @param item: Элемент дерева.
+            Если не определен, то считается что это корневой элемент.
+        @param auto_select: Автоматически выбрать перемещаемый элемент?
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return False
+
+        if item is None:
+            # Корневой элемент двигать нельзя
+            return False
+
+        parent_item = self.getParentTreeItem(ctrl=ctrl, item=item)
+        if parent_item:
+            prev_item = ctrl.GetPrevSibling(ctrl.GetPrevSibling(item))
+            if prev_item and not prev_item.IsOk():
+                prev_item = None
+            new_item = ctrl.InsertItem(parent_item, prev_item,
+                                       text=ctrl.GetItemText(item),
+                                       image=ctrl.GetItemImage(item),
+                                       data=self.getItemData_tree(ctrl=ctrl, item=item))
+            ctrl.Delete(item)
+            if auto_select:
+                self.selectTreeItem(ctrl=ctrl, item=new_item)
+            return True
+        return False
+
+    def moveDownTreeItem(self, ctrl=None, item=None, auto_select=True):
+        """
+        Передвинуть элемент дерева ниже в текущем списке.
+        @param ctrl: Объект контрола дерева.
+        @param item: Элемент дерева.
+            Если не определен, то считается что это корневой элемент.
+        @param auto_select: Автоматически выбрать перемещаемый элемент?
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return False
+
+        if item is None:
+            # Корневой элемент двигать нельзя
+            return False
+
+        parent_item = self.getParentTreeItem(ctrl=ctrl, item=item)
+        if parent_item:
+            next_item = ctrl.GetNextSibling(item)
+            if next_item and not next_item.IsOk():
+                next_item = None
+            new_item = ctrl.InsertItem(parent_item, next_item,
+                                       text=ctrl.GetItemText(item),
+                                       image=ctrl.GetItemImage(item),
+                                       data=self.getItemData_tree(ctrl=ctrl, item=item))
+            ctrl.Delete(item)
+            if auto_select:
+                self.selectTreeItem(ctrl=ctrl, item=new_item)
+            return True
+        return False

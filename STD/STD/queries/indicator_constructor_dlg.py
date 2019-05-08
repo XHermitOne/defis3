@@ -253,6 +253,10 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
             }
         @return: True/False
         """
+        if state_idx < 0:
+            log.warning(u'Не корректный индекс состояния')
+            return False
+
         if state_indicator is None:
             state_indicator = dict(name=UNKNOWN_STATE_NAME_FMT % (self.indicator_listCtrl.GetItemCount() + 1),
                                    image=None, text_color=None, background_color=None,

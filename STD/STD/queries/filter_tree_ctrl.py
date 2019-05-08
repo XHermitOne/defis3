@@ -87,6 +87,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         # Текущий фильтр выбранного элемента
         self._cur_item_filter = None
 
+    def _canEditFilter(self):
+        return True
+
     def onDestroy(self, event):
         """
         При удалении панели. Обработчик события.
@@ -134,7 +137,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         if root_item is None:
             root_item = self.GetRootItem()
-        if not self.isRootItem(ctrl=self, item=root_item):
+        if not self.isRootTreeItem(ctrl=self, item=root_item):
             # Если не корневой элемент, то пропустить обработку
             return False
 
@@ -184,9 +187,13 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         @return: Собранная структура фильтра, соответствующего указанному элементу дерева.
         """
         item_data_path = self.getItemPathData(tree_ctrl=self, item=item)
-        # log.debug(u'Путь до элемента %s' % str(item_data_path))
+        log.debug(u'Путь до элемента %s' % str(item_data_path))
 
-        filters = [data.get('__filter__', None) for data in item_data_path if data.get('__filter__', None)]
+        filters = list()
+        if item_data_path:
+            filters = [data.get('__filter__', None) for data in item_data_path if data.get('__filter__', None)]
+        else:
+            log.warning(u'Не определены структурные данные элемента дерева')
         grp_filter = filter_generate.create_filter_group_AND(*filters)
         return grp_filter
 
@@ -204,6 +211,35 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
             menu = flatmenu.FlatMenu()
 
+            rename_menuitem_id = wx.NewId()
+            bmp = ic_bmp.createLibraryBitmap('textfield_rename.png')
+            menuitem = flatmenu.FlatMenuItem(menu, rename_menuitem_id, u'Переименовать',
+                                             normalBmp=bmp)
+            menu.AppendItem(menuitem)
+            self.Bind(wx.EVT_MENU, self.onRenameMenuItem, id=rename_menuitem_id)
+
+            moveup_menuitem_id = wx.NewId()
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_UP, wx.ART_MENU,
+                                           (treectrl_manager.DEFAULT_ITEM_IMAGE_WIDTH,
+                                            treectrl_manager.DEFAULT_ITEM_IMAGE_HEIGHT))
+            menuitem = flatmenu.FlatMenuItem(menu, moveup_menuitem_id, u'Переместить выше',
+                                             normalBmp=bmp)
+            menu.AppendItem(menuitem)
+            self.Bind(wx.EVT_MENU, self.onMoveUpMenuItem, id=moveup_menuitem_id)
+            menuitem.Enable(not self.isFirstTreeItem(ctrl=self, item=cur_item))
+
+            movedown_menuitem_id = wx.NewId()
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_DOWN, wx.ART_MENU,
+                                           (treectrl_manager.DEFAULT_ITEM_IMAGE_WIDTH,
+                                            treectrl_manager.DEFAULT_ITEM_IMAGE_HEIGHT))
+            menuitem = flatmenu.FlatMenuItem(menu, movedown_menuitem_id, u'Переместить ниже',
+                                             normalBmp=bmp)
+            menu.AppendItem(menuitem)
+            self.Bind(wx.EVT_MENU, self.onMoveDownMenuItem, id=movedown_menuitem_id)
+            menuitem.Enable(not self.isLastTreeItem(ctrl=self, item=cur_item))
+
+            menu.AppendSeparator()
+
             add_menuitem_id = wx.NewId()
             bmp = wx.ArtProvider.GetBitmap(wx.ART_PLUS, wx.ART_MENU,
                                            (treectrl_manager.DEFAULT_ITEM_IMAGE_WIDTH,
@@ -212,6 +248,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                                              normalBmp=bmp)
             menu.AppendItem(menuitem)
             self.Bind(wx.EVT_MENU, self.onAddMenuItem, id=add_menuitem_id)
+            menuitem.Enable(self._canEditFilter())
 
             del_menuitem_id = wx.NewId()
             bmp = wx.ArtProvider.GetBitmap(wx.ART_MINUS, wx.ART_MENU,
@@ -221,6 +258,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                                              normalBmp=bmp)
             menu.AppendItem(menuitem)
             self.Bind(wx.EVT_MENU, self.onDelMenuItem, id=del_menuitem_id)
+            menuitem.Enable(self._canEditFilter())
 
             filter_menuitem_id = wx.NewId()
             bmp = ic_bmp.createLibraryBitmap('filter.png')
@@ -230,6 +268,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                                              normalBmp=bmp)
             menu.AppendItem(menuitem)
             self.Bind(wx.EVT_MENU, self.onFilterMenuItem, id=filter_menuitem_id)
+            menuitem.Enable(self._canEditFilter())
 
             indicator_menuitem_id = wx.NewId()
             bmp = ic_bmp.createLibraryBitmap('traffic-light.png')
@@ -239,19 +278,99 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                                              normalBmp=bmp)
             menu.AppendItem(menuitem)
             self.Bind(wx.EVT_MENU, self.onIndicatorMenuItem, id=indicator_menuitem_id)
+            menuitem.Enable(self._canEditFilter())
 
             return menu
         except:
             log.fatal(u'Ошибка создания меню управления деревом фильтров')
         return None
 
-    def addFilter(self):
+    def renameItem(self, cur_item=None):
+        """
+        Переименовать узел.
+        @return: True/False.
+        """
+        try:
+            if cur_item is None:
+                cur_item = self.GetSelection()
+            if cur_item:
+                cur_label = self.GetItemText(cur_item)
+                label = ic_dlg.icTextEntryDlg(self, u'ПЕРЕИМЕНОВАНИЕ', u'Наименование',
+                                              cur_label)
+
+                if label:
+                    bmp = None
+                    # bmp = ic_bmp.createLibraryBitmap(DEFAULT_NODE_IMAGE_FILENAME)
+                    data_record = self.getItemData_tree(ctrl=self, item=cur_item)
+                    data_record['label'] = label
+                    self.SetItemText(cur_item, label)
+                    return self.setItemData_tree(ctrl=self, item=cur_item, data=data_record)
+            else:
+                log.warning(u'Текущий элемент дерева не определен')
+        except:
+            log.fatal(u'Ошибка переименования фильтра')
+        return False
+
+    def onRenameMenuItem(self, event):
+        """
+        Переименовать узел. Обработчик.
+        """
+        # log.debug(u'Добавить фильтр. Обработчик.')
+        self.renameItem()
+        # event.Skip()
+
+    def moveUpItem(self, cur_item=None):
+        """
+        Переместить узел выше по списку.
+        @return: True/False.
+        """
+        try:
+            if cur_item is None:
+                cur_item = self.GetSelection()
+
+            return self.moveUpTreeItem(ctrl=self, item=cur_item)
+        except:
+            log.fatal(u'Ошибка перемещения узла выше по списку')
+        return False
+
+    def onMoveUpMenuItem(self, event):
+        """
+        Переместить узел выше по списку. Обработчик.
+        """
+        # log.debug(u'Переместить узел выше по списку. Обработчик.')
+        self.moveUpItem()
+        # event.Skip()
+
+    def moveDownItem(self, cur_item=None):
+        """
+        Переместить узел ниже по списку.
+        @return: True/False.
+        """
+        try:
+            if cur_item is None:
+                cur_item = self.GetSelection()
+
+            return self.moveDownTreeItem(ctrl=self, item=cur_item)
+        except:
+            log.fatal(u'Ошибка перемещения узла ниже по списку')
+        return False
+
+    def onMoveDownMenuItem(self, event):
+        """
+        Переместить узел ниже по списку. Обработчик.
+        """
+        # log.debug(u'Переместить узел ниже по списку. Обработчик.')
+        self.moveDownItem()
+        # event.Skip()
+
+    def addFilter(self, cur_item=None):
         """
         Добавить фильтр.
         @return: True/Falseю
         """
         try:
-            cur_item = self.GetSelection()
+            if cur_item is None:
+                cur_item = self.GetSelection()
             if cur_item:
                 label = ic_dlg.icTextEntryDlg(self, u'ДОБАВЛЕНИЕ', u'Наименование',
                                               DEFAULT_NODE_LABEL)
@@ -278,14 +397,16 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.addFilter()
         # event.Skip()
 
-    def delFilter(self):
+    def delFilter(self, cur_item=None):
         """
         Удалить фильтр.
         @return: True/False.
         """
         try:
-            self.deleteItem_tree_ctrl(ctrl=self, ask=True)
-            return True
+            if cur_item is None:
+                cur_item = self.GetSelection()
+
+            return self.deleteItem_tree_ctrl(ctrl=self, item=cur_item, ask=True)
         except:
             log.fatal(u'Ошибка удаления фильтра')
         return False
@@ -297,13 +418,15 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.delFilter()
         # event.Skip()
 
-    def editFilter(self):
+    def editFilter(self, cur_item=None):
         """
         Редактировать фильтр.
         @return: True/False.
         """
         try:
-            item_data = self.getSelectedItemData_tree(ctrl=self)
+            if cur_item is None:
+                cur_item = self.GetSelection()
+            item_data = self.getItemData_tree(ctrl=self, item=cur_item)
             cur_filter = item_data.get('__filter__', None)
             cur_filter = filter_choicectrl.get_filter_choice_dlg(parent=self,
                                                                  environment=self._environment,
@@ -322,13 +445,15 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.editFilter()
         # event.Skip()
 
-    def editItemIndicator(self):
+    def editItemIndicator(self, cur_item=None):
         """
         Редактировать индикатор.
         @return: True/False.
         """
         try:
-            item_data = self.getSelectedItemData_tree(ctrl=self)
+            if cur_item is None:
+                cur_item = self.GetSelection()
+            item_data = self.getItemData_tree(ctrl=self, item=cur_item)
             cur_indicator = item_data.get('__indicator__', None)
             cur_indicator = self.editIndicator(parent=self, indicator=cur_indicator)
             if cur_indicator:
