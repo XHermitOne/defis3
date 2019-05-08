@@ -18,7 +18,7 @@ from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
 
 
-__version__ = (0, 1, 4, 1)
+__version__ = (0, 1, 5, 1)
 
 UNKNOWN = u'Не определено'
 
@@ -110,10 +110,11 @@ class icTreeCtrlManager(object):
         @return:
         """
         # Добавление корневого элемента
-        label = ic_str.toUnicode(node.get(columns[0], u''))
+        label = ic_str.toUnicode(node.get(columns[0], UNKNOWN))
+        # log.debug(u'Надпись %s : %s' % (columns, label))
         parent_item = treelist_ctrl.AddRoot(label)
         for i, column in enumerate(columns[1:]):
-            label = ic_str.toUnicode(node.get(columns[i + 1], u''))
+            label = ic_str.toUnicode(node.get(columns[i + 1], UNKNOWN))
             treelist_ctrl.SetItemText(parent_item, label, i + 1)
 
         # Прикрепляем данные к элементу дерева
@@ -221,7 +222,8 @@ class icTreeCtrlManager(object):
         """
         Получить прикрепленные данные к элементу дерева.
         @param ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева. Если None, то берется корневой элемент дерева.
+        @param item: Элемент дерева.
+            Если None, то берется корневой элемент дерева.
         @return: Прикрепленные данные к элементу дерева или None в случае ошибки.
         """
         if ctrl is None:
@@ -230,6 +232,7 @@ class icTreeCtrlManager(object):
 
         if item is None:
             item = ctrl.GetRootItem()
+
         if isinstance(ctrl, wx.TreeCtrl):
             return ctrl.GetItemData(item)
         elif isinstance(ctrl, wx.dataview.TreeListCtrl) or isinstance(ctrl, wx.gizmos.TreeListCtrl):
@@ -515,7 +518,8 @@ class icTreeCtrlManager(object):
                 node = node[0]
                 parent_item = self._appendTree_root(tree_ctrl, node, (), ext_func)
             elif isinstance(node, dict):
-                parent_item = self._appendTree_root(tree_ctrl, node, (), ext_func)
+                # log.debug(u'Ключ надписи %s : %s. Узел %s' % (label, item_label, str(node)))
+                parent_item = self._appendTree_root(tree_ctrl, node, (label,), ext_func)
             else:
                 log.warning(u'Не поддерживаемый тип данных узла данныж wx.TreeCtrl')
                 return False
@@ -533,7 +537,7 @@ class icTreeCtrlManager(object):
 
             if '__children__' in record and record['__children__']:
                 self._appendBranch_TreeCtrl(tree_ctrl,
-                                            item, record,
+                                            parent_item=item, node=record,
                                             label=label,
                                             ext_func=ext_func)
         return True
@@ -635,7 +639,7 @@ class icTreeCtrlManager(object):
             log.fatal(u'Ошибка функции сворачивания дочерних элементов <%s>' % str(tree_ctrl))
         return False
 
-    def getItemPath(self, tree_ctrl=None, item=None, lPath=None):
+    def getItemPathLabel(self, tree_ctrl=None, item=None, lPath=None):
         """
         Путь до элемента. Путь - список имен элементов.
         @param tree_ctrl: Контрол wx.TreeCtrl.
@@ -650,7 +654,7 @@ class icTreeCtrlManager(object):
         try:
             if item is None:
                 # У корневого элемента пустой путь
-                return list()
+                return []
 
             parent = tree_ctrl.GetItemParent(item)
             # Если есть родительский элемент, то вызвать рекурсивно
@@ -658,7 +662,37 @@ class icTreeCtrlManager(object):
                 if lPath is None:
                     lPath = []
                 lPath.insert(-1, tree_ctrl.GetItemText(item))
-                return self.getItemPath(parent, lPath)
+                return self.getItemPathLabel(tree_ctrl=tree_ctrl, item=parent, lPath=lPath)
+            return lPath
+        except:
+            log.fatal(u'Ошибка определение пути элемента объекта <%s>' % str(tree_ctrl))
+        return None
+
+    def getItemPathData(self, tree_ctrl=None, item=None, lPath=None):
+        """
+        Путь до элемента. Путь - список данных элементов.
+        @param tree_ctrl: Контрол wx.TreeCtrl.
+        @param item: Элемент дерева. Если None, то берется корневой элемент.
+        @param lPath: Текущий заполненный путь.
+        @return: Список пути данных до элемента или None в случае ошибки.
+        """
+        if tree_ctrl is None:
+            log.warning(u'Не указан контрол wx.TreeCtrl для сворачивания дочерних элементов')
+            return None
+
+        if lPath is None:
+            lPath = []
+
+        try:
+            item_data = self.getItemData_tree(ctrl=tree_ctrl, item=item)
+            lPath.insert(-1, item_data)
+
+            if item is not None:
+                parent = tree_ctrl.GetItemParent(item)
+                if self.isRootItem(ctrl=tree_ctrl, item=parent):
+                    parent = None
+                # Если есть родительский элемент, то вызвать рекурсивно
+                return self.getItemPathData(tree_ctrl=tree_ctrl, item=parent, lPath=lPath)
             return lPath
         except:
             log.fatal(u'Ошибка определение пути элемента объекта <%s>' % str(tree_ctrl))
@@ -948,5 +982,82 @@ class icTreeCtrlManager(object):
             return True
         return False
 
+    def _getTreeData(self, ctrl=None, item=None):
+        """
+        Получить данные дерева.
+        @param ctrl: Объект контрола дерева.
+        @param item: Текущий обрабатываемый элемент дерева.
+            Если не определен, тоберется корневой элемент.
+        @return: Словарно-списковая структура дерева или None в случае ошибки.
+        """
+        if item is None:
+            item = ctrl.GetRootItem()
 
+        item_data = self.getItemData_tree(ctrl=ctrl, item=item)
+        if item_data is None:
+            item_data = dict()
 
+        children = self.getItemChildren(ctrl=ctrl, item=item)
+        if children:
+            item_data['__children__'] = list()
+        for child in children:
+            child_data = self._getTreeData(ctrl=ctrl, item=child)
+            item_data['__children__'].append(child_data)
+        return item_data
+
+    def getTreeData(self, ctrl=None, *args, **kwargs):
+        """
+        Получить данные дерева.
+        @param ctrl: Объект контрола дерева.
+        @return: Словарно-списковая структура дерева или None в случае ошибки.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return None
+
+        try:
+            if isinstance(ctrl, wx.TreeCtrl):
+                return self._getTreeData(ctrl=ctrl)
+            elif isinstance(ctrl, wx.gizmos.TreeListCtrl):
+                return self._getTreeData(ctrl=ctrl)
+            else:
+                log.warning(u'Чтение данных дерева. Не поддерживаемый класс контрола дерева <%s>' % ctrl.__class__.__name__)
+            return None
+        except:
+            log.fatal(u'Ошибка получения данных дерева из <%s>' % str(ctrl))
+        return None
+
+    def setTreeData(self, ctrl=None, tree_data=None, *args, **kwargs):
+        """
+        Установить данные дерева.
+        @param ctrl: Объект контрола дерева.
+        @param tree_data: Данные дерева.
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return False
+
+        try:
+            if isinstance(ctrl, wx.TreeCtrl):
+                return self.setTree_TreeCtrl(tree_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
+            elif isinstance(ctrl, wx.gizmos.TreeListCtrl):
+                return self.setTree_TreeListCtrl(treelist_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
+            else:
+                log.warning(u'Установка данных дерева. Не поддерживаемый класс контрола дерева <%s>' % ctrl.__class__.__name__)
+        except:
+            log.fatal(u'Ошибка установки данных дерева в <%s>' % str(ctrl))
+        return False
+
+    def isRootItem(self, ctrl=None, item=None):
+        """
+        Проверить является ли элемент дерева корневым.
+        @param ctrl: Объект контрола дерева.
+        @param item: Элемент дерева.
+        @return: True - корневой элемент / False - нет.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
+            return False
+
+        return ctrl.GetRootItem() == item

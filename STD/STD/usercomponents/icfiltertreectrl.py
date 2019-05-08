@@ -17,6 +17,15 @@ from ic.PropertyEditor import icDefInf
 
 from STD.queries import filter_tree_ctrl
 
+# Регистрация прав использования
+from ic.kernel import icpermission
+from ic.kernel.icaccesscontrol import ClassSecurityInfo
+
+prm = icpermission.icPermission(id='tree_filter_edit', title='TreeObjFilterEdit',
+                                description=u'Редактирование структурных фильтров',
+                                component_type='STD')
+icpermission.registerPermission(prm)
+
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
 
@@ -30,10 +39,16 @@ ic_class_spc = {'name': 'default',
                 'save_filename': None,  # Имя файла хранения фильтров
                 'get_env': None,  # Метод получения окружения
                 'limit': None,  # Ограничение количества строк
+                'get_records': None,    # Код получения набора записей, соответствующих фильтру для индикаторов
 
-                '__events__': {'get_env': (None, None, False)},
+                'onChange': None,  # Код смены фильтра
+
+                '__events__': {'get_env': (None, None, False),
+                               'onChange': (None, 'OnChange', False),
+                               'get_records': (None, 'getCurRecords', False),
+                               },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'save_filename'],
-                                   icDefInf.EDT_PY_SCRIPT: ['get_env'],
+                                   icDefInf.EDT_PY_SCRIPT: ['get_env', 'onChange', 'get_records'],
                                    icDefInf.EDT_NUMBER: ['limit'],
                                    },
 
@@ -41,6 +56,8 @@ ic_class_spc = {'name': 'default',
                 '__attr_hlp__': {'save_filename': u'Имя файла хранения фильтров',
                                  'get_env': u'Метод получения окружения',
                                  'limit': u'Ограничение количества строк',
+                                 'onChange': u'Код смены фильтра',
+                                 'get_records': u'Код получения набора записей, соответствующих фильтру для индикаторов',
                                  },
                 }
 
@@ -69,6 +86,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
     """
     Компонент дерева фильтров.
     """
+    security = ClassSecurityInfo()
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
@@ -87,7 +105,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
         for key in [x for x in component.keys() if not x.startswith('__')]:
             setattr(self, key, component[key])
 
-        self._filter_filename = self.getICAttr('save_filename')
+        self._save_filename = self.getICAttr('save_filename')
         self._environment = self.getICAttr('get_env')
         self._limit = self.getICAttr('limit')
 
@@ -95,6 +113,17 @@ class icFilterTreeCtrl(icwidget.icWidget,
         # имя файла хранения фильтров можно загрузить фильтры
         self.loadFilters()
         # self.SetValue(self.getStrFilter())
+
+    # Установка ограничения редактирования фильтров
+    # Для этого в родительском классе заведены
+    # функции <addFilter>, <delFilter>, <editFilter>, <editItemIndicator>
+    security.declareProtected('tree_filter_edit', 'addFilter')
+    security.declareProtected('tree_filter_edit', 'delFilter')
+    security.declareProtected('tree_filter_edit', 'editFilter')
+    security.declareProtected('tree_filter_edit', 'editItemIndicator')
+
+    def _canEditFilter(self):
+        return self.security.is_permission('tree_filter_edit', self.GetKernel().GetAuthUser().getPermissions())
 
     def getUUID(self):
         """
@@ -111,3 +140,15 @@ class icFilterTreeCtrl(icwidget.icWidget,
             psp = tuple(psp)[0]
         self._widget_psp_uuid = ic_uuid.get_passport_check_sum(psp, True)
         return self._widget_psp_uuid
+
+    def OnChange(self, event):
+        """
+        Смена фильтра.
+        """
+        return self.eval_attr('onChange')
+
+    def getCurRecords(self):
+        """
+        Код получения набора записей, соответствующих фильтру для индикаторов.
+        """
+        return self.eval_attr('get_records')

@@ -24,6 +24,7 @@ from ic.engine import stored_ctrl_manager
 # from . import filter_builder_env
 from . import filter_choicectrl
 from . import filter_indicator
+from . import filter_generate
 
 # from ic.PropertyEditor import select_component_menu
 
@@ -36,7 +37,7 @@ DEFAULT_NODE_LABEL = u'Новый узел'
 DEFAULT_NODE_IMAGE_FILENAME = 'document.png'
 
 # Пустая запись, прикрепленная к узлу
-EMPTY_NODE_RECORD = {'__filter__': None, '__indicator__': None}
+EMPTY_NODE_RECORD = {'__filter__': None, '__indicator__': None, 'label': u''}
 
 
 class icFilterTreeCtrlProto(wx.TreeCtrl,
@@ -58,8 +59,13 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
         # По умолчанию создаем корневой элемент
         self.AddRoot(DEFAULT_ROOT_LABEL)
+        root_data = copy.deepcopy(EMPTY_NODE_RECORD)
+        root_data['label'] = DEFAULT_ROOT_LABEL
+        self.setItemData_tree(ctrl=self, data=root_data)
 
         self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.onItemRightClick)
+        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onItemDoubleClick)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onItemSelectChanged)
         # ВНИМАНИЕ! Если необходимо удалить/освободить
         # ресуры при удалении контрола, то необходимо воспользоваться
         # событием wx.EVT_WINDOW_DESTROY
@@ -68,7 +74,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self._uuid = None
 
         # Имя файла хранения фильтров.
-        self._filter_filename = None
+        self._save_filename = None
 
         # Окружение фильтра
         self._environment = None
@@ -77,6 +83,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self._limit = None
         # Количество строк при привышении лимита
         self._over_limit = None
+
+        # Текущий фильтр выбранного элемента
+        self._cur_item_filter = None
 
     def onDestroy(self, event):
         """
@@ -100,6 +109,12 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         return str(uuid.uuid4())
 
+    def getCurItemFilter(self):
+        """
+        Текущий полный фильтр.
+        """
+        return self._cur_item_filter
+
     def onItemRightClick(self, event):
         """
         Обработчик клика правой кнопки.
@@ -109,6 +124,71 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             menu.Popup(wx.GetMousePosition(), self)
         # select_component_menu.popup_component_flatmenu(parent=self)
         event.Skip()
+
+    def editRootFilter(self, root_item=None):
+        """
+        Редактирование фильтра корневого элемента.
+        @param root_item: Корневой элемент.
+            Если не определен, то берется автоматически.
+        @return: True/False.
+        """
+        if root_item is None:
+            root_item = self.GetRootItem()
+        if not self.isRootItem(ctrl=self, item=root_item):
+            # Если не корневой элемент, то пропустить обработку
+            return False
+
+        try:
+            item_data = self.getItemData_tree(ctrl=self, item=root_item)
+            cur_filter = item_data.get('__filter__', None)
+            cur_filter = filter_choicectrl.get_filter_choice_dlg(parent=self,
+                                                                 environment=self._environment,
+                                                                 cur_filter=cur_filter)
+            if cur_filter:
+                item_data['__filter__'] = cur_filter
+                return True
+        except:
+            log.fatal(u'Ошибка настройки фильтра корневого элемента')
+        return False
+
+    def onItemDoubleClick(self, event):
+        """
+        Обработчик двойного клика на элементе дерева.
+        """
+        item = event.GetItem()
+        self.editRootFilter(root_item=item)
+        event.Skip()
+
+    def OnChange(self, event):
+        """
+        Смена фильтра.
+        """
+        log.error(u'Не определена функция <OnChange> в компоненте <%s>' % self.__class__.__name__)
+
+    def onItemSelectChanged(self, event):
+        """
+        Обработчик изменения выбора элемента дерева.
+        """
+        item = event.GetItem()
+        self._cur_item_filter = self.buildItemFilter(item)
+
+        # Передать обработку компоненту
+        self.OnChange(event)
+
+        event.Skip()
+
+    def buildItemFilter(self, item):
+        """
+        Построение полного фильтра, соответствующего указанному элементу дерева.
+        @param item: Элемент дерева.
+        @return: Собранная структура фильтра, соответствующего указанному элементу дерева.
+        """
+        item_data_path = self.getItemPathData(tree_ctrl=self, item=item)
+        # log.debug(u'Путь до элемента %s' % str(item_data_path))
+
+        filters = [data.get('__filter__', None) for data in item_data_path if data.get('__filter__', None)]
+        grp_filter = filter_generate.create_filter_group_AND(*filters)
+        return grp_filter
 
     def createPopupMenu(self):
         """
@@ -165,11 +245,11 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             log.fatal(u'Ошибка создания меню управления деревом фильтров')
         return None
 
-    def onAddMenuItem(self, event):
+    def addFilter(self):
         """
-        Добавить фильтр. Обработчик.
+        Добавить фильтр.
+        @return: True/Falseю
         """
-        # log.debug(u'Добавить фильтр. Обработчик.')
         try:
             cur_item = self.GetSelection()
             if cur_item:
@@ -180,27 +260,47 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                     bmp = None
                     # bmp = ic_bmp.createLibraryBitmap(DEFAULT_NODE_IMAGE_FILENAME)
                     data_record = copy.deepcopy(EMPTY_NODE_RECORD)
+                    data_record['label'] = label
                     new_item = self.appendChildItem_tree_ctrl(ctrl=self, parent_item=cur_item, label=label,
                                                               image=bmp, data=data_record, select=True)
+                    return True
             else:
                 log.warning(u'Текущий элемент дерева не определен')
         except:
             log.fatal(u'Ошибка добавления фильтра')
+        return False
+
+    def onAddMenuItem(self, event):
+        """
+        Добавить фильтр. Обработчик.
+        """
+        # log.debug(u'Добавить фильтр. Обработчик.')
+        self.addFilter()
         # event.Skip()
+
+    def delFilter(self):
+        """
+        Удалить фильтр.
+        @return: True/False.
+        """
+        try:
+            self.deleteItem_tree_ctrl(ctrl=self, ask=True)
+            return True
+        except:
+            log.fatal(u'Ошибка удаления фильтра')
+        return False
 
     def onDelMenuItem(self, event):
         """
         Удалить фильтр. Обработчик.
         """
-        try:
-            self.deleteItem_tree_ctrl(ctrl=self, ask=True)
-        except:
-            log.fatal(u'Ошибка удаления фильтра')
+        self.delFilter()
         # event.Skip()
 
-    def onFilterMenuItem(self, event):
+    def editFilter(self):
         """
-        Настроить фильтр. Обработчик.
+        Редактировать фильтр.
+        @return: True/False.
         """
         try:
             item_data = self.getSelectedItemData_tree(ctrl=self)
@@ -210,13 +310,22 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                                                                  cur_filter=cur_filter)
             if cur_filter:
                 item_data['__filter__'] = cur_filter
+                return True
         except:
             log.fatal(u'Ошибка настройки фильтра')
+        return False
+
+    def onFilterMenuItem(self, event):
+        """
+        Настроить фильтр. Обработчик.
+        """
+        self.editFilter()
         # event.Skip()
 
-    def onIndicatorMenuItem(self, event):
+    def editItemIndicator(self):
         """
-        Настроить индикаторы. Обработчик.
+        Редактировать индикатор.
+        @return: True/False.
         """
         try:
             item_data = self.getSelectedItemData_tree(ctrl=self)
@@ -224,9 +333,23 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             cur_indicator = self.editIndicator(parent=self, indicator=cur_indicator)
             if cur_indicator:
                 item_data['__indicator__'] = cur_indicator
+                return True
         except:
             log.fatal(u'Ошибка настройки индикатора')
+        return False
+
+    def onIndicatorMenuItem(self, event):
+        """
+        Настроить индикаторы. Обработчик.
+        """
+        self.editItemIndicator()
         # event.Skip()
+
+    def getCurRecords(self):
+        """
+        Код получения набора записей, соответствующих фильтру для индикаторов.
+        """
+        log.error(u'Не определена функция <getCurRecords> в компоненте <%s>' % self.__class__.__name__)
 
     def saveFilters(self, save_filename=None):
         """
@@ -235,6 +358,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             Если не определен, то генерируется по UUID.
         @return:
         """
+        if save_filename is None:
+            save_filename = self._save_filename
+
         if save_filename:
             save_filename = os.path.normpath(save_filename)
         else:
@@ -242,7 +368,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             save_filename = os.path.join(ic_file.getPrjProfilePath(),
                                          widget_uuid + '.dat')
 
-        filter_tree_data = None
+        filter_tree_data = self.getTreeData(ctrl=self)
         return self.save_data_file(save_filename=save_filename, save_data=filter_tree_data)
 
     def loadFilters(self, save_filename=None):
@@ -251,6 +377,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         @param save_filename: Имя файла хранения фильтров.
             Если не определен, то генерируется по UUID.
         """
+        if save_filename is None:
+            save_filename = self._save_filename
+
         if save_filename:
             save_filename = os.path.normpath(save_filename)
         else:
@@ -260,7 +389,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
         filter_tree_data = self.load_data_file(save_filename=save_filename)
         # Построить дерево
-        return self.setTree_TreeCtrl(tree_ctrl=self, tree_data=filter_tree_data)
+        return self.setTreeData(ctrl=self, tree_data=filter_tree_data, label='label')
 
 
 def test():

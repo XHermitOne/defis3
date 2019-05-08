@@ -604,7 +604,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def loadFilter(self, filter_filename=None):
         """
         Загрузить фильтр.
-        @param filters_filename: Имя файла хранения фильтра.
+        @param filter_filename: Имя файла хранения фильтра.
             Если не определен, то генерируется по UUID.
         """
         if filter_filename:

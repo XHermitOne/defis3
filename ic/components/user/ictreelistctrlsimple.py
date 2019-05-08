@@ -432,7 +432,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
             return self.selectItemPath(ItemPath_[1:], cur_item)
         return self.SelectItem(CurItem_)
         
-    def getItemPath(self, Item_, Path_=None):
+    def getItemPathLabel(self, Item_, Path_=None):
         """
         Путь до элемента. Путь - список имен элементов.
         @param Item_: Элемент дерева.
@@ -444,7 +444,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
             if Path_ is None:
                 Path_ = []
             Path_.insert(-1, self.GetItemText(Item_))
-            return self.getItemPath(parent, Path_)
+            return self.getItemPathLabel(parent, Path_)
         return Path_
         
     def reFresh(self):
@@ -583,7 +583,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
         select_item = event.GetItem()
         self._last_selection = None
         if select_item:
-            self._last_selection = self.getItemPath(select_item)
+            self._last_selection = self.getItemPathLabel(select_item)
             
         self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
