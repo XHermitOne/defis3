@@ -1036,24 +1036,31 @@ class icTreeCtrlManager(object):
             log.fatal(u'Ошибка получения данных дерева из <%s>' % str(ctrl))
         return None
 
-    def setTreeData(self, ctrl=None, tree_data=None, *args, **kwargs):
+    def setTreeData(self, ctrl=None, tree_data=None, bRootExpand=True, *args, **kwargs):
         """
         Установить данные дерева.
         @param ctrl: Объект контрола дерева.
         @param tree_data: Данные дерева.
+        @param bRootExpand: Распахнуть корневой элемент?
+        @param bExpandAll: Распахнуть все элементы дерева?
         @return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
             return False
 
+        result = False
         try:
             if isinstance(ctrl, wx.TreeCtrl):
-                return self.setTree_TreeCtrl(tree_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
+                result = self.setTree_TreeCtrl(tree_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
             elif isinstance(ctrl, wx.gizmos.TreeListCtrl):
-                return self.setTree_TreeListCtrl(treelist_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
+                result = self.setTree_TreeListCtrl(treelist_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
             else:
                 log.warning(u'Установка данных дерева. Не поддерживаемый класс контрола дерева <%s>' % ctrl.__class__.__name__)
+
+            if result and bRootExpand:
+                self.expandChildren(tree_ctrl=ctrl, item=None, all_children=kwargs.get('bExpandAll', False))
+            return result
         except:
             log.fatal(u'Ошибка установки данных дерева в <%s>' % str(ctrl))
         return False

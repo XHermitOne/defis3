@@ -118,6 +118,32 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         return self._cur_item_filter
 
+    def getItemFilter(self, item=None):
+        """
+        Фильтр, прикрепленный к элементу.
+        @param item: Текущий обрабатываемый элемент.
+            Если None, то берется корневой элемент.
+        @return: Структура фильтра или None если фильтр не определен.
+        """
+        if item is None:
+            item = self.GetRootItem()
+
+        item_data = self.getItemData_tree(ctrl=self, item=item)
+        return item_data.get('__filter__', None) if item_data else None
+
+    def getItemIndicator(self, item=None):
+        """
+        Индикатор, прикрепленный к элементу.
+        @param item: Текущий обрабатываемый элемент.
+            Если None, то берется корневой элемент.
+        @return: Структура индикатора или None если индикатор не определен.
+        """
+        if item is None:
+            item = self.GetRootItem()
+
+        item_data = self.getItemData_tree(ctrl=self, item=item)
+        return item_data.get('__indicator__', None) if item_data else None
+
     def onItemRightClick(self, event):
         """
         Обработчик клика правой кнопки.
@@ -470,9 +496,11 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.editIndicatorItem()
         # event.Skip()
 
-    def getCurRecords(self):
+    def getCurRecords(self, item_filter=None):
         """
         Код получения набора записей, соответствующих фильтру для индикаторов.
+        @param item_filter: Описание фильтра элемента.
+            Если None, то фильтрация не производится.
         """
         log.error(u'Не определена функция <getCurRecords> в компоненте <%s>' % self.__class__.__name__)
 
@@ -516,7 +544,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         # Построить дерево
         result = self.setTreeData(ctrl=self, tree_data=filter_tree_data, label='label')
 
-        # Установить надпись корневого элемента как фильтр
+        # Установить надпись корневого элемента как надпись фильтра
         root_filter = filter_tree_data.get('__filter__', dict())
         # log.debug(u'Фильтр: %s' % str(root_filter))
         str_filter = filter_choicectrl.get_str_filter(root_filter)
@@ -524,6 +552,99 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.setRootTitle(tree_ctrl=self, title=root_label)
 
         return result
+
+    def refreshIndicators(self, bVisibleItems=True):
+        """
+        Обновить индикаторы элементов дерева.
+        @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
+            Если нет, то обновляются индикаторы всех элементов.
+        @return: True/False.
+        """
+        try:
+            return self._refreshIndicators(bVisibleItems)
+        except:
+            log.fatal(u'Ошибка обновления индикаторов дерева фильтров')
+        return False
+
+    def _refreshIndicators(self, bVisibleItems=True, item=None):
+        """
+        Обновить индикаторы элементов дерева.
+        @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
+            Если нет, то обновляются индикаторы всех элементов.
+        @param item: Текущий обрабатываемый элемент.
+            Если None, то берется корневой элемент.
+        @return: True/False.
+        """
+        if item is None:
+            item = self.GetRootItem()
+
+        item_indicator = self.getItemIndicator(item=item)
+        if item_indicator:
+            if bVisibleItems:
+                if self.IsVisible(item):
+                    self.refreshIndicator(item_indicator, item=item)
+                else:
+                    # Если обрабатываем только видимые элементы
+                    # а текущий элемент не видим, то нет необходимости
+                    # обрабатывать дочерние элементы
+                    return True
+            else:
+                self.refreshIndicator(item_indicator, item=item)
+
+        # Обработка дочерних элементов
+        children = self.getItemChildren(ctrl=self, item=item)
+        for child in children:
+            self._refreshIndicators(bVisibleItems, item=child)
+
+        return True
+
+    def refreshIndicator(self, indicator, item=None):
+        """
+        Обновить индикатор элемента дерева.
+        @param indicator: Структура описания индикатора.
+        @param item: Текущий обрабатываемый элемент.
+            Если None, то берется корневой элемент.
+        @return: True/False.
+        """
+        try:
+            return self._refreshIndicator(indicator=indicator, item=item)
+        except:
+            log.fatal(u'Ошибка обновления индикатора элемента дерева')
+        return False
+
+    def _refreshIndicator(self, indicator, item=None):
+        """
+        Обновить индикатор элемента дерева.
+        @param indicator: Структура описания индикатора.
+        @param item: Текущий обрабатываемый элемент.
+            Если None, то берется корневой элемент.
+        @return: True/False.
+        """
+        if not indicator:
+            # Индикатор не определен. Обновлять не надо
+            return False
+
+        if item is None:
+            item = self.GetRootItem()
+
+        # Сначала получаем набор записей узла, соответствующую элементу
+        cur_filter = self.getItemFilter(item=item)
+        records = self.getCurRecords(item_filter=cur_filter)
+
+        # Затем получаем объекты индикатора
+        name, bmp, txt_colour, bg_colour = self.getStateIndicatorObjects(records=records, indicator=indicator)
+
+        # Устанавливаем параметры элемента
+        if bmp:
+            self.setItemImage_tree_ctrl(ctrl=self, item=item, image=bmp)
+
+        if txt_colour:
+            self.setItemForegroundColour(ctrl=self,item=item, colour=txt_colour)
+        if bg_colour:
+            self.setItemBackgroundColour(ctrl=self,item=item, colour=bg_colour)
+
+        return True
+
 
 def test():
     """

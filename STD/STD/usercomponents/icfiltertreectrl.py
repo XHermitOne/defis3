@@ -11,6 +11,7 @@ from ic.bitmap import ic_bmp
 from ic.log import log
 from ic.utils import util
 from ic.utils import ic_uuid
+from ic.utils import coderror
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
@@ -112,7 +113,8 @@ class icFilterTreeCtrl(icwidget.icWidget,
         # После того как определили окружение и
         # имя файла хранения фильтров можно загрузить фильтры
         self.loadFilters()
-        # self.SetValue(self.getStrFilter())
+        # Обновить индикаторы
+        self.refreshIndicators(bVisibleItems=True)
 
     # Установка ограничения редактирования фильтров
     # Для этого в родительском классе заведены
@@ -147,8 +149,20 @@ class icFilterTreeCtrl(icwidget.icWidget,
         """
         return self.eval_attr('onChange')
 
-    def getCurRecords(self):
+    def getCurRecords(self, item_filter=None, **kwargs):
         """
         Код получения набора записей, соответствующих фильтру для индикаторов.
+        @param item_filter: Описание фильтра элемента.
+            Если None, то фильтрация не производится.
+            ВНИМАНИЕ! При выполнении блока кода <get_records> в пространство имен помещается
+            фильтр элемента как переменная FILTER.
         """
-        return self.eval_attr('get_records')
+        context = self.GetContext()
+        context['FILTER'] = item_filter
+        context.update(kwargs)
+        result = self.eval_attr('get_records')
+        if result[0] == coderror.IC_EVAL_OK:
+            return result[1]
+        else:
+            log.warning(u'Ошибка получения набора записей контрола дерева фильтров <%s>' % self.name)
+        return None
