@@ -36,7 +36,13 @@ try:
 except ImportError:
     pass
 
-__version__ = (0, 1, 8, 1)
+try:
+    from ic.utils import datefunc
+except ImportError:
+    pass
+
+
+__version__ = (0, 1, 9, 1)
 
 
 def getIntegerDlg(parent=None, title=None, label=None, min_value=0, max_value=100):
@@ -143,11 +149,7 @@ def getMonthDlg(parent=None):
     return selected_month
 
 
-MONTH_CHOICES = (u'Январь', u'Февраль',
-                 u'Март', u'Апрель', u'Май',
-                 u'Июнь', u'Июль', u'Август',
-                 u'Сентябрь', u'Октябрь', u'Ноябрь',
-                 u'Декабрь')
+MONTH_CHOICES = datefunc.MONTHS
 
 
 def getMonthNumDlg(parent=None, title=None, text=None):

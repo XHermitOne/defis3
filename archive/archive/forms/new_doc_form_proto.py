@@ -97,14 +97,14 @@ class icNewDocPanelProto ( wx.Panel ):
 		self.m_staticText5.Wrap( -1 )
 		bSizer5.Add( self.m_staticText5, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'ayan_archive'),),  'level_enable': 1})
+		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1})
 		bSizer5.Add( self.doc_type_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.m_staticText51 = wx.StaticText( self, wx.ID_ANY, u"Подразделение:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText51.Wrap( -1 )
 		bSizer5.Add( self.m_staticText51, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_entity', None, 'nsi_archive.mtd', 'ayan_archive'),), 'level_enable': 1})
+		self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_entity', None, 'nsi_archive.mtd', 'archive'),), 'level_enable': 1})
 		bSizer5.Add( self.entity_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -116,7 +116,7 @@ class icNewDocPanelProto ( wx.Panel ):
 		self.m_staticText7.Wrap( -1 )
 		bSizer6.Add( self.m_staticText7, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'ayan_archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name']})
+		self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name']})
 		bSizer6.Add( self.contragent_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		

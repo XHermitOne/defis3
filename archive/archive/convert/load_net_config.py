@@ -6,7 +6,7 @@
 """
 
 # Маски загружаемых файлов
-DOWNLOAD_FILE_PATTERNS = ('*.apx', '*.APX')
+DOWNLOAD_FILE_PATTERNS = ('*.apx', '*.APX', '*.atg', '*.ATG')
 
 SMB_SRC_BACKUP_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/#MTS/',
                        'smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/#RLZ/')

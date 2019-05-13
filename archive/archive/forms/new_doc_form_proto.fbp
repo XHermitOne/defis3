@@ -1364,7 +1364,7 @@
                                 <property name="center_pane">0</property>
                                 <property name="class"></property>
                                 <property name="close_button">1</property>
-                                <property name="construction">self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_doc_type&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;ayan_archive&apos;),),  &apos;level_enable&apos;: 1})</property>
+                                <property name="construction">self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_doc_type&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;archive&apos;),),  &apos;level_enable&apos;: 1})</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
                                 <property name="declaration"></property>
@@ -1532,7 +1532,7 @@
                                 <property name="center_pane">0</property>
                                 <property name="class"></property>
                                 <property name="close_button">1</property>
-                                <property name="construction">self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_entity&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;ayan_archive&apos;),), &apos;level_enable&apos;: 1})</property>
+                                <property name="construction">self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_entity&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;archive&apos;),), &apos;level_enable&apos;: 1})</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
                                 <property name="declaration"></property>
@@ -1711,7 +1711,7 @@
                                 <property name="center_pane">0</property>
                                 <property name="class"></property>
                                 <property name="close_button">1</property>
-                                <property name="construction">self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_c_agent&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;ayan_archive&apos;),), &apos;view_fields&apos;: [&apos;inn&apos;, &apos;kpp&apos;, &apos;full_name&apos;], &apos;search_fields&apos;: [&apos;inn&apos;, &apos;kpp&apos;, &apos;full_name&apos;]})</property>
+                                <property name="construction">self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={&apos;sprav&apos;: ((&apos;Sprav&apos;, &apos;nsi_c_agent&apos;, None, &apos;nsi_archive.mtd&apos;, &apos;archive&apos;),), &apos;view_fields&apos;: [&apos;inn&apos;, &apos;kpp&apos;, &apos;full_name&apos;], &apos;search_fields&apos;: [&apos;inn&apos;, &apos;kpp&apos;, &apos;full_name&apos;]})</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
                                 <property name="declaration"></property>

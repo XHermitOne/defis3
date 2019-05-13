@@ -9,7 +9,14 @@ import datetime
 
 import ic
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 2, 1)
+
+
+MONTHS = (u'Январь', u'Февраль',
+          u'Март', u'Апрель', u'Май',
+          u'Июнь', u'Июль', u'Август',
+          u'Сентябрь', u'Октябрь', u'Ноябрь',
+          u'Декабрь')
 
 
 def get_first_day_of_month(year, month):

@@ -7,6 +7,7 @@
 
 import datetime
 import uuid
+import os
 
 from . import import_manager
 
@@ -56,7 +57,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         dt_oper = dbf_record['DTOPER']
         doc_name = dbf_record['TYP_DOC']
         doc_typ =  self.find_doc_type_code(dbf_record['TYP_DOC'],
-                                           dbf_record['IN_OUT'])
+                                           int(dbf_record['IN_OUT']))
         cagent_cod = self.find_contragent_code(self.contragent_sprav,
                                                dbf_record['NAMD'],
                                                dbf_record['INN'],
@@ -165,13 +166,21 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
                 dbf_tab = None
             log.fatal(u'Ошибка загрузки данных документов материалов БАЛАНС+')
 
-    def load_doc(self, doc_dbf_filename, sFileType):
+    def load_doc(self, doc_dbf_filename, sFileType, bAutoRemove=False):
         """
         Загрузить документы из DBF файла.
         @param doc_dbf_filename: Полное имя загружаемого файла.
         @param sFileType: Тип загружаемого файла.
+        @param bAutoRemove: Автоматически удалить файл после загрузки?
         """
         self._load_doc(doc_dbf_filename, sFileType)
+
+        # Удалить файл после загрузки
+        if bAutoRemove:
+            try:
+                os.remove(doc_dbf_filename)
+            except:
+                log.fatal(u'Ошибка удаления файла <%s>' % doc_dbf_filename)
 
         # log.debug(u'Обновление списка документов...%s' % u'ДА' if self.pack_scan_panel else u'НЕТ')
         if self.pack_scan_panel:

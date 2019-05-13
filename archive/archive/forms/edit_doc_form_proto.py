@@ -93,7 +93,7 @@ class icEditDocPanelProto ( wx.Panel ):
 		self.m_staticText5.Wrap( -1 )
 		bSizer5.Add( self.m_staticText5, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'ayan_archive'),),  'level_enable': 1})
+		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1})
 		bSizer5.Add( self.doc_type_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -105,7 +105,7 @@ class icEditDocPanelProto ( wx.Panel ):
 		self.m_staticText7.Wrap( -1 )
 		bSizer6.Add( self.m_staticText7, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'ayan_archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name']})
+		self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name']})
 		bSizer6.Add( self.contragent_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -117,7 +117,7 @@ class icEditDocPanelProto ( wx.Panel ):
 		self.m_staticText51.Wrap( -1 )
 		bSizer51.Add( self.m_staticText51, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_entity', None, 'nsi_archive.mtd', 'ayan_archive'),),  'level_enable': 1})
+		self.entity_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_entity', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1})
 		bSizer51.Add( self.entity_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
@@ -333,7 +333,7 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		self.m_staticText5.Wrap( -1 )
 		bSizer5.Add( self.m_staticText5, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'ayan_archive'),),  'level_enable': 1, 'on_change': 'self.GetParent().onChangeDocType(None)'})
+		self.doc_type_ctrl = spravtreecomboctrl.icSpravTreeComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_doc_type', None, 'nsi_archive.mtd', 'archive'),),  'level_enable': 1, 'on_change': 'self.GetParent().onChangeDocType(None)'})
 		bSizer5.Add( self.doc_type_ctrl, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
 		self.clear_doc_type_bpButton = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( u"gtk-clear", wx.ART_MENU ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
@@ -357,7 +357,7 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		self.m_staticText7.Wrap( -1 )
 		bSizer5.Add( self.m_staticText7, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'ayan_archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name'], 'on_select': 'self.GetParent().onChangeContragent(None)'})
+		self.contragent_ctrl = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self, id=wx.NewId(), component={'sprav': (('Sprav', 'nsi_c_agent', None, 'nsi_archive.mtd', 'archive'),), 'view_fields': ['inn', 'kpp', 'full_name'], 'search_fields': ['inn', 'kpp', 'full_name'], 'on_select': 'self.GetParent().onChangeContragent(None)'})
 		bSizer5.Add( self.contragent_ctrl, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.clear_contragent_bpButton = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( u"gtk-clear", wx.ART_MENU ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
