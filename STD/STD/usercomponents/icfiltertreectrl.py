@@ -116,11 +116,11 @@ class icFilterTreeCtrl(icwidget.icWidget,
 
     # Установка ограничения редактирования фильтров
     # Для этого в родительском классе заведены
-    # функции <addFilter>, <delFilter>, <editFilter>, <editItemIndicator>
-    security.declareProtected('tree_filter_edit', 'addFilter')
-    security.declareProtected('tree_filter_edit', 'delFilter')
-    security.declareProtected('tree_filter_edit', 'editFilter')
-    security.declareProtected('tree_filter_edit', 'editItemIndicator')
+    # функции <addFilterItem>, <delFilterItem>, <editFilterItem>, <editIndicatorItem>
+    security.declareProtected('tree_filter_edit', 'addFilterItem')
+    security.declareProtected('tree_filter_edit', 'delFilterItem')
+    security.declareProtected('tree_filter_edit', 'editFilterItem')
+    security.declareProtected('tree_filter_edit', 'editIndicatorItem')
 
     def _canEditFilter(self):
         return self.security.is_permission('tree_filter_edit', self.GetKernel().GetAuthUser().getPermissions())

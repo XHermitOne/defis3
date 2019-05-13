@@ -80,7 +80,7 @@ from ic.dlg import ic_dlg
 from ic.components import icwidget
 
 # Версия
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 4, 1)
 
 # Спецификация
 SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {'document': None,
@@ -618,7 +618,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             dataset[toIndex] = dataset[from_idx]
             del dataset[fromIndex]
             if bRefresh:
-                self.refreshtDocListCtrlRows()
+                self.refreshDocListCtrlRows()
 
     def moveDown(self, fromUUID=None, fromIndex=None, stepIndex=1, bRefresh=True):
         """
@@ -638,7 +638,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         del dataset[fromIndex]
 
         if bRefresh:
-            self.refreshtDocListCtrlRows()
+            self.refreshDocListCtrlRows()
 
     def moveUp(self, fromUUID=None, fromIndex=None, stepIndex=1, bRefresh=True):
         """
@@ -658,7 +658,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         del dataset[fromIndex]
 
         if bRefresh:
-            self.refreshtDocListCtrlRows()
+            self.refreshDocListCtrlRows()
 
     def findDoc(self, requisite=None, value=None, fromUUID=None, fromIndex=None, bSelect=True):
         """
@@ -708,7 +708,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         self.setDocDatasetFilter(doc_filter)
         dataset = self.updateDocDataset()
         if bRefresh:
-            self.refreshtDocListCtrlRows()
+            self.refreshDocListCtrlRows()
         return dataset
 
     def sortDocs(self, *sort_fields):
@@ -900,7 +900,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 # Обновить выделенный документ после радактирования
                 self.setDocDatasetRecord(index=idx, doc_requisites=document.getRequisiteData())
                 # Обновить список документов если нормально отредактировали документ
-                self.refreshtDocListCtrlRows()
+                self.refreshDocListCtrlRows()
             return result
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
@@ -937,7 +937,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
             if result:
                 # Обновить список документов если нормально отредактировали документ
-                self.refreshtDocListCtrlRows()
+                self.refreshDocListCtrlRows()
             return result
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для обновления')
@@ -962,7 +962,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         if result:
             # Обновить список документов если нормально выполнили действие над документ
-            self.refreshtDocListCtrlRows()
+            self.refreshDocListCtrlRows()
         return result
 
     def deleteDoc(self, UUID=None, index=None, delete_form_method=None):
@@ -993,7 +993,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
             if result:
                 # Обновить список документов если нормально отредактировали документ
-                self.refreshtDocListCtrlRows()
+                self.refreshDocListCtrlRows()
             return result
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для удаления')
@@ -1277,3 +1277,29 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         """
         log.warning(u'Метод <showHelp> не реализован')
+
+    def setRowColour_list_ctrl_requirement(self, ctrl=None, rows=None,
+                                           fg_colour=None, bg_colour=None, requirement=None):
+        """
+        Установить цвет строки в контроле списка по определенному условию.
+        @param ctrl: Объект контрола.
+        @param rows: Список строк.
+        @param fg_colour: Цвет текста, если условие выполненно.
+        @param bg_colour: Цвет фона, если условие выполненно.
+        @param requirement: lambda выражение, формата:
+            lambda i, row: ...
+            Которое возвращает True/False.
+            Если True, то установка цвета будет сделана.
+            False - строка не расцвечивается.
+        @return: True/False.
+        """
+        if ctrl is None:
+            ctrl = self.getSlaveListCtrl()
+        if rows is None:
+            rows = self.getDocDataset()
+        return listctrl_manager.icListCtrlManager.setRowColour_list_ctrl_requirement(self,
+                                                                                     ctrl=ctrl,
+                                                                                     rows=rows,
+                                                                                     fg_colour=fg_colour,
+                                                                                     bg_colour=bg_colour,
+                                                                                     requirement=requirement)

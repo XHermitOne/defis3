@@ -81,7 +81,8 @@ ic_can_not_contain = []
 __version__ = (0, 1, 1, 2)
 
 
-class icFilterChoiceCtrl(icwidget.icWidget, parentModule.icFilterChoiceCtrlProto):
+class icFilterChoiceCtrl(icwidget.icWidget,
+                         parentModule.icFilterChoiceCtrlProto):
     """
     Компонент выбора фильтра.
     """

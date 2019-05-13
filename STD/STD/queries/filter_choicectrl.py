@@ -19,7 +19,7 @@ from ic.log import log
 from . import filter_choice_dlg
 from . import filter_constructor_dlg
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 DEFAULT_LIMIT_LABEL_FMT = u'Ограничение количества объектов: %d'
 ERROR_LIMIT_LABEL_FMT = u'(!) Превышено ограничение: %d'
@@ -383,7 +383,7 @@ def get_str_filter(cur_filter):
     """
     if cur_filter:
         join_str = u' %s ' % cur_filter.get('description', u'ИЛИ')
-        return join_str.join([u'<%s>' % fltr.get('description', fltr.get('name', '...')) for fltr in cur_filter['children'] if fltr.get('check', False)])
+        return join_str.join([u'<%s>' % fltr.get('description', fltr.get('name', '...')) for fltr in cur_filter.get('children', ()) if fltr.get('check', False)])
     return u''
 
 

@@ -187,7 +187,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         @return: Собранная структура фильтра, соответствующего указанному элементу дерева.
         """
         item_data_path = self.getItemPathData(tree_ctrl=self, item=item)
-        log.debug(u'Путь до элемента %s' % str(item_data_path))
+        # log.debug(u'Путь до элемента %s' % str(item_data_path))
 
         filters = list()
         if item_data_path:
@@ -363,7 +363,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.moveDownItem()
         # event.Skip()
 
-    def addFilter(self, cur_item=None):
+    def addFilterItem(self, cur_item=None):
         """
         Добавить фильтр.
         @return: True/Falseю
@@ -394,10 +394,10 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         Добавить фильтр. Обработчик.
         """
         # log.debug(u'Добавить фильтр. Обработчик.')
-        self.addFilter()
+        self.addFilterItem()
         # event.Skip()
 
-    def delFilter(self, cur_item=None):
+    def delFilterItem(self, cur_item=None):
         """
         Удалить фильтр.
         @return: True/False.
@@ -415,10 +415,10 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         Удалить фильтр. Обработчик.
         """
-        self.delFilter()
+        self.delFilterItem()
         # event.Skip()
 
-    def editFilter(self, cur_item=None):
+    def editFilterItem(self, cur_item=None):
         """
         Редактировать фильтр.
         @return: True/False.
@@ -442,10 +442,10 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         Настроить фильтр. Обработчик.
         """
-        self.editFilter()
+        self.editFilterItem()
         # event.Skip()
 
-    def editItemIndicator(self, cur_item=None):
+    def editIndicatorItem(self, cur_item=None):
         """
         Редактировать индикатор.
         @return: True/False.
@@ -467,7 +467,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         Настроить индикаторы. Обработчик.
         """
-        self.editItemIndicator()
+        self.editIndicatorItem()
         # event.Skip()
 
     def getCurRecords(self):
@@ -514,8 +514,16 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
         filter_tree_data = self.load_data_file(save_filename=save_filename)
         # Построить дерево
-        return self.setTreeData(ctrl=self, tree_data=filter_tree_data, label='label')
+        result = self.setTreeData(ctrl=self, tree_data=filter_tree_data, label='label')
 
+        # Установить надпись корневого элемента как фильтр
+        root_filter = filter_tree_data.get('__filter__', dict())
+        # log.debug(u'Фильтр: %s' % str(root_filter))
+        str_filter = filter_choicectrl.get_str_filter(root_filter)
+        root_label = str_filter if str_filter else DEFAULT_ROOT_LABEL
+        self.setRootTitle(tree_ctrl=self, title=root_label)
+
+        return result
 
 def test():
     """
