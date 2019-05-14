@@ -116,6 +116,10 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         Текущий полный фильтр.
         """
+        if self._cur_item_filter is None:
+            # Не определен полный фильтр
+            # считаем что это фильтр корневого элемента
+            self._cur_item_filter = self.getItemFilter()
         return self._cur_item_filter
 
     def getItemFilter(self, item=None):
@@ -186,7 +190,13 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         item = event.GetItem()
         self.editRootFilter(root_item=item)
-        event.Skip()
+        self.refreshRootItemTitle()
+
+        # Для обновления списка объектов
+        self._cur_item_filter = self.buildItemFilter(item)
+        self.OnChange(event)
+
+        # event.Skip()
 
     def OnChange(self, event):
         """
@@ -206,18 +216,47 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
         event.Skip()
 
-    def buildItemFilter(self, item):
+    def _build_filters(self, cur_filters):
+        """
+        Внутренняя функция построения структуры фильтров.
+        @param cur_filters: Текущий обрабатываемый список фильтров.
+        @return: Собранная структура фильтра.
+        """
+        # Отфильтровать не включенные фильтры
+        filters = [copy.deepcopy(cur_filter) for cur_filter in cur_filters if cur_filter.get('check', True)]
+
+        # Обработка дочерних элементов производится сначала для исключения
+        # пустых фильтров
+        result_filters = list()
+        for i, cur_filter in enumerate(filters):
+            filter_type = cur_filter['type']
+            children = cur_filter.get('children', list())
+            children = self._build_filters(children)
+            if children and filter_type == 'group':
+                cur_filter['children'] = children
+                result_filters.append(cur_filter)
+            elif filter_type == 'compare':
+                result_filters.append(cur_filter)
+
+        return result_filters
+
+    def buildItemFilter(self, item=None):
         """
         Построение полного фильтра, соответствующего указанному элементу дерева.
         @param item: Элемент дерева.
+            Если не определен, то берется текущий выбранный элемент.
         @return: Собранная структура фильтра, соответствующего указанному элементу дерева.
         """
+        if item is None:
+            item = self.GetSelection()
+
         item_data_path = self.getItemPathData(tree_ctrl=self, item=item)
         # log.debug(u'Путь до элемента %s' % str(item_data_path))
 
         filters = list()
         if item_data_path:
             filters = [data.get('__filter__', None) for data in item_data_path if data.get('__filter__', None)]
+            filters = self._build_filters(filters)
         else:
             log.warning(u'Не определены структурные данные элемента дерева')
         grp_filter = filter_generate.create_filter_group_AND(*filters)
@@ -464,11 +503,36 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             log.fatal(u'Ошибка настройки фильтра')
         return False
 
+    def refreshRootItemTitle(self):
+        """
+        Обновить надпись корневого элемента в соответствии с выбранным фильтром.
+        @return: True/False.
+        """
+        item = self.GetRootItem()
+        item_data = self.getItemData_tree(ctrl=self, item=item)
+        cur_filter = item_data.get('__filter__', None)
+        label = filter_choicectrl.get_str_filter(cur_filter) if cur_filter else DEFAULT_ROOT_LABEL
+        if not label:
+            label = DEFAULT_ROOT_LABEL
+        self.setRootTitle(tree_ctrl=self, title=label)
+        return True
+
     def onFilterMenuItem(self, event):
         """
         Настроить фильтр. Обработчик.
         """
         self.editFilterItem()
+
+        # После редактирования фильтра если это корневой элемент,
+        # то поменять надпись корневого элемента
+        cur_item = self.GetSelection()
+        if self.isRootTreeItem(ctrl=self, item=cur_item):
+            self.refreshRootItemTitle()
+
+        # Для обновления списка объектов
+        self._cur_item_filter = self.buildItemFilter(cur_item)
+        self.OnChange(event)
+
         # event.Skip()
 
     def editIndicatorItem(self, cur_item=None):

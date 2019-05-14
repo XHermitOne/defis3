@@ -56,8 +56,8 @@ class icNewMetadataResourceDlg(new_metadata_resource_dlg_proto.icNewMetadataReso
         """
         button = event.GetEventObject()
 
-        self.component_info = select_component_menu.popup_component_flatmenu(parent=self,
-                                                                             button=button)
+        self.component_info = select_component_menu.popup_component_menu(parent=self,
+                                                                         button=button)
         if self.component_info:
             bitmap = self.component_info[1]
             component_name = self.component_info[3].get('type', NONE_COMPONENT_NAME)
