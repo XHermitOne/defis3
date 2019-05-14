@@ -124,6 +124,7 @@ class icIndicatorConstructorDlgProto ( wx.Dialog ):
 		self.Bind( wx.EVT_TOOL, self.onAddToolClicked, id = self.add_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onDelToolClicked, id = self.del_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onSaveToolClicked, id = self.save_tool.GetId() )
+		self.indicator_listCtrl.Bind( wx.EVT_LIST_ITEM_SELECTED, self.onIndicatorListItemSelected )
 		self.image_checkBox.Bind( wx.EVT_CHECKBOX, self.onImageCheckBox )
 		self.image_filePicker.Bind( wx.EVT_FILEPICKER_CHANGED, self.onImageFileChanged )
 		self.textcolor_checkBox.Bind( wx.EVT_CHECKBOX, self.onTextColorCheckBox )
@@ -149,6 +150,9 @@ class icIndicatorConstructorDlgProto ( wx.Dialog ):
 		event.Skip()
 	
 	def onSaveToolClicked( self, event ):
+		event.Skip()
+	
+	def onIndicatorListItemSelected( self, event ):
 		event.Skip()
 	
 	def onImageCheckBox( self, event ):

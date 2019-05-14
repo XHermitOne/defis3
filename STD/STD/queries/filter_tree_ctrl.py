@@ -66,6 +66,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.onItemRightClick)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onItemDoubleClick)
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onItemSelectChanged)
+        self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.onItemExpanded)
         # ВНИМАНИЕ! Если необходимо удалить/освободить
         # ресуры при удалении контрола, то необходимо воспользоваться
         # событием wx.EVT_WINDOW_DESTROY
@@ -617,15 +618,17 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
         return result
 
-    def refreshIndicators(self, bVisibleItems=True):
+    def refreshIndicators(self, bVisibleItems=True, item=None):
         """
         Обновить индикаторы элементов дерева.
         @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
             Если нет, то обновляются индикаторы всех элементов.
+        @param item: Текущий обрабатываемый элемент.
+            Если None, то берется корневой элемент.
         @return: True/False.
         """
         try:
-            return self._refreshIndicators(bVisibleItems)
+            return self._refreshIndicators(bVisibleItems, item=item)
         except:
             log.fatal(u'Ошибка обновления индикаторов дерева фильтров')
         return False
@@ -643,6 +646,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             item = self.GetRootItem()
 
         item_indicator = self.getItemIndicator(item=item)
+        # log.debug(u'Индикатор элемента %s : %s' % (str(item_indicator), self.IsVisible(item)))
         if item_indicator:
             if bVisibleItems:
                 if self.IsVisible(item):
@@ -656,9 +660,10 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                 self.refreshIndicator(item_indicator, item=item)
 
         # Обработка дочерних элементов
-        children = self.getItemChildren(ctrl=self, item=item)
-        for child in children:
-            self._refreshIndicators(bVisibleItems, item=child)
+        if self.IsExpanded(item):
+            children = self.getItemChildren(ctrl=self, item=item)
+            for child in children:
+                self._refreshIndicators(bVisibleItems, item=child)
 
         return True
 
@@ -671,6 +676,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         @return: True/False.
         """
         try:
+            # log.debug(u'Обновление индикатора %s' % str(indicator))
             return self._refreshIndicator(indicator=indicator, item=item)
         except:
             log.fatal(u'Ошибка обновления индикатора элемента дерева')
@@ -708,6 +714,13 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             self.setItemBackgroundColour(ctrl=self,item=item, colour=bg_colour)
 
         return True
+
+    def onItemExpanded(self, event):
+        """
+        Обработчик развертывания элемента дерева.
+        """
+        item = event.GetItem()
+        self.refreshIndicators(item=item)
 
 
 def test():

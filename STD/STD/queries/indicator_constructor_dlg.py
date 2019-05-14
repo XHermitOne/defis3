@@ -408,6 +408,19 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
             self.image_bitmap.SetBitmap(bmp)
         event.Skip()
 
+    def onIndicatorListItemSelected(self, event):
+        """
+        Обработчик выбора состояния индикатора из списка.
+        """
+        idx = event.GetIndex()
+        state_indicator = self._indicator[idx]
+        log.debug(u'Редактирование индикатора %s' % str(state_indicator))
+        self.setStateCtrlValue(state_indicator=state_indicator)
+
+        self.ctrl_toolBar.EnableTool(self.save_tool.GetId(), True)
+
+        event.Skip()
+
 
 def show_indicator_constructor_dlg(parent=None):
     """

@@ -114,7 +114,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
         # имя файла хранения фильтров можно загрузить фильтры
         self.loadFilters()
         # Обновить индикаторы
-        # self.refreshIndicators(bVisibleItems=True)
+        # self.refreshIndicators(bVisibleItems=False)
 
         # Для обновления списка объектов
         self._cur_item_filter = self.buildItemFilter(self.GetRootItem())
