@@ -117,8 +117,8 @@ class icFilterTreeCtrl(icwidget.icWidget,
         # self.refreshIndicators(bVisibleItems=True)
 
         # Для обновления списка объектов
-        self._cur_item_filter = self.buildItemFilter()
-        self.OnChange(None)
+        self._cur_item_filter = self.buildItemFilter(self.GetRootItem())
+        # self.OnChange(None)
 
     # Установка ограничения редактирования фильтров
     # Для этого в родительском классе заведены
