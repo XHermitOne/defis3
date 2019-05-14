@@ -17,7 +17,8 @@
 5. Иконки темы Tango
     http://tango.freedesktop.org/Tango_Icon_Library/
 6. Иконки темы Tango IDE Editra
-    все *.png из папки ../Editra-0.7.20/pixmaps/theme/Tango
+    все *.png из папки ../Editra-0.7.20/pixmaps/theme/Tango/menu и
+    ../Editra-0.7.20/pixmaps/theme/Tango/mime
 
 Менять имена файлов не рекомендуется!!!
 При обновлении обновлять и перезаписывать файлы
