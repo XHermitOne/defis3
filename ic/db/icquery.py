@@ -336,7 +336,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         prj_res_manager = self._get_prj_res_manager()
         return prj_res_manager.isRes(tab_resname, 'tab')
 
-    def to_table(self, table_name=None, bReCreateRes=False, bData=True):
+    def to_table(self, table_name=None, bReCreateRes=False, bData=True, bClear=False):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -345,6 +345,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
             Если None, то таблица создается с таким же именем как и запрос.
         @param bReCreateRes: Пересоздать ресурс если он уже существует?
         @param bData: Заполнить таблицу данными автоматически?
+        @param bClear: Произвести предварительную очистку данных при заполнении?
         @return: True/False.
         """
         if table_name is None:
@@ -356,14 +357,13 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
             prj_res_manager = self._get_prj_res_manager()
             prj_res_manager.delRes(table_name, 'tab')
 
-        self.createTableResource(table_name=table_name)
-        is_data = True
+        result = self.createTableResource(table_name=table_name)
         if bData:
             data = self.execute()
             # Заполнить таблицу данными
-            is_data = self.saveData(table_name, dataset=data)
+            result = self.saveData(table_name, dataset=data, bClear=bClear)
 
-        return is_data
+        return result
 
     def createTableResource(self, table_name=None):
         """
@@ -446,33 +446,36 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
 
         return field_spc
 
-    def saveData(self, table_name=None, dataset=()):
+    def saveData(self, table_name=None, dataset=(), bClear=False):
         """
         Сохранить результат запроса в таблице.
         @param table_name: Имя таблицы.
         @param dataset: Набор записей-результата запроса.
+        @param bClear: Произвести предварительную очистку данных при заполнении?
         @return: True/False.
         """
         if table_name is None:
             table_name = self.getName()
         try:
-            return self._saveData(table_name=table_name, dataset=dataset)
+            return self._saveData(table_name=table_name, dataset=dataset, bClear=bClear)
         except:
             log.fatal(u'Ошибка сохранения данных запроса <%s> в таблице <%s>' % (self.getName(), table_name))
         return False
 
-    def _saveData(self, table_name=None, dataset=()):
+    def _saveData(self, table_name=None, dataset=(), bClear=False):
         """
         Сохранить результат запроса в таблице.
         @param table_name: Имя таблицы.
         @param dataset: Набор записей-результата запроса.
+        @param bClear: Произвести предварительную очистку данных при заполнении?
         @return: True/False.
         """
         # Создать объект таблицы
         kernel = ic_user.getKernel()
         tab = kernel.createObjByRes(table_name, table_name, 'tab')
         # Очистить данные таблицы
-        tab.clear()
+        if bClear:
+            tab.clear()
 
         # Заполнить таблицу данными
         for record in dataset:
