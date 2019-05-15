@@ -17,7 +17,7 @@ from . import icContext
 from . import io_prnt
 from .icbasekernel import icBaseKernel
 
-__version__ = (0, 2, 1, 1)
+__version__ = (0, 2, 1, 2)
 
 prs = None
 resource = None
@@ -194,6 +194,9 @@ class icKernel(icBaseKernel):
         @param context: Контекст.
         @return: Возвращает объект или None в случае ошибки.
         """
+        if context is None:
+            context = self.init_new_context()
+
         context.resFileName = '%s.%s' % (resName, extName)
         obj = prs.icCreateObject(resName, extName, parent=parent,
                                  context=context, className=className, **kwarg)

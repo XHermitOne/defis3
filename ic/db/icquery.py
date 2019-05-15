@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-Модуль функций работы с таблицами запросов. 
+Модуль функций работы с таблицами запросов.
+
+Запрос может использоваться для сохранения результатов в таблицу.
+Сохранение в таблицу производиться с помошью метода <to_table>.
 """
 
 # Подключение библиотек
@@ -249,20 +252,22 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         Получить все записи результата запроса.
         @param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
-        @return: Возвращает список кортежей.
+        @return: Возвращает список словарей записей.
         """
-        result = None
+        dataset = tuple()
         data_src = self.getDataSource()
         if data_src:
-            cursor = data_src.createCursor()
             sql_txt = self.getSQLTxt(**kwargs)
             try:
-                cursor.execute(sql_txt)
-                result = cursor.fetchall()
+                result = data_src.executeSQL(sql_txt)
+                records = result.get('__data__', tuple())
+                fields = result.get('__fields__', tuple())
+                field_names = [field[0] for field in fields]
+                dataset = [dict([(fld_name, record[i]) for i, fld_name in enumerate(field_names)]) for record in records]
+                return dataset
             except:
                 log.fatal(u'QUERY: Ошибка выполнения запроса: %s' % sql_txt)
-            data_src.closeCursor()
-        return result
+        return dataset
         
     def fetchOneRec(self):
         """
@@ -451,6 +456,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         Сохранить результат запроса в таблице.
         @param table_name: Имя таблицы.
         @param dataset: Набор записей-результата запроса.
+            Список словарей.
         @param bClear: Произвести предварительную очистку данных при заполнении?
         @return: True/False.
         """
@@ -467,6 +473,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         Сохранить результат запроса в таблице.
         @param table_name: Имя таблицы.
         @param dataset: Набор записей-результата запроса.
+            Список словарей.
         @param bClear: Произвести предварительную очистку данных при заполнении?
         @return: True/False.
         """
