@@ -38,7 +38,7 @@ from .icMySQL import SPC_IC_MYSQL
 
 import ic
 
-__version__ = (1, 1, 2, 1)
+__version__ = (1, 1, 2, 2)
 
 DB_TYPES = (SQLITE_DB_TYPE, POSTGRES_DB_TYPE, MSSQL_DB_TYPE, MYSQL_DB_TYPE)
 
@@ -197,19 +197,19 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             return False
 
         is_connect = False
-        if engine:
-            connection = None
-            try:
-                connection = self._connection.connect()
-                result = connection.execute('SELECT 1').fetchall()
-                if result:
-                    is_connect = True
+
+        connection = None
+        try:
+            connection = self._connection.connect()
+            result = connection.execute('SELECT 1').fetchall()
+            if result:
+                is_connect = True
+            connection.close()
+        except:
+            if connection:
                 connection.close()
-            except:
-                if connection:
-                    connection.close()
-                log.fatal(u'Ошибка определения онлайн состояния связи с БД')
-                is_connect = False
+            log.fatal(u'Ошибка определения онлайн состояния связи с БД')
+            is_connect = False
         return is_connect
 
     def load_ini_par(self, res):
