@@ -348,6 +348,9 @@ class icKernel(icBaseKernel):
             self._prj_res_controller = ctrlPrj.icProjectResController()
         return self._prj_res_controller
 
+    # Другое название метода
+    getProjectResManager = getProjectResController
+
     def GetMetadata(self):
         """
         Возвращает указатель на объект метоописания.

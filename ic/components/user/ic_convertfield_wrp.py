@@ -25,7 +25,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-from ic.kernel import io_prnt
+from ic.log import log
 
 from ic.convert import icconvertquery
 

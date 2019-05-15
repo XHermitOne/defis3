@@ -3,6 +3,11 @@
 
 """
 Конвертер табличного представления.
+Этот компонент необходимо использовать если конвертация происходит
+из разных источников данных.
+Для определения каждого поля результирующей таблицы
+есть компонент ConvertField. В нем настраивается источник данных
+и правила получения данных из него.
 
 @type ic_user_name: C{string}
 @var ic_user_name: Имя пользовательского класса.
@@ -24,8 +29,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-
-from ic.kernel import io_prnt
+from ic.log import log
 
 import ic.convert.icconvertquery as icconvertquery
 
@@ -80,7 +84,7 @@ ic_can_contain = ['ConvertField', 'DBFConvertDriver']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icConvertQuery(icwidget.icSimple, icconvertquery.icConvertQueryPrototype):
@@ -142,7 +146,7 @@ class icConvertQuery(icwidget.icSimple, icconvertquery.icConvertQueryPrototype):
             if driver_name:
                 return self.components[driver_name]
         except:
-            log.error(u'Не определен драйвер источника данных в объекте %s' % self.getName())
+            log.fatal(u'Не определен драйвер источника данных в объекте %s' % self.getName())
         return None
         
     def getFirstField(self):

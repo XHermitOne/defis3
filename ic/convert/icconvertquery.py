@@ -8,6 +8,7 @@
 # --- Подключение библиотек ---
 from ic.db import icsqlalchemy
 
+from ic.log import log
 from ic.utils import util
 
 from ic.components.user import ic_tab_wrp
@@ -43,7 +44,7 @@ SPC_IC_CONVERTFIELD = {'type': CONVERTFIELD_TYPE,
                                         },
                        }
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Классы ---
@@ -122,7 +123,7 @@ class icConvertQueryPrototype:
             
     def _saveTabRes(self, TabRes_):
         """
-        Сохранить ресурс результирующе йтаблицы.
+        Сохранить ресурс результирующей таблицы.
         """
         table_name = TabRes_['name']
         # Сохранить ресурс
@@ -190,7 +191,7 @@ class icConvertQueryPrototype:
                 
             # Перебор по записям
             driver.First()
-            print(u'START! <%s>' % driver.IsEnd())
+            log.debug(u'START! <%s>' % driver.IsEnd())
             while not driver.IsEnd():
                 print('.')
                 # Перебор по полям и формирование результирующей записи
@@ -203,7 +204,7 @@ class icConvertQueryPrototype:
                 self._tab.add(**rec)
                 
                 driver.Next()            
-            print('OK')
+            log.debug('OK')
 
     def getFirstField(self):
         """
