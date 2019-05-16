@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 import wx.propgrid as pg
 
 ###########################################################################
@@ -20,7 +20,7 @@ class icViewSQLQueryDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Просмотр результатов SQL запроса", pos = wx.DefaultPosition, size = wx.Size( 856,619 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -72,14 +72,21 @@ class icViewSQLQueryDialogProto ( wx.Dialog ):
 		bSizer4 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self.table_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Свернуть панель", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть панель", u"Свернуть панель", None ) 
+		self.collapse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Свернуть панель", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть панель", u"Свернуть панель", None ) 
 		
-		self.expand_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Развернуть панель", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть панель", u"Развернуть панель", None ) 
+		self.expand_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Развернуть панель", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть панель", u"Развернуть панель", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.refresh_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Обновить результаты запроса", wx.ArtProvider.GetBitmap( u"gtk-refresh", wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Обновить результаты запроса", u"Обновить результаты запроса", None ) 
+		self.refresh_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Обновить результаты запроса", wx.ArtProvider.GetBitmap( u"gtk-refresh", wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Обновить результаты запроса", u"Обновить результаты запроса", None ) 
 		
+		self.ctrl_toolBar.AddSeparator()
+		
+		self.m_staticText3 = wx.StaticText( self.ctrl_toolBar, wx.ID_ANY, u"Ограничение количества строк:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText3.Wrap( -1 )
+		self.ctrl_toolBar.AddControl( self.m_staticText3 )
+		self.limit_spinCtrl = wx.SpinCtrl( self.ctrl_toolBar, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
+		self.ctrl_toolBar.AddControl( self.limit_spinCtrl )
 		self.ctrl_toolBar.Realize() 
 		
 		bSizer4.Add( self.ctrl_toolBar, 0, wx.EXPAND, 5 )

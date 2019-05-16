@@ -20,7 +20,7 @@ from ic.utils import ic_str
 from ic.engine import form_manager
 
 
-__version__ = (0, 0, 1, 3)
+__version__ = (0, 1, 1, 1)
 
 UNIX_CR = '\n'
 WIN_CR = '\r\n'
@@ -175,6 +175,11 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
                     cols = [dict(label=field_name, width=-1) for field_name in fields]
                 # Строки
                 rows = query_tab.get('__data__', ())
+
+                # Ограничение количества выводимых строк
+                limit = self.limit_spinCtrl.GetValue()
+                if limit:
+                    rows = rows[:limit]
 
                 self.setColumns_list_ctrl(self.records_listCtrl, cols=cols)
                 self.setRows_list_ctrl(self.records_listCtrl, rows=rows)

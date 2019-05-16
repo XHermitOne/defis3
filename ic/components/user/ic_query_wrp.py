@@ -28,7 +28,7 @@ from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
-from ic.db import icsqlalchemy
+from ic.db import icdb
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.imglib import common
@@ -128,7 +128,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt
-            ctrl_types = icsqlalchemy.DB_TYPES
+            ctrl_types = icdb.DB_TYPES
             if ret[0][0] not in ctrl_types:
                 ic_dlg.icWarningBox(u'ОШИБКА', u'Объект не БД типа.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE

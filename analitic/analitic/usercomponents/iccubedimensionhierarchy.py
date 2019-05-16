@@ -2,52 +2,49 @@
 # -*- coding: utf-8 -*-
 
 """
-Агрегация OLAP Куба.
+Иерархия уровней измерения OLAP Куба.
 """
 
 from ic.log import log
 from ic.bitmap import ic_bmp
 from ic.utils import util
-from ic.utils import coderror
-from ic.dlg import ic_dlg
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
+from ic.utils import coderror
+from ic.dlg import ic_dlg
 
-from analitic.olap import cube_aggregate_proto
+from analitic.olap import cube_dimension_hierarchy_proto
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
 
 #   Имя класса
-ic_class_name = 'icCubeAggregate'
+ic_class_name = 'icCubeDimensionHierarchy'
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'type': 'CubeAggregate',
+ic_class_spc = {'type': 'CubeDimensionHierarchy',
                 'name': 'default',
                 'activate': True,
                 'init_expr': None,
                 '_uuid': None,
+                'child': [],
 
-                'function': None,   # Функция агрегации
-                'measure': None,    # Мера/Факт, которое агрегируется
-                'expression': None,     # Выражение агрегации
-
-                'label': None,  # Надпись агрегации
+                'levels': None,  # Список имен уровней измерения данной иерархии
 
                 '__events__': {},
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'label'],
-                                   icDefInf.EDT_CHOICE: ['function'],
-                                   icDefInf.EDT_USER_PROPERTY: ['measure'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
+                                                            ],
+                                   icDefInf.EDT_USER_PROPERTY: ['levels'],
                                    },
-                '__parent__': cube_aggregate_proto.SPC_IC_CUBEAGGREGATE,
-                '__lists__': {'function': cube_aggregate_proto.AGGREGATE_FUNCTIONS},
+                '__parent__': cube_dimension_hierarchy_proto.SPC_IC_CUBEDIMENSIONHIERARCHY,
+                '__lists__': {},
                 }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('sum.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('sum.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('node-select-all.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('node-select-all.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
@@ -70,12 +67,12 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
     """
     ret = None
-    if attr in ('measure',):
-        choices = [u''] + [u'%s : %s' % (spc['name'], spc.get('description', u'')) for spc in propEdt.getParentResource()['child'] if spc.get('type', None) == 'CubeMeasure']
-        text = ic_dlg.icSingleChoiceDlg(Parent_=None, Title_=u'Меры/Факты',
-                                        Text_=u'Выберите меру/факт агрегации',
+    if attr in ('levels', ):
+        choices = [u'%s : %s' % (spc['name'], spc.get('description', u'')) for spc in propEdt.getParentResource()['child'] if spc.get('type', None) == 'CubeDimensionLevel']
+        items = ic_dlg.icMultiChoiceDlg(Parent_=None, Title_=u'Уровни измерения',
+                                        Text_=u'Выберите уровни измерения',
                                         Choice_=choices)
-        ret = text.split(u' : ')[0].strip() if text else u''
+        ret = [item.split(u' : ')[0].strip() for check, item in items if check].split(u' : ')[0].strip() if items else u''
 
     if ret is None:
         return value
@@ -87,7 +84,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     Стандартная функция контроля.
     """
-    if attr in ('measure',):
+    if attr in ('levels',):
         return coderror.IC_CTRL_OK
 
 
@@ -95,14 +92,14 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     """
     Стандартная функция преобразования текста в значение.
     """
-    if attr in ('measure',):
+    if attr in ('levels', ):
         return text.split(u' : ')[0].strip() if text else None
 
 
-class icCubeAggregate(icwidget.icSimple,
-                      cube_aggregate_proto.icCubeAggregateProto):
+class icCubeDimensionHierarchy(icwidget.icSimple,
+                               cube_dimension_hierarchy_proto.icCubeDimensionHierarchyProto):
     """
-    Агрегация OLAP Куба.
+    Иерархия уровней измерения OLAP Куба.
     """
     component_spc = ic_class_spc
 
@@ -131,35 +128,11 @@ class icCubeAggregate(icwidget.icSimple,
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        cube_aggregate_proto.icCubeAggregateProto.__init__(self)
+        cube_dimension_hierarchy_proto.icCubeDimensionHierarchyProto.__init__(self)
 
-    def getFunctionName(self):
+    def getLevelNames(self):
         """
-        Функция агрегации.
+        Список имен полей дополнительных атрибутов.
         """
-        return self.getICAttr('function')
-
-    def getMeasureName(self):
-        """
-        Мера/Факт, которое агрегируется.
-        """
-        return self.getICAttr('measure')
-
-    def getExpressionCode(self):
-        """
-        Выражение агрегации.
-        """
-        return self.getICAttr('expression')
-
-    def getLabel(self):
-        """
-        Надпись измерения.
-        Если не определено, то берется description.
-        Если и в этом случае не определено, то берем name.
-        """
-        label = self.getICAttr('label')
-        if not label:
-            label = self.getDescription()
-        if not label:
-            label = self.getName()
-        return label
+        level_names = self.getICAttr('levels')
+        return level_names if level_names else list()

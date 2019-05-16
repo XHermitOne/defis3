@@ -39,7 +39,7 @@ class icCubeDimensionProto(object):
 
     def getAttributes(self):
         """
-        Список имен полей дополнительных атрибутов
+        Список имен полей дополнительных атрибутов.
         """
         return list()
 
@@ -60,3 +60,15 @@ class icCubeDimensionProto(object):
         Надпись измерения.
         """
         return u''
+
+    def getLevels(self):
+        """
+        Список объектов уровней измерения.
+        """
+        return list()
+
+    def getHierarchies(self):
+        """
+        Список объектов иерархий уровней измерения.
+        """
+        return list()

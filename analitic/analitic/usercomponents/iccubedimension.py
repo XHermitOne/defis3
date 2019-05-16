@@ -13,6 +13,10 @@ from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
 
 from analitic.olap import cube_dimension_proto
+from analitic.olap import cube_dimension_level_proto
+from analitic.olap import cube_dimension_hierarchy_proto
+
+import ic.components.icResourceParser as prs
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -56,7 +60,7 @@ ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = ['CubeDimension']
+ic_can_contain = ['CubeDimensionLevel', 'CubeDimensionHierarchy']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен
 #   список ic_can_contain
@@ -100,6 +104,17 @@ class icCubeDimension(icwidget.icSimple,
 
         cube_dimension_proto.icCubeDimensionProto.__init__(self)
 
+        #   Создаем дочерние компоненты
+        if 'child' in component:
+            self.childCreator(bCounter, progressDlg)
+
+    def childCreator(self, bCounter, progressDlg):
+        """
+        Функция создает объекты, которые содержаться в данном компоненте.
+        """
+        return prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
+                                    bCounter=bCounter, progressDlg=progressDlg)
+
     def getFieldName(self):
         """
         Имя поля измерения в таблице куба.
@@ -140,3 +155,17 @@ class icCubeDimension(icwidget.icSimple,
         if not label:
             label = self.getName()
         return label
+
+    def getLevels(self):
+        """
+        Список объектов уровней измерения.
+        """
+        # Нужно отфильтровать дочерние объекты
+        return [child for child in self.component_lst if isinstance(child, cube_dimension_level_proto.icCubeDimensionLevelProto)]
+
+    def getHierarchies(self):
+        """
+        Список объектов иерархий уровней измерения.
+        """
+        # Нужно отфильтровать дочерние объекты
+        return [child for child in self.component_lst if isinstance(child, cube_dimension_hierarchy_proto.icCubeDimensionHierarchyProto)]
