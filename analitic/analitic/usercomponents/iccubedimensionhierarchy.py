@@ -68,11 +68,13 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     """
     ret = None
     if attr in ('levels', ):
-        choices = [u'%s : %s' % (spc['name'], spc.get('description', u'')) for spc in propEdt.getParentResource()['child'] if spc.get('type', None) == 'CubeDimensionLevel']
+        choices = [(spc['name'] in value, u'%s : %s' % (spc['name'], spc.get('description', u''))) for spc in propEdt.getParentResource()['child'] if spc.get('type', None) == 'CubeDimensionLevel']
+        # log.debug(u'ВЫБОР %s' % str(choices))
         items = ic_dlg.icMultiChoiceDlg(Parent_=None, Title_=u'Уровни измерения',
                                         Text_=u'Выберите уровни измерения',
                                         Choice_=choices)
-        ret = [item.split(u' : ')[0].strip() for check, item in items if check].split(u' : ')[0].strip() if items else u''
+        # log.debug(u'Выбранные элементы %s' % str(items))
+        ret = [item.split(u' : ')[0].strip() for check, item in items if check] if items else value
 
     if ret is None:
         return value
@@ -93,7 +95,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     Стандартная функция преобразования текста в значение.
     """
     if attr in ('levels', ):
-        return text.split(u' : ')[0].strip() if text else None
+        return eval(text) if text else None
 
 
 class icCubeDimensionHierarchy(icwidget.icSimple,

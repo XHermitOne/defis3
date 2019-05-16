@@ -331,67 +331,132 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
 
         # Заполнение кубов
         for cube in self.getCubes():
-            dimensions = cube.getDimensions()
-            cube_content = dict(name=cube.getTableName(),
-                                dimensions=[dimension.getName() for dimension in dimensions])
-
-            # Заполнение фактов
-            measures = cube.getMeasures()
-            if measures:
-                if 'measures' not in cube_content:
-                    cube_content['measures'] = list()
-                for measure in measures:
-                    measure_content = dict(name=measure.getFieldName())
-                    measure_label = measure.getLabel()
-                    if measure_label:
-                        measure_content['label'] = measure_label
-
-                    cube_content['measures'].append(measure_content)
-
-            # Заполнение измерений
-            for dimension in dimensions:
-                dimension_content = dict(name=dimension.getName())
-                dimension_attributes = dimension.getAttributes()
-                if dimension_attributes:
-                    dimension_content['attributes'] = dimension_attributes
-                json_content['dimensions'].append(dimension_content)
-
-                dimension_detail_tabname = dimension.getDetailTableName()
-                if dimension_detail_tabname:
-                    dimension_detail_fldname = dimension.getDetailFieldName()
-                    if dimension_detail_fldname:
-                        if 'joins' not in cube_content:
-                            cube_content['joins'] = list()
-
-                        # Настроить связь
-                        dimension_fld_name = dimension.getFieldName()
-                        dimension_join = dict(master=dimension_fld_name,
-                                              detail='%s.%s' % (dimension_detail_tabname,
-                                                                dimension_detail_fldname))
-                        cube_content['joins'].append(dimension_join)
-
-            # Заполнение агрегаций
-            aggregates = cube.getAggregates()
-            if aggregates:
-                if 'aggregates' not in cube_content:
-                    cube_content['aggregates'] = list()
-                for aggregate in aggregates:
-                    aggregate_content = dict(name=aggregate.getName())
-                    aggregate_function = aggregate.getFunctionName()
-                    if aggregate_function:
-                        aggregate_content['function'] = aggregate_function
-                    aggregate_measure = aggregate.getMeasureName()
-                    if aggregate_measure:
-                        aggregate_content['measure'] = aggregate_measure
-                    aggregate_expression = aggregate.getExpressionCode()
-                    if aggregate_expression:
-                        aggregate_content['expression'] = aggregate_expression
-
-                    cube_content['aggregates'].append(aggregate_content)
-
+            cube_content = self._get_model_cube(cube)
             json_content['cubes'].append(cube_content)
 
+            dimensions = cube.getDimensions()
+            for dimension in dimensions:
+                dimension_content = self._get_model_dimension(dimension)
+                json_content['dimensions'].append(dimension_content)
+
         return self.save_dict_as_json(model_filename, json_content, bReWrite)
+
+    def _get_model_cube(self, cube):
+        """
+        Содержимое модели куба.
+        @param cube: Объект куба.
+        @return: Словарь содержимого модели, соответствующей кубу.
+        """
+        dimensions = cube.getDimensions()
+        cube_content = dict(name=cube.getTableName(),
+                            dimensions=[dimension.getName() for dimension in dimensions])
+
+        # Заполнение фактов
+        measures = cube.getMeasures()
+        if measures:
+            if 'measures' not in cube_content:
+                cube_content['measures'] = list()
+            for measure in measures:
+                measure_content = self._get_model_measure(measure)
+                cube_content['measures'].append(measure_content)
+
+        # Заполнение измерений
+        for dimension in dimensions:
+            dimension_detail_tabname = dimension.getDetailTableName()
+            if dimension_detail_tabname:
+                dimension_detail_fldname = dimension.getDetailFieldName()
+                if dimension_detail_fldname:
+                    if 'joins' not in cube_content:
+                        cube_content['joins'] = list()
+
+                    # Настроить связь
+                    dimension_fld_name = dimension.getFieldName()
+                    dimension_join = dict(master=dimension_fld_name,
+                                          detail='%s.%s' % (dimension_detail_tabname,
+                                                            dimension_detail_fldname))
+                    cube_content['joins'].append(dimension_join)
+
+        # Заполнение агрегаций
+        aggregates = cube.getAggregates()
+        if aggregates:
+            if 'aggregates' not in cube_content:
+                cube_content['aggregates'] = list()
+            for aggregate in aggregates:
+                aggregate_content = self._get_model_aggregate(aggregate)
+                cube_content['aggregates'].append(aggregate_content)
+        return cube_content
+
+    def _get_model_measure(self, measure):
+        """
+        Содержимое модели меры/фактических данных.
+        @param measure: Объект меры.
+        @return: Словарь содержимого модели, соответствующей мере.
+        """
+        measure_content = dict(name=measure.getFieldName())
+        measure_label = measure.getLabel()
+        if measure_label:
+            measure_content['label'] = measure_label
+        return measure_content
+
+    def _get_model_aggregate(self, aggregate):
+        """
+        Содержимое модели агрегации данных.
+        @param aggregate: Объект агрегации данных.
+        @return: Словарь содержимого модели, соответствующей агрегации данных.
+        """
+        aggregate_content = dict(name=aggregate.getName())
+        aggregate_function = aggregate.getFunctionName()
+        if aggregate_function:
+            aggregate_content['function'] = aggregate_function
+        aggregate_measure = aggregate.getMeasureName()
+        if aggregate_measure:
+            aggregate_content['measure'] = aggregate_measure
+        aggregate_expression = aggregate.getExpressionCode()
+        if aggregate_expression:
+            aggregate_content['expression'] = aggregate_expression
+        return aggregate_content
+
+    def _get_model_dimension(self, dimension):
+        """
+        Содержимое модели измерения.
+        @param dimension: Объект измерения.
+        @return: Словарь содержимого модели, соответствующей измерению.
+        """
+        dimension_content = dict(name=dimension.getName())
+        dimension_attributes = dimension.getAttributes()
+        if dimension_attributes:
+            dimension_content['attributes'] = dimension_attributes
+        dimension_levels = dimension.getLevels()
+        if dimension_levels:
+            dimension_content['levels'] = [self._get_model_dimension_level(level) for level in dimension_levels]
+        dimension_hierarchies = dimension.getHierarchies()
+        if dimension_hierarchies:
+            dimension_content['hierarhies'] = [self._get_model_dimension_hierarchy(hierarchy) for hierarchy in dimension_hierarchies]
+        return dimension_content
+
+    def _get_model_dimension_level(self, level):
+        """
+        Содержимое модели уровня измерения.
+        @param level: Объект уровня.
+        @return: Словарь содержимого модели, соответствующей уровню измерения.
+        """
+        level_content = dict(name=level.getName())
+        level_attributes = level.getAttributes()
+        if level_attributes:
+            level_content['attribites'] = level_attributes
+        return level_content
+
+    def _get_model_dimension_hierarchy(self, hierarchy):
+        """
+        Содержимое модели иерархии уровней измерения.
+        @param hierarchy: Объект иерархии.
+        @return: Словарь содержимого модели, соответствующей иерархии.
+        """
+        hierarchy_content = dict(name=hierarchy.getName())
+        hierarchy_levels = hierarchy.getLevelNames()
+        if hierarchy_levels:
+            hierarchy_content['levels'] = hierarchy_levels
+        return hierarchy_content
 
     def save_model(self, model_filename=None, bReWrite=True):
         """
