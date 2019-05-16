@@ -14,8 +14,11 @@ __version__ = (0, 1, 1, 1)
 # Спецификация
 SPC_IC_CUBE = {'table_name': None,  # Альтернативное название таблицы куба в БД,
                                     # Если не определено, то используется имя куба
+               'label': None,  # Надпись, если не определена, то берется description
+
                '__parent__': icwidget.SPC_IC_SIMPLE,
                '__attr_hlp__': {'table_name': u'Альтернативное название таблицы куба в БД, Если не определено, то используется имя куба',
+                                'label': u'Надпись, если не определена, то берется description',
                                 },
                }
 
@@ -85,4 +88,10 @@ class icCubeProto(object):
             return finds[0]
         else:
             log.warning(u'Функции агрегации с именем <%s> не найдено в кубе <%s>' % (aggregate_name, self.getName()))
+        return None
+
+    def getLabel(self):
+        """
+        Надпись, если не определена, то берется description.
+        """
         return None

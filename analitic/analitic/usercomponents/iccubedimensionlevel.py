@@ -8,6 +8,8 @@
 from ic.log import log
 from ic.bitmap import ic_bmp
 from ic.utils import util
+from ic.dlg import ic_dlg
+from ic.utils import coderror
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
@@ -30,10 +32,14 @@ ic_class_spc = {'type': 'CubeDimensionLevel',
 
                 'attributes': None,  # Список имен полей дополнительных атрибутов
 
+                'key': None,  # Указывает, какой атрибут будет использоваться для фильтрации
+                'label_attribute': None,  # Указывает, какой атрибут будет отображаться в пользовательском интерфейсе
+
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
                                                             ],
                                    icDefInf.EDT_TEXTLIST: ['attributes'],
+                                   icDefInf.EDT_USER_PROPERTY: ['key', 'label_attribute'],
                                    },
                 '__parent__': cube_dimension_level_proto.SPC_IC_CUBEDIMENSIONLEVEL,
                 '__lists__': {},
@@ -57,6 +63,42 @@ ic_can_not_contain = None
 
 #   Версия компонента
 __version__ = (0, 1, 1, 1)
+
+
+# Функции редактирования
+def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
+    """
+    ret = None
+    if attr in ('key', 'label_attribute'):
+        spc = propEdt.getResource()
+        choices = [attribute for attribute in spc.get('attributes', [])] if spc.get('attributes', None) else []
+        attribute = ic_dlg.icSingleChoiceDlg(Parent_=None, Title_=u'Аттрибуты',
+                                             Text_=u'Выберите аттрибут',
+                                             Choice_=choices)
+        ret = attribute if attribute else None
+
+    if ret is None:
+        return value
+
+    return ret
+
+
+def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция контроля.
+    """
+    if attr in ('key', 'label_attribute'):
+        return coderror.IC_CTRL_OK
+
+
+def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция преобразования текста в значение.
+    """
+    if attr in ('key', 'label_attribute'):
+        return text if text else None
 
 
 class icCubeDimensionLevel(icwidget.icSimple,

@@ -23,7 +23,9 @@ SPC_IC_CUBEAGGREGATE = {'function': None,   # Функция агрегации
                         }
 
 # Функции агрегации
-AGGREGATE_FUNCTIONS = (None, 'sum', 'count', 'min', 'max')
+AGGREGATE_FUNCTIONS = (None, 'sum', 'count', 'min', 'max', 'avg',
+                       'count_nonempty', 'count_distinct',
+                       'stddev', 'variance')
 
 
 class icCubeAggregateProto(object):

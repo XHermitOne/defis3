@@ -7,6 +7,30 @@ OLAP Сервер движка Cubes OLAP Framework.
 https://github.com/DataBrewery/cubes
 Оффициальный сайт:
 http://cubes.databrewery.org/
+
+Основные данные и аналитические функции доступны через следующие запросы:
+- /cube/<name>/aggregate – агрегация мер, предоставлять сводку, генерировать детализацию, фрагменты и кубы, ...
+- /cube/<name>/members/<dim> – элементы измерения списка
+- /cube/<name>/facts – список фактов внутри клетки
+- /cube/<name>/fact – одиночный факт
+- /cube/<name>/cell – описание ячейки
+
+Параметры:
+- cut - спецификация ячейки, например: cut=date:2004,1|category:2|entity:12345
+- drilldown - измерение, который нужно "сверлить". Например drilldown=date даст строки для каждого значения
+    следующий уровень даты измерения. Вы можете явно указать уровень для детализации в форме: dimension:level,
+    таких как: drilldown=date:month. Чтобы указать иерархию используйте dimension@hierarchy как в
+    drilldown=date@ywd для неявного уровня или drilldown=date@ywd:week явно указать уровень.
+- aggregates – список агрегатов для расчета, разделяется с помошью |,
+    например: aggergates=amount_sum|discount_avg|count
+- measures – список мер, для которых будут рассчитаны их соответствующие агрегаты (см. ниже).
+    Разделяется с помощью |, например: aggergates=proce|discount
+- page - номер страницы для нумерации страниц
+- pagesize - размер страницы для разбивки на страницы
+- order - список атрибутов для заказа
+- split – разделенная ячейка, тот же синтаксис, что и у вырезки, определяет виртуальное двоичное (флаговое) измерение, которое указывает, является ли ячейка
+    принадлежит разделенному разрезу (true) или нет (false). Атрибут измерения называется __within_split__.
+    Обратитесь к бэкэнду, который вы используете для получения дополнительной информации, поддерживается ли эта функция или нет.
 """
 
 import os.path
@@ -351,6 +375,10 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         cube_content = dict(name=cube.getTableName(),
                             dimensions=[dimension.getName() for dimension in dimensions])
 
+        label = cube.getLabel()
+        if label:
+            cube_content['label'] = label
+
         # Заполнение фактов
         measures = cube.getMeasures()
         if measures:
@@ -423,6 +451,9 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         @return: Словарь содержимого модели, соответствующей измерению.
         """
         dimension_content = dict(name=dimension.getName())
+        label = dimension.getLabel()
+        if label:
+            dimension_content['label'] = label
         dimension_attributes = dimension.getAttributes()
         if dimension_attributes:
             dimension_content['attributes'] = dimension_attributes
@@ -431,7 +462,9 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             dimension_content['levels'] = [self._get_model_dimension_level(level) for level in dimension_levels]
         dimension_hierarchies = dimension.getHierarchies()
         if dimension_hierarchies:
-            dimension_content['hierarhies'] = [self._get_model_dimension_hierarchy(hierarchy) for hierarchy in dimension_hierarchies]
+            dimension_content['hierarchies'] = [self._get_model_dimension_hierarchy(hierarchy) for hierarchy in dimension_hierarchies]
+            # ВНИМАНИЕ! По умолчанию считаем первую иерархию
+            dimension_content['default_hierarchy_name'] = dimension_hierarchies[0].getName()
         return dimension_content
 
     def _get_model_dimension_level(self, level):

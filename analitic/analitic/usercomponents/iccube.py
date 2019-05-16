@@ -36,8 +36,11 @@ ic_class_spc = {'type': 'Cube',
 
                 'table_name': None,  # Альтернативное название таблицы куба в БД,
                                      # Если не определено, то используется имя куба
+                'label': None,  # Надпись, если не определена, то берется description
+
                 '__events__': {},
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'table_name'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
+                                                            'table_name', 'label'],
                                    },
                 '__parent__': cube_proto.SPC_IC_CUBE,
                 '__lists__': {},
@@ -132,3 +135,15 @@ class icCube(icwidget.icSimple, cube_proto.icCubeProto):
         Список объектов функций аггрегаций.
         """
         return [child for child in self.component_lst if isinstance(child, cube_aggregate_proto.icCubeAggregateProto)]
+
+    def getLabel(self):
+        """
+        Надпись, если не определена, то берется description.
+        Если и в этом случае не определено, то берем name.
+        """
+        label = self.getICAttr('label')
+        if not label:
+            label = self.getDescription()
+        if not label:
+            label = self.getName()
+        return label

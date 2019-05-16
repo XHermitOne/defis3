@@ -18,7 +18,23 @@ from STD.spreadsheet import spreadsheet_view_manager
 
 __version__ = (0, 1, 1, 1)
 
-OLAP_METHODS = ('aggregate', )
+OLAP_METHODS = ('aggregate', 'members', 'facts', 'fact', 'cell')
+
+CUT_PARAMETER_HELP = u'cut - спецификация ячейки, например: cut=date:2004,1|category:2|entity:12345'
+DRILLDOWN_PARAMETER_HELP = u'''drilldown - измерение, который нужно "сверлить". Например drilldown=date даст строки для каждого значения
+следующий уровень даты измерения. Вы можете явно указать уровень для детализации в форме: dimension:level,
+таких как: drilldown=date:month. Чтобы указать иерархию используйте dimension@hierarchy как в
+drilldown=date@ywd для неявного уровня или drilldown=date@ywd:week явно указать уровень.'''
+AGGREGATES_PARAMETER_HELP = u'''aggregates – список агрегатов для расчета, разделяется с помошью |,
+например: aggergates=amount_sum|discount_avg|count'''
+MEASURES_PARAMETER_HELP = u'''measures – список мер, для которых будут рассчитаны их соответствующие агрегаты (см. ниже).
+Разделяется с помощью |, например: aggergates=proce|discount'''
+PAGE_PARAMETER_HELP = u'page - номер страницы для нумерации страниц'
+PAGESIZE_PARAMETER_HELP = u'pagesize - размер страницы для разбивки на страницы'
+ORDER_PARAMETER_HELP = u'order - список атрибутов для заказа'
+SPLIT_PARAMETER_HELP = u'''split – разделенная ячейка, тот же синтаксис, что и у вырезки, определяет виртуальное двоичное (флаговое) измерение, которое указывает, является ли ячейка
+принадлежит разделенному разрезу (true) или нет (false). Атрибут измерения называется __within_split__.
+Обратитесь к бэкэнду, который вы используете для получения дополнительной информации, поддерживается ли эта функция или нет.'''
 
 
 class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogProto):
