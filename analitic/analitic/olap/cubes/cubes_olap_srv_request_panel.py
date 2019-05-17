@@ -19,7 +19,7 @@ from ic.engine import form_manager
 
 __version__ = (0, 1, 1, 1)
 
-OLAP_METHODS = ('aggregate', 'members', 'facts', 'fact', 'cell')
+OLAP_METHODS = ('aggregate', 'members', 'facts', 'fact', 'cell', 'report')
 
 CUT_PARAMETER_HELP = u'cut - спецификация ячейки, например: cut=date:2004,1|category:2|entity:12345'
 DRILLDOWN_PARAMETER_HELP = u'''drilldown - измерение, который нужно "сверлить". Например drilldown=date даст строки для каждого значения
@@ -276,7 +276,8 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
         cube_name = cube.getName() if cube else None
         i_func = self.method_choice.GetSelection()
         method_name = OLAP_METHODS[i_func] if i_func >= 0 else None
-        i_dimension = self.method_choice.GetSelection() - 1
+        i_dimension = self.dimension_choice.GetSelection() - 1
+        # log.debug(u'Выбранное измерение %d' % i_dimension)
         dimension = (cube.getDimensions()[i_dimension] if cube else None) if i_dimension >= 0 else None
 
         request_url = u''

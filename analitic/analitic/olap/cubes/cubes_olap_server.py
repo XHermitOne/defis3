@@ -177,6 +177,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         url = OLAP_SERVER_URL_FMT % (self.getHost(), self.getPort(),
                                      request_url)
+        if self.isPrettyPrint():
+            url += '&prettyprint=true' if '?' in url else '?prettyprint=true'
         return url
 
     def get_response(self, request_url):
