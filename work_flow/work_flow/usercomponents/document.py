@@ -49,6 +49,7 @@ from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.log import log
 from ic.PropertyEditor import icDefInf
+from ic.engine import ic_user
 
 import work_flow.doc_sys.icdocument as parentModule
 from work_flow.work_sys import icworkbase
@@ -345,8 +346,31 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
+
+    @staticmethod
+    def TestComponentResource(res, context, parent, *arg, **kwarg):
+        """
+        Функция тестирования компонента таблицы в режиме редактора ресурса.
+        @param res:
+        @param context:
+        @param parent:
+        @param arg:
+        @param kwarg:
+        @return:
+        """
+        import ic.components.user.objects.ictablebrows as brws
+
+        document_obj = ic_user.getKernel().createObjBySpc(parent=None, res=res, context=context)
+        table_name = document_obj.getTable().getName()
+        log.info(u'Тестирование ДОКУМЕНТА <%s>. Таблица <%s>' % (res['name'], table_name))
+
+        cl = brws.TableBrows(None, table_name, ext='tab')
+        win = cl.getObject()
+        if win:
+            win.Show(True)
+            win.SetFocus()
+        return
     
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):

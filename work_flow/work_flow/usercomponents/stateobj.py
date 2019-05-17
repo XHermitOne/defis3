@@ -36,6 +36,7 @@ from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
 from ic.log import log
 from ic.bitmap import ic_bmp
+from ic.engine import ic_user
 
 import work_flow.work_sys.icstateobj as parentModule
 from work_flow.work_sys import icworkstorage
@@ -238,7 +239,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'TABRequisite', 'REFRequisite']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 3)
+__version__ = (0, 1, 2, 1)
 
 # Функции редактирования
 
@@ -322,9 +323,33 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
-    
+
+    @staticmethod
+    def TestComponentResource(res, context, parent, *arg, **kwarg):
+        """
+        Функция тестирования компонента таблицы в режиме редактора ресурса.
+        @param res:
+        @param context:
+        @param parent:
+        @param arg:
+        @param kwarg:
+        @return:
+        """
+        import ic.components.user.objects.ictablebrows as brws
+
+        state_obj = ic_user.getKernel().createObjBySpc(parent=None, res=res, context=context)
+
+        table_name = state_obj.getTable().getName()
+        log.info(u'Тестирование БИЗНЕС ОБЪЕКТА <%s>. Таблица <%s>' % (res['name'], table_name))
+
+        cl = brws.TableBrows(None, table_name, ext='tab')
+        win = cl.getObject()
+        if win:
+            win.Show(True)
+            win.SetFocus()
+        return
+
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
         """

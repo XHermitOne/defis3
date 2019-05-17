@@ -111,7 +111,7 @@ ic_can_contain = ['SpravLevel']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Функции редактирования
 
@@ -177,6 +177,23 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
     security = ClassSecurityInfo()
 
     component_spc = ic_class_spc
+
+    @staticmethod
+    def TestComponentResource(res, context, parent, *arg, **kwarg):
+        """
+        Функция тестирования компонента таблицы в режиме редактора ресурса.
+        @param res:
+        @param context:
+        @param parent:
+        @param arg:
+        @param kwarg:
+        @return:
+        """
+        sprav_obj = ic_user.getKernel().createObjBySpc(parent=None, res=res, context=context)
+
+        log.info(u'Тестирование СПРАВОЧНИКА <%s>' % res['name'])
+        sprav_obj.Edit(ParentForm_=parent)
+        return
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
