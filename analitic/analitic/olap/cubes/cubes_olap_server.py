@@ -91,9 +91,7 @@ DEFAULT_OLAP_SERVER_DIRNAME = ic_file.getPrjProfilePath()
 
 LOG_LEVELS = ('info', 'debug', 'warn', 'error')
 
-OLAP_SERVER_URL_FMT = 'http://%s:%d/cube/%s/%s'
-OLAP_SERVER_URL_DIMENSION_FMT = '?drilldown=%s'
-OLAP_SERVER_URL_VALUE_FMT = '?cut=%s:%s'
+OLAP_SERVER_URL_FMT = 'http://%s:%d/%s'
 
 
 class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
@@ -171,27 +169,23 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         log.info(u'Проверка запущенного OLAP сервера по <%s>' % exec_filename)
         return system.isActiveProcess(exec_filename)
 
-    def get_response(self, *args, **kwargs):
+    def get_request_url(self, request_url):
         """
-        Запрос получения данных от сервера.
-        Функция слишком общая.
-        Поэтому реализация ее должна обрабатывать различные запросы в
-        зависимости от входящих данных.
+        Получить полный запрос получения данных от сервера по URL.
+        @param request_url: URL запроса к OLAP серверу.
+        @return: Полный сгенерированный запрос.
+        """
+        url = OLAP_SERVER_URL_FMT % (self.getHost(), self.getPort(),
+                                     request_url)
+        return url
+
+    def get_response(self, request_url):
+        """
+        Запрос получения данных от сервера по URL.
+        @param request_url: URL запроса к OLAP серверу.
         @return: Запрашиваемые данные или None в случае ошибки.
         """
-        cube_name = kwargs.get('cube_name',  self.getCubes()[0].getTableName() if self.getCubesCount() else None)
-        func_name = kwargs.get('method_name',  'aggregate')
-        dimension_name = kwargs.get('dimension_name',  None)
-        dimension_value = kwargs.get('dimension_value',  None)
-
-        url = OLAP_SERVER_URL_FMT % (self.getHost(), self.getPort(),
-                                     cube_name, func_name)
-        if dimension_name:
-            url += OLAP_SERVER_URL_DIMENSION_FMT % dimension_name
-            if dimension_value:
-                url += OLAP_SERVER_URL_VALUE_FMT % (dimension_name, dimension_value)
-
-        # url = 'http://%s:%d/cubes' % (self.getHost(), self.getPort())
+        url = self.get_request_url(request_url)
         log.debug(u'Определение JSON по URL <%s>' % url)
         return self.get_json_as_dict_by_url(url)
 
