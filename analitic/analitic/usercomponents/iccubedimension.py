@@ -129,13 +129,14 @@ class icCubeDimension(icwidget.icSimple,
         Список имен полей дополнительных атрибутов
         """
         attributes = self.getICAttr('attributes')
-        return attributes if attributes else list()
+        return [attribute for attribute in attributes if attribute] if attributes else list()
 
     def getDetailTableName(self):
         """
         Имя таблицы детализации, связанной с полем таблицы куба.
         """
-        return self.getICAttr('detail_tabname')
+        detail_tabname = self.getICAttr('detail_tabname')
+        return detail_tabname if detail_tabname else self.getName()
 
     def getDetailFieldName(self):
         """

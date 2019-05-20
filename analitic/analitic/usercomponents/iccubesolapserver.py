@@ -151,6 +151,7 @@ class icCubesOLAPServer(icwidget.icSimple,
                                                                                                    parent.file.split('.')[1]))
 
         olap_srv = ic.getKernel().createObjBySpc(parent=None, res=res, context=context)
+        # olap_srv.run()
         cubes_olap_srv_test_dialog.show_cubes_olap_srv_test_dlg(parent=None, olap_srv=olap_srv)
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,

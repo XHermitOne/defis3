@@ -34,6 +34,7 @@ ic_class_spc = {'type': 'CubeDimensionLevel',
 
                 'key': None,  # Указывает, какой атрибут будет использоваться для фильтрации
                 'label_attribute': None,  # Указывает, какой атрибут будет отображаться в пользовательском интерфейсе
+                'label': None,  # Надпись уровня измерения
 
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
@@ -140,4 +141,31 @@ class icCubeDimensionLevel(icwidget.icSimple,
         Список имен полей дополнительных атрибутов.
         """
         attributes = self.getICAttr('attributes')
-        return attributes if attributes else list()
+        return [attribute for attribute in attributes if attribute] if attributes else list()
+
+    def getKey(self):
+        """
+        Ключ. Указывает, какой атрибут будет использоваться для фильтрации.
+        """
+        key = self.getICAttr('key')
+        return key
+
+    def getLabelAttribute(self):
+        """
+        Атрибут надписи. Указывает, какой атрибут будет отображаться в пользовательском интерфейсе.
+        """
+        label_attribute = self.getICAttr('label_attribute')
+        return label_attribute
+
+    def getLabel(self):
+        """
+        Надпись уровня измерения.
+        Если не определено, то берется description.
+        Если и в этом случае не определено, то берем name.
+        """
+        label = self.getICAttr('label')
+        if not label:
+            label = self.getDescription()
+        if not label:
+            label = self.getName()
+        return label

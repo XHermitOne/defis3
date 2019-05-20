@@ -5,6 +5,7 @@
 Измерение OLAP Куба.
 """
 
+from ic.log import log
 from ic.components import icwidget
 
 __version__ = (0, 1, 1, 1)
@@ -72,3 +73,16 @@ class icCubeDimensionProto(object):
         Список объектов иерархий уровней измерения.
         """
         return list()
+
+    def findLevel(self, level_name):
+        """
+        Поиск объекта уровня измерения по его имени.
+        @param level_name: Имя уровня.
+        @return: Объект уровня измерения или None, если объект с таким именем не найден.
+        """
+        finds = [obj for obj in self.getLevels() if obj.getName() == level_name]
+        if finds:
+            return finds[0]
+        else:
+            log.warning(u'Измерение с именем <%s> не найдено в измерении <%s>' % (level_name, self.getName()))
+        return None

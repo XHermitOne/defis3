@@ -472,7 +472,13 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         level_content = dict(name=level.getName())
         level_attributes = level.getAttributes()
         if level_attributes:
-            level_content['attribites'] = level_attributes
+            level_content['attributes'] = level_attributes
+        key = level.getKey()
+        if key:
+            level_content['key'] = key
+        label_attribute = level.getLabelAttribute()
+        if label_attribute:
+            level_content['label_attribute'] = label_attribute
         return level_content
 
     def _get_model_dimension_hierarchy(self, hierarchy):
@@ -642,13 +648,24 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         # Заполнение части уровней измерения строк
         level_count = self._get_level_count(json_dict)
+        log.debug(u'Количество отображаемых уровней <%d>' % level_count)
         for i in range(level_count):
             cell = table.getCell(1, i + 1)
             cell.setStyleID('GROUP')
-            dimension = cube.findDimension(self._get_level_name(json_dict, i))
-            cell.setValue(dimension.getLabel() if dimension else u'')
-            if level_count > 1:
-                cell.setMerge(level_count - 1, 0)
+
+            level_name = self._get_level_name(json_dict, i)
+            if '.' in level_name:
+                dimension_name, level_name = level_name.split('.')
+                dimension = cube.findDimension(dimension_name)
+                level = dimension.findLevel(level_name)
+                label = level.getLabel() if level else u''
+            else:
+                dimension_name = level_name
+                dimension = cube.findDimension(dimension_name)
+                label = dimension.getLabel() if dimension else u''
+            cell.setValue(label)
+            # if level_count > 1:
+            #    cell.setMerge(level_count - 1, 0)
 
         # Заполнение колонок агрегаций
         aggregate_count = self._get_aggregate_count(json_dict)

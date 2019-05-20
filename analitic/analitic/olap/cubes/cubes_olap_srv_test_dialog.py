@@ -142,6 +142,10 @@ def show_cubes_olap_srv_test_dlg(parent=None, olap_srv=None):
         dlg.setOLAPServer(olap_srv)
 
         dlg.ShowModal()
+
+        # Остановить OLAP сервер
+        olap_srv.stop()
+
         return True
     except:
         log.fatal(u'Ошибка отображения окна тестирования OLAP сервера Cubes.')
