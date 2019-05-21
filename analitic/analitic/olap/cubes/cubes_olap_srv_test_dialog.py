@@ -94,6 +94,42 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
         self.EndModal(wx.ID_CLOSE)
         event.Skip()
 
+    def _parse_dimension_names(self, dimension_url):
+        """
+        Список имен измерения.
+        @param dimension_url: Часть элемента запроса.
+            Например store_date@ymd:month
+        @return: Список имен элементов измерения.
+        """
+        dimension_names = list()
+        if '@' in dimension_url:
+            # Указано измерение@иерархия:уровень
+            cube_idx = self.request_panel.cube_choice.GetSelection()
+            cube = self._OLAP_server.getCubes()[cube_idx]
+            dimension_name = dimension_url.split('@')[0]
+            dimension = cube.findDimension(dimension_name)
+            hierarchy_name = dimension_url.split('@')[1].split(':')[0]
+            hierarchy = dimension.findHierarchy(hierarchy_name)
+            level_names = hierarchy.getLevelNames()
+            hierarchy_level_name = dimension_url.split('@')[1].split(':')[1]
+            level_names = level_names[:level_names.index(hierarchy_level_name)+1] if level_names else list()
+            dimension_names = tuple([dimension_name] + level_names)
+        elif ':' in dimension_url:
+            # Указано измерение:уровень
+            cube_idx = self.request_panel.cube_choice.GetSelection()
+            cube = self._OLAP_server.getCubes()[cube_idx]
+            dimension_name = dimension_url.split(':')[0]
+            dimension = cube.findDimension(dimension_name)
+            level_names = [level.getName() for level in dimension.getLevels()]
+            hierarchy_level_name = dimension_url.split(':')[1]
+            level_names = level_names[:level_names.index(hierarchy_level_name)+1] if level_names else list()
+            dimension_names = tuple([dimension_name] + level_names)
+        else:
+            # Указано измерение
+            dimension_names = tuple([dimension_url])
+
+        return dimension_names
+
     def onRefreshToolClicked(self, event):
         """
         Обработчик кнопки ОБНОВИТЬ.
@@ -108,7 +144,15 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
             self.json_scintilla.AddText(ic_util.StructToTxt(result))
 
             if result:
-                spreadsheet = self._OLAP_server.to_spreadsheet(result)
+                if self.request_panel.drilldown_checkBox.GetValue() and '|' in self.request_panel.drilldown_textCtrl.GetValue():
+                    row_dimension_url, col_dimension_url = self.request_panel.drilldown_textCtrl.GetValue().split('|')
+                    row_dimension = self._parse_dimension_names(row_dimension_url)
+                    col_dimension = self._parse_dimension_names(col_dimension_url)
+
+                    spreadsheet = self._OLAP_server.to_pivot_spreadsheet(result, row_dimension=row_dimension,
+                                                                         col_dimension=col_dimension)
+                else:
+                    spreadsheet = self._OLAP_server.to_spreadsheet(result)
                 # log.debug(u'SpreadSheet: %s' % str(spreadsheet))
                 self._spreadsheet_mngr.view_spreadsheet(spreadsheet)
             else:

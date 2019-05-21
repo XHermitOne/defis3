@@ -519,6 +519,24 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         return len(self.getCubes())
 
+    def findCube(self, cube_name=None):
+        """
+        Найти объект куба по его имени.
+        @param cube_name: Имя куба. Если не определено, то просто берется первый куб.
+        @return: Объект куба или None, если куб с таким именем не найден.
+        """
+        cube = None
+        if cube_name is None:
+            cubes = self.getCubes()
+            cube = cubes[0] if cubes else None
+            if cube is None:
+                log.warning(u'Конвертация в структуру SpreadSheet. Не определен куб.')
+                return None
+        else:
+            find_cube = [cube for cube in self.getCubes() if cube.getName() == cube_name]
+            cube = find_cube[0] if find_cube else None
+        return cube
+
     def _to_spreadsheet(self, json_dict, cube=None):
         """
         Преобразование результатов запроса к OLAP серверу к структуре SpreadSheet.
@@ -535,6 +553,29 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
 
         # Объект управления структурой SpreadSheet
         spreadsheet_mngr = spreadsheet_manager.icSpreadSheetManager()
+        self._prepare_spreadsheet(spreadsheet_mngr)
+        worksheet = spreadsheet_mngr.getWorkbook().getWorksheetIdx()
+
+        # Создаем таблицу
+        row_count = self._get_row_count(json_dict)
+        col_count = self._get_col_count(json_dict)
+        table = self._create_spreadsheet_table(spreadsheet_mngr, worksheet, row_count, col_count)
+
+        # Заполнение заголовка
+        self._create_spreadsheet_header(table, json_dict, cube)
+        # Создаем строки
+        self._create_spreadsheet_detail(table, json_dict)
+        # Заполнение подвала
+        self._create_spreadsheet_footer(table, json_dict)
+
+        return spreadsheet_mngr.getData()
+
+    def _prepare_spreadsheet(self, spreadsheet_mngr):
+        """
+        Подготовить структуру Spreadsheet для дальнейшего заполнения.
+        @param spreadsheet_mngr: Объект управления структурой SpreadSheet
+        @return: True/False.
+        """
         # Создаем книгу
         workbook = spreadsheet_mngr.createWorkbook()
         # Создаем лист в книге
@@ -550,20 +591,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             # log.debug(u'1. Style %s' % str(style.get_attributes()))
             style.update_attributes(default_style_attr)
             # log.debug(u'2. Style %s' % str(style.get_attributes()))
-
-        # Создаем таблицу
-        row_count = self._get_row_count(json_dict)
-        col_count = self._get_col_count(json_dict)
-        table = self._create_spreadsheet_table(spreadsheet_mngr, worksheet, row_count, col_count)
-
-        # Заполнение заголовка
-        self._create_spreadsheet_header(table, json_dict, cube)
-        # Создаем строки
-        self._create_spreadsheet_detail(table, json_dict)
-        # Заполнение подвала
-        self._create_spreadsheet_footer(table, json_dict)
-
-        return spreadsheet_mngr.getData()
+        return True
 
     def _get_row_count(self, json_dict):
         """
@@ -747,3 +775,167 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         except:
             log.fatal(u'Ошибка конвертации результатов запроса к OLAP серверу к структуре SpreadSheet.')
         return None
+
+    def to_pivot_spreadsheet(self, json_dict, cube=None, row_dimension=None, col_dimension=None):
+        """
+        Преобразование результатов запроса к OLAP серверу к структуре
+        сводной таблицы (Pivot Table) в формате SpreadSheet.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param cube: Куб. Если не определен, то берется первый.
+        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @return: Словарь структуры SpreadSheet.
+        """
+        try:
+            return self._to_pivot_spreadsheet(json_dict=json_dict, cube=cube,
+                                              row_dimension=row_dimension, col_dimension=col_dimension)
+        except:
+            log.fatal(u'Ошибка конвертации результатов запроса к OLAP серверу к структуре Pivot SpreadSheet.')
+        return None
+
+    def _to_pivot_spreadsheet(self, json_dict, cube=None, row_dimension=None, col_dimension=None):
+        """
+        Преобразование результатов запроса к OLAP серверу к структуре
+        сводной таблицы (Pivot Table) в формате SpreadSheet.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param cube: Куб. Если не определен, то берется первый.
+        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @return: Словарь структуры SpreadSheet.
+        """
+        if cube is None:
+            cubes = self.getCubes()
+            cube = cubes[0] if cubes else None
+            if cube is None:
+                log.warning(u'Конвертация в структуру Pivot SpreadSheet. Не определен куб.')
+                return None
+
+        # Объект управления структурой SpreadSheet
+        spreadsheet_mngr = spreadsheet_manager.icSpreadSheetManager()
+        self._prepare_spreadsheet(spreadsheet_mngr)
+        worksheet = spreadsheet_mngr.getWorkbook().getWorksheetIdx()
+
+        # Создаем таблицу
+        row_count = self._get_pivot_row_count(json_dict, row_dimension=row_dimension, col_dimension=col_dimension)
+        col_count = self._get_pivot_col_count(json_dict, row_dimension=row_dimension, col_dimension=col_dimension)
+        # log.debug(u'Размер сводной таблицы [%d x %d]. Измерения <%s> x <%s>' % (row_count, col_count,
+        #                                                                         row_dimension, col_dimension))
+        table = self._create_spreadsheet_table(spreadsheet_mngr, worksheet, row_count, col_count)
+
+        # Заполнение заголовка
+        self._create_pivot_spreadsheet_header(table, json_dict, cube,
+                                              row_dimension=row_dimension, col_dimension=col_dimension)
+        # Создаем строки
+        self._create_pivot_spreadsheet_detail(table, json_dict,
+                                              row_dimension=row_dimension, col_dimension=col_dimension)
+        # Заполнение подвала
+        self._create_pivot_spreadsheet_footer(table, json_dict,
+                                              row_dimension=row_dimension, col_dimension=col_dimension)
+
+        return spreadsheet_mngr.getData()
+
+    def _get_pivot_row_count(self, json_dict, row_dimension=None, col_dimension=None):
+        """
+        Количество строк для сводной таблицы.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @return: Количество строк.
+        """
+        cells = json_dict.get('cells', list())
+        # Учитываем строку заголовка и строку итогов
+        #                        V
+        col_label_row_count = 1 + len(col_dimension) if col_dimension and (isinstance(col_dimension, tuple) or isinstance(col_dimension, list)) else 1
+        row_count = len(cells) + col_label_row_count
+        return row_count
+
+    def _get_pivot_col_count(self, json_dict, row_dimension=None, col_dimension=None):
+        """
+        Количество колонок для сводной таблицы.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @return: Количество колонок.
+        """
+        dimension_name = col_dimension if isinstance(col_dimension, str) else col_dimension[0]
+        levels_count = 1
+        if isinstance(col_dimension, tuple) or isinstance(col_dimension, list):
+            col_level_count = list()
+            cells = json_dict.get('cells', list())
+            for level_name in col_dimension[1:]:
+                cell_name = '%s.%s' % (dimension_name, level_name)
+                level_cells = [cell[cell_name] for cell in cells if cell_name in cell]
+                level_count = len([cell for i, cell in enumerate(level_cells) if cell not in level_cells[:i]])
+                col_level_count.append(level_count)
+            import functools
+            levels_count = functools.reduce(lambda x, y: x*y, col_level_count)
+
+        col_count = levels_count * self._get_aggregate_count(json_dict)
+        return col_count
+
+    def _create_pivot_spreadsheet_header(self, table, json_dict, cube,
+                                         row_dimension, col_dimension):
+        """
+        Создать заголовок данных структуры Pivot SpreadSheet.
+        @param table: Объект таблицы.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param cube: Объект куба.
+        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @return: True/False
+        """
+        col_count = self._get_pivot_col_count(json_dict, row_dimension=row_dimension, col_dimension=col_dimension)
+        dimension_name = col_dimension[0]
+        json_cells = json_dict.get('cells', list())
+        # Заполнение уровней заголовка
+        for i_row, level_name in enumerate(col_dimension[1:]):
+            cell_name = '%s.%s' % (dimension_name, level_name)
+            # Получить список надписей для колонок уровня
+            col_labels = [cell.get(cell_name, u'')for cell in json_cells]
+            col_labels = [label for i, label in enumerate(col_labels) if label not in col_labels[:i]]
+            prev_idx = -1
+            for i_col in range(col_count):
+                cell = table.getCell(i_row + 1, i_col + 1)
+                idx = int(i_col/(col_count/len(col_labels)))
+                label = col_labels[idx]
+                if prev_idx != idx:
+                    cell.setValue(label)
+                prev_idx = idx
+                cell.setStyleID('GROUP')
+        # Заполнение колонок агрегатов
+        level_row_count = len(col_dimension[1:])
+        aggregates_names = json_dict.get('aggregates', None)
+        aggregate_count = len(aggregates_names)
+        for i_col in range(col_count):
+            cell = table.getCell(level_row_count + 1, i_col + 1)
+            aggregate_idx = i_col % aggregate_count
+            aggregate = cube.findAggregate(aggregates_names[aggregate_idx])
+            label = aggregate.getLabel()
+            cell.setValue(label)
+            cell.setStyleID('HEADER')
+
+        return True
+
+    def _create_pivot_spreadsheet_detail(self, table, json_dict,
+                                         row_dimension, col_dimension):
+        """
+        Создать тело табличной части данных структуры Pivot SpreadSheet.
+        @param table: Объект таблицы.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @return: True/False
+        """
+        pass
+
+    def _create_pivot_spreadsheet_footer(self, table, json_dict,
+                                         row_dimension, col_dimension):
+        """
+        Создать подвал/итоговую строку данных структуры Pivot SpreadSheet.
+        @param table: Объект таблицы.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @return: True/False
+        """
+        pass
