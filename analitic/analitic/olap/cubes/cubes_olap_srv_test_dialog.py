@@ -138,6 +138,7 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
             request_url = self.request_panel.getRequestURL()
 
             result = self._OLAP_server.get_response(request_url)
+            self._OLAP_server.to_pivot_dataframe(result)
 
             # self.json_scintilla.SetText(str(result))
             self.json_scintilla.ClearAll()

@@ -34,6 +34,7 @@ http://cubes.databrewery.org/
 """
 
 import os.path
+import pandas
 
 from .. import olap_server_interface
 from ic.components import icwidget
@@ -776,6 +777,26 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             log.fatal(u'Ошибка конвертации результатов запроса к OLAP серверу к структуре SpreadSheet.')
         return None
 
+    def to_pivot_dataframe(self, json_dict):
+        """
+        Подготовка данных для сводной таблицы.
+        Манипулирование данными производится с помощью библиотеки pandas.
+        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        """
+        attributes = json_dict.get('attributes', list())
+        aggregates = json_dict.get('aggregates', list())
+        cells = json_dict.get('cells', list())
+
+        col_names = attributes + aggregates
+        rows = [pandas.Series([cell.get(col_name, None) for col_name in col_names]) for cell in cells]
+        data_frame = pandas.DataFrame(rows)
+        data_frame.columns = col_names
+        log.debug(u'')
+        log.debug(u'Сводная таблица:')
+        log.debug(str(data_frame))
+        return data_frame
+
     def to_pivot_spreadsheet(self, json_dict, cube=None, row_dimension=None, col_dimension=None):
         """
         Преобразование результатов запроса к OLAP серверу к структуре
@@ -870,7 +891,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             import functools
             levels_count = functools.reduce(lambda x, y: x*y, col_level_count)
 
-        col_count = levels_count * self._get_aggregate_count(json_dict)
+        row_level_count = 1 if isinstance(row_dimension, str) else len(row_dimension)
+        col_count = row_level_count + levels_count * self._get_aggregate_count(json_dict)
         return col_count
 
     def _create_pivot_spreadsheet_header(self, table, json_dict, cube,
@@ -884,6 +906,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
         @return: True/False
         """
+        row_level_count = 1 if isinstance(row_dimension, str) else len(row_dimension)
+
         col_count = self._get_pivot_col_count(json_dict, row_dimension=row_dimension, col_dimension=col_dimension)
         dimension_name = col_dimension[0]
         json_cells = json_dict.get('cells', list())
@@ -894,20 +918,38 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             col_labels = [cell.get(cell_name, u'')for cell in json_cells]
             col_labels = [label for i, label in enumerate(col_labels) if label not in col_labels[:i]]
             prev_idx = -1
-            for i_col in range(col_count):
-                cell = table.getCell(i_row + 1, i_col + 1)
-                idx = int(i_col/(col_count/len(col_labels)))
+            for i_col in range(col_count - row_level_count):
+                cell = table.getCell(i_row + 1, row_level_count + i_col + 1)
+                idx = int(i_col/((col_count - row_level_count)/len(col_labels)))
                 label = col_labels[idx]
                 if prev_idx != idx:
                     cell.setValue(label)
                 prev_idx = idx
                 cell.setStyleID('GROUP')
-        # Заполнение колонок агрегатов
+
         level_row_count = len(col_dimension[1:])
+        # Заполнение колонок надписей строк
+        for i_col in range(row_level_count):
+            cell = table.getCell(level_row_count + 1, i_col + 1)
+            cell.setStyleID('GROUP')
+
+            level_name = self._get_level_name(json_dict, i_col)
+            if '.' in level_name:
+                dimension_name, level_name = level_name.split('.')
+                dimension = cube.findDimension(dimension_name)
+                level = dimension.findLevel(level_name)
+                label = level.getLabel() if level else u''
+            else:
+                dimension_name = level_name
+                dimension = cube.findDimension(dimension_name)
+                label = dimension.getLabel() if dimension else u''
+            cell.setValue(label)
+
+        # Заполнение колонок агрегатов
         aggregates_names = json_dict.get('aggregates', None)
         aggregate_count = len(aggregates_names)
-        for i_col in range(col_count):
-            cell = table.getCell(level_row_count + 1, i_col + 1)
+        for i_col in range(col_count - row_level_count):
+            cell = table.getCell(level_row_count + 1, row_level_count + i_col + 1)
             aggregate_idx = i_col % aggregate_count
             aggregate = cube.findAggregate(aggregates_names[aggregate_idx])
             label = aggregate.getLabel()
@@ -926,7 +968,32 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
         @return: True/False
         """
-        pass
+        attributes = json_dict.get('attributes', list())
+        aggregates = json_dict.get('aggregates', list())
+        json_cells = json_dict.get('cells', list())
+        for i_row, json_cell in enumerate(json_cells):
+            # Затем расставляем значения по своим местам
+            last_idx = 0
+            for name, value in json_cell.items():
+                style_id = None
+                if name in attributes:
+                    idx = attributes.index(name)
+                    last_idx += 1
+                    style_id = 'GROUP'
+                elif name in aggregates:
+                    idx = last_idx + aggregates.index(name)
+                    style_id = 'CELL'
+                else:
+                    log.warning(u'Не определено имя колонки <%s>' % name)
+                    continue
+
+                # log.debug(u'Ячейка <%d x %d>' % (i_row + 1, idx + 1))
+                # Учет строки заголовка------V
+                cell = table.getCell(i_row + 2, idx + 1)
+                if style_id:
+                    cell.setStyleID(style_id)
+                cell.setValue(value if value is not None else u'')
+        return True
 
     def _create_pivot_spreadsheet_footer(self, table, json_dict,
                                          row_dimension, col_dimension):
