@@ -113,7 +113,7 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
             level_names = hierarchy.getLevelNames()
             hierarchy_level_name = dimension_url.split('@')[1].split(':')[1]
             level_names = level_names[:level_names.index(hierarchy_level_name)+1] if level_names else list()
-            dimension_names = tuple([dimension_name] + level_names)
+            dimension_names = tuple(['%s.%s' % (dimension_name, level_name) for level_name in level_names])
         elif ':' in dimension_url:
             # Указано измерение:уровень
             cube_idx = self.request_panel.cube_choice.GetSelection()
@@ -123,11 +123,12 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
             level_names = [level.getName() for level in dimension.getLevels()]
             hierarchy_level_name = dimension_url.split(':')[1]
             level_names = level_names[:level_names.index(hierarchy_level_name)+1] if level_names else list()
-            dimension_names = tuple([dimension_name] + level_names)
+            dimension_names = tuple(['%s.%s' % (dimension_name, level_name) for level_name in level_names])
         else:
             # Указано измерение
             dimension_names = tuple([dimension_url])
 
+        # log.debug(u'Список элментов измерений %s' % str(dimension_names))
         return dimension_names
 
     def onRefreshToolClicked(self, event):
@@ -138,7 +139,6 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
             request_url = self.request_panel.getRequestURL()
 
             result = self._OLAP_server.get_response(request_url)
-            self._OLAP_server.to_pivot_dataframe(result)
 
             # self.json_scintilla.SetText(str(result))
             self.json_scintilla.ClearAll()
@@ -149,11 +149,18 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
                     row_dimension_url, col_dimension_url = self.request_panel.drilldown_textCtrl.GetValue().split('|')
                     row_dimension = self._parse_dimension_names(row_dimension_url)
                     col_dimension = self._parse_dimension_names(col_dimension_url)
+                    dataframe = self._OLAP_server.to_pivot_dataframe(result, row_dimension=row_dimension,
+                                                                     col_dimension=col_dimension)
 
-                    spreadsheet = self._OLAP_server.to_pivot_spreadsheet(result, row_dimension=row_dimension,
-                                                                         col_dimension=col_dimension)
+                    # spreadsheet = self._OLAP_server.pivot_to_spreadsheet(result, dataframe=dataframe)
                 else:
-                    spreadsheet = self._OLAP_server.to_spreadsheet(result)
+                    row_dimension_url = self.request_panel.drilldown_textCtrl.GetValue()
+                    row_dimension = self._parse_dimension_names(row_dimension_url)
+                    # col_dimension = self._parse_dimension_names(col_dimension_url)
+                    dataframe = self._OLAP_server.to_pivot_dataframe(result, row_dimension=row_dimension)
+
+                spreadsheet = self._OLAP_server.pivot_to_spreadsheet(result, dataframe=dataframe)
+                #     spreadsheet = self._OLAP_server.to_spreadsheet(result)
                 # log.debug(u'SpreadSheet: %s' % str(spreadsheet))
                 self._spreadsheet_mngr.view_spreadsheet(spreadsheet)
             else:

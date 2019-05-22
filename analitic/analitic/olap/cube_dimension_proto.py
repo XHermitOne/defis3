@@ -74,7 +74,7 @@ class icCubeDimensionProto(object):
         """
         return list()
 
-    def findHiearchy(self, hierarchy_name):
+    def findHierarchy(self, hierarchy_name):
         """
         Наити объект иерархии по имени.
         @param hierarchy_name: Имя объекта иерархии.

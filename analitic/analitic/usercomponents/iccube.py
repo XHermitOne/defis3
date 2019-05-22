@@ -147,3 +147,9 @@ class icCube(icwidget.icSimple, cube_proto.icCubeProto):
         if not label:
             label = self.getName()
         return label
+
+    def getChildren(self):
+        """
+        Список дочерних элементов.
+        """
+        return self.component_lst

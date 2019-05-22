@@ -95,3 +95,22 @@ class icCubeProto(object):
         Надпись, если не определена, то берется description.
         """
         return None
+
+    def getChildren(self):
+        """
+        Список дочерних элементов.
+        """
+        return list()
+
+    def findChild(self, child_name):
+        """
+        Поиск дочернего объекта по имени.
+        @param child_name: Имя дочернего объекта.
+        @return: Дочерний объект или None, если объект не найден.
+        """
+        finds = [obj for obj in self.getChildren() if obj.getName() == child_name]
+        if finds:
+            return finds[0]
+        else:
+            log.warning(u'Объект <%s> не найден в кубе <%s>' % (child_name, self.getName()))
+        return None
