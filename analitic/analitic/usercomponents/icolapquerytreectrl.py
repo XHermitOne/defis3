@@ -10,12 +10,22 @@ import wx
 from ic.log import log
 from ic.bitmap import ic_bmp
 from ic.utils import util
+from ic.utils import ic_uuid
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
 from ic.components import icResourceParser as prs
 
 from ..olap.ctrl import olap_query_tree_ctrl
+
+# Регистрация прав использования
+from ic.kernel import icpermission
+from ic.kernel.icaccesscontrol import ClassSecurityInfo
+
+prm = icpermission.icPermission(id='tree_olap_request_edit', title='TreeObjOLAPRequestEdit',
+                                description=u'Редактирование запросов к OLAPT серверу',
+                                component_type='analitic')
+icpermission.registerPermission(prm)
 
 #   Описание стилей компонента
 ic_class_styles = {'TR_NO_BUTTONS': wx.TR_NO_BUTTONS,
@@ -49,9 +59,14 @@ ic_class_spc = {'type': 'OLAPQueryTreeCtrl',
                 '_uuid': None,
                 'child': [],
 
+                'save_filename': None,  # Имя файла хранения запросов
+                'onChange': None,  # Код смены запроса
+
                 '__styles__': ic_class_styles,
-                '__events__': {},
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],
+                '__events__': {'onChange': (None, 'OnChange', False),
+                               },
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'save_filename'],
+                                   icDefInf.EDT_PY_SCRIPT: ['onChange'],
                                    },
                 '__parent__': olap_query_tree_ctrl.SPC_IC_OLAPQUERYTREECTRL,
                 '__lists__': {},
@@ -83,6 +98,7 @@ class icOLAPQueryTreeCtrl(icwidget.icWidget,
     Контрол управления деревом запросов к OLAP кубам OLAP сервера.
     """
     component_spc = ic_class_spc
+    security = ClassSecurityInfo()
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
@@ -106,10 +122,52 @@ class icOLAPQueryTreeCtrl(icwidget.icWidget,
         @type progressDlg: C{wx.ProgressDialog}
         @param progressDlg: Указатель на идикатор создания формы.
         """
+        self._widget_psp_uuid = None
+
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         olap_query_tree_ctrl.icOLAPQueryTreeCtrlProto.__init__(self, parent=parent, id=id)
-        #   Создаем дочерние компоненты
-        # if 'child' in component:
-        #     self.childCreator(bCounter, progressDlg)
+
+        #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
+        for key in [x for x in component.keys() if not x.startswith('__')]:
+            setattr(self, key, component[key])
+
+        self._save_filename = self.getICAttr('save_filename')
+
+        # После того как определили окружение и
+        # имя файла хранения фильтров можно загрузить фильтры
+        self.loadRequests()
+
+    # Установка ограничения редактирования фильтров
+    # Для этого в родительском классе заведены
+    # функции <addFilterItem>, <delFilterItem>, <editFilterItem>, <editIndicatorItem>
+    security.declareProtected('tree_olap_request_edit', 'addRequestItem')
+    security.declareProtected('tree_olap_request_edit', 'delRequestItem')
+    security.declareProtected('tree_olap_request_edit', 'editRequestItem')
+    security.declareProtected('tree_olap_request_edit', 'editRequestIndicatorItem')
+
+    def _canEditOLAPRequest(self):
+        return self.security.is_permission('tree_olap_request_edit', self.GetKernel().GetAuthUser().getPermissions())
+
+    def getUUID(self):
+        """
+        Это уникальный идентификатор паспорта компонента.
+        Не изменяемый в зависимости от редактирования т.к.
+        паспорт не меняется.
+        @return: UUID строка контрольной суммы паспорта.
+        """
+        if self._widget_psp_uuid:
+            return self._widget_psp_uuid
+
+        psp = self.GetPassport()
+        if psp:
+            psp = tuple(psp)[0]
+        self._widget_psp_uuid = ic_uuid.get_passport_check_sum(psp, True)
+        return self._widget_psp_uuid
+
+    def OnChange(self, event):
+        """
+        Смена фильтра.
+        """
+        return self.eval_attr('onChange')

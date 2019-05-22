@@ -68,7 +68,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onItemSelectChanged)
         self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.onItemExpanded)
         # ВНИМАНИЕ! Если необходимо удалить/освободить
-        # ресуры при удалении контрола, то необходимо воспользоваться
+        # ресурсы при удалении контрола, то необходимо воспользоваться
         # событием wx.EVT_WINDOW_DESTROY
         self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
 
@@ -95,7 +95,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         При удалении панели. Обработчик события.
         ВНИМАНИЕ! Если необходимо удалить/освободить
-        ресуры при удалении контрола, то необходимо воспользоваться
+        ресурсы при удалении контрола, то необходимо воспользоваться
         событием wx.EVT_WINDOW_DESTROY.
         """
         self.saveFilters()
@@ -432,7 +432,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def addFilterItem(self, cur_item=None):
         """
         Добавить фильтр.
-        @return: True/Falseю
+        @return: True/False.
         """
         try:
             if cur_item is None:
