@@ -312,27 +312,35 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
             self.dimension_choice.SetSelection(i_dimension)
 
         self.cut_checkBox.SetValue('cut' in request)
+        self.cut_textCtrl.Enable('cut' in request)
         self.cut_textCtrl.SetValue(request.get('cut', u''))
 
         self.drilldown_checkBox.SetValue('drilldown' in request)
+        self.drilldown_textCtrl.Enable('drilldown' in request)
         self.drilldown_textCtrl.SetValue(request.get('drilldown', u''))
 
         self.aggregates_checkBox.SetValue('aggregates' in request)
+        self.aggregates_textCtrl.Enable('aggregates' in request)
         self.aggregates_textCtrl.SetValue(request.get('aggregates', u''))
 
         self.measures_checkBox.SetValue('measures' in request)
+        self.measures_textCtrl.Enable('measures' in request)
         self.measures_textCtrl.SetValue(request.get('measures', u''))
 
         self.page_checkBox.SetValue('page' in request)
+        self.page_textCtrl.Enable('page' in request)
         self.page_textCtrl.SetValue(request.get('page', u''))
 
         self.pagesize_checkBox.SetValue('pagesize' in request)
+        self.pagesize_textCtrl.Enable('pagesize' in request)
         self.pagesize_textCtrl.SetValue(request.get('pagesize', u''))
 
         self.order_checkBox.SetValue('order' in request)
+        self.order_textCtrl.Enable('order' in request)
         self.order_textCtrl.SetValue(request.get('order', u''))
 
         self.split_checkBox.SetValue('split' in request)
+        self.split_textCtrl.Enable('split' in request)
         self.split_textCtrl.SetValue(request.get('split', u''))
 
         return True
@@ -406,55 +414,13 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
         if request is None:
             request = self.getRequest()
 
-        request_url = u''
-
-        cube_name = request.get('cube', None)
-        method_name = request.get('method', None)
-        if cube_name and method_name:
-            request_url = OLAP_SERVER_URL_FMT % (cube_name, method_name)
-        dimension_name = request.get('dimension', None)
-        if dimension_name:
-            request_url += '/%s' % dimension_name
-
-        # Наполнить параметрами
-        params = list()
-
-        param = request.get('cut', None)
-        if param:
-            params.append('cut=' + param)
-        param = request.get('drilldown', None)
-        if param:
-            params.append('drilldown=' + param)
-        param = request.get('aggregates', None)
-        if param:
-            params.append('aggregates=' + param)
-        param = request.get('measures', None)
-        if param:
-            params.append('measures=' + param)
-        param = request.get('page', None)
-        if param:
-            params.append('page=' + param)
-        param = request.get('pagesize', None)
-        if param:
-            params.append('pagesize=' + param)
-        param = request.get('order', None)
-        if param:
-            params.append('order=' + param)
-        param = request.get('split', None)
-        if param:
-            params.append('split=' + param)
-
-        if params:
-            params_url = '&'.join(params)
-            request_url += '?%s' % params_url
-
         try:
-            full_request_url = self._OLAP_server.get_request_url(request_url)
+            full_request_url = self._OLAP_server.getRequestURL(request)
             return full_request_url
         except:
             log.fatal(u'Ошибка получения полного запроса URL к OLAP серверу')
 
-        return request_url
+        return u''
 
 
 def show_cubes_olap_srv_request_panel(title=u''):

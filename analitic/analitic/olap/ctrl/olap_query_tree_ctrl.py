@@ -83,7 +83,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
 
         self._uuid = None
 
-        # Имя файла хранения фильтров.
+        # Имя файла хранения дерева запросов
         self._save_filename = None
 
         # Текущий запрос выбранного элемента
@@ -186,18 +186,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             # Если не корневой элемент, то пропустить обработку
             return False
 
-        try:
-            item_data = self.getItemData_tree(ctrl=self, item=root_item)
-            cur_request = item_data.get('__request__', None)
-            cur_request = edit_cubes_olap_srv_request_dlg.get_filter_choice_dlg(parent=self,
-                                                                 environment=self._environment,
-                                                                 cur_request=cur_request)
-            if cur_request:
-                item_data['__request__'] = cur_request
-                return True
-        except:
-            log.fatal(u'Ошибка настройки фильтра корневого элемента')
-        return False
+        return self.editRequestItem(root_item)
 
     def onItemDoubleClick(self, event):
         """
@@ -316,7 +305,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
 
             return menu
         except:
-            log.fatal(u'Ошибка создания меню управления деревом фильтров')
+            log.fatal(u'Ошибка создания меню управления деревом запросов')
         return None
 
     def renameItem(self, cur_item=None):
@@ -342,14 +331,14 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             else:
                 log.warning(u'Текущий элемент дерева не определен')
         except:
-            log.fatal(u'Ошибка переименования фильтра')
+            log.fatal(u'Ошибка переименования запроса')
         return False
 
     def onRenameMenuItem(self, event):
         """
         Переименовать узел. Обработчик.
         """
-        # log.debug(u'Добавить фильтр. Обработчик.')
+        # log.debug(u'Добавить запрос. Обработчик.')
         self.renameItem()
         # event.Skip()
 
@@ -420,14 +409,14 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             else:
                 log.warning(u'Текущий элемент дерева не определен')
         except:
-            log.fatal(u'Ошибка добавления фильтра')
+            log.fatal(u'Ошибка добавления запроса')
         return False
 
     def onAddMenuItem(self, event):
         """
-        Добавить фильтр. Обработчик.
+        Добавить запрос. Обработчик.
         """
-        # log.debug(u'Добавить фильтр. Обработчик.')
+        # log.debug(u'Добавить запрос. Обработчик.')
         self.addRequestItem()
         # event.Skip()
 
@@ -442,12 +431,12 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
 
             return self.deleteItem_tree_ctrl(ctrl=self, item=cur_item, ask=True)
         except:
-            log.fatal(u'Ошибка удаления фильтра')
+            log.fatal(u'Ошибка удаления запроса')
         return False
 
     def onDelMenuItem(self, event):
         """
-        Удалить фильтр. Обработчик.
+        Удалить запрос. Обработчик.
         """
         self.delRequestItem()
         # event.Skip()
@@ -469,12 +458,12 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
                 item_data['__request__'] = cur_request
                 return True
         except:
-            log.fatal(u'Ошибка настройки фильтра')
+            log.fatal(u'Ошибка настройки запроса')
         return False
 
     def refreshRootItemTitle(self):
         """
-        Обновить надпись корневого элемента в соответствии с выбранным фильтром.
+        Обновить надпись корневого элемента в соответствии с выбранным запросом.
         @return: True/False.
         """
         item = self.GetRootItem()
@@ -491,7 +480,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
         """
         self.editRequestItem()
 
-        # После редактирования фильтра если это корневой элемент,
+        # После редактирования запроса если это корневой элемент,
         # то поменять надпись корневого элемента
         cur_item = self.GetSelection()
         if self.isRootTreeItem(ctrl=self, item=cur_item):
@@ -531,7 +520,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def saveRequests(self, save_filename=None):
         """
         Сохранить сведения об запросах в файле.
-        @param save_filename: Имя файла хранения фильтров.
+        @param save_filename: Имя файла хранения дерева запросов.
             Если не определен, то генерируется по UUID.
         @return:
         """
@@ -551,7 +540,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def loadRequests(self, save_filename=None):
         """
         Загрузить запросы.
-        @param save_filename: Имя файла хранения фильтров.
+        @param save_filename: Имя файла хранения дерева запросов.
             Если не определен, то генерируется по UUID.
         """
         if save_filename is None:
@@ -589,7 +578,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
         try:
             return self._refreshIndicators(bVisibleItems, item=item)
         except:
-            log.fatal(u'Ошибка обновления индикаторов дерева фильтров')
+            log.fatal(u'Ошибка обновления индикаторов дерева запросов')
         return False
 
     def _refreshIndicators(self, bVisibleItems=True, item=None):

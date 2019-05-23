@@ -92,7 +92,9 @@ DEFAULT_OLAP_SERVER_DIRNAME = ic_file.getPrjProfilePath()
 
 LOG_LEVELS = ('info', 'debug', 'warn', 'error')
 
+FULL_URL_PREFIX = 'http://'
 OLAP_SERVER_URL_FMT = 'http://%s:%d/%s'
+OLAP_SERVER_SUBURL_FMT = 'cube/%s/%s'
 
 
 class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
@@ -173,6 +175,66 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         log.info(u'Проверка запущенного OLAP сервера по <%s>' % exec_filename)
         return system.isActiveProcess(exec_filename)
 
+    def getRequestURL(self, request=None):
+        """
+        Получить URL запроса к серверу OLAP по его структурному описанию.
+        @return: Словарь параметров запроса к OLAP серверу.
+            Если не определен, то берется из контролов.
+        """
+        if request is None:
+            log.warning(u'Не определен запрос к OLAP серверу для получения URL')
+            return None
+
+        request_url = u''
+
+        cube_name = request.get('cube', None)
+        method_name = request.get('method', None)
+        if cube_name and method_name:
+            request_url = OLAP_SERVER_SUBURL_FMT % (cube_name, method_name)
+        dimension_name = request.get('dimension', None)
+        if dimension_name:
+            request_url += '/%s' % dimension_name
+
+        # Наполнить параметрами
+        params = list()
+
+        param = request.get('cut', None)
+        if param:
+            params.append('cut=' + param)
+        param = request.get('drilldown', None)
+        if param:
+            params.append('drilldown=' + param)
+        param = request.get('aggregates', None)
+        if param:
+            params.append('aggregates=' + param)
+        param = request.get('measures', None)
+        if param:
+            params.append('measures=' + param)
+        param = request.get('page', None)
+        if param:
+            params.append('page=' + param)
+        param = request.get('pagesize', None)
+        if param:
+            params.append('pagesize=' + param)
+        param = request.get('order', None)
+        if param:
+            params.append('order=' + param)
+        param = request.get('split', None)
+        if param:
+            params.append('split=' + param)
+
+        if params:
+            params_url = '&'.join(params)
+            request_url += '?%s' % params_url
+
+        try:
+            full_request_url = self.get_request_url(request_url)
+            return full_request_url
+        except:
+            log.fatal(u'Ошибка получения полного запроса URL к OLAP серверу <%s>' % self.getName())
+
+        return request_url
+
     def get_request_url(self, request_url):
         """
         Получить полный запрос получения данных от сервера по URL.
@@ -189,9 +251,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         Запрос получения данных от сервера по URL.
         @param request_url: URL запроса к OLAP серверу.
+            Может задаваться как полный URL (начинается с http://)
+            так и не полный (/cube/...)
         @return: Запрашиваемые данные или None в случае ошибки.
         """
-        url = self.get_request_url(request_url)
+        url = self.get_request_url(request_url) if not request_url.startswith(FULL_URL_PREFIX) else request_url
         log.debug(u'Определение JSON по URL <%s>' % url)
         return self.get_json_as_dict_by_url(url)
 

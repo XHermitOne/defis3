@@ -398,7 +398,7 @@
                                             <property name="center_pane">0</property>
                                             <property name="class"></property>
                                             <property name="close_button">1</property>
-                                            <property name="construction">self.query_treectrl = icolapquerytreectrl.icOLAPQueryTreeCtrl(parent=self.tree_panel, id=wx.NewId(), component={&apos;save_filename&apos;: &apos;/mnt/defis/defis3/ayan_dealer/tree_olap_request.save&apos;})</property>
+                                            <property name="construction">self.query_treectrl = icolapquerytreectrl.icOLAPQueryTreeCtrl(parent=self.tree_panel, id=wx.NewId(), component={&apos;save_filename&apos;: &apos;/mnt/defis/defis3/ayan_dealer/tree_olap_request.save&apos;, &apos;onChange&apos;: &apos;self.GetParent().GetParent().GetParent().refreshPivotTable()&apos;})</property>
                                             <property name="context_help"></property>
                                             <property name="context_menu">1</property>
                                             <property name="declaration"></property>
