@@ -267,66 +267,190 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
                                  info_text=SPLIT_PARAMETER_HELP)
         event.Skip()
 
-    def getRequestURL(self):
+    def setRequest(self, request):
         """
-        Получить URL запроса к серверу OLAP.
+        Установить запрос к серверу OLAP в структурном виде.
+        @param request: Словарь параметров запроса к OLAP серверу.
+        @return: True/False.
         """
+        if request is None:
+            request = dict()
+
+        if 'url' in request:
+            self.request_textCtrl.SetValue(request['url'])
+
+        cube_name = request.get('cube', None)
+        cube = None
+        if cube_name:
+            cubes = self._OLAP_server.getCubes()
+            cube_names = [cube.getName() for cube in cubes]
+            try:
+                i_cube = cube_names.index(cube_name)
+                cube = cubes[i_cube]
+                self.cube_choice.SetSelection(i_cube)
+            except ValueError:
+                log.error(u'Куб с именем <%s> не найден среди %s' % (cube_name, str(cube_names)))
+
+        method_name = request.get('method', None)
+        if method_name:
+            try:
+                i_method = OLAP_METHODS.index(method_name)
+            except ValueError:
+                log.error(u'Метод <%s> не найден среди %s' % (method_name, str(OLAP_METHODS)))
+                i_method = 0
+            self.method_choice.SetSelection(i_method)
+
+        dimension_name = request.get('dimension', None)
+        if dimension_name and cube:
+            dimensions = cube.getDimensions()
+            dimension_names = [dimension.getName() for dimension in dimensions]
+            try:
+                i_dimension = dimension_names.index(dimension_name) + 1
+            except ValueError:
+                log.error(u'Измерение <%s> не найденj среди %s' % (dimension_name, str(dimension_names)))
+                i_dimension = 0
+            self.dimension_choice.SetSelection(i_dimension)
+
+        self.cut_checkBox.SetValue('cut' in request)
+        self.cut_textCtrl.SetValue(request.get('cut', u''))
+
+        self.drilldown_checkBox.SetValue('drilldown' in request)
+        self.drilldown_textCtrl.SetValue(request.get('drilldown', u''))
+
+        self.aggregates_checkBox.SetValue('aggregates' in request)
+        self.aggregates_textCtrl.SetValue(request.get('aggregates', u''))
+
+        self.measures_checkBox.SetValue('measures' in request)
+        self.measures_textCtrl.SetValue(request.get('measures', u''))
+
+        self.page_checkBox.SetValue('page' in request)
+        self.page_textCtrl.SetValue(request.get('page', u''))
+
+        self.pagesize_checkBox.SetValue('pagesize' in request)
+        self.pagesize_textCtrl.SetValue(request.get('pagesize', u''))
+
+        self.order_checkBox.SetValue('order' in request)
+        self.order_textCtrl.SetValue(request.get('order', u''))
+
+        self.split_checkBox.SetValue('split' in request)
+        self.split_textCtrl.SetValue(request.get('split', u''))
+
+        return True
+
+    def getRequest(self):
+        """
+        Получить запрос к серверу OLAP в структурном виде.
+        @return: Словарь параметров запроса к OLAP серверу.
+            Словарь заполняется в соответствии с выбранными
+            параметрами контролов панели.
+        """
+        request = dict()
         i_cube = self.cube_choice.GetSelection()
         cube = self._OLAP_server.getCubes()[i_cube] if i_cube >= 0 else None
         cube_name = cube.getName() if cube else None
+        if cube_name:
+            request['cube'] = cube_name
+
         i_func = self.method_choice.GetSelection()
         method_name = OLAP_METHODS[i_func] if i_func >= 0 else None
+        if method_name:
+            request['method'] = method_name
+
         i_dimension = self.dimension_choice.GetSelection() - 1
         # log.debug(u'Выбранное измерение %d' % i_dimension)
         dimension = (cube.getDimensions()[i_dimension] if cube else None) if i_dimension >= 0 else None
-
-        request_url = u''
-        if cube_name and method_name:
-            request_url = OLAP_SERVER_URL_FMT % (cube_name, method_name)
         if dimension:
-            request_url += '/%s' % dimension.getName()
+            request['dimension'] = dimension.getName()
 
         # Наполнить параметрами
-        params = list()
         if self.cut_checkBox.GetValue():
             param = self.cut_textCtrl.GetValue().strip()
             if param:
-                params.append('cut=' + param)
+                request['cut'] = param
         if self.drilldown_checkBox.GetValue():
             param = self.drilldown_textCtrl.GetValue().strip()
             if param:
-                params.append('drilldown=' + param)
+                request['drilldown'] = param
         if self.aggregates_checkBox.GetValue():
             param = self.aggregates_textCtrl.GetValue().strip()
             if param:
-                params.append('aggregates=' + param)
+                request['aggregates'] = param
         if self.measures_checkBox.GetValue():
             param = self.measures_textCtrl.GetValue().strip()
             if param:
-                params.append('measures=' + param)
+                request['measures'] = param
         if self.page_checkBox.GetValue():
             param = self.page_textCtrl.GetValue().strip()
             if param:
-                params.append('page=' + param)
+                request['page'] = param
         if self.pagesize_checkBox.GetValue():
             param = self.pagesize_textCtrl.GetValue().strip()
             if param:
-                params.append('pagesize=' + param)
+                request['pagesize'] = param
         if self.order_checkBox.GetValue():
             param = self.order_textCtrl.GetValue().strip()
             if param:
-                params.append('order=' + param)
+                request['order'] = param
         if self.split_checkBox.GetValue():
             param = self.split_textCtrl.GetValue().strip()
             if param:
-                params.append('split=' + param)
+                request['split'] = param
+        return request
+
+    def getRequestURL(self, request=None):
+        """
+        Получить URL запроса к серверу OLAP по его структурному описанию.
+        @return: Словарь параметров запроса к OLAP серверу.
+            Если не определен, то берется из контролов.
+        """
+        if request is None:
+            request = self.getRequest()
+
+        request_url = u''
+
+        cube_name = request.get('cube', None)
+        method_name = request.get('method', None)
+        if cube_name and method_name:
+            request_url = OLAP_SERVER_URL_FMT % (cube_name, method_name)
+        dimension_name = request.get('dimension', None)
+        if dimension_name:
+            request_url += '/%s' % dimension_name
+
+        # Наполнить параметрами
+        params = list()
+
+        param = request.get('cut', None)
+        if param:
+            params.append('cut=' + param)
+        param = request.get('drilldown', None)
+        if param:
+            params.append('drilldown=' + param)
+        param = request.get('aggregates', None)
+        if param:
+            params.append('aggregates=' + param)
+        param = request.get('measures', None)
+        if param:
+            params.append('measures=' + param)
+        param = request.get('page', None)
+        if param:
+            params.append('page=' + param)
+        param = request.get('pagesize', None)
+        if param:
+            params.append('pagesize=' + param)
+        param = request.get('order', None)
+        if param:
+            params.append('order=' + param)
+        param = request.get('split', None)
+        if param:
+            params.append('split=' + param)
+
         if params:
             params_url = '&'.join(params)
             request_url += '?%s' % params_url
 
         try:
             full_request_url = self._OLAP_server.get_request_url(request_url)
-            self.request_textCtrl.SetValue(full_request_url)
+            return full_request_url
         except:
             log.fatal(u'Ошибка получения полного запроса URL к OLAP серверу')
 

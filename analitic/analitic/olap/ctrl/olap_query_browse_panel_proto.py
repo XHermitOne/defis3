@@ -38,7 +38,7 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		self.tree_panel = wx.Panel( self.browse_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.query_treectrl = icolapquerytreectrl.icOLAPQueryTreeCtrl(parent=self.tree_panel, id=wx.NewId(), component={})
+		self.query_treectrl = icolapquerytreectrl.icOLAPQueryTreeCtrl(parent=self.tree_panel, id=wx.NewId(), component={'save_filename': '/mnt/defis/defis3/ayan_dealer/tree_olap_request.save'})
 		bSizer2.Add( self.query_treectrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		

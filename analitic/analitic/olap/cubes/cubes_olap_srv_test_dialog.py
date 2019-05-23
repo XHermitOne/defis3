@@ -137,6 +137,7 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
         """
         if self._OLAP_server:
             request_url = self.request_panel.getRequestURL()
+            self.request_panel.request_textCtrl.SetValue(request_url)
 
             result = self._OLAP_server.get_response(request_url)
 

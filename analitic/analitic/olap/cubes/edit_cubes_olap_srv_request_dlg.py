@@ -7,7 +7,7 @@
 
 import wx
 
-from . import cubes_olap_srv_request_form_proto
+from . import edit_cubes_olap_srv_request_dlg_proto
 
 from ic.log import log
 
@@ -15,7 +15,7 @@ from ic.log import log
 __version__ = (0, 1, 1, 1)
 
 
-class icEditCubesOLAPSrvRequestDialog(cubes_olap_srv_request_form_proto.icEditCubesOLAPSrvRequestDlgProto):
+class icEditCubesOLAPSrvRequestDialog(edit_cubes_olap_srv_request_dlg_proto.icEditCubesOLAPSrvRequestDlgProto):
     """
     Диалоговая форма редактирования запроса к OLAP серверу Cubes.
     """
@@ -23,7 +23,7 @@ class icEditCubesOLAPSrvRequestDialog(cubes_olap_srv_request_form_proto.icEditCu
         """
         Конструктор.
         """
-        cubes_olap_srv_request_form_proto.icEditCubesOLAPSrvRequestDlgProto.__init__(self, *args, **kwargs)
+        edit_cubes_olap_srv_request_dlg_proto.icEditCubesOLAPSrvRequestDlgProto.__init__(self, *args, **kwargs)
 
         # OLAP сервер
         self._OLAP_server = None
@@ -54,6 +54,9 @@ class icEditCubesOLAPSrvRequestDialog(cubes_olap_srv_request_form_proto.icEditCu
         """
         self._request = request
 
+        if self._request:
+            self.request_panel.setRequest(self._request)
+
     def onCancelButtonClick(self, event):
         """
         Обработчик кнопки ОТМЕНА.
@@ -65,7 +68,18 @@ class icEditCubesOLAPSrvRequestDialog(cubes_olap_srv_request_form_proto.icEditCu
         """
         Обработчик кнопки OK.
         """
+        self._request = self.request_panel.getRequest()
+        # Отдельно сохраняем url для дальнейшего использования в браузере
+        self._request['url'] = self.request_panel.getRequestURL(self._request)
         self.EndModal(wx.ID_OK)
+        event.Skip()
+
+    def onRefreshButtonClick(self, event):
+        """
+        Обработчик кнопки обновления адреса.
+        """
+        url = self.request_panel.getRequestURL()
+        self.request_panel.request_textCtrl.SetValue(url)
         event.Skip()
 
 
@@ -91,10 +105,12 @@ def edit_cubes_olap_srv_request_dlg(parent=None, olap_srv=None,
     try:
         dlg = icEditCubesOLAPSrvRequestDialog(parent=parent)
         dlg.setOLAPServer(olap_srv)
+        log.debug(u'Редактируемый запрос %s' % str(olap_srv_request))
         dlg.setRequest(olap_srv_request)
 
-        dlg.ShowModal()
-        result = dlg.getRequest()
+        result = None
+        if dlg.ShowModal() == wx.ID_OK:
+            result = dlg.getRequest()
         dlg.Destroy()
         return result
     except:

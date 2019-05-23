@@ -29,10 +29,12 @@ __version__ = (0, 1, 1, 1)
 # Спецификация
 SPC_IC_OLAPQUERYTREECTRL = {'save_filename': None,  # Имя файла хранения запросов
                             'onChange': None,  # Код смены запроса
+                            'olap_server': None,    # OLAP сервер
 
                             '__parent__': icwidget.SPC_IC_WIDGET,
                             '__attr_hlp__': {'save_filename': u'Имя файла хранения запросов',
                                              'onChange': u'Код смены запроса',
+                                             'olap_server': u'OLAP сервер',
                                              },
                             }
 
@@ -89,10 +91,16 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
 
     def setOLAPServer(self, olap_server):
         """
-        Установить тестируемый OLAP сервер.
-        @param olap_server: OLAP сервер
+        Установить OLAP сервер.
+        @param olap_server: OLAP сервер.
         """
         self._OLAP_server = olap_server
+
+    def getOLAPServer(self):
+        """
+        Объект OLAP сервера.
+        """
+        return self._OLAP_server
 
     def _canEditOLAPRequest(self):
         return True
@@ -455,7 +463,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             item_data = self.getItemData_tree(ctrl=self, item=cur_item)
             cur_request = item_data.get('__request__', None)
             cur_request = edit_cubes_olap_srv_request_dlg.edit_cubes_olap_srv_request_dlg(parent=self,
-                                                                                          olap_srv=self._OLAP_server,
+                                                                                          olap_srv=self.getOLAPServer(),
                                                                                           olap_srv_request=cur_request)
             if cur_request:
                 item_data['__request__'] = cur_request
@@ -471,8 +479,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
         """
         item = self.GetRootItem()
         item_data = self.getItemData_tree(ctrl=self, item=item)
-        cur_request = item_data.get('__request__', None)
-        label = filter_choicectrl.get_str_filter(cur_request) if cur_request else DEFAULT_ROOT_LABEL
+        label = item_data.get('label', None)
         if not label:
             label = DEFAULT_ROOT_LABEL
         self.setRootTitle(tree_ctrl=self, title=label)

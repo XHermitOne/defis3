@@ -11,12 +11,17 @@ from ic.log import log
 from ic.bitmap import ic_bmp
 from ic.utils import util
 from ic.utils import ic_uuid
+from ic.dlg import ic_dlg
+from ic.utils import coderror
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
 from ic.components import icResourceParser as prs
 
 from ..olap.ctrl import olap_query_tree_ctrl
+
+# Расширенные редакторы
+from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
 # Регистрация прав использования
 from ic.kernel import icpermission
@@ -61,12 +66,14 @@ ic_class_spc = {'type': 'OLAPQueryTreeCtrl',
 
                 'save_filename': None,  # Имя файла хранения запросов
                 'onChange': None,  # Код смены запроса
+                'olap_server': None,  # OLAP сервер
 
                 '__styles__': ic_class_styles,
                 '__events__': {'onChange': (None, 'OnChange', False),
                                },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'save_filename'],
                                    icDefInf.EDT_PY_SCRIPT: ['onChange'],
+                                   icDefInf.EDT_USER_PROPERTY: ['olap_server']
                                    },
                 '__parent__': olap_query_tree_ctrl.SPC_IC_OLAPQUERYTREECTRL,
                 '__lists__': {},
@@ -90,6 +97,45 @@ ic_can_not_contain = None
 
 #   Версия компонента
 __version__ = (0, 1, 1, 1)
+
+
+# Функции редактирования
+def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
+    """
+    ret = None
+    if attr in ('olap_server',):
+        ret = pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
+
+    # Проверка нажатия кнопки <Отмена>
+    if ret in (None, 'None'):
+        # log.debug(u'Нажата <отмена>')
+        return value
+
+    return ret
+
+
+def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция контроля.
+    """
+    if attr in ('olap_server',):
+        ret = str_to_val_user_property(attr, value, propEdt)
+        if ret:
+            # parent = propEdt
+            if not ret[0][0] in ('CubesOLAPServer',):
+                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является OLAP СЕРВЕРОМ.')
+                return coderror.IC_CTRL_FAILED_IGNORE
+            return coderror.IC_CTRL_OK
+
+
+def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция преобразования текста в значение.
+    """
+    if attr in ('olap_server',):
+        return pspEdt.str_to_val_user_property(text, propEdt)
 
 
 class icOLAPQueryTreeCtrl(icwidget.icWidget,
@@ -133,7 +179,7 @@ class icOLAPQueryTreeCtrl(icwidget.icWidget,
         for key in [x for x in component.keys() if not x.startswith('__')]:
             setattr(self, key, component[key])
 
-        self._save_filename = self.getICAttr('save_filename')
+        self._save_filename = self.getSaveFilename()
 
         # После того как определили окружение и
         # имя файла хранения фильтров можно загрузить фильтры
@@ -165,6 +211,29 @@ class icOLAPQueryTreeCtrl(icwidget.icWidget,
             psp = tuple(psp)[0]
         self._widget_psp_uuid = ic_uuid.get_passport_check_sum(psp, True)
         return self._widget_psp_uuid
+
+    def getSaveFilename(self):
+        """
+        Имя файла хранения содержимого дерева запросов.
+        """
+        return self.getICAttr('save_filename')
+
+    def getOLAPServerPsp(self):
+        """
+        Паспорт объекта OLAP сервера.
+        """
+        return self.getICAttr('olap_server')
+
+    def getOLAPServer(self):
+        """
+        Объект OLAP сервера.
+        """
+        if self._OLAP_server is None:
+            olap_srv_psp = self.getOLAPServerPsp()
+            kernel = self.GetKernel()
+            self._OLAP_server = kernel.Create(olap_srv_psp)
+
+        return self._OLAP_server
 
     def OnChange(self, event):
         """

@@ -53,11 +53,12 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
         event.Skip()
 
 
-def show_olap_query_browser(parent=None, title=u'Аналитические отчеты'):
+def show_olap_query_browser(parent=None, title=u'Аналитические отчеты', olap_server=None):
     """
     Функция просмотра браузера результатов запросов к OLAP серверу.
     @param parent: Родительское окно.
     @param title: Заголовок страницы браузера.
+    @param olap_server: Объект OLAP сервера, отображаемого в браузере.
     @return: True/False.
     """
     try:
@@ -66,6 +67,7 @@ def show_olap_query_browser(parent=None, title=u'Аналитические от
             parent = app.GetTopWindow()
 
         browser_panel = icOLAPQueryBrowserProto(parent=parent)
+        browser_panel.query_treectrl.setOLAPServer(olap_server)
 
         ic_user.addMainNotebookPage(browser_panel, title)
         return True
