@@ -21,6 +21,9 @@ from ic.engine import treectrl_manager
 from ic.engine import stored_ctrl_manager
 from ic.components import icwidget
 
+from STD.controls import tree_item_indicator
+from analitic.olap.cubes import edit_cubes_olap_srv_request_dlg
+
 __version__ = (0, 1, 1, 1)
 
 # Спецификация
@@ -43,6 +46,7 @@ EMPTY_NODE_RECORD = {'__request__': None, '__indicator__': None, 'label': u''}
 
 
 class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
+                               tree_item_indicator.icTreeItemIndicator,
                                treectrl_manager.icTreeCtrlManager,
                                stored_ctrl_manager.icStoredCtrlManager):
     """
@@ -54,6 +58,8 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
         Конструктор.
         """
         wx.TreeCtrl.__init__(self, *args, **kwargs)
+
+        tree_item_indicator.icTreeItemIndicator.__init__(self)
 
         # По умолчанию создаем корневой элемент
         self.AddRoot(DEFAULT_ROOT_LABEL)
@@ -70,6 +76,9 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
         # событием wx.EVT_WINDOW_DESTROY
         self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
 
+        # OLAP сервер
+        self._OLAP_server = None
+
         self._uuid = None
 
         # Имя файла хранения фильтров.
@@ -77,6 +86,13 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
 
         # Текущий запрос выбранного элемента
         self._cur_item_request = None
+
+    def setOLAPServer(self, olap_server):
+        """
+        Установить тестируемый OLAP сервер.
+        @param olap_server: OLAP сервер
+        """
+        self._OLAP_server = olap_server
 
     def _canEditOLAPRequest(self):
         return True
@@ -164,12 +180,12 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
 
         try:
             item_data = self.getItemData_tree(ctrl=self, item=root_item)
-            cur_filter = item_data.get('__request__', None)
-            cur_filter = filter_choicectrl.get_filter_choice_dlg(parent=self,
+            cur_request = item_data.get('__request__', None)
+            cur_request = edit_cubes_olap_srv_request_dlg.get_filter_choice_dlg(parent=self,
                                                                  environment=self._environment,
-                                                                 cur_filter=cur_filter)
-            if cur_filter:
-                item_data['__request__'] = cur_filter
+                                                                 cur_request=cur_request)
+            if cur_request:
+                item_data['__request__'] = cur_request
                 return True
         except:
             log.fatal(u'Ошибка настройки фильтра корневого элемента')
@@ -270,14 +286,14 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             self.Bind(wx.EVT_MENU, self.onDelMenuItem, id=del_menuitem_id)
             menuitem.Enable(self._canEditOLAPRequest())
 
-            filter_menuitem_id = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('filter.png')
-            cur_filter = item_data.get('__request__', None) if item_data else None
-            label = u'Фильтр: %s' % filter_choicectrl.get_str_filter(cur_filter) if cur_filter else u'Фильтр'
-            menuitem = flatmenu.FlatMenuItem(menu, filter_menuitem_id, label,
+            request_menuitem_id = wx.NewId()
+            bmp = ic_bmp.createLibraryBitmap('table_lightning.png')
+            # cur_request = item_data.get('__request__', None) if item_data else None
+            label = u'Запрос: %s' % item_data.get('label', DEFAULT_ROOT_LABEL) if item_data else u'Запрос'
+            menuitem = flatmenu.FlatMenuItem(menu, request_menuitem_id, label,
                                              normalBmp=bmp)
             menu.AppendItem(menuitem)
-            self.Bind(wx.EVT_MENU, self.onRequestMenuItem, id=filter_menuitem_id)
+            self.Bind(wx.EVT_MENU, self.onRequestMenuItem, id=request_menuitem_id)
             menuitem.Enable(self._canEditOLAPRequest())
 
             indicator_menuitem_id = wx.NewId()
@@ -437,12 +453,12 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             if cur_item is None:
                 cur_item = self.GetSelection()
             item_data = self.getItemData_tree(ctrl=self, item=cur_item)
-            cur_filter = item_data.get('__request__', None)
-            cur_filter = filter_choicectrl.get_filter_choice_dlg(parent=self,
-                                                                 environment=self._environment,
-                                                                 cur_filter=cur_filter)
-            if cur_filter:
-                item_data['__request__'] = cur_filter
+            cur_request = item_data.get('__request__', None)
+            cur_request = edit_cubes_olap_srv_request_dlg.edit_cubes_olap_srv_request_dlg(parent=self,
+                                                                                          olap_srv=self._OLAP_server,
+                                                                                          olap_srv_request=cur_request)
+            if cur_request:
+                item_data['__request__'] = cur_request
                 return True
         except:
             log.fatal(u'Ошибка настройки фильтра')
@@ -455,8 +471,8 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
         """
         item = self.GetRootItem()
         item_data = self.getItemData_tree(ctrl=self, item=item)
-        cur_filter = item_data.get('__request__', None)
-        label = filter_choicectrl.get_str_filter(cur_filter) if cur_filter else DEFAULT_ROOT_LABEL
+        cur_request = item_data.get('__request__', None)
+        label = filter_choicectrl.get_str_filter(cur_request) if cur_request else DEFAULT_ROOT_LABEL
         if not label:
             label = DEFAULT_ROOT_LABEL
         self.setRootTitle(tree_ctrl=self, title=label)
@@ -522,8 +538,8 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             save_filename = os.path.join(ic_file.getPrjProfilePath(),
                                          widget_uuid + '.dat')
 
-        filter_tree_data = self.getTreeData(ctrl=self)
-        return self.save_data_file(save_filename=save_filename, save_data=filter_tree_data)
+        request_tree_data = self.getTreeData(ctrl=self)
+        return self.save_data_file(save_filename=save_filename, save_data=request_tree_data)
 
     def loadRequests(self, save_filename=None):
         """
@@ -541,15 +557,15 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             save_filename = os.path.join(ic_file.getPrjProfilePath(),
                                          widget_uuid + '.dat')
 
-        filter_tree_data = self.load_data_file(save_filename=save_filename)
+        request_tree_data = self.load_data_file(save_filename=save_filename)
         # Построить дерево
-        result = self.setTreeData(ctrl=self, tree_data=filter_tree_data, label='label')
+        result = self.setTreeData(ctrl=self, tree_data=request_tree_data, label='label')
 
-        # Установить надпись корневого элемента как надпись фильтра
-        root_filter = filter_tree_data.get('__request__', dict())
-        # log.debug(u'Фильтр: %s' % str(root_filter))
-        str_filter = filter_choicectrl.get_str_filter(root_filter)
-        root_label = str_filter if str_filter else DEFAULT_ROOT_LABEL
+        # Установить надпись корневого элемента как надпись запроса
+        if request_tree_data is None:
+            request_tree_data = copy.deepcopy(EMPTY_NODE_RECORD)
+        str_request = request_tree_data.get('label', DEFAULT_ROOT_LABEL)
+        root_label = str_request if str_request else DEFAULT_ROOT_LABEL
         self.setRootTitle(tree_ctrl=self, title=root_label)
 
         return result
@@ -634,8 +650,8 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             item = self.GetRootItem()
 
         # Сначала получаем набор записей узла, соответствующую элементу
-        cur_filter = self.getItemRequest(item=item)
-        records = self.getCurRecords(item_filter=cur_filter)
+        cur_request = self.getItemRequest(item=item)
+        records = self.getCurRecords(item_filter=cur_request)
 
         # Затем получаем объекты индикатора
         name, bmp, txt_colour, bg_colour = self.getStateIndicatorObjects(records=records, indicator=indicator)

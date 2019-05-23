@@ -8,8 +8,8 @@
 ###########################################################################
 
 import wx
-import wx.xrc
-from . import olap_query_tree_ctrl
+import wx.adv
+from analitic.usercomponents import icolapquerytreectrl
 import wx.grid
 
 ###########################################################################
@@ -24,9 +24,9 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
+		self.collapse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
 		
-		self.expand_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
+		self.expand_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
 		
 		self.ctrl_toolBar.Realize() 
 		
@@ -38,7 +38,7 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		self.tree_panel = wx.Panel( self.browse_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.query_treectrl = olap_query_tree_ctrl.icOLAPQueryTreeCtrl(parent=self.tree_panel, id=wx.NewId())
+		self.query_treectrl = icolapquerytreectrl.icOLAPQueryTreeCtrl(parent=self.tree_panel, id=wx.NewId(), component={})
 		bSizer2.Add( self.query_treectrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		

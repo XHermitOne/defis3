@@ -139,7 +139,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 
 # Кнопка сортировки по убыванию
@@ -347,24 +347,27 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         """
         Обработка сообщения <wx.EVT_MOTION>.
         """
-        x, y = self.GetPosition()
-        sx, sy = self.GetSize()
-        px,py = p = evt.GetPosition()
-        d = 5
-        r = wx.Rect(d, d, sx-2*d, sy-2*d)
+        try:
+            x, y = self.GetPosition()
+            sx, sy = self.GetSize()
+            px, py = p = evt.GetPosition()
+            d = 5
+            r = wx.Rect(d, d, sx-2*d, sy-2*d)
 
-        #   Создаем окно подсказки
-        if r.Inside(p) and self.shortHelpString not in ['', None, 'None']:
-            if self._helpWin is None:
-                self._helpWin = icwidget.icShortHelpString(self.parent, self.shortHelpString,
-                                                           (x + px, y+sy+10), 750)
+            #   Создаем окно подсказки
+            if r.Contains(p) and self.shortHelpString not in ['', None, 'None']:
+                if self._helpWin is None:
+                    self._helpWin = icwidget.icShortHelpString(self.parent, self.shortHelpString,
+                                                               (x + px, y+sy+10), 750)
+                else:
+                    self._helpWin.bNextPeriod = True
+            elif self._helpWin:
+                self._helpWin.Show(False)
+                self._helpWin.Destroy()
             else:
-                self._helpWin.bNextPeriod = True
-        elif self._helpWin:
-            self._helpWin.Show(False)
-            self._helpWin.Destroy()
-        else:
-            self._helpWin = None
+                self._helpWin = None
+        except:
+            log.fatal(u'Ошибка обработки сообщения wx.EVT_MOTION ЯЧЕЙКИ ЗАГООЛВКА ГРИДА')
         
         evt.Skip()
         

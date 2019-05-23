@@ -552,7 +552,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         @param SQLQuery_: Строка запроса.
         @param to_dict: Преобразовать все записи в словари?
         @return: Возвражает словарь {'__fields__':((..),(..),..),'__data__':[(..),(..),..]}.
-        Или None в случае ошибки.
+            Или None в случае ошибки.
         """
         result = None
         # Выполнить запрос
@@ -565,6 +565,39 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                 fields = cursor.description
                 # log.debug(u'SQL: %s RESULT FIELDS: %s' % (ic_str.toUnicode(SQLQuery_), fields))
                 data = cursor.fetchall()
+                if data and to_dict:
+                    new_data = [dict([(fields[i][0], val) for i, val in enumerate(rec)]) for rec in data]
+                    data = new_data
+                result = copy.deepcopy({'__fields__': fields, '__data__': data})
+            cursor.close()
+        except:
+            err_txt = u'Ошибка выполнения запроса <%s>' % str(SQLQuery_)
+            log.fatal(err_txt)
+            ic_dlg.icErrBox(u'ОШИБКА', err_txt)
+
+            return None
+
+        return result
+
+    def executeSQLOne(self, SQLQuery_, to_dict=False):
+        """
+        Выполнить строку запроса и вернуть только одну запись.
+        @param SQLQuery_: Строка запроса.
+        @param to_dict: Преобразовать запись в словарь?
+        @return: Возвражает словарь {'__fields__':((..),(..),..),'__data__':[(..),(..),..]}.
+            Или None в случае ошибки.
+        """
+        result = None
+        # Выполнить запрос
+        try:
+            # Доступ к конекшену DBAPI2
+            connection = self._metadata.bind.connect().connection
+            cursor = connection.cursor()
+            cursor.execute(SQLQuery_)
+            if self._isSQLReturnResult(SQLQuery_):
+                fields = cursor.description
+                # log.debug(u'SQL: %s RESULT FIELDS: %s' % (ic_str.toUnicode(SQLQuery_), fields))
+                data = cursor.fetchone()
                 if data and to_dict:
                     new_data = [dict([(fields[i][0], val) for i, val in enumerate(rec)]) for rec in data]
                     data = new_data

@@ -23,7 +23,7 @@ from ic.engine import stored_ctrl_manager
 
 # from . import filter_builder_env
 from . import filter_choicectrl
-from . import filter_indicator
+from STD.controls import tree_item_indicator
 from . import filter_generate
 
 # from ic.PropertyEditor import select_component_menu
@@ -41,7 +41,7 @@ EMPTY_NODE_RECORD = {'__filter__': None, '__indicator__': None, 'label': u''}
 
 
 class icFilterTreeCtrlProto(wx.TreeCtrl,
-                            filter_indicator.icFilterIndicator,
+                            tree_item_indicator.icTreeItemIndicator,
                             treectrl_manager.icTreeCtrlManager,
                             stored_ctrl_manager.icStoredCtrlManager):
     """
@@ -55,7 +55,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         wx.TreeCtrl.__init__(self, *args, **kwargs)
 
-        filter_indicator.icFilterIndicator.__init__(self)
+        tree_item_indicator.icTreeItemIndicator.__init__(self)
 
         # По умолчанию создаем корневой элемент
         self.AddRoot(DEFAULT_ROOT_LABEL)
@@ -727,7 +727,6 @@ def test():
     """
     Тестовая функция.
     """
-    import copy
     # mwin = ic.getKernel().GetContext().getMainWin()
     print('TEST filter tree START ... ok')
     # env = copy.deepcopy(filter_builder_env.FILTER_ENVIRONMENT)

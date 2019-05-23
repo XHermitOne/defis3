@@ -62,6 +62,11 @@ class icPivotDataFrameManager(object):
             Задается списком имен колонок.
         @return: Текущий объект pandas.DataFrame.
         """
+        if not row_dimension:
+            row_dimension = list()
+        if not col_dimension:
+            col_dimension = list()
+
         dimensions = list(row_dimension) + list(col_dimension)
         # Устанавливаем индексы измерений
         self._cur_pivot_dataframe = self._cur_pivot_dataframe.set_index(dimensions)

@@ -22,6 +22,13 @@
 import os.path
 import wx
 
+from ic.log import log
+from ic.dlg import ic_dlg
+from ic.utils import coderror
+from ic.utils import ic_file
+from ic.utils import icprotector
+from ic.engine import ic_user
+
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -33,12 +40,6 @@ from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEd
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportListUserEdt as pspListEdt
 from ic.PropertyEditor.ExternalEditors.passwordeditor import icPasswordExternalEdt as passwordEdt
 from ic.PropertyEditor.ExternalEditors.multichoiceeditor import icMultiChoiceUserEdt as multiChoiceEdt
-
-from ic.dlg import ic_dlg
-from ic.utils import coderror
-from ic.utils import ic_file
-from ic.utils import icprotector
-from ic.engine import ic_user
 
 import ic.engine.icUser as icuser
 import ic.config
@@ -139,9 +140,11 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     elif attr in ('roles',):
         choice = getRolesChoiceList()
         ret = multiChoiceEdt.get_user_property_editor(value, pos, size, style, propEdt, title=u'РОЛИ',
-                                                      edt_txt=u'Виберите роли из списка:', choice=choice)
+                                                      edt_txt=u'Выберите роли из списка:', choice=choice)
 
-    if ret is None:
+    # Проверка нажатия кнопки <Отмена>
+    if ret in (None, 'None'):
+        log.debug(u'Нажата <отмена>')
         return value
     
     return ret

@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.adv
+import wx.xrc
 
 ###########################################################################
 ## Class icCubesOLAPSrvRequestPanelProto
@@ -265,6 +265,55 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		event.Skip()
 	
 	def onSplitHelpButtonClick( self, event ):
+		event.Skip()
+	
+
+###########################################################################
+## Class icEditCubesOLAPSrvRequestDlgProto
+###########################################################################
+
+class icEditCubesOLAPSrvRequestDlgProto ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Редактирование запроса к OLAP серверу", pos = wx.DefaultPosition, size = wx.Size( 874,736 ), style = wx.DEFAULT_DIALOG_STYLE )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer13 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.request_panel = icCubesOLAPSrvRequestPanelProto(parent=self)
+		bSizer13.Add( self.request_panel, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		bSizer14 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.cancel_button = wx.Button( self, wx.ID_ANY, u"Отмена", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer14.Add( self.cancel_button, 0, wx.ALL, 5 )
+		
+		self.ok_button = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer14.Add( self.ok_button, 0, wx.ALL, 5 )
+		
+		
+		bSizer13.Add( bSizer14, 0, wx.ALIGN_RIGHT, 5 )
+		
+		
+		self.SetSizer( bSizer13 )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.cancel_button.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
+		self.ok_button.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onCancelButtonClick( self, event ):
+		event.Skip()
+	
+	def onOkButtonClick( self, event ):
 		event.Skip()
 	
 

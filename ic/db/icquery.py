@@ -21,7 +21,7 @@ from ic.utils import util
 
 import ic.interfaces.icdataclassinterface as icdataclassinterface
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Спецификации
 # Результат запроса (словарно-списковое представление)
@@ -269,17 +269,21 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
                 log.fatal(u'QUERY: Ошибка выполнения запроса: %s' % sql_txt)
         return dataset
         
-    def fetchOneRec(self):
+    def fetchOneRec(self, **kwargs):
         """
         Получить одну запись результата запроса.
-        @return: Возвращает кортеж значений.
+        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+            SQL запроса.
+        @return: Возвращает структуру таблицы результата запроса.
         """
         result = None
         data_src = self.getDataSource()
         if data_src:
-            cursor = data_src.getCursor()
-            if cursor:
-                result = cursor.fetchone()
+            sql_txt = self.getSQLTxt(**kwargs)
+            try:
+                result = data_src.executeSQLOne(sql_txt)
+            except:
+                log.fatal(u'QUERY: Ошибка выполнения запроса: %s' % sql_txt)
         return result
 
     def get_normalized(self, query_result=None):
@@ -356,13 +360,23 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         if table_name is None:
             table_name = self.getName()
 
+        result = False
         if bReCreateRes:
             # Если необходимо пересоздать ресурс,
             # то сначала удаляем его а затем вновь создаем
             prj_res_manager = self._get_prj_res_manager()
             prj_res_manager.delRes(table_name, 'tab')
 
-        result = self.createTableResource(table_name=table_name)
+            # Создаем ресурс заново
+            result = self.createTableResource(table_name=table_name)
+
+        # Проверяем есть ли ресурс таблицы для выгрузки
+        # Если его нет то выгрузка не возможна
+        if not self._isTableRes(table_name):
+            log.warning(u'Ресурс таблицы <%s> не найден' % table_name)
+            log.warning(u'Выгрузка результатов запроса <%s> в таблицу не возможна' % self.getName())
+            return False
+
         if bData:
             data = self.execute()
             # Заполнить таблицу данными
@@ -379,6 +393,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
             table_name = self.getName()
             
         if not self._isTableRes(table_name):
+            log.warning(u'ВНИМАНИЕ! Создается ресурс таблицы <%s>' % table_name)
             tab_res = self._createTabSpc()
 
             children_fld = self._getFields()
@@ -408,10 +423,10 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         """
         Описание дочерних полей.
         """
-        record = self.fetchOneRec()
-        rec_dict = self.get_normalized(record)
+        query_result = self.fetchOneRec()
+        # rec_dict = self.get_normalized(record)
 
-        return [dict(name=field[0], type_val=field[1], length=field[2]) for field in rec_dict['__fields__']]
+        return [dict(name=field[0], type_val=field[1], length=field[2]) for field in query_result['__fields__']]
 
     def _createTabSpc(self, table_name=None):
         """
