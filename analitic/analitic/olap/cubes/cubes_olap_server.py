@@ -138,6 +138,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def run(self):
         """
         Запуск сервера.
+        ВНИМАНИЕ! Сохранение файла настроек и модели происходит при запуске
+        сервера.
         @return: True/False.
         """
         if self.is_running():
@@ -392,6 +394,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def save_ini(self, ini_filename=None, bReWrite=True):
         """
         Сохранить файл настройки OLAP сервера.
+        ВНИМАНИЕ! Сохранение файла настроек и модели происходит при запуске
+        сервера.
         @param ini_filename: Полное имя INI файла настроек OLAP сервера.
             Если не определено, то берем имя файла из описания объекта.
         @param bReWrite: Перезаписать существующий файл?
@@ -452,8 +456,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
                 measure_content = self._get_model_measure(measure)
                 cube_content['measures'].append(measure_content)
 
-        # Заполнение измерений
         for dimension in dimensions:
+            # Заполнение измерений
             dimension_detail_tabname = dimension.getDetailTableName()
             if dimension_detail_tabname:
                 dimension_detail_fldname = dimension.getDetailFieldName()
@@ -467,6 +471,22 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
                                           detail='%s.%s' % (dimension_detail_tabname,
                                                             dimension_detail_fldname))
                     cube_content['joins'].append(dimension_join)
+
+            # Заполнение отображений
+            dimension_mapping = dimension.getMapping()
+            if dimension_mapping:
+                if 'mappings' not in cube_content:
+                    cube_content['mappings'] = dict()
+                dimension_name = dimension.getName()
+                cube_content['mappings'][dimension_name] = dimension_mapping
+            for dimension_level in dimension.getLevels():
+                dimension_level_mapping = dimension_level.getMapping()
+                if dimension_level_mapping:
+                    if 'mappings' not in cube_content:
+                        cube_content['mappings'] = dict()
+                    dimension_name = dimension.getName()
+                    mapping_key = '%s.%s' % (dimension_name, dimension_level.getName())
+                    cube_content['mappings'][mapping_key] = dimension_level_mapping
 
         # Заполнение агрегаций
         aggregates = cube.getAggregates()
@@ -545,6 +565,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         if key:
             level_content['key'] = key
         label_attribute = level.getLabelAttribute()
+        log.debug(u'Label attribute <%s>' % label_attribute)
         if label_attribute:
             level_content['label_attribute'] = label_attribute
         return level_content
@@ -564,6 +585,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def save_model(self, model_filename=None, bReWrite=True):
         """
         Сохранить файл описания кубов OLAP сервера.
+        ВНИМАНИЕ! Сохранение файла настроек и модели происходит при запуске
+        сервера.
         @param model_filename: Полное имя JSON файла описания кубов OLAP сервера.
             Если не определено, то берем имя файла из описания объекта.
         @param bReWrite: Перезаписать существующий файл?
@@ -605,39 +628,39 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             cube = find_cube[0] if find_cube else None
         return cube
 
-    def _to_spreadsheet(self, json_dict, cube=None):
-        """
-        Преобразование результатов запроса к OLAP серверу к структуре SpreadSheet.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param cube: Куб. Если не определен, то берется первый.
-        @return: Словарь структуры SpreadSheet.
-        """
-        if cube is None:
-            cubes = self.getCubes()
-            cube = cubes[0] if cubes else None
-            if cube is None:
-                log.warning(u'Конвертация в структуру SpreadSheet. Не определен куб.')
-                return None
-
-        # Объект управления структурой SpreadSheet
-        spreadsheet_mngr = spreadsheet_manager.icSpreadSheetManager()
-        self._prepare_spreadsheet(spreadsheet_mngr)
-        worksheet = spreadsheet_mngr.getWorkbook().getWorksheetIdx()
-
-        # Создаем таблицу
-        row_count = self._get_row_count(json_dict)
-        col_count = self._get_col_count(json_dict)
-        table = self._create_spreadsheet_table(spreadsheet_mngr, worksheet, row_count, col_count)
-
-        # Заполнение заголовка
-        self._create_spreadsheet_header(table, json_dict, cube)
-        # Создаем строки
-        self._create_spreadsheet_detail(table, json_dict)
-        # Заполнение подвала
-        self._create_spreadsheet_footer(table, json_dict)
-
-        return spreadsheet_mngr.getData()
-
+    # def _to_spreadsheet(self, json_dict, cube=None):
+    #     """
+    #     Преобразование результатов запроса к OLAP серверу к структуре SpreadSheet.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @param cube: Куб. Если не определен, то берется первый.
+    #     @return: Словарь структуры SpreadSheet.
+    #     """
+    #     if cube is None:
+    #         cubes = self.getCubes()
+    #         cube = cubes[0] if cubes else None
+    #         if cube is None:
+    #             log.warning(u'Конвертация в структуру SpreadSheet. Не определен куб.')
+    #             return None
+    #
+    #     # Объект управления структурой SpreadSheet
+    #     spreadsheet_mngr = spreadsheet_manager.icSpreadSheetManager()
+    #     self._prepare_spreadsheet(spreadsheet_mngr)
+    #     worksheet = spreadsheet_mngr.getWorkbook().getWorksheetIdx()
+    #
+    #     # Создаем таблицу
+    #     row_count = self._get_row_count(json_dict)
+    #     col_count = self._get_col_count(json_dict)
+    #     table = self._create_spreadsheet_table(spreadsheet_mngr, worksheet, row_count, col_count)
+    #
+    #     # Заполнение заголовка
+    #     self._create_spreadsheet_header(table, json_dict, cube)
+    #     # Создаем строки
+    #     self._create_spreadsheet_detail(table, json_dict)
+    #     # Заполнение подвала
+    #     self._create_spreadsheet_footer(table, json_dict)
+    #
+    #     return spreadsheet_mngr.getData()
+    #
     def _prepare_spreadsheet(self, spreadsheet_mngr):
         """
         Подготовить структуру Spreadsheet для дальнейшего заполнения.
@@ -660,43 +683,43 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             style.update_attributes(default_style_attr)
             # log.debug(u'2. Style %s' % str(style.get_attributes()))
         return True
-
-    def _get_row_count(self, json_dict):
-        """
-        Количество строк.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @return: Количество строк.
-        """
-        cells = json_dict.get('cells', dict())
-        # Учитываем строку заголовка и строку итогов
-        #                        V
-        row_count = len(cells) + 2
-        return row_count
-
-    def _get_col_count(self, json_dict):
-        """
-        Количество колонок.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @return: Количество колонок.
-        """
-        col_count = self._get_level_count(json_dict) + self._get_aggregate_count(json_dict)
-        return col_count
-
-    def _get_level_count(self, json_dict):
-        """
-        Количество уровней измерений.
-        @return: Количество уровней измерений.
-        """
-        attributes = json_dict.get('attributes', list())
-        return len(attributes)
-
-    def _get_aggregate_count(self, json_dict):
-        """
-        Количество уровней измерений.
-        @return: Количество уровней измерений.
-        """
-        aggregates = json_dict.get('aggregates', list())
-        return len(aggregates)
+    #
+    # def _get_row_count(self, json_dict):
+    #     """
+    #     Количество строк.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @return: Количество строк.
+    #     """
+    #     cells = json_dict.get('cells', dict())
+    #     # Учитываем строку заголовка и строку итогов
+    #     #                        V
+    #     row_count = len(cells) + 2
+    #     return row_count
+    #
+    # def _get_col_count(self, json_dict):
+    #     """
+    #     Количество колонок.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @return: Количество колонок.
+    #     """
+    #     col_count = self._get_level_count(json_dict) + self._get_aggregate_count(json_dict)
+    #     return col_count
+    #
+    # def _get_level_count(self, json_dict):
+    #     """
+    #     Количество уровней измерений.
+    #     @return: Количество уровней измерений.
+    #     """
+    #     attributes = json_dict.get('attributes', list())
+    #     return len(attributes)
+    #
+    # def _get_aggregate_count(self, json_dict):
+    #     """
+    #     Количество уровней измерений.
+    #     @return: Количество уровней измерений.
+    #     """
+    #     aggregates = json_dict.get('aggregates', list())
+    #     return len(aggregates)
 
     def _create_spreadsheet_table(self, spreadsheet_mngr, worksheet, row_count, col_count):
         """
@@ -714,135 +737,135 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         spreadsheet_mngr.createDefaultRows(table, count=row_count)
         return table
 
-    def _get_level_name(self, json_dict, level_idx):
-        """
-        Получить имя уровня по индексу.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param level_idx: Индекс уровня.
-        @return: Имя уровня.
-        """
-        attributes = json_dict.get('attributes', list())
-        return attributes[level_idx]
-
-    def _get_aggregate_name(self, json_dict, aggregate_idx):
-        """
-        Получить имя агрегации по индексу.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param aggregate_idx: Индекс агрегации.
-        @return: Имя агрегации.
-        """
-        aggregates = json_dict.get('aggregates', list())
-        return aggregates[aggregate_idx]
-
-    def _create_spreadsheet_header(self, table, json_dict, cube):
-        """
-        Создать заголовок данных структуры SpreadSheet.
-        @param table: Объект таблицы.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param cube: Объект куба.
-        @return: True/False
-        """
-        # Заполнение части уровней измерения строк
-        level_count = self._get_level_count(json_dict)
-        log.debug(u'Количество отображаемых уровней <%d>' % level_count)
-        for i in range(level_count):
-            cell = table.getCell(1, i + 1)
-            cell.setStyleID('GROUP')
-
-            level_name = self._get_level_name(json_dict, i)
-            if '.' in level_name:
-                dimension_name, level_name = level_name.split('.')
-                dimension = cube.findDimension(dimension_name)
-                level = dimension.findLevel(level_name)
-                label = level.getLabel() if level else u''
-            else:
-                dimension_name = level_name
-                dimension = cube.findDimension(dimension_name)
-                label = dimension.getLabel() if dimension else u''
-            cell.setValue(label)
-            # if level_count > 1:
-            #    cell.setMerge(level_count - 1, 0)
-
-        # Заполнение колонок агрегаций
-        aggregate_count = self._get_aggregate_count(json_dict)
-        for i in range(aggregate_count):
-            cell = table.getCell(1, level_count + i + 1)
-            cell.setStyleID('HEADER')
-            aggregate = cube.findAggregate(self._get_aggregate_name(json_dict, i))
-            cell.setValue(aggregate.getLabel() if aggregate else u'')
-        return True
-
-    def _create_spreadsheet_detail(self, table, json_dict):
-        """
-        Создать тело табличной части данных структуры SpreadSheet.
-        @param table: Объект таблицы.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @return: True/False
-        """
-        attributes = json_dict.get('attributes', list())
-        aggregates = json_dict.get('aggregates', list())
-        records = json_dict.get('cells', list())
-        for i_row, record in enumerate(records):
-            # Затем расставляем значения по своим местам
-            last_idx = 0
-            for name, value in record.items():
-                style_id = None
-                if name in attributes:
-                    idx = attributes.index(name)
-                    last_idx += 1
-                    style_id = 'GROUP'
-                elif name in aggregates:
-                    idx = last_idx + aggregates.index(name)
-                    style_id = 'CELL'
-                else:
-                    log.warning(u'Не определено имя колонки <%s>' % name)
-                    continue
-
-                # log.debug(u'Ячейка <%d x %d>' % (i_row + 1, idx + 1))
-                # Учет строки заголовка------V
-                cell = table.getCell(i_row + 2, idx + 1)
-                if style_id:
-                    cell.setStyleID(style_id)
-                cell.setValue(value if value is not None else u'')
-        return True
-
-    def _create_spreadsheet_footer(self, table, json_dict):
-        """
-        Создать подвал/итоговую строку данных структуры SpreadSheet.
-        @param table: Объект таблицы.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @return: True/False
-        """
-        summary = json_dict.get('summary', dict())
-        aggregates = json_dict.get('aggregates', list())
-        level_count = self._get_level_count(json_dict)
-        last_rec_idx = self._get_row_count(json_dict) - 1
-
-        # Затем расставляем значения по своим местам
-        for i, name in enumerate(aggregates):
-            idx = level_count + i
-            i_row = last_rec_idx + 1
-            i_col = idx + 1
-            cell = table.getCell(i_row, i_col)
-            cell.setStyleID('FOOTER')
-            value = summary.get(name, None)
-            cell.setValue(value if value is not None else u'')
-        return True
-
-    def to_spreadsheet(self, json_dict, cube=None):
-        """
-        Преобразование результатов запроса к OLAP серверу к структуре SpreadSheet.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param cube: Куб. Если не определен, то берется первый.
-        @return: Словарь структуры SpreadSheet.
-        """
-        try:
-            spreadsheet = self._to_spreadsheet(json_dict=json_dict, cube=cube)
-            # log.debug(u'SpreadSheet %s' % str(spreadsheet))
-            return spreadsheet
-        except:
-            log.fatal(u'Ошибка конвертации результатов запроса к OLAP серверу к структуре SpreadSheet.')
-        return None
+    # def _get_level_name(self, json_dict, level_idx):
+    #     """
+    #     Получить имя уровня по индексу.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @param level_idx: Индекс уровня.
+    #     @return: Имя уровня.
+    #     """
+    #     attributes = json_dict.get('attributes', list())
+    #     return attributes[level_idx]
+    #
+    # def _get_aggregate_name(self, json_dict, aggregate_idx):
+    #     """
+    #     Получить имя агрегации по индексу.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @param aggregate_idx: Индекс агрегации.
+    #     @return: Имя агрегации.
+    #     """
+    #     aggregates = json_dict.get('aggregates', list())
+    #     return aggregates[aggregate_idx]
+    #
+    # def _create_spreadsheet_header(self, table, json_dict, cube):
+    #     """
+    #     Создать заголовок данных структуры SpreadSheet.
+    #     @param table: Объект таблицы.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @param cube: Объект куба.
+    #     @return: True/False
+    #     """
+    #     # Заполнение части уровней измерения строк
+    #     level_count = self._get_level_count(json_dict)
+    #     log.debug(u'Количество отображаемых уровней <%d>' % level_count)
+    #     for i in range(level_count):
+    #         cell = table.getCell(1, i + 1)
+    #         cell.setStyleID('GROUP')
+    #
+    #         level_name = self._get_level_name(json_dict, i)
+    #         if '.' in level_name:
+    #             dimension_name, level_name = level_name.split('.')
+    #             dimension = cube.findDimension(dimension_name)
+    #             level = dimension.findLevel(level_name)
+    #             label = level.getLabel() if level else u''
+    #         else:
+    #             dimension_name = level_name
+    #             dimension = cube.findDimension(dimension_name)
+    #             label = dimension.getLabel() if dimension else u''
+    #         cell.setValue(label)
+    #         # if level_count > 1:
+    #         #    cell.setMerge(level_count - 1, 0)
+    #
+    #     # Заполнение колонок агрегаций
+    #     aggregate_count = self._get_aggregate_count(json_dict)
+    #     for i in range(aggregate_count):
+    #         cell = table.getCell(1, level_count + i + 1)
+    #         cell.setStyleID('HEADER')
+    #         aggregate = cube.findAggregate(self._get_aggregate_name(json_dict, i))
+    #         cell.setValue(aggregate.getLabel() if aggregate else u'')
+    #     return True
+    #
+    # def _create_spreadsheet_detail(self, table, json_dict):
+    #     """
+    #     Создать тело табличной части данных структуры SpreadSheet.
+    #     @param table: Объект таблицы.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @return: True/False
+    #     """
+    #     attributes = json_dict.get('attributes', list())
+    #     aggregates = json_dict.get('aggregates', list())
+    #     records = json_dict.get('cells', list())
+    #     for i_row, record in enumerate(records):
+    #         # Затем расставляем значения по своим местам
+    #         last_idx = 0
+    #         for name, value in record.items():
+    #             style_id = None
+    #             if name in attributes:
+    #                 idx = attributes.index(name)
+    #                 last_idx += 1
+    #                 style_id = 'GROUP'
+    #             elif name in aggregates:
+    #                 idx = last_idx + aggregates.index(name)
+    #                 style_id = 'CELL'
+    #             else:
+    #                 log.warning(u'Не определено имя колонки <%s>' % name)
+    #                 continue
+    #
+    #             # log.debug(u'Ячейка <%d x %d>' % (i_row + 1, idx + 1))
+    #             # Учет строки заголовка------V
+    #             cell = table.getCell(i_row + 2, idx + 1)
+    #             if style_id:
+    #                 cell.setStyleID(style_id)
+    #             cell.setValue(value if value is not None else u'')
+    #     return True
+    #
+    # def _create_spreadsheet_footer(self, table, json_dict):
+    #     """
+    #     Создать подвал/итоговую строку данных структуры SpreadSheet.
+    #     @param table: Объект таблицы.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @return: True/False
+    #     """
+    #     summary = json_dict.get('summary', dict())
+    #     aggregates = json_dict.get('aggregates', list())
+    #     level_count = self._get_level_count(json_dict)
+    #     last_rec_idx = self._get_row_count(json_dict) - 1
+    #
+    #     # Затем расставляем значения по своим местам
+    #     for i, name in enumerate(aggregates):
+    #         idx = level_count + i
+    #         i_row = last_rec_idx + 1
+    #         i_col = idx + 1
+    #         cell = table.getCell(i_row, i_col)
+    #         cell.setStyleID('FOOTER')
+    #         value = summary.get(name, None)
+    #         cell.setValue(value if value is not None else u'')
+    #     return True
+    #
+    # def to_spreadsheet(self, json_dict, cube=None):
+    #     """
+    #     Преобразование результатов запроса к OLAP серверу к структуре SpreadSheet.
+    #     @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+    #     @param cube: Куб. Если не определен, то берется первый.
+    #     @return: Словарь структуры SpreadSheet.
+    #     """
+    #     try:
+    #         spreadsheet = self._to_spreadsheet(json_dict=json_dict, cube=cube)
+    #         # log.debug(u'SpreadSheet %s' % str(spreadsheet))
+    #         return spreadsheet
+    #     except:
+    #         log.fatal(u'Ошибка конвертации результатов запроса к OLAP серверу к структуре SpreadSheet.')
+    #     return None
 
     def to_pivot_dataframe(self, json_dict, row_dimension=None, col_dimension=None):
         """
@@ -853,31 +876,34 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
         @return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
-        attributes = json_dict.get('attributes', list())
+        # attributes = json_dict.get('attributes', list())
         aggregates = json_dict.get('aggregates', list())
+        # levels = json_dict.get('levels', dict())
         cells = json_dict.get('cells', list())
 
-        col_names = attributes + aggregates
+        row_dimension_list = list(row_dimension) if row_dimension else list()
+        col_dimension_list = list(col_dimension) if col_dimension else list()
+        col_names = row_dimension_list + col_dimension_list + aggregates
         rows = [[cell.get(col_name, None) for col_name in col_names] for cell in cells]
-        # Создаем таблицу
-        data_frame = self.create_dataframe(rows, column_names=col_names)
+        data_frame = None
+        try:
+            # Создаем таблицу
+            data_frame = self.create_dataframe(rows, column_names=col_names)
 
-        # col_dimension_name = col_dimension[0] if col_dimension else None
-        # if col_dimension_name:
-        #     level_dimension_names = ['%s.%s' % (col_dimension_name, level_name) for level_name in col_dimension[1:]]
-        #     level_dimension_names = level_dimension_names if level_dimension_names else [col_dimension_name]
-        # else:
-        #     level_dimension_names = list()
-
-        # Устанавливаем индексы измерений
-        data_frame = self.set_pivot_dimensions(row_dimension=row_dimension, col_dimension=col_dimension)
-        # Заменяем NaN на 0
-        data_frame = self.fillna_value(0)
-        # data_frame = self.aggregate_dimensions('sum')
+            # Устанавливаем индексы измерений
+            data_frame = self.set_pivot_dimensions(row_dimension=row_dimension, col_dimension=col_dimension)
+            # Заменяем NaN на 0
+            data_frame = self.fillna_value(0)
+            # data_frame = self.aggregate_dimensions('sum')
+        except:
+            log.error(u'Ошибка заполнения сводной таблицы:')
+            log.error(str(data_frame))
+            log.fatal()
+            return None
 
         log.debug(u'')
-        log.debug(u'Измерения: %s' % attributes)
-        log.debug(u'Факты: %s' % aggregates)
+        # log.debug(u'Измерения: %s' % attributes)
+        # log.debug(u'Факты: %s' % aggregates)
         log.debug(u'Измерения строк: %s' % str(row_dimension))
         log.debug(u'Измерения столбцов: %s' % str(col_dimension))
         # log.debug(u'Измерения столбцов: %s' % str(level_dimension_names))
@@ -960,14 +986,21 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             # Заполнение части строковых измерений
             for i, level_name in enumerate(col_level.names):
                 cell = table.getCell(i_col_level + 1, i + 1)
+                cell.setStyleID('HEADER')
 
                 label = u''
-                if level_name is None:
-                    cell.setStyleID('CELL')
-                else:
+                if level_name:
                     label = self._get_pivot_label(cube, level_name)
-                    cell.setStyleID('HEADER')
                 cell.setValue(label)
+
+            # Заполнить не используемые ячейки заголовка
+            col_label_count = len(col_level.names)
+            not_use_col_count = len(dataframe.index.names) - col_label_count
+            for i in range(not_use_col_count):
+                cell = table.getCell(i_col_level + 1,
+                                     col_label_count + i + 1)
+                cell.setStyleID('HEADER')
+                cell.setValue(u'')
 
             # Заполнение части колоночных измерений
             for i, col_name in enumerate(col_level.to_list()):
@@ -976,6 +1009,23 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
                 cell.setStyleID('HEADER')
                 label = self._get_pivot_label(cube, col_name)
                 cell.setValue(label)
+
+        # Строка надписи колонок измерений строк
+        for i, level_name in enumerate(dataframe.index.names):
+            cell = table.getCell(dataframe.columns.nlevels + 1,
+                                 i + 1)
+            cell.setStyleID('GROUP')
+            label = u''
+            if level_name:
+                label = self._get_pivot_label(cube, level_name)
+            cell.setValue(label)
+        row_level_count = len(dataframe.index.names)
+        for i in range(len(dataframe.columns)):
+            cell = table.getCell(dataframe.columns.nlevels + 1,
+                                 row_level_count + i + 1)
+            cell.setStyleID('GROUP')
+            cell.setValue(u'')
+
         return True
 
     def _get_pivot_label(self, cube, name):
@@ -1014,10 +1064,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         if dataframe is None:
             dataframe = self.getPivotDataFrame()
 
+        header_row_count = dataframe.columns.nlevels + 1 if any(dataframe.index.names) else 0
         records = list(dataframe.to_records())
         for i, record in enumerate(records):
             for i_col in range(len(record)):
-                cell = table.getCell(dataframe.columns.nlevels + i + 1,
+                cell = table.getCell(header_row_count + i + 1,
                                      i_col + 1)
                 if i_col < dataframe.index.nlevels:
                     cell.setStyleID('GROUP')

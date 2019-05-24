@@ -661,10 +661,10 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             expr = expr.replace('\\n', '\n').replace('\\r', '\r')
         return expr
 
-    def _convertValue(self, name, str_value, property_type, spc=None):
+    def _convertValue(self, attr_name, str_value, property_type, spc=None):
         """
         Преобразовать значение согласно типу редактора свойства.
-        @param name: Имя атрибута.
+        @param attr_name: Имя атрибута.
         @param str_value: Значение в строковом представлении.
         @param property_type: Тип редактора свойства.
         @param spc: Спецификация компонента.
@@ -728,18 +728,18 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
 
         elif property_type == icDefInf.EDT_COMBINE:
             # Редактор комбинированных свойств.
-            if name == 'style':
+            if attr_name == 'style':
                 lst_value = [item.strip('"') for item in str_value.split(' ')]
                 value = 0
                 for v_name in lst_value:
                     value |= spc['__styles__'].get(v_name, 0)
-            elif name == 'flag':
+            elif attr_name == 'flag':
                 lst_value = [item.strip('"') for item in str_value.split(' ')]
                 value = 0
                 for v_name in lst_value:
                     value |= icDefInf.ICSizerFlag.get(v_name, 0)
             else:
-                log.warning(u'Преобразование типа <Редактор комбинированных свойств> для свойства [%s] не поддерживается' % name)
+                log.warning(u'Преобразование типа <Редактор комбинированных свойств> для свойства [%s] не поддерживается' % attr_name)
 
         elif property_type == icDefInf.EDT_COLOR:
             # Редактор цветов wxColour.
@@ -782,11 +782,11 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             # Редактор пользовательского свойства,
             # определяемого компонентом
             try:
-                value = eval(str_value)
+                value = eval(str_value, dict(), dict())
             except:
                 # Если ошибка то оставить как есть и сообщить об ошибке
                 value = str_value
-                log.warning(u'Ошибка конвертации значения свойства <%s>' % name)
+                log.warning(u'Ошибка конвертации значения свойства <%s>' % attr_name)
 
         elif property_type == icDefInf.EDT_RO_TEXTFIELD:
             # Read-Only текстовое поле

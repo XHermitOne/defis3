@@ -168,6 +168,10 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
                 # Если нет ничего, то полностью очистить грид
                 self._spreadsheet_mngr.reCreateGrid(self._spreadsheet_mngr.getSpreadSheetGrid(), 1, 1)
 
+            # ВНИМАНИЕ! Для обновления грида (Чтобы появились полосы прокрутки)
+            # необходимо контрол панели грида перекомпоновать
+            self.spreadsheet_panel.Layout()
+
         event.Skip()
 
 

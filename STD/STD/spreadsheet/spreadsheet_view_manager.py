@@ -48,10 +48,11 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
         """
         self._spreadsheet_grid = grid
 
-    def view_spreadsheet(self, spreadsheet_data):
+    def view_spreadsheet(self, spreadsheet_data, bAutoSize=True):
         """
         Отобразить данные структуры SpreadSheet в гриде.
         @param spreadsheet_data: Данные структуры SpreadSheet.
+        @param bAutoSize: Автоматически переразмерить грид?
         @return: True/False.
         """
         # log.debug(u'Просмотр SpreadSheet %s' % str(spreadsheet_data))
@@ -63,7 +64,13 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
             return False
 
         try:
-            return self._view_spreadsheet(spreadsheet_data)
+            result = self._view_spreadsheet(spreadsheet_data)
+
+            if bAutoSize:
+                grid = self.getSpreadSheetGrid()
+                if grid:
+                    grid.AutoSize()
+            return result
         except:
             log.fatal(u'Ошибка отображения данных структуры SpreadSheet в гриде.')
         return False

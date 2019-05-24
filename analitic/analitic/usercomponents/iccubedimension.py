@@ -38,12 +38,13 @@ ic_class_spc = {'type': 'CubeDimension',
                 'detail_fldname': None,  # Имя поля таблицы детализации, по которому осуществляется связь
                 'attributes': None,  # Список имен полей дополнительных атрибутов
                 'label': None,  # Надпись измерения
+                'mapping': None,  # Физичекое указание поля для отображения
 
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
                                                             'field_name',
                                                             'detail_tabname', 'detail_fldname',
-                                                            'label'],
+                                                            'label', 'mapping'],
                                    icDefInf.EDT_TEXTLIST: ['attributes'],
                                    },
                 '__parent__': cube_dimension_proto.SPC_IC_CUBEDIMENSION,
@@ -123,6 +124,12 @@ class icCubeDimension(icwidget.icSimple,
         if not field_name:
             field_name = self.getName()
         return field_name
+
+    def getMapping(self):
+        """
+        Физичекое указание поля для отображения измерения.
+        """
+        return self.getICAttr('mapping')
 
     def getAttributes(self):
         """

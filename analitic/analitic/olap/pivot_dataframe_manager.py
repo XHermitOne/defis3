@@ -136,4 +136,9 @@ class icPivotDataFrameManager(object):
             dataframe = self._cur_pivot_dataframe
 
         row_count, col_count = self.get_pivot_shape(dataframe)
-        return row_count + dataframe.columns.nlevels, col_count + dataframe.index.nlevels
+        # Учет строки надписей колонок уовней строк---V
+        row_level_count = 1 if any(dataframe.index.names) else 0
+
+        row_count = row_count + dataframe.columns.nlevels + row_level_count
+        col_count = col_count + dataframe.index.nlevels
+        return row_count, col_count

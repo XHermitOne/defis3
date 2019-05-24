@@ -105,6 +105,10 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
             else:
                 # Если нет ничего, то полностью очистить грид
                 self._spreadsheet_mngr.reCreateGrid(self._spreadsheet_mngr.getSpreadSheetGrid(), 1, 1)
+
+            # ВНИМАНИЕ! Для обновления грида (Чтобы появились полосы прокрутки)
+            # необходимо контрол панели грида перекомпоновать
+            self.grid_panel.Layout()
             return True
         else:
             log.warning(u'Не определен OLAP сервер в браузере запросов')

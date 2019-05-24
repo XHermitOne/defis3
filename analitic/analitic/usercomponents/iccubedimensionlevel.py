@@ -35,10 +35,11 @@ ic_class_spc = {'type': 'CubeDimensionLevel',
                 'key': None,  # Указывает, какой атрибут будет использоваться для фильтрации
                 'label_attribute': None,  # Указывает, какой атрибут будет отображаться в пользовательском интерфейсе
                 'label': None,  # Надпись уровня измерения
+                'mapping': None,  # Физичекое указание поля для отображения
 
                 '__events__': {},
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
-                                                            ],
+                                                            'mapping'],
                                    icDefInf.EDT_TEXTLIST: ['attributes'],
                                    icDefInf.EDT_USER_PROPERTY: ['key', 'label_attribute'],
                                    },
@@ -74,11 +75,14 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     ret = None
     if attr in ('key', 'label_attribute'):
         spc = propEdt.getResource()
-        choices = [attribute for attribute in spc.get('attributes', [])] if spc.get('attributes', None) else []
-        attribute = ic_dlg.icSingleChoiceDlg(Parent_=None, Title_=u'Аттрибуты',
-                                             Text_=u'Выберите аттрибут',
-                                             Choice_=choices)
-        ret = attribute if attribute else None
+        choices = [u''] + [attribute for attribute in spc.get('attributes', [])] if spc.get('attributes', None) else []
+        result = ic_dlg.icSingleChoiceDlg(Parent_=None, Title_=u'Аттрибуты',
+                                          Text_=u'Выберите аттрибут',
+                                          Choice_=choices)
+        if result == u'':
+            return None
+        else:
+            ret = result if result else None
 
     if ret is None:
         return value
@@ -155,6 +159,7 @@ class icCubeDimensionLevel(icwidget.icSimple,
         Атрибут надписи. Указывает, какой атрибут будет отображаться в пользовательском интерфейсе.
         """
         label_attribute = self.getICAttr('label_attribute')
+        # log.debug(u'Атрибут надписи <%s>' % label_attribute)
         return label_attribute
 
     def getLabel(self):
@@ -169,3 +174,9 @@ class icCubeDimensionLevel(icwidget.icSimple,
         if not label:
             label = self.getName()
         return label
+
+    def getMapping(self):
+        """
+        Физичекое указание поля для отображения уровня.
+        """
+        return self.getICAttr('mapping')
