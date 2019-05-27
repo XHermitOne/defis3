@@ -16,6 +16,7 @@ SPC_IC_CUBEDIMENSIONLEVEL = {'attributes': None,  # Список имен пол
                              'label_attribute': None,   # Указывает, какой атрибут будет отображаться в пользовательском интерфейсе
                              # 'nonadditive': None,   #
                              'mapping': None,  # Физичекое указание поля для отображения
+                             'get_normal': None,    # Функция нормирования данных уровня
 
                              '__parent__': icwidget.SPC_IC_SIMPLE,
                              '__attr_hlp__': {'attributes': u'Список имен полей дополнительных атрибутов',
@@ -23,6 +24,7 @@ SPC_IC_CUBEDIMENSIONLEVEL = {'attributes': None,  # Список имен пол
                                               'label_attribute': u'Указывает, какой атрибут будет отображаться в пользовательском интерфейсе',
                                               'label': u'Надпись уровня измерения',
                                               'mapping': u'Физичекое указание поля для отображения',
+                                              'get_normal': u'Функция нормирования данных уровня',
                                               },
                              }
 

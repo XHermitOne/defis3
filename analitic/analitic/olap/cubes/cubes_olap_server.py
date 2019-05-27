@@ -712,6 +712,37 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         log.debug('\n' + str(data_frame))
         return data_frame
 
+    def norm_pivot_dataframe(self, dataframe, cube=None, row_dimension=None, col_dimension=None):
+        """
+        Нормировать сводную таблицу.
+        @param dataframe: Объект сводной таблицы.
+        @param cube: Объект куба. Если не определен, то берется первый куб в списке.
+        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        """
+        if cube is None:
+            cubes = self.getCubes()
+            cube = cubes[0] if cubes else None
+        if cube is None:
+            log.warning(u'Не определен куб для нормализации данных сводной таблицы.')
+            return dataframe
+
+        if row_dimension:
+            # Проверяем строковые измерения
+            for row in dataframe.index:
+                print(row)
+                for name in row_dimension:
+                    if '.' in name:
+                        dimension_name, level_name = name.split('.')
+                        dimension = cube.findDimension(dimension_name)
+                        level = dimension.findLevel(level_name) if dimension else None
+                        normal_data = level.getNormal()
+                        if normal_data:
+                            print(normal_data)
+
+        return dataframe
+
     def pivot_to_spreadsheet(self, json_dict=None, cube=None, dataframe=None):
         """
         Преобразование результатов запроса к OLAP серверу к структуре

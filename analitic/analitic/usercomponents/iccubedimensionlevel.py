@@ -37,11 +37,15 @@ ic_class_spc = {'type': 'CubeDimensionLevel',
                 'label': None,  # Надпись уровня измерения
                 'mapping': None,  # Физичекое указание поля для отображения
 
-                '__events__': {},
+                'get_normal': None,  # Функция нормирования данных уровня
+
+                '__events__': {'get_normal': (None, 'getNormal', False),
+                               },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',
                                                             'mapping'],
                                    icDefInf.EDT_TEXTLIST: ['attributes'],
                                    icDefInf.EDT_USER_PROPERTY: ['key', 'label_attribute'],
+                                   icDefInf.EDT_PY_SCRIPT: ['get_normal']
                                    },
                 '__parent__': cube_dimension_level_proto.SPC_IC_CUBEDIMENSIONLEVEL,
                 '__lists__': {},
@@ -180,3 +184,11 @@ class icCubeDimensionLevel(icwidget.icSimple,
         Физичекое указание поля для отображения уровня.
         """
         return self.getICAttr('mapping')
+
+    def getNormal(self):
+        """
+        Функция нормирования данных уровня.
+        """
+        if self.isICAttrValue('get_normal'):
+            return self.eval_attr('get_normal')
+        return None

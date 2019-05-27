@@ -99,7 +99,12 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
                 else:
                     row_dimension_url = request.get('drilldown', None)
                     row_dimension = self._parse_dimension_names(row_dimension_url, request, olap_server=olap_server)
+                    col_dimension = None
                     dataframe = olap_server.to_pivot_dataframe(json_response, row_dimension=row_dimension)
+                # Произвести нормализацию сводной таблицы
+                dataframe = olap_server.norm_pivot_dataframe(dataframe=dataframe, cube=olap_server.getCubes()[0],
+                                                             row_dimension=row_dimension, col_dimension=col_dimension)
+                # Преобразование в SpreadSheet
                 spreadsheet = olap_server.pivot_to_spreadsheet(json_response, dataframe=dataframe)
                 self._spreadsheet_mngr.view_spreadsheet(spreadsheet)
             else:
