@@ -113,12 +113,13 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
                 # cell = row.getCellIdx(i_col)
                 if cell:
                     value = cell.getValue()
-                    # log.debug(u'Значение <%s> [%d x %d]' % (value, i_row, i_col))
                     if value:
                         row_idx, col_idx, merge_down, merge_accross = cell.getRegion()
-                        if merge_down > 1 or merge_accross > 1:
-                            self._spreadsheet_grid.SetCellSize(row_idx, col_idx, merge_down+1, merge_accross+1)
-                        # log.debug(u'Адрес <%d x %d>' % (row_idx, col_idx))
+                        log.debug(u'Значение <%s> [%d x %d] <%d x %d>' % (value, i_row, i_col, merge_down, merge_accross))
+                        if merge_down >= 1 or merge_accross >= 1:
+                            self._spreadsheet_grid.SetCellSize(row_idx - 1, col_idx - 1,
+                                                               merge_down + 1, merge_accross + 1)
+                            log.debug(u'Адрес [%d x %d] <%d x %d> ' % (row_idx, col_idx, merge_down, merge_accross))
                         self._spreadsheet_grid.SetCellValue(row_idx - 1, col_idx - 1, str(value))
         return True
 

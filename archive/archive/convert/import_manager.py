@@ -161,13 +161,13 @@ class icBalansImportManager(icImportManagerInterface):
         """
         Поиск кода участка.
         """
-        if sType.upper() == u'RLZ':
+        if sType.upper() == u'R':
             return u'РЛЗ'
-        elif sType.upper() == u'MTS':
+        elif sType.upper() == u'M':
             return u'МТ'
-        elif sType.upper() == u'ZTR':
+        elif sType.upper() == u'Z':
             return u'ЗТР'
-        elif sType.upper() == u'OSN':
+        elif sType.upper() == u'O':
             return u'ОС'
         return u''
 
@@ -175,13 +175,13 @@ class icBalansImportManager(icImportManagerInterface):
         """
         Поиск наименования участка.
         """
-        if sType.upper() == u'RLZ':
+        if sType.upper() == u'R':
             return u'Реализация'
-        elif sType.upper() == u'MTS':
+        elif sType.upper() == u'M':
             return u'Материалы'
-        elif sType.upper() == u'ZTR':
+        elif sType.upper() == u'Z':
             return u'Затраты на производство'
-        elif sType.upper() == u'OSN':
+        elif sType.upper() == u'O':
             return u'Основные средства'
         return u''
 

@@ -45,7 +45,8 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
 
                     for filename in filenames:
                         # Загрузка из samba ресурса
-                        base_filename = os.path.splitext(filename)[0] + dst_file_ext
+                        name, ext = os.path.splitext(filename)
+                        base_filename = name + ext.upper().replace('.', '_') + dst_file_ext
                         new_filename = os.path.join(dst_path, base_filename)
                         result = smbfunc.smb_download_file_rename(download_urls=(url, ), filename=filename, dst_filename=new_filename)
                         log.debug(u'Загрузка файла <%s>...%s' % (filename, u'ДА' if result else u'НЕТ'))
@@ -58,29 +59,36 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
                     filenames = filefunc.get_dir_filename_list(url, pattern)
 
                     for filename in filenames:
-                        base_filename = os.path.splitext(filename)[0] + dst_file_ext
+                        name, ext = os.path.splitext(filename)
+                        base_filename = name + ext.upper().replace('.', '_') + dst_file_ext
                         new_filename = os.path.join(dst_path, base_filename)
                         result = filefunc.copyFile(filename, new_filename)
                         log.debug(u'Копирование файла <%s> -> <%s> ... %s' % (filename, new_filename,  u'ДА' if result else u'НЕТ'))
                         smb_results.append(result)
-            results[i] = all(smb_results)                
+            results[i] = all(smb_results)
     except:
         log.fatal(u'Ошибка загрузки файлов')
 
     return all(results)
 
 
-def download_archive_files(archive_year=None):
+def download_archive_files(archive_year=None, archive_month=None):
     """
     Загрузить архивные файлы за год.
     @param archive_year: Год загрузки. Если не указан, то берется текущий системный.
+    @param archive_month: Месяц загрузки. Если не указан, то берется текущий системный.
     @return: True/False
     """
     if archive_year is None:
         archive_year = datetime.date.today().year
+    if archive_month is None:
+        archive_month = datetime.date.today().month
 
     if isinstance(archive_year, datetime.date) or isinstance(archive_year, datetime.datetime):
         archive_year = archive_year.year
+
+    if isinstance(archive_month, datetime.date) or isinstance(archive_month, datetime.datetime):
+        archive_month = archive_month.month
 
     urls = [url_fmt % archive_year for url_fmt in load_net_config.ARCH_SMB_URLS_FMT]
     return download_all_dbf(urls=urls, dst_file_ext='_%d.DBF' % archive_year)
