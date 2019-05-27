@@ -819,8 +819,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
                 elif i_span > 1:
                     row = i_col_level + 1
                     col = dataframe.index.nlevels + i - i_span + 1
-                    log.debug(u'1. Установить объединение ячеек [%d x %d] <%s : %s : %d>' % (row, col, prev_label,
-                                                                                             label, i_span))
+                    # log.debug(u'1. Установить объединение ячеек [%d x %d] <%s : %s : %d>' % (row, col, prev_label,
+                    #                                                                          label, i_span))
                     merge_cell = table.getCell(row, col)
                     merge_cell.setMerge(i_span - 1, 0)
                     i_span = 1
@@ -828,8 +828,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             if i_span > 1:
                 row = i_col_level + 1
                 col = dataframe.index.nlevels + len(col_level.to_list()) - i_span + 1
-                log.debug(u'2. Установить объединение ячеек [%d x %d] <%s : %s : %d>' % (row, col, prev_label,
-                                                                                         label, i_span))
+                # log.debug(u'2. Установить объединение ячеек [%d x %d] <%s : %s : %d>' % (row, col, prev_label,
+                #                                                                          label, i_span))
                 merge_cell = table.getCell(row, col)
                 merge_cell.setMerge(i_span - 1, 0)
 
@@ -914,9 +914,9 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
                     elif i_span[i_col] > 1:
                         row = header_row_count + i + 1 - i_span[i_col]
                         col = i_col + 1
-                        log.debug(u'1. Установить объединение ячеек [%d x %d] <%s : %s : %d>' % (row, col,
-                                                                                                 prev_values[i_col],
-                                                                                                 value, i_span[i_col]))
+                        # log.debug(u'1. Установить объединение ячеек [%d x %d] <%s : %s : %d>' % (row, col,
+                        #                                                                          prev_values[i_col],
+                        #                                                                          value, i_span[i_col]))
                         merge_cell = table.getCell(row, col)
                         merge_cell.setMerge(0, i_span[i_col] - 1)
                         i_span[i_col] = 1
@@ -926,8 +926,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             if i_span[i_col] > 1:
                 row = header_row_count + len(records) + 1 - i_span[i_col]
                 col = i_col + 1
-                log.debug(u'2. Установить объединение ячеек [%d x %d] <%s : %d>' % (row, col, prev_values[i_col],
-                                                                                    i_span[i_col]))
+                # log.debug(u'2. Установить объединение ячеек [%d x %d] <%s : %d>' % (row, col, prev_values[i_col],
+                #                                                                     i_span[i_col]))
                 merge_cell = table.getCell(row, col)
                 merge_cell.setMerge(0, i_span[i_col] - 1)
         return True

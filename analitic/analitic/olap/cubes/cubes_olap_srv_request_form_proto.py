@@ -75,7 +75,7 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		
 		bSizer9 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.cut_checkBox = wx.CheckBox( self, wx.ID_ANY, u"cut", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.cut_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Срез (cut)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer9.Add( self.cut_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.cut_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -89,7 +89,7 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		
 		bSizer101 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.drilldown_checkBox = wx.CheckBox( self, wx.ID_ANY, u"drilldown", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.drilldown_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Измерения групп (drilldown)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer101.Add( self.drilldown_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.drilldown_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -103,7 +103,7 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		
 		bSizer11 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.aggregates_checkBox = wx.CheckBox( self, wx.ID_ANY, u"aggregates", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.aggregates_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Агрегации (aggregates)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer11.Add( self.aggregates_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.aggregates_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -117,7 +117,7 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		
 		bSizer111 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.measures_checkBox = wx.CheckBox( self, wx.ID_ANY, u"measures", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.measures_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Меры для расчета (measures)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer111.Add( self.measures_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.measures_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -131,7 +131,7 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		
 		bSizer1111 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.page_checkBox = wx.CheckBox( self, wx.ID_ANY, u"page", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.page_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Номер страницы (page)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer1111.Add( self.page_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.page_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -145,7 +145,7 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		
 		bSizer11111 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.pagesize_checkBox = wx.CheckBox( self, wx.ID_ANY, u"pagesize", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.pagesize_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Размер страницы (pagesize)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer11111.Add( self.pagesize_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.pagesize_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -159,7 +159,7 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		
 		bSizer11112 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.order_checkBox = wx.CheckBox( self, wx.ID_ANY, u"order", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.order_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Порядок сортировки (order)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer11112.Add( self.order_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.order_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -173,7 +173,7 @@ class icCubesOLAPSrvRequestPanelProto ( wx.Panel ):
 		
 		bSizer11113 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.split_checkBox = wx.CheckBox( self, wx.ID_ANY, u"split", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.split_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Разделенная ячейка (split)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer11113.Add( self.split_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.split_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )

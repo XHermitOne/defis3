@@ -52,7 +52,7 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		
 		# Grid
 		self.spreadsheet_grid.CreateGrid( 5, 5 )
-		self.spreadsheet_grid.EnableEditing( True )
+		self.spreadsheet_grid.EnableEditing( False )
 		self.spreadsheet_grid.EnableGridLines( True )
 		self.spreadsheet_grid.EnableDragGridSize( False )
 		self.spreadsheet_grid.SetMargins( 0, 0 )
