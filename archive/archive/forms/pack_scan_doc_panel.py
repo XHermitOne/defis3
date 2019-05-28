@@ -125,17 +125,18 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         if doc_indexes:
             archive_doc = ic.metadata.archive.mtd.scan_document.create()
             pack_result = True
+            # ВНИМАНИЕ! Чтобы не было нарушения индексов перенос документов
+            # делаем с конца списка документов (старших индексов).
+            # Для этого делаем обратную сортировку списка индексов.
+            doc_indexes = sorted(doc_indexes, reverse=True)
             for doc_idx in doc_indexes:
                 doc = self.doc_navigator.getSlaveDocument(index=doc_idx)
                 scan_filename = doc.getRequisiteValue('file_name')
                 if scan_filename and os.path.exists(scan_filename):
-                    #result = doc.remove_to(archive_doc, doc_uuid=doc.getUUID(),
-                    #                       requisite_replace={'scan_doc_to': 'pack_doc_scan_to',
-                    #                                          'scan_doc_from': 'pack_doc_scan_from'})
                     result = self.doc_navigator.remove_toDoc(UUID=doc.getUUID(), to_document=archive_doc,
-                                           requisite_replace={'scan_doc_to': 'pack_doc_scan_to',
-                                                              'scan_doc_from': 'pack_doc_scan_from'},
-                                                              bRefresh=False)
+                                                             requisite_replace={'scan_doc_to': 'pack_doc_scan_to',
+                                                                                'scan_doc_from': 'pack_doc_scan_from'},
+                                                             bRefresh=False)
                     if not result:
                         ic_dlg.icWarningBox(u'ВНИМАНИЕ',
                                             u'Ошибка переноса документа <%s> в архив' % doc.getRequisiteValue('n_doc'))
