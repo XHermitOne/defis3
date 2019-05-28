@@ -65,6 +65,8 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         self.search_crit_panel.clear_button.Bind(wx.EVT_BUTTON, self.onClearButtonClick)
         self.search_crit_panel.search_button.Bind(wx.EVT_BUTTON, self.onSearchButtonClick)
 
+        # log.debug(u'DOC CHECK LIST CTRL <%s>' % self.docs_listCtrl.__class__.__name__)
+
     def onAllCheckBox(self, event):
         """
         Установка/Снятие отметки выделения всех найденных документов.
@@ -119,40 +121,40 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         Обработчик инструмента получения отчета списка документов.
         """
         rep_manager = ic.getReportManager()
-        
+
         doc_type = self.search_crit_panel.doc_type_ctrl.getValue()
         contragents = self.search_crit_panel.contragent_ctrl.getValue()
         entity=self.search_crit_panel.entity_ctrl.getValue()
-        
+
         wx_date = self.search_crit_panel.start_datePicker.GetValue()
         docdate_start = ic_time.wxdate2pydate(wx_date).strftime(DB_DATE_FMT) if self.search_crit_panel.date_checkBox.IsChecked() else ''
         wx_date = self.search_crit_panel.end_datePicker.GetValue()
         docdate_end = ic_time.wxdate2pydate(wx_date).strftime(DB_DATE_FMT) if self.search_crit_panel.date_checkBox.IsChecked() else ''
-        
+
         orderby_idx = self.search_crit_panel.orderby_choice.GetSelection()
-        
-        vars = dict(docnum=self.search_crit_panel.docnum_textCtrl.GetValue(), 
-                    is_docnum_equal=bool(self.search_crit_panel.docnum_radioBox.GetSelection()), 
-                    docname=self.search_crit_panel.docname_textCtrl.GetValue(), 
-                    docdate_start=docdate_start, 
-                    docdate_end=docdate_end, 
-                    doctype= doc_type if doc_type else '', 
-                    contragents= contragents if contragents else '', 
+
+        vars = dict(docnum=self.search_crit_panel.docnum_textCtrl.GetValue(),
+                    is_docnum_equal=bool(self.search_crit_panel.docnum_radioBox.GetSelection()),
+                    docname=self.search_crit_panel.docname_textCtrl.GetValue(),
+                    docdate_start=docdate_start,
+                    docdate_end=docdate_end,
+                    doctype= doc_type if doc_type else '',
+                    contragents= contragents if contragents else '',
                     entity=entity if entity else '',
-                    description=self.search_crit_panel.description_textCtrl.GetValue(), 
+                    description=self.search_crit_panel.description_textCtrl.GetValue(),
                     comment=self.search_crit_panel.comment_textCtrl.GetValue(),
-                    tag0=self.search_crit_panel.tag0_textCtrl.GetValue(), 
-                    tag1=self.search_crit_panel.tag1_textCtrl.GetValue(), 
-                    tag2=self.search_crit_panel.tag2_textCtrl.GetValue(), 
-                    tag3=self.search_crit_panel.tag3_textCtrl.GetValue(), 
-                    tag4=self.search_crit_panel.tag4_textCtrl.GetValue(), 
-                    tag5=self.search_crit_panel.tag5_textCtrl.GetValue(), 
-                    tag6=self.search_crit_panel.tag6_textCtrl.GetValue(), 
-                    tag7=self.search_crit_panel.tag7_textCtrl.GetValue(), 
-                    tag8=self.search_crit_panel.tag8_textCtrl.GetValue(), 
-                    tag9=self.search_crit_panel.tag9_textCtrl.GetValue(), 
+                    tag0=self.search_crit_panel.tag0_textCtrl.GetValue(),
+                    tag1=self.search_crit_panel.tag1_textCtrl.GetValue(),
+                    tag2=self.search_crit_panel.tag2_textCtrl.GetValue(),
+                    tag3=self.search_crit_panel.tag3_textCtrl.GetValue(),
+                    tag4=self.search_crit_panel.tag4_textCtrl.GetValue(),
+                    tag5=self.search_crit_panel.tag5_textCtrl.GetValue(),
+                    tag6=self.search_crit_panel.tag6_textCtrl.GetValue(),
+                    tag7=self.search_crit_panel.tag7_textCtrl.GetValue(),
+                    tag8=self.search_crit_panel.tag8_textCtrl.GetValue(),
+                    tag9=self.search_crit_panel.tag9_textCtrl.GetValue(),
                     order_by_field=['', 'n_doc', 'doc_name', 'doc_date'][orderby_idx])
-        rep_manager.prev_select_action('doc_ext/search_document_list.ods', 
+        rep_manager.prev_select_action('doc_ext/search_document_list.ods',
                                        variables=vars)
         event.Skip()
 
