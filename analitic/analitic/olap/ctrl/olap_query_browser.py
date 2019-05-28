@@ -41,6 +41,33 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
         # Менеджер управления выводом структуры SpreadSheet
         self._spreadsheet_mngr = spreadsheet_view_manager.icSpreadSheetViewManager(grid=self.spreadsheet_grid)
 
+        # Текущая обрабатывая сводная таблица
+        self._pivot_dataframe = None
+        # Текущие данные полученные из OLAP сервера
+        self._json_response = None
+
+    def init(self):
+        """
+        Инициализация браузера.
+        """
+        self.init_img()
+        self.init_ctrl()
+
+    def init_img(self):
+        """
+        Инициализация образов контролов.
+        """
+        self.setLibImages_ToolBar(tool_bar=self.ctrl_toolBar,
+                                  norm_tool='table_columns_insert_right.png',
+                                  total_tool='table_layout_grand_totals.png',
+                                  grp_total_tool='table_layout_subtotals.png')
+
+    def init_ctrl(self):
+        """
+        Инициализация контролов.
+        """
+        pass
+
     def onCollapseToolClicked(self, event):
         """
         Обработчик кнопки СВЕРНУТЬ.
@@ -55,6 +82,27 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
         """
         self.expandSplitterPanel(splitter=self.browse_splitter, toolbar=self.ctrl_toolBar,
                                  collapse_tool=self.collapse_tool, expand_tool=self.expand_tool)
+        event.Skip()
+
+    def onNormToolClicked(self, event):
+        """
+        Обработчик инструмента нормализации сводной таблицы.
+        """
+        self.viewSpreadsheet()
+        event.Skip()
+
+    def onTotalToolClicked(self, event):
+        """
+        Обработчик подсчета итогов по строкам.
+        """
+        self.viewSpreadsheet()
+        event.Skip()
+
+    def onGrpTotalToolClicked(self, event):
+        """
+        Обработчик подсчета итогов по строковым группам.
+        """
+        self.viewSpreadsheet()
         event.Skip()
 
     def refreshPivotTable(self, request_url=None, request=None):
@@ -88,24 +136,76 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
             return False
 
         if olap_server:
-            json_response = olap_server.get_response(request_url)
-            if json_response:
+            self._json_response = olap_server.get_response(request_url)
+            if self._json_response:
                 if 'drilldown' in request and '|' in request['drilldown']:
                     row_dimension_url, col_dimension_url = request['drilldown'].split('|')
                     row_dimension = self._parse_dimension_names(row_dimension_url, request, olap_server=olap_server)
                     col_dimension = self._parse_dimension_names(col_dimension_url, request, olap_server=olap_server)
-                    dataframe = olap_server.to_pivot_dataframe(json_response, row_dimension=row_dimension,
-                                                               col_dimension=col_dimension)
+                    self._pivot_dataframe = olap_server.to_pivot_dataframe(self._json_response, row_dimension=row_dimension,
+                                                                           col_dimension=col_dimension)
                 else:
                     row_dimension_url = request.get('drilldown', None)
                     row_dimension = self._parse_dimension_names(row_dimension_url, request, olap_server=olap_server)
-                    col_dimension = None
-                    dataframe = olap_server.to_pivot_dataframe(json_response, row_dimension=row_dimension)
-                # Произвести нормализацию сводной таблицы
-                dataframe = olap_server.norm_pivot_dataframe(dataframe=dataframe, cube=olap_server.getCubes()[0],
-                                                             row_dimension=row_dimension, col_dimension=col_dimension)
+                    self._pivot_dataframe = olap_server.to_pivot_dataframe(self._json_response, row_dimension=row_dimension)
+            return self.viewSpreadsheet(pivot_dataframe=self._pivot_dataframe,
+                                        olap_server=olap_server,
+                                        json_response=self._json_response)
+        else:
+            log.warning(u'Не определен OLAP сервер в браузере запросов')
+        return False
+
+    def isTotalPivotTable(self):
+        """
+        Включен расчет общих итогов в сводной таблице?
+        @return: True/False
+        """
+        return self.ctrl_toolBar.GetToolState(self.total_tool.GetId())
+
+    def isTotalGroupPivotTable(self):
+        """
+        Включен расчет итогов по группам в сводной таблице?
+        @return: True/False
+        """
+        return self.ctrl_toolBar.GetToolState(self.grp_total_tool.GetId())
+
+    def viewSpreadsheet(self, pivot_dataframe=None, olap_server=None, json_response=None):
+        """
+        Вывести сводную таблицу в контрол отображения.
+        Дополнительные изменения сводной таблицы могут производиться с помощью
+        панели инструментов.
+        @param pivot_dataframe: pandas.DataFrame объект сводной таблицы
+            для отображения.
+            Если не определен , то берется текущая сводная таблица.
+        @param olap_server: Объект OLAP сервера.
+            Если не определен, то берется из контрола дерева запросов.
+        @param json_response: Текущие данные полученные из OLAP сервера.
+            Если не определены, то берутся внутренние.
+        @return: True/False.
+        """
+        if pivot_dataframe is None:
+            pivot_dataframe = self._pivot_dataframe
+
+        if olap_server is None:
+            olap_server = self.query_treectrl.getOLAPServer()
+
+        if json_response is None:
+            json_response = self._json_response
+
+        try:
+            if pivot_dataframe is not None and json_response:
+                # Дополнительные преобразования сводной таблицы
+                if self.isTotalGroupPivotTable():
+                    # Расчет групповых итогов
+                    pivot_dataframe = olap_server.total_group_pivot_dataframe(pivot_dataframe)
+                    log.debug(u'Расчет групповых итогов:\n%s' % str(pivot_dataframe))
+                if self.isTotalPivotTable():
+                    # Расчет общих итогов
+                    pivot_dataframe = olap_server.total_pivot_dataframe(pivot_dataframe)
+                    log.debug(u'Расчет общих итогов:\n%s' % str(pivot_dataframe))
+
                 # Преобразование в SpreadSheet
-                spreadsheet = olap_server.pivot_to_spreadsheet(json_response, dataframe=dataframe)
+                spreadsheet = olap_server.pivot_to_spreadsheet(json_response, dataframe=pivot_dataframe)
                 self._spreadsheet_mngr.view_spreadsheet(spreadsheet)
             else:
                 # Если нет ничего, то полностью очистить грид
@@ -115,8 +215,10 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
             # необходимо контрол панели грида перекомпоновать
             self.grid_panel.Layout()
             return True
-        else:
-            log.warning(u'Не определен OLAP сервер в браузере запросов')
+        except:
+            log.error(u'Ошибка отображения сводной таблицы')
+            log.error(str(pivot_dataframe))
+            log.fatal()
         return False
 
     def _parse_dimension_names(self, dimension_url, request, olap_server=None):
@@ -183,6 +285,7 @@ def show_olap_query_browser(parent=None, title=u'Аналитические от
         olap_server.run()
 
         browser_panel = icOLAPQueryBrowserProto(parent=parent)
+        browser_panel.init()
         browser_panel.query_treectrl.setOLAPServer(olap_server)
 
         ic_user.addMainNotebookPage(browser_panel, title)

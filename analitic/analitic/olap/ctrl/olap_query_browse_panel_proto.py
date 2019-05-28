@@ -23,15 +23,6 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.ctrl_toolBar = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.collapse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
-		
-		self.expand_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
-		
-		self.ctrl_toolBar.Realize() 
-		
-		bSizer1.Add( self.ctrl_toolBar, 0, wx.EXPAND, 5 )
-		
 		self.browse_splitter = wx.SplitterWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.SP_3D )
 		self.browse_splitter.Bind( wx.EVT_IDLE, self.browse_splitterOnIdle )
 		
@@ -47,6 +38,23 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		bSizer2.Fit( self.tree_panel )
 		self.grid_panel = wx.Panel( self.browse_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer3 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.ctrl_toolBar = wx.ToolBar( self.grid_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
+		self.collapse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_UP, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Свернуть", u"Свернуть", None ) 
+		
+		self.expand_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_DOWN, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Развернуть", u"Развернуть", None ) 
+		
+		self.ctrl_toolBar.AddSeparator()
+		
+		self.norm_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_REPORT_VIEW, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_CHECK, u"Нормализовать", u"Нормализовать", None ) 
+		
+		self.total_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-justify-fill", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_CHECK, u"Общие итоги", u"Общие итоги", None ) 
+		
+		self.grp_total_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-justify-center", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_CHECK, u"Итоги по группам", u"Итоги по группам", None ) 
+		
+		self.ctrl_toolBar.Realize() 
+		
+		bSizer3.Add( self.ctrl_toolBar, 0, wx.EXPAND, 5 )
 		
 		self.spreadsheet_grid = wx.grid.Grid( self.grid_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		
@@ -88,6 +96,9 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		# Connect Events
 		self.Bind( wx.EVT_TOOL, self.onCollapseToolClicked, id = self.collapse_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onExpandToolClicked, id = self.expand_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onNormToolClicked, id = self.norm_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onTotalToolClicked, id = self.total_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onGrpTotalToolClicked, id = self.grp_total_tool.GetId() )
 	
 	def __del__( self ):
 		pass
@@ -98,6 +109,15 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		event.Skip()
 	
 	def onExpandToolClicked( self, event ):
+		event.Skip()
+	
+	def onNormToolClicked( self, event ):
+		event.Skip()
+	
+	def onTotalToolClicked( self, event ):
+		event.Skip()
+	
+	def onGrpTotalToolClicked( self, event ):
 		event.Skip()
 	
 	def browse_splitterOnIdle( self, event ):

@@ -668,13 +668,14 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         spreadsheet_mngr.createDefaultRows(table, count=row_count)
         return table
 
-    def to_pivot_dataframe(self, json_dict, row_dimension=None, col_dimension=None):
+    def to_pivot_dataframe(self, json_dict, row_dimension=None, col_dimension=None, bDebug=True):
         """
         Подготовка данных для сводной таблицы.
         Манипулирование данными производится с помощью библиотеки pandas.
         @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
         @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
         @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        @param bDebug: Вывести отладочную информацию в консоль?
         @return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         # attributes = json_dict.get('attributes', list())
@@ -690,7 +691,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         try:
             # Создаем таблицу
             data_frame = self.create_dataframe(rows, column_names=col_names)
-
+            # print(data_frame)
             # Устанавливаем индексы измерений
             data_frame = self.set_pivot_dimensions(row_dimension=row_dimension, col_dimension=col_dimension)
             # Заменяем NaN на 0
@@ -702,14 +703,12 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             log.fatal()
             return None
 
-        log.debug(u'')
-        # log.debug(u'Измерения: %s' % attributes)
-        # log.debug(u'Факты: %s' % aggregates)
-        log.debug(u'Измерения строк: %s' % str(row_dimension))
-        log.debug(u'Измерения столбцов: %s' % str(col_dimension))
-        # log.debug(u'Измерения столбцов: %s' % str(level_dimension_names))
-        log.debug(u'Сводная таблица:')
-        log.debug('\n' + str(data_frame))
+        if bDebug:
+            log.debug(u'')
+            log.debug(u'Измерения строк: %s' % str(row_dimension))
+            log.debug(u'Измерения столбцов: %s' % str(col_dimension))
+            log.debug(u'Сводная таблица:')
+            log.debug('\n' + str(data_frame))
         return data_frame
 
     def norm_pivot_dataframe(self, dataframe, cube=None, row_dimension=None, col_dimension=None):
@@ -742,6 +741,22 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
                             print(normal_data)
 
         return dataframe
+
+    def total_pivot_dataframe(self, dataframe):
+        """
+        Расчет общих итогов сводной таблицы по строкам.
+        @param dataframe: Объект pandas.DataFrame сводной таблицы.
+        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        """
+        return self.total_pivot_table(dataframe=dataframe)
+
+    def total_group_pivot_dataframe(self, dataframe):
+        """
+        Расчет групповых итогов сводной таблицы по строкам.
+        @param dataframe: Объект pandas.DataFrame сводной таблицы.
+        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        """
+        return self.total_group_pivot_table(dataframe=dataframe)
 
     def pivot_to_spreadsheet(self, json_dict=None, cube=None, dataframe=None):
         """

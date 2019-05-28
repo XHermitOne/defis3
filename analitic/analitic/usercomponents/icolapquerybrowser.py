@@ -38,8 +38,8 @@ ic_class_spc = {'type': 'OLAPQueryBrowser',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('application_view_tile.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('application_view_tile.png')
+ic_class_pic = ic_bmp.createLibraryBitmap('table_analysis.png')
+ic_class_pic2 = ic_bmp.createLibraryBitmap('table_analysis.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

@@ -142,3 +142,30 @@ class icPivotDataFrameManager(object):
         row_count = row_count + dataframe.columns.nlevels + row_level_count
         col_count = col_count + dataframe.index.nlevels
         return row_count, col_count
+
+    def total_pivot_table(self, dataframe):
+        """
+        Расчет общих итогов сводной таблицы по строкам.
+        @param dataframe: Объект pandas.DataFrame сводной таблицы.
+        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        """
+        total = dataframe.agg(numpy.sum)
+        total_row = pandas.DataFrame([total])
+        log.debug(u'Расчет общих итогов по значениям:\n%s' % str(total))
+        result = pandas.concat([dataframe, total_row],
+                               keys=[u'', u'ИТОГО'])
+        return result
+
+    def total_group_pivot_table(self, dataframe):
+        """
+        Расчет итогов по группам сводной таблицы по строкам.
+        @param dataframe: Объект pandas.DataFrame сводной таблицы.
+        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        """
+        total = dataframe.groupby(dataframe.index).agg(numpy.sum)
+        # total_row = pandas.DataFrame([total])
+        log.debug(u'Расчет групповых итогов по значениям:\n%s' % str(total))
+        # result = pandas.concat([dataframe, total_row],
+        #                        keys=[u'', u'ИТОГО'])
+        result = total
+        return result
