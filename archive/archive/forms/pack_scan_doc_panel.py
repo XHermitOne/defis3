@@ -129,9 +129,13 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 doc = self.doc_navigator.getSlaveDocument(index=doc_idx)
                 scan_filename = doc.getRequisiteValue('file_name')
                 if scan_filename and os.path.exists(scan_filename):
-                    result = doc.remove_to(archive_doc, doc_uuid=doc.getUUID(),
+                    #result = doc.remove_to(archive_doc, doc_uuid=doc.getUUID(),
+                    #                       requisite_replace={'scan_doc_to': 'pack_doc_scan_to',
+                    #                                          'scan_doc_from': 'pack_doc_scan_from'})
+                    result = self.doc_navigator.remove_toDoc(UUID=doc.getUUID(), to_document=archive_doc,
                                            requisite_replace={'scan_doc_to': 'pack_doc_scan_to',
-                                                              'scan_doc_from': 'pack_doc_scan_from'})
+                                                              'scan_doc_from': 'pack_doc_scan_from'},
+                                                              bRefresh=False)
                     if not result:
                         ic_dlg.icWarningBox(u'ВНИМАНИЕ',
                                             u'Ошибка переноса документа <%s> в архив' % doc.getRequisiteValue('n_doc'))
@@ -334,7 +338,20 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
     def onSelectDocItem(self, event):
         """
         Обработчик выбора документа.
+        ВНИМАНИЕ! При выборе нового элемента списка и включенном режиме
+        быстрого ввода необходимо выводить диалоговое окно
+        быстрого ввода автоматически.
         """
+        item_selected_idx = self.getItemSelectedIdx(self.docs_listCtrl)
+        if self.quick_entry_mode and item_selected_idx == -1:
+            # Если включен режим и никакой документ не выбран, то
+            # Выбираем первый элемент списка и открываем окно ввода
+            self.docs_listCtrl.Select(0)
+        elif self.quick_entry_mode and item_selected_idx >= 0:
+            # Если выбран элемент, то просто отобразить окно быстрого ввода для
+            # этого документа
+            self._show_quick_entry_dlg(item_selected_idx)
+
         event.Skip()
 
     def _show_quick_entry_dlg(self, item_idx):

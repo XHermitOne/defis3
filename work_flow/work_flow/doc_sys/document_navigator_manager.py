@@ -61,6 +61,7 @@ sum - Выполнить суммирование по реквизиту все
 count - Подсчет количества документов в списке
 upload - Выгрузка документа на сервер
 download - Загрузка документа с сервера
+remove_to - Перенос документа в другой мета-объект документа с такой же структурой
 
 Дополнительные функции:
 view_requisites - Изменение списка просматриваемых реквизитов в списке докумнтов
@@ -1256,6 +1257,39 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             UUID = self.getSelectedSlaveDocumentUUID()
 
         log.warning(u'Метод <downloadDoc> не реализован')
+
+    def remove_toDoc(self, UUID=None, to_document=None, doc_num=None,
+                     requisite_replace=None, bAskDel=False, bRefresh=True):
+        """
+        Переместить документ из одной структуры документа в другую.
+        Функция является примером архивирования документа.
+        @param UUID: UIID переносимого документа.
+            Переносимый документ может задаваться как номером так и UUID.
+        @param to_document: Объект документа-приемника.
+        @param doc_num: Номер переносимого документа.
+            Если номер не определен, то перенос производиться по UUID документа.
+        @param requisite_replace: Словарь замены имен реквизитов.
+            Формат:
+            {'Имя реквизита в документе-приемнике': 'Имя реквизита в документе-источнике'}
+        @param bAskDel: Спрашивать об удалении документа из источника?
+        @param bRefresh: Обновить контрол списка после переноса?
+        @return: True/False.
+        """
+        doc = self.getSlaveDocument(UUID=UUID)
+        result = doc.remove_to(dst_doc=to_document, doc_uuid=UUID,
+                               doc_num=doc_num,
+                               requisite_replace=requisite_replace, ask_del=bAskDel)
+
+        # ВНИМАНИЕ! Кроме переноса документа необходимо удалить этот документ
+        # из списка документов менеджера
+        if result:
+            if bRefresh:
+                # Обновить список документов, если перенос прошел нормально
+                self.refreshDocListCtrlRows()
+            else:
+                self.updateDocDataset()
+
+        return result
 
     # --- Дополнительные функции ---
     def viewRequisites(self):
