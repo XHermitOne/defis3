@@ -12,6 +12,7 @@
 
 import os
 import os.path
+import datetime
 import smbclient
 import urllib.parse
 
@@ -31,21 +32,30 @@ DEFAULT_WORKGROUP = 'WORKGROUP'
 
 PRJ_DIRNAME = os.path.dirname(os.path.dirname(os.path.dirname(__file__))) if os.path.dirname(__file__) else os.path.dirname(os.path.dirname(os.getcwd()))
 LOCAL_SPRVENT_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'SPRVENT.VNT')
+LOCAL_PERSON_FILENAME = os.path.join(PRJ_DIRNAME, 'db', 'ZPL.ZLC')
+
+LOCAL_FILENAMES = (LOCAL_SPRVENT_FILENAME, LOCAL_PERSON_FILENAME)
 
 # Список путей поиска DBF файла справочника
 FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/NSI/SPRVENT.VNT',
                  # 'smb://xhermit@TELEMETRIA/share/install/SPRVENT.VNT',
                  )
 
+PERSON_FIND_SMB_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/##PUB/ZPL/%d/ZPL.ZLC' % datetime.datetime.now().year,
+                       )
 
-def smb_download_sprvent(download_urls=None):
+
+def smb_download_sprvent(download_urls=None, local_filename=None):
     """
     Найти и загрузить DBF справочник контрагентов.
     @param download_urls: Список путей поиска DBF файла справочника.
+    @param local_filename: Локальное имя файла.
     @return: True - Произошла загрузка, False - ничего не загружено.
     """
     if download_urls is None:
         download_urls = FIND_SMB_URLS
+    if local_filename is None:
+        local_filename = LOCAL_SPRVENT_FILENAME
 
     result = False
     smb = None
@@ -56,33 +66,34 @@ def smb_download_sprvent(download_urls=None):
             download_share = url.path.split(os.path.sep)[1]
             download_username = url.username
             download_password = url.password
-            
+
             smb = smbclient.SambaClient(server=download_server,
                                         share=download_share,
                                         username=download_username,
                                         password=download_password,
                                         domain=DEFAULT_WORKGROUP)
-            
+
             log.info(u'Установлена связь с SMB ресурсом')
             log.info(u'\tсервер <%s>' % download_server)
             log.info(u'\tпапка <%s>' % download_share)
             log.info(u'\tпользователь <%s>' % download_username)
-            
+
             # Получить имена загружаемых файлов
+            print(url)
             download_file = os.path.join(*url.path.split(os.path.sep)[2:])
-            
-            log.info(u'Загрузка файла <%s>' % download_file)
-                
-            if os.path.exists(LOCAL_SPRVENT_FILENAME):
-                log.info(u'Удаление файла <%s>' % LOCAL_SPRVENT_FILENAME)
-                os.remove(LOCAL_SPRVENT_FILENAME)
-               
+
+            log.info(u'Загрузка файла <%s : %s>' % (download_url, download_file))
+
+            if os.path.exists(local_filename):
+                log.info(u'Удаление файла <%s>' % local_filename)
+                os.remove(local_filename)
+
             # ВНИМАНИЕ! Найден глюк библиотеки smbclient:
             # В списке файлов могут пропадать файлы большого размера.
             # Поэтому проверку на существование файла в SMB ресурсе не производим
             # а сразу пытаемся его загрузить.
             try:
-                smb.download(download_file, LOCAL_SPRVENT_FILENAME)
+                smb.download(download_file, local_filename)
                 log.info(u'Файл <%s> загружен' % download_file)
                 result = True
             except:
@@ -90,21 +101,21 @@ def smb_download_sprvent(download_urls=None):
 возможно проблема в самой библиотеке pysmbclient.
 Решение:
     В файле /usr/local/lib/python2.7/dist-packages/smbclient.py
-    в вызове функции subprocess.Popen() убрать параметр <shell=True> 
+    в вызове функции subprocess.Popen() убрать параметр <shell=True>
     или поставить в False.
                 ''')
                 log.fatal(u'SMB. Ошибка загрузки SMB файла <%s>' % download_file)
                 result = False
-               
+
             smb.close()
             smb = None
-            break        
+            break
         except:
             if smb:
                 smb.close()
             log.fatal(u'Ошибка загрузки DBF файла справочника контрагентов из БАЛАНСА')
             result = False
-            
+
     return result
 
 
@@ -114,28 +125,32 @@ def import_sprvent():
     """
     log.info(u'--- ЗАПУСК ИМПОРТА СПРАВОЧНИКА КОНТРАГЕНТОВ ---')
     # Сначала загрузить справочник из бекапа
-    result = smb_download_sprvent()
+    result = smb_download_sprvent(FIND_SMB_URLS, LOCAL_SPRVENT_FILENAME) and smb_download_sprvent(PERSON_FIND_SMB_URLS, LOCAL_PERSON_FILENAME)
     if result:
-        # Успешно загрузили
-        vnt_filename = LOCAL_SPRVENT_FILENAME
-        dbf_filename = LOCAL_SPRVENT_FILENAME.replace('.VNT', '.DBF')
-        if not filefunc.is_same_file_length(vnt_filename, dbf_filename):
-            # Скопировать VNT в DBF
-            if os.path.exists(dbf_filename):
-                os.remove(dbf_filename)
-            ic_file.icCopyFile(vnt_filename, dbf_filename)
-            
+        for local_filename in LOCAL_FILENAMES:
+            # Успешно загрузили
+            vnt_filename = local_filename
+            dbf_filename = os.path.splitext(local_filename)[0] + '.DBF'
+            if not filefunc.is_same_file_length(vnt_filename, dbf_filename):
+                # Скопировать VNT в DBF
+                if os.path.exists(dbf_filename):
+                    os.remove(dbf_filename)
+                ic_file.icCopyFile(vnt_filename, dbf_filename)
+            else:
+                log.debug(u'Справочник <%s> уже загружен' % local_filename)
+
+        is_load = any([not filefunc.is_same_file_length(local_filename,
+                        os.path.splitext(local_filename)[0] + '.DBF') for local_filename in LOCAL_FILENAMES])
+        if is_load:
             # Это другой файл
             tab = ic.metadata.THIS.tab.nsi_c_agent.create()
             tab.GetManager().set_default_data()
-    
-            # После заполнения справочника сбросить его кеш, 
+
+            # После заполнения справочника сбросить его кеш,
             # чтобы отобразить изменения в уже запущенной программе
             spravmanager = ic.metadata.THIS.mtd.nsi_archive.create()
             sprav = spravmanager.getSpravByName('nsi_c_agent')
             sprav.clearInCache()
-        else:
-            log.debug(u'Справочник контрагентов уже загружен')
     else:
         log.warning(u'Ошибка связи с SMB ресурсом бекапа')
 
@@ -146,12 +161,12 @@ def test():
     """
     from ic import config
     log.init(config)
-    
+
     smb_download_sprvent()
-    
-    filefunc.is_same_file_length(LOCAL_SPRVENT_FILENAME, 
+
+    filefunc.is_same_file_length(LOCAL_SPRVENT_FILENAME,
                                  LOCAL_SPRVENT_FILENAME.replace('.VNT', '.DBF'))
-    
-    
+
+
 if __name__ == '__main__':
     test()

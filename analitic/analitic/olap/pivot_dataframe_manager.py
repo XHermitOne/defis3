@@ -177,13 +177,13 @@ class icPivotDataFrameManager(object):
             #                            for i in range(1, len(fields) + 1)])
             # dataframe = dataframe.sort_index()
 
-            fields = dataframe.index.names
+            levels = dataframe.index.names
             col_values = [dataframe.columns.names[-1]]
             log.debug(u'Колонки значений %s' % str(col_values))
-            dataframe = dataframe.groupby(fields).apply(lambda sub_df: sub_df.pivot_table(index=fields,
-                                                                                          values=col_values,
-                                                                                          aggfunc='sum',
-                                                                                          margins=True))
+            dataframe = dataframe.groupby(level=levels).apply(lambda sub_df: sub_df.pivot_table(index=levels,
+                                                                                                values=col_values,
+                                                                                                aggfunc='sum',
+                                                                                                margins=True))
 
             log.debug(u'Расчет групповых итогов по значениям:\n%s' % str(dataframe))
         except:
