@@ -989,4 +989,16 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         if dataframe is None:
             dataframe = self.getPivotDataFrame()
+
+        header_row_count = dataframe.columns.nlevels + 1 if any(dataframe.index.names) else 0
+        records = list(dataframe.to_records())
+        for i, record in enumerate(records):
+            for i_col in range(len(record)):
+                cell = table.getCell(header_row_count + i + 1,
+                                     i_col + 1)
+                # Итоговые строки определяются по значению первой
+                # колонки в строке
+                if record[0] == pivot_dataframe_manager.TOTAL_LABEL:
+                    # Данные
+                    cell.setStyleID('FOOTER')
         return True

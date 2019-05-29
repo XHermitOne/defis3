@@ -184,7 +184,8 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
         @return: True/False.
         """
         if pivot_dataframe is None:
-            pivot_dataframe = self._pivot_dataframe
+            # ВНИМАНИЕ! Необходимо брать копию чтобы не изменять оригинал
+            pivot_dataframe = self._pivot_dataframe.copy()
 
         if olap_server is None:
             olap_server = self.query_treectrl.getOLAPServer()

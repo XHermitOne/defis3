@@ -15,6 +15,9 @@ __version__ = (0, 1, 1, 1)
 
 AGGREGATE_FUNCTION_NAMES = ('sum', 'min', 'max', 'mean')
 
+TOTAL_LABEL = u'ИТОГО:'
+TOTAL_GROUP_LABEL = u'Итого'
+
 
 class icPivotDataFrameManager(object):
     """
@@ -150,11 +153,17 @@ class icPivotDataFrameManager(object):
         @return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         total = dataframe.agg(numpy.sum)
-        total_row = pandas.DataFrame([total])
-        log.debug(u'Расчет общих итогов по значениям:\n%s' % str(total))
-        result = pandas.concat([dataframe, total_row],
-                               keys=[u'', u'ИТОГО'])
-        return result
+
+        # Индекс для новой строки итогов
+        row_idx = [u''] * dataframe.index.nlevels
+        if row_idx:
+            row_idx[0] = TOTAL_LABEL
+            # ВНИМАНИЕ! Для определения индекса новой строки
+            # используется кортеж либо если 1 уроовень, то строка
+            row_idx = tuple(row_idx) if len(row_idx) > 1 else row_idx[0]
+            # log.debug(u'Индекс строки общих итогов %s' % str(row_idx))
+            dataframe.loc[row_idx] = total
+        return dataframe
 
     def total_group_pivot_table(self, dataframe):
         """
@@ -162,10 +171,22 @@ class icPivotDataFrameManager(object):
         @param dataframe: Объект pandas.DataFrame сводной таблицы.
         @return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
-        total = dataframe.groupby(dataframe.index).agg(numpy.sum)
-        # total_row = pandas.DataFrame([total])
-        log.debug(u'Расчет групповых итогов по значениям:\n%s' % str(total))
-        # result = pandas.concat([dataframe, total_row],
-        #                        keys=[u'', u'ИТОГО'])
-        result = total
-        return result
+        try:
+            # fields = dataframe.index.names
+            # dataframe = pandas.concat([dataframe.assign(**{x: '' for x in fields[i:]}).groupby(fields).sum()
+            #                            for i in range(1, len(fields) + 1)])
+            # dataframe = dataframe.sort_index()
+
+            fields = dataframe.index.names
+            col_values = [dataframe.columns.names[-1]]
+            log.debug(u'Колонки значений %s' % str(col_values))
+            dataframe = dataframe.groupby(fields).apply(lambda sub_df: sub_df.pivot_table(index=fields,
+                                                                                          values=col_values,
+                                                                                          aggfunc='sum',
+                                                                                          margins=True))
+
+            log.debug(u'Расчет групповых итогов по значениям:\n%s' % str(dataframe))
+        except:
+            log.fatal(u'Ошибка расчета итогов по группам сводной таблицы:\n%s\n' % str(dataframe))
+
+        return dataframe
