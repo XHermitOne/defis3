@@ -289,25 +289,25 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
         """
         self.docs_listCtrl.DeleteAllItems()
         for record in self.documents:
-            row_idx = self.docs_listCtrl.InsertStringItem(sys.maxsize, record.get('n_doc', u''))
+            row_idx = self.docs_listCtrl.InsertItem(sys.maxsize, record.get('n_doc', u''))
             
             str_doc_date = record['doc_date'].strftime(DEFAULT_DATE_FMT) if record.get('doc_date', None) else u''
-            self.docs_listCtrl.SetStringItem(row_idx, 1, str_doc_date)
+            self.docs_listCtrl.SetItem(row_idx, 1, str_doc_date)
             
-            self.docs_listCtrl.SetStringItem(row_idx, 2, record.get('n_obj', u''))
+            self.docs_listCtrl.SetItem(row_idx, 2, record.get('n_obj', u''))
             
             str_obj_date = record['obj_date'].strftime(DEFAULT_DATE_FMT) if record.get('obj_date', None) else u''
-            self.docs_listCtrl.SetStringItem(row_idx, 3, str_obj_date)
+            self.docs_listCtrl.SetItem(row_idx, 3, str_obj_date)
             
-            self.docs_listCtrl.SetStringItem(row_idx, 4, record.get('doc_name', u''))
+            self.docs_listCtrl.SetItem(row_idx, 4, record.get('doc_name', u''))
             
             description = record.get('description', u'')
             description = description if isinstance(description, str) else u''
-            self.docs_listCtrl.SetStringItem(row_idx, 5, description)
+            self.docs_listCtrl.SetItem(row_idx, 5, description)
             
             comment = record.get('comment', u'')
             comment = comment if isinstance(comment, str) else u''
-            self.docs_listCtrl.SetStringItem(row_idx, 6, comment)
+            self.docs_listCtrl.SetItem(row_idx, 6, comment)
 
     def onViewToolClicked(self, event):
         """

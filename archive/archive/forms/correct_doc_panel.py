@@ -315,13 +315,13 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
 
             if isinstance(value, datetime.datetime):
                 value = value.strftime(DB_DATE_FMT)
-            elif not isinstance(value, str) and not isinstance(value, unicode):
+            elif not isinstance(value, str):
                 value = str(value)
 
             if i == 0:
-                row_idx = self.doc_card_panel.link_listCtrl.InsertStringItem(sys.maxsize, value, i)
+                row_idx = self.doc_card_panel.link_listCtrl.InsertItem(sys.maxsize, value, i)
             else:
-                self.doc_card_panel.link_listCtrl.SetStringItem(row_idx, i, value)
+                self.doc_card_panel.link_listCtrl.SetItem(row_idx, i, value)
 
     def _addLinksCtrl(self, doc, links_to):
         """

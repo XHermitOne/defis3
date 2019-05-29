@@ -3,6 +3,11 @@
 
 """
 Класс многоколоночного списка с возможностью отметки строки/элемента списка.
+
+ВНИМАНИЕ! В новой версии компонента нельзя использовать для добавления строк
+InsertStringItem (depricated). При использовании старой функции контрол не прорисовывает
+CheckBox элементы строк. Вместо этой функции необходимо использовать InsertItem
+с теми же аргументами.
 """
 
 import wx
@@ -67,7 +72,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
@@ -112,7 +117,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
         icwidget.icWidget.__init__(self, parent,
                                    id, component, logType, evalSpace)
 
-        wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
+        wx.ListCtrl.__init__(self, parent, id, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
         wx.lib.mixins.listctrl.CheckListCtrlMixin.__init__(self)
 
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onItemActivated)

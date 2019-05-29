@@ -449,9 +449,9 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
                         value = str(value)
 
                     if i == 0:
-                        row_idx = self.link_listCtrl.InsertStringItem(sys.maxsize, value, i)
+                        row_idx = self.link_listCtrl.InsertItem(sys.maxsize, value, i)
                     else:
-                        self.link_listCtrl.SetStringItem(row_idx, i, value)
+                        self.link_listCtrl.SetItem(row_idx, i, value)
                 # Обновить размер колонок
                 for i in range(len(requisites)):
                     self.link_listCtrl.SetColumnWidth(i, wx.LIST_AUTOSIZE)
