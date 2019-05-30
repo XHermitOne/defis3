@@ -159,7 +159,7 @@ class icPivotDataFrameManager(object):
         if row_idx:
             row_idx[0] = TOTAL_LABEL
             # ВНИМАНИЕ! Для определения индекса новой строки
-            # используется кортеж либо если 1 уроовень, то строка
+            # используется кортеж либо если 1 уровень, то строка
             row_idx = tuple(row_idx) if len(row_idx) > 1 else row_idx[0]
             # log.debug(u'Индекс строки общих итогов %s' % str(row_idx))
             dataframe.loc[row_idx] = total
@@ -172,19 +172,30 @@ class icPivotDataFrameManager(object):
         @return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         try:
-            # fields = dataframe.index.names
-            # dataframe = pandas.concat([dataframe.assign(**{x: '' for x in fields[i:]}).groupby(fields).sum()
-            #                            for i in range(1, len(fields) + 1)])
-            # dataframe = dataframe.sort_index()
-
             levels = dataframe.index.names
-            col_values = [dataframe.columns.names[-1]]
-            log.debug(u'Колонки значений %s' % str(col_values))
-            dataframe = dataframe.groupby(level=levels).apply(lambda sub_df: sub_df.pivot_table(index=levels,
-                                                                                                values=col_values,
-                                                                                                aggfunc='sum',
-                                                                                                margins=True))
+            log.debug(u'Колонки уровней %s' % str(levels))
 
+            # for i_level, level_name in enumerate(level_names[:-1]):
+            #     for idx_value in list(dataframe.index.levels[i_level]):
+            #         log.debug(u'Значение индекса <%s>' % idx_value)
+            #         sub_level_names = [level_names[i] for i in range(i_level)] + [idx_value]
+            #         log.debug(u'Уровень <%s>' % sub_level_names)
+            #         # Не удаляется индекс уровня, по которому фильтруем--------------V
+            #         sub_dataframe = dataframe.xs(tuple(sub_level_names), drop_level=False)
+            #         sub_total = sub_dataframe.agg(numpy.sum)
+            #
+            #         log.debug(u'Блок группы:\n%s' % str(sub_dataframe))
+            #
+            dataframe = pandas.concat([dataframe]+[
+                dataframe.assign(
+                    **{x: TOTAL_GROUP_LABEL for x in levels}
+                ).groupby(level=levels[:-1]).sum() for i_level in range(len(levels)-1)
+            ])  #.sort_index()
+            # print(dataframe.columns.names)
+            # dataframe = dataframe.groupby(levels[:-1]).apply(lambda sub_df: sub_df.pivot_table(index=[levels[-1]],
+            #                                                                                    # columns=[dataframe.columns.names[-1]],
+            #                                                                                    aggfunc='sum',
+            #                                                                                    margins=False))
             log.debug(u'Расчет групповых итогов по значениям:\n%s' % str(dataframe))
         except:
             log.fatal(u'Ошибка расчета итогов по группам сводной таблицы:\n%s\n' % str(dataframe))

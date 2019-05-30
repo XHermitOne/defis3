@@ -129,6 +129,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
             # делаем с конца списка документов (старших индексов).
             # Для этого делаем обратную сортировку списка индексов.
             doc_indexes = sorted(doc_indexes, reverse=True)
+            log.debug(u'Перенос в архив документов. Индексы: %s' % str(doc_indexes))
             for doc_idx in doc_indexes:
                 doc = self.doc_navigator.getSlaveDocument(index=doc_idx)
                 scan_filename = doc.getRequisiteValue('file_name')
@@ -152,7 +153,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
             if pack_result:
                 ic_dlg.icMsgBox(u'АРХИВ',
                                 u'Пакет документов перенесен в архив')
-            self.refreshDocList()
+            self.refreshDocList(True)
         event.Skip()
 
     def onEditToolClicked(self, event):
@@ -176,8 +177,13 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
             n_begin = n_begin - 1 if n_begin else 0
             n_end = value.get('n_end', self.docs_listCtrl.GetItemCount())
             n_end = n_end - 1 if n_end else self.docs_listCtrl.GetItemCount() - 1
-            self.checkItems_list_ctrl(self.docs_listCtrl, value.get('on_off', False),
-                                      n_begin, n_end)
+            # self.checkItems_list_ctrl(self.docs_listCtrl, value.get('on_off', False),
+            #                          n_begin, n_end)
+            # log.debug(u'Диапазон [%d : %d]' % (n_begin, n_end))
+            check_list = self.checkItems_requirement(self.docs_listCtrl, rows=self.doc_navigator.getDocDataset(),
+                                                     requirement=lambda i, rec: rec['nn'] in list(range(n_begin+1, n_end+2)),
+                                                     bSet=True)
+            # log.debug(u'Индексы меток %s' % str(check_list))
 
             if value.get('n_pages', None) or value.get('is_duplex', None):
                 n_pages = value.get('n_pages', None)
@@ -185,7 +191,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 is_duplex = value.get('is_duplex', None)
                 is_duplex = bool(is_duplex) if is_duplex else False
 
-                for i in range(n_begin, n_end + 1):
+                # for i in range(n_begin, n_end + 1):
+                for i in check_list:
                     doc = self.doc_navigator.getSlaveDocument(index=i)
                     doc_uuid = doc.getUUID()
                     self._set_doc_pages_and_duplex(i, doc, doc_uuid,

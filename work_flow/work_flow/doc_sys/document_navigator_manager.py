@@ -1259,7 +1259,8 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         log.warning(u'Метод <downloadDoc> не реализован')
 
     def remove_toDoc(self, UUID=None, to_document=None, doc_num=None,
-                     requisite_replace=None, bAskDel=False, bRefresh=True):
+                     requisite_replace=None, bAskDel=False,
+                     bRefresh=True, bUpdate=False):
         """
         Переместить документ из одной структуры документа в другую.
         Функция является примером архивирования документа.
@@ -1273,6 +1274,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             {'Имя реквизита в документе-приемнике': 'Имя реквизита в документе-источнике'}
         @param bAskDel: Спрашивать об удалении документа из источника?
         @param bRefresh: Обновить контрол списка после переноса?
+        @param bUpdate: Обновить список документов?
         @return: True/False.
         """
         doc = self.getSlaveDocument(UUID=UUID)
@@ -1286,7 +1288,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             if bRefresh:
                 # Обновить список документов, если перенос прошел нормально
                 self.refreshDocListCtrlRows()
-            else:
+            elif bUpdate:
                 self.updateDocDataset()
 
         return result

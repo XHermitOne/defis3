@@ -21,7 +21,7 @@ from ic.bitmap import ic_bmp
 from ic import config
 
 
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 4, 1)
 
 DEFAULT = 'default'
 
@@ -951,6 +951,61 @@ class icListCtrlManager(object):
 
         log.warning(u'Объект типа <%s> не поддерживается вкл./выкл. элментов контрола' % ctrl.__class__.__name__)
         return False
+
+    def checkItem_list_ctrl(self, ctrl, check=True, i_row=-1):
+        """
+        Установить галки элементов контрола списка.
+        @param ctrl: Объект контрола.
+        @param check: Вкл./выкл.
+        @param i_row: Индекс обрабатываемого элемента.
+            Если не определен, то берется текущий выбранный элемент.
+        @return: True/False.
+        """
+        if isinstance(ctrl, wx.ListCtrl):
+            if i_row < 0:
+                i_row = self.getItemSelectedIdx(ctrl)
+            ctrl.CheckItem(i_row, check=check)
+            return True
+        elif isinstance(ctrl, wx.CheckListBox):
+            if i_row < 0:
+                i_row = self.getItemSelectedIdx(ctrl)
+            ctrl.Check(i_row, check=check)
+            return True
+
+        log.warning(u'Объект типа <%s> не поддерживается вкл./выкл. элментов контрола' % ctrl.__class__.__name__)
+        return False
+
+    def checkItems_requirement(self, ctrl=None, rows=(), requirement=None,
+                               bSet=False):
+        """
+        Наити и пометить строку списка по определенному условию.
+        @param ctrl: Объект контрола.
+        @param rows: Список строк.
+        @param requirement: lambda выражение, формата:
+            lambda i, row: ...
+            Которое возвращает True/False.
+            Если True, то считаем что строка удовлетворяет условию.
+            False - строка не удовлетворяет.
+        @param bSet: Произвести установку меток всех элементов
+            в соответствии с условием.
+        @return: Список индексов помеченных строк.
+        """
+        check_list = list()
+
+        if not rows:
+            # Нет строк. И не надо обрабатывать
+            return check_list
+
+        for i, row in enumerate(rows):
+            checked = requirement(i, row)
+            if checked:
+                check_list.append(i)
+            if bSet:
+                self.checkItems_list_ctrl(ctrl=ctrl, check=checked,
+                                          n_begin=i, n_end=i)
+            elif not bSet and checked:
+                self.checkItem_list_ctrl(ctrl=ctrl, check=True, i_row=i)
+        return check_list
 
     def getCheckedItems_list_ctrl(self, ctrl, check_selected=False):
         """

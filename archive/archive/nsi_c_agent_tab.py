@@ -27,7 +27,7 @@ DBF_DEFAULT_ENCODE = 'cp866'
 
 # Код КПП для ИП отсутствует, подменяем на КПП по умолчанию
 DEFAULT_KPP_CODE = '---------'
-DEFAULT_PERSON_KPP_CODE = '*********'
+DEFAULT_PERSON_KPP_CODE = '+++++++++'
 
 # Формат автоматической генерации ИНН части кода если не указан
 DEFAULT_INN_CODE_FMT = '%010d'
