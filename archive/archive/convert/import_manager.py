@@ -113,10 +113,11 @@ class icBalansImportManager(icImportManagerInterface):
 
         find_codes = list()
         if balance_cod:
-            # Ищем только по балансовскому коду
+            # Ищем только по балансовскому коду и ИНН
             str_balans_cod = u'<%d>' % balance_cod
             tab = contragent_sprav.getStorage().getTable()
-            find_codes = contragent_sprav.getStorage().find_code_where(tab.c.s1.ilike(u'%'+str_balans_cod+u'%'))
+            find_codes = contragent_sprav.getStorage().find_code_where(sqlalchemy.and_(tab.c.s1.ilike(u'%'+str_balans_cod+u'%'),
+                                                                                       tab.c.inn == inn))
         elif kpp:
             # Ищем по ИНН с KPP и наименованию
             find_codes = contragent_sprav.getStorage().find_code(name=name, inn=inn, kpp=kpp)

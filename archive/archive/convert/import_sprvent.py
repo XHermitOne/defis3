@@ -79,8 +79,8 @@ def smb_download_sprvent(download_urls=None, local_filename=None):
             log.info(u'\tпользователь <%s>' % download_username)
 
             # Получить имена загружаемых файлов
-            print(url)
-            download_file = os.path.join(*url.path.split(os.path.sep)[2:])
+            download_filename = url.path + ('/#' + url.fragment if url.fragment else '')
+            download_file = os.path.join(*download_filename.split(os.path.sep)[2:])
 
             log.info(u'Загрузка файла <%s : %s>' % (download_url, download_file))
 
