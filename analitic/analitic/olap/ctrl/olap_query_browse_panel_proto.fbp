@@ -548,6 +548,51 @@
                                                 <property name="permission">protected</property>
                                             </object>
                                             <object class="tool" expanded="1">
+                                                <property name="bitmap">Load From Art Provider; gtk-sort-ascending; wxART_MENU</property>
+                                                <property name="context_menu">0</property>
+                                                <property name="id">wxID_ANY</property>
+                                                <property name="kind">wxITEM_RADIO</property>
+                                                <property name="label">tool</property>
+                                                <property name="name">sort_tool</property>
+                                                <property name="permission">protected</property>
+                                                <property name="statusbar">Сортировка</property>
+                                                <property name="tooltip">Сортировка</property>
+                                                <event name="OnAuiToolBarBeginDrag"></event>
+                                                <event name="OnAuiToolBarMiddleClick"></event>
+                                                <event name="OnAuiToolBarOverflowClick"></event>
+                                                <event name="OnAuiToolBarRightClick"></event>
+                                                <event name="OnAuiToolBarToolDropDown"></event>
+                                                <event name="OnMenuSelection"></event>
+                                                <event name="OnToolClicked">onSortToolClicked</event>
+                                                <event name="OnToolEnter"></event>
+                                                <event name="OnToolRClicked"></event>
+                                                <event name="OnUpdateUI"></event>
+                                            </object>
+                                            <object class="tool" expanded="1">
+                                                <property name="bitmap">Load From Art Provider; gtk-sort-descending; wxART_MENU</property>
+                                                <property name="context_menu">0</property>
+                                                <property name="id">wxID_ANY</property>
+                                                <property name="kind">wxITEM_RADIO</property>
+                                                <property name="label">tool</property>
+                                                <property name="name">reverse_tool</property>
+                                                <property name="permission">protected</property>
+                                                <property name="statusbar">В обратном порядке</property>
+                                                <property name="tooltip">В обратном порядке</property>
+                                                <event name="OnAuiToolBarBeginDrag"></event>
+                                                <event name="OnAuiToolBarMiddleClick"></event>
+                                                <event name="OnAuiToolBarOverflowClick"></event>
+                                                <event name="OnAuiToolBarRightClick"></event>
+                                                <event name="OnAuiToolBarToolDropDown"></event>
+                                                <event name="OnMenuSelection"></event>
+                                                <event name="OnToolClicked">onReverseToolClicked</event>
+                                                <event name="OnToolEnter"></event>
+                                                <event name="OnToolRClicked"></event>
+                                                <event name="OnUpdateUI"></event>
+                                            </object>
+                                            <object class="toolSeparator" expanded="1">
+                                                <property name="permission">protected</property>
+                                            </object>
+                                            <object class="tool" expanded="1">
                                                 <property name="bitmap">Load From Art Provider; wxART_REPORT_VIEW; wxART_MENU</property>
                                                 <property name="context_menu">0</property>
                                                 <property name="id">wxID_ANY</property>

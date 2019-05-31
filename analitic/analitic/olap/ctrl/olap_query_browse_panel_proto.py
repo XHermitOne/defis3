@@ -46,6 +46,12 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		
 		self.ctrl_toolBar.AddSeparator()
 		
+		self.sort_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-sort-ascending", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_RADIO, u"Сортировка", u"Сортировка", None ) 
+		
+		self.reverse_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-sort-descending", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_RADIO, u"В обратном порядке", u"В обратном порядке", None ) 
+		
+		self.ctrl_toolBar.AddSeparator()
+		
 		self.norm_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_REPORT_VIEW, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_CHECK, u"Нормализовать", u"Нормализовать", None ) 
 		
 		self.total_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( u"gtk-justify-fill", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_CHECK, u"Общие итоги", u"Общие итоги", None ) 
@@ -96,6 +102,8 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		# Connect Events
 		self.Bind( wx.EVT_TOOL, self.onCollapseToolClicked, id = self.collapse_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onExpandToolClicked, id = self.expand_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onSortToolClicked, id = self.sort_tool.GetId() )
+		self.Bind( wx.EVT_TOOL, self.onReverseToolClicked, id = self.reverse_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onNormToolClicked, id = self.norm_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onTotalToolClicked, id = self.total_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onGrpTotalToolClicked, id = self.grp_total_tool.GetId() )
@@ -109,6 +117,12 @@ class icOLAPQueryBrowsePanelProto ( wx.Panel ):
 		event.Skip()
 	
 	def onExpandToolClicked( self, event ):
+		event.Skip()
+	
+	def onSortToolClicked( self, event ):
+		event.Skip()
+	
+	def onReverseToolClicked( self, event ):
 		event.Skip()
 	
 	def onNormToolClicked( self, event ):

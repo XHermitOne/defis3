@@ -105,6 +105,20 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
         self.viewSpreadsheet()
         event.Skip()
 
+    def onSortToolClicked(self, event):
+        """
+        Обработчик сортировки данных.
+        """
+        self.viewSpreadsheet()
+        event.Skip()
+
+    def onReverseToolClicked(self, event):
+        """
+        Обработчик сортировки данных в обратном порядке.
+        """
+        self.viewSpreadsheet()
+        event.Skip()
+
     def refreshPivotTable(self, request_url=None, request=None):
         """
         Обновить сводную таблицу по запросу к OLAP серверу.
@@ -169,6 +183,20 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
         """
         return self.ctrl_toolBar.GetToolState(self.grp_total_tool.GetId())
 
+    def isSortPivotTable(self):
+        """
+        Включена сортировка строк сводной таблице?
+        @return: True/False
+        """
+        return self.ctrl_toolBar.GetToolState(self.sort_tool.GetId())
+
+    def isReversePivotTable(self):
+        """
+        Включена обратная сортировка строк сводной таблице?
+        @return: True/False
+        """
+        return self.ctrl_toolBar.GetToolState(self.reverse_tool.GetId())
+
     def viewSpreadsheet(self, pivot_dataframe=None, olap_server=None, json_response=None):
         """
         Вывести сводную таблицу в контрол отображения.
@@ -204,6 +232,14 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
                     # Расчет общих итогов
                     pivot_dataframe = olap_server.total_pivot_dataframe(pivot_dataframe)
                     log.debug(u'Расчет общих итогов:\n%s' % str(pivot_dataframe))
+                if self.isSortPivotTable():
+                    # Сортировка
+                    pivot_dataframe = pivot_dataframe.sort_index(level=list(range(pivot_dataframe.index.nlevels)),
+                                                                 ascending=True)
+                elif self.isReversePivotTable():
+                    # Сортировка в обратном порядке
+                    pivot_dataframe = pivot_dataframe.sort_index(level=list(range(pivot_dataframe.index.nlevels)),
+                                                                 ascending=False)
 
                 # Преобразование в SpreadSheet
                 spreadsheet = olap_server.pivot_to_spreadsheet(json_response, dataframe=pivot_dataframe)

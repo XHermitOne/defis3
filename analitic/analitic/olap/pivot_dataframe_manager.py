@@ -175,27 +175,14 @@ class icPivotDataFrameManager(object):
             levels = dataframe.index.names
             log.debug(u'Колонки уровней %s' % str(levels))
 
-            # for i_level, level_name in enumerate(level_names[:-1]):
-            #     for idx_value in list(dataframe.index.levels[i_level]):
-            #         log.debug(u'Значение индекса <%s>' % idx_value)
-            #         sub_level_names = [level_names[i] for i in range(i_level)] + [idx_value]
-            #         log.debug(u'Уровень <%s>' % sub_level_names)
-            #         # Не удаляется индекс уровня, по которому фильтруем--------------V
-            #         sub_dataframe = dataframe.xs(tuple(sub_level_names), drop_level=False)
-            #         sub_total = sub_dataframe.agg(numpy.sum)
-            #
-            #         log.debug(u'Блок группы:\n%s' % str(sub_dataframe))
-            #
-            dataframe = pandas.concat([dataframe]+[
+            dataframe = pandas.concat([
                 dataframe.assign(
-                    **{x: TOTAL_GROUP_LABEL for x in levels}
+                    **{x: '' for x in levels}
                 ).groupby(level=levels[:-1]).sum() for i_level in range(len(levels)-1)
-            ])  #.sort_index()
-            # print(dataframe.columns.names)
-            # dataframe = dataframe.groupby(levels[:-1]).apply(lambda sub_df: sub_df.pivot_table(index=[levels[-1]],
-            #                                                                                    # columns=[dataframe.columns.names[-1]],
-            #                                                                                    aggfunc='sum',
-            #                                                                                    margins=False))
+            ])
+            # Удалить дублирующие записи
+            dataframe = dataframe.drop_duplicates()
+
             log.debug(u'Расчет групповых итогов по значениям:\n%s' % str(dataframe))
         except:
             log.fatal(u'Ошибка расчета итогов по группам сводной таблицы:\n%s\n' % str(dataframe))
