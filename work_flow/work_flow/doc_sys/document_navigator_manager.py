@@ -473,11 +473,14 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         list_ctrl = self.getSlaveListCtrl()
         row_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
+
+        # Оттенение цвета четных строк
+        red = int(row_colour.Red() / 5.0 * 4.0)
+        green = int(row_colour.Green() / 5.0 * 4.0)
+        blue = int(row_colour.Blue() / 5.0 * 4.0)
         self.setRows_list_ctrl(list_ctrl, rows=rows,
                                evenBackgroundColour=row_colour,
-                               oddBackgroundColour=wx.Colour(row_colour.Red()/3*2,
-                                                             row_colour.Green()/3*2,
-                                                             row_colour.Blue()/3*2),
+                               oddBackgroundColour=wx.Colour(red, green, blue),
                                doSavePos=True)
         if auto_size_columns:
             # Установить автообразмеривание колонок чтобу исключить обрезание информации

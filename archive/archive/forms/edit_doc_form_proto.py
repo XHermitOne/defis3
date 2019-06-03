@@ -534,7 +534,7 @@ class icQuickEntryPackScanPanelProto ( wx.Panel ):
 		self.ndoc_staticText.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Sans" ) )
 		self.ndoc_staticText.SetMinSize( wx.Size( 100,-1 ) )
 		
-		bSizer19.Add( self.ndoc_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		bSizer19.Add( self.ndoc_staticText, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
 		bSizer15.Add( bSizer19, 0, wx.EXPAND, 5 )

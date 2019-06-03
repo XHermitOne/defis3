@@ -169,8 +169,10 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         Обработчик инструмента групповой настройки параметров сканирования документа.
         """
         pos = self.getToolLeftBottomPoint(self.ctrl_toolBar, self.group_tool)
+        doc_dataset = self.doc_navigator.getDocDataset()
+        nn_max = doc_dataset[-1].get('nn', 0) if doc_dataset else 0
         value = group_manipulation_dlg.show_group_manipulation_dlg(self,
-                                                                   n_max=self.docs_listCtrl.GetItemCount(),
+                                                                   n_max=nn_max,
                                                                    position=pos)
         if value:
             n_begin = value.get('n_begin', 1)
