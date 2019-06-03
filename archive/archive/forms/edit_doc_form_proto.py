@@ -529,17 +529,23 @@ class icQuickEntryPackScanPanelProto ( wx.Panel ):
 		
 		bSizer19.Add( self.docname_staticText, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
+		
+		bSizer15.Add( bSizer19, 0, wx.EXPAND, 5 )
+		
+		bSizer22 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText232 = wx.StaticText( self, wx.ID_ANY, u"№ док.:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText232.Wrap( -1 )
+		self.m_staticText232.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Sans" ) )
+		
+		bSizer22.Add( self.m_staticText232, 0, wx.ALL, 5 )
+		
 		self.ndoc_staticText = wx.StaticText( self, wx.ID_ANY, u"...", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
 		self.ndoc_staticText.Wrap( -1 )
 		self.ndoc_staticText.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Sans" ) )
 		self.ndoc_staticText.SetMinSize( wx.Size( 100,-1 ) )
 		
-		bSizer19.Add( self.ndoc_staticText, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
-		
-		
-		bSizer15.Add( bSizer19, 0, wx.EXPAND, 5 )
-		
-		bSizer22 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer22.Add( self.ndoc_staticText, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.m_staticText23 = wx.StaticText( self, wx.ID_ANY, u"от", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText23.Wrap( -1 )
@@ -555,7 +561,38 @@ class icQuickEntryPackScanPanelProto ( wx.Panel ):
 		bSizer22.Add( self.docdate_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer15.Add( bSizer22, 0, wx.ALIGN_RIGHT, 5 )
+		bSizer15.Add( bSizer22, 0, wx.ALIGN_RIGHT|wx.EXPAND, 5 )
+		
+		bSizer221 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText2321 = wx.StaticText( self, wx.ID_ANY, u"№ к.агента:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText2321.Wrap( -1 )
+		self.m_staticText2321.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Sans" ) )
+		
+		bSizer221.Add( self.m_staticText2321, 0, wx.ALL, 5 )
+		
+		self.c_ndoc_staticText = wx.StaticText( self, wx.ID_ANY, u"...", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
+		self.c_ndoc_staticText.Wrap( -1 )
+		self.c_ndoc_staticText.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Sans" ) )
+		self.c_ndoc_staticText.SetMinSize( wx.Size( 100,-1 ) )
+		
+		bSizer221.Add( self.c_ndoc_staticText, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.m_staticText231 = wx.StaticText( self, wx.ID_ANY, u"от", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText231.Wrap( -1 )
+		self.m_staticText231.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Sans" ) )
+		
+		bSizer221.Add( self.m_staticText231, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.c_docdate_staticText = wx.StaticText( self, wx.ID_ANY, u"...", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.c_docdate_staticText.Wrap( -1 )
+		self.c_docdate_staticText.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Sans" ) )
+		self.c_docdate_staticText.SetMinSize( wx.Size( 150,-1 ) )
+		
+		bSizer221.Add( self.c_docdate_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer15.Add( bSizer221, 0, wx.EXPAND, 5 )
 		
 		bSizer21 = wx.BoxSizer( wx.HORIZONTAL )
 		

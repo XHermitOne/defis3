@@ -379,11 +379,13 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                       cagent_ndoc_staticText=u'Данные контрагента: ' + (doc_rec['n_obj'] if doc_rec['n_obj'] else u''),
                       cagent_docdate_staticText=(u'от ' + doc_rec['obj_date'].strftime(DEFAULT_DATE_FMT)) if doc_rec['obj_date'] else u'',
                       npages_spinCtrl=doc_rec['n_scan_pages'],
-                      duplex_checkBox=bool(doc_rec['is_duplex']))
+                      duplex_checkBox=bool(doc_rec['is_duplex']),
+                      c_ndoc_staticText=doc_rec['n_obj'],
+                      c_docdate_staticText=doc_rec['obj_date'].strftime(DEFAULT_DATE_FMT) if doc_rec['obj_date'] else u'')
         # Вызываем окно быстрого ввода
         edit_result = quick_entry_panel.quick_entry_edit_dlg(self,
                                                              title=u'Режим быстрого ввода',
-                                                             size=wx.Size(525, 240),
+                                                             size=wx.Size(525, 280),
                                                              quick_entry_panel_class=icQuickEntryPackScanPanel,
                                                              defaults=values)
         if edit_result == quick_entry_panel.GO_PREV_ITEM_CMD:
