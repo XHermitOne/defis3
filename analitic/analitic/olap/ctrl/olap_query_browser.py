@@ -224,14 +224,6 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
         try:
             if pivot_dataframe is not None and json_response:
                 # Дополнительные преобразования сводной таблицы
-                if self.isTotalGroupPivotTable():
-                    # Расчет групповых итогов
-                    pivot_dataframe = olap_server.total_group_pivot_dataframe(pivot_dataframe)
-                    log.debug(u'Расчет групповых итогов:\n%s' % str(pivot_dataframe))
-                if self.isTotalPivotTable():
-                    # Расчет общих итогов
-                    pivot_dataframe = olap_server.total_pivot_dataframe(pivot_dataframe)
-                    log.debug(u'Расчет общих итогов:\n%s' % str(pivot_dataframe))
                 if self.isSortPivotTable():
                     # Сортировка
                     pivot_dataframe = pivot_dataframe.sort_index(level=list(range(pivot_dataframe.index.nlevels)),
@@ -240,6 +232,14 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
                     # Сортировка в обратном порядке
                     pivot_dataframe = pivot_dataframe.sort_index(level=list(range(pivot_dataframe.index.nlevels)),
                                                                  ascending=False)
+                if self.isTotalGroupPivotTable():
+                    # Расчет групповых итогов
+                    pivot_dataframe = olap_server.total_group_pivot_dataframe(pivot_dataframe)
+                    log.debug(u'Расчет групповых итогов:\n%s' % str(pivot_dataframe))
+                if self.isTotalPivotTable():
+                    # Расчет общих итогов
+                    pivot_dataframe = olap_server.total_pivot_dataframe(pivot_dataframe)
+                    log.debug(u'Расчет общих итогов:\n%s' % str(pivot_dataframe))
 
                 # Преобразование в SpreadSheet
                 spreadsheet = olap_server.pivot_to_spreadsheet(json_response, dataframe=pivot_dataframe)
