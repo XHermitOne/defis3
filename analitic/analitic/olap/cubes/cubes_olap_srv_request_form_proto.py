@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 
 ###########################################################################
 ## Class icCubesOLAPSrvRequestPanelProto
@@ -302,7 +302,7 @@ class icCubesPivotTabRequestPanelProto ( wx.Panel ):
 		bSizer16.Add( self.m_staticText7, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer16.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer16.AddStretchSpacer()
 		
 		self.m_staticText8 = wx.StaticText( sbSizer1.GetStaticBox(), wx.ID_ANY, u"Измерение:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText8.Wrap( -1 )
@@ -332,7 +332,7 @@ class icCubesPivotTabRequestPanelProto ( wx.Panel ):
 		bSizer161.Add( self.m_staticText71, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer161.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer161.AddStretchSpacer()
 		
 		self.m_staticText81 = wx.StaticText( sbSizer1.GetStaticBox(), wx.ID_ANY, u"Измерение:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText81.Wrap( -1 )
@@ -376,7 +376,7 @@ class icCubesPivotTabRequestPanelProto ( wx.Panel ):
 		bSizer20.Add( self.m_staticText16, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer20.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer20.AddStretchSpacer()
 		
 		self.m_staticText17 = wx.StaticText( sbSizer3.GetStaticBox(), wx.ID_ANY, u"Измерение:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText17.Wrap( -1 )
@@ -403,9 +403,9 @@ class icCubesPivotTabRequestPanelProto ( wx.Panel ):
 		bSizer21 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.cut_toolBar = wx.ToolBar( sbSizer3.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.add_cut_tool = self.cut_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_ADD_BOOKMARK, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
+		self.add_cut_tool = self.cut_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_ADD_BOOKMARK, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
 		
-		self.del_cut_tool = self.cut_toolBar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
+		self.del_cut_tool = self.cut_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_TOOLBAR ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
 		
 		self.cut_toolBar.Realize() 
 		
@@ -425,6 +425,8 @@ class icCubesPivotTabRequestPanelProto ( wx.Panel ):
 		self.Layout()
 		
 		# Connect Events
+		self.row_dimension_choice.Bind( wx.EVT_CHOICE, self.onRowDimensionChoice )
+		self.col_dimension_choice.Bind( wx.EVT_CHOICE, self.onColDimensionChoice )
 		self.cut_help_bpButton.Bind( wx.EVT_BUTTON, self.onHelpCutButtonClick )
 		self.Bind( wx.EVT_TOOL, self.onAddCutToolClicked, id = self.add_cut_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onDelCutToolClicked, id = self.del_cut_tool.GetId() )
@@ -434,6 +436,12 @@ class icCubesPivotTabRequestPanelProto ( wx.Panel ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def onRowDimensionChoice( self, event ):
+		event.Skip()
+	
+	def onColDimensionChoice( self, event ):
+		event.Skip()
+	
 	def onHelpCutButtonClick( self, event ):
 		event.Skip()
 	

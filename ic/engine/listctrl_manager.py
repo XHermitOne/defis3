@@ -735,6 +735,31 @@ class icListCtrlManager(object):
             log.warning(u'Добавление колонок контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
         return False
 
+    def getRows_list_ctrl(self, ctrl=None):
+        """
+        Получить список строк в виде списка кортежей.
+        @param ctrl: Объект контрола списка.
+        @return: Список строк.
+            Строка представляет собой список:
+            [
+            (Значение 1, Значение 2, ..., Значение N), ...
+            ]
+        """
+        rows = list()
+        if ctrl is None:
+            log.warning(u'Не определен контрол для получения списка строк')
+            return rows
+
+        if isinstance(ctrl, wx.ListCtrl):
+            for i_row in range(ctrl.GetItemCount()):
+                row = [ctrl.GetItemText(i_row, col=i_col) for i_col in range(ctrl.GetColumnCount())]
+                rows.append(row)
+        elif isinstance(ctrl, wx.dataview.DataViewListCtrl):
+            for i_row in range(ctrl.GetItemCount()):
+                row = [ctrl.GetValue(i_row, col=i_col) for i_col in range(ctrl.GetColumnCount())]
+                rows.append(row)
+        return rows
+
     def setRowColour_list_ctrl_requirement(self, ctrl=None, rows=(),
                                            fg_colour=None, bg_colour=None, requirement=None):
         """
