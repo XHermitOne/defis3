@@ -678,6 +678,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         @param bDebug: Вывести отладочную информацию в консоль?
         @return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
+        # log.debug(u'Результат запроса: %s' % str(json_dict))
         # attributes = json_dict.get('attributes', list())
         aggregates = json_dict.get('aggregates', list())
         # levels = json_dict.get('levels', dict())

@@ -274,7 +274,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
         if cut.strip():
             cut = cut.strip().split('|')
             cut_list = [sub_cut.split(':') for sub_cut in cut]
-            rows = tuple([(cube.findDimension(cut[0]).getName(), cut[0], cut[1]) for cut in cut_list])
+            rows = tuple([(cube.findDimension(cut[0]).getLabel(), cut[0], cut[1]) for cut in cut_list])
             self.setRows_list_ctrl(ctrl=self.cut_listCtrl, rows=rows)
 
         return True
@@ -312,12 +312,13 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
         # Строки и столбцы сводной таблицы
         row_param = u''
         i_dimension = self.row_dimension_choice.GetSelection()
-        if i_dimension > 0:
-            dimension_name = [dimension.getName() for dimension in cube.getDimensions()][i_dimension - 1]
+        if i_dimension >= 0:
+            dimension_name = [dimension.getName() for dimension in cube.getDimensions()][i_dimension]
+            # log.debug(u'Измерение <%s>. Индекс [%d]' % (dimension_name, i_dimension))
             dimension = cube.findDimension(dimension_name)
             i_level = self.row_level_choice.GetSelection()
             if i_level > 0:
-                log.debug(u'Уровень [%d] среди %s' % (i_level, str([level.getName() for level in dimension.getLevels()])))
+                # log.debug(u'Уровень [%d] среди %s' % (i_level, str([level.getName() for level in dimension.getLevels()])))
                 level_name = [level.getName() for level in dimension.getLevels()][i_level - 1]
                 row_param = u'%s:%s' % (dimension_name, level_name)
             else:
@@ -326,10 +327,12 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
         i_dimension = self.col_dimension_choice.GetSelection()
         if i_dimension > 0:
             dimension_name = [dimension.getName() for dimension in cube.getDimensions()][i_dimension - 1]
+            # log.debug(u'Измерение <%s>. Индекс [%d]' % (dimension_name, i_dimension))
             dimension = cube.findDimension(dimension_name)
             i_level = self.col_level_choice.GetSelection()
             if i_level > 0:
                 level_name = [level.getName() for level in dimension.getLevels()][i_level - 1]
+                # log.debug(u'Уровень [%d : %s] среди %s.' % (i_level, level_name, str([level.getName() for level in dimension.getLevels()])))
                 col_param = u'%s:%s' % (dimension_name, level_name)
             else:
                 col_param = dimension_name
@@ -349,6 +352,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
         rows = self.getRows_list_ctrl(ctrl=self.cut_listCtrl)
         request['cut'] = u'|'.join([u'%s:%s' % (row[1], row[2]) for row in rows])
 
+        log.debug(u'Данные запроса: %s' % str(request))
         return request
 
     def getRequestURL(self, request=None):
@@ -374,7 +378,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
         """
         i_dimension = event.GetSelection()
         i_cube = self.cube_choice.GetSelection()
-        if i_dimension > 0:
+        if i_dimension >= 0:
             cube = self._OLAP_server.getCubes()[i_cube]
             dimension = cube.getDimensions()[i_dimension]
             choices = [u''] + [level.getLabel() for level in dimension.getLevels()]
@@ -382,6 +386,8 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
             self.row_level_choice.Clear()
             self.row_level_choice.AppendItems(choices)
             self.row_level_choice.SetSelection(0)
+        else:
+            self.row_level_choice.Clear()
 
         event.Skip()
 
@@ -399,6 +405,8 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
             self.col_level_choice.Clear()
             self.col_level_choice.AppendItems(choices)
             self.col_level_choice.SetSelection(0)
+        else:
+            self.col_level_choice.Clear()
 
         event.Skip()
 

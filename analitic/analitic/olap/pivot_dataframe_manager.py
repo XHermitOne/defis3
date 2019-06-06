@@ -50,7 +50,8 @@ class icPivotDataFrameManager(object):
             data_rows = [pandas.Series(row) for row in rows]
             self._cur_pivot_dataframe = pandas.DataFrame(data_rows)
             # Устанавливаем имена колонок
-            self._cur_pivot_dataframe.columns = column_names
+            if data_rows:
+                self._cur_pivot_dataframe.columns = column_names
         except:
             log.fatal(u'Ошибка создания сводной таблицы. Колонки: %s' % str(column_names))
 
