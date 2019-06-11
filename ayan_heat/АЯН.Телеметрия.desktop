@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=АЯН. Телеметрия.
+Type=Application
+Terminal=false
+Name[ru_RU]=АЯН. Телеметрия.
+Exec=/mnt/samba/defis/ayan_heat/user_run.sh
+Icon=/mnt/samba/defis/ayan_heat/gauge2.png
+Comment[ru_RU]=

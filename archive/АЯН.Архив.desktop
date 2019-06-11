@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=АЯН. Архив.
+Type=Application
+Terminal=false
+Name[ru_RU]=АЯН. Архив.
+Exec=/mnt/defis/defis3/archive/user_run.sh
+Icon=/mnt/defis/defis3/archive/archive.png
+Comment[ru_RU]=
