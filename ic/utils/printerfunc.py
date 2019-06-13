@@ -16,9 +16,40 @@ lpoptions -p WorkCentre-5325 -l
 
 import os
 import os.path
+import subprocess
+import locale
+
 from ic.log import log
 
+__version__ = (0, 1, 1, 1)
+
 NO_DEFAULT_PRINTER_MSG = 'no system default destination'
+
+
+def _get_exec_cmd_stdout_lines(cmd):
+    """
+    Выполнить комманду ОС и верноть список строк выходного потока.
+    @param cmd: Комманда. М.б. в строковом виде или в виде списка.
+        Напрмер:
+        'lpstat -d' или ('lpstat', '-d')
+    @return: Список строк - результат выполнения комманды в stdout.
+        В случае ошибки возвращается пустой список.
+    """
+    if isinstance(cmd, str):
+        cmd = cmd.split(u' ')
+    if not isinstance(cmd, tuple) and not isinstance(cmd, list):
+        log.warning(u'Не поддерживаемый тип комманды OS <%s>' % str(cmd))
+        return list()
+
+    lines = list()
+    try:
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        b_lines = process.stdout.readlines()
+        console_encoding = locale.getpreferredencoding()
+        lines = [line.decode(console_encoding).strip() for line in b_lines]
+    except:
+        log.fatal(u'Ошибка выполнения комманды ОС <%s> и получения списка строк из stdout' % cmd)
+    return lines
 
 
 def noDefaultPrinter(sLPStatResult=None):
@@ -29,8 +60,11 @@ def noDefaultPrinter(sLPStatResult=None):
     @return: True-нет принтера по умалчанию, False - есть принтер по умолчанию.
     """
     if sLPStatResult is None:
-        cmd = 'lpstat -d'
-        sLPStatResult = os.popen3(cmd)[1].readlines()[0]
+        cmd = ('lpstat', '-d')
+        # sLPStatResult = os.popen3(cmd)[1].readlines()[0]
+        lines = _get_exec_cmd_stdout_lines(cmd)
+        sLPStatResult = lines[0]
+
     if sLPStatResult:
         return sLPStatResult.lower().strip() == NO_DEFAULT_PRINTER_MSG
     return False
@@ -41,12 +75,13 @@ def getDefaultPrinter():
     Имя принтера по умолчанию.
     @return: Имя принтера по умолчанию или None, если не установлен.
     """
-    cmd = 'lpstat -d'
-    result = os.popen3(cmd)[1].readlines()
-    if (not result) or noDefaultPrinter(result[0]):
+    cmd = ('lpstat', '-d')
+    lines = _get_exec_cmd_stdout_lines(cmd)
+
+    if (not lines) or noDefaultPrinter(lines[0]):
         return None
     else:
-        result = result[0].split(': ')[1].strip()
+        result = lines[0].split(': ')[1].strip()
         return result
 
 
@@ -56,12 +91,12 @@ def getPrinterDevices():
     Функция работает через утилиту lpstat.
     @return: Список [(имя принтера, адрес подключения),...].
     """
-    cmd = 'lpstat -v'
-    result = os.popen3(cmd)[1].readlines()
-    if not result:
+    cmd = ('lpstat', '-v')
+    lines = _get_exec_cmd_stdout_lines(cmd)
+    if not lines:
         return None
     else:
-        result = [printer.split(' ') for printer in result]
+        result = [printer.split(' ') for printer in lines]
         result = [(device[2][:-1], device[3]) for device in result]
         return result
 
@@ -81,12 +116,12 @@ def getPrinters():
     Функция работает через утилиту lpstat.
     @return: Список строк (имен принтеров).
     """
-    cmd = 'lpstat -a'
-    result = os.popen3(cmd)[1].readlines()
-    if not result:
+    cmd = ('lpstat', '-a')
+    lines = _get_exec_cmd_stdout_lines(cmd)
+    if not lines:
         return None
     else:
-        result = [printer.split(' ')[0] for printer in result]
+        result = [printer.split(' ')[0] for printer in lines]
         return result
 
 
