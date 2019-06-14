@@ -75,7 +75,15 @@ def wxColour2StrHex(colour):
     @param colour: Цвет wx.Colour.
     @return: Строка #RRGGBB соответствующая цвету.    
     """
-    return colour.GetAsString(wx.C2S_HTML_SYNTAX)
+    if isinstance(colour, wx.Colour):
+        return colour.GetAsString(wx.C2S_HTML_SYNTAX)
+    elif isinstance(colour, str):
+        # В ряде случаев цвет задается как 'red'
+        # либо он уже в формате #RRGGBB
+        return colour
+
+    log.warning(u'Не возможно привести цвет <%s> к формату #RRGGBB. Используется черный цвет' % str(colour))
+    return '#000000'
 
 
 # Другое название метода

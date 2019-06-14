@@ -97,7 +97,7 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
             log.warning(u'Ошибка типа словаря переменных SQl запроса.')
             return False
 
-        var_names = variables.keys()
+        var_names = list(variables.keys())
         var_names.sort()
 
         self.var_propertyGrid.Clear()

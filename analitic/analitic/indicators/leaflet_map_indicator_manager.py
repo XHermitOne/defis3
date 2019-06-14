@@ -7,6 +7,8 @@
 Python API для Leaflet - библиотека folium.
 Установка: pip3 install folium.
 Примеры использования библиотеки folium:
+https://python-visualization.github.io/folium
+Примеры использования:
 https://python-visualization.github.io/folium/quickstart.html
 
 В качестве индикатора могут выступать
@@ -26,6 +28,7 @@ from . import map_indicator
 
 from ic.log import log
 from ic.utils import ic_file
+from ic.utils import wxfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -35,9 +38,6 @@ SPC_IC_LEAFLETMAPINDICATORMANAGER = {}
 # Ключ для геолокации Яндекса
 GEO_LOCATOR_KEY = 'AHqsEk4BAAAAekkFTAMA9DGkZfo_WT9ci8K8X286J9ILWjIAAAAAAAAAAABhqxW74U1xylQQhCYKzVIxsQBPTQ=='
 GEO_LACATOR_URL_FMT = 'http://geocode-maps.yandex.ru/1.x/?geocode=%s&key=%s&format=json'
-
-# Коэффициент масштаба по умолчанию
-DEFAULT_ZOOM = 14
 
 
 class icLeafletMapIndicatorManagerProto(map_indicator.icMapIndicator):
@@ -59,6 +59,18 @@ class icLeafletMapIndicatorManagerProto(map_indicator.icMapIndicator):
 
         # Текущий HTML файл браузера просмотра карт
         self._html_filename = None
+
+    def getMap(self):
+        """
+        Объект карты.
+        """
+        return self._geo_map
+
+    def getHTMLFilename(self):
+        """
+        Текущий HTML файл браузера просмотра карт.
+        """
+        return self._html_filename
 
     def get_geolocation(self, address_query, geo_key=None):
         """
@@ -131,8 +143,60 @@ class icLeafletMapIndicatorManagerProto(map_indicator.icMapIndicator):
         gen_path = os.path.join(ic_file.getPrjProfilePath(), gen_uuid+'.html')
         return gen_path
 
+    def createMap(self, geo_latitude, geo_longitude,
+                  zoom=map_indicator.DEFAULT_ZOOM,
+                  html_filename=None, bReWrite=False, bAutoSave=True):
+        """
+        Создать объект карты.
+        @param geo_latitude: Географическая широта.
+        @param geo_longitude: Географическая долгота.
+        @param zoom: Коэффициент масштаба по умолчанию.
+        @param html_filename: Имя сохраняемого файла.
+            Если не указано, то генерируется.
+        @param bReWrite: Перезаписать существующий файл?
+        @param bAutoSave: Автоматически сохранить файл?
+        @return: Объект карты или None в случае ошибки.
+        """
+        if geo_latitude is None or geo_longitude is None:
+            log.warning(u'Не полное определение геолокации <%s : %s>' % (geo_latitude, geo_longitude))
+            return None
+
+        try:
+            self._geo_map = folium.Map(location=[geo_latitude, geo_longitude],
+                                       zoom_start=zoom)
+            log.info(u'Создан объект карты. Локация [%s x %s]' % (geo_latitude, geo_longitude))
+            if bAutoSave:
+                self.saveMapBrowserFile(geo_latitude, geo_longitude, zoom=zoom,
+                                        html_filename=html_filename, bReWrite=bReWrite)
+        except:
+            log.fatal(u'Ошибка создания объекта карты')
+            self._geo_map = None
+        return self._geo_map
+
+    def createMapByAddress(self, address,
+                           zoom=map_indicator.DEFAULT_ZOOM,
+                           html_filename=None, bReWrite=False,
+                           bAutoSave=True):
+        """
+        Создать объект карты по адресу.
+        @param address: Запрашиваемый адрес.
+            Нaпример:
+                Москва, улица Гагарина, дом 10.
+        @param zoom: Коэффициент масштаба по умолчанию.
+        @param html_filename: Имя сохраняемого файла.
+            Если не указано, то генерируется.
+        @param bReWrite: Перезаписать существующий файл?
+        @param bAutoSave: Автоматически сохранить файл?
+        @return: Объект карты или None в случае ошибки.
+        """
+        geo_latitude, geo_longitude = self.findGeoLocation(address_query=address)
+        return self.createMap(geo_latitude, geo_longitude, zoom=zoom,
+                              html_filename=html_filename, bReWrite=bReWrite,
+                              bAutoSave=bAutoSave)
+
     def saveMapBrowserFile(self, geo_latitude, geo_longitude,
-                           zoom=DEFAULT_ZOOM, html_filename=None, bReWrite=False):
+                           zoom=map_indicator.DEFAULT_ZOOM,
+                           html_filename=None, bReWrite=False):
         """
         Сохранить HTML файл для отображения карты.
         @param geo_latitude: Географическая широта.
@@ -157,15 +221,16 @@ class icLeafletMapIndicatorManagerProto(map_indicator.icMapIndicator):
             return None
 
         try:
-            self._geo_map = folium.Map(location=[geo_latitude, geo_longitude],
-                                       zoom_start=zoom)
+            if self._geo_map is None:
+                self._geo_map = folium.Map(location=[geo_latitude, geo_longitude],
+                                           zoom_start=zoom)
             self._geo_map.save(html_filename)
             return html_filename
         except:
             log.fatal(u'Ошибка сохранения файла <%s> для отображения карты' % html_filename)
         return None
 
-    def saveMapBrowserFileByAddress(self, address, zoom=DEFAULT_ZOOM,
+    def saveMapBrowserFileByAddress(self, address, zoom=map_indicator.DEFAULT_ZOOM,
                                     html_filename=None, bReWrite=False):
         """
         Сохранить HTML файл для отображения карты по запросу адреса.
@@ -203,4 +268,82 @@ class icLeafletMapIndicatorManagerProto(map_indicator.icMapIndicator):
             return True
         except:
             log.fatal(u'Ошибка открытия в браузере карт URL <%s>' % url)
+        return False
+
+    def setCircleMarker(self, geo_latitude, geo_longitude,
+                        radius=100, color='blue',
+                        is_fill=True, fill_color='blue',
+                        popup_text=u'', tooltip_text=u''):
+        """
+        Добавление на карту маркера в виде окружности.
+        @param geo_latitude: Географическая широта.
+        @param geo_longitude: Географическая долгота.
+        @param radius: Радиус окружности.
+        @param color: Цвет окружности.
+        @param is_fill: Произвести заполнение внутренней области окружности?
+        @param fill_color: Цвет заполнения окружности.
+        @param popup_text: Текст всплывающей посказки маркера.
+            Подсказка появляется по клику на маркере.
+        @param tooltip_text: Текст всплывающей посказки маркера.
+            Подсказка появляется при наведении мышки на маркер.
+        @return: True/False.
+        """
+        if self._geo_map is not None:
+            try:
+                # Приведение цветов к текстовому формату
+                color = wxfunc.wxColour2StrRGB(color) if color else None
+                fill_color = wxfunc.wxColour2StrRGB(color) if fill_color else None
+
+                marker = folium.CircleMarker(location=[geo_latitude, geo_longitude],
+                                             radius=radius,
+                                             popup=popup_text if popup_text else None,
+                                             color=color if color else None,
+                                             fill=is_fill,
+                                             fill_color=fill_color if fill_color else None,
+                                             tooltip=tooltip_text if tooltip_text else None)
+                marker.add_to(self._geo_map)
+                log.debug(u'Добавлен маркер-окружность. Локация [%s x %s]' % (geo_latitude, geo_longitude))
+            except:
+                log.fatal(u'Ошибка добавления на карту маркера-окружности')
+        else:
+            log.warning(u'Не определен объект карты для добавления маркера-окружности')
+        return False
+
+    def setPinMarker(self, geo_latitude, geo_longitude,
+                     color='blue', icon=None,
+                     popup_text=u'', tooltip_text=u''):
+        """
+        Добавление на карту маркера-указателя.
+        @param geo_latitude: Географическая широта.
+        @param geo_longitude: Географическая долгота.
+        @param color: Цвет маркера.
+        @param icon: Иконка маркера.
+        @param popup_text: Текст всплывающей посказки маркера.
+            Подсказка появляется по клику на маркере.
+        @param tooltip_text: Текст всплывающей посказки маркера.
+            Подсказка появляется при наведении мышки на маркер.
+        @return: True/False.
+        """
+        if self._geo_map is not None:
+            try:
+                # Приведение цветов к текстовому формату
+                color = wxfunc.wxColour2StrRGB(color) if color else None
+
+                marker_icon = None
+                if icon and color:
+                    marker_icon = folium.Icon(color=color, icon=icon)
+                elif icon and color:
+                    marker_icon = folium.Icon(color=color)
+
+                marker = folium.Marker(location=[geo_latitude, geo_longitude],
+                                       popup=popup_text if popup_text else None,
+                                       tooltip=tooltip_text if tooltip_text else None,
+                                       icon=marker_icon)
+                marker.add_to(self._geo_map)
+                log.debug(u'Добавлен маркер-указатель. Локация [%s x %s]' % (geo_latitude, geo_longitude))
+                return True
+            except:
+                log.fatal(u'Ошибка добавления на карту маркера-указателя')
+        else:
+            log.warning(u'Не определен объект карты для добавления маркера-указателя')
         return False
