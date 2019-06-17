@@ -264,6 +264,7 @@ class icLeafletMapIndicatorManagerProto(map_indicator.icMapIndicator):
 
         url = 'file://%s' % self._html_filename
         try:
+            # log.debug(u'Установка в браузере <%s>' % url)
             self._browser.LoadURL(url)
             return True
         except:

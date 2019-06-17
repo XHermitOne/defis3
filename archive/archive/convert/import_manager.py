@@ -140,12 +140,13 @@ class icBalansImportManager(icImportManagerInterface):
         Поиск кода типа документа.
         """
         typ = None
-        # log.debug(u'Приход/Расход <%d>' % in_out)
+        log.debug(u'Приход/Расход <%d>' % in_out)
         if typ_doc.upper() == u'СЧЕТ-ФАКТУРА':
             typ = '2001000000000' if in_out else '1001000000000'
         elif typ_doc.upper() == u'ТОРГ12':
             typ = '2002000000000' if in_out else '1002000000000'
-        log.warning(u'Не определен тип документа <%s>' % typ_doc)
+        else:
+            log.warning(u'Не определен тип документа <%s>' % typ_doc)
         return typ
 
     def get_doc_type_subcode(self, typ_doc, in_out):

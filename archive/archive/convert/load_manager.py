@@ -36,10 +36,15 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         """
         import_manager.icBalansImportManager.__init__(self, pack_scan_panel)
 
-    def _create_doc(self, dbf_record, transaction, doc, sType):
+    def _create_doc(self, dbf_record, transaction, doc, sType, in_out=None):
         """
         Создание нового документа.
         @param dbf_record: Словарь записи DBF файла.
+        @param transaction: Объект транзакции.
+        @param doc: Объект документа для пакетной обработки.
+        @param sType:
+        @param in_out: Признак приходного/расходного документа.
+            Если не определен, то берется из записи DBF файла.
         @return: Словарь новой записи документа.
         """
         if doc is None:
@@ -56,8 +61,8 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         dt_obj = dbf_record['DATE1']
         dt_oper = dbf_record['DTOPER']
         doc_name = dbf_record['TYP_DOC']
-        doc_typ =  self.find_doc_type_code(dbf_record['TYP_DOC'],
-                                           int(dbf_record['IN_OUT']))
+        in_out = int(dbf_record['IN_OUT']) if in_out is None else in_out
+        doc_typ =  self.find_doc_type_code(dbf_record['TYP_DOC'], in_out)
         cagent_cod = self.find_contragent_code(self.contragent_sprav,
                                                dbf_record['NAMD'],
                                                dbf_record['INN'],
@@ -135,7 +140,11 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
             record = dbf_tab.getRecDict()
             while not dbf_tab.EOF():
                 n_doc = None
-                new_rec = self._create_doc(record, transaction, doc, sFileType)
+                # ВНИМАНИЕ! В DBF файле не корректно указывается признак прихода/расхода
+                # поэтому определяем этот признак по имени файла
+                in_out = os.path.basename(doc_dbf_filename)[1].upper() == 'R'
+                log.debug(u'Файл: %s. Приход/Расход: %s' % (os.path.basename(doc_dbf_filename), in_out))
+                new_rec = self._create_doc(record, transaction, doc, sFileType, in_out=in_out)
                 if new_rec:
                     n_doc = new_rec['n_doc']
                     # log.debug(u'+ %s' % str(new_rec))
