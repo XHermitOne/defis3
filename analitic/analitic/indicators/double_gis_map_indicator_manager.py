@@ -3,13 +3,8 @@
 
 """
 Менеджер управления индикациеей на гео-картах.
-Реализация сделана на базе Leaflet (https://leafletjs.com/).
-Python API для Leaflet - библиотека folium.
-Установка: pip3 install folium.
-Примеры использования библиотеки folium:
-https://python-visualization.github.io/folium
-Примеры использования:
-https://python-visualization.github.io/folium/quickstart.html
+Реализация сделана на базе 2GIS.
+Документация по API 2GIS https://api.2gis.ru/doc/maps/ru/quickstart/.
 
 В качестве индикатора могут выступать
 пятна, указатели, окружности покрытия и т.п.
@@ -17,19 +12,19 @@ https://python-visualization.github.io/folium/quickstart.html
 В качестве системы определения геолокации по адресу используется Yandex.
 """
 
-import folium
+from .. import double_gis
 
 from . import map_indicator
 
 __version__ = (0, 1, 1, 1)
 
 # Спецификация компонента
-SPC_IC_LEAFLETMAPINDICATORMANAGER = {}
+SPC_IC_2GISMAPINDICATORMANAGER = {}
 
 
-class icLeafletMapIndicatorManagerProto(map_indicator.icMapIndicatorManagerProto):
+class ic2GISMapIndicatorManagerProto(map_indicator.icMapIndicatorManagerProto):
     """
-    Индикатор карт Leaflet.
+    Индикатор карт 2GIS.
     """
     def __init__(self, *args, **kwargs):
         """
@@ -37,4 +32,4 @@ class icLeafletMapIndicatorManagerProto(map_indicator.icMapIndicatorManagerProto
         """
         map_indicator.icMapIndicatorManagerProto.__init__(self, *args, **kwargs)
 
-        self.setRendering(folium)
+        self.setRendering(double_gis)

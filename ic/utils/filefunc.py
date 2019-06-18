@@ -17,7 +17,7 @@ from . import util
 __version__ = (0, 1, 1, 1)
 
 
-def createTxtFile(FileName_,Txt_=None):
+def createTxtFile(FileName_, Txt_=None):
     """
     Создать текстовый файл.
     @param FileName_: Имя создаваемого файла.
