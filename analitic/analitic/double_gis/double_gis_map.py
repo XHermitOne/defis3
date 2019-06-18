@@ -16,12 +16,13 @@ HTML_TEMPLATE = '''
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>{{ title }}</title>
         <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
         {{ map }}
     </head>
     <body>
-        <div id="map" style="width:500px; height:400px"></div>
+        <div id="map" style="width:{{ width[0] }}{{ width[1] }}; height:{{ height[0] }}{{ height[1] }}"></div>
     </body>
 </html>
 '''
@@ -53,9 +54,9 @@ class Map(object):
     _html_template = jinja2.Template(HTML_TEMPLATE)
 
     def __init__(self, location=None,
-                 width='100%', height='100%',
+                 width='2000px', height='1300px',
                  left='0%', top='0%',
-                 position='relative',
+                 position=None,
                  tiles='OpenStreetMap',
                  attr=None,
                  min_zoom=0,
@@ -112,7 +113,7 @@ class Map(object):
         self.height = double_gis_util.parse_size(height)
         self.left = double_gis_util.parse_size(left)
         self.top = double_gis_util.parse_size(top)
-        self.position = position
+        # self.position = position
 
         # Масштабирование
         self.zoom = zoom_start
@@ -146,6 +147,8 @@ class Map(object):
         @return: True/False.
         """
         map_html = self.render()
-        html = self._html_template.render(map=map_html)
+        html = self._html_template.render(map=map_html,
+                                          width=self.width,
+                                          height=self.height)
 
         return ic_extend.save_file_text(html_filename, html)

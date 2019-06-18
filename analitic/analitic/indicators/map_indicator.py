@@ -22,9 +22,10 @@ try:
 except ImportError:
     log.error(u'Ошибка импорта yandex_maps для определения геолокации по адресу')
     yandex_maps = None
-    import urllib.request
-    import urllib.parse
-    import json
+
+import urllib.request
+import urllib.parse
+import json
 
 __version__ = (0, 1, 1, 1)
 
@@ -32,6 +33,8 @@ __version__ = (0, 1, 1, 1)
 DEFAULT_ZOOM = 14
 
 # --- Функции определения геолокации по адресу ---
+GEO_LOCATOR_DEFAULT = True
+
 # Ключ для геолокации Яндекса
 GEO_LOCATOR_KEY = 'AHqsEk4BAAAAekkFTAMA9DGkZfo_WT9ci8K8X286J9ILWjIAAAAAAAAAAABhqxW74U1xylQQhCYKzVIxsQBPTQ=='
 GEO_LACATOR_URL_FMT = 'http://geocode-maps.yandex.ru/1.x/?geocode=%s&key=%s&format=json'
@@ -80,7 +83,7 @@ def get_default_geolocation(address_query, geo_key=None, item=0):
     @param item: Индекс выбираемого элемента.
     @return: (широта, долгота) данных геолокации или (None, None) в случае ошибки.
     """
-    geo_locations = get_default_geolocation(address_query, geo_key=geo_key)
+    geo_locations = get_default_geolocations(address_query, geo_key=geo_key)
     if geo_locations and item < len(geo_locations):
         return geo_locations[item]
     return None, None
@@ -98,7 +101,11 @@ def get_yandex_geolocation(address_query):
     """
     try:
         yandex = yandex_maps.Yandexmaps()
-        return yandex.address(address=address_query)
+        geo_location = yandex.address(address=address_query)
+        # ВНИМАНИЕ! В API Yandex Maps сначала стоит долгота, а затем широта,
+        # а правильно для использования наоборот
+        # --------------V
+        return tuple(reversed(geo_location))
     except Exception as e:
         log.fatal(u'Ошибка получения данных геолокации по адресу')
     return None, None
@@ -364,7 +371,7 @@ class icMapIndicatorManagerProto(icMapIndicator):
             (Географическая широта, географическая долгота)
             либо (None, None) в случае ошибки.
         """
-        if yandex_maps:
+        if yandex_maps and not GEO_LOCATOR_DEFAULT:
             geo_locations = [get_yandex_geolocation(address_query)]
         else:
             geo_locations = get_default_geolocations(address_query)
@@ -379,7 +386,7 @@ class icMapIndicatorManagerProto(icMapIndicator):
         @return: Кортеж: Географическая широта, географическая долгота
             либо (None, None) в случае ошибки.
         """
-        if yandex_maps:
+        if yandex_maps and not GEO_LOCATOR_DEFAULT:
             geo_location = get_yandex_geolocation(address_query)
         else:
             geo_location = get_default_geolocation(address_query, item=item)

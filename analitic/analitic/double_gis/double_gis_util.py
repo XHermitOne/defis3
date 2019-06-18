@@ -91,13 +91,17 @@ def if_pandas_df_convert_to_numpy(obj):
 
 def parse_size(value):
     try:
-        if isinstance(value, (int, float)):
+        if isinstance(value, str) and value.endswith('px'):
             value_type = 'px'
-            value = float(value)
+            value = int(value.strip('px'))
+            assert value > 0
+        elif isinstance(value, (int, float)):
+            value_type = 'px'
+            value = int(value)
             assert value > 0
         else:
             value_type = '%'
-            value = float(value.strip('%'))
+            value = int(value.strip('%'))
             assert 0 <= value <= 100
     except Exception:
         msg = 'Cannot parse value {!r} as {!r}'.format

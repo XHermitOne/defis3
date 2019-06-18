@@ -6,12 +6,13 @@
 """
 
 import jinja2
+import json
 from . import double_gis_util
 
 from ic.log import log
 
 MARKER_TEMPLATE = '''
-DG.circleMarker({{ location }}).setRadius({{ radius }}).addTo(map);
+DG.circleMarker({{ location }}).setRadius({{ radius }}).setStyle({{ options }}){% if popup %}.bindPopup('{{ popup }}'){% endif %}{% if tooltip %}.bindLabel('{{ tooltip }}'){% endif %}.addTo(map);
 '''
 
 
@@ -23,9 +24,9 @@ class CircleMarker(object):
 
     def __init__(self, location, radius=10,
                  popup=None, tooltip=None,
-                 color=None,
+                 color='blue',
                  fill=True,
-                 fill_color=None,
+                 fill_color='blue',
                  **kwargs):
         """
         Конструктор. Создание маркера.
@@ -59,8 +60,13 @@ class CircleMarker(object):
         Генерирует HTML-представление элемента.
         @return: Сгенерированное HTML представление карты.
         """
+        options = dict(color=self.color)
+        json_options = json.dumps(options)
         return self._marker_template.render(location=self.location,
                                             radius=self.radius,
+                                            options=json_options,
+                                            popup=self.popup,
+                                            tooltip=self.tooltip,
                                             **kwargs)
 
     def add_to(self, geo_map):
