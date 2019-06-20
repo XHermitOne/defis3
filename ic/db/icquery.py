@@ -21,7 +21,7 @@ from ic.utils import util
 
 import ic.interfaces.icdataclassinterface as icdataclassinterface
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 3, 1)
 
 # Спецификации
 # Результат запроса (словарно-списковое представление)
@@ -345,7 +345,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         prj_res_manager = self._get_prj_res_manager()
         return prj_res_manager.isRes(tab_resname, 'tab')
 
-    def to_table(self, table_name=None, bReCreateRes=False, bData=True, bClear=False):
+    def to_table(self, table_name=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -355,6 +355,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         @param bReCreateRes: Пересоздать ресурс если он уже существует?
         @param bData: Заполнить таблицу данными автоматически?
         @param bClear: Произвести предварительную очистку данных при заполнении?
+        @param bTransact: Сделать сохранение данных одной транзакцией?
         @return: True/False.
         """
         if table_name is None:
@@ -380,7 +381,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         if bData:
             data = self.execute()
             # Заполнить таблицу данными
-            result = self.saveData(table_name, dataset=data, bClear=bClear)
+            result = self.saveData(table_name, dataset=data, bClear=bClear, bTransact=bTransact)
 
         return result
 
@@ -466,18 +467,21 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
 
         return field_spc
 
-    def saveData(self, table_name=None, dataset=(), bClear=False):
+    def saveData(self, table_name=None, dataset=(), bClear=False, bTransact=True):
         """
         Сохранить результат запроса в таблице.
         @param table_name: Имя таблицы.
         @param dataset: Набор записей-результата запроса.
             Список словарей.
         @param bClear: Произвести предварительную очистку данных при заполнении?
+        @param bTransact: Сделать сохранение данных одной транзакцией?
         @return: True/False.
         """
         if table_name is None:
             table_name = self.getName()
         try:
+            if bTransact:
+                return self._saveDataTransact(table_name=table_name, dataset=dataset, bClear=bClear)
             return self._saveData(table_name=table_name, dataset=dataset, bClear=bClear)
         except:
             log.fatal(u'Ошибка сохранения данных запроса <%s> в таблице <%s>' % (self.getName(), table_name))
@@ -501,10 +505,46 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
 
         # Заполнить таблицу данными
         for record in dataset:
-            log.debug(u'Добавление записи %s в таблицу <%s>' % (str(record), table_name))
+            # log.debug(u'Добавление записи %s в таблицу <%s>' % (str(record), table_name))
             tab.add(**record)
 
         return True
+
+    def _saveDataTransact(self, table_name=None, dataset=(), bClear=False):
+        """
+        Сохранить результат запроса в таблице.
+        ВНИМАНИЕ! Сохранение производим одной транзакцией.
+        @param table_name: Имя таблицы.
+        @param dataset: Набор записей-результата запроса.
+            Список словарей.
+        @param bClear: Произвести предварительную очистку данных при заполнении?
+        @return: True/False.
+        """
+        # Создать объект таблицы
+        kernel = ic_user.getKernel()
+        tab = kernel.createObjByRes(table_name, table_name, 'tab')
+
+        transaction = tab.db.session(autoflush=False, autocommit=False)
+        try:
+            # Очистить данные таблицы
+            if bClear:
+                tab.clear(transaction=transaction)
+
+            # Заполнить таблицу данными
+            for record in dataset:
+                # log.debug(u'Добавление записи %s в таблицу <%s>' % (str(record), table_name))
+                tab.add_rec_transact(rec=record, transaction=transaction)
+
+            # --- Закончить транзакцию ---
+            transaction.commit()
+            log.debug(u'Заполнения таблицы <%s> результатом запроса <%s> завершено' % (table_name, self.getName()))
+
+            return True
+        except:
+            # Вернуть транзакцию
+            transaction.rollback()
+            log.fatal(u'Ошибка заполнения таблицы <%s> результатом запроса <%s>' % (table_name, self.getName()))
+        return False
 
 
 class icNamedQueryPrototype(icQueryPrototype):

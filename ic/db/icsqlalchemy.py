@@ -52,7 +52,7 @@ from ic.components import icwidget
 
 from . import icdb
 
-__version__ = (1, 1, 2, 1)
+__version__ = (1, 1, 3, 1)
 
 # Типы таблиц
 TABLE_TYPE = 'Table'
@@ -255,6 +255,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         @param TabRes_: Ресурс таблицы.
         @param AutoCreate_: Автоматически создать в БД?
         @param ReCreate_: Признак пересоздания таблицы.
+        @return: Созданный объект sqlalchemy.Table.
         """
         tab_name = TabRes_['name']
         log.info(u'Создание объекта таблицы <%s>' % tab_name)
@@ -1344,12 +1345,28 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         if self.dataclass is not None:
             self.db.releaseConnection(conn)
 
-    def clear(self):
+    def clear(self, transaction=None):
         """
         Очистить таблицу.
+        @param transaction: Объект транзакции.
+            Если определена транзакция то очищаем через транзакционный механизм.
         """
-        if self.dataclass is not None:
-            return self.dataclass.delete().execute()
+        if transaction is None:
+            if self.dataclass is not None:
+                return self.dataclass.delete().execute()
+        else:
+            return self.clear_transact(transaction=transaction)
+        return None
+
+    def clear_transact(self, transaction=None):
+        """
+        Очистить таблицу. Транзакционный механизм.
+        @param transaction: Объект транзакции.
+        """
+        if transaction is not None and self.dataclass is not None:
+            sql = self.dataclass.delete()
+            transaction.execute(sql)
+            return True
         return None
 
     def getFieldDefault(self, FieldName_):

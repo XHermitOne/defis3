@@ -13,6 +13,7 @@ from ic.utils import util
 from ic.dlg import ic_dlg
 from ic.utils import ic_cache
 from ic.log import log
+from ic.engine import ic_user
 
 from ic.storage import storesrc
 
@@ -24,7 +25,7 @@ from NSI.nsi_dlg import icspraveditdlg
 from NSI.nsi_dlg import icspravchoicetreedlg
 
 # Версия
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 # Спецификация
 SPC_IC_SPRAV = {'type': 'SpravDefault',
@@ -596,13 +597,17 @@ class icSpravPrototype(icSpravInterface):
             log.error(u'СПРАВОЧНИК [%s] Ошибка определения уровня справочника по индексу' % self.name)
             return None
 
-    def Edit(self, ParentCode_=(None,), ParentForm_=None):
+    def Edit(self, ParentCode_=(None,), parent=None):
         """
         Запуск окна редактирования справочника/перечисления.
-        @param ParentCode: Код более верхнего уровня.
-        @param ParentForm_: Родительская форма.
+        @param ParentCode_: Код более верхнего уровня.
+        @param parent: Родительская форма.
+            Если не определена, то берется главная форма.
         @return: Возвращает результат выполнения опереции True/False.
         """
+        if parent is None:
+            parent = ic_user.getMainWin()
+
         try:
             if ParentCode_ is None:
                 ParentCode_ = (None, )
@@ -639,7 +644,7 @@ class icSpravPrototype(icSpravInterface):
 
             if not form:
                 # Форма не определена
-                return icspraveditdlg.edit_sprav_dlg(parent=ParentForm_,
+                return icspraveditdlg.edit_sprav_dlg(parent=parent,
                                                      nsi_sprav=self)
             # if form is None:
             #     ic_dlg.icMsgBox(u'ОШИБКА', u'Не определена форма редактирования уровня!')
@@ -660,13 +665,13 @@ class icSpravPrototype(icSpravInterface):
             # Инициализация пространства имен формы редактирования справочника
             evsp = util.InitEvalSpace({'OBJ': self})
             ok = icResourceParser.ResultForm(form,
-                                             filter={tab_name: sql}, evalSpace=evsp, parent=ParentForm_,
+                                             filter={tab_name: sql}, evalSpace=evsp, parent=parent,
                                              bBuff=self.getAutoCacheFrm(),
                                              key=self.GetUUID()+'_'+self.ListCode2StrCode(parent_code))
 
             return ok
         except:
-            log.error(u'СПРАВОЧНИК [%s] Ошибка редактирования' % self.name)
+            log.fatal(u'СПРАВОЧНИК [%s] Ошибка редактирования' % self.name)
             return False
 
     def Ctrl(self, val, old=None, field='name', flds=None, bCount=True, cod='', DateTime_=None):

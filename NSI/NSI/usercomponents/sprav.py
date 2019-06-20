@@ -192,7 +192,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         sprav_obj = ic_user.getKernel().createObjBySpc(parent=None, res=res, context=context)
 
         log.info(u'Тестирование СПРАВОЧНИКА <%s>' % res['name'])
-        sprav_obj.Edit(ParentForm_=parent)
+        sprav_obj.Edit(parent=parent)
         return
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
