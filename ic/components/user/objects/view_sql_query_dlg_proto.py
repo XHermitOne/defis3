@@ -82,7 +82,7 @@ class icViewSQLQueryDialogProto ( wx.Dialog ):
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.m_staticText3 = wx.StaticText( self.ctrl_toolBar, wx.ID_ANY, u"Ограничение количества строк:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText3 = wx.StaticText( self.ctrl_toolBar, wx.ID_ANY, u"Ограничение количества записей:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText3.Wrap( -1 )
 		self.ctrl_toolBar.AddControl( self.m_staticText3 )
 		self.limit_spinCtrl = wx.SpinCtrl( self.ctrl_toolBar, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
@@ -93,6 +93,20 @@ class icViewSQLQueryDialogProto ( wx.Dialog ):
 		
 		self.records_listCtrl = wx.ListCtrl( self.table_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_REPORT )
 		bSizer4.Add( self.records_listCtrl, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		bSizer7 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText4 = wx.StaticText( self.table_panel, wx.ID_ANY, u"Всего записей:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText4.Wrap( -1 )
+		bSizer7.Add( self.m_staticText4, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.count_textCtrl = wx.TextCtrl( self.table_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_READONLY )
+		self.count_textCtrl.SetFont( wx.Font( 11, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Sans" ) )
+		
+		bSizer7.Add( self.count_textCtrl, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		
+		bSizer4.Add( bSizer7, 0, wx.EXPAND, 5 )
 		
 		
 		self.table_panel.SetSizer( bSizer4 )

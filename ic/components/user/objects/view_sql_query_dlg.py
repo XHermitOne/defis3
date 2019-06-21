@@ -175,6 +175,7 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
                     cols = [dict(label=field_name, width=-1) for field_name in fields]
                 # Строки
                 rows = query_tab.get('__data__', ())
+                row_count = len(rows)
 
                 # Ограничение количества выводимых строк
                 limit = self.limit_spinCtrl.GetValue()
@@ -186,6 +187,9 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
                 if rows:
                     # Автообразмерить колонки
                     self.setColumnsAutoSize_list_ctrl(self.records_listCtrl)
+
+                # Вывести количество строк
+                self.count_textCtrl.SetValue(str(row_count))
                 return True
         return False
 
