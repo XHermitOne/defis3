@@ -641,9 +641,9 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
         max_elements = CountResElements([objRes])
         if max_elements > 50:
             max_elements += 10
-        progress.icOpenProgressBar(_('Create form: <%s>') % objRes['name'], 0, max_elements+1)
-    else:
-        log.info(u'Сборка объекта <%s>' % objRes['name'])
+        progress.icOpenProgressBar(u'Создание формы <%s>' % objRes['name'], 0, max_elements+1)
+    # else:
+    #     log.info(u'Сборка объекта <%s>' % objRes['name'])
 
     if parent:
         try:
@@ -711,8 +711,8 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
     #   Уничтожаем индикатор процесса
     if bIndicator:
         progress.icCloseProgressBar()
-    else:
-        log.info(u'Завершена сборка объекта <%s>' % objRes['name'])
+    # else:
+    #     log.info(u'Завершена сборка объекта <%s>' % objRes['name'])
 
     return obj
 
@@ -799,7 +799,7 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
                 if designer:
                     constr = designer
             except:
-                log.error(_('Designer not found'))
+                log.error(u'Не определен дизайнер объекта')
                 designer = None
         
         if 'sizer' in constr.__init__.__code__.co_varnames:

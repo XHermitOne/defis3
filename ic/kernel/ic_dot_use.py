@@ -34,8 +34,8 @@ class icMetaDotUsePrototype(object):
         """
         Создание выбранного объекта.
         """
-        if ic_mode.isDebugMode():
-            log.debug('CREATE Object <%s>' % self.passport())
+        # if ic_mode.isDebugMode():
+        #     log.debug('CREATE Object <%s>' % self.passport())
         kernel = ic_user.getKernel()
         if kernel:
             if 'context' in kwarg:
