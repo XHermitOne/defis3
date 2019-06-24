@@ -22,6 +22,9 @@ from . import gen_nsi_table_res
 # Версия
 __version__ = (1, 1, 2, 2)
 
+# Зарезервированные имена полей
+RESERVER_FIELD_NAMES = ('type', 'count', 'cod', 'name', 'access', 'uuid')
+
 
 class icSpravStorageInterface:
     """
@@ -844,7 +847,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         Список имен полей таблицы данных справочника.
         """
         if self._tab:
-            field_names = [fld_name for fld_name in self._tab.getFieldNames() if fld_name not in ['type', 'count', 'cod', 'name', 'access', 'uuid']]
+            field_names = [fld_name for fld_name in self._tab.getFieldNames() if fld_name not in RESERVER_FIELD_NAMES]
             # Поля cod и name всегда первые, а поле access всегда последнее
             return ['cod', 'name']+field_names+['access']
         else:
@@ -940,12 +943,10 @@ class icSpravSQLStorage(icSpravStorageInterface,
             if recs is not None:
                 if len(recs):
                     return recs[0]
-
-            return None
         except:
-            log.fatal(u'Ошибка определения словаря записи по значению %s поля %s записи: recs' % (FieldValue_,
-                                                                                                        FieldName_))
-            return None
+            log.fatal(u'Ошибка определения словаря записи по значению <%s> поля <%s> записи' % (FieldValue_,
+                                                                                                FieldName_))
+        return None
 
     def _getRecByFldVal(self, FieldName_, FieldValue_):
         """
@@ -976,8 +977,9 @@ class icSpravSQLStorage(icSpravStorageInterface,
             
             recs = self._tab.queryAll(sql)
             # Сконвертировать список кортежей в список словарей
-            for i, rec in enumerate(recs):
-                recs[i] = dict([(fld[1], rec[fld[0]]) for fld in enumerate(field_names)])
+            if recs is not None:
+                for i, rec in enumerate(recs):
+                    recs[i] = dict([(fld[1], rec[fld[0]]) for fld in enumerate(field_names)])
             return recs
         except:
             log.fatal(u'Ошибка определения словаря записи по значению %s поля %s' % (FieldValue_, FieldName_))
