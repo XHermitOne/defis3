@@ -12,16 +12,17 @@
 import copy
 from . import icsqlalchemydataset
 
-import ic.utils.ic_util
+from ic.utils import ic_util
 from ic.utils import resource
 from ic.log import log
 from ic.utils import txtgen
 from ic.engine import ic_user
 from ic.utils import util
 
+
 import ic.interfaces.icdataclassinterface as icdataclassinterface
 
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 4, 1)
 
 # Спецификации
 # Результат запроса (словарно-списковое представление)
@@ -115,7 +116,7 @@ def getQueryTable(Query_, PostFilter_=None):
                 field_name2idx[field_name] = field_names.index(field_name)
             # Фильтрация
             filter_if_str_lst = ['r[%d]==%s' % (field_name2idx[fld],
-                                 ic.utils.ic_util.getStrInQuotes(PostFilter_[fld])) for fld in PostFilter_.keys()]
+                                 ic_util.getStrInQuotes(PostFilter_[fld])) for fld in PostFilter_.keys()]
             filter_if_str = 'lambda r: '+' and '.join(filter_if_str_lst)
             log.debug(u'getQueryTable PostFilter: ' + filter_if_str)
             filter_if = eval(filter_if_str)
@@ -345,7 +346,73 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         prj_res_manager = self._get_prj_res_manager()
         return prj_res_manager.isRes(tab_resname, 'tab')
 
-    def to_table(self, table_name=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True):
+    def to_table(self, table=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True):
+        """
+        Преобразовать результат запроса в таблицу.
+        В результате работы функции создается ресурс таблицы,
+        если он не существует.
+        @param table: Таблица.
+            Таблица может задаваться именем, паспортом или передаваться в виде объекта.
+            Если None, то таблица создается с таким же именем как и запрос.
+        @param bReCreateRes: Пересоздать ресурс если он уже существует?
+        @param bData: Заполнить таблицу данными автоматически?
+        @param bClear: Произвести предварительную очистку данных при заполнении?
+        @param bTransact: Сделать сохранение данных одной транзакцией?
+        @return: True/False.
+        """
+        if isinstance(table, str) or table is None:
+            return self._to_table_by_name(table, bReCreateRes=bReCreateRes, bData=bData,
+                                          bClear=bClear, bTransact=bTransact)
+        elif ic_util.is_pasport(table):
+            kernel = ic_user.getKernel()
+            tab = kernel.Create(passport=table)
+            return self._to_table(tab, bReCreateRes=bReCreateRes, bData=bData,
+                                  bClear=bClear, bTransact=bTransact)
+        return self._to_table(table, bReCreateRes=bReCreateRes, bData=bData,
+                              bClear=bClear, bTransact=bTransact)
+
+    def _to_table(self, table, bReCreateRes=False, bData=True, bClear=False, bTransact=True):
+        """
+        Преобразовать результат запроса в таблицу.
+        В результате работы функции создается ресурс таблицы,
+        если он не существует.
+        @param table: Таблица.
+        @param bReCreateRes: Пересоздать ресурс если он уже существует?
+        @param bData: Заполнить таблицу данными автоматически?
+        @param bClear: Произвести предварительную очистку данных при заполнении?
+        @param bTransact: Сделать сохранение данных одной транзакцией?
+        @return: True/False.
+        """
+        if table is None:
+            log.warning(u'Не определен объект таблицы для заполнения результатом выполнения запроса <%s>' % self.getName())
+            return None
+
+        result = False
+        if bReCreateRes:
+            table_name = table.getName()
+            # Если необходимо пересоздать ресурс,
+            # то сначала удаляем его а затем вновь создаем
+            prj_res_manager = self._get_prj_res_manager()
+            prj_res_manager.delRes(table_name, 'tab')
+
+            # Создаем ресурс заново
+            result = self.createTableResource(table_name=table_name)
+
+            # Проверяем есть ли ресурс таблицы для выгрузки
+            # Если его нет то выгрузка не возможна
+            if not self._isTableRes(table_name):
+                log.warning(u'Ресурс таблицы <%s> не найден' % table_name)
+                log.warning(u'Выгрузка результатов запроса <%s> в таблицу не возможна' % self.getName())
+                return False
+
+        if bData:
+            data = self.execute()
+            # Заполнить таблицу данными
+            result = self.saveData(table, dataset=data, bClear=bClear, bTransact=bTransact)
+
+        return result
+
+    def _to_table_by_name(self, table_name=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -467,77 +534,88 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
 
         return field_spc
 
-    def saveData(self, table_name=None, dataset=(), bClear=False, bTransact=True):
+    def saveData(self, table=None, dataset=(), bClear=False, bTransact=True):
         """
         Сохранить результат запроса в таблице.
-        @param table_name: Имя таблицы.
+        @param table: Таблица.
+            Таблица может задаваться именем, паспортом или передаваться в виде объекта.
         @param dataset: Набор записей-результата запроса.
             Список словарей.
         @param bClear: Произвести предварительную очистку данных при заполнении?
         @param bTransact: Сделать сохранение данных одной транзакцией?
         @return: True/False.
         """
-        if table_name is None:
-            table_name = self.getName()
+        if table is None:
+            table = self.getName()
+
+        if isinstance(table, str):
+            # Таблица задается именем
+            kernel = ic_user.getKernel()
+            table = kernel.createObjByRes(table, table, 'tab')
+        elif ic_util.is_pasport(table):
+            # Таблица задается паспортом
+            kernel = ic_user.getKernel()
+            table = kernel.Create(table)
+        else:
+            # Таблица задается объектом
+            pass
+
+        if table is None:
+            log.warning(u'Не определена таблица для сохранения данных запроса <%s>' % self.getName())
+            return False
+
         try:
             if bTransact:
-                return self._saveDataTransact(table_name=table_name, dataset=dataset, bClear=bClear)
-            return self._saveData(table_name=table_name, dataset=dataset, bClear=bClear)
+                return self._saveDataTransact(table=table, dataset=dataset, bClear=bClear)
+            return self._saveData(table=table, dataset=dataset, bClear=bClear)
         except:
             log.fatal(u'Ошибка сохранения данных запроса <%s> в таблице <%s>' % (self.getName(), table_name))
         return False
 
-    def _saveData(self, table_name=None, dataset=(), bClear=False):
+    def _saveData(self, table=None, dataset=(), bClear=False):
         """
         Сохранить результат запроса в таблице.
-        @param table_name: Имя таблицы.
+        @param table: Таблица.
         @param dataset: Набор записей-результата запроса.
             Список словарей.
         @param bClear: Произвести предварительную очистку данных при заполнении?
         @return: True/False.
         """
-        # Создать объект таблицы
-        kernel = ic_user.getKernel()
-        tab = kernel.createObjByRes(table_name, table_name, 'tab')
         # Очистить данные таблицы
         if bClear:
-            tab.clear()
+            table.clear()
 
         # Заполнить таблицу данными
         for record in dataset:
             # log.debug(u'Добавление записи %s в таблицу <%s>' % (str(record), table_name))
-            tab.add(**record)
+            table.add(**record)
 
         return True
 
-    def _saveDataTransact(self, table_name=None, dataset=(), bClear=False):
+    def _saveDataTransact(self, table=None, dataset=(), bClear=False):
         """
         Сохранить результат запроса в таблице.
         ВНИМАНИЕ! Сохранение производим одной транзакцией.
-        @param table_name: Имя таблицы.
+        @param table: Таблица.
         @param dataset: Набор записей-результата запроса.
             Список словарей.
         @param bClear: Произвести предварительную очистку данных при заполнении?
         @return: True/False.
         """
-        # Создать объект таблицы
-        kernel = ic_user.getKernel()
-        tab = kernel.createObjByRes(table_name, table_name, 'tab')
-
-        transaction = tab.db.session(autoflush=False, autocommit=False)
+        transaction = table.db.session(autoflush=False, autocommit=False)
         try:
             # Очистить данные таблицы
             if bClear:
-                tab.clear(transaction=transaction)
+                table.clear(transaction=transaction)
 
             # Заполнить таблицу данными
             for record in dataset:
                 # log.debug(u'Добавление записи %s в таблицу <%s>' % (str(record), table_name))
-                tab.add_rec_transact(rec=record, transaction=transaction)
+                table.add_rec_transact(rec=record, transaction=transaction)
 
             # --- Закончить транзакцию ---
             transaction.commit()
-            log.debug(u'Заполнения таблицы <%s> результатом запроса <%s> завершено' % (table_name, self.getName()))
+            log.debug(u'Заполнения таблицы <%s> результатом запроса <%s> завершено' % (table.getName(), self.getName()))
 
             return True
         except:
