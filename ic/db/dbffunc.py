@@ -5,14 +5,18 @@
 Функции манипулирования DBF таблицами.
 """
 
-import dbfpy3.dbf
 import os
 import os.path
 import jaydebeapi
 
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+try:
+    import dbfpy3.dbf
+except ImportError:
+    log.error(u'Ошибка импорта dbfpy3.dbf')
+
+__version__ = (0, 1, 1, 2)
 
 #
 DBF_DB_URL_FMT = 'jdbc:dbf:///%s?charSet=%s'

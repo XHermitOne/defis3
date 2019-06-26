@@ -11,7 +11,7 @@ from . import item_selector_dialog_proto
 from ic.engine import form_manager
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Не определенная надпись
 NONE_LABEL = u'Не определено'
@@ -158,7 +158,7 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
         self.item_sort = item_sort
 
         # Инициализация списка записей
-        self.records = records
+        self.records = list(records)
         if self.record_sort:
             self.records.sort(key=self.record_sort)
         self.init_record_list_ctrl(records, columns)
