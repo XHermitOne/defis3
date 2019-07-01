@@ -1,1 +1,0 @@
-/usr/bin/python3 /mnt/defis/defis3/ic/engine/run.py -run -dbg /mnt/defis/defis3/ayan_heat/ayan_heat/ -s admin
