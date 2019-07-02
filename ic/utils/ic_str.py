@@ -558,11 +558,20 @@ def isMultiLineTxt(txt=u''):
 
 def upper_symbols2_lower(txt):
     """
-    Замена больших буков в строке на маленькое с подчеркиванием кроме первого символа.  
+    Замена больших букв в строке на маленькое с подчеркиванием кроме первого символа.
     @param txt: Строка текста в виде AbcdEfghIklmn.
     @return: Изменненная строка в виде abcd_efgh_iklmn.
     """
     return ''.join([('_'+symb.lower() if symb.isupper() and i else symb.lower()) for i, symb in enumerate(list(txt))])
+
+
+def lower_symbols2_upper(txt):
+    """
+    Замена маленьких букв с подчеркиванием кроме первого символа в строке на большое.
+    @param txt: Строка текста в виде abcd_efgh_iklmn.
+    @return: Изменненная строка в виде AbcdEfghIklmn.
+    """
+    return ''.join([(symb.upper() if not i or (i and symb.islower() and txt[i-1] == '_') else symb.lower()) for i, symb in enumerate(list(txt)) if symb != '_'])
 
 
 def get_str_digit(txt):

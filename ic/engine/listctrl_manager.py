@@ -611,6 +611,27 @@ class icListCtrlManager(object):
             log.warning(u'Добавление колонок списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
         return False
 
+    def removeRow_list_ctrl(self, ctrl=None, item=-1):
+        """
+        Удалить строку из контрола списка.
+        @param ctrl: Объект контрола.
+        @param item: Индекс удаляемой строки.
+        @return: True - все прошло нормально / False - какая-то ошибка.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол для удаления строки')
+            return False
+
+        if isinstance(ctrl, wx.ListCtrl):
+            if 0 <= item < ctrl.GetItemCount():
+                ctrl.DeleteItem(item=item)
+                return True
+            else:
+                log.warning(u'Не корректный индекс [%d] удаляемой строки контрола списка' % item)
+        else:
+            log.warning(u'Удаление строк списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
+        return False
+
     def setRow_list_ctrl(self, ctrl=None, row_idx=-1, row=(),
                          evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
                          doSavePos=False):

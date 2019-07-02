@@ -98,7 +98,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icPostgreSQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
@@ -135,3 +135,11 @@ class icPostgreSQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
         icdb.icSQLAlchemyDB.__init__(self, component)
         # Установить тип БД
         self._db_type = icdb.POSTGRES_DB_TYPE
+
+    def countActiveConnections(self):
+        """
+        Колчество активных связей с БД PostgreSQL.
+        @return: Количество активных связей или -1 в случае ошибки.
+        """
+        db_url = self.getDBUrl()
+        return icPostgreSQL.countActiveConnections(db_url)
