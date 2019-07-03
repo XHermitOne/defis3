@@ -603,6 +603,33 @@ class PrjTabRes(PrjResource):
                             u'All table, field and link name must be in lower case')
         return PrjResource.rename(self, old_name, new_name)
 
+    def extend(self):
+        """
+        Дополнительные инструменты узла.
+        """
+        from . import gen_model_dialog
+        from ic.db import icmodel
+
+        # Данном случае возможна генерация модулей модели и
+        # менеджера модели по ресурсу таблицы для работы с таблицей через SQLAlchemy
+        tab_res_filename = self.getResFileName()
+
+        name = self.getResName()
+        # Проверяем наличие файлов модулей
+        # для определения обновления дерева прокта
+        model_module_filename = icmodel.genModelModuleFilename(name=name)
+        model_manager_module_filename = icmodel.genModelModuleManagerFilename(name=name)
+        is_prev = os.path.exists(model_module_filename) and os.path.exists(model_manager_module_filename)
+
+        # Вызываем метод открытия диалогового окна управления генерацией
+        # модйлей модели и менеджера модели
+        gen_model_dialog.open_gen_model_dialog(tab_res_filename=tab_res_filename)
+
+        # Определяем нужно ли обновлять дерево проекта
+        is_post = os.path.exists(model_module_filename) and os.path.exists(model_manager_module_filename)
+        if is_prev != is_post:
+            # Обновляем дерево проекта
+            self.getRoot().getParent().Refresh()
 
 # Словарь выбора БД
 DBTypeChoice = {'SQLite DB': ic_sqlite.ic_class_spc,
