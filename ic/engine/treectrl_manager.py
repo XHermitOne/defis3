@@ -662,15 +662,31 @@ class icTreeCtrlManager(object):
 
             parent = tree_ctrl.GetItemParent(item)
             # Если есть родительский элемент, то вызвать рекурсивно
-            if parent:
+            if parent and parent.IsOk():
                 if lPath is None:
                     lPath = []
                 lPath.insert(-1, tree_ctrl.GetItemText(item))
                 return self.getItemPathLabel(tree_ctrl=tree_ctrl, item=parent, lPath=lPath)
+
+            if lPath is None:
+                # Это корневой элемент
+                lPath = []
             return lPath
         except:
             log.fatal(u'Ошибка определение пути элемента объекта <%s>' % str(tree_ctrl))
         return None
+
+    def getItemLevel(self, tree_ctrl=None, item=None):
+        """
+        Определить уровень дерева элемента.
+        Например у корневого элемента уровень 0.
+        @param tree_ctrl: Контрол wx.TreeCtrl.
+        @param item: Элемент дерева. Если None, то берется корневой элемент.
+        @return: Номер уровня или None в случае ошибки.
+        """
+        label_path = self.getItemPathLabel(tree_ctrl=tree_ctrl, item=item)
+        # log.debug(u'Путь до элемента <%s> %s' % (item, str(label_path)))
+        return len(label_path) if label_path is not None else None
 
     def getItemPathData(self, tree_ctrl=None, item=None, lPath=None):
         """
@@ -1083,6 +1099,7 @@ class icTreeCtrlManager(object):
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
             return False
 
+        # log.debug(u'Проверка на корневой элемент %s : %s : %s : %s' % (ctrl.GetRootItem(), item, ctrl.GetRootItem() == item, ctrl.GetItemParent(item).IsOk()))
         return ctrl.GetRootItem() == item
 
     def isFirstTreeItem(self, ctrl=None, item=None):
