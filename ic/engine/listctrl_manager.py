@@ -21,7 +21,7 @@ from ic.bitmap import ic_bmp
 from ic import config
 
 
-__version__ = (0, 1, 4, 1)
+__version__ = (0, 1, 5, 1)
 
 DEFAULT = 'default'
 
@@ -1254,7 +1254,7 @@ class icListCtrlManager(object):
     def getImageIndex_list_ctrl(self, ctrl=None, image=None, auto_add=True):
         """
         Поиск образа в списке образов wx.ListCtrl.
-        @param ctrl: Объект контрола дерева.
+        @param ctrl: Объект контрола списка.
         @param image: Объект образа.
         @param auto_add: Автоматически добавить в список, если отсутствует?
         @return: Индекс образа или -1 если образ не найден.
@@ -1284,3 +1284,25 @@ class icListCtrlManager(object):
                 # Запоминаем в кеше
                 img_cache[img_id] = img_idx
         return img_idx
+
+    def clear_list_ctrl(self, ctrl=None):
+        """
+        Очистка контрола списка.
+        @param ctrl: Объект контрола списка.
+        @return: True/False.
+        """
+        try:
+            if isinstance(ctrl, wx.ListCtrl):
+                ctrl.DeleteAllItems()
+                return True
+            elif isinstance(ctrl, wx.CheckListBox):
+                ctrl.Clear()
+                return True
+            elif isinstance(ctrl, wx.dataview.DataViewListCtrl):
+                ctrl.DeleteAllItems()
+                return True
+            else:
+                log.warning(u'Не поддерживается очистка контрола списка для <%s>' % self.__class__.__name__)
+        except:
+            log.fatal(u'Ошибка очистки контрола списка')
+        return False
