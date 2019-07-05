@@ -74,7 +74,7 @@ def createSchemeDir(scheme_dirname=None):
     # Т.к. папка схемы является пакетом,
     # то необходимо проверить наличие __init__.py файла
     init_py_filename = os.path.join(scheme_dirname, '__init__.py')
-    if os.path.exists(init_py_filename):
+    if not os.path.exists(init_py_filename):
         # Создать файл если его нет
         return ic_extend.save_file_text(init_py_filename, INIT_PY_TEXT)
 
