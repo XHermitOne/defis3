@@ -984,6 +984,21 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.dataclass.select(*args, **kwargs).execute().rowcount
         return -1
 
+    def is_links(self, link_field, link_value):
+        """
+        Проверка наличия связей для проверки целостности данных таблицы.
+        Поиск наличия связи проверяется по count(*)
+        SQL аналог:
+            SELECT COUNT(*) FROM TABLE_NAME WHERE <link_field> = <link_value>
+        @param link_field: Имя поля связи.
+        @param link_value: Значение связи.
+        @return: True - есть ссылки/связи / False - нет / None в случае ошибки.
+        """
+        if self.dataclass is not None:
+            link_count = self.dataclass.select(getattr(self.c, link_field) == link_value).count()
+            return link_count > 0
+        return None
+
     def select(self, *args, **kwargs):
         """
         Выбрать список объектов из класса данных.

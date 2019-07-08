@@ -106,3 +106,19 @@ class icModelManager:
             session.close()
         return True
 
+    def is_links(self, link_field, link_value):
+        """
+        Проверка наличия связей для проверки целостности данных таблицы.
+        Поиск наличия связи проверяется по count(*)
+        SQL аналог:
+            SELECT COUNT(*) FROM TABLE_NAME WHERE <link_field> = <link_value>
+        @param link_field: Имя поля связи.
+        @param link_value: Значение связи.
+        @return: True - есть ссылки/связи / False - нет / None в случае ошибки.
+        """
+        try:
+            link_count = self.session.query(self.__class__).filter(getattr(self.__class__, link_field) == link_value).count()
+            return link_count > 0
+        except:
+            log.fatal(u'Ошибка проверки наличия связи в <%s>' % self.__class__.__name__)
+        return None
