@@ -17,7 +17,7 @@ from . import ic_extend
 from . import util
 from . import ic_str
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Формат для генерации текста модуля формы
 GEN_PY_MODULE_FMT = u'''#!/usr/bin/env python3
@@ -75,14 +75,17 @@ class %s(%s.%s, form_manager.icFormManager):
 '''
 
 SHOW_PANEL_FUNC_BODY_FMT = u'''
-def %s(title=u''):
+def %s(parent=None, title=u''):
     \"\"\"
+    @param parent: Родительское окно.
+        Если не определено, то берется главное окно.
     @param title: Заголовок страницы нотебука главного окна.
     \"\"\"
     try:
-        main_win = ic.getMainWin()
+        if parent is None:
+            parent = ic.getMainWin()
         
-        panel = %s(main_win)
+        panel = %s(parent)
         panel.init()
         main_win.AddPage(panel, title)
     except:
@@ -94,6 +97,7 @@ SHOW_DIALOG_FUNC_BODY_FMT = u'''
 def %s(parent=None):
     \"\"\"
     @param parent: Родительское окно.
+        Если не определено, то берется главное окно.
     @return: True/False.
     \"\"\"
     try:

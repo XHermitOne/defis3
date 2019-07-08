@@ -743,7 +743,13 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
 
         elif property_type == icDefInf.EDT_COLOR:
             # Редактор цветов wxColour.
-            value = eval(str_value)
+            try:
+                value = eval(str_value)
+            except NameError:
+                # ВНИМАНИЕ! Возможно цвет задается именем цвета.
+                colour_name = str_value.upper()
+                colour = wx.Colour(colour_name)
+                value = (colour.Red(), colour.Green(), colour.Blue())
 
         elif property_type == icDefInf.EDT_FONT:
             # Редактор шрифтов wxFont.

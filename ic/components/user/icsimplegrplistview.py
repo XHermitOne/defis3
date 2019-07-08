@@ -58,6 +58,9 @@ ic_class_spc = {'type': 'SimpleGroupListView',
                 'evenRowsBackColor': (160, 160, 160),
                 'oddRowsBackColor': (224, 224, 224),
 
+                'foregroundColor': (0, 0, 0),
+                'backgroundColor': (255, 255, 255),
+
                 'data_src': None,  # Паспорт источника данных
                 'get_dataset': None,   # Функция получения данных в виде списка словарей
 
@@ -70,14 +73,17 @@ ic_class_spc = {'type': 'SimpleGroupListView',
                 'row_text_color': None,        # Получение цвета текста строки
                 'row_background_color': None,  # Получение цвета фона строки
 
+                'show_item_counts': False,  # Признак отображения количесва элементов группы
+
                 '__styles__': ic_class_styles,
                 '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'OnItemSelected', False),
                                'activated': ('wx.EVT_LIST_ITEM_ACTIVATED', 'OnItemActivated', False),
                                },
                 '__attr_types__': {0: ['name', 'type'],
-                                   icDefInf.EDT_CHECK_BOX: ['activate', 'sortable'],
+                                   icDefInf.EDT_CHECK_BOX: ['activate', 'sortable', 'show_item_counts'],
                                    icDefInf.EDT_TEXTFIELD: ['description'],
-                                   icDefInf.EDT_COLOR: ['evenRowsBackColor', 'oddRowsBackColor'],
+                                   icDefInf.EDT_COLOR: ['evenRowsBackColor', 'oddRowsBackColor',
+                                                        'foregroundColor', 'backgroundColor'],
                                    icDefInf.EDT_USER_PROPERTY: ['data_src'],
                                    },
                 '__parent__': icwidget.SPC_IC_WIDGET,
@@ -92,6 +98,8 @@ ic_class_spc = {'type': 'SimpleGroupListView',
 
                                  'row_text_color': u'Получение цвета текста строки',
                                  'row_background_color': u'Получение цвета фона строки',
+
+                                 'show_item_counts': u'Признак отображения количесва элементов группы',
                                  },
                 }
 
@@ -211,7 +219,9 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         parentModule.GroupListView.__init__(self, parent, id,
                                             style=style,
                                             sortable=self.sortable,
-                                            useAlternateBackColors=True)
+                                            useAlternateBackColors=True,
+                                            showItemCounts=self.show_item_counts)
+
         # Цвет фона линий четных/не четных
         self.evenRowsBackColor = self.getICAttr('evenRowsBackColor')
         self.oddRowsBackColor = self.getICAttr('oddRowsBackColor')
@@ -503,8 +513,14 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
 
         if text_colour and isinstance(text_colour, wx.Colour):
             list_item.SetTextColour(text_colour)
+        elif self.foregroundColor:
+            text_colour = wx.Colour(*self.foregroundColor)
+            list_item.SetTextColour(text_colour)
 
         if bg_colour and isinstance(bg_colour, wx.Colour):
+            list_item.SetBackgroundColour(bg_colour)
+        elif self.backgroundColor:
+            bg_colour = wx.Colour(*self.backgroundColor)
             list_item.SetBackgroundColour(bg_colour)
 
 
