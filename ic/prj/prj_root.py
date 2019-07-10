@@ -246,7 +246,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         """
         tree_prj = self.getParent()
         dir_prj_file_name = ic_dlg.icDirDlg(tree_prj, u'Создать проект',
-                                            DefaultPath_=ic_file.getRootDir())
+                                            default_path=ic_file.getRootDir())
         if dir_prj_file_name:
             prj_name = os.path.basename(dir_prj_file_name)
             new_prj_file_name = os.path.join(dir_prj_file_name, prj_name, prj_name+'.pro')
@@ -626,7 +626,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         selection = usernames.index('admin') if 'admin' in usernames else -1
         selected_idx = ic_dlg.icSingleChoiceIdxDlg(parent, u'ПОЛЬЗОВАТЕЛЬ',
                                                    u'Выберите пользователя',
-                                                   Choice_=choices, default_idx=selection)
+                                                   choices=choices, default_idx=selection)
         username = None
         if selected_idx >= 0:
             username = users_description_list[selected_idx][0]

@@ -102,7 +102,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         if img_lib_dir and img_lib_name:
             img_lib_file_name = os.path.join(img_lib_dir, img_lib_name+'.py')
             if os.path.exists(img_lib_file_name):
-                ic_dlg.icMsgBox(Title_=u'ОШИБКА', Text_=u'Файл %s уже существует!' % img_lib_file_name, parent=dlg)
+                ic_dlg.icMsgBox(title=u'ОШИБКА', prompt_text=u'Файл %s уже существует!' % img_lib_file_name, parent=dlg)
                 return False
             # Создать новый файл
             self._img_lib_res.createNewImgLib()
@@ -114,7 +114,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         Добавить новый образ в библиотеку.
         """
         if self._img_lib_res.isEmpty():
-            ic_dlg.icMsgBox(Title_=u'ОШИБКА', Text_=u'Не определена библиотека образов!',
+            ic_dlg.icMsgBox(title=u'ОШИБКА', prompt_text=u'Не определена библиотека образов!',
                             parent=self.getObject())
             return None
 

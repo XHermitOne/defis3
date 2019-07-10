@@ -21,27 +21,27 @@ from ic.log import log
 __version__ = (1, 1, 1, 3)
 
 
-def icFileDlg(Win_=None, Title_='', Filter_='', DefaultPath_=''):
+def icFileDlg(parent=None, title='', wildcard_filter='', default_path=''):
     """
     Открыть диалог выбора файла для открытия/записи.
-    @param Win_: Ссылка на окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Filter_: Фильтр файлов.
+    @param parent: Ссылка на окно.
+    @param title: Заголовок диалогового окна.
+    @param wildcard_filter: Фильтр файлов.
         Например: All ZIP Files (*.zip)|*.zip
-    @param DefaultPath_: Путь по умолчанию.
-    @return: Возвращает полное имя выбранного файла.
+    @param default_path: Путь по умолчанию.
+    @return: Возвращает полное имя выбранного файла или None в случае ошибки.
     """
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
-           Win_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        wildcard = Filter_+'|All Files (*.*)|*.*'
-        dlg = wx.FileDialog(Win_, Title_, '', '', wildcard, wx.FD_OPEN)
-        if DefaultPath_:
-            dlg.SetDirectory(os.path.normpath(DefaultPath_))
+        wildcard = wildcard_filter + '|All Files (*.*)|*.*'
+        dlg = wx.FileDialog(parent, title, '', '', wildcard, wx.FD_OPEN)
+        if default_path:
+            dlg.SetDirectory(os.path.normpath(default_path))
         else:
             dlg.SetDirectory(os.getcwd())
         
@@ -57,30 +57,32 @@ def icFileDlg(Win_=None, Title_='', Filter_='', DefaultPath_=''):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Win_.Destroy()
+           parent.Destroy()
+    return None
 
 
-def icDirDlg(Win_=None, Title_='', DefaultPath_=''):
+def icDirDlg(parent=None, title='', default_path=''):
     """
     Диалог выбора каталога.
-    @param Win_: Ссылка на окно.
-    @param Title_: Заголовок диалогового окна.
-    @param DefaultPath_: Путь по умолчанию.
+    @param parent: Ссылка на окно.
+    @param title: Заголовок диалогового окна.
+    @param default_path: Путь по умолчанию.
+    @return: Возвращает путь каталога или None в случае ошибки.
     """
     result = ''
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
-           Win_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = wx.DirDialog(Win_, Title_,
+        dlg = wx.DirDialog(parent, title,
                            style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         # Установка пути по умолчанию
-        if not DefaultPath_:
-            DefaultPath_ = os.getcwd()
-        dlg.SetPath(DefaultPath_)
+        if not default_path:
+            default_path = os.getcwd()
+        dlg.SetPath(default_path)
         if dlg.ShowModal() == wx.ID_OK:
             result = dlg.GetPath()
         else:
@@ -92,69 +94,71 @@ def icDirDlg(Win_=None, Title_='', DefaultPath_=''):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Win_.Destroy()
+           parent.Destroy()
+
+        result = None
     return result
 
 
-def icImageDlg(Parent_=None, DefaultImgDir_=None):
+def icImageDlg(parent=None, default_img_path=None):
     """
     Диалог выбора графических файлов.
-    @param Parent_: Ссылка на окно.
-    @param DefaultImgDir_: Указание папки образа.
+    @param parent: Ссылка на родительское окно.
+    @param default_img_path: Указание папки образа.
     @return: Возвращает полное имя выбранного файла.
     """
     dlg = None
     win_clear = False
+    ret = None  # Возвращаемое значение
     try:
-        if Parent_ is None:
-           Parent_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
         # Определить папку образов
-        if not DefaultImgDir_ or not os.path.exists(DefaultImgDir_):
+        if not default_img_path or not os.path.exists(default_img_path):
             from ic.bitmap import ic_bmp
-            DefaultImgDir_ = ic_bmp.getImageLibDir()
+            default_img_path = ic_bmp.getImageLibDir()
         # Диалоговое окно выбора образа
-        dlg = wx.lib.imagebrowser.ImageDialog(Parent_, DefaultImgDir_)
+        dlg = wx.lib.imagebrowser.ImageDialog(parent, default_img_path)
         dlg.CenterOnScreen()
 
-        ret = None      # Возвращаемое значение
         if dlg.ShowModal() == wx.ID_OK:
             ret = dlg.GetFile()
     except:
-        log.fatal(u'Ошибка диалога выбора графического файла. Путь: <%s>' % DefaultImgDir_)
+        log.fatal(u'Ошибка диалога выбора графического файла. Путь: <%s>' % default_img_path)
         
     if dlg:
         dlg.Destroy()
     # Удаляем созданное родительское окно
     if win_clear:
-        Parent_.Destroy()
+        parent.Destroy()
         
     return ret
 
 
-def icColorDlg(Win_=None, Title_='', Default_=wx.BLACK):
+def icColorDlg(parent=None, title='', default_colour=wx.BLACK):
     """
     Диалог выбора цвета
-    @param Win_: Ссылка на окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Default_: Значение по умолчанию.
-    @return: Возвращает выбранный цвет или Default_.
+    @param parent: Ссылка на родительское окно.
+    @param title: Заголовок диалогового окна.
+    @param default_colour: Значение по умолчанию.
+    @return: Возвращает выбранный цвет или default_colour.
     """
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
-           Win_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = wx.ColourDialog(Win_, wx.ColourData().SetColour(Default_))
-        dlg.SetTitle(Title_)
+        dlg = wx.ColourDialog(parent, wx.ColourData().SetColour(default_colour))
+        dlg.SetTitle(title)
         dlg.GetColourData().SetChooseFull(True)
         if dlg.ShowModal() == wx.ID_OK:
             color = dlg.GetColourData().GetColour()
         else:
-            color = Default_
+            color = default_colour
         dlg.Destroy()
         return color
     finally:
@@ -163,52 +167,52 @@ def icColorDlg(Win_=None, Title_='', Default_=wx.BLACK):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Win_.Destroy()
+           parent.Destroy()
 
 
-def icTextEntryDlg(Win_=None, Title_='', Text_='', Default_=''):
+def icTextEntryDlg(parent=None, title='', prompt_text='', default_value=''):
     """
     Диалог ввода строки.
-    @param Win_: Ссылка на окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
-    @param Default_: Значение по умолчанию.
+    @param parent: Ссылка на окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
+    @param default_value: Значение по умолчанию.
     @return: Возвращает введеную строку, если нажата отмена, то None.
     """
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
-           Win_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = wx.TextEntryDialog(Win_, Text_, Title_)
-        if Default_ is None:
-            Default_ = ''
-        dlg.SetValue(str(Default_))
+        dlg = wx.TextEntryDialog(parent, prompt_text, title)
+        if default_value is None:
+            default_value = ''
+        dlg.SetValue(str(default_value))
         if dlg.ShowModal() == wx.ID_OK:
             txt = dlg.GetValue()
             return txt
-        return None
     finally:
         if dlg:
             dlg.Destroy()
 
         # Удаляем созданное родительское окно
         if win_clear:
-            Win_.Destroy()
+            parent.Destroy()
+    return None
 
 
-def icAskDlg(Title_='', Text_='', Style_=wx.YES_NO | wx.ICON_QUESTION):
+def icAskDlg(title='', prompt_text='', style=wx.YES_NO | wx.ICON_QUESTION):
     """
     Диалог вопроса.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
-    @param Style_: Стиль диалога.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
+    @param style: Стиль диалога.
     @return: Код нажатой кнопки (Например: wx.YES или wx.NO).
     """
     try:
-        return wx.MessageBox(Text_, Title_, style=Style_)
+        return wx.MessageBox(prompt_text, title, style=style)
     except:
         log.fatal()
 
@@ -220,81 +224,69 @@ def icAskBox(*args, **kwargs):
     return icAskDlg(*args, **kwargs) == wx.YES
 
 
-def icMsgBox(Title_='', Text_='', **kwargs):
+def icMsgBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения.
-    @param ParentWin_: Родительское окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
+    @param parent: Родительское окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
     @return: Код нажатой кнопки (Например: wx.YES или wx.NO).
     """
-    if 'ParentWin_' in kwargs:
-        kwargs['parent'] = kwargs['ParentWin_']
-        del kwargs['ParentWin_']
     try:
-        return wx.MessageBox(Text_, Title_, style=wx.OK, **kwargs)
+        return wx.MessageBox(prompt_text, title, style=wx.OK, **kwargs)
     except:
         log.fatal()
 
 
-def icErrBox(Title_='', Text_='', **kwargs):
+def icErrBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об ошибке.
-    @param ParentWin_: Родительское окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
+    @param parent: Родительское окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
     @return: Код нажатой кнопки (Например: wx.YES или wx.NO).
     """
-    if 'ParentWin_' in kwargs:
-        kwargs['parent'] = kwargs['ParentWin_']
-        del kwargs['ParentWin_']
     try:
-        return wx.MessageBox(Text_, Title_, style=wx.OK | wx.ICON_ERROR, **kwargs)
+        return wx.MessageBox(prompt_text, title, style=wx.OK | wx.ICON_ERROR, **kwargs)
     except:
         log.fatal()
 
 
-def icFatalBox(Title_='', Text_='', **kwargs):
+def icFatalBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об ошибке вместе с Traceback.
-    @param ParentWin_: Родительское окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
+    @param parent: Родительское окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
     @return: Код нажатой кнопки (Например: wx.YES или wx.NO).
     """
-    if 'ParentWin_' in kwargs:
-        kwargs['parent'] = kwargs['ParentWin_']
-        del kwargs['ParentWin_']
     trace_txt = traceback.format_exc()
-    txt = Text_ + trace_txt
-    return icErrBox(Title_, txt, **kwargs)
+    txt = prompt_text + trace_txt
+    return icErrBox(title, txt, **kwargs)
 
 
-def icWarningBox(Title_='', Text_='', **kwargs):
+def icWarningBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об предупреждении.
-    @param ParentWin_: Родительское окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
+    @param parent: Родительское окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
     @return: Код нажатой кнопки (Например: wx.YES или wx.NO).
     """
-    if 'ParentWin_' in kwargs:
-        kwargs['parent'] = kwargs['ParentWin_']
-        del kwargs['ParentWin_']
     try:
-        return wx.MessageBox(Text_, Title_, style=wx.OK | wx.ICON_WARNING, **kwargs)
+        return wx.MessageBox(prompt_text, title, style=wx.OK | wx.ICON_WARNING, **kwargs)
     except:
         log.fatal()
 
 
-def icSingleChoiceDlg(Parent_=None, Title_='', Text_='', Choice_=[],
+def icSingleChoiceDlg(parent=None, title='', prompt_text='', choices=[],
                       default_idx=-1):
     """
     Диалог выбора из списка.
-    @param Parent_: Родительское окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
-    @param Choice_: Список строк выбора.
+    @param parent: Родительское окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
+    @param choices: Список строк выбора.
     @param default_idx: Индекс строки, выбираемой по умолчанию.
         Если не указывается, то ничего по умолчанию не выбирает.
     @return: Выбранный текст или None, если нажата Cancel.
@@ -302,34 +294,34 @@ def icSingleChoiceDlg(Parent_=None, Title_='', Text_='', Choice_=[],
     dlg = None
     win_clear = False
     try:
-        if Parent_ is None:
-           Parent_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = wx.SingleChoiceDialog(Parent_, Text_, Title_, Choice_, wx.CHOICEDLG_STYLE)
+        dlg = wx.SingleChoiceDialog(parent, prompt_text, title, choices, wx.CHOICEDLG_STYLE)
         if default_idx >= 0:
             dlg.SetSelection(default_idx)
         if dlg.ShowModal() == wx.ID_OK:
             txt = dlg.GetStringSelection()
             return txt
-        return None
 
     finally:
         if dlg:
             dlg.Destroy()
         # Удаляем созданное родительское окно
         if win_clear:
-            Parent_.Destroy()
+            parent.Destroy()
+    return None
 
 
-def icSingleChoiceIdxDlg(Parent_=None, Title_='', Text_='', Choice_=[],
+def icSingleChoiceIdxDlg(parent=None, title='', prompt_text='', choices=[],
                          default_idx=-1):
     """
     Диалог выбора.
-    @param Parent_: Родительское окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
-    @param Choice_: Список выбора. Список строк.
+    @param parent: Родительское окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
+    @param choices: Список выбора. Список строк.
     @param default_idx: Индекс строки, выбираемой по умолчанию.
         Если не указывается, то ничего по умолчанию не выбирает.
     @return: Выбранный индекс в списке выбора или -1, если нажата Cancel.
@@ -338,12 +330,12 @@ def icSingleChoiceIdxDlg(Parent_=None, Title_='', Text_='', Choice_=[],
     dlg = None
     win_clear = False
     try:
-        if Parent_ is None:
-           Parent_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = wx.SingleChoiceDialog(Parent_, Text_, Title_,
-                                    Choice_, wx.CHOICEDLG_STYLE)
+        dlg = wx.SingleChoiceDialog(parent, prompt_text, title,
+                                    choices, wx.CHOICEDLG_STYLE)
         if default_idx >= 0:
             dlg.SetSelection(default_idx)
 
@@ -354,30 +346,30 @@ def icSingleChoiceIdxDlg(Parent_=None, Title_='', Text_='', Choice_=[],
             dlg.Destroy()
         # Удаляем созданное родительское окно
         if win_clear:
-            Parent_.Destroy()
+            parent.Destroy()
     return idx
 
 
-def icMultiChoiceDlg(Parent_=None, Title_='', Text_='', Choice_=()):
+def icMultiChoiceDlg(parent=None, title='', prompt_text='', choices=()):
     """
     Диалог множественного выбора.
-    @param Parent_: Родительское окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
-    @param Choice_: Список выбора.Кортеж выбора в формате ((True/False,'Текст'),...).
+    @param parent: Родительское окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
+    @param choices: Список выбора.Кортеж выбора в формате ((True/False,'Текст'),...).
     @return: Кортеж выбора в формате ((True/False,'Текст'),...).
     """
     dlg = None
     win_clear = False
     try:
-        if Parent_ is None:
-           Parent_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        choice_list = [row[1] for row in Choice_]
-        dlg = wx.MultiChoiceDialog(Parent_, Text_, Title_, choice_list)
+        choice_list = [row[1] for row in choices]
+        dlg = wx.MultiChoiceDialog(parent, prompt_text, title, choice_list)
         # Установить выбор по умолчанию
-        selections = [i for i, row in enumerate(Choice_) if row[0]]
+        selections = [i for i, row in enumerate(choices) if row[0]]
         dlg.SetSelections(selections)
         
         if dlg.ShowModal() == wx.ID_OK:
@@ -389,7 +381,7 @@ def icMultiChoiceDlg(Parent_=None, Title_='', Text_='', Choice_=()):
             dlg.Destroy()
         # Удаляем созданное родительское окно
         if win_clear:
-            Parent_.Destroy()
+            parent.Destroy()
     return None
 
 
@@ -398,26 +390,27 @@ class icProgressDlg(wx.ProgressDialog):
     Класс диалогового окна прогресс бара.
     """
 
-    def __init__(self, Win_=None, Title_='', Msg_='', Min_=0, Max_=100, Style_=wx.PD_CAN_ABORT):
+    def __init__(self, parent=None, title='', prompt_text='',
+                 min_value=0, max_value=100, style=wx.PD_CAN_ABORT):
         """
         Конструктор. Создает и открывает прогресс бар.
-        @param Win_: Ссылка на окно.
-        @param Title_: Заголовок диалогового окна.
-        @param Msg_: Текст диалога.
-        @param Min_: Минимальное значение.
-        @param Max_: Максимальное занчение.
-        @param Style_: Стиль диалога.
+        @param parent: Ссылка на окно.
+        @param title: Заголовок диалогового окна.
+        @param prompt_text: Текст диалога.
+        @param min_value: Минимальное значение.
+        @param max_value: Максимальное занчение.
+        @param style: Стиль диалога.
         @return: Объект диалога.
         """
         # Атрибуты класса
-        self._ProgressFrame = Win_    # Фрейм прогресс бара
+        self._ProgressFrame = parent    # Фрейм прогресс бара
         self._MyFrame = False
         if self._ProgressFrame is None:
             self._ProgressFrame = wx.Frame(None, -1, '')
             self._MyFrame = True
 
-        self._ProgressMIN = Min_    # Минимальное значение
-        self._ProgressMAX = Max_    # Максимальное значение
+        self._ProgressMIN = min_value    # Минимальное значение
+        self._ProgressMAX = max_value    # Максимальное значение
         if self._ProgressMIN > self._ProgressMAX:
             tmp_value = self._ProgressMAX
             self._ProgressMAX = self._ProgressMIN
@@ -426,9 +419,9 @@ class icProgressDlg(wx.ProgressDialog):
         self._current_value = 0
         try:
             # Вызов конструктор а предка
-            wx.ProgressDialog.__init__(self, Title_, Msg_,
-                                       self._ProgressMAX-self._ProgressMIN,
-                                       self._ProgressFrame, Style_ | wx.PD_APP_MODAL)
+            wx.ProgressDialog.__init__(self, title, prompt_text,
+                                       self._ProgressMAX - self._ProgressMIN,
+                                       self._ProgressFrame, style | wx.PD_APP_MODAL)
 
             # Образмерить и отцентровать диалоговое окно
             self.SetSize(wx.Size(500, 130))
@@ -442,24 +435,24 @@ class icProgressDlg(wx.ProgressDialog):
     def getMin(self):
         return self._ProgressMIN
 
-    def UpdateDlg(self, Value_=-1, NewMsg_=''):
+    def UpdateDlg(self, value=-1, new_prompt_text=''):
         """
         Обновить данные програсс бара.
-        @param Value_: Значение.
-        @param NewMsg_: Текст диалога.
+        @param value: Значение.
+        @param new_prompt_text: Текст диалога.
         """
         # Ограничение значения
-        if Value_ < self._ProgressMIN:
-            Value_ = self._ProgressMIN
-        if Value_ > self._ProgressMAX:
-            Value_ = self._ProgressMAX
-        self.Update(Value_-self._ProgressMIN, NewMsg_)
+        if value < self._ProgressMIN:
+            value = self._ProgressMIN
+        if value > self._ProgressMAX:
+            value = self._ProgressMAX
+        self.Update(value - self._ProgressMIN, new_prompt_text)
 
-    def StepDlg(self, step_value=1, new_msg=u''):
+    def StepDlg(self, step_value=1, new_prompt_text=u''):
         """
         Обновить данные програсс бара с приращением.
         @param step_value: Значение приращения.
-        @param new_msg: Текст диалога.
+        @param new_prompt_text: Текст диалога.
         """
         self._current_value += step_value
         # Ограничение значения
@@ -467,7 +460,7 @@ class icProgressDlg(wx.ProgressDialog):
             self._current_value = self._ProgressMIN
         if self._current_value > self._ProgressMAX:
             self._current_value = self._ProgressMAX
-        self.Update(self._current_value - self._ProgressMIN, new_msg)
+        self.Update(self._current_value - self._ProgressMIN, new_prompt_text)
 
     # Закрыть прогресс бар
     def CloseDlg(self):
@@ -485,39 +478,40 @@ class icProgressDlg(wx.ProgressDialog):
 _PROGRESS_DLG = None    # Сам диалог прогресс бара
 
 
-def icOpenProgressDlg(Win_=None, Title_='', Msg_='', Min_=0, Max_=100, Style_=wx.PD_AUTO_HIDE):
+def icOpenProgressDlg(parent=None, title='', prompt_text='',
+                      min_value=0, max_value=100, style=wx.PD_AUTO_HIDE):
     """
     Диалоговые функции прогресс бара.
     Создает и открывает прогресс бар.
-    @param Win_: Ссылка на окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Msg_: Текст диалога.
-    @param Min_: Минимальное значение.
-    @param Max_: Максимальное занчение.
-    @param Style_: Стиль диалога.
+    @param parent: Ссылка на окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
+    @param min_value: Минимальное значение.
+    @param max_value: Максимальное занчение.
+    @param style: Стиль диалога.
     @return: Объект диалога.
     """
     try:
         global _PROGRESS_DLG
-        _PROGRESS_DLG = icProgressDlg(Win_, Title_, Msg_, Min_, Max_, Style_)
+        _PROGRESS_DLG = icProgressDlg(parent, title, prompt_text, min_value, max_value, style)
     except:
         log.fatal(u'Ошибка открытия прогресс бара')
         _PROGRESS_DLG = None
     return _PROGRESS_DLG
 
 
-def icUpdateProgressDlg(Value_=-1, NewMsg_=''):
+def icUpdateProgressDlg(value=-1, new_prompt_text=''):
     """
     Диалоговые функции прогресс бара.
     Обновить данные програсс бара.
-    @param Value_: Значение.
-    @param NewMsg_: Текст диалога.
+    @param value: Значение.
+    @param new_prompt_text: Текст диалога.
     @return: Возвращает результат выполнения операции True/False.
     """
     try:
         global _PROGRESS_DLG
         if _PROGRESS_DLG is not None:
-            _PROGRESS_DLG.UpdateDlg(Value_, NewMsg_)
+            _PROGRESS_DLG.UpdateDlg(value, new_prompt_text)
             return True
         return False
     except:
@@ -525,18 +519,18 @@ def icUpdateProgressDlg(Value_=-1, NewMsg_=''):
         return False
 
 
-def icStepProgressDlg(step_value=1, new_msg=u''):
+def icStepProgressDlg(step_value=1, new_prompt_text=u''):
     """
     Диалоговые функции прогресс бара с приращением.
     Обновить данные програсс бара.
     @param step_value: Значение приращения.
-    @param new_msg: Текст диалога.
+    @param new_prompt_text: Текст диалога.
     @return: Возвращает результат выполнения операции True/False.
     """
     try:
         global _PROGRESS_DLG
         if _PROGRESS_DLG is not None:
-            _PROGRESS_DLG.StepDlg(step_value, new_msg)
+            _PROGRESS_DLG.StepDlg(step_value, new_prompt_text)
             return True
         return False
     except:
@@ -563,26 +557,26 @@ def icCloseProgressDlg():
         return False
 
 
-def icStrComboBoxDlg(Win_=None, Title_='', Text_='', StrList_=None, Default_=''):
+def icStrComboBoxDlg(parent=None, title='', prompt_text='', choices=None, Default_=''):
     """
     Диалог выбора/редактирования строки.
-    @param Win_: Ссылка на окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст диалога.
-    @param StrList_: Список строк, позволяющих выбрать строку из уже существующих.
+    @param parent: Ссылка на окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст диалога.
+    @param choices: Список строк, позволяющих выбрать строку из уже существующих.
     @return: Строку введенную/выбранную пользователем.
     """
     dlg = None
     win_clear = False
     try:
-        if StrList_ is None:
-            StrList_ = []
+        if choices is None:
+            choices = []
 
-        if Win_ is None:
-           Win_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = icStrComboBoxDialog(Win_, Title_, Text_, StrList_, Default_)
+        dlg = icStrComboBoxDialog(parent, title, prompt_text, choices, Default_)
         if dlg.ShowModal() == wx.ID_OK:
             return dlg.GetEntryString()
         return Default_
@@ -592,29 +586,31 @@ def icStrComboBoxDlg(Win_=None, Title_='', Text_='', StrList_=None, Default_='')
 
         # Удаляем созданное родительское окно
         if win_clear:
-            Win_.Destroy()
+            parent.Destroy()
 
 
 class icStrComboBoxDialog(wx.Dialog):
     """
     Диалог выбора/редактирования строки.
     """
-    def __init__(self, parent, Title_='', Text_='', StrList_=None, Default_=''):
+    def __init__(self, parent, title='', prompt_text='',
+                 choices=None, default_value=''):
         """
         Конструктор.
         @param parent: Окно.
-        @param Title_: Заголовок диалогового окна.
-        @param Text_: Текст диалога.
-        @param StrList_: Список строк, позволяющих выбрать строку из уже существующих.
+        @param title: Заголовок диалогового окна.
+        @param prompt_text: Текст диалога.
+        @param choices: Список строк, позволяющих выбрать строку из уже существующих.
+        @param default_value: Значение по умолчанию.
         """
         try:
-            if StrList_ is None:
-                StrList_ = []
+            if choices is None:
+                choices = []
 
-            wx.Dialog.__init__(self, parent, -1, title=Title_,
+            wx.Dialog.__init__(self, parent, -1, title=title,
                                pos=wx.DefaultPosition, size=wx.Size(500, 150))
 
-            self._text = wx.StaticText(self, -1, Text_, wx.Point(10, 10), wx.Size(-1, -1))
+            self._text = wx.StaticText(self, -1, prompt_text, wx.Point(10, 10), wx.Size(-1, -1))
             # Кнопка -OK-
             id_ = wx.NewId()
             self._ok_button = wx.Button(self, id_, u'OK', wx.Point(420, 80), wx.Size(60, -1))
@@ -625,10 +621,10 @@ class icStrComboBoxDialog(wx.Dialog):
             self.Bind(wx.EVT_BUTTON, self.OnCancel, id=id_)
             # Поле редактирования
             id_ = wx.NewId()
-            self._combo_box = wx.ComboBox(self, 500, Default_, wx.Point(20, 30), wx.Size(460, -1),
-                                          StrList_, wx.CB_DROPDOWN)
+            self._combo_box = wx.ComboBox(self, 500, default_value, wx.Point(20, 30), wx.Size(460, -1),
+                                          choices, wx.CB_DROPDOWN)
             # Редактируемая строка
-            self._string = Default_
+            self._string = default_value
         except:
             log.fatal(u'Ошибка создания объекта диалогового окна выбора/редактирования строки')
 
@@ -652,22 +648,22 @@ class icStrComboBoxDialog(wx.Dialog):
         return self._string
 
 
-def icAboutDlg(Win_=None, Title_='', Text_='', Logo_=None):
+def icAboutDlg(parent=None, title='', prompt_text='', logo_bitmap=None):
     """
     О программе...
-    @param Win_: Ссылка на окно.
-    @param Title_: Заголовок диалогового окна.
-    @param Text_: Текст.
-    @param Logo_: Объект типа wx.Bitmap определяющий логотип.
+    @param parent: Ссылка на окно.
+    @param title: Заголовок диалогового окна.
+    @param prompt_text: Текст.
+    @param logo_bitmap: Объект типа wx.Bitmap определяющий логотип.
     """
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
-           Win_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = icAboutDialog(Win_, Title_, Text_, Logo_)
+        dlg = icAboutDialog(parent, title, prompt_text, logo_bitmap)
         dlg.ShowModal()
     finally:
         if dlg:
@@ -675,34 +671,34 @@ def icAboutDlg(Win_=None, Title_='', Text_='', Logo_=None):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Win_.Destroy()
+           parent.Destroy()
 
 
 class icAboutDialog(wx.Dialog):
     """
     Диалог 'О программе...'.
     """
-    def __init__(self, parent, Title_='', Text_='', Logo_=None):
+    def __init__(self, parent, title='', prompt_text='', logo_bitmap=None):
         """
         Конструктор.
         @param parent: Окно.
-        @param Title_: Заголовок диалогового окна.
-        @param Text_: Текст.
-        @param Logo_: Объект типа wx.Bitmap определяющий логотип.
+        @param title: Заголовок диалогового окна.
+        @param prompt_text: Текст.
+        @param logo_bitmap: Объект типа wx.Bitmap определяющий логотип.
         """
         try:
-            wx.Dialog.__init__(self, parent, -1, title=Title_,
+            wx.Dialog.__init__(self, parent, -1, title=title,
                                pos=wx.DefaultPosition, size=wx.Size(500, 500))
 
             # Сайзер
             sizer = wx.BoxSizer(wx.VERTICAL)
             # Логотип
             self._logo = None
-            if Logo_ is not None:
-                self._logo = wx.StaticBitmap(self, -1, Logo_, pos=wx.Point(10, 10))
+            if logo_bitmap is not None:
+                self._logo = wx.StaticBitmap(self, -1, logo_bitmap, pos=wx.Point(10, 10))
                 sizer.Add(self._logo, 10, wx.ALL, 5)
             # Текст
-            self._text = wx.StaticText(self, -1, Text_)
+            self._text = wx.StaticText(self, -1, prompt_text)
             sizer.Add(self._text, 0, wx.ALL, 5)
             # Разделительная линия
             line = wx.StaticLine(self, -1, size=(20, -1), style=wx.LI_HORIZONTAL)
@@ -732,13 +728,13 @@ LOGIN_PASSWORD_IDX = 1
 LOGIN_PASSWORD_MD5_IDX = 2
 
 
-def icLoginDlg(Win_=None, Title_='', DefaultUser_='', RegUsers_=None):
+def icLoginDlg(parent=None, title='', default_username='', reg_users=None):
     """
     Ввод пароля и имени пользователя.
-    @param Win_: Ссылка на окно.
-    @param Title_: Заголовок диалогового окна.
-    @param DefaultUser_: Имя пользователя заполняемое по умолчанию.
-    @param RegUsers_: Список зарегестрированных пользователей.
+    @param parent: Ссылка на окно.
+    @param title: Заголовок диалогового окна.
+    @param default_username: Имя пользователя заполняемое по умолчанию.
+    @param reg_users: Список зарегестрированных пользователей.
     @return: Возвращает кортеж из 2-х строк.
         Первый элемент - пользхователь (LOGIN_USER_IDX).
         Второй элемент - пароль (LOGIN_PASSWORD_IDX).
@@ -746,18 +742,18 @@ def icLoginDlg(Win_=None, Title_='', DefaultUser_='', RegUsers_=None):
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
+        if parent is None:
             id_ = wx.NewId()
-            Win_ = wx.Frame(None, id_, '')
+            parent = wx.Frame(None, id_, '')
             win_clear = True
 
-        dlg = icLoginDialog(Win_, Title_, DefaultUser_, RegUsers_)
+        dlg = icLoginDialog(parent, title, default_username, reg_users)
         if dlg.ShowModal() == wx.ID_OK:
             result = (dlg.GetEntryUser(), dlg.GetEntryPassword(), dlg.GetEntryPasswordMD5())
             dlg.Destroy()
             # Удаляем созданное родительское окно
             if win_clear:
-                Win_.Destroy()
+                parent.Destroy()
             return result
     finally:
         if dlg:
@@ -765,7 +761,7 @@ def icLoginDlg(Win_=None, Title_='', DefaultUser_='', RegUsers_=None):
 
         # Удаляем созданное родительское окно
         if win_clear:
-            Win_.Destroy()
+            parent.Destroy()
     return None
 
 
@@ -774,17 +770,17 @@ class icLoginDialog(wx.Dialog):
     Диалоговое окно ввода пароля и имени пользователя.
     Диалог регистрации пользователя.
     """
-    def __init__(self, parent_, Title_='', DefaultUser_='', RegUsers_=None):
+    def __init__(self, parent_, title='', default_username='', reg_users=None):
         """
         Конструктор.
         @param parent_: Окно.
-        @param Title_: Заголовок диалогового окна.
+        @param title: Заголовок диалогового окна.
         """
         try:
-            if not Title_:
-                Title_ = ''
+            if not title:
+                title = ''
                 
-            wx.Dialog.__init__(self, parent_, -1, title=Title_,
+            wx.Dialog.__init__(self, parent_, -1, title=title,
                                pos=wx.DefaultPosition, size=wx.Size(350, 150))
 
             from ic.PropertyEditor.images import editorimg
@@ -813,20 +809,20 @@ class icLoginDialog(wx.Dialog):
             self.Bind(wx.EVT_BUTTON, self.OnCancel, id=id_)
             # Поля редактирования
             id_ = wx.NewId()
-            if RegUsers_ is None:
-                RegUsers_ = []
-            if DefaultUser_ is None:
-                DefaultUser_ = ''
+            if reg_users is None:
+                reg_users = []
+            if default_username is None:
+                default_username = ''
             self._user_edit = wx.ComboBox(self, id_,
-                                          value=DefaultUser_,
+                                          value=default_username,
                                           pos=(120, 10), size=(220, -1),
-                                          choices=RegUsers_)
+                                          choices=reg_users)
             id_ = wx.NewId()
             self._password_edit = wx.TextCtrl(self, id_, '',
                                               wx.Point(120, 40), wx.Size(220, -1),
                                               style=wx.TE_PASSWORD)
 
-            self._user = DefaultUser_
+            self._user = default_username
             self._password = ''
             # Установить фокус на первый управляющий элемент
             self._user_edit.SetFocus()
@@ -891,16 +887,16 @@ class icLoginDialog(wx.Dialog):
 _BUSY_INFO = None
 
 
-def BusyStart(Msg_=''):
+def BusyStart(prompt_text=''):
     """
     Занято/Ожидание.
-    @param Msg_: Текст диалога.
+    @param prompt_text: Текст диалога.
     """
     wx.BeginBusyCursor()    # Курсор
     global _BUSY_INFO
     if _BUSY_INFO is None:
-        if Msg_:
-            _BUSY_INFO = wx.BusyInfo(Msg_)  # Окно
+        if prompt_text:
+            _BUSY_INFO = wx.BusyInfo(prompt_text)  # Окно
 
 
 def BusyStop():
@@ -916,43 +912,43 @@ def BusyStop():
 ic_wait_proccess_dlg = None
 
 
-def WaitFunc(Parent_, Msg_,
-             Func_, FuncArgs_=(), FuncKW_={},
-             Frames_=None):
+def WaitFunc(parent, prompt_text,
+             function, function_args=(), function_kwargs={},
+             img_frames=None):
     """
     Окно ожидания.
-    @param Parent_: Ссылка на окно.
-    @param Msg_: Текст диалога.
-    @param Func_: Функция, которую необходимо подождать.
-    @param FuncArgs_: Аргументы функции.
-    @param FuncKW_: Именованные аргументы функции.
-    @param Frames_: Файлы-кадры.
+    @param parent: Ссылка на окно.
+    @param prompt_text: Текст диалога.
+    @param function: Функция, которую необходимо подождать.
+    @param function_args: Аргументы функции.
+    @param function_kwargs: Именованные аргументы функции.
+    @param img_frames: Файлы-кадры.
     """
     global ic_wait_proccess_dlg
     
     wait_result = [None]
-    if not Frames_:
+    if not img_frames:
         # Определить кадры по умолчанию
         wait_dir = os.path.join(os.path.dirname(__file__), 'Wait')
-        Frames_ = [wait_dir+'Wait1.png',
-                   wait_dir+'Wait2.png',
-                   wait_dir+'Wait3.png',
-                   wait_dir+'Wait4.png',
-                   wait_dir+'Wait5.png',
-                   wait_dir+'Wait6.png',
-                   wait_dir+'Wait7.png',
-                   wait_dir+'Wait8.png',
-                   wait_dir+'Wait9.png',
-                   wait_dir+'Wait10.png',
-                   wait_dir+'Wait11.png',
-                   wait_dir+'Wait12.png',
-                   wait_dir+'Wait13.png',
-                   wait_dir+'Wait14.png',
-                   wait_dir+'Wait15.png']
-    ic_wait_proccess_dlg = wait_box = icWaitBox(Parent_, Msg_, Frames_)
+        img_frames = [wait_dir + 'Wait1.png',
+                      wait_dir + 'Wait2.png',
+                      wait_dir + 'Wait3.png',
+                      wait_dir + 'Wait4.png',
+                      wait_dir + 'Wait5.png',
+                      wait_dir + 'Wait6.png',
+                      wait_dir + 'Wait7.png',
+                      wait_dir + 'Wait8.png',
+                      wait_dir + 'Wait9.png',
+                      wait_dir + 'Wait10.png',
+                      wait_dir + 'Wait11.png',
+                      wait_dir + 'Wait12.png',
+                      wait_dir + 'Wait13.png',
+                      wait_dir + 'Wait14.png',
+                      wait_dir + 'Wait15.png']
+    ic_wait_proccess_dlg = wait_box = icWaitBox(parent, prompt_text, img_frames)
     wait_box.SetResultList(wait_result)
     # Запустить функцию ожидания
-    _thread.start_new(wait_box.Run, (Func_, FuncArgs_, FuncKW_))
+    _thread.start_new(wait_box.Run, (function, function_args, function_kwargs))
     wait_box.ShowModal()
     wait_box.Destroy()
     ic_wait_proccess_dlg = None
@@ -980,23 +976,23 @@ def SetWaitBoxLabel(label):
         
 
 class icWaitBox(wx.Dialog):
-    def __init__(self, Parent_, Msg_, Frames_, style=0):
+    def __init__(self, parent, prompt_text, img_frames, style=0):
         """
         Конструктор.
         """
-        if Parent_ is None:
+        if parent is None:
             style = wx.STAY_ON_TOP
 
-        wx.Dialog.__init__(self, Parent_, -1, size=wx.Size(150, 34), style=style)
+        wx.Dialog.__init__(self, parent, -1, size=wx.Size(150, 34), style=style)
 
         from ic.bitmap import ic_bmp
-        self._ani = [ic_bmp.createBitmap(frame_file_name) for frame_file_name in Frames_]
+        self._ani = [ic_bmp.createBitmap(frame_file_name) for frame_file_name in img_frames]
         self._cur_ani_state = 0     # Индекс состояния анимации
-        self._max_ani_state = len(Frames_)
+        self._max_ani_state = len(img_frames)
         self._delay = 0.3
         self._picture = wx.StaticBitmap(self, -1, self._ani[0])
         self._pic_size = (self._ani[0].GetWidth(), self._ani[0].GetHeight())
-        self.msg = msg = wx.StaticText(self, -1, Msg_)
+        self.msg = msg = wx.StaticText(self, -1, prompt_text)
         self._lastTime = time.clock()
         
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1020,8 +1016,8 @@ class icWaitBox(wx.Dialog):
         evt = wx.PaintEvent(self.GetId())
         return self.GetEventHandler().ProcessEvent(evt)
 
-    def SetResultList(self, ResultList_):
-        self._result_list = ResultList_
+    def SetResultList(self, result_list):
+        self._result_list = result_list
         
     def NextState(self):
         """
@@ -1032,12 +1028,12 @@ class icWaitBox(wx.Dialog):
             self._cur_ani_state = 0
         return self._cur_ani_state
 
-    def DrawFrame(self, NFrame_):
+    def DrawFrame(self, n_frame):
         """
         Отрисовка кадра.
-        @param NFrame_: Номер кадра.
+        @param n_frame: Номер кадра.
         """
-        frame_bmp = self._ani[NFrame_]
+        frame_bmp = self._ani[n_frame]
         
         dc = wx.WindowDC(self._picture)
         # dc.BeginDrawing()
@@ -1065,12 +1061,12 @@ class icWaitBox(wx.Dialog):
         if event:
             event.Skip()
 
-    def Run(self, Func_, Args_, KW_):
+    def Run(self, function, function_args, function_kwargs):
         """
         Запуск ожидания функции.
         """
         self._running = True
-        result = Func_(*Args_, **KW_)
+        result = function(*function_args, **function_kwargs)
         self._running = False
         # Сбросить в результирующий список
         if isinstance(self._result_list, list):

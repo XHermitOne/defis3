@@ -399,8 +399,8 @@ class PrjPackage(prj_node.PrjFolder):
         """
         # Ввести наименование при создании
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
-                                             Text_=u'Введите наименование пакета', Default_=self.name)
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                             prompt_text=u'Введите наименование пакета', default_value=self.name)
         if new_name:
             self.name = new_name
 
@@ -599,8 +599,8 @@ class PrjModule(prj_node.PrjNode):
         """
         # Ввести наименование при создании
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
-                                             Text_=u'Введите наименование модуля', Default_=self.name)
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                             prompt_text=u'Введите наименование модуля', default_value=self.name)
         if new_name:
             self.name = new_name
 

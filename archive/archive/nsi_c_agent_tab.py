@@ -78,7 +78,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
 
             ic_dlg.icOpenProgressDlg(ic.getMainWin(),
                                      u'Справочник контрагентов', u'Импорт данных',
-                                     Max_=dbf_tab.getRecCount())
+                                     max_value=dbf_tab.getRecCount())
             i = 0
             i_code = 0
             record = dbf_tab.getRecDict()
@@ -195,7 +195,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
 
             ic_dlg.icOpenProgressDlg(ic.getMainWin(),
                                      u'Справочник физических лиц', u'Импорт данных',
-                                     Max_=dbf_tab.getRecCount())
+                                     max_value=dbf_tab.getRecCount())
             i = 0
             i_code = 0
             record = dbf_tab.getRecDict()

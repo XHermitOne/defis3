@@ -214,7 +214,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
             
             ic_dlg.icOpenProgressDlg(ic.getMainWin(),
                                      u'Пакетная обработка', u'Импорт данных',
-                                     Max_=dbf_tab.getRecCount())
+                                     max_value=dbf_tab.getRecCount())
             i = 0
             record = dbf_tab.getRecDict()
             while not dbf_tab.EOF():                

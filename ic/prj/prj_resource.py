@@ -209,8 +209,8 @@ class PrjResource(prj_node.PrjNode):
         if spc:
             self.template = copy.deepcopy(spc)
             if not new_name:
-                new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
-                                                 Text_=u'Введите наименование ресурса', Default_=self.name)
+                new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                                 prompt_text=u'Введите наименование ресурса', default_value=self.name)
 
             # У ресурса такое имя как и у ресурса
             self.template['name'] = new_name
@@ -226,8 +226,8 @@ class PrjResource(prj_node.PrjNode):
         """
         # Ввести наименование при создании ресурса
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
-                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -560,8 +560,8 @@ class PrjTabRes(PrjResource):
             return False
 
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
-                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -675,8 +675,8 @@ class PrjDBRes(PrjResource):
             # Нажата ОТМЕНА
             return False
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
-                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -841,8 +841,8 @@ class PrjWinRes(PrjResource):
             # Нажата ОТМЕНА
             return False
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
-                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -907,8 +907,8 @@ class PrjMenuRes(PrjResource):
             # Нажата ОТМЕНА
             return False
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), Title_=u'НАИМЕНОВАНИЕ',
-                                             Text_=u'Введите наименование ресурса', Default_=self.name)
+            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -1018,7 +1018,7 @@ class PrjMetaDataRes(PrjResource):
                 # Выбор имени файла проекта
                 fbp_dir = ic_dlg.icDirDlg(self.getPrjTreeCtrl(),
                                           u'Выбор файла папки хранения проекта wxFormBuilder для генерации',
-                                          DefaultPath_=self.getPath())
+                                          default_path=self.getPath())
                 if not fbp_dir:
                     # Нажали отмену
                     return

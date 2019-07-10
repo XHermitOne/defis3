@@ -95,9 +95,9 @@ class icCFRoot(iccfobject.icCFObject):
                     return self.DEFAULT_DB_PSP
                 else:
                     choices = [u'%s (%s)' % (db_res['name'], db_res['description']) for db_res in db_resources]
-                    idx = ic_dlg.icSingleChoiceDlg(Title_=u'БД',
-                                                   Text_=u'Выбор БД для генерации ресусов таблиц',
-                                                   Choice_=choices)
+                    idx = ic_dlg.icSingleChoiceDlg(title=u'БД',
+                                                   prompt_text=u'Выбор БД для генерации ресусов таблиц',
+                                                   choices=choices)
                     res = db_resources[idx] if idx >= 0 else None
                     db_psp = ((res['type'], res['name'], None, '%s.src' % res['name'], ic.getPrjName()),) if res else None
                     self.DEFAULT_DB_PSP = db_psp

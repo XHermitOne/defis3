@@ -119,7 +119,7 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
             try:
                 ic_dlg.icOpenProgressDlg(ic.getMainWin(),
                                          u'Пакетная обработка', u'Удаление документов из архива',
-                                         Max_=item_count)
+                                         max_value=item_count)
                 i_progress = 0
                 for i in range(item_count - 1, -1, -1):
                     if self.docs_listCtrl.IsChecked(i):

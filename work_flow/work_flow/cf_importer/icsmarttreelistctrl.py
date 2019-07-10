@@ -213,7 +213,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             self.setItemRecord(child, res['__record__'])
 
         if is_progress:
-            ic_dlg.icStepProgressDlg(new_msg=u'Загрузка данных контрола')
+            ic_dlg.icStepProgressDlg(new_prompt_text=u'Загрузка данных контрола')
 
         # Обработка дочерних элементов
         if 'children' in res and res['children']:
@@ -369,7 +369,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                 if is_progress:
                     tree_len = ic_util.get_tree_length(Tree_)
                     ic_dlg.icOpenProgressDlg(self, u'Загрузка...', u'Загрузка данных контрола',
-                                             Min_=0, Max_=tree_len)
+                                             min_value=0, max_value=tree_len)
 
                 for node in Tree_:
                     self.addNode(self.root, node, is_progress=is_progress)

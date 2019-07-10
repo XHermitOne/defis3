@@ -153,9 +153,9 @@ def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
                 # У нас несколько форм необходимо предложить выбрать
                 choices = [frm_class_name for frm_class_name in fb_module_classes]
                 choices.sort()
-                src_class_name = ic_dlg.icSingleChoiceDlg(Parent_=parent, Title_=u'wxFormBuilder',
-                                                          Text_=u'Выберите протоотип форма/панели wxFormBuilder для источника генерации:',
-                                                          Choice_=choices)
+                src_class_name = ic_dlg.icSingleChoiceDlg(parent=parent, title=u'wxFormBuilder',
+                                                          prompt_text=u'Выберите протоотип форма/панели wxFormBuilder для источника генерации:',
+                                                          choices=choices)
 
         if output_filename is None:
             # Если имя выходного файла не определено, то

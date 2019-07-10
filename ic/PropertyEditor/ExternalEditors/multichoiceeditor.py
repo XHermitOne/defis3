@@ -42,7 +42,7 @@ class icMultiChoiceUserEdt(passportobj.ic_user_property_editor):
                 
             result = ic_dlg.icMultiChoiceDlg(parent,
                                              title, edt_txt,
-                                             Choice_=tuple(choice))
+                                             choices=tuple(choice))
             if result:
                 result = [row[1] for row in result if row[0]]
             else:

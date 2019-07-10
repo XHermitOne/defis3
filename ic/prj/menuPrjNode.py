@@ -304,7 +304,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         res_file_name = ic_dlg.icFileDlg(tree_prj,
                                          u'Выберите ресурсный файл',
                                          self.import_res_filter,
-                                         DefaultPath_=ic_file.getRootDir())
+                                         default_path=ic_file.getRootDir())
 
         if res_file_name:
             node = self._Parent.importChild(res_file_name)

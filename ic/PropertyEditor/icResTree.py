@@ -1030,8 +1030,8 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             self.lastfindItem = None
             if not self.findItem(self.root, findStr):
                 ic_dlg.icWarningBox(ParentWin_=self,
-                                    Title_=u'ВНИМАНИЕ',
-                                    Text_=u'Не найдена подстрока \'%s\' в ресурсе' % findStr)
+                                    title=u'ВНИМАНИЕ',
+                                    prompt_text=u'Не найдена подстрока \'%s\' в ресурсе' % findStr)
                 if self.finddlg:
                     self.finddlg.SetFocus()
 
