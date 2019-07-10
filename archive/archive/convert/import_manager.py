@@ -145,6 +145,8 @@ class icBalansImportManager(icImportManagerInterface):
             typ = '2001000000000' if in_out else '1001000000000'
         elif typ_doc.upper() == u'ТОРГ12':
             typ = '2002000000000' if in_out else '1002000000000'
+        elif typ_doc.upper() == u'АКТ':
+            typ = '2005000000000' if in_out else '1005000000000'
         else:
             log.warning(u'Не определен тип документа <%s>' % typ_doc)
         return typ
@@ -157,6 +159,8 @@ class icBalansImportManager(icImportManagerInterface):
             return u'СФ'
         elif typ_doc.upper() == u'ТОРГ12':
             return u'ТОРГ12'
+        elif typ_doc.upper() == u'АКТ':
+            return u'АКТ'
         return u''
 
     def get_sector_subcode(self, sType):
