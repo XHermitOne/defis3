@@ -81,7 +81,7 @@ class icMenuModNode(flatmenu.FlatMenu):
                                          normalBmp=bmp)
             self.AppendItem(item)
             prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnAddWxCrafterProject, id=self.addWxCrafterID)
-            self._node_reg[self.addWxCrafterID] = self._Parent.include_nodes[1](self._Parent)
+            self._node_reg[self.addWxCrafterID] = self._Parent.include_nodes[3](self._Parent)
 
             # Подменю 'Добавить'
             res_class_menu = flatmenu.FlatMenu()

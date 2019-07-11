@@ -26,8 +26,9 @@ from . import prj_node
 from . import prj_resource
 from . import prj_fb
 from . import prj_xrc
+from . import prj_wxcp
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 3, 1)
 
 _ = wx.GetTranslation
 
@@ -62,6 +63,7 @@ class PrjModules(prj_node.PrjFolder):
         self.include_nodes = [PrjModule,
                               prj_fb.PrjWXFormBuilderProject,
                               prj_xrc.PrjXRCResource,
+                              prj_wxcp.PrjWXCrafterProject,
                               prj_resource.PrjTabRes, prj_resource.PrjDBRes,
                               prj_resource.PrjFrmRes, prj_resource.PrjWinRes,
                               prj_resource.PrjMenuRes, prj_resource.PrjTemplate,
@@ -92,6 +94,7 @@ class PrjModules(prj_node.PrjFolder):
         # Обработка списка файлов
         py_file_list = [file_name for file_name in file_list if self.isFBP(file_name) or
                         self.isXRC(file_name) or
+                        self.isWXCP(file_name) or
                         self.isModule(file_name) or
                         self.isInterfaceModule(file_name) or
                         self.isResourceModule(file_name)]
@@ -151,6 +154,15 @@ class PrjModules(prj_node.PrjFolder):
         return os.path.isfile(sFileName) and \
             (os.path.splitext(sFileName)[1] == '.fbp')
 
+    def isWXCP(self, sFileName):
+        """
+        Проверка является ли файл модулем проекта wxCrafter.
+        @param sFileName: Имя файла.
+        @return: Возвращает True/False.
+        """
+        return os.path.isfile(sFileName) and \
+            (os.path.splitext(sFileName)[1] == '.wxcp')
+
     def isXRC(self, sFileName):
         """
         Проверка является ли файл XRC ресурсом форм.
@@ -158,7 +170,10 @@ class PrjModules(prj_node.PrjFolder):
         @return: Возвращает True/False.
         """
         return os.path.isfile(sFileName) and \
-            (os.path.splitext(sFileName)[1] == '.xrc')
+            (os.path.splitext(sFileName)[1] == '.xrc') and \
+            not sFileName.endswith('_forms_bitmaps.xrc')
+        #                                ^
+        # Исключаем файл ресурсов картинок, генерируемые wxCrafter
 
     def isInterfaceModule(self, FileName_):
         """
@@ -325,12 +340,22 @@ class PrjModules(prj_node.PrjFolder):
             CurPackage_.addChild(cur_node)
 
         elif self.isXRC(Path_):
-            # Это FBP файл
+            # Это XRC файл
             cur_node = prj_xrc.PrjXRCResource(CurPackage_)
             # Установить имя
             name = os.path.splitext(os.path.split(Path_)[1])[0]
             cur_node.name = name
             CurPackage_.addChild(cur_node)
+
+        elif self.isWXCP(Path_):
+            # Это WXCP файл
+            cur_node = prj_wxcp.PrjWXCrafterProject(CurPackage_)
+            # Установить имя
+            name = os.path.splitext(os.path.split(Path_)[1])[0]
+            cur_node.name = name
+            CurPackage_.addChild(cur_node)
+        else:
+            log.warning(u'Не определен тип модуля <%s>' % Path_)
 
     def edit(self):
         """
@@ -377,6 +402,7 @@ class PrjPackage(prj_node.PrjFolder):
         self.include_nodes = [PrjModule,
                               prj_fb.PrjWXFormBuilderProject,
                               prj_xrc.PrjXRCResource,
+                              prj_wxcp.PrjWXCrafterProject,
                               prj_resource.PrjTabRes, prj_resource.PrjDBRes,
                               prj_resource.PrjFrmRes, prj_resource.PrjWinRes,
                               prj_resource.PrjMenuRes, prj_resource.PrjTemplate,
@@ -960,13 +986,22 @@ class PrjFBModule(PrjModule, wxfb_manager.icWXFormBuilderManager):
         """
         if not self.readonly:
             popup_menu = flatmenu.FlatMenu()
+            ctrl = self._root.getParent()
+
+            popup_menuitem_id = wx.NewId()
+            item = flatmenu.FlatMenuItem(popup_menu, popup_menuitem_id,
+                                         u'Удалить модуль формы', u'Удалить модуль формы',
+                                         normalBmp=imglib.imgTrash)
+            popup_menu.AppendItem(item)
+            ctrl.Bind(wx.EVT_MENU, self.onDelFormModuleMenuItem, id=popup_menuitem_id)
+
+            popup_menu.AppendSeparator()
 
             popup_menuitem_id = wx.NewId()
             item = flatmenu.FlatMenuItem(popup_menu, popup_menuitem_id,
                                          u'Сгенерировать модуль формы...', u'Сгенерировать модуль формы...',
                                          normalBmp=imglib.imgPy)
             popup_menu.AppendItem(item)
-            ctrl = self._root.getParent()
             ctrl.Bind(wx.EVT_MENU, self.onGenFormModuleMenuItem, id=popup_menuitem_id)
 
             popup_menuitem_id = wx.NewId()
@@ -977,6 +1012,13 @@ class PrjFBModule(PrjModule, wxfb_manager.icWXFormBuilderManager):
             ctrl.Bind(wx.EVT_MENU, self.onAdaptFormModuleMenuItem, id=popup_menuitem_id)
 
             popup_menu.Popup(wx.GetMousePosition(), ctrl)
+
+    def onDelFormModuleMenuItem(self, event):
+        """
+        Удаление модуля формы.
+        """
+        self.delete()
+        event.Skip()
 
     def onGenFormModuleMenuItem(self, event):
         """
@@ -1019,7 +1061,7 @@ class PrjXRCModule(PrjModule):
         self.name = 'xrc_module'
         self.img = imglib.imgForm
 
-        self.readonly = True
+        # self.readonly = True
 
     def edit(self):
         """
@@ -1028,3 +1070,27 @@ class PrjXRCModule(PrjModule):
         ic_dlg.icWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
                             u'''Редактирование модуля форм, сгенерированных утилитой pywxrc (из XRC ресурса), запрещено.
 Модули форм генерируются средствами дизайнера XRC файла.''')
+
+    def onNodePopup(self, event):
+        """
+        Вызов всплывающего меню узла.
+        """
+        if not self.readonly:
+            popup_menu = flatmenu.FlatMenu()
+            ctrl = self._root.getParent()
+
+            popup_menuitem_id = wx.NewId()
+            item = flatmenu.FlatMenuItem(popup_menu, popup_menuitem_id,
+                                         u'Удалить модуль формы', u'Удалить модуль формы',
+                                         normalBmp=imglib.imgTrash)
+            popup_menu.AppendItem(item)
+            ctrl.Bind(wx.EVT_MENU, self.onDelFormModuleMenuItem, id=popup_menuitem_id)
+
+            popup_menu.Popup(wx.GetMousePosition(), ctrl)
+
+    def onDelFormModuleMenuItem(self, event):
+        """
+        Удаление модуля формы.
+        """
+        self.delete()
+        event.Skip()

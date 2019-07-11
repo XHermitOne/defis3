@@ -32,6 +32,8 @@ class PrjXRCResource(prj_node.PrjNode):
         self.name = 'new_xrc'
         self.img = ic_bmp.createLibraryBitmap('application-form.png')
 
+        self.ext = '.xrc'
+
     def edit(self):
         """ 
         Редактирование.
@@ -51,8 +53,26 @@ class PrjXRCResource(prj_node.PrjNode):
         ic_exec.icSysCmd(cmd)
         return True
 
+    def delete(self):
+        """
+        Удалить.
+        """
+        # Вызвать метод предка
+        prj_node.PrjNode.delete(self)
+        # И в конце удалить файл ресурса, если он есть
+        res_file_name = os.path.join(self.getModulePath(),
+                                     self.name + self.ext)
+
+        # Удалить файл
+        if os.path.exists(res_file_name):
+            # ВНИМАНИЕ! Файл удаляем, но оставляем его бекапную версию!!!
+            ic_file.icCreateBAKFile(res_file_name)
+            os.remove(res_file_name)
+        # Для синхронизации дерева проекта
+        self.getRoot().save()
+
     def getPath(self):
-        return os.path.normpath(os.path.join(self.getModulePath(), '%s.xrc' % self.name))
+        return os.path.normpath(os.path.join(self.getModulePath(), '%s%s' % (self.name, self.ext)))
 
     def getModulePath(self):
         """ 
@@ -80,7 +100,7 @@ class PrjXRCResource(prj_node.PrjNode):
         Дополнительные инструменты узла.
         """
         # В данном случае запуск генерации модуля форм
-        xrc_filename = self.getFullResFileName()
+        xrc_filename = self.getPath()
         yes = ic_dlg.icAskBox(u'Генерация Python модуля', u'Сгенерировать Python модуль из XRC файла <%s>?' % xrc_filename)
         if yes:
             py_filename = os.path.join(os.path.dirname(xrc_filename),

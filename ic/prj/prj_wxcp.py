@@ -72,6 +72,16 @@ class PrjWXCrafterProject(prj_node.PrjNode,
             # ВНИМАНИЕ! Файл удаляем, но оставляем его бекапную версию!!!
             ic_file.icCreateBAKFile(res_file_name)
             os.remove(res_file_name)
+        # Также могут быть сопутствующие файлы, которые в принципе не нужны
+        bitmap_res_filename = os.path.join(self.getModulePath(),
+                                           '%s_forms_bitmaps.cpp' % self.name)
+        if os.path.exists(bitmap_res_filename):
+            os.remove(bitmap_res_filename)
+        bitmap_res_filename = os.path.join(self.getModulePath(),
+                                           '%s_forms_bitmaps.xrc' % self.name)
+        if os.path.exists(bitmap_res_filename):
+            os.remove(bitmap_res_filename)
+
         # Для синхронизации дерева проекта
         self.getRoot().save()
 
