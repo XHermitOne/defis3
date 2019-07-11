@@ -12,6 +12,7 @@ import wx
 from wx.lib.agw import flatmenu
 
 from ic.imglib import common as imglib
+from ic.bitmap import ic_bmp
 from ic.utils import clipboard
 from . import prj_node
 from . import prj_module
@@ -64,13 +65,24 @@ class icMenuModNode(flatmenu.FlatMenu):
 
             # Добавить проект wxFormBuilder
             self.addFBPID = wx.NewId()
+            bmp = ic_bmp.createLibraryBitmap('wxformbuilder.png')
             item = flatmenu.FlatMenuItem(self, self.addFBPID, u'Добавить wxFormBuilder проект',
                                          u'Добавить wxFormBuilder проект',
-                                         normalBmp=imglib.imgDesigner)
+                                         normalBmp=bmp)
             self.AppendItem(item)
             prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnAddFBP, id=self.addFBPID)
             self._node_reg[self.addFBPID] = self._Parent.include_nodes[1](self._Parent)
-    
+
+            # Добавить проект wxCrafter
+            self.addWxCrafterID = wx.NewId()
+            bmp = ic_bmp.createLibraryBitmap('wxc-logo-16.png')
+            item = flatmenu.FlatMenuItem(self, self.addWxCrafterID, u'Добавить wxCrafter проект',
+                                         u'Добавить wxCrafter проект',
+                                         normalBmp=bmp)
+            self.AppendItem(item)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnAddWxCrafterProject, id=self.addWxCrafterID)
+            self._node_reg[self.addWxCrafterID] = self._Parent.include_nodes[1](self._Parent)
+
             # Подменю 'Добавить'
             res_class_menu = flatmenu.FlatMenu()
             for node_class in self._Parent.include_nodes[2:]:
@@ -310,10 +322,20 @@ class icMenuModNode(flatmenu.FlatMenu):
 
     def OnAddFBP(self, event):
         """ 
-        Добавить wxformbuilder project.
+        Добавить wxformbuilder проект.
         """
         fbp = self._node_reg[event.GetId()]
         ok = fbp.create()
+        tree_prj = self._Parent.getRoot().getParent()
+        # Обновление дерева проектов
+        tree_prj.Refresh()
+
+    def OnAddWxCrafterProject(self, event):
+        """
+        Добавить wxCrafer проект.
+        """
+        wx_crafter_prj = self._node_reg[event.GetId()]
+        ok = wx_crafter_prj.create()
         tree_prj = self._Parent.getRoot().getParent()
         # Обновление дерева проектов
         tree_prj.Refresh()

@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+Узел файла wxCrafter проекта. Файлы с расширением *.wxcp
+"""
+
 import os
 import os.path
 import wx
@@ -8,19 +12,19 @@ import wx
 # from ic.imglib import common as imglib
 from ic.bitmap import ic_bmp
 from ic.utils import ic_file
-from ic.editor import wxfb_manager
+from ic.editor import wxc_manager
 
 from . import prj_node
 
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
 
-class PrjWXFormBuilderProject(prj_node.PrjNode,
-                              wxfb_manager.icWXFormBuilderManager):
+class PrjWXCrafterProject(prj_node.PrjNode,
+                          wxc_manager.icWXCrafterManager):
     """
-    Проект wxFormBuilder.
+    Проект wxCrafter.
     """
 
     def __init__(self, parent=None):
@@ -28,13 +32,13 @@ class PrjWXFormBuilderProject(prj_node.PrjNode,
         Конструктор.
         """
         prj_node.PrjNode.__init__(self, parent)
-        self.description = u'Проект wxFormBuilder'
-        self.name = 'new_fb_project'
+        self.description = u'Проект wxCrafter'
+        self.name = 'new_wxc_project'
         # self.img = imglib.imgDesigner
-        self.img = ic_bmp.createLibraryBitmap('wxformbuilder.png')
+        self.img = ic_bmp.createLibraryBitmap('wxc-logo-16.png')
 
         # Расширение файла
-        self.ext = '.fbp'
+        self.ext = '.wxcp'
 
     def edit(self):
         """ 
@@ -81,7 +85,7 @@ class PrjWXFormBuilderProject(prj_node.PrjNode,
         from . import prj_module
 
         path = ''
-        # Если родитель -пакет, то дабывить его в путь
+        # Если родитель - пакет, то дабывить его в путь
         if issubclass(self._Parent.__class__, prj_module.PrjPackage):
             path = self._Parent.getPath()
         elif issubclass(self._Parent.__class__, prj_module.PrjModules):
