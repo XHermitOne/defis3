@@ -41,24 +41,28 @@ ic_class_spc = {'name': 'default',
                 'get_env': None,  # Метод получения окружения
                 'limit': None,  # Ограничение количества строк
                 'get_records': None,    # Код получения набора записей, соответствующих фильтру для индикаторов
+                'get_filter_tree': None,    # Код получения дерева фильтров. Альтернативный вариант чтению из файла
 
                 'onChange': None,  # Код смены фильтра
 
                 '__events__': {'get_env': (None, None, False),
                                'onChange': (None, 'OnChange', False),
                                'get_records': (None, 'getCurRecords', False),
+                               'get_filter_tree': (None, None, False),
                                },
-                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'save_filename'],
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type'],
+                                   icDefInf.EDT_FILE: ['save_filename'],
                                    icDefInf.EDT_PY_SCRIPT: ['get_env', 'onChange', 'get_records'],
                                    icDefInf.EDT_NUMBER: ['limit'],
                                    },
 
                 '__parent__': icwidget.SPC_IC_WIDGET,
                 '__attr_hlp__': {'save_filename': u'Имя файла хранения фильтров',
-                                 'get_env': u'Метод получения окружения',
+                                 'get_env': u'Метод получения окружения конструктора фильтров',
                                  'limit': u'Ограничение количества строк',
                                  'onChange': u'Код смены фильтра',
                                  'get_records': u'Код получения набора записей, соответствующих фильтру для индикаторов',
+                                 'get_filter_tree': 'Код получения дерева фильтров. Альтернативный вариант чтению из файла',
                                  },
                 }
 
@@ -79,7 +83,7 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icFilterTreeCtrl(icwidget.icWidget,
@@ -112,7 +116,8 @@ class icFilterTreeCtrl(icwidget.icWidget,
 
         # После того как определили окружение и
         # имя файла хранения фильтров можно загрузить фильтры
-        self.loadFilters()
+        self.filter_tree = self.getFilters()
+
         # Обновить индикаторы
         # self.refreshIndicators(bVisibleItems=False)
 
@@ -170,3 +175,21 @@ class icFilterTreeCtrl(icwidget.icWidget,
         else:
             log.warning(u'Ошибка получения набора записей контрола дерева фильтров <%s>' % self.name)
         return None
+
+    def getFilters(self):
+        """
+        Получить дерево фильтров.
+        ВНИМАНИЕ! В этой функции реализована поддержка получения альтернативного варианта
+        данных дерева фильтров.
+        """
+        if self.isICAttrValue('get_filter_tree'):
+            # Если функция получения дерева фильтров заполнена, то
+            # вызываем ее. И получаем данные дерева фильтра
+            result = self.eval_attr('get_filter_tree')
+            if result[0] == coderror.IC_EVAL_OK:
+                return result[1]
+            else:
+                log.warning(u'Ошибка получения фильтров контрола дерева фильтров <%s> альтернативным способом' % self.name)
+        # Если произошла ошибка получения или не определен альтернативный способ
+        # то грузим из файла хранения по умолчанию
+        return self.loadFilters()

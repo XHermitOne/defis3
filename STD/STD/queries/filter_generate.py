@@ -42,7 +42,7 @@
 """
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 def create_filter_group(logic='AND', *compare_requisites):
@@ -136,3 +136,52 @@ def create_filter_compare_requisite(name, compare_operate=DEFAULT_COMPARE_OPERAT
                           arg_1=arg_1, arg_2=arg_2,
                           func=compare_func)
     return filter_compare
+
+
+def add_filter_compare_to_group(filter_group, filter_compare):
+    """
+    Добавить реквизит фильтра к группе фильтра.
+    @param filter_group: Структура (словарь) группы фильтра.
+        {
+        'name': Наименование группы. Обычно соответствует логическому операнду.
+        'type': Тип группы. Строка <group>.
+        'logic': Логический операнд. AND или OR или NOT.
+        'children': Список реквизитов - элементов группы.
+        }
+    @param filter_compare: Структура (словарь) реквизита фильтра.
+        {
+        'requisite': Наименование реквизита. Обычно соответствует имени поля таблицы.
+        'type': Тип. Слово <compare>.
+        'arg_1': Значение аргумента 1.
+        'arg_2': Значение аргумента 2.
+        'get_args': Дополнительная функция получения аргументов.
+        'func': Имя функции сравнения. Функция сравнения выбирается по имени из
+                словаря функций сравнения DEFAULT_ENV_FUNCS, определенного
+                в модуле filter_builder_env.
+        '__sql__': Кортеж элментов sql выражения соответствующего данному реквизиту.
+                   Поэтому генерация WHERE секции SQL заключается в правильном
+                   соединении нужных строк этого ключа.
+        }
+    @return: Структура группы фильтра с добавленным реквизито фильтра.
+        {
+        'name': Наименование группы. Обычно соответствует логическому операнду.
+        'type': Тип группы. Строка <group>.
+        'logic': Логический операнд. AND или OR или NOT.
+        'children': [... { Реквизит фильтра }]
+        }
+    """
+    if not filter_compare:
+        # Пустые реквизиты фильтра не добавляем
+        return filter_group
+
+    if filter_group and isinstance(filter_group, dict):
+        if ('children' not in filter_group) or (filter_group['children'] is None):
+            filter_group['children'] = list()
+
+        if isinstance(filter_group['children'], list):
+            filter_group['children'].append(filter_compare)
+        elif isinstance(filter_group['children'], tuple):
+            filter_group['children'] = list(filter_group['children'])
+            filter_group['children'].append(filter_compare)
+
+    return filter_group

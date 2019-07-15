@@ -29,7 +29,7 @@ from . import filter_generate
 # from ic.PropertyEditor import select_component_menu
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Значения по умолчанию
 DEFAULT_ROOT_LABEL = u'...'
@@ -617,6 +617,12 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         self.setRootTitle(tree_ctrl=self, title=root_label)
 
         return result
+
+    def getFilters(self):
+        """
+        Получить дерево фильтров.
+        """
+        return self.loadFilters()
 
     def refreshIndicators(self, bVisibleItems=True, item=None):
         """
