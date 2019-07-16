@@ -85,18 +85,18 @@ def icDirDlg(parent=None, title='', default_path=''):
         dlg.SetPath(default_path)
         if dlg.ShowModal() == wx.ID_OK:
             result = dlg.GetPath()
-        else:
-            result = ''
-    finally:
-        if dlg:
-            dlg.Destroy()
-            dlg = None
-
-        # Удаляем созданное родительское окно
-        if win_clear:
-           parent.Destroy()
-
+    except:
+        log.fatal(u'Ошибка вызова диалога выбора директории')
         result = None
+
+    if dlg:
+        dlg.Destroy()
+        dlg = None
+
+    # Удаляем созданное родительское окно
+    if win_clear:
+        parent.Destroy()
+
     return result
 
 
