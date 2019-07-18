@@ -108,6 +108,76 @@ def StrHex2wxColour(rgb_colour):
 StrRGB2wxColour = StrHex2wxColour
 
 
+def RGB2wxColour(rgb):
+    """
+    Преобразовать цвет в виде кортежа (Red, Green, Blue) в wxColour объект.
+    @param rgb: Кортеж (Red, Green, Blue).
+    @return: Цвет wx.Colour или None в случае ошибки.
+    """
+    if (not isinstance(rgb, tuple) or not isinstance(rgb, list)) and len(rgb) != 3:
+        log.warning(u'Не возможно преобразовать <%s> в wx.Colour' % str(rgb))
+        return None
+
+    return wx.Colour(int(rgb[0]), int(rgb[1]), int(rgb[2]))
+
+
+def wxColour2RGB(colour):
+    """
+    Преобразовать wxColour объект в цвет в виде кортежа (Red, Green, Blue).
+    @param colour: Цвет wx.Colour или None в случае ошибки.
+    @return: Кортеж (Red, Green, Blue) или None в случае ошибки.
+    """
+    if not isinstance(colour, wx.Colour):
+        log.warning(u'Тип <%s> не определен как цвет wx.Colour' % colour.__class__.__name__)
+        return None
+    return colour.Red(), colour.Green(), colour.Blue()
+
+
+def isDarkSysTheme():
+    """
+    Проверка является ли системная тема ОС темной.
+    @return: True - темная тема / False - светлая.
+    """
+    # Цвет темы будем определять отностительно цвета окна
+    win_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
+    sum_rgb = win_colour.Red() + win_colour.Green() + win_colour.Blue()
+    # log.debug(u'Сумма: %d %s' % (sum_rgb, str(win_colour)))
+    # Это сумма 128+128+128
+    # ----------------V
+    return sum_rgb < 384
+
+
+def adaptSysThemeColour(dark_theme_colour=None, light_theme_colour=None):
+    """
+    Адаптировать цвет под системную тему (темную или светлую).
+    Достаточно указать один из цветов:
+    @param dark_theme_colour: Цвет wx.Colour, соответствующий темной теме.
+    @param light_theme_colour: Цвет wx.Colour, соответствующий светлой теме.
+    @return: Адаптированный цвет.
+    """
+    is_dark_sys_theme = isDarkSysTheme()
+    if not is_dark_sys_theme and light_theme_colour:
+        return light_theme_colour
+    elif not is_dark_sys_theme and not light_theme_colour and dark_theme_colour:
+        # Необходимо вычислить цвет светлой темы по цвету темной темы
+        red = min(dark_theme_colour.Red() + 128, 255) if dark_theme_colour.Red() else 0
+        green = min(dark_theme_colour.Green() + 128, 255) if dark_theme_colour.Green() else 0
+        blue = min(dark_theme_colour.Blue() + 128, 255) if dark_theme_colour.Blue() else 0
+        return wx.Colour(red, green, blue)
+    elif is_dark_sys_theme and dark_theme_colour:
+        return dark_theme_colour
+    elif is_dark_sys_theme and light_theme_colour and not dark_theme_colour:
+        # Необходимо вычислить цвет темной темы по цвету светлой темы
+        red = max(light_theme_colour.Red() - 128, 0) if light_theme_colour.Red() else 0
+        green = max(light_theme_colour.Green() - 128, 0) if light_theme_colour.Green() else 0
+        blue = max(light_theme_colour.Blue() - 128, 0) if light_theme_colour.Blue() else 0
+        return wx.Colour(red, green, blue)
+    else:
+        log.warning(u'Не возможно адаптировать цвет под оттенок системной темы')
+
+    return wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
+
+
 def getWxPythonMajorVersion():
     """
     Мажорная версия wxPython.

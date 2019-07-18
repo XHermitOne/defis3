@@ -8,11 +8,11 @@
 import copy
 import uuid
 import os.path
-import wx
+# import wx
 from wx.lib.agw import flatmenu
 
-from ic.log import log
-from ic.bitmap import ic_bmp
+# from ic.log import log
+# from ic.bitmap import ic_bmp
 from ic.dlg import ic_dlg
 from ic.utils import ic_file
 from ic.engine import treectrl_manager
@@ -23,13 +23,13 @@ from ic.engine import stored_ctrl_manager
 
 # from . import filter_builder_env
 from . import filter_choicectrl
-from STD.controls import tree_item_indicator
-from . import filter_generate
+from ..controls.tree_item_indicator import *
+from . filter_generate import *
 
 # from ic.PropertyEditor import select_component_menu
 
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 3, 1)
 
 # Значения по умолчанию
 DEFAULT_ROOT_LABEL = u'...'
@@ -40,8 +40,101 @@ DEFAULT_NODE_IMAGE_FILENAME = 'document.png'
 EMPTY_NODE_RECORD = {'__filter__': None, '__indicator__': None, 'label': u''}
 
 
+# Функции управления структурой дерева фильтров
+def empty_item(label=DEFAULT_NODE_LABEL):
+    """
+    Пустой узел.
+    @param label: Надпись узла.
+    @return: Структура пустого узла.
+    """
+    item_filter = copy.deepcopy(EMPTY_NODE_RECORD)
+    item_filter['label'] = label
+    return item_filter
+
+
+def add_child_item_filter(filter_tree_data, child_item_filter=None):
+    """
+    Добавить узел как дочерний.
+    @param filter_tree_data: Данные узла.
+    @param child_item_filter: Данные дочернего узла.
+        Если не определены, то создаются пустой узел.
+    @return: Измененные данные узла.
+    """
+    if child_item_filter is None:
+        child_item_filter = empty_item()
+
+    if '__children__' not in filter_tree_data:
+        filter_tree_data['__children__'] = list()
+    filter_tree_data['__children__'].append(child_item_filter)
+    return filter_tree_data
+
+
+def new_item_filter(filter_tree_data, label=DEFAULT_NODE_LABEL):
+    """
+    Добавить новый фильтр к уже существующему узлу.
+    @param filter_tree_data: Данные узла.
+    @param label: Надпись узла.
+    @return: Измененные данные узла.
+    """
+    if '__children__' not in filter_tree_data or filter_tree_data['__children__'] is None:
+        filter_tree_data['__children__'] = list()
+
+    item_filter = empty_item(label)
+    return add_child_item_filter(filter_tree_data, item_filter)
+
+
+def set_filter(filter_tree_data, item_filter=None):
+    """
+    Установить существующий фильтр узла.
+    @param filter_tree_data: Данные узла.
+    @param item_filter: Данные фильтра.
+    @return: Измененные данные узла.
+    """
+    filter_tree_data['__filter__'] = item_filter
+    return filter_tree_data
+
+
+def set_indicator(filter_tree_data, item_indicator=None):
+    """
+    Установить существующий индикатор узла.
+    @param filter_tree_data: Данные узла.
+    @param item_indicator: Данные индикатора.
+    @return: Измененные данные узла.
+    """
+    filter_tree_data['__indicator__'] = item_indicator
+    return filter_tree_data
+
+
+def set_label(filter_tree_data, label=u''):
+    """
+    Установить надпись узла.
+    @param filter_tree_data: Данные узла.
+    @param label: Надпись.
+    @return: Измененные данные узла.
+    """
+    filter_tree_data['label'] = label
+    return filter_tree_data
+
+
+def find_label(filter_tree_data, label=u''):
+    """
+    Поиск узла по его надписи
+    @param filter_tree_data: Данные узла.
+    @param label: Надпись.
+    @return: Данные искомого узла или None, если узел не найден.
+    """
+    if filter_tree_data.get('label', None) == label:
+        return filter_tree_data
+    if '__children__' in filter_tree_data and filter_tree_data['__children__']:
+        for child in filter_tree_data['__children__']:
+            find_result = find_label(child, label=label)
+            if find_result:
+                return find_result
+    return None
+
+
 class icFilterTreeCtrlProto(wx.TreeCtrl,
-                            tree_item_indicator.icTreeItemIndicator,
+                            icTreeItemIndicator,
                             treectrl_manager.icTreeCtrlManager,
                             stored_ctrl_manager.icStoredCtrlManager):
     """
@@ -55,7 +148,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         wx.TreeCtrl.__init__(self, *args, **kwargs)
 
-        tree_item_indicator.icTreeItemIndicator.__init__(self)
+        icTreeItemIndicator.__init__(self)
 
         # По умолчанию создаем корневой элемент
         self.AddRoot(DEFAULT_ROOT_LABEL)
@@ -260,7 +353,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             filters = self._build_filters(filters)
         else:
             log.warning(u'Не определены структурные данные элемента дерева')
-        grp_filter = filter_generate.create_filter_group_AND(*filters)
+        grp_filter = create_filter_group_AND(*filters)
         return grp_filter
 
     def createPopupMenu(self):
@@ -618,9 +711,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
         return result
 
-    def getFilters(self):
+    def acceptFilters(self):
         """
-        Получить дерево фильтров.
+        Получить и установить дерево фильтров в контрол.
         """
         return self.loadFilters()
 

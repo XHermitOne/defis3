@@ -17,6 +17,8 @@ from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
 
 from STD.queries import filter_tree_ctrl
+from STD.queries import filter_choicectrl
+
 
 # Регистрация прав использования
 from ic.kernel import icpermission
@@ -116,7 +118,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
 
         # После того как определили окружение и
         # имя файла хранения фильтров можно загрузить фильтры
-        self.filter_tree = self.getFilters()
+        self.acceptFilters()
 
         # Обновить индикаторы
         # self.refreshIndicators(bVisibleItems=False)
@@ -176,20 +178,34 @@ class icFilterTreeCtrl(icwidget.icWidget,
             log.warning(u'Ошибка получения набора записей контрола дерева фильтров <%s>' % self.name)
         return None
 
-    def getFilters(self):
+    def acceptFilters(self):
         """
-        Получить дерево фильтров.
+        Получить и установить дерево фильтров в контрол.
         ВНИМАНИЕ! В этой функции реализована поддержка получения альтернативного варианта
         данных дерева фильтров.
         """
         if self.isICAttrValue('get_filter_tree'):
             # Если функция получения дерева фильтров заполнена, то
             # вызываем ее. И получаем данные дерева фильтра
-            result = self.eval_attr('get_filter_tree')
-            if result[0] == coderror.IC_EVAL_OK:
-                return result[1]
-            else:
-                log.warning(u'Ошибка получения фильтров контрола дерева фильтров <%s> альтернативным способом' % self.name)
+            filter_tree_data = self.getICAttr('get_filter_tree')
+
+            result = False
+            if filter_tree_data:
+                # Построить дерево
+                result = self.setTreeData(ctrl=self, tree_data=filter_tree_data, label='label')
+
+                # Установить надпись корневого элемента как надпись фильтра
+                root_filter = filter_tree_data.get('__filter__', dict())
+                # log.debug(u'Фильтр: %s' % str(root_filter))
+                str_filter = filter_choicectrl.get_str_filter(root_filter)
+                root_label = str_filter if str_filter else filter_tree_ctrl.DEFAULT_ROOT_LABEL
+                self.setRootTitle(tree_ctrl=self, title=root_label)
+
+            if result:
+                # Если не удалось определить дерево по какой-то причине, то
+                # берем данные из файла
+                return result
+
         # Если произошла ошибка получения или не определен альтернативный способ
         # то грузим из файла хранения по умолчанию
         return self.loadFilters()

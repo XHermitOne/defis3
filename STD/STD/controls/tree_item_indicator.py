@@ -42,12 +42,62 @@ import wx
 
 from ic.log import log
 from ic.bitmap import ic_bmp
+from ic.utils import wxfunc
 
 from . import indicator_constructor_dlg
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 3, 1)
 
 UNKNOWN_STATE_NAME = u'Имя состояния не определено'
+
+
+# Функции управления описанием индикаторов
+def create_indicator():
+    """
+    Создание списка индикатора.
+    @return: Пустой список индикатора.
+    """
+    return list()
+
+
+def new_indicator_state(indicator=None,
+                        name=UNKNOWN_STATE_NAME, img_filename=None,
+                        text_color=None, background_color=None,
+                        expression=None):
+    """
+    Добавить новое состояние в сприсок индикатора.
+    @param indicator: Список индикатора.
+    @param name: Наименование состояния.
+    @param img_filename: Файл образа.
+    @param text_color: Кортеж (R, G, B) цвета текста.
+    @param background_color: Кортеж (R, G, B) цвета фона.
+    @param expression: Текст блока кода выражения проверки состояния.
+    @return: Измененный список индикатора.
+    """
+    if text_color is None:
+        text_color = wxfunc.wxColour2RGB(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
+    if background_color is None:
+        background_color = wxfunc.wxColour2RGB(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
+
+    if indicator is None:
+        indicator = create_indicator()
+    new_state = dict(name=name, image=img_filename,
+                     text_color=text_color, background_color=background_color,
+                     expression=expression)
+    indicator.append(new_state)
+    return indicator
+
+
+def find_indicator_state(indicator, name):
+    """
+    Поиск состояния индикатора в списке индикатора по имени.
+    @param indicator: Список индикатора.
+    @param name: Наименование состояния.
+    @return: Структура данных состояния или None если нет состояния с таким именем.
+    """
+    names = [state.get('name', None) for state in indicator]
+    find_state = indicator[names.index(name)] if name in names else None
+    return find_state
 
 
 class icTreeItemIndicator(object):
