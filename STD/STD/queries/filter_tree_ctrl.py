@@ -798,6 +798,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
 
         # Сначала получаем набор записей узла, соответствующую элементу
         cur_filter = self.getItemFilter(item=item)
+        log.debug(u'Фильтр элемента дерева фильтров %s' % str(cur_filter))
         records = self.getCurRecords(item_filter=cur_filter)
 
         # Затем получаем объекты индикатора

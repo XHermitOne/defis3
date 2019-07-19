@@ -41,6 +41,8 @@
 }
 """
 
+import copy
+
 # Version
 __version__ = (0, 1, 2, 1)
 
@@ -138,7 +140,7 @@ def create_filter_compare_requisite(name, compare_operate=DEFAULT_COMPARE_OPERAT
     return filter_compare
 
 
-def add_filter_compare_to_group(filter_group, filter_compare):
+def add_filter_compare_to_group(filter_group, filter_compare, do_clone=False):
     """
     Добавить реквизит фильтра к группе фильтра.
     @param filter_group: Структура (словарь) группы фильтра.
@@ -162,6 +164,7 @@ def add_filter_compare_to_group(filter_group, filter_compare):
                    Поэтому генерация WHERE секции SQL заключается в правильном
                    соединении нужных строк этого ключа.
         }
+    @param do_clone: Предварительно клонировать группу-источник?
     @return: Структура группы фильтра с добавленным реквизито фильтра.
         {
         'name': Наименование группы. Обычно соответствует логическому операнду.
@@ -170,6 +173,9 @@ def add_filter_compare_to_group(filter_group, filter_compare):
         'children': [... { Реквизит фильтра }]
         }
     """
+    if do_clone:
+        filter_group = copy.deepcopy(filter_group)
+
     if not filter_compare:
         # Пустые реквизиты фильтра не добавляем
         return filter_group
