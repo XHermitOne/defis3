@@ -12,7 +12,7 @@ import wx.propgrid
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.utils import ic_time
-from ic import ic_bmp
+from ic import bmpfunc
 from ic.utils import ic_str
 from ic.utils import coderror
 from ic.db import icsqlalchemy
@@ -302,7 +302,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         Инициализация образов контролов.
         """
         # <wx.Tool>
-        bmp = ic_bmp.createLibraryBitmap('magnifier-left.png')
+        bmp = bmpfunc.createLibraryBitmap('magnifier-left.png')
         tool_id = self.search_tool.GetId()
         # ВНИМАНИЕ! Для смены образа инструмента не надо использовать
         # метод инструмента <tool.SetNormalBitmap(bmp)> т.к. НЕ РАБОТАЕТ!
@@ -313,15 +313,15 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         # у панели инструментов надо вызвать <Realize>
         self.search_toolBar.Realize()        
 
-        bmp = ic_bmp.createLibraryBitmap('plus.png')
+        bmp = bmpfunc.createLibraryBitmap('plus.png')
         tool_id = self.add_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('pencil.png')
+        bmp = bmpfunc.createLibraryBitmap('pencil.png')
         tool_id = self.edit_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
         
-        bmp = ic_bmp.createLibraryBitmap('minus.png')
+        bmp = bmpfunc.createLibraryBitmap('minus.png')
         tool_id = self.del_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 

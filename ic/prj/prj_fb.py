@@ -6,7 +6,7 @@ import os.path
 import wx
 
 # from ic.imglib import common as imglib
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import ic_file
 from ic.editor import wxfb_manager
 
@@ -31,7 +31,7 @@ class PrjWXFormBuilderProject(prj_node.PrjNode,
         self.description = u'Проект wxFormBuilder'
         self.name = 'new_fb_project'
         # self.img = imglib.imgDesigner
-        self.img = ic_bmp.createLibraryBitmap('wxformbuilder.png')
+        self.img = bmpfunc.createLibraryBitmap('wxformbuilder.png')
 
         # Расширение файла
         self.ext = '.fbp'

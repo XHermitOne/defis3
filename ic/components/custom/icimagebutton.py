@@ -46,7 +46,7 @@
 import wx
 from wx.lib import buttons
 from ic.dlg.msgbox import MsgBox
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import util
 from ic.components.icwidget import icWidget, icShortHelpString, SPC_IC_WIDGET
 from ic.imglib import common
@@ -247,7 +247,7 @@ class icImageButton(icImgButtonPrototype, buttons.GenBitmapTextButton):
         if img and issubclass(img.__class__, wx.Bitmap):
             pass
         elif isinstance(img, str) and img not in ['', 'None', u'', u'None']:
-            bmptype = ic_bmp.getBitmapType(img)
+            bmptype = bmpfunc.getBitmapType(img)
             img = wx.Image(img, bmptype).ConvertToBitmap()
         elif img in (None, 'None'):
             img = common.imgEdtImage
@@ -328,7 +328,7 @@ class icBitmapButton(icImgButtonPrototype, wx.BitmapButton):
         if img and issubclass(img.__class__, wx.Bitmap):
             pass
         elif isinstance(img, str) and img not in ['', 'None', u'', u'None']:
-            bmptype = ic_bmp.getBitmapType(img)
+            bmptype = bmpfunc.getBitmapType(img)
             img = wx.Image(img, bmptype).ConvertToBitmap()
         elif img in (None, 'None'):
             img = common.imgEdtImage

@@ -389,7 +389,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             menu = flatmenu.FlatMenu()
 
             rename_menuitem_id = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('textfield_rename.png')
+            bmp = bmpfunc.createLibraryBitmap('textfield_rename.png')
             menuitem = flatmenu.FlatMenuItem(menu, rename_menuitem_id, u'Переименовать',
                                              normalBmp=bmp)
             menu.AppendItem(menuitem)
@@ -438,7 +438,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             menuitem.Enable(self._canEditFilter())
 
             filter_menuitem_id = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('filter.png')
+            bmp = bmpfunc.createLibraryBitmap('filter.png')
             cur_filter = item_data.get('__filter__', None) if item_data else None
             label = u'Фильтр: %s' % filter_choicectrl.get_str_filter(cur_filter) if cur_filter else u'Фильтр'
             menuitem = flatmenu.FlatMenuItem(menu, filter_menuitem_id, label,
@@ -448,7 +448,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             menuitem.Enable(self._canEditFilter())
 
             indicator_menuitem_id = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('traffic-light.png')
+            bmp = bmpfunc.createLibraryBitmap('traffic-light.png')
             cur_indicator = item_data.get('__indicator__', None) if item_data else None
             label = u'Индикатор: %s' % self.getLabelIndicator(cur_indicator) if cur_indicator else u'Индикатор'
             menuitem = flatmenu.FlatMenuItem(menu, indicator_menuitem_id, label,

@@ -45,7 +45,7 @@
                             
 import wx
 from wx.lib import buttons
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import util
 from ic.PropertyEditor import icDefInf
 from ic.components.icwidget import icWidget, icShortHelpString, SPC_IC_WIDGET
@@ -131,7 +131,7 @@ class icToggleImageButton(icWidget, buttons.ThemedGenBitmapTextToggleButton):
                                           'Error in getICAttr in icimagebutton. name=%s attribute <image>' % self.name)
 
         if isinstance(img, str) and img not in ['', 'None', u'', u'None']:
-            bmptype = ic_bmp.getBitmapType(img)
+            bmptype = bmpfunc.getBitmapType(img)
             img = wx.Image(img, bmptype).ConvertToBitmap()
         elif not img:
             img = common.imgEdtImage

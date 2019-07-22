@@ -20,7 +20,7 @@ import ic
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.utils import ic_time
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.scanner import scanner_manager
 
 import new_doc_panel
@@ -176,7 +176,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
         """
         Инициализация образов.
         """
-        bmp = ic_bmp.findBitmap(*DEFAULT_SCAN_BMP_FILENAMES)
+        bmp = bmpfunc.findBitmap(*DEFAULT_SCAN_BMP_FILENAMES)
         if bmp:
             self.doc_card_panel.scan_bpButton.SetBitmap(bmp)
 

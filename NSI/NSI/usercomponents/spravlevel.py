@@ -24,7 +24,7 @@ import wx
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.PropertyEditor import icDefInf
 
 import NSI.nsi_sys.icspravlevel as parentModule
@@ -90,8 +90,8 @@ ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('book-open-bookmark.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('book-open-bookmark.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('book-open-bookmark.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('book-open-bookmark.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
@@ -200,7 +200,7 @@ class icSpravLevel(icwidget.icSimple, parentModule.icSpravLevelPrototype):
         pic = self.getICAttr('pic')
         if pic:
             return pic
-        return ic_bmp.createLibraryBitmap('folder.png')
+        return bmpfunc.createLibraryBitmap('folder.png')
 
     def getPic2(self):
         """
@@ -209,7 +209,7 @@ class icSpravLevel(icwidget.icSimple, parentModule.icSpravLevelPrototype):
         pic = self.getICAttr('pic2')
         if pic:
             return pic
-        return ic_bmp.createLibraryBitmap('folder-open.png')
+        return bmpfunc.createLibraryBitmap('folder-open.png')
 
     def getRefSprav(self):
         """

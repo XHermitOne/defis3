@@ -11,7 +11,7 @@ import os.path
 
 from ic.utils import ic_exec
 from ic.utils import ic_util
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 from ic.kernel import icobject
@@ -357,7 +357,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 if 'image' in ToolStruct_:
                     if ToolStruct_['image'] != '' and ToolStruct_['image'] is not None:
                         if os.path.isfile(ToolStruct_['image']):
-                            tool_image = ic_bmp.createBitmap(ToolStruct_['image'])
+                            tool_image = bmpfunc.createBitmap(ToolStruct_['image'])
                         else:
                             return None
                     else:

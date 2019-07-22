@@ -29,7 +29,7 @@ import ic.imglib.common as common
 import ic.PropertyEditor.icDefInf as icDefInf
 import ic.components.icfont as icfont
 import ic.components.custom.icheadcell as icheadcell
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 import ic.utils.graphicUtils as graphicUtils
 
 from ic.db import icsqlalchemy
@@ -213,7 +213,7 @@ class icIndicatorSkin:
         """
         Создаем объект картинки.
         """
-        return wx.Image(file, ic_bmp.getBitmapType(file)).ConvertToBitmap()
+        return wx.Image(file, bmpfunc.getBitmapType(file)).ConvertToBitmap()
 
     def Load(self):
         """

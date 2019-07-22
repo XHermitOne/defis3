@@ -12,7 +12,7 @@ import wx
 from wx.lib.agw import flatmenu
 
 from ic.imglib import common as imglib
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import clipboard
 from . import prj_node
 from . import prj_module
@@ -65,7 +65,7 @@ class icMenuModNode(flatmenu.FlatMenu):
 
             # Добавить проект wxFormBuilder
             self.addFBPID = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('wxformbuilder.png')
+            bmp = bmpfunc.createLibraryBitmap('wxformbuilder.png')
             item = flatmenu.FlatMenuItem(self, self.addFBPID, u'Добавить wxFormBuilder проект',
                                          u'Добавить wxFormBuilder проект',
                                          normalBmp=bmp)
@@ -75,7 +75,7 @@ class icMenuModNode(flatmenu.FlatMenu):
 
             # Добавить проект wxCrafter
             self.addWxCrafterID = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('wxc-logo-16.png')
+            bmp = bmpfunc.createLibraryBitmap('wxc-logo-16.png')
             item = flatmenu.FlatMenuItem(self, self.addWxCrafterID, u'Добавить wxCrafter проект',
                                          u'Добавить wxCrafter проект',
                                          normalBmp=bmp)

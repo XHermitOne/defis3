@@ -51,7 +51,7 @@ from ic.components import icfont
 
 import wx.lib.agw.speedmeter as parentModule
 # from STD.visualcomponents import visualcomponents_img
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 # --- Спецификация ---
 ICSpeedmeterStyle = {'SM_ROTATE_TEXT': parentModule.SM_ROTATE_TEXT,
@@ -141,8 +141,8 @@ ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('dashboard.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('dashboard.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('dashboard.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('dashboard.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

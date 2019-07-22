@@ -19,7 +19,7 @@ from ic.components import icwidget
 from ic.utils import util
 from ic.PropertyEditor import icDefInf
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 from SCADA.scada_proto import node
 
@@ -60,8 +60,8 @@ ic_class_spc = {'type': 'OPCNode',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('network-server.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('network-server.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('network-server.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('network-server.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

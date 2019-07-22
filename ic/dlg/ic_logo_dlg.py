@@ -14,7 +14,7 @@ import wx.lib.imagebrowser
 
 from ic.components import icfont
 import ic.utils.ic_exec     # Этот модуль подгружается для спецификации
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 
 __version__ = (0, 1, 1, 1)
@@ -128,7 +128,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
 
         style = wx.STAY_ON_TOP
         w, h = wx.ScreenDC().GetSize()
-        self._ani = [ic_bmp.icCreateBitmap(pic_name) for pic_name in Frames_]
+        self._ani = [bmpfunc.icCreateBitmap(pic_name) for pic_name in Frames_]
         if self._ani:
             sx, sy = self._pic_size = (self._ani[0].GetWidth(), self._ani[0].GetHeight())
         else:

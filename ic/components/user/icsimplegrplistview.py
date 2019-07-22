@@ -26,7 +26,7 @@ from ic.components import icwidget
 from ic.utils import util
 from ic.utils import ic_util
 from ic.dlg import ic_dlg
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import coderror
 import ic.components.icResourceParser as prs
 from ic.imglib import common
@@ -106,8 +106,8 @@ ic_class_spc = {'type': 'SimpleGroupListView',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('table-heatmap.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('table-heatmap.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('table-heatmap.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('table-heatmap.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

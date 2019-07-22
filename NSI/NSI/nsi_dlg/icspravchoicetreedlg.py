@@ -11,7 +11,7 @@ import wx
 
 from . import nsi_dialogs_proto
 from ic.log import log
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 from . import icspraveditdlg
 from ic.utils import ic_str
@@ -139,7 +139,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         #   V
         if False:
             # <wx.Tool>
-            bmp = ic_bmp.createLibraryBitmap('magnifier-left.png')
+            bmp = bmpfunc.createLibraryBitmap('magnifier-left.png')
             tool_id = self.search_tool.GetId()
             # ВНИМАНИЕ! Для смены образа инструмента не надо использовать
             # метод инструмента <tool.SetNormalBitmap(bmp)> т.к. НЕ РАБОТАЕТ!
@@ -152,12 +152,12 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
 
         # Образы контрола списка справочника
         if self.sprav_treeListCtrl_img_list is None:
-            img_list = wx.ImageList(ic_bmp.DEFAULT_LIB_BMP_SIZE[0],
-                                    ic_bmp.DEFAULT_LIB_BMP_SIZE[1])
+            img_list = wx.ImageList(bmpfunc.DEFAULT_LIB_BMP_SIZE[0],
+                                    bmpfunc.DEFAULT_LIB_BMP_SIZE[1])
             # log.debug(u'Создана библиотека образов')
 
-            self.sort_ascending_img = img_list.Add(ic_bmp.createLibraryBitmap('bullet_arrow_up.png'))
-            self.sort_descending_img = img_list.Add(ic_bmp.createLibraryBitmap('bullet_arrow_down.png'))
+            self.sort_ascending_img = img_list.Add(bmpfunc.createLibraryBitmap('bullet_arrow_up.png'))
+            self.sort_descending_img = img_list.Add(bmpfunc.createLibraryBitmap('bullet_arrow_down.png'))
 
             self.sprav_treeListCtrl.SetImageList(img_list)
             # ВНИМАНИЕ! Необходимо запоминать объект библиотеки образов

@@ -10,7 +10,7 @@ import wx
 import datetime
 from ic.utils import util
 from ic.kernel import io_prnt
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.components import icwidget as parentModule
 from ic.PropertyEditor import icDefInf
 from STD.controls import datetime_ctrl
@@ -36,8 +36,8 @@ ic_class_spc = {'name': 'default',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('calendar-property.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('calendar-property.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('calendar-property.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('calendar-property.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

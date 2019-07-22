@@ -9,7 +9,7 @@ import os
 import os.path
 import wx
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 __version__ = (0, 0, 0, 1)
@@ -38,10 +38,10 @@ class icWMSRackContructorCtrl(wx.StaticBitmap):
             log.debug(u'Фон задается именем файла <%s>' % bmp)
             # Картинка задается именем файла
             if os.path.exists(bmp):
-                bmp = ic_bmp.createBitmap(bmp)
+                bmp = bmpfunc.createBitmap(bmp)
             else:
                 # Возможно картинка задается именем файла из библиотеки
-                bmp = ic_bmp.createLibraryBitmap(bmp)
+                bmp = bmpfunc.createLibraryBitmap(bmp)
         self.SetBitmap(bmp)
 
     # def draw(self, dc):

@@ -6,7 +6,7 @@
 """
 
 from . import sequence_list_box
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 __version__ = (0, 0, 0, 2)
@@ -61,7 +61,7 @@ class icSequenceListBox(sequence_list_box.icSequenceListBoxProto):
         Инициализация образов.
         """
         # <wx.Tool>
-        bmp = ic_bmp.createLibraryBitmap('control-stop-090.png')
+        bmp = bmpfunc.createLibraryBitmap('control-stop-090.png')
         tool_id = self.first_tool.GetId()
         # ВНИМАНИЕ! Для смены образа инструмента не надо использовать
         # метод инструмента <tool.SetNormalBitmap(bmp)> т.к. НЕ РАБОТАЕТ!
@@ -69,23 +69,23 @@ class icSequenceListBox(sequence_list_box.icSequenceListBoxProto):
         # <toolbar.SetToolNormalBitmap(tool_id, bmp)>
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('control-090.png')
+        bmp = bmpfunc.createLibraryBitmap('control-090.png')
         tool_id = self.prev_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('control-270.png')
+        bmp = bmpfunc.createLibraryBitmap('control-270.png')
         tool_id = self.next_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('control-stop-270.png')
+        bmp = bmpfunc.createLibraryBitmap('control-stop-270.png')
         tool_id = self.last_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('arrow-skip-090.png')
+        bmp = bmpfunc.createLibraryBitmap('arrow-skip-090.png')
         tool_id = self.move_up_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('arrow-skip-270.png')
+        bmp = bmpfunc.createLibraryBitmap('arrow-skip-270.png')
         tool_id = self.move_down_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 

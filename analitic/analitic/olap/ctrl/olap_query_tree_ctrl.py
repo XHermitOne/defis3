@@ -13,7 +13,7 @@ import wx.gizmos
 from wx.lib.agw import flatmenu
 
 from ic.log import log
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 from ic.utils import ic_file
 
@@ -235,7 +235,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             menu = flatmenu.FlatMenu()
 
             rename_menuitem_id = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('textfield_rename.png')
+            bmp = bmpfunc.createLibraryBitmap('textfield_rename.png')
             menuitem = flatmenu.FlatMenuItem(menu, rename_menuitem_id, u'Переименовать',
                                              normalBmp=bmp)
             menu.AppendItem(menuitem)
@@ -284,7 +284,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             menuitem.Enable(self._canEditOLAPRequest())
 
             request_menuitem_id = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('table_lightning.png')
+            bmp = bmpfunc.createLibraryBitmap('table_lightning.png')
             # cur_request = item_data.get('__request__', None) if item_data else None
             label = u'Запрос: %s' % item_data.get('label', DEFAULT_ROOT_LABEL) if item_data else u'Запрос'
             menuitem = flatmenu.FlatMenuItem(menu, request_menuitem_id, label,
@@ -294,7 +294,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             menuitem.Enable(self._canEditOLAPRequest())
 
             indicator_menuitem_id = wx.NewId()
-            bmp = ic_bmp.createLibraryBitmap('traffic-light.png')
+            bmp = bmpfunc.createLibraryBitmap('traffic-light.png')
             cur_indicator = item_data.get('__indicator__', None) if item_data else None
             label = u'Индикатор: %s' % self.getLabelIndicator(cur_indicator) if cur_indicator else u'Индикатор'
             menuitem = flatmenu.FlatMenuItem(menu, indicator_menuitem_id, label,

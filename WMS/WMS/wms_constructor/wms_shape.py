@@ -9,7 +9,7 @@ import os
 import os.path
 import wx
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 __version__ = (0, 0, 0, 2)
@@ -181,7 +181,7 @@ class icWMSBoxShape(icWMSCellShape):
 
         if self.bmp is None:
             bmp_filename = os.path.join(DEFAULT_IMG_DIR, 'box.png')
-            self.setBitmap(ic_bmp.createBitmap(bmp_filename))
+            self.setBitmap(bmpfunc.createBitmap(bmp_filename))
 
     def getTagInfo(self):
         """

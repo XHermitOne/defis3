@@ -14,7 +14,7 @@ from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportListUs
 from ic.PropertyEditor import icDefInf
 
 from ic.log import log
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.utils import util
@@ -59,8 +59,8 @@ ic_class_spc = {'type': 'SCADAPanel',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('control_panel.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('control_panel.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('control_panel.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('control_panel.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

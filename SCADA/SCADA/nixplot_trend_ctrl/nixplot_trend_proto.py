@@ -18,7 +18,7 @@ import uuid
 from ic.log import log
 from ic.utils import ic_file
 from ic.utils import ic_time
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 from ic.components import icwidget
 
@@ -447,7 +447,7 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         @return: True/False.
         """
         if frame_filename and os.path.exists(frame_filename) and frame_filename.endswith(PNG_FILE_TYPE.lower()):
-            bmp = ic_bmp.createBitmap(frame_filename)
+            bmp = bmpfunc.createBitmap(frame_filename)
             self.canvas.SetBitmap(bmp)
             self.canvas.Refresh()
             return True

@@ -17,7 +17,7 @@ from ic.imglib import common
 from ic.log import log
 
 from . import icimg2py
-from . import ic_bmp
+from . import bmpfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -127,7 +127,7 @@ class icImageLibManager:
         Объект wx.Bitmap, соответствующий картинке.
         """
         if self._img_name:
-            return ic_bmp.createLibraryBitmap(self._img_name)
+            return bmpfunc.createLibraryBitmap(self._img_name)
         return None
 
     def getImage(self):

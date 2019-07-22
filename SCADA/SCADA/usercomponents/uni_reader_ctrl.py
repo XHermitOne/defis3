@@ -15,7 +15,7 @@ from ic.components import icwidget
 from ic.utils import util
 from ic.PropertyEditor import icDefInf
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 from SCADA.controllers import uni_reader_controller
 
@@ -75,8 +75,8 @@ ic_class_spc = {'type': 'UniReaderController',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('server-network.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('server-network.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('server-network.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('server-network.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

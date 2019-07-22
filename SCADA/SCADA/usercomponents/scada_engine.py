@@ -20,7 +20,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.log import log
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 # from . import scada_tag
 from . import int_tag
@@ -59,8 +59,8 @@ ic_class_spc = {'type': 'SCADAEngine',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('recycle.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('recycle.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('recycle.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('recycle.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

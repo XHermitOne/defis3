@@ -27,7 +27,7 @@ import ic.imglib.common as common
 import ic.PropertyEditor.icDefInf as icDefInf
 import ic.utils.coderror as coderror
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -57,8 +57,8 @@ ic_class_spc = {'type': 'ModPlanManager',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('chart_organisation.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('chart_organisation.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('chart_organisation.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_organisation.png')
 
 #   Путь до файла документации
 ic_class_doc = 'doc/public/icplanmodifmanager.html'

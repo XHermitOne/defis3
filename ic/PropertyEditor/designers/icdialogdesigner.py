@@ -12,7 +12,7 @@ import ic.components.icwxpanel as icwxpanel
 import ic.utils.resource as resource
 import ic.utils.graphicUtils as graphicUtils
 from ic.interfaces import icdesignerinterface
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 _ = wx.GetTranslation
 
@@ -89,9 +89,9 @@ class icDialogDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesign
         self.SetSizer(self.sizer)
         self.SetAutoLayout(1)
 
-        self.img_min = ic_bmp.createLibraryBitmap(DEFAULT_MIN_BUTTON_IMG)
-        self.img_exp = ic_bmp.createLibraryBitmap(DEFAULT_EXP_BUTTON_IMG)
-        self.img_close = ic_bmp.createLibraryBitmap(DEFAULT_CLOSE_BUTTON_IMG)
+        self.img_min = bmpfunc.createLibraryBitmap(DEFAULT_MIN_BUTTON_IMG)
+        self.img_exp = bmpfunc.createLibraryBitmap(DEFAULT_EXP_BUTTON_IMG)
+        self.img_close = bmpfunc.createLibraryBitmap(DEFAULT_CLOSE_BUTTON_IMG)
         
         # 
         self.border_pen = wx.Pen(wx.Colour(*icwxpanel.DESIGN_BORDER_CLR))

@@ -13,7 +13,7 @@ from ic.components import icResourceParser as prs
 
 from ic.log import log
 from ic.utils import util
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 from SCADA.gnuplot_trend_ctrl import gnuplot_trend_navigator_proto
 
@@ -48,8 +48,8 @@ ic_class_spc = {'type': 'GnuplotTrendNavigator',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('chart_curve_edit.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('chart_curve_edit.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('chart_curve_edit.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_curve_edit.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

@@ -12,7 +12,7 @@ import datetime
 import wx
 import ic
 from ic import config
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.dlg import wait_box
@@ -256,7 +256,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         # Список UUID документов с которыми связан текущий документ
         self._link_to_uuids = list()
 
-        bmp = ic_bmp.findBitmap(*DEFAULT_SCAN_BMP_FILENAMES)
+        bmp = bmpfunc.findBitmap(*DEFAULT_SCAN_BMP_FILENAMES)
         if bmp:
             self.scan_bpButton.SetBitmap(bmp)
 

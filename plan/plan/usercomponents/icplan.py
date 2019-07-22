@@ -25,7 +25,7 @@
 
 from ic.PropertyEditor import icDefInf
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.utils import coderror
@@ -68,8 +68,8 @@ ic_class_spc = {'type': 'Plan',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('chart-up-color.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('chart-up-color.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('chart-up-color.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('chart-up-color.png')
 
 #   Путь до файла документации
 ic_class_doc = 'doc/public/icplan.html'

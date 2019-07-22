@@ -41,7 +41,7 @@ import os.path
 import wx
 
 from ic.log import log
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import wxfunc
 
 from . import indicator_constructor_dlg
@@ -223,10 +223,10 @@ class icTreeItemIndicator(object):
         if img_filename:
             if os.path.exists(img_filename):
                 # Файл образа задан как абсолютное имя файла
-                image = ic_bmp.createBitmap(img_filename)
+                image = bmpfunc.createBitmap(img_filename)
             elif img_filename == os.path.basename(img_filename):
                 # Файл образа задан как имя файла библиотеки
-                image = ic_bmp.createLibraryBitmap(img_filename)
+                image = bmpfunc.createLibraryBitmap(img_filename)
             else:
                 log.warning(u'Не корректное имя файла образа <%s>' % img_filename)
 

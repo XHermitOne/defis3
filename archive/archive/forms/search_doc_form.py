@@ -14,7 +14,7 @@ import sqlalchemy
 from archive.forms import search_doc_form_proto
 from archive.forms import scheme_doc_form
 from archive.forms import browse_doc_links_panel
-from ic import ic_bmp
+from ic import bmpfunc
 from ic import log
 from ic import ic_dlg
 import ic
@@ -45,7 +45,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
         Инициализация картинок контролов.
         """
         # <wx.Tool>
-        bmp = ic_bmp.createLibraryBitmap('eye.png')
+        bmp = bmpfunc.createLibraryBitmap('eye.png')
         tool_id = self.view_tool.GetId()
         # ВНИМАНИЕ! Для смены образа инструмента не надо использовать
         # метод инструмента <tool.SetNormalBitmap(bmp)> т.к. НЕ РАБОТАЕТ!
@@ -53,23 +53,23 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
         # <toolbar.SetToolNormalBitmap(tool_id, bmp)>
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('document--pencil.png')
+        bmp = bmpfunc.createLibraryBitmap('document--pencil.png')
         tool_id = self.edit_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('schema.png')
+        bmp = bmpfunc.createLibraryBitmap('schema.png')
         tool_id = self.scheme_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('chain.png')
+        bmp = bmpfunc.createLibraryBitmap('chain.png')
         tool_id = self.links_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
         
-        bmp = ic_bmp.createLibraryBitmap('application-dock-090.png')
+        bmp = bmpfunc.createLibraryBitmap('application-dock-090.png')
         tool_id = self.collapse_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('application-dock-270.png')
+        bmp = bmpfunc.createLibraryBitmap('application-dock-270.png')
         tool_id = self.expand_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
@@ -648,7 +648,7 @@ class icSearchDocDlg(icSearchDocPanelCtrl,
         Инициализация картинок контролов.
         """
         # <wx.Tool>
-        bmp = ic_bmp.createLibraryBitmap('application-dock-090.png')
+        bmp = bmpfunc.createLibraryBitmap('application-dock-090.png')
         tool_id = self.collapse_tool.GetId()
         # ВНИМАНИЕ! Для смены образа инструмента не надо использовать
         # метод инструмента <tool.SetNormalBitmap(bmp)> т.к. НЕ РАБОТАЕТ!
@@ -656,7 +656,7 @@ class icSearchDocDlg(icSearchDocPanelCtrl,
         # <toolbar.SetToolNormalBitmap(tool_id, bmp)>
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('application-dock-270.png')
+        bmp = bmpfunc.createLibraryBitmap('application-dock-270.png')
         tool_id = self.expand_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
@@ -747,7 +747,7 @@ class icChoiceDocsDlg(icSearchDocPanelCtrl,
         Инициализация картинок контролов.
         """
         # <wx.Tool>
-        bmp = ic_bmp.createLibraryBitmap('application-dock-090.png')
+        bmp = bmpfunc.createLibraryBitmap('application-dock-090.png')
         tool_id = self.collapse_tool.GetId()
         # ВНИМАНИЕ! Для смены образа инструмента не надо использовать
         # метод инструмента <tool.SetNormalBitmap(bmp)> т.к. НЕ РАБОТАЕТ!
@@ -755,7 +755,7 @@ class icChoiceDocsDlg(icSearchDocPanelCtrl,
         # <toolbar.SetToolNormalBitmap(tool_id, bmp)>
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
-        bmp = ic_bmp.createLibraryBitmap('application-dock-270.png')
+        bmp = bmpfunc.createLibraryBitmap('application-dock-270.png')
         tool_id = self.expand_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 

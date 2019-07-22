@@ -17,7 +17,7 @@ from . import indicator_constructor_dlg_proto
 
 import ic
 from ic.log import log
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
@@ -98,7 +98,7 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
         self.init_indicator_grid()
         self.init_expression_edit()
 
-        self.image_filePicker.SetInitialDirectory(ic_bmp.getImageLibDir())
+        self.image_filePicker.SetInitialDirectory(bmpfunc.getImageLibDir())
         self.image_filePicker.Enable(False)
         self.textcolor_colourPicker.Enable(False)
         self.bgcolor_colourPicker.Enable(False)
@@ -182,7 +182,7 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
 
         img_filename = self.image_filePicker.GetPath() if self.image_checkBox.GetValue() else None
         if img_filename:
-            img_filename = os.path.basename(img_filename) if img_filename.startswith(ic_bmp.getImageLibDir()) else img_filename
+            img_filename = os.path.basename(img_filename) if img_filename.startswith(bmpfunc.getImageLibDir()) else img_filename
 
         text_color = self.textcolor_colourPicker.GetColour() if self.textcolor_checkBox.GetValue() else None
 
@@ -271,10 +271,10 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
         if img_filename:
             if os.path.exists(img_filename):
                 # Абсолютный путь до файла
-                image = ic_bmp.createBitmap(img_filename)
+                image = bmpfunc.createBitmap(img_filename)
             else:
                 # Во всех других случаях считаем что это библиотечный файл
-                image = ic_bmp.createLibraryBitmap(img_filename)
+                image = bmpfunc.createLibraryBitmap(img_filename)
         line = u''
         expression = state_indicator.get('expression', None)
         if expression:
@@ -404,7 +404,7 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
         """
         img_filename = event.GetPath()
         if img_filename and os.path.exists(img_filename):
-            bmp = ic_bmp.createBitmap(img_filename)
+            bmp = bmpfunc.createBitmap(img_filename)
             self.image_bitmap.SetBitmap(bmp)
         event.Skip()
 

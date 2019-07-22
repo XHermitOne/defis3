@@ -8,7 +8,7 @@
 """
 
 from analitic.usercomponents import icarrowindicator
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 # Версия
 __version__ = (0, 1, 1, 1)
@@ -130,9 +130,9 @@ def getStateImage(filename, state):
 
     if pref1 and pref2:
         # print 'pic name=', filename.replace('.gif',pref1+pref2+'.gif')
-        return ic_bmp.getUserBitmap(filename.replace('.gif', pref1 + pref2 + '.gif'), 'plan')
+        return bmpfunc.getUserBitmap(filename.replace('.gif', pref1 + pref2 + '.gif'), 'plan')
     else:
-        return ic_bmp.getUserBitmap(filename, 'plan')
+        return bmpfunc.getUserBitmap(filename, 'plan')
 #    if state == ColorIndGroup.RED_STATE:
 #        return lib.GetUserBitmap(filename.replace('.gif','Red.gif'), 'plan')
 #    elif state == ColorIndGroup.YELLOW_STATE:

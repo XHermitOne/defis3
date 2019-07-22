@@ -16,7 +16,7 @@ from archive.forms import new_doc_panel
 import ic
 from ic import log
 from ic import ic_time
-from ic import ic_bmp
+from ic import bmpfunc
 from ic import ic_file
 from ic.dlg import ic_dlg
 from work_flow.doc_sys import icdocselectdlg
@@ -185,7 +185,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         """
         Инициализация контролов.
         """
-        bmp = ic_bmp.findBitmap(*new_doc_panel.DEFAULT_SCAN_BMP_FILENAMES)
+        bmp = bmpfunc.findBitmap(*new_doc_panel.DEFAULT_SCAN_BMP_FILENAMES)
         if bmp:
             self.edit_doc_panel.scan_bpButton.SetBitmap(bmp)
 

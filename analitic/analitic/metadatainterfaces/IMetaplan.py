@@ -6,7 +6,7 @@ import ic.components.icResourceParser as prs
 import ic.utils.util as util
 import ic.interfaces.icobjectinterface as icobjectinterface
 import copy
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 import analitic.markalg.mapMark as mapMark
 import analitic.interfaces.IStdIndicatorPanel as IStdIndicatorPanel
 import plan.browsers as brws
@@ -100,7 +100,7 @@ class IMetaplan(icobjectinterface.icObjectInterface):
             # print('>>> Node state:', st)
             return mapMark.getStateImage('calendar.gif', st)
         else:
-            return ic_bmp.getUserBitmap('calendar.gif', 'plan')
+            return bmpfunc.getUserBitmap('calendar.gif', 'plan')
 
     def getPic2_mMonth(self, metaObj):
         """
@@ -118,7 +118,7 @@ class IMetaplan(icobjectinterface.icObjectInterface):
             st = IStdIndicatorPanel.getMonitorState(metaObj)
             return mapMark.getStateImage('product.gif', st)
         else:
-            return ic_bmp.getUserBitmap('product.gif', 'plan')
+            return bmpfunc.getUserBitmap('product.gif', 'plan')
 
     def getPic2_mVidProd(self, metaObj):
         """
@@ -136,7 +136,7 @@ class IMetaplan(icobjectinterface.icObjectInterface):
             st = IStdIndicatorPanel.getMonitorState(metaObj)
             return mapMark.getStateImage('region.gif', st)
         else:
-            return ic_bmp.getUserBitmap('region.gif', 'plan')
+            return bmpfunc.getUserBitmap('region.gif', 'plan')
 
     def getPic2_mReg(self, metaObj):
         """
@@ -154,7 +154,7 @@ class IMetaplan(icobjectinterface.icObjectInterface):
             st = IStdIndicatorPanel.getMonitorState(metaObj)
             return mapMark.getStateImage('human.gif', st)
         else:
-            return ic_bmp.getUserBitmap('human.gif', 'plan')
+            return bmpfunc.getUserBitmap('human.gif', 'plan')
         
     def getPic2_mMenager(self, metaObj):
         """

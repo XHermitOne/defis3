@@ -8,7 +8,7 @@
 import os
 import os.path
 from ic.utils import util
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 from ic.utils import coderror
 from ic.PropertyEditor import icDefInf
@@ -47,8 +47,8 @@ ic_class_spc = {'name': 'default',
                                  },
                 }
 
-ic_class_pic = ic_bmp.createLibraryBitmap('folders_explorer.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('folders_explorer.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('folders_explorer.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('folders_explorer.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

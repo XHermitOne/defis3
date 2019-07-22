@@ -16,7 +16,7 @@ from ic.components import icResourceParser as prs
 
 from ic.log import log
 from ic.utils import util
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 from SCADA.nixplot_trend_ctrl import nixplot_trend_proto
 from SCADA.scada_proto import trend_proto
@@ -65,8 +65,8 @@ ic_class_spc = {'type': 'NixplotTrend',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('diagramm.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('diagramm.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('diagramm.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('diagramm.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

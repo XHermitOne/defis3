@@ -23,7 +23,7 @@
 import wx
 from ic.components import icwidget
 from ic.utils import util
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 import ic.components.icResourceParser as prs
 # from work_flow.work_sys import workflow_img
 from ic.PropertyEditor import icDefInf
@@ -115,8 +115,8 @@ ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('tag-label-black.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('tag-label-black.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('tag-label-black.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('tag-label-black.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

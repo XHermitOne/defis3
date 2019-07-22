@@ -18,7 +18,7 @@ from ic.utils import ic_exec
 from ic.install import InstallWiz as install_wiz
 from ic.bitmap import icimagelibrarybrowser
 from ic.utils import ini
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 from ic.log import log
 
@@ -199,7 +199,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         self.regexpeditID = wx.NewId()
         item = flatmenu.FlatMenuItem(tool_submenu, self.regexpeditID,
                                      u'Редактор регулярных выражений', u'Редактор регулярных выражений',
-                                     normalBmp=ic_bmp.createLibraryBitmap('regular-expression-delimiter.png'))
+                                     normalBmp=bmpfunc.createLibraryBitmap('regular-expression-delimiter.png'))
         tool_submenu.AppendItem(item)
         prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRegExpEditor, id=self.regexpeditID)
 
@@ -207,7 +207,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         self.diffID = wx.NewId()
         item = flatmenu.FlatMenuItem(tool_submenu, self.diffID,
                                      u'Утилита сравнения файлов', u'Утилита сравнения файлов',
-                                     normalBmp=ic_bmp.createLibraryBitmap('edit-diff.png'))
+                                     normalBmp=bmpfunc.createLibraryBitmap('edit-diff.png'))
         tool_submenu.AppendItem(item)
         prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnDiffTool, id=self.diffID)
 
@@ -215,7 +215,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         self.imp1cID = wx.NewId()
         item = flatmenu.FlatMenuItem(tool_submenu, self.imp1cID,
                                      u'Импорт метаобъектов 1С', u'Импорт метаобъектов 1С',
-                                     normalBmp=ic_bmp.createLibraryBitmap('1c.png'))
+                                     normalBmp=bmpfunc.createLibraryBitmap('1c.png'))
         tool_submenu.AppendItem(item)
         prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnImport1C, id=self.imp1cID)
 
@@ -223,7 +223,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         self.wxfbID = wx.NewId()
         item = flatmenu.FlatMenuItem(tool_submenu, self.wxfbID,
                                      u'Дизайнер форм wxFormBuilder', u'Дизайнер форм wxFormBuilder',
-                                     normalBmp=ic_bmp.createLibraryBitmap('wxformbuilder.png'))
+                                     normalBmp=bmpfunc.createLibraryBitmap('wxformbuilder.png'))
         tool_submenu.AppendItem(item)
         prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnWXFormBuilder, id=self.wxfbID)
 

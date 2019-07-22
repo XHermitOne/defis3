@@ -16,7 +16,7 @@ import sqlalchemy
 from archive.forms import search_doc_form_proto
 from archive.forms import edit_doc_form
 from archive.forms import scheme_doc_form
-from ic import ic_bmp
+from ic import bmpfunc
 from ic import log
 from ic import ic_dlg
 import ic
@@ -61,7 +61,7 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
         search_doc_form.icSearchDocPanelCtrl.init_images(self)
         
         # <wx.Tool>
-        bmp = ic_bmp.createLibraryBitmap('minus.png')
+        bmp = bmpfunc.createLibraryBitmap('minus.png')
         tool_id = self.del_tool.GetId()
         # ВНИМАНИЕ! Для смены образа инструмента не надо использовать
         # метод инструмента <tool.SetNormalBitmap(bmp)> т.к. НЕ РАБОТАЕТ!
@@ -70,7 +70,7 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
 
         # <wx.Tool>
-        bmp = ic_bmp.createLibraryBitmap('broom-code.png')
+        bmp = bmpfunc.createLibraryBitmap('broom-code.png')
         tool_id = self.clear_links_tool.GetId()
         self.ctrl_toolBar.SetToolNormalBitmap(tool_id, bmp)
         

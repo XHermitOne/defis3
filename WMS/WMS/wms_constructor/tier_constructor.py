@@ -12,7 +12,7 @@ import wx
 from . import wms_shape
 from . import board
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -115,7 +115,7 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
             self.bg_bmp = background_bitmap
         elif isinstance(background_bitmap, str):
             # Задается именем файла
-            bmp = ic_bmp.createBitmap(background_bitmap)
+            bmp = bmpfunc.createBitmap(background_bitmap)
             self.bg_bmp = bmp
         elif background_bitmap is None:
             self.bg_bmp = None

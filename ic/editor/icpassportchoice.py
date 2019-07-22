@@ -12,7 +12,7 @@ import wx
 
 from ic.log import log
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import ic_util
 
 __version__ = (0, 1, 1, 1)
@@ -234,7 +234,7 @@ class icPassportChoiceDialog(wx.Dialog):
             wx.Dialog.__init__(self, parent_, -1, title=_title,
                                pos=wx.DefaultPosition, size=wx.Size(800, 400))
 
-            icon_img = ic_bmp.getSysImg('imgEdtPassport')
+            icon_img = bmpfunc.getSysImg('imgEdtPassport')
             if icon_img:
                 icon = wx.Icon(icon_img)
                 self.SetIcon(icon)
@@ -310,14 +310,14 @@ class icPassportListPanel(wx.Panel):
             self._toolbar.SetToolBitmapSize(wx.Size(16, 16))
 
             id_ = wx.NewId()
-            bmp = ic_bmp.getSysImg('imgPlus')
+            bmp = bmpfunc.getSysImg('imgPlus')
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'Add', bmp, shortHelp=_('Add'))
             self.Bind(wx.EVT_TOOL, self.OnAddPassport, id=id_)
 
             id_ = wx.NewId()
-            bmp = ic_bmp.getSysImg('imgMinus')
+            bmp = bmpfunc.getSysImg('imgMinus')
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'Delete', bmp, shortHelp=_('Delete'))
@@ -326,7 +326,7 @@ class icPassportListPanel(wx.Panel):
             self._toolbar.AddSeparator()
 
             id_ = wx.NewId()
-            bmp = ic_bmp.getSysImg('imgEdit')
+            bmp = bmpfunc.getSysImg('imgEdit')
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'Edit', bmp, shortHelp=_('Edit'))
@@ -335,14 +335,14 @@ class icPassportListPanel(wx.Panel):
             self._toolbar.AddSeparator()
 
             id_ = wx.NewId()
-            bmp = ic_bmp.getSysImg('imgUp')
+            bmp = bmpfunc.getSysImg('imgUp')
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'MoveUp', bmp, shortHelp=_('Move up'))
             self.Bind(wx.EVT_TOOL, self.OnMoveUpPassport, id=id_)
             
             id_ = wx.NewId()
-            bmp = ic_bmp.getSysImg('imgDown')
+            bmp = bmpfunc.getSysImg('imgDown')
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'MoveDown', bmp, shortHelp=_('Move down'))
@@ -469,7 +469,7 @@ class icPassportListDialog(wx.Dialog):
             wx.Dialog.__init__(self, parent_, -1, title=_title,
                                pos=wx.DefaultPosition, size=wx.Size(800, 400))
 
-            icon_img = ic_bmp.getSysImg('imgEdtPassport')
+            icon_img = bmpfunc.getSysImg('imgEdtPassport')
             if icon_img:
                 icon = wx.Icon(icon_img)
                 self.SetIcon(icon)

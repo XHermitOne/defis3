@@ -33,7 +33,7 @@ from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.PropertyEditor.ExternalEditors.multichoiceeditor import icMultiChoiceUserEdt as multiChoiceEdt
 from ic.db import icsqlalchemy
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 _ = wx.GetTranslation
 
@@ -65,8 +65,8 @@ ic_class_spc = {'type': 'ObjectCatalog',
                     
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('folder.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('folder-open.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('folder.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('folder-open.png')
 
 #   Путь до файла документации
 ic_class_doc = 'doc/public/catalog.html'

@@ -31,7 +31,7 @@ import ic.bitmap.ic_color as ic_color
 import ic.utils.ic_util
 import ic.utils.util
 from ic.log import log
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from . import icUser
 
 import ic
@@ -260,7 +260,7 @@ class icMenuItem(wx.MenuItem):
                 return
             elif isinstance(img, str):
                 # Задается имя файла образа
-                img = ic_bmp.createBitmap(img)
+                img = bmpfunc.createBitmap(img)
             if img and (item_kind == wx.ITEM_CHECK or item_kind == wx.ITEM_NORMAL):
                 # ВНИМАНИЕ:
                 #    Картинки необходимо устанавливать до присоединения

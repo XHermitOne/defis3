@@ -10,7 +10,7 @@ import os.path
 import wx
 
 # from ic.imglib import common as imglib
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import ic_file
 from ic.editor import wxc_manager
 
@@ -35,7 +35,7 @@ class PrjWXCrafterProject(prj_node.PrjNode,
         self.description = u'Проект wxCrafter'
         self.name = 'new_wxc_project'
         # self.img = imglib.imgDesigner
-        self.img = ic_bmp.createLibraryBitmap('wxc-logo-16.png')
+        self.img = bmpfunc.createLibraryBitmap('wxc-logo-16.png')
 
         # Расширение файла
         self.ext = '.wxcp'

@@ -15,7 +15,7 @@ import ic.interfaces.icobjectinterface as icobjectinterface
 from ic.dlg import ic_dlg
 from ic.utils import ic_file
 from ic.utils import ini
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.bitmap import icimglib
 from ic.log import log
 
@@ -135,7 +135,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             # Заменить все минусы на подчеркивание
             # иначе в генерирумом фалйе будут имена объектов с минусами (SyntaxisError)
             img_name = img_name.replace('-', '_')
-            img = ic_bmp.createBitmap(sImgFileName)
+            img = bmpfunc.createBitmap(sImgFileName)
             self._img_dict[img_name] = img
             return img_name
         return None

@@ -9,7 +9,7 @@
 import wx
 
 import ic.utils.ic_exec
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -96,7 +96,7 @@ class icMainNotebook(wx.Notebook):
                     img = wx.ArtProvider.GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER, (16, 16))
                 else:
                     # Создание образа
-                    img = ic_bmp.icCreateBitmap(Image_, False)
+                    img = bmpfunc.icCreateBitmap(Image_, False)
                     if img is None:
                         img = wx.ArtProvider.GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER, (16, 16))
 
@@ -327,7 +327,7 @@ class icMainNotebook(wx.Notebook):
         try:
             if Image_ not in self._img_name:
                 # Создание образа
-                img = ic_bmp.createBitmap(Image_, False)
+                img = bmpfunc.createBitmap(Image_, False)
                 if img is None:
                     img = wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, (16, 16))
                 # Добавление образа

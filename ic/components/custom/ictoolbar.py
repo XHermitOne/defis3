@@ -58,7 +58,7 @@
 import wx
 
 from ic.utils import util
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
@@ -341,19 +341,19 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
         # Активная картинка
         bitmap = util.getICAttr(component['bitmap'], self.evalSpace, msg='ERROR')
         if not (bitmap and issubclass(bitmap.__class__, wx.Bitmap)):
-            bitmap = ic_bmp.createBitmap(component['bitmap'])
+            bitmap = bmpfunc.createBitmap(component['bitmap'])
             if not bitmap:
                 bitmap = common.imgEdtImage
         # Неактивная картинка
         dis_bitmap = util.getICAttr(component['disabledBitmap'], self.evalSpace, msg='ERROR')
         if not (dis_bitmap and issubclass(bitmap.__class__, wx.Bitmap)):
-            dis_bitmap = ic_bmp.createBitmap(component['disabledBitmap'])
+            dis_bitmap = bmpfunc.createBitmap(component['disabledBitmap'])
             if not dis_bitmap:
                 dis_bitmap = wx.NullBitmap
         #   Картинка в нажатом состоянии
         push_bitmap = util.getICAttr('pushedBitmap', self.evalSpace, msg='ERROR')
         if not (push_bitmap and issubclass(push_bitmap.__class__, wx.Bitmap)):
-            push_bitmap = ic_bmp.createBitmap(component['pushedBitmap'])
+            push_bitmap = bmpfunc.createBitmap(component['pushedBitmap'])
             if not push_bitmap:
                 push_bitmap = wx.NullBitmap
         

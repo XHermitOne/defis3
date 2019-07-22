@@ -8,7 +8,7 @@
 import sys
 import wx
 from . import printer_dlg_proto
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import printerfunc
 
 
@@ -39,11 +39,11 @@ class icChoicePrinterDlg(printer_dlg_proto.icChoicePrinterDlgProto):
         """
         # Поддержка картинок в <ListCtrl>
         self.image_list = wx.ImageList(16, 16)
-        bmp = ic_bmp.createLibraryBitmap('printer-monochrome.png')
+        bmp = bmpfunc.createLibraryBitmap('printer-monochrome.png')
         self.printer_idx = self.image_list.Add(bmp)
-        bmp = ic_bmp.createLibraryBitmap('printer--arrow.png')
+        bmp = bmpfunc.createLibraryBitmap('printer--arrow.png')
         self.default_printer_idx = self.image_list.Add(bmp)
-        bmp = ic_bmp.createLibraryBitmap('printer-network.png')
+        bmp = bmpfunc.createLibraryBitmap('printer-network.png')
         self.network_printer_idx = self.image_list.Add(bmp)
         self.printer_listCtrl.SetImageList(self.image_list, wx.IMAGE_LIST_SMALL)
 

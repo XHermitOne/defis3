@@ -10,7 +10,7 @@ import wx
 import wx.adv
 import os
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.bitmap import ic_color
 from ic.log import log
 
@@ -112,7 +112,7 @@ class icSplashScreen(wx.adv.SplashScreen):
             отображаемого в окне.
         """
         try:
-            bmp = ic_bmp.createBitmap(img_filename)
+            bmp = bmpfunc.createBitmap(img_filename)
             wx.adv.SplashScreen.__init__(self, bmp,
                                          wx.adv.SPLASH_CENTRE_ON_SCREEN | wx.adv.SPLASH_TIMEOUT,
                                          SPLASH_DELAY, None, -1, wx.DefaultPosition, wx.DefaultSize,

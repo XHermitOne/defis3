@@ -9,7 +9,7 @@
 import wx
 
 from ic.log import log
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 
 __version__ = (0, 1, 1, 2)
@@ -73,7 +73,7 @@ class icToolBarManager(object):
                 # <wx.Tool>
                 tool = getattr(self, tool_name)
                 tool_id = tool.GetId()
-                bmp = ic_bmp.createLibraryBitmap(lib_img_filename)
+                bmp = bmpfunc.createLibraryBitmap(lib_img_filename)
 
                 if bmp:
                     if tool_bar is None:

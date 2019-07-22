@@ -6,7 +6,7 @@
 """
 
 from ic.log import log
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import util
 from ic.utils import coderror
 from ic.dlg import ic_dlg
@@ -46,8 +46,8 @@ ic_class_spc = {'type': 'CubeAggregate',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('sum.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('sum.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('sum.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('sum.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

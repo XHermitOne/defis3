@@ -15,7 +15,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.log import log
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 # --- Спецификация ---
 SPC_IC_SCAN_CLASS = {'tick': 60,
@@ -51,8 +51,8 @@ ic_class_spc = {'type': 'ScanClass',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('file_start_workflow.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('file_start_workflow.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('file_start_workflow.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('file_start_workflow.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

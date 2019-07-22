@@ -11,7 +11,7 @@ import wx
 from ic.utils import ic_file
 from ic.components import icwidget
 from . import prj_root
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 from ic.editor import ext_python_editor
 from ic.PropertyEditor import icDefInf
@@ -95,7 +95,7 @@ class ImgList(wx.ImageList):
             # Добавить в список образ
             if isinstance(Img_, str):
                 # Указание файла
-                return self._img_lst.Add(ic_bmp.createBitmap(Img_))
+                return self._img_lst.Add(bmpfunc.createBitmap(Img_))
             elif issubclass(Img_.__class__, wx.Bitmap):
                 # Указание непосредственно картинки
                 return self._img_lst.Add(Img_)
@@ -104,7 +104,7 @@ class ImgList(wx.ImageList):
             # Заменить в списке образ
             if isinstance(Img_, str):
                 # Указание файла
-                return self.ReplaceImg(ImgIdx_, ic_bmp.createBitmap(Img_))
+                return self.ReplaceImg(ImgIdx_, bmpfunc.createBitmap(Img_))
             elif issubclass(Img_.__class__, wx.Bitmap):
                 # Указание непосредственно картинки
                 return self.ReplaceImg(ImgIdx_, Img_)

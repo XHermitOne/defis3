@@ -67,7 +67,7 @@ import wx
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.kernel import io_prnt
@@ -348,8 +348,8 @@ ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('ic_node_document.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('ic_node_document.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('ic_node_document.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('ic_node_document.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

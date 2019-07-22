@@ -117,8 +117,8 @@ def icImageDlg(parent=None, default_img_path=None):
 
         # Определить папку образов
         if not default_img_path or not os.path.exists(default_img_path):
-            from ic.bitmap import ic_bmp
-            default_img_path = ic_bmp.getImageLibDir()
+            from ic.bitmap import bmpfunc
+            default_img_path = bmpfunc.getImageLibDir()
         # Диалоговое окно выбора образа
         dlg = wx.lib.imagebrowser.ImageDialog(parent, default_img_path)
         dlg.CenterOnScreen()
@@ -985,8 +985,8 @@ class icWaitBox(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, size=wx.Size(150, 34), style=style)
 
-        from ic.bitmap import ic_bmp
-        self._ani = [ic_bmp.createBitmap(frame_file_name) for frame_file_name in img_frames]
+        from ic.bitmap import bmpfunc
+        self._ani = [bmpfunc.createBitmap(frame_file_name) for frame_file_name in img_frames]
         self._cur_ani_state = 0     # Индекс состояния анимации
         self._max_ani_state = len(img_frames)
         self._delay = 0.3

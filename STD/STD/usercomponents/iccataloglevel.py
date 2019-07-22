@@ -6,7 +6,7 @@
 """
 
 from ic.utils import util
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
 from ic.log import log
@@ -34,8 +34,8 @@ ic_class_spc = {'name': 'default',
                                  },
                 }
 
-ic_class_pic = ic_bmp.createLibraryBitmap('folder_brick.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('folder_brick.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('folder_brick.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('folder_brick.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

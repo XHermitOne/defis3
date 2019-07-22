@@ -23,7 +23,7 @@ import wx
 from ic.components import icwidget
 from ic.utils import util
 from ic.dlg import ic_dlg
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 import ic.components.icResourceParser as prs
 from ic.PropertyEditor import icDefInf
 
@@ -98,8 +98,8 @@ ic_class_spc = {'type': 'ExtSpravTreeChoice',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('ic_nsi_combo_ctrl.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('ic_nsi_combo_ctrl.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('ic_nsi_combo_ctrl.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('ic_nsi_combo_ctrl.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

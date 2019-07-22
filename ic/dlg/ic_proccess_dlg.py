@@ -14,7 +14,7 @@ import wx.lib.imagebrowser
 
 from ic.components import icfont
 import ic.utils.ic_exec   # Этот модуль подгружается для спецификации
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.utils import ic_file
 
 __version__ = (0, 1, 1, 1)
@@ -236,7 +236,7 @@ class icThreadMessageBox(wx.Dialog):
         # as far as the wxPython extension is concerned.
         self.PostCreate(pre)
 
-        self._ani = [ic_bmp.icCreateBitmap(frame_file_name) for frame_file_name in Frames_]
+        self._ani = [bmpfunc.icCreateBitmap(frame_file_name) for frame_file_name in Frames_]
         self._cur_ani_state = 0     # Индекс состояния анимации
         self._max_ani_state = len(Frames_)
         self._delay = 0.3

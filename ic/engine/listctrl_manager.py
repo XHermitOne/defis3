@@ -17,7 +17,7 @@ import wx.grid
 from ic.log import log
 from ic.utils import ic_str
 from ic.utils import wxfunc
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic import config
 
 
@@ -1209,7 +1209,7 @@ class icListCtrlManager(object):
             image_list = wx.ImageList(image_width, image_height)
             # ВНИМАНИЕ! Здесь необходимо вставить хотя бы пустой Bitmap
             # Иначе при заполнении контрол валиться
-            empty_dx = image_list.Add(ic_bmp.createEmptyBitmap(image_width, image_height))
+            empty_dx = image_list.Add(bmpfunc.createEmptyBitmap(image_width, image_height))
             ctrl.SetImageList(image_list, wx.IMAGE_LIST_SMALL)
         return image_list
 

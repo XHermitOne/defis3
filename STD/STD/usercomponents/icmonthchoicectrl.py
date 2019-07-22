@@ -9,7 +9,7 @@ import datetime
 import wx
 from ic.utils import util
 from ic.kernel import io_prnt
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.PropertyEditor import icDefInf
 
 from ic.components.custom import icchoice as parentModule
@@ -34,8 +34,8 @@ ic_class_spc = {'name': 'default',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('combo_box_calendar.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('combo_box_calendar.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('combo_box_calendar.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('combo_box_calendar.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

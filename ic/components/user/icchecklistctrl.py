@@ -13,7 +13,7 @@ CheckBox элементы строк. Вместо этой функции не�
 import wx
 import wx.lib.mixins.listctrl
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 from ic.utils import util
 
@@ -57,8 +57,8 @@ ic_class_spc = {'type': 'CheckListCtrl',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('ui-check-boxes-list.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('ui-check-boxes-list.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('ui-check-boxes-list.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('ui-check-boxes-list.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

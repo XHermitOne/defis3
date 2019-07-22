@@ -8,7 +8,7 @@
 # Imports
 import wx
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 try:
@@ -95,7 +95,7 @@ class icFilterConstructorDialog(wx.Dialog):
                 from ic.imglib import newstyle_img
                 icon_img = newstyle_img.data_filter
             except:
-                icon_img = ic_bmp.getSysImg('imgFilter')
+                icon_img = bmpfunc.getSysImg('imgFilter')
             if icon_img:
                 icon = wx.Icon(icon_img)
             if icon:

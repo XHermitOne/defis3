@@ -25,7 +25,7 @@ from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 # from NSI.nsi_sys import nsi_images
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.PropertyEditor import icDefInf
 
 import NSI.nsi_sys.icspravman as parentModule
@@ -63,8 +63,8 @@ ic_class_spc = {'type': 'SpravManager',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('books.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('books.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('books.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('books.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

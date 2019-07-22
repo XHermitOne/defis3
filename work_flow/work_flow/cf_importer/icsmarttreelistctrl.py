@@ -34,7 +34,7 @@ from ic.log import log
 from ic.utils import ic_str
 from ic.dlg import ic_dlg
 from ic.utils import ic_util
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 _ = wx.GetTranslation
 
@@ -109,10 +109,10 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         isz = (16, 16)
         # Установка списка образов компонентов
         self._img_list = img_lst.icImgList(self, isz[0], isz[1])
-        self.fldridx, self.fldropenidx = self._img_list.setImgIdx('FOLDER', ic_bmp.createLibraryBitmap('folder_small_normal_hover.png'),
-                                                                  ic_bmp.createLibraryBitmap('folderopen_small_normal_hover.png'))
-        self.fileidx = self._img_list.setImgIdx('NEW_DOC', ic_bmp.createLibraryBitmap('new.png'))[0]
-        self.curidx = self._img_list.setImgIdx('PAGE_COMMENT', ic_bmp.createLibraryBitmap('page.png'))[0]
+        self.fldridx, self.fldropenidx = self._img_list.setImgIdx('FOLDER', bmpfunc.createLibraryBitmap('folder_small_normal_hover.png'),
+                                                                  bmpfunc.createLibraryBitmap('folderopen_small_normal_hover.png'))
+        self.fileidx = self._img_list.setImgIdx('NEW_DOC', bmpfunc.createLibraryBitmap('new.png'))[0]
+        self.curidx = self._img_list.setImgIdx('PAGE_COMMENT', bmpfunc.createLibraryBitmap('page.png'))[0]
         self.GetMainWindow().AssignImageList(self._img_list.getImageList())
         
         self.labels = labels if labels is not None else []

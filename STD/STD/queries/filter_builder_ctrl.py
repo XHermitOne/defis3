@@ -11,7 +11,7 @@ import wx.adv
 import wx.lib.platebtn
 
 from ic.dlg import ic_dlg
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.components import icEvents
 from ic.log import log
 
@@ -256,7 +256,7 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
             if 'img' in item:
                 img = item['img']
                 if img and isinstance(img, str):
-                    img = ic_bmp.getSysImg(img)
+                    img = bmpfunc.getSysImg(img)
             if img is None:
                 img = wx.Bitmap(DEFAULT_IMG_WIDTH, DEFAULT_IMG_HEIGHT)
             

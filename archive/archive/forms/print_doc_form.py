@@ -15,7 +15,7 @@ import sqlalchemy
 from archive.forms import search_doc_form_proto
 from archive.forms import edit_doc_form
 from archive.forms import scheme_doc_form
-from ic import ic_bmp
+from ic import bmpfunc
 from ic import log
 from ic import ic_dlg
 from ic.utils import ic_time

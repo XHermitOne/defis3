@@ -7,7 +7,7 @@
 
 import wx
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 __version__ = (0, 0, 0, 1)
 
@@ -36,7 +36,7 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
 
         # Make a shape from an image and mask.  This one will demo
         # dragging outside the window
-        bmp = ic_bmp.createLibraryBitmap('A4album.png')
+        bmp = bmpfunc.createLibraryBitmap('A4album.png')
 
         # bmp = images.TestStar.GetBitmap()
         # bmp = wx.Bitmap('bitmaps/toucan.png')

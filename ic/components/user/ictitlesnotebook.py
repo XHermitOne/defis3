@@ -34,7 +34,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.components import icfont
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 import ic.components.custom.icheadcell as icheadcell
@@ -359,7 +359,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
             img = None
             if indx < len(self.images):
                 filename = self.path+self.images[indx]
-                bmptype = ic_bmp.getBitmapType(filename)
+                bmptype = bmpfunc.getBitmapType(filename)
                 if bmptype is not None and os.path.isfile(filename):
                     img = wx.Image(filename, bmptype).ConvertToBitmap()
                 

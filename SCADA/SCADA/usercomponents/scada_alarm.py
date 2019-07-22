@@ -12,7 +12,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.log import log
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 # --- Спецификация ---
 SPC_IC_SCADA_ALARM = {
@@ -42,8 +42,8 @@ ic_class_spc = {'type': 'SCADAAlarm',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = ic_bmp.createLibraryBitmap('bell_error.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('bell_error.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('bell_error.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('bell_error.png')
 
 #   Путь до файла документации
 ic_class_doc = ''

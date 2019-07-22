@@ -17,12 +17,12 @@ import wx.lib.mixins.gridlabelrenderer as glr
 from ic.components import icfont
 from ic.kernel import io_prnt
 import wx.grid as gridlib
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 
 ### Standart component interface
 ictemplate.inherit_component_interface(globals(), parentModule, ic_class_name='icSpravTable')
-ic_class_pic = ic_bmp.createLibraryBitmap('table_gear.png')
-ic_class_pic2 = ic_bmp.createLibraryBitmap('table_gear.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('table_gear.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('table_gear.png')
 
 #   Component version
 __version__ = (1, 0, 0, 3)

@@ -5,7 +5,7 @@ import wx
 import os
 import os.path
 
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 
 from ic.utils import ic_file
@@ -30,7 +30,7 @@ class PrjXRCResource(prj_node.PrjNode):
         prj_node.PrjNode.__init__(self, parent)
         self.description = u'XRC. Файл ресурса форм'
         self.name = 'new_xrc'
-        self.img = ic_bmp.createLibraryBitmap('application-form.png')
+        self.img = bmpfunc.createLibraryBitmap('application-form.png')
 
         self.ext = '.xrc'
 

@@ -14,7 +14,7 @@ import tempfile                 # Работа со временными фай�
 from wx.tools import img2img    # Функции серилизации образов wx
 from wx.tools import img2py     # Функции серилизации образов wx
 
-from . import ic_bmp
+from . import bmpfunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -29,7 +29,7 @@ def getImgFileData(ImgFileName_):
     """
     try:
         # Определить тип образа и расширение файла
-        img_file_type = ic_bmp.getImageFileType(ImgFileName_)
+        img_file_type = bmpfunc.getImageFileType(ImgFileName_)
         img_file_ext = os.path.splitext(ImgFileName_)[1]
         # Конвертировать файл образа во временный файл
         tmp_file_name = tempfile.mktemp()

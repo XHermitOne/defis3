@@ -10,7 +10,7 @@ import hashlib
 import wx
 
 from ic.dlg import ic_dlg
-from ic.bitmap import ic_bmp
+from ic.bitmap import bmpfunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -118,7 +118,7 @@ class icPasswordEditDialog(wx.Dialog):
             wx.Dialog.__init__(self, parent_, -1, title=_title,
                                pos=wx.DefaultPosition, size=wx.Size(300, 200))
 
-            icon_img = ic_bmp.getSysImg('imgKey')
+            icon_img = bmpfunc.getSysImg('imgKey')
             if icon_img:
                 icon = wx.Icon(icon_img)
                 self.SetIcon(icon)
