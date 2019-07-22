@@ -39,12 +39,12 @@ def setStampedText(parent, prompt_text, font_name=DEFAULT_TEXT_FONT):
             return
         # Определить шрифт для фонового текста
         try:
-            text_font = wx.Font(MAX_FONT_SIZE, wx.DEFAULT,
-                                wx.NORMAL, wx.BOLD, False, font_name)
+            text_font = wx.Font(MAX_FONT_SIZE, wx.FONTFAMILY_DEFAULT,
+                                wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, font_name)
         except:
-            txt_font_name = wx.SystemSettings.GetSystemFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
-            text_font = wx.Font(MAX_FONT_SIZE, wx.DEFAULT,
-                                wx.NORMAL, wx.BOLD, False, txt_font_name)
+            txt_font_name = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
+            text_font = wx.Font(MAX_FONT_SIZE, wx.FONTFAMILY_DEFAULT,
+                                wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, txt_font_name)
 
         # Определение цвета фона
         win_canvas = wx.ClientDC(parent)
@@ -57,8 +57,8 @@ def setStampedText(parent, prompt_text, font_name=DEFAULT_TEXT_FONT):
         canvas.SelectObject(bmp)
        
         # Непосредственно сама отрисовка
-        canvas.BeginDrawing()
-        canvas.SetBackground(wx.Brush(backgrnd_color, wx.SOLID))
+        # canvas.BeginDrawing()
+        canvas.SetBackground(wx.Brush(backgrnd_color, wx.BRUSHSTYLE_SOLID))
         canvas.Clear()
         canvas.SetTextForeground(ic_color.IC_COLOR_BLACK)
         canvas.DrawText(prompt_text, 0, 0)
@@ -66,39 +66,38 @@ def setStampedText(parent, prompt_text, font_name=DEFAULT_TEXT_FONT):
         canvas.DrawText(prompt_text, 2, 2)
         canvas.SetTextForeground(backgrnd_color)
         canvas.DrawText(prompt_text, 1, 1)
-        canvas.EndDrawing()
+        # canvas.EndDrawing()
 
         # Копирование контекста устройства
         client_width, client_height = parent.GetClientSize()
         text_x = (client_width-text_width) / 2
         text_y = (client_height-text_height) / 2
-        win_canvas.BeginDrawing()
+        # win_canvas.BeginDrawing()
         win_canvas.Clear()
         win_canvas.Blit(text_x, text_y, text_width+2, text_height+2, canvas, 0, 0)
-        win_canvas.EndDrawing()
-
+        # win_canvas.EndDrawing()
     except:
-        log.error(u'Ошибка заполнения фона окна.')
+        log.fatal(u'Ошибка заполнения фона окна')
 
 
-def showSplash(GraphFile_=''):
+def showSplash(img_filename=''):
     """
     Функция выводит на экран всплывающее окошко системы.
-    @param GraphFile_: Имя графического файла (BMP).
+    @param img_filename: Имя графического файла (BMP).
     """
     try:
-        if (not GraphFile_) or (not os.path.exists(GraphFile_)):
-            log.warning(u'Сплеш-окно <%s> не найдено!' % GraphFile_)
+        if (not img_filename) or (not os.path.exists(img_filename)):
+            log.warning(u'Сплеш-окно <%s> не найдено!' % img_filename)
             return None
 
         wx.InitAllImageHandlers()
         # Создать объект
-        splash = icSplashScreen(GraphFile_)
+        splash = icSplashScreen(img_filename)
         # Отобразить его
         splash.Show()
         return splash
     except:
-        log.error(u'Ошибка вывода сплеш-окна: <%s>' % GraphFile_)
+        log.fatal(u'Ошибка вывода сплеш-окна: <%s>' % img_filename)
 
 
 class icSplashScreen(wx.adv.SplashScreen):
@@ -119,7 +118,7 @@ class icSplashScreen(wx.adv.SplashScreen):
                                          SPLASH_DELAY, None, -1, wx.DefaultPosition, wx.DefaultSize,
                                          wx.SIMPLE_BORDER | wx.FRAME_NO_TASKBAR | wx.STAY_ON_TOP)
         except:
-            log.error(u'Ошибка создания всплывающего окошка.')
+            log.fatal(u'Ошибка создания всплывающего окна')
 
 
 def showMsgWin(title=''):
@@ -131,7 +130,8 @@ def showMsgWin(title=''):
         msg_win.Show(True)
         return msg_win
     except:
-        return None
+        log.fatal(u'Ошибка отображения окна <%s>' % title)
+    return None
 
 
 def closeMsgWin(msg_window):
@@ -153,7 +153,7 @@ def setMsgText(msg_window, msg_text):
         if msg_window is not None:
             msg_window.setMsgText(msg_text)
     except:
-        raise
+        log.fatal(u'Ошибка вывода сообщения в окне')
 
 
 class icMsgWin(wx.Frame):
@@ -188,5 +188,5 @@ def load_component_proccess(parent=None, frames=None):
         ic_logo_dlg.LoadProjectProccess(parent, u'Подождите',
                                         prs.GetComponentModulDict, tuple(), Frames_=frames)
     except:
-        log.error(u'Ошибка загрузки сплеш-окна')
+        log.fatal(u'Ошибка загрузки сплеш-окна')
 
