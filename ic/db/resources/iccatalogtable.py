@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import copy
 import wx
 import ic.components.icResourceParser as prs
 from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
-import copy
 
 ### !!!! NO CHANGE !!!!
 ###BEGIN SPECIAL BLOCK
@@ -18,6 +18,7 @@ __version__ = (1, 0, 0, 8)
 
 #   Class name
 ic_class_name = 'CatalogTable'
+
 
 class CatalogTable(icobjectinterface.icObjectInterface):
     def __init__(self, parent, src=None, table=None):
@@ -36,7 +37,8 @@ class CatalogTable(icobjectinterface.icObjectInterface):
             
     ###BEGIN EVENT BLOCK
     ###END EVENT BLOCK
-    
+
+
 def test(par=0):
     """
     Test CatalogResource class.
@@ -53,8 +55,7 @@ def test(par=0):
         
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
     test()
-    
-    
