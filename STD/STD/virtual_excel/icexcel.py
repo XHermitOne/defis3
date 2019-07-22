@@ -260,7 +260,7 @@ class icVExcel(icprototype.icVPrototype):
 
         save_data = self.getData()['children'][0]
         try:
-            return dict2xml.Dict2XmlssFile(save_data, self.SpreadsheetFileName, encoding=self.encoding)
+            return dict2xml.dict2XmlssFile(save_data, self.SpreadsheetFileName, encoding=self.encoding)
         except IOError:
             return self.save_copy_xml(save_data, self.SpreadsheetFileName)
 
@@ -273,7 +273,7 @@ class icVExcel(icprototype.icVPrototype):
         """
         try:
             xml_copy_name = os.path.splitext(XMLFileName_)[0]+'_'+str(CopyNum_)+'.xml'
-            return dict2xml.Dict2XmlssFile(SaveData_, xml_copy_name, encoding=self.encoding)
+            return dict2xml.dict2XmlssFile(SaveData_, xml_copy_name, encoding=self.encoding)
         except IOError:
             log.warning(u'XML копия <%s> <%d>' % (XMLFileName_, CopyNum_+1))
             return self.save_copy_xml(SaveData_, XMLFileName_, CopyNum_+1)

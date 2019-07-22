@@ -30,19 +30,19 @@ TAG_KEY = '__tag__'
 CHILDREN_KEY = '__children__'
 VALUE_KEY = '__value__'
 
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
-def XmlFile2Dict(XMLFileName_, encoding='utf-8'):
+def XmlFile2Dict(xml_filename, encoding='utf-8'):
     """
     Функция конвертации файлов Excel в xml формате в словарь Python.
-    @param XMLFileName_: Имя xml файла. 
+    @param xml_filename: Имя xml файла. 
     @return: Функция возвращает заполненный словарь, 
         или None в случае ошибки.
     """
     xml_file = None
     try:
-        xml_file = open(XMLFileName_, 'r')
+        xml_file = open(xml_filename, 'r')
 
         input_source = xmlreader.InputSource()
         input_source.setByteStream(xml_file)
@@ -61,7 +61,7 @@ def XmlFile2Dict(XMLFileName_, encoding='utf-8'):
         if xml_file:
             xml_file.close()
         info = str(sys.exc_info()[1])
-        print(u'Error read file <%s> : %s.' % (XMLFileName_, info))
+        print(u'Error read file <%s> : %s.' % (xml_filename, info))
         return None
 
 

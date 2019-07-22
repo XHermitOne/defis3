@@ -8,18 +8,18 @@
 import time
 from . import dict2xml
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
-def Dict2GnumericFile(Data_, GnumericFileName_, encoding='utf-8'):
+def dict2GnumericFile(data, gnumeric_filename, encoding='utf-8'):
     """
     Функция конвертирования.
     """
     try:
         # Начать запись
         xml_file = None
-        xml_file = open(GnumericFileName_, 'wt')
-        xml_writer = icDict2GnumericWriter(Data_, xml_file, encoding=encoding)
+        xml_file = open(gnumeric_filename, 'wt')
+        xml_writer = icDict2GnumericWriter(data, xml_file, encoding=encoding)
         xml_writer.startDocument()
         xml_writer.setBook()
 
@@ -27,7 +27,7 @@ def Dict2GnumericFile(Data_, GnumericFileName_, encoding='utf-8'):
         xml_writer.endDocument()
         xml_file.close()
 
-        return GnumericFileName_
+        return gnumeric_filename
     except:
         if xml_file:
             xml_file.close()
@@ -182,7 +182,7 @@ def test():
     from . import xml2dict
     data = xml2dict.XmlFile2Dict('./testfiles/SF02.xml')
     # Начать запись
-    xml_file = Dict2GnumericFile(data['children'][0], './testfiles/test.gnumeric')
+    xml_file = dict2GnumericFile(data['children'][0], './testfiles/test.gnumeric')
 
     
 if __name__ == '__main__':

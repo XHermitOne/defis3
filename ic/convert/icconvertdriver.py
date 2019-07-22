@@ -18,15 +18,15 @@ SPC_IC_CONVERTDRIVER = {'type': 'ConvertDriver',
                         '__parent__': icwidget.SPC_IC_SIMPLE,
                         }
     
-SPC_IC_DBFCONVERTDRIVER={'type':'DBFConvertDriver',
-                         'name':'default',
+SPC_IC_DBFCONVERTDRIVER={'type': 'DBFConvertDriver',
+                         'name': 'default',
 
                          'dbf_file': None,   # Имя DBF файла источника данных
                          'dbf_field': None,  # Имя поля DBF файла источника данных
                          '__parent__': SPC_IC_CONVERTDRIVER,
                          }
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Классы ---

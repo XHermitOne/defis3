@@ -93,20 +93,20 @@ class icConvertQueryPrototype:
         """
         return self.resource['auto_clear']
         
-    def _isTableRes(self, TableResName_=None):
+    def _isTableRes(self, table_res_name=None):
         """
         Проверить есть ли ресурсное описание результирующей таблицы.
-        @param TableResName_: Имя ресурсного описание результирующей таблицы.
+        @param table_res_name: Имя ресурсного описание результирующей таблицы.
         Если None, тогда имя берется из ресурсного описания этого компонента.
         """
-        if TableResName_ is None:
-            TableResName_ = self.getTableName()
+        if table_res_name is None:
+            table_res_name = self.getTableName()
             
         # Открыть проект
         self._prj_res_ctrl = ic_user.getKernel().getProjectResController()
         self._prj_res_ctrl.openPrj()
         
-        return self._prj_res_ctrl.isRes(TableResName_, 'tab')
+        return self._prj_res_ctrl.isRes(table_res_name, 'tab')
 
     def createTableResource(self):
         """
@@ -121,13 +121,13 @@ class icConvertQueryPrototype:
                 tab_res['child'].append(fld_spc)
             self._saveTabRes(tab_res)
             
-    def _saveTabRes(self, TabRes_):
+    def _saveTabRes(self, table_res):
         """
         Сохранить ресурс результирующей таблицы.
         """
-        table_name = TabRes_['name']
+        table_name = table_res['name']
         # Сохранить ресурс
-        self._prj_res_ctrl.saveRes(table_name, 'tab', TabRes_)
+        self._prj_res_ctrl.saveRes(table_name, 'tab', table_res)
         # И сразу удалить за ненадобностью
         self._prj_res_ctrl = None
         
@@ -137,34 +137,34 @@ class icConvertQueryPrototype:
         """
         return [chld for chld in self.resource['child'] if chld['type'] == CONVERTFIELD_TYPE]
         
-    def _createTabSpc(self, TableName_=None):
+    def _createTabSpc(self, table_name=None):
         """
         Создать спецификацию результирующей таблицы.
-        @param TableName_: Имя результирующей таблицы.
+        @param table_name: Имя результирующей таблицы.
         """
         tab_spc = util.icSpcDefStruct(util.DeepCopy(ic_tab_wrp.ic_class_spc), None)
         # Установить свойства таблицы
-        if TableName_ is None:
-            TableName_ = self.getTableName()
-        tab_spc['name'] = TableName_
+        if table_name is None:
+            table_name = self.getTableName()
+        tab_spc['name'] = table_name
         tab_spc['description'] = self.resource['description']
-        tab_spc['table'] = TableName_.lower()
+        tab_spc['table'] = table_name.lower()
         tab_spc['source'] = self.getDBName()
 
         return tab_spc
 
-    def _createFieldSpc(self, ConvertFieldSpc_):
+    def _createFieldSpc(self, convert_field_spc):
         """
         Создать спецификацию поля результирующей таблицы из поля конвертации.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
-        field_spc['name'] = ConvertFieldSpc_['name']
-        field_spc['description'] = ConvertFieldSpc_['description']
-        field_spc['field'] = ConvertFieldSpc_['field']
-        field_spc['type_val'] = ConvertFieldSpc_['type_val']
-        field_spc['len'] = ConvertFieldSpc_['len']
-        field_spc['attr'] = ConvertFieldSpc_['attr']
-        field_spc['default'] = ConvertFieldSpc_['default']
+        field_spc['name'] = convert_field_spc['name']
+        field_spc['description'] = convert_field_spc['description']
+        field_spc['field'] = convert_field_spc['field']
+        field_spc['type_val'] = convert_field_spc['type_val']
+        field_spc['len'] = convert_field_spc['len']
+        field_spc['attr'] = convert_field_spc['attr']
+        field_spc['default'] = convert_field_spc['default']
 
         return field_spc
    
@@ -229,13 +229,13 @@ class icConvertFieldPrototype:
     """
     Класс поля конвертера данных в табличное представление.
     """
-    def __init__(self, ParentConvertQuery_, component_spc=None):
+    def __init__(self, parent_convert_query, component_spc=None):
         """
         Конструктор.
         """
         self.resource = component_spc
         
-        self._convert_query = ParentConvertQuery_
+        self._convert_query = parent_convert_query
 
         # Драйвер источника данных
         self._driver = None
