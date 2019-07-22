@@ -1123,7 +1123,7 @@ class icListCtrlManager(object):
         """
         Цвет фона не четных строк по умолчанию.
         """
-        colour = tuple([int(c / 5.0 * 4.0) for c in tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]])
+        colour = tuple([int(c / 8.0 * 7.0) for c in tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]])
         return wx.Colour(*colour)
 
     def setRowsBackgroundColour(self, ctrl, evenBackgroundColour=DEFAULT,

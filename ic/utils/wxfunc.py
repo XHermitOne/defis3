@@ -11,6 +11,9 @@ from ic.log import log
 
 __version__ = (0, 1, 2, 1)
 
+# Кеш цветов для адаптации под системную тему
+WX_ADAPT_COLOURS = dict()
+
 
 def is_same_wx_object(wx_obj1, wx_obj2):
     """
@@ -157,23 +160,39 @@ def adaptSysThemeColour(dark_theme_colour=None, light_theme_colour=None):
     @param light_theme_colour: Цвет wx.Colour, соответствующий/контракстирующий с светлой теме.
     @return: Адаптированный цвет.
     """
+    global WX_ADAPT_COLOURS
+
     is_dark_sys_theme = isDarkSysTheme()
     if not is_dark_sys_theme and light_theme_colour:
         return light_theme_colour
     elif not is_dark_sys_theme and not light_theme_colour and dark_theme_colour:
         # Необходимо вычислить цвет светлой темы по цвету темной темы
-        red = min(dark_theme_colour.Red() + 128, 255) if dark_theme_colour.Red() else 0
-        green = min(dark_theme_colour.Green() + 128, 255) if dark_theme_colour.Green() else 0
-        blue = min(dark_theme_colour.Blue() + 128, 255) if dark_theme_colour.Blue() else 0
-        return wx.Colour(red, green, blue)
+        red = max(dark_theme_colour.Red() - 128, 32) if dark_theme_colour.Red() else 0
+        green = max(dark_theme_colour.Green() - 128, 32) if dark_theme_colour.Green() else 0
+        blue = max(dark_theme_colour.Blue() - 128, 32) if dark_theme_colour.Blue() else 0
+        rgb = (red, green, blue)
+        if rgb in WX_ADAPT_COLOURS:
+            colour = WX_ADAPT_COLOURS[rgb]
+        else:
+            # Регистрируем в кеше адаптивных цветов
+            colour = wx.Colour(red, green, blue)
+            WX_ADAPT_COLOURS[rgb] = colour
+        return colour
     elif is_dark_sys_theme and dark_theme_colour:
         return dark_theme_colour
     elif is_dark_sys_theme and light_theme_colour and not dark_theme_colour:
         # Необходимо вычислить цвет темной темы по цвету светлой темы
-        red = max(light_theme_colour.Red() - 128, 0) if light_theme_colour.Red() else 0
-        green = max(light_theme_colour.Green() - 128, 0) if light_theme_colour.Green() else 0
-        blue = max(light_theme_colour.Blue() - 128, 0) if light_theme_colour.Blue() else 0
-        return wx.Colour(red, green, blue)
+        red = min(light_theme_colour.Red() + 128, 255) if light_theme_colour.Red() else 0
+        green = min(light_theme_colour.Green() + 128, 255) if light_theme_colour.Green() else 0
+        blue = min(light_theme_colour.Blue() + 128, 255) if light_theme_colour.Blue() else 0
+        rgb = (red, green, blue)
+        if rgb in WX_ADAPT_COLOURS:
+            colour = WX_ADAPT_COLOURS[rgb]
+        else:
+            # Регистрируем в кеше адаптивных цветов
+            colour = wx.Colour(red, green, blue)
+            WX_ADAPT_COLOURS[rgb] = colour
+        return colour
     else:
         log.warning(u'Не возможно адаптировать цвет под оттенок системной темы')
 
