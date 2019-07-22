@@ -49,7 +49,7 @@ import ic.utils.ic_exec
 from ic.utils import ic_mode
 import ic.utils.ic_util
 from . import icnotebook
-from ic.dlg import ic_splsh
+from ic.dlg import splash_window
 from ic.log import log
 from ic.log import iclog
 
@@ -524,7 +524,7 @@ class icMainWindow(wx.Frame):
         """
         # Вывести на экран окно приглашения к работе
         if self._splash:
-            ic_splsh.ShowSplash(ic.utils.ic_file.AbsolutePath(self._splash))
+            splash_window.showSplash(ic.utils.ic_file.AbsolutePath(self._splash))
 
     def getIconFilename(self):
         """

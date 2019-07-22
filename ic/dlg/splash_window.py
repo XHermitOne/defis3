@@ -14,7 +14,7 @@ from ic.bitmap import ic_bmp
 from ic.bitmap import ic_color
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Задержка всплывающего окошка
 SPLASH_DELAY = 2000
@@ -25,34 +25,34 @@ MAX_FONT_SIZE = 72
 DEFAULT_TEXT_FONT = 'Courier New'
 
 
-def icStampedText(Win_, Text_, FontName_=DEFAULT_TEXT_FONT):
+def setStampedText(parent, prompt_text, font_name=DEFAULT_TEXT_FONT):
     """
     Функция выводит на фоне окна тесненный текст.
-    @param Win_: Окно.
-    @param Text_: Строка текста.
-    @param FontName_: Шрифт.
+    @param parent: Окно.
+    @param prompt_text: Строка текста.
+    @param font_name: Шрифт.
     """
     try:
-        if Win_ is None:
+        if parent is None:
             return
-        if not Text_:
+        if not prompt_text:
             return
         # Определить шрифт для фонового текста
         try:
             text_font = wx.Font(MAX_FONT_SIZE, wx.DEFAULT,
-                                wx.NORMAL, wx.BOLD, False, FontName_)
+                                wx.NORMAL, wx.BOLD, False, font_name)
         except:
             txt_font_name = wx.SystemSettings.GetSystemFont(wx.SYS_DEFAULT_GUI_FONT).GetFaceName()
             text_font = wx.Font(MAX_FONT_SIZE, wx.DEFAULT,
                                 wx.NORMAL, wx.BOLD, False, txt_font_name)
 
         # Определение цвета фона
-        win_canvas = wx.ClientDC(Win_)
+        win_canvas = wx.ClientDC(parent)
         backgrnd_color = win_canvas.GetBackground().GetColour()
         # Центровка надписи
         canvas = wx.MemoryDC()
         canvas.SetFont(text_font)
-        text_width, text_height = canvas.GetTextExtent(Text_)
+        text_width, text_height = canvas.GetTextExtent(prompt_text)
         bmp = wx.Bitmap(text_width+2, text_height+2)
         canvas.SelectObject(bmp)
        
@@ -61,15 +61,15 @@ def icStampedText(Win_, Text_, FontName_=DEFAULT_TEXT_FONT):
         canvas.SetBackground(wx.Brush(backgrnd_color, wx.SOLID))
         canvas.Clear()
         canvas.SetTextForeground(ic_color.IC_COLOR_BLACK)
-        canvas.DrawText(Text_, 0, 0)
+        canvas.DrawText(prompt_text, 0, 0)
         canvas.SetTextForeground(ic_color.IC_COLOR_LIGHTGREY)
-        canvas.DrawText(Text_, 2, 2)
+        canvas.DrawText(prompt_text, 2, 2)
         canvas.SetTextForeground(backgrnd_color)
-        canvas.DrawText(Text_, 1, 1)
+        canvas.DrawText(prompt_text, 1, 1)
         canvas.EndDrawing()
 
         # Копирование контекста устройства
-        client_width, client_height = Win_.GetClientSize()
+        client_width, client_height = parent.GetClientSize()
         text_x = (client_width-text_width) / 2
         text_y = (client_height-text_height) / 2
         win_canvas.BeginDrawing()
@@ -81,7 +81,7 @@ def icStampedText(Win_, Text_, FontName_=DEFAULT_TEXT_FONT):
         log.error(u'Ошибка заполнения фона окна.')
 
 
-def ShowSplash(GraphFile_=''):
+def showSplash(GraphFile_=''):
     """
     Функция выводит на экран всплывающее окошко системы.
     @param GraphFile_: Имя графического файла (BMP).
@@ -106,14 +106,14 @@ class icSplashScreen(wx.adv.SplashScreen):
     Класс всплывающего окошка системы.
     """
 
-    def __init__(self, GraphFile_=''):
+    def __init__(self, img_filename=''):
         """
         Конструктор.
-        @param GraphFile_: Имя графического файла,
+        @param img_filename: Имя графического файла,
             отображаемого в окне.
         """
         try:
-            bmp = ic_bmp.createBitmap(GraphFile_)
+            bmp = ic_bmp.createBitmap(img_filename)
             wx.adv.SplashScreen.__init__(self, bmp,
                                          wx.adv.SPLASH_CENTRE_ON_SCREEN | wx.adv.SPLASH_TIMEOUT,
                                          SPLASH_DELAY, None, -1, wx.DefaultPosition, wx.DefaultSize,
@@ -122,36 +122,36 @@ class icSplashScreen(wx.adv.SplashScreen):
             log.error(u'Ошибка создания всплывающего окошка.')
 
 
-def ShowMsgWin(Title_=''):
+def showMsgWin(title=''):
     """
     Функция выводи на экран окно для сообщений
     """
     try:
-        msg_win = icMsgWin(Title_)
+        msg_win = icMsgWin(title)
         msg_win.Show(True)
         return msg_win
     except:
         return None
 
 
-def CloseMsgWin(MsgWin_):
+def closeMsgWin(msg_window):
     """
     Функция закрывает окно для сообщений системы.
-    @param MsgWin_: Ссылка на объект окно сообщений.
+    @param msg_window: Ссылка на объект окно сообщений.
     """
-    if MsgWin_ is not None:
-        MsgWin_.Close(False)
+    if msg_window is not None:
+        msg_window.Close(False)
 
 
-def SetMsgText(MsgWin_, Text_):
+def setMsgText(msg_window, msg_text):
     """
     Вывести сообщение в окне.
-    @param MsgWin_: Ссылка на объект окно сообщений.
-    @param Text_: Текст сообщения.
+    @param msg_window: Ссылка на объект окно сообщений.
+    @param msg_text: Текст сообщения.
     """
     try:
-        if MsgWin_ is not None:
-            MsgWin_.SetMsgText(Text_)
+        if msg_window is not None:
+            msg_window.setMsgText(msg_text)
     except:
         raise
 
@@ -161,32 +161,32 @@ class icMsgWin(wx.Frame):
     Класс окна для сообщений.
     """
 
-    def __init__(self, Title_):
+    def __init__(self, title):
         """
         Конструктор
         """
         # Вызов конструктора предка
         wx.Frame.__init__(self, id=wx.NewId(), name='MsgWin', parent=None,
                           pos=wx.DefaultPosition, size=wx.Size(500, 70),
-                          style=wx.CAPTION | wx.BORDER | wx.SYSTEM_MENU, title=Title_)
+                          style=wx.CAPTION | wx.BORDER | wx.SYSTEM_MENU, title=title)
         # Добавить
         self.msg_label = wx.StaticText(self, id=wx.NewId(), label='>',
                                        pos=wx.Point(0, 0), size=wx.Size(400, 20))
 
-    def SetMsgText(self, Text_):
+    def setMsgText(self, msg_text):
         """
         Вывести сообщение в окне.
-        @param Text_: Текст сообщения.
+        @param msg_text: Текст сообщения.
         """
-        self.msg_label.SetLabel(Text_)
+        self.msg_label.SetLabel(msg_text)
 
 
-def load_component_proccess(parent=None, Frames_=None):
+def load_component_proccess(parent=None, frames=None):
     try:
         import ic.components.icResourceParser as prs
         import ic.dlg.ic_logo_dlg as ic_logo_dlg
         ic_logo_dlg.LoadProjectProccess(parent, u'Подождите',
-                                        prs.GetComponentModulDict, tuple(), Frames_=Frames_)
+                                        prs.GetComponentModulDict, tuple(), Frames_=frames)
     except:
         log.error(u'Ошибка загрузки сплеш-окна')
 

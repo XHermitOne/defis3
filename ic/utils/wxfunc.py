@@ -150,9 +150,11 @@ def isDarkSysTheme():
 def adaptSysThemeColour(dark_theme_colour=None, light_theme_colour=None):
     """
     Адаптировать цвет под системную тему (темную или светлую).
+    Вся суть в том что математически вычисляется цвет, контракстирующий с
+    текущей системной темой, но сохраняющий цвет.
     Достаточно указать один из цветов:
-    @param dark_theme_colour: Цвет wx.Colour, соответствующий темной теме.
-    @param light_theme_colour: Цвет wx.Colour, соответствующий светлой теме.
+    @param dark_theme_colour: Цвет wx.Colour, соответствующий/контракстирующий с темной теме.
+    @param light_theme_colour: Цвет wx.Colour, соответствующий/контракстирующий с светлой теме.
     @return: Адаптированный цвет.
     """
     is_dark_sys_theme = isDarkSysTheme()

@@ -105,6 +105,24 @@ def set_indicator(filter_tree_data, item_indicator=None):
     return filter_tree_data
 
 
+def get_filter(filter_tree_data):
+    """
+    Получить фильтр узла.
+    @param filter_tree_data: Данные узла.
+    @return: Структура фильтра узла.
+    """
+    return filter_tree_data['__filter__']
+
+
+def get_indicator(filter_tree_data):
+    """
+    Получить индикатор узла.
+    @param filter_tree_data: Данные узла.
+    @return: Структура индикатора узла.
+    """
+    return filter_tree_data['__indicator__']
+
+
 def set_label(filter_tree_data, label=u''):
     """
     Установить надпись узла.
