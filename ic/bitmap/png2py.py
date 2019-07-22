@@ -14,6 +14,7 @@ def img2gif_tmp():
     for png_file in png_files:
         img_lib.addImg(png_file)
     img_lib.saveImgLib('new_img_lib.py')
-    
+
+
 if __name__ == '__main__':
     img2gif_tmp()

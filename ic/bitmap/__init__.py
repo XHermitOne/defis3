@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """ 
-bitmap - работа с bitmap.
+bitmap - функции работы с файлами картинок и bitmap.
 """
 
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)

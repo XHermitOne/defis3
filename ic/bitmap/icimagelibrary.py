@@ -27,42 +27,42 @@ class icImageLibraryPrototype:
     Менеджер работы с библиотекой образов.
     """
     
-    def __init__(self, ChildrenImg_=None):
+    def __init__(self, children_images=None):
         """
         Крструктор.
-        @param ChildrenImg_: Список дочерних объектов образов 
+        @param children_images: Список дочерних объектов образов 
         """
-        if ChildrenImg_ is None:
+        if children_images is None:
             self._children = []
         else:
-            self._children = ChildrenImg_
+            self._children = children_images
             
         # Словарь соответствий наименование образа-объект образа
         self._children_dict = {}
         if self._children:
             self._children_dict = dict([(img.getName(), img) for img in self._children])
 
-    def add(self, Image_):
+    def add(self, image):
         """
         Добавить образ в библиотеку.
         """
-        if Image_ is not None:
-            self._children.append(Image_)
+        if image is not None:
+            self._children.append(image)
             # Сразу прописать в словаре
-            self._children_dict[Image_.getName()] = Image_
+            self._children_dict[image.getName()] = image
         return self._children
     
-    def getByIdx(self, Idx_):
+    def getByIdx(self, idx):
         """
         Получить объект по индексу.
         """
-        return self._children[Idx_]
+        return self._children[idx]
         
-    def getByName(self, ImgName_):
+    def getByName(self, image_name):
         """
         Получить объект образа по наименованию.
         """
-        return self._children_dict.get(ImgName_, None)
+        return self._children_dict.get(image_name, None)
 
 
 class icImageLibManager:
@@ -70,12 +70,12 @@ class icImageLibManager:
     Класс получения образа по имени файла.
     """
 
-    def __init__(self, Name_=None):
+    def __init__(self, image_name=None):
         """
         Крструктор.
-        @param Name_: Наименование образа.
+        @param image_name: Наименование образа.
         """
-        self._img_name = Name_
+        self._img_name = image_name
         self._img_filename = None
 
     def getImageName(self):
@@ -84,11 +84,11 @@ class icImageLibManager:
         """
         return self._img_name
 
-    def setImageName(self, Name_):
+    def setImageName(self, image_name):
         """
         Наименование образа. Можно менять.
         """
-        self._img_name = Name_
+        self._img_name = image_name
 
     def getFileName(self):
         """
@@ -155,14 +155,14 @@ class icSerializedImagePrototype:
     """
     Класс образа как серилизованного ресурса.
     """
-    def __init__(self, Name_, Body_=None):
+    def __init__(self, image_name, image_body=None):
         """
         Крструктор.
-        @param Name_: Наименование образа.
-        @param Body_: Серилизованный образ.
+        @param image_name: Наименование образа.
+        @param image_body: Серилизованный образ.
         """
-        self._name = Name_
-        self._body = Body_
+        self._name = image_name
+        self._body = image_body
         self._img_filename = None
         
     def getName(self):
@@ -171,11 +171,11 @@ class icSerializedImagePrototype:
         """
         return self._name
     
-    def setName(self, Name_):
+    def setName(self, image_name):
         """
         Наименование образа. Можно менять.
         """
-        self._name = Name_
+        self._name = image_name
         
     def getBody(self):
         """
@@ -213,19 +213,19 @@ class icSerializedImagePrototype:
         else:
             log.warning(u'Файл образа <%s> не найден' % img_filename)
 
-    def serialize(self, ImgFileName_):
+    def serialize(self, img_filename):
         """
         Серилизовать образ и вернуть его серилизованное значение.
-        @param ImgFileName_: Имя файла образа.
+        @param img_filename: Имя файла образа.
         """
-        return icimg2py.getImgFileData(ImgFileName_)
+        return icimg2py.getImgFileData(img_filename)
     
-    def setSerialize(self, ImgFileName_):
+    def setSerialize(self, img_filename):
         """
         Серилизовать образ и установить в тело.
-        @param ImgFileName_: Имя файла образа.
+        @param img_filename: Имя файла образа.
         """
-        self._body = self.serialize(ImgFileName_)
+        self._body = self.serialize(img_filename)
         return self._body
     
     def getBitmap(self):

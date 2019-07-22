@@ -4,6 +4,7 @@
 import wx
 from ic.imglib import common
 
+
 def img2png_tmp():
     app = wx.PySimpleApp()
     common.img_init()
@@ -17,6 +18,7 @@ def img2png_tmp():
                 img_file_name = './tmp/' + img_name + '.png'
                 img = common.__dict__[img_name].ConvertToImage()
                 img.SaveFile(img_file_name, wx.BITMAP_TYPE_PNG)
-    
+
+
 if __name__ == '__main__':
     img2png_tmp()

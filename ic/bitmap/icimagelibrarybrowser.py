@@ -35,32 +35,31 @@ ic_class_name = 'icImageLibraryBrowser'
 
 
 # Функции
-def runImageLibraryBrowser(ParentWin_, PrjIniFile_=None, ImgLibFileName_=None):
+def runImageLibraryBrowser(parent, prj_ini_filename=None, img_lib_filename=None):
     """
     Запуск браузера библиотеки образов.
-    @param ParentWin_: РОдительское окно.
-    @param PrjIniFile_: Файл настроек проекта.
-    @param ImgLibFileName_: Имя файла библиотеки образов.
+    @param parent: РОдительское окно.
+    @param prj_ini_filename: Файл настроек проекта.
+    @param img_lib_filename: Имя файла библиотеки образов.
     """
-    img_lib_browser = icImageLibraryBrowser(ParentWin_)
-    if PrjIniFile_:
-        img_lib_browser.loadImgDir(PrjIniFile_)
+    img_lib_browser = icImageLibraryBrowser(parent)
+    if prj_ini_filename:
+        img_lib_browser.loadImgDir(prj_ini_filename)
         
-    if ImgLibFileName_ and os.path.exists(ImgLibFileName_):
-        result = img_lib_browser.openImgLib(ImgLibFileName_)
+    if img_lib_filename and os.path.exists(img_lib_filename):
+        result = img_lib_browser.openImgLib(img_lib_filename)
         if result:
             img_lib_browser.refreshImgGrid()
             
             # Прописть в заголовке диалогового окна имя файла библиотеки образов
             dlg = img_lib_browser.GetNameObj('ImgLibDlg')
-            dlg.SetTitle(u'Библиотека образов '+ImgLibFileName_)
+            dlg.SetTitle(u'Библиотека образов ' + img_lib_filename)
         
 
 class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
     """
     Браузер серилизованных графических библиотек.
     """
-
     def __init__(self, parent):
         """
         Конструктор интерфейса.
@@ -109,7 +108,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             return self._img_lib_res.saveImgLib(img_lib_file_name)
         return False
             
-    def addImg(self, sImgFileName=None):
+    def addImg(self, img_filename=None):
         """
         Добавить новый образ в библиотеку.
         """
@@ -119,83 +118,83 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             return None
 
         dlg = self.GetNameObj('ImgLibDlg')
-        if sImgFileName is None:
-            sImgFileName = ic_dlg.icImageDlg(dlg, self._img_dir)
+        if img_filename is None:
+            img_filename = ic_dlg.icImageDlg(dlg, self._img_dir)
             # Сохранить выбранную папку как папку картинок
-            self.setImgDir(os.path.dirname(sImgFileName))
+            self.setImgDir(os.path.dirname(img_filename))
             self.saveImgDir()
             
-        if sImgFileName:
+        if img_filename:
             # Серилизовать и добавить образ
-            self._img_lib_res.addImg(sImgFileName)
+            self._img_lib_res.addImg(img_filename)
             self._img_lib_res.saveImgLib()
             
             # Добавить в словарь образов
-            img_name=os.path.splitext(os.path.basename(sImgFileName))[0]
+            img_name=os.path.splitext(os.path.basename(img_filename))[0]
             # Заменить все минусы на подчеркивание
             # иначе в генерирумом фалйе будут имена объектов с минусами (SyntaxisError)
             img_name = img_name.replace('-', '_')
-            img = bmpfunc.createBitmap(sImgFileName)
+            img = bmpfunc.createBitmap(img_filename)
             self._img_dict[img_name] = img
             return img_name
         return None
 
-    def delImg(self, ImgName_=None):
+    def delImg(self, image_name=None):
         """
         Добавить новый образ в библиотеку.
         """
         yes_del = ic_dlg.icAskDlg(u'УДАЛЕНИЕ',
-                                  u'Удалить образ <%s> из библиотеки образов?' % ImgName_)
+                                  u'Удалить образ <%s> из библиотеки образов?' % image_name)
         
-        if (yes_del == wx.YES) and ImgName_:
-            ok = self._img_lib_res.delImgBlock(ImgName_)
+        if (yes_del == wx.YES) and image_name:
+            ok = self._img_lib_res.delImgBlock(image_name)
             if ok:
-                if ImgName_ in self._img_dict:
-                    del self._img_dict[ImgName_]
+                if image_name in self._img_dict:
+                    del self._img_dict[image_name]
                 # Сохранить изменение в библиотеке образов.
                 self._img_lib_res.saveImgLib()
                 return True
         return False
             
-    def renameImg(self, OldImgName_, NewImgName_):
+    def renameImg(self, old_image_name, new_image_name):
         """
         Переименовать образ в библиотеке образов.
         """
-        if OldImgName_ != NewImgName_:
-            ok=self._img_lib_res.renameImgBlock(OldImgName_, NewImgName_)
+        if old_image_name != new_image_name:
+            ok=self._img_lib_res.renameImgBlock(old_image_name, new_image_name)
             if ok:
-                if OldImgName_ in self._img_dict:
-                    self._img_dict[NewImgName_] = self._img_dict[OldImgName_]
-                    del self._img_dict[OldImgName_]
+                if old_image_name in self._img_dict:
+                    self._img_dict[new_image_name] = self._img_dict[old_image_name]
+                    del self._img_dict[old_image_name]
                 # Сохранить изменение в библиотеке образов.
                 self._img_lib_res.saveImgLib()
                 return True
         return False
             
-    def openImgLib(self, sImgLibFileName=None):
+    def openImgLib(self, img_lib_filename=None):
         """
         Открыть библиотеку образов.
-        @param sImgLibFileName: Имя файла библиотеки образов.
+        @param img_lib_filename: Имя файла библиотеки образов.
         """
         dlg = self.GetNameObj('ImgLibDlg')
-        if sImgLibFileName is None:
-            sImgLibFileName = ic_dlg.icFileDlg(dlg, u'',
+        if img_lib_filename is None:
+            img_lib_filename = ic_dlg.icFileDlg(dlg, u'',
                                                u'Библиотеки образов (*.py)|*.py')
 
-        if sImgLibFileName:
-            self._img_lib_res.loadImgLib(sImgLibFileName)
+        if img_lib_filename:
+            self._img_lib_res.loadImgLib(img_lib_filename)
             self._img_dict = self._img_lib_res.getImages()
             return True
             
         return False
         
-    def refreshImgGrid(self, ImgDict_=None):
+    def refreshImgGrid(self, image_dictionary=None):
         """
         Обновить грид просмотра образов.
-        @param ImgDict_: Словарь образов.
+        @param image_dictionary: Словарь образов.
         """
-        if ImgDict_ is None:
-            ImgDict_ = self._img_dict
+        if image_dictionary is None:
+            image_dictionary = self._img_dict
             
         img_grid = self.GetNameObj('ImgLibGrid')
         if img_grid:
@@ -204,23 +203,23 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             if not self.isEmptyGrid(img_grid):
                 img_grid.DeleteRows(1, img_grid.GetNumberRows()-2)
             # Заполнить грид записями
-            img_names = list(ImgDict_.keys())
+            img_names = list(image_dictionary.keys())
             img_names.sort()    # Отсортировать по именам
             for i,img_name in enumerate(img_names):
-                self.addImgToGrid(img_name, ImgDict_[img_name])
+                self.addImgToGrid(img_name, image_dictionary[img_name])
     
-    def isEmptyGrid(self, Grid_):
+    def isEmptyGrid(self, grid):
         """
         Проверить пустой грид или нет.
-        @param Grid_: Сам грид.
+        @param grid: Сам грид.
         """
-        return bool((Grid_.GetNumberRows() == 1) and (not Grid_.GetCellValue(0, 1)))
+        return bool((grid.GetNumberRows() == 1) and (not grid.GetCellValue(0, 1)))
         
-    def addImgToGrid(self, ImgName_, Img_):
+    def addImgToGrid(self, image_name, image):
         """
         Добавить образ в грид.
-        @param ImgName_: Имя образа.
-        @param Img_: Объект образа wx.Bitmap.
+        @param image_name: Имя образа.
+        @param image: Объект образа wx.Bitmap.
         """
         img_grid = self.GetNameObj('ImgLibGrid')
         if img_grid:
@@ -228,42 +227,42 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
                 img_grid.AppendRows()
             i = img_grid.GetNumberRows()-1
             # Установить картинку и надпись
-            img_grid.setCellImg(i, 0, Img_)
-            img_grid.SetCellValue(i, 1, ImgName_)
+            img_grid.setCellImg(i, 0, image)
+            img_grid.SetCellValue(i, 1, image_name)
             # Переразмерить высоту строк
-            img_grid.SetRowSize(i, Img_.GetHeight()+5)
+            img_grid.SetRowSize(i, image.GetHeight() + 5)
         
-    def getImgName(self, sImgFileName=None):
+    def getImgName(self, img_filename=None):
         """
         Имя образа по файлу образа.
         """
-        if sImgFileName:
-            return 'img'+os.path.splitext(os.path.basename(sImgFileName))[0]
+        if img_filename:
+            return 'img'+os.path.splitext(os.path.basename(img_filename))[0]
         return 'img'+str(wx.NewId())
 
-    def setImgDir(self, ImgDir_):
+    def setImgDir(self, img_directory):
         """
         Установить папку образов.
         """
-        self._img_dir = ImgDir_
+        self._img_dir = img_directory
     
-    def loadImgDir(self, IniFile_=None):
+    def loadImgDir(self, ini_filename=None):
         """
         Загрузить папку образов из настроек.
         """
-        if IniFile_:
-            self._ini_file = IniFile_
+        if ini_filename:
+            self._ini_file = ini_filename
         
         if self._ini_file:
             img_dir = ini.loadParamINI(self._ini_file, 'IMAGES', 'img_dir')
             self.setImgDir(img_dir)
         
-    def saveImgDir(self, IniFile_=None):
+    def saveImgDir(self, ini_filename=None):
         """
         Сохранить папку образов в настройках.
         """
-        if IniFile_:
-            self._ini_file = IniFile_
+        if ini_filename:
+            self._ini_file = ini_filename
         
         if self._ini_file:
             if self._img_dir:
@@ -272,7 +271,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         
     ###BEGIN EVENT BLOCK
     
-    def OnToolFuncNewTool(self, evt):
+    def OnToolFuncNewTool(self, event):
         """
         Функция обрабатывает событие <?>.
         """
@@ -284,9 +283,9 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             dlg = self.GetNameObj('ImgLibDlg')
             dlg.SetTitle(u'Библиотека образов '+img_lib_file_name)
             
-        evt.Skip()
+        event.Skip()
 
-    def OnToolFuncAddTool(self, evt):
+    def OnToolFuncAddTool(self, event):
         """
         Функция обрабатывает событие <?>.
         """
@@ -294,9 +293,9 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         if img_name:
             self.addImgToGrid(img_name, self._img_dict[img_name])
 
-        evt.Skip()
+        event.Skip()
 
-    def OnToolFuncOpenTool(self, evt):
+    def OnToolFuncOpenTool(self, event):
         """
         Функция обрабатывает событие <?>.
         """
@@ -311,9 +310,9 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             dlg = self.GetNameObj('ImgLibDlg')
             dlg.SetTitle(u'Библиотека образов '+img_lib_file_name)
             
-        evt.Skip()
+        event.Skip()
 
-    def OnToolFuncDelTool(self, evt):
+    def OnToolFuncDelTool(self, event):
         """
         Функция обрабатывает событие <?>.
         """
@@ -324,7 +323,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             ok = self.delImg(img_name)
             img_grid.DeleteRows(img_grid_row, 1)
             
-        evt.Skip()
+        event.Skip()
 
     def OnImgGridCellChange(self, event):
         """
