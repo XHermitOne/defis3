@@ -38,7 +38,7 @@ from ic.utils import util
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.components.icwidget import icWidget,  SPC_IC_WIDGET
-from ic.bitmap.icbitmap import icBitmapType
+from ic.bitmap import ic_bmp
 from ic.imglib import common
 from ic.components import icwindow
 from ic.PropertyEditor import icDefInf
@@ -159,7 +159,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
             pass
         else:
             self.file = util.getICAttr(component['file'], self.evalSpace, msg='ERROR')
-            bmptype = icBitmapType(self.file)
+            bmptype = ic_bmp.getBitmapType(self.file)
 
             if bmptype is not None and os.path.isfile(self.file):
                 img = wx.Image(self.file, bmptype).ConvertToBitmap()
@@ -245,7 +245,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
         @return: Признак успешного выполнения - если файл найден и картинка создана.
         """
         self.file = new_file
-        bmptype = icBitmapType(new_file)
+        bmptype = ic_bmp.getBitmapType(new_file)
             
         if bmptype is not None and os.path.isfile(new_file):
                 

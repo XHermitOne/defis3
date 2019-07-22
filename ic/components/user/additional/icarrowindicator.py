@@ -31,7 +31,7 @@ from ic.components import icfont
 import ic.components.custom.icheadcell as icheadcell
 import analitic.indicators.icarrowindicatortrend as icarrowindicatortrend
 import analitic.indicators.icArrowIndDef as indDef
-import ic.bitmap.icbitmap as icbitmap
+from ic.bitmap import ic_bmp
 import ic.utils.graphicUtils as graphicUtils
 
 from ic.db import icsqlalchemy
@@ -209,7 +209,7 @@ class icIndicatorSkin:
         """
         Создаем объект картинки.
         """
-        return wx.Image(file, icbitmap.icBitmapType(file)).ConvertToBitmap()
+        return wx.Image(file, ic_bmp.getBitmapType(file)).ConvertToBitmap()
     
     def Load(self):
         """

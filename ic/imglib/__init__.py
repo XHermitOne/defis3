@@ -21,7 +21,7 @@ def get_image_by_expr(expr):
     """
     import wx
     from . import common
-    from ic.bitmap import icbitmap
+    from ic.bitmap import ic_bmp
 
     img = expr
     
@@ -38,7 +38,7 @@ def get_image_by_expr(expr):
         expr = img
 
     if isinstance(expr, str) and expr not in ('', 'None'):
-        bmptype = icbitmap.icBitmapType(expr)
+        bmptype = ic_bmp.getBitmapType(expr)
         img = wx.Image(expr, bmptype).ConvertToBitmap()
     elif not img:
         img = common.imgEdtImage

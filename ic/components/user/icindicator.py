@@ -28,7 +28,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-import ic.bitmap.icbitmap as icbitmap
+from ic.bitmap import ic_bmp
 
 import ic.components.custom.icheadcell as parentModule
 
@@ -169,7 +169,7 @@ class IndicatorState(parentModule.icHeadCell):
                 self.imageList.append(img)
             else:
                 file = self.path+nm
-                bmptype = icbitmap.icBitmapType(file)
+                bmptype = ic_bmp.getBitmapType(file)
                 if bmptype is not None and os.path.isfile(file):
                     image_file = wx.Image(file, bmptype)
                     img = image_file.ConvertToBitmap()

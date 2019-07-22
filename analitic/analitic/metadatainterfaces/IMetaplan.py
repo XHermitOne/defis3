@@ -6,7 +6,7 @@ import ic.components.icResourceParser as prs
 import ic.utils.util as util
 import ic.interfaces.icobjectinterface as icobjectinterface
 import copy
-import ic.bitmap.icbitmap as lib
+from ic.bitmap import ic_bmp
 import analitic.markalg.mapMark as mapMark
 import analitic.interfaces.IStdIndicatorPanel as IStdIndicatorPanel
 import plan.browsers as brws
@@ -25,19 +25,21 @@ __version__ = (1, 0, 5, 3)
 ic_class_name = 'IMetaplan'
 
 #   Описание структуры базового плана
-basePlanDict = {'root':['mYear'],
-                'metadata_plan':['mYear'],
-                'mYear':['mMonth'],
-                'mMonth':['mVidProd'],
-                'mVidProd':['mReg'],
-                'mReg':['mMenager'],
-                'mMenager':[]}
+basePlanDict = {'root': ['mYear'],
+                'metadata_plan': ['mYear'],
+                'mYear': ['mMonth'],
+                'mMonth': ['mVidProd'],
+                'mVidProd': ['mReg'],
+                'mReg': ['mMenager'],
+                'mMenager': []}
+
 basePlanLst = ['metadata_plan',
-                'mYear',
-                'mMonth',
-                'mVidProd',
-                'mReg', 'mMenager']
-                
+               'mYear',
+               'mMonth',
+               'mVidProd',
+               'mReg', 'mMenager']
+
+
 class IMetaplan(icobjectinterface.icObjectInterface):
     def __init__(self, parent=None, forms=None, pics=None):
         """
@@ -83,7 +85,7 @@ class IMetaplan(icobjectinterface.icObjectInterface):
 
         #   Папка базового плана
         self._baseStorageName = self.getObject().getStorage().getNodeDir()
-        print('..... _baseStorageName=', self._baseStorageName)
+        # print('..... _baseStorageName=', self._baseStorageName)
         
     ###BEGIN EVENT BLOCK
     
@@ -93,18 +95,18 @@ class IMetaplan(icobjectinterface.icObjectInterface):
         """
         data = self.GetUserData()
         if data and data['mode'] == 'monitoring':
-            print(' >>> getObject=', self.getObject())
+            # print(' >>> getObject=', self.getObject())
             st = IStdIndicatorPanel.getMonitorState(metaObj)
-            print('>>> Node state:', st)
+            # print('>>> Node state:', st)
             return mapMark.getStateImage('calendar.gif', st)
         else:
-            return lib.GetUserBitmap('calendar.gif', 'plan')
+            return ic_bmp.getUserBitmap('calendar.gif', 'plan')
 
     def getPic2_mMonth(self, metaObj):
         """
         Атрибут <pic2> на узлах mMonth.
         """
-        #return lib.GetUserBitmap('calendar.gif', 'plan')
+        # return lib.GetUserBitmap('calendar.gif', 'plan')
         return self.getPic_mMonth(metaObj)
 
     def getPic_mVidProd(self, metaObj):
@@ -116,13 +118,13 @@ class IMetaplan(icobjectinterface.icObjectInterface):
             st = IStdIndicatorPanel.getMonitorState(metaObj)
             return mapMark.getStateImage('product.gif', st)
         else:
-            return lib.GetUserBitmap('product.gif', 'plan')
+            return ic_bmp.getUserBitmap('product.gif', 'plan')
 
     def getPic2_mVidProd(self, metaObj):
         """
         Атрибут <pic2> на узлах mVidProd.
         """
-        #return lib.GetUserBitmap('product.gif', 'plan')
+        # return lib.GetUserBitmap('product.gif', 'plan')
         return self.getPic_mVidProd(metaObj)
 
     def getPic_mReg(self, metaObj):
@@ -134,13 +136,13 @@ class IMetaplan(icobjectinterface.icObjectInterface):
             st = IStdIndicatorPanel.getMonitorState(metaObj)
             return mapMark.getStateImage('region.gif', st)
         else:
-            return lib.GetUserBitmap('region.gif', 'plan')
+            return ic_bmp.getUserBitmap('region.gif', 'plan')
 
     def getPic2_mReg(self, metaObj):
         """
         Атрибут <pic2> на узлах mReg.
         """
-        #return lib.GetUserBitmap('region.gif', 'plan')
+        # return lib.GetUserBitmap('region.gif', 'plan')
         return self.getPic_mReg(metaObj)
 
     def getPic_mMenager(self, metaObj):
@@ -152,13 +154,13 @@ class IMetaplan(icobjectinterface.icObjectInterface):
             st = IStdIndicatorPanel.getMonitorState(metaObj)
             return mapMark.getStateImage('human.gif', st)
         else:
-            return lib.GetUserBitmap('human.gif', 'plan')
+            return ic_bmp.getUserBitmap('human.gif', 'plan')
         
     def getPic2_mMenager(self, metaObj):
         """
         Атрибут <pic2> на узлах mMenager.
         """
-        #return lib.GetUserBitmap('human.gif', 'plan')
+        # return lib.GetUserBitmap('human.gif', 'plan')
         return self.getPic_mMenager(metaObj)
 
     def can_containFuncmMonth(self, metatype):
@@ -177,13 +179,13 @@ class IMetaplan(icobjectinterface.icObjectInterface):
         else:
             modif_plan_id = None
 
-        if modif_plan_id in (None, '__base__') and basePlanDict.has_key(metatype):
-            #print '<base plan>:', basePlanDict[metatype]
+        if modif_plan_id in (None, '__base__') and metatype in basePlanDict:
+            # print '<base plan>:', basePlanDict[metatype]
             return basePlanDict[metatype]
         elif modif_plan_id:
             lst = self.planMenager.getCanContainLst(modif_plan_id, metatype)
-            #lst = brws.getCanContainLst(modif_plan_id, metatype)
-            #print '<modif plan id=%s>: %s' % (modif_plan_id, str(lst))
+            # lst = brws.getCanContainLst(modif_plan_id, metatype)
+            # print '<modif plan id=%s>: %s' % (modif_plan_id, str(lst))
             return lst
 #        else:
 #            #print '<> ********** <> can_containFuncmMonth', "['mVidProd']"
@@ -228,7 +230,8 @@ class IMetaplan(icobjectinterface.icObjectInterface):
 #            object_storage = objstore.CreateObjectStorageByDir(storage_name)
 #            metatree.setStorage(object_storage)
 #            return metatree
-    
+
+
 def test(par=0):
     """
     Тестируем класс new_form.
@@ -245,6 +248,7 @@ def test(par=0):
         
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
     test()

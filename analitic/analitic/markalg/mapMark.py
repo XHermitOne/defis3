@@ -8,13 +8,13 @@
 """
 
 from analitic.usercomponents import icarrowindicator
-import ic.bitmap.icbitmap as lib
+from ic.bitmap import ic_bmp
 
 # Версия
 __version__ = (0, 1, 1, 1)
 
 
-#--- Функции
+# --- Функции
 def differece(m1, m2):
     """
     Вычисляет степень различия между матрицами m1, m2.
@@ -26,15 +26,17 @@ def differece(m1, m2):
                 v2 = m2[i][j]
             else:
                 v2 = 0
-            D += (v2-v1)^2
+            D += (v2-v1) ^ 2
     return D
+
 
 def convertValToState():
     """
     """
     pass
 
-#--- Классы
+
+# --- Классы
 class IndGroup:
     """
     Класс группы индикаторов.
@@ -59,11 +61,12 @@ class IndGroup:
         D = 0
         for i, x in self.grp:
             if len(ob) < i:
-                D += (x - ob[i])^2
+                D += (x - ob[i]) ^ 2
             else:
-                D += x^2
+                D += x ^ 2
 
         return D
+
 
 class ColorIndGroup(IndGroup):
     """
@@ -88,7 +91,7 @@ class ColorIndGroup(IndGroup):
         @param descr: Описание цветовых зон.
         """
         #   Описание цветовых зон
-        if descr == None:
+        if descr is None:
             self._descr = [('45%', 'RED'), ('50%', (255, 200, 0)), ('100%', 'GREEN')]
         else:
             self._descr = descr
@@ -98,6 +101,7 @@ class ColorIndGroup(IndGroup):
 
         IndGroup.__init__(self, valLst)
 
+
 def getState_RZMonitor(metaObj):
     """
     Возвращает оценку состояние группы мониторов по реализации и заявкам.
@@ -105,6 +109,7 @@ def getState_RZMonitor(metaObj):
     @type metaObj: C{icMetaItem}
     @param metaObj: Указатель на классификатор мониторов.
     """
+
 
 def getStateImage(filename, state):
     """
@@ -124,10 +129,10 @@ def getStateImage(filename, state):
         print('Invalid state identificator state=:', state)
 
     if pref1 and pref2:
-        #print 'pic name=', filename.replace('.gif',pref1+pref2+'.gif')
-        return lib.GetUserBitmap(filename.replace('.gif',pref1+pref2+'.gif'), 'plan')
+        # print 'pic name=', filename.replace('.gif',pref1+pref2+'.gif')
+        return ic_bmp.getUserBitmap(filename.replace('.gif', pref1 + pref2 + '.gif'), 'plan')
     else:
-        return lib.GetUserBitmap(filename, 'plan')
+        return ic_bmp.getUserBitmap(filename, 'plan')
 #    if state == ColorIndGroup.RED_STATE:
 #        return lib.GetUserBitmap(filename.replace('.gif','Red.gif'), 'plan')
 #    elif state == ColorIndGroup.YELLOW_STATE:
@@ -137,10 +142,12 @@ def getStateImage(filename, state):
 #    else:
 #        return lib.GetUserBitmap(filename, 'plan')
 
+
 def test():
     """
     """
     d = ColorIndGroup([])
+
 
 if __name__ == '__main__':
     test()

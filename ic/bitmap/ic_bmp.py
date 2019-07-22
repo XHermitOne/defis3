@@ -12,7 +12,6 @@ import wx
 import wx.lib.throbber as throb
 
 from ic.log import log
-from . import icbitmap
 from ic.utils import ic_file
 
 import ic.imglib.common
@@ -33,11 +32,11 @@ def getImageLibDir():
     return os.path.abspath(os.path.dirname(ic.imglib.common.__file__))
 
 
-def getImageFileType(ImgFileName_):
+def getImageFileType(img_filename):
     """
     Определить тип файла образа по его расширению ( .jpg, ... ).
     """
-    return icbitmap.icBitmapType(ImgFileName_)
+    return getBitmapType(img_filename)
 
 
 def createLibraryBitmap(img_filename, bMask=False):
@@ -56,84 +55,84 @@ def createLibraryBitmap(img_filename, bMask=False):
     return None
 
 
-def createBitmap(ImgFileName_, MakeMask_=False):
+def createBitmap(img_filename, bMask=False):
     """
     Создать объект Bitmap из файла ImgFileName_.
-    @param ImgFileName_: Имя файла.
-    @param MakeMask_: Флаг создания маски по изображению.
+    @param img_filename: Имя файла.
+    @param bMask: Флаг создания маски по изображению.
         Фон д.б. DEFAULT_MASK_COLOUR.
     @return: Возвращает созданный объект или None в случае ошибки.
     """
     try:
         # Преобразовать относительные пути в абсолютные
-        ImgFileName_ = ic_file.AbsolutePath(ImgFileName_)
-        if (not ImgFileName_) or (not os.path.exists(ImgFileName_)):
-            log.warning(u'Некорректное имя файла образа: <%s>' % ImgFileName_)
+        img_filename = ic_file.AbsolutePath(img_filename)
+        if (not img_filename) or (not os.path.exists(img_filename)):
+            log.warning(u'Некорректное имя файла образа: <%s>' % img_filename)
             return None
-        bmp = wx.Bitmap(ImgFileName_, getImageFileType(ImgFileName_))
-        if MakeMask_:
+        bmp = wx.Bitmap(img_filename, getImageFileType(img_filename))
+        if bMask:
             # Создать маску и присоединить ее к битмапу
             phone_color = DEFAULT_MASK_COLOUR
-            bmp.SetMask(wx.MaskColour(bmp, phone_color))
+            bmp.SetMask(wx.Colour(bmp, phone_color))
         return bmp
     except:
-        log.fatal(u'Ошибка создания образа файла <%s>' % ImgFileName_)
+        log.fatal(u'Ошибка создания образа файла <%s>' % img_filename)
         return None
 
 
-def createEmptyBitmap(Width_, Height_, PhoneColor_=None):
+def createEmptyBitmap(width, height, background_colour=None):
     """
     Создать пустой битмап.
-    @param Width_: Ширина Bitmap.
-    @param Height_: Высота битмапа.
-    @param PhoneColor_: Цвет фона. По умолчанию используется белый.
+    @param width: Ширина Bitmap.
+    @param height: Высота битмапа.
+    @param background_colour: Цвет фона. По умолчанию используется белый.
     @return: Пустой Bitmap заданного размера.
     """
     try:
-        if PhoneColor_ is None:
-            PhoneColor_ = wx.WHITE
+        if background_colour is None:
+            background_colour = wx.WHITE
 
         # Пустой квадратик
-        bmp = wx.Bitmap(Width_, Height_)
+        bmp = wx.Bitmap(width, height)
         # Создать объект контекста устройства
         dc = wx.MemoryDC()
         # Выбрать объект для контекста
         dc.SelectObject(bmp)
         # Изменить фон
-        dc.SetBackground(wx.Brush(PhoneColor_))
+        dc.SetBackground(wx.Brush(background_colour))
         dc.Clear()
         # Освободить объект
         dc.SelectObject(wx.NullBitmap)
         return bmp
     except:
-        log.fatal(u'Ошибка создания пустого Bitmap. Размер <%s x %s>' % (Width_, Height_))
+        log.fatal(u'Ошибка создания пустого Bitmap. Размер <%s x %s>' % (width, height))
         return None
 
 
-def createAni(Parent_, Size_, Delay_, *FrameFileNames_):
+def createAni(parent, size, freame_delay, *frame_filenames):
     """
     Создание анимированного объекта.
-    @param Parent_: Окно-родитель.
-    @param Size_: Размер.
-    @param Delay_: Задержка м/у кадрами в секундах.
-    @param FrameFileNames_: Файлы-кадры.
+    @param parent: Окно-родитель.
+    @param size: Размер.
+    @param freame_delay: Задержка м/у кадрами в секундах.
+    @param frame_filenames: Файлы-кадры.
     @return: Возвращает созданный объект или None в случае ошибки.
     """
     try:
-        frames = [createBitmap(frame_file_name) for frame_file_name in FrameFileNames_]
-        throbber = throb.Throbber(Parent_, -1, frames, size=Size_, frameDelay=Delay_)
+        frames = [createBitmap(frame_file_name) for frame_file_name in frame_filenames]
+        throbber = throb.Throbber(parent, -1, frames, size=size, frameDelay=freame_delay)
         return throbber
     except:
         log.fatal(u'Ошибка создания анимированного объекта.')
         return None
 
 
-def getSysImg(ImgName_):
+def getSysImg(image_name):
     """
     Получить системный образ по имени.
     """
-    if ImgName_ in ic.imglib.common.__dict__:
-        return ic.imglib.common.__dict__[ImgName_]
+    if image_name in ic.imglib.common.__dict__:
+        return ic.imglib.common.__dict__[image_name]
     return None
 
 
@@ -148,3 +147,78 @@ def findBitmap(*img_filenames):
         if os.path.exists(img_filename):
             return createBitmap(img_filename)
     return None
+
+
+# Буфер картинок
+USER_BITMAP_CACHE = {}
+
+
+def getBitmapType(filename):
+    """
+    Определить тип графического файла по его расширению (.jpg, .png и т.п.)
+    """
+
+    if filename == '':
+        return None
+
+    try:
+        name, ext = os.path.splitext(filename)
+        ext = ext[1:].upper()
+        if ext == 'BMP':
+            return wx.BITMAP_TYPE_BMP
+        elif ext == 'GIF':
+            return wx.BITMAP_TYPE_GIF
+        elif ext == 'JPG' or ext == 'JPEG':
+            return wx.BITMAP_TYPE_JPEG
+        elif ext == 'PCX':
+            return wx.BITMAP_TYPE_PCX
+        elif ext == 'PNG':
+            return wx.BITMAP_TYPE_PNG
+        elif ext == 'PNM':
+            return wx.BITMAP_TYPE_PNM
+        elif ext == 'TIF' or ext == 'TIFF':
+            return wx.BITMAP_TYPE_TIF
+        elif ext == 'XBM':
+            return wx.BITMAP_TYPE_XBM
+        elif ext == 'XPM':
+            return wx.BITMAP_TYPE_XPM
+        elif ext == 'ICO':
+            return wx.BITMAP_TYPE_ICO
+        return None
+    except:
+        log.fatal('Ошибка определения типа графического файла')
+
+    return None
+
+
+def getUserBitmap(fileName, subsys, dir='images'):
+    """
+    Функция возвращает объект картинки из пользовательской библиотеки.
+
+    @type subsys: C{string}
+    @param subsys: Имя подсистемы в которой ищется картинка.
+    @type fileName: C{string}
+    @param fileName: Имя картинки.
+    @rtype: C{wx.Bitmap}
+    @return: Объект картинки.
+    """
+    global USER_BITMAP_CACHE
+    key = str(subsys) + os.path.sep + fileName
+
+    if key in USER_BITMAP_CACHE:
+        return USER_BITMAP_CACHE[key]
+    else:
+        typ = getBitmapType(fileName)
+
+        if typ:
+            import ic.utils.resource as resource
+            path = resource.icGetResPath().replace('\\', '/')
+            if not subsys:
+                path = os.path.join(path, dir, fileName)
+            else:
+                path = os.path.join(os.path.sep.join(path.split(os.path.sep)[:-1]), subsys, dir, fileName)
+
+            img = wx.Image(path, typ)
+            bmp = img.ConvertToBitmap()
+            USER_BITMAP_CACHE[key] = bmp
+            return bmp
