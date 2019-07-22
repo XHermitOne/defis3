@@ -9,7 +9,7 @@ import ic.components.user.objects.icmetatreebrows as brows
 import plan.interfaces.IManagePlans as iplan
 import plan.interfaces.IODBSprav as IODBSprav
 import ic.storage.objstore as objstore
-import ic.utils.ic_cache as ic_cache
+import ic.utils.system_cache as ic_cache
 
 # Версия
 __version__ = (0, 1, 1, 1)

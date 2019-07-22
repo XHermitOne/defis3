@@ -16,7 +16,7 @@
 __version__ = (0, 0, 0, 1)
 
 import STD.interfaces.reestr.contextInterface as icnt
-import ic.utils.ic_cache as ic_cache
+import ic.utils.system_cache as ic_cache
 
 #   Виды панелей
 id_edt_panel = 1

@@ -10,7 +10,7 @@ import wx
 import ic.components.icResourceParser as prs
 import ic.utils.util as util
 import ic.interfaces.icobjectinterface as icobjectinterface
-import ic.utils.ic_cache as ic_cache
+import ic.utils.system_cache as ic_cache
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK

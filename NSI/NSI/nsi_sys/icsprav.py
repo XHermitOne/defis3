@@ -11,7 +11,7 @@ from ic.utils import coderror
 from ic.utils import resource
 from ic.utils import util
 from ic.dlg import ic_dlg
-from ic.utils import ic_cache
+from ic.utils import system_cache
 from ic.log import log
 from ic.engine import ic_user
 
@@ -387,7 +387,7 @@ class icSpravPrototype(icSpravInterface):
         icSpravInterface.__init__(self, SpravManager_, Name_)
 
         # Кэш
-        self._cache = ic_cache.icCache()
+        self._cache = system_cache.icCache()
         # Параметры вызова функции hlp - нужно для формы
         self._hlp_param = None
 

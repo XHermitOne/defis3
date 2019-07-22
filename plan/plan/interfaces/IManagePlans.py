@@ -9,7 +9,7 @@ import ic.interfaces.icobjectinterface as icobjectinterface
 import plan.interfaces.IODBSprav as IODBSprav
 import ic.utils.coderror as coderror
 import ic.dlg.msgbox as msgbox
-import ic.utils.ic_cache as ic_cache
+import ic.utils.system_cache as ic_cache
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK

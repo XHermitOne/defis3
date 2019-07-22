@@ -18,7 +18,7 @@ from ic.db import icsqlalchemy
 from ic.engine import ic_user
 from ic.log import log
 from ic.dlg import msgbox
-from ic.utils import ic_cache
+from ic.utils import system_cache
 from ic.dlg import ic_proccess_dlg
 # from ic.dlg import progress
 # from ic.dlg import threaded_progress as t_progress
@@ -954,8 +954,8 @@ def _genModifPlan(parent, ibrows, id_modif, year=None, month=None):
     #   Получаем талицу базового плана из буфера, если она там есть
     t = None
     
-    if ic_cache.systemCache.hasObject('IManagePlans', mcod):
-        t = ic_cache.systemCache.get('IManagePlans', mcod)
+    if system_cache.systemCache.hasObject('IManagePlans', mcod):
+        t = system_cache.systemCache.get('IManagePlans', mcod)
 
     tm1 = time.clock()
     if not t:
@@ -977,7 +977,7 @@ def _genModifPlan(parent, ibrows, id_modif, year=None, month=None):
             return None
 
         t = planTreeToTable(mnthObj)
-        ic_cache.systemCache.add('IManagePlans', mcod, t)
+        system_cache.systemCache.add('IManagePlans', mcod, t)
 
     # ic_dlg.SetWaitBoxLabel('Преобразуем таблицу данных')
     tm2 = time.clock()
@@ -1134,8 +1134,8 @@ def _generateModifPlan(parent, metaclass, id_modif, year=None, month=None):
     #   Получаем талицу базового плана из буфера, если она там есть
     base_plan_tab = None
     
-    if ic_cache.systemCache.hasObject('IManagePlans', mcod):
-        base_plan_tab = ic_cache.systemCache.get('IManagePlans', mcod)
+    if system_cache.systemCache.hasObject('IManagePlans', mcod):
+        base_plan_tab = system_cache.systemCache.get('IManagePlans', mcod)
 
     if not base_plan_tab:
         metaObj = metaclass.setMetaplanById()
@@ -1156,7 +1156,7 @@ def _generateModifPlan(parent, metaclass, id_modif, year=None, month=None):
             return None
 
         base_plan_tab = planTree2Table(mnthObj)
-        ic_cache.systemCache.add('IManagePlans', mcod, base_plan_tab)
+        system_cache.systemCache.add('IManagePlans', mcod, base_plan_tab)
     
     #   Получаем структуру модификации
     modifLstFull = eval(IODBSprav.getModifPlanStructById(id_modif))
@@ -1443,7 +1443,7 @@ def loadDataPlanModif(metaclass, year, month):
     """
     # Сначала закачать данные в базовый план
     # result=refreshSumm(metaclass.getObject(),year,month)
-    ic_cache.systemCache.clear()
+    system_cache.systemCache.clear()
 
     main_win = ic_user.icGetMainWin()
     # Обновить модификации

@@ -3,20 +3,22 @@
 
 """
 Модуль управления буферезированными данными.
-@type systemCach: C{icCache}
-@var systemCace: Системный буфер.
+
+@type systemCache: C{icCache}
+@var systemCache: Системный буфер.
 """
 
 import copy
+
+__version__ = (0, 1, 1, 1)
 
 __named_cache__ = {}
 
 
 class icCache:
     """
-    Класс поддержки буферов.
+    Класс поддержки буферов кеширования.
     """
-
     def __init__(self, name='__noname__', maxSize=None, fltFunc=None):
         """ 
         Конструктор буфера.
@@ -53,8 +55,7 @@ class icCache:
             
     def hasObject(self, classObj, id):
         try:
-            self.cache[classObj][id]
-            return True
+            return classObj in self.cache and id in self.cache[classObj]
         except:
             return False
             
@@ -81,7 +82,7 @@ class icCache:
         """
         if classObj in self.cache:
             return self.cache.pop(classObj)
-        elif classObj == None:
+        elif classObj is None:
             self.cache = dict()
 
     def getAll(self, bCopy=False):

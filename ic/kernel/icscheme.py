@@ -7,7 +7,7 @@
 
 # Подключение библиотек
 
-from ic.utils import ic_cache
+from ic.utils import system_cache
 from . import ic_dot_use
 
 __version__ = (0, 1, 1, 1)
@@ -59,7 +59,7 @@ class icDBSchemeDotUse(icDataDotUsePrototype):
     Класс схемы БД. Для доступа к объектам данных через точку.
     """
     # Кеш таблиц в схеме БД
-    DB_SCHEME_CACHE = ic_cache.icCache(name='DB_SCHEME')
+    DB_SCHEME_CACHE = system_cache.icCache(name='DB_SCHEME')
     
     def __init__(self, DefaultPassportList_=None):
         """
