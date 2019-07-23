@@ -81,7 +81,7 @@ from ic.dlg import ic_dlg
 from ic.components import icwidget
 
 # Версия
-__version__ = (0, 1, 4, 1)
+__version__ = (0, 1, 5, 1)
 
 # Спецификация
 SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {'document': None,
@@ -393,6 +393,16 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                                                                                       width=wx.LIST_AUTOSIZE) for i, column in enumerate(columns)]
             self.setColumns_list_ctrl(list_ctrl, cols=cols)
 
+    def setDocListCtrlColumnLabel(self, n_column=0, label=u''):
+        """
+        Установить надпись колонки спискового контрола.
+        @param n_column: Идекс колонки.
+        @param label: Надпись колонки.
+        @return: True/False.
+        """
+        list_ctrl = self.getSlaveListCtrl()
+        return self.setColumnLabel(ctrl=list_ctrl, n_column=n_column, label=label)
+
     def getDocListCtrlColumns(self):
         """
         Определение колонок спискового контрола.
@@ -519,7 +529,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             self.setColumnsAutoSize_list_ctrl(list_ctrl)
 
     def refreshSortDocListCtrlRows(self, rows=None, auto_size_columns=False,
-                                    sort_fields=None, bReverseSort=False):
+                                   sort_fields=None, bReverseSort=False):
         """
         Обновление списка строк контрола отображения списка документов.
         @param rows: Список строк.
@@ -539,6 +549,12 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             self.sortDocs(*sort_fields)
         else:
             self.sortReverseDocs(*sort_fields)
+
+        if auto_size_columns:
+            # Установить автообразмеривание колонок чтобу исключить обрезание информации
+            list_ctrl = self.getSlaveListCtrl()
+            self.setColumnsAutoSize_list_ctrl(list_ctrl)
+
         return True
 
     # --- Функции движения ---

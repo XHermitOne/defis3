@@ -21,7 +21,7 @@ from ic.bitmap import bmpfunc
 from ic import config
 
 
-__version__ = (0, 1, 5, 1)
+__version__ = (0, 1, 6, 1)
 
 DEFAULT = 'default'
 
@@ -521,6 +521,30 @@ class icListCtrlManager(object):
             return True
         else:
             log.warning(u'Установление авторазмера колонок списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
+        return False
+
+    def setColumnLabel(self, ctrl=None, n_column=0, label=u''):
+        """
+        Установить надпись колонки.
+        @param ctrl: Объект контрола списка (wx.ListCtrl и т.п.).
+        @param n_column: Идекс колонки.
+        @param label: Надпись колонки.
+        @return: True/False.
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол для установки надписи колонки')
+            return False
+
+        if isinstance(ctrl, wx.ListCtrl):
+            if 0 <= n_column < ctrl.GetColumnCount():
+                column = ctrl.GetColumn(n_column)
+                column.SetText(label)
+                ctrl.SetColumn(n_column, column)
+                return True
+            else:
+                log.warning(u'Не корректный индекс колонки [%s] контрола списка <%s>' % (n_column, str(ctrl)))
+        else:
+            log.warning(u'Не поддерживаемы тип контрола <%s> в функции установки надписи колонки' % ctrl.__class__.__name__)
         return False
 
     def appendRow_ListCtrl(self, ctrl, row=(),
