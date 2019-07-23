@@ -65,7 +65,10 @@ sudo apt install --assume-yes libsdl1.2debian
 # pip3 install wxPython --upgrade
 # Удаление:
 # pip3 uninstall wxPython
-pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
+pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
+
+# Поддержка web в wxPython
+sudo apt install --assume-yes libwebkitgtk-3.0-0
 
 pip3 install objectlistview
 
@@ -97,7 +100,8 @@ sudo apt install --assume-yes unixodbc unixodbc-dev freetds-bin freetds-dev tdso
 
 # pip3 install dbfpy
 # Работу с DBF везде необходимо делать через JDBC
-pip3 install JayDeBeApi3
+pip3 install JayDeBeApi
+# pip3 install JayDeBeApi3
 
 pip3 install dbfread
 
