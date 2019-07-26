@@ -30,7 +30,7 @@ ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo',
                        dict(compare=CONTAIN_SIGNATURE, src='wx.calendar.', dst='wx.adv.'),
                        # DatePickerCtrl
                        dict(compare=CONTAIN_SIGNATURE, src='wx.DatePickerCtrl', dst='wx.adv.DatePickerCtrl'),
-                       dict(compare=CONTAIN_SIGNATURE, src='wx.DP_DEFAULT', dst='wx.adv.DP_DEFAULT'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.DP_', dst='wx.adv.DP_'),
                        dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_DATE_CHANGED', dst='wx.adv.EVT_DATE_CHANGED'),
                        # Bitmap
                        dict(compare=CONTAIN_SIGNATURE, src='.Ok()', dst='.IsOk()'),
@@ -44,6 +44,10 @@ ADAPTATION_REPLACES = (dict(compare=STARTSWITH_SIGNATURE, src='import wx.combo',
                        dict(compare=CONTAIN_SIGNATURE, src='wx.wizard', dst='wx.adv'),
                        # TextCtrl
                        dict(compare=CONTAIN_SIGNATURE, src='.SetMaxLength', dst=COMMENT_COMMAND_SIGNATIRE),
+                       # TreeListCtrl
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.TreeListCtrl', dst='wx.dataview.TreeListCtrl'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.TL_', dst='wx.dataview.TL_'),
+                       dict(compare=CONTAIN_SIGNATURE, src='wx.EVT_TREELIST_', dst='wx.dataview.EVT_TREELIST_'),
                        )
 
 

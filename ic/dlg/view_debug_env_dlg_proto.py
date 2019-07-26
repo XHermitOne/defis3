@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 import wx.aui
 
 ###########################################################################
@@ -18,9 +18,9 @@ import wx.aui
 class icViewDebugEnvDialogProto ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Пространство имен", pos = wx.DefaultPosition, size = wx.Size( 506,557 ), style = wx.DEFAULT_DIALOG_STYLE )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Пространство имен", pos = wx.DefaultPosition, size = wx.Size( 889,557 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -28,9 +28,10 @@ class icViewDebugEnvDialogProto ( wx.Dialog ):
 		self.local_page_panel = wx.Panel( self.view_auinotebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.local_treeListCtrl = wx.TreeListCtrl( self.local_page_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TL_DEFAULT_STYLE|wx.TL_SINGLE )
-		local_treeListCtrl.AppendColumn( u"Наименование", wx.COL_WIDTH_AUTOSIZE, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
-		local_treeListCtrl.AppendColumn( u"Значение", wx.COL_WIDTH_AUTOSIZE, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
+		self.local_treeListCtrl = wx.dataview.TreeListCtrl( self.local_page_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.dataview.TL_DEFAULT_STYLE|wx.dataview.TL_SINGLE )
+		self.local_treeListCtrl.AppendColumn( u"Наименование", wx.COL_WIDTH_AUTOSIZE, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
+		self.local_treeListCtrl.AppendColumn( u"Значение", wx.COL_WIDTH_AUTOSIZE, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
+		self.local_treeListCtrl.AppendColumn( u"Тип", wx.COL_WIDTH_DEFAULT, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
 		
 		bSizer2.Add( self.local_treeListCtrl, 1, wx.EXPAND |wx.ALL, 5 )
 		
@@ -42,9 +43,10 @@ class icViewDebugEnvDialogProto ( wx.Dialog ):
 		self.global_page_panel = wx.Panel( self.view_auinotebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer3 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.global_treeListCtrl = wx.TreeListCtrl( self.global_page_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TL_DEFAULT_STYLE|wx.TL_SINGLE )
-		global_treeListCtrl.AppendColumn( u"Наименование", wx.COL_WIDTH_AUTOSIZE, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
-		global_treeListCtrl.AppendColumn( u"Значение", wx.COL_WIDTH_AUTOSIZE, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
+		self.global_treeListCtrl = wx.dataview.TreeListCtrl( self.global_page_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.dataview.TL_DEFAULT_STYLE|wx.dataview.TL_SINGLE )
+		self.global_treeListCtrl.AppendColumn( u"Наименование", wx.COL_WIDTH_DEFAULT, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
+		self.global_treeListCtrl.AppendColumn( u"Значение", wx.COL_WIDTH_AUTOSIZE, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
+		self.global_treeListCtrl.AppendColumn( u"Тип", wx.COL_WIDTH_DEFAULT, wx.ALIGN_LEFT, wx.COL_RESIZABLE )
 		
 		bSizer3.Add( self.global_treeListCtrl, 1, wx.EXPAND |wx.ALL, 5 )
 		
@@ -72,8 +74,8 @@ class icViewDebugEnvDialogProto ( wx.Dialog ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.local_treeListCtrl.Bind( wx.EVT_TREELIST_SELECTION_CHANGED, self.onLocalSelectionChange )
-		self.global_treeListCtrl.Bind( wx.EVT_TREELIST_SELECTION_CHANGED, self.onGlobalSelectionChange )
+		self.local_treeListCtrl.Bind( wx.dataview.EVT_TREELIST_SELECTION_CHANGED, self.onLocalSelectionChange )
+		self.global_treeListCtrl.Bind( wx.dataview.EVT_TREELIST_SELECTION_CHANGED, self.onGlobalSelectionChange )
 		self.ok_button.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
 	
 	def __del__( self ):

@@ -112,13 +112,26 @@ class icTreeCtrlManager(object):
         # Добавление корневого элемента
         label = ic_str.toUnicode(node.get(columns[0], UNKNOWN))
         # log.debug(u'Надпись %s : %s' % (columns, label))
-        parent_item = treelist_ctrl.AddRoot(label)
-        for i, column in enumerate(columns[1:]):
-            label = ic_str.toUnicode(node.get(columns[i + 1], UNKNOWN))
-            treelist_ctrl.SetItemText(parent_item, label, i + 1)
-
-        # Прикрепляем данные к элементу дерева
-        treelist_ctrl.SetItemData(parent_item, node)
+        if isinstance(treelist_ctrl, wx.gizmos.TreeListCtrl):
+            parent_item = treelist_ctrl.AddRoot(label)
+            # Заполнение данных колонок
+            for i, column in enumerate(columns[1:]):
+                label = ic_str.toUnicode(node.get(columns[i + 1], UNKNOWN))
+                treelist_ctrl.SetItemText(parent_item, label, i + 1)
+            # Прикрепляем данные к элементу дерева
+            treelist_ctrl.SetItemData(parent_item, node)
+        elif isinstance(treelist_ctrl, wx.dataview.TreeListCtrl):
+            root = treelist_ctrl.GetRootItem()
+            parent_item = treelist_ctrl.AppendItem(root, label)
+            # Заполнение данных колонок
+            for i, column in enumerate(columns[1:]):
+                label = ic_str.toUnicode(node.get(columns[i + 1], UNKNOWN))
+                treelist_ctrl.SetItemText(parent_item, i + 1, label)
+            # Прикрепляем данные к элементу дерева
+            treelist_ctrl.SetItemData(parent_item, node)
+        else:
+            log.warning(u'Не поддерживаемый тип <%s> контрола дерева' % treelist_ctrl.__class__.__name__)
+            return None
 
         # Дополнительная обработка
         if ext_func:
@@ -126,8 +139,8 @@ class icTreeCtrlManager(object):
         return parent_item
 
     def _appendBranch_TreeListCtrl(self, treelist_ctrl=None,
-                                  parent_item=None, node=None, columns=(),
-                                  ext_func=None):
+                                   parent_item=None, node=None, columns=(),
+                                   ext_func=None):
         """
         Добавить ветку в узел дерева контрола wx.TreeListCtrl.
         @param treelist_ctrl: Контрол wx.TreeListCtrl.
@@ -171,10 +184,19 @@ class icTreeCtrlManager(object):
 
         for record in node.get('__children__', list()):
             label = ic_str.toUnicode(record.get(columns[0], u''))
-            item = treelist_ctrl.AppendItem(parent_item, label)
-            for i, column in enumerate(columns[1:]):
-                label = ic_str.toUnicode(record.get(columns[i + 1], u''))
-                treelist_ctrl.SetItemText(item, label, i + 1)
+            if isinstance(treelist_ctrl, wx.gizmos.TreeListCtrl):
+                item = treelist_ctrl.AppendItem(parent_item, label)
+                for i, column in enumerate(columns[1:]):
+                    label = ic_str.toUnicode(record.get(columns[i + 1], u''))
+                    treelist_ctrl.SetItemText(item, label, i + 1)
+            elif isinstance(treelist_ctrl, wx.dataview.TreeListCtrl):
+                item = treelist_ctrl.AppendItem(parent_item, label)
+                for i, column in enumerate(columns[1:]):
+                    label = ic_str.toUnicode(record.get(columns[i + 1], u''))
+                    treelist_ctrl.SetItemText(item, i + 1, label)
+            else:
+                log.warning(u'Не поддерживаемый тип контрола <> списко-древовидного представления' % treelist_ctrl.__class__.__name__)
+                continue
 
             # Дополнительная обработка
             if ext_func:
@@ -239,8 +261,10 @@ class icTreeCtrlManager(object):
 
         if isinstance(ctrl, wx.TreeCtrl):
             return ctrl.GetItemData(item)
-        elif isinstance(ctrl, wx.dataview.TreeListCtrl) or isinstance(ctrl, wx.gizmos.TreeListCtrl):
+        elif isinstance(ctrl, wx.gizmos.TreeListCtrl):
             return ctrl.GetMainWindow().GetItemData(item)
+        elif isinstance(ctrl, wx.dataview.TreeListCtrl):
+            return ctrl.GetItemData(item)
         else:
             log.warning(u'Не поддерживаемый тип древовидного контрола <%s>' % ctrl.__class__.__name__)
         return None
@@ -607,7 +631,11 @@ class icTreeCtrlManager(object):
 
         try:
             if item is None:
-                item = tree_ctrl.GetRootItem()
+                if isinstance(tree_ctrl, wx.dataview.TreeListCtrl):
+                    # Для этого контролакорнем считем первый дочерний элемент корня
+                    item = tree_ctrl.GetFirstChild(tree_ctrl.GetRootItem())
+                else:
+                    item = tree_ctrl.GetRootItem()
 
             if all_children:
                 tree_ctrl.ExpandAllChildren(item)
@@ -1078,6 +1106,8 @@ class icTreeCtrlManager(object):
                 result = self.setTree_TreeCtrl(tree_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
             elif isinstance(ctrl, wx.gizmos.TreeListCtrl):
                 result = self.setTree_TreeListCtrl(treelist_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
+            elif isinstance(ctrl, wx.dataview.TreeListCtrl):
+                result = self.setTree_TreeListCtrl(treelist_ctrl=ctrl, tree_data=tree_data, *args, **kwargs)
             else:
                 log.warning(u'Установка данных дерева. Не поддерживаемый класс контрола дерева <%s>' % ctrl.__class__.__name__)
 
@@ -1087,6 +1117,9 @@ class icTreeCtrlManager(object):
         except:
             log.fatal(u'Ошибка установки данных дерева в <%s>' % str(ctrl))
         return False
+
+    # Другое название метода
+    setTreeContent = setTreeData
 
     def isRootTreeItem(self, ctrl=None, item=None):
         """

@@ -44,7 +44,7 @@
             <property name="minimum_size"></property>
             <property name="name">icViewDebugEnvDialogProto</property>
             <property name="pos"></property>
-            <property name="size">506,557</property>
+            <property name="size">889,557</property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
             <property name="title">Пространство имен</property>
@@ -364,6 +364,12 @@
                                                 <property name="name">Значение</property>
                                                 <property name="width">wxCOL_WIDTH_AUTOSIZE</property>
                                             </object>
+                                            <object class="wxTreeListCtrlColumn" expanded="1">
+                                                <property name="alignment">wxALIGN_LEFT</property>
+                                                <property name="flag">wxCOL_RESIZABLE</property>
+                                                <property name="name">Тип</property>
+                                                <property name="width">wxCOL_WIDTH_DEFAULT</property>
+                                            </object>
                                         </object>
                                     </object>
                                 </object>
@@ -542,13 +548,19 @@
                                                 <property name="alignment">wxALIGN_LEFT</property>
                                                 <property name="flag">wxCOL_RESIZABLE</property>
                                                 <property name="name">Наименование</property>
-                                                <property name="width">wxCOL_WIDTH_AUTOSIZE</property>
+                                                <property name="width">wxCOL_WIDTH_DEFAULT</property>
                                             </object>
                                             <object class="wxTreeListCtrlColumn" expanded="1">
                                                 <property name="alignment">wxALIGN_LEFT</property>
                                                 <property name="flag">wxCOL_RESIZABLE</property>
                                                 <property name="name">Значение</property>
                                                 <property name="width">wxCOL_WIDTH_AUTOSIZE</property>
+                                            </object>
+                                            <object class="wxTreeListCtrlColumn" expanded="1">
+                                                <property name="alignment">wxALIGN_LEFT</property>
+                                                <property name="flag">wxCOL_RESIZABLE</property>
+                                                <property name="name">Тип</property>
+                                                <property name="width">wxCOL_WIDTH_DEFAULT</property>
                                             </object>
                                         </object>
                                     </object>
