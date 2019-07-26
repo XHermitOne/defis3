@@ -5,6 +5,7 @@
 Модуль диалоговой формы отображения текущего системного окружения имен для отладки.
 """
 
+import types
 import wx
 
 try:
@@ -18,6 +19,16 @@ from ic.engine import form_manager
 __version__ = (0, 1, 1, 1)
 
 VIEW_OBJECT_TYPES = (int, float, str, dict, tuple, list)
+
+NOT_CHILDREN_OBJECT_TYPES = (int, float, str, dict, tuple, list,
+                             types.AsyncGeneratorType, types.BuiltinFunctionType,
+                             types.BuiltinMethodType, types.CodeType,
+                             types.CoroutineType, types.FrameType,
+                             types.FunctionType, types.GeneratorType,
+                             types.GetSetDescriptorType, types.LambdaType,
+                             types.MappingProxyType, types.MemberDescriptorType,
+                             types.MethodType, types.ModuleType,
+                             types.TracebackType)
 
 DEFAULT_NAME_COLUMN_WIDTH = 250
 
@@ -130,7 +141,7 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
                 # Скрыть имена специально скрываемые / системные
                 continue
 
-            if type(obj) in VIEW_OBJECT_TYPES:
+            if type(obj) not in NOT_CHILDREN_OBJECT_TYPES:
                 child_content = dict(name=name, content=str(obj), type=obj.__class__.__name__, obj=obj)
                 if '__children__' not in parent_item_content:
                     parent_item_content['__children__'] = list()
