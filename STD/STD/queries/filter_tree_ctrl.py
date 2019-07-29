@@ -735,20 +735,32 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         return self.loadFilters()
 
-    def refreshIndicators(self, bVisibleItems=True, item=None):
+    def refreshIndicators(self, bVisibleItems=True, item=None, bRestoreDataset=True):
         """
         Обновить индикаторы элементов дерева.
         @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
             Если нет, то обновляются индикаторы всех элементов.
         @param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
+        @param bRestoreDataset: Восстановить датасет выбранного элемента?
         @return: True/False.
         """
+        result = False
         try:
-            return self._refreshIndicators(bVisibleItems, item=item)
+            # Сначала запоминаем выбранный элемент
+            cur_item = self.GetSelection()
+            # Обновляем все индикаторы
+            result = self._refreshIndicators(bVisibleItems, item=item)
+
+            if bRestoreDataset:
+                # ВНИМАНИЕ! После обновления индикаторов необходимо восстановить
+                # набор записей выбранного элемента
+                cur_filter = self.getItemFilter(item=cur_item)
+                # log.debug(u'Фильтр элемента дерева фильтров %s' % str(cur_filter))
+                self.getCurRecords(item_filter=cur_filter)
         except:
             log.fatal(u'Ошибка обновления индикаторов дерева фильтров')
-        return False
+        return result
 
     def _refreshIndicators(self, bVisibleItems=True, item=None):
         """
@@ -827,9 +839,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             self.setItemImage_tree_ctrl(ctrl=self, item=item, image=bmp)
 
         if txt_colour:
-            self.setItemForegroundColour(ctrl=self,item=item, colour=txt_colour)
+            self.setItemForegroundColour(ctrl=self, item=item, colour=txt_colour)
         if bg_colour:
-            self.setItemBackgroundColour(ctrl=self,item=item, colour=bg_colour)
+            self.setItemBackgroundColour(ctrl=self, item=item, colour=bg_colour)
 
         return True
 

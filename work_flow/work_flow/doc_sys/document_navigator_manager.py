@@ -278,15 +278,45 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
 
         doc_uuid = None
         if idx != -1:
-            doc_requisites = dataset[idx]
-            doc_uuid = doc_requisites.get('uuid', None)
+            try:
+                doc_requisites = dataset[idx]
+                doc_uuid = doc_requisites.get('uuid', None)
+            except IndexError:
+                log.fatal(u'Ошибка индекса записи <%d>. Количество записей: [%d]' % (idx, len(dataset)))
+                doc_uuid = None
         return doc_uuid
 
-    def getDocDataset(self):
+    def getSelectedSlaveDocument(self):
+        """
+        Получить выбранный документ.
+        @return: Выбранный документ.
+            Либо None, если ничего не выбрано.
+        """
+        doc_uuid = self.getSelectedSlaveDocumentUUID()
+        if doc_uuid:
+            return self.getSlaveDocument(UUID=doc_uuid, bLoad=False)
+        return None
+
+    def getSelectedSlaveDocumentRecord(self):
+        """
+        Получить выбранный документ в виде словаря записи.
+        @return: Выбранный документ в виде словаря записи.
+            Либо None, если ничего не выбрано.
+        """
+        selected_doc = self.getSelectedSlaveDocument()
+        if selected_doc:
+            return selected_doc.getRequisiteData()
+        return None
+
+    def getDocDataset(self, bAutoUpdate=False):
         """
         Текущий заполненный список документов.
+        @param bAutoUpdate: Автоматически обновить датасет по документу?
         @return: Текущий заполненный список документов.
         """
+        if bAutoUpdate:
+            self.updateDocDataset()
+
         try:
             return self.__document_navigator_dataset
         except AttributeError:

@@ -1357,14 +1357,15 @@ class icObjPersistent(icObjPersistentPrototype):
         if not filter_requisite_data:
             filter_requisite_data = None
 
-        log.info(u'BUSINES OBJECT get data')
+        log.info(u'BUSINES OBJECT. Получение набора записей')
         data_filter = self.filterRequisiteData(filter_requisite_data)
-        log.info(u'\tFilter: <%s>' % data_filter)
-        query = self.getFilterSQLAlchemy(data_filter,
-                                         limit=limit if limit else self._limit)
-        # log.info(u'\tQuery: <%s>' % query)
+        if limit is None:
+            limit = self._limit
+        log.info(u'\tФильтр: <%s>. Ограничение кол. записей: [%s]' % (data_filter, limit))
+        query = self.getFilterSQLAlchemy(data_filter, limit=limit)
+        # log.info(u'\tЗапрос: <%s>' % query)
         result = self.getTable().getConnection().execute(query)
-        log.info(u'\tResult: [%s]' % result.rowcount)
+        log.info(u'\tКол. записей результата: [%s]' % result.rowcount)
         return self._resultFilter2Dataset(result.fetchall())
 
     # Другие наименования метода
