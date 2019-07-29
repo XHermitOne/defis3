@@ -755,7 +755,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             if bRestoreDataset:
                 # ВНИМАНИЕ! После обновления индикаторов необходимо восстановить
                 # набор записей выбранного элемента
-                cur_filter = self.getItemFilter(item=cur_item)
+                cur_filter = self.buildItemFilter(item=cur_item)
                 # log.debug(u'Фильтр элемента дерева фильтров %s' % str(cur_filter))
                 self.getCurRecords(item_filter=cur_filter)
         except:
@@ -827,8 +827,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             item = self.GetRootItem()
 
         # Сначала получаем набор записей узла, соответствующую элементу
-        cur_filter = self.getItemFilter(item=item)
-        log.debug(u'Фильтр элемента дерева фильтров %s' % str(cur_filter))
+        # ВНИМАНИЕ! Индикаторы обновляются по полному фильтру элемента
+        cur_filter = self.buildItemFilter(item=item)
+        # log.debug(u'Фильтр элемента дерева фильтров %s' % str(cur_filter))
         records = self.getCurRecords(item_filter=cur_filter)
 
         # Затем получаем объекты индикатора
