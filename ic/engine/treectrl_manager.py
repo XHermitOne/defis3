@@ -129,6 +129,10 @@ class icTreeCtrlManager(object):
                 treelist_ctrl.SetItemText(parent_item, i + 1, label)
             # Прикрепляем данные к элементу дерева
             treelist_ctrl.SetItemData(parent_item, node)
+        elif isinstance(treelist_ctrl, wx.TreeCtrl):
+            parent_item = treelist_ctrl.AddRoot(label)
+            # Прикрепляем данные к элементу дерева
+            treelist_ctrl.SetItemData(parent_item, node)
         else:
             log.warning(u'Не поддерживаемый тип <%s> контрола дерева' % treelist_ctrl.__class__.__name__)
             return None
@@ -194,6 +198,8 @@ class icTreeCtrlManager(object):
                 for i, column in enumerate(columns[1:]):
                     label = ic_str.toUnicode(record.get(columns[i + 1], u''))
                     treelist_ctrl.SetItemText(item, i + 1, label)
+            elif isinstance(treelist_ctrl, wx.TreeCtrl):
+                item = treelist_ctrl.AppendItem(parent_item, label)
             else:
                 log.warning(u'Не поддерживаемый тип контрола <> списко-древовидного представления' % treelist_ctrl.__class__.__name__)
                 continue
