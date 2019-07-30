@@ -6,9 +6,11 @@
 """
 
 # Маски загружаемых файлов
-DOWNLOAD_FILE_PATTERNS = ('*.apx', '*.APX', '*.atg', '*.ATG', '*.asf', '*.ASF')
+# DOWNLOAD_FILE_PATTERNS = ('*.apx', '*.APX', '*.atg', '*.ATG', '*.asf', '*.ASF', '*.arh', '*.ARH')
+DOWNLOAD_FILE_PATTERNS = ('*.apx', '*.APX', '*.atg', '*.ATG', '*.arh', '*.ARH')
 
-DOWNLOAD_FILE_EXT_UPPER = ('APX', 'ATG', 'ASF')
+# DOWNLOAD_FILE_EXT_UPPER = ('APX', 'ATG', 'ASF', 'ARH')
+DOWNLOAD_FILE_EXT_UPPER = ('APX', 'ATG', 'ARH')
 
 SMB_SRC_BACKUP_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/#MTS/',
                        'smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/#RLZ/')

@@ -18,13 +18,17 @@ import fnmatch
 import shutil
 import smbclient
 import urllib.parse
+import locale
+import datetime
 
 from ic.log import log
 from ic.utils import ic_file
 
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 3, 1)
 
 DEFAULT_WORKGROUP = 'WORKGROUP'
+
+ANONYMOUS_USERNAME = 'guest'
 
 
 def smb_url_path_split(smb_url):
@@ -201,7 +205,8 @@ def smb_connect(url):
         smb_url = urllib.parse.urlparse(url)
         download_server = smb_url.hostname
         download_share = smb_url.path.split(os.path.sep)[1]
-        download_username = smb_url.username
+        # Если не указан пользователь, то осуществляем вход
+        download_username = smb_url.username if smb_url.username else ANONYMOUS_USERNAME
         download_password = smb_url.password
 
         smb = smbclient.SambaClient(server=download_server,
@@ -275,8 +280,134 @@ def smb_listdir_filename(url=None, filename_pattern=None, smb=None):
     # В конец имени файла добавляется '                           N'
     # Здесь пытаемся нивелировать эту ошибку
     filenames = [filename.strip('                           N').strip() for filename in filenames]
-    log.debug(u'SMB. Список файлов %s' % str(filenames))
+    # log.debug(u'SMB. Список файлов %s' % str(filenames))
     if filename_pattern:
         filenames = [filename for filename in filenames if fnmatch.fnmatch(filename, filename_pattern)]
-        log.debug(u'SMB. Отфильтрованные файлы %s' % str(filenames))
+        # log.debug(u'SMB. Отфильтрованные файлы %s' % str(filenames))
     return filenames
+
+
+DEFAULT_SMB_DATETIME_FMT = '%a %b %d %H:%M:%S %Y'
+
+def _smb_to_datetime(str_datetime, bSetLocale=False):
+    """
+    Преобразовать время из строкового варианта в datetime.
+    @param str_datetime: Время в строковом виде.
+        Например 'Пн июл 29 17:23:39 2019 +07'.
+    @param bSetLocale: Установить системную локаль?
+    @return: datetime.datetime или None в случае ошибки.
+    """
+    if bSetLocale:
+        # Для корректного преобразования времени необходимо установить системную локаль
+        locale.setlocale(locale.LC_ALL, '')
+
+    try:
+        # Удаляем информацию о временной зоне
+        str_datetime = str_datetime[:-str_datetime[::-1].index(' ') - 1]
+        return datetime.datetime.strptime(str_datetime, DEFAULT_SMB_DATETIME_FMT)
+    except:
+        log.fatal(u'Ошибка преобразования <%s> к виду datetime' % str_datetime)
+    return None
+
+
+def get_smb_file_info(url=None, filename=None, smb=None, bToDateTime=True):
+    """
+    Получить всю информацию о файле в виде структуры.
+    @param url: URL samba ресурса.
+    @param filename: Имя файла. Напрмер /2019/TEST.DBF
+    @param smb: Объект samba ресурса в случае уже открытого ресурса.
+    @param bToDateTime: Преобразовать сразу время из строкового представления в datetime?
+    @return: Словарь информации о файле:
+        {
+            'create_time': Время создания файла,
+            'access_time': Время последнего доступа к файлу,
+            'write_time': Время сохранения файла,
+            'change_time': Время изменения файла,
+            ...
+        }
+    """
+    file_info = dict()
+    try:
+        if smb is not None:
+            # Ресурс уже открыт
+            file_info = smb.info(filename)
+        else:
+            try:
+                smb = smb_connect(url)
+                file_info = smb.info(filename)
+                smb_disconnect(smb)
+            except:
+                smb_disconnect(smb)
+                log.fatal(u'Ошибка получения информации о файле samba ресурса. URL <%s>' % url)
+    except:
+        log.fatal(u'Ошибка получения информации о файле <%s> samba ресурса' % filename)
+
+    if bToDateTime:
+        # Преобразуем сразу время из строкового представления в datetime
+        # Для корректного преобразования времени необходимо установить локаль
+        locale.setlocale(locale.LC_ALL, '')
+
+        if 'create_time' in file_info:
+            file_info['create_time'] = _smb_to_datetime(file_info['create_time'])
+        if 'access_time' in file_info:
+            file_info['access_time'] = _smb_to_datetime(file_info['access_time'])
+        if 'write_time' in file_info:
+            file_info['write_time'] = _smb_to_datetime(file_info['write_time'])
+        if 'change_time' in file_info:
+            file_info['change_time'] = _smb_to_datetime(file_info['change_time'])
+
+    return file_info
+
+
+def isdir_smb(url=None, path=None, smb=None):
+    """
+    Проверка на то что файловый объект является директорией.
+    @param url: URL samba ресурса.
+    @param path: Имя файлового объекта. Напрмер /2019/TEST.DBF
+    @param smb: Объект samba ресурса в случае уже открытого ресурса.
+    @return: True - Это директория. False - нет.
+    """
+    is_dir = None
+    try:
+        if smb is not None:
+            # Ресурс уже открыт
+            is_dir = smb.isdir(path)
+        else:
+            try:
+                smb = smb_connect(url)
+                is_dir = smb.isdir(path)
+                smb_disconnect(smb)
+            except:
+                smb_disconnect(smb)
+                log.fatal(u'Ошибка проверки наличия директории <%s> samba ресурса. URL <%s>' % (path, url))
+    except:
+        log.fatal(u'Ошибка проверки наличия директории <%s> samba ресурса' % path)
+
+    return is_dir
+
+
+def isfile_smb(url=None, path=None, smb=None):
+    """
+    Проверка на то что файловый объект является файлом.
+    @param url: URL samba ресурса.
+    @param path: Имя файлового объекта. Напрмер /2019/TEST.DBF
+    @param smb: Объект samba ресурса в случае уже открытого ресурса.
+    @return: True - Это файл. False - нет.
+    """
+    is_file = None
+    try:
+        if smb is not None:
+            # Ресурс уже открыт
+            is_file = smb.isfile(path)
+        else:
+            try:
+                smb = smb_connect(url)
+                is_file = smb.isfile(path)
+                smb_disconnect(smb)
+            except:
+                smb_disconnect(smb)
+                log.fatal(u'Ошибка проверки наличия файла <%s> samba ресурса. URL <%s>' % (path, url))
+    except:
+        log.fatal(u'Ошибка проверки наличия файла <%s> samba ресурса' % path)
+
+    return is_file

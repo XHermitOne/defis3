@@ -121,9 +121,13 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
             label += u'Покупка. СФ.'
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
-            label += u'Продажа.'
+            label += u'Продажа. Акты.'
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
-            label += u'Покупка.'
+            label += u'Покупка. Акты.'
+        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
+            label += u'Продажа. Документы.'
+        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
+            label += u'Покупка. Документы.'
         else:
             label += u'Документы'
 
