@@ -21,7 +21,7 @@ from ic.dlg import ic_dlg
 
 import ic.config
 
-__version__ = (1, 1, 4, 1)
+__version__ = (1, 1, 4, 2)
 
 _ = wx.GetTranslation
 
@@ -79,9 +79,14 @@ def icCopyFile(FileName_, NewFileName_, Rewrite_=True):
     try:
         # --- Проверка существования файла-источника ---
         if not os.path.exists(FileName_):
-            msg = u'Копирование <%s> -> <%s>. Файл <%s> не существует.' % (FileName_, NewFileName_, FileName_)
+            msg = u'Копирование <%s> -> <%s>. Исходный файл <%s> не существует.' % (FileName_, NewFileName_, FileName_)
             log.warning(msg)
             ic_dlg.icWarningBox(u'ОШИБКА', msg)
+            return False
+
+        # --- Проверка копирования файла в самого себя ---
+        if os.path.exists(FileName_) and FileName_ == NewFileName_:
+            log.warning(u'Копирование файла <%s> самого в себя' % FileName_)
             return False
 
         MakeDirs(os.path.dirname(NewFileName_))

@@ -22,7 +22,13 @@ try:
 except:
     print(u'Import error ic_str module')
 
-__version__ = (0, 1, 1, 1)
+try:
+    from ic.log import log
+except:
+    print(u'Import error ic_str module')
+    log = None
+
+__version__ = (0, 1, 2, 1)
 
 
 DEFAULT_ENCODING = 'utf-8'
@@ -1161,6 +1167,79 @@ def loadBinaryFile(filename):
     else:
         print('WARNING. Don\'t exist file <%s>' % filename)
     return None
+
+
+def read_text_file_lines(txt_filename):
+    """
+    Прочитать текстовый файл как список строк.
+    @param txt_filename: Полное имя текстового файла.
+    @return: Список строк файла.
+    """
+    if not os.path.exists(txt_filename):
+        # Если файла не существует, то создать его
+        if log:
+            log.warning(u'Файл <%s> не существует.' % txt_filename)
+        else:
+            print(u'Файл <%s> не существует.' % txt_filename)
+
+        f = None
+        try:
+            f = open(txt_filename, 'wt')
+            f.close()
+            if log:
+                log.info(u'Создан текстовый файл <%s>' % txt_filename)
+            else:
+                print(u'Создан текстовый файл <%s>' % txt_filename)
+        except:
+            if f:
+                f.close()
+            if log:
+                log.fatal(u'Ошибка создания текстового файла <%s>' % txt_filename)
+            else:
+                print(u'Ошибка создания текстового файла <%s>' % txt_filename)
+        return list()
+
+    f = None
+    lines = list()
+    try:
+        f = open(txt_filename, 'rt')
+        lines = f.readlines()
+        lines = [filename.strip() for filename in lines]
+        f.close()
+        f = None
+    except:
+        if f:
+            f.close()
+        if log:
+            log.fatal(u'Ошибка чтения текстового файла <%s>' % txt_filename)
+        else:
+            print(u'Ошибка чтения текстового файла <%s>' % txt_filename)
+    return list(lines)
+
+
+def append_text_file_line(line, txt_filename=None):
+    """
+    Записать линию в текстовый файл.
+    @param line: Линия в виде строки.
+    @param txt_filename: Полное имя текстового файла.
+    @return: True/False.
+    """
+    f = None
+    try:
+        f = open(txt_filename, 'at+')
+        f.write(str(line))
+        # Добавить перевод на новую строку
+        f.write('\n')
+        f.close()
+        return True
+    except:
+        if f:
+            f.close()
+        if log:
+            log.fatal(u'Ошибка записи линии в текстовый файл <%s>' % txt_filename)
+        else:
+            print(u'Ошибка записи линии в текстовый файл <%s>' % txt_filename)
+    return False
 
 
 def is_float_str(txt):
