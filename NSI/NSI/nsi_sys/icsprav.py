@@ -65,8 +65,8 @@ class icSpravInterface:
         """
         self._sprav_manager = SpravManager_
 
-        # if isinstance(Name_, unicode):
-        #    Name_ = Name_.encode()
+        # if isinstance(name, unicode):
+        #    name = name.encode()
 
         self._name = Name_
 

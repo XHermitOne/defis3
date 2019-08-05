@@ -9,10 +9,10 @@
 import ic.iccomponents.icmenutree
 
 from . import ext_func_menu
-import ic.utils.ic_res
+from ic.utils import ic_res
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def MenuToTree(Tree_, Name_, Index_, Data_):
@@ -24,21 +24,21 @@ def MenuToTree(Tree_, Name_, Index_, Data_):
     """
     try:
         # Определение ключа
-        if Index_ == ic.utils.ic_res.RES_IDX_RUN:  # <(0)словарь главных меню>,
+        if Index_ == ic_res.RES_IDX_RUN:  # <(0)словарь главных меню>,
             key = ext_func_menu.RES_MENU_MENUBAR
-            next_idx = ic.utils.ic_res.RES_IDX_MENUBAR
-        elif Index_ == ic.utils.ic_res.RES_IDX_MENUBAR:  # <(1)словарь пунктов горизонтальных меню>,
+            next_idx = ic_res.RES_IDX_MENUBAR
+        elif Index_ == ic_res.RES_IDX_MENUBAR:  # <(1)словарь пунктов горизонтальных меню>,
             key = ext_func_menu.RES_MENU_ITEMS
-            next_idx = ic.utils.ic_res.RES_IDX_MENU_ITEM
-        elif Index_ == ic.utils.ic_res.RES_IDX_MENU_ITEM:  # <(2)словарь пунктов выпадающих меню>,
+            next_idx = ic_res.RES_IDX_MENU_ITEM
+        elif Index_ == ic_res.RES_IDX_MENU_ITEM:  # <(2)словарь пунктов выпадающих меню>,
             key = ext_func_menu.RES_MENU_ITEMS
-            next_idx = ic.utils.ic_res.RES_IDX_MENU_ITEM
-        elif Index_ == ic.utils.ic_res.RES_IDX_POPUP_ITEM:  # <(3)словарь пунктов всплывающих меню>,
+            next_idx = ic_res.RES_IDX_MENU_ITEM
+        elif Index_ == ic_res.RES_IDX_POPUP_ITEM:  # <(3)словарь пунктов всплывающих меню>,
             key = ext_func_menu.RES_MENU_ITEMS
-            next_idx = ic.utils.ic_res.RES_IDX_POPUP_ITEM
-        elif Index_ == ic.utils.ic_res.RES_IDX_POPUP:  # <(4)словарь всплывающих меню>,
+            next_idx = ic_res.RES_IDX_POPUP_ITEM
+        elif Index_ == ic_res.RES_IDX_POPUP:  # <(4)словарь всплывающих меню>,
             key = ext_func_menu.RES_MENU_ITEMS
-            next_idx = ic.utils.ic_res.RES_IDX_POPUP_ITEM
+            next_idx = ic_res.RES_IDX_POPUP_ITEM
         else:
             log.info(u'Недопустимый индекс')
             return {}

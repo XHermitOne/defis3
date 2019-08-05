@@ -52,88 +52,88 @@ SPC_IC_STORENODE = {STORE_LOCK_KEY: None,       # Ключ блокировки 
                     STORE_ITEMS_KEY: {},        # Вложенные узлы
                     }
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icVarStorage:
     """    
     Класс хранителя глобальных объектов системы.
     """
-    def __init__(self, ResFile_='', CanLog_=True):
+    def __init__(self, res_filename='', bLog=True):
         """
         Конструктор класса.
-        @param ResFile_: Ресурсный файл глобальных переменных.
-        @param CanLog_: Разрешение включения регистратора.
+        @param res_filename: Ресурсный файл глобальных переменных.
+        @param bLog: Разрешение включения регистратора.
         """
         # === Атрибуты класса ===
         # Ресурсный файл глобальных переменных
-        self._ResFile = ResFile_
+        self._res_filename = res_filename
         # Разрешение включения регистратора.
-        self._CanLog = CanLog_
+        self._can_log = bLog
         # Само хранилище данных (В ВИДЕ СЛОВАРЯ)
         self._storage = {}
         # Загрузить сразу из ресурсного файла
-        if ResFile_ != '':
-            self._Load(ResFile_)
+        if res_filename != '':
+            self._load(res_filename)
 
     def getStorage(self):
         return self._storage
         
     # --- Функции получения доступа к объекту ---
-    def Add(self, Name_, Data_, Security_='*rw'):
+    def Add(self, name, data, security='*rw'):
         """
         Записать в хранилище объект.
-        @param Name_: Имя-идентификатор объекта .
-        @param Data_: Тело объекта.
-        @param Security_: Строка прав доступа к переменной.
+        @param name: Имя-идентификатор объекта .
+        @param data: Тело объекта.
+        @param security: Строка прав доступа к переменной.
         """
         try:
-            path = split(r'[/]', Name_)
-            return self.AddToPath(path, Data_, Security_)
+            path = split(r'[/]', name)
+            return self.addToPath(path, data, security)
         except:
-            log.fatal(u'Ошибка записи в хранилище объекта %s' % Name_)
+            log.fatal(u'Ошибка записи в хранилище объекта %s' % name)
         return False, None
 
-    def AddToPath(self, Path_, Data_, Security_='*rw',storage_=None):
+    def addToPath(self, path, data, security='*rw', storage=None):
         """
         Записать в хранилище объект (в качестве пути передается список имен).
-        @param Path_: в качестве пути передается список имен.
-        @param Data_: Тело объекта.
-        @param Security_: Строка прав доступа к переменной.
+        @param path: в качестве пути передается список имен.
+        @param data: Тело объекта.
+        @param security: Строка прав доступа к переменной.
         """
         node = ''
         try:
             # Проверка аргументов
-            if not isinstance(Path_, list):
-                self._Log(u'Неверный тип аргумента Path_')
+            if not isinstance(path, list):
+                self._log(u'Неверный тип аргумента path')
                 return False, None
-            if storage_ is None:
-                storage_ = self._storage
+            if storage is None:
+                storage = self._storage
             
-            node = Path_[0]     # Берем первый элемент
+            node = path[0]     # Берем первый элемент
             # Если остался последний элемент, тогда добавить в него данные
-            if len(Path_) == 1:
-                if node in storage_ and \
-                   STORE_DATA_KEY in storage_[node] and \
-                   storage_[node][STORE_SECURITY_KEY].find(WRITE_SYMB) == -1:
-                    self._Log(u'Элемент под именем <%s> уже существует в хранилище' % node)
+            if len(path) == 1:
+                if node in storage and \
+                   STORE_DATA_KEY in storage[node] and \
+                   storage[node][STORE_SECURITY_KEY].find(WRITE_SYMB) == -1:
+                    self._log(u'Элемент под именем <%s> уже существует в хранилище' % node)
                     return False, None
                 else:
                     # Добавить элемент
-                    storage_[node] = {}
-                    storage_[node][STORE_LOCK_KEY] = None
-                    storage_[node][STORE_DATA_KEY] = Data_
-                    storage_[node][STORE_SECURITY_KEY] = Security_
-                    storage_[node][STORE_ITEMS_KEY] = {}
+                    storage[node] = {}
+                    storage[node][STORE_LOCK_KEY] = None
+                    storage[node][STORE_DATA_KEY] = data
+                    storage[node][STORE_SECURITY_KEY] = security
+                    storage[node][STORE_ITEMS_KEY] = {}
             else:
-                if node not in storage_:
+                if node not in storage:
                     # Если узел не гайден, тогда создать его
-                    storage_[node] = {}
-                    storage_[node][STORE_LOCK_KEY] = None
-                    storage_[node][STORE_SECURITY_KEY] = Security_
-                    storage_[node][STORE_ITEMS_KEY] = {}
-                storage_ = storage_[node][STORE_ITEMS_KEY]
-                return self.AddToPath(Path_[1:], Data_, Security_, storage_)
+                    storage[node] = {}
+                    storage[node][STORE_LOCK_KEY] = None
+                    storage[node][STORE_SECURITY_KEY] = security
+                    storage[node][STORE_ITEMS_KEY] = {}
+                storage = storage[node][STORE_ITEMS_KEY]
+                return self.addToPath(path[1:], data, security, storage)
             return True, None
         except:
             log.fatal(u'Ошибка записи в хранилище объекта %s' % node)
@@ -145,78 +145,78 @@ class icVarStorage:
         """
         self._storage = dict()
 
-    def Del(self, Name_):
+    def Del(self, name):
         """
         Получить объект из хранилища с удалением.
-        @param Name_: Имя-идентификатор объекта.
+        @param name: Имя-идентификатор объекта.
         @return: Возвращает ссылку на объект или None.
         """
         try:
-            path = split(r'[/]', Name_)
-            return self.DelToPath(path)
+            path = split(r'[/]', name)
+            return self.delToPath(path)
         except:
-            log.fatal(u'Ошибка удаления объекта <%s> из хранилища' % Name_)
+            log.fatal(u'Ошибка удаления объекта <%s> из хранилища' % name)
         return False, None
 
-    def DelToPath(self, Path_, storage_=None):
+    def delToPath(self, path, storage=None):
         """
         Получить объект из хранилища с удалением.
-        @param Path_: в качестве пути передается список имен.
+        @param path: в качестве пути передается список имен.
         @return: Возвращает ссылку на объект или None.
         """
         node = ''
         try:
             # Проверка аргументов
-            if not isinstance(Path_, list):
-                self._Log(u'Неверный тип аргумента Path_')
+            if not isinstance(path, list):
+                self._log(u'Неверный тип аргумента path')
                 return False, None
-            if storage_ is None:
-                storage_ = self._storage
+            if storage is None:
+                storage = self._storage
             
-            node = Path_[0]     # Берем первый элемент
+            node = path[0]     # Берем первый элемент
             # Если остался последний элемент, тогда удаляем
-            if len(Path_) == 1:
-                if node not in storage_:
-                    self._Log(u'Элемент <%s> не найден' % node)
+            if len(path) == 1:
+                if node not in storage:
+                    self._log(u'Элемент <%s> не найден' % node)
                     return False, None
                 else:
-                    if storage_[node][STORE_LOCK_KEY]:
-                        self._Log(u'Объект <%s> заблокирован' % node)
+                    if storage[node][STORE_LOCK_KEY]:
+                        self._log(u'Объект <%s> заблокирован' % node)
                         return False, None
-                    elif storage_[node][STORE_SECURITY_KEY][WRITE_IDX] != WRITE_SYMB:
-                        self._Log(u'Запрещен доступ к объекту <%s>' % node)
+                    elif storage[node][STORE_SECURITY_KEY][WRITE_IDX] != WRITE_SYMB:
+                        self._log(u'Запрещен доступ к объекту <%s>' % node)
                         return False, None
                     else:
-                        if STORE_DATA_KEY in storage_[node]:
-                            obj = storage_[node][STORE_DATA_KEY]
-                        elif STORE_ITEMS_KEY in storage_[node]:
-                            obj = storage_[node][STORE_ITEMS_KEY]
+                        if STORE_DATA_KEY in storage[node]:
+                            obj = storage[node][STORE_DATA_KEY]
+                        elif STORE_ITEMS_KEY in storage[node]:
+                            obj = storage[node][STORE_ITEMS_KEY]
                         else:
                             obj = None
-                        del storage_[node]
+                        del storage[node]
                         return True, obj
             else:
-                if node not in storage_:
-                    self._Log(u'Элемент <%s> не найден' % node)
+                if node not in storage:
+                    self._log(u'Элемент <%s> не найден' % node)
                     return False, None
-                storage_ = storage_[node][STORE_ITEMS_KEY]
-                return self.DelToPath(Path_[1:], storage_)
+                storage = storage[node][STORE_ITEMS_KEY]
+                return self.delToPath(path[1:], storage)
         except:
             log.fatal(u'Ошибка удаления объекта <%s> из хранилища' % node)
         return False, None
 
-    def GetCopy(self, Name_, LockKey_=None):
+    def getCopy(self, name, lock_key=None):
         """
         Получить копию объекта в хранилище, для редактирования.
-        Если LockKey_==None, то доступ к объекту не блокируется
-        @param Name_: Имя-идентификатор объекта.
-        @param LockKey_: Ключ блокировки доступа 
-            Если LockKey_==None, то доступ к объекту не блокируется.
+        Если lock_key==None, то доступ к объекту не блокируется
+        @param name: Имя-идентификатор объекта.
+        @param lock_key: Ключ блокировки доступа
+            Если lock_key==None, то доступ к объекту не блокируется.
         @return: Копия объекта не связанная с оригиналом.
         """
         try:
-            path = split(r'[/]', Name_)
-            node = self._GetNode(path)[1]
+            path = split(r'[/]', name)
+            node = self._getNode(path)[1]
 
             if node is None:
                 return False, None
@@ -225,9 +225,9 @@ class icVarStorage:
                 node[STORE_LOCK_KEY] = None
             # Проверка блокировки объекта владельцем
             if not node[STORE_LOCK_KEY]:
-                node[STORE_LOCK_KEY] = LockKey_
+                node[STORE_LOCK_KEY] = lock_key
             else:
-                self._Log(u'Объект <%s> заблокирован' % Name_)
+                self._log(u'Объект <%s> заблокирован' % name)
                 return False, None
             if STORE_SECURITY_KEY in node:
                 if node[STORE_SECURITY_KEY][READ_IDX] == READ_SYMB:
@@ -235,23 +235,23 @@ class icVarStorage:
                     # возвращает полную копию объекта не связанную с оригиналом
                     return True, copy.deepcopy(node[STORE_DATA_KEY])
                 else:
-                    self._Log(u'Запрет на чтение объекта <%s>' % Name_)
+                    self._log(u'Запрет на чтение объекта <%s>' % name)
         except:
             log.fatal()
         return False, None
 
-    def PutCopy(self, Name_, Data_, LockKey_=None):
+    def putCopy(self, name, data, lock_key=None):
         """
         Положить отредактированную копию объекта.
-        Если LockKey_==None, то доступ к объекту не блокируется.
-        @param Name_: Имя-идентификатор объекта.
-        @param Data_: Тело объекта.
-        @param LockKey_: Ключ блокировки доступа.
+        Если lock_key==None, то доступ к объекту не блокируется.
+        @param name: Имя-идентификатор объекта.
+        @param data: Тело объекта.
+        @param lock_key: Ключ блокировки доступа.
         @return: True, а в случае неудачи возвращает False.
         """
         try:
-            path = split(r'[/]', Name_)
-            node = self._GetNode(path)[1]
+            path = split(r'[/]', name)
+            node = self._getNode(path)[1]
 
             if node is None:
                 return False, None
@@ -259,38 +259,38 @@ class icVarStorage:
             if STORE_LOCK_KEY not in node:
                 node[STORE_LOCK_KEY] = None
             # Проверка блокировки объекта владельцем
-            if node[STORE_LOCK_KEY] != LockKey_:
-                self._Log(u'Объект <%s> заблокирован' % Name_)
+            if node[STORE_LOCK_KEY] != lock_key:
+                self._log(u'Объект <%s> заблокирован' % name)
                 return False, None
             if STORE_SECURITY_KEY in node:
                 if node[STORE_SECURITY_KEY][WRITE_IDX] == WRITE_SYMB:
                     del node[STORE_DATA_KEY]        # Сначала удалить
-                    node[STORE_DATA_KEY] = Data_    # Затем восстановить
+                    node[STORE_DATA_KEY] = data    # Затем восстановить
                 else:
-                    self._Log(u'Запрет на модификацию объекта <%s>' % Name_)
+                    self._log(u'Запрет на модификацию объекта <%s>' % name)
                     return False, None
             return True, None
         except:
             log.fatal()
         return False, None
 
-    def Ref(self, Name_, LockKey_=None):
+    def Ref(self, name, lock_key=None):
         """
         Получить ссылку на объект в хранилище, для чтения.
-        Если LockKey_==None, то доступ к объекту не блокируется.
-        @param Name_: Имя-идентификатор объекта.
-        @param LockKey_: Ключ блокировки доступа.
+        Если lock_key==None, то доступ к объекту не блокируется.
+        @param name: Имя-идентификатор объекта.
+        @param lock_key: Ключ блокировки доступа.
         @return: Ссылку на объект.
         """
         try:
-            path = split(r'[/]', Name_)
-            node = self._GetNode(path)[1]
+            path = split(r'[/]', name)
+            node = self._getNode(path)[1]
 
             if node is None:
                 return False, None
 
             if node[STORE_SECURITY_KEY][REF_IDX] != REF_SYMB:
-                self._Log(u'Запрет на доступ к объекту <%s>' % Name_)
+                self._log(u'Запрет на доступ к объекту <%s>' % name)
                 return False, None
 
             # Проверка существования ключа
@@ -298,9 +298,9 @@ class icVarStorage:
                 node[STORE_LOCK_KEY] = None
             # Проверка блокировки объекта владельцем
             if node[STORE_LOCK_KEY] is None:
-                node[STORE_LOCK_KEY] = LockKey_
+                node[STORE_LOCK_KEY] = lock_key
             else:
-                self._Log(u'Объект <%s> заблокирован' % Name_)
+                self._log(u'Объект <%s> заблокирован' % name)
                 return False, None
             if STORE_SECURITY_KEY in node:
                 if node[STORE_SECURITY_KEY][READ_IDX] == READ_SYMB:
@@ -309,71 +309,71 @@ class icVarStorage:
             log.fatal()
         return False, None
 
-    def _GetNode(self, Path_, storage_=None):
+    def _getNode(self, path, storage=None):
         """
         Получить узел объекта из хранилища по пути.
-        @param Path_: в качестве пути передается список имен.
+        @param path: в качестве пути передается список имен.
         """
         node = ''
         try:
             # Проверка аргументов
-            if not isinstance(Path_, list):
-                self._Log(u'Неверный тип аргумента Path_')
+            if not isinstance(path, list):
+                self._log(u'Неверный тип аргумента path')
                 return False, None
-            if storage_ is None:
-                storage_ = self._storage
+            if storage is None:
+                storage = self._storage
             
-            node = Path_[0]     # Берем первый элемент
-            if node not in storage_:
+            node = path[0]     # Берем первый элемент
+            if node not in storage:
                 return False, None
             # Если остался последний элемент, тогда возвращаем его
-            if len(Path_) == 1:
-                return True, storage_[node]
+            if len(path) == 1:
+                return True, storage[node]
             else:
-                storage_ = storage_[node][STORE_ITEMS_KEY]
-                return self._GetNode(Path_[1:], storage_)
+                storage = storage[node][STORE_ITEMS_KEY]
+                return self._getNode(path[1:], storage)
         except:
             log.fatal(u'Ошибка определения узла <%s>' % node)
         return False, None
         
     # --- Функции чтения/записи на диск ---
-    def _Save(self, ResFile_=''):
+    def _save(self, res_filename=''):
         """
         Сохранить хранилище в ресурсном файле.
-        @param ResFile_: Имя ресурсного файла.
+        @param res_filename: Имя ресурсного файла.
         """
         try:
-            if ResFile_ != '':
-                self.SetResFile(ResFile_)
-            if self._ResFile is None or self._ResFile == '':
+            if res_filename != '':
+                self.setResFilename(res_filename)
+            if self._res_filename is None or self._res_filename == '':
                 return False, None
 
-            resfunc.SaveResourceText(self._ResFile, self._storage)
+            resfunc.SaveResourceText(self._res_filename, self._storage)
         except:
             log.fatal()
 
-    def _Load(self, ResFile_=''):
+    def _load(self, res_filename=''):
         """
         Загрузить хранилище из ресурсного файла.
-        @param ResFile_: Имя ресурсного файла.
+        @param res_filename: Имя ресурсного файла.
         """
         try:
-            if ResFile_ != '':
-                self.SetResFile(ResFile_)
-            if self._ResFile != '':
-                self._storage = resfunc.LoadResourceText(self._ResFile)
+            if res_filename != '':
+                self.setResFilename(res_filename)
+            if self._res_filename != '':
+                self._storage = resfunc.LoadResourceText(self._res_filename)
         except:
             log.fatal()
 
     # --- Сервисные функции ---
-    def Is(self, Name_):
+    def Is(self, name):
         """
         Проверка существует ли такой объект.
-        @param Name_: Имя объекта.
+        @param name: Имя объекта.
         """
         try:
-            path = split(r'[/]', Name_)
-            node = self._GetNode(path)[1]
+            path = split(r'[/]', name)
+            node = self._getNode(path)[1]
             if node is None:
                 return False
             return True
@@ -381,15 +381,15 @@ class icVarStorage:
             log.fatal()
         return False
 
-    def CanRead(self, Name_, LockKey_=None):
+    def canRead(self, name, lock_key=None):
         """
         Проверка возможности чтения объекта из хранилища.
-        @param Name_: Имя объекта.
-        @param LockKey_: Ключ блокировки доступа.
+        @param name: Имя объекта.
+        @param lock_key: Ключ блокировки доступа.
         """
         try:
-            path = split(r'[/]', Name_)
-            node = self._GetNode(path)[1]
+            path = split(r'[/]', name)
+            node = self._getNode(path)[1]
             if node is None:
                 return False
             if node[STORE_SECURITY_KEY][READ_IDX] != READ_SYMB:
@@ -399,15 +399,15 @@ class icVarStorage:
             log.fatal()
         return False
 
-    def CanWrite(self, Name_, LockKey_=None):
+    def canWrite(self, name, lock_key=None):
         """
         Проверка возможности изменения объекта из хранилища.
-        @param Name_: Имя объекта.
-        @param LockKey_: Ключ блокировки доступа.
+        @param name: Имя объекта.
+        @param lock_key: Ключ блокировки доступа.
         """
         try:
-            path = split(r'[/]', Name_)
-            node = self._GetNode(path)[1]
+            path = split(r'[/]', name)
+            node = self._getNode(path)[1]
             if node is None:
                 return False
             if node[STORE_SECURITY_KEY][WRITE_IDX] != WRITE_SYMB:
@@ -417,15 +417,15 @@ class icVarStorage:
             log.fatal()
         return False
 
-    def CanRef(self, Name_, LockKey_=None):
+    def canRef(self, name, lock_key=None):
         """
         Проверка возможности получения ссылки на объект
-        @param Name_: Имя объекта.
-        @param LockKey_: Ключ блокировки доступа.
+        @param name: Имя объекта.
+        @param lock_key: Ключ блокировки доступа.
         """
         try:
-            path = split(r'[/]', Name_)
-            node = self._GetNode(path)[1]
+            path = split(r'[/]', name)
+            node = self._getNode(path)[1]
             if node is None:
                 return False
             if node[STORE_SECURITY_KEY][REF_IDX] != REF_SYMB:
@@ -435,7 +435,7 @@ class icVarStorage:
             log.fatal()
         return False
 
-    def TextStorage(self):
+    def printTextStorage(self):
         """
         Функция выводит в виде текста все имена объектов ХРАНИЛИЩА.
         Функция применяется при отладке.
@@ -448,53 +448,53 @@ class icVarStorage:
             txt += u'\n'
             txt += line
             txt += u'\n'
-            txt += self._TextListAll(self._storage)
+            txt += self._getTextListAll(self._storage)
             txt += line
             return txt
         except:
             log.fatal(u'Ошибка преобразования в виде текста объектов ХРАНИЛИЩА')
         return None
         
-    def _TextListAll(self, Storage_=None, Path_=''):
+    def _getTextListAll(self, storage=None, path=''):
         """
         Функция выводит в виде текста все имена объектов ХРАНИЛИЩА.
         Функция применяется при отладке.
         Используется рекурсивный вызов.
-        @param Storage_: Текущий уровень(папка) ХРАНИЛИЩА.
-        @param Path_: Путь до объекта.
+        @param storage: Текущий уровень(папка) ХРАНИЛИЩА.
+        @param path: Путь до объекта.
         """
         txt = u''
-        for obj_name in Storage_.keys():
-            name = Path_+obj_name
-            value = str(Storage_[obj_name][STORE_DATA_KEY])
-            security = Storage_[obj_name][STORE_SECURITY_KEY]
+        for obj_name in storage.keys():
+            name = path + obj_name
+            value = str(storage[obj_name][STORE_DATA_KEY])
+            security = storage[obj_name][STORE_SECURITY_KEY]
             lock = u'-'
             
-            if Storage_[obj_name][STORE_LOCK_KEY] is not None:
+            if storage[obj_name][STORE_LOCK_KEY] is not None:
                 lock = u'+'
             txt += u'%-20s %-40s %-9s %-7s' % (name, value, security, lock)
-            if STORE_ITEMS_KEY in Storage_[obj_name] and \
-                Storage_[obj_name][STORE_ITEMS_KEY] != {}:
-                txt += self._TextListAll(Storage_[obj_name][STORE_ITEMS_KEY],
-                                         name+'/')
+            if STORE_ITEMS_KEY in storage[obj_name] and \
+                storage[obj_name][STORE_ITEMS_KEY] != {}:
+                txt += self._getTextListAll(storage[obj_name][STORE_ITEMS_KEY],
+                                            name +'/')
             txt += u'\n'
         return txt
 
-    def _Log(self, Msg_):
+    def _log(self, message):
         """
         Регистрация сообщения/ошибки.
-        @param Msg_: Текст сообщения.
+        @param message: Текст сообщения.
         """
-        if self._CanLog:
-            log.warning(Msg_)
+        if self._can_log:
+            log.warning(message)
 
     # --- Функции-свойства класса ---
 
-    def GetResFile(self):
-        return self._ResFile
+    def getResFilename(self):
+        return self._res_filename
 
-    def SetResFile(self, ResFile_):
-        if isinstance(ResFile_, str):
-            self._ResFile = ResFile_
+    def setResFilename(self, res_filename):
+        if isinstance(res_filename, str):
+            self._res_filename = res_filename
         else:
-            self._Log(u'Неверный тип аргумента ResFile_')
+            self._log(u'Неверный тип аргумента res_filename')

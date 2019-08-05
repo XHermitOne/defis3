@@ -21,7 +21,7 @@ try:
 except:
     from ic.std.log import log
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 class icVWorksheet(icprototype.icVPrototype):
@@ -47,7 +47,7 @@ class icVWorksheet(icprototype.icVPrototype):
 
     def _is_worksheets_name(self, Worksheets_, Name_):
         """
-        Существуют листы с именем Name_?
+        Существуют листы с именем name?
         """
         for sheet in Worksheets_:
             if not isinstance(sheet['Name'], str):

@@ -37,23 +37,23 @@
 # --- Подключение библиотек ---
 import os.path
 import wx
-from wx.lib.splitter import MultiSplitterWindow
+import wx.lib.splitter
 
 from ic.imglib import common
-import ic.utils.ic_res
-import ic.utils.resource
-import ic.utils.ic_file
+from ic.utils import ic_res
+from ic.utils import resource
+from ic.utils import ic_file
 
-import ic.bitmap.ic_color as ic_color
-import ic.utils.ic_exec
+from ic.bitmap import ic_color
+from ic.utils import ic_exec
 from ic.utils import ic_mode
-import ic.utils.ic_util
+from ic.utils import ic_util
 from . import icnotebook
 from ic.dlg import splash_window
 from ic.log import log
 from ic.log import iclog
 
-from ic.kernel import icobject
+from ic.kernel import ickernel
 
 __version__ = (0, 1, 1, 1)
 
@@ -138,22 +138,23 @@ SPC_IC_WIN = dict({RES_WIN_NAME: 'new_win',
                    })
 
 
-def CreateICWin(Name_, ResFile_=DEFAULT_WIN_RES_FILE, ParentWin_=None, Runner_=None):
+def createMainWindowByRes(name, res_filename=DEFAULT_WIN_RES_FILE,
+                          parent=None, engine=None):
     """
     Функция создает из ресурса окно по его имени.
-    @param Name_: Имя-идентификатор окна прописанный в файле ресурса.
-    @param ResFile_: Имя ресурсного файла.
-    @param ParentWin_: Родительское окно (если нет, то None).
-    @param Runner_: Родительский ДВИЖОК (если нет, то None).
+    @param name: Имя-идентификатор окна прописанный в файле ресурса.
+    @param res_filename: Имя ресурсного файла.
+    @param parent: Родительское окно (если нет, то None).
+    @param engine: Родительский ДВИЖОК (если нет, то None).
     @return: Возвращает объект окна или None в случае ошибки.
     """
     win = None
     try:
-        win_struct = LoadWinStruct(Name_, ResFile_)
+        win_struct = loadWinStruct(name, res_filename)
         if win_struct == {}:
             log.info(u'Нет данных о таком окне!')
             return None
-        win = icMainWindow(Name_, win_struct, ResFile_, ParentWin_, Runner_)
+        win = icMainWindow(name, win_struct, res_filename, parent, engine)
         return win
     except:
         if win is not None:
@@ -162,19 +163,20 @@ def CreateICWin(Name_, ResFile_=DEFAULT_WIN_RES_FILE, ParentWin_=None, Runner_=N
         return win
 
 
-def createMainWin(Name_, ResFile_=DEFAULT_WIN_RES_FILE, ParentWin_=None, Runner_=None):
+def createMainWin(name, res_filename=DEFAULT_WIN_RES_FILE,
+                  parent=None, engine=None):
     """
     Функция создает из ресурса окно по его имени.
-    @param Name_: Имя-идентификатор окна прописанный в файле ресурса.
-    @param ResFile_: Имя ресурсного файла.
-    @param ParentWin_: Родительское окно (если нет, то None).
-    @param Runner_: Родительский ДВИЖОК (если нет, то None).
+    @param name: Имя-идентификатор окна прописанный в файле ресурса.
+    @param res_filename: Имя ресурсного файла.
+    @param parent: Родительское окно (если нет, то None).
+    @param engine: Родительский ДВИЖОК (если нет, то None).
     @return: Возвращает объект окна или None в случае ошибки.
     """
     win = None
     try:
         from ic.components.user import ic_mainwin_wrp
-        win_struct = LoadWinStruct(Name_, ResFile_)
+        win_struct = loadWinStruct(name, res_filename)
         if win_struct == {}:
             log.info(u'Нет данных о таком окне!')
             return None
@@ -187,20 +189,20 @@ def createMainWin(Name_, ResFile_=DEFAULT_WIN_RES_FILE, ParentWin_=None, Runner_
         return win
 
 
-def OpenWinResFile(ResFileName_):
+def openWinResFile(res_filename):
     """
     Загрузить информацию из файла ресурсов в память.
-    @param ResFileName_: Имя ресурсного файла.
+    @param res_filename: Имя ресурсного файла.
     @return: Возвращает словарь, который определен в файле.
     """
     global CUR_WIN_RES_FILE_NAME
     global CUR_WIN_RES_FILE
-    CUR_WIN_RES_FILE_NAME = ResFileName_
-    CUR_WIN_RES_FILE = ic.utils.ic_res.ReadAndEvalFile(ResFileName_)
+    CUR_WIN_RES_FILE_NAME = res_filename
+    CUR_WIN_RES_FILE = ic_res.ReadAndEvalFile(res_filename)
     return CUR_WIN_RES_FILE
 
 
-def CloseWinResFile():
+def closeWinResFile():
     """
     Выгрузить информацию о файле ресурсов из памяти.
     """
@@ -210,17 +212,17 @@ def CloseWinResFile():
     CUR_WIN_RES_FILE_NAME = ''
 
 
-def LoadWinStruct(Name_, ResFile_=DEFAULT_WIN_RES_FILE):
+def loadWinStruct(name, res_filename=DEFAULT_WIN_RES_FILE):
     """
     Загрузить атрибуты компонента из файла ресурсов.
-    @param Name_: Имя-идентификатор окна.
-    @param ResFile_: Имя ресурсного файла.
+    @param name: Имя-идентификатор окна.
+    @param res_filename: Имя ресурсного файла.
     @return: Возвращает словарь, описывающий окно
         (см описание формата ресурсного файла окна).
     """
-    return ic.utils.resource.icGetRes(Name_,
-                                      os.path.splitext(ResFile_)[1][1:],
-                                      nameRes=os.path.splitext(ResFile_)[0])
+    return resource.icGetRes(name,
+                             os.path.splitext(res_filename)[1][1:],
+                             nameRes=os.path.splitext(res_filename)[0])
 
 
 # --- Классы ---
@@ -233,12 +235,12 @@ class icStatusBar(wx.StatusBar):
     Статусная строка главного окна.
     """
 
-    def __init__(self, ParentMainWin_):
+    def __init__(self, parent):
         """
         Конструктор.
-        @param ParentMainWin_: Родительское главное окно.
+        @param parent: Родительское главное окно.
         """
-        wx.StatusBar.__init__(self, ParentMainWin_, wx.NewId(),
+        wx.StatusBar.__init__(self, parent, wx.NewId(),
                               style=wx.STB_SIZEGRIP | wx.FULL_REPAINT_ON_RESIZE)
 
         # Установить количество и ширины полей
@@ -260,28 +262,28 @@ class icStatusBar(wx.StatusBar):
         self.SetStatusWidths([width/2, width/25, -1])
         event.Skip()
         
-    def openProgressBar(self, Label_='', Min_=0, Max_=100):
+    def openProgressBar(self, label='', min_value=0, max_value=100):
         """
         Открыть прогресс бар статусной строки.
-        @param Label_: Надпись статусной строки.
-        @param Min_: Минимальное значение.
-        @param Max_: Максимальное занчение.
+        @param label: Надпись статусной строки.
+        @param min_value: Минимальное значение.
+        @param max_value: Максимальное занчение.
         """
-        self.SetStatusText(Label_, sbfLabel)
+        self.SetStatusText(label, sbfLabel)
         if not self.progress_bar:
-            self._progress_range = (Min_, Max_)
+            self._progress_range = (min_value, max_value)
             self.SetStatusText('0%%', sbfProcent)
             self.progress_bar = wx.Gauge(self, -1,
                                          self._progress_range[1]-self._progress_range[0])
             rect = self.GetFieldRect(sbfProgress)
             self.progress_bar.SetDimensions(rect.x+1, rect.y+1, rect.width-2, rect.height-2)
         
-    def closeProgressBar(self, Label_=''):
+    def closeProgressBar(self, label=''):
         """
         Закрыть прогресс бар.
-        @param Label_: Надпись статусной строки.
+        @param label: Надпись статусной строки.
         """
-        self.SetStatusText(Label_, sbfLabel)
+        self.SetStatusText(label, sbfLabel)
         self.SetStatusText('', sbfProcent)
         if self.progress_bar:
             self.progress_bar.SetValue(0)
@@ -290,27 +292,27 @@ class icStatusBar(wx.StatusBar):
         self._progress_range = (0, 0)
         self._progress_count = 0
         
-    def updateProgressBar(self, Label_='', Value_=-1):
+    def updateProgressBar(self, label='', value=-1):
         """
         Обновить прогресс бар.
-        @param Label_: Надпись статусной строки.
-        @param Value_: Значение.
+        @param label: Надпись статусной строки.
+        @param value: Значение.
         """
-        if Value_ == -1:
+        if value == -1:
             # Высчитать очередное значение и запомнить его
             self._progress_count = max(self._progress_range[0],
                                        min(self._progress_range[1],
                                        self._progress_count+1))
-            Value_ = self._progress_count
+            value = self._progress_count
             
-        self.SetStatusText(Label_, sbfLabel)
+        self.SetStatusText(label, sbfLabel)
         if self._progress_range[1] > self._progress_range[0]:
-            procent = ((Value_-self._progress_range[0])*100)/(self._progress_range[1]-self._progress_range[0])
+            procent = ((value - self._progress_range[0]) * 100) / (self._progress_range[1] - self._progress_range[0])
         else:
             procent = 1
         self.SetStatusText('%d%%' % procent, sbfProcent)
         if self.progress_bar:
-            self.progress_bar.SetValue(Value_-self._progress_range[0])
+            self.progress_bar.SetValue(value - self._progress_range[0])
             
     def getPregressBarCount(self):
         return self._progress_count
@@ -321,14 +323,15 @@ class icMainWindow(wx.Frame):
     Класс окна системы.
     """
 
-    def __init__(self, Name_, WinStruct_, ResFile_='', Parent_=None, Runner_=None):
+    def __init__(self, name, win_struct, res_filename='',
+                 parent=None, engine=None):
         """
         Конструктор.
-        @param Name_: Имя окна.
-        @param WinStruct_: Словарь, описывающий окно.
-        @param ResFile_: Имя ресурсного файла.
-        @param Parent_: Родительское окно.
-        @param Runner_: Родительский ДВИЖОК.
+        @param name: Имя окна.
+        @param win_struct: Словарь, описывающий окно.
+        @param res_filename: Имя ресурсного файла.
+        @param parent: Родительское окно.
+        @param engine: Родительский ДВИЖОК.
         """
         # --- Свойства класса ---
         # Иденитификатор числовой
@@ -346,7 +349,7 @@ class icMainWindow(wx.Frame):
         # Функция вызываемая каждй раз при отрисовке главного окна.
         self._PaintFunc = None
         # Движок
-        self._RunnerApp = Runner_
+        self._RunnerApp = engine
         # Открытие органайзера
         self._OnOrgOpen = None
         # Закрытие органайзера
@@ -362,45 +365,45 @@ class icMainWindow(wx.Frame):
 
         # --- Инициализация ---
         # Расширение структуры до спецификации
-        WinStruct_ = ic.utils.ic_util.SpcDefStruct(SPC_IC_WIN, WinStruct_)
+        win_struct = ic_util.SpcDefStruct(SPC_IC_WIN, win_struct)
 
         # Содержит линейку меню? По умолчанию - да
-        self.is_menubar = WinStruct_.get('is_menubar', True)
+        self.is_menubar = win_struct.get('is_menubar', True)
 
         # Содержит статусную строку? По умолчанию - да
-        self.is_statusbar = WinStruct_.get('is_statusbar', True)
+        self.is_statusbar = win_struct.get('is_statusbar', True)
 
         self._ID = wx.NewId()
-        self._Name = Name_
-        if ResFile_ != '':
-            self._ResFile = ResFile_
+        self._Name = name
+        if res_filename != '':
+            self._ResFile = res_filename
 
         left, top = 0, 0
-        if RES_WIN_POS in WinStruct_ and WinStruct_[RES_WIN_POS] is not None:
-            left = WinStruct_[RES_WIN_POS][0]
-            top = WinStruct_[RES_WIN_POS][1]
+        if RES_WIN_POS in win_struct and win_struct[RES_WIN_POS] is not None:
+            left = win_struct[RES_WIN_POS][0]
+            top = win_struct[RES_WIN_POS][1]
         width, height = IC_WIN_WIDTH_MIN, IC_WIN_HEIGHT_MIN
-        if RES_WIN_SIZE in WinStruct_ and WinStruct_[RES_WIN_SIZE] is not None:
-            width = WinStruct_[RES_WIN_SIZE][0]
-            height = WinStruct_[RES_WIN_SIZE][1]
+        if RES_WIN_SIZE in win_struct and win_struct[RES_WIN_SIZE] is not None:
+            width = win_struct[RES_WIN_SIZE][0]
+            height = win_struct[RES_WIN_SIZE][1]
 
         win_title = ''
-        if RES_WIN_TITLEFUNC in WinStruct_ and \
-           not ic.utils.ic_exec.IsEmptyMethod(WinStruct_[RES_WIN_TITLEFUNC]):
-            win_title = ic.utils.ic_exec.ExecuteMethod(WinStruct_[RES_WIN_TITLEFUNC])
+        if RES_WIN_TITLEFUNC in win_struct and \
+           not ic_exec.IsEmptyMethod(win_struct[RES_WIN_TITLEFUNC]):
+            win_title = ic_exec.ExecuteMethod(win_struct[RES_WIN_TITLEFUNC])
         else:
-            if RES_WIN_TITLE in WinStruct_ and WinStruct_[RES_WIN_TITLE] is not None:
-                win_title = WinStruct_[RES_WIN_TITLE]
+            if RES_WIN_TITLE in win_struct and win_struct[RES_WIN_TITLE] is not None:
+                win_title = win_struct[RES_WIN_TITLE]
 
         # Вызов конструктора предка
-        wx.Frame.__init__(self, id=self._ID, name=self._Name, parent=Parent_,
+        wx.Frame.__init__(self, id=self._ID, name=self._Name, parent=parent,
                           pos=wx.Point(left, top), size=wx.Size(width, height), title=win_title,
                           style=wx.DEFAULT_FRAME_STYLE)
 
         # Вывести на экран окно приглашения к работе
         self._splash = None
-        if RES_WIN_SPLASH in WinStruct_ and WinStruct_[RES_WIN_SPLASH]:
-            self._splash = WinStruct_[RES_WIN_SPLASH]
+        if RES_WIN_SPLASH in win_struct and win_struct[RES_WIN_SPLASH]:
+            self._splash = win_struct[RES_WIN_SPLASH]
                 
         # --- Статусная строка ---
         if self.is_statusbar:
@@ -418,30 +421,30 @@ class icMainWindow(wx.Frame):
         # Установка дополнительных атрибутов окна
         # ...
         # Цвет фона окна
-        if RES_WIN_PHONECOLOR in WinStruct_ and WinStruct_[RES_WIN_PHONECOLOR] is not None:
-            phone_color = wx.Colour(WinStruct_[RES_WIN_PHONECOLOR][ic_color.I_RED],
-                                    WinStruct_[RES_WIN_PHONECOLOR][ic_color.I_GREEN],
-                                    WinStruct_[RES_WIN_PHONECOLOR][ic_color.I_BLUE])
+        if RES_WIN_PHONECOLOR in win_struct and win_struct[RES_WIN_PHONECOLOR] is not None:
+            phone_color = wx.Colour(win_struct[RES_WIN_PHONECOLOR][ic_color.I_RED],
+                                    win_struct[RES_WIN_PHONECOLOR][ic_color.I_GREEN],
+                                    win_struct[RES_WIN_PHONECOLOR][ic_color.I_BLUE])
         else:
             phone_color = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
         # Установить цвет фона
         self.SetBackgroundColour(phone_color)
 
         # Установить иконку (если файл существует)
-        if RES_WIN_ICON in WinStruct_ and WinStruct_[RES_WIN_ICON]:
-            self.setIcon(WinStruct_[RES_WIN_ICON])
+        if RES_WIN_ICON in win_struct and win_struct[RES_WIN_ICON]:
+            self.setIcon(win_struct[RES_WIN_ICON])
 
         # Установить параметры заголовка
-        if RES_WIN_TITLEREADONLY in WinStruct_ and WinStruct_[RES_WIN_TITLEREADONLY] is not None:
-            self._TitleReadOnly = WinStruct_[RES_WIN_TITLEREADONLY]
-        if RES_WIN_TITLEFUNC in WinStruct_ and WinStruct_[RES_WIN_TITLEFUNC] is not None:
-            self._TitleFunc = WinStruct_[RES_WIN_TITLEFUNC]
+        if RES_WIN_TITLEREADONLY in win_struct and win_struct[RES_WIN_TITLEREADONLY] is not None:
+            self._TitleReadOnly = win_struct[RES_WIN_TITLEREADONLY]
+        if RES_WIN_TITLEFUNC in win_struct and win_struct[RES_WIN_TITLEFUNC] is not None:
+            self._TitleFunc = win_struct[RES_WIN_TITLEFUNC]
         
         # Установить параметры бордюра
         style = wx.CAPTION | wx.BORDER
         value = IC_WIN_SIMPLE_BORDER
-        if RES_WIN_BORDER in WinStruct_ and WinStruct_[RES_WIN_BORDER] is not None:
-            value = WinStruct_[RES_WIN_BORDER]
+        if RES_WIN_BORDER in win_struct and win_struct[RES_WIN_BORDER] is not None:
+            value = win_struct[RES_WIN_BORDER]
         if value == IC_WIN_NO_BORDER:
             style |= wx.NO_BORDER
         elif value == IC_WIN_SIMPLE_BORDER:
@@ -455,11 +458,11 @@ class icMainWindow(wx.Frame):
         elif value == IC_WIN_RAISED_BORDER:
             style |= wx.RAISED_BORDER
 
-        if RES_WIN_SYSMENU in WinStruct_ and WinStruct_[RES_WIN_SYSMENU]:
+        if RES_WIN_SYSMENU in win_struct and win_struct[RES_WIN_SYSMENU]:
             style |= wx.SYSTEM_MENU
-        if RES_WIN_MIN in WinStruct_ and WinStruct_[RES_WIN_MIN]:
+        if RES_WIN_MIN in win_struct and win_struct[RES_WIN_MIN]:
             style |= wx.MINIMIZE_BOX
-        if RES_WIN_MAX in WinStruct_ and WinStruct_[RES_WIN_MAX]:
+        if RES_WIN_MAX in win_struct and win_struct[RES_WIN_MAX]:
             style |= wx.MAXIMIZE_BOX
   
         # Возможность изменения размеров
@@ -472,8 +475,8 @@ class icMainWindow(wx.Frame):
         self._h_area_splitter = None
         self._v_area_splitter = None
         self.area_split = False
-        if RES_WIN_AREASPLIT in WinStruct_:
-            self.area_split = bool(WinStruct_[RES_WIN_AREASPLIT])
+        if RES_WIN_AREASPLIT in win_struct:
+            self.area_split = bool(win_struct[RES_WIN_AREASPLIT])
             
         # Панели главного окна
         self.left_panel = None
@@ -483,36 +486,36 @@ class icMainWindow(wx.Frame):
         self.central_panel = None
 
         # --- Объект-содержание главного окна ---
-        content_psp = WinStruct_.get('content', None)
+        content_psp = win_struct.get('content', None)
         if content_psp:
-            self.content_obj = ic.getKernel().Create(content_psp, parent=self)
+            self.content_obj = ickernel.getKernel().Create(content_psp, parent=self)
             log.info(u'Наполнение главного окна <%s>' % self.content_obj)
             self.setCentralPanel(self.content_obj)
 
         # Функция вызываемая каждй раз при отрисовке главного окна.
-        if RES_WIN_PAINT in WinStruct_:
-            self._PaintFunc = WinStruct_[RES_WIN_PAINT]
+        if RES_WIN_PAINT in win_struct:
+            self._PaintFunc = win_struct[RES_WIN_PAINT]
         # Обработчик отрисовки фона главного окна
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_SIZE, self.OnSize)
 
         # Обработчик закрытия главного окна
-        if RES_WIN_CLOSE in WinStruct_:
-            self._OnClose = WinStruct_[RES_WIN_CLOSE]
+        if RES_WIN_CLOSE in win_struct:
+            self._OnClose = win_struct[RES_WIN_CLOSE]
 
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
         # Обработчик открытия главного окна
-        if RES_WIN_OPEN in WinStruct_:
-            self._OnOpen = WinStruct_[RES_WIN_OPEN]
+        if RES_WIN_OPEN in win_struct:
+            self._OnOpen = win_struct[RES_WIN_OPEN]
 
         self.Bind(wx.EVT_SHOW, self.OnOpen)
 
         # СОбытия органайзера
-        if RES_WIN_ORG_OPEN in WinStruct_:
-            self._OnOrgOpen = WinStruct_[RES_WIN_ORG_OPEN]
-        if RES_WIN_ORG_CLOSE in WinStruct_:
-            self._OnOrgClose = WinStruct_[RES_WIN_ORG_CLOSE]
+        if RES_WIN_ORG_OPEN in win_struct:
+            self._OnOrgOpen = win_struct[RES_WIN_ORG_OPEN]
+        if RES_WIN_ORG_CLOSE in win_struct:
+            self._OnOrgClose = win_struct[RES_WIN_ORG_CLOSE]
 
         # Запустить обработку переразмеривания всех дочерних компонентов
         # главного окна для корректного отображения
@@ -524,7 +527,7 @@ class icMainWindow(wx.Frame):
         """
         # Вывести на экран окно приглашения к работе
         if self._splash:
-            splash_window.showSplash(ic.utils.ic_file.AbsolutePath(self._splash))
+            splash_window.showSplash(ic_file.AbsolutePath(self._splash))
 
     def getIconFilename(self):
         """
@@ -534,18 +537,18 @@ class icMainWindow(wx.Frame):
         """
         icon = self.resource.get(RES_WIN_ICON, None) if hasattr(self, 'resource') else None
         if icon and isinstance(icon, str):
-            return ic.utils.ic_file.AbsolutePath(icon)
+            return ic_file.AbsolutePath(icon)
         else:
             log.warning(u'Не определена иконка главного окна')
         return None
 
-    def setIcon(self, Icon_):
+    def setIcon(self, icon):
         """
         Установить иконку.
-        @param Icon_: Или имя файла *.ico или объект wx.Icon.
+        @param icon: Или имя файла *.ico или объект wx.Icon.
         """
-        if isinstance(Icon_, str):
-            ico_file_name = ic.utils.ic_file.AbsolutePath(Icon_)
+        if isinstance(icon, str):
+            ico_file_name = ic_file.AbsolutePath(icon)
             # Установить иконку (если файл существует)
             if os.path.exists(ico_file_name):
                 try:
@@ -556,10 +559,10 @@ class icMainWindow(wx.Frame):
             else:
                 log.warning(u'Иконка главного окна <%s> не найдена' % ico_file_name)
                 return None
-        elif isinstance(Icon_, wx.Icon):
-            icon = Icon_
+        elif isinstance(icon, wx.Icon):
+            icon = icon
         else:
-            log.warning(u'Не обрабатываемый тип иконки <%s>' % Icon_)
+            log.warning(u'Не обрабатываемый тип иконки <%s>' % icon)
             return None
         self.SetIcon(icon)
         return icon
@@ -575,7 +578,7 @@ class icMainWindow(wx.Frame):
                 # Если главный органайзер не отображается в данный момент,
                 # то выпольнить функцию отрисовки
                 if (self._MainNotebook is None) or not self._MainNotebook.IsShown():
-                    ic.utils.ic_exec.ExecuteMethod(self._PaintFunc, self)
+                    ic_exec.ExecuteMethod(self._PaintFunc, self)
 
             # ВНИМАНИЕ!!! НЕОБХОДИМО ОБЯЗАТЕЛЬНО СТАВИТЬ event.Skip()
             #   ИНАЧЕ УЖАСНО ГЛЮЧИТ!!!!
@@ -630,9 +633,9 @@ class icMainWindow(wx.Frame):
 
         try:
             ok = True
-            if not ic.utils.ic_exec.IsEmptyMethod(self._OnOpen) and \
+            if not ic_exec.IsEmptyMethod(self._OnOpen) and \
                 not self._is_opened:
-                ok = ic.utils.ic_exec.ExecuteMethod(self._OnOpen, self)
+                ok = ic_exec.ExecuteMethod(self._OnOpen, self)
                 self._is_opened = True
             if ok:  # Обычное открытие окна
                 event.Skip()
@@ -654,8 +657,8 @@ class icMainWindow(wx.Frame):
                         
         try:
             ok = True
-            if not ic.utils.ic_exec.IsEmptyMethod(self._OnClose):
-                ok = ic.utils.ic_exec.ExecuteMethod(self._OnClose, self)
+            if not ic_exec.IsEmptyMethod(self._OnClose):
+                ok = ic_exec.ExecuteMethod(self._OnClose, self)
             if ok:  # Обычное закрытие окна
                 if self._MainNotebook:
                     self.DelOrg()
@@ -702,43 +705,43 @@ class icMainWindow(wx.Frame):
         ext_prg.run_external_programm()
         event.Skip()
 
-    def SetICTitle(self, Title_=''):
+    def SetICTitle(self, title=''):
         """
         Установить заголовок.
         """
-        if Title_ != '':
+        if title != '':
             if self._TitleReadOnly == 0:
-                self.SetTitle(Title_)
+                self.SetTitle(title)
         else:
             if self._TitleReadOnly == 0 and self._TitleFunc != {}:
-                new_title = ic.utils.ic_exec.ExecuteMethod(self._TitleFunc, self)
+                new_title = ic_exec.ExecuteMethod(self._TitleFunc, self)
                 if new_title != '' and new_title is not None:
                     self.SetTitle(new_title)
 
-    def SetTitleFunc(self, TitleFunc_):
+    def SetTitleFunc(self, title_func):
         """
         Установить метод заполнения заголовка.
-        @param TitleFunc_: Словарь функции метода заполнения заголовка.
+        @param title_func: Словарь функции метода заполнения заголовка.
         """
-        self._TitleFunc = TitleFunc_
+        self._TitleFunc = title_func
 
     def RefreshTitle(self):
         """
         Обновить заголовок.
         """
         try:
-            if not ic.utils.ic_exec.IsEmptyMethod(self._TitleFunc):
-                win_title = ic.utils.ic_exec.ExecuteMethod(self._TitleFunc)
+            if not ic_exec.IsEmptyMethod(self._TitleFunc):
+                win_title = ic_exec.ExecuteMethod(self._TitleFunc)
                 self.SetTitle(win_title)
                 self.Refresh()
         except:
             log.fatal(u'Ошибка выполнения функции обновления заголовка главного окна.')
 
-    def SetTitleReadOnly(self, TitleReadOnly_):
+    def SetTitleReadOnly(self, bTitleReadOnly):
         """
         Установить Флаг разрешения/запрещения изменения заголовка окна.
         """
-        self._TitleReadOnly = TitleReadOnly_
+        self._TitleReadOnly = bTitleReadOnly
 
     def GetMainNotebook(self):
         """
@@ -760,21 +763,22 @@ class icMainWindow(wx.Frame):
         self.Show(False)
 
     # --- Методы управления панелями главного окна ---
-    def AddOrgPage(self, Page_, Title_, OpenExists_=False, Image_=None,
-                   CanClose_=True, OpenScript_=None, CloseScript_=None, DefaultPage_=-1):
+    def AddOrgPage(self, page, title, open_exists=False, image=None,
+                   bCanClose=True, open_script=None, close_script=None,
+                   default_page=-1):
         """
         Добавить страницу.
-        @param Page_: Страница-объект наследник wx.Window.
-        @param Title_: Заголовок страницы.
-        @param OpenExists_: Если страница уже создана-открыть ее.
-        @param Image_: Файл образа или сам образ в заголовке страницы.
-        @param CanClose_: Признак разрешения закрытия страницы при помощи
+        @param page: Страница-объект наследник wx.Window.
+        @param title: Заголовок страницы.
+        @param open_exists: Если страница уже создана-открыть ее.
+        @param image: Файл образа или сам образ в заголовке страницы.
+        @param bCanClose: Признак разрешения закрытия страницы при помощи
             стандартного всплывающего меню.
-        @param OpenScript_: Блок кода открытия страницы при переключенни
+        @param open_script: Блок кода открытия страницы при переключенни
             м/у страницами.
-        @param CloseScript_: Блок кода закрытия страницы при переключенни
+        @param close_script: Блок кода закрытия страницы при переключенни
             м/у страницами.
-        @param DefaultPage_: Индекс страницы,  открываемой по умолчанию.
+        @param default_page: Индекс страницы,  открываемой по умолчанию.
             Если -1, то открывается текущая добавляемая страница.
         """
         if self.content_obj is not None:
@@ -791,9 +795,9 @@ class icMainWindow(wx.Frame):
                 else:
                     self._MainNotebook = icnotebook.icMainNotebook(self)
             # Добавить страницу
-            return self._MainNotebook.addPage(Page_, Title_, OpenExists_,
-                                              Image_, CanClose_, OpenScript_,
-                                              CloseScript_, DefaultPage_)
+            return self._MainNotebook.addPage(page, title, open_exists,
+                                              image, bCanClose, open_script,
+                                              close_script, default_page)
         except:
             log.fatal(u'Ошибка добавления страницы в главное окно.')
             return None
@@ -801,10 +805,10 @@ class icMainWindow(wx.Frame):
     # Можно использовать и другое наименование метода
     AddPage = AddOrgPage
 
-    def DelOrgPage(self, Index_):
+    def DelOrgPage(self, page_index):
         """
         Удалить страницу.
-        @param Index_: Индекс страницы.
+        @param page_index: Индекс страницы.
         """
         if self.content_obj is not None:
             log.warning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
@@ -813,7 +817,7 @@ class icMainWindow(wx.Frame):
             # --- Объект главного менеджера системных панелей ---
             if self._MainNotebook is None:
                 return
-            self._MainNotebook.deletePage(Index_)
+            self._MainNotebook.deletePage(page_index)
             # Если страниц в органайзере больше нет, тогда удалить его из окна
             if self._MainNotebook.GetPageCount() == 0:
                 self.DelOrg()
@@ -871,10 +875,10 @@ class icMainWindow(wx.Frame):
         try:
             if self.area_split:
                 # Вертикальный сплиттер
-                self._v_area_splitter = MultiSplitterWindow(self, style=wx.SP_LIVE_UPDATE)
+                self._v_area_splitter = wx.lib.splitter.MultiSplitterWindow(self, style=wx.SP_LIVE_UPDATE)
                 self._v_area_splitter.SetOrientation(wx.VERTICAL)
                 # Горизонтальный сплиттер
-                self._h_area_splitter = MultiSplitterWindow(self._v_area_splitter, style=wx.SP_LIVE_UPDATE)
+                self._h_area_splitter = wx.lib.splitter.MultiSplitterWindow(self._v_area_splitter, style=wx.SP_LIVE_UPDATE)
                 self._h_area_splitter.SetOrientation(wx.HORIZONTAL)
                 self._insPanel(self._v_area_splitter, 1, self._h_area_splitter)
 
@@ -913,56 +917,56 @@ class icMainWindow(wx.Frame):
             log.fatal(u'Ошибка удаления разделителя областей.')
             return False
         
-    def _insPanel(self, Splitter_, Index_, Panel_):
+    def _insPanel(self, splitter, index, panel):
         """
         Установить панель.
-        @param Splitter_: Сплиттер, в который будет устанавливаться панель.
-        @param Index_: Индекс в сплиттере.
-        @param Panel_: Объект панели. Наследник от wx.Window.
+        @param splitter: Сплиттер, в который будет устанавливаться панель.
+        @param index: Индекс в сплиттере.
+        @param panel: Объект панели. Наследник от wx.Window.
         @return: Возвращает True/False.
         """
         try:
-            if Splitter_ is None:
+            if splitter is None:
                 return False
             
-            win_count = len(Splitter_._windows)
+            win_count = len(splitter._windows)
             win = None
-            if Index_ < win_count:
-                win = Splitter_.GetWindow(Index_)
+            if index < win_count:
+                win = splitter.GetWindow(index)
                 
             if win:
-                Splitter_.ReplaceWindow(win, Panel_)
+                splitter.ReplaceWindow(win, panel)
             else:
-                if Index_ >= win_count:
-                    for i in range(win_count, Index_):
-                        Splitter_.AppendWindow(wx.Panel(Splitter_, -1), 0)
-                    Splitter_.AppendWindow(Panel_)
+                if index >= win_count:
+                    for i in range(win_count, index):
+                        splitter.AppendWindow(wx.Panel(splitter, -1), 0)
+                    splitter.AppendWindow(panel)
                 else:
-                    Splitter_.InsertWindow(Index_, Panel_, sashPos=-1)
+                    splitter.InsertWindow(index, panel, sashPos=-1)
                     
             return True
         except:
             log.fatal(u'Ошибка установки панели в разделитель областей.')
             return False
 
-    def _delPanel(self, Splitter_, Index_):
+    def _delPanel(self, splitter, index):
         """
         Удалить из области панель с указанным индексом.
-        @param Splitter_: Сплиттер, в который устанавленна панель.
-        @param Index_: Индекс в сплиттере.
+        @param splitter: Сплиттер, в который устанавленна панель.
+        @param index: Индекс в сплиттере.
         @return: Возвращает True/False.
         """
         try:
-            if Splitter_ is None:
+            if splitter is None:
                 return False
                 
-            win_count = len(Splitter_._windows)
+            win_count = len(splitter._windows)
             win = None
-            if Index_ < win_count:
-                win = Splitter_.GetWindow(Index_)
+            if index < win_count:
+                win = splitter.GetWindow(index)
                 
             if win:
-                Splitter_.DetachWindow(win)
+                splitter.DetachWindow(win)
                 win.Destroy()
             return True
         except:
@@ -1005,14 +1009,14 @@ class icMainWindow(wx.Frame):
             return self.right_panel
         return None
         
-    def setRightPanel(self, Panel_):
+    def setRightPanel(self, panel):
         """
         Установить правую панель.
         """
         if self._v_area_splitter is None or self._h_area_splitter is None:
             self._createAreaSplitter()
 
-        self.right_panel = Panel_
+        self.right_panel = panel
         return self._insPanel(self._h_area_splitter, 2, self.right_panel)
         
     def delRightPanel(self):
@@ -1033,14 +1037,14 @@ class icMainWindow(wx.Frame):
             return self.top_panel
         return None
         
-    def setTopPanel(self, Panel_):
+    def setTopPanel(self, panel):
         """
         Установить верхнюю панель.
         """
         if self._v_area_splitter is None or self._h_area_splitter is None:
             self._createAreaSplitter()
 
-        self.top_panel = Panel_
+        self.top_panel = panel
         return self._insPanel(self._v_area_splitter, 0, self.top_panel)
         
     def delTopPanel(self):
@@ -1061,14 +1065,14 @@ class icMainWindow(wx.Frame):
             return self.bottom_panel
         return None
 
-    def setBottomPanel(self, Panel_):
+    def setBottomPanel(self, panel):
         """
         Установить нижнюю панель.
         """
         if self._v_area_splitter is None or self._h_area_splitter is None:
             self._createAreaSplitter()
 
-        self.bottom_panel = Panel_
+        self.bottom_panel = panel
         return self._insPanel(self._v_area_splitter, 2, self.bottom_panel)
         
     def delBottomPanel(self):
@@ -1089,14 +1093,14 @@ class icMainWindow(wx.Frame):
             return self.central_panel
         return None
 
-    def setCentralPanel(self, Panel_):
+    def setCentralPanel(self, panel):
         """
         Установить центральную панель.
         """
         if self._v_area_splitter is None or self._h_area_splitter is None:
             self._createAreaSplitter()
 
-        self.central_panel = Panel_
+        self.central_panel = panel
         return self._insPanel(self._h_area_splitter, 1, self.central_panel)
         
     def delCentralPanel(self):
@@ -1109,12 +1113,12 @@ class icMainWindow(wx.Frame):
         self.central_panel = None
         return self._delPanel(self._h_area_splitter, 1)
 
-    def setMenuBar(self, MenuBar_):
+    def setMenuBar(self, menubar):
         """
         Установить горизонтальное меню.
         """
         try:
-            self.SetMenuBar(MenuBar_)
-            MenuBar_.Refresh()
+            self.SetMenuBar(menubar)
+            menubar.Refresh()
         except:
-            log.fatal(u'Ошибка установки горизонтального меню <%s> в главное окно.' % MenuBar_)
+            log.fatal(u'Ошибка установки горизонтального меню <%s> в главное окно.' % menubar)

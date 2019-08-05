@@ -11,7 +11,7 @@ try:
 except:
     from ic.std.log import log
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 RANGE_ROW_IDX = 0
 RANGE_COL_IDX = 1
@@ -400,11 +400,11 @@ class icVRow(icprototype.icVIndexedPrototype, icVRange):
         # Базисная ячейка
         self._basis_cell = None
 
-#     def setIndex(self,Index_):
+#     def setIndex(self, index):
 #         """
 #         Индекс строки в таблице.
 #         """
-#         self._attributes['Index']=str(Index_)
+#         self._attributes['Index']=str(index)
 
     def setHeight(self, Height_):
         """

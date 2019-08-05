@@ -71,7 +71,7 @@ def icOpenResFile(ResFileName_):
     """
     Загрузить информацию из файла ресурсов в память.
     @param ResFileName_: имя файла ресурсов.
-    @return: Возвращает словарь Python из файла ResFileName_
+    @return: Возвращает словарь Python из файла res_filename
     """
     global CUR_MENU_RES_FILE_NAME
     global CUR_MENU_RES_FILE
@@ -115,7 +115,7 @@ __version__ = (0, 0, 0, 1)
 
 def CreateInitFile(Path_):
     """
-    Создает файл __init__.py в директории Path_ если его там нет.
+    Создает файл __init__.py в директории path если его там нет.
     @return: Возвращает True, если файл был создан или уже есть.
     """
     if not Path_:

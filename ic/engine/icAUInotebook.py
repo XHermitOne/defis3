@@ -22,7 +22,7 @@ class icAUINotebook(aui.AuiNotebook):
     def __init__(self, Parent_):
         """
         Конструктор.
-        @param: Parent_: Родительское окно.
+        @param: parent: Родительское окно.
         """
         aui.AuiNotebook.__init__(self, Parent_)
         
@@ -103,6 +103,6 @@ class icAUIMainNotebook(icAUINotebook):
     def __init__(self, Parent_):
         """
         Конструктор.
-        @param: Parent_: Родительское окно.
+        @param: parent: Родительское окно.
         """
         icAUINotebook.__init__(self, Parent_)

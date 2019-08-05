@@ -771,7 +771,7 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
             если код не выбран.
         """
         if RunSelectedCodeFunc_:
-            kwargs['Value_'] = Value_
+            kwargs['value'] = Value_
             result = self.setSelectedCodeFunc(*args, **kwargs)
             if result:
                 return result

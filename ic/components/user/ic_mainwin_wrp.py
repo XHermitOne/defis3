@@ -27,7 +27,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-import ic.engine.ic_win as ic_win
+import ic.engine.main_window as ic_win
 from ic.engine import ic_user
 from ic.utils import coderror
 from ic.dlg import ic_dlg
@@ -173,7 +173,7 @@ class icMainWindow(icwidget.icSimple, ic_win.icMainWindow):
             main_win_parent = parent
         
         ic_win.icMainWindow.__init__(self, component['name'], component,
-                                     Parent_=main_win_parent, Runner_=ic_user.icGetRunner())
+                                     parent=main_win_parent, engine=ic_user.icGetRunner())
 
         # Дополнительный функционал инициализации
         if component.get('init_expr', None):

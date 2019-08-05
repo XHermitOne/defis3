@@ -309,7 +309,7 @@ def _syncSprav(Type_,Cod_,Name_):
         nsi.refreshSpravBuffRepl(Type_)
 #    else:
 #        s_name=s_name.strip()
-#        name_=Name_.strip()
+#        name_=name.strip()
 #        if s_name<>name_ and name_:
 #            #Изменилось название
 #            #Надо синхронизировать со справочником

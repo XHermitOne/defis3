@@ -12,7 +12,7 @@ except ImportError:
     # Если Virtual Excel работает в окружении ic
     from ic.log import log
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 class icVCell(icprototype.icVIndexedPrototype):
@@ -400,7 +400,7 @@ class icVData(icprototype.icVPrototype):
             val_type = DEFAULT_PERCENTAGE_TYPE
         elif type(Value_) in (int, float):
             val_type = DEFAULT_NUMBER_TYPE
-        # elif isinstance(Value_, str):
+        # elif isinstance(value, str):
         #    val = val.encode(self.getApp().encoding)
         
         # Обработка формул

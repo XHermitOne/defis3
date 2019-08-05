@@ -64,7 +64,7 @@ class icAUIPanePrototype:
     def __init__(self, Parent_, Resource_):
         """
         Конструктор.
-        @param: Parent_: Родительское окно.
+        @param: parent: Родительское окно.
         @param Resource_: Ресурс объекта.
         """
         self._Parent = Parent_

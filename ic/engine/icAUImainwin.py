@@ -14,7 +14,7 @@ from wx.lib.agw import aui
 from ic.log import log
 from ic.utils import util
 
-from . import ic_win
+from . import main_window
 from . import icAUImanager
 from . import icAUInotebook
 from . import ic_user
@@ -53,7 +53,7 @@ SPC_IC_AUIMAINWIN = {'is_main_notebook': True,  # Присутствует в г
                      # Градиент заголовков AUI панелей
                      'pane_gradient': 'Horizontal',
     
-                     '__parent__': ic_win.SPC_IC_WIN,
+                     '__parent__': main_window.SPC_IC_WIN,
                      '__attr_hlp__': {'is_main_notebook': u'Присутствует в главном окне нотебук?',
                                       'is_menubar': u'Присутствует в главном окне меню?',
                                       'is_statusbar': u'Присутствует в главном окне статусная строка?',
@@ -69,7 +69,7 @@ SPC_IC_AUIMAINWIN = {'is_main_notebook': True,  # Присутствует в г
                      }
 
 
-class icAUIMainWinPrototype(ic_win.icMainWindow):
+class icAUIMainWinPrototype(main_window.icMainWindow):
     """
     Главное окно. Технология AUI.
     """
@@ -81,7 +81,7 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
         """
         Resource_ = util.icSpcDefStruct(SPC_IC_AUIMAINWIN, Resource_)
 
-        ic_win.icMainWindow.__init__(self, Resource_['name'], Resource_)
+        main_window.icMainWindow.__init__(self, Resource_['name'], Resource_)
 
         # AUI Менеджер
         self.aui_manager = icAUImanager.icAUIManager(self)
@@ -176,10 +176,10 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
             # 1 раз при открытии. Этим он отличается от
             # обработчика OnShow
             try:
-                if self.isICAttrValue(ic_win.RES_WIN_OPEN):
+                if self.isICAttrValue(main_window.RES_WIN_OPEN):
                     self.evalSpace['evt'] = event
                     self.evalSpace['event'] = event
-                    self.eval_attr(ic_win.RES_WIN_OPEN)
+                    self.eval_attr(main_window.RES_WIN_OPEN)
             except:
                 log.error(u'Ошибка открытия главного окна')
             self._is_opened = True
@@ -193,10 +193,10 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
         закрытия
         """
         try:
-            if self.isICAttrValue(ic_win.RES_WIN_CLOSE):
+            if self.isICAttrValue(main_window.RES_WIN_CLOSE):
                 self.evalSpace['evt'] = event
                 self.evalSpace['event'] = event
-                result = self.eval_attr(ic_win.RES_WIN_CLOSE)
+                result = self.eval_attr(main_window.RES_WIN_CLOSE)
                 if result and not result[1]:
                     # Не нажато подтверждение выхода из главного окна
                     log.warning(u'Условия корректного выхода из программы не подтверждены')
@@ -254,26 +254,26 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
     def OnPaint(self, evt):
         evt.Skip()
         
-    def AddOrgPage(self, Page_, Title_, OpenExists_=False, Image_=None,
-                   CanClose_=True, OpenScript_=None, CloseScript_=None, DefaultPage_=-1,
+    def AddOrgPage(self, Page_, title, open_exists=False, image=None,
+                   bCanClose=True, open_script=None, close_script=None, default_page=-1,
                    not_duplicate=True):
         """
         Добавить страницу.
         @param Page_: Страница-объект наследник wx.Window.
-        @param Title_: Заголовок страницы.
-        @param OpenExists_: Если страница уже создана-открыть ее.
-        @param Image_: Файл образа или сам образ в заголовке страницы.
-        @param CanClose_: Признак разрешения закрытия страницы при помощи
+        @param title: Заголовок страницы.
+        @param open_exists: Если страница уже создана-открыть ее.
+        @param image: Файл образа или сам образ в заголовке страницы.
+        @param bCanClose: Признак разрешения закрытия страницы при помощи
             стандартного всплывающего меню.
-        @param OpenScript_: Блок кода открытия страницы при переключенни
+        @param open_script: Блок кода открытия страницы при переключенни
             м/у страницами.
-        @param CloseScript_: Блок кода закрытия страницы при переключенни
+        @param close_script: Блок кода закрытия страницы при переключенни
             м/у страницами.
-        @param DefaultPage_: Индекс страницы,  открываемой по умолчанию.
+        @param default_page: Индекс страницы,  открываемой по умолчанию.
             Если -1, то открывается текущая добавляемая страница.
         @param not_dublicate: Не открывать страницу с таким же именем?
         """
-        select = DefaultPage_ == -1
+        select = default_page == -1
         if isinstance(Page_, str):
             res_name, res_ext = os.path.splitext(Page_)
             # По умолчанию ресурс форм: *.frm
@@ -285,21 +285,21 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
             page_parent = main_notebook if main_notebook else self
             Page_ = icResourceParser.icCreateObject(res_name, res_ext[1:],
                                                     parent=page_parent)
-        return self.addMainNotebookPage(Page_, Title_, select, Image_, not_dublicate=not_duplicate)
+        return self.addMainNotebookPage(Page_, title, select, image, not_dublicate=not_duplicate)
 
     # Можно использовать и другое наименование метода
     AddPage = AddOrgPage
 
-    def DelOrgPage(self, Index_):
+    def DelOrgPage(self, page_index):
         """
         Удалить страницу.
-        @param Index_: Индекс страницы.
+        @param page_index: Индекс страницы.
         """
         try:
             # Объект главного менеджера системных панелей
             if self._MainNotebook is None:
                 return None
-            self._MainNotebook.deletePage(Index_)
+            self._MainNotebook.deletePage(page_index)
             return self._MainNotebook
         except:
             log.error(u'Ошибка удаления страницы из органайзера.')
@@ -399,9 +399,9 @@ class icAUIMainWinPrototype(ic_win.icMainWindow):
         pane = self.GetChildByName(PaneName_)
         return pane.showControl(PageObj_)
 
-    def setMenuBar(self,MenuBar_):
+    def setMenuBar(self, menubar):
         """
         Установить горизонтальное меню.
         """
-        if issubclass(MenuBar_.__class__, icmenubar.icMenuBar):
-            ic_win.icMainWindow.setMenuBar(self, MenuBar_)
+        if issubclass(menubar.__class__, icmenubar.icMenuBar):
+            main_window.icMainWindow.setMenuBar(self, menubar)

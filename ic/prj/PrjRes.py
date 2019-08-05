@@ -781,7 +781,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         
     def isImpSubSys(self, Name_):
         """
-        Проверить, является ли Name_ именем импортируемой подсистемы.
+        Проверить, является ли name именем импортируемой подсистемы.
         @param Name_: Имя некого ресурса.
         @return: Возвращает True/False.
         """
@@ -792,7 +792,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         Возвращает индекс импортируемой подсистемы по имени.
         @param Name_: Имя подсистемы.
         @return: Индекс в структуре ресурсного файла импортируемой подсистемы
-            с именем Name_ или -1, если такая подсистема в описании не найдена.
+            с именем name или -1, если такая подсистема в описании не найдена.
         """
         find_idx = -1
         try:

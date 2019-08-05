@@ -34,24 +34,24 @@ _ = wx.GetTranslation
 _SubSysFuncs = {'install': '''def install(RootPrjTree_):
     \"\"\"
     Функция, выполняющаяся при подключении импортируемой подсистемы.
-    @param Runner_: Указатель на основной движок системы.
+    @param engine: Указатель на основной движок системы.
     \"\"\"
     pass
     ''',
                 'deinstall': '''def deinstall(RootPrjTree_):
     \"\"\"
     Функция, выполняющаяся при отключении импортируемой подсистемы.
-    @param Runner_: Указатель на основной движок системы.
+    @param engine: Указатель на основной движок системы.
     \"\"\"
     pass
     ''',
-                'initialize': '''def inittialize(Runner_):
+                'initialize': '''def inittialize(engine):
     \"\"\"
     Функция, выполняющаяся при инициализации импортируемой подсистемы.
     \"\"\"
     pass
     ''',
-                'deinitialize': '''def deinittialize(Runner_):
+                'deinitialize': '''def deinittialize(engine):
     \"\"\"
     Функция, выполняющаяся при деинициализации импортируемой подсистемы.
     \"\"\"

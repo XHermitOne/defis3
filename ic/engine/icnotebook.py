@@ -140,7 +140,7 @@ class icMainNotebook(wx.Notebook):
         """
         try:
             # Удалить картинку прикрепленную к этой странице ОБЯЗАТЕЛЬНО!!!
-            # self._img_list.Remove(Index_)
+            # self._img_list.Remove(page_index)
             # Обязательно поменять выделенную страницу!!!
             self.AdvanceSelection()
             # Очистить окно страницы

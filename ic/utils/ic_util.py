@@ -98,7 +98,7 @@ def getAttrValue(AttrName_, SPC_):
 
 def getStrInQuotes(Value_):
     """
-    Если Value_ - строка то обрамляет ее одинарными кавычками, если нет,
+    Если value - строка то обрамляет ее одинарными кавычками, если нет,
     то просто преабразует в строку.
     """
     if isinstance(Value_, str):
