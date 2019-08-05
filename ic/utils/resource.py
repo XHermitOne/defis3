@@ -12,17 +12,17 @@ import os
 import os.path
 import copy
 import wx
+import importlib.util
 
 from ic.dlg import ic_dlg
 from ic.log import log
-from ic.imglib import common
 from . import lock
 from ic.PropertyEditor import icDefInf
 import ic.storage.storesrc
 from . import util
 from ic.engine import ic_user
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 _ = wx.GetTranslation
 
@@ -211,7 +211,9 @@ def icGetICPath():
     """
     Возвращает путь до пакета ic.
     """
-    return common.icpath
+    ic_spec = importlib.util.find_spec('ic')
+    ic_path = os.path.dirname(ic_spec.origin)
+    return ic_path
 
 
 def icGetUserClassesPath():

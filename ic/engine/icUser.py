@@ -788,12 +788,12 @@ class icLoginManager(object):
         """
         Конструктор.
         """
-        from . import loader
+        from . import db_res_load_manager
 
         # Журнал регистрации пользователей
         self._reg_user_journal = user_journal.icRegUserJournal(RegUserJrnFileName_)
         # Инициализируем менеджера загрузки ресурса
-        self._loader = loader_ or loader.icLoader()
+        self._loader = loader_ or db_res_load_manager.icDBResLoadManager()
         self._users_resource = None
         ic_user.icLet('LOADER', self._loader)
         users_res_file_name = ic_file.PathFile(ic_user.icGet('SYS_RES'), UsersResFileName_)

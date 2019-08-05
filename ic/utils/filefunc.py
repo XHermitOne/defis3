@@ -292,7 +292,7 @@ def removeFile(filename):
     try:
         if not os.path.exists(filename):
             log.warning(u'Удаление: файл <%s> не существует' % filename)
-            return None
+            return False
 
         os.remove(filename)
         return True

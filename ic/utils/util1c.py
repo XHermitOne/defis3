@@ -8,9 +8,11 @@
 import types
 import os
 import os.path
-import imp
+# import imp
 import wx
 
+from . import util
+from . import ic_str
 
 __version__ = (0, 1, 1, 1)
 
@@ -18,53 +20,53 @@ __version__ = (0, 1, 1, 1)
 DEFAULT_PADDING = '....'
 
 
-def StructToTxt(Struct_, Level_=0, PADDING=DEFAULT_PADDING):
-    """ 
-    Перевод словарно-списковой структуры в форматированный текст.
-    @param Struct_ : словарно-списковая структура.
-    @param Level_: уровень вложенности (д.б. 0).
-    """
-    try:
-        txt = ''
-        obj_type = type(Struct_)
-        if isinstance(obj_type, list):
-            txt = txt+'\n'+Level_*PADDING+'[\n'
-            for obj in Struct_:
-                txt += Level_*PADDING
-                txt += StructToTxt(obj, Level_+1, PADDING)
-                txt += ',\n'
-            if len(Struct_) != 0:
-                txt = txt[:-2]
-            txt = txt+'\n'+Level_*PADDING+']'
-        elif isinstance(obj_type, dict):
-            txt = txt+'\n'+Level_*PADDING+'{\n'
-            keys = Struct_.keys()
-            values = Struct_.values()
-            for key in keys:
-                txt = txt+Level_*PADDING+'\''+key+'\':'
-                txt += StructToTxt(Struct_[key], Level_+1, PADDING)
-                txt += ',\n'
-            if len(keys) != 0:
-                txt = txt[:-2]
-            txt = txt+'\n'+Level_*PADDING+'}'
-        elif isinstance(obj_type, str):
-            # Появляется косяк с разделителем папок в именах путей
-            # Проверка на кавычки
-            txt = txt+'\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
-        # elif isinstance(obj_type, unicode):
-        #     # Появляется косяк с разделителем папок в именах путей
-        #     # Проверка на кавычки
-        #     txt = txt+'u\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
-        else:
-            txt += str(Struct_)
-
-        # Убрать первый перевод каретки
-        if txt[0] == '\n' and (not Level_):
-            txt = txt[1:]
-        return txt
-    except:
-        print('ERROR! Level: <%d>' % Level_)
-        raise
+# def StructToTxt(Struct_, Level_=0, PADDING=DEFAULT_PADDING):
+#     """
+#     Перевод словарно-списковой структуры в форматированный текст.
+#     @param Struct_ : словарно-списковая структура.
+#     @param Level_: уровень вложенности (д.б. 0).
+#     """
+#     try:
+#         txt = ''
+#         obj_type = type(Struct_)
+#         if isinstance(obj_type, list):
+#             txt = txt+'\n'+Level_*PADDING+'[\n'
+#             for obj in Struct_:
+#                 txt += Level_*PADDING
+#                 txt += StructToTxt(obj, Level_+1, PADDING)
+#                 txt += ',\n'
+#             if len(Struct_) != 0:
+#                 txt = txt[:-2]
+#             txt = txt+'\n'+Level_*PADDING+']'
+#         elif isinstance(obj_type, dict):
+#             txt = txt+'\n'+Level_*PADDING+'{\n'
+#             keys = Struct_.keys()
+#             values = Struct_.values()
+#             for key in keys:
+#                 txt = txt+Level_*PADDING+'\''+key+'\':'
+#                 txt += StructToTxt(Struct_[key], Level_+1, PADDING)
+#                 txt += ',\n'
+#             if len(keys) != 0:
+#                 txt = txt[:-2]
+#             txt = txt+'\n'+Level_*PADDING+'}'
+#         elif isinstance(obj_type, str):
+#             # Появляется косяк с разделителем папок в именах путей
+#             # Проверка на кавычки
+#             txt = txt+'\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
+#         # elif isinstance(obj_type, unicode):
+#         #     # Появляется косяк с разделителем папок в именах путей
+#         #     # Проверка на кавычки
+#         #     txt = txt+'u\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
+#         else:
+#             txt += str(Struct_)
+#
+#         # Убрать первый перевод каретки
+#         if txt[0] == '\n' and (not Level_):
+#             txt = txt[1:]
+#         return txt
+#     except:
+#         print('ERROR! Level: <%d>' % Level_)
+#         raise
 
 
 def ValueIndexPath(List_, Value_, Idx_=None):
@@ -133,7 +135,8 @@ def getModuleDoc(ModuleFileName_):
     module_name = None
     try:
         module_name = os.path.splitext(os.path.basename(ModuleFileName_))[0]
-        module = imp.load_source(module_name, ModuleFileName_)
+        # module = imp.load_source(module_name, ModuleFileName_)
+        module = util.icLoadSource(module_name, ModuleFileName_)
         if hasattr(module, '__doc__'):
             if wx.Platform == '__WXGTK__':
                 return module.__doc__
@@ -174,12 +177,12 @@ def encodeText(Text_, SrcCP_=None, DstCP_='utf-8'):
 
     if isinstance(Text_, str):
         if (SrcCP_ is not None) and (SrcCP_.lower() != 'unicode'):
-            txt = unicode(Text_, SrcCP_)
+            txt = str(Text_, encoding=SrcCP_)
         else:
-            txt = unicode(Text_, 'utf-8')
+            txt = str(Text_, encoding='utf-8')
         
-    elif isinstance(Text_, unicode):
-        txt = Text_
+    # elif isinstance(Text_, str):
+    #     txt = Text_
         
     return txt.encode(DstCP_)
 
@@ -205,7 +208,7 @@ def listStrRecode(List_, SrcCP_, DstCP_):
         elif isinstance(List_[i], tuple):
             # Елемент списка - кортеж
             value = tupleStrRecode(List_[i], SrcCP_, DstCP_)
-        elif isinstance(List_[i], str) or isinstance(List_[i], unicode):
+        elif isinstance(List_[i], str):
             value = encodeText(List_[i], SrcCP_, DstCP_)
         else:
             value = List_[i]
@@ -252,7 +255,7 @@ def dictStrRecode(Dict_, SrcCP_, DstCP_):
         elif isinstance(value, tuple):
             # Елемент - кортеж
             Dict_[new_key] = tupleStrRecode(value, SrcCP_, DstCP_)
-        elif isinstance(value, str) or isinstance(value, unicode):
+        elif isinstance(value, str):
             Dict_[new_key] = encodeText(value, SrcCP_, DstCP_)
 
     return Dict_
@@ -292,7 +295,7 @@ def structStrRecode(Struct_, SrcCP_, DstCP_):
     elif isinstance(Struct_, tuple):
         # Кортеж
         struct = tupleStrRecode(Struct_, SrcCP_, DstCP_)
-    elif isinstance(Struct_, str) or isinstance(Struct_, unicode):
+    elif isinstance(Struct_, str):
         # Строка
         struct = encodeText(Struct_, SrcCP_, DstCP_)
     else:
@@ -386,7 +389,7 @@ def cmpLowerU(str1, str2):
     """
     Сравнивает два символа в нижнем регистре.
     """
-    for i in xrange(min(len(str1), len(str2))):
+    for i in range(min(len(str1), len(str2))):
         s1 = str1[i]
         s2 = str2[i]
         if s1 in u_rusRegLowerLst and s2 in u_rusRegLowerLst:
@@ -416,7 +419,7 @@ def isLATText(Text_):
     """
     Текст написан в латинице?
     """
-    if type(Text_) in (str, unicode):
+    if isinstance(Text_, str):
         rus_chr = [c for c in Text_ if ord(c) > 128]
         return not bool(rus_chr)
     else:
@@ -429,12 +432,10 @@ def isRUSText(Text_):
     """ 
     Строка с рускими буквами?
     """
-    if type(Text_) in (str, unicode):
+    if isinstance(Text_, str):
         rus_chr = [c for c in Text_ if ord(c) > 128]
         return bool(rus_chr)
-    else:
-        # Это не строка
-        return False
+    # Это не строка
     return False
 
 
@@ -442,9 +443,9 @@ def _rus2lat(Text_, TranslateDict_):
     """
     Перевод русских букв в латинские по словарю замен.
     """
-    if not isinstance(Text_, unicode):
+    if not isinstance(Text_, str):
         # Привести к юникоду
-        Text_ = unicode(Text_, 'utf-8')
+        Text_ = str(Text_, encoding='utf-8')
         
     txt_list = list(Text_)
     txt_list = [TranslateDict_.setdefault(ch, ch) for ch in txt_list]
@@ -492,10 +493,10 @@ def splitName1CWord(Txt_):
     Например:
     'ДокументСписокПередНачаломДобавления'->'Документ список перед началом добавления'.
     """
-    if isinstance(Txt_, unicode):
+    # if isinstance(Txt_, str):
+    #     return _splitName1CWordUNICODE(Txt_)
+    if isinstance(Txt_, str):
         return _splitName1CWordUNICODE(Txt_)
-    elif isinstance(Txt_, str):
-        return _splitName1CWordUTF8(Txt_)
     return Txt_
 
 

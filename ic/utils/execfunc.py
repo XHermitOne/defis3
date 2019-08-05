@@ -7,28 +7,17 @@
 
 import os
 import sys
-import imp
+# import imp
 import subprocess
 import locale
 
 from ic.log import log
+try:
+    from . import util
+except ImportError:
+    import util
 
-__versiom__ = (0, 1, 1, 1)
-
-
-def loadSource(name, path):
-    """
-    Возвращает загруженный модуль.
-
-    @type name: C{string}
-    @param name: Имя модуля.
-    @type path: C{string}
-    @param path: Полный путь до модуля.
-    """
-    f = open(path, 'rt')
-    mod = imp.load_source(name, path, f)
-    f.close()
-    return mod
+__versiom__ = (0, 1, 1, 2)
 
 
 def unLoadSource(name):
@@ -60,7 +49,7 @@ def reLoadSource(name, path=None):
             log.warning(u'Модуль <%s> не загружен' % name)
             return None
     unLoadSource(name)
-    return loadSource(name, path)
+    return util.icLoadSource(name, path)
 
 
 def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):

@@ -12,7 +12,9 @@
 import sys
 import os
 import os.path
-import imp
+# import imp
+import importlib.util
+
 from ic.kernel import ickernel
 from ic.log import log
 from ic.kernel import icexceptions
@@ -20,7 +22,7 @@ from ic.kernel import icexceptions
 from . import glob_variables
 from ic.utils import ic_file
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def getKernel():
@@ -591,7 +593,12 @@ def getPrjPackage():
         return None
 
     try:
-        return imp.load_package(prj_name, prj_dir)
+        # return imp.load_package(prj_name, prj_dir)
+        init_filename = os.path.join(prj_dir, '__init__.py')
+        module_spec = importlib.util.spec_from_file_location(prj_name, init_filename)
+        module = importlib.util.module_from_spec(module_spec)
+        module_spec.loader.exec_module(module)
+        return module
     except:
         log.fatal(u'Ошибка создания объекта пакета Python <%s> : <%s>' % (prj_name, prj_dir))
     return None

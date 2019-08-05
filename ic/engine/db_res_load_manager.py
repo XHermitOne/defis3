@@ -15,10 +15,13 @@ from ic.utils import ic_res
 from ic.utils import ic_file
 from ic.utils import lock as lockmod
 from ic.log import log
-from . import ic_user
 
+try:
+    from . import ic_user
+except ImportError:
+    from ic.engine import ic_user
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class Resources(object):
@@ -78,9 +81,10 @@ def todbpath(func):
 LOCKREC = 'LOCKREC'
 
 
-class icLoader(object):
+class icDBResLoadManager(object):
     """
-    Управление загрузкой ресурса. Ресурсы могут хранится только в PostgreSQL.
+    Управление загрузкой ресурса.
+    Ресурсы могут хранится только в PostgreSQL.
     """
     def __init__(self, *arg, **kwarg):
         import ic

@@ -2622,9 +2622,10 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         res = self.GetResource()
         # В случае если редактируется модуль
         if self.is_res_module(self.file):
-            import imp
+            # import imp
             import ic.interfaces.ictemplate as ictemplate
-            mod = imp.load_source('testModule', self.file)
+            # mod = imp.load_source('testModule', self.file)
+            mod = util.icLoadSource('testModule', self.file)
             cls = getattr(mod, mod.ic_class_name)(self)
 
             # В случае редактирования шаблона

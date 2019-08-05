@@ -8,7 +8,6 @@
 import _thread
 import threading
 import time
-import imp
 
 from . import icexceptions
 from ic.log import log
@@ -16,8 +15,9 @@ from . import decorators
 from . import icContext
 from . import io_prnt
 from .icbasekernel import icBaseKernel
+from ic.utils import util
 
-__version__ = (0, 2, 1, 2)
+__version__ = (0, 2, 1, 3)
 
 prs = None
 resource = None
@@ -490,10 +490,7 @@ class icKernel(icBaseKernel):
         @type path: C{string}
         @param path: Полный путь до модуля.
         """
-        f = open(path)
-        mod = imp.load_source(name, path, f)
-        f.close()
-        return mod
+        return util.icLoadSource(name=name, path=path)
 
     def post_signal(self, signal, slotLst=None):
         """

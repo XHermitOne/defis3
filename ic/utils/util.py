@@ -25,7 +25,8 @@
 import os
 import os.path
 import sys
-import imp
+# import imp
+import importlib.util
 import datetime
 import wx
 import types
@@ -808,11 +809,20 @@ def icLoadSource(name, path):
     @param name: Имя модуля.
     @type path: C{string}
     @param path: Полный путь до модуля.
+    @return: Объект загруженного модуля или None в случае ошибки.
     """
-    f = open(path)
-    mod = imp.load_source(name, path, f)
-    f.close()
-    return mod
+    module = None
+    try:
+        # f = open(path)
+        # mod = imp.load_source(name, path, f)
+        module_spec = importlib.util.spec_from_file_location(name, path)
+        module = importlib.util.module_from_spec(module_spec)
+        module_spec.loader.exec_module(module)
+        # f.close()
+    except ImportError:
+        log.fatal(u'Ошибка загрузки модуля <%s>. Путь <%s>' % (name, path))
+        log.error(u'Системные пути: %s' % str(sys.path))
+    return module
 
 
 def icUnLoadSource(name):
