@@ -24,8 +24,9 @@ def main():
     log.init(config)
     
     pkg_path = os.path.dirname(icWizard.__file__)
-    log.debug(u'ADD PACKAGE PATH: <%s>' % pkg_path)
-    sys.path.append(pkg_path)
+    if pkg_path not in sys.path:
+        log.debug(u'ADD PACKAGE PATH: <%s>' % pkg_path)
+        sys.path.append(pkg_path)
 
     if '--wizard' in argv:
         return main_wizard(*argv)

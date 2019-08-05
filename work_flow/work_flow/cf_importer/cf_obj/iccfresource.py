@@ -238,8 +238,9 @@ def test():
     dir_path = os.path.dirname(__file__)
     if not dir_path:
         dir_path = os.getcwd()
-        
-    sys.path.append(os.path.dirname(dir_path))
+
+    if dir_path not in sys.path:
+        sys.path.append(os.path.dirname(dir_path))
     
     res_filename = os.path.abspath(os.path.join(dir_path, 'test', 'root'))
     print('RES FILE:', res_filename)

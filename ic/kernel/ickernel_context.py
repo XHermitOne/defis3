@@ -147,8 +147,7 @@ class icKernelContext(icContext.BaseContext):
 
             log.info(u'vvvvvvvvvvvvvvvvvvvvvvvv')
             log.info(u'Окружение системы. Пути:')
-            for pth in sys.path:
-                log.info(u'\t%s' % pth)
+            log.info(impfunc.getSysPathStr())
             log.info(u'^^^^^^^^^^^^^^^^^^^^^^^^')
 
             prj_name = os.path.basename(PrjDir_)

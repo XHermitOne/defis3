@@ -6,7 +6,6 @@
 """
 import os
 import sys
-# import imp
 import importlib.util
 
 from ic.log import log
@@ -41,15 +40,15 @@ def loadSource(name, path):
     """
     module = None
     try:
-        # f = open(path)
-        # mod = imp.load_source(name, path, f)
         module_spec = importlib.util.spec_from_file_location(name, path)
         module = importlib.util.module_from_spec(module_spec)
         module_spec.loader.exec_module(module)
-        # f.close()
     except ImportError:
         log.fatal(u'Ошибка загрузки модуля <%s>. Путь <%s>' % (name, path))
-        log.error(u'Системные пути: %s' % str(sys.path))
+        log.warning(u'ВНИМАНИЕ! Возможно в корневой папке подсистемы находится __init__.py.')
+        log.error(u'Системные пути (sys.path):')
+        log.error(getSysPathStr())
+
     return module
 
 
@@ -113,3 +112,10 @@ def addImportPath(path):
     sys.path = [imp_path for i, imp_path in enumerate(sys.path) if imp_path not in sys.path[:i]]
 
     return sys.path
+
+
+def getSysPathStr():
+    """
+    Список путей для sys.path в виде строки для вывода на экран (print).
+    """
+    return '\n'.join([u'\t%s' % pth for pth in sys.path])
