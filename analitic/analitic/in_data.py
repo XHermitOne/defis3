@@ -68,7 +68,7 @@ def loadInputData(InputDataDir_=None):
     
     #   Загружаем файлы по реализации
     dbf_files = ic_file.GetFilesByExt(InputDataDir_, '.grf')
-    # print('--->>>loadInputData -> <analitik>', dbf_files, InputDataDir_ ) #,ic_file.ListDir(InputDataDir_)
+    # print('--->>>loadInputData -> <analitik>', dbf_files, input_data_dir ) #,ic_file.ListDir(input_data_dir)
     for dbf_file in dbf_files:
         # print('LOAD DATA FROM', dbf_file)
         loadInputDataDBF(dbf_file)
@@ -77,7 +77,7 @@ def loadInputData(InputDataDir_=None):
         
     #   Загружаем файлы по заявкам
     dbf_files = ic_file.GetFilesByExt(InputDataDir_, '.grz')
-    # print('--->>>loadInputData -> <zayavki>',dbf_files,InputDataDir_)
+    # print('--->>>loadInputData -> <zayavki>',dbf_files,input_data_dir)
     for dbf_file in dbf_files:
         # print('LOAD DATA FROM',dbf_file)
         loadInputDataDBF(dbf_file, 'zayavki')
@@ -86,7 +86,7 @@ def loadInputData(InputDataDir_=None):
     
     #   Загружаем файлы по оплате
     dbf_files = ic_file.GetFilesByExt(InputDataDir_, '.grp')
-    # print('--->>>loadInputData -> <pay>', dbf_files,InputDataDir_)
+    # print('--->>>loadInputData -> <pay>', dbf_files,input_data_dir)
     for dbf_file in dbf_files:
         # print('LOAD DATA FROM',dbf_file)
         loadInputDataDBF(dbf_file, 'pay')

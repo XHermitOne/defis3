@@ -77,7 +77,7 @@ class icToolBarManager(object):
 
                 if bmp:
                     if tool_bar is None:
-                        tool_bar = tool.GetToolBar()
+                        tool_bar = tool.getToolBar()
                     # ВНИМАНИЕ! Для смены образа инструмента не надо использовать
                     # метод инструмента <tool.SetNormalBitmap(bmp)> т.к. НЕ РАБОТАЕТ!
                     # Для этого вызываем метод панели инструметнтов

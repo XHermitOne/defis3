@@ -46,15 +46,15 @@ class icWXApp(wx.App, ickernel.icKernel):
         ickernel.icKernel.__init__(self)
 
     # --- Управление поведением системы ---
-    def setBehaviour(self, BehaviourResourceFileName_):
+    def setBehaviour(self, behaviour_res_filename):
         """
         Установить поведение системы.
-        @param BehaviourResourceFileName_: Имя файла ресурса со связями.
+        @param behaviour_res_filename: Имя файла ресурса со связями.
         """
         from ic.components import icResourceParser
         try:
-            file_name, file_ext = os.path.splitext(BehaviourResourceFileName_)
+            file_name, file_ext = os.path.splitext(behaviour_res_filename)
             return icResourceParser.icCreateObject(file_name, file_ext[1:])
         except:
-            log.fatal(u'Ошибка установки поведения системы из файла: <%s>' % BehaviourResourceFileName_)
+            log.fatal(u'Ошибка установки поведения системы из файла: <%s>' % behaviour_res_filename)
         return None

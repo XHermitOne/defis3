@@ -128,7 +128,7 @@ class icKernelContext(icContext.BaseContext):
         @param PrjDir_: Папке проекта.
         """
         if isinstance(PrjDir_, str):
-            # PrjDir_ = PrjDir_.encode(sys.getfilesystemencoding())
+            # prj_dirname = prj_dirname.encode(sys.getfilesystemencoding())
             pass
             
         if PrjDir_ and os.path.isdir(PrjDir_):
@@ -142,7 +142,7 @@ class icKernelContext(icContext.BaseContext):
                 sys.path = impfunc.addImportPath(parent_prj_dir)
             # Прописать папку проекта для импорта
             if PrjDir_ not in sys.path:
-                # sys.path.append(PrjDir_)
+                # sys.path.append(prj_dirname)
                 sys.path = impfunc.addImportPath(PrjDir_)
 
             log.info(u'vvvvvvvvvvvvvvvvvvvvvvvv')
@@ -210,7 +210,7 @@ class icKernelContext(icContext.BaseContext):
         Определить главное окно системы.
         """
         if ic_mode.isRuntimeMode():
-            return self.kernel.GetMainWin()
+            return self.kernel.getMainWin()
         return None
 
     def getMainOrg(self):

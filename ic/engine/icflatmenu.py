@@ -10,7 +10,7 @@ import wx
 from wx.lib.agw import flatmenu
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # --- Спецификации ---
 SPC_IC_FLATMENU = {'label': 'menu',    # Надпись
@@ -29,18 +29,18 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
         """
         flatmenu.FlatMenu.__init__(self, *args, **kwargs)
         
-    def appendItem(self, FlatMenuItem_):
+    def appendItem(self, flat_menuitem):
         """
         Добавить пункт меню.
-        @param FlatMenuItem_: Объект пункта меню. 
+        @param flat_menuitem: Объект пункта меню. 
         """
-        if FlatMenuItem_ is None:
+        if flat_menuitem is None:
             return None
         
         item = None
-        kind = FlatMenuItem_.GetKind()
+        kind = flat_menuitem.GetKind()
         if kind == wx.ITEM_NORMAL:
-            item = self.AppendItem(FlatMenuItem_)
+            item = self.AppendItem(flat_menuitem)
         elif kind == wx.ITEM_SEPARATOR:
             item = self.AppendSeparator()
         elif kind == wx.ITEM_CHECK:
@@ -50,21 +50,21 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
 
         return item
     
-    def appendMenu(self, FlatMenu_):
+    def appendMenu(self, flat_menu):
         """
         Добавить меню.
-        @param FlatMenu_: Объект меню. 
+        @param flat_menu: Объект меню. 
         """
-        if FlatMenu_ is None:
+        if flat_menu is None:
             return None
         
         id = wx.NewId()
-        label = FlatMenu_.getLabel()
-        menu_item = flatmenu.FlatMenuItem(self, id, label, '', wx.ITEM_NORMAL, FlatMenu_)
+        label = flat_menu.getLabel()
+        menu_item = flatmenu.FlatMenuItem(self, id, label, '', wx.ITEM_NORMAL, flat_menu)
         self.AppendItem(menu_item)
         return menu_item
     
-    def findMenuItemByName(self, MenuItemName_):
+    def findMenuItemByName(self, menuitem_name):
         """ 
         Поиск пункта меню по имени. 
         """
@@ -72,7 +72,7 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
             is_separator = item.IsSeparator()
             if not is_separator:
                 # Разделители просматривать не надо
-                if item.getName() == MenuItemName_:
+                if item.getName() == menuitem_name:
                     return item
         return None
     
@@ -141,7 +141,7 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
             return None
 
         if toolbar is None:
-            toolbar = tool.GetToolBar()
+            toolbar = tool.getToolBar()
 
         point = self.getToolLeftBottomPoint(toolbar, tool)
         parent = toolbar.GetParent()

@@ -20,7 +20,7 @@ There are a few small complexities worth noting in the example:
    but this is at the top of the frame. Matplotlib default is to put the
    controls at the bottom of the frame, so you have to manage the toolbar
    yourself. I have done this by putting the figure and toolbar into a
-   sizer, but this means that you need to override GetToolBar for your
+   sizer, but this means that you need to override getToolBar for your
    wxFrame so that the figure manager can find the toolbar.
    
 2) I have implemented a figure manager to look after the plots and axes.
@@ -189,7 +189,7 @@ class icPlotPanel(wx.Panel):
 
     def GetToolBar(self):
         """
-        You will need to override GetToolBar if you are using an unmanaged toolbar in your frame.
+        You will need to override getToolBar if you are using an unmanaged toolbar in your frame.
         """
         return self.toolbar
     

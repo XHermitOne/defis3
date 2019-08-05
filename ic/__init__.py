@@ -14,7 +14,7 @@ import os.path
 # Импортируем исключения ядра
 import ic.utils.impfunc
 from ic.kernel.icexceptions import *
-from ic.kernel import io_prnt
+# from ic.kernel import io_prnt
 
 from ic.utils import ic_mode        # Режимы работы
 from ic.utils import coderror       # Коды ошибок

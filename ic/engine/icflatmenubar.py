@@ -32,7 +32,7 @@ SPC_IC_FLATMENUBAR = {'renderer': None,    # Стиль отрисовки
                       }
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
@@ -57,24 +57,24 @@ class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
             parent.aui_manager.Update()
             self.Refresh()
 
-    def appendTool(self, FlatMenuTool_):
+    def appendTool(self, flat_menutool):
         """
         Добавить инструмент на панель инструментов горизонтального меню.
-        @param FlatMenuTool_: ОБъект инструмента горизонтального меню.
+        @param flat_menutool: ОБъект инструмента горизонтального меню.
         """
-        if FlatMenuTool_ is None:
+        if flat_menutool is None:
             return None
 
         tool = None
-        kind = FlatMenuTool_.GetKind()
+        kind = flat_menutool.GetKind()
         if kind == wx.ITEM_NORMAL:
-            id = FlatMenuTool_.GetId()
-            pic1 = FlatMenuTool_.GetNormalBmp()
-            pic2 = FlatMenuTool_.GetDisabledBmp()
-            helpString = FlatMenuTool_.GetHelpString()
+            id = flat_menutool.GetId()
+            pic1 = flat_menutool.GetNormalBmp()
+            pic2 = flat_menutool.GetDisabledBmp()
+            helpString = flat_menutool.GetHelpString()
             if not helpString:
                 helpString = ''
-            description = FlatMenuTool_.GetDescription()
+            description = flat_menutool.GetDescription()
             if not description:
                 description = ''
                 
@@ -91,12 +91,12 @@ class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
 
         return tool
 
-    def findMenuItemByName(self, MenuItemName_):
+    def findMenuItemByName(self, menuitem_name):
         """ 
         Поиск пункта меню по имени. 
         """
         for item in self._items:
-            find_item = item.GetMenu().findMenuItemByName(MenuItemName_)
+            find_item = item.GetMenu().findMenuItemByName(menuitem_name)
             if find_item:
                 return find_item
         return None

@@ -38,14 +38,14 @@ from ic.log import log
 __version__ = (0, 1, 1, 1)
 
 
-def GetPrjSubSysDirs(PrjDir_):
+def getPrjSubSysDirs(prj_dirname):
     """
     Получить список директорий подсистем вместе с проектом.
     Заполнение списка происходит по файлу *.pro.
-    @param PrjDir_: Папка проекта.
+    @param prj_dirname: Папка проекта.
     """
-    root_prj_dir = os.path.dirname(PrjDir_)
-    pro_files = ic.utils.ic_file.GetFilesByExt(PrjDir_, '.pro')
+    root_prj_dir = os.path.dirname(prj_dirname)
+    pro_files = ic.utils.ic_file.GetFilesByExt(prj_dirname, '.pro')
     if pro_files:
         pro_file = pro_files[0]
         prj = ic.utils.ic_res.ReadAndEvalFile(pro_file)
@@ -53,14 +53,14 @@ def GetPrjSubSysDirs(PrjDir_):
     return []
 
 
-def GetSubSysDirs(PrjDir_):
+def getSubSysDirs(prj_dirname):
     """
     Получить список директорий подсистем.
         Заполнение списка происходит по файлу *.pro.
-    @param PrjDir_: Папка проекта.
+    @param prj_dirname: Папка проекта.
     """
-    root_prj_dir = os.path.dirname(PrjDir_)
-    pro_files = ic.utils.ic_file.GetFilesByExt(PrjDir_, '.pro')
+    root_prj_dir = os.path.dirname(prj_dirname)
+    pro_files = ic.utils.ic_file.GetFilesByExt(prj_dirname, '.pro')
     if pro_files:
         pro_file = pro_files[0]
         prj = ic.utils.ic_res.ReadAndEvalFile(pro_file)
@@ -86,7 +86,7 @@ class icApp(icwxapplication.icWXApp):
         self._MainSizer = None
         
         # Имя файла ресурса
-        self._ResFile = ''
+        self._res_filename = ''
         # Имя ДВИЖКА
         self._Name = ''
 
@@ -137,16 +137,16 @@ class icApp(icwxapplication.icWXApp):
             self._MainWindow.Close()
         return icwxapplication.icWXApp.Stop(self)
        
-    def Login(self, User_=None, Password_=None, DBMode_='-s'):
+    def Login(self, username=None, password=None, db_mode='-s'):
         """
         Регистрация пользователя в системе.
-        @param User_: Имя пользователя.
-        @param Password_: Пароль.
-        @param DBMode_: Режим использования БД.
+        @param username: Имя пользователя.
+        @param password: Пароль.
+        @param db_mode: Режим использования БД.
         """
         from ic.engine import ic_user
 
-        ok = self._login_loop(User_, Password_, DBMode_)
+        ok = self._login_loop(username, password, db_mode)
         if ok:
             # self.run(self._User.getMainWinPsp(), self._User.getMenubarsPsp())
             # Удалить файлы блокировок при входе в систему
@@ -158,19 +158,19 @@ class icApp(icwxapplication.icWXApp):
         
         return False
 
-    def _login_loop(self, User_=None, Password_=None, DBMode_='-s'):
+    def _login_loop(self, username=None, password=None, db_mode='-s'):
         """
         Цикл входа в систему.
-        @param User_: Имя пользователя.
-        @param Password_: Пароль.
-        @param DBMode_: Режим использования БД.
+        @param username: Имя пользователя.
+        @param password: Пароль.
+        @param db_mode: Режим использования БД.
         """
         login_ok = False
         login_manager = icUser.icLoginManager()
-        User_, Password_ = login_manager._getAutoLogin(User_, Password_)
+        username, password = login_manager._getAutoLogin(username, password)
         bAuto = login_manager.IsAutoAuth()
         while not login_ok:
-            user_data = login_manager.Login(User_, Password_, DBMode_)
+            user_data = login_manager.Login(username, password, db_mode)
             if user_data is None:
                 break
             user_name = user_data[ic_dlg.LOGIN_USER_IDX]
@@ -180,37 +180,37 @@ class icApp(icwxapplication.icWXApp):
             # Если пользователя с таким именем нет, просим пользователя еще раз ввести
             # логин и пароль
             if res is None:
-                User_, Password_ = None, None
+                username, password = None, None
                 ic_dlg.icMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
             else:
                 self._User = self.createObjBySpc(None, res)
                 self._User.setLoginManager(login_manager)
                 try:
-                    login_ok = self._User.Login(user_name, user_password, DBMode_, bAutoLogin=bAuto)
+                    login_ok = self._User.Login(user_name, user_password, db_mode, bAutoLogin=bAuto)
                 except icexceptions.LoginInvalidException:
                     bAuto = False
-                    User_, Password_ = None, None
+                    username, password = None, None
             
         return login_ok
 
-    def run(self, MainWinPsp_=None, MenuBarsPsp_=None):
+    def run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
-        @param MainWinPsp_: Паспорт главного окна.
-        @param MenuBarsPsp_: Список паспортов горизонтальных меню.
+        @param mainwin_psp: Паспорт главного окна.
+        @param menubars_psp: Список паспортов горизонтальных меню.
         @return: Возвращает True, если все OK иначе - False.
         """
-        if MainWinPsp_ is None:
-            MainWinPsp_ = self._User.getMainWinPsp()
-        if MenuBarsPsp_ is None:
-            MenuBarsPsp_ = self._User.getMenubarsPsp()
-        return self._run(MainWinPsp_, MenuBarsPsp_)
+        if mainwin_psp is None:
+            mainwin_psp = self._User.getMainWinPsp()
+        if menubars_psp is None:
+            menubars_psp = self._User.getMenubarsPsp()
+        return self._run(mainwin_psp, menubars_psp)
 
-    def _run(self, MainWinPsp_=None, MenuBarsPsp_=None):
+    def _run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
-        @param MainWinPsp_: Паспорт главного окна.
-        @param MenuBarsPsp_: Список паспортов горизонтальных меню.
+        @param mainwin_psp: Паспорт главного окна.
+        @param menubars_psp: Список паспортов горизонтальных меню.
         @return: Возвращает True, если все OK иначе - False.
         """
         # Проинициализировать внутренние данные
@@ -218,14 +218,14 @@ class icApp(icwxapplication.icWXApp):
         self._MainWindow = None
 
         # --- Создание главного окна ---
-        if MainWinPsp_:
+        if mainwin_psp:
             try:
-                self._MainWindow = self.Create(MainWinPsp_)
+                self._MainWindow = self.Create(mainwin_psp)
                 self._MainWindow.showSplash()
                 self._MainWindow.Enable(self._Enabled)
             except:
-                log.error(u'Ошибка создания главного окна системы. Паспорт: <%s> тип паспорта: <%s>' % (MainWinPsp_,
-                                                                                                             type(MainWinPsp_)))
+                log.error(u'Ошибка создания главного окна системы. Паспорт: <%s> тип паспорта: <%s>' % (mainwin_psp,
+                                                                                                        type(mainwin_psp)))
                 return False
         else:
             log.warning(u'Не определено окно в ресурсном описании пользователя')
@@ -234,7 +234,7 @@ class icApp(icwxapplication.icWXApp):
         # --- Создание главного меню ---
         # С главном окне м.б. отключено создание главного меню
         if self._MainWindow.is_menubar:
-            self._createMainMenu(MenuBarsPsp_)
+            self._createMainMenu(menubars_psp)
             
             # --- Установить расположение меню ---
         
@@ -246,14 +246,14 @@ class icApp(icwxapplication.icWXApp):
         self.SetTopWindow(self._MainWindow)
         return True
 
-    def _createMainMenu(self, MenuBarsPsp_):
+    def _createMainMenu(self, menubars_psp):
         """
         Создание/Сборка главного горизонтального меню.
-        @param MenuBarsPsp_: Список паспортов линеек горизонтальных меню для сборки.
+        @param menubars_psp: Список паспортов линеек горизонтальных меню для сборки.
         """
         # Сборка полного ресурса линейки горизонтального меню
         menubar_res = None
-        for menubar_psp in MenuBarsPsp_:
+        for menubar_psp in menubars_psp:
             if menubar_psp:
                 if menubar_res is None:
                     menubar_res = self.getResByPsp(menubar_psp)
@@ -270,14 +270,14 @@ class icApp(icwxapplication.icWXApp):
             self._MainMenu = menubar
         return self._MainMenu
 
-    def LoadPopupMenu(self, Name_, Owner_):
+    def loadPopupMenu(self, name, owner):
         """
         Загрузка всплывающих меню в системе должна производится ч/з эту функцию для последующего доступа объектов к этим менюхам.
-        @param Name_: имя всплывающего меню.
-        @param Owner_: объект-хозяин, к которому прикрепляется меню.
+        @param name: имя всплывающего меню.
+        @param owner: объект-хозяин, к которому прикрепляется меню.
         @return: Возвращает ссылку на объект всплывающего меню.
         """
-        popup = icpopupmenu.CreateICPopupMenu(Owner_, Name_, self._ResFile)
+        popup = icpopupmenu.CreateICPopupMenu(owner, name, self._res_filename)
         # Зарегистрировать его
         if popup is not None:
             self._PopupMenus.append(popup) 
@@ -285,37 +285,37 @@ class icApp(icwxapplication.icWXApp):
 
     # --- Функции-свойства ---
 
-    def GetMainWin(self):
+    def getMainWin(self):
         return self._MainWindow
 
-    def GetToolBars(self):
+    def getToolBars(self):
         return self._ToolBars
 
-    def GetToolBar(self, Name_):
+    def getToolBar(self, name):
         for toolbar in self._ToolBars:
-            if toolbar.GetAlias() == Name_:
+            if toolbar.GetAlias() == name:
                 return toolbar
         return None
 
-    def GetPopupMenus(self):
+    def getPopupMenus(self):
         return self._PopupMenus
 
-    def GetPopupMenu(self, Name_):
+    def getPopupMenu(self, name):
         for popup in self._PopupMenus:
-            if popup.GetAlias() == Name_:
+            if popup.GetAlias() == name:
                 return popup
         return None
 
-    def SetEnabled(self, Enabled_):
+    def setEnabled(self, Enabled_):
         self._Enabled = Enabled_
         if self._MainWindow is not None:
             self._MainWindow.Enable(self._Enabled)
 
-    def GetEnabled(self):
+    def getEnabled(self):
         return self._Enabled
 
-    def GetResFile(self):
-        return self._ResFile
+    def getResFilename(self):
+        return self._res_filename
 
     def getName(self):
         return self._Name

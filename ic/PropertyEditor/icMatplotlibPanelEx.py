@@ -93,7 +93,7 @@ class icCanvasPanel(wx.Panel):
 
     def GetToolBar(self):
         """
-        You will need to override GetToolBar if you are using an unmanaged toolbar in your frame.
+        You will need to override getToolBar if you are using an unmanaged toolbar in your frame.
         """
         return self.toolbar
 

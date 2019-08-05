@@ -18,7 +18,7 @@ from . import io_prnt
 from .icbasekernel import icBaseKernel
 from ic.utils import util
 
-__version__ = (0, 2, 1, 3)
+__version__ = (0, 2, 1, 4)
 
 prs = None
 resource = None
@@ -400,35 +400,35 @@ class icKernel(icBaseKernel):
 
         return context
 
-    def Login(self, User_, Password_, *arg, **kwarg):
+    def Login(self, username, password, *arg, **kwarg):
         """
         Функция регистрации пользователя.
         """
         try:
-            login_result = self._login_loop(User_, Password_, *arg, **kwarg)
+            login_result = self._login_loop(username, password, *arg, **kwarg)
         except:
             self.Logout()
             raise
 
-        io_prnt.SetUserLog(User_, self)
+        io_prnt.SetUserLog(username, self)
         return login_result
 
-    def _login_loop(self, User_=None, Password_=None, DBMode_='-s'):
+    def _login_loop(self, username=None, password=None, db_mode='-s'):
         """
         Цикл входа в систему.
-        @param User_: Имя пользователя.
-        @param Password_: Пароль.
-        @param DBMode_: Режим использования БД.
+        @param username: Имя пользователя.
+        @param password: Пароль.
+        @param db_mode: Режим использования БД.
         """
         from ic.dlg import ic_dlg
         from ic.engine import icUser
 
         login_ok = False
         login_manager = icUser.icLoginManager()
-        User_, Password_ = login_manager._getAutoLogin(User_, Password_)
+        username, password = login_manager._getAutoLogin(username, password)
         bAuto = login_manager.IsAutoAuth()
         while not login_ok:
-            user_data = login_manager.Login(User_, Password_, DBMode_,
+            user_data = login_manager.Login(username, password, db_mode,
                                             RuntimeMode_=False)
             if user_data is None:
                 break
@@ -438,7 +438,7 @@ class icKernel(icBaseKernel):
             res = login_manager.GetUserResource(user_name)
 
             if res is None:
-                User_, Password_ = None, None
+                username, password = None, None
                 ic_dlg.icMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
             else:
                 self._User = self.createObjBySpc(None, res)
@@ -446,11 +446,11 @@ class icKernel(icBaseKernel):
                 passwd_md5 = self._User._password_md5(user_password)
                 try:
                     login_ok = self._User.login_ok(user_name, user_password, passwd_md5,
-                                                   DBMode_, RuntimeMode_=False)
+                                                   db_mode, RuntimeMode_=False)
                 except icexceptions.LoginInvalidException:
                     if bAuto:
                         bAuto = False
-                        User_, Password_ = None, None
+                        username, password = None, None
                         ic_dlg.icMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
                     else:
                         raise
@@ -553,11 +553,11 @@ class icKernel(icBaseKernel):
             log.fatal(u'Ошибка парсинга очереди сообщений')
             pass
 
-    def run(self, MainWinPsp_=None, MenuBarsPsp_=None):
+    def run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
-        @param MainWinPsp_: Паспорт главного окна.
-        @param MenuBarsPsp_: Список паспортов горизонтальных меню.
+        @param mainwin_psp: Паспорт главного окна.
+        @param menubars_psp: Список паспортов горизонтальных меню.
         @return: Возвращает True, если все OK иначе - False.
         """
         pass
@@ -626,10 +626,10 @@ class icKernel(icBaseKernel):
         self.__stop = False
         self._loopThread = _thread.start_new(self.signal_loop, (0,))
 
-    def setBehaviour(self, BehaviourResourceFileName_):
+    def setBehaviour(self, behaviour_res_filename):
         """
         Установить поведение системы.
-        @param BehaviourResourceFileName_: Имя файла ресурса со связями.
+        @param behaviour_res_filename: Имя файла ресурса со связями.
         """
         pass
 

@@ -13,9 +13,6 @@
 Автор(ы): Шурик Колчанов.
 """
 
-# Версия
-__version__ = (0, 0, 0, 1)
-
 #--- Подключение библиотек ---
 import wx
 #import datetime
@@ -40,19 +37,23 @@ import ic.components.icResourceParser as prs
 import analitic.in_data as input_data
 from STD import std_dialogs
 
+# Версия
+__version__ = (0, 0, 0, 1)
+
+
 #--- Функции (Устаревшие) данных ---
-def loadInputData(InputDataDir_=None):
+def loadInputData(input_data_dir=None):
     """
     Загрузить входные данные в БД.
-    @param InputDataDir_: Папка в которой лежат дбфники.
+    @param input_data_dir: Папка в которой лежат дбфники.
     """
-    if InputDataDir_ is None:
-        InputDataDir_=input_data.getInputDataDir()
+    if input_data_dir is None:
+        input_data_dir=input_data.getInputDataDir()
 
     #   Загружаем файлы по реализации
-    dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.olp')
+    dbf_files=ic_file.GetFilesByExt(input_data_dir, '.olp')
     dbf_files.sort()
-    # print '--->>>loadInputData -> <analiticIC>',dbf_files,InputDataDir_ #,ic_file.ListDir(InputDataDir_)
+    # print '--->>>loadInputData -> <analiticIC>',dbf_files,input_data_dir #,ic_file.ListDir(input_data_dir)
     for dbf_file in dbf_files:
         # print 'LOAD DATA FROM',dbf_file
         loadInputDataDBF(dbf_file,'analitic')
@@ -60,9 +61,9 @@ def loadInputData(InputDataDir_=None):
         #ic_file.icChangeExt(dbf_file,'_rlz.bak')
 
     #   Загружаем файлы по заявкам
-    dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.olp')
+    dbf_files=ic_file.GetFilesByExt(input_data_dir, '.olp')
     dbf_files.sort()
-    # print '--->>>loadInputData -> <zayavkiIC>',dbf_files,InputDataDir_
+    # print '--->>>loadInputData -> <zayavkiIC>',dbf_files,input_data_dir
     for dbf_file in dbf_files:
         # print 'LOAD DATA FROM',dbf_file
         loadInputDataDBF(dbf_file, 'zayavki')
@@ -72,8 +73,8 @@ def loadInputData(InputDataDir_=None):
         _logInputData(dbf_file)
 
     #   Загружаем файлы по оплате
-#    dbf_files=ic_file.GetFilesByExt(InputDataDir_,'.grp')
-#    print '--->>>loadInputData -> <pay>', dbf_files,InputDataDir_
+#    dbf_files=ic_file.GetFilesByExt(input_data_dir,'.grp')
+#    print '--->>>loadInputData -> <pay>', dbf_files,input_data_dir
 #    for dbf_file in dbf_files:
 #        print 'LOAD DATA FROM',dbf_file
 #        loadInputDataDBF(dbf_file, 'pay')
@@ -90,10 +91,10 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
     ### Изменил Оконешников А.
     #Было
     #res=resource.icGetRes('analitic',nameRes='analitic')
-    res=resource.icGetRes(className, nameRes=className)
+    res = resource.icGetRes(className, nameRes=className)
     ###
 
-    tab=ic_sqlobjtab.icSQLObjDataClass(res)
+    tab = ic_sqlobjtab.icSQLObjDataClass(res)
     #Удалить данные перед загрузкой
     ok=_delLoadData(DBFFileName_,tab)
     if not ok:
