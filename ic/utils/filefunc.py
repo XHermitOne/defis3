@@ -12,9 +12,11 @@ import hashlib
 import fnmatch
 import shutil
 import pwd
-from . import util
 
-__version__ = (0, 1, 1, 1)
+from . import util
+from ic.log import log
+
+__version__ = (0, 1, 2, 1)
 
 
 def createTxtFile(FileName_, Txt_=None):
@@ -279,3 +281,21 @@ def getProfilePath(profile_dirname=u''):
     if not os.path.exists(profile_path):
         os.makedirs(profile_path)
     return profile_path
+
+
+def removeFile(filename):
+    """
+    Удалить файл.
+    @param filename: Полное имя файла.
+    @return: True - файл успешно удален / False - ошибка удаления файла.
+    """
+    try:
+        if not os.path.exists(filename):
+            log.warning(u'Удаление: файл <%s> не существует' % filename)
+            return None
+
+        os.remove(filename)
+        return True
+    except OSError:
+        log.fatal(u'Ошибка удаления файла <%s>' % filename)
+    return False
