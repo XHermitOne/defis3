@@ -12,6 +12,7 @@ bitmap - работа с bitmap.
 import os.path
 
 # Импортируем исключения ядра
+import ic.utils.impfunc
 from ic.kernel.icexceptions import *
 from ic.kernel import io_prnt
 
@@ -50,7 +51,7 @@ def set_log_prj(prj_path):
     prj_path = os.path.normpath(prj_path)
     cfg_filename = os.path.join(prj_path, 'config.py')
     if os.path.exists(cfg_filename):
-        cfg_module = util.icLoadSource('cfg_module', cfg_filename)
+        cfg_module = ic.utils.impfunc.loadSource('cfg_module', cfg_filename)
         log.init(cfg_module)
     else:
         from . import config

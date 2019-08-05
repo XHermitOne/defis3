@@ -13,6 +13,8 @@
 # --- Подключение библиотек ---
 import wx
 import os
+
+import ic.utils.impfunc
 from ic.log import log
 
 from . import ic_util
@@ -388,7 +390,7 @@ def execFuncStr(FuncStr_, NameSpace_=None, ReImport_=False, *args, **kwargs):
         try:
             try:
                 if ReImport_:
-                    util.icUnLoadSource(func_mod)
+                    ic.utils.impfunc.unloadSource(func_mod)
                 import_str = 'import '+func_mod
                 exec(import_str)
             except:

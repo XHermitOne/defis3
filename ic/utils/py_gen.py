@@ -11,6 +11,7 @@ import os.path
 import inspect
 import wx
 
+import ic.utils.impfunc
 from ic.log import log
 from ic.dlg import ic_dlg
 from . import ic_extend
@@ -141,7 +142,7 @@ def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
     try:
         src_module_name = os.path.splitext(os.path.basename(wxFB_module_filename))[0]
         src_module_path = os.path.dirname(wxFB_module_filename)
-        fb_module = util.icLoadSource(src_module_name, wxFB_module_filename)
+        fb_module = ic.utils.impfunc.loadSource(src_module_name, wxFB_module_filename)
         fb_module_classes = [var_name for var_name in dir(fb_module) if inspect.isclass(getattr(fb_module, var_name))]
         log.debug(u'Найденные классы %s в модуле <%s>' % (fb_module_classes, wxFB_module_filename))
 

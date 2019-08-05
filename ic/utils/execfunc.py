@@ -11,45 +11,14 @@ import sys
 import subprocess
 import locale
 
+from ic.utils import impfunc
 from ic.log import log
-try:
-    from . import util
-except ImportError:
-    import util
+# try:
+#     from . import util
+# except ImportError:
+#     import util
 
 __versiom__ = (0, 1, 1, 2)
-
-
-def unLoadSource(name):
-    """
-    Выгрузить модуль.
-    @type name: C{string}
-    @param name: Имя модуля.
-    """
-    if name in sys.modules:
-        del sys.modules[name]
-        return True
-    return False
-
-
-def reLoadSource(name, path=None):
-    """
-    Перезагрузить модуль.
-    @type name: C{string}
-    @param name: Имя модуля.
-    @type path: C{string}
-    @param path: Полный путь до модуля.
-    """
-    if path is None:
-        if name in sys.modules:
-            py_file_name = sys.modules[name].__file__
-            py_file_name = os.path.splitext(py_file_name)[0]+'.py'
-            path = py_file_name
-        else:
-            log.warning(u'Модуль <%s> не загружен' % name)
-            return None
-    unLoadSource(name)
-    return util.icLoadSource(name, path)
 
 
 def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
@@ -80,7 +49,7 @@ def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
     func_mod = '.'.join(func_import[:-1])
 
     if bReImport:
-        unLoadSource(func_mod)
+        impfunc.unloadSource(func_mod)
 
     # Импортирование модуля
     if func_mod:

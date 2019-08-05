@@ -14,6 +14,7 @@ import copy
 import wx
 import importlib.util
 
+import ic.utils.impfunc
 from ic.dlg import ic_dlg
 from ic.log import log
 from . import lock
@@ -655,7 +656,7 @@ def getICObjectResource(path):
     """
     try:
         #   Импортируем модуль
-        mod = util.icLoadSource('modulRes', path)
+        mod = ic.utils.impfunc.loadSource('modulRes', path)
         res = mod.resource
         #   Читаем имя класса
         try:

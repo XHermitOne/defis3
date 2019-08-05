@@ -11,6 +11,7 @@ import sys
 
 from ic.utils import ic_file
 from ic.utils import ic_mode
+from ic.utils import impfunc
 from . import icContext
 from ic.log import log
 
@@ -137,10 +138,12 @@ class icKernelContext(icContext.BaseContext):
             # Прописать для импорта родительскую папку проекта
             parent_prj_dir = os.path.dirname(PrjDir_)
             if parent_prj_dir not in sys.path:
-                sys.path.append(parent_prj_dir)
+                # sys.path.append(parent_prj_dir)
+                sys.path = impfunc.addImportPath(parent_prj_dir)
             # Прописать папку проекта для импорта
             if PrjDir_ not in sys.path:
-                sys.path.append(PrjDir_)
+                # sys.path.append(PrjDir_)
+                sys.path = impfunc.addImportPath(PrjDir_)
 
             log.info(u'vvvvvvvvvvvvvvvvvvvvvvvv')
             log.info(u'Окружение системы. Пути:')

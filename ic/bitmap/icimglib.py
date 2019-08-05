@@ -9,6 +9,7 @@
 import os
 import os.path
 
+import ic.utils.impfunc
 from ic.log import log
 from ic.utils import util
 from ic.utils import ic_mode
@@ -231,7 +232,7 @@ class icImgLibResource:
         # if isinstance(ImgName_, unicode):
         #     ImgName_ = ImgName_.encode()
 
-        module = util.icLoadSource('img_lib_module', self._img_lib_file_name)
+        module = ic.utils.impfunc.loadSource('img_lib_module', self._img_lib_file_name)
         img_data_func_name = 'get%sData' % ImgName_
         if img_data_func_name in dir(module):
             img_data = icimg2py.crunchImgData(module.__dict__[img_data_func_name]())
@@ -270,7 +271,7 @@ class icImgLibResource:
         
         img_dict = None
         if sImgLibFileName:
-            module = util.icReLoadSource('img_lib_module', sImgLibFileName)
+            module = ic.utils.impfunc.reloadSource('img_lib_module', sImgLibFileName)
             # Заполенение словаря образов
             img_dict = dict([(var_name, module.__dict__[var_name]) for var_name in [var for var in dir(module) if type(module.__dict__[var]).__name__ == 'Bitmap']])
             log.debug('IMAGES: %s' % img_dict.keys())

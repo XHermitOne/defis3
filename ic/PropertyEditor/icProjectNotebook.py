@@ -11,6 +11,7 @@ import sys
 import wx.lib.agw.flatnotebook as fnb
 
 from ic.log import log
+from ic.utils import impfunc
 
 try:
     dirName = os.path.dirname(os.path.abspath(__file__))
@@ -19,10 +20,10 @@ except:
 
 dir_name = os.path.split(dirName)[0]
 if dir_name not in sys.path:
-    sys.path.append(dir_name)
+    sys.path = impfunc.addImportPath(dir_name)
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 _ = wx.GetTranslation
 

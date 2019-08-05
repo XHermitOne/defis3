@@ -102,6 +102,7 @@
 import os
 import wx
 
+import ic.utils.impfunc
 from ic.PropertyEditor import icDefInf
 from . import icEvents
 from ic.utils import graphicUtils
@@ -900,7 +901,7 @@ class icSimple(icobject.icObject):
 
                 # Загружаем модуль, если не загружен
                 if not mod:
-                    mod = util.icLoadSource(res['res_module'].replace('.', '_'), fn)
+                    mod = ic.utils.impfunc.loadSource(res['res_module'].replace('.', '_'), fn)
                     log.info(u'\t(+) Load resource module: <%s>' % fn)
 
                 if not self.GetContext().get('res_module', False):
@@ -917,7 +918,7 @@ class icSimple(icobject.icObject):
             fn = os.path.join(os.path.dirname(self.GetContext()['__file_res']),
                               self.resource['obj_module'])
             try:
-                mod = util.icLoadSource(self.resource['obj_module'].replace('.', '_'), fn)
+                mod = ic.utils.impfunc.loadSource(self.resource['obj_module'].replace('.', '_'), fn)
                 self.__obj_module = mod
             except:
                 log.fatal(_('\t(-) Failed to import object module: [%s : %s]') % (self.resource['obj_module'], fn))

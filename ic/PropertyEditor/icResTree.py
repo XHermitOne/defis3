@@ -15,6 +15,7 @@ import copy
 
 import ic
 import ic.imglib
+import ic.utils.impfunc
 from ic.imglib import common
 from ic import components
 from ic.utils import resource
@@ -2625,7 +2626,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             # import imp
             import ic.interfaces.ictemplate as ictemplate
             # mod = imp.load_source('testModule', self.file)
-            mod = util.icLoadSource('testModule', self.file)
+            mod = ic.utils.impfunc.loadSource('testModule', self.file)
             cls = getattr(mod, mod.ic_class_name)(self)
 
             # В случае редактирования шаблона

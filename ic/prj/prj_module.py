@@ -12,7 +12,7 @@ import os
 import os.path
 import shutil
 # import imp
-
+import ic.utils.impfunc
 from ic.imglib import common as imglib
 from ic.utils import ic_file
 from ic.utils import ic_res
@@ -848,7 +848,7 @@ class PrjModule(prj_node.PrjNode):
                                            self.name+self.ext)
             module_name = os.path.splitext(os.path.basename(module_filename))[0]
             # module = imp.load_source(module_name, module_filename)
-            module = util.icLoadSource(module_name, module_filename)
+            module = ic.utils.impfunc.loadSource(module_name, module_filename)
             if hasattr(module, '__doc__'):
                 if wx.Platform == '__WXGTK__':
                     return module.__doc__.strip()
@@ -893,7 +893,7 @@ class PrjInterfaceModule(PrjModule):
         """
         Получить ресурс узла.
         """
-        module = util.icReLoadSource('interface_module', self.getFullResFileName())
+        module = ic.utils.impfunc.reloadSource('interface_module', self.getFullResFileName())
         return {module.ic_class_name: module.resource}
     
 

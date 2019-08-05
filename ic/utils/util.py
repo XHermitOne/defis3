@@ -26,10 +26,7 @@ import os
 import os.path
 import sys
 # import imp
-import importlib.util
-import datetime
 import wx
-import types
 import copy
 import pickle
 
@@ -784,80 +781,6 @@ def ic_import(dict_names, evalSpace = {}, isDebug = False):
             return False
 
     return True
-
-
-def icImport(name):
-    """
-    Импортирование модуля. Пример: subsys.usercomponents.component
-    @type name: C{string}
-    @param name: Имя модуля.
-    """
-    mod = __import__(name, globals(), locals(), [], -1)
-    # Поскольку __import__ возвращает родительский модуль
-    # получаем доступ до нужного нам модуля через
-    # рекурсивный getattr
-    c = name.split('.')
-    for x in c[1:]:
-        mod = getattr(mod, x)
-    return mod
-
-
-def icLoadSource(name, path):
-    """
-    Возвращает загруженный модуль.
-    @type name: C{string}
-    @param name: Имя модуля.
-    @type path: C{string}
-    @param path: Полный путь до модуля.
-    @return: Объект загруженного модуля или None в случае ошибки.
-    """
-    module = None
-    try:
-        # f = open(path)
-        # mod = imp.load_source(name, path, f)
-        module_spec = importlib.util.spec_from_file_location(name, path)
-        module = importlib.util.module_from_spec(module_spec)
-        module_spec.loader.exec_module(module)
-        # f.close()
-    except ImportError:
-        log.fatal(u'Ошибка загрузки модуля <%s>. Путь <%s>' % (name, path))
-        log.error(u'Системные пути: %s' % str(sys.path))
-    return module
-
-
-def icUnLoadSource(name):
-    """
-    Выгрузить модуль.
-    @type name: C{string}
-    @param name: Имя модуля.
-    """
-    if name in sys.modules:
-        del sys.modules[name]
-        return True
-    return False
-
-
-def icReLoadSource(name, path=None):
-    """
-    Перезагрузить модуль.
-    @type name: C{string}
-    @param name: Имя модуля.
-    @type path: C{string}
-    @param path: Полный путь до модуля.
-    """
-    if path is None:
-        if name in sys.modules:
-            try:
-                py_file_name = sys.modules[name].__file__
-                py_file_name = os.path.splitext(py_file_name)[0]+'.py'
-                path = py_file_name
-            except:
-                log.error('Error')
-                return None
-        else:
-            return None
-    icUnLoadSource(name)
-    return icLoadSource(name, path)
 
 
 def isExprDict(expr):

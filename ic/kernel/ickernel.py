@@ -9,6 +9,7 @@ import _thread
 import threading
 import time
 
+import ic.utils.impfunc
 from . import icexceptions
 from ic.log import log
 from . import decorators
@@ -490,7 +491,7 @@ class icKernel(icBaseKernel):
         @type path: C{string}
         @param path: Полный путь до модуля.
         """
-        return util.icLoadSource(name=name, path=path)
+        return ic.utils.impfunc.loadSource(name=name, path=path)
 
     def post_signal(self, signal, slotLst=None):
         """

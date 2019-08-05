@@ -19,6 +19,7 @@ from ic.utils import ic_res
 from ic.dlg import ic_dlg
 from ic.kernel import icexceptions
 from ic.utils import ic_util
+from ic.utils import impfunc
 
 from ic.engine import ic_user
 import ic.utils.ic_mode as ic_mode
@@ -42,7 +43,7 @@ import subprocess
 
 _ = wx.GetTranslation
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Константы
 # Файл журнала зарегистрированных пользователей
@@ -168,7 +169,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         if self.getPrjFileName():
             prj_dir = os.path.dirname(self.getPrjFileName())
             if prj_dir not in sys.path:
-                sys.path.append(prj_dir)
+                sys.path = impfunc.addImportPath(prj_dir)
         
     def Default(self):
         """

@@ -11,6 +11,7 @@ import os.path
 # import imp
 import wx
 
+import ic.utils.impfunc
 from . import util
 from . import ic_str
 
@@ -136,7 +137,7 @@ def getModuleDoc(ModuleFileName_):
     try:
         module_name = os.path.splitext(os.path.basename(ModuleFileName_))[0]
         # module = imp.load_source(module_name, ModuleFileName_)
-        module = util.icLoadSource(module_name, ModuleFileName_)
+        module = ic.utils.impfunc.loadSource(module_name, ModuleFileName_)
         if hasattr(module, '__doc__'):
             if wx.Platform == '__WXGTK__':
                 return module.__doc__
