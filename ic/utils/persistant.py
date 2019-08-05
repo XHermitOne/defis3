@@ -16,7 +16,7 @@ from . import ic_file
 from . import ic_res
 from . import util
 from . import lock
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.log import log
 
 _ = wx.GetTranslation
@@ -128,7 +128,7 @@ class icPersistant:
             if not lock.IsLockedFile(lock_file_name):
                 try:
                     lock_rec = {'computer': lock.ComputerName(),
-                                'user': ic_user.icGet('UserName')}
+                                'user': glob_functions.getVar('UserName')}
                     lock.LockFile(lock_file_name, lock_rec)
                     ic_res.SaveResourcePickle(full_file_name, res)
                     lock.UnLockFile(lock_file_name)

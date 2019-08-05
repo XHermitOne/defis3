@@ -18,7 +18,7 @@ from ic import ic_dlg
 from ic.utils import ic_uuid
 from ic.utils import ic_extend
 from ic.utils import ic_time
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.interfaces import icmanagerinterface
 
 ### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/scan_document_pack.mtd

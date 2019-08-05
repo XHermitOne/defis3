@@ -7,7 +7,7 @@
 """
 
 from ic.components.user.objects import icmetatreebrows as browser
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from analitic.metadatainterfaces import IMetaplan
 from plan import browsers as brws
 from analitic import planUtils
@@ -30,10 +30,10 @@ def showTextMonitorBrowser():
     metaclass = IMetaplan.IMetaplan(forms=frm)
 #    metaObj = metaclass.getObject()
 
-#    brows=browser.MetaTreeBrows(ic_user.icGetMainWin(), metaObj=metaObj,
+#    brows=browser.MetaTreeBrows(glob_functions.getMainWin(), metaObj=metaObj,
 #                                treeRootTitle='Классификация мониторов',
 #                                treeLabels=['Мониторы'])
-    brows = brws.icMonitoringBrows(ic_user.icGetMainWin(), 'metadata_plan',
+    brows = brws.icMonitoringBrows(glob_functions.getMainWin(), 'metadata_plan',
                                    metaclass=metaclass,
                                    treeRootTitle=u'Классификация мониторов',
                                    treeLabels=[u'Мониторы'])
@@ -44,7 +44,7 @@ def showTextMonitorBrowser():
     # Устанавливает у метадерева режим мониторинга и указатель на браузер.
     metaclass.SetUserData({'mode': 'monitoring', 'browserInterface': brows})
     obj = brows.getObject()
-    ic_user.icAddMainOrgPage(obj, u'Табличные мониторы')
+    glob_functions.addMainOrgPage(obj, u'Табличные мониторы')
 
 
 def showMonitorBrowser():
@@ -60,10 +60,10 @@ def showMonitorBrowser():
     metaclass = IMetaplan.IMetaplan(forms=frm)
 #    metaObj = metaclass.getObject()
 
-#    brows=browser.MetaTreeBrows(ic_user.icGetMainWin(), metaObj=metaObj,
+#    brows=browser.MetaTreeBrows(glob_functions.getMainWin(), metaObj=metaObj,
 #                                treeRootTitle='Классификация мониторов',
 #                                treeLabels=['Мониторы'])
-    brows = brws.icMonitoringBrows(ic_user.icGetMainWin(), 'metadata_plan',
+    brows = brws.icMonitoringBrows(glob_functions.getMainWin(), 'metadata_plan',
                                    metaclass=metaclass,
                                    treeRootTitle=u'Классификация мониторов',
                                    treeLabels=[u'Мониторы'])
@@ -74,7 +74,7 @@ def showMonitorBrowser():
     metaclass.SetUserData({'mode': 'monitoring', 'browserInterface': brows})
     obj = brows.getObject()
     # obj.Show(True)
-    ic_user.icAddMainOrgPage(obj, u'Просмотр индикаторов')
+    glob_functions.addMainOrgPage(obj, u'Просмотр индикаторов')
 
 
 def showPlanBrowser():

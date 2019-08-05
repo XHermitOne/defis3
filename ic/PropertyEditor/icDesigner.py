@@ -10,7 +10,7 @@ import sys
 # import locale
 
 from ic.utils import ic_i18n
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_util
 from ic.log import log
 
@@ -48,7 +48,7 @@ class icDesignerApp(wx.App):
         """
         Обработчик выхода из приложения.
         """
-        cur_user = ic_user.getCurUser()
+        cur_user = glob_functions.getCurUser()
         # Завершить работу пользователя
         if cur_user:
             cur_user.Logout()

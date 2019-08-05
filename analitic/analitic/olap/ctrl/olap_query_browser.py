@@ -10,7 +10,7 @@ import wx
 from . import olap_query_browse_panel_proto
 
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from ic.engine import panel_manager
 from ic.components import icwidget
@@ -325,7 +325,7 @@ def show_olap_query_browser(parent=None, title=u'Аналитические от
         browser_panel.init()
         browser_panel.query_treectrl.setOLAPServer(olap_server)
 
-        ic_user.addMainNotebookPage(browser_panel, title)
+        glob_functions.addMainNotebookPage(browser_panel, title)
 
         # Остановить OLAP сервер
         olap_server.stop()

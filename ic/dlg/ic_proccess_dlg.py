@@ -175,7 +175,7 @@ def ProccessFunc(Parent_, Msg_,
     return wait_result[0]
 
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 
 class icThreadMessageBox(wx.Dialog):
@@ -213,7 +213,7 @@ class icThreadMessageBox(wx.Dialog):
         if Parent_:
             self.defBackClr = Parent_.GetBackgroundColour()
         else:
-            app = ic_user.icGetRunner()
+            app = glob_functions.getEngine()
             if app:
                 Parent_ = app.GetTopWindow()
                 self.defBackClr = app.GetTopWindow().GetBackgroundColour()

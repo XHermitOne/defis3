@@ -22,7 +22,7 @@ from ic.utils import lock
 from ic.kernel import icobject
 from ic.utils import resource
 from ic.dlg import ic_dlg
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 # Типы БД
 from .icSQLite import SQLITE_DB_TYPE
@@ -648,7 +648,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         """
         if LockRec_ is None:
             comp_name = lock.ComputerName()
-            user_name = ic_user.getCurUserName()
+            user_name = glob_functions.getCurUserName()
             LockRec_ = str({'computer': comp_name, 'user': user_name})
         result = lock.LockRecord(name, id, LockRec_)
         log.debug(u'Запись заблокирована <%s : %s : %s : %s>' % (name, id, LockRec_, result))
@@ -682,7 +682,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             # Если блокировка поставлена тем же пользователем,
             # тогда не считается что заблокировано
             log.debug(u'Проверка блокироваки записи <%s : %s> ' % (lock_rec, type(lock_rec)))
-            if lock_rec and lock_rec['user'] == ic_user.getCurUserName():
+            if lock_rec and lock_rec['user'] == glob_functions.getCurUserName():
                 return False
             return lock.isLockRecord(name, id)
         return False

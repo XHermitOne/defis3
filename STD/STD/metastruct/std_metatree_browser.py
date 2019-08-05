@@ -10,7 +10,7 @@ import wx
 from . import std_metatree_browser_proto
 
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.engine import form_manager
 from ic.components import icwidget
 
@@ -51,11 +51,11 @@ def browse_metatree_std_panel(parent=None, title=u''):
     """
     try:
         if parent is None:
-            parent = ic_user.getMainWin()
+            parent = glob_functions.getMainWin()
 
         browser_panel = icStdMetaTreeBrowserProto(parent=parent)
 
-        result = ic_user.addMainNotebookPage(browser_panel, title)
+        result = glob_functions.addMainNotebookPage(browser_panel, title)
         return result is not None
     except:
         log.fatal(u'Ошибка вызова стандартного браузера в главном органайзере.')

@@ -13,7 +13,7 @@ from ic.utils import util
 from ic.dlg import ic_dlg
 from ic.utils import system_cache
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from ic.storage import storesrc
 
@@ -606,7 +606,7 @@ class icSpravPrototype(icSpravInterface):
         @return: Возвращает результат выполнения опереции True/False.
         """
         if parent is None:
-            parent = ic_user.getMainWin()
+            parent = glob_functions.getMainWin()
 
         try:
             if ParentCode_ is None:

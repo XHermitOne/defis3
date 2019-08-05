@@ -92,8 +92,8 @@ def getKernel():
     """
     Текущее ядро.
     """
-    from ic.engine import ic_user
-    return ic_user.getKernel()
+    from ic.engine import glob_functions
+    return glob_functions.getKernel()
 
 
 # Классы ядра

@@ -55,8 +55,8 @@ def getBDNames():
     """
     Получить в спецификации список имен БД.
     """
-    from ic.engine import ic_user
-    prj = ic_user.getPrjRoot()
+    from ic.engine import glob_functions
+    prj = glob_functions.getPrjRoot()
     if prj:
         return prj.getResNamesByTypes(SRC_EXT[1:])
     return None

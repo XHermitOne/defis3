@@ -11,7 +11,7 @@ from ic.log import log
 from ic.utils import resource
 from ic.storage import objstore
 from ic.utils import ic_util
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 try:
     from . import metaitem
@@ -77,7 +77,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
         Установка хранилища данных по паспорту.
         """
         if self._object_storage_name != ObjectStoragePsp_[0][1]:
-            kernel = ic_user.getKernel()
+            kernel = glob_functions.getKernel()
             # Нужно создать новое хранилище
             self._storage = kernel.Create(ObjectStoragePsp_)
             if self._storage is None:

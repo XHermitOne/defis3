@@ -7,13 +7,13 @@
 
 import unittest
 import ic.kernel.ic_dot_use as ic_dot_use
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_mode
 from ic.kernel import ickernel
 
 def init_tutorial_enviroment():
     ic_mode.setRuntimeMode(False)
-    ic_user.icEditorLogin(None, None, '-s', PrjDir_= 'C:/defis/tutorial/tutorial/' , DEBUG_MODE=False)
+    glob_functions.icEditorLogin(None, None, '-s', PrjDir_='C:/defis/tutorial/tutorial/', DEBUG_MODE=False)
 
 class TesticDotUseMeta(unittest.TestCase):
 

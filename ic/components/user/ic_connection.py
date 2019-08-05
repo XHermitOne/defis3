@@ -25,7 +25,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.log import log
 
 import ic.kernel.icObjConnection as parentModule
@@ -144,7 +144,7 @@ class icConnection(icwidget.icSimple, parentModule.icConnection):
         parentModule.icConnection.__init__(self, first_signal, slot_list)
 
         # Регистрируем соединение через ядро
-        kernel = ic_user.icGetRunner()
+        kernel = glob_functions.getEngine()
         if kernel:
             log.info(u'>>> Регистрируем соединение first_signal = <%s>, slot_list = <%s>' % (first_signal,
                                                                                              slot_list))

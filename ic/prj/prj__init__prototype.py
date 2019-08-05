@@ -8,7 +8,7 @@
 import os
 import os.path
 
-from ic.engine import ic_user as ic_user
+from ic.engine import glob_functions as ic_user
 from ic.utils import ic_mode
 from ic.kernel import ic_dot_use
 
@@ -24,7 +24,7 @@ def init_env():
     pth = pth.replace('\\', '/')
     ln = pth.split('/')[-1]
     ic_mode.setRuntimeMode(False)
-    ic_user.icEditorLogin(None, None, '-s',
+    glob_functions.icEditorLogin(None, None, '-s',
                           PrjDir_=os.path.join(pth, ln), DEBUG_MODE=False)
 
 

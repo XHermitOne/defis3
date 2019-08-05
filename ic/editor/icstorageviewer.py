@@ -11,7 +11,7 @@ from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK
@@ -37,7 +37,7 @@ class icStorageViewerDlg(icobjectinterface.icObjectInterface):
         
         try:
             viewer = self.GetNameObj('view_treectrl')
-            var_storage = ic_user.getVarStorage().getStorage()
+            var_storage = glob_functions.getVarStorage().getStorage()
             log.info(u'VAR STORAGE VIEWER: <%s>' % var_storage)
             variables = self._storageConvert(var_storage)
             viewer.LoadTree(variables)

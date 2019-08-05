@@ -29,8 +29,8 @@ def icPassportChoiceDlg(Win_=None, Prj_=None):
     @return: Возвращает список паспорта выбранного объекта или None  в случае ошибки.
     """
     if Prj_ is None:
-        from ic.engine import ic_user
-        Prj_ = ic_user.getPrjRoot()
+        from ic.engine import glob_functions
+        Prj_ = glob_functions.getPrjRoot()
 
     dlg = None
     win_clear = False
@@ -114,8 +114,8 @@ class icPassportChoicePanel(wx.Panel):
         
         try:
             if Prj_ is None:
-                from ic.engine import ic_user
-                Prj_ = ic_user.getPrjRoot()
+                from ic.engine import glob_functions
+                Prj_ = glob_functions.getPrjRoot()
 
             wx.Panel.__init__(self, parent_, wx.NewId())
 

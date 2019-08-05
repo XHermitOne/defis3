@@ -22,10 +22,10 @@ import os
 import sys
 import copy
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_mode
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def main(args):
@@ -76,13 +76,13 @@ def main(args):
             ic.set_ini_file(prj_path)
 
         if len(args) > 3:
-            ic_user.icLogin(args[2], args[3], args[1], PrjDir_=prj_path)
+            glob_functions.icLogin(args[2], args[3], args[1], prj_dirname=prj_path)
         elif len(args) > 2:
-            ic_user.icLogin(args[2], '', args[1], PrjDir_=prj_path)
+            glob_functions.icLogin(args[2], '', args[1], prj_dirname=prj_path)
         elif len(args) > 1:
-            ic_user.icLogin(None, None, args[1], PrjDir_=prj_path)
+            glob_functions.icLogin(None, None, args[1], prj_dirname=prj_path)
         else:
-            ic_user.icLogin()
+            glob_functions.icLogin()
     elif '-srv' in args:
         # Режим работы СЕРВИСНОГО СЕРВЕРА
         pass

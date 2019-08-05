@@ -32,7 +32,7 @@ from ic.db import icsqlalchemy
 from ic.db import icdb
 from ic.dlg import ic_dlg
 from ic.utils import coderror
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.log import log
 
 from ic.components.user import ic_field_wrp
@@ -54,7 +54,7 @@ def getBDNames():
     """
     Получить в спецификации список имен БД.
     """
-    prj = ic_user.getPrjRoot()
+    prj = glob_functions.getPrjRoot()
     if prj:
         return prj.getResNamesByTypes('src')
     return None

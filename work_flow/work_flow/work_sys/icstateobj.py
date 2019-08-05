@@ -15,7 +15,7 @@ import datetime
 from ic.log import log
 from . import icbusinessobj
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_extend
 
 # Версия
@@ -86,7 +86,7 @@ class icStateObjProto(icbusinessobj.icBusinessObjPrototype):
         if self.isRequisite('computer') and not self.getRequisiteValue('computer'):
             self.setRequisiteValue('computer', ic_extend.getComputerName())
         if self.isRequisite('username') and not self.getRequisiteValue('username'):
-            self.setRequisiteValue('username', ic_user.getCurUserName())
+            self.setRequisiteValue('username', glob_functions.getCurUserName())
         # Дата-время изменения состояния
         if self.isRequisite('dt_state') and not self.getRequisiteValue('dt_state'):
             self.setRequisiteValue('dt_state', datetime.datetime.now())
@@ -152,7 +152,7 @@ class icStateObjProto(icbusinessobj.icBusinessObjPrototype):
         if self.isRequisite('computer') and not self.getRequisiteValue('computer'):
             self.setRequisiteValue('computer', ic_extend.getComputerName())
         if self.isRequisite('username') and not self.getRequisiteValue('username'):
-            self.setRequisiteValue('username', ic_user.getCurUserName())
+            self.setRequisiteValue('username', glob_functions.getCurUserName())
         # Дата-время изменения состояния
         if self.isRequisite('dt_state') and not self.getRequisiteValue('dt_state'):
             self.setRequisiteValue('dt_state', datetime.datetime.now())

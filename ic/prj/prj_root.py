@@ -21,7 +21,7 @@ from ic.kernel import icexceptions
 from ic.utils import ic_util
 from ic.utils import impfunc
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 import ic.utils.ic_mode as ic_mode
 
 from . import PrjRes
@@ -82,8 +82,8 @@ class PrjRoot(ImpNode.PrjImportSys):
         self.show_popup_help = False
         
         # Сразу зарегестрировать этот объект в хранилище переменных
-        if not ic_user.icIs('PRJ_ROOT') or ic_user.icGet('PRJ_ROOT') is None:
-            ic_user.icLet('PRJ_ROOT', self)
+        if not glob_functions.isVar('PRJ_ROOT') or glob_functions.getVar('PRJ_ROOT') is None:
+            glob_functions.letVar('PRJ_ROOT', self)
 
         # Режим отладки
         self.debug_mode = ic_mode.isDebugMode()
@@ -100,7 +100,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         log.info('PROJECT EXIT')
         ic_util.print_defis_logo()
 
-        kernel = ic_user.getKernel()
+        kernel = glob_functions.getKernel()
         if kernel:
             kernel.stop()
         self.logout()
@@ -281,7 +281,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             
             self.logout()
             # Определить окружение проекта
-            ic_user.InitEnv(os.path.dirname(self.getPrjFileName()))
+            glob_functions.initEnv(os.path.dirname(self.getPrjFileName()))
             self.login('admin', '')
             
             tree_prj.setRoot()
@@ -352,7 +352,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         # создавать каждый раз заново при открытии проекта
         result = False
         try:
-            result = ic_user.getKernel().Login(User_, Password_)
+            result = glob_functions.getKernel().Login(User_, Password_)
         except icexceptions.LoginInvalidException:
             ic_dlg.icMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
         except icexceptions.LoginErrorException:
@@ -383,7 +383,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             from ic.kernel import icsettings
             icsettings.setProjectSettingsToEnvironment(self.name, ReDefine_=True)
         if result:
-            self._prj_user = ic_user.getKernel().getUser()
+            self._prj_user = glob_functions.getKernel().getUser()
         else:
             self._prj_user = None
             
@@ -424,7 +424,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             # должен отразиться актуальный проект------------------------------+
             # Иначе дерево проекта для выбора паспорта не обновляется          |
             # Поэтому явно задаем корень проекта в окружении                   v
-            ic_user.InitEnv(os.path.dirname(prj_file), PrjName=prj_name, PRJ_ROOT=self)
+            glob_functions.initEnv(os.path.dirname(prj_file), PrjName=prj_name, PRJ_ROOT=self)
             
             # Регистрация программиста
             if not self.login(prj_filename=prj_file):

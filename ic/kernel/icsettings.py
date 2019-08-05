@@ -14,7 +14,7 @@ import os.path
 from ic.utils import ic_mode
 from ic.utils import ini
 from ic.utils import ic_exec
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -29,32 +29,32 @@ def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
     @return: True/False.
     """
     prj_settings = None
-    if ic_user.getSettings() is None:
+    if glob_functions.getSettings() is None:
         if ic_mode.isDebugMode():
             log.info(u'Не определена переменная настроек проекта.')
-        prj_dir = ic_user.icGet('PRJ_DIR')
-        prj_name = ic_user.icGet('PrjName')
+        prj_dir = glob_functions.getVar('PRJ_DIR')
+        prj_name = glob_functions.getVar('PrjName')
         if prj_dir and prj_name:
             prj_ini_file_name = os.path.join(prj_dir, prj_name+'.ini')
             prj_settings = ini.INI2Dict(prj_ini_file_name)
     else:    
         if ProjectName_ is None:
-            prj_settings = ic_user.getSettings().THIS.get()
+            prj_settings = glob_functions.getSettings().THIS.get()
         else:
-            prj_settings = getattr(ic_user.getSettings(), ProjectName_).get()
+            prj_settings = getattr(glob_functions.getSettings(), ProjectName_).get()
             
     if prj_settings:
         for section_name, section in prj_settings.items():
             for param, value in section.items():
-                if ic_user.icIs(param):
+                if glob_functions.isVar(param):
                     log.info(u'Переменная %s уже определена в окружении' % param)
                     if ReDefine_:
-                        ic_user.icLet(param, value)
+                        glob_functions.letVar(param, value)
                         log.info(u'Переменная %s переопределена в окружении' % param)
                 else:
-                    ic_user.icLet(param, value)
+                    glob_functions.letVar(param, value)
         if ic_mode.isDebugMode():
-            ic_user.icPrintStore()            
+            glob_functions.printVarStorage()
         return True
     return False
     
@@ -83,7 +83,7 @@ class icSettingsDotUsePrototype(object):
         """
         Определить полное имя файла настроек из имени проекта.
         """
-        prj_dir = ic_user.icGet('PRJ_DIR')
+        prj_dir = glob_functions.getVar('PRJ_DIR')
         if prj_dir:
             ini_file_name = os.path.join(prj_dir, self._cur_settings_list[0]+'.ini')
         else:
@@ -130,7 +130,7 @@ class icSettingsDotUse(icSettingsDotUsePrototype):
         prj = icPrjDotUse(object.__getattribute__(self, '_cur_settings_list'))
 
         if AttrName_ == object.__getattribute__(self, 'THIS_PRJ'):
-            prj._cur_settings_list[0] = ic_user.icGet('PrjName')
+            prj._cur_settings_list[0] = glob_functions.getVar('PrjName')
         else:
             prj._cur_settings_list[-1] = AttrName_
             

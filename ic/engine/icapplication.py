@@ -114,10 +114,10 @@ class icApp(icwxapplication.icWXApp):
         Функция выхода из системы.
         """
         # Удалить корректно все объекты таблиц
-        from ic.engine import ic_user
+        from ic.engine import glob_functions
         from ic.utils import resource
         
-        lock.UnLockAllFile(ic_user.icGet('LOCK_DIR'))
+        lock.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
         # Сохраняем локальное хранилище настроек 
         resource.icCloseLocalStorage()
         
@@ -144,17 +144,17 @@ class icApp(icwxapplication.icWXApp):
         @param password: Пароль.
         @param db_mode: Режим использования БД.
         """
-        from ic.engine import ic_user
+        from ic.engine import glob_functions
 
         ok = self._login_loop(username, password, db_mode)
         if ok:
             # self.run(self._User.getMainWinPsp(), self._User.getMenubarsPsp())
             # Удалить файлы блокировок при входе в систему
-            lock.UnLockAllFile(ic_user.icGet('LOCK_DIR'))
+            lock.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
             return True
 
         # Удалить файлы блокировок при входе в систему
-        lock.UnLockAllFile(ic_user.icGet('LOCK_DIR'))
+        lock.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
         
         return False
 

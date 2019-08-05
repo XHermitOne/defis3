@@ -196,7 +196,7 @@ class PrjSecurity(prj_node.PrjFolder):
         """
         Открытие файлов ролей.
         """
-        prj_dir = ic.icGet('PRJ_DIR')
+        prj_dir = ic.getVar('PRJ_DIR')
         role_files = ic_file.GetFilesByExt(prj_dir, '.rol')
         # Сразу отфильтровать Pkl файлы
         role_files = [role_file for role_file in role_files if '_pkl.rol' not in role_file.lower()]

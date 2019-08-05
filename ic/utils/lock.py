@@ -18,7 +18,7 @@ import stat
 
 from . import ic_util
 from . import ic_str
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -245,7 +245,7 @@ def getLockDir():
     """
     Определить папку блокировок.
     """
-    lock_dir = ic_user.icGet('LOCK_DIR')
+    lock_dir = glob_functions.getVar('LOCK_DIR')
     if not lock_dir:
         log.warning(u'Не определена папка блокировок. Используется папка по умолчанию <%s>' % LOCK_DIR)
         return LOCK_DIR
@@ -507,8 +507,8 @@ def UnLockAllFile(LockDir_, ComputerName_=None, UserName_=None):
     if not ComputerName_:
         ComputerName_ = ComputerName()
     if not UserName_:
-        import ic.engine.ic_user
-        UserName_ = ic.engine.ic_user.icGet('UserName')
+        import ic.engine.glob_functions
+        UserName_ = ic.engine.glob_functions.getVar('UserName')
     if LockDir_:
         return os.walk(LockDir_, _UnLockFileWalk, (ComputerName_, UserName_))
 
@@ -581,9 +581,9 @@ class icLockSystem:
         """
         lock_file_name = self._getLockFileName(LockName_)
         if LockRec_ is None:
-            import ic.engine.ic_user
+            import ic.engine.glob_functions
             LockRec_ = {'computer': ComputerName(),
-                        'user': ic.engine.ic_user.icGet('UserName')}
+                        'user': ic.engine.glob_functions.getVar('UserName')}
 
         if unLockMy and self.isMyLockRes(LockName_, LockRec_):
             # Это мной поставленная блокировка. Поэтому мы можем снять ее
@@ -610,9 +610,9 @@ class icLockSystem:
             False - ресурс вообще не заблокирован или заблокирован не мной.
         """
         if LockRec_ is None:
-            import ic.engine.ic_user
+            import ic.engine.glob_functions
             LockRec_ = {'computer': ComputerName(),
-                        'user': ic.engine.ic_user.icGet('UserName')}
+                        'user': ic.engine.glob_functions.getVar('UserName')}
 
         # Если ресурс заблокирован надо посмотреть кто его заблокировал
         lock_rec = self.getLockRec(LockName_)

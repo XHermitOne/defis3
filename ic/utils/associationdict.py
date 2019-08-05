@@ -18,7 +18,7 @@ import os.path
 
 from . import persistant
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.log import log
 
 __version__ = (1, 1, 1, 1)
@@ -69,7 +69,7 @@ class icAssociationDict(persistant.icPersistant):
 
         persistant.icPersistant.__init__(self, uniq_name, 'adt', res_path, subsys)
 
-        local_dir = ic_user.icGet('LOCAL_DIR')
+        local_dir = glob_functions.getVar('LOCAL_DIR')
         if not self.res_path and local_dir:
             self.res_path = os.path.normpath(local_dir)
 

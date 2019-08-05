@@ -23,7 +23,7 @@ from . import menuImpNode
 from . import prj_node
 from . import prj_module
 from . import PrjRes
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 __version__ = (0, 1, 1, 1)
 
@@ -256,7 +256,7 @@ class PrjImportSystems(PrjImportFolder):
                 self._copySubSysDir(sub_sys_dir, prj_dir)
 
             # Обновить дерево пользовательских компонентов
-            ic_user.refreshImports()
+            glob_functions.refreshImports()
             tree_prj = self.getParentRoot().getParent()
             tree_prj.res_editor.CloseResource()
             tree_prj.res_editor.InitObjectsInfo(bRefresh=True)
@@ -663,7 +663,7 @@ class PrjImportSys(PrjNotImportSys):
             sub_systems._copySubSysDir(sub_sys_dir, prj_dir)
 
             # Обновить дерево пользовательских компонентов
-            ic_user.refreshImports()
+            glob_functions.refreshImports()
             tree_prj = self.getParentRoot().getParent()
             tree_prj.res_editor.CloseResource()
             tree_prj.res_editor.InitObjectsInfo(bRefresh=True)

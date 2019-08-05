@@ -13,7 +13,7 @@ import ic.interfaces.icobjectinterface as icobjectinterface
 import ic.log.ic_log as ic_log
 import copy
 import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK
@@ -299,10 +299,10 @@ def showReestrBrowser(MetaClass_):
 #                            treeRootTitle='Структура планов',
 #                            treeLabels=['Планы'])
     print('>>>', metaObj.name)
-    browser=ReestrBrowser(ic_user.icGetMainWin(), metaObj.name,
-                            metaObj=metaObj,
-                            treeRootTitle='',
-                            treeLabels=[''])
+    browser=ReestrBrowser(glob_functions.getMainWin(), metaObj.name,
+                          metaObj=metaObj,
+                          treeRootTitle='',
+                          treeLabels=[''])
                             
     #   Определяем функции пересчета модифицированных планов по базовому
     #brows.recountFunc = planUtils.genModifPlan
@@ -312,7 +312,7 @@ def showReestrBrowser(MetaClass_):
     # Устанавливает у метадерева указатель на браузер.
     #metaclass.SetUserData({'mode':'planning', 'browserInterface':brows})
     obj=browser.getObject()
-    ic_user.icAddMainOrgPage(obj,u'Реестр документов')
+    glob_functions.addMainOrgPage(obj, u'Реестр документов')
     #obj.Show(True)
     
 def test(par=0):

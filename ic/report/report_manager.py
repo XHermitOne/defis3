@@ -12,7 +12,7 @@ import os.path
 import wx
 
 from . import config
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_extend
 from ic.utils import ic_res
 from ic.utils import ic_str
@@ -92,7 +92,7 @@ class icReportManager(object):
         @return: Полный путь до директории отчетов.
         """
         if self._report_dir is None:
-            prj_dir = ic_user.icGet('PRJ_DIR')
+            prj_dir = glob_functions.getVar('PRJ_DIR')
             self._report_dir = os.path.join(prj_dir,
                                             config.get_glob_var('DEFAULT_REPORT_DIRNAME'))
             # Проверить сразу существует ли папка

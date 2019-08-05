@@ -11,7 +11,7 @@ from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK
@@ -38,7 +38,7 @@ class icContextViewerDlg(icobjectinterface.icObjectInterface):
         try:
             viewer = self.GetNameObj('view_treectrl')
             if Context_ is None:
-                Context_ = ic_user.getKernel().GetContext()
+                Context_ = glob_functions.getKernel().GetContext()
             variables = self._contextConvert(Context_)
             viewer.LoadTree(variables)
         except:

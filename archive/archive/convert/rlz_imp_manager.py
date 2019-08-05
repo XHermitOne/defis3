@@ -18,7 +18,7 @@ from ic.utils import filefunc
 # from ic.utils import smbfunc
 from ic.db import dbf
 from ic.utils import ic_extend
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from . import import_manager
 
@@ -559,7 +559,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                        dt_oper=dt_oper,
                        n_obj=alt_n_doc,
                        obj_date=dt_doc,
-                       username=ic_user.getCurUserName(),
+                       username=glob_functions.getCurUserName(),
                        computer=ic_extend.getComputerNameLAT(),
                        n_doc=n_doc,
                        doc_date=dt_doc,
@@ -655,7 +655,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                        dt_oper=dt_oper,
                        n_obj=n_nakl,
                        obj_date=dt_doc,
-                       username=ic_user.getCurUserName(),
+                       username=glob_functions.getCurUserName(),
                        computer=ic_extend.getComputerNameLAT(),
                        n_doc=n_doc,
                        doc_date=dt_doc,
@@ -746,7 +746,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                        dt_oper=dt_oper,
                        n_obj=alt_n_doc,
                        obj_date=dt_doc,
-                       username=ic_user.getCurUserName(),
+                       username=glob_functions.getCurUserName(),
                        computer=ic_extend.getComputerNameLAT(),
                        n_doc=n_doc,
                        doc_date=dt_doc,
@@ -857,7 +857,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                            dt_oper=dt_oper,
                            n_obj=u'%s от %s' % (n_doc, dt_doc.strftime(import_manager.DEFAULT_DBF_DT_FMT)),
                            obj_date=dt_doc,
-                           username=ic_user.getCurUserName(),
+                           username=glob_functions.getCurUserName(),
                            computer=ic_extend.getComputerNameLAT(),
                            n_doc=n_doc,
                            doc_date=dt_doc,

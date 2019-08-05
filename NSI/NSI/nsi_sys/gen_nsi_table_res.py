@@ -8,7 +8,7 @@
 from ic.log import log
 from ic.utils import util
 from ic.utils import ic_str
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from ic.components.user import ic_tab_wrp
 from ic.components.user import ic_field_wrp
@@ -140,7 +140,7 @@ class icSpravTableResGenerator():
         @param sTableName: Имя таблицы.
         """
         # Открыть проект
-        prj_res_ctrl = ic_user.getKernel().getProjectResController()
+        prj_res_ctrl = glob_functions.getKernel().getProjectResController()
         prj_res_ctrl.openPrj()
 
         # Проверка на добавление нового ресурса

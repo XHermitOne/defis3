@@ -46,7 +46,7 @@ from ic.utils import util
 
 from ic.utils import coderror
 from ic.dlg import ic_dlg
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from ic.components import icwidget
 
@@ -1474,8 +1474,8 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         tab = None
         # Пробуем получить объект по таблицы по сгенерированному паспорту
         try:
-            tab_psp = (('Table', tab_name, None, tab_name + '.tab', ic_user.getPrjName()),)
-            tab = ic_user.getKernel().Create(tab_psp)
+            tab_psp = (('Table', tab_name, None, tab_name + '.tab', glob_functions.getPrjName()),)
+            tab = glob_functions.getKernel().Create(tab_psp)
         except:
             log.fatal(u'Ошибка создания таблицы по имени <%s>' % tab_name)
         return tab

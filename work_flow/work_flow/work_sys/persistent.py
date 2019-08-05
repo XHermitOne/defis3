@@ -12,7 +12,7 @@ from ic.utils import ic_mode
 from ic.utils import lock
 from ic.utils import ic_str
 from ic.utils import util
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_uuid
 from ic.log import log
 from ic.dlg import ic_dlg
@@ -215,7 +215,7 @@ class icObjPersistentPrototype:
         Инициализация системы блокировок.
         """
         # Система блокировки
-        lock_dir = ic_user.icGet('LOCK_DIR')
+        lock_dir = glob_functions.getVar('LOCK_DIR')
         self._lockSystem = lock.icLockSystem(lock_dir)
 
     def lock(self, UUID=None):
@@ -1104,7 +1104,7 @@ class icObjPersistent(icObjPersistentPrototype):
         @param ParentTableName_: Имя родительской таблицы.
         """
         # Открыть проект
-        prj_res_ctrl = ic_user.getKernel().getProjectResController()
+        prj_res_ctrl = glob_functions.getKernel().getProjectResController()
         prj_res_ctrl.openPrj()
     
         # Проверка на добавление нового ресурса

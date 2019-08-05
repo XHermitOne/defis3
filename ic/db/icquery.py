@@ -16,7 +16,7 @@ from ic.utils import ic_util
 from ic.utils import resource
 from ic.log import log
 from ic.utils import txtgen
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import util
 
 
@@ -328,7 +328,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         @param bOpenPrj: Автоматически открыть текущий проект?
         """
         if self._prj_res_manager is None:
-            self._prj_res_manager = ic_user.getKernel().getProjectResManager()
+            self._prj_res_manager = glob_functions.getKernel().getProjectResManager()
             if bOpenPrj:
                 self._prj_res_manager.openPrj()
         return self._prj_res_manager
@@ -364,7 +364,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
             return self._to_table_by_name(table, bReCreateRes=bReCreateRes, bData=bData,
                                           bClear=bClear, bTransact=bTransact)
         elif ic_util.is_pasport(table):
-            kernel = ic_user.getKernel()
+            kernel = glob_functions.getKernel()
             tab = kernel.Create(passport=table)
             return self._to_table(tab, bReCreateRes=bReCreateRes, bData=bData,
                                   bClear=bClear, bTransact=bTransact)
@@ -550,11 +550,11 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
 
         if isinstance(table, str):
             # Таблица задается именем
-            kernel = ic_user.getKernel()
+            kernel = glob_functions.getKernel()
             table = kernel.createObjByRes(table, table, 'tab')
         elif ic_util.is_pasport(table):
             # Таблица задается паспортом
-            kernel = ic_user.getKernel()
+            kernel = glob_functions.getKernel()
             table = kernel.Create(table)
         else:
             # Таблица задается объектом

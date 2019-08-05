@@ -186,7 +186,7 @@ class icPlanModifManager(icwidget.icSimple):
         for key in lst_keys:
             setattr(self, key, component[key])
 
-#        kernel = ic_user.icGetRunner()
+#        kernel = glob_functions.getEngine()
 #        if self.metaclass and kernel:
 #            self.metaclass = kernel.Create(self.metaclass, parent, evalSpace)
         

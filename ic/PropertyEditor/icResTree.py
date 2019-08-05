@@ -30,7 +30,7 @@ from ic.components.user.objects import icpanelgroupedt
 from ic.PropertyEditor import icpropertyeditmanager
 
 from ic.prj import PrjTree
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.components import user
 from ic.components import icEvents
 from ic.dlg import ic_logo_dlg
@@ -2614,7 +2614,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         util.clearResourceBuff()
         # Удаляем, импортируемые во время работы модули,
         # из пространства имен.
-        ic_user.clearImports()
+        glob_functions.clearImports()
         icResourceParser.ClearComponentModulDict()
         # Устанавливаем для конструктора форм режим отладки
         icResourceParser.setTestMode(True)

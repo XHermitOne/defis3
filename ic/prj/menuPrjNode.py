@@ -280,8 +280,8 @@ class icMenuPrjNode(flatmenu.FlatMenu):
             node = self._Parent
             table_psp = ((None, None, None,
                           node.getResFileName()+'.'+node.getResFileExt(), None),)
-            from ic.engine import ic_user
-            table = ic_user.getKernel().Create(table_psp)
+            from ic.engine import glob_functions
+            table = glob_functions.getKernel().Create(table_psp)
             ok = table.syncDB()
         except:
             ok = False

@@ -14,7 +14,7 @@ from ic.utils import util
 from ic.components.user import ic_tab_wrp
 from ic.components.user import ic_field_wrp
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 # --- Спецификации ---
 CONVERTQUERY_TYPE = 'ConvertQuery'
@@ -103,7 +103,7 @@ class icConvertQueryPrototype:
             table_res_name = self.getTableName()
             
         # Открыть проект
-        self._prj_res_ctrl = ic_user.getKernel().getProjectResController()
+        self._prj_res_ctrl = glob_functions.getKernel().getProjectResController()
         self._prj_res_ctrl.openPrj()
         
         return self._prj_res_ctrl.isRes(table_res_name, 'tab')

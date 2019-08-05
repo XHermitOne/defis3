@@ -25,7 +25,7 @@ from ic.utils import ini
 from ic.log import log
 from ic.utils import util
 
-from ic.engine.ic_user import *
+from ic.engine.glob_functions import *
 from ic.engine.form_manager import *
 from ic.utils.ic_extend import *
 from ic.utils.ic_file import *
@@ -78,7 +78,7 @@ def load_ini_param(section, par):
 def get_loader():
     global resource_loader
     if not resource_loader:
-        resource_loader = icGet('LOADER')
+        resource_loader = getVar('LOADER')
     return resource_loader
 
 

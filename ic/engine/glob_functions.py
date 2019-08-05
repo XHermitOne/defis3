@@ -53,95 +53,95 @@ def getSettings():
     return glob_variables.get_glob_var('settings')
 
 
-def icLet(Name_, Data_, Security_='*rw'):
+def letVar(name, data, security='*rw'):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Функция добавляет переменную/объект в хранилище.
-    @param Name_: Имя переменной/объекта.
-    @param Data_: Непосредственно данные.
-    @param Security_: Строка защиты.
+    @param name: Имя переменной/объекта.
+    @param data: Непосредственно данные.
+    @param security: Строка защиты.
     """
     try:
-        return getKernel().GetContext().Set(Name_, Data_)
+        return getKernel().GetContext().Set(name, data)
     except:
         log.fatal()
 
 
-def icRef(Name_):
+def refVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Получить ссыылку на объект по его имени.
-    @param Name_: Имя объекта.
+    @param name: Имя объекта.
     @return: Возвращает ссылку на объект или None, если нет такого объекта.
     """
     try:
-        return getKernel().GetContext().Get(Name_)
+        return getKernel().GetContext().Get(name)
     except:
         log.fatal()
 
 
-def icGet(Name_, LockKey_=None):
+def getVar(name, lock_key=None):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Получить копию объекта.
-    @param Name_: Имя объекта.
-    @param LockKey_: Ключ блокировки.
+    @param name: Имя объекта.
+    @param lock_key: Ключ блокировки.
     @return: Возвращает копию объекта не связанную с оригиналом
         или None, если нет такого объекта.
     """
     try:
         kernel = getKernel()
         if kernel:
-            return kernel.GetContext().Get(Name_)
+            return kernel.GetContext().Get(name)
         else:
-            log.warning(u'Не определено ядро системы для получения объекта <%s>' % Name_)
+            log.warning(u'Не определено ядро системы для получения объекта <%s>' % name)
     except:
-        log.fatal(u'Ошибка ic_user.icGet NAME: <%s> KERNEL: <%s>' % (Name_, getKernel()))
+        log.fatal(u'Ошибка glob_functions.getVar NAME: <%s> KERNEL: <%s>' % (name, getKernel()))
     return None
 
 
-def icPut(Name_, Data_, LockKey_=None):
+def putVar(name, data, lock_key=None):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Сохранить объект.
-    @param Name_: Имя объекта.
-    @param Data_: Данные.
-    @param LockKey_: Ключ блокировки.
+    @param name: Имя объекта.
+    @param data: Данные.
+    @param lock_key: Ключ блокировки.
     @return: Возвращает результат выполнения операции (False или True).
     """
     try:
-        return getKernel().GetContext().Set(Name_, Data_)
+        return getKernel().GetContext().Set(name, data)
     except:
         log.fatal()
 
 
-def icDel(Name_):
+def delVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Удалить объект.
-    @param Name_: Имя объекта.
+    @param name: Имя объекта.
     @return: Возвращает удаленный из хранилища объект.
     """
     try:
-        return getKernel().GetContext().Del(Name_)
+        return getKernel().GetContext().Del(name)
     except:
         log.fatal()
 
 
-def icIs(Name_):
+def isVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Функция проверяет усть ли объект в хранилище.
-    @param Name_: Имя объекта.
+    @param name: Имя объекта.
     @return: Результат поиска (0/1).
     """
     try:
-        return getKernel().GetContext().Is(Name_)
+        return getKernel().GetContext().Is(name)
     except:
         log.fatal()
 
 
-def icPrintStore():
+def printVarStorage():
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Вывести на консоль содержимое ХРАНИЛИЩА.
@@ -149,9 +149,9 @@ def icPrintStore():
     try:
         return getKernel().GetContext().Print()
     except:
-        log.fatal(u'Ошибка ic_user.icPrintStore <%s>' % getKernel().GetContext().__class__)
+        log.fatal(u'Ошибка glob_functions.printVarStorage <%s>' % getKernel().GetContext().__class__)
 
-printEnvironmentTable = icPrintStore
+printEnvironmentTable = printVarStorage
 
 # ФУНКЦИИ ДВИЖКА
 
@@ -186,16 +186,16 @@ def refreshImports():
         log.fatal()
 
 
-def InitEnv(PrjDir_, **environ):
+def initEnv(prj_dirname, **environ):
     """
     Инициализация окружения по папке проекта.
-    @param PrjDir_: Папке проекта.
+    @param prj_dirname: Папка проекта.
     """
     try:
         # Подгрузить дополнительные атрибуты проекта
         from ic.prj import PrjRes
         prj_res_manager = PrjRes.icPrjRes()
-        prj_dir = os.path.normpath(PrjDir_)
+        prj_dir = os.path.normpath(prj_dirname)
         prj_res_file_name = os.path.join(prj_dir, os.path.basename(prj_dir)+'.pro')
         if os.path.exists(prj_res_file_name):
             prj_res_manager.openPrj(prj_res_file_name)
@@ -204,12 +204,12 @@ def InitEnv(PrjDir_, **environ):
             log.info(u'Чтение дополнительных атрибутов проекта <%s> ... ОК' % prj_res_file_name)
         else:
             log.warning(u'Не найден файл проекта <%s>' % prj_res_file_name)
-        return getKernel().GetContext().initEnv(PrjDir_, **environ)
+        return getKernel().GetContext().initEnv(prj_dirname, **environ)
     except:
-        log.fatal(u'Ошибка ic_user.InitEnv')
+        log.fatal(u'Ошибка glob_functions.initEnv')
 
 
-def icLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
+def icLogin(username=None, password=None, db_mode='-s', **kwargs):
     """
     Основная запускаемая функция.
     """
@@ -217,20 +217,20 @@ def icLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
 
     kernel = ickernel.createKernel()
     glob_variables.set_glob_var('KERNEL', kernel)
-    InitEnv(**kwargs)
+    initEnv(**kwargs)
 
     # Полное имя файла ресурса доступа к ресурсам
     users_file = icUser.DEFAULT_USERS_RES_FILE
-    icLet('UserAccessFile', users_file)
+    letVar('UserAccessFile', users_file)
 
     # Имя проекта
-    icLet('PrjName', os.path.split(icGet('SYS_RES'))[1])
+    letVar('PrjName', os.path.split(getVar('SYS_RES'))[1])
 
     # Установить операционный год
     setOperateYear()
 
     # залогиниться
-    login_ok = kernel.Login(User_, Password_, DBMode_)
+    login_ok = kernel.Login(username, password, db_mode)
     if not login_ok:
         kernel.Logout()
     else:
@@ -254,7 +254,7 @@ def icLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
     return login_ok
 
 
-def icEditorLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
+def icEditorLogin(username=None, password=None, db_mode='-s', **kwargs):
     """
     Основная запускаемая функция.
     """
@@ -265,13 +265,13 @@ def icEditorLogin(User_=None, Password_=None, DBMode_='-s', **kwargs):
 
     kernel = ickernel.createEditorKernel()
     glob_variables.set_glob_var('KERNEL', kernel)
-    InitEnv(**kwargs)
+    initEnv(**kwargs)
     # Полное имя файла ресурса доступа к ресурсам
     users_file = icUser.DEFAULT_USERS_RES_FILE
-    icLet('UserAccessFile', users_file)
+    letVar('UserAccessFile', users_file)
     # Имя проекта
-    icLet('PrjName', os.path.split(icGet('SYS_RES'))[1])
-    login_result = kernel.Login(User_, Password_, DBMode_)
+    letVar('PrjName', os.path.split(getVar('SYS_RES'))[1])
+    login_result = kernel.Login(username, password, db_mode)
 
     metadata = glob_variables.set_glob_var('metadata', kernel.GetContext()['metadata'])
     schemas = glob_variables.set_glob_var('schemas', kernel.GetContext()['schemas'])
@@ -359,10 +359,7 @@ def getMainWin():
         log.fatal()
 
 
-icGetMainWin = getMainWin
-
-
-def icGetMainOrg():
+def getMainOrg():
     """
     Определить главный органайзер.
     """
@@ -372,7 +369,7 @@ def icGetMainOrg():
         log.fatal()
 
 
-def icGetRunner():
+def getEngine():
     """
     Определить запущенный движок системы.
     """
@@ -396,7 +393,7 @@ def getPrjRoot():
             else:
                 log.warning(u'Не инициализирован проект в контексте ядра системы')
             # Берем из глобального контекста
-            prj_root = icGet('PRJ_ROOT')
+            prj_root = getVar('PRJ_ROOT')
             if prj_root:
                 return prj_root
             else:
@@ -406,41 +403,41 @@ def getPrjRoot():
         log.fatal(u'Ошибка определения корневого элемента дерева')
 
 
-def addMainNotebookPage(Page_, Title_, OpenExists_=False, Image_=None,
-                        CanClose_=True, OpenScript_=None, CloseScript_=None, DefaultPage_=-1):
+def addMainNotebookPage(page, title, bOpenExists=False, image=None, bCanClose=True,
+                        open_script=None, close_script=None, default_page=-1):
     """
     Добавить в органайзер страницу.
-    @param Page_: Страница (Наследник wxScrolledWindow).
-    @param Title_: Строка-заголовок страницы.
-    @param OpenExists_: Если такая страница уже существует, тогда открыть ее.
-    @param DefaultPage_: Индекс страницы,  открываемой по умолчанию. Если -1,
+    @param page: Страница (Наследник wxScrolledWindow).
+    @param title: Строка-заголовок страницы.
+    @param bOpenExists: Если такая страница уже существует, тогда открыть ее.
+    @param default_page: Индекс страницы,  открываемой по умолчанию. Если -1,
         то открывается текущая добавляемая страница.
     """
     try:
-        return getKernel().GetContext().getMainWin().AddOrgPage(Page_, Title_, OpenExists_, Image_,
-                                                                CanClose_, OpenScript_, CloseScript_, DefaultPage_)
+        return getKernel().GetContext().getMainWin().AddOrgPage(page, title, bOpenExists, image,
+                                                                bCanClose, open_script, close_script, default_page)
     except:
         log.fatal()
     
 
-icAddMainOrgPage = addMainNotebookPage
+addMainOrgPage = addMainNotebookPage
 
 
-def icDelMainOrgPage(Index_):
+def delMainOrgPage(page_index):
     """
     Удалить из органайзера страницу.
-    @param Index_: Индекс стриницы.
+    @param page_index: Индекс стриницы.
     """
     try:
-        return getKernel().GetContext().getMainWin().DelOrgPage(Index_)
+        return getKernel().GetContext().getMainWin().DelOrgPage(page_index)
     except:
         log.fatal()
 
 
-def StartDRPython(Param_=None):
+def startDRPythonIDE(param=None):
     """
     Запуск drPython отдельной задачей.
-    @param Param_: Параметры коммандной строки.
+    @param param: Параметры коммандной строки.
     """
     # Очистить параметры командной строки
     del sys.argv[1:]
@@ -450,20 +447,20 @@ def StartDRPython(Param_=None):
     app.MainLoop()
 
 
-def icGetDBResFile():
+def getDBResFile():
     """
     ФУНКЦИИ РАБОТЫ С ДАННЫМИ.
     Функция возвращает путь к ресурсному файлу описания классов данных.
     """
-    return icGet('DBResFile')
+    return getVar('DBResFile')
 
 
-def icGetUserAccessFile():
+def getUserAccessFile():
     """
     ФУНКЦИИ РАБОТЫ С ДАННЫМИ.
     Функция возвращает путь к ресурсному файлу доступа к ресурсам системы.
     """
-    return icGet('UserAccessFile')
+    return getVar('UserAccessFile')
 
 
 def getCurUserName():
@@ -471,7 +468,7 @@ def getCurUserName():
     ФУНКЦИИ РАБОТЫ С ДАННЫМИ.
     Имя текущего зарегистрированного пользователя в системе.
     """
-    return icGet('UserName')
+    return getVar('UserName')
 
 
 def getCurUser():
@@ -556,7 +553,7 @@ def getPrjName():
     Имя текущего проекта.
     Имя берем из окружения.
     """
-    return icGet('PrjName')
+    return getVar('PrjName')
 
 
 def getObjManager(obj):
@@ -573,7 +570,7 @@ def getPrjDir():
     Папка проекта. Берем из окружения.
     @return:  Путь до папки проекта.
     """
-    return icGet('PRJ_DIR')
+    return getVar('PRJ_DIR')
 
 
 def getPrjPackage():
@@ -641,7 +638,7 @@ def setOperateYear(year=None):
         else:
             year = int(operate_year)
             is_save = False
-    icLet('OperateYEAR', year)
+    letVar('OperateYEAR', year)
     if is_save:
         saveOperateYear(year)
 
@@ -650,7 +647,7 @@ def getOperateYear():
     """
     Получить операционный год.
     """
-    return icGet('OperateYEAR')
+    return getVar('OperateYEAR')
 
 
 def setSysYearAsOperate():
@@ -660,7 +657,7 @@ def setSysYearAsOperate():
     import datetime
     today = datetime.date.today()
     sys_year = today.year
-    icLet('OperateYEAR', sys_year)
+    letVar('OperateYEAR', sys_year)
     saveOperateYear(sys_year)
 
 

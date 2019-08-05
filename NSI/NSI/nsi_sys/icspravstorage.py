@@ -15,7 +15,7 @@ from ic.log import log
 from ic.utils import ic_uuid
 from ic.db import icsqlalchemy
 from ic.db import icdb
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_extend
 from . import gen_nsi_table_res
 
@@ -922,7 +922,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
             if fld_name == 'computer' and not value:
                 fld_dict[fld_name] = ic_extend.getComputerName()
             if fld_name == 'username' and not value:
-                fld_dict[fld_name] = ic_user.getCurUserName()
+                fld_dict[fld_name] = glob_functions.getCurUserName()
         return fld_dict
 
     def getRecByFieldValue(self, FieldName_, FieldValue_, DateTime_=None):
@@ -1100,7 +1100,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                         if 'computer' in RecDict_ and not RecDict_['computer']:
                             RecDict_['computer'] = ic_extend.getComputerName()
                         if 'username' in RecDict_ and not RecDict_['username']:
-                            RecDict_['username'] = ic_user.getCurUserName()
+                            RecDict_['username'] = glob_functions.getCurUserName()
 
                         self._tab.update(id=recs[0][0], **RecDict_)
                     else:
@@ -1126,7 +1126,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                         if 'computer' in RecDict_ and not RecDict_['computer']:
                             RecDict_['computer'] = ic_extend.getComputerName()
                         if 'username' in RecDict_ and not RecDict_['username']:
-                            RecDict_['username'] = ic_user.getCurUserName()
+                            RecDict_['username'] = glob_functions.getCurUserName()
                         self._tab.update(recs[0][0], **RecDict_)
                     else:
                         # Нет записи с таким кодом
@@ -1175,7 +1175,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
             if fld_name == 'computer' and not value:
                 fld_dict[fld_name] = ic_extend.getComputerName()
             if fld_name == 'username' and not value:
-                fld_dict[fld_name] - ic_user.getCurUserName()
+                fld_dict[fld_name] - glob_functions.getCurUserName()
 
         return fld_dict
 

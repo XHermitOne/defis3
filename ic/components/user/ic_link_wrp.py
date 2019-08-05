@@ -36,7 +36,7 @@ from ic.utils import coderror
 
 from ic.kernel import io_prnt
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 #   Тип компонента
 ic_class_type = icDefInf._icDatasetType
@@ -122,7 +122,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
                 ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             try:
-                kernel = ic_user.getKernel()
+                kernel = glob_functions.getKernel()
                 res = propEdt.GetResEditor().GetResource()
                 my_db_psp = res['source']
                 if my_db_psp:

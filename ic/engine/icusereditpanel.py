@@ -9,7 +9,7 @@ import ic.interfaces.icobjectinterface as icobjectinterface
 from ic.kernel import io_prnt
 from ic.engine import icUser
 from ic.dlg import ic_dlg
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.engine import icuserpropertydlg
 
 ### !!!! NO CHANGE !!!!
@@ -163,8 +163,8 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
         """
         try:
             # Главное окно и горизонтальное меню наследуются у текущего пользователя
-            default_main_win = ic_user.getKernel().GetAuthUser().resource['main_win']
-            default_main_menubars = ic_user.getKernel().GetAuthUser().resource['menubars']
+            default_main_win = glob_functions.getKernel().GetAuthUser().resource['main_win']
+            default_main_menubars = glob_functions.getKernel().GetAuthUser().resource['menubars']
             default_res = util.icSpcDefStruct(icUser.SPC_IC_USER,
                                               {'main_win': default_main_win,
                                                'name': 'new_user',

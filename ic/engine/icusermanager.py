@@ -20,7 +20,7 @@ from ic.log import log
 
 from ic.engine import icusereditpanel
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 # Version
 __version__ = (0, 1, 1, 1)
@@ -133,7 +133,7 @@ class icUserManager(object):
         """
         # Если ресурс уже не заблокирован
         rl = ic.resource_loader
-        path = path or os.path.join(ic_user.icGet('PRJ_DIR'), 'users.acc')
+        path = path or os.path.join(glob_functions.getVar('PRJ_DIR'), 'users.acc')
         if not rl.is_lock_res(path):
             # Заблокировать ресурс
             # bAdd=False - признак того, что запись о блокировки при отсутствии объекта
@@ -142,7 +142,7 @@ class icUserManager(object):
             # Прочитать ресурс
             users_res = rl.load_res(path, bRefresh=True)
 
-            result = self._edit(parent or ic_user.getMainWin(), users_res)
+            result = self._edit(parent or glob_functions.getMainWin(), users_res)
             if result is not None:
                 # Если нажата <ОК>, то сохранить файл ресурсов
                 rl.save_res(path, result)
@@ -164,7 +164,7 @@ class icUserManager(object):
         """
         Обновить дерево проекта.
         """
-        kernel = ic_user.getKernel()
+        kernel = glob_functions.getKernel()
         if kernel:
             prj_manager = kernel.getProjectResController()
             prj_manager.refreshPrj()
@@ -228,7 +228,7 @@ class icUserManager(object):
         @param isSort_: Сортировать роли по имени?
         """
         if PrjDir_ is None:
-            PrjDir_ = ic_user.icGet('PRJ_DIR')
+            PrjDir_ = glob_functions.getVar('PRJ_DIR')
         role_files = ic_file.GetFilesByExt(PrjDir_, '.rol')
         # Отфильтровать pickle файлы
         role_files = [role_file for role_file in role_files if role_file[-8:].lower() != '_pkl.rol']
@@ -258,7 +258,7 @@ class icUserManager(object):
                 reg_user_journal = ini.INI2Dict(reg_user_journal_file_name)
                 if reg_user_journal and 'CURRENT_USERS' in reg_user_journal:
                     users = [(True, usr) for usr in reg_user_journal['CURRENT_USERS'].keys()]
-                    parent_win = ic_user.getMainWin()
+                    parent_win = glob_functions.getMainWin()
                     selected_users = ic_dlg.icMultiChoiceDlg(parent_win,
                                                              u'Зарегистрированные пользователи',
                                                              u'Снятие регистрации пользователей',
@@ -324,10 +324,10 @@ def testDlg():
     """
     Функция тестиорвания.
     """
-    res = ic_user.getKernel()._User.getUsersResource()
+    res = glob_functions.getKernel()._User.getUsersResource()
 
     user_mngr = icUserManager()
-    user_mngr._edit(ic_user.getMainWin(), res)
+    user_mngr._edit(glob_functions.getMainWin(), res)
 
 
 def testEditDlg():

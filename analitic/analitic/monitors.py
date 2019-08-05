@@ -28,7 +28,7 @@ import wx
 
 # import NSI.spravfunc
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.components import icResourceParser
 from ic.utils import util
 from ic.utils import resource
@@ -107,7 +107,7 @@ class icMonitorNode:
                                                            evalSpace=util.InitEvalSpace({MONITOR_OBJ_NAME: self}))
                 return monitor_form
             else:
-                return ic_user.icAddMainOrgPage(monitor_dict['s2'], monitor_dict['name'])
+                return glob_functions.addMainOrgPage(monitor_dict['s2'], monitor_dict['name'])
 
     def wizard(self, bIndicator=False):
         """
@@ -132,7 +132,7 @@ class icMonitorNode:
                                                            evalSpace=util.InitEvalSpace({MONITOR_OBJ_NAME: self}))
                 return monitor_form
             else:
-                return ic_user.icAddMainOrgPage(monitor_dict['s1'], monitor_dict['name'])
+                return glob_functions.addMainOrgPage(monitor_dict['s1'], monitor_dict['name'])
 
     def edit(self):
         """
@@ -147,7 +147,7 @@ class icMonitorNode:
     
         #   2. Вызываем форму для редактирования
         icResourceParser.ResultForm(NSI.spravfunc.NsiEdtFormName(self.sprav_type),
-                                    filter=flt, parent=ic_user.icGetMainWin())
+                                    filter=flt, parent=glob_functions.getMainWin())
     
     def viewLink(self, LinkAlias_):
         """

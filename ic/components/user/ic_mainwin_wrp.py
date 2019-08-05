@@ -28,7 +28,7 @@ from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 import ic.engine.main_window as ic_win
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import coderror
 from ic.dlg import ic_dlg
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -173,7 +173,7 @@ class icMainWindow(icwidget.icSimple, ic_win.icMainWindow):
             main_win_parent = parent
         
         ic_win.icMainWindow.__init__(self, component['name'], component,
-                                     parent=main_win_parent, engine=ic_user.icGetRunner())
+                                     parent=main_win_parent, engine=glob_functions.getEngine())
 
         # Дополнительный функционал инициализации
         if component.get('init_expr', None):

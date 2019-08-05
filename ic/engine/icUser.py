@@ -40,7 +40,7 @@ from ic.utils import user_journal
 from ic.kernel import icexceptions
 from ic.kernel import icbaseuser
 from ic.utils import coderror
-from . import ic_user
+from . import glob_functions
 import ic.config
 
 _ = wx.GetTranslation
@@ -123,7 +123,7 @@ def getUserRequisit(UserName_):
     """
     if ic_mode.isRuntimeMode():
         # Режим исполнения
-        app = ic_user.icGetRunner()
+        app = glob_functions.getEngine()
         return app.getUser().GetUserRequisit(UserName_)
     else:
         # Режим редактирования
@@ -143,7 +143,7 @@ def getAuthent(ResName_, ResType_, ShowMsg_=True):
     """
     if ic_mode.isRuntimeMode():
         # Режим исполнения
-        app = ic_user.icGetRunner()
+        app = glob_functions.getEngine()
         return app.getUser().GetAuthent(ResName_, ResType_, ShowMsg_)
     else:
         # Режим редактирования
@@ -171,7 +171,7 @@ def canAuthent(Permit_, ResName_, ResType_, ShowMsg_=True):
     """
     # ВНИМАНИЕ!!! Проверка осуществляется только в режиме выполнения
     if ic_mode.isRuntimeMode():
-        app = ic_user.icGetRunner()
+        app = glob_functions.getEngine()
         if app:
             return app.getUser().CanAuthent(Permit_, ResName_, ResType_, ShowMsg_)
     return True
@@ -247,7 +247,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         role_obj_list = []
         for role_id in RolesId_:
             new_role_psp = (('Role', role_id, None, role_id+'.rol', None),)
-            new_role_obj = ic_user.getKernel().createResObjByPsp(new_role_psp, context=self.GetContext())
+            new_role_obj = glob_functions.getKernel().createResObjByPsp(new_role_psp, context=self.GetContext())
             role_obj_list.append(new_role_obj)
         return tuple(role_obj_list)
         
@@ -469,12 +469,12 @@ class icUserPrototype(icbaseuser.icRootUser):
                             # Если в систему вошли,
                             # Установить режим работы с БД.
                             self._DBMode = DBMode_
-                            ic_user.icLet('DBMode', self._DBMode)
+                            glob_functions.letVar('DBMode', self._DBMode)
                             # то прописать в журнале регистрации
                             if self._login_manager:
                                 self._login_manager.RegisterJournal(self._UserName, self._DBMode)
                             # Сохранить имя юзверя в хранилище переменных
-                            ic_user.icLet('UserName', self._UserName)
+                            glob_functions.letVar('UserName', self._UserName)
                             # Выполнить скрипт прикладного программиста
                             if 'on_login' in self._UserRequisit:
                                 self._exec_on_login(self._UserRequisit['on_login'])
@@ -795,8 +795,8 @@ class icLoginManager(object):
         # Инициализируем менеджера загрузки ресурса
         self._loader = loader_ or db_res_load_manager.icDBResLoadManager()
         self._users_resource = None
-        ic_user.icLet('LOADER', self._loader)
-        users_res_file_name = ic_file.PathFile(ic_user.icGet('SYS_RES'), UsersResFileName_)
+        glob_functions.letVar('LOADER', self._loader)
+        users_res_file_name = ic_file.PathFile(glob_functions.getVar('SYS_RES'), UsersResFileName_)
         self._users_resource = self._loader.load_res(users_res_file_name, bRefresh=True)
 
     def GetResource(self):
@@ -818,8 +818,8 @@ class icLoginManager(object):
         """
         if UserName_:
             return UserName_, Password_
-        store_auto_login = ic_user.icGet('AutoLogin')
-        store_auto_psswd = ic_user.icGet('AutoPassword')
+        store_auto_login = glob_functions.getVar('AutoLogin')
+        store_auto_psswd = glob_functions.getVar('AutoPassword')
         if store_auto_login:
             return store_auto_login, store_auto_psswd
         return UserName_, Password_
@@ -828,7 +828,7 @@ class icLoginManager(object):
         """
         Возвращает признак автоматической авторизации.
         """
-        if ic_user.icGet('AutoLogin') in (None, 'None', ''):
+        if glob_functions.getVar('AutoLogin') in (None, 'None', ''):
             return False
         return True
         
@@ -913,7 +913,7 @@ class icLoginManager(object):
         Прописать юзеря в журнале регистрации.
         @param UserName_: Имя пользователя.
         """
-        prj_name = ic_user.icGet('PrjName')
+        prj_name = glob_functions.getVar('PrjName')
         return self._reg_user_journal.register(UserName_, prj_name, DBMode_, ic_mode.isRuntimeMode())
     
     def getRegUserList(self):

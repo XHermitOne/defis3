@@ -23,7 +23,7 @@ import ic.dlg.ic_dlg as ic_dlg
 #import ic.dlg.threaded_progress as progress
 import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
 
-import ic.engine.ic_user as ic_user
+import ic.engine.glob_functions as ic_user
 import ic.utils.ic_file as ic_file
 import ic.utils.ic_util as ic_util
 import ic.utils.ic_time as ic_time
@@ -595,7 +595,7 @@ def refreshData(date_range=None):
     Обновление данных в деревьях планов.
     """
     if date_range is None:
-        date_range=std_dialogs.icDateRangeSTDDlg(ic_user.icGetMainWin())
+        date_range=std_dialogs.icDateRangeSTDDlg(glob_functions.getMainWin())
 
     if date_range:
         import analitic.planUtils as planUtils
@@ -662,7 +662,7 @@ def saveLoadDayCount(self):
     Выбрать и сохранить диапазон загружаемых дат.
     """
     days=prs.ResultForm('day_count_dlg',
-        parent=ic_user.icGetMainWin())
+        parent=glob_functions.getMainWin())
     if days<>None:
         #load_day_count='0000.00.%02i'%(int(days))
         setLoadDayCount(days)
@@ -671,7 +671,7 @@ def getLoadDayCount():
     """
     Определить диапазон загружаемых дат.
     """
-    prj_path=ic_user.icGet('SYS_RES')
+    prj_path=glob_functions.getVar('SYS_RES')
     ini_file=prj_path+'/'+ic_file.BaseName(prj_path)+'.ini'
     return ic_ini.IniLoadParam(ini_file,
             'SETTINGS','load_day_count')
@@ -682,7 +682,7 @@ def setLoadDayCount(LoadDayCount_):
     """
     #Заносить только проверенные значния
     if LoadDayCount_:
-        prj_path=ic_user.icGet('SYS_RES')
+        prj_path=glob_functions.getVar('SYS_RES')
         ini_file=prj_path+'/'+ic_file.BaseName(prj_path)+'.ini'
         return ic_ini.IniSaveParam(ini_file,
             'SETTINGS','load_day_count',LoadDayCount_)

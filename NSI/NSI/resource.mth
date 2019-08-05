@@ -133,7 +133,7 @@ p67
 (dp68
 S'body'
 p69
-S"import os.path\r\nimport ic.ic_run.ic_user\r\n\r\ntry:\r\n\tprj_name=os.path.split(ic.ic_run.ic_user.icGet('SYS_RES'))[1]\r\nexcept:\r\n\tprint 'getPrjName ERROR!'\r\n\tprj_name=''\r\n_resultEval=prj_name"
+S"import os.path\r\nimport ic.ic_run.ic_user\r\n\r\ntry:\r\n\tprj_name=os.path.split(ic.ic_run.glob_functions.getVar('SYS_RES'))[1]\r\nexcept:\r\n\tprint 'getPrjName ERROR!'\r\n\tprj_name=''\r\n_resultEval=prj_name"
 p70
 sS'name'
 p71

@@ -17,7 +17,7 @@ from ic.utils import util
 from . import main_window
 from . import icAUImanager
 from . import icAUInotebook
-from . import ic_user
+from . import glob_functions
 from . import icmenubar
 
 from ic.components import icResourceParser
@@ -205,7 +205,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
             # ВНИМАНИЕ! Для корректного выхода из приложения необходимо
             # закрыть все внутренние циклы ядра
             # А затем произвести все остальные действия
-            kernel = ic_user.getKernel()
+            kernel = glob_functions.getKernel()
             if kernel:
                 kernel.stop()
 

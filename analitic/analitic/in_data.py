@@ -16,7 +16,7 @@ from ic.db import dbf
 
 from ic.log import log
 from ic.dlg import ic_dlg
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_file
 from ic.utils import ic_util
 from ic.utils import ini
@@ -41,7 +41,7 @@ def getInputDataDir():
     """
     Определить папку входных данных.
     """
-    prj_path = ic_user.icGet('SYS_RES')
+    prj_path = glob_functions.getVar('SYS_RES')
     ini_file = os.path.join(prj_path, os.path.basename(prj_path)+'.ini')
     return ini.loadParamINI(ini_file, 'SETTINGS', 'input_data_dir')
 
@@ -53,7 +53,7 @@ def setInputDataDir(InputDataDir_):
     """
     # Заносить только проверенные значния
     if InputDataDir_ and os.path.isdir(InputDataDir_):
-        prj_path = ic_user.icGet('SYS_RES')
+        prj_path = glob_functions.getVar('SYS_RES')
         ini_file = os.path.join(prj_path, os.path.basename(prj_path)+'.ini')
         return ini.saveParamINI(ini_file, 'SETTINGS', 'input_data_dir', InputDataDir_)
 

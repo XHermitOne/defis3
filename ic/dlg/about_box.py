@@ -11,7 +11,7 @@ import wx
 import wx.adv
 from wx.lib.wordwrap import wordwrap
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_extend
 from ic import config
 from ic.log import log
@@ -81,15 +81,15 @@ def showAbout(parent=None, name=None, version=None, description=None,
     @param icon_filename: Имя файла иконки программы.
     """
     if parent is None:
-        parent = ic_user.getMainWin()
+        parent = glob_functions.getMainWin()
 
     if name is None:
-        main_win = ic_user.getMainWin()
+        main_win = glob_functions.getMainWin()
         name = main_win.GetTitle()
 
     prj_package = None
     if version is None or description is None:
-        prj_package = ic_user.getPrjPackage()
+        prj_package = glob_functions.getPrjPackage()
 
     if version is None:
         try:
@@ -113,7 +113,7 @@ def showAbout(parent=None, name=None, version=None, description=None,
         license = ic_extend.load_file_text(DEFAULT_LICENSE_FILENAME,
                                            to_unicode=True)
     if icon_filename is None:
-        main_win = ic_user.getMainWin()
+        main_win = glob_functions.getMainWin()
         icon_filename = main_win.getIconFilename()
     icon = wx.Icon(icon_filename, wx.BITMAP_TYPE_ICO) if icon_filename else None
 

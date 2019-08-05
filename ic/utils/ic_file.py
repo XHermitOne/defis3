@@ -305,8 +305,8 @@ def RelativePath(Path_, CurDir_=None):
     @param CurDir_: Текущий путь.
     """
     if CurDir_ is None:
-        import ic.engine.ic_user
-        CurDir_ = os.path.dirname(ic.engine.ic_user.icGet('PRJ_DIR')).replace('\\', '/').lower()
+        import ic.engine.glob_functions
+        CurDir_ = os.path.dirname(ic.engine.glob_functions.getVar('PRJ_DIR')).replace('\\', '/').lower()
     if CurDir_:
         Path_ = Path_.replace('\\', '/').lower().strip()
         return Path_.replace(CurDir_, '.')
@@ -320,8 +320,8 @@ def getCurDirPrj(Path_=None):
     # Нормализация текущего пути
     if Path_ is None:
         try:
-            import ic.engine.ic_user
-            prj_dir = ic.engine.ic_user.icGet('PRJ_DIR')
+            import ic.engine.glob_functions
+            prj_dir = ic.engine.glob_functions.getVar('PRJ_DIR')
             if prj_dir:
                 Path_ = os.path.dirname(prj_dir)
             else:
@@ -699,9 +699,9 @@ def getPrjProfilePath(bAutoCreatePath=True):
     @return: Путь до ~/.defis/имя_проекта/
     """
     profile_path = getProfilePath(bAutoCreatePath)
-    from ic.engine import ic_user
+    from ic.engine import glob_functions
 
-    prj_name = ic_user.getPrjName()
+    prj_name = glob_functions.getPrjName()
     if prj_name:
         prj_profile_path = os.path.join(profile_path, prj_name)
     else:
@@ -723,8 +723,8 @@ def getProjectDir():
     Папка проекта.
     @return: Папка проекта.
     """
-    from ic.engine import ic_user
-    return ic_user.getPrjDir()
+    from ic.engine import glob_functions
+    return glob_functions.getPrjDir()
 
 
 def getRootProjectDir():

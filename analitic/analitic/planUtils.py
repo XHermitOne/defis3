@@ -15,7 +15,7 @@ from ic.db import icsqlalchemy
 # from NSI import spravfunc
 # from NSI import spravctrl
 
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.log import log
 from ic.dlg import msgbox
 from ic.utils import system_cache
@@ -439,7 +439,7 @@ ORDER BY year,month,dtoper
         # Перебор записей в таблице-источнике
         recs = source_tab.queryRecs(src_query)
         # print 'RECS COUNT>>>>',recs.count()
-        # ic_dlg.icOpenProgressDlg(ic_user.icGetMainWin(),
+        # ic_dlg.icOpenProgressDlg(glob_functions.getMainWin(),
         #    'Подождите пожалуйста','Обнуление сумм',0,recs.count())
         # t_progress.icOpenThreadedProgressDlg('Разнос сумм','Обнуление сумм',0,recs.count())
         # ic_proccess_dlg.SetProccessBoxLabel(label2='Разнос сумм', value2=10)
@@ -637,7 +637,7 @@ ORDER BY year, month, dtoper
         # Перебор записей в таблице-источнике
         recs = source_tab.queryRecs(src_query)
 
-        # ic_dlg.icOpenProgressDlg(ic_user.icGetMainWin(),
+        # ic_dlg.icOpenProgressDlg(glob_functions.getMainWin(),
         #    'Подождите пожалуйста','Разнос сумм',0,recs.count())
         # t_progress.icOpenThreadedProgressDlg('Разнос сумм','Разнос сумм',0,recs.count())
         # ic_proccess_dlg.SetProccessBoxLabel(label2='Разнос сумм', value2=10)
@@ -758,7 +758,7 @@ def refreshSumm(metaTree=None, year=None, month=None):
     Обноовление/разнос сумм в нашем деревер планов.
     """
     if None in (year, month):
-        month_year = prs.ResultForm('MonthYearDlg', parent=ic_user.icGetMainWin())
+        month_year = prs.ResultForm('MonthYearDlg', parent=glob_functions.getMainWin())
         if month_year:
             month, year = month_year
         else:
@@ -784,7 +784,7 @@ def genPlanByFact():
     """
     Запускается диалог генерации месячного плана по накопленным фактам.
     """
-    prs.ResultForm('GenMonthPlanDlg', parent=ic_user.icGetMainWin())
+    prs.ResultForm('GenMonthPlanDlg', parent=glob_functions.getMainWin())
 
 
 # ---> Функции генерации модификаций планов ---
@@ -1445,7 +1445,7 @@ def loadDataPlanModif(metaclass, year, month):
     # result=refreshSumm(metaclass.getObject(),year,month)
     system_cache.systemCache.clear()
 
-    main_win = ic_user.icGetMainWin()
+    main_win = glob_functions.getMainWin()
     # Обновить модификации
     modif_lst = IODBSprav.getModifLst()
     # print 'loadDataPlan:::',modif_lst,result

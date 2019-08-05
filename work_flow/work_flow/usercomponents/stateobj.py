@@ -36,7 +36,7 @@ from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
 from ic.log import log
 from ic.bitmap import bmpfunc
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 import work_flow.work_sys.icstateobj as parentModule
 from work_flow.work_sys import icworkstorage
@@ -103,7 +103,7 @@ ic_user_requisite_spc = copy.deepcopy(requisite.ic_class_spc)
 ic_user_requisite_spc['name'] = 'username'
 ic_user_requisite_spc['description'] = u'Пользователь'
 ic_user_requisite_spc['label'] = u'Пользователь'
-ic_user_requisite_spc['default'] = u'@ic.engine.ic_user.getCurUserName()'
+ic_user_requisite_spc['default'] = u'@ic.engine.glob_functions.getCurUserName()'
 
 # Спецификация объекта
 ic_class_spc = dict({'type': 'StateObj',
@@ -338,7 +338,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
         """
         import ic.components.user.objects.ictablebrows as brws
 
-        state_obj = ic_user.getKernel().createObjBySpc(parent=None, res=res, context=context)
+        state_obj = glob_functions.getKernel().createObjBySpc(parent=None, res=res, context=context)
 
         table_name = state_obj.getTable().getName()
         log.info(u'Тестирование БИЗНЕС ОБЪЕКТА <%s>. Таблица <%s>' % (res['name'], table_name))

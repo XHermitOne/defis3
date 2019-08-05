@@ -19,7 +19,7 @@ from . import ic_file
 
 from . import ic_util
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 # Функции блокировки ресурсов
 from . import lock
 
@@ -357,7 +357,7 @@ def lockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
                                              ResFileExt_.strip(),
                                              lock.LOCK_FILE_EXT))
     comp_name = lock.ComputerName()
-    user_name = ic_user.icGet('UserName')
+    user_name = glob_functions.getVar('UserName')
     log.info(u'Блокировка ресурса <%s>' % lock_file)
     return lock.LockFile(lock_file, u'{\'computer\':\'%s\',\'user\':\'%s\'}' % (comp_name,
                                                                                 user_name))
@@ -382,7 +382,7 @@ def unlockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
                                              ResFileName_.strip(),
                                              ResFileExt_.strip(),
                                              lock.LOCK_FILE_EXT))
-    user_name = ic_user.getCurUserName()
+    user_name = glob_functions.getCurUserName()
     log.info(u'Снятие блокировки ресурса <%s> : <%s>' % (lock_file, user_name))
     return lock.UnLockFile(lock_file, user=user_name)
 
@@ -424,13 +424,13 @@ def isLockRes(ResName_, ResFileName_, ResFileExt_, LockDir_=None):
         # проверить кем он заблокирован
         if is_lock_file:
             is_lock_file = bool(getLockResOwner(ResFileName_, ResFileName_,
-                                                ResFileExt_, LockDir_) != ic_user.getCurUserName())
+                                                ResFileExt_, LockDir_) != glob_functions.getCurUserName())
         
         # Если файл блокировки есть, то
         # проверить кем он заблокирован
         if is_lock_res:
             is_lock_res = bool(getLockResOwner(ResName_, ResFileName_,
-                                               ResFileExt_, LockDir_) != ic_user.getCurUserName())
+                                               ResFileExt_, LockDir_) != glob_functions.getCurUserName())
         is_lock = is_lock_file or is_lock_res
     return is_lock
 

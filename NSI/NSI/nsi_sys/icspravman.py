@@ -17,7 +17,7 @@ from ic.log import log
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.kernel import icexceptions
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 # Версия
 __version__ = (0, 1, 1, 1)
@@ -163,7 +163,7 @@ class icSpravManagerPrototype(icSpravManagerInterface):
         @param ParentForm_: Родительское окно для формы редактирования справочника.
         """
         if ParentForm_ is None:
-            ParentForm_ = ic_user.icGetMainWin()
+            ParentForm_ = glob_functions.getMainWin()
         spravs = self.getContainer().getAll().values()
         choice_str = [sprav.name+u' - '+sprav.description if sprav.description else u'' for sprav in spravs]
         idx = ic_dlg.icSingleChoiceIdxDlg(ParentForm_, Title_, MsgTxt_, choice_str)
@@ -182,7 +182,7 @@ class icSpravManagerPrototype(icSpravManagerInterface):
         @param ParentForm_: Родительское окно для формы редактирования справочника.
         """
         if ParentForm_ is None:
-            ParentForm_ = ic_user.icGetMainWin()
+            ParentForm_ = glob_functions.getMainWin()
 
         edit_sprav = self.getSpravByName(SpravName_)
         if edit_sprav:
@@ -202,7 +202,7 @@ class icSpravManagerPrototype(icSpravManagerInterface):
             или None в случае ошибки или если нажата кнопка <Отмена>.
         """
         if ParentForm_ is None:
-            ParentForm_ = ic_user.icGetMainWin()
+            ParentForm_ = glob_functions.getMainWin()
 
         choice_sprav = self.getSpravByName(SpravName_)
         if choice_sprav:

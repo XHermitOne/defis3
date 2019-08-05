@@ -10,7 +10,7 @@
 from ic.utils import ic_mode
 
 from ic.prj.prj_prototype import nodeReg
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.components import icwidget
 from ic.log import log
 
@@ -36,7 +36,7 @@ class icMetaDotUsePrototype(object):
         """
         # if ic_mode.isDebugMode():
         #     log.debug('CREATE Object <%s>' % self.passport())
-        kernel = ic_user.getKernel()
+        kernel = glob_functions.getKernel()
         if kernel:
             if 'context' in kwarg:
                 if isinstance(kwarg['context'], dict):
@@ -59,7 +59,7 @@ class icMetaDotUsePrototype(object):
         """
         if ic_mode.isDebugMode():
             log.debug('GET Object <%s>' % self.passport())
-        kernel = ic_user.getKernel()
+        kernel = glob_functions.getKernel()
         if kernel:
             # Проверить зарегистрирован ли уже объект в ядре
             name = self.passport()[0][1]
@@ -115,8 +115,8 @@ class icMetaDataDotUse(icMetaDotUsePrototype):
         prj = icPrjDotUse(object.__getattribute__(self, '_cur_passport_list'))
 
         if AttrName_ == object.__getattribute__(self, 'THIS_PRJ'):
-            ic_user.icPrintStore()
-            prj._cur_passport_list[-1] = ic_user.icGet('PrjName')
+            glob_functions.printVarStorage()
+            prj._cur_passport_list[-1] = glob_functions.getVar('PrjName')
         else:
             prj._cur_passport_list[-1] = AttrName_
             

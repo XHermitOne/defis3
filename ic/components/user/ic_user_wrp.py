@@ -27,7 +27,7 @@ from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.utils import ic_file
 from ic.utils import icprotector
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from ic.components import icwidget
 from ic.utils import util
@@ -117,7 +117,7 @@ def getRolesChoiceList():
     """
     Функция получения списка ролей, определенных в проекте.
     """
-    prj_dir = ic_user.icGet('PRJ_DIR')
+    prj_dir = glob_functions.getVar('PRJ_DIR')
     role_files = ic_file.GetFilesByExt(prj_dir, '.rol')
     # Сразу отфильтровать Pkl файлы
     role_files = [role_file for role_file in role_files if '_pkl.rol' not in role_file.lower()]
@@ -230,8 +230,8 @@ class icUser(icwidget.icSimple, icuser.icUser):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        icuser.icUser.__init__(self, ic_file.PathFile(ic_user.icGet('SYS_RES'),
-                               icuser.DEFAULT_USERS_RES_FILE))
+        icuser.icUser.__init__(self, ic_file.PathFile(glob_functions.getVar('SYS_RES'),
+                                                      icuser.DEFAULT_USERS_RES_FILE))
             
         icUser.roles = icprotector.readonly(self._createRoles())
         

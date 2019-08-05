@@ -17,9 +17,9 @@ from ic.utils import lock as lockmod
 from ic.log import log
 
 try:
-    from . import ic_user
+    from . import glob_functions
 except ImportError:
-    from ic.engine import ic_user
+    from ic.engine import glob_functions
 
 __version__ = (0, 1, 1, 2)
 
@@ -124,21 +124,21 @@ class icDBResLoadManager(object):
         """
         Определяет источник данных где будут хранится системные ресурсы через параметры проекта.
         """
-        db_auth = ic_user.icGet('db_auth')
+        db_auth = glob_functions.getVar('db_auth')
         if db_auth in ('0', '', None, 'None', 'false', 'False', 'FALSE'):
             db_auth = False
         else:
             db_auth = True
 
-        sys_table_name = ic_user.icGet('sys_table_name') or 'sys_table'
-        db_engine = ic_user.icGet('db_engine')
-        convert_unicode = ic_user.icGet('convert_unicode') or 'UTF-8'
-        dbname = ic_user.icGet('dbname')
-        host = ic_user.icGet('host') or '127.0.0.1'
-        user = ic_user.icGet('user')
-        password = ic_user.icGet('password')
-        port = ic_user.icGet('port')
-        dbstore = ic_user.icGet('dbstore') or '.acc'
+        sys_table_name = glob_functions.getVar('sys_table_name') or 'sys_table'
+        db_engine = glob_functions.getVar('db_engine')
+        convert_unicode = glob_functions.getVar('convert_unicode') or 'UTF-8'
+        dbname = glob_functions.getVar('dbname')
+        host = glob_functions.getVar('host') or '127.0.0.1'
+        user = glob_functions.getVar('user')
+        password = glob_functions.getVar('password')
+        port = glob_functions.getVar('port')
+        dbstore = glob_functions.getVar('dbstore') or '.acc'
 
         if not db_auth or not db_engine or not dbname or not user or not password or not port:
             return

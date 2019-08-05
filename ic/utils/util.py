@@ -454,7 +454,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
         evalSpace['__runtime_mode'] == IC_RUNTIME_MODE_DEBUG):
         try:
             # subsys = resource.icGetResPath().split('/')[-1]
-            subsys = ic.icGet('SYS_RES').split('/')[-1]
+            subsys = ic.getVar('SYS_RES').split('/')[-1]
             MyExec('import %s.debug as debugModul' % subsys)
             newSpace = eval('debugModul.f_%s(_esp)' % compileKey, globSpace, evalSpace)
             evalSpace.update(newSpace)

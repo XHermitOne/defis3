@@ -17,7 +17,7 @@ from ic.log import log
 from ic.dlg import std_dlg
 from ic.dlg import ic_dlg
 from ic.dlg import quick_entry_panel
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from . import group_manipulation_dlg
 from . import new_doc_panel
@@ -214,7 +214,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         popup_menu = ic.metadata.archive.mnu.load_select_popup_menu.create()
 
         # Включить все пункты меню для администратора
-        is_admin = ic_user.isAdministratorCurUser()
+        is_admin = glob_functions.isAdministratorCurUser()
         log.info(u'Включение всех пунктов меню импорта для АДМИНИСТРАТОРА [%s]' % is_admin)
         popup_menu.findMenuItemByName('load_rlz_menuitem').Enable(is_admin)
         popup_menu.findMenuItemByName('load_ztr_menuitem').Enable(is_admin)

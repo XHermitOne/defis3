@@ -24,7 +24,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.engine import ic_user
+from ic.engine import glob_functions
 import ic.kernel.io_prnt as io_prnt
 
 import ic.kernel.icObjConnection as parentModule

@@ -9,7 +9,7 @@
 __version__ = (0, 0, 0, 1)
 
 #--- Подключение библиотек ---
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.components import icResourceParser
 
 #--- Функции ---
@@ -20,4 +20,4 @@ def browseDocJournal(DocJournalRes_):
     '''
     doc_jrnl=icResourceParser.icCreateObject(DocJournalRes_,'mtd')
     print('!!',doc_jrnl)
-    doc_jrnl.Browse(ParentForm_=ic_user.icGetMainWin())
+    doc_jrnl.Browse(ParentForm_=glob_functions.getMainWin())

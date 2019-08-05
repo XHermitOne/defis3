@@ -10,7 +10,7 @@ from ic.PropertyEditor import icDefInf
 from ic.utils import util
 import copy
 from STD import reestr_img
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 
 ### Общий интерфейс компонента
@@ -24,7 +24,7 @@ ic_class_spc = {'name':'defaultAttribute',
                 'nest':'Unit:attributes',
                 '__attr_types__': {icDefInf.EDT_CHOICE:['sprav_type', 'attrType']},
                 '__lists__':{'nest':['Unit:attributes'],
-                             'attrType':ic_user.get_names_in_res(('mtd',), 'AttributeType')},
+                             'attrType':glob_functions.get_names_in_res(('mtd',), 'AttributeType')},
                 '__parent__':ictemplate.SPC_IC_TEMPLATE}
 
 ic_class_pic = reestr_img.Requisite

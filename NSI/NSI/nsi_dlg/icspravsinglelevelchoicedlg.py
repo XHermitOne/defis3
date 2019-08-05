@@ -10,7 +10,7 @@ import wx
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.utils import ic_util
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 __version__ = (0, 1, 1, 1)
 
@@ -30,7 +30,7 @@ def select_single_level_choice_dlg(parent=None, sprav=None, n_level=0, parent_co
     """
     if ic_util.is_pasport(sprav):
         # Справочник задается паспортом. Необходимо создать объект
-        sprav = ic_user.getKernel().Create(sprav)
+        sprav = glob_functions.getKernel().Create(sprav)
 
     if sprav is None:
         log.warning(u'Не определен объект справочника для выбора')

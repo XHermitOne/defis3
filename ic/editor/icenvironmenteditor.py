@@ -10,7 +10,7 @@ from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK
@@ -37,7 +37,7 @@ class icEnvironmentEditDlg(icobjectinterface.icObjectInterface):
         try:
             viewer = self.GetNameObj('view_list')
             if Context_ is None:
-                Context_ = ic_user.getKernel().GetContext()
+                Context_ = glob_functions.getKernel().GetContext()
             variables = self._contextConvert(Context_)
             # log.debug(u'Переменные окружения: %s' % str(variables))
             var_list = [dict(name=var['__record__'][0],

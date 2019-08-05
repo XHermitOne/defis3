@@ -30,7 +30,7 @@
 # --- Подключение библиотек ---
 from ic.log import log
 from ic.components import icwidget
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from . import persistent
 from . import form_generator
@@ -161,7 +161,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
                 return True
             if User_ is None:
                 # Определение текущего пользователя
-                User_ = ic_user.getCurUserName()
+                User_ = glob_functions.getCurUserName()
             
             return bool(User_ in list(Permit_))
         except:

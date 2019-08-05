@@ -30,7 +30,7 @@ import ic.components.icResourceParser as prs
 from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 import work_flow.work_sys.icbusinessobj as parentModule
 from work_flow.work_sys import icworkstorage
@@ -248,7 +248,7 @@ class icBusinessObj(parentModule.icBusinessObjPrototype, icwidget.icSimple):
         """
         import ic.components.user.objects.ictablebrows as brws
 
-        business_obj = ic_user.getKernel().createObjBySpc(parent=None, res=res, context=context)
+        business_obj = glob_functions.getKernel().createObjBySpc(parent=None, res=res, context=context)
         table_name = business_obj.getTable().getName()
         log.info(u'Тестирование БИЗНЕС ОБЪЕКТА <%s>. Таблица <%s>' % (res['name'], table_name))
 

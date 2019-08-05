@@ -10,7 +10,7 @@ import wx
 from . import select_document_dlg_proto
 from ic.log import log
 from ic.utils import ic_file
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 
 class icDocumentSelectPanel(select_document_dlg_proto.icDocumentSelectPanelProto):
@@ -104,7 +104,7 @@ class icDocumentSelectDlg(select_document_dlg_proto.icDocumentSelectDlgProto):
         env = doc.getFilterEnv()
         self.doc_select_panel.doc_filter_ctrl.setEnvironment(env)
         filename = os.path.join(ic_file.getProfilePath(),
-                                ic_user.getPrjName(),
+                                glob_functions.getPrjName(),
                                 'doc_%s_filter.save' % doc.getUUID())
         # ВНИМАНИЕ! При инициализации устанавливаем фильтр
         self.doc_select_panel.doc_filter_ctrl.setFilterFileName(filename)

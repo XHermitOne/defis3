@@ -76,7 +76,7 @@ import wx
 
 from ic.log import log
 from ic.engine import listctrl_manager
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.dlg import ic_dlg
 from ic.components import icwidget
 
@@ -138,7 +138,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             return
 
         try:
-            kernel = ic_user.getKernel()
+            kernel = glob_functions.getKernel()
             if kernel:
                 list_ctrl = kernel.Create(list_ctrl_psp)
                 self.setSlaveListCtrl(list_ctrl)
@@ -158,7 +158,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             return
 
         try:
-            kernel = ic_user.getKernel()
+            kernel = glob_functions.getKernel()
             if kernel:
                 document = kernel.Create(document_psp)
                 self.__document_navigator_slave_document = document

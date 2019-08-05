@@ -29,7 +29,7 @@ import ic.components.icResourceParser as prs
 from ic.bitmap import bmpfunc
 from ic.PropertyEditor import icDefInf
 from ic.log import log
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -189,7 +189,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         @param kwarg:
         @return:
         """
-        sprav_obj = ic_user.getKernel().createObjBySpc(parent=None, res=res, context=context)
+        sprav_obj = glob_functions.getKernel().createObjBySpc(parent=None, res=res, context=context)
 
         log.info(u'Тестирование СПРАВОЧНИКА <%s>' % res['name'])
         sprav_obj.Edit(parent=parent)
@@ -303,7 +303,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         else:
             log.warning(u'Не определена таблица хранения справочника <%s>' % self.name)
         # Считаем что текущий проект и есть нужная подсистема по умолчанию
-        return ic_user.getPrjName()
+        return glob_functions.getPrjName()
 
     def getDBPsp(self):
         """

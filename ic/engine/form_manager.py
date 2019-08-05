@@ -10,7 +10,7 @@ import os
 import os.path
 
 from ic import config
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import resfunc
 from ic.utils import formdatamanager
 
@@ -56,7 +56,7 @@ class icFormManager(formdatamanager.icFormDataManager,
         """
         # Определить имя файла для хранения данных
         res_filename = os.path.join(config.PROFILE_DIRNAME,
-                                    ic_user.getPrjName(),
+                                    glob_functions.getPrjName(),
                                     self.__class__.__name__)
         data = self._getCtrlData()
         return resfunc.SaveResourcePickle(res_filename, data)
@@ -70,7 +70,7 @@ class icFormManager(formdatamanager.icFormDataManager,
         @return: True/False.
         """
         res_filename = os.path.join(config.PROFILE_DIRNAME,
-                                    ic_user.getPrjName(),
+                                    glob_functions.getPrjName(),
                                     self.__class__.__name__)
         data = resfunc.LoadResourcePickle(res_filename)
         return self._setCtrlData(data)

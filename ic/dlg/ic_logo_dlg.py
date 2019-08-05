@@ -90,7 +90,7 @@ def LoadProjectProccess(Parent_, Msg_,
 
 
 try:
-    from ic.engine import ic_user
+    from ic.engine import glob_functions
 except ImportError:
     print('ic_user IMPORT ERROR')
 
@@ -119,7 +119,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
         if Parent_:
             self.defBackClr = Parent_.GetBackgroundColour()
         else:
-            app = ic_user.icGetRunner()
+            app = glob_functions.getEngine()
             if app:
                 Parent_ = app.GetTopWindow()
                 self.defBackClr = app.GetTopWindow().GetBackgroundColour()

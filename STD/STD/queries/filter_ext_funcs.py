@@ -190,8 +190,8 @@ def get_args_oper_year_datetime():
     Получение аргументов текущего операционного года.
     @return: Словарь заполненных аргументов.
     """
-    from ic.engine import ic_user
-    first_day_year = datetime.datetime(ic_user.getOperateYear(), 1, 1)
+    from ic.engine import glob_functions
+    first_day_year = datetime.datetime(glob_functions.getOperateYear(), 1, 1)
     date_on_next_year = first_day_year + datetime.timedelta(370)
     first_day_next_year = datetime.datetime(date_on_next_year.year, 1, 1)
     last_day_year = first_day_next_year - datetime.timedelta(1)

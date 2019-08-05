@@ -29,7 +29,7 @@ from ic.log import log
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.dlg import ic_dlg
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt

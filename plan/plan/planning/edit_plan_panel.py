@@ -10,7 +10,7 @@ import wx
 from . import edit_plan_panel_proto
 from ic.log import log
 from ic.engine import form_manager
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from ic.utils import ic_util
 
 
@@ -74,21 +74,21 @@ def show_edit_plan_panel(parent=None, plan_metatree=None):
     """
     try:
         if parent is None:
-            parent = ic_user.getMainWin()
+            parent = glob_functions.getMainWin()
 
         panel = icEditPlanPanel(parent=parent)
 
         if ic_util.is_pasport(plan_metatree):
             # Если план задается паспортом, то необходимо
             # создать объект
-            kernel = ic_user.getKernel()
+            kernel = glob_functions.getKernel()
             plan_metatree = kernel.Create(plan_metatree)
 
         # Установить метадерево плана
         panel.setPlanMetatree(plan_metatree)
 
         title = str(plan_metatree.description) if plan_metatree else u'---'
-        result = ic_user.addMainNotebookPage(panel, title)
+        result = glob_functions.addMainNotebookPage(panel, title)
         return result is not None
     except:
         log.fatal(u'Ошибка открытия панели ведения планирования.')

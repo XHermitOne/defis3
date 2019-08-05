@@ -21,7 +21,7 @@ from . import lock
 from ic.PropertyEditor import icDefInf
 import ic.storage.storesrc
 from . import util
-from ic.engine import ic_user
+from ic.engine import glob_functions
 
 __version__ = (1, 1, 1, 2)
 
@@ -38,14 +38,14 @@ def icGetKernel():
     """
     Возвращает ссылку на ядро системы.
     """
-    return ic_user.getKernel()
+    return glob_functions.getKernel()
 
 
 def icGetResPath():
     """
     Возвращает путь до директории, где располагаются ресурсные файлы
     """
-    return ic_user.icGet('SYS_RES')
+    return glob_functions.getVar('SYS_RES')
 
 
 def icGetSysPath():
@@ -80,8 +80,8 @@ def IsDebugMode():
     """
     Признак режима отладки.
     """
-    if ic_user.icIs('DEBUG_MODE'):
-        return ic_user.icGet('DEBUG_MODE')
+    if glob_functions.isVar('DEBUG_MODE'):
+        return glob_functions.getVar('DEBUG_MODE')
     else:
         return False
 
@@ -90,7 +90,7 @@ def icGetUserPath():
     """
     Возвращает путь до директории пользователя.
     """
-    userName = ic_user.icGet('UserName')
+    userName = glob_functions.getVar('UserName')
     path = icGetResPath()
     if not userName:
         return None
@@ -193,7 +193,7 @@ def icGetCfgFrame():
     """
     Возвращает путь до директории, где располагаются ресурсные файлы.
     """
-    appx = ic_user.icRef('CFG_APP')
+    appx = glob_functions.refVar('CFG_APP')
     return appx.appFrame
 
 
@@ -201,7 +201,7 @@ def icGetSubsysResPaths():
     """
     Возвращает список путей до всех подсистем.
     """
-    paths = ic_user.icGet('SUBSYS_RES')
+    paths = glob_functions.getVar('SUBSYS_RES')
     if not paths:
         paths = [icGetResPath()]
 
@@ -825,7 +825,7 @@ def icSaveRes(className, ext, pathRes=None, nameRes='resource',
     @return: Ресурсное описание объекта. None если ресурс не найден.
     """
     if not pathRes:
-        pathRes = ic_user.icGet('PRJ_DIR')
+        pathRes = glob_functions.getVar('PRJ_DIR')
     fileResName = os.path.join(pathRes, nameRes+'.'+ext)
 
     if ResFmt == PICKLE_RES_FMT:

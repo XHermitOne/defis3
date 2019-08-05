@@ -22,7 +22,7 @@ import copy
 from ic.log import log
 from ic.utils import util
 from ic.utils import resource
-from ic.engine import ic_user
+from ic.engine import glob_functions
 from . import PrjRes
 
 _ = wx.GetTranslation
@@ -206,7 +206,7 @@ class icProjectResController:
     def setPrjName(self, PrjName_):
         self._PrjName = PrjName_
         if self._PrjName is None:
-            self._PrjName = ic_user.icGet('PrjName')
+            self._PrjName = glob_functions.getVar('PrjName')
         
     def getPrjResFileName(self):
         """
@@ -223,7 +223,7 @@ class icProjectResController:
     def setPrjResFileName(self, PrjResFileName_):
         self._PrjResFileName = PrjResFileName_
         if self._PrjResFileName is None:
-            self._PrjResDir = ic_user.icGet('PRJ_DIR')
+            self._PrjResDir = glob_functions.getVar('PRJ_DIR')
             self._PrjResFileName = os.path.join(self._PrjResDir, '%s.pro' % self._PrjName)
         else:
             self._PrjResDir = os.path.dirname(self._PrjResFileName)
