@@ -141,7 +141,7 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
             return None
 
         if toolbar is None:
-            toolbar = tool.getToolBar()
+            toolbar = tool.GetToolBar()
 
         point = self.getToolLeftBottomPoint(toolbar, tool)
         parent = toolbar.GetParent()
