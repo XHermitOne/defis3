@@ -161,5 +161,5 @@ def browse_doc_links_panel(doc=None, title=u''):
     panel = icBrowseDocLinksPanel(main_win)
     panel.init()
     panel.init_tree(links_data, doc.getUUID())
-    main_win.AddPage(panel, title)
+    main_win.addPage(panel, title)
     

@@ -487,7 +487,7 @@ def test_defis():
     parent = ic.getMainWin()
     panel = icWMSTruckConstructorPanel(parent)
     panel.init(box_layout_scheme=layout_scheme.DEFAULT_WINTER_1_AXLE_POS)
-    parent.AddOrgPage(panel, u'Конструктор погрузки')
+    parent.addOrgPage(panel, u'Конструктор погрузки')
 
 
 def test():

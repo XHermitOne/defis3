@@ -414,7 +414,7 @@ def addMainNotebookPage(page, title, bOpenExists=False, image=None, bCanClose=Tr
         то открывается текущая добавляемая страница.
     """
     try:
-        return getKernel().GetContext().getMainWin().AddOrgPage(page, title, bOpenExists, image,
+        return getKernel().GetContext().getMainWin().addOrgPage(page, title, bOpenExists, image,
                                                                 bCanClose, open_script, close_script, default_page)
     except:
         log.fatal()
@@ -429,7 +429,7 @@ def delMainOrgPage(page_index):
     @param page_index: Индекс стриницы.
     """
     try:
-        return getKernel().GetContext().getMainWin().DelOrgPage(page_index)
+        return getKernel().GetContext().getMainWin().delOrgPage(page_index)
     except:
         log.fatal()
 

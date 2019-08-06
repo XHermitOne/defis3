@@ -17,33 +17,33 @@ class icAUIManager(aui.AuiManager):
     Главное окно. Технология AUI.
     """
 
-    def __init__(self, ManagedWindow_):
+    def __init__(self, managed_window):
         """
         Конструктор.
-        @param: ManagedWindow_: Окно, управляемое AUI менеджером.
+        @param: managed_window: Окно, управляемое AUI менеджером.
         """
         aui.AuiManager.__init__(self)
         
         # Установить управляемое окно
-        if ManagedWindow_:
-            self.SetManagedWindow(ManagedWindow_)
+        if managed_window:
+            self.SetManagedWindow(managed_window)
 
-    def setGradient(self, Gradient_):
+    def setGradient(self, gradient):
         """
         Установка градиента заполнения AUI панелей.
         """
-        return self.GetArtProvider().SetMetric(aui.AUI_DOCKART_GRADIENT_TYPE, Gradient_)
+        return self.GetArtProvider().SetMetric(aui.AUI_DOCKART_GRADIENT_TYPE, gradient)
 
-    def addPane(self,Pane_):
+    def addPane(self, pane):
         """
         Добавить AUI панель.
         """
         # Заполнение информации о AUI панели
         pane_info = aui.AuiPaneInfo()
-        pane_info = pane_info.Name(Pane_.name)
-        pane_info = pane_info.Caption(Pane_.title or '')
+        pane_info = pane_info.Name(pane.name)
+        pane_info = pane_info.Caption(pane.title or '')
         
-        direction = Pane_.direction.lower().strip()
+        direction = pane.direction.lower().strip()
         if direction == 'left':
             pane_info = pane_info.Left()
         elif direction == 'right':
@@ -55,15 +55,15 @@ class icAUIManager(aui.AuiManager):
         elif direction == 'center':
             pane_info = pane_info.Center()
             
-        pane_info = pane_info.Layer(Pane_.layer)
-        pane_info = pane_info.Position(Pane_.pos)
-        pane_info = pane_info.CloseButton(Pane_.close_button)
-        pane_info = pane_info.MaximizeButton(Pane_.maximize_button)
-        pane_info = pane_info.BestSize(wx.Size(*Pane_.best_size))
-        pane_info = pane_info.MinSize(wx.Size(*Pane_.min_size))
-        pane_info = pane_info.MaxSize(wx.Size(*Pane_.max_size))
+        pane_info = pane_info.Layer(pane.layer)
+        pane_info = pane_info.Position(pane.pos)
+        pane_info = pane_info.CloseButton(pane.close_button)
+        pane_info = pane_info.MaximizeButton(pane.maximize_button)
+        pane_info = pane_info.BestSize(wx.Size(*pane.best_size))
+        pane_info = pane_info.MinSize(wx.Size(*pane.min_size))
+        pane_info = pane_info.MaxSize(wx.Size(*pane.max_size))
 
-        return self.AddPane(Pane_.getControl(), pane_info)
+        return self.AddPane(pane.getControl(), pane_info)
 
     def SetFlags(self, flags):
         if wx.VERSION > (2, 8, 11, 0):

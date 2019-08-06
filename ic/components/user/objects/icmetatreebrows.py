@@ -220,7 +220,7 @@ class MetaTreeBrows(icobjectinterface.icObjectInterface):
             #   Перед уничтожением вызываем фукцию уведомляющую все дочерние компоненты
             try:
                 cls = MetaTreeBrows.edtPanelBuff[key]
-                cls.getObject().DestroyWin()
+                cls.getObject().destroyWin()
             except:
                 pass
             MetaTreeBrows.edtPanelBuff.pop(key)

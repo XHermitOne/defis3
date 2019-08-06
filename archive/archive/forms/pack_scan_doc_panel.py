@@ -474,7 +474,7 @@ def show_pack_scan_doc_panel(title=u''):
 
         panel = icPackScanDocPanel(main_win)
         panel.init()
-        main_win.AddPage(panel, title)
+        main_win.addPage(panel, title)
     except:
         log.fatal(u'Ошибка')
 

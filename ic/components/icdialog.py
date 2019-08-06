@@ -402,7 +402,7 @@ class icDialog(icWidget, wx.Dialog):
         try:
             for key in self.evalSpace['_dict_obj']:
                 try:
-                    self.evalSpace['_dict_obj'][key].ObjDestroy()
+                    self.evalSpace['_dict_obj'][key].destroyObj()
                 except:
                     log.fatal(u'Ошибка разрушения диалогового окна')
         except:

@@ -11,7 +11,7 @@ from wx.lib.agw import aui
 from ic.log import log
 from ic.dlg import ic_dlg
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icAUINotebook(aui.AuiNotebook):
@@ -19,44 +19,44 @@ class icAUINotebook(aui.AuiNotebook):
     Менеджер панелей с закладками. Технология AUI.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         @param: parent: Родительское окно.
         """
-        aui.AuiNotebook.__init__(self, Parent_)
+        aui.AuiNotebook.__init__(self, parent)
         
-        self.SetClientSize(Parent_.GetClientSize())
+        self.SetClientSize(parent.GetClientSize())
     
-    def addPage(self, Page_, Title_, Select_=False, Image_=None, not_dublicate=True):
+    def addPage(self, page, title, bAutoSelect=False, image=None, bNotDuplicate=True):
         """
         Добавить страницу.
-        @param Page_: Страница-объект наследник wx.Window.
-        @param Title_: Заголовок страницы.
-        @param Select_: Выбирается по умолчанию эта страница?
-        @param Image_: Файл образа или сам образ в заголовке страницы.
-        @param not_dublicate: Не открывать страницу с таким же именем?
+        @param page: Страница-объект наследник wx.Window.
+        @param title: Заголовок страницы.
+        @param bAutoSelect: Выбирается по умолчанию эта страница?
+        @param image: Файл образа или сам образ в заголовке страницы.
+        @param bNotDuplicate: Не открывать страницу с таким же именем?
         """
-        if Page_ is None:
+        if page is None:
             log.warning(u'Не определена страница для добавления в главный нотебук')
             return
 
-        if not_dublicate:
+        if bNotDuplicate:
             # Запретить открытие страницы с таким же заголовком
             page_titles = [page['title'] for page in self.getPages()]
-            if Title_ in page_titles:
-                msg = u'Страница <%s> уже открыта' % Title_
+            if title in page_titles:
+                msg = u'Страница <%s> уже открыта' % title
                 log.warning(msg)
-                Page_.Destroy()
+                page.Destroy()
                 ic_dlg.icWarningBox(u'ВНИМАНИЕ!', msg)
                 return None
 
         # У объекта страницы поменять хозяина
         # Чтобы органайзер синхронно переразмеривался с главным окном
-        if Page_.GetParent() != self:
-            log.debug(u'Смена родителя <%s> страницы <%s>' % (Page_.GetParent(), Page_.__class__.__name__))
-            Page_.Reparent(self)
-        return self.AddPage(Page_, Title_, Select_, Image_)
+        if page.GetParent() != self:
+            log.debug(u'Смена родителя <%s> страницы <%s>' % (page.GetParent(), page.__class__.__name__))
+            page.Reparent(self)
+        return self.AddPage(page, title, bAutoSelect, image)
 
     # Удалить страницу по индексу
     deletePage = aui.AuiNotebook.DeletePage
@@ -100,9 +100,9 @@ class icAUIMainNotebook(icAUINotebook):
     Менеджер панелей с закладками для главного окна. Технология AUI.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         @param: parent: Родительское окно.
         """
-        icAUINotebook.__init__(self, Parent_)
+        icAUINotebook.__init__(self, parent)

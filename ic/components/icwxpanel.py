@@ -50,7 +50,7 @@ SPC_IC_PANEL = {'type': 'Panel',
                 'keyDown': None,
 
                 '__default_page__': 1,
-                '__events__': {'onClose': ('wx.EVT_CLOSE', 'ObjDestroy', False),
+                '__events__': {'onClose': ('wx.EVT_CLOSE', 'destroyObj', False),
                                'onLeftMouseClick': ('wx.EVT_LEFT_DOWN', 'OnLeftDown', False),
                                'onRightMouseClick': ('wx.EVT_RIGHT_DOWN', 'OnRightDown', False),
                                },
@@ -202,7 +202,7 @@ class icWXPanel(icWidget, wx.Panel):
             for key in self.evalSpace['_dict_obj']:
                 #   Функционал перед закрытием
                 try:
-                    self.evalSpace['_dict_obj'][key].ObjDestroy()
+                    self.evalSpace['_dict_obj'][key].destroyObj()
                 except:
                     log.fatal(u'Ошибка разрушения объекта <%s>' % key)
         except:

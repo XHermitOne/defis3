@@ -589,7 +589,7 @@ def open_correct_doc_panel(parent=None):
         page = icCorrectScanDocPanel(parent=main_win)        
         page.init()        
         page.setDocUUIDList(*doc_uuid_lst)
-        main_win.AddOrgPage(page, u'Коррекция сканированных документов')        
+        main_win.addOrgPage(page, u'Коррекция сканированных документов')        
     else:
         # Нажата <отмена> или ошибка
         pass

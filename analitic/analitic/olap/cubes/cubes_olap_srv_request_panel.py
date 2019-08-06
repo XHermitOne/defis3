@@ -432,7 +432,7 @@ def show_cubes_olap_srv_request_panel(title=u''):
         
         panel = icCubesOLAPSrvRequestPanel(main_win)
         # panel.init()
-        main_win.AddPage(panel, title)
+        main_win.addPage(panel, title)
     except:
         log.fatal(u'Ошибка')    
 

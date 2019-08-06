@@ -661,7 +661,7 @@ class icMainWindow(wx.Frame):
                 ok = ic_exec.ExecuteMethod(self._OnClose, self)
             if ok:  # Обычное закрытие окна
                 if self._MainNotebook:
-                    self.DelOrg()
+                    self.delOrg()
                 self._destroyAreaSplitter()
 
                 # Остановить основной цикл выполнения приложения
@@ -763,7 +763,7 @@ class icMainWindow(wx.Frame):
         self.Show(False)
 
     # --- Методы управления панелями главного окна ---
-    def AddOrgPage(self, page, title, open_exists=False, image=None,
+    def addOrgPage(self, page, title, open_exists=False, image=None,
                    bCanClose=True, open_script=None, close_script=None,
                    default_page=-1):
         """
@@ -803,9 +803,9 @@ class icMainWindow(wx.Frame):
             return None
 
     # Можно использовать и другое наименование метода
-    AddPage = AddOrgPage
+    addPage = addOrgPage
 
-    def DelOrgPage(self, page_index):
+    def delOrgPage(self, page_index):
         """
         Удалить страницу.
         @param page_index: Индекс страницы.
@@ -820,13 +820,13 @@ class icMainWindow(wx.Frame):
             self._MainNotebook.deletePage(page_index)
             # Если страниц в органайзере больше нет, тогда удалить его из окна
             if self._MainNotebook.GetPageCount() == 0:
-                self.DelOrg()
+                self.delOrg()
             return self._MainNotebook
         except:
             log.fatal(u'Ошибка удаления страницы из органайзера.')
             return None
 
-    def DelOrg(self):
+    def delOrg(self):
         """
         Удалить органайзер(Объект главного менеджера системных панелей).
         @return: Возвращает результат выполнения операции True/False.
@@ -848,7 +848,7 @@ class icMainWindow(wx.Frame):
             log.fatal(u'Ошибка удаления главного органайзера')
             return False
 
-    def CloseOrgPages(self):
+    def closeOrgPages(self):
         """
         Закрыть все страницы органайзера(Объект главного менеджера системных панелей).
         @return: Возвращает результат выполнения операции True/False.

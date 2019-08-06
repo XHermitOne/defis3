@@ -140,7 +140,7 @@ class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
 
         main_win = ic.getMainWin()
         page = search_doc_form.icSearchDocPanel(parent=main_win)
-        main_win.AddOrgPage(page, u'Тест поиска документов')
+        main_win.addOrgPage(page, u'Тест поиска документов')
 
         event.Skip()
 
@@ -152,7 +152,7 @@ class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
 
         main_win = ic.getMainWin()
         page = print_doc_form.icPrintDocPanel(parent=main_win)
-        main_win.AddOrgPage(page, u'Тест печати документов')
+        main_win.addOrgPage(page, u'Тест печати документов')
 
         event.Skip()
 

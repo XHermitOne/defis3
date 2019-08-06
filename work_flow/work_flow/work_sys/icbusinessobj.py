@@ -653,7 +653,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             # Создать и открыть
             obj = ic.getKernel().Create(psp, parent=ParentForm_, context=Context_)
-            ic.getKernel().GetContext().getMainWin().AddOrgPage(obj, self.description)
+            ic.getKernel().GetContext().getMainWin().addOrgPage(obj, self.description)
         except:
             log.error(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
 

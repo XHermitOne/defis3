@@ -88,7 +88,7 @@ def %s(parent=None, title=u''):
         
         panel = %s(parent)
         panel.init()
-        main_win.AddPage(panel, title)
+        main_win.addPage(panel, title)
     except:
         log.fatal(u'Ошибка')    
 '''

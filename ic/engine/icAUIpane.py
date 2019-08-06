@@ -15,7 +15,7 @@ from ic.components import icwidget
 from ic.components import icResourceParser
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # --- Основные константы ---
 AUI_PANE_DIRECTIONS = ['Top', 'Right', 'Bottom', 'Left', 'Center']
@@ -61,32 +61,32 @@ class icAUIPanePrototype:
     AUI панель. Технология AUI.
     """
 
-    def __init__(self, Parent_, Resource_):
+    def __init__(self, parent, component):
         """
         Конструктор.
         @param: parent: Родительское окно.
-        @param Resource_: Ресурс объекта.
+        @param component: Ресурс объекта.
         """
-        self._Parent = Parent_
+        self._Parent = parent
         
-        self.name = Resource_['name']
-        self.title = Resource_['title']
+        self.name = component['name']
+        self.title = component['title']
         # Кнопки управления
-        self.maximize_button = Resource_['maximize_button']
-        self.close_button = Resource_['close_button']
+        self.maximize_button = component['maximize_button']
+        self.close_button = component['close_button']
         # Местоположение
-        self.direction = Resource_['direction']
-        self.layer = Resource_['layer']
-        self.row = Resource_['row']
-        self.pos = Resource_['pos']
-        self.min_size = Resource_['min_size']
-        self.best_size = Resource_['best_size']
-        self.max_size = Resource_['max_size']
-        self.visible = Resource_['visible']
+        self.direction = component['direction']
+        self.layer = component['layer']
+        self.row = component['row']
+        self.pos = component['pos']
+        self.min_size = component['min_size']
+        self.best_size = component['best_size']
+        self.max_size = component['max_size']
+        self.visible = component['visible']
         # Контрол
-        self.control_name = Resource_.get('control_name', None)
+        self.control_name = component.get('control_name', None)
         self.control_subsys = None
-        self.control_res = Resource_['control_res']
+        self.control_res = component['control_res']
         # Теперь control_res должен быть паспорт
         if type(self.control_res) == tuple:
             self.control_name = self.control_res[0][1]
@@ -145,21 +145,21 @@ class icAUIPanePrototype:
         self.SaveUserProperty('best_size', tuple(self.getControl().GetClientSize()))
         self.SaveUserProperty('visible', pane_info.IsShown())
 
-    def ObjDestroy(self):
+    def destroyObj(self):
         """
         Вызывается при удалении объекта.
         """
         self._saveUserProperty()
         
-    def createControl(self, Name_, ResFileName_, subsys=None):
+    def createControl(self, name, res_filename, subsys=None):
         """
         Создание прикрепленного объекта.
-        @param Name_: Имя объекта.
-        @param ResFileName_: Имя файла ресурса объекта.
+        @param name: Имя объекта.
+        @param res_filename: Имя файла ресурса объекта.
         """
         control = None
         try:
-            res_name, res_ext = os.path.splitext(ResFileName_)
+            res_name, res_ext = os.path.splitext(res_filename)
             control = icResourceParser.icCreateObject(res_name,
                                                       res_ext[1:],
                                                       subsys=subsys,
@@ -175,26 +175,26 @@ class icAUIPanePrototype:
         """
         return self.control
 
-    def openControl(self, Name_, ResFileName_):
+    def openControl(self, name, res_filename):
         """
         Отобразить/показать контрол и при необходимости создать.
-        @param Name_: Имя объекта.
-        @param ResFileName_: Имя файла ресурса объекта.
+        @param name: Имя объекта.
+        @param res_filename: Имя файла ресурса объекта.
         """
-        if self.control and self.control.name != Name_:
-            self.control = self.createControl(Name_, ResFileName_)
-            self.control_name = Name_
-            self.control_res = ResFileName_
+        if self.control and self.control.name != name:
+            self.control = self.createControl(name, res_filename)
+            self.control_name = name
+            self.control_res = res_filename
         aui_manager = self._Parent.getAUIManager()
         aui_manager.addPane(self)
         aui_manager.Update()
 
-    def showControl(self, Control_):
+    def showControl(self, control):
         """
         Отобразить/показать контрол.
         """
-        if Control_:
-            self.control = Control_
+        if control:
+            self.control = control
         aui_manager = self._Parent.getAUIManager()
         aui_manager.addPane(self)
         aui_manager.Update()

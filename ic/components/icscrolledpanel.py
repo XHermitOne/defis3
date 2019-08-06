@@ -180,7 +180,7 @@ class icScrolledPanel(icWidget, wx.lib.scrolledpanel.ScrolledPanel):
         try:
             for key in self.evalSpace['_dict_obj']:
                 try:
-                    self.evalSpace['_dict_obj'][key].ObjDestroy()
+                    self.evalSpace['_dict_obj'][key].destroyObj()
                 except:
                     pass
         except:

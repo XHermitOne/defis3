@@ -457,6 +457,6 @@ def show_cubes_pivot_tab_request_panel(title=u''):
 
         panel = icCubesPivotTabRequestPanel(main_win)
         # panel.init()
-        main_win.AddPage(panel, title)
+        main_win.addPage(panel, title)
     except:
         log.fatal(u'Ошибка')

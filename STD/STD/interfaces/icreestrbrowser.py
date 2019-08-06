@@ -249,7 +249,7 @@ class ReestrBrowser(icobjectinterface.icObjectInterface):
             #   Перед уничтожением вызываем фукцию уведомляющую все дочерние компоненты
             try:
                 cls = ReestrBrowser.edtPanelBuff[key]
-                cls.getObject().DestroyWin()
+                cls.getObject().destroyWin()
             except:
                 pass
             ReestrBrowser.edtPanelBuff.pop(key)

@@ -249,7 +249,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
         try:
             for key in self.evalSpace['_dict_obj']:
                 try:
-                    self.evalSpace['_dict_obj'][key].ObjDestroy()
+                    self.evalSpace['_dict_obj'][key].destroyObj()
                 except:
                     log.warning(u'Ошибка разрушения фрейма')
         except:
@@ -276,7 +276,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
         for key in self.evalSpace['_sources']:
             self.evalSpace['_sources'][key].UnlockAll()
 
-        # self.DestroyWin()
+        # self.destroyWin()
         if evt:
             evt.Skip()
         

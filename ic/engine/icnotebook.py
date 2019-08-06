@@ -121,12 +121,12 @@ class icMainNotebook(wx.Notebook):
 
             if DefaultPage_ != -1:
                 # Добавление страницы
-                ret = self.AddPage(page, Title_, False, img_idx)
+                ret = self.addPage(page, Title_, False, img_idx)
                 # Сразу сделать активной страницу по умолчанию
                 self.SetSelection(DefaultPage_)
             else:
                 # Добавление страницы
-                ret = self.AddPage(page, Title_, True, img_idx)
+                ret = self.addPage(page, Title_, True, img_idx)
 
             return ret
         except:
@@ -145,7 +145,7 @@ class icMainNotebook(wx.Notebook):
             self.AdvanceSelection()
             # Очистить окно страницы
             page = self.GetPage(Index_)
-            page.DestroyWin()
+            page.destroyWin()
             # Удалить страницу
             result = self.DeletePage(Index_)
             # Изменить привязку картинок к страницам
@@ -178,7 +178,7 @@ class icMainNotebook(wx.Notebook):
         # Очистить окно страницы
         for i in range(self.GetPageCount()):
             page = self.GetPage(i)
-            page.DestroyWin()
+            page.destroyWin()
         # Удалить картинки ОБЯЗАТЕЛЬНО!!!
         self._img_list.RemoveAll()
         result = wx.Notebook.DeleteAllPages(self)

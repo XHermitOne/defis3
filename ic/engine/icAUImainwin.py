@@ -22,7 +22,7 @@ from . import icmenubar
 
 from ic.components import icResourceParser
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Основные константы
 # Градиент заголовков AUI панелей
@@ -74,45 +74,45 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     Главное окно. Технология AUI.
     """
 
-    def __init__(self, Resource_=None):
+    def __init__(self, component=None):
         """
         Конструктор.
-        @param: Resource_: Ресурсное представление объекта.
+        @param: component: Ресурсное представление объекта.
         """
-        Resource_ = util.icSpcDefStruct(SPC_IC_AUIMAINWIN, Resource_)
+        component = util.icSpcDefStruct(SPC_IC_AUIMAINWIN, component)
 
-        main_window.icMainWindow.__init__(self, Resource_['name'], Resource_)
+        main_window.icMainWindow.__init__(self, component['name'], component)
 
         # AUI Менеджер
         self.aui_manager = icAUImanager.icAUIManager(self)
 
-        if Resource_['is_main_notebook'] and not Resource_['is_main_notebook'] in ('None', 'False', '0', 'false'):
+        if component['is_main_notebook'] and not component['is_main_notebook'] in ('None', 'False', '0', 'false'):
             self.aui_manager.AddPane(self.createMainNotebook(), 
                                      aui.AuiPaneInfo().Name('main_notebook').CenterPane())
 
         # Установить флаги
         flags = 0
-        if Resource_['allow_floating']:
+        if component['allow_floating']:
             flags |= aui.AUI_MGR_ALLOW_FLOATING
-        if Resource_['allow_active_pane']:
+        if component['allow_active_pane']:
             flags |= aui.AUI_MGR_ALLOW_ACTIVE_PANE
-        if Resource_['transparent_drag']:
+        if component['transparent_drag']:
             flags |= aui.AUI_MGR_TRANSPARENT_DRAG
-        if Resource_['transparent_hint']:
+        if component['transparent_hint']:
             flags |= aui.AUI_MGR_TRANSPARENT_HINT
-        if Resource_['venetian_blinds_hint']:
+        if component['venetian_blinds_hint']:
             flags |= aui.AUI_MGR_VENETIAN_BLINDS_HINT
-        if Resource_['rectangle_hint']:
+        if component['rectangle_hint']:
             flags |= aui.AUI_MGR_RECTANGLE_HINT
-        if Resource_['hint_fade']:
+        if component['hint_fade']:
             flags |= aui.AUI_MGR_HINT_FADE
-        if Resource_['no_venetian_blinds_fade']:
+        if component['no_venetian_blinds_fade']:
             flags |= aui.AUI_MGR_NO_VENETIAN_BLINDS_FADE
         
         self.aui_manager.SetFlags(flags)
         
         # Установка градиентной заливки AUI панелей
-        gradient = AUI_PANE_GRADIENTS[Resource_['pane_gradient']]
+        gradient = AUI_PANE_GRADIENTS[component['pane_gradient']]
         self.aui_manager.setGradient(gradient)
         
         # События
@@ -181,7 +181,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
                     self.evalSpace['event'] = event
                     self.eval_attr(main_window.RES_WIN_OPEN)
             except:
-                log.error(u'Ошибка открытия главного окна')
+                log.fatal(u'Ошибка открытия главного окна')
             self._is_opened = True
         event.Skip()
 
@@ -214,7 +214,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
             if app:
                 app.ExitMainLoop()
         except:
-            log.error(u'Ошибка закрытия главного окна')
+            log.fatal(u'Ошибка закрытия главного окна')
         # ВНИМАНИЕ! При выходе из программы не надо вызывать
         # event.Skip(), чтобы не было повторного вызова процедуры
         # закрытия
@@ -225,41 +225,41 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
         """
         return self._MainNotebook
 
-    def addMainNotebookPage(self, Page_, Title_, Select_=False, Image_=None,
-                            not_dublicate=True):
+    def addMainNotebookPage(self, page, title, bAutoSelect=False, image=None,
+                            bNotDuplicate=True):
         """
         Добавить страницу.
-        @param Page_: Страница-объект наследник wx.Window.
-        @param Title_: Заголовок страницы.
-        @param Select_: Выбирается по умолчанию эта страница?
-        @param Image_: Файл образа или сам образ в заголовке страницы.
-        @param not_dublicate: Не открывать страницу с таким же именем?
+        @param page: Страница-объект наследник wx.Window.
+        @param title: Заголовок страницы.
+        @param bAutoSelect: Выбирается по умолчанию эта страница?
+        @param image: Файл образа или сам образ в заголовке страницы.
+        @param bNotDuplicate: Не открывать страницу с таким же именем?
         """
         try:
             # Объект главного менеджера системных панелей
             if self._MainNotebook:
                 
-                if Image_ is None:
-                    Image_ = wx.NullBitmap
-                if not isinstance(Title_, str):
-                    log.warning(u'Не допустимый тип <%s> заголовка страницы нотебука' % type(Title_))
-                    Title_ = str(Title_)
+                if image is None:
+                    image = wx.NullBitmap
+                if not isinstance(title, str):
+                    log.warning(u'Не допустимый тип <%s> заголовка страницы нотебука' % type(title))
+                    title = str(title)
 
                 # Добавить страницу
-                return self._MainNotebook.addPage(Page_, Title_, Select_, Image_, not_dublicate)
+                return self._MainNotebook.addPage(page, title, bAutoSelect, image, bNotDuplicate)
         except:
-            log.error(u'Ошибка добавления страницы в главное окно.')
+            log.fatal(u'Ошибка добавления страницы в главное окно.')
         return None
     
     def OnPaint(self, evt):
         evt.Skip()
         
-    def AddOrgPage(self, Page_, title, open_exists=False, image=None,
+    def addOrgPage(self, page, title, open_exists=False, image=None,
                    bCanClose=True, open_script=None, close_script=None, default_page=-1,
-                   not_duplicate=True):
+                   bNotDuplicate=True):
         """
         Добавить страницу.
-        @param Page_: Страница-объект наследник wx.Window.
+        @param page: Страница-объект наследник wx.Window.
         @param title: Заголовок страницы.
         @param open_exists: Если страница уже создана-открыть ее.
         @param image: Файл образа или сам образ в заголовке страницы.
@@ -271,11 +271,11 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
             м/у страницами.
         @param default_page: Индекс страницы,  открываемой по умолчанию.
             Если -1, то открывается текущая добавляемая страница.
-        @param not_dublicate: Не открывать страницу с таким же именем?
+        @param bNotDuplicate: Не открывать страницу с таким же именем?
         """
         select = default_page == -1
-        if isinstance(Page_, str):
-            res_name, res_ext = os.path.splitext(Page_)
+        if isinstance(page, str):
+            res_name, res_ext = os.path.splitext(page)
             # По умолчанию ресурс форм: *.frm
             if not res_ext:
                 res_ext = '.frm'
@@ -283,14 +283,14 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
             # Создание объекта страницы
             main_notebook = self.GetMainNotebook()
             page_parent = main_notebook if main_notebook else self
-            Page_ = icResourceParser.icCreateObject(res_name, res_ext[1:],
-                                                    parent=page_parent)
-        return self.addMainNotebookPage(Page_, title, select, image, not_dublicate=not_duplicate)
+            page = icResourceParser.icCreateObject(res_name, res_ext[1:],
+                                                   parent=page_parent)
+        return self.addMainNotebookPage(page, title, select, image, bNotDuplicate=bNotDuplicate)
 
     # Можно использовать и другое наименование метода
-    AddPage = AddOrgPage
+    addPage = addOrgPage
 
-    def DelOrgPage(self, page_index):
+    def delOrgPage(self, page_index):
         """
         Удалить страницу.
         @param page_index: Индекс страницы.
@@ -302,7 +302,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
             self._MainNotebook.deletePage(page_index)
             return self._MainNotebook
         except:
-            log.error(u'Ошибка удаления страницы из органайзера.')
+            log.fatal(u'Ошибка удаления страницы из органайзера.')
             return None
 
     def delPageByTitle(self, page_title):
@@ -322,10 +322,10 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
                     self._MainNotebook.deletePage(i + 1)
             return self._MainNotebook
         except:
-            log.error(u'Ошибка удаления страницы из органайзера.')
+            log.fatal(u'Ошибка удаления страницы из органайзера.')
             return None
 
-    def DelOrg(self):
+    def delOrg(self):
         """
         Удалить органайзер(Объект главного менеджера системных панелей).
         @return: Возвращает результат выполнения операции True/False.
@@ -335,10 +335,10 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
                 self._MainNotebook.deleteAllPages()
             return True
         except:
-            log.error(u'Ошибка удаления главного органайзера')
+            log.fatal(u'Ошибка удаления главного органайзера')
             return False
 
-    def CloseOrgPages(self):
+    def closeOrgPages(self):
         """
         Закрыть все страницы органайзера(Объект главного менеджера системных панелей).
         @return: Возвращает результат выполнения операции True/False.
@@ -348,7 +348,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
                 self._MainNotebook.closeAllPages()
             return True
         except:
-            log.error(u'Ошибка удаления главного органайзера')
+            log.fatal(u'Ошибка удаления главного органайзера')
             return False
 
     def getAUIManager(self):
@@ -357,7 +357,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
         """
         return self.aui_manager
 
-    def DestroyWin(self):
+    def destroyWin(self):
         """
         Обрабатывает закрытие окна.
         """
@@ -366,38 +366,38 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
         try:
             for key in self.evalSpace['_dict_obj']:
                 try:
-                    self.evalSpace['_dict_obj'][key].ObjDestroy()
+                    self.evalSpace['_dict_obj'][key].destroyObj()
                 except: 
                     pass
         except:
             pass
 
-    def openChildPane(self, Page_, PaneName_):
+    def openChildPane(self, page, pane_name):
         """
         Открыть дочернее окно как AUI панель.
-        @param Page_: Имя ресурсного файла окна.
-        @param PaneName_: Имя дочерней AUI панели.
+        @param page: Имя ресурсного файла окна.
+        @param pane_name: Имя дочерней AUI панели.
         """
-        pane = self.GetChildByName(PaneName_)
-        if isinstance(Page_, str):
-            res_name, res_ext = os.path.splitext(Page_)
+        pane = self.GetChildByName(pane_name)
+        if isinstance(page, str):
+            res_name, res_ext = os.path.splitext(page)
             # По умолчанию ресурс форм: *.frm
             if not res_ext:
                 res_ext = '.frm'
-            Page_ = icResourceParser.icCreateObject(res_name, res_ext[1:], parent=self)
-            if Page_:
+            page = icResourceParser.icCreateObject(res_name, res_ext[1:], parent=self)
+            if page:
                 pane.control_name = os.path.basename(res_name)
                 pane.control_res = res_name+res_ext
-        return pane.showControl(Page_)
+        return pane.showControl(page)
 
-    def setChildPane(self, PageObj_, PaneName_):
+    def setChildPane(self, page, pane_name):
         """
         Установить дочернее окно как AUI панель.
-        @param PageObj_: Объект окна/панели.
-        @param PaneName_: Имя дочерней AUI панели.
+        @param page: Объект окна/панели.
+        @param pane_name: Имя дочерней AUI панели.
         """
-        pane = self.GetChildByName(PaneName_)
-        return pane.showControl(PageObj_)
+        pane = self.GetChildByName(pane_name)
+        return pane.showControl(page)
 
     def setMenuBar(self, menubar):
         """

@@ -378,7 +378,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
             scheme_page = scheme_doc_form.icSchemeDocPanel(parent=main_win)
             scheme_page.init()
             scheme_page.scheme_viewer_ctrl.setDiagram(scheme)
-            main_win.AddOrgPage(scheme_page, u'Схема документа <%s>' % doc.getRequisiteValue('doc_name'))
+            main_win.addOrgPage(scheme_page, u'Схема документа <%s>' % doc.getRequisiteValue('doc_name'))
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
 

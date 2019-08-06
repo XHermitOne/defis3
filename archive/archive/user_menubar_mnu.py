@@ -49,7 +49,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
         main_win = ic.getMainWin()
         page = new_doc_panel.icNewArchiveDocPanel(parent=main_win)
         page.init()
-        main_win.AddOrgPage(page, u'Регистрация новых документов')
+        main_win.addOrgPage(page, u'Регистрация новых документов')
         event.Skip()
 
     def onSearchDocMenuItemSelected(self, event):
@@ -59,7 +59,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
         main_win = ic.getMainWin()
         # page = search_doc_form.icSearchDocPanel(parent=main_win)
         page = print_doc_form.icPrintDocPanel(parent=main_win)
-        main_win.AddOrgPage(page, u'Поиск документов')
+        main_win.addOrgPage(page, u'Поиск документов')
 
         event.Skip()
 
