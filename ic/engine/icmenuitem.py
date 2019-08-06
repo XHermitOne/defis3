@@ -32,7 +32,7 @@ import ic.utils.ic_util
 import ic.utils.util
 from ic.log import log
 from ic.bitmap import bmpfunc
-from . import icUser
+from . import user_manager
 
 import ic
 
@@ -226,7 +226,7 @@ class icMenuItem(wx.MenuItem):
             if 'enabled' in ItemStruct_ and ItemStruct_['enabled'] is not None:
                 item_enabled = ItemStruct_['enabled']
             # Проверка на ограничение доступа к функциональному ресурсу
-            if not icUser.canAuthent(icUser.ACCESS_USE, self._Name, icUser.ACC_MENUITEM, False):
+            if not user_manager.canAuthent(user_manager.ACCESS_USE, self._Name, user_manager.ACC_MENUITEM, False):
                 item_enabled = False
 
             wx.MenuItem.Enable(self, item_enabled)
@@ -511,7 +511,7 @@ class icMenuItem(wx.MenuItem):
         @param enable: Флаг включения/выключения.
         """
         # Если вообще нельзя использовать этот пункт, то ничего и не делать
-        if icUser.canAuthent(icUser.ACCESS_USE, self._Name, icUser.ACC_MENUITEM, False):
+        if user_manager.canAuthent(user_manager.ACCESS_USE, self._Name, user_manager.ACC_MENUITEM, False):
             # Если есть связанный инструмент,  тогда отключить и его
             if self._Toolbar and self._ToolID:
                 self._Toolbar.EnableTool(self._ToolID, enable)

@@ -247,7 +247,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         @param sort_column: Наименования колонки сортировки.
         """
         # Добавить корневой элемент дерева справочника
-        sprav_res = self.sprav.GetResource() 
+        sprav_res = self.sprav.getResource()
         sprav_title = sprav_res['description'] if sprav_res['description'] else sprav_res['name']
         # В случае многострочных наименования выделять только первую строку
         sprav_title = [line.strip() for line in sprav_title.split(u'\n')][0]
@@ -278,7 +278,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         self.sprav_treeListCtrl.DeleteAllItems()
 
         # Добавить корневой элемент дерева справочника
-        sprav_res = self.sprav.GetResource()
+        sprav_res = self.sprav.getResource()
         sprav_title = sprav_res['description'] if sprav_res['description'] else sprav_res['name']
         # В случае многострочных наименования выделять только первую строку
         sprav_title = [line.strip() for line in sprav_title.split(u'\n')][0]
@@ -319,7 +319,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             log.warning(u'Нет данных справочника')
             return
 
-        sprav_res = self.sprav.GetResource()
+        sprav_res = self.sprav.getResource()
         sprav_title = sprav_res['description'] if sprav_res['description'] else sprav_res['name']
         label = u'Открытие справочника <%s>' % sprav_title
         len_level_data = len(level_data) if isinstance(level_data, list) else level_data.rowcount

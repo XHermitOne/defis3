@@ -32,7 +32,7 @@ import copy
 from wx import grid
 
 from ic.utils.util import icSpcDefStruct
-from ic.engine import icUser
+from ic.engine import user_manager
 from ic.utils import coderror
 from ic.interfaces import icdatasetinterface
 from ic.utils import translate
@@ -256,7 +256,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         @return: Возвращает в случае успеха код контроля (0,1,2), в противном случае None.
         """
         #   Проверка на права доступа к данному методу
-        if not icUser.canAuthent('wr', self.name, icUser.ACC_DATA):
+        if not user_manager.canAuthent('wr', self.name, user_manager.ACC_DATA):
             return None
 
         #   Если номер строки не указан, то номер записи определяем по положению курсора
@@ -295,7 +295,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         value = ''
         #   Проверка на права доступа к данному методу
-        if not icUser.canAuthent('r', self.name, icUser.ACC_DATA, False):
+        if not user_manager.canAuthent('r', self.name, user_manager.ACC_DATA, False):
             return ''
         #   Если номер строки не указан, то номер записи определяем по положению курсора
         if rec is None:
@@ -378,7 +378,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         @rtype: C{bool}
         """
         #   Проверка на права доступа к данному методу
-        if not icUser.canAuthent('a', self.name,  icUser.ACC_DATA,  True):
+        if not user_manager.canAuthent('a', self.name, user_manager.ACC_DATA, True):
             return False
 
         rec = self.getRecordCount()
@@ -422,7 +422,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         @rtype: C{int}
         """
         #   Проверка на права доступа к данному методу
-        if not icUser.canAuthent('d', self.name,  icUser.ACC_DATA,  True):
+        if not user_manager.canAuthent('d', self.name, user_manager.ACC_DATA, True):
             return coderror.IC_DEL_FAILED
 
         if rec is None:

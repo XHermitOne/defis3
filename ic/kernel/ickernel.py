@@ -421,21 +421,21 @@ class icKernel(icBaseKernel):
         @param db_mode: Режим использования БД.
         """
         from ic.dlg import ic_dlg
-        from ic.engine import icUser
+        from ic.engine import user_manager
 
         login_ok = False
-        login_manager = icUser.icLoginManager()
+        login_manager = user_manager.icLoginManager()
         username, password = login_manager._getAutoLogin(username, password)
-        bAuto = login_manager.IsAutoAuth()
+        bAuto = login_manager.isAutoAuth()
         while not login_ok:
             user_data = login_manager.Login(username, password, db_mode,
-                                            RuntimeMode_=False)
+                                            bRuntimeMode=False)
             if user_data is None:
                 break
             user_name = user_data[ic_dlg.LOGIN_USER_IDX]
             user_password = user_data[ic_dlg.LOGIN_PASSWORD_IDX]
             user_password_md5 = user_data[ic_dlg.LOGIN_PASSWORD_MD5_IDX]
-            res = login_manager.GetUserResource(user_name)
+            res = login_manager.getUserResource(user_name)
 
             if res is None:
                 username, password = None, None
@@ -443,10 +443,10 @@ class icKernel(icBaseKernel):
             else:
                 self._User = self.createObjBySpc(None, res)
                 self._User.setLoginManager(login_manager)
-                passwd_md5 = self._User._password_md5(user_password)
+                passwd_crc = self._User._get_password_crc(user_password)
                 try:
-                    login_ok = self._User.login_ok(user_name, user_password, passwd_md5,
-                                                   db_mode, RuntimeMode_=False)
+                    login_ok = self._User.login_ok(user_name, user_password, passwd_crc,
+                                                   db_mode, bRuntimeMode=False)
                 except icexceptions.LoginInvalidException:
                     if bAuto:
                         bAuto = False

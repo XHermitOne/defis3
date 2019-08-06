@@ -16,7 +16,7 @@ from ic.utils import ic_res
 from ic.dlg import ic_dlg
 from ic.log import log
 
-from ic.engine import icUser
+from ic.engine import user_manager
 from . import prj_node
 from . import prj_resource
 from . import userRes
@@ -65,10 +65,10 @@ class PrjSecurity(prj_node.PrjFolder):
             prj_name = self.getRoot().prj_res_manager.getPrjRootName()
             return ic_file.AbsolutePath(prj_name,
                                         os.path.join(os.path.dirname(self.getRoot().getPrjFileName()),
-                                        icUser.DEFAULT_USERS_RES_FILE))
+                                                     user_manager.DEFAULT_USERS_RES_FILE))
         else:
             return os.path.join(os.path.split(prj_file_name)[0],
-                                icUser.DEFAULT_USERS_RES_FILE)
+                                user_manager.DEFAULT_USERS_RES_FILE)
 
     def save(self):
         """

@@ -128,7 +128,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
             return value
 
     elif attr == 'wx_signal_type':
-        lib = propEdt.GetResource()['lib']
+        lib = propEdt.getResource()['lib']
         lst = _get_lib_evt_lst(lib)
         if lst:
             dlg = baseeditor.ChoiceMenu(parent, lst)
@@ -151,7 +151,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     if attr in ('src', 'receiver'):
         return pspEdt.property_editor_ctrl(value, propEdt)
     elif attr == 'wx_signal_type':
-        lib = propEdt.GetResource()['lib']
+        lib = propEdt.getResource()['lib']
         lst = _get_lib_evt_lst(lib, True)
         if value in lst:
             return coderror.IC_CTRL_OK

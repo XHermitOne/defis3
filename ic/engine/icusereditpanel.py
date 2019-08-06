@@ -7,7 +7,7 @@ from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.kernel import io_prnt
-from ic.engine import icUser
+from ic.engine import user_manager
 from ic.dlg import ic_dlg
 from ic.engine import glob_functions
 from ic.engine import icuserpropertydlg
@@ -131,7 +131,7 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
             name = rec['user']
             description = rec['description']
             roles = rec['roles']
-            new_user = util.icSpcDefStruct(icUser.SPC_IC_USER,
+            new_user = util.icSpcDefStruct(user_manager.SPC_IC_USER,
                                            {'name': name,
                                             'description': description,
                                             'roles': roles})
@@ -165,7 +165,7 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
             # Главное окно и горизонтальное меню наследуются у текущего пользователя
             default_main_win = glob_functions.getKernel().GetAuthUser().resource['main_win']
             default_main_menubars = glob_functions.getKernel().GetAuthUser().resource['menubars']
-            default_res = util.icSpcDefStruct(icUser.SPC_IC_USER,
+            default_res = util.icSpcDefStruct(user_manager.SPC_IC_USER,
                                               {'main_win': default_main_win,
                                                'name': 'new_user',
                                                'local_dir': 'C:\\#WRK\\new_user',

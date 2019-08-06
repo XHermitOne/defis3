@@ -2636,7 +2636,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 # шаблонные обработчики
                 cls.SetContext(evalSpace)
                 evalSpace.register_wrapper(cls, cls.name)
-                res = cls.GetResource()
+                res = cls.getResource()
                 bExcept = True
 
             # В случае редактирования интерфейса

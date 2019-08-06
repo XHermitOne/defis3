@@ -15,7 +15,7 @@ import ic.interfaces.resManager as resManager
 from ic.utils import ic_res
 from ic.utils import ic_file
 from ic.dlg import ic_dlg
-from ic.engine import icUser
+from ic.engine import user_manager
 from ic.log import log
 
 _ = wx.GetTranslation
@@ -101,7 +101,7 @@ class UserResource(resManager.ResourceManagerInterface):
         Создание ресурса по умолччанию. Для одного пользователя!!!.
         @param UserName_: Имя пользрвателя по умолчанию.
         """
-        usr = copy.deepcopy(icUser.SPC_IC_USER)
+        usr = copy.deepcopy(user_manager.SPC_IC_USER)
         usr['_uuid'] = None
         usr['name'] = UserName_
         return usr
@@ -111,7 +111,7 @@ class UserResource(resManager.ResourceManagerInterface):
         Спецификация группы пользователей по умолчанию.
         @param UserGrpName_: Имя группы пользрвателей.
         """
-        usr_grp = copy.deepcopy(icUser.SPC_IC_USERGROUP)
+        usr_grp = copy.deepcopy(user_manager.SPC_IC_USERGROUP)
         usr_grp['_uuid'] = None
         usr_grp['name'] = UserGrpName_
         return usr_grp
@@ -410,7 +410,7 @@ class UserResource(resManager.ResourceManagerInterface):
     def createUserGroup(self, UserGrpName_='new_user_grp'):
         """
         Создание новой группы пользователей в структуре.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         @return: Возвращает результат выполнения операции True/False.
         """
         if self._user_res is None:
@@ -464,7 +464,7 @@ class UserResource(resManager.ResourceManagerInterface):
             
     def findUserLegacy(self, UserName_='new_user'):
         """
-        Поиск имен пользователей, которые наследуют права от UserName_.
+        Поиск имен пользователей, которые наследуют права от username.
         @param UserName_: Имя пользователя.
         @return: Возвращает список имен пользователей-наследников
             или None  в случае ошибки.

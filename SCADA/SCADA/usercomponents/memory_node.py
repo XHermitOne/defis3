@@ -190,7 +190,7 @@ class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
         for tag in tags:
             # Все теги Memory узла являются вычисляемыми.
             # Выражение для вычисления записывается в 'address'
-            expression = tag.GetResource().get('address', None)
+            expression = tag.getResource().get('address', None)
             if not expression:
                 log.warning(u'Не определена функция вычисляемого тега <%s> для определения значения' % tag.getName())
                 value = None

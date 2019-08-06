@@ -9,7 +9,7 @@ import ic.components.icResourceParser as prs
 from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
-from ic.engine import icUser
+from ic.engine import user_manager
 from ic.dlg import ic_dlg
 from ic.utils import ic_str
 from ic.utils import coderror
@@ -117,7 +117,7 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
         default_main_win = ic.getKernel().GetAuthUser().resource['main_win']
         default_main_menubars = ic.getKernel().GetAuthUser().resource['menubars']
         
-        data = util.icSpcDefStruct(icUser.SPC_IC_USER, {'main_win': default_main_win,
+        data = util.icSpcDefStruct(user_manager.SPC_IC_USER, {'main_win': default_main_win,
                                                         'menubars': default_main_menubars})
         
         name_edit = self.GetNameObj('nameEdit')

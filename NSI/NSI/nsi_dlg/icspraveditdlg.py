@@ -376,7 +376,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         Установить данные дерева справочника.
         """
         # Добавить корневой элемент дерева справочника
-        sprav_res = self.sprav.GetResource() 
+        sprav_res = self.sprav.getResource()
         sprav_title = sprav_res['description'] if sprav_res['description'] else sprav_res['name']
         # В случае многострочных наименования выделять только первую строку
         sprav_title = [line.strip() for line in sprav_title.split(u'\n')][0]

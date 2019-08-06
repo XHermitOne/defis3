@@ -123,7 +123,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
                 return coderror.IC_CTRL_FAILED_IGNORE
             try:
                 kernel = glob_functions.getKernel()
-                res = propEdt.GetResEditor().GetResource()
+                res = propEdt.GetResEditor().getResource()
                 my_db_psp = res['source']
                 if my_db_psp:
                     my_db_psp = icobject.icObjectPassport(*my_db_psp)

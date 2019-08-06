@@ -41,7 +41,7 @@ from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportListUs
 from ic.PropertyEditor.ExternalEditors.passwordeditor import icPasswordExternalEdt as passwordEdt
 from ic.PropertyEditor.ExternalEditors.multichoiceeditor import icMultiChoiceUserEdt as multiChoiceEdt
 
-import ic.engine.icUser as icuser
+import ic.engine.user_manager as icuser
 import ic.config
 
 USER_WRK_PATH = os.path.join(ic.config.PROFILE_PATH, 'wrk')
@@ -241,14 +241,14 @@ class icUser(icwidget.icSimple, icuser.icUser):
         """
         return self.getICAttr('roles')
 
-    def _exec_on_login(self,Code_):
+    def _exec_on_login(self, exec_code):
         """
         Выполнить при успешном логине.
         """
-        return self.eval_expr(Code_, 'on_login')
+        return self.eval_expr(exec_code, 'on_login')
         
-    def _exec_on_logout(self,Code_):
+    def _exec_on_logout(self, exec_code):
         """
         Выполнить при успешном логауте.
         """
-        return self.eval_expr(Code_, 'on_logout')
+        return self.eval_expr(exec_code, 'on_logout')

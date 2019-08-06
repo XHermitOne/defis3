@@ -32,7 +32,7 @@ from ic.utils import coderror
 from ic.utils import ic_file
 from ic.engine import glob_functions
 
-import ic.engine.icUser as icuser
+import ic.engine.user_manager as icuser
 
 #   Тип компонента
 ic_class_type = icDefInf._icMenuType
@@ -125,14 +125,14 @@ class icUserGroup(icwidget.icSimple, icuser.icUserGroup):
         icuser.icUserGroup.__init__(self, ic_file.PathFile(glob_functions.getVar('SYS_RES'),
                                                            icuser.DEFAULT_USERS_RES_FILE))
 
-    def _exec_on_login(self, Code_):
+    def _exec_on_login(self, exec_code):
         """
         Выполнить при успешном логине.
         """
-        return self.eval_expr(Code_, 'on_login')
+        return self.eval_expr(exec_code, 'on_login')
         
-    def _exec_on_logout(self, Code_):
+    def _exec_on_logout(self, exec_code):
         """
         Выполнить при успешном логауте.
         """
-        return self.eval_expr(Code_, 'on_logout')
+        return self.eval_expr(exec_code, 'on_logout')

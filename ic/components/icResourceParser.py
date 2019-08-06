@@ -684,7 +684,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
         post_buff_lst = []
         for ob in evalSpace['_dict_obj'].values():
             try:
-                res = ob.GetResource()
+                res = ob.getResource()
                 if 'onInit' in res and not res['onInit'] in ['', 'None', None]:
                     ob.PostOnInitEvent()
                     post_buff_lst.append(ob)
@@ -696,7 +696,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
             for key, ifs in evalSpace['_interfaces'].items():
                 for ob in ifs.getRegObjDict().values():
                     try:
-                        res = ob.GetResource()
+                        res = ob.getResource()
                         if ('onInit' in res and not res['onInit'] in ['', 'None', None]
                            and ob not in post_buff_lst):
                             ob.PostOnInitEvent()
@@ -821,7 +821,7 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
             else:
                 nm = component['name']
                 
-            res = wxw.GetResource()
+            res = wxw.getResource()
             res['__interface__'] = nm
             parent = icResourceParser(parent, [res], sizer, logType=logType,
                                       evalSpace=evalSpace, bCounter=bCounter)

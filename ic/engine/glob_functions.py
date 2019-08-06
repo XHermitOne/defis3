@@ -213,14 +213,14 @@ def icLogin(username=None, password=None, db_mode='-s', **kwargs):
     """
     Основная запускаемая функция.
     """
-    from . import icUser
+    from . import user_manager
 
     kernel = ickernel.createKernel()
     glob_variables.set_glob_var('KERNEL', kernel)
     initEnv(**kwargs)
 
     # Полное имя файла ресурса доступа к ресурсам
-    users_file = icUser.DEFAULT_USERS_RES_FILE
+    users_file = user_manager.DEFAULT_USERS_RES_FILE
     letVar('UserAccessFile', users_file)
 
     # Имя проекта
@@ -259,7 +259,7 @@ def icEditorLogin(username=None, password=None, db_mode='-s', **kwargs):
     Основная запускаемая функция.
     """
     from ic.engine import icapplication
-    from . import icUser
+    from . import user_manager
 
     app = icapplication.icApp()
 
@@ -267,7 +267,7 @@ def icEditorLogin(username=None, password=None, db_mode='-s', **kwargs):
     glob_variables.set_glob_var('KERNEL', kernel)
     initEnv(**kwargs)
     # Полное имя файла ресурса доступа к ресурсам
-    users_file = icUser.DEFAULT_USERS_RES_FILE
+    users_file = user_manager.DEFAULT_USERS_RES_FILE
     letVar('UserAccessFile', users_file)
     # Имя проекта
     letVar('PrjName', os.path.split(getVar('SYS_RES'))[1])

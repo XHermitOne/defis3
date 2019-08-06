@@ -107,15 +107,15 @@ SPC_IC_USER = {'type': 'User',
                }
 
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # --- ФУНКЦИИ СИСТЕМЫ ОГРАНИЧЕНИЯ ДОСТУПА ---
-def getUserRequisit(UserName_):
+def getUserRequisit(username):
     """
     Получить реквизиты пользователя.
-    @param UserName_: Имя пользователя.
-        Если UserName_ не определено, тогда возвращается
+    @param username: Имя пользователя.
+        Если username не определено, тогда возвращается
         описание прав доступа текущего пользователя.
         Если UserName определен, тогда возвращается
         описание прав доступа указанного пользователя.
@@ -124,18 +124,18 @@ def getUserRequisit(UserName_):
     if ic_mode.isRuntimeMode():
         # Режим исполнения
         app = glob_functions.getEngine()
-        return app.getUser().GetUserRequisit(UserName_)
+        return app.getUser().getUserRequisit(username)
     else:
         # Режим редактирования
         return copy.deepcopy(SPC_IC_USER)
 
 
-def getAuthent(ResName_, ResType_, ShowMsg_=True):
+def getAuthent(res_name, res_type, bShowMsg=True):
     """
     Функция возвращает права доступа к ресурсу для текущего пользователя в виде 8-символьной строки.
-    @param ResName_: имя ресурса.
-    @param ResType_: тип ресурса.
-    @param ShowMsg_: флаг, описывающий разрешение на отображение
+    @param res_name: имя ресурса.
+    @param res_type: тип ресурса.
+    @param bShowMsg: флаг, описывающий разрешение на отображение
         сообщения о заблокированном ресурсе для данного пользователя.
         Параметр необязателен. По умолчанию сообщение показывается.
     @return: Возвращает права доступа к ресурсу для текущего пользователя
@@ -144,16 +144,16 @@ def getAuthent(ResName_, ResType_, ShowMsg_=True):
     if ic_mode.isRuntimeMode():
         # Режим исполнения
         app = glob_functions.getEngine()
-        return app.getUser().GetAuthent(ResName_, ResType_, ShowMsg_)
+        return app.getUser().getAuthent(res_name, res_type, bShowMsg)
     else:
         # Режим редактирования
         return FULL_ACCESS_PERMIT
 
 
-def canAuthent(Permit_, ResName_, ResType_, ShowMsg_=True):
+def canAuthent(permit, res_name, res_type, bShowMsg=True):
     """
     Функция определяет ограничения на запрашиваемый ресурс.
-    @param Permit_: символ или группа символов,
+    @param permit: символ или группа символов,
         определяющий право доступа на действие.
         'u' - использование (ACCESS_USE).
         'v' - отображение  (ACCESS_VIEW).
@@ -161,9 +161,9 @@ def canAuthent(Permit_, ResName_, ResType_, ShowMsg_=True):
         'w' - редактирование (ACCESS_EDIT).
         'a' - добавление (ACCESS_APPEND).
         'd' - удаление (ACCESS_DELETE).
-    @param ResName_: имя ресурса.
-    @param ResType_: тип ресурса.
-    @param ShowMsg_: флаг, описывающий разрешение на отображения
+    @param res_name: имя ресурса.
+    @param res_type: тип ресурса.
+    @param bShowMsg: флаг, описывающий разрешение на отображения
         сообщения о заблокированном ресурсе для данного пользователя.
         Параметр необязателен. По умолчанию сообщение показывается.
     @return: Возвращает True, если ресурс не ограничен,
@@ -173,7 +173,7 @@ def canAuthent(Permit_, ResName_, ResType_, ShowMsg_=True):
     if ic_mode.isRuntimeMode():
         app = glob_functions.getEngine()
         if app:
-            return app.getUser().CanAuthent(Permit_, ResName_, ResType_, ShowMsg_)
+            return app.getUser().canAuthent(permit, res_name, res_type, bShowMsg)
     return True
 
 
@@ -182,7 +182,7 @@ class icUserPrototype(icbaseuser.icRootUser):
     Класс пользователя системы.
     """
     
-    def __init__(self, ResFileName_=DEFAULT_USERS_RES_FILE, LoginManager_=None):
+    def __init__(self, res_filename=DEFAULT_USERS_RES_FILE, login_manager=None):
         """
         Конструктор класса.
         """
@@ -192,7 +192,7 @@ class icUserPrototype(icbaseuser.icRootUser):
 
         # --- Атрибуты класса ---
         # Ресурсный файл
-        self._ResFile = ResFileName_
+        self._ResFile = res_filename
         # Имя текущего пользователя
         self._UserName = ''
         # Реквизиты текущего пользователя:
@@ -200,13 +200,13 @@ class icUserPrototype(icbaseuser.icRootUser):
         # Режим работы с БД.
         self._DBMode = ic_mode.DB_SHARE
         
-        self._login_manager = LoginManager_
+        self._login_manager = login_manager
 
-    def setLoginManager(self, LoginManager_):
+    def setLoginManager(self, login_manager):
         """
         Установить менеджер входа в систему.
         """
-        self._login_manager = LoginManager_
+        self._login_manager = login_manager
         
     def getUserResFileName(self):
         """
@@ -216,11 +216,11 @@ class icUserPrototype(icbaseuser.icRootUser):
             return ic_file.getAbsolutePath(self._ResFile)
         return self._ResFile
     
-    def setUserResFileName(self, ResFile_):
+    def setUserResFileName(self, res_filename):
         """
         Установить ресурсный файл.
         """
-        self._ResFile = ResFile_
+        self._ResFile = res_filename
 
     def getUsersResource(self):
         """
@@ -236,16 +236,16 @@ class icUserPrototype(icbaseuser.icRootUser):
             return self._UserRequisit['roles']
         return []
         
-    def _createRoles(self, RolesId_=None):
+    def _createRoles(self, reles_id=None):
         """
         Создание списка ролей по идентификаторам.
         @return: Список объектов ролей.
         """
-        if RolesId_ is None:
-            RolesId_ = self._getRolesIdList()
+        if reles_id is None:
+            reles_id = self._getRolesIdList()
             
         role_obj_list = []
-        for role_id in RolesId_:
+        for role_id in reles_id:
             new_role_psp = (('Role', role_id, None, role_id+'.rol', None),)
             new_role_obj = glob_functions.getKernel().createResObjByPsp(new_role_psp, context=self.GetContext())
             role_obj_list.append(new_role_obj)
@@ -281,24 +281,24 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         return self._getRoles()
 
-    def Load(self, UserName_, ResFile_=None):
+    def Load(self, username, res_filename=None):
         """
         Загузить все реквизиты из ресурсного файла.
-        @param UserName_: Имя пользователя в ресурсном файле.
-        @param ResFile_: Имя ресурсного файла.
+        @param username: Имя пользователя в ресурсном файле.
+        @param res_filename: Имя ресурсного файла.
         """
         try:
-            if ResFile_ is not None:
-                self.setUserResFileName(ResFile_)
+            if res_filename is not None:
+                self.setUserResFileName(res_filename)
             res_filename = self.getUserResFileName()
             access_dict = util.readAndEvalFile(res_filename, bRefresh=True)
 
             # Запомнить имя ...
-            self._UserName = UserName_
+            self._UserName = username
 
-            if UserName_ in access_dict:
+            if username in access_dict:
                 # Собрать данные из словаря по одному пользователю.
-                self._UserRequisit = self.CutUserRequisit(access_dict, UserName_, self._UserRequisit)
+                self._UserRequisit = self.cutUserRequisit(access_dict, username, self._UserRequisit)
                 if self._UserRequisit != {}:
                     pass
                 else:
@@ -313,78 +313,78 @@ class icUserPrototype(icbaseuser.icRootUser):
             self._UserName = ''
             self._UserRequisit = {}
 
-    def _cutGroupRequisite(self, AccessDict_, GroupName_, Requisit_=None):
+    def _cutGroupRequisite(self, access_dict, user_group_name, user_requisit=None):
         """
         Собрать данные по группам.
-        @param AccessDict_: Словарь описаний ограничений доступа
+        @param access_dict: Словарь описаний ограничений доступа
             пользователей системы.
-        @param GroupName_: Имя группы пользователей в ресурсном файле.
-        @param Requisit_: Текущий реквизит пользователя.
+        @param user_group_name: Имя группы пользователей в ресурсном файле.
+        @param user_requisit: Текущий реквизит пользователя.
             При первом вызове функции д.б. {}
         """
-        if Requisit_ is None:
-            Requisit_ = {}
-        group_data = AccessDict_[GroupName_]
+        if user_requisit is None:
+            user_requisit = {}
+        group_data = access_dict[user_group_name]
         
         # временной график  доступа к системе  за неделю
-        if (('lock_time' not in Requisit_) or (not Requisit_['lock_time'])) and \
+        if (('lock_time' not in user_requisit) or (not user_requisit['lock_time'])) and \
            'lock_time' in group_data:
-            Requisit_['lock_time'] = group_data['lock_time']
+            user_requisit['lock_time'] = group_data['lock_time']
         # Список меню
-        if (('menubars' not in Requisit_) or (not Requisit_['menubars'])) and \
+        if (('menubars' not in user_requisit) or (not user_requisit['menubars'])) and \
            'menubars' in group_data:
-            Requisit_['menubars'] = group_data['menubars']
+            user_requisit['menubars'] = group_data['menubars']
         # скрипт, выполняемый после успешного логина
-        if (('on_login' not in Requisit_) or (not Requisit_['on_login'])) and \
+        if (('on_login' not in user_requisit) or (not user_requisit['on_login'])) and \
            'on_login' in group_data:
-            Requisit_['on_login'] = group_data['on_login']
+            user_requisit['on_login'] = group_data['on_login']
         # скрипт, выполняемый после успешного логаута
-        if (('on_logout' not in Requisit_) or (not Requisit_['on_logout'])) and \
+        if (('on_logout' not in user_requisit) or (not user_requisit['on_logout'])) and \
            'on_logout' in group_data:
-            Requisit_['on_logout'] = group_data['on_logout']
+            user_requisit['on_logout'] = group_data['on_logout']
         
         if 'group' in group_data and group_data['group']:
-            Requisit_ = self._cutGroupRequisit(AccessDict_, group_data['group'], Requisit_)
+            user_requisit = self._cutGroupRequisit(access_dict, group_data['group'], user_requisit)
             
-        return Requisit_
+        return user_requisit
         
-    def CutUserRequisit(self, AccessDict_, UserName_, Requisit_=None):
+    def cutUserRequisit(self, access_dict, username, user_requisit=None):
         """
         Собрать данные из словаря по одному пользователю.
-        @param AccessDict_: Словарь описаний ограничений доступа
+        @param access_dict: Словарь описаний ограничений доступа
             пользователей системы.
-        @param UserName_: Имя пользователя в ресурсном файле.
-        @param Requisit_: Текущий реквизит пользователя.
+        @param username: Имя пользователя в ресурсном файле.
+        @param user_requisit: Текущий реквизит пользователя.
             При первом вызове функции д.б. {}
         """
         try:
-            if Requisit_ is None:
-                Requisit_ = {}
+            if user_requisit is None:
+                user_requisit = {}
 
-            user_data = AccessDict_[UserName_]
+            user_data = access_dict[username]
             user_data = copy.deepcopy(ic_util.SpcDefStruct(SPC_IC_USER, user_data))
 
             if 'group' in user_data and user_data['group']:
-                requisites = self._cutGroupRequisite(AccessDict_, user_data['group'])
+                requisites = self._cutGroupRequisite(access_dict, user_data['group'])
                 # временной график  доступа к системе  за неделю
                 if (('lock_time' not in user_data) or (not user_data['lock_time'])) and \
                    'lock_time' in requisites:
-                    Requisit_['lock_time'] = requisites['lock_time']
+                    user_requisit['lock_time'] = requisites['lock_time']
                 # Список меню
                 if (('menubars' not in user_data) or (not user_data['menubars'])) and \
                    'menubars' in requisites:
-                    Requisit_['menubars'] = requisites['menubars']
+                    user_requisit['menubars'] = requisites['menubars']
                 # скрипт, выполняемый после успешного логина
                 if (('on_login' not in user_data) or (not user_data['on_login'])) and \
                    'on_login' in requisites:
-                    Requisit_['on_login'] = requisites['on_login']
+                    user_requisit['on_login'] = requisites['on_login']
                 # скрипт, выполняемый после успешного логаута
                 if (('on_logout' not in user_data) or (not user_data['on_logout'])) and \
                    'on_logout' in requisites:
-                    Requisit_['on_logout'] = requisites['on_logout']
+                    user_requisit['on_logout'] = requisites['on_logout']
                 
-            if Requisit_:
-                user_data.update(Requisit_)
+            if user_requisit:
+                user_data.update(user_requisit)
 
             return user_data
         except:
@@ -392,87 +392,87 @@ class icUserPrototype(icbaseuser.icRootUser):
             log.fatal(u'User Requisite Error')
             return None
         
-    def LoadUser(self, UserName_, ResFile_=DEFAULT_USERS_RES_FILE):
+    def loadUser(self, username, res_filename=DEFAULT_USERS_RES_FILE):
         """
         Загузить данные из ресурсного файла по одному пользователю.
-        @param UserName_: Имя пользователя в ресурсном файле.
-        @param ResFile_: Имя ресурсного файла.
+        @param username: Имя пользователя в ресурсном файле.
+        @param res_filename: Имя ресурсного файла.
         """
         try:
-            access_dict = util.readAndEvalFile(ResFile_)
-            return access_dict[UserName_]
+            access_dict = util.readAndEvalFile(res_filename)
+            return access_dict[username]
         except:
             log.fatal(u'Load User Requisite Error')
 
-    def _checkLoginUser(self, UserName_):
+    def _checkLoginUser(self, username):
         """
         Проверка зарегистрированного пользователя.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         """
         if not ic_mode.isRuntimeMode():
             # Если режим конфигурирования, то обязательно
             # проверять уникальность регистрации
             # чтобы проблем с блокировками не было
             if self._login_manager:
-                return self._login_manager.isRegUserName(UserName_)
+                return self._login_manager.isRegUserName(username)
         return False
       
-    def _password_compare(self, UserPassword_, LoginPassword_, LoginPasswordMD5_):
+    def _password_compare(self, user_password, login_password, login_password_crc):
         """
         Функция сравнения паролей.
-        @param UserPassword_: Пароль определенный для пользователя в ресурсе.
-        @param LoginPassword_: Введенный пароль при логине.
-        @param LoginPasswordMD5_: Контрольная сумма md5 введенного пароля при логине.
+        @param user_password: Пароль определенный для пользователя в ресурсе.
+        @param login_password: Введенный пароль при логине.
+        @param login_password_crc: Контрольная сумма md5 введенного пароля при логине.
         @return: Возвращает True если пароли совпадают и False если не совпадают.
         """
-        if UserPassword_ is None or UserPassword_ == '':
+        if user_password is None or user_password == '':
             # Пароль для пользователя не определен
             # Можно в систему входить без пароля
             return True
-        elif len(UserPassword_) < 32:
+        elif len(user_password) < 32:
             # Пароль для пользователя определен просто строкой
-            return UserPassword_ == LoginPassword_
-        elif len(UserPassword_) == 32:
+            return user_password == login_password
+        elif len(user_password) == 32:
             # Пароль для пользователя в ресурсе задан как контрольная сумма md5
-            return UserPassword_ == LoginPasswordMD5_
+            return user_password == login_password_crc
         return False
         
-    def login_ok(self, UserName_=SYS_ADMIN_NAME, Password_=None, PasswordMD5_=None,
-                 DBMode_=ic_mode.DB_SHARE, RuntimeMode_=True):
+    def login_ok(self, username=SYS_ADMIN_NAME, password=None, password_crc=None,
+                 db_mode=ic_mode.DB_SHARE, bRuntimeMode=True):
         """
         Залогинить пользователя.
-        @param UserName_: Имя пользователя.
-        @param Password_: Если задан пароль по умолчанию,
+        @param username: Имя пользователя.
+        @param password: Если задан пароль по умолчанию,
             то происходит автологин.
-        @param PasswordMD5_: Контрольная сумма логина.
-        @param DBMode_: Режим использования БД.
-        @param RuntimeMode_: Признак режима исполнения.
+        @param password_crc: Контрольная сумма логина.
+        @param db_mode: Режим использования БД.
+        @param bRuntimeMode: Признак режима исполнения.
         @return: Возвращает True, если вход в систему успешный.
         """
         try:
             sys_enter = False  # Флаг входа в систему
 
-            if self._checkLoginUser(UserName_):
-                if UserName_:
+            if self._checkLoginUser(username):
+                if username:
                     err_txt = 'Пользователь <%s> уже зарегистрирован в системе' % self._UserName
                     log.warning(err_txt)
                     raise icexceptions.LoginErrorException((coderror.IC_LOGIN_ERROR, err_txt))
         
-            if UserName_:
-                self.Load(UserName_)
+            if username:
+                self.Load(username)
                 if self._UserName and \
-                   self._password_compare(self._UserRequisit['password'], Password_, PasswordMD5_):
+                   self._password_compare(self._UserRequisit['password'], password, password_crc):
                     # Проверка входа в систему в нерабочее время
-                    if self.CanWorkTime():
-                        if self.CanDBMode(DBMode_):
+                    if self.canWorkTime():
+                        if self.canDBMode(db_mode):
                             sys_enter = True
                             # Если в систему вошли,
                             # Установить режим работы с БД.
-                            self._DBMode = DBMode_
+                            self._DBMode = db_mode
                             glob_functions.letVar('DBMode', self._DBMode)
                             # то прописать в журнале регистрации
                             if self._login_manager:
-                                self._login_manager.RegisterJournal(self._UserName, self._DBMode)
+                                self._login_manager.registerJournal(self._UserName, self._DBMode)
                             # Сохранить имя юзверя в хранилище переменных
                             glob_functions.letVar('UserName', self._UserName)
                             # Выполнить скрипт прикладного программиста
@@ -480,7 +480,7 @@ class icUserPrototype(icbaseuser.icRootUser):
                                 self._exec_on_login(self._UserRequisit['on_login'])
                         else:
                             err_txt = u'''БД открыта в монопольном режиме другим пользователем.
-                            Нельзя работать с БД в режиме <%s>''' % DBMode_
+                            Нельзя работать с БД в режиме <%s>''' % db_mode
                             log.warning(err_txt)
                             raise icexceptions.LoginDBExclusiveException((coderror.IC_LOGIN_DBEXCLUSIVE_ERROR, err_txt))
                     else:
@@ -494,30 +494,30 @@ class icUserPrototype(icbaseuser.icRootUser):
                     log.warning(err_txt)
                     raise icexceptions.LoginInvalidException((coderror.IC_LOGIN_ERROR, err_txt))
         except:
-            log.fatal(u'Ошибка регистрации пользователя <%s>' % UserName_)
+            log.fatal(u'Ошибка регистрации пользователя <%s>' % username)
             raise
         
         ok = ['FAILED', 'OK'][int(sys_enter)]
         log.info(u'Вход в систему <%s> ... %s' % (self._UserName, ok))
         return sys_enter
         
-    def _password_md5(self, Password_):
+    def _get_password_crc(self, password):
         """
         Получить из обычного пароля зашифрованный пароль.
         """
-        md5_password = hashlib.md5(Password_.encode()).hexdigest()
-        return md5_password
+        crc_password = hashlib.md5(password.encode()).hexdigest()
+        return crc_password
        
-    def Login(self, DefaultUserName_=SYS_ADMIN_NAME,
-              DefaultPassword_=None, DBMode_=ic_mode.DB_SHARE,
-              RuntimeMode_=True, bAutoLogin=False):
+    def Login(self, default_username=SYS_ADMIN_NAME,
+              default_password=None, db_name=ic_mode.DB_SHARE,
+              bRuntimeMode=True, bAutoLogin=False):
         """
         Сделать заполнение формы логина пользователя и в случае удачного входа в систему загрузить реквизиты пользователя.
-        @param DefaultUserName_: Имя пользователя по умолчанию.
-        @param DefaultPassword_: Если задан пароль по умолчанию,
+        @param default_username: Имя пользователя по умолчанию.
+        @param default_password: Если задан пароль по умолчанию,
             то происходит автологин.
-        @param DBMode_: Режим использования БД.
-        @param RuntimeMode_: Признак режима исполнения.
+        @param db_name: Режим использования БД.
+        @param bRuntimeMode: Признак режима исполнения.
         @return: Возвращает True, если вход в систему успешный.
         """
         user_login = None
@@ -532,15 +532,15 @@ class icUserPrototype(icbaseuser.icRootUser):
         sys_enter = False   # Флаг входа в систему
         
         if self._login_manager:
-            user_login = self._login_manager.Login(DefaultUserName_,
-                                                   DefaultPassword_, DBMode_, RuntimeMode_)
+            user_login = self._login_manager.Login(default_username,
+                                                   default_password, db_name, bRuntimeMode)
 
-        if DefaultPassword_ is not None:
-            md5_password = self._password_md5(DefaultPassword_)
+        if default_password is not None:
+            md5_password = self._get_password_crc(default_password)
             # Автологин
-            user_login = (DefaultUserName_, DefaultPassword_, md5_password)
+            user_login = (default_username, default_password, md5_password)
         else:
-            user_login = (DefaultUserName_, DefaultPassword_, None)
+            user_login = (default_username, default_password, None)
             
         # Если нажата кнопка Отмена, тогда прекратить логин
         if user_login is None:
@@ -556,13 +556,13 @@ class icUserPrototype(icbaseuser.icRootUser):
             return True
 
         # Переопределить пользователя по умолчани.
-        DefaultUserName_ = user_login[ic_dlg.LOGIN_USER_IDX]
+        default_username = user_login[ic_dlg.LOGIN_USER_IDX]
             
         try:
             sys_enter = self.login_ok(user_login[ic_dlg.LOGIN_USER_IDX],
                                       user_login[ic_dlg.LOGIN_PASSWORD_IDX],
                                       user_login[ic_dlg.LOGIN_PASSWORD_MD5_IDX],
-                                      DBMode_, RuntimeMode_)
+                                      db_name, bRuntimeMode)
         except icexceptions.LoginInvalidException:
             if bAutoLogin:
                 raise
@@ -584,19 +584,19 @@ class icUserPrototype(icbaseuser.icRootUser):
                 
         return sys_enter
 
-    def _exec_on_login(self, Code_):
+    def _exec_on_login(self, exec_code):
         """
         Выполнить при успешном логине.
         """
         if ic_mode.isRuntimeMode():
-            ic_exec.ExecuteMethod(Code_, self)
+            ic_exec.ExecuteMethod(exec_code, self)
         
     def logout_ok(self):
         """
         Выход из системы.
         """
         if self._login_manager:
-            self._login_manager.UnRegisterJournal()
+            self._login_manager.unregisterJournal()
         # Выполнить скрипт прикладного программиста
         if 'on_logout' in self._UserRequisit:
             self._exec_on_logout(self._UserRequisit['on_logout'])
@@ -611,41 +611,41 @@ class icUserPrototype(icbaseuser.icRootUser):
         ic_mode.setRuntimeMode(False)
         return logout_result
 
-    def _exec_on_logout(self, Code_):
+    def _exec_on_logout(self, exec_code):
         """
         Выполнить при успешном логауте.
         """
         if ic_mode.isRuntimeMode():
-            ic_exec.ExecuteMethod(Code_, self)
+            ic_exec.ExecuteMethod(exec_code, self)
 
-    def GetUserRequisit(self, UserName_=''):
+    def getUserRequisit(self, username=''):
         """
         Получить реквизиты пользователя.
-        @param UserName_: Имя пользователя.
-            Если UserName_ не определено, тогда возвращается
+        @param username: Имя пользователя.
+            Если username не определено, тогда возвращается
             описание прав доступа текущего пользователя.
             Если UserName определен, тогда возвращается
             описание прав доступа указанного пользователя.
         @return: Функция возвращает реквизиты текущего пользователя.
         """
         try:
-            if UserName_ == '' or UserName_ is None or UserName_ == self._UserName:
+            if username == '' or username is None or username == self._UserName:
                 return self._UserRequisit
             else:
                 res_filename = self.getUserResFileName()
                 access_dict = util.readAndEvalFile(res_filename)
-                return self.CutUserRequisit(access_dict, UserName_)
+                return self.cutUserRequisit(access_dict, username)
         except:
             log.fatal(u'Ошибка опеределения реквизитов доступа к системным ресурсам пользователя')
             return None
 
-    def GetAuthent(self, ResName_, ResType_=ACC_NONE, ShowMsg_=True):
+    def getAuthent(self, res_name, res_type=ACC_NONE, bShowMsg=True):
         """
         Функция возвращает права доступа к ресурсу для текущего пользователя в виде 8-символьной строки.
-        @param ResName_: имя ресурса.
-        @param ResType_: тип ресурса, необязательный параметр.
+        @param res_name: имя ресурса.
+        @param res_type: тип ресурса, необязательный параметр.
             Если он не определен, ресурс ищется среди всех типов ресурсов.
-        @param ShowMsg_: флаг, описывающий разрешение на отображение
+        @param bShowMsg: флаг, описывающий разрешение на отображение
             сообщения о заблокированном ресурсе для данного пользователя.
             Параметр необязателен. По умолчанию сообщение показывается.
         @return: Возвращает права доступа к ресурсу для текущего пользователя
@@ -653,25 +653,25 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         try:
             # Если определен тип ресурса, ...
-            if ResType_ != ACC_NONE:
+            if res_type != ACC_NONE:
                 # ... тогда проверять только ресурсы этого типа
                 for i_access in self._UserRequisit:
-                    if i_access[ACC_IDX_RESTYPE] == ResType_:
-                        if re.match(i_access[ACC_IDX_TEMPLAT], ResName_):
+                    if i_access[ACC_IDX_RESTYPE] == res_type:
+                        if re.match(i_access[ACC_IDX_TEMPLAT], res_name):
                             return i_access[ACC_IDX_PERMIT]
             else:
                 # Иначе проверять все ресурсы
                 for i_access in self._UserRequisit:
-                    if re.match(i_access[ACC_IDX_TEMPLAT], ResName_):
+                    if re.match(i_access[ACC_IDX_TEMPLAT], res_name):
                         return i_access[ACC_IDX_PERMIT]
             return FULL_ACCESS_PERMIT
         except:
             log.fatal(u'Ошибка определения прав доступа для ресурса')
 
-    def CanAuthent(self, Permit_, ResName_, ResType_=ACC_NONE, ShowMsg_=True):
+    def canAuthent(self, permit, res_name, res_type=ACC_NONE, bShowMsg=True):
         """
         Функция определяет ограничения на запрашиваемый ресурс.
-        @param Permit_: символ или группа символов,
+        @param permit: символ или группа символов,
             определяющий право доступа на действие.
             'u' - использование (ACCESS_USE).
             'v' - отображение  (ACCESS_VIEW).
@@ -679,10 +679,10 @@ class icUserPrototype(icbaseuser.icRootUser):
             'w' - редактирование (ACCESS_EDIT).
             'a' - добавление (ACCESS_APPEND).
             'd' - удаление (ACCESS_DELETE).
-        @param ResName_: имя ресурса.
-        @param ResType_: тип ресурса, необязательный параметр.
+        @param res_name: имя ресурса.
+        @param res_type: тип ресурса, необязательный параметр.
             Если он не определен, ресурс ищется среди всех типов ресурсов.
-        @param ShowMsg_: флаг, описывающий разрешение на отображения
+        @param bShowMsg: флаг, описывающий разрешение на отображения
             сообщения о заблокированном ресурсе для данного пользователя.
             Параметр необязателен. По умолчанию сообщение показывается.
         @return: Возвращает True, если ресурс не ограничен,
@@ -692,27 +692,27 @@ class icUserPrototype(icbaseuser.icRootUser):
             can = True
             # Если определен тип ресурса, ...
             # Вывести сообщение
-            if (not can) and ShowMsg_:
+            if (not can) and bShowMsg:
                 ic_dlg.icMsgBox(u'Ошибка!',
-                                u'Доступ к ресурсу <%s> заблокирован.' % ResName_)
+                                u'Доступ к ресурсу <%s> заблокирован.' % res_name)
             return can
         except:
             log.fatal(u'Ошибка проверки прав доступа для ресурса')
 
-    def CanAccess(self, AccessPermit_, AskPermit_):
+    def canAccess(self, access_permit, ask_permit):
         """
         Проверка на разрешение всех запрашиваемых прав.
-        @param AccessPermit_: права доступа, строка 8 символов.
-        @param AskPermit_: символ или группа символов,
+        @param access_permit: права доступа, строка 8 символов.
+        @param ask_permit: символ или группа символов,
             определяющий право доступа на действие.
         """
-        for i_symb in AskPermit_:
+        for i_symb in ask_permit:
             # Как только найден первый запрет, то возвратить ложь
-            if AccessPermit_.find(i_symb) == -1:
+            if access_permit.find(i_symb) == -1:
                 return False
         return True
 
-    def CanWorkTime(self):
+    def canWorkTime(self):
         """
         Проверить текущее время удовлетворяет временному графику доступа к системе.
         @return: Возвращает True если текущее время удовлетворяет временному графику.
@@ -720,14 +720,14 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         return True
 
-    def CanDBMode(self, DBMode_=ic_mode.DB_SHARE):
+    def canDBMode(self, db_mode=ic_mode.DB_SHARE):
         """
         Можно залогиниться с таким режимом работы с БД?
-        @param DBMode_: Режим использования БД.
+        @param db_mode: Режим использования БД.
         @return: Возвращает True, если вход разрешен.
         """
         if self._login_manager:
-            return self._login_manager.CanDBMode(DBMode_)
+            return self._login_manager.canDBMode(db_mode)
         return True
     
     # --- Функции-свойства ---
@@ -783,48 +783,48 @@ class icLoginManager(object):
     Менеджер управления входа в систему.
     """
 
-    def __init__(self, RegUserJrnFileName_=user_journal.DEFAULT_REG_JRN_FILE_NAME,
-                 UsersResFileName_=DEFAULT_USERS_RES_FILE, loader_=None):
+    def __init__(self, reg_user_jrn_filename=user_journal.DEFAULT_REG_JRN_FILE_NAME,
+                 users_res_filename=DEFAULT_USERS_RES_FILE, loader=None):
         """
         Конструктор.
         """
         from . import db_res_load_manager
 
         # Журнал регистрации пользователей
-        self._reg_user_journal = user_journal.icRegUserJournal(RegUserJrnFileName_)
+        self._reg_user_journal = user_journal.icRegUserJournal(reg_user_jrn_filename)
         # Инициализируем менеджера загрузки ресурса
-        self._loader = loader_ or db_res_load_manager.icDBResLoadManager()
+        self._loader = loader or db_res_load_manager.icDBResLoadManager()
         self._users_resource = None
         glob_functions.letVar('LOADER', self._loader)
-        users_res_file_name = ic_file.PathFile(glob_functions.getVar('SYS_RES'), UsersResFileName_)
+        users_res_file_name = ic_file.PathFile(glob_functions.getVar('SYS_RES'), users_res_filename)
         self._users_resource = self._loader.load_res(users_res_file_name, bRefresh=True)
 
-    def GetResource(self):
+    def getResource(self):
         return self._users_resource
     
-    def GetUserResource(self, name):
+    def getUserResource(self, name):
         try:
             return self._users_resource.get(name, None)
         except:
             log.fatal(u'Ошибка определения ресурса пользователя')
         return None
     
-    def _getAutoLogin(self, UserName_=None, Password_=None):
+    def _getAutoLogin(self, username=None, password=None):
         """
         Определить имя пользователя и пароль для автологина если они гдето указаны.
         Автологин может задаваться как из коммандной строки, так и через
         дополнительные атрибуты проекта, которые затем попадают в хранилище переменных.
         @return: Функция возвращает кортеж (Логин,Пароль) используемый для автологина.
         """
-        if UserName_:
-            return UserName_, Password_
+        if username:
+            return username, password
         store_auto_login = glob_functions.getVar('AutoLogin')
         store_auto_psswd = glob_functions.getVar('AutoPassword')
         if store_auto_login:
             return store_auto_login, store_auto_psswd
-        return UserName_, Password_
+        return username, password
 
-    def IsAutoAuth(self):
+    def isAutoAuth(self):
         """
         Возвращает признак автоматической авторизации.
         """
@@ -832,20 +832,20 @@ class icLoginManager(object):
             return False
         return True
         
-    def Login(self, DefaultUserName_=SYS_ADMIN_NAME,
-              DefaultPassword_=None, DBMode_=ic_mode.DB_SHARE,
-              RuntimeMode_=True, ResFileName_=None):
+    def Login(self, default_username=SYS_ADMIN_NAME,
+              default_password=None, db_mode=ic_mode.DB_SHARE,
+              bRuntimeMode=True, res_filename=None):
         """
         Сделать заполнение формы логина пользователя и в случае удачного входа в систему загрузить реквизиты пользователя.
-        @param DefaultUserName_: Имя пользователя по умолчанию.
-        @param DefaultPassword_: Если задан пароль по умолчанию,
+        @param default_username: Имя пользователя по умолчанию.
+        @param default_password: Если задан пароль по умолчанию,
             то происходит автологин.
-        @param DBMode_: Режим использования БД.
-        @param RuntimeMode_: Признак режима исполнения.
+        @param db_mode: Режим использования БД.
+        @param bRuntimeMode: Признак режима исполнения.
         @return: Заполненную структуру ввода.
         """
         # Установить режим работы системы
-        ic_mode.setRuntimeMode(RuntimeMode_)
+        ic_mode.setRuntimeMode(bRuntimeMode)
         
         # Сначала проверить защиту от копирования
         if not self.CopyDefender():
@@ -853,15 +853,15 @@ class icLoginManager(object):
             return False
         
         user_login = None
-        if DefaultPassword_ is None:
+        if default_password is None:
             # Вызов диалога логина
             user_name = self.getRegLastUser()
             user_login = ic_dlg.icLoginDlg(None, u' Вход в систему',
                                            user_name, self.getRegUserList())
         else:
-            md5_password = hashlib.md5(DefaultPassword_.encode()).hexdigest()
+            md5_password = hashlib.md5(default_password.encode()).hexdigest()
             # Автологин
-            user_login = (DefaultUserName_, DefaultPassword_, md5_password)
+            user_login = (default_username, default_password, md5_password)
 
         return user_login
     
@@ -880,10 +880,10 @@ class icLoginManager(object):
         ic_dlg.icMsgBox(u'Вход в систему', u'Не зарегестрированная копия. Вход в систему не возможен.')
         return False
     
-    def CanDBMode(self, DBMode_=ic_mode.DB_SHARE):
+    def canDBMode(self, db_mode=ic_mode.DB_SHARE):
         """
         Можно залогиниться с таким режимом работы с БД?
-        @param DBMode_: Режим использования БД.
+        @param db_mode: Режим использования БД.
         @return: Возвращает True, если вход разрешен.
         """
         # Посмотреть колтчество пользователей системы
@@ -902,19 +902,19 @@ class icLoginManager(object):
                     return True
         # Если несколько пользователей то смотря какой режим нужен
         elif param_count > 1:
-            if DBMode_ == ic_mode.DB_MONOPOLY:
+            if db_mode == ic_mode.DB_MONOPOLY:
                 return False
-            elif DBMode_ == ic_mode.DB_SHARE:
+            elif db_mode == ic_mode.DB_SHARE:
                 return True
         return False
     
-    def RegisterJournal(self, UserName_, DBMode_):
+    def registerJournal(self, username, db_mode):
         """
         Прописать юзеря в журнале регистрации.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         """
         prj_name = glob_functions.getVar('PrjName')
-        return self._reg_user_journal.register(UserName_, prj_name, DBMode_, ic_mode.isRuntimeMode())
+        return self._reg_user_journal.register(username, prj_name, db_mode, ic_mode.isRuntimeMode())
     
     def getRegUserList(self):
         """
@@ -945,14 +945,14 @@ class icLoginManager(object):
 
         return reg_last_user
         
-    def UnRegisterJournal(self):
+    def unregisterJournal(self):
         """
         Вычеркнуть из журнала регистрации пользователей.
         """
         return self._reg_user_journal.unregister()
 
-    def isRegUserName(self, UserName_):
+    def isRegUserName(self, username):
         """
         Есть в журнале регистрации такой пользователь.
         """
-        return self._reg_user_journal.isRegUserName(UserName_)
+        return self._reg_user_journal.isRegUserName(username)
