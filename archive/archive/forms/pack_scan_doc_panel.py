@@ -217,7 +217,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         is_admin = glob_functions.isAdministratorCurUser()
         log.info(u'Включение всех пунктов меню импорта для АДМИНИСТРАТОРА [%s]' % is_admin)
         popup_menu.findMenuItemByName('load_rlz_menuitem').Enable(is_admin)
-        popup_menu.findMenuItemByName('load_ztr_menuitem').Enable(is_admin)
+        popup_menu.findMenuItemByName('load_ztr_menuitem').Enable(True)
         popup_menu.findMenuItemByName('load_mt_menuitem').Enable(True)
         popup_menu.findMenuItemByName('load_os_menuitem').Enable(is_admin)
 
