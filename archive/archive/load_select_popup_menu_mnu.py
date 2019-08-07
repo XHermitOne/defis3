@@ -107,9 +107,9 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         file_ext = dbf_filename[8:11].upper()
         log.debug(u'Тип файла %s' % file_ext)
         # Участок материалы
-        if dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
+        if dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
             label += u'Продажа. СФ.'
-        elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
+        elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
             label += u'Покупка. СФ.'
         elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
             label += u'Продажа. ТОРГ12.'
