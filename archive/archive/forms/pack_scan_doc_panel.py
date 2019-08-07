@@ -490,6 +490,6 @@ def open_pack_scan_doc_page(main_win=None, title=u'Пакетная обрабо
 
         page = icPackScanDocPanel(parent=main_win)
         page.init()
-        main_win.AddOrgPage(page, title)
+        main_win.addOrgPage(page, title)
     except:
         log.fatal(u'Ошибка открытия страницы пакетной обработки')

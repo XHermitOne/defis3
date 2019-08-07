@@ -217,7 +217,7 @@ class icObjectLink(parentModule.icBase):
         @return: Словарь замен.
         """
         if res is None:
-            res = self.GetResource()
+            res = self.getResource()
 
         replacement_dct = dict()
         # ВНИМАНИЕ! Самое главное надо подменить имя ссылаемого объекта

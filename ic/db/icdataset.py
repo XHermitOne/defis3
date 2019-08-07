@@ -548,7 +548,7 @@ class icDataLink(icwidget.icSimple):
         if not self._uuid:
             self._uuid = ic_uuid.get_uuid()
 
-        self.resource = self.GetResource(component)
+        self.resource = self.getResource(component)
         
     def GetExtAndPathSource(self, source):
         """
@@ -603,7 +603,7 @@ class icDataLink(icwidget.icSimple):
                 
         return path, nameRes, res_ext
 
-    def GetResource(self, component):
+    def getResource(self, component):
         """
         Собирает ресурсное описание по ссылке.
 
@@ -650,7 +650,7 @@ class icDataLink(icwidget.icSimple):
             if isinstance(res[key], list):
                 for indx, comp in enumerate(res[key]):
                     if comp['type'] == 'DataLink':
-                        new_res = self.GetResource(comp)
+                        new_res = self.getResource(comp)
                         res[key][indx] = new_res
 
         # По необходимости перегружаем атрибуты ресурсного описания

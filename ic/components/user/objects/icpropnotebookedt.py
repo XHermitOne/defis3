@@ -117,7 +117,7 @@ class PropNotebookEdt:
         @param typeEdt: Тип редактора.
         """
         self.SetProperty(attr, value)
-        res = self.GetResource()
+        res = self.getResource()
         if typeEdt in res['__attr_types__']:
             res['__attr_types__'][typeEdt].append(attr)
         else:
@@ -146,7 +146,7 @@ class PropNotebookEdt:
         ret = coderror.IC_CTRL_OK
         attr = grid.GetTable().GetValue(row, 0)
         attr = attr.strip()
-        res = self.GetResource()
+        res = self.getResource()
         tree = self.GetResTree()
         if row >= grid.GetTable().GetNumberRows()-1:
             ret = coderror.IC_CTRL_FAILED_IGNORE
@@ -200,7 +200,7 @@ class PropNotebookEdt:
         """
         Удаляет свойство.
         """
-        res = self.GetResource()
+        res = self.getResource()
         if prop in res:
             res.pop(prop)
             #   Удаляем имя атрибута из списка свойств одной из страниц
@@ -226,7 +226,7 @@ class PropNotebookEdt:
         """
         return self.object
 
-    def GetResource(self):
+    def getResource(self):
         """
         Возвращает редактируемый ресурс.
         """
@@ -297,7 +297,7 @@ class PropNotebookEdt:
             return False
             
         elif evt.GetKeyCode() == wx.WXK_INSERT:
-            res = self.GetResource()
+            res = self.getResource()
             nb = self.GetNB()
             if res and 'type' in res and res['type'] == 'DataLink':
                 from ic.components.user.objects import icreloadattrdlg
@@ -367,7 +367,7 @@ class PropNotebookEdt:
         """
         Возвращеет значение заданного свойства.
         """
-        return self.GetResource()[prop]
+        return self.getResource()[prop]
         
     def GetPropertyType(self, prop):
         """
@@ -375,7 +375,7 @@ class PropNotebookEdt:
         """
         #   Определяем тип свойства
         typ = None
-        tps = self.GetResource()['__attr_types__']
+        tps = self.getResource()['__attr_types__']
         for id_edt in tps.keys():
             if prop in tps[id_edt]:
                 typ = id_edt
@@ -439,7 +439,7 @@ class PropNotebookEdt:
                             
                         if bSel:
                             grid.DisableCellEditControl()
-                            nm = self.GetResource()['name']
+                            nm = self.getResource()['name']
                             func = '%s_%s' % (nm, attr)
                             # По расширению файла ресурса определяем способ вызова:
                             # '.py' - вызываем метод интерфейса, в противном случае
@@ -467,7 +467,7 @@ class PropNotebookEdt:
         #   Отключаем контроль на значения свойств
         self.EnableCtrl(False)
         nb = self.GetNB()
-        resource = self.GetResource()
+        resource = self.getResource()
         grid = self.GetPropertyGrid()
         if grid:
             lst = self.GetPageAttrLst(indx)
@@ -597,7 +597,7 @@ class PropNotebookEdt:
                 r = _grid.CellToRect(row, col)
                 self._last_sel = (row, col)
                 sx, sy = _grid.GetSize()
-                res = self.GetResource()
+                res = self.getResource()
                 tree = self.GetResTree()
                 if tree and tree.GetPanelGroup():
                     tx, ty = tree.GetPanelGroup().GetSize()
@@ -679,7 +679,7 @@ class PropNotebookEdt:
         elif type in (icDefInf.EDT_PY_SCRIPT, icDefInf.EDT_TEXTDICT, icDefInf.EDT_TEXTLIST):
             r = grid.CellToRect(row, col)
             sx, sy = grid.GetSize()
-            res = self.GetResource()
+            res = self.getResource()
             tree = self.GetResTree()
         
             if tree and tree.GetPanelGroup():
@@ -799,8 +799,8 @@ class PropNotebookEdt:
         @param prop: Имя атрибута.
         @param value: Значение атрибута.
         """
-        if prop in self.GetResource():
-            self.GetResource()[prop] = value
+        if prop in self.getResource():
+            self.getResource()[prop] = value
             return True
             
         return False
@@ -819,12 +819,12 @@ class PropNotebookEdt:
         if typ is not None:
             if typ == icDefInf.EDT_USER_PROPERTY:
                 cls = icDefInf.GetEditorClass(typ)
-                self.GetResource()[prop] = cls.strToVal(value, self)
+                self.getResource()[prop] = cls.strToVal(value, self)
             else:
                 #   Преобразуем к нужному типу
-                self.GetResource()[prop] = icDefInf.strToVal(typ, value)
+                self.getResource()[prop] = icDefInf.strToVal(typ, value)
         else:
-            self.GetResource()[prop] = str(value)
+            self.getResource()[prop] = str(value)
 
     def SetResTree(self, resTree):
         """
@@ -986,7 +986,7 @@ class PropNotebookEdt:
         """
         grid = self.evalSpace['_dict_obj']['PropertyGrid']
         nb = self.evalSpace['_dict_obj']['NB']
-        res = self.GetResource()
+        res = self.getResource()
         spec = self.GetSpc()
         if not res:
             return

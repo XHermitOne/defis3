@@ -216,5 +216,5 @@ def open_ctrl_search_doc_page(main_win=None):
         main_win = ic.getMainWin()
 
     page = icCtrlDocPanel(parent=main_win)
-    main_win.AddOrgPage(page, u'Управление документами')
+    main_win.addOrgPage(page, u'Управление документами')
     return

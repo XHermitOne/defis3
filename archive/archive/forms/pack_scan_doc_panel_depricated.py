@@ -817,5 +817,5 @@ def open_pack_scan_doc_page(main_win=None):
 
     page = icPackScanDocPanel(parent=main_win)
     page.init()
-    main_win.AddOrgPage(page, u'Пакетная обработка документов')
+    main_win.addOrgPage(page, u'Пакетная обработка документов')
     return

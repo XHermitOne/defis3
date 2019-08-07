@@ -82,7 +82,7 @@ class icObjectInterface:
         else:
             return None
 
-    def GetResource(self):
+    def getResource(self):
         """
         Возвращает ресурсное описание.
         """
@@ -92,7 +92,7 @@ class icObjectInterface:
         """
         Возвращает имя корневого элемента ресурса.
         """
-        return self.GetResource()['name']
+        return self.getResource()['name']
         
     def _findres(self, res, nameObj, typeObj):
         """
@@ -137,7 +137,7 @@ class icObjectInterface:
         @return: Ресурсное описание найденного объекта.
         """
         if resource is None:
-            return self._findres(self.GetResource(), nameObj, typeObj)
+            return self._findres(self.getResource(), nameObj, typeObj)
         else:
             return self._findres(resource, nameObj, typeObj)
                 

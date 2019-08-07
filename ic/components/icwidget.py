@@ -1058,7 +1058,7 @@ class icSimple(icobject.icObject):
             key = self.type+self.name+':'+prop
         return key
 
-    def GetResource(self):
+    def getResource(self):
         """
         Возвращает ресурсное описание.
         """
@@ -1409,7 +1409,7 @@ class icSimple(icobject.icObject):
             если не найдено.
         """
         if res is None:
-            res = self.GetResource()
+            res = self.getResource()
 
         return resource.find_child_resource(child_name, res)
 
@@ -1763,7 +1763,7 @@ class icWidget(icBase, icEvent):
         return self.GetEventHandler().ProcessEvent(evt)
 
     def GetBestSize(self):
-        return wx.Size(*self.GetResource()['size'])
+        return wx.Size(*self.getResource()['size'])
 
     def GetDataset(self):
         """

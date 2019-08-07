@@ -1941,7 +1941,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
 
         # Сохраняем старый ресурс
         if bSave:
-            if self.GetResource() and self.isToggleEnable():
+            if self.getResource() and self.isToggleEnable():
                 self.OnSave(None, bSaveAs=bSaveAs)
 
         # Чистим переменные
@@ -2105,7 +2105,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         """
         Выгружает ресурс из реадктора.
         """
-        if self.GetResource() and self.isToggleEnable():
+        if self.getResource() and self.isToggleEnable():
             self.OnSave(None, bSaveAs=bSaveAs)
 
         # Чистим переменные
@@ -2115,7 +2115,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         self._version = None
         self.RefreshTree()
 
-    def GetResource(self):
+    def getResource(self):
         """
         Возвращает на ресурсное описание без служебных ключей.
         """
@@ -2151,7 +2151,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         @param bEnable: Признак возможности редактирования.
         """
         # Сохраняем старый ресурс
-        if self.GetResource() and self.isToggleEnable():
+        if self.getResource() and self.isToggleEnable():
             self.OnSave(None)
 
         fname = os.path.join(filePath, '%s.%s' % (fileName, fileExt))
@@ -2411,7 +2411,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             py_filename = self.create_res_module(res_name)
             py_path, py_name = os.path.split(py_filename)
             # Проверяем если имя модуля не проставлено в ресурсе, то проставляем его
-            res = self.GetResource()
+            res = self.getResource()
             if not ('res_module' in res and res['res_module']):
                 self.res['res_module'] = py_name
                 self.RefreshTree()
@@ -2536,7 +2536,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if ic_dlg.icAskBox(u'ВНИМАНИЕ', u'Сохранить изменения в ресурсе?'):
                 self.OnSaveAs(evt)
         elif self.is_res_module(self.file):
-            resource.updateICObject(self.file, self._formName, self.GetResource(), self._version)
+            resource.updateICObject(self.file, self._formName, self.getResource(), self._version)
             ide = self.GetIDEInterface()
             if ide:
                 fl = self.file.replace('\\', '/')
@@ -2576,7 +2576,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                         self._formName = None
 
                     dlg_inp.Destroy()
-                    resource.saveICObject(path, self._formName, self.GetResource())
+                    resource.saveICObject(path, self._formName, self.getResource())
             else:
                 # Ввод нового имени формы
                 dlg_inp = wx.TextEntryDialog(self,
@@ -2620,7 +2620,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         icResourceParser.setTestMode(True)
         icResourceParser.setEditorPoint(None, False)
         bExcept = True
-        res = self.GetResource()
+        res = self.getResource()
         # В случае если редактируется модуль
         if self.is_res_module(self.file):
             # import imp
@@ -2750,7 +2750,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 dlg.Destroy()
             if self._formName is None:
                 return False
-            _res[self._formName] = self.GetResource()
+            _res[self._formName] = self.getResource()
             text = str(_res)
             file_obj = open(path, 'wt', encoding=ic.config.DEFAULT_ENCODING)
             file_obj.write(text)

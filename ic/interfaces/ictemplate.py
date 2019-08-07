@@ -242,7 +242,7 @@ class icTemplateInterface(icwidget.icBase):
             # Ищем гнездо для вставления дочерних элементов (считаем, что у
             # нас односвязные компоненты)
             if chld and self._nest not in (None, '', 'None') and self._nest[1]:
-                res = self._findres(self.GetResource(), self._nest[1], self._nest[0])
+                res = self._findres(self.getResource(), self._nest[1], self._nest[0])
                 if res:
                     optLst = list(set(res.keys()) & set(icDefInf.icContainerAttr))
                     if optLst:
@@ -290,7 +290,7 @@ class icTemplateInterface(icwidget.icBase):
         @return: Ресурсное описание найденного объекта.
         """
         if resource is None:
-            return self._findres(self.GetResource(), nameObj, typeObj)
+            return self._findres(self.getResource(), nameObj, typeObj)
         else:
             return self._findres(resource, nameObj, typeObj)
           

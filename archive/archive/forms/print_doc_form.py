@@ -169,7 +169,7 @@ def open_print_search_doc_page(main_win=None):
             main_win = ic.getMainWin()
 
         page = icPrintDocPanel(parent=main_win)
-        main_win.AddOrgPage(page, u'Поиск документов')
+        main_win.addOrgPage(page, u'Поиск документов')
     except:
         log.fatal(u'Ошибка открытия страницы поиска/печати документа архива')
     return
