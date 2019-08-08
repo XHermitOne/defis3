@@ -7,6 +7,8 @@
 """
 
 # Imports
+import time
+
 from ic.utils import ic_mode
 
 from ic.utils import lock
@@ -30,7 +32,7 @@ from STD.queries import filter_generate
 
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icObjPersistentPrototype:
@@ -1353,6 +1355,7 @@ class icObjPersistent(icObjPersistentPrototype):
             Использование:
                 create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
         @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
+        @return: Список словарей записей.
         """
         if not filter_requisite_data:
             filter_requisite_data = None
@@ -1361,12 +1364,14 @@ class icObjPersistent(icObjPersistentPrototype):
         data_filter = self.filterRequisiteData(filter_requisite_data)
         if limit is None:
             limit = self._limit
-        log.info(u'\tФильтр: <%s>. Ограничение кол. записей: [%s]' % (data_filter, limit))
+        # log.info(u'\tФильтр: <%s>. Ограничение кол. записей: [%s]' % (data_filter, limit))
         query = self.getFilterSQLAlchemy(data_filter, limit=limit)
         # log.info(u'\tЗапрос: <%s>' % query)
+        start_time = time.time()
         result = self.getTable().getConnection().execute(query)
-        log.info(u'\tКол. записей результата: [%s]' % result.rowcount)
-        return self._resultFilter2Dataset(result.fetchall())
+        recordset = self._resultFilter2Dataset(result.fetchall())
+        log.info(u'\tКол. записей результата: [%s]. Время выполнения: %s' % (result.rowcount, time.time()-start_time))
+        return recordset
 
     # Другие наименования метода
     getDataset = getDataDict
