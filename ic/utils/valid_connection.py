@@ -20,9 +20,17 @@ try:
 except ImportError:
     pass
 
-import urllib.request
+try:
+    import urllib.request
+except ImportError:
+    pass
 
-__version__ = (0, 1, 1, 1)
+try:
+    import sqlalchemy
+except:
+    pass
+
+__version__ = (0, 1, 2, 1)
 
 
 def validPingHost(host_name):
@@ -40,6 +48,7 @@ def validPingHost(host_name):
     return response == 0
 
 
+# --- Проверка связи через ODBC ---
 def validDBConnectODBC(connection_str=None):
     """
     Проверка связи с БД ODBC.
@@ -145,6 +154,7 @@ def getNotValidURLErrTxt(url):
     return error_txt
 
 
+# --- Проверка связи через JDBC ---
 # Поддерживаемые типы JDBC драйверов
 JDBC_TYPES = ('DBF', 'MSSQL', 'POSTGRESQL')
 JAVA_DRIVER_CLASS = {'DBF': 'com.hxtt.sql.dbf.DBFDriver',
@@ -272,5 +282,75 @@ def getNotValidDBConnectJDBCErrTxt(connection_url=None, jdbc_type=None):
         connection.close()
     else:
         error_txt = u'Не определен объект связи для доступа к БД \n<%s>' % connection_url
+
+    return error_txt
+
+
+# --- Проверка связи через SQLAlchemy ---
+def validDBConnectSQLAlchemy(connection_str=None):
+    """
+    Проверка связи с БД через SQLAlchemy.
+    @param connection_str: Connection string связи с БД.
+    @return: True - есть связь. False - связь не установлена.
+    """
+    if connection_str is None:
+        # Не определена связь с БД, тогда и проверять нечего
+        return False
+
+    try:
+        engine = sqlalchemy.create_engine(connection_str, echo=False)
+    except:
+        # Если сединение не можем сделать, то нет связи с сервером
+        return False
+
+    is_connect = False
+    if engine:
+        connection = None
+        try:
+            connection = engine.connect()
+            result = connection.execute('SELECT 1').fetchall()
+            if result:
+                is_connect = True
+            connection.close()
+        except:
+            if connection:
+                connection.close()
+            is_connect = False
+    return is_connect
+
+
+def getNotValidDBConnectSQLAlchemyErrTxt(connection_str=None):
+    """
+    Получить сообщение об ошибке в случае не доступности связи с БД через SQLAlchemy.
+    @param connection_str: Connection string связи с БД.
+    @return: Текст ошибки или пустая строка в случае отсутствия ошибки.
+    """
+    if connection_str is None:
+        # Не определена связь с БД, тогда и проверять нечего
+        return u'Не определена связь с БД'
+
+    try:
+        engine = sqlalchemy.create_engine(connection_str, echo=False)
+    except:
+        # Если сединение не можем сделать, то нет связи с сервером
+        return u'Ошибка связи с сервером БД\n<%s>\n%s' % (connection_str, traceback.format_exc())
+
+    error_txt = u''
+    if engine:
+        connection = None
+        try:
+            connection = engine.connect()
+
+            result = connection.execute('SELECT 1').fetchall()
+            if not result:
+                error_txt = u'Не корректный результат тестового запроса к БД <%s>' % connection_str
+            connection.close()
+        except:
+            if connection:
+                connection.close()
+            error_txt = u'Ошибка выполнения тестового запроса к БД \n<%s>\n%s' % (connection_str, traceback.format_exc())
+        connection.close()
+    else:
+        error_txt = u'Не определен объект связи для доступа к БД \n<%s>' % connection_str
 
     return error_txt
