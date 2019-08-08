@@ -52,7 +52,7 @@ from ic.components import icwidget
 
 from . import icdb
 
-__version__ = (1, 1, 3, 1)
+__version__ = (1, 1, 3, 2)
 
 # Типы таблиц
 TABLE_TYPE = 'Table'
@@ -321,7 +321,9 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         log.info(u'Создание таблицы <%s> в БД' % tab_name)
 
         table = None
-        columns = [sqlalchemy.Column(self.getIdName(), sqlalchemy.Integer, primary_key=True)]
+        # ВНИМАНИЕ! Тип Integer переполняется на больших данных
+        # поэтому заменил на BigInteger---------------------------V
+        columns = [sqlalchemy.Column(self.getIdName(), sqlalchemy.BigInteger, primary_key=True)]
         # Создание колонок
         for fld in TabRes_['child']:
             if fld['type'] == 'Field':
