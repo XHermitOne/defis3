@@ -961,7 +961,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
             tab_name = self._tab.getDBTableName()
 
             if isinstance(FieldValue_, str):
-                field_val_str = '\''+FieldValue_+'\''
+                field_val_str = '\'' + FieldValue_ + '\''
             else:
                 field_val_str = str(FieldValue_)
 

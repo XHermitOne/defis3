@@ -80,7 +80,7 @@ def wxColour2StrHex(colour):
     """
     if isinstance(colour, wx.Colour):
         return colour.GetAsString(wx.C2S_HTML_SYNTAX)
-    elif isinstance(colour, str):
+    elif isinstance(colour, str) and colour not in ('default',):
         # В ряде случаев цвет задается как 'red'
         # либо он уже в формате #RRGGBB
         return colour

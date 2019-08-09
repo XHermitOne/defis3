@@ -244,7 +244,7 @@ class icDocumentNavigatorManager(icwidget.icSimple,
         # Инициализация документа
         doc_psp = self.getDocumentPsp()
         if doc_psp:
-            self.setSlaveDocumentByPsp(doc_psp)
+            self.setSlaveDocumentByPsp(doc_psp, bAutoUpdate=False)
         else:
             log.warning(u'Не определен паспорт ведомого документа для менеджера навигации <%s>' % self.getName())
 

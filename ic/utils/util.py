@@ -30,6 +30,12 @@ import wx
 import copy
 import pickle
 
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+# Эти модули используются в ic_eval
+# поэтому необходимо их импортировать
+import datetime
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 from ic.kernel import icContext
 from ic.dlg import ic_dlg
 from . import coderror
@@ -37,7 +43,7 @@ from . import ic_uuid
 from ic.log import log
 import ic
 
-__version__ = (1, 1, 2, 1)
+__version__ = (1, 1, 2, 2)
 
 DEFAULT_ENCODING = 'utf-8'
 

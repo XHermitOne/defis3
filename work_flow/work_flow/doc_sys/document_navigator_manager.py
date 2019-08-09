@@ -81,7 +81,7 @@ from ic.dlg import ic_dlg
 from ic.components import icwidget
 
 # Версия
-__version__ = (0, 1, 5, 1)
+__version__ = (0, 1, 5, 2)
 
 # Спецификация
 SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {'document': None,
@@ -147,11 +147,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         except:
             log.fatal(u'Ошибка установки контрола списка %s для управления им' % list_ctrl_psp)
 
-    def setSlaveDocumentByPsp(self, document_psp, bAutoUpdate=True):
+    def setSlaveDocumentByPsp(self, document_psp, bAutoUpdate=False):
         """
         Установить ведомый объект документа для управления им по его паспорту.
         @param document_psp: Паспорт объекта документа.
-        @param bAutoUpdate: Автоматически обновить датавет по документу.
+        @param bAutoUpdate: Автоматически обновить датасет по документу.
         """
         if not document_psp:
             log.warning(u'Не определен паспорт ведомого документа для менеджера навигации')
@@ -169,7 +169,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         except:
             log.fatal(u'Ошибка установки документа %s для управления им' % document_psp)
 
-    def setSlaveDocument(self, document, bAutoUpdate=True):
+    def setSlaveDocument(self, document, bAutoUpdate=False):
         """
         Установить ведомый объект документа для управления им.
         @param document: Объект документа.
@@ -350,7 +350,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             log.fatal(u'Ошибка получения текущего фильтра списка документов')
         return None
 
-    def setDocDatasetFilter(self, doc_filter=None, bAutoUpdate=True):
+    def setDocDatasetFilter(self, doc_filter=None, bAutoUpdate=False):
         """
         Текущий фильтр списка документов.
         @param doc_filter: Фильтр документов.
@@ -495,17 +495,18 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             rows.append(tuple(row))
         return rows
 
-    def refreshDocListCtrlRows(self, rows=None, auto_size_columns=False):
+    def refreshDocListCtrlRows(self, rows=None, auto_size_columns=False, bAutoUpdate=False):
         """
         Обновление списка строк контрола отображения списка документов.
         @param rows: Список строк.
             Если не определен, то заполняется автоматически по датасету.
         @param auto_size_columns: Установить автообразмеривание колонок.
+        @param bAutoUpdate: Автоматически обновить датасет по документу.
         @return: True/False.
         """
         if rows is None:
             # При обновление всех строки лучше обновить весь датасет
-            dataset = self.updateDocDataset()
+            dataset = self.getDocDataset(bAutoUpdate=bAutoUpdate)
             rows = self.getDocListCtrlRows(dataset)
 
         if not rows:
@@ -547,11 +548,12 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 row = self.getDocListCtrlRows(dataset)[index]
 
             row_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
+            red = int(row_colour.Red() / 5.0 * 4.0)
+            green = int(row_colour.Green() / 5.0 * 4.0)
+            blue = int(row_colour.Blue() / 5.0 * 4.0)
             self.setRow_list_ctrl(list_ctrl, row_idx=index, row=row,
                                   evenBackgroundColour=row_colour,
-                                  oddBackgroundColour=wx.Colour(row_colour.Red()/3*2,
-                                                                row_colour.Green()/3*2,
-                                                                row_colour.Blue()/3*2),
+                                  oddBackgroundColour=wx.Colour(red, green, blue),
                                   doSavePos=True)
 
         if auto_size_columns:
@@ -755,7 +757,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
         @return: Возвращает список-dataset объектов, соответствующих заданному фильтру.
         """
-        self.setDocDatasetFilter(doc_filter)
+        self.setDocDatasetFilter(doc_filter, bAutoUpdate=False)
         dataset = self.updateDocDataset()
         if bRefresh:
             self.refreshDocListCtrlRows()

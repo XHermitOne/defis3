@@ -25,7 +25,7 @@ from NSI.nsi_dlg import icspraveditdlg
 from NSI.nsi_dlg import icspravchoicetreedlg
 
 # Версия
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 3, 1)
 
 # Спецификация
 SPC_IC_SPRAV = {'type': 'SpravDefault',
@@ -406,6 +406,20 @@ class icSpravPrototype(icSpravInterface):
         """
         if self.getAutoCache():
             self.getCache().clear(self.getName())
+
+    def getCachedRec(self, code):
+        """
+        Получить закешированную запись по коду.
+        @param code: Код справочника.
+        @return: Словарь записи.
+        """
+        if self._cache.hasObject(self.getName(), id=code):
+            record = self._cache.get(classObj=self.getName(), id=code)
+        else:
+            storage = self.getStorage()
+            record = storage.getRecByCod(code)
+            self._cache.add(classObj=self.getName(), id=code, obj=record)
+        return record
 
     def Hlp(self, ParentCode=(None,), field=None, form=None, parentForm=None, DateTime_=None,
             default_selected_code=None, view_fields=None, search_fields=None):

@@ -164,6 +164,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         Конструктор
         """
+        # Флаг окончания полной инициализации контрола
+        self._init_flag = False
+
         wx.TreeCtrl.__init__(self, *args, **kwargs)
 
         icTreeItemIndicator.__init__(self)
@@ -745,6 +748,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         @param bRestoreDataset: Восстановить датасет выбранного элемента?
         @return: True/False.
         """
+        # log.debug(u'--- Обновление индикаторов ---')
         result = False
         try:
             # Сначала запоминаем выбранный элемент
@@ -779,14 +783,14 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         if item_indicator:
             if bVisibleItems:
                 if self.IsVisible(item):
-                    self.refreshIndicator(item_indicator, item=item)
+                    self._refreshIndicator(item_indicator, item=item)
                 else:
                     # Если обрабатываем только видимые элементы
                     # а текущий элемент не видим, то нет необходимости
                     # обрабатывать дочерние элементы
                     return True
             else:
-                self.refreshIndicator(item_indicator, item=item)
+                self._refreshIndicator(item_indicator, item=item)
 
         # Обработка дочерних элементов
         if self.IsExpanded(item):
@@ -829,7 +833,6 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         # Сначала получаем набор записей узла, соответствующую элементу
         # ВНИМАНИЕ! Индикаторы обновляются по полному фильтру элемента
         cur_filter = self.buildItemFilter(item=item)
-        # log.debug(u'Фильтр элемента дерева фильтров %s' % str(cur_filter))
         records = self.getCurRecords(item_filter=cur_filter)
 
         # Затем получаем объекты индикатора
@@ -850,8 +853,14 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         Обработчик развертывания элемента дерева.
         """
-        item = event.GetItem()
-        self.refreshIndicators(item=item)
+        # ВНИМАНИЕ! Индикацию дочерних элементов производить только в
+        # случае когда произведена полная инициализация контрола
+        if self._init_flag:
+            item = event.GetItem()
+            # log.debug(u'Развертывание элемента <%s> дерева фильтров' % str(item))
+            self.refreshIndicators(item=item)
+
+        event.Skip()
 
 
 def test():

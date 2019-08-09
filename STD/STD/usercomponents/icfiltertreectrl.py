@@ -5,6 +5,7 @@
 Компонент дерева фильтров.
 """
 
+import time
 import wx
 
 from ic.bitmap import bmpfunc
@@ -101,7 +102,6 @@ class icFilterTreeCtrl(icwidget.icWidget,
         Конструктор.
         """
         self._widget_psp_uuid = None
-
         # Append for specification
         component = util.icSpcDefStruct(ic_class_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -126,6 +126,9 @@ class icFilterTreeCtrl(icwidget.icWidget,
         # Для обновления списка объектов
         self._cur_item_filter = self.buildItemFilter(self.GetRootItem())
         # self.OnChange(None)
+
+        # Флаг окончания полной инициализации контрола
+        self._init_flag = True
 
     # Установка ограничения редактирования фильтров
     # Для этого в родительском классе заведены
@@ -205,6 +208,8 @@ class icFilterTreeCtrl(icwidget.icWidget,
                 # Если не удалось определить дерево по какой-то причине, то
                 # берем данные из файла
                 return result
+            else:
+                log.warning(u'Ошибка загрузки дерева фильтров. Загрузка данных из файла')
 
         # Если произошла ошибка получения или не определен альтернативный способ
         # то грузим из файла хранения по умолчанию

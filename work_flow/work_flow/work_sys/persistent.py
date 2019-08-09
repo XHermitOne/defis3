@@ -32,7 +32,10 @@ from STD.queries import filter_generate
 
 
 # Version
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
+
+# Префикс для кода справочника в словаре записи
+NSI_CODE_PREFIX = '_'
 
 
 class icObjPersistentPrototype:
@@ -1297,23 +1300,33 @@ class icObjPersistent(icObjPersistentPrototype):
                                                         limit=limit)
         return query
 
-    def _resultFilter2Dataset(self, FilterResult_):
+    def _resultFilter2Dataset(self, filter_result):
         """
         Подготовка результата фильтрации в виде датасета для 
         грида объектов в виде списка словарей.
+        @param filter_result: Список записей - результат фильтрации.
+        @return: Спиоск словарей записей - результат фильтрации.
         """
         # Замена кодов идентифицирующих реквизитов на значение <КОД Наименование>
         result = []
+        # Реквизиты справочников
         id_nsi_requisites = [requisite for requisite in self.getChildrenRequisites() if requisite.isIDAttr() and requisite.type == 'NSIRequisite']
-        for record in FilterResult_:
+        for record in filter_result:
             rec = dict(record)
+            # Для реквизитов справочников необходимо указать код и наименование
             for nsi_requisite in id_nsi_requisites:
                 fld_name = nsi_requisite.getFieldName()
                 # Если код определен, тогда найти наименование в справочнике
                 if rec[fld_name]:
                     # Но сохранить и код c новым именем
-                    rec['_'+fld_name] = rec[fld_name]
-                    rec[fld_name] = nsi_requisite.getSprav().Find(rec[fld_name])
+                    rec[NSI_CODE_PREFIX + fld_name] = rec[fld_name]
+
+                    # В целях оптимизации произведена замена:
+                    # rec[fld_name] = nsi_requisite.getSprav().Find(rec[fld_name])
+                    # Получить запись справочника
+                    nsi_record = nsi_requisite.getSprav().getCachedRec(rec[fld_name])
+                    # Взять только наименование
+                    rec[fld_name] = nsi_record.get('name', u'') if nsi_record is not None else u''
             result.append(rec)
                 
         return result
@@ -1360,17 +1373,18 @@ class icObjPersistent(icObjPersistentPrototype):
         if not filter_requisite_data:
             filter_requisite_data = None
 
-        log.info(u'BUSINES OBJECT. Получение набора записей')
+        log.info(u'Бизнес-объект <%s>. Получение набора записей' % self.getName())
         data_filter = self.filterRequisiteData(filter_requisite_data)
         if limit is None:
             limit = self._limit
         # log.info(u'\tФильтр: <%s>. Ограничение кол. записей: [%s]' % (data_filter, limit))
         query = self.getFilterSQLAlchemy(data_filter, limit=limit)
         # log.info(u'\tЗапрос: <%s>' % query)
-        start_time = time.time()
         result = self.getTable().getConnection().execute(query)
+        log.info(u'\tКол. записей результата: [%s]' % result.rowcount)
+        start_time = time.time()
         recordset = self._resultFilter2Dataset(result.fetchall())
-        log.info(u'\tКол. записей результата: [%s]. Время выполнения: %s' % (result.rowcount, time.time()-start_time))
+        log.info(u'\tПреобразование списка записей. Время выполнения: %s' % str(time.time()-start_time))
         return recordset
 
     # Другие наименования метода
