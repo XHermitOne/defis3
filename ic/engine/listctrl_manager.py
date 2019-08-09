@@ -23,7 +23,8 @@ from ic import config
 
 __version__ = (0, 1, 6, 1)
 
-DEFAULT = 'default'
+# Цвет по умолчанию
+DEFAULT_COLOUR = 'default'
 
 # Размер картинок элементов дерева по умолчанию
 DEFAULT_ITEM_IMAGE_WIDTH = 16
@@ -548,7 +549,7 @@ class icListCtrlManager(object):
         return False
 
     def appendRow_ListCtrl(self, ctrl, row=(),
-                           evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
+                           evenBackgroundColour=DEFAULT_COLOUR, oddBackgroundColour=DEFAULT_COLOUR,
                            auto_select=False):
         """
         Добавить строку в контрол wx.ListCtrl.
@@ -588,10 +589,10 @@ class icListCtrlManager(object):
             if row_idx != -1:
                 if evenBackgroundColour and not (row_idx % 2):
                     # Добавляемая строка четная?
-                    ctrl.SetItemBackgroundColour(row_idx, self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT else evenBackgroundColour)
+                    ctrl.SetItemBackgroundColour(row_idx, self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT_COLOUR else evenBackgroundColour)
                 elif oddBackgroundColour and (row_idx % 2):
                     # Добавляемая строка не четная?
-                    ctrl.SetItemBackgroundColour(row_idx, self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT else oddBackgroundColour)
+                    ctrl.SetItemBackgroundColour(row_idx, self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT_COLOUR else oddBackgroundColour)
 
                 if auto_select:
                     # Автоматически выбрать добавленную строку?
@@ -602,7 +603,7 @@ class icListCtrlManager(object):
         return False
 
     def appendRow_list_ctrl(self, ctrl=None, row=(),
-                            evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
+                            evenBackgroundColour=DEFAULT_COLOUR, oddBackgroundColour=DEFAULT_COLOUR,
                             auto_select=False):
         """
         Добавить строку в контрол списка.
@@ -657,7 +658,7 @@ class icListCtrlManager(object):
         return False
 
     def setRow_list_ctrl(self, ctrl=None, row_idx=-1, row=(),
-                         evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
+                         evenBackgroundColour=DEFAULT_COLOUR, oddBackgroundColour=DEFAULT_COLOUR,
                          doSavePos=False):
         """
         Установить строку контрола списка.
@@ -696,10 +697,10 @@ class icListCtrlManager(object):
                 ctrl.SetItem(row_idx, i, item_str)
                 if evenBackgroundColour and not (row_idx % 2):
                     # Четная строка?
-                    ctrl.SetItemBackgroundColour(row_idx, self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT else evenBackgroundColour)
+                    ctrl.SetItemBackgroundColour(row_idx, self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT_COLOUR else evenBackgroundColour)
                 elif oddBackgroundColour and (row_idx % 2):
                     # Не четная строка?
-                    ctrl.SetItemBackgroundColour(row_idx, self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT else oddBackgroundColour)
+                    ctrl.SetItemBackgroundColour(row_idx, self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT_COLOUR else oddBackgroundColour)
             if cursor_pos not in (None, -1) and cursor_pos < row_count:
                 ctrl.Select(cursor_pos)
             return True
@@ -708,7 +709,7 @@ class icListCtrlManager(object):
         return False
 
     def setRows_list_ctrl(self, ctrl=None, rows=(),
-                          evenBackgroundColour=DEFAULT, oddBackgroundColour=DEFAULT,
+                          evenBackgroundColour=DEFAULT_COLOUR, oddBackgroundColour=DEFAULT_COLOUR,
                           doSavePos=False):
         """
         Установить строки в контрол списка.
@@ -854,7 +855,7 @@ class icListCtrlManager(object):
 
         if isinstance(ctrl, wx.ListCtrl):
             try:
-                ctrl.SetItemTextColour(i_row, colour)
+                ctrl.SetItemTextColour(i_row, colour if colour != DEFAULT_COLOUR else wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOXTEXT))
             except:
                 log.warning(u'Не корректный индекс строки <%s>' % i_row)
                 return False
@@ -879,7 +880,7 @@ class icListCtrlManager(object):
 
         if isinstance(ctrl, wx.ListCtrl):
             try:
-                ctrl.SetItemBackgroundColour(i_row, colour)
+                ctrl.SetItemBackgroundColour(i_row, colour if colour != DEFAULT_COLOUR else wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))
             except:
                 log.warning(u'Не корректный индекс строки <%s>' % i_row)
                 return False
@@ -1150,8 +1151,8 @@ class icListCtrlManager(object):
         colour = tuple([int(c / 8.0 * 7.0) for c in tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]])
         return wx.Colour(*colour)
 
-    def setRowsBackgroundColour(self, ctrl, evenBackgroundColour=DEFAULT,
-                                oddBackgroundColour=DEFAULT):
+    def setRowsBackgroundColour(self, ctrl, evenBackgroundColour=DEFAULT_COLOUR,
+                                oddBackgroundColour=DEFAULT_COLOUR):
         """
         Просто раскрасить фон четных и не четных строк.
         @param ctrl: Объект контрола wx.ListCtrl.
@@ -1167,11 +1168,11 @@ class icListCtrlManager(object):
             if evenBackgroundColour and not (row_idx % 2):
                 # Добавляемая строка четная?
                 ctrl.SetItemBackgroundColour(row_idx,
-                                             self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT else evenBackgroundColour)
+                                             self.defaultEvenRowsBGColour() if evenBackgroundColour == DEFAULT_COLOUR else evenBackgroundColour)
             elif oddBackgroundColour and (row_idx % 2):
                 # Добавляемая строка не четная?
                 ctrl.SetItemBackgroundColour(row_idx,
-                                             self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT else oddBackgroundColour)
+                                             self.defaultOddRowsBGColour() if oddBackgroundColour == DEFAULT_COLOUR else oddBackgroundColour)
 
     def findRowIdx_requirement(self, ctrl=None, rows=(), requirement=None, auto_select=False):
         """

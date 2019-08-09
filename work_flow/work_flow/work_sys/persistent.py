@@ -1311,11 +1311,11 @@ class icObjPersistent(icObjPersistentPrototype):
         result = []
         # Реквизиты справочников
         id_nsi_requisites = [requisite for requisite in self.getChildrenRequisites() if requisite.isIDAttr() and requisite.type == 'NSIRequisite']
+        nsi_requisite_fields = [nsi_requisite.getFieldName() for nsi_requisite in id_nsi_requisites]
         for record in filter_result:
             rec = dict(record)
             # Для реквизитов справочников необходимо указать код и наименование
-            for nsi_requisite in id_nsi_requisites:
-                fld_name = nsi_requisite.getFieldName()
+            for i, fld_name in enumerate(nsi_requisite_fields):
                 # Если код определен, тогда найти наименование в справочнике
                 if rec[fld_name]:
                     # Но сохранить и код c новым именем
@@ -1323,12 +1323,11 @@ class icObjPersistent(icObjPersistentPrototype):
 
                     # В целях оптимизации произведена замена:
                     # rec[fld_name] = nsi_requisite.getSprav().Find(rec[fld_name])
-                    # Получить запись справочника
-                    nsi_record = nsi_requisite.getSprav().getCachedRec(rec[fld_name])
+                    # Получить запись справочника по коду
+                    nsi_record = id_nsi_requisites[i].getSprav().getCachedRec(rec[fld_name])
                     # Взять только наименование
                     rec[fld_name] = nsi_record.get('name', u'') if nsi_record is not None else u''
             result.append(rec)
-                
         return result
 
     def filterRequisiteData(self, FilterRequisiteData_=None):
@@ -1382,9 +1381,9 @@ class icObjPersistent(icObjPersistentPrototype):
         # log.info(u'\tЗапрос: <%s>' % query)
         result = self.getTable().getConnection().execute(query)
         log.info(u'\tКол. записей результата: [%s]' % result.rowcount)
-        start_time = time.time()
+        # start_time = time.time()
         recordset = self._resultFilter2Dataset(result.fetchall())
-        log.info(u'\tПреобразование списка записей. Время выполнения: %s' % str(time.time()-start_time))
+        # log.info(u'\tПреобразование списка записей. Время выполнения: %s' % str(time.time()-start_time))
         return recordset
 
     # Другие наименования метода

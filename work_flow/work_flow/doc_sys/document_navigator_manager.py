@@ -516,9 +516,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         row_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
 
         # Оттенение цвета четных строк
-        red = int(row_colour.Red() / 5.0 * 4.0)
-        green = int(row_colour.Green() / 5.0 * 4.0)
-        blue = int(row_colour.Blue() / 5.0 * 4.0)
+        red = int(row_colour.Red() / 8.0 * 7.0)
+        green = int(row_colour.Green() / 8.0 * 7.0)
+        blue = int(row_colour.Blue() / 8.0 * 7.0)
         self.setRows_list_ctrl(list_ctrl, rows=rows,
                                evenBackgroundColour=row_colour,
                                oddBackgroundColour=wx.Colour(red, green, blue),
@@ -548,9 +548,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 row = self.getDocListCtrlRows(dataset)[index]
 
             row_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
-            red = int(row_colour.Red() / 5.0 * 4.0)
-            green = int(row_colour.Green() / 5.0 * 4.0)
-            blue = int(row_colour.Blue() / 5.0 * 4.0)
+            red = int(row_colour.Red() / 8.0 * 7.0)
+            green = int(row_colour.Green() / 8.0 * 7.0)
+            blue = int(row_colour.Blue() / 8.0 * 7.0)
             self.setRow_list_ctrl(list_ctrl, row_idx=index, row=row,
                                   evenBackgroundColour=row_colour,
                                   oddBackgroundColour=wx.Colour(red, green, blue),
