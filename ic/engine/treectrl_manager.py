@@ -18,7 +18,7 @@ from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 
 
-__version__ = (0, 1, 5, 1)
+__version__ = (0, 1, 6, 1)
 
 UNKNOWN = u'Не определено'
 
@@ -375,7 +375,23 @@ class icTreeCtrlManager(object):
                     children.append(child)
             return children
         except:
-            log.error(u'ОШИБКА компонента <%s> метода определения списка дочерних элементов' % str(ctrl))
+            log.fatal(u'ОШИБКА компонента <%s> метода определения списка дочерних элементов' % str(ctrl))
+        return None
+
+    def getItemChildrenCount(self, ctrl=None, item=None):
+        """
+        Количество дочерних элементов узла дерева.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @param item: Узел/элемент дерева. Если None, то корневой элемент.
+        @return: Количество дочерних элементов или -1 в случае ошибки.
+        """
+        try:
+            # Определить узел
+            if item is None:
+                item = ctrl.GetRootItem()
+            return ctrl.GetChildrenCount(item)
+        except:
+            log.fatal(u'ОШИБКА компонента <%s> метода определения количества дочерних элементов' % str(ctrl))
         return None
 
     def setItemColour_requirement(self, ctrl=None, fg_colour=None, bg_colour=None, requirement=None, item=None):

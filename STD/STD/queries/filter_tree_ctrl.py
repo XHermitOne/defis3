@@ -738,7 +738,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         return self.loadFilters()
 
-    def refreshIndicators(self, bVisibleItems=True, item=None, bRestoreDataset=True):
+    def refreshIndicators(self, bVisibleItems=True, item=None, bRestoreDataset=True, bProgress=True):
         """
         Обновить индикаторы элементов дерева.
         @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
@@ -746,15 +746,24 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         @param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
         @param bRestoreDataset: Восстановить датасет выбранного элемента?
+        @param bProgress: Отображать прогресс диалог при обновлении?
         @return: True/False.
         """
         # log.debug(u'--- Обновление индикаторов ---')
         result = False
         try:
+            if bProgress:
+                if item is None:
+                    item = self.GetRootItem()
+                children_count = self.getItemChildrenCount(ctrl=self, item=item)
+                ic_dlg.icOpenProgressDlg(parent=self,
+                                         title=u'ОБНОВЛЕНИЕ ИНДИКАТОРОВ',
+                                         prompt_text=u'Обновление индикаторов...',
+                                         min_value=0, max_value=children_count)
             # Сначала запоминаем выбранный элемент
             cur_item = self.GetSelection()
             # Обновляем все индикаторы
-            result = self._refreshIndicators(bVisibleItems, item=item)
+            result = self._refreshIndicators(bVisibleItems, item=item, bProgress=bProgress)
 
             if bRestoreDataset:
                 # ВНИМАНИЕ! После обновления индикаторов необходимо восстановить
@@ -764,15 +773,18 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                 self.getCurRecords(item_filter=cur_filter)
         except:
             log.fatal(u'Ошибка обновления индикаторов дерева фильтров')
+        if bProgress:
+            ic_dlg.icCloseProgressDlg()
         return result
 
-    def _refreshIndicators(self, bVisibleItems=True, item=None):
+    def _refreshIndicators(self, bVisibleItems=True, item=None, bProgress=True):
         """
         Обновить индикаторы элементов дерева.
         @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
             Если нет, то обновляются индикаторы всех элементов.
         @param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
+        @param bProgress: Отображать прогресс диалог при обновлении?
         @return: True/False.
         """
         if item is None:
@@ -797,6 +809,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             children = self.getItemChildren(ctrl=self, item=item)
             for child in children:
                 self._refreshIndicators(bVisibleItems, item=child)
+                if bProgress:
+                    label = self.GetItemText(child)
+                    ic_dlg.icStepProgressDlg(new_prompt_text=u'Обновление индикатора... %s' % label)
 
         return True
 
