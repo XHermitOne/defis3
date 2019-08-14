@@ -49,45 +49,45 @@ def is_root_user():
     return bool(who_am_i().lower() == 'root')
 
 
-def check_python_library_version(LibName_, LibVer_, Compare_='=='):
+def check_python_library_version(lib_name, lib_version, compare='=='):
     """
     Проверка установлена ли библиотека указанной версии.
-    @param LibName_: Имя библиотеки, например 'wx'.
-    @param LibVer_: Версия библиотеки, например '2.8.8.1'.
-    @param Compare_: Оператор сравнения.
+    @param lib_name: Имя библиотеки, например 'wx'.
+    @param lib_version: Версия библиотеки, например '2.8.8.1'.
+    @param compare: Оператор сравнения.
     @return: Возвращает True/False.
     """
-    import_cmd = 'import '+str(LibName_)
+    import_cmd = 'import '+str(lib_name)
     try:
         exec(import_cmd)
-        import_lib = eval(LibName_)
+        import_lib = eval(lib_name)
     except ImportError:
         # Нет такой библиотеки
-        print(u'Check Library Error:', LibName_)
+        print(u'Check Library Error:', lib_name)
         return False
 
-    if Compare_ == '==':
+    if compare == '==':
         # Проверка на сравнение
-        print('Python Library:', LibName_, 'Version:', import_lib.__version__)
-        return bool(import_lib.__version__ == LibVer_)
-    elif Compare_ in ('>=', '=>'):
+        print('Python Library:', lib_name, 'Version:', import_lib.__version__)
+        return bool(import_lib.__version__ == lib_version)
+    elif compare in ('>=', '=>'):
         # Проверка на больше или равно
-        print('Python Library:', LibName_, 'Version:', import_lib.__version__)
-        return version_compare_greate_equal(import_lib.__version__, LibVer_)
+        print('Python Library:', lib_name, 'Version:', import_lib.__version__)
+        return version_compare_greate_equal(import_lib.__version__, lib_version)
     else:
-        print('Not supported compare:', Compare_)
+        print('Not supported compare:', compare)
     return False
 
 
-def version_compare_greate_equal(Version1_, Version2_, Delimiter_='.'):
+def version_compare_greate_equal(version1, version2, delimiter='.'):
     """
-    Сравнение версий на Version1_>=Version2_.
-    @param Version1_: Версия 1. В строковом виде. Например '2.8.9.2'.
-    @param Version2_: Версия 2. В строковом виде. Например '2.8.10.1'.
-    @param Delimiter_: Разделитель. Например точка.
+    Сравнение версий на Version1_>=version2.
+    @param version1: Версия 1. В строковом виде. Например '2.8.9.2'.
+    @param version2: Версия 2. В строковом виде. Например '2.8.10.1'.
+    @param delimiter: Разделитель. Например точка.
     """
-    ver1 = tuple([int(sub_ver) for sub_ver in Version1_.split(Delimiter_)])
-    ver2 = tuple([int(sub_ver) for sub_ver in Version2_.split(Delimiter_)])
+    ver1 = tuple([int(sub_ver) for sub_ver in version1.split(delimiter)])
+    ver2 = tuple([int(sub_ver) for sub_ver in version2.split(delimiter)])
     len_ver2 = len(ver2)
     for i, sub_ver1 in enumerate(ver1):
         if i >= len_ver2:
@@ -110,35 +110,35 @@ def check_python_labraries(**kwargs):
     return result
 
 
-def check_linux_package(PackageName_, Version_=None, Compare_='=='):
+def check_linux_package(package_name, version=None, compare='=='):
     """
     Проверка установленного пакета Linux.
-    @param PackageName_: Имя пакета, например 'libgnomeprintui'
-    @param Version_: Версия пакета. Если None, то версия не проверяется.\
-    @param Compare_: Метод проверки версии.
+    @param package_name: Имя пакета, например 'libgnomeprintui'
+    @param version: Версия пакета. Если None, то версия не проверяется.\
+    @param compare: Метод проверки версии.
     @return: True-пакет установлен, False-не установлен, 
         None-система пакетов не определена.
     """
     if is_deb_linux():
         print('This Linux is Debian')
-        return check_deb_linux_package(PackageName_, Version_, Compare_)
+        return check_deb_linux_package(package_name, version, compare)
     else:
         print('This linux is not Debian')
     return None
 
 
-def check_deb_linux_package(PackageName_, Version_=None, Compare_='=='):
+def check_deb_linux_package(package_name, version=None, compare='=='):
     """
     Проверка установленного пакета Linux.
-    @param PackageName_: Имя пакета, например 'libgnomeprintui'
-    @param Version_: Версия пакета. Если None, то версия не проверяется.\
-    @param Compare_: Метод проверки версии.
+    @param package_name: Имя пакета, например 'libgnomeprintui'
+    @param version: Версия пакета. Если None, то версия не проверяется.\
+    @param compare: Метод проверки версии.
     @return: True-пакет установлен, False-не установлен, 
         None-система пакетов не определена.
     """
     cmd = None
     try:
-        cmd = 'dpkg-query --list | grep \'ii \' | grep \'%s\'' % PackageName_
+        cmd = 'dpkg-query --list | grep \'ii \' | grep \'%s\'' % package_name
         result = os.popen3(cmd)[1].readlines()
         return bool(result)
     except:
@@ -147,23 +147,23 @@ def check_deb_linux_package(PackageName_, Version_=None, Compare_='=='):
     return None    
 
 
-def check_deb_package_install(sPackageName):
+def check_deb_package_install(package_name):
     """
     Проверка установленн ли пакет DEB.
-    @param sPackageName: Имя пакета, например 'libgnomeprintui'
+    @param package_name: Имя пакета, например 'libgnomeprintui'
     @return: True-пакет установлен, False-не установлен, 
         None-система пакетов не определена.
     """
-    return check_deb_linux_package(sPackageName)
+    return check_deb_linux_package(package_name)
 
 
-def get_uname(Option_='-a'):
+def get_uname(option='-a'):
     """
     Результат выполнения комманды uname.
     """
     cmd = None
     try:
-        cmd = 'uname %s' % Option_
+        cmd = 'uname %s' % option
         return os.popen3(cmd)[1].readline()
     except:
         print('Uname Error', cmd)
@@ -230,19 +230,19 @@ def get_dist_packages_path():
     return None
 
 
-def create_pth_file(PthFileName_, Path_):
+def create_pth_file(pth_filename, path):
     """
     Создание *.pth файла в папке site_packages.
-    @param PthFileName_: Не полное имя pth файла, например 'ic.pth'.
-    @param Path_: Путь который указывается в pth файле.
+    @param pth_filename: Не полное имя pth файла, например 'ic.pth'.
+    @param path: Путь который указывается в pth файле.
     @return: Возвращает результат выполнения операции True/False.
     """
     pth_file = None
     try:
         dist_packages_path = get_dist_packages_path()
-        pth_file_name = os.path.join(dist_packages_path, PthFileName_)
+        pth_file_name = os.path.join(dist_packages_path, pth_filename)
         pth_file = open(pth_file_name, 'wt')
-        pth_file.write(Path_)
+        pth_file.write(path)
         pth_file.close()
         pth_file = None
         
@@ -251,7 +251,7 @@ def create_pth_file(PthFileName_, Path_):
             os.chmod(pth_file_name, stat.S_IRWXO | stat.S_IRWXG | stat.S_IRWXU)
         except:
             print(u'ERROR! Chmod function in create_pth_file')
-        print('Create PTH file:', pth_file_name, 'path:', Path_)
+        print('Create PTH file:', pth_file_name, 'path:', path)
         return True
     except:
         if pth_file:
@@ -261,11 +261,11 @@ def create_pth_file(PthFileName_, Path_):
     return False
 
 
-def unzip_to_dir(ZipFileName_, Dir_, bOverwrite=True, bConsole=False):
+def unzip_to_dir(zip_filename, dst_dir, bOverwrite=True, bConsole=False):
     """
     Распаковать *.zip архив в папку.
-    @param ZipFileName_: Полное имя *.zip архива.
-    @param Dir_: Указание папки, в которую будет архив разворачиваться.
+    @param zip_filename: Полное имя *.zip архива.
+    @param dst_dir: Указание папки, в которую будет архив разворачиваться.
     @param bOverwrite: Перезаписать существующие файлы без запроса?
     @param bConsole: Вывод в консоль?
     @return: Возвращает результат выполнения операции True/False.
@@ -274,7 +274,7 @@ def unzip_to_dir(ZipFileName_, Dir_, bOverwrite=True, bConsole=False):
         overwrite = ''
         if bOverwrite:
             overwrite = '-o'
-        unzip_cmd = 'unzip %s %s -d %s' % (overwrite, ZipFileName_, Dir_)
+        unzip_cmd = 'unzip %s %s -d %s' % (overwrite, zip_filename, dst_dir)
         if bConsole:
             os.system(unzip_cmd)
             return None
@@ -286,18 +286,18 @@ def unzip_to_dir(ZipFileName_, Dir_, bOverwrite=True, bConsole=False):
     return None
 
 
-def targz_extract_to_dir(TarFileName_, Dir_, bConsole=False):
+def targz_extract_to_dir(tar_filename, dst_dir, bConsole=False):
     """
     Распаковать *.tar архив в папку.
-    @param TarFileName_: Полное имя *.tar архива.
-    @param Dir_: Указание папки, в которую будет архив разворачиваться.
+    @param tar_filename: Полное имя *.tar архива.
+    @param dst_dir: Указание папки, в которую будет архив разворачиваться.
     @param bConsole: Вывод в консоль?
     @return: Возвращает результат выполнения операции True/False.
     """
     tar_extract_cmd = None
     try:
-        tar_extract_cmd = 'tar --extract --verbose --directory=%s --file=%s' % (Dir_, TarFileName_)
-        print('Tar extract command:', tar_extract_cmd, os.path.exists(TarFileName_))
+        tar_extract_cmd = 'tar --extract --verbose --directory=%s --file=%s' % (dst_dir, tar_filename)
+        print('Tar extract command:', tar_extract_cmd, os.path.exists(tar_filename))
         if bConsole:
             os.system(tar_extract_cmd)
             return None
@@ -309,16 +309,16 @@ def targz_extract_to_dir(TarFileName_, Dir_, bConsole=False):
     return None
 
 
-def deb_pkg_install(sDEBFileName):
+def deb_pkg_install(deb_filename):
     """
     Установить deb пакет.
-    @param sDEBFileName: Полное имя *.deb пакета.
+    @param deb_filename: Полное имя *.deb пакета.
     @return: Возвращает результат выполнения операции True/False.
     """
     deb_install_cmd = None
     try:
-        deb_install_cmd = 'dpkg --install %s' % sDEBFileName
-        print('DEB package install command:', deb_install_cmd, os.path.exists(sDEBFileName))
+        deb_install_cmd = 'dpkg --install %s' % deb_filename
+        print('DEB package install command:', deb_install_cmd, os.path.exists(deb_filename))
         return os.popen3(deb_install_cmd)
     except:
         print('DEB package install Error', deb_install_cmd)
@@ -326,27 +326,27 @@ def deb_pkg_install(sDEBFileName):
     return None
 
 
-def deb_pkg_uninstall(sDEBPackageName):
+def deb_pkg_uninstall(deb_package_name):
     """
     Деинсталлировать DEB пакет.
-    @param sDEBPackageName: Имя пакета. Например dosemu.
+    @param deb_package_name: Имя пакета. Например dosemu.
     @return: Возвращает результат выполнения операции True/False.
     """
     deb_uninstall_cmd = None
     try:
         if check_deb_package_install:
-            deb_uninstall_cmd = 'dpkg --remove %s' % sDEBPackageName
+            deb_uninstall_cmd = 'dpkg --remove %s' % deb_package_name
             print('DEB package uninstall command:', deb_uninstall_cmd)
             return os.popen3(deb_uninstall_cmd)
         else:
-            print('WARNING: Package %s not installed' % sDEBPackageName)
+            print('WARNING: Package %s not installed' % deb_package_name)
     except:
         print('DEB package uninstall Error', deb_uninstall_cmd)
         raise
     return None
 
 
-def get_home_path(UserName_=None):
+def get_home_path(username=None):
     """
     Определить домашнюю папку.
     """
@@ -354,10 +354,10 @@ def get_home_path(UserName_=None):
         home = os.environ['HOMEDRIVE']+os.environ['HOMEPATH']
         home = home.replace('\\', '/')
     else:
-        if UserName_ is None:
+        if username is None:
             home = os.environ['HOME']
         else:
-            user_struct = pwd.getpwnam(UserName_)
+            user_struct = pwd.getpwnam(username)
             home = user_struct.pw_dir
     return home
 
@@ -373,11 +373,11 @@ def get_login():
         return os.environ['SUDO_USER']
         
 
-def dir_dlg(Title_='', DefaultPath_=''):
+def dir_dlg(title='', default_path=''):
     """
     Диалог выбора каталога.
-    @param Title_: Заголовок диалогового окна.
-    @param DefaultPath_: Путь по умолчанию.
+    @param title: Заголовок диалогового окна.
+    @param default_path: Путь по умолчанию.
     """
     import wx
     app = wx.GetApp()
@@ -388,13 +388,13 @@ def dir_dlg(Title_='', DefaultPath_=''):
         try:
             main_win = app.GetTopWindow()
 
-            dlg = wx.DirDialog(main_win, Title_,
+            dlg = wx.DirDialog(main_win, title,
                                style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
 
             # Установка пути по умолчанию
-            if not DefaultPath_:
-                DefaultPath_ = os.getcwd()
-            dlg.SetPath(DefaultPath_)
+            if not default_path:
+                default_path = os.getcwd()
+            dlg.SetPath(default_path)
             if dlg.ShowModal() == wx.ID_OK:
                 result = dlg.GetPath()
             else:
@@ -407,12 +407,12 @@ def dir_dlg(Title_='', DefaultPath_=''):
     return result
 
 
-def file_dlg(Title_='', Filter_='', DefaultPath_=''):
+def file_dlg(title='', filename_filter='', default_path=''):
     """
     Открыть диалог выбора файла для открытия/записи.
-    @param Title_: Заголовок диалогового окна.
-    @param Filter_: Фильтр файлов.
-    @param DefaultPath_: Путь по умолчанию.
+    @param title: Заголовок диалогового окна.
+    @param filename_filter: Фильтр файлов.
+    @param default_path: Путь по умолчанию.
     @return: Возвращает полное имя выбранного файла.
     """
     import wx
@@ -424,10 +424,10 @@ def file_dlg(Title_='', Filter_='', DefaultPath_=''):
         try:
             main_win = app.GetTopWindow()
 
-            wildcard = Filter_+'|All Files (*.*)|*.*'
-            dlg = wx.FileDialog(main_win, Title_, '', '', wildcard, wx.FD_OPEN)
-            if DefaultPath_:
-                dlg.SetDirectory(normpath(DefaultPath_, get_login()))
+            wildcard = filename_filter + '|All Files (*.*)|*.*'
+            dlg = wx.FileDialog(main_win, title, '', '', wildcard, wx.FD_OPEN)
+            if default_path:
+                dlg.SetDirectory(normpath(default_path, get_login()))
             else:
                 dlg.SetDirectory(os.getcwd())
         
@@ -443,11 +443,11 @@ def file_dlg(Title_='', Filter_='', DefaultPath_=''):
     return result
 
 
-def get_dosemu_dir(UserName_=None):
+def get_dosemu_dir(username=None):
     """
     Определить папку установленного dosemu.
     """
-    home = get_home_path(UserName_)
+    home = get_home_path(username)
     dosemu_dir = os.path.join(home, '.dosemu')
     if os.path.exists(dosemu_dir):
         return dosemu_dir
@@ -457,11 +457,11 @@ def get_dosemu_dir(UserName_=None):
     return None
 
 
-def check_dir(Dir_):
+def check_dir(dirname):
     """
     Проверить папку, если ее нет то она создается.
     """
-    norm_dir = normpath(Dir_, get_login())
+    norm_dir = normpath(dirname, get_login())
     if not os.path.exists(norm_dir):
         try:
             os.makedirs(norm_dir)
@@ -473,55 +473,55 @@ def check_dir(Dir_):
         return True
 
 
-def save_file_text(FileName_, Txt_=''):
+def save_file_text(filename, txt=''):
     """
     Запись текста в файл.
-    @param FileName_; Имя файла.
-    @param Txt_: Записываемый текст.
+    @param filename; Имя файла.
+    @param txt: Записываемый текст.
     @return: True/False
     """
-    # if isinstance(Txt_, str):
+    # if isinstance(txt, str):
     #    # Если передается текст в юникоде,
     #    #  то автоматом перекодировать в UTF-8
-    #    Txt_ = Txt_.encode(DEFAULT_ENCODING)
+    #    txt = txt.encode(DEFAULT_ENCODING)
 
     file_obj = None
     try:
-        file_obj = open(FileName_, 'wt')
-        file_obj.write(Txt_)
+        file_obj = open(filename, 'wt')
+        file_obj.write(txt)
         file_obj.close()
         return True
     except:
         if file_obj:
             file_obj.close()
-        print('Save text file', FileName_, 'ERROR')
+        print('Save text file', filename, 'ERROR')
         print(traceback.format_exc())
     return False
 
 
-def load_file_text(FileName_, code_page='utf-8',
+def load_file_text(filename, code_page='utf-8',
                    to_unicode=False):
     """
     Чтение текстового файла.
-    @param FileName_; Имя файла.
+    @param filename; Имя файла.
     @param code_page: Кодовая страница файла
         (для преобразования в Unicode).
     @paran to_unicode: Преобразовать сразу в Unicode?
     @return: Текст файла.
     """
-    if not os.path.exists(FileName_):
-        print(u'File <%s> not found' % FileName_)
+    if not os.path.exists(filename):
+        print(u'File <%s> not found' % filename)
         return ''
 
     f = None
     try:
-        f = open(FileName_, 'rt')
+        f = open(filename, 'rt')
         txt = f.read()
         f.close()
     except:
         if f:
             f.close()
-        print(u'Load text file <%s>' % FileName_)
+        print(u'Load text file <%s>' % filename)
         return ''
 
     # if to_unicode:
@@ -529,16 +529,16 @@ def load_file_text(FileName_, code_page='utf-8',
     return txt
 
 
-def load_file_unicode(FileName_, code_page=None):
+def load_file_unicode(filename, code_page=None):
     """
     Чтение текстового файла сразу в виде unocode.
     Определение содовой страницы происходит автоматически.
-    @param FileName_; Имя файла.
+    @param filename; Имя файла.
     @param code_page: Кодовая страница файла.
         Если не определена, то пробуем определить ее.
     @return: Текст файла в unicode.
     """
-    body_text = load_file_text(FileName_)
+    body_text = load_file_text(filename)
     if not code_page:
         code_page = ic_str.get_codepage(body_text)
     return str(body_text)   # , code_page)
@@ -577,56 +577,56 @@ def recode_text_file(txt_filename, new_filename=None, src_codepage=None, dst_cod
     return False
 
 
-def copy_file_to(SrcFileName_, DstPath_, ReWrite_=True):
+def copy_file_to(src_filename, dst_path, bReWrite=True):
     """
     Копировать файл в указанную папку.
-    @param SrcFileName_: Имя файла-источника.
-    @param DstPath_: Папка-назначение.
-    @param ReWrite_: Перезаписать файл, если он уже существует?
+    @param src_filename: Имя файла-источника.
+    @param dst_path: Папка-назначение.
+    @param bReWrite: Перезаписать файл, если он уже существует?
     """
     try:
-        DstPath_ = normpath(DstPath_, get_login())
-        if not os.path.exists(DstPath_):
-            os.makedirs(DstPath_)
-        dst_file_name = os.path.join(DstPath_, os.path.basename(SrcFileName_))
-        if ReWrite_:
+        dst_path = normpath(dst_path, get_login())
+        if not os.path.exists(dst_path):
+            os.makedirs(dst_path)
+        dst_file_name = os.path.join(dst_path, os.path.basename(src_filename))
+        if bReWrite:
             if os.path.exists(dst_file_name):
                 os.remove(dst_file_name)
-        shutil.copyfile(SrcFileName_, dst_file_name)
+        shutil.copyfile(src_filename, dst_file_name)
         return True
     except:
         return False
 
 
-def set_chown_login(sPath):
+def set_chown_login(path):
     """
     Установить владельца файла/папки залогиненного пользователя.
     """
-    if not os.path.exists(sPath):
+    if not os.path.exists(path):
         return False
     username = get_login()
     user_struct = pwd.getpwnam(username)
     uid = user_struct.pw_uid
     gid = user_struct.pw_gid
-    path = normpath(sPath, username)
+    path = normpath(path, username)
     return os.chown(path, uid, gid)
 
 
-def set_public_chmod(sPath):
+def set_public_chmod(path):
     """
     Установить свободный режим доступа (0x777) к файлу/папке.
     """
-    path = normpath(sPath, get_login())
+    path = normpath(path, get_login())
     if os.path.exists(path):
         return os.chmod(path, stat.S_IRWXO | stat.S_IRWXG | stat.S_IRWXU)
     return False
 
 
-def set_public_chmode_tree(sPath):
+def set_public_chmode_tree(path):
     """
     Установить свободный режим доступа (0x777) к файлу/папке рекурсивно.
     """
-    path = normpath(sPath, get_login())
+    path = normpath(path, get_login())
     result = set_public_chmod(path)
     if os.path.isdir(path):
         for f in os.listdir(path):
@@ -635,19 +635,19 @@ def set_public_chmode_tree(sPath):
     return result
 
 
-def sym_link(sLinkPath, sLinkName, sUserName=None, bOverwrite=True):
+def sym_link(link_path, linkname, username=None, bOverwrite=True):
     """
     Создать символическую ссылку.
-    @param sLinkPath: На что ссылается ссылка.
-    @param sLinkName: Имя ссылки.
-    @param sUserName: Имя пользователя.
+    @param link_path: На что ссылается ссылка.
+    @param linkname: Имя ссылки.
+    @param username: Имя пользователя.
     @param bOverwrite: Перезаписать ссылку, если она существует?
     """ 
-    username = sUserName
+    username = username
     if username is None:
         username = get_login()
-    link_path = normpath(sLinkPath, username)
-    link_name = normpath(sLinkName, username)
+    link_path = normpath(link_path, username)
+    link_name = normpath(linkname, username)
     
     if os.path.exists(link_name) and bOverwrite:
         # Перезаписать?
@@ -660,42 +660,42 @@ def sym_link(sLinkPath, sLinkName, sUserName=None, bOverwrite=True):
     return None
 
 
-def get_options(lArgs=None):
+def get_options(arguments=None):
     """
     Преобразование параметров коммандной строки в словарь python.
     Параметры коммандной строки в виде --ключ=значение.
-    @param lArgs: Список строк параметров.
+    @param arguments: Список строк параметров.
     @return: Словарь значений или None в случае ошибки.
     """
-    if lArgs is None:
-        lArgs = sys.argv[1:]
+    if arguments is None:
+        arguments = sys.argv[1:]
         
     opts = {}
     args = []
-    while lArgs:
-        if lArgs[0][:2] == '--':
-            if '=' in lArgs[0]:
+    while arguments:
+        if arguments[0][:2] == '--':
+            if '=' in arguments[0]:
                 # поиск пар “--name=value”
-                i = lArgs[0].index('=')
+                i = arguments[0].index('=')
                 # ключами словарей будут имена параметров
-                opts[lArgs[0][:i]] = lArgs[0][i+1:]
+                opts[arguments[0][:i]] = arguments[0][i + 1:]
             else:
                 # поиск “--name”
                 # ключами словарей будут имена параметров
-                opts[lArgs[0]] = True
+                opts[arguments[0]] = True
         else:
-            args.append(lArgs[0])
-        lArgs = lArgs[1:]
+            args.append(arguments[0])
+        arguments = arguments[1:]
     return opts, args
     
     
-def normpath(path, sUserName=None):
+def normpath(path, username=None):
     """
     Нормировать путь.
     @param path: Путь.
-    @param sUserName: Имя пользователя.
+    @param username: Имя пользователя.
     """
-    home_dir = get_home_path(sUserName)
+    home_dir = get_home_path(username)
     return os.path.abspath(os.path.normpath(path.replace('~', home_dir)))
 
 
@@ -720,13 +720,13 @@ def getPlatform():
     return sys.platform
 
 
-def copyFile(sFileName, sNewFileName, bRewrite=True):
+def copyFile(filename, new_filename, bRewrite=True):
     """
     Создает копию файла с новым именем.
-    @type sFileName: C{string}
-    @param sFileName: Полное имя файла.
-    @type sNewFileName: C{string}
-    @param sNewFileName: Новое имя файла.
+    @type filename: C{string}
+    @param filename: Полное имя файла.
+    @type new_filename: C{string}
+    @param new_filename: Новое имя файла.
     @type bRewrite: C{bool}
     @param bRewrite: True-если новый файл уже существует,
         то переписать его молча. False-если новый файл уже существует,
@@ -735,72 +735,72 @@ def copyFile(sFileName, sNewFileName, bRewrite=True):
     """
     try:
         # Проверка существования файла-источника
-        if not os.path.isfile(sFileName):
-            print('WARNING! File %s not exist for copy' % sFileName)
+        if not os.path.isfile(filename):
+            print('WARNING! File %s not exist for copy' % filename)
             return False
 
         # Проверка перезаписи уже существуещего файла
         if not bRewrite:
-            print('WARNING! File %s exist and not rewrite' % sFileName)
+            print('WARNING! File %s exist and not rewrite' % filename)
             return False
 
         # Создать результирующую папку
-        dir = os.path.dirname(sNewFileName)
+        dir = os.path.dirname(new_filename)
         if not os.path.exists(dir):
             os.makedirs(dir)
-        shutil.copyfile(sFileName, sNewFileName)
+        shutil.copyfile(filename, new_filename)
         return True
     except IOError:
-        print('ERROR! Copy file %s I/O error' % sFileName)
+        print('ERROR! Copy file %s I/O error' % filename)
         return False
 
 
-def copyToDir(sFileName, sDestDir, bRewrite=True):
+def copyToDir(filename, dst_dir, bRewrite=True):
     """
     Копировать файл в папку.
-    @type sFileName: C{string}
-    @param sFileName: Имя файла.
-    @type sDestDir: C{string}
-    @param sDestDir: Папка в которую необходимо скопировать.
+    @type filename: C{string}
+    @param filename: Имя файла.
+    @type dst_dir: C{string}
+    @param dst_dir: Папка в которую необходимо скопировать.
     @type bRewrite: C{bool}
     @param bRewrite: True-если новый файл уже существует,
         то переписать его молча. False-если новый файл уже существует,
         то не перезаписывать его а оставить старый.
     @return: Возвращает результат выполнения операции True/False.
     """
-    return copyFile(sFileName, os.path.join(sDestDir, os.path.basename(sFileName)), bRewrite)
+    return copyFile(filename, os.path.join(dst_dir, os.path.basename(filename)), bRewrite)
 
 
-def changeExt(sFileName, sNewExt):
+def changeExt(filename, new_ext):
     """
     Поменять у файла расширение.
-    @type sFileName: C{string}
-    @param sFileName_: Полное имя файла.
-    @type sNewExt: C{string}
-    @param sNewExt: Новое расширение файла (Например: '.bak').
+    @type filename: C{string}
+    @param filename: Полное имя файла.
+    @type new_ext: C{string}
+    @param new_ext: Новое расширение файла (Например: '.bak').
     @return: Возвращает новое полное имя файла.
     """
     try:
-        new_name = os.path.splitext(sFileName)[0]+sNewExt
+        new_name = os.path.splitext(filename)[0] + new_ext
         if os.path.isfile(new_name):
             os.remove(new_name)     # если файл существует, то удалить
-        if os.path.exists(sFileName):
-            os.rename(sFileName, new_name)
+        if os.path.exists(filename):
+            os.rename(filename, new_name)
             return new_name
     except:
-        print('ERROR! Cange ext file %s' % sFileName)
+        print('ERROR! Cange ext file %s' % filename)
         raise
     return None
 
 
-def parseCmd(sCommand):
+def parseCmd(command):
     """
     Распарсить комманду.
-    @type sCommand: c{string}
-    @param sCommand: Строковое представление комманды.
+    @type command: c{string}
+    @param command: Строковое представление комманды.
     @return: Список [<Комманда>,<Аргумент1>,<Аргумент2>,..]
     """
-    parse_args = sCommand.strip().split(' ')
+    parse_args = command.strip().split(' ')
     args = []
     i = 0
     while i < len(parse_args):
@@ -856,18 +856,18 @@ def getComputerNameLAT():
     return comp_name
 
 
-def _rus2lat(sText, dTranslateDict):
+def _rus2lat(text, translate_dict):
     """
     Перевод русских букв в латинские по словарю замен.
-    @param sText: Русский текст.
-    @param dTranslateDict: Словарь замен.
+    @param text: Русский текст.
+    @param translate_dict: Словарь замен.
     """
-    # if not isinstance(sText, unicode):
+    # if not isinstance(text, unicode):
     #    # Привести к юникоду
-    #    sText = unicode(sText, 'utf-8')
+    #    text = unicode(text, 'utf-8')
 
-    txt_list = list(sText)
-    txt_list = [dTranslateDict.setdefault(ch, ch) for ch in txt_list]
+    txt_list = list(text)
+    txt_list = [translate_dict.setdefault(ch, ch) for ch in txt_list]
     return ''.join(txt_list)
 
 
@@ -881,26 +881,26 @@ RUS2LATDict = {u'а': 'a', u'б': 'b', u'в': 'v', u'г': 'g', u'д': 'd', u'е'
                u'Ш': 'SH', u'Щ': 'SCH', u'Ь': '', u'Ы': 'Y', u'Ъ': '', u'Э': 'E', u'Ю': 'YU', u'Я': 'YA'}
 
 
-def rus2lat(sText):
+def rus2lat(text):
     """
     Перевод русских букв в латинские.
     """
-    return _rus2lat(sText, RUS2LATDict)
+    return _rus2lat(text, RUS2LATDict)
 
 
-def norm_path(sPath, sDelim=os.path.sep):
+def norm_path(path, delim=os.path.sep):
     """
     Удалить двойные разделител из пути.
-    @type sPath: C{string}
-    @param sPath: Путь
-    @type sDelim: C{string}
-    @param sDelim: Разделитель пути
+    @type path: C{string}
+    @param path: Путь
+    @type delim: C{string}
+    @param delim: Разделитель пути
     """
-    sPath = sPath.replace('~', getHomeDir())
-    dbl_delim = sDelim+sDelim
-    while dbl_delim in sPath:
-        sPath = sPath.replace(dbl_delim, sDelim)
-    return sPath
+    path = path.replace('~', getHomeDir())
+    dbl_delim = delim + delim
+    while dbl_delim in path:
+        path = path.replace(dbl_delim, delim)
+    return path
 
 
 def getHomeDir():
@@ -916,23 +916,23 @@ def getHomeDir():
     return os.path.normpath(home_dir)
 
 
-def text_file_append(sTextFileName, sText, CR='\n'):
+def text_file_append(txt_filename, text, cr='\n'):
     """
     Добавить строки в текстовый файл.
-    @param sTextFileName: Имя текстового файла.
-    @param sText: Добавляемый текст.
-    @param CR: Символ возврата каретки.
+    @param txt_filename: Имя текстового файла.
+    @param text: Добавляемый текст.
+    @param cr: Символ возврата каретки.
     @return: True/False.
     """
-    txt_filename = normpath(sTextFileName, get_login())
+    txt_filename = normpath(txt_filename, get_login())
     if os.path.exists(txt_filename):
         f = None
         try:
             f = open(txt_filename, 'rt')
             txt = f.read()
-            txt += CR
-            txt += sText
-            print('Text file append <%s> in <%s>' % (sText, txt_filename))
+            txt += cr
+            txt += text
+            print('Text file append <%s> in <%s>' % (text, txt_filename))
             f.close()
             f = None
             f = open(txt_filename, 'wt')
@@ -950,27 +950,27 @@ def text_file_append(sTextFileName, sText, CR='\n'):
     return False
 
 
-def text_file_replace(sTextFileName, sOld, sNew, bAutoAdd=True, CR='\n'):
+def text_file_replace(txt_filename, old_string, new_string, bAutoAdd=True, cr='\n'):
     """
     Замена строки в текстовом файле.
-    @param sTextFileName: Имя текстового файла.
-    @param sOld: Старая строка.
-    @param sNew: Новая строка.
+    @param txt_filename: Имя текстового файла.
+    @param old_string: Старая строка.
+    @param new_string: Новая строка.
     @param bAutoAdd: Признак автоматического добавления новой строки.
-    @param CR: Символ возврата каретки.
+    @param cr: Символ возврата каретки.
     @return: True/False.
     """
-    txt_filename = normpath(sTextFileName, get_login())
+    txt_filename = normpath(txt_filename, get_login())
     if os.path.exists(txt_filename):
         f = None
         try:
             f = open(txt_filename, 'rt')
             txt = f.read()
-            txt = txt.replace(sOld, sNew)
-            if bAutoAdd and (sNew not in txt):
-                txt += CR
-                txt += sNew
-                print('Text file append <%s> in <%s>' % (sNew, txt_filename))
+            txt = txt.replace(old_string, new_string)
+            if bAutoAdd and (new_string not in txt):
+                txt += cr
+                txt += new_string
+                print('Text file append <%s> in <%s>' % (new_string, txt_filename))
             f.close()
             f = None
             f = open(txt_filename, 'wt')
@@ -988,25 +988,25 @@ def text_file_replace(sTextFileName, sOld, sNew, bAutoAdd=True, CR='\n'):
     return False
 
 
-def text_file_find(sTextFileName, sFind):
+def text_file_find(txt_filename, find_string):
     """
     Поиск строки в текстовом файле.
-    @param sTextFileName: Имя текстового файла.
-    @param sFind: Сирока поиска.
+    @param txt_filename: Имя текстового файла.
+    @param find_string: Сирока поиска.
     @return: True/False.
     """
-    txt_filename = normpath(sTextFileName, get_login())
+    txt_filename = normpath(txt_filename, get_login())
     if os.path.exists(txt_filename):
         f = None
         try:
             f = open(txt_filename, 'rt')
             txt = f.read()
-            result = sFind in txt
+            result = find_string in txt
             f.close()
             f = None
             return result
         except:
-            print('Find <%s> in text file <%s>' % (sFind, txt_filename))
+            print('Find <%s> in text file <%s>' % (find_string, txt_filename))
             if f:
                 f.close()
                 f = None
@@ -1015,17 +1015,17 @@ def text_file_find(sTextFileName, sFind):
     return False
 
 
-def text_file_subreplace(sTextFileName, sSubStr, sNew, bAutoAdd=True, CR='\n'):
+def text_file_subreplace(txt_filename, sub_string, new_string, bAutoAdd=True, cr='\n'):
     """
     Замена строки в текстовом файле с поиском подстроки.
-    @param sTextFileName: Имя текстового файла.
-    @param sSubStr: Под строка  выявления строки замены.
-    @param sNew: Новая строка.
+    @param txt_filename: Имя текстового файла.
+    @param sub_string: Под строка  выявления строки замены.
+    @param new_string: Новая строка.
     @param bAutoAdd: Признак автоматического добавления новой строки.
-    @param CR: Символ возврата каретки.
+    @param cr: Символ возврата каретки.
     @return: True/False.
     """
-    txt_filename = normpath(sTextFileName, get_login())
+    txt_filename = normpath(txt_filename, get_login())
     if os.path.exists(txt_filename):
         f = None
         try:
@@ -1033,14 +1033,14 @@ def text_file_subreplace(sTextFileName, sSubStr, sNew, bAutoAdd=True, CR='\n'):
             lines = f.readlines()
             is_replace = False
             for i, line in enumerate(lines):
-                if sSubStr in line:
-                    lines[i] = sNew
+                if sub_string in line:
+                    lines[i] = new_string
                     is_replace = True
-                    print('Text file replace <%s> -> <%s> in <%s>' % (line, sNew, txt_filename))
+                    print('Text file replace <%s> -> <%s> in <%s>' % (line, new_string, txt_filename))
             if bAutoAdd and not is_replace:
-                lines += [CR]
-                lines += [sNew]
-                print('Text file append <%s> in <%s>' % (sNew, txt_filename))
+                lines += [cr]
+                lines += [new_string]
+                print('Text file append <%s> in <%s>' % (new_string, txt_filename))
             f.close()
             f = None
             f = open(txt_filename, 'wt')
@@ -1058,14 +1058,14 @@ def text_file_subreplace(sTextFileName, sSubStr, sNew, bAutoAdd=True, CR='\n'):
     return False
 
 
-def text_file_subdelete(sTextFileName, sSubStr):
+def text_file_subdelete(txt_filename, sub_string):
     """
     Удаление строки в текстовом файле с поиском подстроки.
-    @param sTextFileName: Имя текстового файла.
-    @param sSubStr: Под строка  выявления строки удаления.
+    @param txt_filename: Имя текстового файла.
+    @param sub_string: Под строка  выявления строки удаления.
     @return: True/False.
     """
-    txt_filename = normpath(sTextFileName, get_login())
+    txt_filename = normpath(txt_filename, get_login())
     if os.path.exists(txt_filename):
         f = None
         try:
@@ -1073,7 +1073,7 @@ def text_file_subdelete(sTextFileName, sSubStr):
             f = open(txt_filename, 'rt')
             lines = f.readlines()
             for line in lines:
-                if sSubStr not in line:
+                if sub_string not in line:
                     result_lines.append(line)
                 else:
                     print('Text file delete line <%s> from <%s>' % (line, txt_filename))
@@ -1094,16 +1094,16 @@ def text_file_subdelete(sTextFileName, sSubStr):
     return False
 
 
-def exec_sys_command(sCommand):
+def exec_sys_command(command):
     """
     Функция выполнения команды ОС.
-    @param sCommand: Текст команды.
+    @param command: Текст команды.
     """
     try:
-        os.system(sCommand)
-        print('Execute command: %s' % sCommand)
+        os.system(command)
+        print('Execute command: %s' % command)
     except:
-        print('ERROR. Execute command: %s' % sCommand)
+        print('ERROR. Execute command: %s' % command)
         raise
 
 

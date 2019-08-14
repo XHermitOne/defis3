@@ -13,21 +13,23 @@
 # --- Подключение пакетов ---
 import wx
 
+__version__ = (0, 1, 1, 2)
+
 # --- Константы ---
 CLIPBOARD = None
 
 
 # --- Функции ---
-def toClipboard(Obj_):
+def toClipboard(cur_object):
     """
     Положить объект в клипбоард.
-    @param Obj_: Объект.
+    @param cur_object: Объект.
     """
     global CLIPBOARD
-    if isinstance(Obj_, str):
+    if isinstance(cur_object, str):
         # Строку можно запихать непосредственно в клтпбоард.
         txt_data_clipboard = wx.TextDataObject()
-        txt_data_clipboard.SetText(Obj_)
+        txt_data_clipboard.SetText(cur_object)
         wx.TheClipboard.Open()
         wx.TheClipboard.SetData(txt_data_clipboard)
         wx.TheClipboard.Close()
@@ -36,7 +38,7 @@ def toClipboard(Obj_):
         return True
     else:
         # Обычный объект просто запихнуть во внутренний буфер
-        CLIPBOARD = Obj_
+        CLIPBOARD = cur_object
         # Очистить системный клипбоард
         wx.TheClipboard.Open()
         wx.TheClipboard.Clear()
@@ -44,15 +46,15 @@ def toClipboard(Obj_):
         return True
 
 
-def fromClipboard(Clear_=True):
+def fromClipboard(bClear=True):
     """
     Получить содержимое клипборда.
-    @param Clear_: Признак того,  что после извлечения содержимое очищается.
+    @param bClear: Признак того,  что после извлечения содержимое очищается.
     """
     global CLIPBOARD
     if CLIPBOARD:
         buff = CLIPBOARD
-        if Clear_:
+        if bClear:
             clearClipboard()
         return buff
     else:
@@ -62,7 +64,7 @@ def fromClipboard(Clear_=True):
         wx.TheClipboard.Close()
         if success:
             txt_data = txt_data_clipboard.GetText()
-            if Clear_:
+            if bClear:
                 clearClipboard()
             return txt_data
     return None

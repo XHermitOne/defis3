@@ -79,7 +79,7 @@ class icCFConfiguration(iccfobject.icCFObject):
         log.info(u'CONFIGURATION RESOURCE: <%s>' % self.name)
         # util1c.print_idx_paths(cf_cfg_res.data)
 
-        # idx = util1c.ValueIndexPath(cf_cfg_res.data, '4938909f-92f5-4cd8-992f-6c53996d1af9')
+        # idx = util1c.findValueIndexPath(cf_cfg_res.data, '4938909f-92f5-4cd8-992f-6c53996d1af9')
 
         # Справочники
         sprav_uid_lst = cf_cfg_res.data[4][1][1][16][2:]

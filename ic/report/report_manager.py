@@ -13,7 +13,7 @@ import wx
 
 from . import config
 from ic.engine import glob_functions
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from ic.utils import ic_res
 from ic.utils import ic_str
 from ic.log import log
@@ -102,11 +102,11 @@ class icReportManager(object):
                     log.info(u'Cоздание папки <%s>' % self._report_dir)
                     description_filename = os.path.join(self._report_dir, 'descript.ion')
                     prj_name = os.path.basename(prj_dir)
-                    ic_extend.save_file_text(description_filename,
+                    extfunc.save_file_text(description_filename,
                                              u'Отчеты прикладной системы <%s>' % prj_name)
                     init_filename = os.path.join(self._report_dir, '__init__.py')
-                    ic_extend.save_file_text(init_filename,
-                                             DEFAULT_INIT_PY_FMT % prj_name)
+                    extfunc.save_file_text(init_filename,
+                                           DEFAULT_INIT_PY_FMT % prj_name)
                 except IOError:
                     log.warning(u'Ошибка создания папки <%s>' % self._report_dir)
         return self._report_dir

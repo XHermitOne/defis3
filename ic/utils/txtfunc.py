@@ -9,22 +9,22 @@
 import os
 import os.path
 
-from .ic_extend import save_file_text
-from .ic_extend import load_file_text
+from .extfunc import save_file_text
+from .extfunc import load_file_text
 
 # Эти функции добавлены для возможности
 # импортировать их из этого модуля
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-from .ic_extend import load_file_unicode
-from .ic_extend import recode_text_file
-from .ic_extend import text_file_append
-from .ic_extend import text_file_find
-from .ic_extend import text_file_replace
-from .ic_extend import text_file_subdelete
-from .ic_extend import text_file_subreplace
+from .extfunc import load_file_unicode
+from .extfunc import recode_text_file
+from .extfunc import text_file_append
+from .extfunc import text_file_find
+from .extfunc import text_file_replace
+from .extfunc import text_file_subdelete
+from .extfunc import text_file_subreplace
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-from . import ic_extend
+from . import extfunc
 from . import ic_str
 from ic.log import log
 
@@ -74,7 +74,7 @@ def load_file_csv(csv_filename, delim=u',',
             records = list()
             txt_lines = txt.split(u'\n')
             for txt_line in txt_lines:
-                record = [ic_extend.wise_type_translate_str(field) for field in txt_line.split(delim)]
+                record = [extfunc.wise_type_translate_str(field) for field in txt_line.split(delim)]
                 records.append(record)
             return records
         except:

@@ -51,7 +51,7 @@ def ReadAndEvalFile(FileName_, *args, **kwargs):
     """
     Загрузить информацию из файла ресурсов.
     @param FileName_: имя файла ресурсов.
-    @return: Возвращает структуру Python определенную в виде текста в файле FileName_
+    @return: Возвращает структуру Python определенную в виде текста в файле filename
     """
     return util.readAndEvalFile(FileName_, *args, **kwargs)
 

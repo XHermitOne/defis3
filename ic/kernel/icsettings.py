@@ -185,7 +185,7 @@ class icPrjDotUse(icSettingsDotUsePrototype):
         ini_file_name = self._get_ini_file_name()
         if os.path.exists(ini_file_name):
             cmd = 'gedit %s &' % ini_file_name
-            ic_exec.icSysCmd(cmd)
+            ic_exec.doSysCmd(cmd)
         else:
             log.warning(u'INI файл <%s> не найден' % ini_file_name)
 

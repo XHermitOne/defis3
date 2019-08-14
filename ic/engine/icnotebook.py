@@ -117,7 +117,7 @@ class icMainNotebook(wx.Notebook):
             # Если количество страниц - 0,
             # тогда считается что ораганайзер только открылся
             if self.GetPageCount() <= 0 and self.getMainWin()._OnOrgOpen:
-                ic.utils.ic_exec.ExecuteMethod(self.getMainWin()._OnOrgOpen, self)
+                ic.utils.ic_exec.execute_method(self.getMainWin()._OnOrgOpen, self)
 
             if DefaultPage_ != -1:
                 # Добавление страницы
@@ -157,7 +157,7 @@ class icMainNotebook(wx.Notebook):
                 self.Show(False)
                 # Если количество страниц - 0,
                 # тогда считается что ораганайзер только закрылся
-                ic.utils.ic_exec.ExecuteMethod(self.getMainWin()._OnOrgClose, self)
+                ic.utils.ic_exec.execute_method(self.getMainWin()._OnOrgClose, self)
 
             # При удалении страницы меняется и текущая выбранная страница
             self._cur_selected_page = self.GetSelection()
@@ -186,7 +186,7 @@ class icMainNotebook(wx.Notebook):
         self.Show(False)
         # Если количество страниц - 0,
         # тогда считается что ораганайзер только закрылся
-        ic.utils.ic_exec.ExecuteMethod(self.getMainWin()._OnOrgClose, self)
+        ic.utils.ic_exec.execute_method(self.getMainWin()._OnOrgClose, self)
         return result
 
     def OpenPageByTitle(self, Title_):
@@ -216,11 +216,11 @@ class icMainNotebook(wx.Notebook):
                 # Сначала выполняем скрипт на закрытие
                 if i_old_page >= 0:
                     if self._page_attr[i_old_page][CLOSE_CODE_IDX] is not None:
-                        ic.utils.ic_exec.ExecuteMethod(self._page_attr[i_old_page][CLOSE_CODE_IDX], self)
+                        ic.utils.ic_exec.execute_method(self._page_attr[i_old_page][CLOSE_CODE_IDX], self)
                 # Потом выполняем скрипт на открытие
                 if i_new_page >= 0:
                     if self._page_attr[i_new_page][OPEN_CODE_IDX] is not None:
-                        ic.utils.ic_exec.ExecuteMethod(self._page_attr[i_new_page][OPEN_CODE_IDX], self)
+                        ic.utils.ic_exec.execute_method(self._page_attr[i_new_page][OPEN_CODE_IDX], self)
         except:
             log.fatal(u'Ошибка функции изменения страницы.')
         # ЗДЕСЬ ОБЯЗАТЕЛЬНО ДОЛЖЕН БЫТЬ Skip() ИНАЧЕ ОБЪЕКТ ГЛЮЧИТ!!!

@@ -138,7 +138,7 @@ class icStaticBoxSizer(icwidget.icSizer, wx.StaticBoxSizer):
         if parent:
             import ic.utils.graphicUtils as grph
             parent_bgr = parent.GetBackgroundColour()
-            self.shape_clr = grph.AdjustColour2(parent_bgr, 7)
+            self.shape_clr = grph.getAdjustColour2(parent_bgr, 7)
         else:
             self.shape_clr = icwidget.icSizer.DESIGN_SHAPE_COLOR
         

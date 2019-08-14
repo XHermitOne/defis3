@@ -23,7 +23,7 @@ import os.path
 import sqlalchemy.ext.declarative
 
 from ic.utils import ic_file
-from ic.utils import ic_extend
+from ic.utils import extfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -76,7 +76,7 @@ def createSchemeDir(scheme_dirname=None):
     init_py_filename = os.path.join(scheme_dirname, '__init__.py')
     if not os.path.exists(init_py_filename):
         # Создать файл если его нет
-        return ic_extend.save_file_text(init_py_filename, INIT_PY_TEXT)
+        return extfunc.save_file_text(init_py_filename, INIT_PY_TEXT)
 
     return result
 

@@ -16,24 +16,24 @@ import pwd
 from . import util
 from ic.log import log
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
-def createTxtFile(FileName_, Txt_=None):
+def createTxtFile(filename, txt=None):
     """
     Создать текстовый файл.
-    @param FileName_: Имя создаваемого файла.
-    @param Txt_: Текст по умолчанию записываемый в файл.
+    @param filename: Имя создаваемого файла.
+    @param txt: Текст по умолчанию записываемый в файл.
     @return: True/False.
     """
-    Txt_ = util.encodeText(Txt_)
+    txt = util.encodeText(txt)
     f = None
     try:
-        if os.path.exists(FileName_):
-            os.remove(FileName_)
-        f = open(FileName_, 'w')
-        if Txt_:
-            f.write(Txt_)
+        if os.path.exists(filename):
+            os.remove(filename)
+        f = open(filename, 'w')
+        if txt:
+            f.write(txt)
         f.close()
         return True
     except:
@@ -136,38 +136,38 @@ def get_dir_filename_list(directory, filename_pattern=None, sort_filename=False)
     return full_filenames
 
 
-def get_home_path(UserName_=None):
+def get_home_path(username=None):
     """
     Определить домашнюю папку пользователя.
     """
     if sys.platform[:3].lower() == 'win':
         home = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'])
     else:
-        if UserName_ is None:
+        if username is None:
             home = os.environ['HOME']
         else:
-            user_struct = pwd.getpwnam(UserName_)
+            user_struct = pwd.getpwnam(username)
             home = user_struct.pw_dir
     return home
 
 
-def normal_path(path, sUserName=None):
+def normal_path(path, username=None):
     """
     Нормировать путь.
     @param path: Путь.
-    @param sUserName: Имя пользователя.
+    @param username: Имя пользователя.
     """
-    home_dir = get_home_path(sUserName)
+    home_dir = get_home_path(username)
     return os.path.abspath(os.path.normpath(path.replace('~', home_dir)))
 
 
-def copyFile(sFileName, sNewFileName, bRewrite=True):
+def copyFile(filename, new_filename, bRewrite=True):
     """
     Создает копию файла с новым именем.
-    @type sFileName: C{string}
-    @param sFileName: Полное имя файла.
-    @type sNewFileName: C{string}
-    @param sNewFileName: Новое имя файла.
+    @type filename: C{string}
+    @param filename: Полное имя файла.
+    @type new_filename: C{string}
+    @param new_filename: Новое имя файла.
     @type bRewrite: C{bool}
     @param bRewrite: True-если новый файл уже существует,
         то переписать его молча. False-если новый файл уже существует,
@@ -176,87 +176,87 @@ def copyFile(sFileName, sNewFileName, bRewrite=True):
     """
     try:
         # Проверка существования файла-источника
-        if not os.path.isfile(sFileName):
-            print('WARNING! File %s not exist for copy' % sFileName)
+        if not os.path.isfile(filename):
+            print('WARNING! File %s not exist for copy' % filename)
             return False
 
         # Проверка перезаписи уже существуещего файла
         if not bRewrite:
-            print('WARNING! File %s exist and not rewrite' % sFileName)
+            print('WARNING! File %s exist and not rewrite' % filename)
             return False
 
         # Создать результирующую папку
-        dir = os.path.dirname(sNewFileName)
+        dir = os.path.dirname(new_filename)
         if not os.path.exists(dir):
             os.makedirs(dir)
-        shutil.copyfile(sFileName, sNewFileName)
+        shutil.copyfile(filename, new_filename)
         return True
     except IOError:
-        print('ERROR! Copy file %s I/O error' % sFileName)
+        print('ERROR! Copy file %s I/O error' % filename)
         return False
 
 
-def copyToDir(sFileName, sDestDir, bRewrite=True):
+def copyToDir(filename, dst_dirname, bRewrite=True):
     """
     Копировать файл в папку.
-    @type sFileName: C{string}
-    @param sFileName: Имя файла.
-    @type sDestDir: C{string}
-    @param sDestDir: Папка в которую необходимо скопировать.
+    @type filename: C{string}
+    @param filename: Имя файла.
+    @type dst_dirname: C{string}
+    @param dst_dirname: Папка в которую необходимо скопировать.
     @type bRewrite: C{bool}
     @param bRewrite: True-если новый файл уже существует,
         то переписать его молча. False-если новый файл уже существует,
         то не перезаписывать его а оставить старый.
     @return: Возвращает результат выполнения операции True/False.
     """
-    return copyFile(sFileName,
-                    os.path.normpath(sDestDir+'/'+os.path.basename(sFileName)), bRewrite)
+    return copyFile(filename,
+                    os.path.normpath(dst_dirname + '/' + os.path.basename(filename)), bRewrite)
 
 
-def changeExt(sFileName, sNewExt):
+def changeExt(filename, new_ext):
     """
     Поменять у файла расширение.
-    @type sFileName: C{string}
+    @type filename: C{string}
     @param sFileName_: Полное имя файла.
-    @type sNewExt: C{string}
-    @param sNewExt: Новое расширение файла (Например: '.bak').
+    @type new_ext: C{string}
+    @param new_ext: Новое расширение файла (Например: '.bak').
     @return: Возвращает новое полное имя файла.
     """
     try:
-        new_name = os.path.splitext(sFileName)[0]+sNewExt
+        new_name = os.path.splitext(filename)[0] + new_ext
         if os.path.isfile(new_name):
             os.remove(new_name)     # если файл существует, то удалить
-        if os.path.exists(sFileName):
-            os.rename(sFileName, new_name)
+        if os.path.exists(filename):
+            os.rename(filename, new_name)
             return new_name
     except:
-        print('ERROR! Change ext file %s' % sFileName)
+        print('ERROR! Change ext file %s' % filename)
         raise
     return None
 
 
-def fileList(sDir):
+def fileList(src_dirname):
     """
     Список файлов в директории с полными путями.
-    @param sDir: Исходная директория.
+    @param src_dirname: Исходная директория.
     @return: Список файлов.
     """
-    return [norm_path(sDir+'/'+filename) for filename in os.listdir(norm_path(sDir))]
+    return [norm_path(src_dirname + '/' + filename) for filename in os.listdir(norm_path(src_dirname))]
 
 
-def norm_path(sPath, sDelim=os.path.sep):
+def norm_path(cur_path, delim=os.path.sep):
     """
     Удалить двойные разделител из пути.
-    @type sPath: C{string}
-    @param sPath: Путь
-    @type sDelim: C{string}
-    @param sDelim: Разделитель пути
+    @type cur_path: C{string}
+    @param cur_path: Путь
+    @type delim: C{string}
+    @param delim: Разделитель пути
     """
-    sPath = sPath.replace('~', getHomeDir())
-    dbl_delim = sDelim + sDelim
-    while dbl_delim in sPath:
-        sPath = sPath.replace(dbl_delim, sDelim)
-    return sPath
+    cur_path = cur_path.replace('~', getHomeDir())
+    dbl_delim = delim + delim
+    while dbl_delim in cur_path:
+        cur_path = cur_path.replace(dbl_delim, delim)
+    return cur_path
 
 
 def getHomeDir():

@@ -19,7 +19,7 @@ except:
     print(u'Import error: xmltodict')
 
 from ic.log import log
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from ic.utils import ic_str
 
 
@@ -208,7 +208,7 @@ def convert_xml_file2dict(xml_filename, codepage='utf-8'):
         log.warning(u'XML файл не найден <%s>' % xml_filename)
         return dict()
 
-    body_xml = ic_extend.load_file_text(xml_filename, 'utf-8')
+    body_xml = extfunc.load_file_text(xml_filename, 'utf-8')
 
     # Перекодировать текст, если надо
     src_codepage = ic_str.get_codepage(body_xml)

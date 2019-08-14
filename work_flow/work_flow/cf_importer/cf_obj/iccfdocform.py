@@ -370,7 +370,7 @@ class icCFDocForm(iccfobject.icCFObject):
         """
         Найти индекс ресурса объекта в ресурсе формы по его имени.
         """
-        idx = util1c.ValueIndexPath(res_data, obj_name)
+        idx = util1c.findValueIndexPath(res_data, obj_name)
         if idx:
             return idx[:-1]
         return None

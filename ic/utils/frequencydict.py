@@ -174,7 +174,7 @@ class icFrequencyDict(persistant.icPersistant):
         """
         result = list()
         for value in value_list:
-            if not isinstance(value, unicode):
+            if not isinstance(value, str):
                 value = ic_str.toUnicode(value, DEFAULT_ENCODING)
             words = value.split(u' ')
 
@@ -220,11 +220,11 @@ class icFrequencyDict(persistant.icPersistant):
         var = None
         for v in col_var:
             w = v[0]
-            if not isinstance(w, unicode):
+            if not isinstance(w, str):
                 try:
-                    w = unicode(w, DEFAULT_ENCODING)
+                    w = str(w, DEFAULT_ENCODING)
                 except UnicodeDecodeError:
-                    w = unicode(w, ALTERNATIVE_ENCODING)
+                    w = str(w, ALTERNATIVE_ENCODING)
             if w.find(txt) == 0:
                 var = w
                 break
@@ -273,11 +273,11 @@ class icFrequencyDict(persistant.icPersistant):
 
         if text_ctrl:
             value = text_ctrl.GetValue()
-            if not isinstance(value, unicode):
+            if not isinstance(value, str):
                 try:
-                    value = unicode(value, DEFAULT_ENCODING)
+                    value = str(value, DEFAULT_ENCODING)
                 except UnicodeDecodeError:
-                    value = unicode(value, ALTERNATIVE_ENCODING)
+                    value = str(value, ALTERNATIVE_ENCODING)
             self.AddWordInFreqDict(key, val=value)
             return True
         return False

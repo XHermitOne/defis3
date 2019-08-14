@@ -715,10 +715,10 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
             dc.SetPen(pagePen)
             dc.DrawLine(w+1, IC_NB_HEIGHT-1, w+wo-1, IC_NB_HEIGHT-1)
 
-            clr1 = graphicUtils.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), -50)
-            clr2 = graphicUtils.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
+            clr1 = graphicUtils.getAdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), -50)
+            clr2 = graphicUtils.getAdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
             
-            graphicUtils.DrawGradientRect(dc, wo-2, IC_NB_HEIGHT-pst, clr1, clr2, 1, x0=w+1, y0=pst+1)
+            graphicUtils.drawGradientRect(dc, wo - 2, IC_NB_HEIGHT - pst, clr1, clr2, 1, x0=w + 1, y0=pst + 1)
             graphicUtils.drawRoundCornersRect(dc, (w, pst), (wo, IC_NB_HEIGHT-pst),
                                               fgr, self.selPageColor,
                                               self.backgroundColor, 0,
@@ -928,8 +928,8 @@ def test(par=0):
     nb.GetTitle(1).SetDescription('Short Help for <2>')
     nb.GetTitle(2).SetDescription('Short Help for <3>')
     nb.SetFirstVisible(0)
-    nb.selPageColor = graphicUtils.GetMidColor(win.GetBackgroundColour(), wx.Colour(0, 0, 0), 0.15)
-    clr = graphicUtils.GetMidColor(win.GetBackgroundColour(), wx.Colour(255, 255, 255), 0.5)
+    nb.selPageColor = graphicUtils.getMidColour(win.GetBackgroundColour(), wx.Colour(0, 0, 0), 0.15)
+    clr = graphicUtils.getMidColour(win.GetBackgroundColour(), wx.Colour(255, 255, 255), 0.5)
     nb.SetBackgroundColour(clr)
     frame.Show(True)
     app.MainLoop()

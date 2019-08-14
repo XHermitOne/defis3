@@ -21,7 +21,7 @@
 
 import wx
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 2)
 
 #   Идентификаторы типов заливки ячейки
 BGR_SOLID = 0
@@ -37,7 +37,7 @@ if wx.VERSION > (2, 8, 11, 10):
 # --- Функции для работы с градиентами
 
 
-def GetMidColor(clr1, clr2, part=0.5):
+def getMidColour(clr1, clr2, part=0.5):
     """ 
     Функция возвращает промежуточный цвет между двумя.
     @type clr1: C{wx.Colour}
@@ -53,7 +53,7 @@ def GetMidColor(clr1, clr2, part=0.5):
     return wx.Colour(r, g, b)
 
 
-def DrawGradient(dc, width, height, clr, gradType=BGR_GRAD_TOP, x0=0, y0=0, delta=None):
+def drawGradient(dc, width, height, clr, gradType=BGR_GRAD_TOP, x0=0, y0=0, delta=None):
     """ 
     Рисует прямоугольник с градиентной заливкой.
     type dc: C{wx.DC}
@@ -85,7 +85,7 @@ def DrawGradient(dc, width, height, clr, gradType=BGR_GRAD_TOP, x0=0, y0=0, delt
             delta = 3
 
     if gradType in [BGR_GRAD_TOP, BGR_GRAD_BOTTOM]:
-        for h in xrange(height):
+        for h in range(height):
             if gradType == BGR_GRAD_BOTTOM:
                 y = height - h
             else:
@@ -110,7 +110,7 @@ def DrawGradient(dc, width, height, clr, gradType=BGR_GRAD_TOP, x0=0, y0=0, delt
             dc.SetPen(pen)
             dc.DrawLine(x0, y0+h, x0+width, y0+h)
     else:
-        for w in xrange(width):
+        for w in range(width):
 
             if gradType == BGR_GRAD_RIGHT:
                 x = width - w
@@ -138,7 +138,7 @@ def DrawGradient(dc, width, height, clr, gradType=BGR_GRAD_TOP, x0=0, y0=0, delt
             dc.DrawLine(x0+w, y0+0, x0+w, y0+height)
 
 
-def DrawLineGradient(dc, x0, y0, x1, y1, clr1, clr2, gradType=BGR_GRAD_TOP, clr_bord=None):
+def drawLineGradient(dc, x0, y0, x1, y1, clr1, clr2, gradType=BGR_GRAD_TOP, clr_bord=None):
     """ 
     Рисует прямоугольник с градиентной заливкой.
     """
@@ -163,7 +163,7 @@ def DrawLineGradient(dc, x0, y0, x1, y1, clr1, clr2, gradType=BGR_GRAD_TOP, clr_
     gc.DrawRectangle(x0, y0, rect.width, rect.height)
 
     
-def DrawGradientRect(dc, width, height, clr1, clr2=wx.Colour(128, 128, 128),
+def drawGradientRect(dc, width, height, clr1, clr2=wx.Colour(128, 128, 128),
                      gradType=BGR_GRAD_TOP, x0=0, y0=0):
     """ 
     Рисует прямоугольник с градиентной заливкой.
@@ -190,20 +190,20 @@ def DrawGradientRect(dc, width, height, clr1, clr2=wx.Colour(128, 128, 128),
     param y0: Верх угла.
     """
     if gradType in [BGR_GRAD_TOP, BGR_GRAD_BOTTOM]:
-        for h in xrange(height):
+        for h in range(height):
             if gradType == BGR_GRAD_BOTTOM:
-                clr = GetMidColor(clr1, clr2, float(h/(height-1.0)))
+                clr = getMidColour(clr1, clr2, float(h / (height - 1.0)))
             else:
-                clr = GetMidColor(clr2, clr1, float(h/(height-1.0)))
+                clr = getMidColour(clr2, clr1, float(h / (height - 1.0)))
             pen = wx.Pen(clr)
             dc.SetPen(pen)
             dc.DrawLine(x0, y0+h, x0+width, y0+h)
     else:
-        for w in xrange(width):
+        for w in range(width):
             if gradType == BGR_GRAD_RIGHT:
-                clr = GetMidColor(clr1, clr2, float(w/(width-1)))
+                clr = getMidColour(clr1, clr2, float(w / (width - 1)))
             else:
-                clr = GetMidColor(clr2, clr1, float(w/(width-1)))
+                clr = getMidColour(clr2, clr1, float(w / (width - 1)))
                     
             pen = wx.Pen(clr)
             dc.SetPen(pen)
@@ -217,7 +217,7 @@ pLeft = [[0,    0.4,   0.7,  0.9],
 
 
 def drawRoundCorners(dc, size, fgr, bgr, bgr_prnt,
-                    st=0, clrLst=None, corners=(1, 1, 1, 1), backgroundType=0):
+                     st=0, clrLst=None, corners=(1, 1, 1, 1), backgroundType=0):
     """
     """
     return drawRoundCornersRect(dc, (0,0), size, fgr, bgr, bgr_prnt,
@@ -280,9 +280,9 @@ def drawRoundCornersRect(dc, pos, size, fgr, bgr, bgr_prnt,
         for y, r in enumerate(pLeft):
             for x, p in enumerate(r):
                 if p >= 0:
-                    clr = GetMidColor(clr_prnt, clrT, p)
+                    clr = getMidColour(clr_prnt, clrT, p)
                 else:
-                    clr = GetMidColor(dc.GetPixel(x0+x+st, y0+y+st), clrT, -p)
+                    clr = getMidColour(dc.GetPixel(x0 + x + st, y0 + y + st), clrT, -p)
                         
                 pen = wx.Pen(clr)
                 dc.SetPen(pen)
@@ -293,9 +293,9 @@ def drawRoundCornersRect(dc, pos, size, fgr, bgr, bgr_prnt,
                 if bRT and clrR:
                     if backgroundType:
                         if p >= 0:
-                            clr = GetMidColor(clr_prnt, clrR, p)
+                            clr = getMidColour(clr_prnt, clrR, p)
                         else:
-                            clr = GetMidColor(dc.GetPixel(x0+width-x-st-1, y0+y+st), clrR, -p)
+                            clr = getMidColour(dc.GetPixel(x0 + width - x - st - 1, y0 + y + st), clrR, -p)
                         pen = wx.Pen(clr)
                         dc.SetPen(pen)
 
@@ -304,9 +304,9 @@ def drawRoundCornersRect(dc, pos, size, fgr, bgr, bgr_prnt,
                 if bRB and clrB:
                     if backgroundType:
                         if p >= 0:
-                            clr = GetMidColor(clr_prnt, clrB, p)
+                            clr = getMidColour(clr_prnt, clrB, p)
                         else:
-                            clr = GetMidColor(dc.GetPixel(x0+width-x-st-1, y0+height-y-st-1), clrB, -p)
+                            clr = getMidColour(dc.GetPixel(x0 + width - x - st - 1, y0 + height - y - st - 1), clrB, -p)
                         pen = wx.Pen(clr)
                         dc.SetPen(pen)
 
@@ -315,9 +315,9 @@ def drawRoundCornersRect(dc, pos, size, fgr, bgr, bgr_prnt,
                 if bLB and clrL:
                     if backgroundType:
                         if p >= 0:
-                            clr = GetMidColor(clr_prnt, clrL, p)
+                            clr = getMidColour(clr_prnt, clrL, p)
                         else:
-                            clr = GetMidColor(dc.GetPixel(x0+x+st, y0+height-y-st-1), clrL, -p)
+                            clr = getMidColour(dc.GetPixel(x0 + x + st, y0 + height - y - st - 1), clrL, -p)
                             
                         pen = wx.Pen(clr)
                         dc.SetPen(pen)
@@ -326,7 +326,7 @@ def drawRoundCornersRect(dc, pos, size, fgr, bgr, bgr_prnt,
 # ------ new
 
 
-def AdjustColour(color, percent, alpha=wx.ALPHA_OPAQUE):
+def getAdjustColour(color, percent, alpha=wx.ALPHA_OPAQUE):
     """ 
     Brighten/Darken input colour by percent and adjust alpha
     channel if needed. Returns the modified color.
@@ -353,7 +353,7 @@ def AdjustColour(color, percent, alpha=wx.ALPHA_OPAQUE):
     return wx.Colour(max(red, 0), max(green, 0), max(blue, 0), alpha)
 
 
-def AdjustColour2(color, shift, alpha=wx.ALPHA_OPAQUE):
+def getAdjustColour2(color, shift, alpha=wx.ALPHA_OPAQUE):
     """ 
     Brighten/Darken input colour by percent and adjust alpha
     channel if needed. Returns the modified color.

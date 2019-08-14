@@ -15,7 +15,7 @@ import ic.utils.impfunc
 from . import util
 from . import ic_str
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Наполнитель позиций при отображении вложенности пунктов в компоненте списка
 DEFAULT_PADDING = '....'
@@ -70,27 +70,27 @@ DEFAULT_PADDING = '....'
 #         raise
 
 
-def ValueIndexPath(List_, Value_, Idx_=None):
+def findValueIndexPath(cur_list, value, idx=None):
     """
     Функция позволяет найти значение в сложном списке списков и 
     возвращает кореж индексов-пути до этого элемента.
     """
-    if Idx_ is None:
-        Idx_ = []
-    if isinstance(Idx_, tuple):
-        Idx_ = list(Idx_)
+    if idx is None:
+        idx = []
+    if isinstance(idx, tuple):
+        idx = list(idx)
         
-    if Value_ in List_:
-        idx = List_.index(Value_)
-        Idx_.append(idx)
-        return tuple(Idx_)
+    if value in cur_list:
+        idx = cur_list.index(value)
+        idx.append(idx)
+        return tuple(idx)
     else:
         # Поиск в подсписках
-        Idx_.append(-1)
-        for i, element in enumerate(List_):
+        idx.append(-1)
+        for i, element in enumerate(cur_list):
             if isinstance(element, list):
-                Idx_[-1] = i
-                idx_lst = ValueIndexPath(element, Value_, tuple(Idx_))
+                idx[-1] = i
+                idx_lst = findValueIndexPath(element, value, tuple(idx))
                 if idx_lst:
                     return idx_lst
     # Ничего найти не удалось
@@ -112,7 +112,7 @@ def get_idx_paths(data_list, parent_idx=None):
                 value_path = parent_idx + [i] if parent_idx else [i]
                 result += get_idx_paths(value, value_path)
             else:
-                value_path = list(parent_idx + list(ValueIndexPath(data_list, value)) if parent_idx else ValueIndexPath(data_list, value))
+                value_path = list(parent_idx + list(findValueIndexPath(data_list, value)) if parent_idx else findValueIndexPath(data_list, value))
                 result.append((value, value_path))
 
     return result
@@ -128,16 +128,16 @@ def print_idx_paths(data_list):
         print('Value: <%s> Index path: %s' % (idx_path[0], idx_path[1]))
 
 
-def getModuleDoc(ModuleFileName_):
+def getModuleDoc(module_filename):
     """
     Определить текст документации модуля.
-    @param ModuleFileName_: Полное имя файла модуля.
+    @param module_filename: Полное имя файла модуля.
     """
     module_name = None
     try:
-        module_name = os.path.splitext(os.path.basename(ModuleFileName_))[0]
-        # module = imp.load_source(module_name, ModuleFileName_)
-        module = ic.utils.impfunc.loadSource(module_name, ModuleFileName_)
+        module_name = os.path.splitext(os.path.basename(module_filename))[0]
+        # module = imp.load_source(module_name, module_filename)
+        module = ic.utils.impfunc.loadSource(module_name, module_filename)
         if hasattr(module, '__doc__'):
             if wx.Platform == '__WXGTK__':
                 return module.__doc__
@@ -146,7 +146,7 @@ def getModuleDoc(ModuleFileName_):
             else:
                 return module.__doc__
     except:
-        print('ERROR: In function \'util.getModuleDoc\'.Module file: %s Module name: %s' % (ModuleFileName_, module_name))
+        print('ERROR: In function \'util.getModuleDoc\'.Module file: %s Module name: %s' % (module_filename, module_name))
     return None
 
 
@@ -160,145 +160,145 @@ def genUID():
     return str(uid)[1:-1]
 
 
-def encodeText(Text_, SrcCP_=None, DstCP_='utf-8'):
+def encodeText(text, src_codepage=None, dst_codepage='utf-8'):
     """
     Перекодировать текст из одной кодировки в другую.
-    @param Text_: Сам текст.
-    @param SrcCP_: Кодировка исходного текста.
-    @param DstCP_: Кодировка результата.
+    @param text: Сам текст.
+    @param src_codepage: Кодировка исходного текста.
+    @param dst_codepage: Кодировка результата.
     @return: Текст в нужной кодировке.
     """
-    if (DstCP_ is None) or (DstCP_.lower() == 'unicode'):
-        if isinstance(Text_, str):
-            # return str(Text_, SrcCP_)
-            return Text_
-        # elif isinstance(Text_, unicode):
-        #     return Text_
-        return Text_
+    if (dst_codepage is None) or (dst_codepage.lower() == 'unicode'):
+        if isinstance(text, str):
+            # return str(text, src_codepage)
+            return text
+        # elif isinstance(text, unicode):
+        #     return text
+        return text
 
-    if isinstance(Text_, str):
-        if (SrcCP_ is not None) and (SrcCP_.lower() != 'unicode'):
-            txt = str(Text_, encoding=SrcCP_)
+    if isinstance(text, str):
+        if (src_codepage is not None) and (src_codepage.lower() != 'unicode'):
+            txt = str(text, encoding=src_codepage)
         else:
-            txt = str(Text_, encoding='utf-8')
+            txt = str(text, encoding='utf-8')
         
-    # elif isinstance(Text_, str):
-    #     txt = Text_
+    # elif isinstance(text, str):
+    #     txt = text
         
-    return txt.encode(DstCP_)
+    return txt.encode(dst_codepage)
 
 
-def listStrRecode(List_, SrcCP_, DstCP_):
+def listStrRecode(cur_list, src_codepage, dst_codepage):
     """ 
     Перекодировать все строки в списке рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param List_: Сам список.
-    @param SrcCP_: Кодовая страница строки.
-    @param DstCP_: Новая кодовая страница строки.
+    @param cur_list: Сам список.
+    @param src_codepage: Кодовая страница строки.
+    @param dst_codepage: Новая кодовая страница строки.
     @return: Возвращает преобразованный список.
     """
     lst = []
     # Перебор всех элементов списка
-    for i in range(len(List_)):
-        if isinstance(List_[i], list):
+    for i in range(len(cur_list)):
+        if isinstance(cur_list[i], list):
             # Елемент - список
-            value = listStrRecode(List_[i], SrcCP_, DstCP_)
-        elif isinstance(List_[i], dict):
+            value = listStrRecode(cur_list[i], src_codepage, dst_codepage)
+        elif isinstance(cur_list[i], dict):
             # Елемент списка - словарь
-            value = dictStrRecode(List_[i], SrcCP_, DstCP_)
-        elif isinstance(List_[i], tuple):
+            value = dictStrRecode(cur_list[i], src_codepage, dst_codepage)
+        elif isinstance(cur_list[i], tuple):
             # Елемент списка - кортеж
-            value = tupleStrRecode(List_[i], SrcCP_, DstCP_)
-        elif isinstance(List_[i], str):
-            value = encodeText(List_[i], SrcCP_, DstCP_)
+            value = tupleStrRecode(cur_list[i], src_codepage, dst_codepage)
+        elif isinstance(cur_list[i], str):
+            value = encodeText(cur_list[i], src_codepage, dst_codepage)
         else:
-            value = List_[i]
+            value = cur_list[i]
         lst.append(value)
     return lst
 
 
-def _isRUSString(String_):
+def _isRUSString(cur_string):
     """
     Строка с рускими буквами?
     """
-    if isinstance(String_, str):
-        rus_chr = [c for c in String_ if ord(c) > 128]
+    if isinstance(cur_string, str):
+        rus_chr = [c for c in cur_string if ord(c) > 128]
         return bool(rus_chr)
     return False
 
 
-def dictStrRecode(Dict_, SrcCP_, DstCP_):
+def dictStrRecode(cur_dict, src_codepage, dst_codepage):
     """ 
     Перекодировать все строки в словаре рекурсивно в другую кодировку. 
     Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param Dict_: Сам словарь.
-    @param SrcCP_: Кодовая страница строки.
-    @param DstCP_: Новая кодовая страница строки.
+    @param cur_dict: Сам словарь.
+    @param src_codepage: Кодовая страница строки.
+    @param dst_codepage: Новая кодовая страница строки.
     @return: Возвращает преобразованный словарь.
     """
-    keys_ = Dict_.keys()
+    keys_ = cur_dict.keys()
     # Перебор всех ключей словаря
     for cur_key in keys_:
-        value = Dict_[cur_key]
+        value = cur_dict[cur_key]
         # Нужно ключи конвертировать?
         if _isRUSString(cur_key):
-            new_key = encodeText(cur_key, SrcCP_, DstCP_)
-            del Dict_[cur_key]
+            new_key = encodeText(cur_key, src_codepage, dst_codepage)
+            del cur_dict[cur_key]
         else:
             new_key = cur_key
             
         if isinstance(value, list):
             # Елемент - список
-            Dict_[new_key] = listStrRecode(value, SrcCP_, DstCP_)
+            cur_dict[new_key] = listStrRecode(value, src_codepage, dst_codepage)
         elif isinstance(value, dict):
             # Елемент - cловарь
-            Dict_[new_key] = dictStrRecode(value, SrcCP_, DstCP_)
+            cur_dict[new_key] = dictStrRecode(value, src_codepage, dst_codepage)
         elif isinstance(value, tuple):
             # Елемент - кортеж
-            Dict_[new_key] = tupleStrRecode(value, SrcCP_, DstCP_)
+            cur_dict[new_key] = tupleStrRecode(value, src_codepage, dst_codepage)
         elif isinstance(value, str):
-            Dict_[new_key] = encodeText(value, SrcCP_, DstCP_)
+            cur_dict[new_key] = encodeText(value, src_codepage, dst_codepage)
 
-    return Dict_
+    return cur_dict
 
 
-def tupleStrRecode(Tuple_, SrcCP_, DstCP_):
+def tupleStrRecode(Tuple_, src_codepage, dst_codepage):
     """ 
     Перекодировать все строки в кортеже рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
     @param Tuple_: Сам кортеж.
-    @param SrcCP_: Кодовая страница строки.
-    @param DstCP_: Новая кодовая страница строки.
+    @param src_codepage: Кодовая страница строки.
+    @param dst_codepage: Новая кодовая страница строки.
     @return: Возвращает преобразованный кортеж.
     """
     # Перевести кортеж в список
     lst = list(Tuple_)
     # и обработать как список
-    list_ = listStrRecode(lst, SrcCP_, DstCP_)
+    list_ = listStrRecode(lst, src_codepage, dst_codepage)
     # Обратно перекодировать
     return tuple(list_)
 
 
-def structStrRecode(Struct_, SrcCP_, DstCP_):
+def structStrRecode(Struct_, src_codepage, dst_codepage):
     """ 
     Перекодировать все строки в структуре рекурсивно в другую кодировку.
     @param Struct_: Сруктура (список, словарь, кортеж).
-    @param SrcCP_: Кодовая страница строки.
-    @param DstCP_: Новая кодовая страница строки.
+    @param src_codepage: Кодовая страница строки.
+    @param dst_codepage: Новая кодовая страница строки.
     @return: Возвращает преобразованную структру.
     """
     if isinstance(Struct_, list):
         # Список
-        struct = listStrRecode(Struct_, SrcCP_, DstCP_)
+        struct = listStrRecode(Struct_, src_codepage, dst_codepage)
     elif isinstance(Struct_, dict):
         # Словарь
-        struct = dictStrRecode(Struct_, SrcCP_, DstCP_)
+        struct = dictStrRecode(Struct_, src_codepage, dst_codepage)
     elif isinstance(Struct_, tuple):
         # Кортеж
-        struct = tupleStrRecode(Struct_, SrcCP_, DstCP_)
+        struct = tupleStrRecode(Struct_, src_codepage, dst_codepage)
     elif isinstance(Struct_, str):
         # Строка
-        struct = encodeText(Struct_, SrcCP_, DstCP_)
+        struct = encodeText(Struct_, src_codepage, dst_codepage)
     else:
         # Тип не определен
         struct = Struct_
@@ -494,8 +494,8 @@ def splitName1CWord(Txt_):
     Например:
     'ДокументСписокПередНачаломДобавления'->'Документ список перед началом добавления'.
     """
-    # if isinstance(Txt_, str):
-    #     return _splitName1CWordUNICODE(Txt_)
+    # if isinstance(txt, str):
+    #     return _splitName1CWordUNICODE(txt)
     if isinstance(Txt_, str):
         return _splitName1CWordUNICODE(Txt_)
     return Txt_

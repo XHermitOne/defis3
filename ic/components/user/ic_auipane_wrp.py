@@ -136,11 +136,11 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     Стандартная функция контроля.
     """
     if attr in ('control_res',):
-        ret=str_to_val_user_property(attr, value, propEdt)
+        ret = str_to_val_user_property(attr, value, propEdt)
         if ret and type(ret) == tuple:
             typ, name, ifs, fl, subsys = ret[0]
-            if not typ in INS_TYPES:
-                wx.MessageBox(u'%s <%s>. %s %s' % (_('Object type is'), typ, _('Object type must be'), INS_TYPES))
+            if typ not in INS_TYPES:
+                wx.MessageBox(u'Тип объекта: <%s>. Требуемый тип объекта: %s' % (typ, INS_TYPES))
             else:
                 return coderror.IC_CTRLKEY_OK 
 

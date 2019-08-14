@@ -1286,7 +1286,7 @@ class icObjectStorageSource(icTreeDirStorage,
         """
         storage_interface.icObjectStorageSourceInterface.__init__(self, Res_)
         self._spc = ic_util.SpcDefStruct(SPC_IC_OBJ_STORAGE_SRC, self._res)
-        storage_dir = ic_file.AbsolutePath(ic_exec.ExecuteCode(self._spc['storage_dir'], self))
+        storage_dir = ic_file.AbsolutePath(ic_exec.execute_code(self._spc['storage_dir'], self))
         icTreeDirStorage.__init__(self, storage_dir)
 
 

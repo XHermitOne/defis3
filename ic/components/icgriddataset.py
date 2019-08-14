@@ -531,7 +531,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
         txt = value
 
         #   Если определен аттрибут setvalue колoнки, то пытаемся по нему вычислить значение ячейки
-        if (not self.exCols[col]['setvalue'] in [None, '', 'None']) and self.exCols[col]['attr'] in ['C', 'CR']:
+        if (not self.exCols[col]['setvalue'] in [None, '', 'None']) and self.exCols[col]['attr'] in ['C', 'cr']:
             keyExpr = self.GetView().GetUUIDAttr('setvalue', fld_name)
             res, val = util.ic_eval(self.exCols[col]['setvalue'], 0, self.evalSpace,
                                     'Exception icGridDataSet.SetValue()',
@@ -769,7 +769,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
             value = self.GetDataset().getNameValue(fld, row)
             self.evalSpace['value'] = value
             #   Если определен аттрибут getvalue колoнки, то пытаемся по нему вычислить значение ячейки
-            if (not self.exCols[col]['getvalue'] in [None, '', 'None']) and self.exCols[col]['attr'] in ['C', 'CR']:
+            if (not self.exCols[col]['getvalue'] in [None, '', 'None']) and self.exCols[col]['attr'] in ['C', 'cr']:
                 keyExpr = self.GetView().GetUUIDAttr('getvalue', fld)
                 res, val = util.ic_eval(self.exCols[col]['getvalue'], 0,
                                         self.evalSpace, 'Exception icGridDataSet.GetValue()',
@@ -979,7 +979,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
         #   Устанавливаем аттрибуты ячеек и колонок
         if row >= self.GetNumberRows()-1:
             #   Добавляем признак 'только для чтения'
-            if col['attr'] in ['R', 'O', 'CR']:
+            if col['attr'] in ['R', 'O', 'cr']:
                 icAttrEditCell['readonly'] = 1
             else:
                 icAttrEditCell['readonly'] = 0
@@ -988,7 +988,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
             try:
                 col_attr = col['cell_attr']
                 #   Добавляем признак 'только для чтения'
-                if col['attr'] in ['R', 'O', 'CR']:
+                if col['attr'] in ['R', 'O', 'cr']:
                     col_attr['readonly'] = 1
                 #   Сначала пытаемся вычислить аттрибут ячейки по спец. выражению в getattr
                 if not self.GetView().getattr in [None, '']:
@@ -1356,7 +1356,7 @@ class icGridDataset(icGrid):
                     or self.GetDataset().isFieldIndexed(fld)):
                 #   Если поле вычисляемое, то честно вычисляем каждое поле, затем
                 #   сортируем буфер идентификаторов в нужном нам порядке
-                if rescol['attr'] in ['C', 'CR'] and fld not in self.GetDataset().getFieldList():
+                if rescol['attr'] in ['C', 'cr'] and fld not in self.GetDataset().getFieldList():
                     if not direction:
                         if self.GetDataset()._isSortDESC:
                             self.GetDataset()._isSortDESC = False
@@ -1771,7 +1771,7 @@ class icGridDataset(icGrid):
             except KeyError:
                 attr = 'W'
 
-            if hlp not in [None, ''] and not attr in ['R', 'O', 'CR']:
+            if hlp not in [None, ''] and not attr in ['R', 'O', 'cr']:
                 keyExpr = self.GetUUIDAttr('hlp', self.GetTable().exCols[col]['name'])
                 ret, val = util.ic_eval(hlp, 0, self.evalSpace, 'hlp:' + hlp,
                                         compileKey=keyExpr)
@@ -2271,7 +2271,7 @@ def defColDBDescription(col):
     @return: Описание поля для таблицы данных.
     """
     cell_type, wx_type = defPicType(col['pic'], col['valid'])
-    if col['attr'] in (u'c', u'C', u'cr', u'CR'):
+    if col['attr'] in (u'c', u'C', u'cr', u'cr'):
         attr = icdataset.icVirtualFieldType
     else:
         attr = icdataset.icNormalFieldType

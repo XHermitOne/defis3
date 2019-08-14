@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-# CR Format Test
+# cr Format Test
 
 import os.path
 
@@ -25,7 +25,7 @@ def walk_find_rus(rus_txt, dir_, files_):
                         write_file.close()
                     except:
                         write_file.close()
-                    print(py_file_name + ' ERROR CR')
+                    print(py_file_name + ' ERROR cr')
                 else:
                     pass
 

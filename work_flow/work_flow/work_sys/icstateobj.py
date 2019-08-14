@@ -16,7 +16,7 @@ from ic.log import log
 from . import icbusinessobj
 
 from ic.engine import glob_functions
-from ic.utils import ic_extend
+from ic.utils import extfunc
 
 # Версия
 __version__ = (0, 1, 1, 2)
@@ -84,7 +84,7 @@ class icStateObjProto(icbusinessobj.icBusinessObjPrototype):
         # ВНИМАНИЕ! При смене состояния любого документа/объекта запоминаем
         # компьютер и пользователя которым были сделаны изменения
         if self.isRequisite('computer') and not self.getRequisiteValue('computer'):
-            self.setRequisiteValue('computer', ic_extend.getComputerName())
+            self.setRequisiteValue('computer', extfunc.getComputerName())
         if self.isRequisite('username') and not self.getRequisiteValue('username'):
             self.setRequisiteValue('username', glob_functions.getCurUserName())
         # Дата-время изменения состояния
@@ -150,7 +150,7 @@ class icStateObjProto(icbusinessobj.icBusinessObjPrototype):
         # ВНИМАНИЕ! При смене состояния любого документа/объекта запоминаем
         # компьютер и пользователя которым были сделаны изменения
         if self.isRequisite('computer') and not self.getRequisiteValue('computer'):
-            self.setRequisiteValue('computer', ic_extend.getComputerName())
+            self.setRequisiteValue('computer', extfunc.getComputerName())
         if self.isRequisite('username') and not self.getRequisiteValue('username'):
             self.setRequisiteValue('username', glob_functions.getCurUserName())
         # Дата-время изменения состояния

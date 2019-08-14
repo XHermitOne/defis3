@@ -420,7 +420,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
             value = self.dataset.getNameValue(fld, item)
             #   Если определен аттрибут getvalue колoнки, то пытаемся по нему вычислить значение ячейки
             self.evalSpace['value'] = value
-            if (self.exCols[col]['getvalue'] not in [None, '', 'None']) and self.exCols[col]['attr'] in ['C', 'CR']:
+            if (self.exCols[col]['getvalue'] not in [None, '', 'None']) and self.exCols[col]['attr'] in ['C', 'cr']:
                 keyExpr = self.GetUUIDAttr('getvalue', fld)
                 res, val = util.ic_eval(self.exCols[col]['getvalue'],
                                         0, self.evalSpace,

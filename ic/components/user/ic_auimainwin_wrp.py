@@ -147,7 +147,7 @@ ic_can_contain = ['AUIPane']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 1)
 
 # Функции редактирования
 
@@ -244,11 +244,11 @@ class icAUIMainWindow(icwidget.icSimple, icAUImainwin.icAUIMainWinPrototype):
                                     None, evalSpace=self.evalSpace,
                                     bCounter=bCounter, progressDlg=progressDlg)
 
-    def childCreator(self, Child_):
+    def childCreator(self, child):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        return prs.icBuildObject(self, Child_,
+        return prs.icBuildObject(self, child,
                                  evalSpace=self.evalSpace,
                                  bIndicator=False)
 

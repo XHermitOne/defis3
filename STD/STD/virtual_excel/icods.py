@@ -98,10 +98,10 @@ class icODS(object):
         self.setWorkbook(workbook)
         
         if self.ods_document:
-            # if isinstance(sFileName, str):
+            # if isinstance(filename, str):
             #    # ВНИМАНИЕ! Перед сохранением надо имя файла сделать
             #    # Юникодной иначе падает по ошибке в функции save
-            #    sFileName = unicode(sFileName, DEFAULT_ENCODE)
+            #    filename = unicode(filename, DEFAULT_ENCODE)
             # Добавлять автоматически расширение-+
             # к имени файла (True - да)          |
             #                                    V

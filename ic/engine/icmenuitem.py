@@ -336,7 +336,7 @@ class icMenuItem(wx.MenuItem):
             иначе False.
         """
         if self.GetKind() == wx.ITEM_RADIO and self._radio_checked:
-            ic.utils.ic_exec.ExecuteMethod(self.GetCheckOffMethod(), self)
+            ic.utils.ic_exec.execute_method(self.GetCheckOffMethod(), self)
             self._radio_checked = False
             # Установить собственную метку
             self._SelfChecked = False
@@ -380,7 +380,7 @@ class icMenuItem(wx.MenuItem):
                 parent_parent_menu.SetChildOpenedMenu(self._ParentMenu)
             # Если менюшка прежде не открывалась, тогда выполнить метод на открытие
             if not self._ParentMenu.IsOpened():
-                ic.utils.ic_exec.ExecuteMethod(self._ParentMenu.GetOpenMethod(), self)
+                ic.utils.ic_exec.execute_method(self._ParentMenu.GetOpenMethod(), self)
             # Установить признак открытой меню
             self._ParentMenu.SetOpened()
 
@@ -427,12 +427,12 @@ class icMenuItem(wx.MenuItem):
         """
         try:
             item_kind = self.GetKind()
-            ic.utils.ic_exec.ExecuteMethod(self.GetActionMethod(), self)
+            ic.utils.ic_exec.execute_method(self.GetActionMethod(), self)
 
             # Если пункт меню отмечен как переключаемый, то ...
             if item_kind == wx.ITEM_CHECK or item_kind == wx.ITEM_RADIO:
                 if self._SelfChecked:
-                    result = ic.utils.ic_exec.ExecuteMethod(self.GetCheckOffMethod(), self)
+                    result = ic.utils.ic_exec.execute_method(self.GetCheckOffMethod(), self)
                     # Проверка выполнения метода
                     if result is not None:
                         # Если метод запрещает переключение,
@@ -445,7 +445,7 @@ class icMenuItem(wx.MenuItem):
                     else:
                         self._SelfChecked = False
                 else:
-                    result = ic.utils.ic_exec.ExecuteMethod(self.GetCheckOnMethod(), self)
+                    result = ic.utils.ic_exec.execute_method(self.GetCheckOnMethod(), self)
                     # Проверка выполнения метода
                     if result is not None:
                         # Если метод запрещает переключение,

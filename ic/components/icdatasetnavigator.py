@@ -576,14 +576,14 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                     col = flt[0].GetGridCursorCol()
                     rec = flt[0].GetGridCursorRow()
                     fields = [flt[0].GetTable().colNames[col]]
-                    if flt[0].GetTable().exCols[col]['attr'] in ['C', 'CR']:
+                    if flt[0].GetTable().exCols[col]['attr'] in ['C', 'cr']:
                         bVirtual = True
                 else:
                     flt = [x for x in objs if x.source == self.source and x.type == 'ListDataset']
                     if flt:
                         fields = [flt[0].colNames[0]]
                         rec = -1
-                        if flt[0].exCols[0]['attr'] in ['C', 'CR']:
+                        if flt[0].exCols[0]['attr'] in ['C', 'cr']:
                             bVirtual = True
                     else:
                         fields = None

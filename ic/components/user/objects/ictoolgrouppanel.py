@@ -52,9 +52,9 @@ class ToolGroupPanel(icobjectinterface.icObjectInterface):
         obj.SetState(1)
 
         clr1 = wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE)
-        clr2 = grph.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
-        bnd = grph.AdjustColour(clr1, -60)
-        bnd2 = grph.AdjustColour(clr2, 50)
+        clr2 = grph.getAdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
+        bnd = grph.getAdjustColour(clr1, -60)
+        bnd2 = grph.getAdjustColour(clr2, 50)
 
         obj.SetBackgroundColour(clr1)
         obj.bgr2 = clr2

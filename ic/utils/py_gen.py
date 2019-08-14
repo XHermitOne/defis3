@@ -14,7 +14,7 @@ import wx
 import ic.utils.impfunc
 from ic.log import log
 from ic.dlg import ic_dlg
-from . import ic_extend
+from . import extfunc
 from . import util
 from . import ic_str
 
@@ -212,7 +212,7 @@ def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
                                           body_functions,
                                           frm_body_function)
             log.debug(u'Сохранение файла <%s>' % output_filename)
-            result = ic_extend.save_file_text(output_filename, py_txt)
+            result = extfunc.save_file_text(output_filename, py_txt)
             if result:
                 return output_filename
             else:

@@ -63,7 +63,7 @@ class XPCornerLabelRenderer(glr.GridLabelRenderer):
         self._right_pen = wx.Pen(right_clr)
 
     def Draw(self, grid, dc, rect, rc):
-        graphicUtils.DrawLineGradient(dc, rect.GetX(), rect.GetY(), rect.GetX()+rect.GetWidth()-2, rect.GetY()+rect.GetHeight(),
+        graphicUtils.drawLineGradient(dc, rect.GetX(), rect.GetY(), rect.GetX() + rect.GetWidth() - 2, rect.GetY() + rect.GetHeight(),
                                       self._start_color, self._end_color)
         r = wx.Rect(rect.GetX(), rect.GetY(), rect.GetWidth(), rect.GetHeight())
         # Top Line
@@ -131,7 +131,7 @@ class XPRowLabelRenderer(glr.GridLabelRenderer):
         self._drawCursor = flag
         
     def Draw(self, grid, dc, rect, row):
-        graphicUtils.DrawLineGradient(dc, rect.GetX(), rect.GetY(), rect.GetX()+rect.GetWidth()-2, rect.GetY()+rect.GetHeight()-1,
+        graphicUtils.drawLineGradient(dc, rect.GetX(), rect.GetY(), rect.GetX() + rect.GetWidth() - 2, rect.GetY() + rect.GetHeight() - 1,
                                       self._start_color, self._end_color)
         r = wx.Rect(rect.GetX(), rect.GetY(), rect.GetWidth(), rect.GetHeight())
         if self._drawNumRow:
@@ -201,7 +201,7 @@ class XPColLabelRenderer(glr.GridLabelRenderer):
         return self._isSort
         
     def Draw(self, grid, dc, rect, col):
-        graphicUtils.DrawLineGradient(dc, rect.GetX(), rect.GetY(), rect.GetX()+rect.GetWidth()-2, rect.GetY()+rect.GetHeight(),
+        graphicUtils.drawLineGradient(dc, rect.GetX(), rect.GetY(), rect.GetX() + rect.GetWidth() - 2, rect.GetY() + rect.GetHeight(),
                                       self._start_color, self._end_color)
         r = wx.Rect(rect.GetX(), rect.GetY(), rect.GetWidth(), rect.GetHeight())
         hAlign, vAlign = grid.GetColLabelAlignment()

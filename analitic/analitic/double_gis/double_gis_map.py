@@ -9,7 +9,7 @@ import jinja2
 
 from . import double_gis_util
 
-from ic.utils import ic_extend
+from ic.utils import extfunc
 
 # Шаблон результирующего HTML документа
 HTML_TEMPLATE = '''
@@ -151,4 +151,4 @@ class Map(object):
                                           width=self.width,
                                           height=self.height)
 
-        return ic_extend.save_file_text(html_filename, html)
+        return extfunc.save_file_text(html_filename, html)

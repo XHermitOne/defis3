@@ -14,13 +14,13 @@ import wx
 import datetime
 
 from ic.components import icwidget
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.utils import ic_str
 from ic.utils import ic_time
 from . import frequencydict
 
 
-__version__ = (1, 0, 1, 2)
+__version__ = (1, 1, 1, 2)
 
 
 class icFormDataManager(object):

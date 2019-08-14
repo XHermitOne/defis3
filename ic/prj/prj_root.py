@@ -644,7 +644,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         """
         import ic.utils.ic_exec as ic_exec
 
-        # ic_exec.CreateRunApp(AppDir_)
+        # ic_exec.createRunApp(AppDir_)
         
         # Коммандная строка
         dbg_mode_cmd = ''
@@ -667,7 +667,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             cmd = '%s %s/run.py -run %s %s/ -s %s' % (sys.executable, ic_engine_path, dbg_mode_cmd, PrjPath_, username)
             
         log.info(u'Запуск проекта <%s>' % cmd)
-        ic_exec.RunTask(cmd)
+        ic_exec.runTask(cmd)
         
     def run(self):
         """
@@ -748,14 +748,14 @@ class PrjRoot(ImpNode.PrjImportSys):
             prj_path = os.path.dirname(self.getRoot().getPrjFileName())
             defis_dir = os.path.dirname(os.path.dirname(prj_path))
         
-            ic_exec.CreateRunApp(defis_dir)
+            ic_exec.createRunApp(defis_dir)
             
             # Коммандная строка
             cmd = '\'%s\' \'%s\' -c -t \'%s/run.py\' -run \'%s/\' -s' % (python_exe, winpdb_module,
                                                                          defis_dir, prj_path)
             
             log.info('DEBUG PROJECT: <%s>' % cmd)
-            ic_exec.RunTaskBAT(cmd)
+            ic_exec.runTaskBAT(cmd)
         
     def getResNamesByTypes(self, *Types_):
         """

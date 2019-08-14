@@ -12,7 +12,7 @@ import wx.adv
 from wx.lib.wordwrap import wordwrap
 
 from ic.engine import glob_functions
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from ic import config
 from ic.log import log
 
@@ -110,8 +110,8 @@ def showAbout(parent=None, name=None, version=None, description=None,
     if authors is None:
         authors = DEFAULT_AUTHORS
     if license is None:
-        license = ic_extend.load_file_text(DEFAULT_LICENSE_FILENAME,
-                                           to_unicode=True)
+        license = extfunc.load_file_text(DEFAULT_LICENSE_FILENAME,
+                                         to_unicode=True)
     if icon_filename is None:
         main_win = glob_functions.getMainWin()
         icon_filename = main_win.getIconFilename()

@@ -394,11 +394,11 @@ class icMenuRootNode(flatmenu.FlatMenu):
         if os.path.exists(hlp_file_name):
             if wx.Platform == '__WXMSW__':
                 hlp_file_name = os.path.normpath(hlp_file_name)
-                ic_exec.icSysCmd('start explorer ' + hlp_file_name)
+                ic_exec.doSysCmd('start explorer ' + hlp_file_name)
             elif wx.Platform == '__WXGTK__':
                 try:
                     www_browser = os.environ.get('BROWSER', DEFAULT_WWW_BROWSER)
-                    ic_exec.icSysCmd(www_browser + ' ' + hlp_file_name)
+                    ic_exec.doSysCmd(www_browser + ' ' + hlp_file_name)
                 except:
                     log.error()
         else:

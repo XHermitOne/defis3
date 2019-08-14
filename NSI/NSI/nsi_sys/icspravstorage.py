@@ -16,7 +16,7 @@ from ic.utils import ic_uuid
 from ic.db import icsqlalchemy
 from ic.db import icdb
 from ic.engine import glob_functions
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from . import gen_nsi_table_res
 
 # Версия
@@ -920,7 +920,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                         fld_dict[fld_name] = value
 
             if fld_name == 'computer' and not value:
-                fld_dict[fld_name] = ic_extend.getComputerName()
+                fld_dict[fld_name] = extfunc.getComputerName()
             if fld_name == 'username' and not value:
                 fld_dict[fld_name] = glob_functions.getCurUserName()
         return fld_dict
@@ -1098,7 +1098,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                         if 'id' in RecDict_:
                             del RecDict_['id']
                         if 'computer' in RecDict_ and not RecDict_['computer']:
-                            RecDict_['computer'] = ic_extend.getComputerName()
+                            RecDict_['computer'] = extfunc.getComputerName()
                         if 'username' in RecDict_ and not RecDict_['username']:
                             RecDict_['username'] = glob_functions.getCurUserName()
 
@@ -1124,7 +1124,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                         if 'id' in RecDict_:
                             del RecDict_['id']
                         if 'computer' in RecDict_ and not RecDict_['computer']:
-                            RecDict_['computer'] = ic_extend.getComputerName()
+                            RecDict_['computer'] = extfunc.getComputerName()
                         if 'username' in RecDict_ and not RecDict_['username']:
                             RecDict_['username'] = glob_functions.getCurUserName()
                         self._tab.update(recs[0][0], **RecDict_)
@@ -1173,7 +1173,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                             value = self._tab.getFieldDefault(fld_name)
                             fld_dict[fld_name] = value
             if fld_name == 'computer' and not value:
-                fld_dict[fld_name] = ic_extend.getComputerName()
+                fld_dict[fld_name] = extfunc.getComputerName()
             if fld_name == 'username' and not value:
                 fld_dict[fld_name] - glob_functions.getCurUserName()
 

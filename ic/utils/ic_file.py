@@ -176,7 +176,7 @@ def GetSubDirsFilterSVN(Path_):
     """
     Функция возвращает список поддиректорий с отфильтрованными папками Subversion.
     @param Path_: Дирикторий.
-    @param Filter_: Список недопустимых имен папок.
+    @param filename_filter: Список недопустимых имен папок.
     @return: В случае ошибки возвращает None.
     """
     return GetSubDirsFilter(Path_)
@@ -452,9 +452,9 @@ def _addCopyDirWalk(args, CurDir_, CurNames_):
 
 def addCopyDir(Dir_, ToDir_, NotCopyFilter_=('.svn', '.SVN', '.Svn')):
     """
-    Дополнить папку ToDir_ файлами и папками из Dir_
+    Дополнить папку ToDir_ файлами и папками из dst_dir
     @param Dir_: Папка/директория,  которая копируется.
-    @param ToDir_: Папка/директория, в которую копируется Dir_.
+    @param ToDir_: Папка/директория, в которую копируется dst_dir.
     @param NotCopyFilter_: Не копировать файлы/папки.
     """
     try:
@@ -467,10 +467,10 @@ def addCopyDir(Dir_, ToDir_, NotCopyFilter_=('.svn', '.SVN', '.Svn')):
 
 def CopyDir(Dir_, ToDir_, ReWrite_=False, AddDir_=True):
     """
-    Функция папку Dir_ в папку ToDir_ со всеми внутренними поддиректориями
+    Функция папку dst_dir в папку ToDir_ со всеми внутренними поддиректориями
     и файлами.
     @param Dir_: Папка/директория,  которая копируется.
-    @param ToDir_: Папка/директория, в которую копируется Dir_.
+    @param ToDir_: Папка/директория, в которую копируется dst_dir.
     @param ReWrite_: Указание перезаписи директории,
         если она уже существует.
     @param AddDir_: Указание производить дополнение папки,
@@ -495,7 +495,7 @@ def CopyDir(Dir_, ToDir_, ReWrite_=False, AddDir_=True):
 
 def CloneDir(Dir_, NewDir_, ReWrite_=False):
     """
-    Функция переносит все содержимое папки Dir_ в папку с новым именем NewDir_.
+    Функция переносит все содержимое папки dst_dir в папку с новым именем NewDir_.
     @param Dir_: Папка/директория,  которая копируется.
     @param NewDir_: Новое имя папки/директории.
     @param ReWrite_: Указание перезаписи директории, если она

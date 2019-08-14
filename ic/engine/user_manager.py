@@ -589,7 +589,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         Выполнить при успешном логине.
         """
         if ic_mode.isRuntimeMode():
-            ic_exec.ExecuteMethod(exec_code, self)
+            ic_exec.execute_method(exec_code, self)
         
     def logout_ok(self):
         """
@@ -616,7 +616,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         Выполнить при успешном логауте.
         """
         if ic_mode.isRuntimeMode():
-            ic_exec.ExecuteMethod(exec_code, self)
+            ic_exec.execute_method(exec_code, self)
 
     def getUserRequisit(self, username=''):
         """

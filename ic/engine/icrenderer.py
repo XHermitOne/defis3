@@ -10,7 +10,7 @@ import wx
 from wx.lib.agw.artmanager import ArtManager, RendererBase, DCSaver
 from wx.lib.agw.fmresources import ControlFocus, ControlPressed, ControlNormal
 
-from ic.utils.graphicUtils import GetMidColor
+from ic.utils.graphicUtils import getMidColour
 
 # --- Specifications ---
 SPC_IC_RENDERERXP = dict({
@@ -188,10 +188,10 @@ class icRendererXPPrototype(RendererBase):
         c3 = dc.GetPixel(rect.x + rect.width, rect.y)
         c4 = dc.GetPixel(rect.x + rect.width, rect.y + rect.height)
 
-        rbTailAvColor = GetMidColor(bottomTailColor, c4)
-        rbTailTBColor = GetMidColor(bottomTailColor, endColor)
-        rtTailAvColor = GetMidColor(startColorTail, c3)
-        rtTailTBColor = GetMidColor(startColorTail, startColor)
+        rbTailAvColor = getMidColour(bottomTailColor, c4)
+        rbTailTBColor = getMidColour(bottomTailColor, endColor)
+        rtTailAvColor = getMidColour(startColorTail, c3)
+        rtTailTBColor = getMidColour(startColorTail, startColor)
 
         r = wx.Rect(rect.x-6, rect.y+1, rect.width-tailW, rect.height)
         r2 = wx.Rect(r.x + rect.width - tailW, rect.y+1, tailW, rect.height)

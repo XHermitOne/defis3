@@ -69,7 +69,7 @@ class icObjectStorage(storesrc.icObjStorageSrc,
         """
         storage_interface.icObjectStorageInterface.__init__(self, Resource_)
         self._spc = ic_util.SpcDefStruct(SPC_IC_OBJ_STORAGE, self._res)
-        # self._storage_src_name = ic_exec.ExecuteCode(self._spc['storage_src'], self)
+        # self._storage_src_name = ic_exec.execute_code(self._spc['storage_src'], self)
         self._storage_src_psp = self._spc['storage_src']
         self._storage_src_name = self._storage_src_psp[0][1]
         storesrc.icObjStorageSrc.__init__(self, self._storage_src_name)

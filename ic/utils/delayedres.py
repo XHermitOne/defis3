@@ -47,6 +47,6 @@ class DelayedFunction(object):
         try:
             result = delayedResult.get()
             self.result_func(*self.args)
-        except Exception, exc:
+        except Exception as exc:
             print(u'Result for sessionID %s raised exception: %s' % (self.sessionID, exc))
             return

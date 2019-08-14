@@ -219,7 +219,7 @@ class icCFSprav(iccfobject.icCFObject):
             return
 
         # util1c.print_idx_paths(cf_doc_res.data)
-        # print '>>', util1c.ValueIndexPath(cf_doc_res.data, 'b5818d6c-2f83-4927-a320-bb81a4253603')
+        # print '>>', util1c.findValueIndexPath(cf_doc_res.data, 'b5818d6c-2f83-4927-a320-bb81a4253603')
         # import sys
         # sys.exit(1)
 

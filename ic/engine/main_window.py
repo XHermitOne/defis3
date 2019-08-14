@@ -389,8 +389,8 @@ class icMainWindow(wx.Frame):
 
         win_title = ''
         if RES_WIN_TITLEFUNC in win_struct and \
-           not ic_exec.IsEmptyMethod(win_struct[RES_WIN_TITLEFUNC]):
-            win_title = ic_exec.ExecuteMethod(win_struct[RES_WIN_TITLEFUNC])
+           not ic_exec.is_empty_method(win_struct[RES_WIN_TITLEFUNC]):
+            win_title = ic_exec.execute_method(win_struct[RES_WIN_TITLEFUNC])
         else:
             if RES_WIN_TITLE in win_struct and win_struct[RES_WIN_TITLE] is not None:
                 win_title = win_struct[RES_WIN_TITLE]
@@ -578,7 +578,7 @@ class icMainWindow(wx.Frame):
                 # Если главный органайзер не отображается в данный момент,
                 # то выпольнить функцию отрисовки
                 if (self._MainNotebook is None) or not self._MainNotebook.IsShown():
-                    ic_exec.ExecuteMethod(self._PaintFunc, self)
+                    ic_exec.execute_method(self._PaintFunc, self)
 
             # ВНИМАНИЕ!!! НЕОБХОДИМО ОБЯЗАТЕЛЬНО СТАВИТЬ event.Skip()
             #   ИНАЧЕ УЖАСНО ГЛЮЧИТ!!!!
@@ -633,9 +633,9 @@ class icMainWindow(wx.Frame):
 
         try:
             ok = True
-            if not ic_exec.IsEmptyMethod(self._OnOpen) and \
+            if not ic_exec.is_empty_method(self._OnOpen) and \
                 not self._is_opened:
-                ok = ic_exec.ExecuteMethod(self._OnOpen, self)
+                ok = ic_exec.execute_method(self._OnOpen, self)
                 self._is_opened = True
             if ok:  # Обычное открытие окна
                 event.Skip()
@@ -657,8 +657,8 @@ class icMainWindow(wx.Frame):
                         
         try:
             ok = True
-            if not ic_exec.IsEmptyMethod(self._OnClose):
-                ok = ic_exec.ExecuteMethod(self._OnClose, self)
+            if not ic_exec.is_empty_method(self._OnClose):
+                ok = ic_exec.execute_method(self._OnClose, self)
             if ok:  # Обычное закрытие окна
                 if self._MainNotebook:
                     self.delOrg()
@@ -714,7 +714,7 @@ class icMainWindow(wx.Frame):
                 self.SetTitle(title)
         else:
             if self._TitleReadOnly == 0 and self._TitleFunc != {}:
-                new_title = ic_exec.ExecuteMethod(self._TitleFunc, self)
+                new_title = ic_exec.execute_method(self._TitleFunc, self)
                 if new_title != '' and new_title is not None:
                     self.SetTitle(new_title)
 
@@ -730,8 +730,8 @@ class icMainWindow(wx.Frame):
         Обновить заголовок.
         """
         try:
-            if not ic_exec.IsEmptyMethod(self._TitleFunc):
-                win_title = ic_exec.ExecuteMethod(self._TitleFunc)
+            if not ic_exec.is_empty_method(self._TitleFunc):
+                win_title = ic_exec.execute_method(self._TitleFunc)
                 self.SetTitle(win_title)
                 self.Refresh()
         except:

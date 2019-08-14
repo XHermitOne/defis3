@@ -13,7 +13,7 @@ from . import import_manager
 
 from ic.log import log
 from ic.db import dbf
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from ic.engine import glob_functions
 from ic.dlg import ic_dlg
 
@@ -101,7 +101,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
                        n_obj=alt_n_doc,
                        obj_date=dt_obj,
                        username=glob_functions.getCurUserName(),
-                       computer=ic_extend.getComputerNameLAT(),
+                       computer=extfunc.getComputerNameLAT(),
                        n_doc=n_doc,
                        doc_date=dt_doc,
                        doc_name=doc_name,

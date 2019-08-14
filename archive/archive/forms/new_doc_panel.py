@@ -16,7 +16,7 @@ from ic.bitmap import bmpfunc
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.dlg import wait_box
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from ic.utils import ic_str
 from ic.utils import ic_file
 from ic.utils import txtgen

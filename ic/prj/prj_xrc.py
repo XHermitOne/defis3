@@ -41,7 +41,7 @@ class PrjXRCResource(prj_node.PrjNode):
         filename = self.getPath()
         if os.path.exists(filename):
             cmd = 'xrced --meta %s&' % filename
-            ic_exec.icSysCmd(cmd)
+            ic_exec.doSysCmd(cmd)
         return True
 
     def create(self, new_name=None):
@@ -50,7 +50,7 @@ class PrjXRCResource(prj_node.PrjNode):
         @param new_name: Указание нового имени созданного узла.
         """
         cmd = 'xrced --meta&'
-        ic_exec.icSysCmd(cmd)
+        ic_exec.doSysCmd(cmd)
         return True
 
     def delete(self):
@@ -106,7 +106,7 @@ class PrjXRCResource(prj_node.PrjNode):
             py_filename = os.path.join(os.path.dirname(xrc_filename),
                                        os.path.basename(xrc_filename).replace('.', '_')+'.py')
             cmd = 'pywxrc --python --output %s %s' % (py_filename, xrc_filename)
-            ic_exec.icSysCmd(cmd)
+            ic_exec.doSysCmd(cmd)
             msg = u'Сгенерирован файл <%s>' % py_filename
             ic_dlg.icMsgBox(u'Генерация Python модуля', msg)
 

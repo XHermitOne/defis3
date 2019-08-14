@@ -65,7 +65,7 @@ ic_class_pic = '@common.imgEdtMethod'
 ic_class_pic2 = '@common.imgEdtMethod'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_mth_wrp.icMethod-class.html'
+ic_class_doc = 'ic/doc/ic.components.user.ic_mth_wrp.doMethod-class.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте

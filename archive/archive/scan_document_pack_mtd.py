@@ -16,7 +16,7 @@ from ic.db import dbf
 from ic.utils import ic_str
 from ic import ic_dlg
 from ic.utils import ic_uuid
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from ic.utils import ic_time
 from ic.engine import glob_functions
 from ic.interfaces import icmanagerinterface

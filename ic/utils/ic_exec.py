@@ -21,7 +21,7 @@ from . import ic_util
 from . import ic_file
 from . import util
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 _ = wx.GetTranslation
 
@@ -51,11 +51,11 @@ SPC_IC_FUNC = {'name': 'func1',     # код-имя функции, строка
                }
 
 
-def ExecuteMethod(Func_, self=None):
+def execute_method(function, self=None):
     """
     Выполнить метод.
     @param self: ссылка на объект, который вызывает эту функцию.
-    @param Func_: словарь функции (см. документацию на ресурсные файлы).
+    @param function: словарь функции (см. документацию на ресурсные файлы).
     """
     try:
         if self is not None:
@@ -67,77 +67,77 @@ def ExecuteMethod(Func_, self=None):
             name_space = util.InitEvalSpace(locals())
         name_space['self'] = self
         
-        ret = util.ic_eval(Func_, evalSpace=name_space)
+        ret = util.ic_eval(function, evalSpace=name_space)
         
         if ret[0]:
             return ret[1]
         else:
             return None
     except:
-        log.fatal(u'Execute method error: %s' % Func_)
+        log.fatal(u'Execute method error: %s' % function)
         return None
 
 
-def ExecuteCode(Code_, self=None):
+def execute_code(code_block, self=None):
     """
     Выполнить блок кода.
     @param self: ссылка на объект, который вызывает эту функцию.
-    @param Func_: строка функции.
+    @param function: строка функции.
         Если строка начинается с символа '@', то это выполняемая функция.
     """
     try:
         # Проверка аргументов
-        if isinstance(Code_, str):
-            return Code_
-        elif Code_[0] != CODE_UNIT_TAG:
-            return Code_
+        if isinstance(code_block, str):
+            return code_block
+        elif code_block[0] != CODE_UNIT_TAG:
+            return code_block
         # Убрать признак блока кода
-        Code_ = Code_[1:]
+        code_block = code_block[1:]
         # Перед выполнением метода заменить тег, определяющий объект,
         # который вызвал эту функцию, на self
         if self is not None:
-            Code_ = Code_.replace(SELF_DOT_TAG, 'self.')
+            code_block = code_block.replace(SELF_DOT_TAG, 'self.')
         # Выполнить
-        return ic_util.icEval(Code_, 0, locals(), globals())
+        return ic_util.icEval(code_block, 0, locals(), globals())
     except:
         log.fatal(u'Ошибка выполнения блока кода')
 
 
-def IsEmptyMethod(Func_):
+def is_empty_method(function):
     """
     Проверка пустой словарь функции или нет.
-    @param Func_: Словарь функции.
+    @param function: Словарь функции.
     @return: Истина - если словарь пустой (ни модуль, ни метод не определены).
              В противном случае - ложь.
     """
     try:
         find = True
-        if (not Func_) or Func_ == 'None':
+        if (not function) or function == 'None':
             return True
 
         # Проверка модуля
-        if RES_MODULE in Func_ and Func_[RES_MODULE]:
+        if RES_MODULE in function and function[RES_MODULE]:
             find = False
         else:
             # Проверка метода
-            if RES_METHOD in Func_ and Func_[RES_METHOD] != '' and \
-               Func_[RES_METHOD] != CODE_UNIT_TAG and Func_[RES_METHOD] is not None:
+            if RES_METHOD in function and function[RES_METHOD] != '' and \
+               function[RES_METHOD] != CODE_UNIT_TAG and function[RES_METHOD] is not None:
                 find = False
         return find
     except:
-        log.fatal(u'Function: %s' % Func_)
+        log.fatal(u'Function: %s' % function)
 
 
-def GetNameFuncFromCode(Code_):
+def getNameFuncFromCode(code_block):
     """
     Получить имя функции из блока кода.
-    @param Code_: Блок кода.
+    @param code_block: Блок кода.
         Блок кода - строка в формате:
             @ИмяФункции(аргументы)
     """
     try:
         # Убрали @
-        name_func = Code_[1:]
+        name_func = code_block[1:]
         i_find = name_func.find('(')
         # Если это константа, тогда вернуть ее имя
         if i_find == -1:
@@ -147,62 +147,62 @@ def GetNameFuncFromCode(Code_):
         return ''
 
 
-def icSysCmd(sCommand):
+def doSysCmd(command):
     """
     Функция выполняет комманду системы.
-    @param sCommand: Строка системной команды.
+    @param command: Строка системной команды.
     """
-    log.debug(u'Выполнение команды: <%s>' % sCommand)
-    return os.system(sCommand)
+    log.debug(u'Выполнение команды: <%s>' % command)
+    return os.system(command)
 
 
-def icExecFunc(Func_):
+def exec_function(function):
     """
     Выполнить функцию и возвратить значение.
-    @param Func_: Описание функции (См. спецификацию SPC_IC_FUNC).
+    @param function: Описание функции (См. спецификацию SPC_IC_FUNC).
     @return: Возвращает значение,  которое возвращает функция.
     """
     name_space = dict()
     try:
-        name_space = util.ic_import(Func_['import'])
-        return util.ic_eval(Func_['func'], -1, name_space)
+        name_space = util.ic_import(function['import'])
+        return util.ic_eval(function['func'], -1, name_space)
     except:
         log.fatal()
         return None
 
 
-def icExecFuncByName(FuncName_, Funcs_):
+def execFuncByName(function_name, functions):
     """
     Выполнить функцию и возвратить значение по его имени.
-    @param FuncName_: Имя функции (См. fnc_fmt.doc).
-    @param Funcs_: Описание функций (См. fnc_fmt.doc) или 
+    @param function_name: Имя функции (См. fnc_fmt.doc).
+    @param functions: Описание функций (См. fnc_fmt.doc) или 
         имя файла где оно храниться.
     @return: Возвращает значение,  которое возвращает функция.
     """
     try:
-        if isinstance(Funcs_, str):
-            Funcs_ = util.readAndEvalFile(Funcs_)
-        return icExecFunc(Funcs_[FuncName_])
+        if isinstance(functions, str):
+            functions = util.readAndEvalFile(functions)
+        return exec_function(functions[function_name])
     except:
         log.fatal()
         return None
 
 
-def icMethod(MethodStr_, NameSpace_=None):
+def doMethod(method_str, name_space=None):
     """
     Вызов метода.
-    @param MethodStr_: Строковый вызов метода. Например 'NSI.method1(a1=3,s2=4)'.
-    @param NameSpace_: Пространство имен.
+    @param method_str: Строковый вызов метода. Например 'NSI.method1(a1=3,s2=4)'.
+    @param name_space: Пространство имен.
     """
     try:
         # Сначала разобрать строку
-        method_name = MethodStr_.split('{')[0]
-        if NameSpace_ is None:
-            NameSpace_ = locals()
-        method_args_str = MethodStr_[len(method_name):]
+        method_name = method_str.split('{')[0]
+        if name_space is None:
+            name_space = locals()
+        method_args_str = method_str[len(method_name):]
         method_args = {}
         if method_args_str:
-            method_args = eval(method_args_str, NameSpace_)
+            method_args = eval(method_args_str, name_space)
 
         sub_sys = None
         if method_name.find('.') != -1:
@@ -211,10 +211,10 @@ def icMethod(MethodStr_, NameSpace_=None):
             method_name = method_name_split[1]
 
         from ic.utils import resource
-        value = resource.method(method_name, sub_sys, NameSpace_, **method_args)
+        value = resource.method(method_name, sub_sys, name_space, **method_args)
         return value
     except:
-        log.fatal(u'Execute method error: %s' % MethodStr_)
+        log.fatal(u'Execute method error: %s' % method_str)
         return None
 
 
@@ -232,12 +232,12 @@ else:
 """
 
 
-def CreateRunApp(PrjDir_):
+def createRunApp(prj_dir):
     """
     Создать если надо модуль запуска прикладной системы.
     @return: True/False.
     """
-    run_py_file_name = os.path.join(ic_file.AbsolutePath(PrjDir_), 'run.py')
+    run_py_file_name = os.path.join(ic_file.AbsolutePath(prj_dir), 'run.py')
     
     if not os.path.exists(run_py_file_name):
         run_py_file = None
@@ -253,22 +253,22 @@ def CreateRunApp(PrjDir_):
     return False
         
     
-def RunTask(Cmd_):
+def runTask(command):
     """
     Запуск комманды, как отдельной задачи.
-    @type Cmd_: C{string}
-    @param Cmd_: Комманда системы.
+    @type command: C{string}
+    @param command: Комманда системы.
     """
     if ic_util.isOSWindowsPlatform():
-        return RunTaskBAT(Cmd_)
-    return RunTaskSH(Cmd_)
+        return runTaskBAT(command)
+    return runTaskSH(command)
 
 
-def RunTaskSH(Cmd_):
+def runTaskSH(command):
     """
     Запуск комманды, как отдельной задачи с отдельной консолью в Linux.
-    @type Cmd_: C{string}
-    @param Cmd_: Комманда системы.
+    @type command: C{string}
+    @param command: Комманда системы.
     """
     run_sh_name = ic_file.AbsolutePath('./run.sh')
     if os.path.isfile(run_sh_name):
@@ -276,7 +276,7 @@ def RunTaskSH(Cmd_):
     f = None
     try:
         f = open(run_sh_name, 'wt')
-        f.write(Cmd_)
+        f.write(command)
         f.close()
         f = None
         # Запуск исполняемого скрипта
@@ -288,11 +288,11 @@ def RunTaskSH(Cmd_):
             f.close()
 
 
-def RunTaskBAT(Cmd_):
+def runTaskBAT(command):
     """
     Запуск комманды, как отдельной задачи с отдельной консолью.
-    @type Cmd_: C{string}
-    @param Cmd_: Комманда системы.
+    @type command: C{string}
+    @param command: Комманда системы.
     """
     run_bat_name = ic_file.AbsolutePath('./run.bat')
     if os.path.isfile(run_bat_name):
@@ -300,7 +300,7 @@ def RunTaskBAT(Cmd_):
     f = None
     try:
         f = open(run_bat_name, 'wt')
-        f.write(Cmd_)
+        f.write(command)
         f.close()
         f = None
         # Запуск батника
@@ -312,16 +312,16 @@ def RunTaskBAT(Cmd_):
             f.close()
 
 
-def RunProgramm(Cmd_, Mode_=os.P_NOWAIT):
+def runProgramm(command, exec_mode=os.P_NOWAIT):
     """
     Запуск программы на выполнение.
-    @type Cmd_: C{string}
-    @param Cmd_: Комманда системы.
-    @param Mode_: Режим выполнения комманды. См os режимы выполнения.
+    @type command: C{string}
+    @param command: Комманда системы.
+    @param exec_mode: Режим выполнения комманды. См os режимы выполнения.
     @return: True/False.
     """
     try:
-        parse_args = Cmd_.strip().split(' ')
+        parse_args = command.strip().split(' ')
         args = []
         i = 0
         while i < len(parse_args):
@@ -339,67 +339,67 @@ def RunProgramm(Cmd_, Mode_=os.P_NOWAIT):
             args.append(parse_arg)
             i += 1
         log.info(u'Запуск программы: %s' % args)
-        os.spawnve(Mode_, args[0], args, os.environ)
+        os.spawnve(exec_mode, args[0], args, os.environ)
         return True
     except:
-        log.fatal(u'Ошибка запуска программы: %s' % Cmd_)
+        log.fatal(u'Ошибка запуска программы: %s' % command)
         return False
 
 
-def RunOSCommand(Cmd_, Wait_=True):
+def runOSCommand(command, bWait=True):
     """
     Запуск комманды OC.
-    @type Cmd_: C{string}
-    @param Cmd_: Комманда системы.
-    @param Wait_: Команда ожидания процесса.
+    @type command: C{string}
+    @param command: Комманда системы.
+    @param bWait: Команда ожидания процесса.
     @return: True/False.
     """
     try:
-        if Wait_:
-            os.system(Cmd_)
+        if bWait:
+            os.system(command)
         else:
             # Если ожидание выключено, то скорее всего это программа
-            return RunProgramm(Cmd_)
+            return runProgramm(command)
         return True
     except:
-        log.fatal(u'Ошибка запуска комманды ОС: %s' % Cmd_)
+        log.fatal(u'Ошибка запуска комманды ОС: %s' % command)
         return False
 
 
-def execFuncStr(FuncStr_, NameSpace_=None, ReImport_=False, *args, **kwargs):
+def execFuncStr(function_str, name_space=None, bReImport=False, *args, **kwargs):
     """
     Выполнение строковой функции в формате: пакеты.модуль.функция(аргументы).
-    @type FuncStr_: C{string}
-    @param FuncStr_: Строковая функция.
-    @type NameSpace_: C{dictionary}
-    @param NameSpace_: Пространство имен.
-    @type ReImport_: C{bool}
-    @param ReImport_: Переимпортировать модуль функции?
+    @type function_str: C{string}
+    @param function_str: Строковая функция.
+    @type name_space: C{dictionary}
+    @param name_space: Пространство имен.
+    @type bReImport: C{bool}
+    @param bReImport: Переимпортировать модуль функции?
     @return: Вовращает результат выполнения функции или None  в случае ошибки.
     """
     result = None
     try:
         # Выделить модуль функции
-        func_import = FuncStr_.split('(')[0].split('.')
+        func_import = function_str.split('(')[0].split('.')
         func_mod = '.'.join(func_import[:-1])
         # Подготовить пространство имен
-        if NameSpace_ is None or not isinstance(NameSpace_, dict):
-            NameSpace_ = {}
+        if name_space is None or not isinstance(name_space, dict):
+            name_space = {}
 
         # Выполнение функции
         try:
             try:
-                if ReImport_:
+                if bReImport:
                     ic.utils.impfunc.unloadSource(func_mod)
                 import_str = 'import '+func_mod
                 exec(import_str)
             except:
                 log.fatal(u'Ошибка импорта модуля: %s' % import_str)
-            NameSpace_.update(locals())
-            result = eval(FuncStr_, globals(), NameSpace_)
+            name_space.update(locals())
+            result = eval(function_str, globals(), name_space)
         except:
-            log.fatal(u'Ошибка запуска модуля: %s' % (FuncStr_, func_mod))
+            log.fatal(u'Ошибка запуска модуля: %s' % (function_str, func_mod))
     except:
-        log.fatal(u'Ошибка в функции ic_exec.execFuncStr, %s' % FuncStr_)
+        log.fatal(u'Ошибка в функции ic_exec.execFuncStr, %s' % function_str)
     
     return result

@@ -478,11 +478,11 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             # Если это инструмент, тогда выполнить его
             if tool_id in self._tools_action and self._tools_action[tool_id] is not None:
                 # Выполнение метода
-                ic_exec.ExecuteMethod(self._tools_action[tool_id], self)
+                ic_exec.execute_method(self._tools_action[tool_id], self)
             if tool_state:
                 if tool_id in self._tools_check_off and self._tools_check_off[tool_id] is not None:
                     # Выполнение метода
-                    result = ic_exec.ExecuteMethod(self._tools_check_on[tool_id], self)
+                    result = ic_exec.execute_method(self._tools_check_on[tool_id], self)
                     # Проверка выполнения метода
                     if result is not None:
                         # Если метод запрещает переключение,
@@ -492,7 +492,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
             else:
                 if tool_id in self._tools_check_on and self._tools_check_on[tool_id] is not None:
                     # Выполнение метода
-                    result = ic_exec.ExecuteMethod(self._tools_check_off[tool_id], self)
+                    result = ic_exec.execute_method(self._tools_check_off[tool_id], self)
                     # Проверка выполнения метода
                     if result is not None:
                         # Если метод запрещает переключение,

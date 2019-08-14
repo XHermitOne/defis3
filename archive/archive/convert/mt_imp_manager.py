@@ -18,7 +18,7 @@ from ic.utils import filefunc
 from ic.utils import smbfunc
 from ic.utils import ic_str
 from ic.db import dbf
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from ic.engine import glob_functions
 
 from . import import_manager
@@ -484,7 +484,7 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
                        n_obj=alt_n_doc,
                        obj_date=dt_obj,
                        username=glob_functions.getCurUserName(),
-                       computer=ic_extend.getComputerNameLAT(),
+                       computer=extfunc.getComputerNameLAT(),
                        n_doc=n_doc,
                        doc_date=dt_doc,
                        doc_name=u'Счет-фактура',
@@ -575,7 +575,7 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
                        n_obj=alt_n_doc,
                        obj_date=dt_obj,
                        username=glob_functions.getCurUserName(),
-                       computer=ic_extend.getComputerNameLAT(),
+                       computer=extfunc.getComputerNameLAT(),
                        n_doc=n_doc,
                        doc_date=dt_doc,
                        doc_name=u'Торг12',
@@ -675,7 +675,7 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
                        n_obj=alt_n_doc,
                        obj_date=dt_obj,
                        username=glob_functions.getCurUserName(),
-                       computer=ic_extend.getComputerNameLAT(),
+                       computer=extfunc.getComputerNameLAT(),
                        n_doc=n_doc,
                        doc_date=dt_doc,
                        doc_name=u'Приложение/Транспортные документы',

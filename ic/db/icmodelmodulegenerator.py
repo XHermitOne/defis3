@@ -11,7 +11,7 @@ import os.path
 from ic.log import log
 from ic.utils import resfunc
 from ic.utils import ic_str
-from ic.utils import ic_extend
+from ic.utils import extfunc
 
 from . import icsqlalchemy
 from . import icmodel
@@ -141,7 +141,7 @@ class icModelModuleGenerator(object):
             if dst_module_filename is None:
                 dst_module_filename = os.path.join(icmodel.getSchemeDir(),
                                                    '%s_model.py' % tab_name)
-            return ic_extend.save_file_text(dst_module_filename, module_txt)
+            return extfunc.save_file_text(dst_module_filename, module_txt)
         except:
             log.fatal(u'Ошибка генерации модуля модели по ресурсу таблицы')
         return False
@@ -172,7 +172,7 @@ class icModelModuleGenerator(object):
             if dst_module_filename is None:
                 dst_module_filename = os.path.join(icmodel.getSchemeDir(),
                                                    '%s.py' % manager_module_name)
-            return ic_extend.save_file_text(dst_module_filename, module_txt)
+            return extfunc.save_file_text(dst_module_filename, module_txt)
         except:
             log.fatal(u'Ошибка генерации модуля менеджера модели по ресурсу таблицы')
         return False

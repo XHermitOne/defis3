@@ -258,9 +258,9 @@ class icHeadCell(icwidget.icWidget, wx.Control):
 
         if not bgr2:
             if bgr:
-                self.bgr2 = graphicUtils.GetMidColor(wx.Colour(*bgr), wx.Colour(0, 0, 0), 0.25)
+                self.bgr2 = graphicUtils.getMidColour(wx.Colour(*bgr), wx.Colour(0, 0, 0), 0.25)
             else:
-                self.bgr2 = graphicUtils.GetMidColor(parent.GetBackgroundColour(), wx.Colour(0, 0, 0), 0.25)
+                self.bgr2 = graphicUtils.getMidColour(parent.GetBackgroundColour(), wx.Colour(0, 0, 0), 0.25)
 
         self.fgr = fgr = component['foregroundColor']
 
@@ -551,15 +551,15 @@ class icHeadCell(icwidget.icWidget, wx.Control):
                                      graphicUtils.BGR_GRAD_BOTTOM, graphicUtils.BGR_GRAD_LEFT,
                                      graphicUtils.BGR_GRAD_RIGHT]:
             if self._buttonPress and self.backgroundType == graphicUtils.BGR_GRAD_TOP:
-                graphicUtils.DrawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_BOTTOM)
+                graphicUtils.drawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_BOTTOM)
             elif self._buttonPress and self.backgroundType == graphicUtils.BGR_GRAD_BOTTOM:
-                graphicUtils.DrawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_TOP)
+                graphicUtils.drawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_TOP)
             elif self._buttonPress and self.backgroundType == graphicUtils.BGR_GRAD_LEFT:
-                graphicUtils.DrawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_RIGHT)   
+                graphicUtils.drawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_RIGHT)
             elif self._buttonPress and self.backgroundType == graphicUtils.BGR_GRAD_RIGHT:
-                graphicUtils.DrawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_LEFT)
+                graphicUtils.drawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_LEFT)
             else:
-                graphicUtils.DrawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=self.backgroundType)
+                graphicUtils.drawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=self.backgroundType)
         else:
             dc.Clear()
         
@@ -599,7 +599,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         
         # Для градиентых типов цвет подложки берем промежуточный между clr, clr2
         if self.backgroundType:
-            bgr_clr = graphicUtils.GetMidColor(clr2, clr)
+            bgr_clr = graphicUtils.getMidColour(clr2, clr)
         else:
             bgr_clr = clr
             
@@ -710,8 +710,8 @@ def test(par=0):
     frame = wx.Frame(None, -1, u'icHeadCell Test')
     win = wx.Panel(frame, -1)
 
-    clr1 = graphicUtils.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), -50)
-    clr2 = graphicUtils.AdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
+    clr1 = graphicUtils.getAdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), -50)
+    clr2 = graphicUtils.getAdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), 50)
     
     cell = icHeadCell(win, -1, {'size': (100, 30),
                                 'backgroundType': 1,

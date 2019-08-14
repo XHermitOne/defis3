@@ -14,7 +14,7 @@ import os
 import os.path
 import wx
 from ic.log import log
-from ic.utils import ic_extend
+from ic.utils import extfunc
 from . import fb_form_template
 from ic.dlg import ic_dlg
 
@@ -101,7 +101,7 @@ class icWxFBPrjGenerator(object):
         if prj_filename is None:
             prj_filename = self.fbp_filename
 
-        return ic_extend.save_file_text(prj_filename, txt)
+        return extfunc.save_file_text(prj_filename, txt)
 
     def genPrj(self, resource=None):
         """
