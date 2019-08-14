@@ -873,7 +873,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         if self._init_flag:
             item = event.GetItem()
             # log.debug(u'Развертывание элемента <%s> дерева фильтров' % str(item))
-            self.refreshIndicators(item=item)
+            self.refreshIndicators(item=item, bProgress=True)
 
         event.Skip()
 

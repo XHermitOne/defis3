@@ -1381,9 +1381,9 @@ class icObjPersistent(icObjPersistentPrototype):
         # log.info(u'\tЗапрос: <%s>' % query)
         result = self.getTable().getConnection().execute(query)
         log.info(u'\tКол. записей результата: [%s]' % result.rowcount)
-        # start_time = time.time()
+        start_time = time.time()
         recordset = self._resultFilter2Dataset(result.fetchall())
-        # log.info(u'\tПреобразование списка записей. Время выполнения: %s' % str(time.time()-start_time))
+        log.info(u'\tПреобразование списка записей. Время выполнения: %s' % str(time.time()-start_time))
         return recordset
 
     # Другие наименования метода
