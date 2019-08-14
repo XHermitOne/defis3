@@ -93,7 +93,7 @@ def _draw_picture_by_filename(dc, rect, img_body):
     """
     Отрисовать картинку в гриде редактора свойств с указанием имени файла образа.
     """
-    bmp = icimg2py.bitmapFromData(img_body)
+    bmp = icimg2py.getBitmapFromData(img_body)
     if bmp.Ok():
         memDC = wx.MemoryDC()
         memDC.SelectObject(bmp)

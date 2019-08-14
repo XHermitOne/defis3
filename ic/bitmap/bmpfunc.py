@@ -57,7 +57,7 @@ def createLibraryBitmap(img_filename, bMask=False):
 
 def createBitmap(img_filename, bMask=False):
     """
-    Создать объект Bitmap из файла ImgFileName_.
+    Создать объект Bitmap из файла img_filename.
     @param img_filename: Имя файла.
     @param bMask: Флаг создания маски по изображению.
         Фон д.б. DEFAULT_MASK_COLOUR.

@@ -17,24 +17,24 @@ from wx.tools import img2py     # Функции серилизации обра
 from . import bmpfunc
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # --- Определение функций ---
-def getImgFileData(ImgFileName_):
+def getImgFileData(img_filename):
     """
     Получить данные файла образа.
-    @param ImgFileName_: Имя файла образа.
+    @param img_filename: Имя файла образа.
     @return: Данные образа или None  в случае ошибки.
     """
     try:
         # Определить тип образа и расширение файла
-        img_file_type = bmpfunc.getImageFileType(ImgFileName_)
-        img_file_ext = os.path.splitext(ImgFileName_)[1]
+        img_file_type = bmpfunc.getImageFileType(img_filename)
+        img_file_ext = os.path.splitext(img_filename)[1]
         # Конвертировать файл образа во временный файл
         tmp_file_name = tempfile.mktemp()
-        log.info(u'Серилизация файла образа [%s : %s : %s]' % (ImgFileName_, img_file_ext, img_file_type))
-        ok, msg = img2img.convert(ImgFileName_, None,
+        log.info(u'Серилизация файла образа [%s : %s : %s]' % (img_filename, img_file_ext, img_file_type))
+        ok, msg = img2img.convert(img_filename, None,
                                   None, tmp_file_name, img_file_type, img_file_ext)
         # Все нормально?
         if not ok:
@@ -46,22 +46,22 @@ def getImgFileData(ImgFileName_):
         os.unlink(tmp_file_name)
         return data
     except:
-        log.error(u'Ошибка серилизации файла образа <%s> в строку.' % ImgFileName_)
+        log.error(u'Ошибка серилизации файла образа <%s> в строку.' % img_filename)
         return None
 
 
-def crunchImgData(ImgData_):
+def crunchImgData(img_data):
     """
     Нормализовать данные для записи в файл *.py.
-    @param ImgData_: Данные образа.
+    @param img_data: Данные образа.
     """
     try:
-        return img2py.crunch_data(ImgData_, 0)
+        return img2py.crunch_data(img_data, 0)
     except:
-        return ic_crunch_data(ImgData_, 0)
+        return create_crunch_data(img_data, 0)
 
 
-def ic_crunch_data(data, compressed):
+def create_crunch_data(data, compressed):
     """
     Функция создает строку по данным файла образа.
     Эта функция взята из старой версии wxPython.
@@ -113,29 +113,29 @@ def ic_crunch_data(data, compressed):
     return fp.getvalue()
 
 
-def imageFromData(ImageData_):
+def getImageFromData(img_data):
     """
     Создание wx.Image из строки серилизованной картинки.
-    @param ImageData_: Данные строки серилизованной картинки.
+    @param img_data: Данные строки серилизованной картинки.
     """
-    stream = io.BytesIO(ImageData_)
+    stream = io.BytesIO(img_data)
     return wx.Image(stream)
 
 
-def bitmapFromData(ImageData_):
+def getBitmapFromData(img_data):
     """
     Создание wx.Bitmap из строки серилизованной картинки.
-    @param ImageData_: Данные строки серилизованной картинки.
+    @param img_data: Данные строки серилизованной картинки.
     """
-    image = imageFromData(ImageData_)
+    image = getImageFromData(img_data)
     return wx.Bitmap(image)
 
 
-def iconFromData(ImageData_):
+def getIconFromData(img_data):
     """
     Создание wx.Icon из строки серилизованной картинки.
-    @param ImageData_: Данные строки серилизованной картинки.
+    @param img_data: Данные строки серилизованной картинки.
     """
     icon = wx.Icon()
-    icon.CopyFromBitmap(bitmapFromData(ImageData_))
+    icon.CopyFromBitmap(getBitmapFromData(img_data))
     return icon
