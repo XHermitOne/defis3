@@ -738,7 +738,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         """
         return self.loadFilters()
 
-    def refreshIndicators(self, bVisibleItems=True, item=None, bRestoreDataset=True, bProgress=True):
+    def refreshIndicators(self, bVisibleItems=True, item=None, bRestoreDataset=True, bProgress=False):
         """
         Обновить индикаторы элементов дерева.
         @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
@@ -777,7 +777,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             ic_dlg.icCloseProgressDlg()
         return result
 
-    def _refreshIndicators(self, bVisibleItems=True, item=None, bProgress=True):
+    def _refreshIndicators(self, bVisibleItems=True, item=None, bProgress=False):
         """
         Обновить индикаторы элементов дерева.
         @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
