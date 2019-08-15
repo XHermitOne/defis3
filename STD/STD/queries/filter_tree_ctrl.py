@@ -29,7 +29,7 @@ from . filter_generate import *
 # from ic.PropertyEditor import select_component_menu
 
 
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 3, 2)
 
 # Значения по умолчанию
 DEFAULT_ROOT_LABEL = u'...'
@@ -197,7 +197,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         # Ограничение количества строк фильтруемого объекта.
         self._limit = None
         # Количество строк при привышении лимита
-        self._over_limit = None
+        # self._over_limit = None
 
         # Текущий фильтр выбранного элемента
         self._cur_item_filter = None
@@ -226,6 +226,19 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         @return: UUID.
         """
         return str(uuid.uuid4())
+
+    def getLimit(self):
+        """
+        Ограничение количества строк фильтруемого объекта.
+        """
+        return self._limit
+
+    def setLimit(self, limit=0):
+        """
+        Установить ограничение количества строк фильтруемого объекта.
+        @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
+        """
+        self._limit = limit
 
     def getCurItemFilter(self):
         """
