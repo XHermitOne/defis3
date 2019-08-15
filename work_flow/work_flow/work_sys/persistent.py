@@ -1307,28 +1307,23 @@ class icObjPersistent(icObjPersistentPrototype):
         @param filter_result: Список записей - результат фильтрации.
         @return: Спиоск словарей записей - результат фильтрации.
         """
+        # Из-за оптимизации функции код стал менее читабельным
+        # Словарь соответствий имя поля: справочник реквизита
+        nsi_requisite_spravs = dict(
+            [(requisite.getFieldName(), requisite.getSprav()) for requisite in self.getChildrenRequisites() if
+             requisite.isIDAttr() and requisite.type == 'NSIRequisite'])
         # Замена кодов идентифицирующих реквизитов на значение <КОД Наименование>
-        result = []
-        # Реквизиты справочников
-        id_nsi_requisites = [requisite for requisite in self.getChildrenRequisites() if requisite.isIDAttr() and requisite.type == 'NSIRequisite']
-        nsi_requisite_fields = [nsi_requisite.getFieldName() for nsi_requisite in id_nsi_requisites]
-        for record in filter_result:
-            rec = dict(record)
-            # Для реквизитов справочников необходимо указать код и наименование
-            for i, fld_name in enumerate(nsi_requisite_fields):
-                # Если код определен, тогда найти наименование в справочнике
-                if rec[fld_name]:
-                    # Но сохранить и код c новым именем
-                    rec[NSI_CODE_PREFIX + fld_name] = rec[fld_name]
+        recordset = [dict(
+            [(NSI_CODE_PREFIX + fld_name, value) if value and fld_name in nsi_requisite_spravs else (fld_name, value)
+             for fld_name, value in record.items()]) for record in filter_result]
 
-                    # В целях оптимизации произведена замена:
-                    # rec[fld_name] = nsi_requisite.getSprav().Find(rec[fld_name])
-                    # Получить запись справочника по коду
-                    nsi_record = id_nsi_requisites[i].getSprav().getCachedRec(rec[fld_name])
-                    # Взять только наименование
-                    rec[fld_name] = nsi_record.get('name', u'') if nsi_record is not None else u''
-            result.append(rec)
-        return result
+        for record in recordset:
+            for fld_name, sprav in nsi_requisite_spravs.items():
+                # Получить запись справочника по коду
+                nsi_record = sprav.getCachedRec(NSI_CODE_PREFIX + fld_name)
+                # Взять только наименование
+                record[fld_name] = nsi_record.get('name', u'') if nsi_record is not None else u''
+        return recordset
 
     def filterRequisiteData(self, FilterRequisiteData_=None):
         """
