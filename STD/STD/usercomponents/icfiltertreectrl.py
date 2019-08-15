@@ -169,10 +169,12 @@ class icFilterTreeCtrl(icwidget.icWidget,
         @param item_filter: Описание фильтра элемента.
             Если None, то фильтрация не производится.
             ВНИМАНИЕ! При выполнении блока кода <get_records> в пространство имен помещается
-            фильтр элемента как переменная FILTER.
+            фильтр элемента как переменная FILTER и
+            ограничение по количеству записей как переменная LIMIT.
         """
         context = self.GetContext()
         context['FILTER'] = item_filter
+        context['LIMIT'] = self._limit
         context.update(kwargs)
         result = self.eval_attr('get_records')
         if result[0] == coderror.IC_EVAL_OK:

@@ -81,7 +81,7 @@ from ic.dlg import ic_dlg
 from ic.components import icwidget
 
 # Версия
-__version__ = (0, 1, 5, 2)
+__version__ = (0, 1, 6, 1)
 
 # Спецификация
 SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {'document': None,
@@ -264,6 +264,16 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         except:
             log.fatal(u'Ошибка обновления списка документов')
         return self.__document_navigator_dataset
+
+    def setDocDatasetLimit(self, limit=0):
+        """
+        Установить ограничение количества записей для датасета документа.
+        @param limit: Ограничение количества записей. Если не определено, то ограничения нет.
+        @return: True/False.
+        """
+        document = self.getSlaveDocument()
+        document.setLimit(limit)
+        return True
 
     def getSelectedSlaveDocumentUUID(self):
         """

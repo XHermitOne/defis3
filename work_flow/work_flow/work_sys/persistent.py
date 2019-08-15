@@ -1325,10 +1325,10 @@ class icObjPersistent(icObjPersistentPrototype):
                 record[fld_name] = nsi_record.get('name', u'') if nsi_record is not None else u''
         return recordset
 
-    def filterRequisiteData(self, FilterRequisiteData_=None):
+    def filterRequisiteData(self, filter_requisite_data=None):
         """
         Отфильтровать объекты согласно данным фильтра.
-        @param FilterRequisiteData_: Словарь значений реквизитов фильтров.
+        @param filter_requisite_data: Словарь значений реквизитов фильтров.
             Если None, то берется текущий фильтр бизнес объектов.
             Для создания фильтров надо пользоваться
             функциями из STD.queries.filter_generate.
@@ -1338,15 +1338,15 @@ class icObjPersistent(icObjPersistentPrototype):
                 create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
         @return: Возвращает список-dataset объектов, соответствующих заданному фильтру.
         """
-        if FilterRequisiteData_ is None:
+        if filter_requisite_data is None:
             # Если None, то берется текущий фильтр бизнес объектов.
-            FilterRequisiteData_ = self.getFilter()
+            filter_requisite_data = self.getFilter()
 
-        if FilterRequisiteData_ is None:
+        if filter_requisite_data is None:
             # Если фильтр не определен, то показываем все объекты
-            FilterRequisiteData_ = {}
+            filter_requisite_data = {}
         # Сначала убрать значения реквизитов с не указанными значениями
-        filter_requisite_data = dict([(name, value) for name, value in FilterRequisiteData_.items() if value])
+        filter_requisite_data = dict([(name, value) for name, value in filter_requisite_data.items() if value])
         return filter_requisite_data
 
     def getDataDict(self, filter_requisite_data=None, limit=None):
