@@ -132,6 +132,7 @@ class icBalansImportManager(icImportManagerInterface):
 
         len_find_codes = len(find_codes)
         if len_find_codes == 1:
+            log.debug(u'Найден контрагент <%s> для <%s>' % (find_codes[0], name))
             return find_codes[0]
         elif len_find_codes > 1:
             msg = u'Найдено несколько кодов для <%s> ИНН: <%s> КПП: <%s>' % (name, inn, kpp)

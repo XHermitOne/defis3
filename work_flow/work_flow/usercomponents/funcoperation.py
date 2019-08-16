@@ -23,7 +23,7 @@ import wx
 from ic.components import icwidget
 from ic.utils import util
 from ic.utils import coderror
-from ic.kernel import io_prnt
+from ic.log import log
 import ic.components.icResourceParser as prs
 from ic.bitmap import bmpfunc
 # from work_flow.work_sys import work_img
@@ -89,7 +89,7 @@ ic_can_contain = None
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):

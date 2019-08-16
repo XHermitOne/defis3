@@ -488,6 +488,8 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 value = None
                 if isinstance(column, str):
                     # Это просто имя реквизита
+                    if column not in record:
+                        log.warning(u'Запрашиваемая колонка <%s> не найдена среди %s' % (column, str(record.keys())))
                     value = record.get(column, None)
                 elif isinstance(column, types.FunctionType):
                     try:
@@ -537,14 +539,16 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             # Установить автообразмеривание колонок чтобу исключить обрезание информации
             self.setColumnsAutoSize_list_ctrl(list_ctrl)
 
-    def refreshDocListCtrlRow(self, index=None, row=None, auto_size_columns=False):
+    def refreshDocListCtrlRow(self, index=None, row=None, auto_size_columns=False,
+                              bAutoUpdate=False):
         """
-        Обновление списка строк контрола отображения списка документов.
+        Обновление троки контрола отображения списка документов.
         @param index: Индекс обновляемой строки.
             Если не определен, то берется индекс текущего выбранного элемента.
         @param row: Строка в виде списка.
             Если не определен, то заполняется автоматически по датасету.
         @param auto_size_columns: Установить автообразмеривание колонок.
+        @param bAutoUpdate: Автоматически обновить датасет по документу.
         @return: True/False.
         """
         list_ctrl = self.getSlaveListCtrl()
@@ -554,7 +558,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         if index > -1:
             if row is None:
                 # При обновление одной строки работаем с существующим датасетом
-                dataset = self.getDocDataset()
+                dataset = self.getDocDataset(bAutoUpdate=bAutoUpdate)
                 row = self.getDocListCtrlRows(dataset)[index]
 
             row_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
@@ -571,7 +575,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             self.setColumnsAutoSize_list_ctrl(list_ctrl)
 
     def refreshSortDocListCtrlRows(self, rows=None, auto_size_columns=False,
-                                   sort_fields=None, bReverseSort=False):
+                                   sort_fields=None, bReverseSort=False, bAutoUpdate=False):
         """
         Обновление списка строк контрола отображения списка документов.
         @param rows: Список строк.
@@ -580,12 +584,16 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         @param sort_fields: Сортировка списка документов по полям.
             Если не указано, то сортировка не производиться.
         @param bReverseSort: Произвести обратную сортировку?
+        @param bAutoUpdate: Автоматически обновить датасет по документу.
         @return: True/False.
         """
         if sort_fields is None:
             # Не надо производить сортировку просто обновить
             log.warning(u'Не определены поля сортировки. Сортировка документов не произведена')
             return self.refreshDocListCtrlRow(rows, auto_size_columns)
+
+        if bAutoUpdate:
+            self.updateDocDataset()
 
         if not bReverseSort:
             self.sortDocs(*sort_fields)
@@ -784,7 +792,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             значение по которому будет производиться сортитровка.
         @return: Отсортированный список документов.
         """
-        dataset = self.getDocDataset()
+        dataset = self.getDocDataset(bAutoUpdate=False)
 
         do_refresh = False
         try:
