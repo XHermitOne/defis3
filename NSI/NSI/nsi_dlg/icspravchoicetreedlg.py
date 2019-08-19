@@ -606,6 +606,11 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             self.sprav_treeListCtrl.ScrollTo(item)
             # Выбрать элемент дерева
             self.sprav_treeListCtrl.SelectItem(item)
+            # ВНИМАНИЕ! Компонент теряет фокус когда происходит нажатие на
+            # кнопку поиска. Далее при выборе элемента дерева выбранный элемент
+            # не подсвечивается. Что бы восстановить подсветку элемента необходимо
+            # вернуть фокус компоненту дерева.
+            self.sprav_treeListCtrl.SetFocus()
             return item
         return None        
 
