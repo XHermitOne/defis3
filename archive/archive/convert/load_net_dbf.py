@@ -10,6 +10,7 @@ import os.path
 import datetime
 
 from ic.log import log
+from ic.dlg import ic_dlg
 from . import load_net_config
 from ic.utils import smbfunc
 from ic.utils import filefunc
@@ -20,7 +21,8 @@ __version__ = (0, 1, 2, 1)
 def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
                      file_patterns=load_net_config.DOWNLOAD_FILE_PATTERNS,
                      dst_path=load_net_config.DEST_PATH,
-                     dst_file_ext=load_net_config.DEST_FILE_EXT):
+                     dst_file_ext=load_net_config.DEST_FILE_EXT,
+                     bProgress=True):
     """
     Загрузить все файлы данных в виде DBF.
     @param urls: Список URL с которых необходимо произвести загрузку.
@@ -28,6 +30,7 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
     @param dst_path: Результирующая локальная папка для загрузки.
     @param dst_file_ext: Поменять расширение файлов на указанное.
         Если None, то расширение меняться не будет.
+    @param bProgress: Открыть прогрессбар загрузки.
     @return: True - Загрузка файлов прошла успешно.
         False - ошибка.
     """
@@ -35,6 +38,11 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
 
     results = [False] * len(urls)
     try:
+        if bProgress:
+            ic_dlg.icOpenProgressDlg(title=u'Загрузка файлов',
+                                     prompt_text=u'Загрузка файлов...',
+                                     min_value=0, max_value=100)
+
         for i, url in enumerate(urls):
             smb_results = list()
             if url.startswith(u'smb://'):
@@ -44,6 +52,9 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
                     filenames = smbfunc.smb_listdir_filename(url, pattern, smb=smb)
 
                     for filename in filenames:
+                        if bProgress:
+                            ic_dlg.icStepProgressDlg(new_prompt_text=u'Загрузка файла <%s>' % filename)
+
                         # Загрузка из samba ресурса
                         name, ext = os.path.splitext(filename)
                         base_filename = name + ext.upper().replace('.', '_') + dst_file_ext
@@ -59,6 +70,9 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
                     filenames = filefunc.get_dir_filename_list(url, pattern)
 
                     for filename in filenames:
+                        if bProgress:
+                            ic_dlg.icStepProgressDlg(new_prompt_text=u'Загрузка файла <%s>' % filename)
+
                         name, ext = os.path.splitext(filename)
                         base_filename = name + ext.upper().replace('.', '_') + dst_file_ext
                         new_filename = os.path.join(dst_path, base_filename)
@@ -68,6 +82,9 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
             results[i] = all(smb_results)
     except:
         log.fatal(u'Ошибка загрузки файлов')
+
+    if bProgress:
+        ic_dlg.icCloseProgressDlg()
 
     return all(results)
 

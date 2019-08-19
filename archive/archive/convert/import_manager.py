@@ -181,6 +181,8 @@ class icBalansImportManager(icImportManagerInterface):
             return u'ЗТР'
         elif sType.upper() == u'O':
             return u'ОС'
+        elif sType.upper() == u'U':
+            return u'УСЛ'
         return u''
 
     def get_sector_name(self, sType):
@@ -195,6 +197,8 @@ class icBalansImportManager(icImportManagerInterface):
             return u'Затраты на производство'
         elif sType.upper() == u'O':
             return u'Основные средства'
+        elif sType.upper() == u'U':
+            return u'Услуги/Аренда'
         return u''
 
     def gen_contragent_code(self, inn, kpp, i=0):

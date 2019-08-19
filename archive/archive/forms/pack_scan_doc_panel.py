@@ -220,7 +220,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         popup_menu.findMenuItemByName('load_ztr_menuitem').Enable(True)
         popup_menu.findMenuItemByName('load_mt_menuitem').Enable(True)
         popup_menu.findMenuItemByName('load_os_menuitem').Enable(is_admin)
-        popup_menu.findMenuItemByName('load_arn_menuitem').Enable(is_admin)
+        popup_menu.findMenuItemByName('load_arn_menuitem').Enable(True)
 
         popup_menu.GetManager().setPackScanPanel(self)
         popup_menu.popupByTool(self.import_tool)
