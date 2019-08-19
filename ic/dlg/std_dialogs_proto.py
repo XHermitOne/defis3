@@ -893,3 +893,69 @@ class checkListBoxDialogProto ( wx.Dialog ):
 		event.Skip()
 	
 
+###########################################################################
+## Class quarterDialogProto
+###########################################################################
+
+class quarterDialogProto ( wx.Dialog ):
+	
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор квартала", pos = wx.DefaultPosition, size = wx.Size( 477,130 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
+		
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		
+		bSizer6 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer7 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.m_staticText3 = wx.StaticText( self, wx.ID_ANY, u"Квартал:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText3.Wrap( -1 )
+		bSizer7.Add( self.m_staticText3, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		quarter_choiceChoices = [ u"Первый (январь - март)", u"Второй (апрель - июнь)", u"Третий (июль - сентябрь)", u"Четвертый (октябрь - декабрь)" ]
+		self.quarter_choice = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, quarter_choiceChoices, 0 )
+		self.quarter_choice.SetSelection( 0 )
+		bSizer7.Add( self.quarter_choice, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		year_choiceChoices = []
+		self.year_choice = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, year_choiceChoices, 0 )
+		self.year_choice.SetSelection( 0 )
+		bSizer7.Add( self.year_choice, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer6.Add( bSizer7, 1, wx.EXPAND, 5 )
+		
+		bSizer8 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.cancelButton = wx.Button( self, wx.ID_ANY, u"Отмена", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer8.Add( self.cancelButton, 0, wx.ALL, 5 )
+		
+		self.okButton = wx.Button( self, wx.ID_ANY, u"ОК", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.okButton.SetDefault() 
+		bSizer8.Add( self.okButton, 0, wx.ALL, 5 )
+		
+		
+		bSizer6.Add( bSizer8, 0, wx.ALIGN_RIGHT, 5 )
+		
+		
+		self.SetSizer( bSizer6 )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+		
+		# Connect Events
+		self.cancelButton.Bind( wx.EVT_BUTTON, self.onCancelButtonClick )
+		self.okButton.Bind( wx.EVT_BUTTON, self.onOkButtonClick )
+	
+	def __del__( self ):
+		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def onCancelButtonClick( self, event ):
+		event.Skip()
+	
+	def onOkButtonClick( self, event ):
+		event.Skip()
+	
+

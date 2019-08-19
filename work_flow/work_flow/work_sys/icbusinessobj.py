@@ -966,12 +966,12 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             return self._getRequisiteData()
         except:
             log.error(u'ОШИБКА определения словаря данных ДОКУМЕНТЫ <%s>' % self.name)
-            return None
+        return None
 
-    def _getRequisiteData(self, ParentID_=None):
+    def _getRequisiteData(self, parent_id=None):
         """
         Получить все реквизиты документа/спецификации в виде словаря.
-        @param ParentID_: Родительский идентификатор.
+        @param parent_id: Родительский идентификатор.
         """
         # Заполнить данными реквизитов
         data = {}

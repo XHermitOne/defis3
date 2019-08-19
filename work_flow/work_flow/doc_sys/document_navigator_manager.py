@@ -81,7 +81,7 @@ from ic.dlg import ic_dlg
 from ic.components import icwidget
 
 # Версия
-__version__ = (0, 1, 6, 1)
+__version__ = (0, 1, 6, 2)
 
 # Спецификация
 SPC_IC_DOCUMENT_NAVIGATOR_MANAGER = {'document': None,
@@ -544,7 +544,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def refreshDocListCtrlRow(self, index=None, row=None, auto_size_columns=False,
                               bAutoUpdate=False):
         """
-        Обновление троки контрола отображения списка документов.
+        Обновление строки контрола отображения списка документов.
         @param index: Индекс обновляемой строки.
             Если не определен, то берется индекс текущего выбранного элемента.
         @param row: Строка в виде списка.
@@ -970,9 +970,13 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 # Определение индекса документа
                 idx = self._getDocIndex(UUID=UUID, index=index)
                 # Обновить выделенный документ после радактирования
-                self.setDocDatasetRecord(index=idx, doc_requisites=document.getRequisiteData())
+                # ВНИМАНИЕ! Для реквизитов справочников поля должны преабразовываться
+                # в виде field_name = name и _field_name = cod
+                doc_requisites = document._prepareDatasetRecord()
+
+                self.setDocDatasetRecord(index=idx, doc_requisites=doc_requisites)
                 # Обновить список документов если нормально отредактировали документ
-                self.refreshDocListCtrlRows()
+                self.refreshDocListCtrlRow(index=idx)
             return result
         else:
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')

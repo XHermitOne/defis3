@@ -602,10 +602,10 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         
         item = self.find_sprav_tree_item(parent_item, sprav_code)
         if item:
-            # Выбрать элемент дерева
-            self.sprav_treeListCtrl.SelectItem(item)
             # Прокрутить скролинг до выбранного элемента дерева
             self.sprav_treeListCtrl.ScrollTo(item)
+            # Выбрать элемент дерева
+            self.sprav_treeListCtrl.SelectItem(item)
             return item
         return None        
 

@@ -1305,7 +1305,7 @@ class icObjPersistent(icObjPersistentPrototype):
         Подготовка результата фильтрации в виде датасета для 
         грида объектов в виде списка словарей.
         @param filter_result: Список записей - результат фильтрации.
-        @return: Спиоск словарей записей - результат фильтрации.
+        @return: Список словарей записей - результат фильтрации.
         """
         # Из-за оптимизации функции код стал менее читабельным
         # Словарь соответствий имя поля: справочник реквизита
@@ -1325,6 +1325,48 @@ class icObjPersistent(icObjPersistentPrototype):
                 # Взять только наименование
                 record[fld_name] = nsi_record.get('name', u'') if nsi_record is not None else u''
         return recordset
+
+    def _prepareDatasetRecord(self, requisite_data=None):
+        """
+        ВНИМАНИЕ! Для реквизитов справочников поля должны преабразовываться
+        в виде field_name = name и _field_name = cod.
+        Эта функция это и делает. Используется в менеджере навигации
+        документов для корректного отображения на экране а также в
+        контролах работы с документами.
+        @param requisite_data: Словарь данных реквизитов.
+        @return: Подготовленный словарь данных.
+        """
+        if requisite_data is None:
+            requisite_data = self.getRequisiteData()
+        # Словарь соответствий имя поля: справочник реквизита
+        nsi_requisite_spravs = dict(
+            [(requisite.getFieldName(), requisite.getSprav()) for requisite in self.getChildrenRequisites() if
+             requisite.isIDAttr() and requisite.type == 'NSIRequisite'])
+        for fld_name, sprav in nsi_requisite_spravs.items():
+            # Получить запись справочника по коду
+            nsi_code = requisite_data.get(fld_name, u'')
+            nsi_record = sprav.getCachedRec(nsi_code)
+            # log.debug(u'NSI record: %s' % str(nsi_record))
+            requisite_data[NSI_CODE_PREFIX + fld_name] = nsi_code
+            requisite_data[fld_name] = nsi_record.get('name', u'') if nsi_record is not None else u''
+        return requisite_data
+
+    def getRequisiteData(self):
+        """
+        ВНИМАНИЕ! Этот метод переопределяется в дочерних классах.
+
+        Получить все реквизиты документа/спецификации в виде словаря.
+        @return: Словарь значений реквизитов.
+            Словарь реквизитов представлен в виде
+                {
+                'имя реквизита':значение реквизита,
+                ...
+                'имя спецификации документа':[список словарей реквизитов],
+                ...
+                }
+        """
+        log.warning(u'Не определен метод получения реквизитов документа/спецификации в виде словаря.')
+        return dict()
 
     def filterRequisiteData(self, filter_requisite_data=None):
         """

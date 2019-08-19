@@ -398,24 +398,27 @@ class PrjRoot(ImpNode.PrjImportSys):
             # Меняется проект, меняется и файл ресурса ограничения доступа
             self._prj_user = None
         
-    def openPrj(self, PrjFileName_=None):
+    def openPrj(self, prj_filename=None):
         """
         Открыть проект.
         """
         tree_prj = self.getParent()
-        if PrjFileName_ is None:
-            prj_file = ic_dlg.icFileDlg(tree_prj, u'Открыть проект',
-                                        _('Project file (*.pro)|*.pro'))
-        else:
-            prj_file = PrjFileName_
-            
-        if prj_file and os.path.exists(prj_file):
+        if prj_filename is None:
+            prj_filename = ic_dlg.icFileDlg(tree_prj, u'Открыть проект',
+                                            u'Файл проекта (*.pro)|*.pro',
+                                            default_path=ic_file.getRootDir())
+
+        if prj_filename and not os.path.exists(prj_filename):
+            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Файл проекта <%s> не найден' % prj_filename)
+            return
+
+        if prj_filename and os.path.exists(prj_filename):
             # Проверка тот ли мы проект загрузили
-            prj_name, sub_sys_name = self.getPrjSubsys(prj_file)
+            prj_name, sub_sys_name = self.getPrjSubsys(prj_filename)
             if prj_name != sub_sys_name:
-                ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
-                                u'Load subsystem <%s> to project <%s>! After load all changes will lost. subsys: <%s>, project: <%s>!' % (sub_sys_name,
-                                prj_name, sub_sys_name, prj_name), parent=tree_prj)
+                ic_dlg.icWarningBox(u'ВНИМАНИЕ!',
+                                    u'Подключение подсистемы <%s> к проекту <%s>! Все изменения будут утеряны. Подсистема: <%s>, Проект: <%s>!' % (sub_sys_name,
+                                    prj_name, sub_sys_name, prj_name), parent=tree_prj)
             self.delMyLocks()   # Удалить блокировки из старого проекта
             self.logout()
 
@@ -424,10 +427,10 @@ class PrjRoot(ImpNode.PrjImportSys):
             # должен отразиться актуальный проект------------------------------+
             # Иначе дерево проекта для выбора паспорта не обновляется          |
             # Поэтому явно задаем корень проекта в окружении                   v
-            glob_functions.initEnv(os.path.dirname(prj_file), PrjName=prj_name, PRJ_ROOT=self)
+            glob_functions.initEnv(os.path.dirname(prj_filename), PrjName=prj_name, PRJ_ROOT=self)
             
             # Регистрация программиста
-            if not self.login(prj_filename=prj_file):
+            if not self.login(prj_filename=prj_filename):
                 return
             
             # Удалить все из дерева
@@ -438,16 +441,16 @@ class PrjRoot(ImpNode.PrjImportSys):
                 tree_prj.ide.CloseFile(None)
 
             # Построить дерево узлов по ресурсному файлу
-            self.prj_res_manager.openPrj(prj_file)
-            self.imp_prj_file_name = prj_file
+            self.prj_res_manager.openPrj(prj_filename)
+            self.imp_prj_file_name = prj_filename
             self._openDefault()
             # Сохранить время и размер до следующей синхронизации
-            self.prj_res_time = ic_file.GetMakeFileTime(prj_file)
-            self.prj_res_size = os.path.getsize(prj_file)
+            self.prj_res_time = ic_file.GetMakeFileTime(prj_filename)
+            self.prj_res_size = os.path.getsize(prj_filename)
 
             # определить папку блокировок
-            self.lock_dir = os.path.join(os.path.dirname(os.path.dirname(prj_file)), 'lock')
-            log.debug(u'Init LOCK DIR: <%s>' % self.lock_dir)
+            self.lock_dir = os.path.join(os.path.dirname(os.path.dirname(prj_filename)), 'lock')
+            log.info(u'Инициализация директория блокировок: <%s>' % self.lock_dir)
             self.delMyLocks()   # Удалить блокировки из вновь открытого проекта
             
             # Создание ресурсов
@@ -456,7 +459,7 @@ class PrjRoot(ImpNode.PrjImportSys):
                                  list(cur_res.values())[0], list(cur_res.keys())[0])
 
             # Создание дерева функционала
-            self.getModules().buildPrjPy(os.path.dirname(prj_file))
+            self.getModules().buildPrjPy(os.path.dirname(prj_filename))
             # Создание дерева импортируемых систем
             self.getImpSystems().buildSubSystemsTree(self.prj_res_manager.getImportSystems())
 

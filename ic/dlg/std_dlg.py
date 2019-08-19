@@ -17,6 +17,7 @@ except ImportError:
 
 from . import icyeardlg
 from . import icmonthdlg
+from . import icquarterdlg
 from . import icmonthrangedlg
 try:
     from . import icdaterangedlg
@@ -147,6 +148,28 @@ def getMonthDlg(parent=None):
     dlg.Destroy()
 
     return selected_month
+
+
+def getQuarterDlg(parent=None):
+    """
+    Выбор квартала в диалоговом окне.
+    @param parent: Родительское окно. Если не определено, то
+        береться wx.GetApp().GetTopWindow()
+    @return: Кортеж (год, номер картала) или None если нажата <отмена>.
+    """
+    selected_quarter = None
+
+    if parent is None:
+        parent = wx.GetApp().GetTopWindow()
+
+    dlg = icquarterdlg.icQuarterDialog(parent=parent)
+    dlg.Centre()
+
+    if dlg.ShowModal() == wx.ID_OK:
+        selected_quarter = dlg.getSelectedQuarter()
+    dlg.Destroy()
+
+    return selected_quarter
 
 
 MONTH_CHOICES = datefunc.MONTHS

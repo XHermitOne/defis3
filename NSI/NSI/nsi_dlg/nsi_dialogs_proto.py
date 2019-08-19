@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 import wx.propgrid as pg
 import  wx.gizmos
 
@@ -21,7 +21,7 @@ class icSpravChoiceListDlgProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 698,421 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -30,7 +30,7 @@ class icSpravChoiceListDlgProto ( wx.Dialog ):
 		bSizer1.Add( self.path_statictext, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		self.dlg_toolbar = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.return_tool = self.dlg_toolbar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_TO_PARENT, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
+		self.return_tool = self.dlg_toolbar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_TO_PARENT, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
 		
 		self.dlg_toolbar.AddSeparator()
 		
@@ -41,7 +41,7 @@ class icSpravChoiceListDlgProto ( wx.Dialog ):
 		self.search_textctrl.SetFont( wx.Font( 14, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 		
 		self.dlg_toolbar.AddControl( self.search_textctrl )
-		self.search_tool = self.dlg_toolbar.AddLabelTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
+		self.search_tool = self.dlg_toolbar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None ) 
 		
 		self.dlg_toolbar.Realize() 
 		
@@ -108,7 +108,7 @@ class icSpravEditDlgProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Редактирование справочника", pos = wx.DefaultPosition, size = wx.Size( 1097,408 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer3 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -124,7 +124,7 @@ class icSpravEditDlgProto ( wx.Dialog ):
 		self.search_toolBar.AddControl( self.m_staticText4 )
 		self.search_textCtrl = wx.TextCtrl( self.search_toolBar, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), 0 )
 		self.search_toolBar.AddControl( self.search_textCtrl )
-		self.search_tool = self.search_toolBar.AddLabelTool( wx.ID_ANY, u"Найти", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Найти", u"Найти", None ) 
+		self.search_tool = self.search_toolBar.AddTool( wx.ID_ANY, u"Найти", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Найти", u"Найти", None ) 
 		
 		self.search_toolBar.Realize() 
 		
@@ -141,13 +141,13 @@ class icSpravEditDlgProto ( wx.Dialog ):
 		bSizer5 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.ctrl_toolBar = wx.ToolBar( self.m_panel2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.add_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Добавить", wx.ArtProvider.GetBitmap( wx.ART_ADD_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Добавить", u"Добавить", None ) 
+		self.add_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Добавить", wx.ArtProvider.GetBitmap( wx.ART_ADD_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Добавить", u"Добавить", None ) 
 		
-		self.edit_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Редактировать", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактировать", u"Редактировать", None ) 
+		self.edit_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Редактировать", wx.ArtProvider.GetBitmap( u"gtk-edit", wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Редактировать", u"Редактировать", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
-		self.del_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Удалить", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удалить", u"Удалить", None ) 
+		self.del_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Удалить", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Удалить", u"Удалить", None ) 
 		
 		self.ctrl_toolBar.AddSeparator()
 		
@@ -156,7 +156,7 @@ class icSpravEditDlgProto ( wx.Dialog ):
 		self.ctrl_toolBar.AddControl( self.m_staticText41 )
 		self.find_textCtrl = wx.TextCtrl( self.ctrl_toolBar, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 300,-1 ), 0 )
 		self.ctrl_toolBar.AddControl( self.find_textCtrl )
-		self.find_tool = self.ctrl_toolBar.AddLabelTool( wx.ID_ANY, u"Найти", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Найти", u"Найти", None ) 
+		self.find_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"Найти", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Найти", u"Найти", None ) 
 		
 		self.ctrl_toolBar.Realize() 
 		
@@ -248,7 +248,7 @@ class icSpravRecEditDlgProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Редактирование записи справочника", pos = wx.DefaultPosition, size = wx.Size( 479,467 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer6 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -302,7 +302,7 @@ class icSpravChoiceTreeDlgProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 953,439 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer9 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -320,13 +320,13 @@ class icSpravChoiceTreeDlgProto ( wx.Dialog ):
 		self.search_textCtrl.SetFont( wx.Font( 14, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 		
 		self.search_toolBar.AddControl( self.search_textCtrl )
-		self.search_tool = self.search_toolBar.AddLabelTool( wx.ID_ANY, u"Найти", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Найти", u"Найти", None ) 
+		self.search_tool = self.search_toolBar.AddTool( wx.ID_ANY, u"Найти", wx.ArtProvider.GetBitmap( wx.ART_FIND, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Найти", u"Найти", None ) 
 		
 		self.search_toolBar.Realize() 
 		
 		bSizer9.Add( self.search_toolBar, 0, wx.EXPAND, 5 )
 		
-		self.sprav_treeListCtrl = wx.gizmos.TreeListCtrl(parent=self, id=-1, style=wx.TR_DEFAULT_STYLE | wx.TR_FULL_ROW_HIGHLIGHT)
+		self.sprav_treeListCtrl = wx.gizmos.TreeListCtrl(parent=self, id=-1, style=0, agwStyle=wx.gizmos.TR_DEFAULT_STYLE | wx.gizmos.TR_FULL_ROW_HIGHLIGHT)
 		bSizer9.Add( self.sprav_treeListCtrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		bSizer10 = wx.BoxSizer( wx.HORIZONTAL )
