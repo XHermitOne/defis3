@@ -1320,7 +1320,8 @@ class icObjPersistent(icObjPersistentPrototype):
         for record in recordset:
             for fld_name, sprav in nsi_requisite_spravs.items():
                 # Получить запись справочника по коду
-                nsi_record = sprav.getCachedRec(NSI_CODE_PREFIX + fld_name)
+                nsi_record = sprav.getCachedRec(record.get(NSI_CODE_PREFIX + fld_name, u''))
+                # log.debug(u'NSI record: %s' % str(nsi_record))
                 # Взять только наименование
                 record[fld_name] = nsi_record.get('name', u'') if nsi_record is not None else u''
         return recordset

@@ -484,6 +484,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         rows = list()
         for record in dataset:
             row = list()
+            # log.debug(u'Record: %s' % str(record))
             for column in columns:
                 value = None
                 if isinstance(column, str):
@@ -505,6 +506,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                     log.warning(u'Не поддерживаемый тип колонки <%s>' % column.__class__.__name__)
                 row.append(value)
             rows.append(tuple(row))
+        # log.debug(u'Rows: %s' % str(rows))
         return rows
 
     def refreshDocListCtrlRows(self, rows=None, auto_size_columns=False, bAutoUpdate=False):
