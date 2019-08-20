@@ -110,7 +110,7 @@ class icPassportChoicePanel(wx.Panel):
         @param parent_: Окно.
         @param Prj_: Объект проекта.
         """
-        from ic.prj import PrjTree
+        from ic.prj import icPrjTree
         
         try:
             if Prj_ is None:
@@ -129,7 +129,7 @@ class icPassportChoicePanel(wx.Panel):
             self._psp_label.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
 
             self._splitter = wx.SplitterWindow(self, wx.NewId())
-            self._prj_viewer = PrjTree.icPrjTreeViewer(self._splitter, None)
+            self._prj_viewer = icPrjTree.icPrjTreeViewer(self._splitter, None)
 
             if Prj_:
                 self._prj_viewer.setRoot(Prj_)

@@ -11,6 +11,8 @@ from ic.interfaces import icprjnodeviewer
 from ic.PropertyEditor import icResTree
 from ic.log import log
 
+__version__ = (0, 1, 1, 1)
+
 
 class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
                          icResTree.icResTree):
@@ -18,19 +20,19 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
     Просмотрщик ресурсного узла проекта.
     """
 
-    def __init__(self, parent, Node_):
+    def __init__(self, parent, node):
         """
         Конструктор.
         """
-        icprjnodeviewer.icPrjNodeViewerInterface.__init__(self, parent, Node_)
+        icprjnodeviewer.icPrjNodeViewerInterface.__init__(self, parent, node)
 
         eval_space = util.InitEvalSpace()
         icResTree.icResTree.__init__(self, parent, evalSpace=eval_space)
         
-        self._full_res_file_name = Node_.getFullResFileName()
+        self._full_res_file_name = node.getFullResFileName()
         
         # Прочитать ресурс
-        res = self._getNodeRes(Node_)
+        res = self._getNodeRes(node)
         self.parseTree(res[list(res.keys())[0]])
         self.Expand(self.root)
 
@@ -40,15 +42,15 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
         """
         return self._full_res_file_name
         
-    def _getNodeRes(self, Node_):
+    def _getNodeRes(self, node):
         """
         Определить ресурс узла.
         """
         try:
-            return Node_.getMyRes()
+            return node.getMyRes()
         except:
-            log.error()
-            return {}
+            log.fatal(u'Ошибка определения ресурса узла проекта')
+        return dict()
         
     def getSelectedObject(self):
         """

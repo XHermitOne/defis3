@@ -87,7 +87,7 @@ class icImgList:
             elif issubclass(Img_.__class__, wx.Bitmap):
                 # Указание непосредственно картинки
                 return self._img_lst.Add(Img_)
-        # Надо заменить картинку на ImgIdx_
+        # Надо заменить картинку на img_idx
         else:
             # Заменить в списке образ
             if isinstance(Img_, str):

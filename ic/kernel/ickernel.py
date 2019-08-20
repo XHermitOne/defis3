@@ -349,7 +349,7 @@ class icKernel(icBaseKernel):
         """
         if self._prj_res_controller is None:
             from ic.prj import ctrlPrj
-            self._prj_res_controller = ctrlPrj.icProjectResController()
+            self._prj_res_controller = ctrlPrj.icProjectResManager()
         return self._prj_res_controller
 
     # Другое название метода

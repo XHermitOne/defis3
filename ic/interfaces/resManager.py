@@ -5,14 +5,11 @@
 Интерфейс для менеджеров ресурсных файлов.
 """
 
-# === Подключение библиотек ===
-# === Константы ===
-
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 # === Описание классов ===
-class ResourceManagerInterface:
+class icResourceManagerInterface(object):
     """
     Интерфейс для менеджеров ресурсных файлов.
     """
@@ -35,21 +32,21 @@ class ResourceManagerInterface:
         """
         pass
 
-    def saveAs(self, ResFileName_):
+    def saveAs(self, res_filename):
         """
         Сохранить как...
-        @param ResFileName_: Имя ресурсного файла.
+        @param res_filename: Имя ресурсного файла.
         """
         pass
 
-    def load(self, ResFileName_):
+    def load(self, res_filename):
         """
         Загрузить ресурс из файла.
-        @param ResFileName_: Имя ресурсного файла.
+        @param res_filename: Имя ресурсного файла.
         """
         pass
 
-    def setResFileName(self, ResFileName_=None):
+    def setResFileName(self, res_filename=None):
         """
         Установить имя ресурсного файла.
         """

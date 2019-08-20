@@ -70,16 +70,16 @@ ALL_PKL_FILES_MASK = ('*_pkl.src', '*_pkl.tab', '*_pkl.frm',
                       '*_pkl.mtd', '*_pkl.win', '*_pkl.odb')
 
 
-class PrjImportFolder(prj_node.PrjFolder):
+class icPrjImportFolder(prj_node.icPrjFolder):
     """
     Папка внутри импортируемой подсистемы.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_node.PrjFolder.__init__(self, Parent_)
+        prj_node.icPrjFolder.__init__(self, parent)
 
         self.description = 'new_imp_folder'
         # Имя узла при добавлении в дерево проекта
@@ -92,32 +92,32 @@ class PrjImportFolder(prj_node.PrjFolder):
         pass
 
 
-class PrjImportResources(PrjImportFolder):
+class icPrjImportResources(icPrjImportFolder):
     """
     Папка ресурсов внутри импортируемой подсистемы.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjImportFolder.__init__(self, Parent_)
+        icPrjImportFolder.__init__(self, parent)
 
         self.description = u'Ресурсы'
         # Имя узла при добавлении в дерево проекта
         self.name = u'Ресурсы'
 
 
-class PrjImportModules(prj_module.PrjModules):
+class icPrjImportModules(prj_module.icPrjModules):
     """
     Папка модулей внутри импортируемой подсистемы.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_module.PrjModules.__init__(self, Parent_)
+        prj_module.icPrjModules.__init__(self, parent)
 
         self.description = u'Модули'
         # Имя узла при добавлении в дерево проекта
@@ -130,28 +130,28 @@ class PrjImportModules(prj_module.PrjModules):
         pass
 
 
-class PrjImportSystems(PrjImportFolder):
+class icPrjImportSystems(icPrjImportFolder):
     """
     Папка импортируемых подсистем.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjImportFolder.__init__(self, Parent_)
+        icPrjImportFolder.__init__(self, parent)
         self.img_extended = imglib.imgFolderOpen
         self.description = u'Подсистемы'
         self.name = u'Подсистемы'
-        self.include_nodes = [PrjImportSys]
+        self.include_nodes = [icPrjImportSys]
         self.include_folder = None
 
         # Для доступа к редактору ресурсов и IDE
         self.res_editor = None
         self.ide = None
 
-    def setRoot(self, Root_):
-        prj_node.PrjNode.setRoot(self, Root_)
+    def setRoot(self, root):
+        prj_node.icPrjNode.setRoot(self, root)
         self.res_editor = self.getRoot().getParent().res_editor
         self.ide = self.getRoot().getParent().getIDE()
 
@@ -168,14 +168,14 @@ class PrjImportSystems(PrjImportFolder):
         popup_menu = menuImpNode.icMenuImpNode(self)
         popup_menu.Popup(wx.GetMousePosition(), self._root.getParent())
 
-    def buildSubSystemsTree(self, SubSystems_):
+    def buildSubSystemsTree(self, sub_systems):
         """
         Построить дерево подсистемы в дереве проекта.
-        @param SubSystems_: Список указаний подсистем (<*.pro>[1:]).
+        @param sub_systems: Список указаний подсистем (<*.pro>[1:]).
         """
-        for sub_sys in SubSystems_:
+        for sub_sys in sub_systems:
             # Создать и инициализировать узел импортируемой системы
-            imp_sys_node = PrjImportSys(self)
+            imp_sys_node = icPrjImportSys(self)
             imp_sys_node.Default()
             imp_sys_node.name = sub_sys['name']
             # Путь к подсистеме
@@ -191,19 +191,19 @@ class PrjImportSystems(PrjImportFolder):
             else:
                 ic_dlg.icMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
                 # Добавить узел не импортированной подсистемы
-                not_imp_sys_node = PrjNotImportSys(self)
+                not_imp_sys_node = icPrjNotImportSys(self)
                 not_imp_sys_node.name = sub_sys['name']
                 self.addChild(not_imp_sys_node)
                 not_imp_sys_node._is_build = True
 
-    def copySubSys(self, SubSysPrjFileName_):
+    def copySubSys(self, subsys_prj_filename):
         """
         Копирование подсистемы в текущий проект.
-        @param SubSysPrjFileName_: Имя файла проекта подсистемы.
+        @param subsys_prj_filename: Имя файла проекта подсистемы.
         @return: Возвращает новую директорию подсистемы или
             None в случае  ошибки.
         """
-        sub_sys_dir = os.path.dirname(SubSysPrjFileName_)
+        sub_sys_dir = os.path.dirname(subsys_prj_filename)
         prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
         if (not os.path.isdir(sub_sys_dir)) or (not os.path.exists(sub_sys_dir)):
             ic_dlg.icMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
@@ -213,25 +213,25 @@ class PrjImportSystems(PrjImportFolder):
             return None
         return self._copySubSysDir(sub_sys_dir, prj_dir)
 
-    def _copySubSysDir(self, SubSysDir_, PrjDir_):
+    def _copySubSysDir(self, subsys_dir, prj_dir):
         """
         Копирование директории подсистемы в текущий проект.
-        @param SubSysDir_: Папка подсистемы.
-        @param PrjDir_: Папка проекта.
+        @param subsys_dir: Папка подсистемы.
+        @param prj_dir: Папка проекта.
         """
-        if SubSysDir_ and PrjDir_:
-            log.info(u'Копирование подсистемы <%s> в <%s>' % (SubSysDir_, PrjDir_))
+        if subsys_dir and prj_dir:
+            log.info(u'Копирование подсистемы <%s> в <%s>' % (subsys_dir, prj_dir))
             # Просто скопировать одну папку в другую
-            ok = ic_file.CopyDir(Dir_=SubSysDir_, ToDir_=PrjDir_, ReWrite_=True)
+            ok = ic_file.CopyDir(Dir_=subsys_dir, ToDir_=prj_dir, ReWrite_=True)
             # Кроме кодирования надо удалить все пикловсвие файлы из проекта
             # иначе бывает рассинхронизация с отредактированными ресурсами
-            new_subsys_dir = os.path.join(PrjDir_, os.path.basename(SubSysDir_))
+            new_subsys_dir = os.path.join(prj_dir, os.path.basename(subsys_dir))
             ic_file.delAllFilesFilter(new_subsys_dir, *ALL_PKL_FILES_MASK)
             if ok:
-                log.info(u'[+] Обновление подсистемы <%s> прошло успешно' % PrjDir_)
+                log.info(u'[+] Обновление подсистемы <%s> прошло успешно' % prj_dir)
                 return new_subsys_dir
             else:
-                log.warning(u'Ошибка копирования подсистемы <%s> в <%s>' % (SubSysDir_, PrjDir_))
+                log.warning(u'Ошибка копирования подсистемы <%s> в <%s>' % (subsys_dir, prj_dir))
         return None
 
     def refreshSubSystems(self):
@@ -271,52 +271,52 @@ class PrjImportSystems(PrjImportFolder):
         self.getRoot().synchroPrj(True)
         return True
 
-    def getSubSysPath(self, SubSysName_):
+    def getSubSysPath(self, subsys_name):
         """
         Получить путь к импортируемой подсистеме по ее имени.
-        @param SubSysName_: Имя подсистемы.
+        @param subsys_name: Имя подсистемы.
         """
         sub_systems = self.getRoot().prj_res_manager.getImportSystems()
         sub_sys_names = [sub_sys['name'] for sub_sys in sub_systems]
-        if SubSysName_ in sub_sys_names:
-            i_sub_sys = sub_sys_names.index(SubSysName_)
+        if subsys_name in sub_sys_names:
+            i_sub_sys = sub_sys_names.index(subsys_name)
             return sub_systems[i_sub_sys]['path'].replace('\\', '/').strip()
         return None
 
-    def unLinkSubSys(self, SubSysName_):
+    def unLinkSubSys(self, subsys_name):
         """
         Отключить импортированную подсистему.
-        @param SubSysName_: Имя подсистемы.
+        @param subsys_name: Имя подсистемы.
         """
         try:
-            sub_sys_path = self.getSubSysPath(SubSysName_)
+            sub_sys_path = self.getSubSysPath(subsys_name)
             prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
             del_dir = os.path.join(prj_dir, os.path.basename(os.path.dirname(sub_sys_path)))
-            log.info(u'Отключение подсистемы <%s>' % SubSysName_)
+            log.info(u'Отключение подсистемы <%s>' % subsys_name)
             log.info(u'\tУдаление папки <%s>' % del_dir)
             # Сначала удалить из описания в фале *.pro
-            ok = self.getRoot().prj_res_manager.delImpSubSys(SubSysName_)
+            ok = self.getRoot().prj_res_manager.delImpSubSys(subsys_name)
             # Затем удалить папку подсистемы
             if ok:
                 shutil.rmtree(del_dir, True)
-                self.delChildByName(SubSysName_)
+                self.delChildByName(subsys_name)
         except:
-            log.fatal(u'Ошибка отключения импортированной подсистемы <%s>' % SubSysName_)
+            log.fatal(u'Ошибка отключения импортированной подсистемы <%s>' % subsys_name)
 
     def getPrjTreeCtrl(self):
         return self.getParent().getPrjTreeCtrl()
 
 
-class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface):
+class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterface):
     """
     Импортируемая подсистема, Но не подключенная по каким то причинам.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_node.PrjFolder.__init__(self, Parent_)
+        prj_node.icPrjFolder.__init__(self, parent)
         # Инсталяция
         subsysinterface.ImportSubSysInterface.__init__(self)
 
@@ -348,17 +348,17 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         return os.path.join(os.path.dirname(os.path.dirname(self.getParentRoot().getPrjFileName())),
                             self.name.strip(), '%s.pro' % self.name.strip())
 
-    def openPrjFile(self, PrjFileName_):
+    def openPrjFile(self, prj_filename):
         """
         Открыть файл проекта.
-        @param PrjFileName_: Имя файла проекта.
+        @param prj_filename: Имя файла проекта.
         @return: Готовую структуру проекта или None в случае ошибки.
         """
-        if PrjFileName_.endswith('_pkl.pro'):
+        if prj_filename.endswith('_pkl.pro'):
             # Определяем тип ресурса по окончанию имени файла
-            return ic_res.LoadResourcePickle(PrjFileName_)
+            return ic_res.LoadResourcePickle(prj_filename)
         else:
-            return ic_res.LoadResourceText(PrjFileName_)
+            return ic_res.LoadResourceText(prj_filename)
 
     def getPath(self):
         """
@@ -373,7 +373,7 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         """
         return os.path.dirname(self.getPrjFileName())
 
-    def unlockResInResEditor(self, ResEditor_=None):
+    def unlockResInResEditor(self, res_editor=None):
         """
         Заглушка.
         """
@@ -401,7 +401,7 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
             self.getParentRoot().save()
             # Построить ветку дерева,
             # соответствующую импортируемой подсистеме
-            tree_prj.AddBranchInParentSelection(self)
+            tree_prj.addBranchInParentSelection(self)
             # Удалить старую ветку
             tree_prj.delSelectionNode()
 
@@ -468,51 +468,51 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
 
         return self.getParentRoot().prj_res_manager.getImportSystems()
 
-    def readPrjName(self, PrjFile_=None):
+    def readPrjName(self, prj_file=None):
         """
         Прочитать имя проекта из файла проекта.
-        @param PrjFile_: Файл проекта.
+        @param prj_file: Файл проекта.
             М.б. задан, как имя файла или как данные файла.
         @return: Имя проекта или None в случае ошибки.
         """
-        if PrjFile_:
-            if isinstance(PrjFile_, str):
+        if prj_file:
+            if isinstance(prj_file, str):
                 # Задано имя файла
-                prj_data = self.openPrjFile(PrjFile_)
+                prj_data = self.openPrjFile(prj_file)
             else:
-                prj_data = PrjFile_
+                prj_data = prj_file
             # Задано содержание файла
             prj_names = [key for key in prj_data[0].keys() if not key.startswith('_')]
             return prj_names[0]
         return None
 
-    def buildSubSysTree(self, SubSysPrjFileName_=None):
+    def buildSubSysTree(self, subsys_prj_filename=None):
         """
         Построить дерево подсистемы в дереве проекта.
-        @param SubSysPrjFileName_: Файл проекта импортируемой подсистемы.
+        @param subsys_prj_filename: Файл проекта импортируемой подсистемы.
             Если None, то берется установленный файл.
         @return: Возвращает результат выполнения операции True/False.
         """
         # Если None, то берется установленный файл.
-        if SubSysPrjFileName_ is None:
-            SubSysPrjFileName_ = self.imp_prj_file_name
-        if SubSysPrjFileName_:
+        if subsys_prj_filename is None:
+            subsys_prj_filename = self.imp_prj_file_name
+        if subsys_prj_filename:
             try:
-                if not os.path.exists(SubSysPrjFileName_):
-                    log.warning(u'Не найден файл проекта <%s> подсистемы' % SubSysPrjFileName_)
+                if not os.path.exists(subsys_prj_filename):
+                    log.warning(u'Не найден файл проекта <%s> подсистемы' % subsys_prj_filename)
                     return False
 
                 prj_manager = PrjRes.icPrjRes()
-                prj_manager.openPrj(SubSysPrjFileName_)
+                prj_manager.openPrj(subsys_prj_filename)
                 # Создание ресурсов
                 for cur_res in prj_manager.getPrjRoot():
                     self.getParentRoot().buildPrjRes(self.getResources(),
                                                      list(cur_res.values())[0],
                                                      list(cur_res.keys())[0],
-                                                     PrjImportFolder)
+                                                     icPrjImportFolder)
 
                 # Создание дерева функционала
-                self.getModules().buildPrjPy(os.path.dirname(SubSysPrjFileName_))
+                self.getModules().buildPrjPy(os.path.dirname(subsys_prj_filename))
 
                 # Все узлы импортируемых подсистем открываются
                 # только для проcмотра
@@ -521,7 +521,7 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
                 self._is_build = True
                 return self._is_build
             except:
-                log.fatal(u'Ошибка построения дерева проекта подсистемы <%s>' % SubSysPrjFileName_)
+                log.fatal(u'Ошибка построения дерева проекта подсистемы <%s>' % subsys_prj_filename)
         return False
 
     def isBuild(self):
@@ -537,8 +537,8 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         # Удалить все дочерние объекты
         self.children = []
         # и добавить по умолчанию
-        self.addChild(PrjImportResources(self))
-        self.addChild(PrjImportModules(self))
+        self.addChild(icPrjImportResources(self))
+        self.addChild(icPrjImportModules(self))
 
     def getResources(self):
         """
@@ -570,16 +570,16 @@ class PrjNotImportSys(prj_node.PrjFolder, subsysinterface.ImportSubSysInterface)
         return self.getParentRoot().getPrjTreeCtrl()
 
 
-class PrjImportSys(PrjNotImportSys):
+class icPrjImportSys(icPrjNotImportSys):
     """
     Импортируемая подсистема.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjNotImportSys.__init__(self, Parent_)
+        icPrjNotImportSys.__init__(self, parent)
         # Инсталяция
         self.description = u'Подсистема'
         self.name = 'new_import_sys'
@@ -623,14 +623,14 @@ class PrjImportSys(PrjNotImportSys):
                 return ide.OpenFile(py_file, True, readonly=self.readonly)
             return True
 
-    def _writeFunc(self, InitFileName_, FuncBody_):
+    def _writeFunc(self, init_filename, function_body):
         """
         Запись функций в __init__ файл.
         """
         init_file = None
         try:
-            init_file = open(InitFileName_, 'wt')
-            init_file.write(FuncBody_)
+            init_file = open(init_filename, 'wt')
+            init_file.write(function_body)
             init_file.close()
         except:
             if init_file:

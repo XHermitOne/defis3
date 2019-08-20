@@ -17,8 +17,8 @@ __version__ = (0, 1, 2, 2)
 _ = wx.GetTranslation
 
 
-class PrjWXFormBuilderProject(prj_node.PrjNode,
-                              wxfb_manager.icWXFormBuilderManager):
+class icPrjWXFormBuilderProject(prj_node.icPrjNode,
+                                wxfb_manager.icWXFormBuilderManager):
     """
     Проект wxFormBuilder.
     """
@@ -27,7 +27,7 @@ class PrjWXFormBuilderProject(prj_node.PrjNode,
         """ 
         Конструктор.
         """
-        prj_node.PrjNode.__init__(self, parent)
+        prj_node.icPrjNode.__init__(self, parent)
         self.description = u'Проект wxFormBuilder'
         self.name = 'new_fb_project'
         # self.img = imglib.imgDesigner
@@ -58,7 +58,7 @@ class PrjWXFormBuilderProject(prj_node.PrjNode,
         Удалить.
         """
         # Вызвать метод предка
-        prj_node.PrjNode.delete(self)
+        prj_node.icPrjNode.delete(self)
         # И в конце удалить файл ресурса, если он есть
         res_file_name = os.path.join(self.getModulePath(),
                                      self.name + self.ext)
@@ -82,9 +82,9 @@ class PrjWXFormBuilderProject(prj_node.PrjNode,
 
         path = ''
         # Если родитель -пакет, то дабывить его в путь
-        if issubclass(self._Parent.__class__, prj_module.PrjPackage):
+        if issubclass(self._Parent.__class__, prj_module.icPrjPackage):
             path = self._Parent.getPath()
-        elif issubclass(self._Parent.__class__, prj_module.PrjModules):
+        elif issubclass(self._Parent.__class__, prj_module.icPrjModules):
             path = os.path.dirname(self.getRoot().getPrjFileName())
         return path
 

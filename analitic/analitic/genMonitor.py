@@ -50,7 +50,7 @@ def genViewZayavki(Type_, Cod_, PrototypeName_='zayavki_sum'):
     """
     view_name = genViewZayavkiName(Type_,Cod_)
  
-    prj_res_ctrl = ctrlPrj.icProjectResController()
+    prj_res_ctrl = ctrlPrj.icProjectResManager()
     prj_res_ctrl.openPrj()
     
     # Проверка на добавление нового ресурса
@@ -87,7 +87,7 @@ def genViewRealize(Type_, Cod_, PrototypeName_='realize_sum'):
     """
     view_name = genViewRealizeName(Type_, Cod_)
  
-    prj_res_ctrl = ctrlPrj.icProjectResController()
+    prj_res_ctrl = ctrlPrj.icProjectResManager()
     prj_res_ctrl.openPrj()
     
     # Проверка на добавление нового ресурса
@@ -124,7 +124,7 @@ def genViewPay(Type_, Cod_, PrototypeName_='pay_sum'):
     """
     view_name = genViewPayName(Type_, Cod_)
  
-    prj_res_ctrl = ctrlPrj.icProjectResController()
+    prj_res_ctrl = ctrlPrj.icProjectResManager()
     prj_res_ctrl.openPrj()
     
     # Проверка на добавление нового ресурса
@@ -232,7 +232,7 @@ def delViewZayavki(Type_,Cod_):
     """
     view_name=genViewZayavkiName(Type_,Cod_)
  
-    prj_res_ctrl=ctrlPrj.icProjectResController()
+    prj_res_ctrl=ctrlPrj.icProjectResManager()
     prj_res_ctrl.openPrj()
     
     #удаление ресурса
@@ -245,7 +245,7 @@ def delViewRealize(Type_,Cod_):
     """
     view_name=genViewRealizeName(Type_,Cod_)
  
-    prj_res_ctrl=ctrlPrj.icProjectResController()
+    prj_res_ctrl=ctrlPrj.icProjectResManager()
     prj_res_ctrl.openPrj()
     
     #удаление ресурса
@@ -258,7 +258,7 @@ def delViewPay(Type_,Cod_):
     """
     view_name=genViewPayName(Type_,Cod_)
  
-    prj_res_ctrl=ctrlPrj.icProjectResController()
+    prj_res_ctrl=ctrlPrj.icProjectResManager()
     prj_res_ctrl.openPrj()
     
     #удаление ресурса

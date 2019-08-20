@@ -5,6 +5,7 @@
     <mapping directory="$PROJECT_DIR$/archive/dbfpy3" vcs="" />
     <mapping directory="$PROJECT_DIR$/ayan_dealer" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ayan_dealer/dbfpy3" vcs="" />
-    <mapping directory="$PROJECT_DIR$/ic/report/icreport" vcs="" />
+    <mapping directory="$PROJECT_DIR$/ayan_heat" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ic/report/icreport" vcs="Git" />
   </component>
 </project>

@@ -47,25 +47,25 @@ __version__ = (0, 1, 4, 1)
 _ = wx.GetTranslation
 
 
-class PrjResources(prj_node.PrjFolder):
+class icPrjResources(prj_node.icPrjFolder):
     """
     Ресурсы.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_node.PrjFolder.__init__(self, Parent_)
+        prj_node.icPrjFolder.__init__(self, parent)
         self.img_extended = imglib.imgFolderOpen
         self.description = u'Ресурсы'
         self.name = u'Ресурсы'
         # Классы узлов, которые м.б. включены в текущий узел
-        self.include_nodes = [PrjTabRes, PrjDBRes,
-                              PrjObjStorageRes,
-                              PrjFrmRes, PrjWinRes,
-                              PrjMenuRes, PrjTemplate, PrjMethod, PrjMetaDataRes]
-        self.include_folder = PrjResources
+        self.include_nodes = [icPrjTabRes, icPrjDBRes,
+                              icPrjObjStorageRes,
+                              icPrjFrmRes, icPrjWinRes,
+                              icPrjMenuRes, icPrjTemplate, icPrjMethod, icPrjMetaDataRes]
+        self.include_folder = icPrjResources
         
     def isMainFolder(self):
         """
@@ -99,36 +99,36 @@ class PrjResources(prj_node.PrjFolder):
         # Удалить из проекта
         self.getRoot().prj_res_manager.delFolder(self.name)
         # Удалить из дерева
-        return prj_node.PrjNode.delete(self)
+        return prj_node.icPrjNode.delete(self)
 
-    def rename(self, OldName_, NewName_):
+    def rename(self, old_name, new_name):
         """
         Переименование папки.
-        @param OldName_: Старое имя папки.
-        @param NewName_: Новое имя папки.
+        @param old_name: Старое имя папки.
+        @param new_name: Новое имя папки.
         """
         # Переименовать в проекте
-        self.getRoot().prj_res_manager.renameRes(OldName_, NewName_)
-        self.name = NewName_
+        self.getRoot().prj_res_manager.renameRes(old_name, new_name)
+        self.name = new_name
         # Для синхронизации дерева проекта
         self.getRoot().save()
         return True
 
-    def importChild(self, ResFileName_=None):
+    def importChild(self, res_filename=None):
         """
         Импортировать ресурс, как дочерний узел.
-        @param ResFileName_: Имя импортируемого ресурсного файла.
+        @param res_filename: Имя импортируемого ресурсного файла.
         @return: Возвращает вновь созданный узел или None.
         """
         new_node = None
-        if os.path.exists(ResFileName_):
+        if os.path.exists(res_filename):
             # Сделать новое имя файла
             new_res_file_name = ic_file.AbsolutePath(os.path.join('.', self.getRoot().name,
-                                                     os.path.basename(ResFileName_)))
+                                                                  os.path.basename(res_filename)))
             # Если новый файл существут, то спросить о его перезаписи
-            if not ic_file.SamePathWin(ResFileName_, new_res_file_name):
+            if not ic_file.SamePathWin(res_filename, new_res_file_name):
                 # Скопировать файл
-                ic_file.icCopyFile(ResFileName_, new_res_file_name, True)
+                ic_file.icCopyFile(res_filename, new_res_file_name, True)
             # Создать узел
             res_file_name_split = os.path.splitext(new_res_file_name)
             typ = res_file_name_split[1][1:]
@@ -141,16 +141,16 @@ class PrjResources(prj_node.PrjFolder):
         return new_node
 
 
-class PrjResource(prj_node.PrjNode):
+class icPrjResource(prj_node.icPrjNode):
     """
     Ресурс.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_node.PrjNode.__init__(self, Parent_)
+        prj_node.icPrjNode.__init__(self, parent)
         # Тип ресурса 'tab', 'frm' и т.п.
         self.typ = ''
         # Шаблон для заполнения по умолчанию
@@ -282,11 +282,11 @@ class PrjResource(prj_node.PrjNode):
             ok = self.getRoot().getParent().res_editor.CreateResource(res_name, mod_path, mod_file, mod_ext,
                                                                       copy.deepcopy(self.template), bRecreate=True)
             # Для синхронизации дерева проекта
-            self.getRoot().synchroPrj(Refresh_=True)
+            self.getRoot().synchroPrj(bRefresh=True)
             return ok
         except:
-            log.error(u'Create resource class error <%s>' % self.name)
-            return None
+            log.fatal(u'Ошибка создания ресурсного класса <%s>' % self.name)
+        return None
 
     def edit(self):
         """
@@ -302,7 +302,7 @@ class PrjResource(prj_node.PrjNode):
                 try:
                     os.makedirs(res_path)
                 except:
-                    log.error(u'Ошибка создания папки <%s>' % res_path)
+                    log.fatal(u'Ошибка создания папки <%s>' % res_path)
 
             res_file = self.getResFileName()
             res_ext = self.getResFileExt()
@@ -333,11 +333,11 @@ class PrjResource(prj_node.PrjNode):
                                               bEnable=False)
         return None
 
-    def rename(self, OldName_, NewName_):
+    def rename(self, old_name, new_name):
         """
         Переименование ресурса.
-        @param OldName_: Старое имя ресурса.
-        @param NewName_: Новое имя ресурса.
+        @param old_name: Старое имя ресурса.
+        @param new_name: Новое имя ресурса.
         """
         tree_prj = self.getRoot().getParent()
         res_editor = tree_prj.res_editor
@@ -356,7 +356,7 @@ class PrjResource(prj_node.PrjNode):
                 ic_res.unlockRes(res_name, res_file, res_ext,
                                  self.getRoot().lock_dir)
             
-            self.name = NewName_
+            self.name = new_name
             new_res_name = self.getResName()
             new_res_file = os.path.join(self.getResPath(),
                                         self.getResFileName()+'.'+self.getResFileExt())
@@ -392,13 +392,13 @@ class PrjResource(prj_node.PrjNode):
         # Удалить из проекта
         self.delete()
         # Удалить из дерева
-        return prj_node.PrjNode.cut(self)
+        return prj_node.icPrjNode.cut(self)
         
     def copy(self):
         """
         Копировать.
         """
-        node = prj_node.PrjNode.copy(self)
+        node = prj_node.icPrjNode.copy(self)
         # Скопировать файл ресурса во временный файл
         res_file_name = os.path.join(self.getResPath(),
                                      self.getResFileName()+'.'+self.getResFileExt())
@@ -426,16 +426,16 @@ class PrjResource(prj_node.PrjNode):
             log.fatal(u'Ошибка сохранения файла <%s>' % copy_res_file_name)
         return node
         
-    def paste(self, Node_):
+    def paste(self, node):
         """
         Вставить.
-        @param Node_: Вставляемый узел.
+        @param node: Вставляемый узел.
         """
         # Поменять расширение у bak файлов.
-        res_file_name = os.path.join(Node_.getResPath(),
-                                     Node_.getResFileName()+'.bak')
+        res_file_name = os.path.join(node.getResPath(),
+                                     node.getResFileName() + '.bak')
         to_res_file_name = os.path.join(self.getResPath(),
-                                        Node_.getResFileName()+'.'+Node_.typ)
+                                        node.getResFileName() + '.' + node.typ)
 
         try:
             os.rename(res_file_name, to_res_file_name)
@@ -444,10 +444,10 @@ class PrjResource(prj_node.PrjNode):
             log.fatal(u'Ошибка переименования файла <%s> -> <%s>' % (res_file_name, to_res_file_name))
 
         # Прописать его в проекте
-        self.getRoot().prj_res_manager.addRes(Node_.name, Node_.typ, self._Parent.name)
+        self.getRoot().prj_res_manager.addRes(node.name, node.typ, self._Parent.name)
         self.getRoot().prj_res_manager.save()
         # Вставить в проект
-        return prj_node.PrjNode.paste(self, Node_)
+        return prj_node.icPrjNode.paste(self, node)
         
     def delete(self):
         """
@@ -456,7 +456,7 @@ class PrjResource(prj_node.PrjNode):
         # Сначала удалить из файла *.pro
         self.getRoot().prj_res_manager.delRes(self.name, self.typ)
         # Затем удалить из дерева
-        prj_node.PrjNode.delete(self)
+        prj_node.icPrjNode.delete(self)
         # И в конце удалить файл ресурса, если он есть
         res_file_name = os.path.join(self.getResPath(), self.getResFileName()+'.'+self.getResFileExt())
         res_pkl_file_name = os.path.join(self.getResPath(), self.getResFileName()+'_pkl.'+self.getResFileExt())
@@ -527,16 +527,16 @@ TableTypeChoice = {u'Стандартная таблица': ic_tab.ic_class_spc
                    }
 
 
-class PrjTabRes(PrjResource):
+class icPrjTabRes(icPrjResource):
     """
     Таблица.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = _('Table')
         self.name = 'new_tab'
         self.img = imglib.imgEdtTable
@@ -569,7 +569,7 @@ class PrjTabRes(PrjResource):
         self._setTemplateSpc(spc, new_name)
 
         # Создать
-        return PrjResource.create(self, new_name=new_name)
+        return icPrjResource.create(self, new_name=new_name)
 
     def delete(self):
         """
@@ -586,22 +586,22 @@ class PrjTabRes(PrjResource):
                 tab = ic.db.icsqlalchemy.icSQLAlchemyTabClass(self.name)
                 tab.drop(del_cascade)
             except:
-                log.error(u'Ошибка удаления таблицы из БД при удалении ресурса')
+                log.fatal(u'Ошибка удаления таблицы из БД при удалении ресурса')
             
-        return PrjResource.delete(self)
+        return icPrjResource.delete(self)
 
-    def rename(self, OldName_, NewName_):
+    def rename(self, old_name, new_name):
         """
         Переименование ресурса.
-        @param OldName_: Старое имя ресурса.
-        @param NewName_: Новое имя ресурса.
+        @param old_name: Старое имя ресурса.
+        @param new_name: Новое имя ресурса.
         """
-        new_name = NewName_.lower()
-        old_name = OldName_.lower()
-        if new_name != NewName_ or OldName_ != old_name:
+        new_name = new_name.lower()
+        old_name = old_name.lower()
+        if new_name != new_name or old_name != old_name:
             ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
                             u'All table, field and link name must be in lower case')
-        return PrjResource.rename(self, old_name, new_name)
+        return icPrjResource.rename(self, old_name, new_name)
 
     def extend(self):
         """
@@ -631,28 +631,29 @@ class PrjTabRes(PrjResource):
             # Обновляем дерево проекта
             self.getRoot().getParent().Refresh()
 
+
 # Словарь выбора БД
-DBTypeChoice = {'SQLite DB': ic_sqlite.ic_class_spc,
-                'PostgreSQL DB': ic_postgres.ic_class_spc,
-                'MSSQL DB': ic_mssql.ic_class_spc,
-                'Object Storage': ic_obj_storage_src.ic_class_spc,
-                'ODBC data source': ic_odbc.ic_class_spc,
-                'SQLAlchemy scheme': ic_sqlalchemy_scheme_wrp.ic_class_spc,
-                'MySQL DB': ic_mysql.ic_class_spc,
-                None: None,
-                }
+DATABASE_TYPE_CHOICE = {'SQLite DB': ic_sqlite.ic_class_spc,
+                        'PostgreSQL DB': ic_postgres.ic_class_spc,
+                        'MSSQL DB': ic_mssql.ic_class_spc,
+                        'Object Storage': ic_obj_storage_src.ic_class_spc,
+                        'ODBC data source': ic_odbc.ic_class_spc,
+                        'SQLAlchemy scheme': ic_sqlalchemy_scheme_wrp.ic_class_spc,
+                        'MySQL DB': ic_mysql.ic_class_spc,
+                        None: None,
+                        }
 
 
-class PrjDBRes(PrjResource):
+class icPrjDBRes(icPrjResource):
     """
     БД.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = u'Data source/DB'
         self.name = 'new_db'
         self.img = imglib.imgDb
@@ -667,10 +668,10 @@ class PrjDBRes(PrjResource):
         @param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
-        global DBTypeChoice
-        spc = DBTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+        global DATABASE_TYPE_CHOICE
+        spc = DATABASE_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                     u'ТИПЫ БД', u'Выберите из списка типов БД:',
-                                                    [txt for txt in DBTypeChoice.keys() if isinstance(txt, str)])]
+                                                            [txt for txt in DATABASE_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
             return False
@@ -683,19 +684,19 @@ class PrjDBRes(PrjResource):
         self._setTemplateSpc(spc, new_name)
 
         # Создать
-        return PrjResource.create(self, new_name=new_name)
+        return icPrjResource.create(self, new_name=new_name)
         
     def createResClass(self):
         """
         Создание ресурсного класса.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
-        global DBTypeChoice
-        self.template = DBTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                              _('Choose DB'), _('DB list:'),
-                                                              [txt for txt in DBTypeChoice.keys() if isinstance(txt, str)])]
+        global DATABASE_TYPE_CHOICE
+        self.template = DATABASE_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+                                                                      _('Choose DB'), _('DB list:'),
+                                                                      [txt for txt in DATABASE_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         # Создать
-        return PrjResource.createResClass(self)
+        return icPrjResource.createResClass(self)
 
     def extend(self):
         """
@@ -707,23 +708,23 @@ class PrjDBRes(PrjResource):
         spc = res.get(name, dict())
         yes = ic_dlg.icAskBox(u'Проверка связи с БД', u'Поверить связь с БД <%s : %s>?' % (spc['name'], spc['type']))
         if yes:
-            from ic.db import icsqlalchemy
-            db_url = icsqlalchemy.createDBUrl(spc)
-            check_connect = icsqlalchemy.checkDBConnect(db_url)
+            from ic.db import icdb
+            db_url = icdb.createDBUrl(spc)
+            check_connect = icdb.checkDBConnect(db_url)
             msg = u'Связь с БД <%s> успешно установлена' % db_url if check_connect else u'Нет связи с БД <%s>' % db_url
             ic_dlg.icMsgBox(u'Проверка связи с БД', msg)
 
 
-class PrjSQLiteRes(PrjResource):
+class icPrjSQLiteRes(icPrjResource):
     """
     БД SQLite.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = 'SQLite DB'
         self.name = 'new_sqlite'
         self.img = imglib.imgEdtSQLite
@@ -733,16 +734,16 @@ class PrjSQLiteRes(PrjResource):
         self.template = ic_sqlite.ic_class_spc
 
 
-class PrjPostgreSQLRes(PrjResource):
+class icPrjPostgreSQLRes(icPrjResource):
     """
     БД PostgreSQL.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = 'PostgreSQL DB'
         self.name = 'new_postgres'
         self.img = imglib.imgEdtPostgreSQL
@@ -758,24 +759,24 @@ class PrjPostgreSQLRes(PrjResource):
         # Данном случае проверка связи с БД
         yes = ic_dlg.icAskBox(u'Поверить связь с БД?')
         if yes:
-            from ic.db import icsqlalchemy
+            from ic.db import icdb
             res = self.getMyRes()
-            db_url = icsqlalchemy.createDBUrl(res)
-            check_connect = icsqlalchemy.checkDBConnect(db_url)
+            db_url = icdb.createDBUrl(res)
+            check_connect = icdb.checkDBConnect(db_url)
             msg = u'Связь с БД <%s> успешно установлена' % db_url if check_connect else u'Нет связи с БД <%s>' % db_url
             ic_dlg.icMsgBox(u'Проверка связи с БД', msg)
 
 
-class PrjFrmRes(PrjResource):
+class icPrjFrmRes(icPrjResource):
     """
     Форма.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = u'Форма'
         self.name = 'new_form'
         self.img = imglib.imgEdtFrame
@@ -783,15 +784,15 @@ class PrjFrmRes(PrjResource):
         self.typ = 'frm'
 
 
-class PrjObjStorageRes(PrjResource):
+class icPrjObjStorageRes(icPrjResource):
     """
     Хранилище ObjectStorage.
     """
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = 'Object Storage'
         self.name = 'new_storage'
         self.img = imglib.imgEdtObjStorage
@@ -802,22 +803,22 @@ class PrjObjStorageRes(PrjResource):
  
 
 # Словарь выбора главных окон
-WinTypeChoice = {'Standart main window': ic_mainwin.ic_class_spc,
-                 'AUI main window': ic_auimainwin.ic_class_spc,
-                 None: None,
-                 }
+WINDOW_TYPE_CHOICE = {'Standart main window': ic_mainwin.ic_class_spc,
+                      'AUI main window': ic_auimainwin.ic_class_spc,
+                      None: None,
+                      }
 
 
-class PrjWinRes(PrjResource):
+class icPrjWinRes(icPrjResource):
     """
     Главное окно.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = u'Главное окно'
         self.name = 'new_win'
         self.img = imglib.imgEdtMainWin
@@ -832,11 +833,11 @@ class PrjWinRes(PrjResource):
         @param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
-        global WinTypeChoice
-        spc = WinTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+        global WINDOW_TYPE_CHOICE
+        spc = WINDOW_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                      u'ВИДЫ ГЛАВНОГО ОКНА',
                                                      u'Выберите из списка типов главного окна:',
-                                                     [txt for txt in WinTypeChoice.keys() if isinstance(txt, str)])]
+                                                          [txt for txt in WINDOW_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
             return False
@@ -850,40 +851,40 @@ class PrjWinRes(PrjResource):
         self._setTemplateSpc(spc, new_name)
 
         # Создать
-        return PrjResource.create(self, new_name=new_name)
+        return icPrjResource.create(self, new_name=new_name)
         
     def createResClass(self):
         """
         Создание ресурсного класса.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
-        global WinTypeChoice
-        self.template = WinTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                               _('Choose main window type'),
-                                                               _('Main window type list:'),
-                                                               [txt for txt in WinTypeChoice.keys() if isinstance(txt, str)])]
+        global WINDOW_TYPE_CHOICE
+        self.template = WINDOW_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+                                                                    _('Choose main window type'),
+                                                                    _('Main window type list:'),
+                                                                    [txt for txt in WINDOW_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         # Создать
-        return PrjResource.createResClass(self)
+        return icPrjResource.createResClass(self)
 
 
 # Словарь выбора типов меню
-MenuTypeChoice = {'Standart menu bar': ic_menubar_wrp.ic_class_spc,
-                  'Flat menu bar': ic_flatmenubar_wrp.ic_class_spc,
-                  'Flat popup menu': ic_flatmenu_wrp.ic_class_spc,
-                  None: None,
-                  }
+MENU_TYPE_CHOICE = {'Standart menu bar': ic_menubar_wrp.ic_class_spc,
+                    'Flat menu bar': ic_flatmenubar_wrp.ic_class_spc,
+                    'Flat popup menu': ic_flatmenu_wrp.ic_class_spc,
+                    None: None,
+                    }
 
 
-class PrjMenuRes(PrjResource):
+class icPrjMenuRes(icPrjResource):
     """
     Меню.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = u'Меню'
         self.name = 'new_menubar'
         self.img = imglib.imgEdtMenuBar
@@ -898,11 +899,11 @@ class PrjMenuRes(PrjResource):
         @param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую меню будем создавать а затем создать ее
-        global MenuTypeChoice
-        spc = MenuTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+        global MENU_TYPE_CHOICE
+        spc = MENU_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
                                                       u'ВИДЫ ГЛАВНОГО МЕНЮ',
                                                       u'Выберите из списка видов главного меню:',
-                                                      [txt for txt in MenuTypeChoice.keys() if isinstance(txt, str)])]
+                                                        [txt for txt in MENU_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
             return False
@@ -915,32 +916,32 @@ class PrjMenuRes(PrjResource):
         self._setTemplateSpc(spc, new_name)
 
         # Создать
-        return PrjResource.create(self, new_name=new_name)
+        return icPrjResource.create(self, new_name=new_name)
         
     def createResClass(self):
         """
         Создание ресурсного класса.
         """
         # Сначал спросить какую меню будем создавать а затем создать ее
-        global MenuTypeChoice
-        self.template = MenuTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                                _('Choose menu type'),
-                                                                _('Menu type list:'),
-                                                                [txt for txt in MenuTypeChoice.keys() if isinstance(txt, str)])]
+        global MENU_TYPE_CHOICE
+        self.template = MENU_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+                                                                  _('Choose menu type'),
+                                                                  _('Menu type list:'),
+                                                                  [txt for txt in MENU_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         # Создать
-        return PrjResource.createResClass(self)
+        return icPrjResource.createResClass(self)
 
 
-class PrjTemplate(PrjResource):
+class icPrjTemplate(icPrjResource):
     """
     Шаблон.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = u'Шаблон'
         self.name = 'new_template'
         self.enable = False     # Выключить шаблоны для использования
@@ -950,16 +951,16 @@ class PrjTemplate(PrjResource):
         self.template = None
 
 
-class PrjMethod(PrjResource):
+class icPrjMethod(icPrjResource):
     """
     Метод.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = u'Метод'
         self.name = 'new_method'
         self.enable = False     # Выключить методы для использования
@@ -970,16 +971,16 @@ class PrjMethod(PrjResource):
         self.template = ic_mth.ic_class_spc
 
 
-class PrjMetaDataRes(PrjResource):
+class icPrjMetaDataRes(icPrjResource):
     """
     Дерево метаклассов/Метаданные.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjResource.__init__(self, Parent_)
+        icPrjResource.__init__(self, parent)
         self.description = u'Метаданные'
         self.name = 'new_metadata'
         self.typ = 'mtd'
@@ -1076,4 +1077,4 @@ class PrjMetaDataRes(PrjResource):
             self.template = res
 
         # Создать
-        return PrjResource.create(self, new_name=new_name)
+        return icPrjResource.create(self, new_name=new_name)

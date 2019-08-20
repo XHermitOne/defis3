@@ -18,15 +18,15 @@ __version__ = (0, 1, 1, 1)
 _ = wx.GetTranslation
 
 
-class PrjEnv(prj_node.PrjNode):
+class icPrjEnv(prj_node.icPrjNode):
     """
     Окружение.
     """
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_node.PrjNode.__init__(self, Parent_)
+        prj_node.icPrjNode.__init__(self, parent)
         self.img = imglib.imgEdtEnv
         self.description = u'Окружение'
         self.name = u'Окружение'

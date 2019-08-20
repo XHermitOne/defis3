@@ -21,8 +21,8 @@ __version__ = (0, 1, 1, 1)
 _ = wx.GetTranslation
 
 
-class PrjWXCrafterProject(prj_node.PrjNode,
-                          wxc_manager.icWXCrafterManager):
+class icPrjWXCrafterProject(prj_node.icPrjNode,
+                            wxc_manager.icWXCrafterManager):
     """
     Проект wxCrafter.
     """
@@ -31,7 +31,7 @@ class PrjWXCrafterProject(prj_node.PrjNode,
         """ 
         Конструктор.
         """
-        prj_node.PrjNode.__init__(self, parent)
+        prj_node.icPrjNode.__init__(self, parent)
         self.description = u'Проект wxCrafter'
         self.name = 'new_wxc_project'
         # self.img = imglib.imgDesigner
@@ -62,7 +62,7 @@ class PrjWXCrafterProject(prj_node.PrjNode,
         Удалить.
         """
         # Вызвать метод предка
-        prj_node.PrjNode.delete(self)
+        prj_node.icPrjNode.delete(self)
         # И в конце удалить файл ресурса, если он есть
         res_file_name = os.path.join(self.getModulePath(),
                                      self.name + self.ext)
@@ -96,9 +96,9 @@ class PrjWXCrafterProject(prj_node.PrjNode,
 
         path = ''
         # Если родитель - пакет, то дабывить его в путь
-        if issubclass(self._Parent.__class__, prj_module.PrjPackage):
+        if issubclass(self._Parent.__class__, prj_module.icPrjPackage):
             path = self._Parent.getPath()
-        elif issubclass(self._Parent.__class__, prj_module.PrjModules):
+        elif issubclass(self._Parent.__class__, prj_module.icPrjModules):
             path = os.path.dirname(self.getRoot().getPrjFileName())
         return path
 

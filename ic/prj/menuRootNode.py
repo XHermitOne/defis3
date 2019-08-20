@@ -36,12 +36,12 @@ class icMenuRootNode(flatmenu.FlatMenu):
     Меню добавления/редактирования корневого узла/папки проекта.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         """
         flatmenu.FlatMenu.__init__(self)
-        self._Parent = Parent_
+        self._Parent = parent
         # Контрол дерева проекта
         prj_tree_ctrl = self._Parent.getRoot().getParent()
 
@@ -51,7 +51,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      u'Новый проект', u'Новый проект',
                                      normalBmp=imglib.imgNewPrj)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnNew, id=self.newPrjID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onNew, id=self.newPrjID)
 
         # Открыть
         self.openID = wx.NewId()
@@ -59,7 +59,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      u'Открыть', u'Открыть',
                                      normalBmp=imglib.imgFolderOpen)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnOpen, id=self.openID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onOpen, id=self.openID)
         
         # Последний открытый проект
         pth = ini.loadParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths')
@@ -69,7 +69,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                          u'Последний открытый проект: %s' % pth, u'Последний открытый проект',
                                          normalBmp=imglib.imgFolderOpen)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnLastOpen, id=self.lastOpenID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onLastOpen, id=self.lastOpenID)
 
         # Список открытых ранее проектов
         prj_paths = ini.loadParamINIValue(PRJ_INI_FILE, 'PRJ', 'OpenedPaths')
@@ -82,7 +82,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                                  prj_path, u'Проект',
                                                  normalBmp=imglib.imgFolderOpen)
                     prj_submenu.AppendItem(item)
-                    prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnOpenPrj, id=item_id)
+                    prj_tree_ctrl.Bind(wx.EVT_MENU, self.onOpenPrj, id=item_id)
 
             self.AppendSubMenu(prj_submenu, u'Ранее открытые проекты')
 
@@ -97,7 +97,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      normalBmp=imglib.imgSave)
         self.AppendItem(item)
         item.Enable(prj_none)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnSave, id=self.saveID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onSave, id=self.saveID)
 
         # Обновить
         self.refreshID = wx.NewId()
@@ -106,7 +106,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      normalBmp=imglib.imgRefreshPage)
         self.AppendItem(item)
         item.Enable(prj_none)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRefresh, id=self.refreshID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onRefresh, id=self.refreshID)
         
         self.AppendSeparator()
         # Запустить
@@ -116,7 +116,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      normalBmp=imglib.imgPlay)
         self.AppendItem(item)
         item.Enable(prj_none)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRun, id=self.runID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onRun, id=self.runID)
         # Отладка
         self.debugID = wx.NewId()
         item = flatmenu.FlatMenuItem(self, self.debugID,
@@ -124,7 +124,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      normalBmp=imglib.imgDebug)
         self.AppendItem(item)
         item.Enable(prj_none)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnDebug, id=self.debugID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onDebug, id=self.debugID)
        
         self.AppendSeparator()
         # 'Редактировать'
@@ -134,7 +134,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      normalBmp=imglib.imgEdit)
         self.AppendItem(item)
         item.Enable(prj_none)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnEdit, id=self.editID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onEdit, id=self.editID)
 
         self.editIniID = wx.NewId()
         item = flatmenu.FlatMenuItem(self, self.editIniID,
@@ -142,7 +142,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      normalBmp=imglib.imgProperty)
         self.AppendItem(item)
         item.Enable(prj_none)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnEditIni, id=self.editIniID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onEditIni, id=self.editIniID)
 
         self.AppendSeparator()
 
@@ -153,7 +153,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      normalBmp=imglib.imgRename)
         self.AppendItem(item)
         item.Enable(prj_none)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRename, id=self.renameID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onRename, id=self.renameID)
 
         self.AppendSeparator()
  
@@ -167,7 +167,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                          normalBmp=imglib.imgDemo)
             tool_submenu.AppendItem(item)
             item.Enable(prj_none)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnMakeInstall, id=self.installID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onMakeInstall, id=self.installID)
         
             # 'Создать демо-проект'
             self.demoID = wx.NewId()
@@ -176,7 +176,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                          normalBmp=imglib.imgDemo)
             tool_submenu.AppendItem(item)
             item.Enable(False)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnMakeDemo, id=self.demoID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onMakeDemo, id=self.demoID)
         
         # 'Создать публикацию'
         self.publicID = wx.NewId()
@@ -185,7 +185,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      normalBmp=imglib.imgInstall)
         tool_submenu.AppendItem(item)
         item.Enable(prj_none)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnMakePublic, id=self.publicID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onMakePublic, id=self.publicID)
 
         # 'Браузер библиотеки образов'
         self.imglibID = wx.NewId()
@@ -193,7 +193,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      u'Библиотека образов', u'Библиотека образов',
                                      normalBmp=imglib.imgEdtImgBrowser)
         tool_submenu.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnImgLibBrowser, id=self.imglibID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onImgLibBrowser, id=self.imglibID)
 
         # 'Редактор регулярных выражений'
         self.regexpeditID = wx.NewId()
@@ -201,7 +201,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      u'Редактор регулярных выражений', u'Редактор регулярных выражений',
                                      normalBmp=bmpfunc.createLibraryBitmap('regular-expression-delimiter.png'))
         tool_submenu.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRegExpEditor, id=self.regexpeditID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onRegExpEditor, id=self.regexpeditID)
 
         # 'Утилита сравнения файлов'
         self.diffID = wx.NewId()
@@ -209,7 +209,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      u'Утилита сравнения файлов', u'Утилита сравнения файлов',
                                      normalBmp=bmpfunc.createLibraryBitmap('edit-diff.png'))
         tool_submenu.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnDiffTool, id=self.diffID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onDiffTool, id=self.diffID)
 
         # 'Импорт метаобъектов 1С'
         self.imp1cID = wx.NewId()
@@ -217,7 +217,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      u'Импорт метаобъектов 1С', u'Импорт метаобъектов 1С',
                                      normalBmp=bmpfunc.createLibraryBitmap('1c.png'))
         tool_submenu.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnImport1C, id=self.imp1cID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onImport1C, id=self.imp1cID)
 
         # 'Дизайнер форм wxFormBuilder'
         self.wxfbID = wx.NewId()
@@ -225,7 +225,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      u'Дизайнер форм wxFormBuilder', u'Дизайнер форм wxFormBuilder',
                                      normalBmp=bmpfunc.createLibraryBitmap('wxformbuilder.png'))
         tool_submenu.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnWXFormBuilder, id=self.wxfbID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onWXFormBuilder, id=self.wxfbID)
 
         self.AppendSubMenu(tool_submenu, u'Инструменты')
 
@@ -239,7 +239,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         self.AppendItem(item)
         # Галку ставить только после присоединения пункта к меню
         item.Check(self._Parent.show_popup_help)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnPopupHelp, id=self.popup_helpID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onPopupHelp, id=self.popup_helpID)
         
         # 'Помощь'
         self.hlpID = wx.NewId()
@@ -247,9 +247,9 @@ class icMenuRootNode(flatmenu.FlatMenu):
                                      u'Помощь', u'Помощь',
                                      normalBmp=imglib.imgHelpBook)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnHelp, id=self.hlpID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onHelp, id=self.hlpID)
 
-    def OnNew(self, event):
+    def onNew(self, event):
         """
         Новый проект.
         """
@@ -258,7 +258,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         # Обновление дерева проектов
         self._Parent.getRoot().getParent().Refresh()
 
-    def OnOpen(self, event):
+    def onOpen(self, event):
         """
         Открыть проект.
         """
@@ -284,7 +284,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
             prj_paths.append(prj_path)
         ini.saveParamINI(PRJ_INI_FILE, 'PRJ', 'OpenedPaths', prj_paths)
 
-    def OnLastOpen(self, event):
+    def onLastOpen(self, event):
         """
         Открыть последний открытый проект.
         """
@@ -294,7 +294,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         # Обновление дерева проектов
         self._Parent.getRoot().getParent().Refresh()
 
-    def OnOpenPrj(self, event):
+    def onOpenPrj(self, event):
         """
         Открыть ранее уже открытый проект.
         """
@@ -309,7 +309,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
 
         self.saveINIOpenedPath(path)
 
-    def OnSave(self, event):
+    def onSave(self, event):
         """
         Сохранить проект.
         """
@@ -318,7 +318,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         # Обновление дерева проектов
         self._Parent.getRoot().getParent().Refresh()
 
-    def OnRename(self, event):
+    def onRename(self, event):
         """
         Переименовать.
         """
@@ -327,28 +327,28 @@ class icMenuRootNode(flatmenu.FlatMenu):
         tree_prj.EditLabel(node.tree_id)
         tree_prj.Refresh()
 
-    def OnRun(self, event):
+    def onRun(self, event):
         """
         Запустить.
         """
         node = self._Parent
         node.run()
 
-    def OnDebug(self, event):
+    def onDebug(self, event):
         """
         Запустить в режиме отладки.
         """
         node = self._Parent
         node.debug()
         
-    def OnEdit(self, event):
+    def onEdit(self, event):
         """
         Редактировать.
         """
         node = self._Parent
         node.edit()
 
-    def OnEditIni(self, event):
+    def onEditIni(self, event):
         """
         Редактировать INI файл проекта.
         """
@@ -378,14 +378,14 @@ class icMenuRootNode(flatmenu.FlatMenu):
             log.warning(u'Не определен IDE для редактирования модуля <%s>' % filename)
         return False
 
-    def OnPopupHelp(self, event):
+    def onPopupHelp(self, event):
         """
         Управление отображением всплывающих подсказок.
         """
         node = self._Parent
         node.show_popup_help = event.IsChecked()
         
-    def OnHelp(self, event):
+    def onHelp(self, event):
         """
         Помощь...
         """
@@ -405,21 +405,21 @@ class icMenuRootNode(flatmenu.FlatMenu):
             ic_dlg.icWarningBox(u'ПОМОЩЬ',
                                 u'Файл помощи <%s> не найден. Запустите генерацию документации :-)' % hlp_file_name)
 
-    def OnMakeInstall(self, event):
+    def onMakeInstall(self, event):
         """
         Создание инсталяционного пакета.
         """
         install_wiz.runInstallWizard(self._Parent.getRoot().getParent(),
                                      self._Parent.getRoot().getPrjFileName())
 
-    def OnMakeDemo(self, event):
+    def onMakeDemo(self, event):
         """
         Создание демо-проекта.
         """
         install_wiz.runDemoWizard(self._Parent.getRoot().getParent(),
                                   self._Parent.getRoot().getPrjFileName())
 
-    def OnImgLibBrowser(self, event):
+    def onImgLibBrowser(self, event):
         """
         Браузер библиотек картинок.
         """
@@ -430,7 +430,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         icimagelibrarybrowser.runImageLibraryBrowser(self._Parent.getRoot().getParent(),
                                                      prj_ini_file)
 
-    def OnRegExpEditor(self, event):
+    def onRegExpEditor(self, event):
         """
         Редактор регулярных выражений.
         """
@@ -439,7 +439,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         log.info(u'Выполнение команды ОС <%s>' % cmd)
         os.system(cmd)
 
-    def OnDiffTool(self, event):
+    def onDiffTool(self, event):
         """
         Утилита сравнения файлов.
         """
@@ -447,14 +447,14 @@ class icMenuRootNode(flatmenu.FlatMenu):
         log.info(u'Выполнение команды ОС <%s>' % cmd)
         os.system(cmd)
 
-    def OnMakePublic(self, event):
+    def onMakePublic(self, event):
         """
         Создание публикации.
         """
         install_wiz.runPublicWizard(self._Parent.getRoot().getParent(),
                                     self._Parent.getRoot().getPrjFileName())
             
-    def OnRefresh(self, event):
+    def onRefresh(self, event):
         """
         Обновить дерево проектов/Переоткрыть проект.
         """
@@ -463,7 +463,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         # Обновление дерева проектов
         self._Parent.getRoot().getParent().Refresh()
 
-    def OnImport1C(self, event):
+    def onImport1C(self, event):
         """
         Импорт метаобъектов 1С.
         """
@@ -493,7 +493,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         except:
             log.fatal(u'Ошибка запуска визарда импорта метаобъектов 1С')
 
-    def OnWXFormBuilder(self, event):
+    def onWXFormBuilder(self, event):
         """
         Вызов wxFormBuilder.
         """

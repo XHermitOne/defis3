@@ -314,12 +314,12 @@ def _syncSprav(Type_,Cod_,Name_):
 #        if s_name<>name_ and name_:
 #            #Изменилось название
 #            #Надо синхронизировать со справочником
-#            ic_log.icToLog('NSI %s CHANGE %s %s <> %s'%(Type_,Cod_,name_,s_name))
-#            id=nsi.getSpravCodeId(Type_,Cod_)
+#            ic_log.icToLog('NSI %s CHANGE %s %s <> %s'%(res_type,Cod_,name_,s_name))
+#            id=nsi.getSpravCodeId(res_type,Cod_)
 #            if id<>None:
 #                tab=ic_sqlobjtab.icSQLObjDataClass(resource.icGetRes('NsiStd',
 #                    nameRes='NsiStd'))
-#                tab.update(id,type=Type_,cod=Cod_,name=name_,id_nsi_list=nsi.getSpravId(Type_))
+#                tab.update(id,type=res_type,cod=Cod_,name=name_,id_nsi_list=nsi.getSpravId(res_type))
 
 def _syncSpravProducts(GroupCod_,GroupName_,ProductCod_,ProductName_):
     """

@@ -22,22 +22,22 @@ class icMenuUserNode(flatmenu.FlatMenu):
     Меню управления правами и пользователями системы.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         """
         flatmenu.FlatMenu.__init__(self)
-        self._Parent = Parent_
+        self._Parent = parent
         # Контрол дерева проекта
         prj_tree_ctrl = self._Parent.getRoot().getParent()
 
-        if issubclass(self._Parent.__class__, prj_security.PrjSecurity):
+        if issubclass(self._Parent.__class__, prj_security.icPrjSecurity):
             # 'Новый пользователь'
             self.newID = wx.NewId()
             item = flatmenu.FlatMenuItem(self, self.newID, u'Новый пользователь', u'Новый пользователь',
                                          normalBmp=imglib.imgUser)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnNewUser, id=self.newID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onNewUser, id=self.newID)
             # 'Новая группа пользователей'
             self.newGrpID = wx.NewId()
             item = flatmenu.FlatMenuItem(self, self.newGrpID,
@@ -45,25 +45,25 @@ class icMenuUserNode(flatmenu.FlatMenu):
                                          u'Новая группа пользователей',
                                          normalBmp=imglib.imgUsers)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnNewUserGroup, id=self.newGrpID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onNewUserGroup, id=self.newGrpID)
             # 'Новая роль'
             self.newID = wx.NewId()
             item = flatmenu.FlatMenuItem(self, self.newID, u'Новая роль', u'Новая роль',
                                          normalBmp=imglib.imgRole)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnNewRole, id=self.newID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onNewRole, id=self.newID)
 
-        elif issubclass(self._Parent.__class__, prj_security.PrjUser) or \
-            issubclass(self._Parent.__class__, prj_security.PrjUserGroup) or \
-            issubclass(self._Parent.__class__, prj_security.PrjRole):
+        elif issubclass(self._Parent.__class__, prj_security.icPrjUser) or \
+            issubclass(self._Parent.__class__, prj_security.icPrjUserGroup) or \
+            issubclass(self._Parent.__class__, prj_security.icPrjRole):
             
-            if issubclass(self._Parent.__class__, prj_security.PrjUserGroup):
+            if issubclass(self._Parent.__class__, prj_security.icPrjUserGroup):
                 # Новый юзер
                 self.newID = wx.NewId()
                 item = flatmenu.FlatMenuItem(self, self.newID, u'Новый пользователь', u'Новый пользователь',
                                              normalBmp=imglib.imgUser)
                 self.AppendItem(item)
-                prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnNewUser, id=self.newID)
+                prj_tree_ctrl.Bind(wx.EVT_MENU, self.onNewUser, id=self.newID)
 
                 self.AppendSeparator()
 
@@ -72,7 +72,7 @@ class icMenuUserNode(flatmenu.FlatMenu):
             item = flatmenu.FlatMenuItem(self, self.renameID, u'Переименовать', u'Переименовать',
                                          normalBmp=imglib.imgRename)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRenameUser, id=self.renameID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onRenameUser, id=self.renameID)
 
             self.AppendSeparator()
 
@@ -81,9 +81,9 @@ class icMenuUserNode(flatmenu.FlatMenu):
             item = flatmenu.FlatMenuItem(self, self.delID, u'Удалить', u'Удалить',
                                          normalBmp=imglib.imgTrash)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnDelUser, id=self.delID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onDelUser, id=self.delID)
 
-    def OnNewUser(self, event):
+    def onNewUser(self, event):
         """
         Добавить нового пользователя.
         """
@@ -92,13 +92,13 @@ class icMenuUserNode(flatmenu.FlatMenu):
         tree_prj = self._Parent.getRoot().getParent()
         if new_user:
             # Добавить объект в отображаемом дереве
-            new_item = tree_prj.AddBranchInSelection(new_user)
+            new_item = tree_prj.addBranchInSelection(new_user)
             tree_prj.SelectItem(new_item)
             new_user.edit()
         # Обновление дерева проектов
         tree_prj.Refresh()
 
-    def OnNewRole(self, event):
+    def onNewRole(self, event):
         """
         Добавить новую роль.
         """
@@ -107,13 +107,13 @@ class icMenuUserNode(flatmenu.FlatMenu):
         tree_prj = self._Parent.getRoot().getParent()
         if new_role:
             # Добавить объект в отображаемом дереве
-            new_item = tree_prj.AddBranchInSelection(new_role)
+            new_item = tree_prj.addBranchInSelection(new_role)
             tree_prj.SelectItem(new_item)
             new_role.edit()
         # Обновление дерева проектов
         tree_prj.Refresh()
         
-    def OnNewUserGroup(self, event):
+    def onNewUserGroup(self, event):
         """
         Добавить новую группу пользователей.
         """
@@ -122,13 +122,13 @@ class icMenuUserNode(flatmenu.FlatMenu):
         tree_prj = self._Parent.getRoot().getParent()
         if new_user_grp:
             # Добавить объект в отображаемом дереве
-            new_item = tree_prj.AddBranchInSelection(new_user_grp)
+            new_item = tree_prj.addBranchInSelection(new_user_grp)
             tree_prj.SelectItem(new_item)
             new_user_grp.edit()
         # Обновление дерева проектов
         tree_prj.Refresh()
         
-    def OnDelUser(self, event):
+    def onDelUser(self, event):
         """
         Удалить.
         """
@@ -141,7 +141,7 @@ class icMenuUserNode(flatmenu.FlatMenu):
         # Обновление дерева проектов
         tree_prj.Refresh()
 
-    def OnRenameUser(self, event):
+    def onRenameUser(self, event):
         """
         Переименовать.
         """

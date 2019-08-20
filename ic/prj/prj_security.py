@@ -28,24 +28,24 @@ __version__ = (0, 1, 1, 1)
 _ = wx.GetTranslation
 
 
-class PrjSecurity(prj_node.PrjFolder):
+class icPrjSecurity(prj_node.icPrjFolder):
     """
     Безопасность.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_node.PrjFolder.__init__(self, Parent_)
+        prj_node.icPrjFolder.__init__(self, parent)
 
         self.img = imglib.imgKey
         self.description = u'Безопасность'
         self.name = u'Безопасность'
         # Классы узлов, которые м.б. включены в текущий узел
-        self.include_nodes = [PrjUserGroup, PrjRole]
+        self.include_nodes = [icPrjUserGroup, icPrjRole]
         # Менеджер ресурса прав и пользователей
-        self.usr_res_manager = userRes.UserResource()
+        self.usr_res_manager = userRes.UserIcResource()
         self.usr_res_manager.setResFileName(self.getUserResFileName())
 
     def onNodePopup(self, event):
@@ -76,10 +76,10 @@ class PrjSecurity(prj_node.PrjFolder):
         """
         return self.usr_res_manager.save()
         
-    def createUser(self, UserName_='new_user'):
+    def createUser(self, username='new_user'):
         """
         Создать нового пользователя.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         @return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
@@ -90,19 +90,19 @@ class PrjSecurity(prj_node.PrjFolder):
         
         self.usr_res_manager.setResFileName(self.getUserResFileName())
 
-        ok = self.usr_res_manager.createUser(UserName_)
+        ok = self.usr_res_manager.createUser(username)
         # Для синхронизации дерева проекта
         self.getRoot().save()
         if ok:
             self.usr_res_manager.save()
-            return self._addChildUser(UserName_)
+            return self._addChildUser(username)
         else:
             return None
 
-    def createRole(self, RoleName_='new_role'):
+    def createRole(self, role_name='new_role'):
         """
         Создать новую роль.
-        @param RoleName_: Имя роли.
+        @param role_name: Имя роли.
         @return: Функция возвращает узел созданной роли
             или None в случае ошибки.
         """
@@ -111,17 +111,17 @@ class PrjSecurity(prj_node.PrjFolder):
         if res_editor:
             res_editor.CloseResource(bSaveAs=True)
         
-        node = self._addChildRole(RoleName_)
+        node = self._addChildRole(role_name)
         node.create()
  
         # Для синхронизации дерева проекта
         self.getRoot().save()
         return node
 
-    def createUserGroup(self, UserGrpName_='new_user_grp'):
+    def createUserGroup(self, user_group_name='new_user_grp'):
         """
         Создать новой группы пользователей.
-        @param UserGrpName_: Имя группы пользователей.
+        @param user_group_name: Имя группы пользователей.
         @return: Функция возвращает узел созданной группы пользователей
             или None в случае ошибки.
         """
@@ -132,41 +132,41 @@ class PrjSecurity(prj_node.PrjFolder):
         
         self.usr_res_manager.setResFileName(self.getUserResFileName())
 
-        ok = self.usr_res_manager.createUserGroup(UserGrpName_)
+        ok = self.usr_res_manager.createUserGroup(user_group_name)
         # Для синхронизации дерева проекта
         self.getRoot().save()
         if ok:
             self.usr_res_manager.save()
-            return self._addChildUserGroup(UserGrpName_)
+            return self._addChildUserGroup(user_group_name)
         else:
             return None
             
-    def _addChildUser(self, UserName_):
+    def _addChildUser(self, username):
         """
         Добавление узла пользователя.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         @return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         try:
-            usr = PrjUser(self)
-            usr.name = UserName_
+            usr = icPrjUser(self)
+            usr.name = username
             self.addChild(usr)
             return usr
         except:
             log.error(u'Ошибка. Класс PrjSecurity Метод _addChildUser')
             return None
         
-    def _addChildRole(self, RoleName_):
+    def _addChildRole(self, role_name):
         """
         Добавление узла роли.
-        @param RoleName_: Имя роли.
+        @param role_name: Имя роли.
         @return: Функция возвращает узел созданной роли
             или None в случае ошибки.
         """
         try:
-            role = PrjRole(self)
-            role.name = RoleName_
+            role = icPrjRole(self)
+            role.name = role_name
             # Сразу поменять имя в спецификации
             role.template['name'] = role.name
             self.addChild(role)
@@ -176,16 +176,16 @@ class PrjSecurity(prj_node.PrjFolder):
             log.error(u'ERROR. Class: PrjSecurity Method: _addChildRole')
             return None
             
-    def _addChildUserGroup(self, UserGrpName_):
+    def _addChildUserGroup(self, user_group_name):
         """
         Добавление узла группы пользователей.
-        @param UserGrpName_: Имя группы пользователей.
+        @param user_group_name: Имя группы пользователей.
         @return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         try:
-            usr = PrjUserGroup(self)
-            usr.name = UserGrpName_
+            usr = icPrjUserGroup(self)
+            usr.name = user_group_name
             self.addChild(usr)
             return usr
         except:
@@ -227,25 +227,25 @@ class PrjSecurity(prj_node.PrjFolder):
             else:
                 log.info(u'ERROR: Unknown type <%s>' % user_type)
 
-    def _openBranch(self, UserGroupName_):
+    def _openBranch(self, user_group_name):
         """
         Открыть ветку группы пользователей.
         """
-        user_res = self.usr_res_manager.getUserRes(UserGroupName_)
+        user_res = self.usr_res_manager.getUserRes(user_group_name)
         if user_res['group']:
             parent_usr_grp_node = self._openBranch(user_res['group'])
         else:
             parent_usr_grp_node = self
             
-        usr_grp_node = parent_usr_grp_node.getChild(UserGroupName_)
+        usr_grp_node = parent_usr_grp_node.getChild(user_group_name)
         if not usr_grp_node:
-            usr_grp_node = parent_usr_grp_node._addChildUserGroup(UserGroupName_)
+            usr_grp_node = parent_usr_grp_node._addChildUserGroup(user_group_name)
         return usr_grp_node
         
-    def delUser(self, UserName_):
+    def delUser(self, username):
         """
         Удаление пользователя.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         @return: Возвращает результат выполнения операции True/False.
         """
         tree_prj = self.getRoot().getParent()
@@ -253,40 +253,40 @@ class PrjSecurity(prj_node.PrjFolder):
         if res_editor:
             res_editor.CloseResource(bSaveAs=True)
 
-        ok = self.usr_res_manager.delUser(UserName_)
+        ok = self.usr_res_manager.delUser(username)
         if ok:
-            self._delChildUser(UserName_)
+            self._delChildUser(username)
             self.usr_res_manager.save()
         return ok
         
-    def _delChildUser(self, UserName_):
+    def _delChildUser(self, username):
         """
         Удалить дочерний узел пользователя.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         """
         for i_child in range(len(self.children)):
             child = self.children[i_child]
-            if child.name == UserName_:
+            if child.name == username:
                 del self.children[i_child]
                 return
 
 
-class PrjUserPrototype(prj_node.PrjNode):
+class icPrjUserPrototype(prj_node.icPrjNode):
     """
     Пользователь.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_node.PrjNode.__init__(self, Parent_)
+        prj_node.icPrjNode.__init__(self, parent)
         self.img = imglib.imgUser
         self.description = u'Пользователь'
         self.name = 'admin'
         self.typ = 'acc'
         # Менеджер управления ресурсао прав и пользователей
-        self.usr_res_manager = Parent_.usr_res_manager
+        self.usr_res_manager = parent.usr_res_manager
 
     def design(self):
         """
@@ -391,11 +391,11 @@ class PrjUserPrototype(prj_node.PrjNode):
         self.getRoot().save()
         return True
             
-    def rename(self, OldName_, NewName_):
+    def rename(self, old_name, new_name):
         """
         Переименование пользователя.
-        @param OldName_: Старое имя.
-        @param NewName_: Новое имя.
+        @param old_name: Старое имя.
+        @param new_name: Новое имя.
         """
         tree_prj = self.getRoot().getParent()
         res_editor = tree_prj.res_editor
@@ -403,7 +403,7 @@ class PrjUserPrototype(prj_node.PrjNode):
             old_res_name = self.getResName()
             old_res_file = os.path.join(self.getResPath(),
                                         self.getResFileName()+'.'+self.getResFileExt())
-            self.name = NewName_
+            self.name = new_name
             new_res_name = self.getResName()
             new_res_file = os.path.join(self.getResPath(),
                                         self.getResFileName()+'.'+self.getResFileExt())
@@ -434,45 +434,45 @@ class PrjUserPrototype(prj_node.PrjNode):
         return u''
 
 
-class PrjUser(PrjUserPrototype):
+class icPrjUser(icPrjUserPrototype):
     """
     Пользователь.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjUserPrototype.__init__(self, Parent_)
+        icPrjUserPrototype.__init__(self, parent)
         self.img = imglib.imgUser
         self.description = u'Пользователь'
         self.name = 'admin'
         self.typ = 'acc'
 
 
-class PrjUserGroup(prj_node.PrjFolder, PrjUserPrototype):
+class icPrjUserGroup(prj_node.icPrjFolder, icPrjUserPrototype):
     """
     Группа пользователей.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjUserPrototype.__init__(self, Parent_)
-        prj_node.PrjFolder.__init__(self, Parent_)
+        icPrjUserPrototype.__init__(self, parent)
+        prj_node.icPrjFolder.__init__(self, parent)
         
         self.img = imglib.imgUsers
         self.description = u'Группа пользователей'
         self.name = 'user_group'
         self.typ = 'acc'
         # Классы узлов, которые м.б. включены в текущий узел
-        self.include_nodes = [PrjUser]
+        self.include_nodes = [icPrjUser]
 
-    def createUser(self, UserName_='new_user'):
+    def createUser(self, username='new_user'):
         """
         Создать нового пользователя.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         @return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
@@ -484,40 +484,40 @@ class PrjUserGroup(prj_node.PrjFolder, PrjUserPrototype):
         security = self.getParent()
         security.usr_res_manager.setResFileName(security.getUserResFileName())
 
-        ok = security.usr_res_manager.createUser(UserName_)
+        ok = security.usr_res_manager.createUser(username)
         
         # Прописать группу в пользователе
-        usr_res = security.usr_res_manager.getRes()[UserName_]
+        usr_res = security.usr_res_manager.getRes()[username]
         usr_res['group'] = self.name
 
         # Для синхронизации дерева проекта
         self.getRoot().save()
         if ok:
             security.usr_res_manager.save()
-            return self._addChildUser(UserName_)
+            return self._addChildUser(username)
         else:
             return None
 
-    def _addChildUser(self, UserName_):
+    def _addChildUser(self, username):
         """
         Добавление узла пользователя.
-        @param UserName_: Имя пользователя.
+        @param username: Имя пользователя.
         @return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         try:
-            usr = PrjUser(self)
-            usr.name = UserName_
+            usr = icPrjUser(self)
+            usr.name = username
             self.addChild(usr)
             return usr
         except:
             log.error(u'ОШИБКА. Класс PrjUserGroup Функция _addChildUser')
             return None
 
-    def createUserGroup(self, UserGrpName_='new_user_grp'):
+    def createUserGroup(self, user_group_name='new_user_grp'):
         """
         Создать новой группы пользователей.
-        @param UserGrpName_: Имя группы пользователей.
+        @param user_group_name: Имя группы пользователей.
         @return: Функция возвращает узел созданной группы пользователей
             или None в случае ошибки.
         """
@@ -529,30 +529,30 @@ class PrjUserGroup(prj_node.PrjFolder, PrjUserPrototype):
         security = self.getParent()
         security.usr_res_manager.setResFileName(self.getUserResFileName())
 
-        ok = security.usr_res_manager.createUserGroup(UserGrpName_)
+        ok = security.usr_res_manager.createUserGroup(user_group_name)
         
         # Прописать группу в группе
-        usr_grp_res = security.usr_res_manager.getUserRes(UserGrpName_)
-        usr_res['group'] = self.name
+        usr_grp_res = security.usr_res_manager.getUserRes(user_group_name)
+        usr_grp_res['group'] = self.name
 
         # Для синхронизации дерева проекта
         self.getRoot().save()
         if ok:
             security.usr_res_manager.save()
-            return self._addChildUserGroup(UserGrpName_)
+            return self._addChildUserGroup(user_group_name)
         else:
             return None
             
-    def _addChildUserGroup(self, UserGrpName_):
+    def _addChildUserGroup(self, user_group_name):
         """
         Добавление узла группы пользователей.
-        @param UserGrpName_: Имя группы пользователей.
+        @param user_group_name: Имя группы пользователей.
         @return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         try:
-            usr = PrjUserGroup(self)
-            usr.name = UserGrpName_
+            usr = icPrjUserGroup(self)
+            usr.name = user_group_name
             self.addChild(usr)
             return usr
         except:
@@ -563,16 +563,16 @@ class PrjUserGroup(prj_node.PrjFolder, PrjUserPrototype):
 from ic.components.user import ic_role_wrp
 
 
-class PrjRole(prj_resource.PrjResource):
+class icPrjRole(prj_resource.icPrjResource):
     """
     Роль.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_resource.PrjResource.__init__(self, Parent_)
+        prj_resource.icPrjResource.__init__(self, parent)
         self.description = u'Роль'
         self.name = 'new_role'
         self.img = imglib.imgRole

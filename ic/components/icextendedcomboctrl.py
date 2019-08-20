@@ -103,7 +103,7 @@ class icGridDatasetComboCtrl(icExtendedComboCtrlPrototype):
         Переопределяемый обработчик события нажатия на кнопку выбора.
         """
         if self.grid:
-            return self.grid.OnExtend()
+            return self.grid.onExtend()
 
     def GetButton(self):
         return wx.ComboCtrl.GetButton(self)

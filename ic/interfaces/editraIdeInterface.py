@@ -321,7 +321,7 @@ class DesignerDoc(wx.Panel, EditraDocumentInterface, AbsDesignerInterface):
             self.top_panel.designer_panel = self.designer
         
     def SaveFile(self, *arg, **kwarg):
-        self.designer.propertyTree.OnSave(None)
+        self.designer.propertyTree.onSave(None)
         return True
         
     def PageToolPanel(self):

@@ -34,44 +34,44 @@ OTHER_PRJ_FOLDER_NAME = u'Дополнительно'
 
 
 # --- Описание классов ---
-class icProjectResController:
+class icProjectResManager(object):
     """
     Класс управления ресурсами проекта.
     """
 
-    def __init__(self, PrjName_=None, PrjResFileName_=None):
+    def __init__(self, prj_name=None, prj_res_filename=None):
         """
         Конструктор.
-        @param PrjName_: Имя проекта.
-        @param PrjResFileName_: Имя файла ресурса проекта.
+        @param prj_name: Имя проекта.
+        @param prj_res_filename: Имя файла ресурса проекта.
         """
-        self.setPrj(PrjName_, PrjResFileName_)
+        self.setPrj(prj_name, prj_res_filename)
         # Объект управления ресурсом проекта
         self._PrjRes = PrjRes.icPrjRes()
         
-    def saveRes(self, ResName_, ResType_, Resource_):
+    def saveRes(self, res_name, res_type, res_data):
         """
         Записать ресурс в проект.
-        @param ResName_: Имя ресурса.
-        @param ResType_: Тип ресурса.
-        @param Resource_: Сам, записываемый ресурс.
+        @param res_name: Имя ресурса.
+        @param res_type: Тип ресурса.
+        @param res_data: Сам, записываемый ресурс.
         """
         self.makeFolderOther()
         if self._PrjRes:
-            if not self._PrjRes.isResByNameANDType(ResName_, ResType_,
+            if not self._PrjRes.isResByNameANDType(res_name, res_type,
                                                    self._PrjRes.getFolderBody(OTHER_PRJ_FOLDER_NAME)):
-                self._PrjRes.addRes(ResName_, ResType_,
+                self._PrjRes.addRes(res_name, res_type,
                                     OTHER_PRJ_FOLDER_NAME)
                 self._PrjRes.savePrj()
                     
-        return resource.icSaveRes(ResName_, ResType_,
-                                  nameRes=ResName_, resData=Resource_, ResFmt=1)
+        return resource.icSaveRes(res_name, res_type,
+                                  nameRes=res_name, resData=res_data, ResFmt=1)
 
-    def loadRes(self, ResName_, ResType_=None):
+    def loadRes(self, res_name, res_type=None):
         """
         Прочитать ресурс из проекта.
-        @param ResName_: Имя загружаемого ресурса.
-        @param ResType_: Тип ресурса.
+        @param res_name: Имя загружаемого ресурса.
+        @param res_type: Тип ресурса.
         @return: Содержимое ресурса или None в случае ошибки.
         """
         self.makeFolderOther()
@@ -80,59 +80,59 @@ class icProjectResController:
             # а не только в папке <Дополнительные>
             # res_ref = self._PrjRes.getResRef(res_name, res_type,
             #                                  self._PrjRes.getFolderBody(OTHER_PRJ_FOLDER_NAME))
-            res_ref = self._PrjRes.getResRef(ResName_, ResType_)
+            res_ref = self._PrjRes.getResRef(res_name, res_type)
             return self._loadResFile(*res_ref)
         return None
 
-    def loadResClone(self, ResName_, ResType_=None):
+    def loadResClone(self, res_name, res_type=None):
         """
         Прочитать ресурс из проекта для его последующего клонирования.
-        @param ResName_: Имя загружаемого ресурса.
-        @param ResType_: Тип ресурса.
+        @param res_name: Имя загружаемого ресурса.
+        @param res_type: Тип ресурса.
         @return: Содержимое ресурса или None в случае ошибки.
         """
         if self._PrjRes:
-            res_ref = self._PrjRes.getResRef(ResName_, ResType_)
+            res_ref = self._PrjRes.getResRef(res_name, res_type)
             return self._loadResFile(*res_ref)
         return None
         
-    def _loadResFile(self, ResName_, ResType_):
+    def _loadResFile(self, res_name, res_type):
         """
         Открыть и загрузить файл ресурса.
         @return: Содержимое ресурса или None в случае ошибки.
         """
-        res_file_name = os.path.join(self._PrjResDir, '%s.%s' % (ResName_, ResType_))
+        res_file_name = os.path.join(self._PrjResDir, '%s.%s' % (res_name, res_type))
         if os.path.isfile(res_file_name):
             res_file = util.readAndEvalFile(res_file_name)
-            res = res_file[ResName_]
+            res = res_file[res_name]
             return copy.deepcopy(res)
         return None
                 
-    def delRes(self, ResName_, ResType_):
+    def delRes(self, res_name, res_type):
         """
         Удалить ресурс из проекта.
-        @param ResName_: Имя ресурса.
-        @param ResType_: Тип ресурса.
+        @param res_name: Имя ресурса.
+        @param res_type: Тип ресурса.
         """
         self.makeFolderOther()
         if self._PrjRes:
-            self._PrjRes.delRes(ResName_, ResType_)
+            self._PrjRes.delRes(res_name, res_type)
             self._PrjRes.savePrj()
             
-        res_file_name = os.path.join(self._PrjResDir, '%s.%s' % (ResName_, ResType_))
+        res_file_name = os.path.join(self._PrjResDir, '%s.%s' % (res_name, res_type))
         if os.path.isfile(res_file_name):
             os.remove(res_file_name)
             return True
         return False
 
-    def isRes(self, ResName_, ResType_=None):
+    def isRes(self, res_name, res_type=None):
         """
         Проверка соществования ресурса с именем и типом в проекте.
-        @param ResName_: Имя ресурса.
-        @param ResType_: Тип ресурса.
+        @param res_name: Имя ресурса.
+        @param res_type: Тип ресурса.
         """
         if self._PrjRes:
-            return self._PrjRes.isResByNameANDType(ResName_, ResType_)
+            return self._PrjRes.isResByNameANDType(res_name, res_type)
         return False
 
     def getResourcesByType(self, res_type=None):
@@ -166,32 +166,32 @@ class icProjectResController:
                                        self._PrjRes.getPrjRootName())
                 self._PrjRes.savePrj()
 
-    def openPrj(self, PrjName_=None, PrjResFileName_=None):
+    def openPrj(self, prj_name=None, prj_res_filename=None):
         """
         Открыть проект.
-        @param PrjName_: Имя проекта.
-        @param PrjResFileName_: Имя файла ресурса проекта.
+        @param prj_name: Имя проекта.
+        @param prj_res_filename: Имя файла ресурса проекта.
         """
-        self.setPrj(PrjName_, PrjResFileName_)
+        self.setPrj(prj_name, prj_res_filename)
         if self._PrjRes:
             self._PrjRes.openPrj(self._PrjResFileName)
 
-    def savePrj(self, PrjName_=None, PrjResFileName_=None):
+    def savePrj(self, prj_name=None, prj_res_filename=None):
         """
         Сохранить проект.
-        @param PrjName_: Имя проекта.
-        @param PrjResFileName_: Имя файла ресурса проекта.
+        @param prj_name: Имя проекта.
+        @param prj_res_filename: Имя файла ресурса проекта.
         """
-        self.setPrj(PrjName_, PrjResFileName_)
+        self.setPrj(prj_name, prj_res_filename)
         if self._PrjRes:
             self._PrjRes.savePrj()
         
-    def refreshPrj(self, PrjName_=None, PrjResFileName_=None):
+    def refreshPrj(self, prj_name=None, prj_res_filename=None):
         """
         Обновить дерево проекта.
         """
         # Просто поменять время создания файла проекта
-        self.setPrj(PrjName_, PrjResFileName_)
+        self.setPrj(prj_name, prj_res_filename)
         if self._PrjRes:
             self._PrjRes.openPrj(self._PrjResFileName)
             self._PrjRes.savePrj()
@@ -203,8 +203,8 @@ class icProjectResController:
         """
         return self._PrjName
         
-    def setPrjName(self, PrjName_):
-        self._PrjName = PrjName_
+    def setPrjName(self, prj_name):
+        self._PrjName = prj_name
         if self._PrjName is None:
             self._PrjName = glob_functions.getVar('PrjName')
         
@@ -220,14 +220,14 @@ class icProjectResController:
         """
         return self._PrjResDir
         
-    def setPrjResFileName(self, PrjResFileName_):
-        self._PrjResFileName = PrjResFileName_
+    def setPrjResFileName(self, prj_res_filename):
+        self._PrjResFileName = prj_res_filename
         if self._PrjResFileName is None:
             self._PrjResDir = glob_functions.getVar('PRJ_DIR')
             self._PrjResFileName = os.path.join(self._PrjResDir, '%s.pro' % self._PrjName)
         else:
             self._PrjResDir = os.path.dirname(self._PrjResFileName)
     
-    def setPrj(self, PrjName_, PrjResFileName_):
-        self.setPrjName(PrjName_)
-        self.setPrjResFileName(PrjResFileName_)
+    def setPrj(self, prj_name, prj_res_filename):
+        self.setPrjName(prj_name)
+        self.setPrjResFileName(prj_res_filename)

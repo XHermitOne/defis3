@@ -97,7 +97,7 @@ DEFAULT_PRJ_NAME = 'new_prj'
 # Типы ресурсов ('tab','var','win','mnu','svb','frm')
 
 
-class icPrjRes(resManager.ResourceManagerInterface):
+class icPrjRes(resManager.icResourceManagerInterface):
     """
     Класс управления ресурсом проекта.
     """
@@ -106,7 +106,7 @@ class icPrjRes(resManager.ResourceManagerInterface):
         """
         Конструктор.
         """
-        resManager.ResourceManagerInterface.__init__(self)
+        resManager.icResourceManagerInterface.__init__(self)
 
         # Файл проекта
         self.prj_file_name = None
@@ -114,22 +114,22 @@ class icPrjRes(resManager.ResourceManagerInterface):
         # Структура проекта
         self._prj = []
 
-    def setResFileName(self, ResFileName_=None):
-        self.prj_file_name = ResFileName_
+    def setResFileName(self, res_filename=None):
+        self.prj_file_name = res_filename
 
-    def newPrj(self, PrjName_, PyPack_=None, PrjTemplate_=None):
+    def newPrj(self, prj_name, py_pack=None, prj_template=None):
         """
         Создание нового проекта по умолчанию.
-        @param PrjName_: Имя проекта.
-        @param PyPack_: Макет модулей питона.
-        @param PrjTemplate_: Шаблон для создания проекта.
+        @param prj_name: Имя проекта.
+        @param py_pack: Макет модулей питона.
+        @param prj_template: Шаблон для создания проекта.
         """
         # Файл проекта
         prj_res = {}
-        if PrjTemplate_ is None:
-            PrjTemplate_ = self._newPrjTemplate()
-        prj_res[PrjName_] = PrjTemplate_
-        prj_res['__py__'] = PyPack_
+        if prj_template is None:
+            prj_template = self._newPrjTemplate()
+        prj_res[prj_name] = prj_template
+        prj_res['__py__'] = py_pack
         prj_res['__env__'] = {'AutoLogin': 'admin',
                               'AutoPassword': '',
                               'db_auth': '0',
@@ -159,13 +159,13 @@ class icPrjRes(resManager.ResourceManagerInterface):
                 {'Metadata': []},
                 ]
         
-    def openPrj(self, PrjFileName_):
+    def openPrj(self, prj_filename):
         """
         Открыть файл проекта.
         """
-        path, name = os.path.split(PrjFileName_)
+        path, name = os.path.split(prj_filename)
         ic.set_ini_file(path)
-        self.prj_file_name = PrjFileName_
+        self.prj_file_name = prj_filename
         if os.path.isfile(self.prj_file_name) and os.path.exists(self.prj_file_name):
             prj = util.readAndEvalFile(self.prj_file_name, bRefresh=True)
             self._prj = self._prepareDataPrj(prj)
@@ -193,228 +193,228 @@ class icPrjRes(resManager.ResourceManagerInterface):
     # Один метод под двумя именами
     save = savePrj
 
-    def _prepareDataPrj(self, Prj_):
+    def _prepareDataPrj(self, project):
         """
         Подготовка данных проекта для записи/чтения.
         """
-        if isinstance(Prj_, dict):
-            Prj_ = dict([(key.strip(), self._prepareDataPrj(value)) for key, value in Prj_.items()])
-        elif isinstance(Prj_, list):
-            Prj_ = [self._prepareDataPrj(value) for value in Prj_]
-        elif isinstance(Prj_, tuple):
-            Prj_ = tuple([self._prepareDataPrj(value) for value in Prj_])
-        elif isinstance(Prj_, str):
-            Prj_ = Prj_.strip()
-        return Prj_
+        if isinstance(project, dict):
+            project = dict([(key.strip(), self._prepareDataPrj(value)) for key, value in project.items()])
+        elif isinstance(project, list):
+            project = [self._prepareDataPrj(value) for value in project]
+        elif isinstance(project, tuple):
+            project = tuple([self._prepareDataPrj(value) for value in project])
+        elif isinstance(project, str):
+            project = project.strip()
+        return project
 
-    def _save_prj(self, PrjFileName_, Prj_=None):
+    def _save_prj(self, prj_filename, project=None):
         """
         Непосредственное сохранение проекта.
-        @param PrjFileName_: Имя файла проекта.
-        @param Prj_: Структура проекта.
+        @param prj_filename: Имя файла проекта.
+        @param project: Структура проекта.
         @return: Возвращает результат выполнения True/False.
         """
-        if Prj_ is None:
-            Prj_ = self._prepareDataPrj(self._prj)
-        ok = ic_res.SaveResourceText(PrjFileName_.strip(), Prj_)
+        if project is None:
+            project = self._prepareDataPrj(self._prj)
+        ok = ic_res.SaveResourceText(prj_filename.strip(), project)
         # Кроме того, что сохраняем проект, еще делаем его пакетом
-        ic_res.CreateInitFile(os.path.dirname(PrjFileName_.strip()))
+        ic_res.CreateInitFile(os.path.dirname(prj_filename.strip()))
         return ok
 
     def getPrjRes(self):
         return self._prj
 
-    def addFolder(self, NewFolderName_, FolderName_, CurFolder_=None):
+    def addFolder(self, new_folder_name, dst_folder_name, cur_folder=None):
         """
         Добавить папку.
-        @param NewFolderName_: Имя новой папки.
-        @param FolderName_: Имя папки или проекта,  
+        @param new_folder_name: Имя новой папки.
+        @param dst_folder_name: Имя папки или проекта,
             в которую будет добавляться новая папка.
-        @param CurFolder_: Текущая папка,  если None, 
+        @param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
         @return: Результат добавления True|False.
         """
-        if CurFolder_ is None:
-            CurFolder_ = self.getPrjRoot()
+        if cur_folder is None:
+            cur_folder = self.getPrjRoot()
         # Если имя папки==имя проекта, то просто добавить
         # папку в проект
-        if FolderName_ == self.getPrjRootName():
-            self.getPrjRoot().append({NewFolderName_: []})
+        if dst_folder_name == self.getPrjRootName():
+            self.getPrjRoot().append({new_folder_name: []})
             return True
             
         ok = False
-        for folder in CurFolder_:
+        for folder in cur_folder:
             folder_name = list(folder.keys())[0]
             # Проверять только папки
             if isinstance(folder[folder_name], list):
-                if folder_name == FolderName_:
-                    folder[folder_name].append({NewFolderName_: []})
+                if folder_name == dst_folder_name:
+                    folder[folder_name].append({new_folder_name: []})
                     ok = True
                     return ok
                 else:
-                    add = self.addFolder(NewFolderName_, FolderName_, folder[folder_name])
+                    add = self.addFolder(new_folder_name, dst_folder_name, folder[folder_name])
                     if add:
                         return add
         return ok
 
-    def addRes(self, NewResName_, ResType_, FolderName_, CurFolder_=None):
+    def addRes(self, new_res_name, res_type, dst_folder_name, cur_folder=None):
         """
         Добавить ресурс.
-        @param NewResName_: Имя нового ресурса.
-        @param ResType_: Тип ресурса ('tab','var','win','mnu','svb','frm').
-        @param FolderName_: Имя папки или проекта,  
+        @param new_res_name: Имя нового ресурса.
+        @param res_type: Тип ресурса ('tab','var','win','mnu','svb','frm').
+        @param dst_folder_name: Имя папки или проекта,
             в которую будет добавляться новая папка.
-        @param CurFolder_: Текущая папка,  если None, 
+        @param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
         @return: Результат добавления True|False.
         """
-        if CurFolder_ is None:
-            CurFolder_ = self.getPrjRoot()
+        if cur_folder is None:
+            cur_folder = self.getPrjRoot()
         ok = False
-        for folder in CurFolder_:
+        for folder in cur_folder:
             folder_name = list(folder.keys())[0]
             # Проверять только папки
             if isinstance(folder[folder_name], list):
-                if folder_name == FolderName_:
-                    folder[folder_name].append({NewResName_: ResType_})
+                if folder_name == dst_folder_name:
+                    folder[folder_name].append({new_res_name: res_type})
                     return True
                 else:
-                    add = self.addRes(NewResName_, ResType_, FolderName_, folder[folder_name])
+                    add = self.addRes(new_res_name, res_type, dst_folder_name, folder[folder_name])
                     if add:
                         return add
         return ok
 
-    def delFolder(self, FolderName_, CurFolder_=None):
+    def delFolder(self, del_folder_name, cur_folder=None):
         """
         Удалить папку с именем.
-        @param FolderName_: Имя удаляемой папки.
-        @param CurFolder_: Текущая папка,  если None, 
+        @param del_folder_name: Имя удаляемой папки.
+        @param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
         @return: True-успешное удаление. False-не удален.
         """
-        if CurFolder_ is None:
-            CurFolder_ = self.getPrjRoot()
+        if cur_folder is None:
+            cur_folder = self.getPrjRoot()
         del_ok = False
-        for i_folder in range(len(CurFolder_)):
-            folder = CurFolder_[i_folder]
+        for i_folder in range(len(cur_folder)):
+            folder = cur_folder[i_folder]
             folder_name = list(folder.keys())[0]
             # Проверять только папки
             if isinstance(folder[folder_name], list):
-                if folder_name == FolderName_:
-                    del CurFolder_[i_folder]
+                if folder_name == del_folder_name:
+                    del cur_folder[i_folder]
                     return True
                 else:
-                    delete_ok = self.delFolder(FolderName_, folder[folder_name])
+                    delete_ok = self.delFolder(del_folder_name, folder[folder_name])
                     if delete_ok:
                         return delete_ok
         return del_ok
 
-    def getFolder(self, FolderName_, CurFolder_=None):
+    def getFolder(self, folder_name, cur_folder=None):
         """
         Взять папку с именем.
-        @param FolderName_: Имя папки.
-        @param CurFolder_: Текущая папка,  если None, 
+        @param folder_name: Имя папки.
+        @param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
         @return: Список папки в ресурсе проекта.
         """
-        if CurFolder_ is None:
-            CurFolder_ = self.getPrjRoot()
-        for i_folder in range(len(CurFolder_)):
-            folder = CurFolder_[i_folder]
-            folder_name = list(folder.keys())[0]
+        if cur_folder is None:
+            cur_folder = self.getPrjRoot()
+        for i_folder in range(len(cur_folder)):
+            folder = cur_folder[i_folder]
+            cur_folder_name = list(folder.keys())[0]
             # Проверять только папки
-            if isinstance(folder[folder_name], list):
-                if folder_name == FolderName_:
-                    return CurFolder_[i_folder]
+            if isinstance(folder[cur_folder_name], list):
+                if cur_folder_name == folder_name:
+                    return cur_folder[i_folder]
                 else:
-                    find_fld = self.getFolder(FolderName_, folder[folder_name])
+                    find_fld = self.getFolder(folder_name, folder[cur_folder_name])
                     if find_fld is not None:
                         return find_fld
         return None
 
-    def getFolderBody(self, FolderName_, CurFolder_=None):
+    def getFolderBody(self, folder_name, cur_folder=None):
         """
         Взять содержимое папки с именем.
-        @param FolderName_: Имя папки.
-        @param CurFolder_: Текущая папка,  если None, 
+        @param folder_name: Имя папки.
+        @param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
         @return: Список папки в ресурсе проекта.
         """
-        if CurFolder_ is None:
-            CurFolder_ = self.getPrjRoot()
-        for i_folder in range(len(CurFolder_)):
-            folder = CurFolder_[i_folder]
-            folder_name = list(folder.keys())[0]
+        if cur_folder is None:
+            cur_folder = self.getPrjRoot()
+        for i_folder in range(len(cur_folder)):
+            folder = cur_folder[i_folder]
+            cur_folder_name = list(folder.keys())[0]
             # Проверять только папки
-            if isinstance(folder[folder_name], list):
-                if folder_name == FolderName_:
-                    return CurFolder_[i_folder][FolderName_]
+            if isinstance(folder[cur_folder_name], list):
+                if cur_folder_name == folder_name:
+                    return cur_folder[i_folder][folder_name]
                 else:
-                    find_fld = self.getFolderBody(FolderName_, folder[folder_name])
+                    find_fld = self.getFolderBody(folder_name, folder[cur_folder_name])
                     if find_fld is not None:
                         return find_fld
         return None
 
-    def delRes(self, ResName_, ResType_=None, CurFolder_=None):
+    def delRes(self, res_name, res_type=None, cur_folder=None):
         """
         Удалить ресурс по имени и типу.
-        @param ResName_: Имя ресурса.
-        @param ResType_: Тип ресурса, если None, 
+        @param res_name: Имя ресурса.
+        @param res_type: Тип ресурса, если None,
             то проверка на тип не производится.
-        @param CurFolder_: Текущая папка,  если None, 
+        @param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
         @return: True-успешное удаление. False-не удален.
         """
-        if CurFolder_ is None:
+        if cur_folder is None:
             # Отсечь импортитруемые подсистемы
-            CurFolder_ = self.getPrjRoot()
+            cur_folder = self.getPrjRoot()
         del_ok = False
-        for i_res in range(len(CurFolder_)):
-            res = CurFolder_[i_res]
-            res_name = list(res.keys())[0]
+        for i_res in range(len(cur_folder)):
+            res = cur_folder[i_res]
+            cur_res_name = list(res.keys())[0]
             # Проверять только папки
-            if isinstance(res[res_name], list):
-                find_res = self.delRes(ResName_, ResType_, res[res_name])
+            if isinstance(res[cur_res_name], list):
+                find_res = self.delRes(res_name, res_type, res[cur_res_name])
                 if find_res:
                     return find_res
             else:
-                if res_name == ResName_ and res[res_name] == ResType_:
-                    del CurFolder_[i_res]
+                if cur_res_name == res_name and res[cur_res_name] == res_type:
+                    del cur_folder[i_res]
                     return True
-                elif res_name == ResName_ and not ResType_:
-                    del CurFolder_[i_res]
+                elif cur_res_name == res_name and not res_type:
+                    del cur_folder[i_res]
                     return True
         return del_ok
 
-    def getResRef(self, ResName_, ResType_=None, CurFolder_=None):
+    def getResRef(self, res_name, res_type=None, cur_folder=None):
         """
         Получить кортеж указания ресурса по имени и типу.
-        @param ResName_: Имя ресурса.
-        @param ResType_: Тип ресурса, если None, 
+        @param res_name: Имя ресурса.
+        @param res_type: Тип ресурса, если None,
             то проверка на тип не производится.
-        @param CurFolder_: Текущая папка,  если None, 
+        @param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
         @return: Кортеж (Имя ресурса, тип ресурса) или None в случае ошибки.
         """
-        if CurFolder_ is None:
+        if cur_folder is None:
             # Отсечь импортитруемые подсистемы
-            CurFolder_ = self.getPrjRoot()
+            cur_folder = self.getPrjRoot()
         ret_res = None
-        for res in CurFolder_:
-            res_name = list(res.keys())[0]
+        for res in cur_folder:
+            cur_res_name = list(res.keys())[0]
             # Проверять только папки
-            if isinstance(res[res_name], list):
-                find_res = self.getResRef(ResName_, ResType_, res[res_name])
+            if isinstance(res[cur_res_name], list):
+                find_res = self.getResRef(res_name, res_type, res[cur_res_name])
                 if find_res:
                     return find_res
             else:
-                if res_name == ResName_ and res[res_name] == ResType_:
-                    return res_name, res[res_name]
-                elif res_name == ResName_ and ResType_ is None:
-                    return res_name, res[res_name]
+                if cur_res_name == res_name and res[cur_res_name] == res_type:
+                    return cur_res_name, res[cur_res_name]
+                elif cur_res_name == res_name and res_type is None:
+                    return cur_res_name, res[cur_res_name]
 
         if ret_res is None:
-            log.warning(u'Не найден ресурс <%s.%s> %s' % (ResName_, ResType_, str(CurFolder_)))
+            log.warning(u'Не найден ресурс <%s.%s> %s' % (res_name, res_type, str(cur_folder)))
         return ret_res
 
     def getImportSystems(self):
@@ -437,17 +437,17 @@ class icPrjRes(resManager.ResourceManagerInterface):
         names = [key for key in root.keys() if not key.startswith('_')]
         return names[0]
 
-    def setPrjRootName(self, NewPrjRootName_):
+    def setPrjRootName(self, new_prj_root_name):
         """
         Имя корневой папки проекта.
         """
-        NewPrjRootName_ = NewPrjRootName_
+        new_prj_root_name = new_prj_root_name
         root = self._prj[0]
         names = [key for key in root.keys() if not key.startswith('_')]
         old_prj_root_name = names[0]
         prj_root = root[old_prj_root_name]
         del self._prj[0][old_prj_root_name]
-        self._prj[0][NewPrjRootName_] = prj_root
+        self._prj[0][new_prj_root_name] = prj_root
 
     def getPrjRoot(self):
         """
@@ -457,219 +457,219 @@ class icPrjRes(resManager.ResourceManagerInterface):
             self.newPrj(DEFAULT_PRJ_NAME)
         return self._prj[0][self.getPrjRootName()]
 
-    def getPyPackageImportSys(self, ImportSys_):
+    def getPyPackageImportSys(self, import_sys):
         """
         Пакет модулей питона импортироуемой системы.
         """
         return None
 
-    def addPackage(self, PackagePath_, NewPackageName_=None):
+    def addPackage(self, package_path, new_package_name=None):
         """
         Добавить пакет модулей в дерево проектов.
-        @param PackagePath_: Путь пакета.
-        @param NewPackageName_: Имя нового пакета.
+        @param package_path: Путь пакета.
+        @param new_package_name: Имя нового пакета.
         @return: Результат добавления True|False.
         """
-        package_path = PackagePath_
-        if NewPackageName_:
-            package_path = os.path.join(package_path, NewPackageName_)
-        return ic_res.CreateInitFile(package_path)
+        cur_package_path = package_path
+        if new_package_name:
+            cur_package_path = os.path.join(cur_package_path, new_package_name)
+        return ic_res.CreateInitFile(cur_package_path)
 
-    def addModule(self, ModuleName_, PackagePath_):
+    def addModule(self, module_name, package_path):
         """
         Добавить модуль в дерево проектов.
-        @param ModuleName_: Имя модуля.
-        @param PackagePath_: Путь пакета.
+        @param module_name: Имя модуля.
+        @param package_path: Путь пакета.
         """
         pass
 
-    def renameRes(self, OldName_, NewName_, CurFolder_=None):
+    def renameRes(self, old_name, new_name, cur_folder=None):
         """
         Переименовать ресурс/папку.
-        @param OldName_: Старое имя.
-        @param NewName_: Новое имя.
-        @param CurFolder_: Текущая папка,  если None, 
+        @param old_name: Старое имя.
+        @param new_name: Новое имя.
+        @param cur_folder: Текущая папка,  если None, 
             то берется папка проекта.
         @return: Возвращает результат выполнения переименования.
         """
-        if CurFolder_ is None:
+        if cur_folder is None:
             # Отсечь импортитруемые подсистемы
-            CurFolder_ = self.getPrjRoot()
+            cur_folder = self.getPrjRoot()
         rename_res = False
-        for i_res in range(len(CurFolder_)):
-            res = CurFolder_[i_res]
+        for i_res in range(len(cur_folder)):
+            res = cur_folder[i_res]
             res_name = list(res.keys())[0]
-            if res_name == OldName_:
-                CurFolder_[i_res] = {NewName_: res[res_name]}
+            if res_name == old_name:
+                cur_folder[i_res] = {new_name: res[res_name]}
                 return True
             elif isinstance(res[res_name], list):
                 # Если это папка, то обработать все подпапки
-                rename_res = self.renameRes(OldName_, NewName_, res[res_name])
+                rename_res = self.renameRes(old_name, new_name, res[res_name])
                 if rename_res:
                     return rename_res
         return rename_res
 
-    def newSubSys(self, SubSysName_, SubSysPrjFile_, PyPack_):
+    def newSubSys(self, subsys_name, subsys_prj_filename, py_pack):
         """
         Создать новую импортируемую подсистему.
-        @param SubSysName_: Имя импортируемой подсистемы.
-        @param SubSysPrjFile_: Файл импортируемой подсистемы.
-        @param PyPack_: Пакет импортируемой подсистмы.
+        @param subsys_name: Имя импортируемой подсистемы.
+        @param subsys_prj_filename: Файл импортируемой подсистемы.
+        @param py_pack: Пакет импортируемой подсистмы.
         """
-        imp_sys = {'name': SubSysName_,
+        imp_sys = {'name': subsys_name,
                    'type': 'icSubSys',
-                   '__py__': PyPack_,
+                   '__py__': py_pack,
                    'link': 0,
-                   'path': SubSysPrjFile_}
+                   'path': subsys_prj_filename}
         # Добавить в проект
         self._prj.append(imp_sys)
         return imp_sys
 
-    def isResORFolderByName(self, Name_, CurFolder_=None):
+    def isResORFolderByName(self, name, cur_folder=None):
         """
         Проверка, есть ли ресурс или папка с таким именем в проекте.
-        @param Name_: Имя.
+        @param name: Имя.
         @return: Возвращает результат операции True/False.
         """
-        if CurFolder_ is None:
+        if cur_folder is None:
             # Отсечь импортитруемые подсистемы
-            CurFolder_ = self.getPrjRoot()
+            cur_folder = self.getPrjRoot()
         find = False
-        for i_res in range(len(CurFolder_)):
-            res = CurFolder_[i_res]
+        for i_res in range(len(cur_folder)):
+            res = cur_folder[i_res]
             res_name = list(res.keys())[0]
-            if res_name == Name_:
+            if res_name == name:
                 return True
             elif isinstance(res[res_name], list):
                 # Если это папка, то обработать все подпапки
-                find_folder = self.isResORFolderByName(Name_, res[res_name])
+                find_folder = self.isResORFolderByName(name, res[res_name])
                 if find_folder:
                     return find_folder
         return find
 
-    def isResByNameANDType(self, Name_, Type_=None, CurFolder_=None):
+    def isResByNameANDType(self, name, res_type=None, cur_folder=None):
         """
         Проверка, есть ли ресурс с таким именем и типом в проекте.
-        @param Name_: Имя.
-        @param Type_: Строковое определение типа ресурса 'tab','frm',...
+        @param name: Имя.
+        @param res_type: Строковое определение типа ресурса 'tab','frm',...
             Если тип None, то проверка по типу не делается.
         @return: Возвращает результат операции True/False.
         """
-        if CurFolder_ is None:
+        if cur_folder is None:
             # Отсечь импортитруемые подсистемы
-            CurFolder_ = self.getPrjRoot()
+            cur_folder = self.getPrjRoot()
         find = False
-        for i_res in range(len(CurFolder_)):
-            res = CurFolder_[i_res]
-            res_name = list(res.keys())[0]
-            res_type = res[res_name]
-            if isinstance(res[res_name], list):
+        for i_res in range(len(cur_folder)):
+            res = cur_folder[i_res]
+            cur_res_name = list(res.keys())[0]
+            cur_res_type = res[cur_res_name]
+            if isinstance(res[cur_res_name], list):
                 # Если это папка, то обработать все подпапки
-                find_folder = self.isResByNameANDType(Name_, Type_, res[res_name])
+                find_folder = self.isResByNameANDType(name, res_type, res[cur_res_name])
                 if find_folder:
                     return find_folder
-            elif res_name == Name_ and res_type == Type_:
+            elif cur_res_name == name and cur_res_type == res_type:
                 return True
-            elif res_name == Name_ and Type_ is None:
+            elif cur_res_name == name and res_type is None:
                 return True
         return find
 
-    def getResNameListByType(self, Type_, CurFolder_=None):
+    def getResNameListByType(self, res_type, cur_folder=None):
         """
         Список имен ресурсов в проекте по их типу.
-        @param Type_: Строковое определение типа ресурса 'tab','frm',...
+        @param res_type: Строковое определение типа ресурса 'tab','frm',...
         @return: Возвращает список имен ресурсов заданного типа.
         """
-        if CurFolder_ is None:
+        if cur_folder is None:
             # Отсечь импортитруемые подсистемы
-            CurFolder_ = self.getPrjRoot()
+            cur_folder = self.getPrjRoot()
         
         find_list = []
-        for i_res in range(len(CurFolder_)):
-            res = CurFolder_[i_res]
-            res_name = list(res.keys())[0]
-            res_type = res[res_name]
-            if isinstance(res[res_name], list):
+        for i_res in range(len(cur_folder)):
+            res = cur_folder[i_res]
+            cur_res_name = list(res.keys())[0]
+            cur_res_type = res[cur_res_name]
+            if isinstance(res[cur_res_name], list):
                 # Если это папка, то обработать все подпапки
-                find_folder = self.getResNameListByType(Type_, res[res_name])
+                find_folder = self.getResNameListByType(res_type, res[cur_res_name])
                 if find_folder:
                     find_list += find_folder
-            elif res_type == Type_:
-                find_list.append(res_name)
+            elif cur_res_type == res_type:
+                find_list.append(cur_res_name)
         return find_list
         
-    def getResNameListByTypes(self, Types_, CurFolder_=None):
+    def getResNameListByTypes(self, res_types, cur_folder=None):
         """
         Список имен ресурсов в проекте по их типу.
-        @param Types_: Кортеж строковых определение типа ресурса 'tab','frm',...
+        @param res_types: Кортеж строковых определение типа ресурса 'tab','frm',...
         @return: Возвращает список имен ресурсов заданных типов.
         """
-        if CurFolder_ is None:
+        if cur_folder is None:
             # Отсечь импортитруемые подсистемы
-            CurFolder_ = self.getPrjRoot()
+            cur_folder = self.getPrjRoot()
         
         find_list = []
-        for i_res in range(len(CurFolder_)):
-            res = CurFolder_[i_res]
-            res_name = list(res.keys())[0]
-            res_type = res[res_name]
-            if isinstance(res[res_name], list):
+        for i_res in range(len(cur_folder)):
+            res = cur_folder[i_res]
+            cur_res_name = list(res.keys())[0]
+            cur_res_type = res[cur_res_name]
+            if isinstance(res[cur_res_name], list):
                 # Если это папка, то обработать все подпапки
-                find_folder = self.getResNameListByTypes(Types_, res[res_name])
+                find_folder = self.getResNameListByTypes(res_types, res[cur_res_name])
                 if find_folder:
                     find_list += find_folder
-            elif res_type in Types_:
-                find_list.append(res_name)
+            elif cur_res_type in res_types:
+                find_list.append(cur_res_name)
         return find_list
         
-    def getResNamesByTypes(self, *Types_):
+    def getResNamesByTypes(self, *res_types):
         """
         Список имен ресурсов в проекте по их типу.
-        @param Types_: Кортеж строковых определение типа ресурса 'tab','frm',...
+        @param res_types: Кортеж строковых определение типа ресурса 'tab','frm',...
         @return: Возвращает список имен ресурсов заданных типов.
         """
-        return self.getResNameListByTypes(*Types_)
+        return self.getResNameListByTypes(*res_types)
         
-    def getResFileNamesByResPattern(self, ResPattern_, CurFolder_=None):
+    def getResFileNamesByResPattern(self, res_pattern, cur_folder=None):
         """
         Список имен файлов ресурсов по шаблону ресурса.
-        @param ResPattern_: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
+        @param res_pattern: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
         @return: Список имен файлов ресурсов по шаблону ресурса.
         """
-        if CurFolder_ is None:
+        if cur_folder is None:
             # Отсечь импортитруемые подсистемы
-            CurFolder_ = self.getPrjRoot()
+            cur_folder = self.getPrjRoot()
         
         find_list = []
-        for i_res in range(len(CurFolder_)):
-            res = CurFolder_[i_res]
+        for i_res in range(len(cur_folder)):
+            res = cur_folder[i_res]
             res_name = list(res.keys())[0]
             res_type = res[res_name]
             if isinstance(res[res_name], list):
                 # Если это папка, то обработать все подпапки
-                find_folder = self.getResFileNamesByResPattern(ResPattern_, res[res_name])
+                find_folder = self.getResFileNamesByResPattern(res_pattern, res[res_name])
                 if find_folder:
                     find_list += find_folder
             else:
                 res_file_name = u''
                 try:
                     res_file_name = res_name+'.'+res_type
-                    if [pattern for pattern in ResPattern_ if re.match(pattern, res_file_name)]:
+                    if [pattern for pattern in res_pattern if re.match(pattern, res_file_name)]:
                         # Если имя файла подходит под какойлибо шаблон,
                         # то добавитьв выходной список
                         find_list.append(res_file_name)
                 except:
-                    log.fatal(u'File <%s> is not found by template <%s>' % (res_file_name, ResPattern_))
+                    log.fatal(u'Ошибка поиска файла <%s> по шаблону <%s>' % (res_file_name, res_pattern))
         return find_list
 
-    def getObjectsByResPattern(self, *ResPattern_):
+    def getObjectsByResPattern(self, *res_pattern):
         """
         Получить список кортежей (тип объекта,имя объекта) по шаблону ресурса.
-        @param ResPattern_: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
+        @param res_pattern: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
         @return: Список кортежей (тип объекта,имя объекта) по шаблону ресурса.
         """
         obj_list = []
-        res_file_names = self.getResFileNamesByResPattern(ResPattern_)
+        res_file_names = self.getResFileNamesByResPattern(res_pattern)
         prj_dir = os.path.dirname(self.prj_file_name)
         for res_file_name in res_file_names:
             full_res_file_name = os.path.join(prj_dir, res_file_name)
@@ -678,144 +678,144 @@ class icPrjRes(resManager.ResourceManagerInterface):
             obj_list.append(obj)
         return obj_list
         
-    def getObjNamesByResPattern(self, *ResPattern_):
+    def getObjNamesByResPattern(self, *res_pattern):
         """
         Имена объектов по шаблону ресурсов.
         """
-        return [obj[1] for obj in self.getObjectsByResPattern(*ResPattern_)]
+        return [obj[1] for obj in self.getObjectsByResPattern(*res_pattern)]
         
-    def getObjectsInResByType(self, ResFileName_, ObjType_, CurObj_=None):
+    def getObjectsInResByType(self, res_filename, obj_type, cur_obj=None):
         """
         Поиск объектов в ресурсе по типу.
-        @param ResFileName_: Имя файла ресурса.
+        @param res_filename: Имя файла ресурса.
         @param OBjType_: Тип объекта, например 'icButton'.
         @return: Список кортежей формата:
             [('тип объекта','имя объекта','описание'),...]
         """
-        if CurObj_ is None:
-            spc = util.readAndEvalFile(ResFileName_, bRefresh=True)
-            CurObj_ = spc[list(spc.keys())[0]]
+        if cur_obj is None:
+            spc = util.readAndEvalFile(res_filename, bRefresh=True)
+            cur_obj = spc[list(spc.keys())[0]]
 
         find_list = []
         try:
-            if CurObj_ is None:
+            if cur_obj is None:
                 # Ресурс пустой
                 return find_list
-            if CurObj_['type'] == ObjType_:
-                find_list.append((CurObj_['type'], CurObj_['name'], CurObj_['description']))
-            if 'child' in CurObj_ and CurObj_['child']:
-                for child in CurObj_['child']:
-                    find_grp = self.getObjectsInResByType(ResFileName_, ObjType_, child)
+            if cur_obj['type'] == obj_type:
+                find_list.append((cur_obj['type'], cur_obj['name'], cur_obj['description']))
+            if 'child' in cur_obj and cur_obj['child']:
+                for child in cur_obj['child']:
+                    find_grp = self.getObjectsInResByType(res_filename, obj_type, child)
                     find_list += find_grp
         except:
-            log.fatal(u'Search error in function getObjectsInResByType: %s, %s, %s' % (ResFileName_, ObjType_, CurObj_))
+            log.fatal(u'Search error in function getObjectsInResByType: %s, %s, %s' % (res_filename, obj_type, cur_obj))
         return find_list
         
-    def getObjectsInResByTypes(self, ResFileName_, ObjTypes_, CurObj_=None):
+    def getObjectsInResByTypes(self, res_filename, obj_types, cur_obj=None):
         """
         Поиск объектов в ресурсе по типу.
-        @param ResFileName_: Имя файла ресурса.
+        @param res_filename: Имя файла ресурса.
         @param OBjTypes_: Кортеж типов объектов, например ('icButton',).
         @return: Список кортежей формата:
             [('тип объекта','имя объекта','описание'),...]
         """
-        if CurObj_ is None:
-            spc = util.readAndEvalFile(ResFileName_, bRefresh=True)
-            CurObj_ = spc[list(spc.keys())[0]]
+        if cur_obj is None:
+            spc = util.readAndEvalFile(res_filename, bRefresh=True)
+            cur_obj = spc[list(spc.keys())[0]]
 
         find_list = []
         try:
-            if CurObj_ is None:
+            if cur_obj is None:
                 # Ресурс пустой
                 return find_list
-            if CurObj_['type'] in ObjTypes_:
-                find_list.append((CurObj_['type'], CurObj_['name'], CurObj_['description']))
-            if 'child' in CurObj_ and CurObj_['child']:
-                for child in CurObj_['child']:
-                    find_grp = self.getObjectsInResByTypes(ResFileName_, ObjTypes_, child)
+            if cur_obj['type'] in obj_types:
+                find_list.append((cur_obj['type'], cur_obj['name'], cur_obj['description']))
+            if 'child' in cur_obj and cur_obj['child']:
+                for child in cur_obj['child']:
+                    find_grp = self.getObjectsInResByTypes(res_filename, obj_types, child)
                     find_list += find_grp
         except:
-            log.fatal(u'Search error in function getObjectsInResByTypes: (%s, %s, %s)' % (ResFileName_,
-                                                                                              ObjTypes_, CurObj_))
+            log.fatal(u'Search error in function getObjectsInResByTypes: (%s, %s, %s)' % (res_filename,
+                                                                                          obj_types, cur_obj))
         return find_list
         
-    def getObjByResPatternANDType(self, ResPattern_, ObjType_):
+    def getObjByResPatternANDType(self, res_pattern, obj_type):
         """
         Получить список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
-        @param ResPattern_: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
-        @param ObjType_: Тип объекта. Например 'icButton'.
+        @param res_pattern: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
+        @param obj_type: Тип объекта. Например 'icButton'.
         @return: Список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
         """
         obj_list = []
-        res_file_names = self.getResFileNamesByResPattern(ResPattern_)
+        res_file_names = self.getResFileNamesByResPattern(res_pattern)
         prj_dir = os.path.dirname(self.prj_file_name)
         for res_file_name in res_file_names:
             full_res_file_name = os.path.join(prj_dir, res_file_name)
-            obj_lst = self.getObjectsInResByType(full_res_file_name, ObjType_)
+            obj_lst = self.getObjectsInResByType(full_res_file_name, obj_type)
             obj_list += obj_lst
         return obj_list
         
-    def getObjByResPatternANDTypes(self, ResPattern_, ObjTypes_):
+    def getObjByResPatternANDTypes(self, res_pattern, obj_types):
         """
         Получить список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
-        @param ResPattern_: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
-        @param ObjTypes_: Кортеж типов объектов, например ('icButton',).
+        @param res_pattern: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
+        @param obj_types: Кортеж типов объектов, например ('icButton',).
         @return: Список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
         """
         obj_list = []
-        res_file_names = self.getResFileNamesByResPattern(ResPattern_)
+        res_file_names = self.getResFileNamesByResPattern(res_pattern)
         prj_dir = os.path.dirname(self.prj_file_name)
         for res_file_name in res_file_names:
             full_res_file_name = os.path.join(prj_dir, res_file_name)
-            obj_lst = self.getObjectsInResByTypes(full_res_file_name, ObjTypes_)
+            obj_lst = self.getObjectsInResByTypes(full_res_file_name, obj_types)
             obj_list += obj_lst
         return obj_list
         
-    def isModByName(self, ModuleName_):
+    def isModByName(self, module_name):
         """
         Проверить, есть ли модуль с таким именем.
-        @param ModuleName_: Имя модуля.
+        @param module_name: Имя модуля.
         @return: Возвращает результат операции True/False.
         """
         return False
         
-    def isImpSubSys(self, Name_):
+    def isImpSubSys(self, name):
         """
         Проверить, является ли name именем импортируемой подсистемы.
-        @param Name_: Имя некого ресурса.
+        @param name: Имя некого ресурса.
         @return: Возвращает True/False.
         """
-        return bool([sub_sys for sub_sys in self.getImportSystems() if sub_sys['name'] == Name_])
+        return bool([sub_sys for sub_sys in self.getImportSystems() if sub_sys['name'] == name])
 
-    def getImpSubSysIdx(self, Name_):
+    def getImpSubSysIdx(self, name):
         """
         Возвращает индекс импортируемой подсистемы по имени.
-        @param Name_: Имя подсистемы.
+        @param name: Имя подсистемы.
         @return: Индекс в структуре ресурсного файла импортируемой подсистемы
             с именем name или -1, если такая подсистема в описании не найдена.
         """
         find_idx = -1
         try:
             name_list = ['']+[sub_sys['name'] for sub_sys in self.getImportSystems()]
-            find_idx = name_list.index(Name_)
+            find_idx = name_list.index(name)
         except ValueError:
             log.fatal()
             find_idx = -1
             
         return find_idx
         
-    def delImpSubSys(self, Name_, AutoSave_=True):
+    def delImpSubSys(self, name, bAutoSave=True):
         """
         Удалить из файла *.pro импортируемую подсистему по имени.
-        @param Name_: Имя подсистемы.
-        @param AutoSave_: Автоматически сохранить файл *.pro после удаления.
+        @param name: Имя подсистемы.
+        @param bAutoSave: Автоматически сохранить файл *.pro после удаления.
         @return: Возвращает True/False.
         """
         try:
-            sub_sys_idx = self.getImpSubSysIdx(Name_)
+            sub_sys_idx = self.getImpSubSysIdx(name)
             if sub_sys_idx > 0:
                 del self._prj[sub_sys_idx]
-            if AutoSave_:
+            if bAutoSave:
                 self.save()
             return True
         except:
@@ -830,11 +830,11 @@ class icPrjRes(resManager.ResourceManagerInterface):
             return self._prj[0]['__env__']
         return {}
     
-    def setPrjEnv(self, Env_):
+    def setPrjEnv(self, env):
         """
         Установить словарь дополнительных атрибутов проекта.
         """
-        self._prj[0]['__env__'] = Env_
+        self._prj[0]['__env__'] = env
 
 
 def test():

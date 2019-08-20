@@ -50,16 +50,16 @@ __version__ = (0, 1, 1, 2)
 PRJ_REG_JRN_FILE_NAME = './log/prj_reg_user_journal.ini'
 
 
-class PrjRoot(ImpNode.PrjImportSys):
+class icPrjRoot(ImpNode.icPrjImportSys):
     """
     Главный класс проекта.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        ImpNode.PrjImportSys.__init__(self, Parent_)
+        ImpNode.icPrjImportSys.__init__(self, parent)
         self.img = imglib.imgEdtPrj
         self.description = u'Проект'
         self.name = 'new_prj'
@@ -116,20 +116,20 @@ class PrjRoot(ImpNode.PrjImportSys):
         if self.lock_dir:
             ic_res.delAllLockRes(self.lock_dir)
             
-    def unlockResInResEditor(self, ResEditor_=None):
+    def unlockResInResEditor(self, res_editor=None):
         """
         Разблокировать ресурс, который находится в редакторе ресурсов.
-        @param ResEditor_: Редактор ресурса.
+        @param res_editor: Редактор ресурса.
         """
-        if ResEditor_ is None:
-            ResEditor_ = self.getParent().res_editor
-        if ResEditor_ is None:
+        if res_editor is None:
+            res_editor = self.getParent().res_editor
+        if res_editor is None:
             log.warning('Don\'t define Resource Editor')
             return False
 
-        res_name = ResEditor_.GetResName()
+        res_name = res_editor.GetResName()
         if res_name:
-            res_file_name = ResEditor_.GetResFileName()
+            res_file_name = res_editor.GetResFileName()
             if res_file_name:
                 res_file_ext = os.path.splitext(os.path.basename(res_file_name))[1][1:]
                 res_file_name = os.path.splitext(os.path.basename(res_file_name))[0]
@@ -137,18 +137,18 @@ class PrjRoot(ImpNode.PrjImportSys):
                                         res_file_ext, self.lock_dir)
         return False
 
-    def unlockPyFileInIDE(self, PyFileName_):
+    def unlockPyFileInIDE(self, py_filename):
         """
         Разблокировать модуль.
-        @param PyFileName_: Имя модуля.
+        @param py_filename: Имя модуля.
         """
         ide = self.getParent().getIDE()
         # Если файл не открыт в редакторе, то удалить блокировку
-        if ide and not ide.IsOpenedFile(PyFileName_):
-            py_file_name = os.path.splitext(os.path.basename(PyFileName_))[0]
+        if ide and not ide.IsOpenedFile(py_filename):
+            py_file_name = os.path.splitext(os.path.basename(py_filename))[0]
             py_file_ext = 'py'
-            package_name = os.path.basename(os.path.dirname(PyFileName_))
-            log.debug('UNLOCK PY FILE <%s> is open - %s' % (PyFileName_, ide.GetAlreadyOpen()))
+            package_name = os.path.basename(os.path.dirname(py_filename))
+            log.debug('UNLOCK PY FILE <%s> is open - %s' % (py_filename, ide.GetAlreadyOpen()))
             return ic_res.unlockRes(py_file_name, package_name,
                                     py_file_ext, self.lock_dir)
         return False
@@ -181,28 +181,28 @@ class PrjRoot(ImpNode.PrjImportSys):
         # Удалить все дочерние объекты
         self.children = []
         # и добавить по умолчанию
-        self.addChild(prj_env.PrjEnv(self))
-        self.prj_security = prj_security.PrjSecurity(self)
+        self.addChild(prj_env.icPrjEnv(self))
+        self.prj_security = prj_security.icPrjSecurity(self)
         self.addChild(self.prj_security)
-        self.addChild(prj_report.PrjReports(self))
-        resources = prj_resource.PrjResources(self)
+        self.addChild(prj_report.icPrjReports(self))
+        resources = prj_resource.icPrjResources(self)
         self.addChild(resources)
 
-        db = resources.addChild(prj_resource.PrjResources(resources))
+        db = resources.addChild(prj_resource.icPrjResources(resources))
         db.name = u'БД'
-        tables = resources.addChild(prj_resource.PrjResources(resources))
+        tables = resources.addChild(prj_resource.icPrjResources(resources))
         tables.name = u'Таблицы'
-        menus = resources.addChild(prj_resource.PrjResources(resources))
+        menus = resources.addChild(prj_resource.icPrjResources(resources))
         menus.name = u'Меню'
-        systems = resources.addChild(prj_resource.PrjResources(resources))
+        systems = resources.addChild(prj_resource.icPrjResources(resources))
         systems.name = u'Системное'
-        forms = resources.addChild(prj_resource.PrjResources(resources))
+        forms = resources.addChild(prj_resource.icPrjResources(resources))
         forms.name = u'Формы'
-        meta = resources.addChild(prj_resource.PrjResources(resources))
+        meta = resources.addChild(prj_resource.icPrjResources(resources))
         meta.name = u'Метаданные'
         
-        self.addChild(prj_module.PrjModules(self))
-        self.addChild(ImpNode.PrjImportSystems(self))
+        self.addChild(prj_module.icPrjModules(self))
+        self.addChild(ImpNode.icPrjImportSystems(self))
         
         # По умолчанию создать дополнительные ресурсы
         self._newResources()
@@ -217,7 +217,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         security_node.createRole('administrators')
         # 2. Создать главное окно
         frm_folder = self.getResources().getChild(u'Формы')
-        win_node = prj_resource.PrjWinRes(frm_folder)
+        win_node = prj_resource.icPrjWinRes(frm_folder)
         win_node.template['name'] = win_node.name
         frm_folder.addChild(win_node)
         # 3. Сохранить созданные ресурсы
@@ -225,21 +225,21 @@ class PrjRoot(ImpNode.PrjImportSys):
         security_node.save()
         return self.save()
         
-    def onNodePopup(self,event):
+    def onNodePopup(self, event):
         """
         Вызов всплывающего меню узла.
         """
         popup_menu = menuRootNode.icMenuRootNode(self)
         popup_menu.Popup(wx.GetMousePosition(), self._root.getParent())
 
-    def _new_prj_init_file(self, PrjPath_):
+    def _new_prj_init_file(self, prj_path):
         """
         Создать новый __init__.py файл проекта.
         """
-        log.info(_('__init__.py is created in folder %s') % PrjPath_)
+        log.info(_('__init__.py is created in folder %s') % prj_path)
         return ic_file.icCopyFile(os.path.join(os.path.dirname(__file__),
                                                'prj__init__prototype.py'),
-                                  os.path.join(PrjPath_, '__init__.py'), False)
+                                  os.path.join(prj_path, '__init__.py'), False)
         
     def newPrj(self):
         """
@@ -298,15 +298,15 @@ class PrjRoot(ImpNode.PrjImportSys):
         # Удалить все дочерние объекты
         self.children = []
         # и добавить по умолчанию
-        self.addChild(prj_env.PrjEnv(self))
-        self.prj_security = prj_security.PrjSecurity(self)
+        self.addChild(prj_env.icPrjEnv(self))
+        self.prj_security = prj_security.icPrjSecurity(self)
         self.prj_security.openUsers()
         self.prj_security.openRoles()
         self.addChild(self.prj_security)
-        self.addChild(prj_report.PrjReports(self))
-        self.addChild(prj_resource.PrjResources(self))
-        self.addChild(prj_module.PrjModules(self))
-        self.addChild(ImpNode.PrjImportSystems(self))
+        self.addChild(prj_report.icPrjReports(self))
+        self.addChild(prj_resource.icPrjResources(self))
+        self.addChild(prj_module.icPrjModules(self))
+        self.addChild(ImpNode.icPrjImportSystems(self))
 
     def getResources(self):
         """
@@ -326,22 +326,22 @@ class PrjRoot(ImpNode.PrjImportSys):
         """
         return self.children[5]
 
-    def getPrjSubsys(self, PrjFileName_):
+    def getPrjSubsys(self, prj_filename):
         """
         Имя проекта и имя проекта, подсистемой которого он является.
-        @param PrjFileName_: Имя файла проекта.
+        @param prj_filename: Имя файла проекта.
         @return: Кортеж (имя проекта, имя подсистемы).
         """
-        prj_dir = os.path.dirname(PrjFileName_)
+        prj_dir = os.path.dirname(prj_filename)
         subsys_name = os.path.basename(prj_dir)
         prj_name = os.path.basename(os.path.dirname(prj_dir))
         return prj_name, subsys_name
         
-    def login(self, User_=None, Password_=None, prj_filename=None):
+    def login(self, username=None, password=None, prj_filename=None):
         """
         Открыть регистрацию программиста в режиме редактирования.
-        @param User_: Имя пользователя.
-        @param Password_: Пароль. Если имя или пароль не указаны, то выводится
+        @param username: Имя пользователя.
+        @param password: Пароль. Если имя или пароль не указаны, то выводится
         окно входа в систему.
         @param prj_filename: Имя файла проекта, который пытаемся открыть.
             Необходимо для снятия блокировки пользователя.
@@ -352,7 +352,7 @@ class PrjRoot(ImpNode.PrjImportSys):
         # создавать каждый раз заново при открытии проекта
         result = False
         try:
-            result = glob_functions.getKernel().Login(User_, Password_)
+            result = glob_functions.getKernel().Login(username, password)
         except icexceptions.LoginInvalidException:
             ic_dlg.icMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
         except icexceptions.LoginErrorException:
@@ -480,49 +480,49 @@ class PrjRoot(ImpNode.PrjImportSys):
         """
         return self._is_opened_prj
 
-    def buildPrjRes(self, CurFolder_, ResNode_,ResName_, FolderClass_=None):
+    def buildPrjRes(self, cur_folder, res_node, res_name, folder_class=None):
         """
         Построение всех узлов/ресурсов проекта.
-        @param CurFolder_: Текущая папка, в которую происходит добавление узлов.
-        @param ResNode_: Ресурс, соответствующий этому узлу.
-        @param ResName_: Имя ресурса, соответствующего этому узлу.
-        @param FolderClass_: Класс папки проекта.
+        @param cur_folder: Текущая папка, в которую происходит добавление узлов.
+        @param res_node: Ресурс, соответствующий этому узлу.
+        @param res_name: Имя ресурса, соответствующего этому узлу.
+        @param folder_class: Класс папки проекта.
         @return: Корневой, добавляемый узел.
         """
         cur_node = None
-        if isinstance(ResNode_, list):
+        if isinstance(res_node, list):
             # Обработка папки
-            if FolderClass_ is None:
-                cur_node = prj_resource.PrjResources(CurFolder_)
+            if folder_class is None:
+                cur_node = prj_resource.icPrjResources(cur_folder)
             else:
-                cur_node = FolderClass_(CurFolder_)
+                cur_node = folder_class(cur_folder)
             # Установить имя
-            cur_node.name = ResName_
-            CurFolder_.addChild(cur_node)
-            for cur_res in ResNode_:
+            cur_node.name = res_name
+            cur_folder.addChild(cur_node)
+            for cur_res in res_node:
                 # Обработка подпапок
                 self.buildPrjRes(cur_node, list(cur_res.values())[0],
-                                 list(cur_res.keys())[0], FolderClass_)
+                                 list(cur_res.keys())[0], folder_class)
         else:
             from . import prj_prototype
-            res_node_typ = ResNode_.strip()
+            res_node_typ = res_node.strip()
             if res_node_typ in prj_prototype.nodeReg.keys():
                 # Взять класс из реестра узлов
                 # и создать объект узла
-                cur_node = prj_prototype.nodeReg[res_node_typ](CurFolder_)
+                cur_node = prj_prototype.nodeReg[res_node_typ](cur_folder)
                 # Установить имя
-                cur_node.name = ResName_
+                cur_node.name = res_name
                 # Добавить узел в папку
-                CurFolder_.addChild(cur_node)
+                cur_folder.addChild(cur_node)
             else:
                 log.warning(u'Invalid resource type <%s>' % res_node_typ)
 
         return cur_node
             
-    def synchroPrj(self, Refresh_=False):
+    def synchroPrj(self, bRefresh=False):
         """
         Синхронизация дерева проекта с изменениями другими программистами.
-        @param Refresh_: указание принудительного обновления дерева проекта.
+        @param bRefresh: указание принудительного обновления дерева проекта.
         """
         prj_file = self.getPrjFileName()
         if prj_file:
@@ -530,7 +530,7 @@ class PrjRoot(ImpNode.PrjImportSys):
             cur_prj_res_size = os.path.getsize(prj_file)
             if (cur_prj_res_time != self.prj_res_time) or \
                (cur_prj_res_size != self.prj_res_size) or \
-               Refresh_:
+               bRefresh:
                 # Нужно синхронизировать
                 try:
                     # Удалить все из дерева
@@ -570,16 +570,16 @@ class PrjRoot(ImpNode.PrjImportSys):
         self.prj_res_size = os.path.getsize(self.getPrjFileName())
         return ok
 
-    def rename(self, OldName_, NewName_):
+    def rename(self, old_name, new_name):
         """
         Переименование проекта.
-        @param OldName_: Старое имя.
-        @param NewName_: Новое имя.
+        @param old_name: Старое имя.
+        @param new_name: Новое имя.
         """
         old_prj_file_name = self.getRoot().getPrjFileName()
-        self.name = NewName_
+        self.name = new_name
         self.prj_res_manager.prj_file_name = self.getRoot().getPrjFileName()
-        self.prj_res_manager.setPrjRootName(NewName_)
+        self.prj_res_manager.setPrjRootName(new_name)
 
         if os.path.exists(old_prj_file_name):
             # Если существовал старый файл проекта, то переименовать его
@@ -636,18 +636,18 @@ class PrjRoot(ImpNode.PrjImportSys):
             username = users_description_list[selected_idx][0]
         return username
 
-    def _runPrjCmd(self, AppDir_, PrjPath_, username=None):
+    def _runPrjCmd(self, app_dir, prj_path, username=None):
         """
         Запуск проекта на исполнение.
-        @param AppDir_: Папка приложения.
-        @param PrjPath_: Папка проекта.
+        @param app_dir: Папка приложения.
+        @param prj_path: Папка проекта.
         @param username: Имя пользователя, запускающего проект.
             Если не указано (None), то производиться выбор из списка пользователей,
             присутствующих в проекте.
         """
         import ic.utils.ic_exec as ic_exec
 
-        # ic_exec.createRunApp(AppDir_)
+        # ic_exec.createRunApp(app_dir)
         
         # Коммандная строка
         dbg_mode_cmd = ''
@@ -662,12 +662,12 @@ class PrjRoot(ImpNode.PrjImportSys):
         if self.debug_mode:
             dbg_mode_cmd = '-dbg'
 
-        ic_engine_path = os.path.join(os.path.dirname(AppDir_), 'ic', 'engine')
+        ic_engine_path = os.path.join(os.path.dirname(app_dir), 'ic', 'engine')
         if ic_util.isOSWindowsPlatform():
             cmd = '\"%s/python.exe\" \"%s/run.py\" -run %s \"%s/\" -s %s' % (sys.prefix, ic_engine_path,
-                                                                             dbg_mode_cmd, PrjPath_, username)
+                                                                             dbg_mode_cmd, prj_path, username)
         else:
-            cmd = '%s %s/run.py -run %s %s/ -s %s' % (sys.executable, ic_engine_path, dbg_mode_cmd, PrjPath_, username)
+            cmd = '%s %s/run.py -run %s %s/ -s %s' % (sys.executable, ic_engine_path, dbg_mode_cmd, prj_path, username)
             
         log.info(u'Запуск проекта <%s>' % cmd)
         ic_exec.runTask(cmd)
@@ -733,63 +733,36 @@ class PrjRoot(ImpNode.PrjImportSys):
         else:
             log.warning(u'Не определен IDE для редактирования модулей')
 
-    def _debugWinPDB_old(self):
-        """
-        Отладка в WinPDB.
-        """
-        import ic.utils.ic_exec as ic_exec
-        import sys
-        
-        python_exe = sys.executable
-        winpdb_module = '%s%sLib%ssite-packages%swinpdb.py' % (sys.prefix,
-                                                               os.path.sep,
-                                                               os.path.sep,
-                                                               os.path.sep)
-        
-        if os.path.exists(winpdb_module):
-            # Если установлен WinPDB
-            prj_path = os.path.dirname(self.getRoot().getPrjFileName())
-            defis_dir = os.path.dirname(os.path.dirname(prj_path))
-        
-            ic_exec.createRunApp(defis_dir)
-            
-            # Коммандная строка
-            cmd = '\'%s\' \'%s\' -c -t \'%s/run.py\' -run \'%s/\' -s' % (python_exe, winpdb_module,
-                                                                         defis_dir, prj_path)
-            
-            log.info('DEBUG PROJECT: <%s>' % cmd)
-            ic_exec.runTaskBAT(cmd)
-        
-    def getResNamesByTypes(self, *Types_):
+    def getResNamesByTypes(self, *res_types):
         """
         Список имен ресурсов в проекте по их типу.
-        @param Types_: Кортеж строковых определение типа ресурса 'tab','frm',...
+        @param res_types: Кортеж строковых определение типа ресурса 'tab','frm',...
         @return: Возвращает список имен ресурсов заданных типов.
         """
-        return self.prj_res_manager.getResNameListByTypes(*Types_)
+        return self.prj_res_manager.getResNameListByTypes(*res_types)
 
-    def getObjNamesByTypes(self, *Types_):
+    def getObjNamesByTypes(self, *res_types):
         """
         Список имен объектов в проекте по их типу ресурса.
-        @param Types_: Кортеж строковых определение типа ресурса 'tab','frm',...
+        @param res_types: Кортеж строковых определение типа ресурса 'tab','frm',...
         @return: Возвращает список имен объектов.
         """
-        res_types = tuple(['.*\.'+res_type for res_type in Types_])
-        return self.prj_res_manager.getObjNamesByResPattern(*res_types)
+        cur_res_types = tuple(['.*\.' + res_type for res_type in res_types])
+        return self.prj_res_manager.getObjNamesByResPattern(*cur_res_types)
        
-    def getObjNamesInResources(self, ResTypes_, ObjType_):
+    def getObjNamesInResources(self, res_types, obj_type):
         """
         Список имен объектов в проекте по типам ресурсов и типу объекта.
         """
-        res_types = list(['.*\.'+res_type for res_type in ResTypes_])
-        return [obj[1] for obj in self.prj_res_manager.getObjByResPatternANDType(res_types, ObjType_)]
+        cur_res_types = list(['.*\.' + res_type for res_type in res_types])
+        return [obj[1] for obj in self.prj_res_manager.getObjByResPatternANDType(cur_res_types, obj_type)]
         
-    def getObjNamesInResourcesByTypes(self, ResTypes_, ObjTypes_):
+    def getObjNamesInResourcesByTypes(self, res_types, obj_types):
         """
         Список имен объектов в проекте по типам ресурсов и типам объектов.
         """
-        res_types = list(['.*\.'+res_type for res_type in ResTypes_])
-        return [obj[1] for obj in self.prj_res_manager.getObjByResPatternANDTypes(res_types, ObjTypes_)]
+        cur_res_types = list(['.*\.' + res_type for res_type in res_types])
+        return [obj[1] for obj in self.prj_res_manager.getObjByResPatternANDTypes(cur_res_types, obj_types)]
 
     def getPrjTreeCtrl(self):
         return self.getParent()

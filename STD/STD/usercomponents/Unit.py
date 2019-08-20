@@ -73,7 +73,7 @@ class CUnit(icwidget.icSimple):
         child=None
         if ChildName_ in self.components:
             child=self.components[ChildName_]
-        #print 'DBG UNIT',ChildName_,child,type(ChildName_),self.components.keys()
+        #print 'DBG UNIT',child_name,child,type(child_name),self.components.keys()
         if child is not None:
             return child.value
         return None

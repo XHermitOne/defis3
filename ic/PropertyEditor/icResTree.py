@@ -29,7 +29,7 @@ from ic.PropertyEditor import icDefInf
 from ic.components.user.objects import icpanelgroupedt
 from ic.PropertyEditor import icpropertyeditmanager
 
-from ic.prj import PrjTree
+from ic.prj import icPrjTree
 from ic.engine import glob_functions
 from ic.components import user
 from ic.components import icEvents
@@ -2839,7 +2839,7 @@ def GetProjectEditorOLD(parent, drFrame=None, ifs=None):
     panel = cls.getObject()
     win1 = cls.GetProjectPanel()
     win2 = cls.GetResourcePanel()
-    parent.prj_edt = PrjTree.PrjTree(win1, ifs)
+    parent.prj_edt = icPrjTree.icPrjTree(win1, ifs)
     parent.prj_edt.type = 'PrjTree'
     parent.res_edt = icResourceEditor(win2, -1, {'style_work': 'single', 'res': None, 'size': (300, 100)})
 
@@ -2873,7 +2873,7 @@ def GetProjectEditor(parent, drFrame=None, ifs=None):
     ickernel.createEditorKernel()
 
     nb = icProjectNB(parent)
-    prj_edt = parent.prj_edt = PrjTree.PrjTree(nb, ifs)
+    prj_edt = parent.prj_edt = icPrjTree.icPrjTree(nb, ifs)
     res_edt = parent.res_edt = icResourceEditor(nb, -1, {'style_work': 'single', 'res': None, 'size': (300, 100)})
     nb.init_notebook(prj_edt, res_edt, ifs)
     return nb

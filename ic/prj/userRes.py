@@ -23,7 +23,7 @@ _ = wx.GetTranslation
 __version__ = (0, 1, 1, 1)
 
 
-class UserResource(resManager.ResourceManagerInterface):
+class UserIcResource(resManager.icResourceManagerInterface):
     """
     Класс управления ресурсом проекта.
     """
@@ -32,7 +32,7 @@ class UserResource(resManager.ResourceManagerInterface):
         """
         Конструктор.
         """
-        resManager.ResourceManagerInterface.__init__(self)
+        resManager.icResourceManagerInterface.__init__(self)
         # Дерево ресурса
         self._user_res = None
         # Файл
@@ -40,8 +40,8 @@ class UserResource(resManager.ResourceManagerInterface):
         # Время последней модификации ресурса
         self._res_maker_time = 0
 
-    def setResFileName(self, ResFileName_=None):
-        self._user_res_file_name = ResFileName_
+    def setResFileName(self, res_filename=None):
+        self._user_res_file_name = res_filename
 
     def defaultRes(self):
         """
@@ -261,15 +261,15 @@ class UserResource(resManager.ResourceManagerInterface):
         """
         self.saveAs(self._user_res_file_name)
 
-    def saveAs(self, ResFileName_=None):
+    def saveAs(self, res_filename=None):
         """
         Сохранить как...
-        @param ResFileName_: Имя ресурсного файла, если None, 
+        @param res_filename: Имя ресурсного файла, если None, 
             то сделать его запрос.
         @return: Функция возвращает результат выполнения операции 
             сохранения True/False.
         """
-        self._user_res_file_name = ResFileName_
+        self._user_res_file_name = res_filename
         if self._user_res_file_name is None:
             self._user_res_file_name = ic_dlg.icFileDlg(None, u'Create user access file',
                                                         u'User access file (*.acc)|*.acc')
@@ -282,13 +282,13 @@ class UserResource(resManager.ResourceManagerInterface):
                                            self._user_res)
         return False
 
-    def load(self, ResFileName_=None):
+    def load(self, res_filename=None):
         """
         Загрузить из ресурсного файла.
-        @param ResFileName_: Имя ресурсного файла, если None, 
+        @param res_filename: Имя ресурсного файла, если None, 
             то сделать его запрос.
         """
-        self._user_res_file_name = ResFileName_
+        self._user_res_file_name = res_filename
         if self._user_res_file_name is None:
             self._user_res_file_name = ic_dlg.icFileDlg(None, u'Create user access file',
                                                         u'User access file (*.acc)|*.acc')

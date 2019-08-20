@@ -17,16 +17,16 @@ __version__ = (0, 1, 1, 1)
 _ = wx.GetTranslation
 
 
-class PrjReports(prj_node.PrjNode):
+class icPrjReports(prj_node.icPrjNode):
     """
     Отчеты.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        prj_node.PrjNode.__init__(self, Parent_)
+        prj_node.icPrjNode.__init__(self, parent)
         self.img = imglib.imgEdtReports
         self.description = u'Отчеты'
         self.name = u'Отчеты'

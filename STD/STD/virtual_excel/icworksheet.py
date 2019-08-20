@@ -188,7 +188,7 @@ class icVWorksheet(icprototype.icVPrototype):
     def clone(self, NewName_):
         """
         Создать клон листа и добавить его в книгу.
-        param NewName_: Новое имя листа.
+        param new_name: Новое имя листа.
         """
         new_attributes = copy.deepcopy(self._attributes)
         new_attributes['Name'] = NewName_

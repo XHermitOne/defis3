@@ -28,14 +28,14 @@ class icImgModulePrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
     Просмотрщик узла модуля библиотеки образов проекта.
     """
 
-    def __init__(self, parent, Node_):
+    def __init__(self, parent, node):
         """
         Конструктор.
         """
-        icprjnodeviewer.icPrjNodeViewerInterface.__init__(self, parent, Node_)
+        icprjnodeviewer.icPrjNodeViewerInterface.__init__(self, parent, node)
         icsimplegrid.icSimpleGrid.__init__(self, parent, wx.NewId(), None)
         
-        self._full_py_file_name = Node_.getFullModuleFileName()
+        self._full_py_file_name = node.getFullModuleFileName()
 
         self._img_lib_res = icimglib.icImgLibResource()
         # Словарь образов
@@ -61,23 +61,23 @@ class icImgModulePrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
         for i, img_name in enumerate(img_names):
             self._addImg(img_name, self._img_dict[img_name])
 
-    def _addImg(self, ImgName_, Img_):
+    def _addImg(self, img_name, img):
         """
         Добавить образ в грид.
-        @param ImgName_: Имя образа.
-        @param Img_: Объект образа wx.Bitmap.
+        @param img_name: Имя образа.
+        @param img: Объект образа wx.Bitmap.
         """
         if not bool((self.GetNumberRows() == 1) and (not self.GetCellValue(0, 1))):
             self.AppendRows()
-        i = self.GetNumberRows()-1
+        i = self.GetNumberRows() - 1
         # Установить картинку и надпись
-        self.setCellImg(i, 0, Img_)
-        self.SetCellValue(i, 1, ImgName_)
+        self.setCellImg(i, 0, img)
+        self.SetCellValue(i, 1, img_name)
         # Запретить редактирование
         self.SetReadOnly(i, 0)
         self.SetReadOnly(i, 1)
         # Переразмерить высоту строк
-        self.SetRowSize(i, Img_.GetHeight()+5)
+        self.SetRowSize(i, img.GetHeight() + 5)
         
     def getSelectedObject(self):
         """

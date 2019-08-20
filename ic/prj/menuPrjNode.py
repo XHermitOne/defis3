@@ -26,16 +26,16 @@ class icMenuPrjNode(flatmenu.FlatMenu):
     Меню управления проектом.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         """
         flatmenu.FlatMenu.__init__(self)
-        self._Parent = Parent_
+        self._Parent = parent
         # Контрол дерева проекта
         prj_tree_ctrl = self._Parent.getRoot().getParent()
 
-        is_folder = issubclass(self._Parent.__class__, prj_node.PrjFolder)
+        is_folder = issubclass(self._Parent.__class__, prj_node.icPrjFolder)
         if is_folder:
             # Дополнительные ресурсы
             if self._Parent.include_nodes:
@@ -60,9 +60,9 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                         item.Enable(node.enable)
                       
                     if wx.Platform == '__WXMSW__':
-                        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnAddResource, id=res_id)
+                        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onAddResource, id=res_id)
                     elif wx.Platform == '__WXGTK__':
-                        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnAddResource, id=res_id)
+                        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onAddResource, id=res_id)
 
                 self.AppendMenu(wx.NewId(), 
                                 u'Добавить ресурс', submenu_res)
@@ -73,7 +73,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                                              u'Импорт ресурса', u'Импорт ресурса',
                                              normalBmp=imglib.imgEdtImport)
                 self.AppendItem(item)
-                prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnImportResource, id=self.importResID)
+                prj_tree_ctrl.Bind(wx.EVT_MENU, self.onImportResource, id=self.importResID)
                 
                 self.AppendSeparator()
 
@@ -83,7 +83,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                                          u'Добавить папку', u'Добавить папку',
                                          normalBmp=imglib.imgFolder)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnAddFolder, id=self.addFolderID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onAddFolder, id=self.addFolderID)
             self.AppendSeparator()
 
         # Подменю 'Буфер обмена'
@@ -91,7 +91,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         item = flatmenu.FlatMenuItem(self, self.cutID, u'Вырезать', u'Вырезать',
                                      normalBmp=imglib.imgCut)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnCut, id=self.cutID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onCut, id=self.cutID)
         item.Enable(not is_folder)
 
         self.copyID = wx.NewId()
@@ -99,7 +99,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                                      u'Копировать', u'Копировать',
                                      normalBmp=imglib.imgEdtMnuCopy)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnCopy, id=self.copyID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onCopy, id=self.copyID)
         item.Enable(not is_folder)
 
         self.pasteID = wx.NewId()
@@ -107,7 +107,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                                      u'Вставить', u'Вставить',
                                      normalBmp=imglib.imgEdtMnuPaste)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnPaste, id=self.pasteID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onPaste, id=self.pasteID)
         item.Enable(not is_folder and not clipboard.emptyClipboard())
 
         self.AppendSeparator()
@@ -118,7 +118,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                                      u'Клонировать', u'Клонировать',
                                      normalBmp=imglib.imgClone)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnClone, id=self.cloneID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onClone, id=self.cloneID)
         item.Enable(not is_folder)
 
         # Подменю 'Удалить'
@@ -127,7 +127,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                                      u'Удалить', u'Удалить',
                                      normalBmp=imglib.imgTrash)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnDel, id=self.delID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onDel, id=self.delID)
 
         self.AppendSeparator()
 
@@ -148,7 +148,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                                          u'Переименовать', u'Переименовать',
                                          normalBmp=imglib.imgRename)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRename, id=self.renameID)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onRename, id=self.renameID)
             self.AppendSeparator()
 
         # Подменю 'Сохранить'
@@ -157,16 +157,16 @@ class icMenuPrjNode(flatmenu.FlatMenu):
                                      u'Сохранить', u'Сохранить',
                                      normalBmp=imglib.imgSave)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnSave, id=self.saveID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onSave, id=self.saveID)
 
         # Пункт дополнительных функций узла
         self.extID = wx.NewId()
         item = flatmenu.FlatMenuItem(self, self.extID, u'Дополнительно', u'Дополнительно',
                                      normalBmp=imglib.imgAdvanced)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnExtend, id=self.extID)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onExtend, id=self.extID)
 
-    def OnAddFolder(self, event):
+    def onAddFolder(self, event):
         """
         Добавить папку.
         """
@@ -176,13 +176,13 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         # Добавить папку в отображаемом дереве
         tree_prj = self._Parent.getRoot().getParent()
         if ok:
-            new_item = tree_prj.AddBranchInSelection(folder)
+            new_item = tree_prj.addBranchInSelection(folder)
             tree_prj.SelectItem(new_item)
             folder.getRoot().save()
         # Обновление дерева проектов
         tree_prj.Refresh()
 
-    def OnAddResource(self, event):
+    def onAddResource(self, event):
         """
         Функция добавления ресурса.
         """
@@ -191,14 +191,14 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         tree_prj = self._Parent.getRoot().getParent()
         if ok:
             # Добавить объект в отображаемом дереве
-            new_item = tree_prj.AddBranchInSelection(node)
+            new_item = tree_prj.addBranchInSelection(node)
             tree_prj.SelectItem(new_item)
             node.getRoot().save()
             node.edit()
         # Обновление дерева проектов
         tree_prj.Refresh()
 
-    def OnCut(self, event):
+    def onCut(self, event):
         """
         Вырезать.
         """
@@ -206,7 +206,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         # Работа с системным клиппордом
         clipboard.toClipboard(node)        
 
-    def OnCopy(self, event):
+    def onCopy(self, event):
         """
         Копировать.
         """
@@ -214,7 +214,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         # Работа с системным клиппордом
         clipboard.toClipboard(node)        
 
-    def OnPaste(self, event):
+    def onPaste(self, event):
         """
         Вставить.
         """
@@ -224,7 +224,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         if node:
             if self._Parent.paste(node):
                 # Добавить объект в отображаемом дереве
-                new_item = tree_prj.AddBranchInParentSelection(node)
+                new_item = tree_prj.addBranchInParentSelection(node)
                 tree_prj.SelectItem(new_item)
                 node.edit()
                 # Если добавление прошло успешно, то очистить
@@ -233,7 +233,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         # Обновление дерева проектов
         tree_prj.Refresh()
 
-    def OnRename(self, event):
+    def onRename(self, event):
         """
         Переименовать.
         """
@@ -243,21 +243,21 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         # Обновление дерева проектов
         tree_prj.Refresh()
 
-    def OnSave(self, event):
+    def onSave(self, event):
         """
         Сохранить.
         """
         node = self._Parent
         node.save()
 
-    def OnDel(self, event):
+    def onDel(self, event):
         """
         Удалить.
         """
         node = self._Parent
         node.delete()
             
-    def OnClone(self, event):
+    def onClone(self, event):
         """
         Клонировать.
         """
@@ -265,14 +265,14 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         tree_prj = self._Parent.getRoot().getParent()
         if node:
             # Добавить объект в отображаемом дереве
-            new_item = tree_prj.AddBranchInParentSelection(node)
+            new_item = tree_prj.addBranchInParentSelection(node)
             tree_prj.SelectItem(new_item)
             node.edit()
             
         # Обновление дерева проектов
         tree_prj.Refresh()
         
-    def OnSynchroTab(self, event):
+    def onSynchroTab(self, event):
         """
         Синхронизация описания таблицы с БД.
         """
@@ -295,7 +295,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
             
     import_res_filter = u'Tables (*.tab)|*.tab|DB (*.src)|*.src|ODB (*.odb)|*.odb|Forms (*.frm)|*.frm|Main window (*.win)|*.win|Menu (*.mnu)|*.mnu|Metadata (*.mtd)|*.mtd'
     
-    def OnImportResource(self, event):
+    def onImportResource(self, event):
         """
         Импортировать ресурс.
         """
@@ -310,13 +310,13 @@ class icMenuPrjNode(flatmenu.FlatMenu):
             node = self._Parent.importChild(res_file_name)
 
             # Добавить объект в отображаемом дереве
-            new_item = tree_prj.AddBranchInSelection(node)
+            new_item = tree_prj.addBranchInSelection(node)
             tree_prj.SelectItem(new_item)
             node.edit()
         # Обновление дерева проектов
         tree_prj.Refresh()
 
-    def OnExtend(self, event):
+    def onExtend(self, event):
         """
         Дополнительные инструменты узла.
         """

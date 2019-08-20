@@ -57,7 +57,7 @@ ic_class_spc = {'type': 'SimpleObjectGrid',
 
                 '__styles__': ic_class_styles,
                 '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'OnItemSelected', False),
-                               'activated': ('wx.EVT_LIST_ITEM_ACTIVATED', 'OnItemActivated', False),
+                               'activated': ('wx.EVT_LIST_ITEM_ACTIVATED', 'onItemActivated', False),
                                },
                 '__attr_types__': {0: ['name', 'type'],
                                    icDefInf.EDT_TEXTFIELD: ['description'],
@@ -250,7 +250,7 @@ class icSimpleObjectGrid(icwidget.icWidget, parentModule.GroupListView):
         
         rowDict = self.GetObjectAt(currentItem)
         self.evalSpace['values'] = rowDict
-        self.evalSpace['_lfp'] = {'func': 'OnItemActivated', 'evt': evt,
+        self.evalSpace['_lfp'] = {'func': 'onItemActivated', 'evt': evt,
                                   'currentItem': currentItem, 'result': rowDict,
                                   'self': self}
         self.eval_attr('activated')

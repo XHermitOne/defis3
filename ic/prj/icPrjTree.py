@@ -25,16 +25,16 @@ hyNodeImgHeight = 16
 _ = wx.GetTranslation
 
 
-class ImgList(wx.ImageList):
+class icPrjTreeImgList(wx.ImageList):
     """
     Список образов, ориентированный на образы комопнентов.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         """
-        self._Parent = Parent_
+        self._Parent = parent
         # Вызов консктруктора предка
         self._img_lst = wx.ImageList(hyNodeImgWidth, hyNodeImgHeight)
         # Используемые образы компонентов
@@ -45,130 +45,130 @@ class ImgList(wx.ImageList):
     def getImageList(self):
         return self._img_lst
 
-    def SetNodeImgIdx(self, Node_):
+    def setNodeImgIdx(self, node):
         """
         Установить компонент для редактирования.
-        @param Node_: Компонент.
+        @param node: Компонент.
         """
-        node_class = Node_.__class__.__name__
-        node_name = Node_.name
+        node_class = node.__class__.__name__
+        node_name = node.name
         # Если тип компонента не зарегистрирован, то зарегистрировать его
         if node_class not in self._NodeImgIdx:
             # Образ типа компонента
-            self._NodeImgIdx[node_class] = self.SetNodeImg(Node_.img)
-            if Node_.img_extended:
-                self._NodeImgExtendedIdx[node_class] = self.SetNodeImg(Node_.img_extended)
+            self._NodeImgIdx[node_class] = self.setNodeImg(node.img)
+            if node.img_extended:
+                self._NodeImgExtendedIdx[node_class] = self.setNodeImg(node.img_extended)
 
-    def GetNodeImgIdx(self, Node_):
+    def getNodeImgIdx(self, node):
         """
         Получить данные о компоненте для редактирования.
-        @param Node_: Компонент.
+        @param node: Компонент.
         """
         # Если тип компонента не зарегистрирован, то зарегистрировать его
-        self.SetNodeImgIdx(Node_)
+        self.setNodeImgIdx(node)
 
-        node_class = Node_.__class__.__name__
+        node_class = node.__class__.__name__
         return self._NodeImgIdx[node_class]
 
-    def GetNodeImgExtendedIdx(self, Node_):
+    def getNodeImgExtendedIdx(self, node):
         """
         Получить данные о компоненте для редактирования.
-        @param Node_: Компонент.
+        @param node: Компонент.
         """
         # Если тип компонента не зарегистрирован, то зарегистрировать его
-        self.SetNodeImgIdx(Node_)
+        self.setNodeImgIdx(node)
 
-        node_class = Node_.__class__.__name__
+        node_class = node.__class__.__name__
         if node_class in self._NodeImgExtendedIdx:
             return self._NodeImgExtendedIdx[node_class]
         return -1
 
-    def SetNodeImg(self, Img_, ImgIdx_=-1):
+    def setNodeImg(self, img, img_idx=-1):
         """
         Добавить картинку компонента в список образов.
-        @param Img_: Имя файла образа компонента или сам образ.
-        @param ImgIdx_: Указание на какое место поместить картинку.
+        @param img: Имя файла образа компонента или сам образ.
+        @param img_idx: Указание на какое место поместить картинку.
         @return: Возвращает индекс соответствующий этому образу.
         """
         # Заменять картинку в списке не надо
-        if ImgIdx_ < 0:
+        if img_idx < 0:
             # Добавить в список образ
-            if isinstance(Img_, str):
+            if isinstance(img, str):
                 # Указание файла
-                return self._img_lst.Add(bmpfunc.createBitmap(Img_))
-            elif issubclass(Img_.__class__, wx.Bitmap):
+                return self._img_lst.Add(bmpfunc.createBitmap(img))
+            elif issubclass(img.__class__, wx.Bitmap):
                 # Указание непосредственно картинки
-                return self._img_lst.Add(Img_)
-        # Надо заменить картинку на ImgIdx_
+                return self._img_lst.Add(img)
+        # Надо заменить картинку на img_idx
         else:
             # Заменить в списке образ
-            if isinstance(Img_, str):
+            if isinstance(img, str):
                 # Указание файла
-                return self.ReplaceImg(ImgIdx_, bmpfunc.createBitmap(Img_))
-            elif issubclass(Img_.__class__, wx.Bitmap):
+                return self.replaceImg(img_idx, bmpfunc.createBitmap(img))
+            elif issubclass(img.__class__, wx.Bitmap):
                 # Указание непосредственно картинки
-                return self.ReplaceImg(ImgIdx_, Img_)
+                return self.replaceImg(img_idx, img)
         return -1
 
-    def ReplaceImg(self, ImgIdx_, Img_):
+    def replaceImg(self, img_idx, img):
         """
         Заменить образ в списке образов.
-        @param ImgIdx_: Индекс заменяемого образа.
-        @param Img_: Сам wx.Bitmap образ.
+        @param img_idx: Индекс заменяемого образа.
+        @param img: Сам wx.Bitmap образ.
         @return: Функция возвращает новый индекс образа.
         """
         try:
-            self._img_lst.Replace(ImgIdx_, Img_)
+            self._img_lst.Replace(img_idx, img)
         except:
-            log.error(u'%s from %s %s ' % (ImgIdx_, self._img_lst.GetImageCount(), Img_))
-        return ImgIdx_
+            log.error(u'%s from %s %s ' % (img_idx, self._img_lst.GetImageCount(), img))
+        return img_idx
 
 
-class PrjTree(wx.TreeCtrl):
+class icPrjTree(wx.TreeCtrl):
     """
     Визуальное дерево проекта.
     """
 
-    def __init__(self, Parent_, IDE_=None):
+    def __init__(self, parent, ide=None):
         """
         Конструктор.
-        @param Parent_: Родитель-панель.
-        @param IDE_: Указатель на объект IDE.
+        @param parent: Родитель-панель.
+        @param ide: Указатель на объект IDE.
         """
         # Окно всплывающих подсказок
         self._helpWin = None
         
         # Интерфейсный объект работы с IDE
-        self.ide = IDE_
+        self.ide = ide
         # Главное окно IDE
-        if IDE_:
-            self.ide_frame = IDE_.GetIDEFrame()
+        if ide:
+            self.ide_frame = ide.GetIDEFrame()
         else:
             self.ide_frame = None
 
-        if Parent_ is None:
-            Parent_ = self.ide_frame
+        if parent is None:
+            parent = self.ide_frame
             
         # ВНИМАНИЕ! стиль редактирования ярлыков дерева под Linux нельзя использовать
         if wx.Platform == '__WXMSW__':
             style = wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS
         else:
             style = wx.TR_DEFAULT_STYLE
-        wx.TreeCtrl.__init__(self, Parent_, wx.NewId(), style=style)
+        wx.TreeCtrl.__init__(self, parent, wx.NewId(), style=style)
 
         # Установка списка образов компонентов
-        self._img_list = ImgList(self)
+        self._img_list = icPrjTreeImgList(self)
         self.SetImageList(self._img_list.getImageList())
 
         # Определение событий
-        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnItemActivated, self)
-        self.Bind(wx.EVT_RIGHT_DOWN, self.OnMouseRightClick)
-        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressed)
-        self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
-        self.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.OnEndItemLabelEdit)
-        self.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.OnBeginItemLabelEdit)
-        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelectChanged)
-        self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.OnItemExpanded)
+        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onItemActivated, self)
+        self.Bind(wx.EVT_RIGHT_DOWN, self.onMouseRightClick)
+        self.Bind(wx.EVT_KEY_DOWN, self.onKeyPressed)
+        self.Bind(wx.EVT_LEFT_DOWN, self.onMouseLeftDown)
+        self.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.onEndItemLabelEdit)
+        self.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.onBeginItemLabelEdit)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onSelectChanged)
+        self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.onItemExpanded)
 
         # Флаг разрешения редактирования имен/ярлыков узлов дерева
         self.canEditItemLabel = True
@@ -180,7 +180,7 @@ class PrjTree(wx.TreeCtrl):
         # Корень
         self._Root = None
 
-        self._Prj = prj_root.PrjRoot(self)
+        self._Prj = prj_root.icPrjRoot(self)
         self.setRoot()
 
     def getIDE(self):
@@ -199,21 +199,21 @@ class PrjTree(wx.TreeCtrl):
         """
         return self._Prj
 
-    def setRoot(self, Prj_=None):
+    def setRoot(self, prj=None):
         """
         Функция по ресурсному описанию строит дерево описаниея.
-        @param Prj_: Корень дерева проекта.
+        @param prj: Корень дерева проекта.
         """
         try:
-            if not Prj_:
-                Prj_ = self._Prj
+            if not prj:
+                prj = self._Prj
             else:
-                self._Prj = Prj_
+                self._Prj = prj
                 self.DeleteAllItems()
             self._Root = self.GetRootItem()
 
-            if Prj_:
-                self.AddBranch(self._Root, Prj_)
+            if prj:
+                self.addBranch(self._Root, prj)
             # Распахнуть содержание компонента
             if self._Root:
                 self.Expand(self._Root)
@@ -227,68 +227,68 @@ class PrjTree(wx.TreeCtrl):
         """
         return self._Root
         
-    def expandAllWithoutRoot(self, CurItem_=None, Refresh_=True):
+    def expandAllWithoutRoot(self, cur_item=None, bRefresh=True):
         """
         Раскрыть все ветки дерева (когда корень скрыт).
-        @param CurItem_: Текущий узел дерева.
+        @param cur_item: Текущий узел дерева.
             Если None, то корень.
-        @param Refresh_: Флаг обновления дерева.
+        @param bRefresh: Флаг обновления дерева.
         """
-        if (CurItem_ is None) or (CurItem_ == self.GetRootItem()):
+        if (cur_item is None) or (cur_item == self.GetRootItem()):
             # Начать с корня
-            CurItem_ = self.GetRootItem()
-            cur_item = self.GetFirstChild(CurItem_)[0]
-            while cur_item:
-                self.expandAllWithoutRoot(cur_item, False)
-                cur_item = self.GetNextSibling(cur_item)
+            cur_item = self.GetRootItem()
+            item = self.GetFirstChild(cur_item)[0]
+            while item:
+                self.expandAllWithoutRoot(item, False)
+                item = self.GetNextSibling(item)
         else:
             # Отдельная ветка
-            if self.ItemHasChildren(CurItem_):
-                if not self.IsExpanded(CurItem_):
-                    self.Expand(CurItem_)
-                cur_item = self.GetFirstChild(CurItem_)[0]
-                while cur_item:
-                    self.expandAllWithoutRoot(cur_item, False)
-                    cur_item = self.GetNextSibling(cur_item)
-        if Refresh_:
+            if self.ItemHasChildren(cur_item):
+                if not self.IsExpanded(cur_item):
+                    self.Expand(cur_item)
+                item = self.GetFirstChild(cur_item)[0]
+                while item:
+                    self.expandAllWithoutRoot(item, False)
+                    item = self.GetNextSibling(item)
+        if bRefresh:
             self.Refresh()
 
-    def expandAll(self, CurItem_=None, Refresh_=True):
+    def expandAll(self, cur_item=None, bRefresh=True):
         """
         Раскрыть все ветки дерева.
-        @param CurItem_: Текущий узел дерева.
+        @param cur_item: Текущий узел дерева.
             Если None, то корень.
-        @param Refresh_: Флаг обновления дерева.
+        @param bRefresh: Флаг обновления дерева.
         """
-        if CurItem_ is None:
+        if cur_item is None:
             # Начать с корня
-            CurItem_ = self.GetRootItem()
+            cur_item = self.GetRootItem()
         # Отдельная ветка
-        if self.ItemHasChildren(CurItem_):
-            if not self.IsExpanded(CurItem_):
-                self.Expand(CurItem_)
-            cur_item = self.GetFirstChild(CurItem_)[0]
-            while cur_item:
-                self.expandAll(cur_item, False)
-                cur_item = self.GetNextSibling(cur_item)
-        if Refresh_:
+        if self.ItemHasChildren(cur_item):
+            if not self.IsExpanded(cur_item):
+                self.Expand(cur_item)
+            item = self.GetFirstChild(cur_item)[0]
+            while item:
+                self.expandAll(item, False)
+                item = self.GetNextSibling(item)
+        if bRefresh:
             self.Refresh()
 
-    def AddBranch(self, Root_, Node_):
+    def addBranch(self, root, node):
         """
         Добавляет ветку в дерево.
-        @param Node_: компонент.
+        @param node: компонент.
         @return: Возвращает узел дерева.
         """
         # Определить образ компонента
-        img_idx = self._img_list.GetNodeImgIdx(Node_)
-        img_extended_idx = self._img_list.GetNodeImgExtendedIdx(Node_)
+        img_idx = self._img_list.getNodeImgIdx(node)
+        img_extended_idx = self._img_list.getNodeImgExtendedIdx(node)
 
         # Определить текст надписи
-        if not isinstance(Node_.name, str):
-            txt = str(Node_.name.strip())
+        if not isinstance(node.name, str):
+            txt = str(node.name.strip())
         else:
-            txt = Node_.name.strip()
+            txt = node.name.strip()
 
         # Определить цвет
         txt_color = wx.Colour(*icDefInf.getActivateColour())
@@ -296,66 +296,66 @@ class PrjTree(wx.TreeCtrl):
         if not self._Root:
             log.info(u'Добавление корневого элемента дерева проекта <%s>' % txt)
             self._Root = self.AddRoot(txt)
-            Root_ = self._Root
+            root = self._Root
             # Установить картинки у корневого элемента
-            self.SetItemImage(Root_, img_idx, wx.TreeItemIcon_Normal)
+            self.SetItemImage(root, img_idx, wx.TreeItemIcon_Normal)
             if img_extended_idx >= 0:
-                self.SetItemImage(Root_, img_extended_idx, wx.TreeItemIcon_Expanded)
+                self.SetItemImage(root, img_extended_idx, wx.TreeItemIcon_Expanded)
             
-            self.SetItemData(Root_, Node_)
+            self.SetItemData(root, node)
         else:
             # ВНИМАНИЕ! Когда поставил этот print
             # прекратилась ошибка <Segmentation Fault>
-            # log.info(u'Append item %s.<%s>' % (Root_, txt))
-            Root_ = self.AppendItem(Root_, txt)
-            self.SetItemImage(Root_, img_idx, wx.TreeItemIcon_Normal)
+            # log.info(u'Append item %s.<%s>' % (root, txt))
+            root = self.AppendItem(root, txt)
+            self.SetItemImage(root, img_idx, wx.TreeItemIcon_Normal)
             if img_extended_idx >= 0:
-                self.SetItemImage(Root_, img_extended_idx, wx.TreeItemIcon_Expanded)
+                self.SetItemImage(root, img_extended_idx, wx.TreeItemIcon_Expanded)
             # Связать компонент с вновь добавленным узлом
-            self.SetItemData(Root_, Node_)
+            self.SetItemData(root, node)
             
         # Установить цвет
-        self.SetItemTextColour(Root_, txt_color)
+        self.SetItemTextColour(root, txt_color)
         
         # Прописать идентификатор в дереве.
-        Node_.tree_id = Root_
+        node.tree_id = root
 
         # Обработка внутренних компонентов
-        if Node_.getChildrenCount():
-            for cur_node in Node_.getChildren():
-                self.AddBranch(Root_, cur_node)
+        if node.getChildrenCount():
+            for cur_node in node.getChildren():
+                self.addBranch(root, cur_node)
 
-        return Root_
+        return root
 
-    def AddBranchInSelection(self, Node_):
+    def addBranchInSelection(self, node):
         """
         Добавляет ветку в дерево в текущий выделенный узел.
-        @param Node_: Описание/спецификация компонента.
+        @param node: Описание/спецификация компонента.
         @return: Возвращает узел дерева.
         """
-        item = self.AddBranch(self.GetSelection(), Node_)
+        item = self.addBranch(self.GetSelection(), node)
         # Прописать идентификатор в узле
-        Node_.tree_id = item
+        node.tree_id = item
         # Добавить компонент в описание родительского компонента
         root = self.GetItemParent(item)
         if root:
-            self.GetItemData(root).addChild(Node_)
+            self.GetItemData(root).addChild(node)
         self.Expand(self.GetSelection())
         return item
 
-    def AddBranchInParentSelection(self, Node_):
+    def addBranchInParentSelection(self, node):
         """
         Добавляет ветку в дерево в родителя выделенного узел.
-        @param Node_: Описание/спецификация компонента.
+        @param node: Описание/спецификация компонента.
         @return: Возвращает узел дерева.
         """
-        item = self.AddBranch(self.GetItemParent(self.GetSelection()), Node_)
+        item = self.addBranch(self.GetItemParent(self.GetSelection()), node)
         # Прописать идентификатор в узле
-        Node_.tree_id = item
+        node.tree_id = item
         # Добавить компонент в описание родительского компонента
         root = self.GetItemParent(item)
         if root:
-            self.GetItemData(root).addChild(Node_)
+            self.GetItemData(root).addChild(node)
         return item
 
     def getSelectionNode(self):
@@ -372,35 +372,35 @@ class PrjTree(wx.TreeCtrl):
         item_id = self.GetSelection()
         return self.Delete(item_id)
         
-    def RefreshObj(self, Root_=None, Refresh_=True):
+    def refreshObj(self, root=None, bRefresh=True):
         """
         Обновить изображения дерева объекта.
-        @param Root_: Указание корня откуда начинать обновление.
-        @param Refresh_: Признак обновления самого объекта-дерева.
+        @param root: Указание корня откуда начинать обновление.
+        @param bRefresh: Признак обновления самого объекта-дерева.
         """
-        if Root_ is None:
-            Root_ = self.GetRootItem()
+        if root is None:
+            root = self.GetRootItem()
 
-        node = self.GetItemData(Root_)
+        node = self.GetItemData(root)
         # Сначала обновить рут, а затем все дочерние узлы.
         node_class = node.getClassType().split('.')[-1]
         # Надпись
-        self.SetItemText(Root_, node_class+' : '+node.name)
+        self.SetItemText(root, node_class + ' : ' + node.name)
         # Образ
-        i_img = self._img_list.GetNodeImgIdx(node)
-        self.SetItemImage(Root_, i_img)
+        i_img = self._img_list.getNodeImgIdx(node)
+        self.SetItemImage(root, i_img)
         
-        if self.ItemHasChildren(Root_):
-            child, cookie = self.GetFirstChild(Root_)
+        if self.ItemHasChildren(root):
+            child, cookie = self.GetFirstChild(root)
             while child.IsOk():
-                self.RefreshObj(child, False)
-                child, cookie = self.GetNextChild(Root_, cookie)
+                self.refreshObj(child, False)
+                child, cookie = self.GetNextChild(root, cookie)
 
         # Обновить сам объект
-        if Refresh_:
+        if bRefresh:
             self.Refresh()
 
-    def RefreshSelection(self):
+    def refreshSelection(self):
         """
         Обновить надпись выделенного объекта.
         """
@@ -411,17 +411,17 @@ class PrjTree(wx.TreeCtrl):
             self.SetItemText(selection,
                              node.getClassType()+' : '+node.name)
             # Образ
-            i_img = self._img_list.GetNodeImgIdx(node)
+            i_img = self._img_list.getNodeImgIdx(node)
             self.SetItemImage(selection, i_img)
 
-    def setResourceEditor(self, ResEditor_=None):
+    def setResourceEditor(self, res_editor=None):
         """
         Запомнить указатель на редактор ресурсов.
-        @param ResEditor_: Редактор ресурсов.
+        @param res_editor: Редактор ресурсов.
         """
-        self.res_editor = ResEditor_
+        self.res_editor = res_editor
 
-    def OnMouseRightClick(self, event):
+    def onMouseRightClick(self, event):
         """
         Обработчик нажатия правой кнопки мыши.
         """
@@ -442,7 +442,7 @@ class PrjTree(wx.TreeCtrl):
                     if node:
                         node.onNodePopup(event)
 
-    def OnSelectChanged(self, event):
+    def onSelectChanged(self, event):
         """
         Изменение выделенного компонента.
         """
@@ -468,7 +468,7 @@ class PrjTree(wx.TreeCtrl):
                     
         event.Skip()
     
-    def OnItemActivated(self, event):
+    def onItemActivated(self, event):
         """
         Активация элемента дерева.
         """
@@ -478,7 +478,7 @@ class PrjTree(wx.TreeCtrl):
             node.onNodeActivated(event)
         event.Skip()
 
-    def OnBeginItemLabelEdit(self, event):
+    def onBeginItemLabelEdit(self, event):
         """
         Начало редактирования имени узла.
         """
@@ -492,16 +492,16 @@ class PrjTree(wx.TreeCtrl):
             # сбросить флаг разрешения редактирования
             self.editItemLabel = True
 
-    def _checkLegalLabel(self, Label_):
+    def _checkLegalLabel(self, label):
         """
         Проверка допустимости имени узла.
-        @param Label_: Имя узла.
+        @param label: Имя узла.
         @return: Возвращает True/False.
         """
-        if not Label_:
+        if not label:
             return False
         # проверить допустимость имени
-        for s in list(Label_):
+        for s in list(label):
             r = ord(s)
             # Цифры
             # Большие латинские буквы
@@ -511,7 +511,7 @@ class PrjTree(wx.TreeCtrl):
                 return False
         return True
 
-    def OnEndItemLabelEdit(self, event):
+    def onEndItemLabelEdit(self, event):
         """
         Окончание редактирования имени узла.
         """
@@ -544,7 +544,7 @@ class PrjTree(wx.TreeCtrl):
             # Обновить дерево проекта
             self.Refresh()
 
-    def OnKeyPressed(self, event):
+    def onKeyPressed(self, event):
         """
         Нажатие клавиши.
         """
@@ -554,7 +554,7 @@ class PrjTree(wx.TreeCtrl):
         #     item = self.GetSelection()
         event.Skip()
 
-    def OnMouseLeftDown(self, event):
+    def onMouseLeftDown(self, event):
         """
         Левая кнопка мыши.
         """
@@ -567,7 +567,7 @@ class PrjTree(wx.TreeCtrl):
         else:
             event.Skip()
 
-    def OnItemExpanded(self, event):
+    def onItemExpanded(self, event):
         """
         Раскрытие узла по +.
         """
@@ -585,7 +585,7 @@ class PrjTree(wx.TreeCtrl):
             
                 # Построить ветку узлов дерева подсистемы
                 for child in node.getChildren():
-                    self.AddBranch(item, child)
+                    self.addBranch(item, child)
             except:
                 log.fatal(u'Ошибка открытия подсистемы')
                 wx.MessageBox(u'Ошибка открытия подсистемы',
@@ -595,19 +595,19 @@ class PrjTree(wx.TreeCtrl):
         event.Skip()
         
 
-class icPrjTreeViewer(PrjTree):
+class icPrjTreeViewer(icPrjTree):
     """
     Класс просмотрщика проекта.
     """
 
-    def __init__(self, Parent_, IDE_=None):
+    def __init__(self, parent, ide=None):
         """
         Конструктор.
         """
-        PrjTree.__init__(self, Parent_, IDE_)
+        icPrjTree.__init__(self, parent, ide)
         self._item_label = None
         # Пустая панель в родительском сплиттере
-        self._none_panel = wx.Panel(Parent_, wx.NewId())
+        self._none_panel = wx.Panel(parent, wx.NewId())
    
     def getNonePanel(self):
         """
@@ -615,13 +615,13 @@ class icPrjTreeViewer(PrjTree):
         """
         return self._none_panel
         
-    def OnMouseRightClick(self, event):
+    def onMouseRightClick(self, event):
         """
         Обработчик нажатия правой кнопки мыши.
         """
         event.Skip()
 
-    def OnSelectChanged(self, event):
+    def onSelectChanged(self, event):
         """
         Изменение выделенного компонента.
         """
@@ -652,20 +652,20 @@ class icPrjTreeViewer(PrjTree):
                 
         event.Skip()
     
-    def OnItemActivated(self, event):
+    def onItemActivated(self, event):
         """
         Активация элемента дерева.
         """
         event.Skip()
         
-    def OnBeginItemLabelEdit(self, event):
+    def onBeginItemLabelEdit(self, event):
         """
         Начало редактирования имени узла.
         """
         self._item_label = event.GetLabel()
         event.Skip()
         
-    def OnEndItemLabelEdit(self, event):
+    def onEndItemLabelEdit(self, event):
         """
         Окончание редактирования имени узла.
         """
@@ -674,13 +674,13 @@ class icPrjTreeViewer(PrjTree):
             self.SetItemText(item, self._item_label)
         event.Skip()
       
-    def OnKeyPressed(self, event):
+    def onKeyPressed(self, event):
         """
         Нажатие клавиши.
         """
         event.Skip()
 
-    def OnMouseLeftDown(self, event):
+    def onMouseLeftDown(self, event):
         """
         Левая кнопка мыши.
         """
@@ -693,7 +693,7 @@ def test():
     """
     app = wx.PySimpleApp(0)
     main_frm = wx.Frame(None, wx.NewId())
-    prj_tree = PrjTree(main_frm)
+    prj_tree = icPrjTree(main_frm)
     prj_tree.setRoot()
     main_frm.Show()
     app.MainLoop()

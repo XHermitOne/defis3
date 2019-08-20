@@ -15,16 +15,16 @@ from ic.utils import ic_res
 __version__ = (0, 1, 2, 1)
 
 
-class PrjNode:
+class icPrjNode(object):
     """
     Узел проекта.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        self._Parent = Parent_
+        self._Parent = parent
         
         # Имя узла
         self.description = ''
@@ -47,7 +47,7 @@ class PrjNode:
         self._designer = None
         # Корень
         self._root = None
-        if issubclass(self._Parent.__class__, PrjNode):
+        if issubclass(self._Parent.__class__, icPrjNode):
             self._root = self._Parent.getRoot()
         # Идентификатор дерева
         self.tree_id = None
@@ -87,15 +87,15 @@ class PrjNode:
         popup_menu = menuPrjNode.icMenuPrjNode(self)
         popup_menu.Popup(wx.GetMousePosition(), self._root.getParent())
 
-    def getLevel(self, CurLevel_=0):
+    def getLevel(self, cur_level=0):
         """
         Уровень в дереве проекта.
         """
         from . import prj_root
-        if not issubclass(self.__class__, prj_root.PrjRoot):
-            return self.getParent().getLevel(CurLevel_+1)
+        if not issubclass(self.__class__, prj_root.icPrjRoot):
+            return self.getParent().getLevel(cur_level + 1)
         else:
-            return CurLevel_
+            return cur_level
 
     def Default(self):
         """
@@ -127,11 +127,11 @@ class PrjNode:
         """
         pass
 
-    def rename(self, OldName_, NewName_):
+    def rename(self, old_name, new_name):
         """
         Метод переименования узла.
-        @param OldName_: Старое имя.
-        @param NewName_: Новое имя.
+        @param old_name: Старое имя.
+        @param new_name: Новое имя.
         """
         pass
 
@@ -154,7 +154,7 @@ class PrjNode:
         """
         pass
 
-    def load(self, ResFileName_):
+    def load(self, res_filename):
         """
         Загрузка ресурса из файла.
         """
@@ -169,8 +169,8 @@ class PrjNode:
     def getRoot(self):
         return self._root
 
-    def setRoot(self, Root_):
-        self._root = Root_
+    def setRoot(self, root):
+        self._root = root
 
     def getParentRoot(self):
         return self.getRoot()
@@ -181,13 +181,13 @@ class PrjNode:
     def getPrjTreeCtrl(self):
         return self.getRoot().getParent()
 
-    def readonlyChildren(self, ReadOnly_=True):
+    def readonlyChildren(self, bReadOnly=True):
         """
         Установить флаг запрета редактирования
         у всех дочерних узлов.
-        @param ReadOnly_: Флаг запрета редактирования.
+        @param bReadOnly: Флаг запрета редактирования.
         """
-        self.readonly = ReadOnly_
+        self.readonly = bReadOnly
 
     def cut(self):
         """
@@ -215,13 +215,13 @@ class PrjNode:
         new_node.description = self.description
         return new_node
 
-    def paste(self, Node_):
+    def paste(self, node):
         """
         Вставить.
-        @param Node_: Вставляемый узел.
+        @param node: Вставляемый узел.
         """
-        if Node_:
-            self._Parent.addChild(Node_)
+        if node:
+            self._Parent.addChild(node)
             return True
         return False
         
@@ -239,7 +239,7 @@ class PrjNode:
         """
         Удалить узел.
         """
-        return PrjNode.cut(self)
+        return icPrjNode.cut(self)
         
     def getViewer(self, parent):
         """
@@ -266,15 +266,15 @@ class PrjNode:
         return None
 
 
-class PrjFolder(PrjNode):
+class icPrjFolder(icPrjNode):
     """
     Папка проекта.
     """
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
         """
-        PrjNode.__init__(self, Parent_)
+        icPrjNode.__init__(self, parent)
         # Образы
         self.img = imglib.imgFolder
         self.img_extended = None
@@ -294,76 +294,76 @@ class PrjFolder(PrjNode):
     def getChildren(self):
         return self.children
         
-    def getChild(self, ChildName_):
+    def getChild(self, child_name):
         """
         Получить дочерний узел по имени.
-        @param ChildName_: Имя дочернего узла.
+        @param child_name: Имя дочернего узла.
         @return: Возвращает объект узла или None,
             если узел с таким именем не найден.
         """
-        find = [child for child in self.children if child.name == ChildName_]
+        find = [child for child in self.children if child.name == child_name]
         if find:
             return find[0]
         return None
 
-    def isChild(self, ChildName_):
+    def isChild(self, child_name):
         """
         Проверить есть ли дочерний узел с таким именем.
-        @param ChildName_: Имя дочернего узла.
+        @param child_name: Имя дочернего узла.
         @return: Возвращает True/False.
         """
-        return bool(self.getChild(ChildName_))
+        return bool(self.getChild(child_name))
         
-    def addChild(self, Node_):
+    def addChild(self, node):
         """
         Добавить дочерний узел.
         """
-        if Node_:
+        if node:
             # Для начала установить у него корень
-            Node_.setRoot(self.getRoot())
+            node.setRoot(self.getRoot())
             # ну и добавить в общий список
-            self.children.append(Node_)
-        return Node_
+            self.children.append(node)
+        return node
 
-    def delChild(self, Node_):
+    def delChild(self, node):
         """
         Удалить дочерний узел.
         """
-        if Node_:
+        if node:
             try:
-                find = self.children.index(Node_)
+                find = self.children.index(node)
             except ValueError:
                 find = -1
             if find >= 0:
                 del self.children[find]
 
-    def delChildByName(self, NodeName_=None):
+    def delChildByName(self, node_name=None):
         """
         Удалить дочерний узел по его имени.
-        @param NodeName_: Имя узла.
+        @param node_name: Имя узла.
         """
-        if NodeName_:
+        if node_name:
             children_names = [child.name for child in self.children]
             try:
-                find = children_names.index(NodeName_)
+                find = children_names.index(node_name)
             except ValueError:
                 find = -1
             if find >= 0:
                 del self.children[find]
                 
-    def readonlyChildren(self, ReadOnly_=True):
+    def readonlyChildren(self, bReadOnly=True):
         """
         Установить флаг запрета редактирования
         у всех дочерних узлов.
-        @param ReadOnly_: Флаг запрета редактирования.
+        @param bReadOnly: Флаг запрета редактирования.
         """
-        PrjNode.readonlyChildren(self, ReadOnly_)
+        icPrjNode.readonlyChildren(self, bReadOnly)
         for child in self.children:
-            child.readonlyChildren(ReadOnly_)
+            child.readonlyChildren(bReadOnly)
 
-    def importChild(self, ResFileName_=None):
+    def importChild(self, res_filename=None):
         """
         Импортировать ресурс, как дочерний узел.
-        @param ResFileName_: Имя импортируемого ресурсного файла.
+        @param res_filename: Имя импортируемого ресурсного файла.
         """
         pass

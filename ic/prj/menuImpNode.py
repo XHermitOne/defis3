@@ -22,12 +22,12 @@ class icMenuImpNode(flatmenu.FlatMenu):
     Меню добавления/редактирования импортируемых подсистем.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         """
         flatmenu.FlatMenu.__init__(self)
-        self._Parent = Parent_
+        self._Parent = parent
         # Контрол дерева проекта
         prj_tree_ctrl = self._Parent.getParentRoot().getParent()
 
@@ -46,7 +46,7 @@ class icMenuImpNode(flatmenu.FlatMenu):
                 item = flatmenu.FlatMenuItem(self, res_id, node.label, node.label,
                                              normalBmp=node.img)
                 self.AppendItem(item)
-                prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnAddSubSys, id=res_id)
+                prj_tree_ctrl.Bind(wx.EVT_MENU, self.onAddSubSys, id=res_id)
 
             self.AppendSeparator()
 
@@ -56,9 +56,9 @@ class icMenuImpNode(flatmenu.FlatMenu):
                                          u'Обновить подсистемы', u'Обновить подсистемы',
                                          normalBmp=imglib.imgRefreshPage)
             self.AppendItem(item)
-            prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRefreshSubSys, id=refresh_id)
+            prj_tree_ctrl.Bind(wx.EVT_MENU, self.onRefreshSubSys, id=refresh_id)
 
-    def OnAddSubSys(self, event):
+    def onAddSubSys(self, event):
         """
         Функция добавления подсистемы.
         """
@@ -74,11 +74,11 @@ class icMenuImpNode(flatmenu.FlatMenu):
                 self._Parent.getRoot().save()
                 # Построить ветку дерева,
                 # соответствующую импортируемой подсистеме
-                new_item = tree_prj.AddBranchInSelection(sub_sys_node)
+                new_item = tree_prj.addBranchInSelection(sub_sys_node)
             # Обновление дерева проектов
             tree_prj.Refresh()
 
-    def OnRefreshSubSys(self, event):
+    def onRefreshSubSys(self, event):
         """
         Обновление подсистем.
         """
@@ -91,12 +91,12 @@ class icMenuImpSysNode(flatmenu.FlatMenu):
     Меню обновления импортируемой подсистемы.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         """
         flatmenu.FlatMenu.__init__(self)
-        self._Parent = Parent_
+        self._Parent = parent
         # Контрол дерева проекта
         prj_tree_ctrl = self._Parent.getParentRoot().getParent()
 
@@ -106,7 +106,7 @@ class icMenuImpSysNode(flatmenu.FlatMenu):
                                      u'Обновить подсистему', u'Обновить подсистему',
                                      normalBmp=imglib.imgRefreshPage)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnRefreshSubSys, id=refresh_id)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onRefreshSubSys, id=refresh_id)
         
         self.AppendSeparator()
 
@@ -117,7 +117,7 @@ class icMenuImpSysNode(flatmenu.FlatMenu):
                                      u'Подключить подсистему', u'Подключить подсистему',
                                      normalBmp=imglib.imgEdtPluginIn)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnLinkSubSys, id=link_id)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onLinkSubSys, id=link_id)
 
         # Отключение подсистемы
         unlink_id = wx.NewId()
@@ -127,14 +127,14 @@ class icMenuImpSysNode(flatmenu.FlatMenu):
         self.AppendItem(item)
         prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnUnlinkSubSys, id=unlink_id)
     
-    def OnRefreshSubSys(self, event):
+    def onRefreshSubSys(self, event):
         """
         Обновление подсистем.
         """
         sub_system = self._Parent
         sub_system.refreshSubSys()
         
-    def OnLinkSubSys(self, event):
+    def onLinkSubSys(self, event):
         """
         Изменить связь с подсистемой.
         """
@@ -154,12 +154,12 @@ class icMenuNotImpSysNode(flatmenu.FlatMenu):
     Меню обновления не импортированной подсистемы.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         """
         flatmenu.FlatMenu.__init__(self)
-        self._Parent = Parent_
+        self._Parent = parent
         # Контрол дерева проекта
         prj_tree_ctrl = self._Parent.getParentRoot().getParent()
 
@@ -169,7 +169,7 @@ class icMenuNotImpSysNode(flatmenu.FlatMenu):
                                      u'Подключить подсистему', u'Подключить подсистему',
                                      normalBmp=imglib.imgEdtPluginIn)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnLinkSubSys, id=link_id)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onLinkSubSys, id=link_id)
 
         # Отключение подсистемы
         unlink_id = wx.NewId()
@@ -177,9 +177,9 @@ class icMenuNotImpSysNode(flatmenu.FlatMenu):
                                      u'Отключить подсистему', u'Отключить подсистему',
                                      normalBmp=imglib.imgEdtPluginOut)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnUnlinkSubSys, id=unlink_id)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onUnlinkSubSys, id=unlink_id)
 
-    def OnLinkSubSys(self, event):
+    def onLinkSubSys(self, event):
         """
         Переимпортировать подсистему.
         """
@@ -188,7 +188,7 @@ class icMenuNotImpSysNode(flatmenu.FlatMenu):
         prj = sub_system.getParentRoot()
         prj.synchroPrj(True)
 
-    def OnUnlinkSubSys(self, event):
+    def onUnlinkSubSys(self, event):
         """
         Отключить подсистему.
         """
@@ -201,12 +201,12 @@ class icMenuImpResNode(flatmenu.FlatMenu):
     Меню копирования ресурсов из импортируемых подсистем.
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
         """
         flatmenu.FlatMenu.__init__(self)
-        self._Parent = Parent_
+        self._Parent = parent
         # Контрол дерева проекта
         prj_tree_ctrl = self._Parent.getParentRoot().getPrjTreeCtrl()
 
@@ -216,9 +216,9 @@ class icMenuImpResNode(flatmenu.FlatMenu):
                                      u'Копировать', u'Копировать',
                                      normalBmp=imglib.imgEdtMnuCopy)
         self.AppendItem(item)
-        prj_tree_ctrl.Bind(wx.EVT_MENU, self.OnCopyRes, id=copy_id)
+        prj_tree_ctrl.Bind(wx.EVT_MENU, self.onCopyRes, id=copy_id)
 
-    def OnCopyRes(self, event):
+    def onCopyRes(self, event):
         """
         Копировать ресурс.
         """
