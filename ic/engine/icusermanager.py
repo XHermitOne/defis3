@@ -26,12 +26,12 @@ from ic.engine import glob_functions
 __version__ = (0, 1, 1, 1)
 
 
-def runEditDlg():
+def edit_user_dlg():
     """
     Функция запуска на редактирование менеджера пользователей.
     """
     user_mngr = icUserManager()
-    user_mngr.Edit()
+    user_mngr.edit()
 
 
 class icUserEditDialog(wx.Dialog):
@@ -39,12 +39,12 @@ class icUserEditDialog(wx.Dialog):
     Диалоговое окно редактора пользователей.
     """
 
-    def __init__(self, parent, UserRes_, Manager_=None):
+    def __init__(self, parent, user_res, manager=None):
         """
         Конструктор.
         """
         # менеджер управления файлами ресурса пользователя.
-        self._manager = Manager_
+        self._manager = manager
         try:
             wx.Dialog.__init__(self, parent, -1,
                                title=u'Управление пользователями',
@@ -63,11 +63,11 @@ class icUserEditDialog(wx.Dialog):
 
             id_ = wx.NewId()
             self._ok_button = wx.Button(self, id_, u'OK', size=wx.Size(-1, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnOK, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onOK, id=id_)
 
             id_ = wx.NewId()
             self._cancel_button = wx.Button(self, id_, u'Отмена', size=wx.Size(-1, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnCancel, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onCancel, id=id_)
 
             self._button_boxsizer.Add(self._ok_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
             self._button_boxsizer.Add(self._cancel_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
@@ -76,7 +76,7 @@ class icUserEditDialog(wx.Dialog):
             self._edit_panel = self._edit_panel_iface.getPanel()
             if self._manager:
                 self.setManager(self._manager)
-            self._edit_panel_iface.setData(UserRes_)
+            self._edit_panel_iface.setData(user_res)
 
             self._boxsizer.Add(self._edit_panel, 1, wx.EXPAND | wx.GROW, 0)
             self._boxsizer.Add(self._button_boxsizer, 0, wx.ALIGN_RIGHT, 10)
@@ -86,14 +86,14 @@ class icUserEditDialog(wx.Dialog):
         except:
             log.fatal(u'Ошибка создания диалогового окна редактирования пользователей.')
 
-    def OnOK(self, event):
+    def onOK(self, event):
         """
         Нажатие кнопки <ОК>.
         """
         self._edit_panel_iface.refreshData()
         self.EndModal(wx.ID_OK)
 
-    def OnCancel(self, event):
+    def onCancel(self, event):
         """
         Нажатие кнопки <Отмена>.
         """
@@ -106,13 +106,13 @@ class icUserEditDialog(wx.Dialog):
         """
         return self._edit_panel_iface.getData()
 
-    def setManager(self, Manager_):
+    def setManager(self, manager):
         """
         Установить менеджер управления файлами ресурса пользователя.
         """
-        self._manager = Manager_
+        self._manager = manager
         # И установить менеджер у дочерних объектов
-        self._edit_panel_iface.setManager(Manager_)
+        self._edit_panel_iface.setManager(manager)
 
 
 class icUserManager(object):
@@ -127,7 +127,7 @@ class icUserManager(object):
         # Роли текущего проекта
         self._roles = None
 
-    def Edit(self, parent=None, bRefreshPrj=True, path=None):
+    def edit(self, parent=None, bRefreshPrj=True, path=None):
         """
         Открыть окно редактирования пользователей.
         """
@@ -181,26 +181,26 @@ class icUserManager(object):
         """
         return ic_res.unlockRes(None, 'users', 'acc')
 
-    def _edit(self, ParentForm_=None, UserRes_=None):
+    def _edit(self, parent=None, user_res=None):
         """
         Открыть окно редактирования пользователей.
-        @param ParentForm_: Родительское окно.
-        @param UserRes_: Структура, описывающая ползователей.
+        @param parent: Родительское окно.
+        @param user_res: Структура, описывающая ползователей.
         """
         dlg = None
         result = None
         clear = False
         try:
-            if ParentForm_ is None:
+            if parent is None:
                 id_ = wx.NewId()
-                ParentForm_ = wx.Frame(None, id_, '')
+                parent = wx.Frame(None, id_, '')
                 clear = True
-            dlg = icUserEditDialog(ParentForm_, UserRes_, Manager_=self)
+            dlg = icUserEditDialog(parent, user_res, manager=self)
             if dlg.ShowModal() == wx.ID_OK:
                 result = dlg.getData()
                 dlg.Destroy()
                 if clear:
-                    ParentForm_.Destroy()
+                    parent.Destroy()
                 return result
         except:
             log.fatal(u'Ошибка редактирования пользователей.')
@@ -209,7 +209,7 @@ class icUserManager(object):
                 dlg.Destroy()
 
             if clear:
-               ParentForm_.Destroy()
+               parent.Destroy()
 
         return None
 
@@ -218,18 +218,18 @@ class icUserManager(object):
         Роли проекта.
         """
         if self._roles is None:
-            self._roles = self.readRoles(isSort_=True)
+            self._roles = self.readRoles(bSort=True)
         return self._roles
 
-    def readRoles(self, PrjDir_=None, isSort_=False):
+    def readRoles(self, prj_dir=None, bSort=False):
         """
         Чтение ролей из папки проекта.
-        @param PrjDir_: Папка проекта.
-        @param isSort_: Сортировать роли по имени?
+        @param prj_dir: Папка проекта.
+        @param bSort: Сортировать роли по имени?
         """
-        if PrjDir_ is None:
-            PrjDir_ = glob_functions.getVar('PRJ_DIR')
-        role_files = ic_file.GetFilesByExt(PrjDir_, '.rol')
+        if prj_dir is None:
+            prj_dir = glob_functions.getVar('PRJ_DIR')
+        role_files = ic_file.GetFilesByExt(prj_dir, '.rol')
         # Отфильтровать pickle файлы
         role_files = [role_file for role_file in role_files if role_file[-8:].lower() != '_pkl.rol']
 
@@ -240,19 +240,19 @@ class icUserManager(object):
             role_name = role_spc['name']
             role_description = role_spc.get('description', u'') or u''
             result.append((role_name, role_description))
-        if isSort_:
+        if bSort:
             result.sort()
         return result
 
-    def unregisterUser(self, CurDirPrj_=None):
+    def unregisterUser(self, cur_prj_dir=None):
         """
         Сброс блокирующих записей пользователей при некорректном завершении программы.
-        @param CurDirPrj_: Текущая папка проекта.
+        @param cur_prj_dir: Текущая папка проекта.
         """
         try:
-            if CurDirPrj_ is None:
-                CurDirPrj_ = ic_file.getCurDirPrj()
-            reg_user_journal_file_name = os.path.join(CurDirPrj_,
+            if cur_prj_dir is None:
+                cur_prj_dir = ic_file.getCurDirPrj()
+            reg_user_journal_file_name = os.path.join(cur_prj_dir,
                                                       'log', 'reg_user_journal.ini')
             if os.path.exists(reg_user_journal_file_name):
                 reg_user_journal = ini.INI2Dict(reg_user_journal_file_name)
@@ -310,7 +310,7 @@ def test():
             ic.resource_loader.save_res('c:\\defis\\Registr/Registr/users1.acc', res)
             res1 = ic.resource_loader.load_res('D:\\defis\Registr\\Registr/users1.acc')
             user_mngr = icUserManager()
-            user_mngr.Edit(form, False)
+            user_mngr.edit(form, False)
 
             form.Show()
         except :
@@ -335,7 +335,7 @@ def testEditDlg():
     Функция тестиорвания.
     """
     user_mngr = icUserManager()
-    user_mngr.Edit()
+    user_mngr.edit()
 
 
 def testUnregUser():

@@ -44,11 +44,11 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
     ###BEGIN EVENT BLOCK
     ###END EVENT BLOCK
 
-    def setManager(self, Manager_=None):
+    def setManager(self, manager=None):
         """
         Установить менеджер управления файлами ресурса пользователя.
         """
-        self._manager = Manager_
+        self._manager = manager
         
         # Вместе менеджером устаонвить список ролей
         if self._manager:
@@ -67,22 +67,22 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
         """
         return self._data
 
-    def setData(self, Data_=None):
+    def setData(self, data=None):
         """
         Установить данные.
         """
-        self._data = Data_
+        self._data = data
         if self._data is not None:
             self._refreshControls(self._data)
 
-    def _refreshControls(self, Data_):
+    def _refreshControls(self, data):
         """
         Обновление значений контролов по редактируемым данным.
         """
         dlg = self.getDialog()
         user_name = ''
-        if 'name' in Data_:
-            user_name = Data_['name']
+        if 'name' in data:
+            user_name = data['name']
         dlg.SetTitle(u'Пользователь: ' + user_name)
         
         name_edit = self.GetNameObj('nameEdit')
@@ -91,12 +91,12 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
             
         description_edit = self.GetNameObj('descriptionEdit')
         if description_edit:
-            if 'description' in Data_:
-                description_edit.SetValue(Data_['description'], False)
+            if 'description' in data:
+                description_edit.SetValue(data['description'], False)
             
         local_dir_edit = self.GetNameObj('localDirEdit')
         if local_dir_edit:
-            local_dir_edit.SetValue(Data_['local_dir'], False)
+            local_dir_edit.SetValue(data['local_dir'], False)
             
         role_choice = self.GetNameObj('roleChoice')
         if role_choice:
@@ -104,7 +104,7 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
             roles_name = [role[0] for role in roles]
             roles_description = [role[1] for role in roles]
             try:
-                selection = roles_name.index(Data_['roles'][0])
+                selection = roles_name.index(data['roles'][0])
             except IndexError:
                 selection = 0
             role_choice.SetSelection(selection)            
@@ -118,7 +118,7 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
         default_main_menubars = ic.getKernel().GetAuthUser().resource['menubars']
         
         data = util.icSpcDefStruct(user_manager.SPC_IC_USER, {'main_win': default_main_win,
-                                                        'menubars': default_main_menubars})
+                                                              'menubars': default_main_menubars})
         
         name_edit = self.GetNameObj('nameEdit')
         if name_edit:
@@ -157,7 +157,7 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
             else:
                 ic_dlg.icWarningBox(u'ВНИМАНИЕ!',
                                     u'Введенный пароль и подтверждение на совпадают. Введите еще раз.',
-                    ParentWin_ = self.getDialog())
+                                    parent=self.getDialog())
                 return None
         
         self._data = data
@@ -233,44 +233,43 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
         return coderror.IC_CTRL_OK
 
 
-def icUserPropertyDlg(ParentForm_, DefaultRes_, UserManager_=None):
+def open_user_property_dlg(parent, default_res, user_manager=None):
     """
     Функция вызова диалогового окна редактирования
     свойств пользователя.
-    @param ParentForm_: Родительское окно.
-    @param DefaultRes_: Структура для редактирования
-    по умолчанию.
-    @param UserManager_: Менеджер пользователей.
+    @param parent: Родительское окно.
+    @param default_res: Структура для редактирования по умолчанию.
+    @param user_manager: Менеджер пользователей.
     """
     dlg = None
     result = None
     clear = False
     try:
-        if ParentForm_ is None:
+        if parent is None:
             id_ = wx.NewId()
-            ParentForm_ = wx.Frame(None, id_, '')
+            parent = wx.Frame(None, id_, '')
             clear = True
 
-        dlg_iface = icUserPropertyDialog(ParentForm_)
-        dlg_iface.setManager(UserManager_)  # Установить менеджера у всех контролов редактирования
-        dlg_iface.setData(DefaultRes_)
+        dlg_iface = icUserPropertyDialog(parent)
+        dlg_iface.setManager(user_manager)  # Установить менеджера у всех контролов редактирования
+        dlg_iface.setData(default_res)
         dlg = dlg_iface.getDialog()
         
         if dlg.ShowModal() == wx.ID_OK:
             result = dlg_iface.getData()
             dlg.Destroy()
             if clear:
-                ParentForm_.Destroy()
+                parent.Destroy()
             return result
     except:
-        log.error(u'Ошибка редактирования пользователя.')
+        log.fatal(u'Ошибка редактирования пользователя')
 
     finally:
         if dlg:
             dlg.Destroy()
 
         if clear:
-            ParentForm_.Destroy()
+            parent.Destroy()
 
     return None
 

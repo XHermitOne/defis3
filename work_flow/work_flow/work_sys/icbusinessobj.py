@@ -170,7 +170,7 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
             Если None, то уникальный идентификатор self.uuid
         @param edit_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
-        assert None, 'Abstract method <Edit> in class %s' % self.__class__.__name__
+        assert None, 'Abstract method <edit> in class %s' % self.__class__.__name__
         
     def View(self, ParentForm_=None, Context_=None, UUID_=None,
              view_form_psp=None):

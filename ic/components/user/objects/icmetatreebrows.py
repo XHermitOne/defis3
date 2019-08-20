@@ -159,17 +159,17 @@ class MetaTreeBrows(icobjectinterface.icObjectInterface):
             elif item != tree.root:
                 if not self.rootPanel:
                     if self.GetEditMode():
-                        obj = data.Edit(split, data)
+                        obj = data.edit(split, data)
                     else:
-                        obj = data.Edit(split, data)
+                        obj = data.edit(split, data)
                         
                     if obj:
                         self.ILeftPanel = obj.evalSpace['WrapperObj']
                 else:
                     if self.GetEditMode():
-                        obj = data.Edit(self.rootPanel, data)
+                        obj = data.edit(self.rootPanel, data)
                     else:
-                        obj = data.Edit(self.rootPanel, data)
+                        obj = data.edit(self.rootPanel, data)
 
                     if obj:
                         obj.Reparent(split)

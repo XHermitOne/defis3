@@ -171,7 +171,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         """
         pos = self.getToolLeftBottomPoint(self.ctrl_toolBar, self.group_tool)
         doc_dataset = self.doc_navigator.getDocDataset()
-        nn_max = doc_dataset[-1].get('nn', 0) if doc_dataset else 0
+        nn_max = int(str(doc_dataset[-1].get('nn', '00'))[:-1]) if doc_dataset else 0
         value = group_manipulation_dlg.show_group_manipulation_dlg(self,
                                                                    n_max=nn_max,
                                                                    position=pos)
@@ -184,7 +184,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
             #                          n_begin, n_end)
             # log.debug(u'Диапазон [%d : %d]' % (n_begin, n_end))
             check_list = self.checkItems_requirement(self.docs_listCtrl, rows=self.doc_navigator.getDocDataset(),
-                                                     requirement=lambda i, rec: rec['nn'] in list(range(n_begin+1, n_end+2)),
+                                                     requirement=lambda i, rec: int(str(rec['nn'])[:-1]) in list(range(n_begin+1, n_end+2)),
                                                      bSet=True)
             # log.debug(u'Индексы меток %s' % str(check_list))
 

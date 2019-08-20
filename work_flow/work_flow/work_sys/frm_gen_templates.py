@@ -190,7 +190,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
         obj_uuid = obj_list.getSelectedObjUUID()
         if obj_uuid:
             obj = self.context['OBJ']
-            obj.Edit(UUID_=obj_uuid)        
+            obj.edit(UUID_=obj_uuid)        
             obj_list.refreshDataset()
 
     def onAddObjTool(self, event):
@@ -346,7 +346,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             if obj:
                 # Создать новый контекст у объекта, т.к. 
                 # он будет работать в другом режиме
-                obj.Edit(Context_=ic.components.icwidget.icResObjContext())
+                obj.edit(Context_=ic.components.icwidget.icResObjContext())
         except:
             ic.log.error(u'Обработчик нажатия на кнопку <Редактирование>.')
         event.Skip()
@@ -437,7 +437,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
         \"\"\"
         Обработчик нахатия на кнопке <Режим редактирования> на панели инструментов.
         \"\"\"
-        self.OBJ.Edit(self.GetObject('search_panel'))
+        self.OBJ.edit(self.GetObject('search_panel'))
         event.Skip()
     
     def getSelectedObjUUID(self):

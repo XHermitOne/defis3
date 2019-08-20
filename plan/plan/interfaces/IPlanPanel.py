@@ -109,7 +109,7 @@ class IPlanPanel(icobjectinterface.icObjectInterface):
                 
             # В противном случае создаем
             elif item != tree.root:
-                obj = data.Edit(split, data)
+                obj = data.edit(split, data)
                 self.ILeftPanel = obj.evalSpace['WrapperObj']
             # Для корневого элемента создаем панельку
             else:

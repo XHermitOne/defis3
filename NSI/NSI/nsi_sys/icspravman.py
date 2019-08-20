@@ -171,7 +171,7 @@ class icSpravManagerPrototype(icSpravManagerInterface):
             edit_sprav = spravs[idx]
             log.info(u'Редактирование справочника: %d %s' % (idx, edit_sprav.name))
             try:
-                edit_sprav.Edit(parent=ParentForm_)
+                edit_sprav.edit(parent=ParentForm_)
             except icexceptions.MethodAccessDeniedException:
                 wx.MessageBox(u'У пользователя [%s] нет прав на редактирвоние справочников.' % ic.getCurUserName())
 

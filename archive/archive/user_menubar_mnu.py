@@ -231,7 +231,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
         from archive.forms import pack_scan_doc_panel
         pack_scan_doc_panel.open_pack_scan_doc_page()
         # obj = ic.metadata.archive.mtd.scan_doc_pack.create()
-        # obj.Browse(ParentForm_=ic.getMainWin())
+        # obj.Browse(parent=ic.getMainWin())
         event.Skip()
 
 

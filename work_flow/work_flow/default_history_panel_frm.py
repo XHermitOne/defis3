@@ -288,7 +288,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                 root_obj=hist_panel.getRootObject()
                 if root_obj:
                     root_obj.Close()
-                attach_obj.Edit(hist_panel)
+                attach_obj.edit(hist_panel)
                     
     def onViewObjectTool(self,event):
         """
@@ -441,7 +441,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                 root_obj=hist_panel.getRootObject()
                 if root_obj:
                     root_obj.Close()
-                attach_obj.Edit(hist_panel)
+                attach_obj.edit(hist_panel)
 
     def onViewDocTool(self,event):
         """

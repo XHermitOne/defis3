@@ -170,8 +170,8 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
                                                'name': 'new_user',
                                                'local_dir': 'C:\\#WRK\\new_user',
                                                'menubars': default_main_menubars})
-            user_res = icuserpropertydlg.icUserPropertyDlg(self.getPanel(),
-                                                           default_res, self._manager)
+            user_res = icuserpropertydlg.open_user_property_dlg(self.getPanel(),
+                                                                default_res, self._manager)
             if user_res:
                 self.updateData(user_res)
             
@@ -188,8 +188,8 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
             if values:
                 user_name = values['user']
                 default_res = self._data[user_name]
-                user_res = icuserpropertydlg.icUserPropertyDlg(self.getPanel(),
-                                                               default_res, self._manager)
+                user_res = icuserpropertydlg.open_user_property_dlg(self.getPanel(),
+                                                                    default_res, self._manager)
                 if user_res:
                     self.updateData(user_res)
             else:

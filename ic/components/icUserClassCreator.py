@@ -458,7 +458,7 @@ def RunWizard(parent):
     page1 = FirstPage(wizard, _('Base parameters'))
     page2 = AttrPage(wizard, _('Class attributes'))
     page3 = MsgPage(wizard, _('Event attributes'))
-    page4 = EditModulPage(wizard, _('Edit module'))
+    page4 = EditModulPage(wizard, _('edit module'))
     parent.page1 = page1
     wizard.FitToPage(page1)
     

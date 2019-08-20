@@ -390,7 +390,7 @@ class PyReditorFrm(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnMenu_Exit, id=self._menu_ids['exit'])
         
         #----------
-        # Edit menu (only edit items)
+        # edit menu (only edit items)
         #----------
         self.menu_edit = EditInsertMenu(self, self.txtRegex, self._path, hasedit=True, insertitems=None)
         edit_ids = self.menu_edit.get_ids()
@@ -453,7 +453,7 @@ class PyReditorFrm(wx.Frame):
         # edit templates
         self._menu_ids['opt_edittemp'] = wx.NewId()
         self._add_menu_item(self.menu_opt, id=self._menu_ids['opt_edittemp'],
-                            text=u'Edit templates', icon='kmenuedit.png')
+                            text=u'edit templates', icon='kmenuedit.png')
         self.Bind(wx.EVT_MENU, self.OnMenu_optedittemp, id=self._menu_ids['opt_edittemp'])
         
         #----------
@@ -494,7 +494,7 @@ class PyReditorFrm(wx.Frame):
         self.menubar.SetEvtHandlerEnabled(True)
         
         self.menubar.Append(menu=self.menu_file, title=u'File')
-        self.menubar.Append(menu=self.menu_edit, title=u'Edit')
+        self.menubar.Append(menu=self.menu_edit, title=u'edit')
         self.menubar.Append(menu=self.menu_insert, title=u'Insert')
         self.menubar.Append(menu=self.menu_opt, title=u'Options')
         self.menubar.Append(menu=self.menu_help, title=u'Help')
@@ -546,7 +546,7 @@ class PyReditorFrm(wx.Frame):
         
         self.toolBar1.DoAddTool(bitmap=self._set_png(r'kmenuedit22.png'), bmpDisabled=wx.NullBitmap,
               id=self._menu_ids['opt_edittemp'], kind=wx.ITEM_NORMAL, label='',
-              longHelp='', shortHelp=u'Edit menu templates')
+              longHelp='', shortHelp=u'edit menu templates')
         
         self.toolBar1.AddSeparator()
         
@@ -1042,7 +1042,7 @@ class PyReditorFrm(wx.Frame):
         self._read_sett()
     
     def OnMenu_optedittemp(self, event):
-        # Edit templates 
+        # edit templates
         # If not open yet
         try:
             self._tmp_editor_h.Show()

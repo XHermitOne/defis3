@@ -65,7 +65,7 @@ msgid "&Copy"
 msgstr "&Копировать"
 
 #: ../../src/ed_menu.py:339
-msgid "&Edit"
+msgid "&edit"
 msgstr "&Редактировать"
 
 #: ../../src/ed_menu.py:274
@@ -580,15 +580,15 @@ msgid "Edge Guide"
 msgstr "Руководство по ошибкам"
 
 #: ../../plugins/filebrowser/filebrowser/browser.py:424
-msgid "Edit"
+msgid "edit"
 msgstr "Правка"
 
 #: ../../src/ed_menu.py:338
-msgid "Edit Preferences / Settings"
+msgid "edit Preferences / Settings"
 msgstr "Редактировать Настройки / Установки"
 
 #: ../../src/ed_menu.py:487
-msgid "Edit the way syntax is highlighted"
+msgid "edit the way syntax is highlighted"
 msgstr "Изменить способ подсветки синтаксиса"
 
 #: ../../src/ed_menu.py:366
@@ -1033,7 +1033,7 @@ msgid "License: wxWindows (see COPYING.txt for full license)"
 msgstr ""
 
 #: ../../src/ed_menu.py:317
-msgid "Line Edit"
+msgid "Line edit"
 msgstr "Редактировать строку"
 
 #: ../../src/ed_stc.py:675
@@ -2123,7 +2123,7 @@ msgid "Generate component by resource"
 msgstr "Генерировать компонент по ресурсу"
 
 #: p:/defis/ic/PropertyEditor/icResTree.py:1153
-msgid "Edit object module"
+msgid "edit object module"
 msgstr "Редактировать модуль объекта"
 
 #: p:/defis/ic/PropertyEditor/icResTree.py:1157
@@ -2386,7 +2386,7 @@ msgstr "Вставить"
 msgid "Clone"
 msgstr "Клонировать"
 
-#msgid "Edit"
+#msgid "edit"
 #msgstr "Редактировать"
 #msgid "Rename"
 #msgstr "Переименовать"
@@ -3245,7 +3245,7 @@ msgid "Event attributes"
 msgstr "Атрибуты сообщений"
 
 #: ../components/icUserClassCreator.py:409
-msgid "Edit module"
+msgid "edit module"
 msgstr "Редактирования модуля"
 
 #: ../components/icUserClassCreator.py:441

@@ -59,7 +59,7 @@ msgid "Generate component by resource"
 msgstr "Генерировать компонент по ресурсу"
 
 #: ../PropertyEditor/icResTree.py:1153
-msgid "Edit object module"
+msgid "edit object module"
 msgstr "Редактировать модуль объекта"
 
 #: ../PropertyEditor/icResTree.py:1157
@@ -329,7 +329,7 @@ msgid "Clone"
 msgstr "Клонировать"
 
 #: ../prj/menuPrjNode.py:130
-msgid "Edit"
+msgid "edit"
 msgstr "Редактировать"
 
 #: ../prj/menuPrjNode.py:138
@@ -1190,7 +1190,7 @@ msgid "Event attributes"
 msgstr "Атрибуты сообщений"
 
 #: ../components/icUserClassCreator.py:409
-msgid "Edit module"
+msgid "edit module"
 msgstr "Редактирования модуля"
 
 #: ../components/icUserClassCreator.py:441

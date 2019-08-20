@@ -86,7 +86,7 @@ class IMyDocsReestr(icobjectinterface.icObjectInterface):
         if work_flow_obj:
             doc_obj=work_flow_obj.getCloneDocumentByName(metaObj.value.doc_type)
             doc_obj.loadRequisite(metaObj.value.doc_id)
-            edit_panel=doc_obj.Edit()
+            edit_panel=doc_obj.edit()
         print('EDIT DOCUMENT',edit_panel)
         return edit_panel
         

@@ -192,7 +192,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         sprav_obj = glob_functions.getKernel().createObjBySpc(parent=None, res=res, context=context)
 
         log.info(u'Тестирование СПРАВОЧНИКА <%s>' % res['name'])
-        sprav_obj.Edit(parent=parent)
+        sprav_obj.edit(parent=parent)
         return
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
@@ -233,10 +233,10 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
             self.childCreator(bCounter, progressDlg)
 
     # Установка ограничения редактирования справочника
-    security.declareProtected('sprav_edit', 'Edit')
+    security.declareProtected('sprav_edit', 'edit')
 
     def Edit(self, *args, **kwargs):
-        return parentModule.icSpravPrototype.Edit(self, *args, **kwargs)
+        return parentModule.icSpravPrototype.edit(self, *args, **kwargs)
 
     def childCreator(self, bCounter, progressDlg):
         """

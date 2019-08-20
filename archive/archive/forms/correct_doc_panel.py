@@ -351,13 +351,13 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
         self.doc_card_panel.docname_textCtrl.SetValue(doc.getRequisiteValue('doc_name'))
         
         doc_type_code = doc.getRequisiteValue('doc_type')
-        log.debug(u'Edit. Установка данных. Код вида документа <%s>' % doc_type_code)
+        log.debug(u'edit. Установка данных. Код вида документа <%s>' % doc_type_code)
         self.doc_card_panel.doc_type_ctrl.setValue(doc_type_code)
         
         self.doc_card_panel.contragent_ctrl.setValue(doc.getRequisiteValue('c_agent'))
         
         entity_code = doc.getRequisiteValue('entity')
-        log.debug(u'Edit. Установка данных. Код подразделения <%s>' % entity_code)
+        log.debug(u'edit. Установка данных. Код подразделения <%s>' % entity_code)
         self.doc_card_panel.entity_ctrl.setValue(entity_code)
         
         self.doc_card_panel.description_textCtrl.SetValue(doc.getRequisiteValue('description'))

@@ -233,13 +233,13 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         self.edit_doc_panel.docname_textCtrl.SetValue(self.document.getRequisiteValue('doc_name'))
 
         doc_type_code = self.document.getRequisiteValue('doc_type')
-        log.debug(u'Edit. Установка данных. Код вида документа <%s>' % doc_type_code)
+        log.debug(u'edit. Установка данных. Код вида документа <%s>' % doc_type_code)
         self.edit_doc_panel.doc_type_ctrl.setValue(doc_type_code)
 
         self.edit_doc_panel.contragent_ctrl.setValue(self.document.getRequisiteValue('c_agent'))
 
         entity_code = self.document.getRequisiteValue('entity')
-        log.debug(u'Edit. Установка данных. Код подразделения <%s>' % entity_code)
+        log.debug(u'edit. Установка данных. Код подразделения <%s>' % entity_code)
         self.edit_doc_panel.entity_ctrl.setValue(entity_code)
 
         description = self.document.getRequisiteValue('description')

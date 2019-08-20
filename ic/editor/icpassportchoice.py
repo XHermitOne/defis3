@@ -329,7 +329,7 @@ class icPassportListPanel(wx.Panel):
             bmp = bmpfunc.getSysImg('imgEdit')
             if bmp is None:
                 bmp = wx.NullBitmap
-            self._toolbar.AddTool(id_, 'Edit', bmp, shortHelp=_('Edit'))
+            self._toolbar.AddTool(id_, 'edit', bmp, shortHelp=_('edit'))
             self.Bind(wx.EVT_TOOL, self.OnEditPassport, id=id_)
             
             self._toolbar.AddSeparator()

@@ -949,7 +949,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         @param edit_form_method: Метод вызова формы редактирования документа.
             Может задаваться фукнцией.
             В качестве первого аргумента функция должна принимать объект документа.
-            Если не определен, то вызывается document.Edit().
+            Если не определен, то вызывается document.edit().
         @return: True/False
         """
         if UUID is None and index is None:

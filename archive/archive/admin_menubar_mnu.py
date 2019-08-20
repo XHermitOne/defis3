@@ -111,7 +111,7 @@ class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
         """
         sprav_manager = ic.metadata.THIS.mtd.nsi_archive.create()
         sprav = sprav_manager.getSpravByName('nsi_c_agent')
-        sprav.Edit(parent=ic.getMainWin())
+        sprav.edit(parent=ic.getMainWin())
         event.Skip()
 
     def onTestSelectDocMenuItemSelected(self, event):

@@ -126,7 +126,7 @@ class scan_doc_pack_choice_panel_ChoicePanelManager(icmanagerinterface.icWidgetM
         obj_uuid = obj_list.getSelectedObjUUID()
         if obj_uuid:
             obj = self.context['OBJ']
-            obj.Edit(UUID_=obj_uuid)        
+            obj.edit(UUID_=obj_uuid)
             obj_list.refreshDataset()
 
     def onAddObjTool(self, event):
