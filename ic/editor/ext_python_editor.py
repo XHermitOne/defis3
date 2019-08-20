@@ -38,22 +38,22 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
         """
         icideinterface.icIDEInterface.__init__(self, *args, **kwargs)
 
-    def OpenFile(self, filename, OpenInNewTab=True,
-                 editrecentfiles=True, encoding=icideinterface.DEFAULT_ENCODINT_STR, readonly=False):
+    def openFile(self, filename, bOpenInNewTab=True,
+                 bEditRecentFiles=True, encoding=icideinterface.DEFAULT_ENCODINT_STR, bReadonly=False):
         """
         Загружает нужный файл в IDE.
 
         @type filename: C{string}
         @param filename: Имя загружаемого файла.
-        @type OpenInNewTab: C{bool}
-        @param OpenInNewTab: Признак загрузки файла на новой закладке.
-        @type editrecentfiles: C{bool}
-        @param editrecentfiles: Признак сохранении в списке недавно загружаемых файлов
+        @type bOpenInNewTab: C{bool}
+        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        @type bEditRecentFiles: C{bool}
+        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
         @type encoding: C{string}
         @param encoding: Кодировка файла.
-        @type readonly: C{bool}
-        @param readonly: Указание, что файл откроется только для чтения.
+        @type bReadonly: C{bool}
+        @param bReadonly: Указание, что файл откроется только для чтения.
         @rtype: C{bool}
         @return: Признак успешной загрузки.
         """
@@ -71,7 +71,7 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
         except:
             log.fatal(u'Ошибка открытия файла <%s> в IDE' % filename)
 
-    def OpenFormEditor(self, res, res_editor=None, *arg, **kwarg):
+    def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
         @param res: Ресурсное описание.
@@ -95,49 +95,49 @@ class icGeanyPythonEditor(icideinterface.icIDEInterface):
         """
         icideinterface.icIDEInterface.__init__(self, *args, **kwargs)
 
-    def OpenFile(self, filename, OpenInNewTab=True,
-                 editrecentfiles=True, encoding=icideinterface.DEFAULT_ENCODINT_STR, readonly=False):
+    def openFile(self, filename, bOpenInNewTab=True,
+                 bEditRecentFiles=True, encoding=icideinterface.DEFAULT_ENCODINT_STR, bReadonly=False):
         """
         Загружает нужный файл в IDE.
 
         @type filename: C{string}
         @param filename: Имя загружаемого файла.
-        @type OpenInNewTab: C{bool}
-        @param OpenInNewTab: Признак загрузки файла на новой закладке.
-        @type editrecentfiles: C{bool}
-        @param editrecentfiles: Признак сохранении в списке недавно загружаемых файлов
+        @type bOpenInNewTab: C{bool}
+        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        @type bEditRecentFiles: C{bool}
+        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
         @type encoding: C{string}
         @param encoding: Кодировка файла.
-        @type readonly: C{bool}
-        @param readonly: Указание, что файл откроется только для чтения.
+        @type bReadonly: C{bool}
+        @param bReadonly: Указание, что файл откроется только для чтения.
         @rtype: C{bool}
         @return: Признак успешной загрузки.
         """
         try:
             # Формирование коммандной строки запуска внешнего редактора
-            cmd = GEANY_EXT_PYTHON_EDITOR_FMT % ('--read-only' if readonly else '',
+            cmd = GEANY_EXT_PYTHON_EDITOR_FMT % ('--read-only' if bReadonly else '',
                                                  filename)
             log.info(u'Запуск комманды <%s>' % cmd)
             os.system(cmd)
         except:
             log.fatal(u'Ошибка открытия файла <%s> в IDE' % filename)
 
-    def GetAlreadyOpen(self):
+    def getAlreadyOpen(self):
         """
         Возвращает список имен открытых файлов.
         """
         pass
 
-    def IsOpenedFile(self, fileName):
+    def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         """
         pass
 
-    def OpenFormEditor(self, res, res_editor=None, *arg, **kwarg):
+    def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
         @param res: Ресурсное описание.

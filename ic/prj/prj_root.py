@@ -144,11 +144,11 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         """
         ide = self.getParent().getIDE()
         # Если файл не открыт в редакторе, то удалить блокировку
-        if ide and not ide.IsOpenedFile(py_filename):
+        if ide and not ide.isOpenedFile(py_filename):
             py_file_name = os.path.splitext(os.path.basename(py_filename))[0]
             py_file_ext = 'py'
             package_name = os.path.basename(os.path.dirname(py_filename))
-            log.debug('UNLOCK PY FILE <%s> is open - %s' % (py_filename, ide.GetAlreadyOpen()))
+            log.debug('UNLOCK PY FILE <%s> is open - %s' % (py_filename, ide.getAlreadyOpen()))
             return ic_res.unlockRes(py_file_name, package_name,
                                     py_file_ext, self.lock_dir)
         return False
@@ -262,7 +262,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             # Закрыть все
             tree_prj.res_editor.CloseResource()
             if tree_prj.ide:
-                tree_prj.ide.CloseFile(None)
+                tree_prj.ide.closeFile(None)
             
             # Инициализировать по умолчанию
             self.Default()
@@ -438,7 +438,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             # Закрыть все
             tree_prj.res_editor.CloseResource()
             if tree_prj.ide:
-                tree_prj.ide.CloseFile(None)
+                tree_prj.ide.closeFile(None)
 
             # Построить дерево узлов по ресурсному файлу
             self.prj_res_manager.openPrj(prj_filename)
@@ -727,8 +727,8 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             imp_path = os.path.normpath(imp_path)   # .replace('\\', '/')
             py_file = os.path.join(os.path.dirname(imp_path), 'run.py')
             
-            if not ide.SelectFile(py_file):
-                return ide.OpenFile(py_file, True, readonly=False)
+            if not ide.selectFile(py_file):
+                return ide.openFile(py_file, True, bReadonly=False)
             return True
         else:
             log.warning(u'Не определен IDE для редактирования модулей')

@@ -156,7 +156,7 @@ def StyleEdtDlg(parent, style, styles,
     
     for indx, key in enumerate(lst):
         if dict[key] == 1:
-            dlg.lbox.SetSelection(indx)
+            dlg.lbox.setSelection(indx)
         
     if dlg.ShowModal() == wx.ID_OK:
         tst = dlg.GetValue()

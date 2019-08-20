@@ -15,6 +15,8 @@ from ic.utils import ic_file
 from ic.utils import ini
 from ic.utils import printerfunc
 
+__version__ = (0, 1, 1, 1)
+
 DEFAULT_OPTIONS_FILENAME = 'printer_options.ini'
 
 # Размер точки печати.
@@ -83,7 +85,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
         self.paper_comboBox.Append(u'A3 альбомная ориентация', wx.Image.ConvertToBitmap(wx.Image(img_filename)));
         img_filename = os.path.join(self.get_img_path(), u'A3P.png')
         self.paper_comboBox.Append(u'A3 книжная ориентация', wx.Image.ConvertToBitmap(wx.Image(img_filename)));
-        self.paper_comboBox.SetSelection(0)
+        self.paper_comboBox.setSelection(0)
 
         img_filename = os.path.join(self.get_img_path(), u'Page.png')
         bitmap = wx.Bitmap(img_filename, wx.BITMAP_TYPE_ANY)
@@ -179,15 +181,15 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
             self.opt_filename = os.path.join(ic_file.getProfilePath(), DEFAULT_OPTIONS_FILENAME)
         return self.opt_filename
 
-    def loadPrintOptions(self, sFileName=None):
+    def loadPrintOptions(self, filename=None):
         """
         Загрузить параметры печати из конфигурационного файла.
-        @param sFileName: Имя файла параметров печати.
+        @param filename: Имя файла параметров печати.
         """
-        if sFileName is None:
-            sFileName = self.genOptFileName()
+        if filename is None:
+            filename = self.genOptFileName()
 
-        ini_dict = ini.INI2Dict(sFileName)
+        ini_dict = ini.INI2Dict(filename)
         if ini_dict:
             self.printer = ini_dict['OPTIONS'].get('printer', None)
             self.size = ini_dict['OPTIONS'].get('size', None)
@@ -204,23 +206,23 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
             self.lines = ini_dict['OPTIONS'].get('lines', None)
             self.use_font = ini_dict['OPTIONS'].get('use_font', None)
 
-    def savePrintOptions(self, sFileName=None):
+    def savePrintOptions(self, filename=None):
         """
         Записать параметры печати в конфигурационный файл.
-        @param sFileName: Имя файла параметров печати.
+        @param filename: Имя файла параметров печати.
         """
-        if sFileName is None:
-            sFileName = self.genOptFileName()
+        if filename is None:
+            filename = self.genOptFileName()
 
         ini_dict = self.getOptions()
-        ini.Dict2INI(ini_dict, sFileName)
+        ini.Dict2INI(ini_dict, filename)
 
     def showPrintOptions(self):
         """
         Выставить параметры печати в контролах окна.
         """
         if self.printer:
-            self.printer = self.printer if type(self.printer) in (str, unicode) else str(self.printer)
+            self.printer = self.printer if isinstance(self.printer, str) else str(self.printer)
             self.printer_comboBox.SetStringSelection(self.printer)
 
         if self.size and self.orientation:
@@ -246,7 +248,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
             self.copies_spinCtrl.SetValue(1)
 
         i_dict = {'all': 0, 'even': 1, 'odd': 2}
-        self.page_radioBox.SetSelection(i_dict.get(self.order, 0))
+        self.page_radioBox.setSelection(i_dict.get(self.order, 0))
 
         if self.left:
             self.left_spinCtrl.SetValue(self.left)
@@ -359,14 +361,14 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
 
     _noNixPrintArgs = ('--dlg', '--printer')
 
-    def _getArgsStr(self, dArgs=None):
+    def _getArgsStr(self, argument_dict=None):
         """
         Получить аргументы в виде строки.
         """
-        if dArgs is None:
-            dArgs = self.args
+        if argument_dict is None:
+            argument_dict = self.args
 
-        return ' '.join([name + '=' + value if value else name for name, value in dArgs.items() if
+        return ' '.join([name + '=' + value if value else name for name, value in argument_dict.items() if
                          name not in self._noNixPrintArgs])
 
     def _getCtrlArgs(self):
@@ -422,10 +424,10 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
 
         return result
 
-    def initComboBoxPrinters(self, sSelectPrinter=None):
+    def initComboBoxPrinters(self, select_printer=None):
         """
         Инициализация комбобокса списка принтеров системы.
-        @param sSelectPrinter: Какой принтер выбрать после
+        @param select_printer: Какой принтер выбрать после
         инициализации комбобокса, если None то выбирается принтер по умолчанию.
         """
         printers_info = printerfunc.getPrintersInfo()
@@ -440,9 +442,9 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
                 img_filename = os.path.join(self.get_img_path(), u'printer.png')
                 if default:
                     img_filename = os.path.join(self.get_img_path(), u'printer--arrow.png')
-                    if sSelectPrinter is None:
+                    if select_printer is None:
                         default_select = i
-                if printer_name == sSelectPrinter:
+                if printer_name == select_printer:
                     default_select = i
 
                 self.printer_comboBox.Append(printer_name, wx.Image.ConvertToBitmap(wx.Image(img_filename)))
@@ -470,7 +472,7 @@ def get_print_option_dlg(parent=None):
     return ret
 
 
-def showPrintDialog(args):
+def show_print_dialog(args):
     app = wx.PySimpleApp()
 
     dlg = icPrintDlg(None)

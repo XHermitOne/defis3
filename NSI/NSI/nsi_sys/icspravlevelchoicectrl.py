@@ -209,7 +209,7 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         Очистить выбор контролов.
         """
         for choice_ctrl in self._choice_ctrl_list:
-            choice_ctrl.SetSelection(wx.NOT_FOUND)
+            choice_ctrl.setSelection(wx.NOT_FOUND)
         return True
 
     def initLevelChoice(self, level_index, auto_select=True):
@@ -254,7 +254,7 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         if level_index >= len(self._selected_code):
             return False
         choice_ctrl = self._choice_ctrl_list[level_index]
-        choice_ctrl.SetSelection(item)
+        choice_ctrl.setSelection(item)
         # Заполнить код уровня
         item_code = self.getChoiceSelectedCode(choice_ctrl, item)
         # print 'DBG. Item code:', item, item_code

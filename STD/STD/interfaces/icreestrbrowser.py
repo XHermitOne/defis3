@@ -209,7 +209,7 @@ class ReestrBrowser(icobjectinterface.icObjectInterface):
                 try:
                     #self.ILeftPanel.LoadData()
 #                    if _fromBuff:
-#                        ic_proccess_dlg.ProccessFunc(split,'Обновляем состояние индикаторов', self.ILeftPanel.LoadData, tuple(), {}, bAutoIncr=True)
+#                        ic_proccess_dlg.proccess_function(split,'Обновляем состояние индикаторов', self.ILeftPanel.LoadData, tuple(), {}, bAutoIncr=True)
 #                    else:
                     self.ILeftPanel.LoadData()
                         

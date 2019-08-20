@@ -183,7 +183,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
             # в функции selectLevelChoice. Поэтому
             # здесь инициализировать его не надо.
             selected_code = self._sprav.StrCode2ListCode(code)
-            # for i, subcode in enumerate(selected_code):
+            # for idx, subcode in enumerate(selected_code):
             item = self.findItemIdxByCode(selected_code)
             if item >= 0:
                 self.selectLevelChoice(item)
@@ -224,7 +224,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
         for i in range(min_index, max_index+1):
             # Очистить коды этих уровней
             self._selected_code[i] = None
-            # if self._choice_ctrl_list[i]:
+            # if self._choice_ctrl_list[idx]:
             # Очистить списки контролов выбора
             self._choice.Clear()
         return True
@@ -233,7 +233,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
         """
         Очистить выбор контролов.
         """
-        self._choice.SetSelection(wx.NOT_FOUND)
+        self._choice.setSelection(wx.NOT_FOUND)
         return True
 
     def initLevelChoice(self):
@@ -266,7 +266,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
         @return: True/False.
         """
         choice_ctrl = self._choice
-        choice_ctrl.SetSelection(item)
+        choice_ctrl.setSelection(item)
         # Заполнить код уровня
         item_code = self.getChoiceSelectedCode(choice_ctrl, item)
         # print 'DBG. Item code:', item, item_code

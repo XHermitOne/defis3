@@ -39,7 +39,7 @@
 # v1.0.1
 # 2008/06/22  JPP   - Allowed for custom sorting, even on virtual lists
 #                   - Fixed bug where an imageGetter that returned 0 was treated
-#                     as if it returned -1 (i.e. no image)
+#                     as if it returned -1 (idx.e. no image)
 # 2008/06/17  JPP   - Use binary searches when searching on sorted columns
 # 2008/06/16  JPP   - Search by sorted column works, even on virtual lists
 # 2008/06/12  JPP   - Added sortable parameter
@@ -933,7 +933,7 @@ class ObjectListView(wx.ListCtrl):
         #    clientSize = self.MainWindow.GetClientSizeTuple()[0]
         # else:
         #    clientSize = self.GetClientSizeTuple()[0]
-        #freeSpace = max(0, clientSize - totalFixedWidth)
+        #freeSpace = max_value(0, clientSize - totalFixedWidth)
         if 'phoenix' in wx.PlatformInfo:
             freeSpace = max(0, self.GetClientSize()[0] - totalFixedWidth)
         else:
@@ -3518,7 +3518,7 @@ class ColumnDefn(object):
         space within the listview. As the listview is expanded, space filling columns
         expand as well. Conversely, as the control shrinks these columns shrink too.
 
-        Space filling columns can disappear (i.e. have a width of 0) if the control
+        Space filling columns can disappear (idx.e. have a width of 0) if the control
         becomes too small. You can set `minimumWidth` to prevent them from
         disappearing.
 

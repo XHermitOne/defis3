@@ -1398,7 +1398,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         @param fg_colour: Цвет текста, если условие выполненно.
         @param bg_colour: Цвет фона, если условие выполненно.
         @param requirement: lambda выражение, формата:
-            lambda i, row: ...
+            lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то установка цвета будет сделана.
             False - строка не расцвечивается.

@@ -108,7 +108,7 @@ M_ITEMS = {'Groups': ['group.png', {
                 'special_06_B': ['\\B\tEmpty string', False, r'\B', None],
                 'special_07_d': ['\\d\tDecimal digit', False, r'\d', None],
                 'special_08_D': ['\\D\tNon-digit', False, r'\D', None],
-                'special_09_f': ['\\f\tFormfeed', False, r'\f', None],
+                'special_09_f': ['\\function\tFormfeed', False, r'\f', None],
                 'special_10_n': ['\\n\tNew line', False, r'\n', None],
                 'special_11_r': ['\\r\tCarriage Return', False, r'\r', None],
                 'special_12_s': ['\\s\tAny white space', False, r'\s', None],

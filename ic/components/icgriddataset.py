@@ -127,8 +127,8 @@ def getAttrKey(attrRes):
     font_key = str(fk['size']) + str(fk['family']) + str(fk['faceName']) + str(fk['style']) + str(fk['underline'])
     key = (str(attrRes['foregroundColor']) + str(attrRes['backgroundColor']) +
            font_key + str(attrRes['alignment']))
-    if 'readonly' in attrRes:
-        key += str(attrRes['readonly'])
+    if 'bReadonly' in attrRes:
+        key += str(attrRes['bReadonly'])
     return key
 
 
@@ -194,7 +194,7 @@ def createAttr(attrRes):
 
         attr.SetAlignment(* aln)
 
-    if 'readonly' in attrRes and attrRes['readonly']:
+    if 'bReadonly' in attrRes and attrRes['bReadonly']:
         attr.SetReadOnly()
 
     return attr
@@ -980,16 +980,16 @@ class icGridDatasetData(wx.grid.GridTableBase):
         if row >= self.GetNumberRows()-1:
             #   Добавляем признак 'только для чтения'
             if col['attr'] in ['R', 'O', 'cr']:
-                icAttrEditCell['readonly'] = 1
+                icAttrEditCell['bReadonly'] = 1
             else:
-                icAttrEditCell['readonly'] = 0
+                icAttrEditCell['bReadonly'] = 0
             attr = getAttrBuff(icAttrEditCell)
         else:
             try:
                 col_attr = col['cell_attr']
                 #   Добавляем признак 'только для чтения'
                 if col['attr'] in ['R', 'O', 'cr']:
-                    col_attr['readonly'] = 1
+                    col_attr['bReadonly'] = 1
                 #   Сначала пытаемся вычислить аттрибут ячейки по спец. выражению в getattr
                 if not self.GetView().getattr in [None, '']:
                     keyExpr = self.GetView().GetUUIDAttr('cell_attr', col['name'])

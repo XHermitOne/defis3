@@ -1695,7 +1695,7 @@ def test():
                'type': 'N',
                'len': 10,
                'decimal': 4},
-              {'name': 'f',
+              {'name': 'function',
                'type': 'N',
                'len': 10,
                'decimal': 4},

@@ -29,8 +29,8 @@ open_group2 = PyEmbeddedImage(
     "REFUOI1jZGRiZqAEMFGkmyYGvP7++//zr7/+k23Aj7//Gfqf/mU48uYnUYZgGPDrHwPD0hd/"
     "GTJu/2ZY8uQHQUMwDPjzD6KnSY6ZoePRH4alBAzBMOAvlJZjZ2RolGdmaH/8h+HYW9zewYwF"
     "JKVKHIwMbQosDKFXfzOc/4A9YDEMYGKE0MyMDAwPfjIwVD/4w7BGm5XBUICNkSgDmKHKHv9k"
-    "YKh9+IehSo6FwVKYHatmBgYGBgZGJmYU/Ojr3/8yR77/1zvx/f/K57//o8ujYxZ0A9mZGRii"
-    "JZgZgkWYGMyF8NgMcwB6Zvrw4/f/v/8ZGIQ5WQlqxmoAqYDizAQAJQpTXW+NGlkAAAAASUVO"
+    "YKh9+IehSo6FwVKYHatmBgYGBgZGJmYU/Ojr3/8yR77/1zvx/function/K57//o8ujYxZ0A9mZGRii"
+    "JZgZgkWYGMyF8NgMcwB6Zvrw4/function/v/8ZGIQ5WQlqxmoAqYDizAQAJQpTXW+NGlkAAAAASUVO"
     "RK5CYII=")
 getopen_group2Data = open_group2.GetData
 getopen_group2Image = open_group2.GetImage

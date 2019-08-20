@@ -19,12 +19,12 @@ SPC_IC_GAUGE = {'type': 'Gauge',
                 'position': (-1, -1),
                 'size': (-1, -1),
                 'layout': 'horizontal',
-                'max': 10,
+                'max_value': 10,
                 'value': 0,
                 'foregroundColor': (0, 0, 0),
                 'backgroundColor': (255, 255, 255),
 
-                '__attr_types__': {icDefInf.EDT_NUMBER: ['max', 'value'],
+                '__attr_types__': {icDefInf.EDT_NUMBER: ['max_value', 'value'],
                                    },
                 '__parent__': SPC_IC_WIDGET,
                 }
@@ -99,7 +99,7 @@ class icGauge(icWidget, wx.Gauge):
         layout = component['layout']
         fgr = component['foregroundColor']
         bgr = component['backgroundColor']
-        max = component['max']
+        max = component['max_value']
         val = component['value']
 
         if layout == 'vertical':
@@ -128,7 +128,7 @@ def test(par=0):
     app = TestApp(par)
     frame = wx.Frame(None, -1, 'icGauge Test')
     win = wx.Panel(frame, -1)
-    ctrl_1 = icGauge(win, -1, {'value': 30, 'max': 100, 'size': (300, -1),
+    ctrl_1 = icGauge(win, -1, {'value': 30, 'max_value': 100, 'size': (300, -1),
                                'position': (10, 10),
                                'keyDown': 'print \'keyDown in Gauge\''})
     frame.Show(True)

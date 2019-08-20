@@ -768,7 +768,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         #   Указатель на функцию опрделяющую дневные планы наблюдаемого параметра
         self._dayPlanFunc = None
         #   Поправочный параметр, для определения планового значения
-        #   определяется как max/(2*plan)
+        #   определяется как max_value/(2*plan)
         self._planFactor = 1
 
         #   Статистика
@@ -1308,7 +1308,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
 #                    if v > 100:
 #                        v = 100
 #
-#                    v = (max-min)*(v-min)/100
+#                    v = (max_value-min_value)*(v-min_value)/100
 #
 #                if val <= v:
 #                        if type(clr) in (type(''),type(u'')):
@@ -1581,8 +1581,8 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             self.factor = factor
 
         print('### RecountScalePar:', min, max, majorStep, minorStep)
-#        self.majorValues = range(min, max+1)[0::majorStep]
-#        self.minorValues = range(min, max+1)[0::minorStep]
+#        self.majorValues = range(min_value, max_value+1)[0::majorStep]
+#        self.minorValues = range(min_value, max_value+1)[0::minorStep]
 
         self.majorValues = []
         s = 0.0

@@ -280,10 +280,10 @@ def runTaskSH(command):
         f.close()
         f = None
         # Запуск исполняемого скрипта
-        log.info(u'Run task: %s' % run_sh_name)
+        log.info(u'run task: %s' % run_sh_name)
         os.system('gnome-terminal --command \'sh %s\'' % run_sh_name)
     except:
-        log.fatal(u'Run task error: %s' % run_sh_name)
+        log.fatal(u'run task error: %s' % run_sh_name)
         if f:
             f.close()
 
@@ -304,7 +304,7 @@ def runTaskBAT(command):
         f.close()
         f = None
         # Запуск батника
-        log.info(u'Run task: %s' % run_bat_name)
+        log.info(u'run task: %s' % run_bat_name)
         os.startfile(run_bat_name)
     except:
         log.fatal(u'Ошибка запуска коммандного файла: %s' % run_bat_name)

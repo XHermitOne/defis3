@@ -244,7 +244,7 @@ def _month_buff_aggr(rs, indicator, beg, end):
         buff_values[n] = val
         
         if not plan:
-            # plan = _get_plan(t2, i, 1)
+            # plan = _get_plan(t2, idx, 1)
             max = indicator.GetMaxValue()
             plan = max/2
         else:
@@ -332,7 +332,7 @@ def _qwarter_buff_aggr(rs, indicator, beg, end):
         buff_values[n] = val
         
         if not plan:
-            # plan = _get_plan(t2, i, 2)
+            # plan = _get_plan(t2, idx, 2)
             max = indicator.GetMaxValue()
             plan = max / 2
         else:
@@ -415,7 +415,7 @@ def _year_buff_aggr(rs, indicator, beg, end):
         buff_values[n] = val
 
         if not plan:
-            # plan = _get_plan(t2, i, 3)
+            # plan = _get_plan(t2, idx, 3)
             max = indicator.GetMaxValue()
             plan = max/2
         else:
@@ -627,7 +627,7 @@ class ArrowIndicatorTrend(icobjectinterface.icObjectInterface):
             subplot.xaxis.set_major_formatter(formatter)
             labels = subplot.get_xticklabels()
             pylab.setp(labels, 'rotation', 45, size=10)
-#            for i, tick in enumerate(subplot.xaxis.get_major_ticks()):
+#            for idx, tick in enumerate(subplot.xaxis.get_major_ticks()):
 #                tick.label1.update({'rotation':45,'size':10})
                 # tick.label2.update({'text':'label2', 'size':8,'weight':'bold'})
 

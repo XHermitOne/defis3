@@ -1489,11 +1489,11 @@ msgstr "Вернуть по умолчанию"
 
 #: ../../plugins/Launch/launch/launch.py:126
 #: ../../plugins/Launch/launch/launch.py:343
-msgid "Run"
+msgid "run"
 msgstr "Выполнить"
 
 #: ../../plugins/Launch/launch/__init__.py:63
-msgid "Run script from current buffer"
+msgid "run script from current buffer"
 msgstr ""
 
 #: ../../src/ed_toolbar.py:79
@@ -2500,7 +2500,7 @@ msgstr "Добавление ресурсного класса"
 msgid "New project"
 msgstr "Новый проект"
 
-#msgid "Run"
+#msgid "run"
 #msgstr "Запуск"
 #: ../prj/menuRootNode.py:68
 #: ../prj/menuRootNode.py:75
@@ -2777,15 +2777,15 @@ msgid "Execute method error: %s"
 msgstr "Ошибка выполнения метода: %s"
 
 #: ../utils/ic_exec.py:340
-msgid "Run task: %s"
+msgid "run task: %s"
 msgstr "Запустить задачу: %s"
 
 #: ../utils/ic_exec.py:344
-msgid "Run task error: %s"
+msgid "run task error: %s"
 msgstr "Ошибка запуска задачи: %s"
 
 #: ../utils/ic_exec.py:399
-msgid "Run programm error: %s"
+msgid "run programm error: %s"
 msgstr "Ошибка запуска программы: %s"
 
 #: ../utils/ic_exec.py:418
@@ -2797,7 +2797,7 @@ msgid "Import module error: %s"
 msgstr "Ошибка импорта модуля: %s"
 
 #: ../utils/ic_exec.py:452
-msgid "Run module error: %s"
+msgid "run module error: %s"
 msgstr "Ошибка запуска модуля: %s"
 
 #: ../utils/ic_exec.py:454

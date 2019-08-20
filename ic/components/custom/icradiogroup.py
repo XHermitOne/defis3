@@ -12,7 +12,7 @@
     - B{field_name=None}: Имя поля базы данных, которое отображает компонент.
     - B{style=0}: Стиль окна.
     - B{layout='vertical'}: Расположение ('vertical' | 'horizontal')
-    - B{max=0}:  Количество возможных выборов.
+    - B{max_value=0}:  Количество возможных выборов.
     - B{items=[]}: Список выборов.
     - B{selected=0}: Текущий выбор.
     - B{font={}}: Шрифт.
@@ -40,7 +40,7 @@ SPC_IC_RADIOGROUP = {'type': 'RadioGroup',
                      'position': (-1, -1),
                      'size': (-1, -1),
                      'layout': 'vertical',
-                     'max': 0,
+                     'max_value': 0,
                      'items': ['first', 'second'],
                      'selected': 0,
                      'font': {},
@@ -50,7 +50,7 @@ SPC_IC_RADIOGROUP = {'type': 'RadioGroup',
 
                      '__events__': {'onSelected': ('wx.EVT_RADIOBOX', 'OnSelected', False),
                                     },
-                     '__attr_types__': {icDefInf.EDT_NUMBER: ['selected', 'max'],
+                     '__attr_types__': {icDefInf.EDT_NUMBER: ['selected', 'max_value'],
                                         icDefInf.EDT_TEXTLIST: ['items'],
                                         },
                      '__parent__': SPC_IC_WIDGET,
@@ -124,7 +124,7 @@ class icRadioGroup(icWidget, wx.RadioBox):
         layout = component['layout']
         fgr = component['foregroundColor']
         bgr = component['backgroundColor']
-        max = component['max']
+        max = component['max_value']
         label = component['label']
         items = component['items']
         size = component['size']

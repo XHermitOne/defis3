@@ -92,7 +92,7 @@ The blocks describe the structure of the report. The formatting of a report is
 controlled by ``BlockFormat`` objects. The ``ReportFormat`` contains a ``BlockFormat``
 object for each formattable section of the report.
 
-Each section must be formatted in same fashion, i.e. all column headers will look the same,
+Each section must be formatted in same fashion, idx.e. all column headers will look the same,
 all page footer will look the same. There is no way to make the first footer look one way,
 and the second look a different way.
 """
@@ -690,7 +690,7 @@ class ReportFormat(object):
         Default: *False*
 
     * UseListCtrlTextFormat
-        If this is True, the text format (i.e. font and text color) of each row will be taken from the ListCtrl,
+        If this is True, the text format (idx.e. font and text color) of each row will be taken from the ListCtrl,
         rather than from the *Cell* format.
         Default: *False*
 
@@ -2227,7 +2227,7 @@ class ColumnBasedBlock(CellBlock):
         """
         Return the widths of the cells used in this block
         """
-        # return [self.allCellWidths[i] for i in range(self.left,
+        # return [self.allCellWidths[idx] for idx in range(self.left,
         # self.right+1)]
         return self.allCellWidths[self.left:self.right + 1]
 
@@ -2518,20 +2518,20 @@ class RowBlock(ColumnBasedBlock):
     #    Return a list of the texts that should be drawn with the cells
     #    """
     #    modelObjects = self.lv.GetObjectAt(self.rowIndex)
-    #    return [self.lv.GetStringValueAt(modelObjects, i) for i in range(self.left, self.right+1)]
+    #    return [self.lv.GetStringValueAt(modelObjects, idx) for idx in range(self.left, self.right+1)]
     #
     # def GetAlignments(self):
     #    """
     #    Return a list indicating how the text within each cell is aligned.
     #    """
-    #    return [self.lv.columns[i].GetAlignment() for i in range(self.left, self.right+1)]
+    #    return [self.lv.columns[idx].GetAlignment() for idx in range(self.left, self.right+1)]
     #
     # def GetImages(self):
     #    """
     #    Return a list of the images that should be drawn in each cell
     #    """
     #    modelObjects = self.lv.GetObjectAt(self.rowIndex)
-    # return [self.lv.GetImageAt(modelObjects, i) for i in range(self.left,
+    # return [self.lv.GetImageAt(modelObjects, idx) for idx in range(self.left,
     # self.right+1)]
 
 

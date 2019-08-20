@@ -27,15 +27,15 @@ ic_class_name = 'icYearChoiceCtrl'
 # Спецификация компонента
 ic_class_spc = {'name': 'default',
                 'type': 'YearChoiceCtrl',
-                'min': DEFAULT_MIN_YEAR,
-                'max': DEFAULT_MAX_YEAR,
+                'min_value': DEFAULT_MIN_YEAR,
+                'max_value': DEFAULT_MAX_YEAR,
                 'is_now': True,    # Установить по умалчанию на текущий год?
                 '__attr_types__': {0: ['name', 'type'],
                                    icDefInf.EDT_CHECK_BOX: ['is_now'],
                                    },
                 '__parent__': parentModule.ic_class_spc,
-                '__attr_hlp__': {'min': u'Минимальный возможный год',
-                                 'max': u'Максимальный возможный год',
+                '__attr_hlp__': {'min_value': u'Минимальный возможный год',
+                                 'max_value': u'Максимальный возможный год',
                                  'is_now': u'Установить по умалчанию на текущий год?',
                                  },
                 }
@@ -72,8 +72,8 @@ class icYearChoiceCtrl(parentModule.icChoice):
         """
         Конструктор.
         """
-        self.min_year = component.get('min', DEFAULT_MIN_YEAR)
-        self.max_year = component.get('max', DEFAULT_MAX_YEAR)
+        self.min_year = component.get('min_value', DEFAULT_MIN_YEAR)
+        self.max_year = component.get('max_value', DEFAULT_MAX_YEAR)
         self.year_list = None
         component['items'] = self.get_years()
 

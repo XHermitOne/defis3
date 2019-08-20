@@ -69,8 +69,8 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
             self.cube_choice.Clear()
             self.cube_choice.AppendItems(choices)
             if choices:
-                self.cube_choice.SetSelection(0)
-                self.method_choice.SetSelection(0)
+                self.cube_choice.setSelection(0)
+                self.method_choice.setSelection(0)
                 self.refreshDimensionChoice(0)
 
     def refreshDimensionChoice(self, i_cube):
@@ -84,7 +84,7 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
             self.dimension_choice.Clear()
             self.dimension_choice.AppendItems(choices)
             if choices:
-                self.dimension_choice.SetSelection(0)
+                self.dimension_choice.setSelection(0)
 
     def init(self):
         """
@@ -287,7 +287,7 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
             try:
                 i_cube = cube_names.index(cube_name)
                 cube = cubes[i_cube]
-                self.cube_choice.SetSelection(i_cube)
+                self.cube_choice.setSelection(i_cube)
             except ValueError:
                 log.error(u'Куб с именем <%s> не найден среди %s' % (cube_name, str(cube_names)))
 
@@ -298,7 +298,7 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
             except ValueError:
                 log.error(u'Метод <%s> не найден среди %s' % (method_name, str(OLAP_METHODS)))
                 i_method = 0
-            self.method_choice.SetSelection(i_method)
+            self.method_choice.setSelection(i_method)
 
         dimension_name = request.get('dimension', None)
         if dimension_name and cube:
@@ -309,7 +309,7 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
             except ValueError:
                 log.error(u'Измерение <%s> не найденj среди %s' % (dimension_name, str(dimension_names)))
                 i_dimension = 0
-            self.dimension_choice.SetSelection(i_dimension)
+            self.dimension_choice.setSelection(i_dimension)
 
         self.cut_checkBox.SetValue('cut' in request)
         self.cut_textCtrl.Enable('cut' in request)

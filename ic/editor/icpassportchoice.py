@@ -21,32 +21,32 @@ _ = wx.GetTranslation
 
 
 # --- Функции ---
-def icPassportChoiceDlg(Win_=None, Prj_=None):
+def open_passport_choice_dlg(parent=None, prj=None):
     """
     Выбор паспорта объекта.
-    @param Win_: Ссылка на окно.
-    @param Prj_: Объект проекта.
+    @param parent: Ссылка на окно.
+    @param prj: Объект проекта.
     @return: Возвращает список паспорта выбранного объекта или None  в случае ошибки.
     """
-    if Prj_ is None:
+    if prj is None:
         from ic.engine import glob_functions
-        Prj_ = glob_functions.getPrjRoot()
+        prj = glob_functions.getPrjRoot()
 
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
+        if parent is None:
             id_ = wx.NewId()
-            Win_ = wx.Frame(None, id_, '')
+            parent = wx.Frame(None, id_, '')
             win_clear = True
 
-        dlg = icPassportChoiceDialog(Win_, Prj_)
+        dlg = icPassportChoiceDialog(parent, prj)
         if dlg.ShowModal() == wx.ID_OK:
             result = dlg.getPassport()
             dlg.Destroy()
             # Удаляем созданное родительское окно
             if win_clear:
-                Win_.Destroy()
+                parent.Destroy()
             log.debug(u'Выбор паспорта %s' % result)
             return result
     except:
@@ -57,33 +57,33 @@ def icPassportChoiceDlg(Win_=None, Prj_=None):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Win_.Destroy()
+           parent.Destroy()
 
     return None
 
 
-def icPassportListDlg(Win_=None, Prj_=None, Default_=None):
+def open_passport_list_dlg(parent=None, prj=None, default=None):
     """
     Выбор списка паспортов выбранных объектов.
-    @param Win_: Ссылка на окно.
-    @param Prj_: Объект проекта.
+    @param parent: Ссылка на окно.
+    @param prj: Объект проекта.
     @return: Возвращает список паспортов выбранных объектов или None в случае ошибки.
     """
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
+        if parent is None:
             id_ = wx.NewId()
-            Win_ = wx.Frame(None, id_, '')
+            parent = wx.Frame(None, id_, '')
             win_clear = True
 
-        dlg = icPassportListDialog(Win_, Prj_, Default_)
+        dlg = icPassportListDialog(parent, prj, default)
         if dlg.ShowModal() == wx.ID_OK:
             result = dlg.getPassports()
             dlg.Destroy()
             # Удаляем созданное родительское окно
             if win_clear:
-                Win_.Destroy()
+                parent.Destroy()
             log.debug(u'Выбор паспорта %s' % result)
             return result
     except:
@@ -94,7 +94,7 @@ def icPassportListDlg(Win_=None, Prj_=None, Default_=None):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Win_.Destroy()
+           parent.Destroy()
 
     return None
 
@@ -104,18 +104,18 @@ class icPassportChoicePanel(wx.Panel):
     Класс панели выбора паспорта объекта.
     """
 
-    def __init__(self, parent_, Prj_=None):
+    def __init__(self, parent_, prj=None):
         """
         Конструктор.
         @param parent_: Окно.
-        @param Prj_: Объект проекта.
+        @param prj: Объект проекта.
         """
         from ic.prj import icPrjTree
         
         try:
-            if Prj_ is None:
+            if prj is None:
                 from ic.engine import glob_functions
-                Prj_ = glob_functions.getPrjRoot()
+                prj = glob_functions.getPrjRoot()
 
             wx.Panel.__init__(self, parent_, wx.NewId())
 
@@ -126,13 +126,13 @@ class icPassportChoicePanel(wx.Panel):
             self._psp_label = wx.StaticText(self, id_, u'Паспорт: ')
             cursor = wx.StockCursor(wx.CURSOR_QUESTION_ARROW)
             self._psp_label.SetCursor(cursor)
-            self._psp_label.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
+            self._psp_label.Bind(wx.EVT_LEFT_DOWN, self.onMouseLeftDown)
 
             self._splitter = wx.SplitterWindow(self, wx.NewId())
             self._prj_viewer = icPrjTree.icPrjTreeViewer(self._splitter, None)
 
-            if Prj_:
-                self._prj_viewer.setRoot(Prj_)
+            if prj:
+                self._prj_viewer.setRoot(prj)
 
             self._splitter.SplitVertically(self._prj_viewer,
                                            self._prj_viewer.getNonePanel(), 400)
@@ -147,7 +147,7 @@ class icPassportChoicePanel(wx.Panel):
         except:
             log.fatal(u'Ошибка создания объекта панели выбора паспорта объекта')
 
-    def OnMouseLeftDown(self, event):
+    def onMouseLeftDown(self, event):
         """
         Обработчик отображения паспорта.
         """
@@ -157,14 +157,14 @@ class icPassportChoicePanel(wx.Panel):
             self._psp_label.SetLabel(u'Паспорт: ')
         event.Skip()
         
-    def setPassportLabel(self, Psp_=None):
+    def setPassportLabel(self, psp=None):
         """
         Установить текущий выбранный паспорт к окне.
         """
-        if Psp_ is None:
+        if psp is None:
             self._selectedPassport()
-            Psp_ = self._passport
-        self._psp_label.SetLabel(u'Паспорт: %s' % Psp_)
+            psp = self._passport
+        self._psp_label.SetLabel(u'Паспорт: %s' % psp)
 
     def _selectedPassport(self):
         """
@@ -222,11 +222,11 @@ class icPassportChoiceDialog(wx.Dialog):
     Класс диалогового окна выбора паспорта объекта.
     """
 
-    def __init__(self, parent_, Prj_=None):
+    def __init__(self, parent_, prj=None):
         """
         Конструктор.
         @param parent_: Окно.
-        @param Prj_: Объект проекта.
+        @param prj: Объект проекта.
         """
         try:
             _title = u'Определение паспорта объекта'
@@ -246,16 +246,16 @@ class icPassportChoiceDialog(wx.Dialog):
             # Кнопка -OK-
             id_ = wx.NewId()
             self._ok_button = wx.Button(self, id_, u'OK', size=wx.Size(-1, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnOK, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onOK, id=id_)
             # Кнопка -Отмена-
             id_ = wx.NewId()
             self._cancel_button = wx.Button(self, id_, u'Отмена', size=wx.Size(-1, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnCancel, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onCancel, id=id_)
 
             self._button_boxsizer.Add(self._cancel_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
             self._button_boxsizer.Add(self._ok_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
 
-            self._psp_panel = icPassportChoicePanel(self, Prj_)
+            self._psp_panel = icPassportChoicePanel(self, prj)
             
             self._boxsizer.Add(self._psp_panel, 1, wx.EXPAND | wx.GROW, 0)
             self._boxsizer.Add(self._button_boxsizer, 0, wx.ALIGN_RIGHT, 10)
@@ -265,14 +265,14 @@ class icPassportChoiceDialog(wx.Dialog):
         except:
             log.fatal(u'Ошибка создания объекта диалогового окна выбора паспорта объекта')
 
-    def OnOK(self, event):
+    def onOK(self, event):
         """
         Обработчик нажатия кнопки -OK-.
         """
         self._psp_panel._selectedPassport()
         self.EndModal(wx.ID_OK)
 
-    def OnCancel(self, event):
+    def onCancel(self, event):
         """
         Обработчик нажатия кнопки -Отмена-.
         """
@@ -291,15 +291,15 @@ class icPassportListPanel(wx.Panel):
     Класс панели выбора списка паспортов объектов.
     """
 
-    def __init__(self, parent_, Prj_=None):
+    def __init__(self, parent_, prj=None):
         """
         Конструктор.
         @param parent_: Окно.
-        @param Prj_: Объект проекта.
+        @param prj: Объект проекта.
         """
         try:
             # Сохранить объект проекта, для последующего использования
-            self._Prj = Prj_
+            self._Prj = prj
             
             wx.Panel.__init__(self, parent_, wx.NewId())
 
@@ -314,14 +314,14 @@ class icPassportListPanel(wx.Panel):
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'Add', bmp, shortHelp=_('Add'))
-            self.Bind(wx.EVT_TOOL, self.OnAddPassport, id=id_)
+            self.Bind(wx.EVT_TOOL, self.onAddPassport, id=id_)
 
             id_ = wx.NewId()
             bmp = bmpfunc.getSysImg('imgMinus')
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'Delete', bmp, shortHelp=_('Delete'))
-            self.Bind(wx.EVT_TOOL, self.OnDelPassport, id=id_)
+            self.Bind(wx.EVT_TOOL, self.onDelPassport, id=id_)
 
             self._toolbar.AddSeparator()
 
@@ -330,7 +330,7 @@ class icPassportListPanel(wx.Panel):
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'edit', bmp, shortHelp=_('edit'))
-            self.Bind(wx.EVT_TOOL, self.OnEditPassport, id=id_)
+            self.Bind(wx.EVT_TOOL, self.onEditPassport, id=id_)
             
             self._toolbar.AddSeparator()
 
@@ -339,14 +339,14 @@ class icPassportListPanel(wx.Panel):
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'MoveUp', bmp, shortHelp=_('Move up'))
-            self.Bind(wx.EVT_TOOL, self.OnMoveUpPassport, id=id_)
+            self.Bind(wx.EVT_TOOL, self.onMoveUpPassport, id=id_)
             
             id_ = wx.NewId()
             bmp = bmpfunc.getSysImg('imgDown')
             if bmp is None:
                 bmp = wx.NullBitmap
             self._toolbar.AddTool(id_, 'MoveDown', bmp, shortHelp=_('Move down'))
-            self.Bind(wx.EVT_TOOL, self.OnMoveDownPassport, id=id_)
+            self.Bind(wx.EVT_TOOL, self.onMoveDownPassport, id=id_)
             
             self._toolbar.Realize()
 
@@ -362,31 +362,31 @@ class icPassportListPanel(wx.Panel):
         except:
             log.fatal(u'Ошибка создания объекта панели выбора списка паспортов объектов')
 
-    def SetPassportList(self, PassportList_=None):
+    def setPassportList(self, passport_list=None):
         """
         Установить список паспортов.
-        @param PassportList_: Список паспортов.
+        @param passport_list: Список паспортов.
         """
-        if PassportList_ is None:
-            PassportList_ = []
+        if passport_list is None:
+            passport_list = []
         
-        self._passports = PassportList_
+        self._passports = passport_list
         self._list_box.Clear()
         
         for cur_psp in self._passports:
             self._list_box.Append(str(cur_psp))
             
-    def OnAddPassport(self, event):
+    def onAddPassport(self, event):
         """
         Обработчик нажатия на кнопку-инструмент добавления паспорта в список паспортов.
         """
-        psp = icPassportChoiceDlg(self, self._Prj)
+        psp = open_passport_choice_dlg(self, self._Prj)
         if psp:
             self._list_box.Append(str(psp))
             self._passports.append(psp)
         event.Skip()
         
-    def OnDelPassport(self, event):
+    def onDelPassport(self, event):
         """
         Обработчик нажатия на кнопку-инструмент удаления паспорта из списка паспортов.
         """
@@ -397,20 +397,20 @@ class icPassportListPanel(wx.Panel):
         
         event.Skip()
         
-    def OnEditPassport(self, event):
+    def onEditPassport(self, event):
         """
         Обработчик нажатия на кнопку-инструмент изменения паспорта в списке паспортов.
         """
         selected = self._list_box.GetSelection()
         if 0 <= selected < self._list_box.GetCount() and selected != wx.NOT_FOUND:
-            psp = icPassportChoiceDlg(self, self._Prj)
+            psp = open_passport_choice_dlg(self, self._Prj)
             if psp:
                 self._list_box.SetString(selected, str(psp))
                 self._passports[selected] = psp
         
         event.Skip()
         
-    def OnMoveUpPassport(self, event):
+    def onMoveUpPassport(self, event):
         """
         Обработчик нажатия на кнопку-инструмент перемещения вверх паспорта в списке паспортов.
         """
@@ -430,7 +430,7 @@ class icPassportListPanel(wx.Panel):
                 
         event.Skip()
         
-    def OnMoveDownPassport(self, event):
+    def onMoveDownPassport(self, event):
         """
         Обработчик нажатия на кнопку-инструмент перемещения вниз паспорта в списке паспортов.
         """
@@ -456,12 +456,12 @@ class icPassportListDialog(wx.Dialog):
     Класс диалогового окна выбора списков паспортов объектов.
     """
 
-    def __init__(self, parent_, Prj_=None, Default_=None):
+    def __init__(self, parent_, prj=None, default=None):
         """
         Конструктор.
         @param parent_: Родительское окно.
-        @param Prj_: Объект проекта.
-        @param Default_: Список паспортов по умолчанию.
+        @param prj: Объект проекта.
+        @param default: Список паспортов по умолчанию.
         """
         try:
             _title = u'Определение паспортов объектов'
@@ -481,19 +481,19 @@ class icPassportListDialog(wx.Dialog):
             # Кнопка -OK-
             id_ = wx.NewId()
             self._ok_button = wx.Button(self, id_, u'OK', size=wx.Size(-1, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnOK, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onOK, id=id_)
             # Кнопка -Отмена-
             id_ = wx.NewId()
             self._cancel_button = wx.Button(self, id_, u'Отмена', size=wx.Size(-1, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnCancel, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onCancel, id=id_)
 
             self._button_boxsizer.Add(self._cancel_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
             self._button_boxsizer.Add(self._ok_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
 
-            self._psp_list_panel = icPassportListPanel(self, Prj_)
+            self._psp_list_panel = icPassportListPanel(self, prj)
             # Если надо то установить редатируемый список паспортов
-            if Default_:
-                self._psp_list_panel.SetPassportList(Default_)
+            if default:
+                self._psp_list_panel.setPassportList(default)
             
             self._boxsizer.Add(self._psp_list_panel, 1, wx.EXPAND | wx.GROW, 0)
             self._boxsizer.Add(self._button_boxsizer, 0, wx.ALIGN_RIGHT, 10)
@@ -503,13 +503,13 @@ class icPassportListDialog(wx.Dialog):
         except:
             log.fatal(u'Ошибка создания объекта диалогового окна выбора списка паспортов объектов')
         
-    def OnOK(self, event):
+    def onOK(self, event):
         """
         Обработчик нажатия кнопки -OK-.
         """
         self.EndModal(wx.ID_OK)
 
-    def OnCancel(self, event):
+    def onCancel(self, event):
         """
         Обработчик нажатия кнопки -Отмена-.
         """
@@ -528,7 +528,7 @@ def test():
     Функция тестирования.
     """
     app = wx.PySimpleApp(0)
-    main_frm = icPassportListDlg(None, None)
+    main_frm = open_passport_list_dlg(None, None)
 
     main_frm.Show()
     app.MainLoop()

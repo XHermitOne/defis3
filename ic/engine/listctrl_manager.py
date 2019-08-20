@@ -583,7 +583,7 @@ class icListCtrlManager(object):
                     # row_idx = ctrl.InsertStringItem(sys.maxsize, value)
                     row_idx = ctrl.InsertItem(sys.maxsize, value)
                 else:
-                    # ctrl.SetStringItem(row_idx, i, value)
+                    # ctrl.SetStringItem(row_idx, idx, value)
                     ctrl.SetItem(row_idx, i, value)
 
             if row_idx != -1:
@@ -693,7 +693,7 @@ class icListCtrlManager(object):
 
             for i, item in enumerate(row):
                 item_str = ic_str.toUnicode(item, config.DEFAULT_ENCODING)
-                # ctrl.SetStringItem(row_idx, i, item_str)
+                # ctrl.SetStringItem(row_idx, idx, item_str)
                 ctrl.SetItem(row_idx, i, item_str)
                 if evenBackgroundColour and not (row_idx % 2):
                     # Четная строка?
@@ -815,7 +815,7 @@ class icListCtrlManager(object):
         @param fg_colour: Цвет текста, если условие выполненно.
         @param bg_colour: Цвет фона, если условие выполненно.
         @param requirement: lambda выражение, формата:
-            lambda i, row: ...
+            lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то установка цвета будет сделана.
             False - строка не расцвечивается.
@@ -1053,7 +1053,7 @@ class icListCtrlManager(object):
         @param ctrl: Объект контрола.
         @param rows: Список строк.
         @param requirement: lambda выражение, формата:
-            lambda i, row: ...
+            lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то считаем что строка удовлетворяет условию.
             False - строка не удовлетворяет.
@@ -1180,7 +1180,7 @@ class icListCtrlManager(object):
         @param ctrl: Объект контрола.
         @param rows: Список строк.
         @param requirement: lambda выражение, формата:
-            lambda i, row: ...
+            lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то считаем что строка удовлетворяет условию.
             False - строка не удовлетворяет.
@@ -1208,7 +1208,7 @@ class icListCtrlManager(object):
         @param ctrl: Объект контрола.
         @param rows: Список строк.
         @param requirement: lambda выражение, формата:
-            lambda i, row: ...
+            lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то считаем что строка удовлетворяет условию.
             False - строка не удовлетворяет.

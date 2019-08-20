@@ -173,7 +173,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         if txt:
             txt = txt[0].capitalize() + txt[1:]
         self.docname_textCtrl.ChangeValue(txt)
-        self.docname_textCtrl.SetSelection(*selection)
+        self.docname_textCtrl.setSelection(*selection)
 
     def setEditDoc(self, document):
         """

@@ -88,7 +88,7 @@ def parse_folder(args, dirname, names):
     if not os.path.isdir(todir) and names:
 #        os.makedirs(todir)
 #        print 'make dirs:', todir, len(names)
-#        f.write('make dirs:%s\n' % todir)
+#        function.write('make dirs:%s\n' % todir)
 #        bp = True
         pass
 #    elif names:

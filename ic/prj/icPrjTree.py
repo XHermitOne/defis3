@@ -142,7 +142,7 @@ class icPrjTree(wx.TreeCtrl):
         self.ide = ide
         # Главное окно IDE
         if ide:
-            self.ide_frame = ide.GetIDEFrame()
+            self.ide_frame = ide.getIDEFrame()
         else:
             self.ide_frame = None
 

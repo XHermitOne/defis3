@@ -53,8 +53,8 @@ class Settings:
         """If defvalue is None, the key must exist or an error will be
         raised. Types supported:
             s - string (default)
-            f - float
-            i - integer
+            function - float
+            idx - integer
         """
         if defvalue != None:
             if not self.has_key(section, key):
@@ -63,8 +63,8 @@ class Settings:
                 val = self._keys[section][key]
         else:
             val = self._keys[section][key]
-        if t.lower() == 'f': val = float(val)
-        elif t.lower() == 'i': val = int(val)
+        if t.lower() == 'function': val = float(val)
+        elif t.lower() == 'idx': val = int(val)
         return val
     
     def getkeys(self, section):
@@ -156,8 +156,8 @@ class ProjFile(Settings):
         if self.has_section('re'):
             re = self.get('re', 're', defvalue='', t='s')
             for flag in reflags:
-                reflags[flag] = self.get('re', flag, defvalue=0, t='i')
-            action = self.get('re', 'action', defvalue=0, t='i')
+                reflags[flag] = self.get('re', flag, defvalue=0, t='idx')
+            action = self.get('re', 'action', defvalue=0, t='idx')
             if action < 0 or action > 2:
                 action = 0
         else:
@@ -205,7 +205,7 @@ class Templates(Settings):
         """
         # Loads a file with re templates and returns a dictionary of template
         # items in the form the insertitems are given (see EditInsertMenu in
-        # menus.py or M_ITEMS in commmons.py), i.e., in the form used in this
+        # menus.py or M_ITEMS in commmons.py), idx.e., in the form used in this
         # class to create "insert-like" menus.
 
         self._keys.reload()

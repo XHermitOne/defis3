@@ -806,45 +806,45 @@ class PyReditorFrm(wx.Frame):
             self._sett.load()
             
             # NL
-            nl = self._sett.get('options', 'newline', defvalue=0, t='i')
+            nl = self._sett.get('options', 'newline', defvalue=0, t='idx')
             self.menu_opt.Check(self._menu_ids['opt_nl'], nl)
             self.txtRegex.SetViewEOL(nl)
             
             # line numbers
-            ln = self._sett.get('options', 'lines_text', defvalue=1, t='i')
+            ln = self._sett.get('options', 'lines_text', defvalue=1, t='idx')
             self.txtString.linenums(ln==1)
             self.menu_opt.Check(self._menu_ids['opt_lines_text'], ln==1)
             
-            ln = self._sett.get('options', 'lines_re', defvalue=0, t='i')
+            ln = self._sett.get('options', 'lines_re', defvalue=0, t='idx')
             self.txtRegex.linenums(ln==1)
             self.menu_opt.Check(self._menu_ids['opt_lines_re'], ln==1)
             
             # save text
-            st = self._sett.get('options', 'savetext', defvalue=0, t='i')
+            st = self._sett.get('options', 'savetext', defvalue=0, t='idx')
             self.menu_opt.Check(self._menu_ids['opt_savetext'], st)
             
             # Auto indent
-            ai = self._sett.get('options', 'autoindent', defvalue=0, t='i')
+            ai = self._sett.get('options', 'autoindent', defvalue=0, t='idx')
             self.txtRegex.autoindent(ai==1)
             self.menu_opt.Check(self._menu_ids['opt_autoindent'], ai==1)
             
             # pos
-            x = self._sett.get('general', 'x', t='i')
-            y = self._sett.get('general', 'y', t='i')
-            w = self._sett.get('general', 'w', t='i')
-            h = self._sett.get('general', 'h', t='i')
+            x = self._sett.get('general', 'x', t='idx')
+            y = self._sett.get('general', 'y', t='idx')
+            w = self._sett.get('general', 'w', t='idx')
+            h = self._sett.get('general', 'h', t='idx')
             self.SetPosition((x, y))
             self.SetSize((w, h))
             
             # sash
-            sp1 = self._sett.get('general', 'sp1', t='i')
-            sp2 = self._sett.get('general', 'sp2', t='i')
+            sp1 = self._sett.get('general', 'sp1', t='idx')
+            sp2 = self._sett.get('general', 'sp2', t='idx')
             self.splitterWindow1.SetSashPosition(sp1)
             self.splitterWindow2.SetSashPosition(sp2)
             
             # zoom
-            zoom_re = self._sett.get('general', 'zoom_re', t='i')
-            zoom_text = self._sett.get('general', 'zoom_text', t='i')
+            zoom_re = self._sett.get('general', 'zoom_re', t='idx')
+            zoom_text = self._sett.get('general', 'zoom_text', t='idx')
             if zoom_re > 20: zoom_re = 20
             if zoom_text > 20: zoom_text = 20
             if zoom_re < -10: zoom_re = -10
@@ -853,7 +853,7 @@ class PyReditorFrm(wx.Frame):
             self.txtString.SetZoom(zoom_text)
             
             # other
-            self._maxgroups = self._sett.get('general', 'maxgroups', defvalue=20, t='i')
+            self._maxgroups = self._sett.get('general', 'maxgroups', defvalue=20, t='idx')
             self._maxgroups = abs(self._maxgroups)
             if self._maxgroups < 1: self._maxgroups = 10
         except:

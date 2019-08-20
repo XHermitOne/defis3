@@ -31,7 +31,7 @@ def MsgBox (parent, mess, title = 'MsgBox', style = wx.OK | wx.ICON_INFORMATION 
         - B{wxICON_HAND}: Выводися картинка об ошибке.
         - B{wxICON_ERROR}: Аналог wxICON_HAND.
         - B{wxICON_QUESTION}: Рядом с сообщением выводится <?>.
-        - B{wxICON_INFORMATION}: Рядом с сообщением выводится <i>.
+        - B{wxICON_INFORMATION}: Рядом с сообщением выводится <idx>.
     """
     
     bCr = 0

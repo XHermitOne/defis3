@@ -13,7 +13,7 @@ from ic.log import log
 
 __version__ = (0, 1, 1, 1)
 
-AGGREGATE_FUNCTION_NAMES = ('sum', 'min', 'max', 'mean')
+AGGREGATE_FUNCTION_NAMES = ('sum', 'min_value', 'max_value', 'mean')
 
 TOTAL_LABEL = u'ИТОГО:'
 TOTAL_GROUP_LABEL = u'Итого'
@@ -110,9 +110,9 @@ class icPivotDataFrameManager(object):
         """
         if aggregate_function_name == 'sum':
             self._cur_pivot_dataframe = self._cur_pivot_dataframe.aggregate(numpy.sum)
-        elif aggregate_function_name == 'min':
+        elif aggregate_function_name == 'min_value':
             self._cur_pivot_dataframe = self._cur_pivot_dataframe.aggregate(numpy.min)
-        elif aggregate_function_name == 'max':
+        elif aggregate_function_name == 'max_value':
             self._cur_pivot_dataframe = self._cur_pivot_dataframe.aggregate(numpy.max)
         elif aggregate_function_name == 'mean':
             self._cur_pivot_dataframe = self._cur_pivot_dataframe.aggregate(numpy.mean)

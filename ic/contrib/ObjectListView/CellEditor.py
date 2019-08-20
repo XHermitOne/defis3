@@ -29,7 +29,7 @@ Cell Editors
 
     GetValue(self)
         The editor should return the value that it holds. Return None to indicate
-        an invalid value. The returned value should be of the correct type, i.e.
+        an invalid value. The returned value should be of the correct type, idx.e.
         don't return a string if the editor was registered for the bool type.
 
     The editor should invoke FinishCellEdit() on its parent ObjectListView when it
@@ -474,7 +474,7 @@ class DateEditor(DatePickerCtrl):
     """
     This control uses standard datetime.
     wx.DatePickerCtrl works only with wx.DateTime, but they are strange beasts.
-    wx.DataTime use 0 indexed months, i.e. January==0 and December==11.
+    wx.DataTime use 0 indexed months, idx.e. January==0 and December==11.
     """
 
     def __init__(self, *args, **kwargs):
@@ -547,7 +547,7 @@ def MakeAutoCompleteTextBox(olv, columnIndex, maxObjectsToConsider=10000):
     Do not call for large lists
     """
     col = olv.columns[columnIndex]
-    # THINK: We could make this time based, i.e. it escapes after 1 second.
+    # THINK: We could make this time based, idx.e. it escapes after 1 second.
     maxObjectsToConsider = min(maxObjectsToConsider, olv.GetItemCount())
     options = set(
         col.GetStringValue(olv.GetObjectAt(i))
@@ -625,4 +625,4 @@ class AutoCompleteHelper(object):
         else:
             # Seems that under linux, selecting only seems to work here if we do it
             # outside of the text event
-            wx.CallAfter(self.control.SetSelection, insertIndex, len(newValue))
+            wx.CallAfter(self.control.setSelection, insertIndex, len(newValue))

@@ -337,7 +337,7 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
             t1 = time.clock()
             if 1:
                 try:
-                    ic_proccess_dlg.ProccessFunc(self, u'Подождите', res.ReLoad, tuple(), {}, bAutoIncr=True)
+                    ic_proccess_dlg.proccess_function(self, u'Подождите', res.ReLoad, tuple(), {}, bAutoIncr=True)
                 except:
                     if not type(res) in (type({}), type([]), type(0,)):
                         iclog.LogLastError(u'### Reload Error')

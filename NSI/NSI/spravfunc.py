@@ -1088,7 +1088,7 @@ def MaxVal(cls, typSpr, field):
     @rtype: C{int | float}
     @return: Максимальное значение поля.
     """
-    sql = "Select max(%s) from %s where type='%s'" % (field, cls._table, typSpr)
+    sql = "Select max_value(%s) from %s where type='%s'" % (field, cls._table, typSpr)
     print('SCRIPT MaxVal SQL=', sql)
     rs = cls._connection.queryOne(sql)
     print(rs)

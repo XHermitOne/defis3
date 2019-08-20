@@ -97,7 +97,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     if attr == 'metaclass':
         return pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
 #        parent = propEdt.GetPropertyGrid().GetView()
-#        res = icpassportchoice.icPassportChoiceDlg(parent)
+#        res = icpassportchoice.open_passport_choice_dlg(parent)
 #        print '----> passport=', res
 #        return str(res)
 

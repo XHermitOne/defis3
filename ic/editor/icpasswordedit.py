@@ -19,29 +19,29 @@ _ = wx.GetTranslation
 
 
 # --- Функции ---
-def icPasswordEditDlg(Win_=None, Prj_=None, Default_=None):
+def open_password_edit_dlg(parent=None, prj=None, default=None):
     """
     Редактор пароля.
-    @param Win_: Ссылка на окно.
-    @param Prj_: Объект проекта.
-    @param Default_: Пароль по умолчанию.
+    @param parent: Ссылка на окно.
+    @param prj: Объект проекта.
+    @param default: Пароль по умолчанию.
     @return: Возвращает введенный пароль или None  в случае ошибки.
     """
     dlg = None
     win_clear = False
     try:
-        if Win_ is None:
+        if parent is None:
             id_ = wx.NewId()
-            Win_ = wx.Frame(None, id_, '')
+            parent = wx.Frame(None, id_, '')
             win_clear = True
 
-        dlg = icPasswordEditDialog(Win_, Prj_, Default_)
+        dlg = icPasswordEditDialog(parent, prj, default)
         if dlg.ShowModal() in (wx.ID_OK, wx.ID_CANCEL):
-            result = dlg.getPasswordMD5()
+            result = dlg.getPasswordCrc()
             dlg.Destroy()
             # Удаляем созданное родительское окно
             if win_clear:
-                Win_.Destroy()
+                parent.Destroy()
             return result
     finally:
         if dlg:
@@ -49,7 +49,7 @@ def icPasswordEditDlg(Win_=None, Prj_=None, Default_=None):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Win_.Destroy()
+           parent.Destroy()
 
     return None
 
@@ -59,15 +59,15 @@ class icPasswordEditPanel(wx.Panel):
     Класс панели редактирования пароля.
     """
 
-    def __init__(self, parent_, Prj_=None):
+    def __init__(self, parent_, prj=None):
         """
         Конструктор.
         @param parent_: Окно.
-        @param Prj_: Объект проекта.
+        @param prj: Объект проекта.
         """
         try:
             # Сохранить объект проекта, для последующего использования
-            self._Prj = Prj_
+            self._Prj = prj
             
             wx.Panel.__init__(self, parent_, wx.NewId())
 
@@ -89,15 +89,15 @@ class icPasswordEditPanel(wx.Panel):
             self.SetSizer(self._boxsizer)
             self.SetAutoLayout(True)
             
-            self._password_md5 = None
+            self._password_crc = None
         except:
-            log.error(u'Ошибка создания объекта панели редактирования пароля')
+            log.fatal(u'Ошибка создания объекта панели редактирования пароля')
 
-    def SetPasswordMD5Default(self, PasswordMD5_):
+    def setPasswordCrcDefault(self, password_crc):
         """
         Установить возвращаемое по умолчанию значение пароля md5.
         """
-        self._password_md5 = PasswordMD5_
+        self._password_crc = password_crc
 
         
 class icPasswordEditDialog(wx.Dialog):
@@ -105,12 +105,12 @@ class icPasswordEditDialog(wx.Dialog):
     Класс диалогового окна редактирования пароля.
     """
 
-    def __init__(self, parent_, Prj_=None, Default_=None):
+    def __init__(self, parent_, prj=None, default=None):
         """
         Конструктор.
         @param parent_: Окно.
-        @param Prj_: Объект проекта.
-        @param Default_: Пароль md5 по умолчанию.
+        @param prj: Объект проекта.
+        @param default: Пароль md5 по умолчанию.
         """
         try:
             _title = u'Определение пароля'
@@ -130,19 +130,19 @@ class icPasswordEditDialog(wx.Dialog):
             # Кнопка -OK-
             id_ = wx.NewId()
             self._ok_button = wx.Button(self, id_, u'OK', size=wx.Size(60, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnOK, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onOK, id=id_)
             # Кнопка -Отмена-
             id_ = wx.NewId()
             self._cancel_button = wx.Button(self, id_, u'Отмена', size=wx.Size(60, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnCancel, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onCancel, id=id_)
 
             self._button_boxsizer.Add(self._cancel_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
             self._button_boxsizer.Add(self._ok_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
 
-            self._password_edit_panel = icPasswordEditPanel(self, Prj_)
+            self._password_edit_panel = icPasswordEditPanel(self, prj)
             # Если надо то установить редатируемый список паспортов
-            if Default_:
-                self._password_edit_panel.SetPasswordMD5Default(Default_)
+            if default:
+                self._password_edit_panel.setPasswordCrcDefault(default)
             
             self._boxsizer.Add(self._password_edit_panel, 1, wx.EXPAND | wx.GROW, 0)
             self._boxsizer.Add(self._button_boxsizer, 0, wx.ALIGN_RIGHT, 10)
@@ -152,7 +152,7 @@ class icPasswordEditDialog(wx.Dialog):
         except:
             log.error(u'Ошибка создания объекта диалогового окна редактирования пароля')
         
-    def OnOK(self, event):
+    def onOK(self, event):
         """
         Обработчик нажатия кнопки -OK-.
         """
@@ -169,19 +169,19 @@ class icPasswordEditDialog(wx.Dialog):
         else:
             if not password1_txt.strip():
                 # Выбрана пустая строка
-                self._password_edit_panel._password_md5 = hashlib.md5(b'').hexdigest()
+                self._password_edit_panel._password_crc = hashlib.md5(b'').hexdigest()
             else:
-                self._password_edit_panel._password_md5 = password1_md5
+                self._password_edit_panel._password_crc = password1_md5
             self.EndModal(wx.ID_OK)
 
-    def OnCancel(self, event):
+    def onCancel(self, event):
         """
         Обработчик нажатия кнопки -Отмена-.
         """
         self.EndModal(wx.ID_CANCEL)
 
-    def getPasswordMD5(self):
+    def getPasswordCrc(self):
         """
         Пароль.
         """
-        return self._password_edit_panel._password_md5
+        return self._password_edit_panel._password_crc

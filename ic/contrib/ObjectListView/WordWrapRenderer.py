@@ -85,7 +85,7 @@ class WordWrapRenderer:
         if valign == wx.ALIGN_CENTER:
             valign = wx.ALIGN_CENTER_VERTICAL
 
-        # DrawLabel only accepts a wx.Rect
+        # drawLabel only accepts a wx.Rect
         try:
             bounds = wx.Rect(*bounds)
         except:
@@ -102,7 +102,7 @@ class WordWrapRenderer:
         text = text.rstrip(' ')
 
         lines = wordwrap(text, bounds[2], dc, True)
-        dc.DrawLabel(lines, bounds, align | valign)
+        dc.drawLabel(lines, bounds, align | valign)
 
     @staticmethod
     def DrawTruncatedString(
@@ -140,7 +140,7 @@ class WordWrapRenderer:
             bounds[2],
             ellipse,
             ellipseChars)
-        dc.DrawLabel(lines, bounds, align | valign)
+        dc.drawLabel(lines, bounds, align | valign)
 
     @staticmethod
     def _Truncate(dc, text, maxWidth, ellipse, ellipseChars):

@@ -47,14 +47,14 @@ class icStorageViewerDlg(icobjectinterface.icObjectInterface):
     ###BEGIN EVENT BLOCK
     ###END EVENT BLOCK
     
-    def _storageConvert(self, VarStorage_):
+    def _storageConvert(self, var_storage):
         """
         Переконвертировать хранилище в формат дерева.
         """
         result = []
-        for name in VarStorage_.keys():
+        for name in var_storage.keys():
             tree_item = {}
-            storage_item = VarStorage_[name]
+            storage_item = var_storage[name]
             tree_item['name'] = name
             tree_item['__record__'] = [name, str(storage_item['data']),
                                        str(storage_item['security']),

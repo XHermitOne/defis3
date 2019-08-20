@@ -28,7 +28,7 @@ ic_class_name = 'icContextViewerDlg'
 
 class icContextViewerDlg(icobjectinterface.icObjectInterface):
 
-    def __init__(self, parent, Context_=None):
+    def __init__(self, parent, context=None):
         """
         Конструктор интерфейса.
         """
@@ -37,9 +37,9 @@ class icContextViewerDlg(icobjectinterface.icObjectInterface):
         
         try:
             viewer = self.GetNameObj('view_treectrl')
-            if Context_ is None:
-                Context_ = glob_functions.getKernel().GetContext()
-            variables = self._contextConvert(Context_)
+            if context is None:
+                context = glob_functions.getKernel().GetContext()
+            variables = self._contextConvert(context)
             viewer.LoadTree(variables)
         except:
             log.fatal(u'Ошибка инициализации дерева просмотра хранилища переменных.')
@@ -47,14 +47,14 @@ class icContextViewerDlg(icobjectinterface.icObjectInterface):
     ###BEGIN EVENT BLOCK
     ###END EVENT BLOCK
     
-    def _contextConvert(self, Context_):
+    def _contextConvert(self, context):
         """
         Переконвертировать контекст в формат дерева.
         """
         result = []
-        for name in Context_.keys():
+        for name in context.keys():
             tree_item = {}
-            context_item = Context_[name]
+            context_item = context[name]
             tree_item['name'] = name
             tree_item['__record__'] = [name, str(context_item), '', '']
             result.append(tree_item)

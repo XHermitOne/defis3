@@ -204,7 +204,7 @@ def LoadIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
         
     if stRes:
         #   Заполняем минимальное значение
-        # min, max = stRes['majorValues']
+        # min_value, max_value = stRes['majorValues']
     
         #   Заполняем максимальное значение
         majorStep = stRes['majorStep']

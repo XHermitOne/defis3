@@ -169,7 +169,7 @@ class icScanDocumentManager(icmanagerinterface.icWidgetManager):
         for i, shape in enumerate(shapes):
             shape['pos'] = (shape['pos'][0] + dx,
                             shape['pos'][1] + dy)
-            # shapes[i] = shape
+            # shapes[idx] = shape
             
         new_pos = (x, y)
         if dx:
@@ -195,7 +195,7 @@ class icScanDocumentManager(icmanagerinterface.icWidgetManager):
                     new_pos = (pos[0], pos[1]+shape['size'][1]+BORDER_HEIGHT)
                     #print 'Pos', pos, new_pos, shape['size'], prev_pos
                     shape['pos'] = new_pos
-                    # shapes[i] = shape
+                    # shapes[idx] = shape
                     is_shuffle = True
                     break
             # print is_shuffle

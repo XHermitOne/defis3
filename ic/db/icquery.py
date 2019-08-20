@@ -302,7 +302,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
             return self.queryAll(**sql_params)
         try:
             # if data and to_dict:
-            #    new_data = [dict([(fields[i][0], val) for i, val in enumerate(rec)]) for rec in data]
+            #    new_data = [dict([(fields[idx][0], val) for idx, val in enumerate(rec)]) for rec in data]
             #    data = new_data
             data = list(query_result)
             if data:

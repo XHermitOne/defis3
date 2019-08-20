@@ -6,54 +6,54 @@
 """
 
 _stdToolbarResModuleFmt = '''
-    def onAddTool(Context_):
+    def onAddTool(context):
         \"\"\"
         Обработчик добавления объекта.
-        @param Context_: Контекст выполнения формы.
+        @param context: Контекст выполнения формы.
         \"\"\"
         pass
         
-    def onDelTool(Context_):
+    def onDelTool(context):
         \"\"\"
         Обработчик удаления объекта.
-        @param Context_: Контекст выполнения формы.
+        @param context: Контекст выполнения формы.
         \"\"\"
         pass
 
-    def onEditTool(Context_):
+    def onEditTool(context):
         \"\"\"
         Обработчик редактирования объекта.
-        @param Context_: Контекст выполнения формы.
+        @param context: Контекст выполнения формы.
         \"\"\"
         pass
         
-    def onModeTool(Context_):
+    def onModeTool(context):
         \"\"\"
         Обработчик изменения режима работы с объектом.
-        @param Context_: Контекст выполнения формы.
+        @param context: Контекст выполнения формы.
         \"\"\"
         pass
         
-    def onFindTool(Context_):
+    def onFindTool(context):
         \"\"\"
         Обработчик поиска объекта.
-        @param Context_: Контекст выполнения формы.
+        @param context: Контекст выполнения формы.
         \"\"\"
         pass
         
 '''
 
 _stdTreeBrwsResModuleFmt = '''
-    def onInitTreeBrws(Context_):
+    def onInitTreeBrws(context):
         \"\"\"
         Обработчик инициализации дерева просмотра объекта.
-        @param Context_: Контекст выполнения формы.
+        @param context: Контекст выполнения формы.
         \"\"\"
         try:
-            obj = Context_['OBJ']
+            obj = context['OBJ']
             storage = obj.getStorage()
             tree_data = storage.getBranchObj()
-            tree_ctrl = Context_.GetObject('tree_object_ctrl')
+            tree_ctrl = context.GetObject('tree_object_ctrl')
             tree_ctrl.LoadTree(tree_data)
             return True 
         except:
@@ -227,14 +227,14 @@ manager_class = %sManager
 '''
 
 # Шаблон обработчика кнопки <Отмена> в диалоговых формах
-_cancelMouseClickScript = '''def onCancelButtonMouseClick(Context_):
+_cancelMouseClickScript = '''def onCancelButtonMouseClick(context):
     \"\"\"
     Обработчик нажатия на кнопку <Отмена>.
     \"\"\"
     try:
-        dlg = Context_['_root_obj']
+        dlg = context['_root_obj']
         dlg.EndModal(wx.ID_CANCEL)
-        Context_['result'] = None
+        context['result'] = None
     except:
         ic.log.error(u'Обработчик нажатия на кнопку <Отмена>.')
     return None
@@ -242,14 +242,14 @@ _cancelMouseClickScript = '''def onCancelButtonMouseClick(Context_):
 '''
 
 # Шаблон обработчика кнопки <OK> в диалоговых формах
-_okMouseClickScript = '''def onOkButtonMouseClick(Context_):
+_okMouseClickScript = '''def onOkButtonMouseClick(context):
     \"\"\"
     Обработчик нажатия на кнопку <OK>.
     \"\"\"
     try:
-        dlg = Context_['_root_obj']
+        dlg = context['_root_obj']
         dlg.EndModal(wx.ID_OK)
-        Context_['result'] = True
+        context['result'] = True
     except:
         ic.log.error(u'Обработчик нажатия на кнопку <OK>.')
     return None
@@ -346,7 +346,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
             if obj:
                 # Создать новый контекст у объекта, т.к. 
                 # он будет работать в другом режиме
-                obj.edit(Context_=ic.components.icwidget.icResObjContext())
+                obj.edit(context=ic.components.icwidget.icResObjContext())
         except:
             ic.log.error(u'Обработчик нажатия на кнопку <Редактирование>.')
         event.Skip()

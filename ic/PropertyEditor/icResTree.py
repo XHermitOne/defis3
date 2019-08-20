@@ -201,7 +201,7 @@ def InitObjectsInfo(bRefresh=False):
     for name, modl in mod_list.items():
         count += 1
         try:
-            ic_logo_dlg.SetLoadProccessBoxLabel(u'Импорт системного компонента <%s>' % name, 100*count/len(mod_list))
+            ic_logo_dlg.setLoadProccessBoxLabel(u'Импорт системного компонента <%s>' % name, 100 * count / len(mod_list))
             spc = copy.deepcopy(modl.ic_class_spc)
             img = ic.imglib.get_image_by_expr(modl.ic_class_pic)
             img2 = ic.imglib.get_image_by_expr(modl.ic_class_pic2)
@@ -1054,7 +1054,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         """
         Обрабатывает нажатие клавиши.
         """
-        if evt.GetKeyCode() in (ord(u'f'), ord(u'F'), ord(u'А'), ord(u'а')) and evt.ControlDown():
+        if evt.GetKeyCode() in (ord(u'function'), ord(u'F'), ord(u'А'), ord(u'а')) and evt.ControlDown():
             self.OnHelpFind()
         elif evt.GetKeyCode() in (ord(u'g'), ord(u'G'), ord(u'П'), ord(u'п')) and evt.ControlDown():
             self.OnFindNext(evt)
@@ -2436,14 +2436,14 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         """
         ide = self.GetIDEInterface()
         if ide:
-            alreadyopen = ide.GetAlreadyOpen()
+            alreadyopen = ide.getAlreadyOpen()
             if alreadyopen:
                 if fl not in alreadyopen:
-                    ide.OpenFile(fl, True)
+                    ide.openFile(fl, True)
                 else:
-                    ide.SelectFile(fl)
+                    ide.selectFile(fl)
             else:
-                ide.OpenFile(fl, True)
+                ide.openFile(fl, True)
         else:
             log.warning(u'Не определен объект IDE для открытия файла <%s>' % fl)
 
@@ -2457,7 +2457,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def open_formeditor_doc(self):
         ide = self.GetIDEInterface()
         if ide:
-            main_win = ide.GetIDEFrame()
+            main_win = ide.getIDEFrame()
             if main_win is None:
                 msg = u'Не определено окно IDE. Редактор форм не может быть запущен в IDE.'
                 log.warning(msg)
@@ -2466,7 +2466,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
 
             icResourceParser.ClearComponentModulDict()
             icResourceParser.setEditorPoint(self)
-            edt = ide.OpenFormEditor(copy.deepcopy(self.res), self)
+            edt = ide.openFormEditor(copy.deepcopy(self.res), self)
             icResourceParser.setDesignMode(False)
             self.graphEditor = edt or self.graphEditor
             mgr = main_win.GetFrameManager()
@@ -2540,13 +2540,13 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             ide = self.GetIDEInterface()
             if ide:
                 fl = self.file.replace('\\', '/')
-                alreadyopen = ide.GetAlreadyOpen()
+                alreadyopen = ide.getAlreadyOpen()
                 if alreadyopen:
-                    if fl in alreadyopen and not ide.GetModify(fl):
-                        ide.ReloadFile(fl)
+                    if fl in alreadyopen and not ide.getModify(fl):
+                        ide.reloadFile(fl)
                     elif fl in alreadyopen and ic_dlg.icAskBox(u'ВНИМАНИЕ',
                                                                u'Будет перегружет текущий <%s> файл.\nИзменения будут потеряны.\nУверены?' % fl):
-                        ide.ReloadFile(fl)
+                        ide.reloadFile(fl)
         else:
             self.SaveRes(self.file)
 

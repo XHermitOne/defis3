@@ -69,7 +69,7 @@ class icObjectPassportUserEdt(ic_user_property_editor):
         """
         if value:
             parent = propEdt
-            res = icpassportchoice.icPassportChoiceDlg(parent)
+            res = icpassportchoice.open_passport_choice_dlg(parent)
             log.debug(u'passport = %s' % res)
             return str(res)
 
@@ -80,7 +80,7 @@ class icObjectPassportUserEdt(ic_user_property_editor):
         """
         if value:
             parent = propEdt
-            res = icpassportchoice.icPassportChoiceDlg(parent)
+            res = icpassportchoice.open_passport_choice_dlg(parent)
             return res
             
     @staticmethod
@@ -128,7 +128,7 @@ class icObjectPassportListUserEdt(ic_user_property_editor):
         if value:
             parent = propEdt
             value = icObjectPassportListUserEdt.str_to_val_user_property(value, propEdt)
-            res = icpassportchoice.icPassportListDlg(parent, None, value)
+            res = icpassportchoice.open_passport_list_dlg(parent, None, value)
             log.debug(u'Выбранные паспорта = %s' % res)
             return str(res)
 
@@ -140,7 +140,7 @@ class icObjectPassportListUserEdt(ic_user_property_editor):
         if value:
             parent = propEdt
             value = icObjectPassportListUserEdt.str_to_val_user_property(value, propEdt)
-            res = icpassportchoice.icPassportListDlg(parent, None, value)
+            res = icpassportchoice.open_passport_list_dlg(parent, None, value)
             return res
             
     @staticmethod

@@ -13,7 +13,7 @@ __version__ = (0, 1, 1, 1)
 DEFAULT_ENCODINT_STR = '<Default Encoding>'
 
 
-class icIDEInterface:
+class icIDEInterface(object):
     """
     Интерфейс взаимодействия с IDE.
     """
@@ -25,9 +25,9 @@ class icIDEInterface:
         """
         self._ide = IDEFrame
         if self._ide:
-            self._ide.Bind(wx.EVT_CLOSE, self.OnCloseIC)
+            self._ide.Bind(wx.EVT_CLOSE, self.onPostClose)
 
-    def OnCloseIC(self, event):
+    def onPostClose(self, event):
         """
         Пост обработчик закрытия главного окна IDE.
         """
@@ -39,232 +39,232 @@ class icIDEInterface:
         """
         pass
         
-    def AddToolPanel(self, Panel_):
+    def addToolPanel(self, panel):
         """
         Добавить панель в нотебук инструментов/палитры инструментов.
-        @param Panel_: Наследник wx.Panel.
+        @param panel: Наследник wx.Panel.
         @return: Возвращает указатель на страницу нотебука(наследник drSidePanel),
             которая соответствует этой панели.
         """
         pass
         
-    def OpenFile(self, filename, OpenInNewTab=True,
-                 editrecentfiles=True, encoding=DEFAULT_ENCODINT_STR, readonly=False):
+    def openFile(self, filename, bOpenInNewTab=True,
+                 bEditRecentFiles=True, encoding=DEFAULT_ENCODINT_STR, bReadonly=False):
         """
         Загружает нужный файл в IDE.
         
         @type filename: C{string}
         @param filename: Имя загружаемого файла.
-        @type OpenInNewTab: C{bool}
-        @param OpenInNewTab: Признак загрузки файла на новой закладке.
-        @type editrecentfiles: C{bool}
-        @param editrecentfiles: Признак сохранении в списке недавно загружаемых файлов
+        @type bOpenInNewTab: C{bool}
+        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        @type bEditRecentFiles: C{bool}
+        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
         @type encoding: C{string}
         @param encoding: Кодировка файла.
-        @type readonly: C{bool}
-        @param readonly: Указание, что файл откроется только для чтения.
+        @type bReadonly: C{bool}
+        @param bReadonly: Указание, что файл откроется только для чтения.
         @rtype: C{bool}
         @return: Признак успешной загрузки.
         """
         pass
         
-    def CloseFile(self, fileName):
+    def closeFile(self, filename):
         """
         Выгружает файл.
         
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         @rtype: C{bool}
         @return: Признак успешной выгрузки.
         """
         pass
         
-    def CloseAllFiles(self):
+    def closeAllFiles(self):
         """
         Выгрузить все файлы.
         """
         pass
 
-    def GetAlreadyOpen(self):
+    def getAlreadyOpen(self):
         """
         Возвращает список имен открытых файлов.
         """
         pass
         
-    def insertEvtFuncToInterface(self, fileName, funcName, bodyFunc=None):
+    def insertEvtFuncToInterface(self, filename, func_name, function_body=None):
         """
         Вставляет в тело интерфейсного модуля заготовку функции с заданным именем.
         
-        @type fileName: C{string}
-        @param fileName: Имя файла.
-        @type funcName: C{string}
-        @param funcName: Имя функции.
-        @type bodyFunc: C{string}
-        @param bodyFunc: Тело функции.
+        @type filename: C{string}
+        @param filename: Имя файла.
+        @type func_name: C{string}
+        @param func_name: Имя функции.
+        @type function_body: C{string}
+        @param function_body: Тело функции.
         """
         pass
         
-    def IsOpenedFile(self, fileName):
+    def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         """
         pass
         
-    def SetSelection(self, i):
+    def setSelection(self, idx):
         """
         Устанавливает нужный файл в качестве текущего.
         """
-        if self.GetDocumentNotebook():
-            self.GetDocumentNotebook().SetSelection(i)
-            self.GetDocumentNotebook().SetTab()
+        if self.getDocumentNotebook():
+            self.getDocumentNotebook().SetSelection(idx)
+            self.getDocumentNotebook().SetTab()
     
-    def _getOpenedFileIdx(self, fileName):
+    def _getOpenedFileIdx(self, filename):
         """
         Индекс открытого файла.
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         @return: Индекс открытого файла или
             -1, если файл не открыт.
         """
-        alreadyopen = self.GetAlreadyOpen()
+        alreadyopen = self.getAlreadyOpen()
         i = -1
         try:
-            i = alreadyopen.index(fileName)
+            i = alreadyopen.index(filename)
         except ValueError:
             i = -1
         return i
         
-    def SelectFile(self, fileName):
+    def selectFile(self, filename):
         """
         Устанавливает нужный файл в качестве текущего.
 
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         @rtype: C{bool}
         @return: Признак успешного выбора.
         """
-        fl = fileName.replace('\\', '/')
-        alreadyopen = self.GetAlreadyOpen()
+        fl = filename.replace('\\', '/')
+        alreadyopen = self.getAlreadyOpen()
             
         if alreadyopen and fl in alreadyopen:
             i = alreadyopen.index(fl)
-            self.SetSelection(i)
+            self.setSelection(i)
             return True
             
         return False
         
-    def GetDocumentNotebook(self):
+    def getDocumentNotebook(self):
         """
         Возвращает указатель на документы, организованные в 'записной книжке'.
         """
         pass
         
-    def GetDocument(self):
+    def getDocument(self):
         """
         Возвращает текущий документ.
         """
         pass
     
-    def GetDocumentObj(self, fileName):
+    def getDocumentObj(self, filegame):
         """
         Возвращает объект документа.
 
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filegame: C{string}
+        @param filegame: Имя файла.
         """
         pass
     
-    def GetDocumentText(self, fileName):
+    def getDocumentText(self, filename):
         """
         Возвращает текст документа.
 
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         """
         pass
                 
-    def GetSourceBrowser(self):
+    def getSourceBrowser(self):
         """
         Возвращает указатель на SourceBrowser текста.
         """
         pass
 
-    def GetMatches(self, text, resourcebrowser):
+    def getMatches(self, text, resource_browser):
         """
         """
         pass
         
-    def GetModify(self, fileName):
+    def getModify(self, filename):
         """
         Возвращает признак измененного документа.
         
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         """
         pass
         
-    def GoToFunc(self, funcname):
+    def goToFunc(self, func_name):
         """
         Переход на нужную функцию.
         """
         pass
 
-    def GetMainPanel(self):
+    def getMainPanel(self):
         """
         Главная панель IDE.
         """
         pass
 
-    def GetBrowserNotebook(self):
+    def getBrowserNotebook(self):
         """
         Браузер.
         """
         pass
         
-    def GetToolNotebook(self):
+    def getToolNotebook(self):
         """
         Нотебук инструменнтов/палитры компонентов.
         """
         pass
 
-    def HideToolNotebook(self):
+    def hideToolNotebook(self):
         """
         Скрыть нотебук инструменнтов/палитры компонентов.
         """
         pass
 
-    def ReloadFile(self, fileName):
+    def reloadFile(self, filename):
         """
         Перегружает нужный файл в IDE.
         
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         @rtype: C{bool}
         @return: Признак успешной перезагрузки.
         """
         pass
             
-    def SetDocumentText(self, fileName, txt):
+    def setDocumentText(self, filename, txt):
         """
         Изменяет текст документа.
         """
         pass
         
-    def ShowToolNotebook(self):
+    def showToolNotebook(self):
         """
         Показать нотебук инструменнтов/палитры компонентов.
         """
         pass
 
-    def GetIDEFrame(self):
+    def getIDEFrame(self):
         """
         """
         return self._ide
 
-    def OpenFormEditor(self, res, res_editor=None, *arg, **kwarg):
+    def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
         @param res: Ресурсное описание.

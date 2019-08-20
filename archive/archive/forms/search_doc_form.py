@@ -122,7 +122,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
         self.search_crit_panel.tag7_textCtrl.SetValue(u'')
         self.search_crit_panel.tag8_textCtrl.SetValue(u'')
         self.search_crit_panel.tag9_textCtrl.SetValue(u'')
-        self.search_crit_panel.orderby_choice.SetSelection(wx.NOT_FOUND)
+        self.search_crit_panel.orderby_choice.setSelection(wx.NOT_FOUND)
         self.search_crit_panel.orderby_checkBox.SetValue(False)
 
         self.search_crit_panel.date_checkBox.SetValue(False)

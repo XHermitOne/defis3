@@ -43,7 +43,7 @@ class icYearDialog(std_dialogs_proto.yearDialogProto):
         else:
             cur_year_idx = year_choices.index(str(self._selected_year))
 
-        self.year_choice.SetSelection(cur_year_idx)
+        self.year_choice.setSelection(cur_year_idx)
 
     def getSelectedYear(self):
         return self._selected_year

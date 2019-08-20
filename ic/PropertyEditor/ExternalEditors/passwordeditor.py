@@ -27,7 +27,7 @@ class icPasswordExternalEdt(passportobj.ic_user_property_editor):
         """
         parent = propEdt.GetPropertyGrid().GetView().GetParent()
         value = icPasswordExternalEdt.str_to_val_user_property(value, propEdt)
-        res = icpasswordedit.icPasswordEditDlg(parent, None, value)
+        res = icpasswordedit.open_password_edit_dlg(parent, None, value)
         icPasswordExternalEdt._is_external_edit = True
         return str(res)
 

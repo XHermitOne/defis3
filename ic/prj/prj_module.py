@@ -366,8 +366,8 @@ class icPrjModules(prj_node.icPrjFolder):
             py_file = os.path.join(os.path.dirname(self.getRoot().getPrjFileName()),
                                    '__init__.py')
             # Если файл не открыт, то открыть его
-            if not ide.SelectFile(py_file):
-                return ide.OpenFile(py_file, True, readonly=self.readonly)
+            if not ide.selectFile(py_file):
+                return ide.openFile(py_file, True, bReadonly=self.readonly)
             return True
         else:
             log.warning(u'Не определен IDE для редактирования модуля')
@@ -483,12 +483,12 @@ class icPrjPackage(prj_node.icPrjFolder):
             py_file = os.path.join(pack_dir, '__init__.py')
             # Сначала разблокировать все модули
             self.getRoot().unlockAllPyFilesInIDE()
-            if not ide.SelectFile(py_file):
+            if not ide.selectFile(py_file):
                 # Заблокировать файл
                 parent_pack = os.path.basename(os.path.dirname(pack_dir))
                 ic_res.lockRes(self.name, parent_pack, 'py',
                                self.getRoot().lock_dir)
-                return ide.OpenFile(py_file, True, readonly=self.readonly)
+                return ide.openFile(py_file, True, bReadonly=self.readonly)
             return True
         else:
             log.warning(u'Не определен IDE для редактирования модуля')
@@ -513,7 +513,7 @@ class icPrjPackage(prj_node.icPrjFolder):
         # И в конце удалить папку пакета, если она есть
         package = self.getPath()
         # Выгрузить из редакторов
-        self.getRoot().getParent().getIDE().CloseFile(os.path.join(package, '__init__.py'))
+        self.getRoot().getParent().getIDE().closeFile(os.path.join(package, '__init__.py'))
 
         # Удалить все блокировки
         self.getRoot().unlockAllPyFilesInIDE()
@@ -658,7 +658,7 @@ class icPrjModule(prj_node.icPrjNode):
             os.rename(old_py_file, new_py_file)
             # Закрыть модуль для редактирования
             ide = self.getRoot().getParent().getIDE()
-            ide.CloseFile(old_py_file)
+            ide.closeFile(old_py_file)
             # И опять открыть
             self.edit()
         # Для синхронизации дерева проекта
@@ -679,8 +679,8 @@ class icPrjModule(prj_node.icPrjNode):
         if ide:
             # Сначала разблокировать все модули
             self.getRoot().unlockAllPyFilesInIDE()
-            if ide.IsOpenedFile(py_file):
-                ide.CloseFile(py_file)
+            if ide.isOpenedFile(py_file):
+                ide.closeFile(py_file)
             else:
                 parent_pack = os.path.basename(py_dir)
                 # Если модуль заблокирован,
@@ -707,7 +707,7 @@ class icPrjModule(prj_node.icPrjNode):
                 self.getRoot().getParent().res_editor.SetResource(self.name,
                                                                   py_dir, self.name, 'py', bEnable=True)
 
-            return ide.OpenFile(py_file, True, readonly=self.readonly)
+            return ide.openFile(py_file, True, bReadonly=self.readonly)
         else:
             log.warning(u'Не определен IDE для редактирования модуля')
 
@@ -745,7 +745,7 @@ class icPrjModule(prj_node.icPrjNode):
         module_name = os.path.join(self.getModulePath(), self.name+self.ext)
 
         # Выгрузить из редакторов
-        self.getRoot().getParent().getIDE().CloseFile(module_name)
+        self.getRoot().getParent().getIDE().closeFile(module_name)
         res_file_name = self.getRoot().getParent().res_editor.GetResFileName()
         if res_file_name and ic_file.SamePathWin(module_name, res_file_name):
             self.getRoot().getParent().res_editor.CloseResource()
@@ -971,7 +971,7 @@ class icPrjFBModule(icPrjModule, wxfb_manager.icWXFormBuilderManager):
         self.name = 'fb_module'
         self.img = imglib.imgForm
 
-        # self.readonly = True
+        # self.bReadonly = True
 
     def edit(self):
         """
@@ -1062,7 +1062,7 @@ class icPrjXRCModule(icPrjModule):
         self.name = 'xrc_module'
         self.img = imglib.imgForm
 
-        # self.readonly = True
+        # self.bReadonly = True
 
     def edit(self):
         """

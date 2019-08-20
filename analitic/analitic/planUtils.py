@@ -96,7 +96,7 @@ def getSpravBuffDict(metaObj, bRefreshBuff=False):
             #   Буферизируем справочники
             try:
                 dict[item_cls.name] = spravfunc.getReplDict(item_cls.value.sprav, 'cod', 'name')
-                # progress.icUpdateProgressBar("Буферизируем справочник: %s" % item_cls.value.sprav, i*100/len(lst))
+                # progress.icUpdateProgressBar("Буферизируем справочник: %s" % item_cls.value.sprav, idx*100/len(lst))
             except:
                 print('$EXCEPTION spravfunc.getReplDict(...)', item_cls.name)
                 
@@ -154,7 +154,7 @@ def genPlanTemplate(metaObj, source, yearTempl, monthTempl=1, year=2005, month=N
 #    progress.icCloseProgressBar()
 #    progress.icOpenProgressBar("Выборка",0,100)
     # ic_dlg.SetWaitBoxLabel('Получаем выборку')
-    ic_proccess_dlg.SetProccessBoxLabel('Получаем выборку', 10)
+    ic_proccess_dlg.setProccessBoxLabel('Получаем выборку', 10)
 
     if month is None:
         month = monthTempl
@@ -212,7 +212,7 @@ ORDER BY codt, reg, mens''' % (str(yearTempl) + '.' + ('0' + str(monthTempl))[-2
         mnthObj = itemObj
         
         # ic_dlg.SetWaitBoxLabel('Создаем необходимую структуру')
-        ic_proccess_dlg.SetProccessBoxLabel('Создаем необходимую структуру', 20)
+        ic_proccess_dlg.setProccessBoxLabel('Создаем необходимую структуру', 20)
     
         #   Начинаем транзакцию
         mnthObj.transact()
@@ -225,14 +225,14 @@ ORDER BY codt, reg, mens''' % (str(yearTempl) + '.' + ('0' + str(monthTempl))[-2
                 kwarg[typ] = getattr(r, fld)
                 
             fo = GetOrCreateMetaPlanObj(itemObj, dict, None, init_plan_node_func, **kwarg)
-            # progress.icUpdateProgressBar("Создаем необходимую структуру: %s" % fo.value.description, i*100/len(rec))
+            # progress.icUpdateProgressBar("Создаем необходимую структуру: %s" % fo.value.description, idx*100/len(rec))
         t2 = time.clock()
         # print(' :::: change struct', t2-t1)
             
         #   Делаем пересчет плановых и агрегирующих сум (кроме месячных и
         #   годовых планов)
         # ic_dlg.SetWaitBoxLabel('Делаем пересчет плановых сумм групп')
-        ic_proccess_dlg.SetProccessBoxLabel(u'Делаем пересчет плановых сумм групп', 50)
+        ic_proccess_dlg.setProccessBoxLabel(u'Делаем пересчет плановых сумм групп', 50)
         
         for r in rec:
             for typ, fld in typfldDict.items():
@@ -251,7 +251,7 @@ ORDER BY codt, reg, mens''' % (str(yearTempl) + '.' + ('0' + str(monthTempl))[-2
         
         #   Деламе пересчет коэфициентов по вычисленным суммам планов
         # ic_dlg.SetWaitBoxLabel('Делаем пересчет сумм и коэфициентов')
-        ic_proccess_dlg.SetProccessBoxLabel(u'Делаем пересчет сумм и коэфициентов', 80)
+        ic_proccess_dlg.setProccessBoxLabel(u'Делаем пересчет сумм и коэфициентов', 80)
         CountParPlan(mnthObj)
         
         # ieditpanel.recount_prnt(mnthObj, bSave=False)
@@ -373,7 +373,7 @@ def MetaPlanZeroSum(metaTree, Year_, Month_, aggregate_ctrl=None):
     """
     Обнуление сумм-фактов в дереве планов.
     """
-    ic_proccess_dlg.SetProccessBoxLabel(u'Обнуление сумм', 0,
+    ic_proccess_dlg.setProccessBoxLabel(u'Обнуление сумм', 0,
                                         label2=u'Год: %s Месяц: %s Разнос сумм базового плана' % (Year_, Month_),
                                         value2=10)
     if not aggregate_ctrl:
@@ -442,7 +442,7 @@ ORDER BY year,month,dtoper
         # ic_dlg.icOpenProgressDlg(glob_functions.getMainWin(),
         #    'Подождите пожалуйста','Обнуление сумм',0,recs.count())
         # t_progress.icOpenThreadedProgressDlg('Разнос сумм','Обнуление сумм',0,recs.count())
-        # ic_proccess_dlg.SetProccessBoxLabel(label2='Разнос сумм', value2=10)
+        # ic_proccess_dlg.setProccessBoxLabel(label2='Разнос сумм', value2=10)
         # print 'ZERO SUMM',src_query, recs.count()
         i = 0
         try:
@@ -450,10 +450,10 @@ ORDER BY year,month,dtoper
         except:
             count_100 = 0
         for rec in recs:
-            # ic_dlg.icUpdateProgressDlg(i,'Обнуление сумм')
+            # ic_dlg.icUpdateProgressDlg(idx,'Обнуление сумм')
             # t_progress.icStepThreadedProgressDlg()
-            # ic_proccess_dlg.SetProccessBoxLabel(label1='Обнуление сумм', value1=i)
-            ic_proccess_dlg.SetProccessBoxLabel(u'Обнуление сумм <%s>' % source_tab_name, count_100 * i)
+            # ic_proccess_dlg.setProccessBoxLabel(label1='Обнуление сумм', value1=idx)
+            ic_proccess_dlg.setProccessBoxLabel(u'Обнуление сумм <%s>' % source_tab_name, count_100 * i)
             i += 1
             # Определить разносимые суммы
             # aggregate_values=dict(map(lambda field: (field,getattr(rec,field)),
@@ -579,7 +579,7 @@ def MetaPlanDeliveSum(metaTree, Year_, Month_, aggregate_ctrl=None):
     """
     Разнесение сумм-фактов в дереве планов.
     """
-    ic_proccess_dlg.SetProccessBoxLabel(u'Разнос сумм', 0,
+    ic_proccess_dlg.setProccessBoxLabel(u'Разнос сумм', 0,
                                         label2=u'Год: %s Месяц: %s Разнос сумм базового плана' % (Year_, Month_),
                                         value2=50)
     if not aggregate_ctrl:
@@ -640,7 +640,7 @@ ORDER BY year, month, dtoper
         # ic_dlg.icOpenProgressDlg(glob_functions.getMainWin(),
         #    'Подождите пожалуйста','Разнос сумм',0,recs.count())
         # t_progress.icOpenThreadedProgressDlg('Разнос сумм','Разнос сумм',0,recs.count())
-        # ic_proccess_dlg.SetProccessBoxLabel(label2='Разнос сумм', value2=10)
+        # ic_proccess_dlg.setProccessBoxLabel(label2='Разнос сумм', value2=10)
         
         i = 0
         try:
@@ -649,10 +649,10 @@ ORDER BY year, month, dtoper
             count_100 = 0
         # print 'ZERO SUMM',src_query,recs.count()
         for rec in recs:
-            # ic_dlg.icUpdateProgressDlg(i,'Обнуление сумм')
+            # ic_dlg.icUpdateProgressDlg(idx,'Обнуление сумм')
             # t_progress.icStepThreadedProgressDlg()
-            # ic_proccess_dlg.SetProccessBoxLabel(label1='Разнос сумм', value1=i)
-            ic_proccess_dlg.SetProccessBoxLabel(u'Разнос сумм <%s>' % source_tab_name, count_100 * i)
+            # ic_proccess_dlg.setProccessBoxLabel(label1='Разнос сумм', value1=idx)
+            ic_proccess_dlg.setProccessBoxLabel(u'Разнос сумм <%s>' % source_tab_name, count_100 * i)
             i += 1
 
             # Определить разносимые суммы
@@ -863,7 +863,7 @@ def genModifPlan(parent, ibrows, id_modif, year=None, month=None):
             
         month, year = res
 
-    ic_proccess_dlg.SetProccessBoxLabel(u'Пересчет модификации плана за %s месяц %s года' % (month, year), 0,
+    ic_proccess_dlg.setProccessBoxLabel(u'Пересчет модификации плана за %s месяц %s года' % (month, year), 0,
                                         u'Получаем дерево базового плана', 10)
     return _genModifPlan(parent, ibrows, id_modif, year, month)
 
@@ -905,7 +905,7 @@ def _genAllPlanMonth(parent, ibrows, modif_lst, month=None, year=None):
     t1 = t2 = time.clock()
     for indx, id_modif in enumerate(modif_lst):
         tt = '%02i:%02i' % (int((t2-t1)/60), int(t2-t1) % 60)
-        ic_proccess_dlg.SetProccessBoxLabel(u'Пересчет всех модификаций плана за %s месяц %s года  (%s)' % (month, year, tt),
+        ic_proccess_dlg.setProccessBoxLabel(u'Пересчет всех модификаций плана за %s месяц %s года  (%s)' % (month, year, tt),
                                             int(100*indx/len(modif_lst)), u'Получаем дерево базового плана', 10)
         _genModifPlan(parent, ibrows, id_modif, year, month)
         t2 = time.clock()
@@ -919,7 +919,7 @@ def _genModifPlanYear(parent, ibrows, id_modif, year):
     t1 = t2 = time.clock()
     for month in range(1, 13):
         tt = '%02i:%02i' % (int((t2-t1)/60), int(t2-t1) % 60)
-        ic_proccess_dlg.SetProccessBoxLabel(u'Пересчет модификации плана за %s месяц %s года  (%s)' % (month, year, tt),
+        ic_proccess_dlg.setProccessBoxLabel(u'Пересчет модификации плана за %s месяц %s года  (%s)' % (month, year, tt),
                                             int(100*month/12), u'Получаем дерево базового плана', 10)
         _genModifPlan(parent, ibrows, id_modif, year, month)
         t2 = time.clock()
@@ -941,9 +941,9 @@ def _genModifPlan(parent, ibrows, id_modif, year=None, month=None):
         return
         
     base_plan_lst = ibrows.metaclass.plan_struct_lst[3:]
-#    ic_proccess_dlg.SetProccessBoxLabel('Пересчет модификации плана за %s месяц %s года' %
+#    ic_proccess_dlg.setProccessBoxLabel('Пересчет модификации плана за %s месяц %s года' %
 #                    (str(month), year), None, 'Получаем дерево базового плана', 10)
-    ic_proccess_dlg.SetProccessBoxLabel(label2=u'Получаем дерево базового плана', value2=10)
+    ic_proccess_dlg.setProccessBoxLabel(label2=u'Получаем дерево базового плана', value2=10)
 
     ycod = str(year)
     if isinstance(month, int):
@@ -981,7 +981,7 @@ def _genModifPlan(parent, ibrows, id_modif, year=None, month=None):
 
     # ic_dlg.SetWaitBoxLabel('Преобразуем таблицу данных')
     tm2 = time.clock()
-    ic_proccess_dlg.SetProccessBoxLabel(label2=u'Преобразуем таблицу данных', value2=40)
+    ic_proccess_dlg.setProccessBoxLabel(label2=u'Преобразуем таблицу данных', value2=40)
 
     #   Получаем структуру модификации
     fullPlanLst = eval(IODBSprav.getModifPlanStructById(id_modif))
@@ -1015,7 +1015,7 @@ def _genModifPlan(parent, ibrows, id_modif, year=None, month=None):
         mt[indx] = (str(par), val)
     
     #   Сортируем таблицу
-    ic_proccess_dlg.SetProccessBoxLabel(label2=u'Сортируем', value2=50)
+    ic_proccess_dlg.setProccessBoxLabel(label2=u'Сортируем', value2=50)
     mt.sort()
 
     modif_metaplan = ibrows.setMetaplanById(id_modif)
@@ -1053,14 +1053,14 @@ def _genModifPlan(parent, ibrows, id_modif, year=None, month=None):
         
     #   Строим дерево модифицированного плана по подготовленной таблице
     #   Буферезируем справочники
-    ic_proccess_dlg.SetProccessBoxLabel(label2=u'Буферезируем справочники', value2=70)
+    ic_proccess_dlg.setProccessBoxLabel(label2=u'Буферезируем справочники', value2=70)
 
     dict = getSpravBuffDict(mMonthObj)
     if bCreateMnthNode:
         mMonthObj.value.description = dict['mMonth'][mcod]
     
     tm2 = time.clock()
-    ic_proccess_dlg.SetProccessBoxLabel(label2=u'Создаем структуру', value2=90)
+    ic_proccess_dlg.setProccessBoxLabel(label2=u'Создаем структуру', value2=90)
     buildStructByTable(mt, mMonthObj, fullPlanLst, dict)
 
     #   Деламе пересчет коэфициентов по вычисленным суммам планов
@@ -1120,7 +1120,7 @@ def _generateModifPlan(parent, metaclass, id_modif, year=None, month=None):
     """
     result = None
         
-    ic_proccess_dlg.SetProccessBoxLabel(u'Получаем дерево базового плана '+id_modif, 30)
+    ic_proccess_dlg.setProccessBoxLabel(u'Получаем дерево базового плана ' + id_modif, 30)
 
     base_plan_lst = metaclass.plan_struct_lst[3:]
     
@@ -1176,7 +1176,7 @@ def _generateModifPlan(parent, metaclass, id_modif, year=None, month=None):
             dictIndxRepl[i] = -1
     
     # ic_dlg.SetWaitBoxLabel('Преобразуем таблицу данных')
-    ic_proccess_dlg.SetProccessBoxLabel(u'Генерация модификации плана '+id_modif, 60)
+    ic_proccess_dlg.setProccessBoxLabel(u'Генерация модификации плана ' + id_modif, 60)
     #   2. Заменяем колонки
     # print '.... dictIndxRepl=', dictIndxRepl
     mt = range(len(base_plan_tab))
@@ -1215,7 +1215,7 @@ def _generateModifPlan(parent, metaclass, id_modif, year=None, month=None):
         bCreateMnthNode = True
         # mMonthObj.value.description = dict['mMonth'][mcod]
     
-    ic_proccess_dlg.SetProccessBoxLabel(u'Строим дерево модифицированного плана '+id_modif, 90)
+    ic_proccess_dlg.setProccessBoxLabel(u'Строим дерево модифицированного плана ' + id_modif, 90)
     
     #   Начинаем транзакцию
     mMonthObj.transact()
@@ -1452,6 +1452,6 @@ def loadDataPlanModif(metaclass, year, month):
 
     if modif_lst:
         for i, modif_plan in enumerate(modif_lst):
-            ic_proccess_dlg.SetProccessBoxLabel(label2=u'Год: %s Месяц: %s Генерация модификаций планов' % (year, month),
+            ic_proccess_dlg.setProccessBoxLabel(label2=u'Год: %s Месяц: %s Генерация модификаций планов' % (year, month),
                                                 value2=float(100.0/len(modif_lst))*i)
             generateModifPlan(main_win, metaclass, modif_plan[0], year, month)

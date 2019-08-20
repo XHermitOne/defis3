@@ -33,7 +33,7 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         icideinterface.icIDEInterface.__init__(self, drFrame)
 
-    def OnCloseIC(self, event):
+    def onPostClose(self, event):
         """
         Пост обработчик закрытия главного окна IDE.
         """
@@ -51,96 +51,96 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Окно/Закладка редактора ресурсов.
         """
-        browser_notebook = self.GetBrowserNotebook()
+        browser_notebook = self.getBrowserNotebook()
         if browser_notebook:
             for i_page in range(browser_notebook.GetPageCount()):
                 if browser_notebook.GetPageText(i_page).strip() == u'DEFIS':
                     return browser_notebook.GetPage(i_page)
         return None
         
-    def AddToolPanel(self, Panel_):
+    def addToolPanel(self, panel):
         """
         Добавить панель в нотебук инструментов/палитры инструментов.
-        @param Panel_: Наследник wx.Panel.
+        @param panel: Наследник wx.Panel.
         @return: Возвращает указатель на страницу нотебука(наследник drSidePanel),
             которая соответствует этой панели.
         """
-        main_panel = self.GetMainPanel()
+        main_panel = self.getMainPanel()
         tool_notebook_indx = 1
         if main_panel:
             page, i = main_panel.GetTargetNotebookPage(tool_notebook_indx,
                                                        u'Палитра инструментов')
-            Panel_.Reparent(page)
-            page.SetPanel(Panel_)
+            panel.Reparent(page)
+            page.SetPanel(panel)
             main_panel.ShowPanel(tool_notebook_indx, i)
             return page
         
-    def OpenFile(self, filename, OpenInNewTab=True,
-                 editrecentfiles=True, encoding='<Default Encoding>', readonly=False):
+    def openFile(self, filename, bOpenInNewTab=True,
+                 bEditRecentFiles=True, encoding='<Default Encoding>', bReadonly=False):
         """
         Загружает нужный файл в IDE.
         
         @type filename: C{string}
         @param filename: Имя загружаемого файла.
-        @type OpenInNewTab: C{bool}
-        @param OpenInNewTab: Признак загрузки файла на новой закладке.
-        @type editrecentfiles: C{bool}
-        @param editrecentfiles: Признак сохранении в списке недавно загружаемых файлов
+        @type bOpenInNewTab: C{bool}
+        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        @type bEditRecentFiles: C{bool}
+        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
         @type encoding: C{string}
         @param encoding: Кодировка файла.
-        @type readonly: C{bool}
-        @param readonly: Указание, что файл откроется только для чтения.
+        @type bReadonly: C{bool}
+        @param bReadonly: Указание, что файл откроется только для чтения.
         @rtype: C{bool}
         @return: Признак успешной загрузки.
         """
-        self.GetIDEFrame().OpenFile(filename, OpenInNewTab, editrecentfiles, encoding)
-        self.GetIDEFrame().txtDocument.SetReadOnly(readonly)
+        self.getIDEFrame().openFile(filename, bOpenInNewTab, bEditRecentFiles, encoding)
+        self.getIDEFrame().txtDocument.SetReadOnly(bReadonly)
         
-    def CloseFile(self, fileName):
+    def closeFile(self, filename):
         """
         Выгружает файл.
         
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         @rtype: C{bool}
         @return: Признак успешной выгрузки.
         """
-        i = self._getOpenedFileIdx(fileName)
+        i = self._getOpenedFileIdx(filename)
         if i >= 0:
-            self.SetSelection(i)
-            self.GetIDEFrame().OnClose(None)
+            self.setSelection(i)
+            self.getIDEFrame().OnClose(None)
         return True
 
-    def CloseAllFiles(self):
+    def closeAllFiles(self):
         """
         Выгрузить все файлы.
         """
-        self.GetIDEFrame().OnCloseAllDocuments(None)
+        self.getIDEFrame().OnCloseAllDocuments(None)
         return True
 
-    def GetAlreadyOpen(self):
+    def getAlreadyOpen(self):
         """
         Возвращает список имен открытых файлов.
         """
-        return self.GetIDEFrame().GetAlreadyOpen()
+        return self.getIDEFrame().getAlreadyOpen()
         
-    def insertEvtFuncToInterface(self, fileName, funcName, bodyFunc=None):
+    def insertEvtFuncToInterface(self, filename, func_name, function_body=None):
         """
         Вставляет в тело интерфейсного модуля заготовку функции с заданным именем.
         
-        @type fileName: C{string}
-        @param fileName: Имя файла.
-        @type funcName: C{string}
-        @param funcName: Имя функции.
-        @type bodyFunc: C{string}
-        @param bodyFunc: Тело функции.
+        @type filename: C{string}
+        @param filename: Имя файла.
+        @type func_name: C{string}
+        @param func_name: Имя функции.
+        @type function_body: C{string}
+        @param function_body: Тело функции.
         """
-        if self.SelectFile(fileName):
-            if self.GoToFunc(funcName):
+        if self.selectFile(filename):
+            if self.goToFunc(func_name):
                 return True
             else:
-                txt = self.GetDocumentText(fileName)
+                txt = self.getDocumentText(filename)
                 
                 #   Ищем секцию для обработчиков событий
                 indx = txt.find('###END EVENT')
@@ -151,121 +151,121 @@ class drPythonInterface(icideinterface.icIDEInterface):
                     indx = txt.find('def __init__')
                     
                 if indx >= 0:
-                    funcTxt = interfaceTemplate % funcName
+                    funcTxt = interfaceTemplate % func_name
                     txt = txt[:indx] + funcTxt + '    ' + txt[indx:]
-                    self.SetDocumentText(fileName, txt)
+                    self.setDocumentText(filename, txt)
                 
         return False
         
-    def IsOpenedFile(self, fileName):
+    def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         """
         # Сначала нормализовать имя файла к UNIX виду
-        fileName = fileName.replace('\\', '/').replace('//', '/')
-        return fileName in self.GetAlreadyOpen()
+        filename = filename.replace('\\', '/').replace('//', '/')
+        return filename in self.getAlreadyOpen()
         
-    def SetSelection(self, i):
+    def setSelection(self, idx):
         """
         Устанавливает нужный файл в качестве текущего.
         """
-        if self.GetDocumentNotebook():
-            self.GetDocumentNotebook().SetSelection(i)
-            self.GetDocumentNotebook().SetTab()
+        if self.getDocumentNotebook():
+            self.getDocumentNotebook().setSelection(idx)
+            self.getDocumentNotebook().SetTab()
     
-    def _getOpenedFileIdx(self, fileName):
+    def _getOpenedFileIdx(self, filename):
         """
         Индекс открытого файла.
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         @return: Индекс открытого файла или
             -1, если файл не открыт.
         """
-        alreadyopen = self.GetAlreadyOpen()
+        alreadyopen = self.getAlreadyOpen()
         i = -1
         try:
-            i = alreadyopen.index(fileName)
+            i = alreadyopen.index(filename)
         except ValueError:
             i = -1
         return i
         
-    def SelectFile(self, fileName):
+    def selectFile(self, filename):
         """
         Устанавливает нужный файл в качестве текущего.
 
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         @rtype: C{bool}
         @return: Признак успешного выбора.
         """
-        fl = fileName.replace('\\', '/')
-        alreadyopen = self.GetAlreadyOpen()
+        fl = filename.replace('\\', '/')
+        alreadyopen = self.getAlreadyOpen()
             
         if alreadyopen and fl in alreadyopen:
             i = alreadyopen.index(fl)
-            self.SetSelection(i)
+            self.setSelection(i)
 
             return True
             
         return False
         
-    def GetDocumentNotebook(self):
+    def getDocumentNotebook(self):
         """
         Возвращает указатель на документы, организованные в 'записной книжке'.
         """
-        if self.GetIDEFrame():
-            return self.GetIDEFrame().documentnotebook
+        if self.getIDEFrame():
+            return self.getIDEFrame().documentnotebook
         
-    def GetDocument(self):
+    def getDocument(self):
         """
         Возвращает текущий документ.
         """
-        return self.GetIDEFrame().txtDocument
+        return self.getIDEFrame().txtDocument
     
-    def GetDocumentObj(self, fileName):
+    def getDocumentObj(self, filegame):
         """
         Возвращает объект документа.
 
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filegame: C{string}
+        @param filegame: Имя файла.
         """
-        fl = fileName.replace('\\', '/')
-        al = self.GetAlreadyOpen()
+        fl = filegame.replace('\\', '/')
+        al = self.getAlreadyOpen()
         
         if fl in al:
             docnumber = al.index(fl)
-            return self.GetIDEFrame().txtDocumentArray[docnumber]
+            return self.getIDEFrame().txtDocumentArray[docnumber]
     
-    def GetDocumentText(self, fileName):
+    def getDocumentText(self, filename):
         """
         Возвращает текст документа.
 
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         """
-        fl = fileName.replace('\\','/')
-        al = self.GetAlreadyOpen()
+        fl = filename.replace('\\', '/')
+        al = self.getAlreadyOpen()
         
         if fl in al:
             docnumber = al.index(fl)
-            text = self.GetIDEFrame().txtDocumentArray[docnumber].GetText()
+            text = self.getIDEFrame().txtDocumentArray[docnumber].GetText()
             return text
                 
-    def GetSourceBrowser(self):
+    def getSourceBrowser(self):
         """
         Возвращает указатель на SourceBrowser текста.
         """
-        return self.GetIDEFrame().SourceBrowser
+        return self.getIDEFrame().SourceBrowser
 
-    def GetMatches(self, text, resourcebrowser):
+    def getMatches(self, text, resource_browser):
         """
         """
         matches = []
         positions = []
             
-        matcher = resourcebrowser.finditer(text)
+        matcher = resource_browser.finditer(text)
         
         try:
             match = matcher.next()
@@ -281,29 +281,29 @@ class drPythonInterface(icideinterface.icIDEInterface):
             
         return matches, positions
         
-    def GetModify(self, fileName):
+    def getModify(self, filename):
         """
         Возвращает признак измененного документа.
         
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         """
-        return self.GetDocumentObj(fileName).GetModify()
+        return self.getDocumentObj(filename).getModify()
         
-    def GoToFunc(self, funcname):
+    def goToFunc(self, func_name):
         """
         """
-        Document = self.GetDocument()
+        Document = self.getDocument()
 
         if Document:
             compchar = Document.GetIndentationCharacter()
             resourcebrowser = re.compile(r'(^'+compchar+'*?class\s.*[(:])|(^'+compchar+'*?def\s.*[(:])|(^'+compchar+'*?import\s.*$)|(^'+compchar+'*?from\s.*$)', re.MULTILINE)
             text = Document.GetText()
             
-            matches, positions = self.GetMatches(text, resourcebrowser)
+            matches, positions = self.getMatches(text, resourcebrowser)
             
             for i, sl in enumerate(matches):
-                if funcname in sl:
+                if func_name in sl:
                     line = Document.LineFromPosition(positions[i])
                     Document.EnsureVisible(line)
                     Document.ScrollToLine(line)
@@ -315,70 +315,70 @@ class drPythonInterface(icideinterface.icIDEInterface):
         
         return False
 
-    def GetMainPanel(self):
+    def getMainPanel(self):
         """
         Гравная панель IDE.
         """
-        if self.GetIDEFrame():
-            return self.GetIDEFrame().mainpanel
+        if self.getIDEFrame():
+            return self.getIDEFrame().mainpanel
 
-    def GetBrowserNotebook(self):
+    def getBrowserNotebook(self):
         """
         Браузер.
         """
-        main_panel = self.GetMainPanel()
+        main_panel = self.getMainPanel()
         if main_panel:
             return main_panel.leftNotebook
 
-    def GetToolNotebook(self):
+    def getToolNotebook(self):
         """
         Нотебук инструменнтов/палитры компонентов.
         """
-        main_panel = self.GetMainPanel()
+        main_panel = self.getMainPanel()
         if main_panel:
             return main_panel.rightNotebook
 
-    def HideToolNotebook(self):
+    def hideToolNotebook(self):
         """
         Скрыть нотебук инструменнтов/палитры компонентов.
         """
-        main_panel = self.GetMainPanel()
+        main_panel = self.getMainPanel()
         tool_notebook_indx = 1
         if main_panel:
             main_panel.RightIsVisible = False
 
-    def ReloadFile(self, fileName):
+    def reloadFile(self, filename):
         """
         Перегружает нужный файл в IDE.
         
-        @type fileName: C{string}
-        @param fileName: Имя файла.
+        @type filename: C{string}
+        @param filename: Имя файла.
         @rtype: C{bool}
         @return: Признак успешной перезагрузки.
         """
-        al = self.GetAlreadyOpen()
+        al = self.getAlreadyOpen()
         
-        if fileName in al:
-            indx = al.index(fileName)
-            self.GetIDEFrame().setDocumentTo(indx, True)
-            self.OpenFile(fileName, False)
+        if filename in al:
+            indx = al.index(filename)
+            self.getIDEFrame().setDocumentTo(indx, True)
+            self.openFile(filename, False)
             
-    def SetDocumentText(self, fileName, txt):
+    def setDocumentText(self, filename, txt):
         """
         Изменяет текст документа.
         """
-        fl = fileName.replace('\\', '/')
-        al = self.GetAlreadyOpen()
+        fl = filename.replace('\\', '/')
+        al = self.getAlreadyOpen()
         
         if fl in al:
             docnumber = al.index(fl)
-            self.GetIDEFrame().txtDocumentArray[docnumber].SetText(txt)
+            self.getIDEFrame().txtDocumentArray[docnumber].SetText(txt)
 
-    def ShowToolNotebook(self):
+    def showToolNotebook(self):
         """
         Показать нотебук инструменнтов/палитры компонентов.
         """
-        main_panel = self.GetMainPanel()
+        main_panel = self.getMainPanel()
         tool_notebook_indx = 1
         if main_panel:
             main_panel.RightIsVisible = True

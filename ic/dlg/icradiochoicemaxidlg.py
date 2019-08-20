@@ -69,7 +69,7 @@ class icRadioChoiceMaxiDialog(std_dialogs_proto.radioChoiceMaxiDialogProto):
                 else:
                     self.choice_radioBox.ShowItem(i, False)
             if default is not None:
-                self.choice_radioBox.SetSelection(default)
+                self.choice_radioBox.setSelection(default)
 
         # Т.к не все элементы отображаются переразмерить окно для того чтобы
         # не было пустого места

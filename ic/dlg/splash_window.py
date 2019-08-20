@@ -185,8 +185,8 @@ def load_component_proccess(parent=None, frames=None):
     try:
         import ic.components.icResourceParser as prs
         import ic.dlg.ic_logo_dlg as ic_logo_dlg
-        ic_logo_dlg.LoadProjectProccess(parent, u'Подождите',
-                                        prs.GetComponentModulDict, tuple(), Frames_=frames)
+        ic_logo_dlg.loadProjectProccess(parent, u'Подождите',
+                                        prs.GetComponentModulDict, tuple(), frames=frames)
     except:
         log.fatal(u'Ошибка загрузки сплеш-окна')
 

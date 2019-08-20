@@ -371,8 +371,8 @@ class icMenuRootNode(flatmenu.FlatMenu):
         node = self._Parent
         ide = node.getParent().getIDE()
         if ide:
-            if not ide.SelectFile(filename):
-                return ide.OpenFile(filename, True, readonly=False)
+            if not ide.selectFile(filename):
+                return ide.openFile(filename, True, bReadonly=False)
             return True
         else:
             log.warning(u'Не определен IDE для редактирования модуля <%s>' % filename)

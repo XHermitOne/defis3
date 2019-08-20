@@ -133,9 +133,9 @@ class icDBCalendarPrototype(icsprav.icSpravPrototype):
             # Опрделить сколько дней в месяце
             days = ic_time.getMonthDaysCount(month+1, Year_)
             for day in range(days):
-                ic_proccess_dlg.SetProccessBoxLabel(u'Календарный график на %s год. Месяц: %s' % (str(Year_),
+                ic_proccess_dlg.setProccessBoxLabel(u'Календарный график на %s год. Месяц: %s' % (str(Year_),
                                                                                                   self.getMonthNameByNum(month+1)),
-                                                    100.0 / 12.0 * (month + 1), u'День: '+str(day+1),
+                                                    100.0 / 12.0 * (month + 1), u'День: ' + str(day+1),
                                                     100.0 / days * (day+1))
                 self._genDayRec(Year_, month+1, day+1)
     

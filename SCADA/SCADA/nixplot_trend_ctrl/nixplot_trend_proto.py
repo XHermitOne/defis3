@@ -543,16 +543,16 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                 scene_max_time = limit_scene_time_max
 
             log.debug(u'Адаптация сцены:')
-            log.debug(u'\tmin data x: %s' % min(time_data))
-            log.debug(u'\tmin data y: %s' % min_y)
-            log.debug(u'\tmax data x: %s' % max(time_data))
-            log.debug(u'\tmax data y: %s' % max_y)
+            log.debug(u'\tmin_value data x: %s' % min(time_data))
+            log.debug(u'\tmin_value data y: %s' % min_y)
+            log.debug(u'\tmax_value data x: %s' % max(time_data))
+            log.debug(u'\tmax_value data y: %s' % max_y)
             log.debug(u'\ttime precision: %s' % str(self._x_precision))
             log.debug(u'\ty precision: %s' % str(self._y_precision))
-            log.debug(u'\tmin time: %s' % str(scene_min_time))
-            log.debug(u'\tmin y: %s' % str(scene_min_y))
-            log.debug(u'\tmax time: %s' % str(scene_max_time))
-            log.debug(u'\tmax y: %s' % str(scene_max_y))
+            log.debug(u'\tmin_value time: %s' % str(scene_min_time))
+            log.debug(u'\tmin_value y: %s' % str(scene_min_y))
+            log.debug(u'\tmax_value time: %s' % str(scene_max_time))
+            log.debug(u'\tmax_value y: %s' % str(scene_max_y))
 
             self._cur_scene = (scene_min_time, scene_min_y, scene_max_time, scene_max_y)
 

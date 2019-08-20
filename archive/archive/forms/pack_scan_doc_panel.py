@@ -194,7 +194,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 is_duplex = value.get('is_duplex', None)
                 is_duplex = bool(is_duplex) if is_duplex else False
 
-                # for i in range(n_begin, n_end + 1):
+                # for idx in range(n_begin, n_end + 1):
                 for i in check_list:
                     doc = self.doc_navigator.getSlaveDocument(index=i)
                     doc_uuid = doc.getUUID()

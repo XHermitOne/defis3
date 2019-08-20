@@ -68,7 +68,7 @@ def onTreeBrwsInit(Context_):
         #Вытащить глобальные переменные из пространства имен, 
         #иначе они не попадут в локальное пространство имен
         onTreeBrwsInit.func_globals['__builtins__']['locals']().update(Context_)
-        #print 'DBG>>>',Context_.keys()
+        #print 'DBG>>>',context.keys()
         OBJ=Context_['OBJ']
         
         tree_ctrl=Context_.GetObject('tree_object_ctrl')
@@ -104,7 +104,7 @@ def onCancelButtonMouseClick(Context_):
     @param Context_: Контекст выполнения формы.
     """
     try:
-        #main_dlg=Context_.GetObject('std_ref_book_choice_dlg')
+        #main_dlg=context.GetObject('std_ref_book_choice_dlg')
         main_dlg=Context_['_root_obj']
         main_dlg.EndModal(wx.ID_CANCEL)
         return None
@@ -117,7 +117,7 @@ def onOkButtonMouseClick(Context_):
     @param Context_: Контекст выполнения формы.
     """
     try:
-        #main_dlg=Context_.GetObject('std_ref_book_choice_dlg')
+        #main_dlg=context.GetObject('std_ref_book_choice_dlg')
         main_dlg=Context_['_root_obj']
         main_dlg.EndModal(wx.ID_OK)
         return True

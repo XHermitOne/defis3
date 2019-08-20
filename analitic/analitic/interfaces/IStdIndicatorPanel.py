@@ -343,7 +343,7 @@ def _getStatisticYearSumma(metaObj, tableName, dateLst=None):
         plan = _getYearPlan(tdate, metaObj)
         # kol_plan = _getYearKolPlan(tdate, metaObj)
         data[i] = (tdate, summa, plan)
-        # kol_data[i] = (tdate, kol, kol_plan)
+        # kol_data[idx] = (tdate, kol, kol_plan)
     return data
 
 
@@ -375,7 +375,7 @@ def _getStatisticYearKol(metaObj, tableName, dateLst=None):
         summa, kol = _getYearSumma(tdate, metaObj, tableName)
         # plan = _getYearPlan(tdate, metaObj)
         kol_plan = _getYearKolPlan(tdate, metaObj)
-        # data[i] = (tdate, summa, plan)
+        # data[idx] = (tdate, summa, plan)
         kol_data[i] = (tdate, kol, kol_plan)
     
     return kol_data
@@ -687,12 +687,12 @@ class IStdIndicatorPanel(icobjectinterface.icObjectInterface):
 #        data = range(len(lst))
 #        kol_data = range(len(lst))
 #
-#        for i, tdate in enumerate(lst):
+#        for idx, tdate in enumerate(lst):
 #            summa, kol = self.GetYearSumma(tdate, metaObj, tableName)
 #            plan = self.GetYearPlan(tdate, metaObj)
 #            kol_plan = self.GetYearKolPlan(tdate, metaObj)
-#            data[i] = (tdate, summa, plan)
-#            kol_data[i] = (tdate, kol, kol_plan)
+#            data[idx] = (tdate, summa, plan)
+#            kol_data[idx] = (tdate, kol, kol_plan)
 #
 #        return (data, kol_data)
 

@@ -760,7 +760,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         #   Указатель на функцию опрделяющую дневные планы наблюдаемого параметра
         self._dayPlanFunc = None
         #   Поправочный параметр, для определения планового значения
-        #   определяется как max/(2*plan)
+        #   определяется как max_value/(2*plan)
         self._planFactor = 1
         
         #   Статистика

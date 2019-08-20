@@ -11,6 +11,8 @@ from . import printer_dlg_proto
 from ic.bitmap import bmpfunc
 from ic.utils import printerfunc
 
+__version__ = (0, 1, 1, 1)
+
 
 class icChoicePrinterDlg(printer_dlg_proto.icChoicePrinterDlgProto):
     """

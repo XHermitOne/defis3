@@ -127,12 +127,12 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
             if ext != '.py':
                 py_filename = res_editor.get_res_module_name(py_filename)
 
-            bSel = ide and ide.SelectFile(py_filename)
+            bSel = ide and ide.selectFile(py_filename)
 
             # Если файл не открыт пытаемся его открыть
             if not bSel:
                 res_editor.open_ide_py_module()
-                bSel = ide and ide.SelectFile(py_filename)
+                bSel = ide and ide.selectFile(py_filename)
 
             if bSel:
                 # По расширению файла ресурса определяем способ вызова:
@@ -167,10 +167,10 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
             py_filename = res_editor.file if ext == '.py' else path_filename+'_'+ext[1:]+'.py'
             # log.debug(u'Поиск функции <%s> в модуле <%s>' % (func_name, py_filename))
             if tree and ide:
-                bSel = ide.SelectFile(py_filename)
+                bSel = ide.selectFile(py_filename)
                 if bSel:
                     # log.debug(u'Переход к функции')
-                    ide.GoToFunc(func_name)
+                    ide.goToFunc(func_name)
                     return True
                 else:
                     log.warning(u'Модуль Python <%s> не выбран в IDE' % py_filename)

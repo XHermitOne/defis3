@@ -18,11 +18,11 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: defiscfg/__init__.py:30
-msgid "Run current module"
+msgid "run current module"
 msgstr "Запустить текущий модуль"
 
 #: defiscfg/__init__.py:30
-msgid "Run module"
+msgid "run module"
 msgstr "Запустить модуль"
 
 #: defiscfg/__init__.py:31

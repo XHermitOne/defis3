@@ -101,13 +101,13 @@ class TestUser(unittest.TestCase):
             
         root.Login('root')
         self.failUnlessEqual(root.getRoles()[0].id, 'Admin')
-        # Проверяем, что роли readonly атрибут
+        # Проверяем, что роли bReadonly атрибут
         try:
             root.roles = []
             raise NotImplementedError('Readonly Attribute Error')
         except AttributeError:
             pass
-        # Проверяем, что разрешения readonly атрибут
+        # Проверяем, что разрешения bReadonly атрибут
         try:
             root.getRoles()[0].permissions = []
             raise NotImplementedError('Readonly Attribute Error')

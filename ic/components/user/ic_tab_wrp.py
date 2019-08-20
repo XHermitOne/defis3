@@ -170,7 +170,7 @@ for i in range(1, 6):
 
 for i in range(1, 6):
     ic_f_field_spc = copy.deepcopy(ic_field_wrp.ic_class_spc)
-    ic_f_field_spc['name'] = 'f%d' % i
+    ic_f_field_spc['name'] = 'function%d' % i
     ic_f_field_spc['description'] = u'Вещественное значение %d' % i
     ic_f_field_spc['label'] = u'F%d' % i
     ic_f_field_spc['type_val'] = 'F'

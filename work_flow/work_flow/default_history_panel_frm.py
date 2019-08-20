@@ -55,14 +55,14 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
         #контролы панели состояний объекта
         state_choice=self.GetObject('state_choice')
         state_choice.setChoiceList(self.OBJ.getHistory().getTypeStateLabels())
-        state_choice.SetSelection(0)        
+        state_choice.setSelection(0)
         
         #Проинициализировать периоды
         period_choice=self.GetObject('period_choice')
         self.periods=self.OBJ.getHistory().getPeriodRecords(self.OBJ.getUUID())
         period_labels=self._convertPeriodLabels(self.periods)
         period_choice.setChoiceList(period_labels)
-        period_choice.SetSelection(0)
+        period_choice.setSelection(0)
 
         #Заполнение панели реквизитов состояния
         state_idx=state_choice.GetSelection()
@@ -113,7 +113,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             period_choice.setChoiceList(period_labels)
             labels_count=len(period_labels)
             if labels_count>0:
-                period_choice.SetSelection(len(period_labels)-1)
+                period_choice.setSelection(len(period_labels) - 1)
                 
             #Обновить контрол дерева прикрепленных объектов
             state_idx=self.GetObject('state_choice').GetSelection()
@@ -157,7 +157,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                 self.periods=self.OBJ.getHistory().getPeriodRecords(obj_uuid)
                 period_labels=self._convertPeriodLabels(self.periods)
                 period_choice.setChoiceList(period_labels)
-                period_choice.SetSelection(0)
+                period_choice.setSelection(0)
                 
     #--- Панель управления объектами ---
     def onAttachObjectTool(self,event):

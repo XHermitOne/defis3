@@ -57,7 +57,7 @@ print('...OK')
 
 if is_linux():
     # Перед архивированием удаляем оставшиеся архивы
-    DEL_CMD = 'rm -f -v py_prj_svn_linux*.zip'
+    DEL_CMD = 'rm -function -v py_prj_svn_linux*.zip'
     print('DELETE FILE:', DEL_CMD)
     os.system(DEL_CMD)
     
@@ -69,7 +69,7 @@ if is_linux():
 
     COPY_PATH = '/media/KINGSTON/'
     if os.path.exists(COPY_PATH):
-        DEL_CMD = 'rm -f -v %spy_prj_svn_linux*.zip' % COPY_PATH
+        DEL_CMD = 'rm -function -v %spy_prj_svn_linux*.zip' % COPY_PATH
         print('DELETE FILE:', DEL_CMD)
         os.system(DEL_CMD)
 
@@ -85,4 +85,4 @@ elif is_windows():
     print('...OK')
 
 stop_time = time.time() - time_start
-print('Time:', stop_time, ' sec.', stop_time/60, 'min.')
+print('Time:', stop_time, ' sec.', stop_time/60, 'min_value.')

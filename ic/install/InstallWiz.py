@@ -297,7 +297,7 @@ SectionEnd
 
 _NSISSectionTemplateMSI = '''
 Section '%s'
-    ExecWait ''msiexec.exe' /i '$EXEDIR\\package\\%s''
+    ExecWait ''msiexec.exe' /idx '$EXEDIR\\package\\%s''
 SectionEnd
 '''
 

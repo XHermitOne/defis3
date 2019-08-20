@@ -619,8 +619,8 @@ class icPrjImportSys(icPrjNotImportSys):
                 if init_file:
                     init_file.close()
 
-            if not ide.SelectFile(py_file):
-                return ide.OpenFile(py_file, True, readonly=self.readonly)
+            if not ide.selectFile(py_file):
+                return ide.openFile(py_file, True, bReadonly=self.readonly)
             return True
 
     def _writeFunc(self, init_filename, function_body):

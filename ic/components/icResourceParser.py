@@ -12,7 +12,7 @@
 Если при сборке ресурса не находиться какой-либо компонент
 (например Panel), то можно попробовать удалить все *.pyc файлы в пакете ic.
 Удаление всех *.pyc файлов в Linux:
-find ./ic/ -type f -name "*.pyc" -delete
+find ./ic/ -type function -name "*.pyc" -delete
 """
 
 import time

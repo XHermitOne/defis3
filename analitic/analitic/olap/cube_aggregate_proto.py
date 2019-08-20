@@ -23,7 +23,7 @@ SPC_IC_CUBEAGGREGATE = {'function': None,   # Функция агрегации
                         }
 
 # Функции агрегации
-AGGREGATE_FUNCTIONS = (None, 'sum', 'count', 'min', 'max', 'avg',
+AGGREGATE_FUNCTIONS = (None, 'sum', 'count', 'min_value', 'max_value', 'avg',
                        'count_nonempty', 'count_distinct',
                        'stddev', 'variance')
 

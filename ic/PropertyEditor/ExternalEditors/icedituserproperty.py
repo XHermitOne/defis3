@@ -248,4 +248,4 @@ class icEditUserPropertyEditor(wx.propgrid.PGTextCtrlAndButtonEditor):
     #    ctrl.SetValue(text)
 
     #def OnFocus(self, property, ctrl):
-    #    ctrl.SetSelection(-1, -1)
+    #    ctrl.setSelection(-1, -1)

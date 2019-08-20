@@ -56,7 +56,7 @@ def _gen_pseudograph_line(line, pseudograph_symb, i):
     prev_symb = line[i]
     result_symb = ic_str.overlayPseudoGraph(pseudograph_symb, prev_symb,
                                             default_symb=pseudograph_symb)
-    # log.debug(u'%d. Слияние символов <%s> + <%s> = <%s>' % (i, pseudograph_symb, prev_symb, result_symb))
+    # log.debug(u'%d. Слияние символов <%s> + <%s> = <%s>' % (idx, pseudograph_symb, prev_symb, result_symb))
     return line[:i]+result_symb+line[i+1:]
 
 

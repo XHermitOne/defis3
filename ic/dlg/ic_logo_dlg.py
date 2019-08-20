@@ -31,17 +31,17 @@ def load_proccess_deco(f):
     """
 
     def func(*arg, **kwarg):
-        return LoadProjectProccess(None, u'Подождите   ', f, arg, kwarg)
+        return loadProjectProccess(None, u'Подождите   ', f, arg, kwarg)
 
     return func
 
 
-def SetLoadProccessBoxLabel(label=None, value=None):
+def setLoadProccessBoxLabel(label=None, value=None):
     """
     Функция изменяет параметры индикатора процесса. Если значение любого из
     параметров None, то значение параметра на индикаторе не меняется.
     Примеры:
-        2. SetLoadProccessBoxLabel('Wait...', 20)
+        2. setLoadProccessBoxLabel('Wait...', 20)
     
     @type label: C{string}
     @param label: Текст сообщения на верхней полосе индикации.
@@ -55,34 +55,34 @@ def SetLoadProccessBoxLabel(label=None, value=None):
         ic_proccess_dlg.SetValue(value)
 
 
-def LoadProjectProccess(Parent_, Msg_,
-                        Func_, FuncArgs_=(), FuncKW_={},
-                        Frames_=None, bAutoIncr=False):
+def loadProjectProccess(parent, message,
+                        function, function_args=(), function_kwargs={},
+                        frames=None, bAutoIncr=False):
     """
     Окно ожидания.
-    @param Parent_: Ссылка на окно.
-    @param Msg_: Текст диалога.
-    @param Func_: Функция, которую необходимо подождать.
-    @param FuncArgs_: Аргументы функции.
-    @param FuncKW_: Именованные аргументы функции.
-    @param Frames_: Файлы-кадры.
+    @param parent: Ссылка на окно.
+    @param message: Текст диалога.
+    @param function: Функция, которую необходимо подождать.
+    @param function_args: Аргументы функции.
+    @param function_kwargs: Именованные аргументы функции.
+    @param frames: Файлы-кадры.
     """
     global ic_proccess_dlg
     if ic_proccess_dlg:
-        return Func_(*FuncArgs_, **FuncKW_)
+        return function(*function_args, **function_kwargs)
         
     wait_result = [None]
 
-    if not Frames_:
+    if not frames:
         # Определить кадры по умолчанию
         wait_dir = os.path.join(os.path.dirname(__file__), 'Wait')
-        Frames_ = [wait_dir+'logo.jpg']
+        frames = [wait_dir + 'logo.jpg']
     
-    ic_proccess_dlg = wait_box = icThreadLoadProjectDlg(Parent_, Frames_, Msg_, bAutoIncr=bAutoIncr)
+    ic_proccess_dlg = wait_box = icThreadLoadProjectDlg(parent, frames, message, bAutoIncr=bAutoIncr)
         
-    wait_box.SetResultList(wait_result)
+    wait_box.setResultList(wait_result)
     # Запустить функцию ожидания
-    _thread.start_new(wait_box.Run, (Func_, FuncArgs_, FuncKW_))
+    _thread.start_new(wait_box.run, (function, function_args, function_kwargs))
     wait_box.ShowModal()
     wait_box.Destroy()
     ic_proccess_dlg = None
@@ -97,18 +97,18 @@ except ImportError:
 
 class icThreadLoadProjectDlg(wx.Dialog):
 
-    def __init__(self, Parent_, Frames_, Msg_, min=0, max=100, style=0, bAutoIncr=False):
+    def __init__(self, parent, frames, message, min_value=0, max_value=100, style=0, bAutoIncr=False):
         """
         Конструктор.
         
-        @type Parent_: C{wx.Window}
-        @param Parent_: Указатель на родительское окно.
-        @type Msg_: C{string}
-        @param Msg_: Сообщение верхнего индикатора.
-        @type min: C{int}
-        @param min: Минимальное значение верхнего индикатора.
-        @type max: C{int}
-        @param max: Максимальное значение верхнего индикатора.
+        @type parent: C{wx.Window}
+        @param parent: Указатель на родительское окно.
+        @type message: C{string}
+        @param message: Сообщение верхнего индикатора.
+        @type min_value: C{int}
+        @param min_value: Минимальное значение верхнего индикатора.
+        @type max_value: C{int}
+        @param max_value: Максимальное значение верхнего индикатора.
         @type style: C{int}
         @param style: Стиль окна процесса.
         @type bAutoIncr: C{bool}
@@ -116,19 +116,19 @@ class icThreadLoadProjectDlg(wx.Dialog):
             Используется в тех случаях, когда размерность процесса не определена,
             а показывать чего то надо.
         """
-        if Parent_:
-            self.defBackClr = Parent_.GetBackgroundColour()
+        if parent:
+            self.defBackClr = parent.GetBackgroundColour()
         else:
             app = glob_functions.getEngine()
             if app:
-                Parent_ = app.GetTopWindow()
+                parent = app.GetTopWindow()
                 self.defBackClr = app.GetTopWindow().GetBackgroundColour()
             else:
                 self.defBackClr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE)
 
         style = wx.STAY_ON_TOP
         w, h = wx.ScreenDC().GetSize()
-        self._ani = [bmpfunc.icCreateBitmap(pic_name) for pic_name in Frames_]
+        self._ani = [bmpfunc.icCreateBitmap(pic_name) for pic_name in frames]
         if self._ani:
             sx, sy = self._pic_size = (self._ani[0].GetWidth(), self._ani[0].GetHeight())
         else:
@@ -142,7 +142,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
         # method.
         pre = wx.PreDialog()
         pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
-        pre.Create(Parent_, -1, pos=(x, y), size=(sx, sy), style=style)
+        pre.Create(parent, -1, pos=(x, y), size=(sx, sy), style=style)
 
         # This next step is the most important, it turns this Python
         # object into the real wrapper of the dialog (instead of pre)
@@ -151,15 +151,15 @@ class icThreadLoadProjectDlg(wx.Dialog):
         
         # Индекс состояния анимации
         self._cur_ani_state = 0
-        self._max_ani_state = len(Frames_)
+        self._max_ani_state = len(frames)
         self._delay = 0.3
         self._autoIncr = bAutoIncr
 
         self.title = ''
-        self.label = Msg_
-        self.min = min
-        self.max = max
-        self.value = min
+        self.label = message
+        self.min = min_value
+        self.max = max_value
+        self.value = min_value
         
         #
         self.indBgrClr = wx.Colour(230, 230, 230)
@@ -184,7 +184,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
         self._oPos = self.GetPosition()
         self._oPar = None
         
-        self.timer = wx.FutureCall(1, self.OnTimer, None)
+        self.timer = wx.FutureCall(1, self.onTimer, None)
         
     def DirectRefresh(self):
         """
@@ -192,10 +192,10 @@ class icThreadLoadProjectDlg(wx.Dialog):
         evt = wx.PaintEvent(self.GetId())
         return self.GetEventHandler().ProcessEvent(evt)
 
-    def SetResultList(self, ResultList_):
+    def setResultList(self, ResultList_):
         self._result_list = ResultList_
         
-    def NextState(self):
+    def setNextState(self):
         """
         Сменить состояние.
         """
@@ -204,7 +204,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
             self._cur_ani_state = 0
         return self._cur_ani_state
     
-    def DrawFrame(self, NFrame_):
+    def drawFrame(self, NFrame_):
         """
         Отрисовка кадра.
         @param NFrame_: Номер кадра.
@@ -218,7 +218,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
         dc.EndDrawing()
         self._picture.Refresh()
 
-    def DrawLabel(self, dc, label=None, label2=None):
+    def drawLabel(self, dc, label=None, label2=None):
         """
         Отрисовываем текст сообщения.
         """
@@ -239,7 +239,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
         if label:
             dc.DrawText(label, x, y)
 
-    def DrawIndicator(self, dc):
+    def drawIndicator(self, dc):
         """
         Рисует индикатор процесса.
         """
@@ -263,14 +263,14 @@ class icThreadLoadProjectDlg(wx.Dialog):
             dc.SetBrush(self.indBrush)
             dc.DrawRectangle(px+5, hh, width*(self.value-self.min)/(self.max-self.min), H)
             
-    def DrawPic(self, NFrame_, dc, bClear=False):
+    def drawPic(self, n_frame, dc, bClear=False):
         """
         Отрисовка кадра.
-        @param NFrame_: Номер кадра.
+        @param n_frame: Номер кадра.
         """
         if self._ani:
             sx, sy = self.GetSize()
-            bmp = self._ani[NFrame_]
+            bmp = self._ani[n_frame]
             px, py = self._pic_size
             
             memDC = wx.MemoryDC()
@@ -288,7 +288,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
         return (sz != self._oSize or pos != self._oPos or
                 self._oPar != (self.min, self.max, self.value, self.label))
         
-    def OnCheckClose(self, event=None):
+    def onCheckClose(self, event=None):
         """
         Проверка закрытия окна.
         """
@@ -324,22 +324,22 @@ class icThreadLoadProjectDlg(wx.Dialog):
         dc.SetBrush(self.bgrBrush)
         
         #   Отрисовываем картинку
-        self.DrawPic(self.NextState(), dc)
+        self.drawPic(self.setNextState(), dc)
 
         #   Отрисовываем сообщение
-        self.DrawLabel(dc)
+        self.drawLabel(dc)
 
         #   Отрисовываем индикатор процесса
-        self.DrawIndicator(dc)
+        self.drawIndicator(dc)
         
         dc.EndDrawing()
         
         if evt:
             evt.Skip
         
-        self.OnCheckClose()
+        self.onCheckClose()
         
-    def OnTimer(self, evt):
+    def onTimer(self, evt):
         """
         """
         if self._autoIncr:
@@ -350,14 +350,14 @@ class icThreadLoadProjectDlg(wx.Dialog):
         self.OnPaint(None)
         
         #   Сохраняем текущие параметры
-        self.SavePar()
+        self.saveParameter()
 
-    def Run(self, Func_, Args_, KW_):
+    def run(self, function, function_args, function_kwargs):
         """
         Запуск ожидания функции.
         """
         self._running = True
-        result = Func_(*Args_, **KW_)
+        result = function(*function_args, **function_kwargs)
         self._running = False
         # Сбросить в результирующий список
         if isinstance(self._result_list, list):
@@ -370,7 +370,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
         if label is not None:
             self.label = label
         
-    def SavePar(self):
+    def saveParameter(self):
         """
         Сохраняет параметры индикатора.
         """
@@ -398,7 +398,7 @@ def f(parent):
     """
     """
     for x in range(100):
-        SetLoadProccessBoxLabel('Count x:'+str(x), x)
+        setLoadProccessBoxLabel('Count x:' + str(x), x)
         time.sleep(0.5)
 
 

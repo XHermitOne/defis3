@@ -88,7 +88,7 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
                         if ext == 'py' and md not in not_load_lst:
                             try:
                                 log.info(u'>>> Импорт пользовательского компонента %s' % md)
-                                ic_logo_dlg.SetLoadProccessBoxLabel(u'>>> Импортируемый компонент: %s' % md,
+                                ic_logo_dlg.setLoadProccessBoxLabel(u'>>> Импортируемый компонент: %s' % md,
                                                                     100 * j / len(dir_list))
 
                                 # ВНИМАНИЕ! Аргумент level определяет уровень с которого

@@ -358,8 +358,8 @@ def testStorage():
     for i in range(10):
         a = {}
         for j in range(10):
-            a[j] = 'indx i,j=%d.%d' % (i, j)
-            print(u'\tms[i][j] = %s' % a[j])
+            a[j] = 'indx idx,j=%d.%d' % (i, j)
+            print(u'\tms[idx][j] = %s' % a[j])
         ms[i] = a
     
     storage.Close()

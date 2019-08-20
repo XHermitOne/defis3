@@ -418,8 +418,8 @@ class PropNotebookEdt:
                         tree = self.GetResTree()
                         if tree:
                             ide = tree.GetResEditor().GetIDEInterface()
-                            if ide and ide.SelectFile(tree.GetResEditor().file):
-                                ide.GoToFunc(func)
+                            if ide and ide.selectFile(tree.GetResEditor().file):
+                                ide.goToFunc(func)
                 # Автоматически создаем заготовку функции и ссылку на неё
                 elif col > 0 and _val in ('', None, 'None') and type == icDefInf.EDT_PY_SCRIPT:
                     tree = self.GetResTree()
@@ -430,12 +430,12 @@ class PropNotebookEdt:
                         if ext != '.py':
                             fl = tree.GetResEditor().get_res_module_name(fl)
                             
-                        bSel = ide and ide.SelectFile(fl)
+                        bSel = ide and ide.selectFile(fl)
                         
                         # Если файл не открыт пытаемся его открыть
                         if not bSel:
                             tree.GetResEditor().OnPyScript(None)
-                            bSel = ide and ide.SelectFile(fl)
+                            bSel = ide and ide.selectFile(fl)
                             
                         if bSel:
                             grid.DisableCellEditControl()
@@ -574,8 +574,8 @@ class PropNotebookEdt:
                 if func and fl:
                     if tree:
                         ide = tree.GetResEditor().GetIDEInterface()
-                        if ide and ide.SelectFile(fl):
-                            ide.GoToFunc(func)
+                        if ide and ide.selectFile(fl):
+                            ide.goToFunc(func)
             except:
                 log.fatal('###')
 

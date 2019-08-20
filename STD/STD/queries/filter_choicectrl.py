@@ -151,9 +151,9 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
             # Выбор условия соединения фильтров
             and_or = filter_data.get('logic', 'OR')
             if and_or == 'OR':
-                self.logicRadioBox.SetSelection(0)
+                self.logicRadioBox.setSelection(0)
             else:
-                self.logicRadioBox.SetSelection(1)
+                self.logicRadioBox.setSelection(1)
 
             self._filters = filter_data.get('children', [])
         else:
@@ -216,7 +216,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
 
         self.refreshFilters()
         # Выделить
-        self.filterCheckList.SetSelection(filter_idx - 1)
+        self.filterCheckList.setSelection(filter_idx - 1)
         return True
 
     def moveFilterDown(self, filter_idx=None):
@@ -242,7 +242,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
 
         self.refreshFilters()
         # Выделить
-        self.filterCheckList.SetSelection(filter_idx + 1)
+        self.filterCheckList.setSelection(filter_idx + 1)
         return True
 
     def setLimitLabel(self, limit=None, over_limit=None):

@@ -319,7 +319,7 @@ class icNumerator(object):
             # Определение максимального значения счетчика
             max_count = self.get_max_count(session, numerator_table)
             max_count = max_count + 1 if max_count else 1
-            log.debug(u'New max count <%s>' % max_count)
+            log.debug(u'New max_value count <%s>' % max_count)
 
             # Т.к. актуальный год можно заменить, то и дату выставить
             # актуального года

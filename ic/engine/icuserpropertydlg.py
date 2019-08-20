@@ -107,7 +107,7 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
                 selection = roles_name.index(data['roles'][0])
             except IndexError:
                 selection = 0
-            role_choice.SetSelection(selection)            
+            role_choice.setSelection(selection)
                 
     def _refreshData(self):
         """

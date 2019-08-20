@@ -468,7 +468,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
             if '_resultEval' in evalSpace:
                 ret = evalSpace['_resultEval']
 
-            log.info(u'### EXECUTE ATTRIBUTE DEBUG FUNCTION f%s(_esp)' % compileKey)
+            log.info(u'### EXECUTE ATTRIBUTE DEBUG FUNCTION function%s(_esp)' % compileKey)
             return coderror.IC_EVAL_OK, ret
         except:
             log.error(msg)

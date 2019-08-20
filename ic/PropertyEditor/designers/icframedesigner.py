@@ -156,7 +156,7 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
             font.SetWeight(wx.BOLD)
             dc.SetFont(font)
             dc.SetTextForeground(wx.WHITE)
-            dc.DrawLabel(self.title, wx.Rect(5,d, width - 60 - d, H-d))
+            dc.drawLabel(self.title, wx.Rect(5, d, width - 60 - d, H - d))
         # Рисуем кнопки
         dc.DrawBitmap(self.img_min, width - 60, d+2, True)
         dc.DrawBitmap(self.img_exp, width - 40, d+2, True)

@@ -59,7 +59,7 @@ class icUPrintDlgProto ( wx.Dialog ):
 		bSizer5.Add( self.m_staticText1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		self.paper_comboBox = wx.combo.BitmapComboBox( self.option_panel, wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, "", wx.CB_READONLY ) 
-		self.paper_comboBox.SetSelection( 0 )
+		self.paper_comboBox.setSelection(0)
 		self.paper_comboBox.SetFont( wx.Font( 14, 70, 90, 90, False, wx.EmptyString ) )
 		
 		bSizer5.Add( self.paper_comboBox, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 5 )

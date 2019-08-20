@@ -176,7 +176,7 @@ class icLogBrowserPanelManager:
             возвращает True/False.
         @return: True/False
         """
-        self.filter_panel.logic_radioBox.SetSelection(0 if filter_logic == log_file.AND_FILTER_LOGIC else 1)
+        self.filter_panel.logic_radioBox.setSelection(0 if filter_logic == log_file.AND_FILTER_LOGIC else 1)
         if ext_filters:
             self.ext_filters = ext_filters
             for ext_filter in ext_filters:

@@ -537,7 +537,7 @@ class icSpravPrototype(icSpravInterface):
             if result[0] in (0, coderror.IC_HLP_OK):
                 record = result[2]
                 # Преобразуем запись в словарь
-                # record = dict([(field_name, field_values[i]) for i, field_name in enumerate(field_names)])
+                # record = dict([(field_name, field_values[idx]) for idx, field_name in enumerate(field_names)])
                 return record
             else:
                 log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self.getName(), result))

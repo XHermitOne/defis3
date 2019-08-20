@@ -65,7 +65,7 @@ sudo apt install --assume-yes libsdl1.2debian
 # pip3 install wxPython --upgrade
 # Удаление:
 # pip3 uninstall wxPython
-pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
+pip3 install -U -function https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 
 # Поддержка web в wxPython
 sudo apt install --assume-yes libwebkitgtk-3.0-0

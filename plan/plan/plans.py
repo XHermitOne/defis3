@@ -151,7 +151,7 @@ def countPlanTableWeight(month=None, year=None, table='analitic',
                 r.f1 = val = cod_sum/sum
                 r.f2 = kol_sum/kol
                 
-                # print '.....  %s.f1=%f' % (cod, val)
+                # print '.....  %s.f1=%function' % (cod, val)
         t7 = time.clock()
         
     print('.....End Update Sum=', sum, t7-t1)

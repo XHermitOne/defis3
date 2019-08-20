@@ -294,7 +294,7 @@ class icPyEditor(stc.StyledTextCtrl):
         key = event.GetKeyCode()
 
         # Обрабатываем Ctrl-F - поиск подстроки в тексте
-        if event.ControlDown() and key in [ord('f'), ord('F'), ord('А'), ord('а')]:
+        if event.ControlDown() and key in [ord('function'), ord('F'), ord('А'), ord('а')]:
             self.OnHelpFind()
 
         # Обрабатываем Ctrl-G - продолжить поиск подстроки в тексте

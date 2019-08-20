@@ -200,7 +200,7 @@ class icDocCardPanelManager():
         replaces = {'FILENAME': doc_filename,
                     'PROFILE_DIR': ic_file.getPrjProfilePath()}
         cmd = txtgen.gen(cmd, replaces)
-        log.info(u'Run command <%s>' % cmd)
+        log.info(u'run command <%s>' % cmd)
 
         doc_txt = os.popen3(cmd)[1].read()
 
@@ -510,7 +510,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         if txt:
             txt = txt[0].capitalize() + txt[1:]
         self.docname_textCtrl.ChangeValue(txt)
-        self.docname_textCtrl.SetSelection(*selection)
+        self.docname_textCtrl.setSelection(*selection)
 
     def onTag0Text(self, event):
         """

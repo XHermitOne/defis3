@@ -51,7 +51,7 @@ SPC_IC_SIMPLEGRID = {'col_count': 2,    # Количество колонок
                      'default_row_height': -1,  # Размер по умолчанию строк
                      'default_col_width': -1,   # Размер по умолчанию колонок
                      'selection_mode': 'cells',     # Режим выделения объектов грида
-                     'readonly': False,     # Не редакттируемые ячейки грида?
+                     'bReadonly': False,     # Не редакттируемые ячейки грида?
     
                      '__parent__': icwidget.SPC_IC_WIDGET,
                      '__attr_hlp__': {'col_count': u'Количество колонок',
@@ -65,7 +65,7 @@ SPC_IC_SIMPLEGRID = {'col_count': 2,    # Количество колонок
                                       'default_row_height': u'Размер по умолчанию строк',
                                       'default_col_width': u'Размер по умолчанию колонок',
                                       'selection_mode': u'Режим выделения объектов грида',
-                                      'readonly': u'Не редакттируемые ячейки грида?',
+                                      'bReadonly': u'Не редакттируемые ячейки грида?',
                                       },
                      }
 
@@ -102,7 +102,7 @@ ic_class_spc = {'type': 'SimpleGrid',
                 'default_row_height': -1,  # Размер по умолчанию строк
                 'default_col_width': -1,   # Размер по умолчанию колонок
                 'selection_mode': 'cells',     # Режим выделения объектов грида
-                'readonly': False,     # Не редакттируемые ячейки грида?
+                'bReadonly': False,     # Не редакттируемые ячейки грида?
 
                 '__styles__': ic_class_styles,
                 '__lists__': {'selection_mode': list(GRID_SELECTION_MODES.keys()),
@@ -115,7 +115,7 @@ ic_class_spc = {'type': 'SimpleGrid',
                                    icDefInf.EDT_TEXTLIST: ['col_labels',
                                                            'row_labels', 'wcols', 'hrows'],
                                    icDefInf.EDT_CHOICE: ['selection_mode'],
-                                   icDefInf.EDT_CHECK_BOX: ['readonly'],
+                                   icDefInf.EDT_CHECK_BOX: ['bReadonly'],
                                    },
                     
                 '__events__': {'cellChange': ('wx.EVT_GRID_CELL_CHANGE', 'OnCellChange', False),

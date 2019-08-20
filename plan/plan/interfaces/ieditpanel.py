@@ -360,7 +360,7 @@ class IEdtPanel(icobjectinterface.icObjectInterface):
             metaObj = self.metaObj
 
         recount_child_sum(metaObj, bIndicator)
-#        ic_proccess_dlg.ProccessFunc(self.parent,'Пересчитываем суммы дочерних планов',
+#        ic_proccess_dlg.proccess_function(self.parent,'Пересчитываем суммы дочерних планов',
 #            recount_child_sum, (metaObj, bIndicator), {}, bAutoIncr=True)
 
     def RecountChildKol(self, metaObj=None, bIndicator=True):
@@ -371,7 +371,7 @@ class IEdtPanel(icobjectinterface.icObjectInterface):
             metaObj = self.metaObj
 
         recount_child_kol(metaObj, bIndicator)
-#        ic_proccess_dlg.ProccessFunc(self.parent,'Пересчитываем кол. показ. дочерних планов',
+#        ic_proccess_dlg.proccess_function(self.parent,'Пересчитываем кол. показ. дочерних планов',
 #            recount_child_kol, (metaObj, bIndicator), {}, bAutoIncr=True)
 
     def RecountParentSum(self, metaObj=None, bIndicator=True, bSave=True):
@@ -382,7 +382,7 @@ class IEdtPanel(icobjectinterface.icObjectInterface):
             metaObj = self.metaObj
 
         recount_prnt_sum(metaObj, bIndicator, bSave)
-#        ic_proccess_dlg.ProccessFunc(self.parent,'Пересчитываем суммы родительских планов',
+#        ic_proccess_dlg.proccess_function(self.parent,'Пересчитываем суммы родительских планов',
 #                    recount_prnt_sum, (metaObj, bIndicator, bSave), {}, bAutoIncr=True)
 
     def RecountParentKol(self, metaObj=None, bIndicator=True, bSave=True):
@@ -393,7 +393,7 @@ class IEdtPanel(icobjectinterface.icObjectInterface):
             metaObj = self.metaObj
         
         recount_prnt_kol(metaObj, bIndicator, bSave)        
-#        ic_proccess_dlg.ProccessFunc(self.parent,'Пересчитываем кол. показ. родительских планов',
+#        ic_proccess_dlg.proccess_function(self.parent,'Пересчитываем кол. показ. родительских планов',
 #                    recount_prnt_kol, (metaObj, bIndicator, bSave), {}, bAutoIncr=True)
             
     def RefreshPanel(self):

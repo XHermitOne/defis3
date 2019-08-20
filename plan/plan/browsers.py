@@ -315,7 +315,7 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
             ctrl.SetValue(self.default_id)
             tree.ReLoadRoot()
         else:
-            ctrl.SetSelection(0)
+            ctrl.setSelection(0)
 
         # self.choiceFuncVariantChoice(evt)
 
@@ -429,7 +429,7 @@ class icPlanBrows(icMultiSrcBrows):
         if old and old in ctrl.getDictRepl().keys():
             ctrl.SetValue(old)
         else:
-            ctrl.SetSelection(0)
+            ctrl.setSelection(0)
         
         self.choiceFuncVariantChoice(evt)
         dlg.Destroy()

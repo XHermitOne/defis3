@@ -163,7 +163,7 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
             #recs=tab.select(ic_sqlobjtab.AND(tab.q.dtoper==dt_oper,
             #    tab.q.grup==grp_cod,tab.q.summa==sum,
             #    tab.q.reg==reg_cod,tab.q.mens==men_cod))
-            #print i,recs
+            #print idx,recs
             #if recs.count():
             #    for rec in recs:
             #        tab.update(rec.id,dtoper=dt_oper,grup=grp_cod,codt=t_cod,
@@ -413,7 +413,7 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
     dbf_f=dbf.icDBFFile(DBFFileName_)
     bOpen = dbf_f.Open()
 
-    #ic_proccess_dlg.SetProccessBoxLabel(DBFFileName_, 0,label2='Загрузка данных', value2=10)
+    #ic_proccess_dlg.setProccessBoxLabel(DBFFileName_, 0,label2='Загрузка данных', value2=10)
     #progress.icOpenThreadedProgressDlg('Загрузка данных',
     #    DBFFileName_,0,dbf_f.getRecCount())
     i=0
@@ -472,7 +472,7 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
 
             #Загрузка данных
             i+=1
-            #print i
+            #print idx
             tab.add(dtoper=dt_oper,grup=grp_cod,codt=t_cod,
                 ei=ei_name,kolf=kol,cena=cen,summa=sum,
                 reg=reg_cod,mens=men_cod,
@@ -487,7 +487,7 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
         except:
             ic_log.icLogErr('ОШИБКА загрузки DBF %s файда в БД'%(DBFFileName_))
 
-        ic_proccess_dlg.SetProccessBoxLabel(value=float(100.0/dbf_f.getRecCount())*i)
+        ic_proccess_dlg.setProccessBoxLabel(value=float(100.0 / dbf_f.getRecCount()) * i)
         i+=1
         #progress.icStepThreadedProgressDlg()
 
@@ -559,7 +559,7 @@ def loadDataStandart():
             for cur_file in files:
 
                 #Процесс бар
-                ic_proccess_dlg.SetProccessBoxLabel(cur_file,0,label2='Загрузка данных', value2=count_100*i)
+                ic_proccess_dlg.setProccessBoxLabel(cur_file, 0, label2='Загрузка данных', value2=count_100 * i)
                 i+=1
 
                 #Вызов функции загрузки данных

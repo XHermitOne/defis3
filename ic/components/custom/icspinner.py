@@ -13,8 +13,8 @@
     - B{field_name=None}: Имя поля базы данных, которое отображает компонент.
     - B{style=wx.SP_WRAP | wx.SIMPLE_BORDER}: Стиль окна.
     - B{value=0}: Значение после создания объекта.
-    - B{min=0}: Минимальное значение поля.
-    - B{max=10}: Максимальное значение поля.
+    - B{min_value=0}: Минимальное значение поля.
+    - B{max_value=10}: Максимальное значение поля.
     - B{position=(-1, -1)}: Расположение на родительском окне.
     - B{size=(-1,-1)}: Размеры поля.
     - B{init=None}: Выражение, вычисляющее значение компонента.
@@ -41,7 +41,7 @@
 @var ICSpinnerStyle: Словарь специальных стилей компонента. Описание ключей ICSpinnerStyle:
 
     - C{wx.SP_ARROW_KEYS} - Пользователь может использовать стрелки для изменения значения.
-    - C{wx.SP_WRAP} - Значение компонента лежит в заданных пределах (min,max).
+    - C{wx.SP_WRAP} - Значение компонента лежит в заданных пределах (min_value,max_value).
 
 """
 
@@ -65,8 +65,8 @@ SPC_IC_SPINNER = {'type': 'Spinner',
                   'size': (-1, -1),
                   'init': None,
                   'value': 0,
-                  'min': 0,
-                  'max': 10,
+                  'min_value': 0,
+                  'max_value': 10,
                   'foregroundColor': None,
                   'backgroundColor': None,
                   'font': {},
@@ -77,7 +77,7 @@ SPC_IC_SPINNER = {'type': 'Spinner',
                   'refresh': [],
                   'source': None,
 
-                  '__attr_types__': {icDefInf.EDT_NUMBER: ['min', 'max', 'value'],
+                  '__attr_types__': {icDefInf.EDT_NUMBER: ['min_value', 'max_value', 'value'],
                                      },
                   '__events__': {'onSpin': ('wx.EVT_SPIN', 'OnSpin', True),
                                  'setFocus': ('wx.EVT_SET_FOCUS', 'OnSetFocus', False),
@@ -157,10 +157,10 @@ class icSpinner(icWidget, wx.SpinCtrl):
         else:
             self.field_name = component['field_name']
    
-        min = util.getICAttr(component['min'], evalSpace,
-                             'Error in getICAttr in icspinner. name=%s <min>=%s' % (self.name, component['min']))
-        max = util.getICAttr(component['max'], evalSpace,
-                             'Error in getICAttr in icspinner. name=%s <max>=%s' % (self.name, component['max']))
+        min = util.getICAttr(component['min_value'], evalSpace,
+                             'Error in getICAttr in icspinner. name=%s <min_value>=%s' % (self.name, component['min_value']))
+        max = util.getICAttr(component['max_value'], evalSpace,
+                             'Error in getICAttr in icspinner. name=%s <max_value>=%s' % (self.name, component['max_value']))
         val = util.getICAttr(component['value'], evalSpace,
                              'Error in getICAttr in icspinner. name=%s <value>=%s' % (self.name, component['value']))
         

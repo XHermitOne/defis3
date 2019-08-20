@@ -60,7 +60,7 @@ class TestCatalog(unittest.TestCase):
         self.failUnlessEqual(len(ct.get_path_lst('key/')), 9)
         self.failUnlessEqual(len(ct.get_path_lst('/key')), 9)
         self.failUnlessEqual(len(ct.get_path_lst('/key/')), 9)
-        self.failUnlessEqual(len(ct.get_path_lst('key/f')), 0)
+        self.failUnlessEqual(len(ct.get_path_lst('key/function')), 0)
         self.failUnlessEqual(len(ct.get_path_lst('key/fld')), 4)
         self.failUnlessEqual(len(ct.get_path_lst('key/fld1')), 3)
         self.failUnlessEqual(len(ct.get_path_lst('key/fld1/')), 3)
