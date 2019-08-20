@@ -64,7 +64,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
         # Инициализация навигатора документов
         self.doc_navigator = ic.metadata.archive.mtd.pack_scan_doc_form_manager.create()
-        self.doc_navigator.setDocListCtrlColumns('nn', 'n_scan_pages', lambda rec: '+' if rec['is_duplex'] else '',
+        self.doc_navigator.setDocListCtrlColumns(lambda rec: str(rec['nn'])[:-1], 'n_scan_pages', lambda rec: '+' if rec['is_duplex'] else '',
                                                  'n_doc', lambda rec: rec['doc_date'].strftime(DEFAULT_DATE_FMT) if rec['doc_date'] else NONE_DATE,
                                                  'n_obj', lambda rec: rec['obj_date'].strftime(DEFAULT_DATE_FMT) if rec['obj_date'] else NONE_DATE,
                                                  'doc_name', 'c_agent')

@@ -51,7 +51,10 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
         # tab = doc.getTable()
 
+        # ВНИМАНИЕ! Чтобы не нарушить порядок сортировки документов сортировать
+        # необходимо по NPP + NPPS
         nn = dbf_record['NPP']
+        npps = dbf_record['NPPS']
         str_n_doc = dbf_record['NDOC'].strip()
         n_doc = u'%s.%s.%s' % (self.get_sector_subcode(sType),
                                self.get_doc_type_subcode(dbf_record['TYP_DOC'], dbf_record['IN_OUT']),
@@ -93,7 +96,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         n_pages = dbf_record['NLIST'] if dbf_record['NLIST'] > 0 else 1
 
         new_rec = dict(uuid=str(uuid.uuid4()),
-                       nn=nn,
+                       nn=int(str(nn) + str(npps)),
                        state='00',
                        dt_create=datetime.date.today(),
                        dt_state=datetime.date.today(),

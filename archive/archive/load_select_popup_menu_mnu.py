@@ -147,17 +147,20 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Документы'
 
         prefix = u' за'
-        if int(dbf_filename[2:5]) and not dbf_filename.startswith('U'):
-            # Если цифры склада определены, то считаем что
-            # следующие 2 цифры это месяц ...
-            month = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
-            str_month = datefunc.MONTHS[month - 1] if 1 <= month <= 12 else u''
-            prefix += u' ' + str_month
-        elif int(dbf_filename[2:5]) == 0:
-            # ... иначе это квартал
-            quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
-            if quartal:
-                prefix += u' %d квартал' % quartal
+        try:
+            if int(dbf_filename[2:5]) and not dbf_filename.startswith('U'):
+                # Если цифры склада определены, то считаем что
+                # следующие 2 цифры это месяц ...
+                month = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
+                str_month = datefunc.MONTHS[month - 1] if 1 <= month <= 12 else u''
+                prefix += u' ' + str_month
+            elif int(dbf_filename[2:5]) == 0:
+                # ... иначе это квартал
+                quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
+                if quartal:
+                    prefix += u' %d квартал' % quartal
+        except:
+            log.fatal(u'Ошибка определения префикса. Файл <%s>' % dbf_filename)
 
 
         try:
