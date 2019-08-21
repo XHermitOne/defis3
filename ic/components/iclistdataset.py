@@ -338,7 +338,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
             self.rowDict = {}
         
         self.evalSpace['values'] = self.rowDict
-        self.evalSpace['_lfp'] = {'func': 'OnItemSelected',
+        self.evalSpace['_lfp'] = {'function': 'OnItemSelected',
                                   'evt': evt,
                                   'currentItem': self.currentItem,
                                   'row': self.currentItem,
@@ -365,7 +365,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
             self.rowDict = {}
         
         self.evalSpace['values'] = self.rowDict
-        self.evalSpace['_lfp'] = {'func': 'onItemActivated',
+        self.evalSpace['_lfp'] = {'function': 'onItemActivated',
                                   'evt': evt,
                                   'currentItem': currentItem,
                                   'result': self.rowDict,

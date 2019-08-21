@@ -4,12 +4,12 @@
 """
 """
 
-# Version
-__version__ = (0, 0, 0, 2)
-
 import wx
 import wx.lib.delayedresult as delayedresult
 import thread
+
+# Version
+__version__ = (0, 0, 0, 2)
 
 
 class DelayedFunction(object):
@@ -49,8 +49,7 @@ class DelayedFunction(object):
         
     def result(self, delayedResult):
         try:
-            result = delayedResult.get()
+            # result = delayedResult.get()
             self.result_func(*self.args)
-        except Exception, exc:
+        except Exception as exc:
             print(u'Result for sessionID %s raised exception: %s' % (self.sessionID, exc))
-            return

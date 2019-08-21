@@ -31,7 +31,7 @@
  'arg_1': Значение аргумента 1.
  'arg_2': Значение аргумента 2.
  'get_args': Дополнительная функция получения аргументов.
- 'func': Имя функции сравнения. Функция сравнения выбирается по имени из 
+ 'function': Имя функции сравнения. Функция сравнения выбирается по имени из
             словаря функций сравнения, определенного 
             в модуле filter_builder_env.
  '__sql__': Кортеж элментов sql выражения соответствующего данному реквизиту.
@@ -229,66 +229,66 @@ class icFilter2SQLAlchemyConverter:
             ic.log.fatal(u'Ошибка получения аргументов')
 
         try:
-            if Requisite_['func'] == 'equal':
+            if Requisite_['function'] == 'equal':
                 # Проверка на <равно>
                 return getattr(self.table.c, Requisite_['requisite']) == Requisite_['arg_1']
-            elif Requisite_['func'] == 'not_equal':
+            elif Requisite_['function'] == 'not_equal':
                 # Проверка на <неравенство>
                 return getattr(self.table.c, Requisite_['requisite']) != Requisite_['arg_1']
-            elif Requisite_['func'] == 'great':
+            elif Requisite_['function'] == 'great':
                 # Проверка на <больше>
                 return getattr(self.table.c, Requisite_['requisite']) > Requisite_['arg_1']
-            elif Requisite_['func'] == 'great_or_equal':
+            elif Requisite_['function'] == 'great_or_equal':
                 # Проверка на <больше или равно>
                 return getattr(self.table.c, Requisite_['requisite']) >= Requisite_['arg_1']
-            elif Requisite_['func'] == 'lesser':
+            elif Requisite_['function'] == 'lesser':
                 # Проверка на <меньше>
                 return getattr(self.table.c, Requisite_['requisite']) < Requisite_['arg_1']
-            elif Requisite_['func'] == 'lesser_or_equal':
+            elif Requisite_['function'] == 'lesser_or_equal':
                 # Проверка на <меньше или равно>
                 return getattr(self.table.c, Requisite_['requisite']) <= Requisite_['arg_1']
-            elif Requisite_['func'] == 'between':
+            elif Requisite_['function'] == 'between':
                 # Проверка <МЕЖДУ>
                 return getattr(self.table.c, Requisite_['requisite']).between(Requisite_['arg_1'],
                                                                               Requisite_['arg_2'])
-            elif Requisite_['func'] == 'not_between':
+            elif Requisite_['function'] == 'not_between':
                 # Проверка <не МЕЖДУ>
                 return sqlalchemy.not_(getattr(self.table.c, Requisite_['requisite']).between(Requisite_['arg_1'],
                                                                                               Requisite_['arg_2']))
-            elif Requisite_['func'] == 'contain':
+            elif Requisite_['function'] == 'contain':
                 # Проверка <СОДЕРЖИТ>
                 return getattr(self.table.c, Requisite_['requisite']).contains(Requisite_['arg_1'])
-            elif Requisite_['func'] == 'not_contain':
+            elif Requisite_['function'] == 'not_contain':
                 # Проверка <не СОДЕРЖИТ>
                 return sqlalchemy.not_(getattr(self.table.c, Requisite_['requisite']).contains(Requisite_['arg_1']))
-            elif Requisite_['func'] in ('left_equal', 'startswith'):
+            elif Requisite_['function'] in ('left_equal', 'startswith'):
                 # Проверка <начинается с>
                 return getattr(self.table.c, Requisite_['requisite']).startswith(Requisite_['arg_1'])
-            elif Requisite_['func'] in ('right_equal', 'endswith'):
+            elif Requisite_['function'] in ('right_equal', 'endswith'):
                 # Проверка <заканчивается на>
                 return getattr(self.table.c, Requisite_['requisite']).endswith(Requisite_['arg_1'])
-            elif Requisite_['func'] == 'mask':
+            elif Requisite_['function'] == 'mask':
                 # Проверка <соответствует маске>
                 ic.log.warning(u'Проверка на соответствие маски пока не реализованно')
                 return None
-            elif Requisite_['func'] == 'not_mask':
+            elif Requisite_['function'] == 'not_mask':
                 # Проверка <не соответствует маске>
                 ic.log.warning(u'Проверка на не соответствие маски пока не реализованно')
                 return None
-            elif Requisite_['func'] == 'is_null':
+            elif Requisite_['function'] == 'is_null':
                 # Проверка <пусто>
                 return getattr(self.table.c, Requisite_['requisite']) is None
-            elif Requisite_['func'] == 'is_not_null':
+            elif Requisite_['function'] == 'is_not_null':
                 # Проверка <не пусто>
                 return getattr(self.table.c, Requisite_['requisite']) is not None
-            elif Requisite_['func'] == 'into':
+            elif Requisite_['function'] == 'into':
                 # Проверка <любое из>
                 return getattr(self.table.c, Requisite_['requisite']).in_(Requisite_['arg_1'])
-            elif Requisite_['func'] == 'not_into':
+            elif Requisite_['function'] == 'not_into':
                 # Проверка <не одно из>
                 return sqlalchemy.not_(getattr(self.table.c, Requisite_['requisite']).in_(Requisite_['arg_1']))
         
-            ic.log.warning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % Requisite_['func'])
+            ic.log.warning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % Requisite_['function'])
         except:
             ic.log.error(u'Ошибка конвертации реквизита фильтра <%s>' % Requisite_)
             

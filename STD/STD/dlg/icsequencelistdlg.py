@@ -10,7 +10,7 @@ from . import sequence_list_dlg_proto
 import ic
 from ic.log import log
 
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icSequenceListDlg(sequence_list_dlg_proto.icSequenceListDlgProto):

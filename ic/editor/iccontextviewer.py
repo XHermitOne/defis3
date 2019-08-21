@@ -40,7 +40,7 @@ class icContextViewerDlg(icobjectinterface.icObjectInterface):
             if context is None:
                 context = glob_functions.getKernel().GetContext()
             variables = self._contextConvert(context)
-            viewer.LoadTree(variables)
+            viewer.loadTree(variables)
         except:
             log.fatal(u'Ошибка инициализации дерева просмотра хранилища переменных.')
 

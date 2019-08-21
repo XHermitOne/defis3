@@ -139,7 +139,7 @@ def onMouseClickSaveTool2(evalSpace):
     sprav.getStorage().setLevelTable(old_cod, tab)
     # Перегрузить дерево справочника
     sprav_tree = sprav.getStorage().getLevelTree()
-    GetObject('spravTree').LoadTree(sprav_tree)
+    GetObject('spravTree').loadTree(sprav_tree)
 
 
 def onMouseClickFindTool2(evalSpace):
@@ -171,7 +171,7 @@ def _onInitSpravTree2(evalSpace):
     GetInterface = evalSpace['GetInterface']
     
     sprav_tree = sprav.getStorage().getLevelTree()
-    GetObject('spravTree').LoadTree(sprav_tree)
+    GetObject('spravTree').loadTree(sprav_tree)
     # Получить таблицу
     level_tab_tuple = sprav.getStorage().getLevelTable(None)
     level_tab = [list(rec) for rec in level_tab_tuple]

@@ -40,7 +40,7 @@ class icStorageViewerDlg(icobjectinterface.icObjectInterface):
             var_storage = glob_functions.getVarStorage().getStorage()
             log.info(u'VAR STORAGE VIEWER: <%s>' % var_storage)
             variables = self._storageConvert(var_storage)
-            viewer.LoadTree(variables)
+            viewer.loadTree(variables)
         except:
             log.fatal(u'Ошибка инициализации дерева просмотра хранилища переменных.')
 

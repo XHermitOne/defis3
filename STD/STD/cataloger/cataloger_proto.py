@@ -38,7 +38,7 @@ import shutil
 from ic.log import log
 from . import level_proto
 
-__version__ = (0, 0, 1, 4)
+__version__ = (0, 1, 1, 1)
 
 
 class icCatalogerProto(object):

@@ -9,7 +9,7 @@ from . import sequence_list_box
 from ic.bitmap import bmpfunc
 from ic.log import log
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icSequenceListBox(sequence_list_box.icSequenceListBoxProto):

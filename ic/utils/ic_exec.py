@@ -44,7 +44,7 @@ SPC_IC_FUNC = {'name': 'func1',     # код-имя функции, строка
                'type': 'icFunc',    # тип 'icFunc', строка
                'description': '',   # описание, строка
                'import': {},        # словарь, описывающий импортируемые имена для вычисления выражений
-               'func': '@',         # сама функция, строка
+               'function': '@',         # сама функция, строка
                'len': -1,           # длина возвращаемого значения, целое
                'mask': '',          # шаблон возвращаемого значения, регулярное выражение
                'date': None,        # дата последнего изменения, строка
@@ -165,7 +165,7 @@ def exec_function(function):
     name_space = dict()
     try:
         name_space = util.ic_import(function['import'])
-        return util.ic_eval(function['func'], -1, name_space)
+        return util.ic_eval(function['function'], -1, name_space)
     except:
         log.fatal()
         return None

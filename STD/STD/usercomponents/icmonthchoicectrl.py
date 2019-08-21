@@ -7,8 +7,8 @@
 
 import datetime
 import wx
+
 from ic.utils import util
-from ic.kernel import io_prnt
 from ic.bitmap import bmpfunc
 from ic.PropertyEditor import icDefInf
 
@@ -24,6 +24,7 @@ ic_class_name = 'icMonthChoiceCtrl'
 ic_class_spc = {'name': 'default',
                 'type': 'MonthChoiceCtrl',
                 'is_now': True,    # Установить по умолчанию на текущий месяц?
+
                 '__attr_types__': {0: ['name', 'type'],
                                    icDefInf.EDT_CHECK_BOX: ['is_now'],
                                    },
@@ -49,12 +50,13 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 MONTH_LIST = (u'Январь', u'Февраль', u'Март', u'Апрель',
               u'Май', u'Июнь', u'Июль', u'Август',
               u'Сентябрь', u'Октябрь', u'Ноябрь', u'Декабрь',
               )
+
 
 class icMonthChoiceCtrl(parentModule.icChoice):
     """
@@ -62,7 +64,6 @@ class icMonthChoiceCtrl(parentModule.icChoice):
     @type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
-
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,
                  bCounter=False, progressDlg=None):
         """

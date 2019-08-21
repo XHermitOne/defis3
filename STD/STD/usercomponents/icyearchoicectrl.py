@@ -57,7 +57,7 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 0, 0, 4)
+__version__ = (0, 1, 1, 1)
 
 
 class icYearChoiceCtrl(parentModule.icChoice):
@@ -66,7 +66,6 @@ class icYearChoiceCtrl(parentModule.icChoice):
     @type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
-
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,
                  bCounter=False, progressDlg=None):
         """

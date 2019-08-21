@@ -54,7 +54,7 @@ _stdTreeBrwsResModuleFmt = '''
             storage = obj.getStorage()
             tree_data = storage.getBranchObj()
             tree_ctrl = context.GetObject('tree_object_ctrl')
-            tree_ctrl.LoadTree(tree_data)
+            tree_ctrl.loadTree(tree_data)
             return True 
         except:
             ic.log.error(u'Ошибка инициализации дерева просмотра объекта')

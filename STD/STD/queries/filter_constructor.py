@@ -496,7 +496,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             func = None
             if func_combobox:
                 func = func_combobox.getSelectedData() or {'name': None}
-                item_data['func'] = func['name']
+                item_data['function'] = func['name']
 
             for i_col in range(3, self.GetColumnCount()):
                 arg_edit = self.GetItemWindow(Item_, i_col)
@@ -519,7 +519,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
                     for i, arg in enumerate(args):
                         value = item_data['arg_'+str(i+1)]
                         kwargs[arg['name']] = value
-                    compare_function = func['func']
+                    compare_function = func['function']
                     if compare_function:   
                         item_data['__sql__'] = compare_function(**kwargs)
         else:
@@ -539,7 +539,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         if not req:
             return False
         
-        if req.get('type', None) == 'compare' and (req.get('func', None) and
+        if req.get('type', None) == 'compare' and (req.get('function', None) and
            req.get('requisite', None)):
             return True
         elif req.get('type', None) == 'group':
@@ -580,7 +580,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
                 
             func_combobox = self.GetItemWindow(compare_item, 2)
             if func_combobox:
-                func_combobox.selectByName(Data_['func'])
+                func_combobox.selectByName(Data_['function'])
                 self.setArgsEdit(compare_item, func_combobox)
                 
             for i_col in range(3, self.GetColumnCount()):

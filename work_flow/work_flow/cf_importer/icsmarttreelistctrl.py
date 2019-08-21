@@ -890,7 +890,7 @@ def __load_data(tree=None):
 
 
 def __view_data(obj):
-    obj.LoadTree(obj.tree)
+    obj.loadTree(obj.tree)
 
 
 def test(par=0):

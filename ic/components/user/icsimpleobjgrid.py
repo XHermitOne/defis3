@@ -228,7 +228,7 @@ class icSimpleObjectGrid(icwidget.icWidget, parentModule.GroupListView):
         self.evalSpace['row'] = currentItem
 
         self.evalSpace['values'] = self.GetObjectAt(currentItem)
-        self.evalSpace['_lfp'] = {'func': 'OnItemSelected', 'evt': evt,
+        self.evalSpace['_lfp'] = {'function': 'OnItemSelected', 'evt': evt,
                                   'currentItem': currentItem, 'row': currentItem,
                                   'self': self}
         
@@ -250,7 +250,7 @@ class icSimpleObjectGrid(icwidget.icWidget, parentModule.GroupListView):
         
         rowDict = self.GetObjectAt(currentItem)
         self.evalSpace['values'] = rowDict
-        self.evalSpace['_lfp'] = {'func': 'onItemActivated', 'evt': evt,
+        self.evalSpace['_lfp'] = {'function': 'onItemActivated', 'evt': evt,
                                   'currentItem': currentItem, 'result': rowDict,
                                   'self': self}
         self.eval_attr('activated')

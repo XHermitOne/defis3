@@ -92,7 +92,7 @@ class icMultiCheckTreeDialog:
         """
         if self.object:
             tree_ctrl = self.evalSpace.GetObject('multi_check_tree_ctrl')
-            tree_ctrl.LoadTree(TreeData_)
+            tree_ctrl.loadTree(TreeData_)
             return self.object.ShowModal()
         return None
     

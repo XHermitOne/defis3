@@ -713,7 +713,7 @@ LOGIC_OPERATION = {'name': 'AND',  # Английское название ло�
                    }
 
 # Представление функции в редакторе критериев выборки коллекций
-FILTER_FUNC = {'func': None,         # Объект функции
+FILTER_FUNC = {'function': None,         # Объект функции
                'description': None,  # Рускоязычное описание функции
                'args': [],           # Список аргументов функции
                }
@@ -746,7 +746,7 @@ DEFAULT_ENV_LOGIC_OPERATIONS = [
 DEFAULT_ENV_FUNCS = {
     'equal': {
         'name': 'equal',
-        'func': equal,
+        'function': equal,
         'description': u'Равно',
         'args': [
                 {'name': 'value',
@@ -756,7 +756,7 @@ DEFAULT_ENV_FUNCS = {
         
     'not_equal': {
         'name': 'not_equal',
-        'func': not_equal,
+        'function': not_equal,
         'description': u'Не равно',
         'args': [
                  {'name': 'value',
@@ -766,7 +766,7 @@ DEFAULT_ENV_FUNCS = {
         
     'great': {
         'name': 'great',
-        'func': great,
+        'function': great,
         'description': u'Больше',
         'args': [
             {'name': 'value',
@@ -776,7 +776,7 @@ DEFAULT_ENV_FUNCS = {
         
     'great_or_equal': {
         'name': 'great_or_equal',
-        'func': great_or_equal,
+        'function': great_or_equal,
         'description': u'Больше или равно',
         'args': [
             {'name': 'value',
@@ -786,7 +786,7 @@ DEFAULT_ENV_FUNCS = {
         
     'lesser': {
         'name': 'lesser',
-        'func': lesser,
+        'function': lesser,
         'description': u'Меньше',
         'args': [
             {'name': 'value',
@@ -796,7 +796,7 @@ DEFAULT_ENV_FUNCS = {
         
     'lesser_or_equal': {
         'name': 'lesser_or_equal',
-        'func': lesser_or_equal,
+        'function': lesser_or_equal,
         'description': u'Меньше или равно',
         'args': [
             {'name': 'value',
@@ -806,7 +806,7 @@ DEFAULT_ENV_FUNCS = {
         
     'between': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Между',
         'args': [
             {'name': 'minimum',
@@ -819,7 +819,7 @@ DEFAULT_ENV_FUNCS = {
     
     'not_between': {
         'name': 'not_between',
-        'func': not_between,
+        'function': not_between,
         'description': u'Не между',
         'args': [
             {'name': 'minimum',
@@ -832,7 +832,7 @@ DEFAULT_ENV_FUNCS = {
         
     'contain': {
         'name': 'contain',
-        'func': contain,
+        'function': contain,
         'description': u'Содержит',
         'args': [
             {'name': 'value',
@@ -842,7 +842,7 @@ DEFAULT_ENV_FUNCS = {
 
     'not_contain': {
         'name': 'not_contain',
-        'func': not_contain,
+        'function': not_contain,
         'description': u'Не содержит',
         'args': [
             {'name': 'value',
@@ -852,7 +852,7 @@ DEFAULT_ENV_FUNCS = {
         
     'left_equal': {
         'name': 'left_equal',
-        'func': left_equal,
+        'function': left_equal,
         'description': u'Начинается с',
         'args': [
             {'name': 'value',
@@ -862,7 +862,7 @@ DEFAULT_ENV_FUNCS = {
 
     'right_equal': {
         'name': 'right_equal',
-        'func': right_equal,
+        'function': right_equal,
         'description': u'Заканчивается на',
         'args': [
             {'name': 'value',
@@ -872,7 +872,7 @@ DEFAULT_ENV_FUNCS = {
 
     'startswith': {
         'name': 'startswith',
-        'func': left_equal,
+        'function': left_equal,
         'description': u'Начало строки с',
         'args': [
             {'name': 'value',
@@ -882,7 +882,7 @@ DEFAULT_ENV_FUNCS = {
 
     'endswith': {
         'name': 'endswith',
-        'func': right_equal,
+        'function': right_equal,
         'description': u'Окончание строки на',
         'args': [
             {'name': 'value',
@@ -892,7 +892,7 @@ DEFAULT_ENV_FUNCS = {
 
     'mask': {
         'name': 'mask',
-        'func': mask,
+        'function': mask,
         'description': u'Соответствует маске',
         'args': [
             {'name': 'value',
@@ -902,7 +902,7 @@ DEFAULT_ENV_FUNCS = {
         
     'not_mask': {
         'name': 'not_mask',
-        'func': not_mask,
+        'function': not_mask,
         'description': u'Не соответствует маске',
         'args': [
             {'name': 'value',
@@ -912,7 +912,7 @@ DEFAULT_ENV_FUNCS = {
         
     'is_null': {
         'name': 'is_null',
-        'func': is_null,
+        'function': is_null,
         'description': u'Пусто',
         'args': [],
         'img': bmpfunc.createLibraryBitmap('logic_is_null.png'),
@@ -920,7 +920,7 @@ DEFAULT_ENV_FUNCS = {
         
     'is_not_null': {
         'name': 'is_not_null',
-        'func': is_not_null,
+        'function': is_not_null,
         'description': u'Не пусто',
         'args': [],
         'img': bmpfunc.createLibraryBitmap('logic_is_not_null.png'),
@@ -928,7 +928,7 @@ DEFAULT_ENV_FUNCS = {
         
     'into': {
         'name': 'into',
-        'func': into,
+        'function': into,
         'description': u'Любое из',
         'args': [
             {'name': 'values',
@@ -938,7 +938,7 @@ DEFAULT_ENV_FUNCS = {
         
     'not_into': {
         'name': 'not_into',
-        'func': not_into,
+        'function': not_into,
         'description': u'Не одно из',
         'args': [
             {'name': 'values',
@@ -1081,7 +1081,7 @@ from . import filter_builder_ctrl
 DEFAULT_ENV_DATE_FUNCS = {
     'date_equal': {
         'name': 'equal',
-        'func': equal,
+        'function': equal,
         'description': u'Равно',
         'args': [
             {'name': 'value',
@@ -1094,7 +1094,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         
     'date_not_equal': {
         'name': 'not_equal',
-        'func': not_equal,
+        'function': not_equal,
         'description': u'Не равно',
         'args': [
             {'name': 'value',
@@ -1107,7 +1107,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         
     'date_great': {
         'name': 'great',
-        'func': great,
+        'function': great,
         'description': u'Больше',
         'args': [
             {'name': 'value',
@@ -1120,7 +1120,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         
     'date_great_or_equal': {
         'name': 'great_or_equal',
-        'func': great_or_equal,
+        'function': great_or_equal,
         'description': u'Больше или равно',
         'args': [
             {'name': 'value',
@@ -1133,7 +1133,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         
     'date_lesser': {
         'name': 'lesser',
-        'func': lesser,
+        'function': lesser,
         'description': u'Меньше',
         'args': [
             {'name': 'value',
@@ -1146,7 +1146,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         
     'date_lesser_or_equal': {
         'name': 'lesser_or_equal',
-        'func': lesser_or_equal,
+        'function': lesser_or_equal,
         'description': u'Меньше или равно',
         'args': [
             {'name': 'value',
@@ -1159,7 +1159,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         
     'date_between': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Между',
         'args': [
             {'name': 'minimum',
@@ -1178,7 +1178,7 @@ DEFAULT_ENV_DATE_FUNCS = {
     
     'date_not_between': {
         'name': 'not_between',
-        'func': not_between,
+        'function': not_between,
         'description': u'Не между',
         'args': [
             {'name': 'minimum',
@@ -1199,7 +1199,7 @@ DEFAULT_ENV_DATE_FUNCS = {
 
     'sys_date': {
         'name': 'equal',
-        'func': equal,
+        'function': equal,
         'description': u'Текущая дата',
         'args': [],
         'get_args': exf.get_args_sys_date,
@@ -1208,7 +1208,7 @@ DEFAULT_ENV_DATE_FUNCS = {
 
     'sys_month': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Текущий месяц',
         'args': [],
         'get_args': exf.get_args_sys_month,
@@ -1217,7 +1217,7 @@ DEFAULT_ENV_DATE_FUNCS = {
 
     'sys_year': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Текущий год',
         'args': [],
         'get_args': exf.get_args_sys_year,
@@ -1226,7 +1226,7 @@ DEFAULT_ENV_DATE_FUNCS = {
 
     'choice_date': {
         'name': 'equal',
-        'func': equal,
+        'function': equal,
         'description': u'Указанная дата',
         'args': [],
         'get_args': exf.get_args_choice_date,
@@ -1235,7 +1235,7 @@ DEFAULT_ENV_DATE_FUNCS = {
 
     'choice_month': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанный месяц',
         'args': [],
         'get_args': exf.get_args_choice_month,
@@ -1244,7 +1244,7 @@ DEFAULT_ENV_DATE_FUNCS = {
 
     'choice_year': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанный год',
         'args': [],
         'get_args': exf.get_args_choice_year,
@@ -1253,7 +1253,7 @@ DEFAULT_ENV_DATE_FUNCS = {
 
     'choice_date_range': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанный период дат',
         'args': [],
         'get_args': exf.get_args_choice_date_range,
@@ -1262,7 +1262,7 @@ DEFAULT_ENV_DATE_FUNCS = {
 
     'choice_month_range': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанный период масяцев',
         'args': [],
         'get_args': exf.get_args_choice_month_range,
@@ -1277,7 +1277,7 @@ DEFAULT_ENV_FUNCS.update(DEFAULT_ENV_DATE_FUNCS)
 DEFAULT_ENV_DATETIME_FUNCS = {
     'datetime_equal': {
         'name': 'equal',
-        'func': equal,
+        'function': equal,
         'description': u'Равно',
         'args': [
             {'name': 'value',
@@ -1290,7 +1290,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_not_equal': {
         'name': 'not_equal',
-        'func': not_equal,
+        'function': not_equal,
         'description': u'Не равно',
         'args': [
             {'name': 'value',
@@ -1303,7 +1303,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_great': {
         'name': 'great',
-        'func': great,
+        'function': great,
         'description': u'Больше',
         'args': [
             {'name': 'value',
@@ -1316,7 +1316,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_great_or_equal': {
         'name': 'great_or_equal',
-        'func': great_or_equal,
+        'function': great_or_equal,
         'description': u'Больше или равно',
         'args': [
             {'name': 'value',
@@ -1329,7 +1329,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_lesser': {
         'name': 'lesser',
-        'func': lesser,
+        'function': lesser,
         'description': u'Меньше',
         'args': [
             {'name': 'value',
@@ -1342,7 +1342,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_lesser_or_equal': {
         'name': 'lesser_or_equal',
-        'func': lesser_or_equal,
+        'function': lesser_or_equal,
         'description': u'Меньше или равно',
         'args': [
             {'name': 'value',
@@ -1355,7 +1355,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_between': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Между',
         'args': [
             {'name': 'minimum',
@@ -1374,7 +1374,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_not_between': {
         'name': 'not_between',
-        'func': not_between,
+        'function': not_between,
         'description': u'Не между',
         'args': [
             {'name': 'minimum',
@@ -1395,7 +1395,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_sys_date': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Текущая системная дата',
         'args': [],
         'get_args': exf.get_args_sys_date_datetime,
@@ -1404,7 +1404,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_yesterday': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Вчерашняя дата',
         'args': [],
         'get_args': exf.get_args_yesterday_datetime,
@@ -1413,7 +1413,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_two_days_ago': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Позавчерашняя дата',
         'args': [],
         'get_args': exf.get_args_two_days_ago_datetime,
@@ -1422,7 +1422,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_sys_month': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Текущий системный месяц',
         'args': [],
         'get_args': exf.get_args_sys_month_datetime,
@@ -1431,7 +1431,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_sys_year': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Текущий системный год',
         'args': [],
         'get_args': exf.get_args_sys_year_datetime,
@@ -1440,7 +1440,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_oper_year': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Текущий операционный год',
         'args': [],
         'get_args': exf.get_args_oper_year_datetime,
@@ -1449,7 +1449,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_choice_date': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанная дата',
         'args': [],
         'get_args': exf.get_args_choice_date_datetime,
@@ -1458,7 +1458,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_choice_month': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанный месяц',
         'args': [],
         'get_args': exf.get_args_choice_month_datetime,
@@ -1467,7 +1467,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_choice_year': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанный год',
         'args': [],
         'get_args': exf.get_args_choice_year_datetime,
@@ -1476,7 +1476,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_choice_date_range': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанный период дат',
         'args': [],
         'get_args': exf.get_args_choice_date_range_datetime,
@@ -1485,7 +1485,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
 
     'datetime_choice_month_range': {
         'name': 'between',
-        'func': between,
+        'function': between,
         'description': u'Указанный период масяцев',
         'args': [],
         'get_args': exf.get_args_choice_month_range_datetime,
@@ -1506,7 +1506,7 @@ except ImportError:
 DEFAULT_ENV_NSI_FUNCS = {
     'nsi_equal': {
         'name': 'equal',
-        'func': equal,
+        'function': equal,
         'description': u'Равно',
         'args': [
             {'name': 'value',
@@ -1519,7 +1519,7 @@ DEFAULT_ENV_NSI_FUNCS = {
         
     'nsi_not_equal': {
         'name': 'not_equal',
-        'func': not_equal,
+        'function': not_equal,
         'description': u'Не равно',
         'args': [
             {'name': 'value',
@@ -1532,7 +1532,7 @@ DEFAULT_ENV_NSI_FUNCS = {
 
     'nsi_left_equal': {
         'name': 'left_equal',
-        'func': left_equal,
+        'function': left_equal,
         'description': u'Группа',
         'args': [
             {'name': 'value',

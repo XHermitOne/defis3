@@ -1250,7 +1250,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                 values = {}
             
             # ---- Формируем пространство имен
-            self.evalSpace['_lfp'] = {'func': 'addRecord', 'values': values}
+            self.evalSpace['_lfp'] = {'function': 'addRecord', 'values': values}
             self.evalSpace['self'] = self
             self.evalSpace['values'] = values
             record = {}

@@ -76,12 +76,12 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             attach_node=self.OBJ.getHistory().getStateByIdx().getAttachNode()
             attach_uuid=self.OBJ.getHistory().getAttachUUID(period_uuid)
             attach_data=attach_node.getTreeData(attach_uuid)
-            self.GetObject('obj_tree').LoadTree(attach_data)
+            self.GetObject('obj_tree').loadTree(attach_data)
 
             docs_node=self.OBJ.getHistory().getStateByIdx().getDocumentsNode()
             docs_uuid=self.OBJ.getHistory().getDocumentsUUID(period_uuid)
             docs_data=attach_node.getTreeData(docs_uuid)
-            self.GetObject('docs_tree').LoadTree(docs_data)
+            self.GetObject('docs_tree').loadTree(docs_data)
 
             #Заполнение панели реквизитов состояния
             state_data=state.loadRequisiteData(state.getUUIDByPeriod(period_uuid))
@@ -121,7 +121,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             attach_uuid=self.OBJ.getHistory().getAttachUUID(self.periods[period_choice.GetSelection()]['uuid'],state_idx)
             attach_data=attach_node.getTreeData(attach_uuid)
             #print '!!!!!!!!DBG!!!!!!!!!!!',attach_uuid,attach_data,type(attach_data)
-            self.GetObject('obj_tree').LoadTree(attach_data)
+            self.GetObject('obj_tree').loadTree(attach_data)
                 
     def _convertPeriodLabels(self,PeriodRecords_):
         """
@@ -194,7 +194,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                     #надо обновить дерево контрола
                     attach_uuid=self.OBJ.getHistory().getAttachUUID(self.periods[period_choice.GetSelection()]['uuid'],state_idx)
                     attach_data=attach_node.getTreeData(attach_uuid)
-                    self.GetObject('obj_tree').LoadTree(attach_data)
+                    self.GetObject('obj_tree').loadTree(attach_data)
                     
     def onDetachObjectTool(self,event):
         """
@@ -227,7 +227,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                 #надо обновить дерево контрола
                 attach_uuid=self.OBJ.getHistory().getAttachUUID(self.periods[period_choice.GetSelection()]['uuid'],state_idx)
                 attach_data=attach_node.getTreeData(attach_uuid)
-                self.GetObject('obj_tree').LoadTree(attach_data)
+                self.GetObject('obj_tree').loadTree(attach_data)
         
     def onAddObjectTool(self,event):
         """
@@ -263,7 +263,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                     #надо обновить дерево контрола
                     attach_uuid=self.OBJ.getHistory().getAttachUUID(self.periods[period_choice.GetSelection()]['uuid'],state_idx)
                     attach_data=attach_node.getTreeData(attach_uuid)
-                    self.GetObject('obj_tree').LoadTree(attach_data)
+                    self.GetObject('obj_tree').loadTree(attach_data)
                     
     def onEditObjectTool(self,event):
         """
@@ -347,7 +347,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                     #надо обновить дерево контрола
                     attach_uuid=self.OBJ.getHistory().getDocumentsUUID(self.periods[period_choice.GetSelection()]['uuid'],state_idx)
                     attach_data=attach_node.getTreeData(attach_uuid)
-                    self.GetObject('doc_tree').LoadTree(attach_data)
+                    self.GetObject('doc_tree').loadTree(attach_data)
         
     def onDetachDocTool(self,event):
         """
@@ -380,7 +380,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                 #надо обновить дерево контрола
                 attach_uuid=self.OBJ.getHistory().getDocumentsUUID(self.periods[period_choice.GetSelection()]['uuid'],state_idx)
                 attach_data=attach_node.getTreeData(attach_uuid)
-                self.GetObject('doc_tree').LoadTree(attach_data)
+                self.GetObject('doc_tree').loadTree(attach_data)
         
     def onAddDocTool(self,event):
         """
@@ -416,7 +416,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
                     #надо обновить дерево контрола
                     attach_uuid=self.OBJ.getHistory().getDocumentsUUID(self.periods[period_choice.GetSelection()]['uuid'],state_idx)
                     attach_data=attach_node.getTreeData(attach_uuid)
-                    self.GetObject('doc_tree').LoadTree(attach_data)
+                    self.GetObject('doc_tree').loadTree(attach_data)
         
     def onEditDocTool(self,event):
         """
@@ -479,12 +479,12 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             attach_node=state.getAttachNode()
             attach_uuid=self.OBJ.getHistory().getAttachUUID(period_uuid)
             attach_data=attach_node.getTreeData(attach_uuid)
-            self.GetObject('obj_tree').LoadTree(attach_data)
+            self.GetObject('obj_tree').loadTree(attach_data)
 
             docs_node=state.getDocumentsNode()
             docs_uuid=self.OBJ.getHistory().getDocumentsUUID(period_uuid)
             docs_data=attach_node.getTreeData(docs_uuid)
-            self.GetObject('docs_tree').LoadTree(docs_data)
+            self.GetObject('docs_tree').loadTree(docs_data)
             
             #Сначала сохранить предыдущие изменения
             data_panel=self.GetObject('data_panel')
@@ -513,14 +513,14 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             attach_uuid=self.OBJ.getHistory().getAttachUUID(period_uuid)
             attach_data=attach_node.getTreeData(attach_uuid)
             obj_tree.clearRoot()
-            obj_tree.LoadTree(attach_data)
+            obj_tree.loadTree(attach_data)
 
             docs_tree=self.GetObject('docs_tree')
             docs_node=state.getDocumentsNode()
             docs_uuid=self.OBJ.getHistory().getDocumentsUUID(period_uuid)
             docs_data=attach_node.getTreeData(docs_uuid)
             docs_tree.clearRoot()
-            docs_tree.LoadTree(docs_data)
+            docs_tree.loadTree(docs_data)
             
             #Сначала сохранить предыдущие изменения
             self.saveStateRequisites()

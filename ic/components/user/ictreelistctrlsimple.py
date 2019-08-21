@@ -79,7 +79,7 @@ ic_class_spc = {'type': 'TreeListCtrlSimple',
                 'itemActivated': None,
 
                 '__styles__': ic_class_styles,
-                '__events__': {'itemCollapsed': ('wx.EVT_TREE_ITEM_COLLAPSED', 'OnItemCollapsed', False),
+                '__events__': {'itemCollapsed': ('wx.EVT_TREE_ITEM_COLLAPSED', 'onItemCollapsed', False),
                                'itemExpanded': ('wx.EVT_TREE_ITEM_EXPANDED', 'onItemExpanded', False),
                                'selectChanged': ('wx.EVT_TREE_SEL_CHANGED', 'onSelectChanged', False),
                                'itemActivated': ('wx.EVT_TREE_ITEM_ACTIVATED', 'onItemActivated', False),

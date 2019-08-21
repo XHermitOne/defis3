@@ -33,7 +33,7 @@ def LogLastError(beg_msg, logType=0, msg_encoding='utf-8'):
         lt = trace[last]
         if not isinstance(beg_msg, str):
             beg_msg = str(beg_msg)  # msg_encoding
-        msg = beg_msg + u' in file: %s, func: %s, line: %i, text: \n%s\ntype:%s\ncomments:%s' % (lt[0], lt[2], lt[1],
+        msg = beg_msg + u' in file: %s, function: %s, line: %i, text: \n%s\ntype:%s\ncomments:%s' % (lt[0], lt[2], lt[1],
                                                                                                  lt[3], str(ltype),
                                                                                                  str(sys.exc_info()))
         print(msg)

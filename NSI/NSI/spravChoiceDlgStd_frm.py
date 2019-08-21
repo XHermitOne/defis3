@@ -55,7 +55,7 @@ def HlpTreeList_onInit(obj):
         log.warning(u'SPRAV TREE ERROR <%s>' % sprav_tree)
         
     ctrl = obj.GetContext().GetObject(HLP_TREE_NAME)
-    ctrl.LoadTree(sprav_tree)    
+    ctrl.loadTree(sprav_tree)
 
 
 def ok_button_mouseClick(obj, evt):

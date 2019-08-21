@@ -423,7 +423,7 @@ class icMenuItem(wx.MenuItem):
     def ExecuteItem(self):
         """
         Выполнить действие,  привязанное к пункту меню.
-        @param Item_: объект пункта меню.
+        @param item: объект пункта меню.
         """
         try:
             item_kind = self.GetKind()

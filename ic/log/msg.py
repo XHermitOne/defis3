@@ -29,7 +29,7 @@ def msgErr(msg=''):
 
     if last >= 0:
         lt = trace[last]
-        msg += ' in file: %s, func: %s, line: %i, \ntext: %s\ntype:%s' % (lt[0], lt[2], lt[1], lt[3], str(ltype))
+        msg += ' in file: %s, function: %s, line: %i, \ntext: %s\ntype:%s' % (lt[0], lt[2], lt[1], lt[3], str(ltype))
         toMsg(msg)
 
     return msg

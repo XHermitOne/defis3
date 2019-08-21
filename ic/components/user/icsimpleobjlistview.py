@@ -384,7 +384,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         self.evalSpace['row'] = currentItem
 
         self.evalSpace['values'] = self.GetObjectAt(currentItem)
-        self.evalSpace['_lfp'] = {'func': 'OnItemSelected', 'evt': evt,
+        self.evalSpace['_lfp'] = {'function': 'OnItemSelected', 'evt': evt,
                                   'currentItem': currentItem, 'row': currentItem, 'self': self}
         
         if not self.getSelectedRecord() in [None, '', 'None']:
@@ -405,7 +405,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         
         rowDict = self.GetObjectAt(currentItem)
         self.evalSpace['values'] = rowDict
-        self.evalSpace['_lfp'] = {'func': 'onItemActivated',
+        self.evalSpace['_lfp'] = {'function': 'onItemActivated',
                                   'evt': evt, 'currentItem': currentItem,
                                   'result': rowDict, 'self': self}
         self.eval_attr('activated')

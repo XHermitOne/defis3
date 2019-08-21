@@ -10,7 +10,7 @@ import wx
 from . import std_controls_proto
 from ic.utils import ic_time
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 DEFAULT_MIN_YEAR = datetime.MINYEAR

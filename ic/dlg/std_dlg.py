@@ -290,7 +290,7 @@ def getStdDlgQueue(*dlgs):
     @param dlgs: Список словарей описания вызова диалоговых окон.
         Вызов диалогового окна - это словарь формата:
         {'key': Ключ результата,
-         'func': Функция вызова диалога,
+         'function': Функция вызова диалога,
          'args': Список аргументов функции вызова диалога,
          'kwargs': Словарь именованных аргументов вункции вызова диалога}.
     @return: Словарь заполненных значений с помощью диалоговых функций.
@@ -303,7 +303,7 @@ def getStdDlgQueue(*dlgs):
     result = dict()
 
     for dlg in dlgs:
-        dlg_func = dlg.get('func', None)
+        dlg_func = dlg.get('function', None)
         args = dlg.get('args', tuple())
         kwargs = dlg.get('kwargs', dict())
         if dlg_func:

@@ -186,7 +186,7 @@ def onMouseClickSaveTool(obj):
         grid.GetDataset().set_change_prz(False)
         #Перегрузить дерево справочника
         sprav_tree=sprav.getStorage().getLevelTree()
-        evalSpace.GetObject(SPR_TREE_NAME).LoadTree(sprav_tree)
+        evalSpace.GetObject(SPR_TREE_NAME).loadTree(sprav_tree)
     except:
         ic_log.icLogErr(u'Ошибка обработчика кнопки сохрания изменения справочника.')
 
@@ -239,7 +239,7 @@ def _onInitSpravTree(obj, bRefresh=True):
         tree.GetParent().Freeze()
         tree.begin_load()
         sprav_tree=sprav.getStorage().getLevelTree()
-        tree.LoadTree(sprav_tree)
+        tree.loadTree(sprav_tree)
         tree.GetParent().Thaw()
         #Получить таблицу
         level_tab_tuple=sprav.getStorage().getLevelTable(None)

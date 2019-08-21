@@ -6,8 +6,9 @@
 """
 
 
-import wx
-import datetime
+# import datetime
+# import wx
+
 from ic.utils import util
 from ic.bitmap import bmpfunc
 from ic.components import icwidget as parentModule
@@ -46,7 +47,7 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icSequenceListBox(sequence_list_box_ctrl.icSequenceListBox,
@@ -56,7 +57,6 @@ class icSequenceListBox(sequence_list_box_ctrl.icSequenceListBox,
     @type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
-
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,
                  bCounter=False, progressDlg=None):
         """

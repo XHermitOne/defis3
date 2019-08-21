@@ -29,7 +29,7 @@ class icValidateManager(object):
         Все проверки организуются в список и проверяются последовательно.
         Проверка представляет собой словарь:
             {'name': Наименование проверки,
-             'func': Функция проверки правильного значения,
+             'function': Функция проверки правильного значения,
              'err_txt': Текст ошибки, в случае если проверка не прошла,
              'ctrl': Объект проверяемого контрола,
             }
@@ -44,7 +44,7 @@ class icValidateManager(object):
         Добавить простую проверку значения.
         Проверка представляет собой словарь:
             {'name': Наименование проверки,
-             'func': Функция проверки правильного значения,
+             'function': Функция проверки правильного значения,
              'err_txt': Текст ошибки, в случае если проверка не прошла,
              'ctrl': Объект проверяемого контрола,
             }
@@ -97,7 +97,7 @@ class icValidateManager(object):
                 if validation.get('name', None) == validation_name:
                     validate_msg = validation.get('err_txt', validation_name)
                     try:
-                        validate_func = validation.get('func', None)
+                        validate_func = validation.get('function', None)
                         if validate_func:
                             is_ok = validate_func(value)
                             if not is_ok:
@@ -147,7 +147,7 @@ class icValidateManager(object):
             if validation_name in names:
                 validate_msg = validation.get('err_txt', validation_name)
                 try:
-                    validate_func = validation.get('func', None)
+                    validate_func = validation.get('function', None)
                     validate_ctrl = validation.get('ctrl', None)
                     if validate_ctrl is None:
                         log.warning(u'Не определен контрол для проверки <%s>' % validate_msg)

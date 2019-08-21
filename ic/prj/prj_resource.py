@@ -993,7 +993,7 @@ class icPrjMetaDataRes(icPrjResource):
             [{
                 'name': Наименование инструмента,
                 'label': Надпись в диалоговом окне выбора инструмента,
-                'func': Функция передачи управления инструменту.
+                'function': Функция передачи управления инструменту.
             }, ...]
         """
         ext_tools = list()
@@ -1056,7 +1056,7 @@ class icPrjMetaDataRes(icPrjResource):
                                                    u'Выберите операцию с ресурсом:',
                                                    choices)
             if i_select >= 0:
-                func = ext_tools[i_select]['func']
+                func = ext_tools[i_select]['function']
                 func()
         else:
             log.warning(u'Не предусмотрены дополнительные инструменты для ресурса <%s>' % self.getResName())

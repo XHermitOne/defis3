@@ -161,7 +161,7 @@ def onMouseClickSaveTool(evalSpace):
         sprav.getStorage().setLevelTable(old_cod, tab)
         # Перегрузить дерево справочника
         sprav_tree = sprav.getStorage().getLevelTree()
-        evalSpace.GetObject('spravTree').LoadTree(sprav_tree)
+        evalSpace.GetObject('spravTree').loadTree(sprav_tree)
     except:
         log.fatal(u'Ошибка обработчика кнопки сохрания изменения справочника')
 
@@ -193,7 +193,7 @@ def onInitSpravTree(evalSpace, bRefresh=True):
 
         tree = evalSpace.GetObject('spravTree')
         sprav_tree = sprav.getStorage().getLevelTree()
-        tree.LoadTree(sprav_tree)
+        tree.loadTree(sprav_tree)
         # Получить таблицу
         level_tab_tuple = sprav.getStorage().getLevelTable(None)
         level_tab = [list(rec) for rec in level_tab_tuple]

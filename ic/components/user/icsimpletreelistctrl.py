@@ -98,11 +98,11 @@ ic_class_spc = {'type': 'SimpleTreeListCtrl',
                                    icDefInf.EDT_CHECK_BOX: ['hideHeader'],
                                    icDefInf.EDT_TEXTLIST: ['labels', 'wcols'],
                                    },
-                '__events__': {'itemCollapsed': ('wx.EVT_TREE_ITEM_COLLAPSED', 'OnItemCollapsed', False),
+                '__events__': {'itemCollapsed': ('wx.EVT_TREE_ITEM_COLLAPSED', 'onItemCollapsed', False),
                                'itemExpanded': ('wx.EVT_TREE_ITEM_EXPANDED', 'onItemExpanded', False),
                                'selectChanged': ('wx.EVT_TREE_SEL_CHANGED', 'onSelectChanged', False),
                                'itemActivated': ('wx.EVT_TREE_ITEM_ACTIVATED', 'onItemActivated', False),
-                               'itemChecked': ('customtree.EVT_TREE_ITEM_CHECKED', 'OnItemChecked', False),
+                               'itemChecked': ('customtree.EVT_TREE_ITEM_CHECKED', 'onItemChecked', False),
                                'keyDown': ('wx.EVT_TREE_KEY_DOWN', 'OnTreeListKeyDown', False),
                                },
                 '__parent__': icwidget.SPC_IC_WIDGET,
@@ -983,7 +983,7 @@ def __load_data(tree=None):
 
 
 def __view_data(obj):
-    obj.LoadTree(obj.tree)
+    obj.loadTree(obj.tree)
 
 
 def test(par=0):

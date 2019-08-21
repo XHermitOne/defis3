@@ -76,7 +76,7 @@ def onTreeBrwsInit(Context_):
             #tree_ctrl.clearRoot()
             tree_data=OBJ.getTreeObjData()
             #print 'TREE DATA:::',tree_data
-            tree_ctrl.LoadTree(tree_data)
+            tree_ctrl.loadTree(tree_data)
             tree_ctrl.expandAllRoot()
             tree_ctrl.reFresh()
     except:
@@ -199,7 +199,7 @@ def onDelObjTool(Context_):
                     OBJ.Del(selection_rec[0],Context_)
                     #Перечитать дерево
                     tree_data=OBJ.getTreeObjData()
-                    tree_ctrl.LoadTree(tree_data)
+                    tree_ctrl.loadTree(tree_data)
                     tree_ctrl.expandAllRoot()
                     tree_ctrl.reFresh()
 

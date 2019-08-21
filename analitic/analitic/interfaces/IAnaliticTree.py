@@ -130,7 +130,7 @@ class IAnaliticTree:
         obj = self.GetNameObj('AnaliticTreeList')
         
         if obj and not obj.timer:
-            # def func(row, level):
+            # def function(row, level):
             #     try:
             #         if row[2] < 0:
             #             return 1

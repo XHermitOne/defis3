@@ -74,7 +74,7 @@ def genTxtLastError_depricate(beg_msg, msg_encoding='utf-8'):
         else:
             sys_info_msg = _to_unicode(sys_info[1].message, msg_encoding)
         
-        msg = beg_msg + u''' in file: %s, func: %s, line: %i, 
+        msg = beg_msg + u''' in file: %s, function: %s, line: %i, 
         text: 
             %s
         type: %s
