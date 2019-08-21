@@ -136,7 +136,7 @@ def create_filter_compare_requisite(name, compare_operate=DEFAULT_COMPARE_OPERAT
     compare_func = COMPARE_OPERATION_TRANSLATE.get(compare_operate, compare_operate)
     filter_compare = dict(requisite=name, type='compare',
                           arg_1=arg_1, arg_2=arg_2,
-                          func=compare_func)
+                          function=compare_func)
     return filter_compare
 
 

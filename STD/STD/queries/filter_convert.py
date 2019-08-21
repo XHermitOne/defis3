@@ -40,21 +40,20 @@
 }
 """
 
-# Imports
 import sqlalchemy
 
 import ic
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
-def convertFilter2PgSQL(Filter_, TableName_, Fields_=('*',), limit=None):
+def convertFilter2PgSQL(filter_data, table_name, fields=('*',), limit=None):
     """
     Конвертировать фильтр в SQL представление Postgres.
-    @param Filter_: Структура фильтра.
-    @param TableName_: Имя таблицы запроса.
-    @param Fields_: Список/Кортеж имен полей используемых в запросе.
+    @param filter_data: Структура фильтра.
+    @param table_name: Имя таблицы запроса.
+    @param fields: Список/Кортеж имен полей используемых в запросе.
     @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
     @return: Возвращает строковое представление оператора
     SELECT диалекта PgSQL.
@@ -63,32 +62,31 @@ def convertFilter2PgSQL(Filter_, TableName_, Fields_=('*',), limit=None):
     FROM %s
     WHERE %s
     '''
-    fields = ', '.join(Fields_)
-    converter = icFilter2PostgreSQLConverter(Filter_)
+    fields_sql = ', '.join(fields)
+    converter = icFilter2PostgreSQLConverter(filter_data)
     where = converter.convert()
     if not where:
         sql_fmt = 'SELECT %s FROM %s'
-        sql = sql_fmt % (fields, TableName_)
+        sql = sql_fmt % (fields_sql, table_name)
     else:
-        sql = sql_fmt % (fields, TableName_, where)
+        sql = sql_fmt % (fields_sql, table_name, where)
     if limit:
         sql += 'LIMIT %d' % limit
     return sql
 
 
-class icFilter2PostgreSQLConverter:
+class icFilter2PostgreSQLConverter(object):
     """
     Класс конвертера фильтра в PostgreSQL.
     """
-
-    def __init__(self, Filter_, CodePage_='utf-8'):
+    def __init__(self, filter_data, code_page='utf-8'):
         """
         Конструктор.
-        @param Filter_: Структура фильтра.
-        @param CodePage_: Кодировка текста в фильтре.
+        @param filter_data: Структура фильтра.
+        @param code_page: Кодировка текста в фильтре.
         """
-        self.filter = Filter_
-        self.codepage = CodePage_
+        self.filter = filter_data
+        self.codepage = code_page
     
     def convert(self):
         """
@@ -103,16 +101,16 @@ class icFilter2PostgreSQLConverter:
             return sql_txt
         return ''
     
-    def gen_group_sql(self, Grp_):
+    def gen_group_sql(self, group_data):
         """
         Генерация части SQL выражения, соответствующего группе реквизитов-элементов.
-        @param Grp_: Структура группы.
+        @param group_data: Структура группы.
         @return: Возвращает строку секции WHERE SQL, соответствующую данной группе.
         """
         sql_fmt = '''( %s )'''
         
         sql_elements = []
-        for element in Grp_['children']:
+        for element in group_data['children']:
             if element['type'] == 'group':
                 sql_element = self.gen_group_sql(element)
             elif element['type'] == 'compare':
@@ -122,61 +120,61 @@ class icFilter2PostgreSQLConverter:
                 continue
             sql_elements.append(sql_element)
             
-        sql_group = (' '+Grp_['logic']+' ').join(sql_elements)
+        sql_group = (' ' + group_data['logic'] + ' ').join(sql_elements)
         return sql_fmt % sql_group
     
-    def gen_requisite_sql(self, Requisite_):
+    def gen_requisite_sql(self, requisite):
         """
         Генерация части SQL выражения, соответствующую данному реквизиту.
-        @param Requisite_: Структура реквизита.
+        @param requisite: Структура реквизита.
         @return: Возвращает строку секции WHERE SQl, соответствующую данному элементу.
         """
-        return ' '.join(Requisite_['__sql__'])
+        return ' '.join(requisite['__sql__'])
     
 
 # --- Конвертация фильтра в SQLAlchemy представление ---
 # Словарь преобразования логических операций
-logicName2SQLAlchemyLogic = {'AND': sqlalchemy.and_,
-                             'OR': sqlalchemy.or_,
-                             'NOT': sqlalchemy.not_,
-                             }
+LOGIC_NAME2SQLALCHEMY_LOGIC = {'AND': sqlalchemy.and_,
+                               'OR': sqlalchemy.or_,
+                               'NOT': sqlalchemy.not_,
+                               }
 
 
-def convertFilter2SQLAlchemy(Filter_, Table_, Fields_=('*',), limit=None):
+def convertFilter2SQLAlchemy(filter_data, table, fields=('*',), limit=None):
     """
     Конвертация фильтра в представление SQLAlchemy.
-    @param Filter_: Структура фильтра.
-    @param Table_: Таблица запроса.
-    @param Fields_: Список/Кортеж имен полей используемых в запросе.
+    @param filter_data: Структура фильтра.
+    @param table: Таблица запроса.
+    @param fields: Список/Кортеж имен полей используемых в запросе.
     @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
     """
-    converter = icFilter2SQLAlchemyConverter(Filter_, Table_)
+    converter = icFilter2SQLAlchemyConverter(filter_data, table)
     where = converter.convert()
     columns = None
-    if '*' not in Fields_:
-        columns = [getattr(Table_.c, fld_name) for fld_name in Fields_]
+    if '*' not in fields:
+        columns = [getattr(table.c, fld_name) for fld_name in fields]
     else:
-        columns = [Table_]
+        columns = [table]
     query = sqlalchemy.select(columns, where)
     if limit:
         query = query.limit(int(limit))
     return query
 
 
-class icFilter2SQLAlchemyConverter:
+class icFilter2SQLAlchemyConverter(object):
     """
     Класс конвертера фильтра в представление SQLAlchemy.
     """
 
-    def __init__(self, Filter_, Table_, CodePage_='utf-8'):
+    def __init__(self, filter_data, table, code_page='utf-8'):
         """
         Конструктор.
-        @param Filter_: Структура фильтра.
-        @param Table_: Объект таблицы.
+        @param filter_data: Структура фильтра.
+        @param table: Объект таблицы.
         """
-        self.filter = Filter_
-        self.table = Table_
-        self.codepage = CodePage_
+        self.filter = filter_data
+        self.table = table
+        self.codepage = code_page
         
     def convert(self):
         """
@@ -191,14 +189,14 @@ class icFilter2SQLAlchemyConverter:
             ic.log.warning(u'Не определен фильтр <%s>' % self.filter)
         return None
     
-    def gen_group_section(self, Grp_):
+    def gen_group_section(self, group_data):
         """
         Генерация секции группы.
-        @param Grp_: Структура группы.
+        @param group_data: Структура группы.
         @return: Возвращает результат.
         """
         sql_alchemy_elements = []
-        for element in Grp_.get('children', []):
+        for element in group_data.get('children', []):
             if element['type'] == 'group':
                 sql_alchemy_element = self.gen_group_section(element)
             elif element['type'] == 'compare':
@@ -213,83 +211,83 @@ class icFilter2SQLAlchemyConverter:
                 sql_alchemy_elements.append(sql_alchemy_element)
                 
         sql_alchemy_elements = tuple(sql_alchemy_elements)
-        return logicName2SQLAlchemyLogic.get(Grp_['logic'].upper())(*sql_alchemy_elements)
+        return LOGIC_NAME2SQLALCHEMY_LOGIC.get(group_data['logic'].upper())(*sql_alchemy_elements)
 
-    def gen_requisite_section(self, Requisite_):
+    def gen_requisite_section(self, requisite):
         """
         Генерация секции реквизита.
-        @param Requisite_: Структура реквизита.
+        @param requisite: Структура реквизита.
         @return: Возвращает результат.
         """
         try:
-            if 'get_args' in Requisite_ and Requisite_['get_args']:
-                ext_dict = Requisite_['get_args']()
-                Requisite_.update(ext_dict)
+            if 'get_args' in requisite and requisite['get_args']:
+                ext_dict = requisite['get_args']()
+                requisite.update(ext_dict)
         except:
             ic.log.fatal(u'Ошибка получения аргументов')
 
         try:
-            if Requisite_['function'] == 'equal':
+            if requisite['function'] == 'equal':
                 # Проверка на <равно>
-                return getattr(self.table.c, Requisite_['requisite']) == Requisite_['arg_1']
-            elif Requisite_['function'] == 'not_equal':
+                return getattr(self.table.c, requisite['requisite']) == requisite['arg_1']
+            elif requisite['function'] == 'not_equal':
                 # Проверка на <неравенство>
-                return getattr(self.table.c, Requisite_['requisite']) != Requisite_['arg_1']
-            elif Requisite_['function'] == 'great':
+                return getattr(self.table.c, requisite['requisite']) != requisite['arg_1']
+            elif requisite['function'] == 'great':
                 # Проверка на <больше>
-                return getattr(self.table.c, Requisite_['requisite']) > Requisite_['arg_1']
-            elif Requisite_['function'] == 'great_or_equal':
+                return getattr(self.table.c, requisite['requisite']) > requisite['arg_1']
+            elif requisite['function'] == 'great_or_equal':
                 # Проверка на <больше или равно>
-                return getattr(self.table.c, Requisite_['requisite']) >= Requisite_['arg_1']
-            elif Requisite_['function'] == 'lesser':
+                return getattr(self.table.c, requisite['requisite']) >= requisite['arg_1']
+            elif requisite['function'] == 'lesser':
                 # Проверка на <меньше>
-                return getattr(self.table.c, Requisite_['requisite']) < Requisite_['arg_1']
-            elif Requisite_['function'] == 'lesser_or_equal':
+                return getattr(self.table.c, requisite['requisite']) < requisite['arg_1']
+            elif requisite['function'] == 'lesser_or_equal':
                 # Проверка на <меньше или равно>
-                return getattr(self.table.c, Requisite_['requisite']) <= Requisite_['arg_1']
-            elif Requisite_['function'] == 'between':
+                return getattr(self.table.c, requisite['requisite']) <= requisite['arg_1']
+            elif requisite['function'] == 'between':
                 # Проверка <МЕЖДУ>
-                return getattr(self.table.c, Requisite_['requisite']).between(Requisite_['arg_1'],
-                                                                              Requisite_['arg_2'])
-            elif Requisite_['function'] == 'not_between':
+                return getattr(self.table.c, requisite['requisite']).between(requisite['arg_1'],
+                                                                             requisite['arg_2'])
+            elif requisite['function'] == 'not_between':
                 # Проверка <не МЕЖДУ>
-                return sqlalchemy.not_(getattr(self.table.c, Requisite_['requisite']).between(Requisite_['arg_1'],
-                                                                                              Requisite_['arg_2']))
-            elif Requisite_['function'] == 'contain':
+                return sqlalchemy.not_(getattr(self.table.c, requisite['requisite']).between(requisite['arg_1'],
+                                                                                             requisite['arg_2']))
+            elif requisite['function'] == 'contain':
                 # Проверка <СОДЕРЖИТ>
-                return getattr(self.table.c, Requisite_['requisite']).contains(Requisite_['arg_1'])
-            elif Requisite_['function'] == 'not_contain':
+                return getattr(self.table.c, requisite['requisite']).contains(requisite['arg_1'])
+            elif requisite['function'] == 'not_contain':
                 # Проверка <не СОДЕРЖИТ>
-                return sqlalchemy.not_(getattr(self.table.c, Requisite_['requisite']).contains(Requisite_['arg_1']))
-            elif Requisite_['function'] in ('left_equal', 'startswith'):
+                return sqlalchemy.not_(getattr(self.table.c, requisite['requisite']).contains(requisite['arg_1']))
+            elif requisite['function'] in ('left_equal', 'startswith'):
                 # Проверка <начинается с>
-                return getattr(self.table.c, Requisite_['requisite']).startswith(Requisite_['arg_1'])
-            elif Requisite_['function'] in ('right_equal', 'endswith'):
+                return getattr(self.table.c, requisite['requisite']).startswith(requisite['arg_1'])
+            elif requisite['function'] in ('right_equal', 'endswith'):
                 # Проверка <заканчивается на>
-                return getattr(self.table.c, Requisite_['requisite']).endswith(Requisite_['arg_1'])
-            elif Requisite_['function'] == 'mask':
+                return getattr(self.table.c, requisite['requisite']).endswith(requisite['arg_1'])
+            elif requisite['function'] == 'mask':
                 # Проверка <соответствует маске>
                 ic.log.warning(u'Проверка на соответствие маски пока не реализованно')
                 return None
-            elif Requisite_['function'] == 'not_mask':
+            elif requisite['function'] == 'not_mask':
                 # Проверка <не соответствует маске>
                 ic.log.warning(u'Проверка на не соответствие маски пока не реализованно')
                 return None
-            elif Requisite_['function'] == 'is_null':
+            elif requisite['function'] == 'is_null':
                 # Проверка <пусто>
-                return getattr(self.table.c, Requisite_['requisite']) is None
-            elif Requisite_['function'] == 'is_not_null':
+                return getattr(self.table.c, requisite['requisite']) is None
+            elif requisite['function'] == 'is_not_null':
                 # Проверка <не пусто>
-                return getattr(self.table.c, Requisite_['requisite']) is not None
-            elif Requisite_['function'] == 'into':
+                return getattr(self.table.c, requisite['requisite']) is not None
+            elif requisite['function'] == 'into':
                 # Проверка <любое из>
-                return getattr(self.table.c, Requisite_['requisite']).in_(Requisite_['arg_1'])
-            elif Requisite_['function'] == 'not_into':
+                return getattr(self.table.c, requisite['requisite']).in_(requisite['arg_1'])
+            elif requisite['function'] == 'not_into':
                 # Проверка <не одно из>
-                return sqlalchemy.not_(getattr(self.table.c, Requisite_['requisite']).in_(Requisite_['arg_1']))
+                return sqlalchemy.not_(getattr(self.table.c, requisite['requisite']).in_(requisite['arg_1']))
         
-            ic.log.warning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % Requisite_['function'])
+            ic.log.warning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % requisite['function'])
         except:
-            ic.log.error(u'Ошибка конвертации реквизита фильтра <%s>' % Requisite_)
+            ic.log.fatal(u'Ошибка конвертации реквизита фильтра <%s>' % requisite)
             
         return None

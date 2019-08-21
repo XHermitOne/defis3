@@ -16,7 +16,7 @@ from ic.components import icEvents
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Constants
 DEFAULT_COMBO_SIZE = (200, -1)
@@ -104,26 +104,26 @@ class icCustomChoice(icCustomComboCtrl):
         # Данные выбора
         self.data = None
 
-    def setData(self, Data_=None):
+    def setData(self, data=None):
         """
-        установить данные выбора.
+        Установить данные выбора.
         """
-        if Data_ is None:
+        if data is None:
             self.data = []
         else:
-            self.data = Data_
+            self.data = data
             choice = [element['description'] for element in self.data]
             self.setChoice(choice)
         return self.data
         
-    def setChoice(self, Choice_=None):
+    def setChoice(self, choice=None):
         """
         Установить список выбора.
         """
-        if Choice_ is None:
+        if choice is None:
             self.choice = []
         else:
-            self.choice = Choice_
+            self.choice = choice
         
     def OnButtonClick(self):
         """
@@ -212,12 +212,12 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
 
         self.Bind(wx.EVT_COMBOBOX, self.onCombo, self)
      
-    def Select(self, Item_):
+    def Select(self, item):
         """
         Выбрать элемент  с индексом.
         """
-        self._cur_selected_item = Item_
-        return wx.adv.BitmapComboBox.Select(self, Item_)
+        self._cur_selected_item = item
+        return wx.adv.BitmapComboBox.Select(self, item)
     
     def onCombo(self, event):
         """
@@ -232,10 +232,10 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
         """
         return self._cur_selected_item
         
-    def appendItems(self, Items_):
+    def appendItems(self, items):
         """
         Добавить список выбора комбобокса.
-        @param Items_: Список пунктов выбора структуры:
+        @param items: Список пунктов выбора структуры:
         [{
             'name':'Наименование пункта',
             'description':'Описание пункта (появляется в компоненте)',
@@ -246,10 +246,10 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
         if self.items is None:
             self.items = []
             
-        self.items += list(Items_)
+        self.items += list(items)
         
         # Перебрать элементы
-        for item in list(Items_):
+        for item in list(items):
             name = item['name']
             description = item['description']
             img = None
@@ -271,10 +271,10 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
             return self.items[selected]
         return None
         
-    def setItems(self, Items_):
+    def setItems(self, items):
         """
         Установить список выбора комбобокса.
-        @param Items_: Список пунктов выбора структуры:
+        @param items: Список пунктов выбора структуры:
         [{
             'name':'Наименование пункта',
             'description':'Описание пункта (появляется в компоненте)',
@@ -284,18 +284,18 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
         """
         self.Clear()
         self.items = None
-        self.appendItems(Items_)
+        self.appendItems(items)
    
-    def selectByName(self, Name_):
+    def selectByName(self, name):
         """
         Выбрать элемент по его имени.
         @return: Индекс выбранного элемента.
         """
         item_names = [item['name'] for item in self.items]
         try:
-            i = item_names.index(Name_)
+            i = item_names.index(name)
         except:
-            log.info(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
+            log.info(u'Элемент с именем <%s> среди <%s> не найден.' % (name, item_names))
             i = -1
         self.Select(i)
         return i
@@ -314,10 +314,10 @@ class icItemComboBox(wx.ComboBox):
         
         self.items = None
 
-    def appendItems(self, Items_):
+    def appendItems(self, items):
         """
         Добавить пункты в выпадающий список.
-        @param Items_:
+        @param items:
         [{
             'name':'Наименование пункта',
             'description':'Описание пункта (появляется в компоненте)',
@@ -327,9 +327,9 @@ class icItemComboBox(wx.ComboBox):
         if self.items is None:
             self.items = []
             
-        self.items += list(Items_)
+        self.items += list(items)
         
-        for item in list(Items_):
+        for item in list(items):
             name = item['name']
             description = item['description']
             data = None
@@ -347,10 +347,10 @@ class icItemComboBox(wx.ComboBox):
             return self.items[selected]
         return None
     
-    def setItems(self, Items_):
+    def setItems(self, items):
         """
         Установить пункты в выпадающий список.
-        @param Items_:
+        @param items:
         [{
             'name':'Наименование пункта',
             'description':'Описание пункта (появляется в компоненте)',
@@ -359,18 +359,18 @@ class icItemComboBox(wx.ComboBox):
         """
         self.Clear()
         self.items = None
-        self.appendItems(Items_)
+        self.appendItems(items)
         
-    def selectByName(self, Name_):
+    def selectByName(self, name):
         """
         Выбрать элемент по его имени.
         @return: Индекс выбранного элемента.
         """
         item_names = [item['name'] for item in self.items]
         try:
-            i = item_names.index(Name_)
+            i = item_names.index(name)
         except:
-            log.info(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
+            log.warning(u'Элемент с именем <%s> среди <%s> не найден.' % (name, item_names))
             i = -1
         self.Select(i)
         return i
@@ -470,14 +470,14 @@ class icArgEdit(wx.TextCtrl):
         if default:
             self.SetValue(self._to_unicode(default))
             
-    def _to_unicode(self, Value_):
+    def _to_unicode(self, value):
         """
         Приведение значения любого типа к юникоду.
         """
-        if isinstance(Value_, str):
-            return Value_
+        if isinstance(value, str):
+            return value
         else:
-            return str(Value_)
+            return str(value)
 
     def getValue(self, *args, **kwargs):
         return self.GetValue(*args, **kwargs)
@@ -565,22 +565,22 @@ class icLabelChoice(wx.StaticText):
         event.SetICObject(self)
         return self.GetEventHandler().AddPendingEvent(event)
     
-    def setItems(self, Items_):
+    def setItems(self, items):
         """
         Установить пункты.
         """
-        self.items = Items_
+        self.items = items
         
-    def Select(self, Item_):
+    def Select(self, item):
         """
         Выбрать элемент.
         """
-        if isinstance(Item_, int):
-            self._cur_selected_item = Item_
+        if isinstance(item, int):
+            self._cur_selected_item = item
             label_txt = self._format % self.items[self._cur_selected_item]['description']
-        elif isinstance(Item_, dict):
+        elif isinstance(item, dict):
             try:
-                self._cur_selected_item = self.items.index(Item_)
+                self._cur_selected_item = self.items.index(item)
                 label_txt = self._format % self.items[self._cur_selected_item]['description']
             except ValueError:
                 self._cur_selected_item = -1
@@ -590,15 +590,15 @@ class icLabelChoice(wx.StaticText):
             label_txt = self._none_label_txt
         self.SetLabel(label_txt)
    
-    def _createSelectMenu(self, Items_):
+    def _createSelectMenu(self, items):
         """
         Создание меню выбора.
         """
         self._menuitem_item_dict = {}
         
         menu = wx.Menu()
-        if Items_:
-            for item in Items_:
+        if items:
+            for item in items:
                 text = item['description'] if item['description'] else item['name']
                 img = None
                 if 'img' in item:
@@ -660,16 +660,16 @@ class icLabelChoice(wx.StaticText):
             return self.items[selected]
         return None
 
-    def selectByName(self, Name_):
+    def selectByName(self, name):
         """
         Выбрать элемент по его имени.
         @return: Индекс выбранного элемента.
         """
         item_names = [item['name'] for item in self.items]
         try:
-            i = item_names.index(Name_)
+            i = item_names.index(name)
         except:
-            log.info(u'Элемент с именем <%s> среди <%s> не найден.' % (Name_, item_names))
+            log.info(u'Элемент с именем <%s> среди <%s> не найден.' % (name, item_names))
             i = -1
         self.Select(i)
         return i

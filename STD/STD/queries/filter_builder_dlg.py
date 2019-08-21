@@ -5,8 +5,6 @@
 Редактор критериев выбора коллекций.
 """
 
-
-# Imports
 import wx
 import wx.lib.scrolledpanel
 
@@ -19,18 +17,18 @@ from .filter_builder_ctrl import *
 __version__ = (0, 1, 1, 1)
 
 
-def doFilterBuilder(Parent_, Environment_, Default_=None):
+def doFilterBuilder(parent, environment, default=None):
     """
     Запустить редактор критериев выборки/фильтров.
-    @param Parent_: Родительское окно редактора.
-    @param Environment_: Структура окружения редактора.
-    @param Default_: Структура по умолчанию.
+    @param parent: Родительское окно редактора.
+    @param environment: Структура окружения редактора.
+    @param default: Структура по умолчанию.
     @return: Возвращает результат редактирования.    
     """
     try:
-        dlg = icFilterBuilderDialog(Parent_, -1, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
-        dlg.setEnvironment(Environment_)
-        dlg.setEditResult(Default_)
+        dlg = icFilterBuilderDialog(parent, -1, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        dlg.setEnvironment(environment)
+        dlg.setEditResult(default)
         result = dlg.ShowModal()
         if result == wx.ID_OK:
             # Нажата кнопка OK в редакторе
@@ -97,13 +95,13 @@ class icFilterBuilderDialog(wx.Dialog):
         self.GetSizer().SetSizeHints(self)
         self.GetSizer().Layout()
         
-    def setEnvironment(self, Env_=None):
+    def setEnvironment(self, env=None):
         """
         Установить окружение для работы редактора.
-        @param Env_: Окружение, словарно-списковая структура формата
+        @param env: Окружение, словарно-списковая структура формата
         filter_builder_env.FILTER_ENVIRONMENT.
         """
-        self.environment = Env_
+        self.environment = env
         self.removeAll()
         self.addFilterEdit()
         self.addRequisiteChoice()
@@ -114,16 +112,16 @@ class icFilterBuilderDialog(wx.Dialog):
         """
         return self.result
 
-    def setEditResult(self, Result_):
+    def setEditResult(self, result):
         """
         Инициализация редактора по отредактированному значению.
         """
-        self.result = Result_
+        self.result = result
         if self.result:
             # Создание всех внутренних контролов
             self._createEditControls(self.result, self.environment)
         
-    def _createEditControls(self, Result_, Environment_):
+    def _createEditControls(self, result, environment):
         """
         Создание всех внутренних контролов редактирования.
         """
@@ -134,7 +132,7 @@ class icFilterBuilderDialog(wx.Dialog):
         requisite = None  # Структура описания реквизита
         func = None       # Структура описания функции
         # Перебор по строкам редактирования
-        for i_row, row in enumerate(Result_):
+        for i_row, row in enumerate(result):
             if row:
                 self.addFilterEdit()
                 # Перебор по элементам строки редактирования
@@ -187,18 +185,18 @@ class icFilterBuilderDialog(wx.Dialog):
             return self.environment['requisites']
         return []
     
-    def _setRequisiteFilterCtrl(self, Control_, Description_):
+    def _setRequisiteFilterCtrl(self, control, description):
         """
         Установить у контрола редактирования структуру управления по русскому описанию.
         """
         # Найти стурктуру управления в окружении
         for requisite in self.environment['requisites']:
-            if requisite['description'] == Description_:
-                Control_.filter_ctrl = requisite
+            if requisite['description'] == description:
+                control.filter_ctrl = requisite
                 return requisite
         return None
         
-    def OnDelEditRow(self, event):
+    def onDelEditRow(self, event):
         """
         Удалить строку редактирования.
         """
@@ -219,7 +217,7 @@ class icFilterBuilderDialog(wx.Dialog):
         Добавить в редактор контрол выбора реквизита.
         """
         del_row_button = wx.Button(self.builder_panel, -1, label='-', size=wx.Size(24, 24))
-        del_row_button.Bind(wx.EVT_BUTTON, self.OnDelEditRow)
+        del_row_button.Bind(wx.EVT_BUTTON, self.onDelEditRow)
         self.builder_panel_row_sizers[-1].Add(del_row_button, 0, wx.ALIGN_CENTER | wx.ALL, 2)
         self.edit_controls[-1].append(del_row_button)
         
@@ -239,39 +237,39 @@ class icFilterBuilderDialog(wx.Dialog):
         """
         pass
 
-    def _getControlRowIndex(self, Control_):
+    def _getControlRowIndex(self, control):
         """
         Получить индекс строки контрола редактирования.
         """
         for i, row_control in enumerate(self.edit_controls):
             # Не забыть проверить в дочерних объектах
-            if Control_ in row_control or \
-               bool([control for control in row_control if Control_ in control.GetChildren()]):
+            if control in row_control or \
+               bool([control for control in row_control if control in control.GetChildren()]):
                 return i
         return -1
 
-    def _getEditControlByChild(self, Control_):
+    def _getEditControlByChild(self, control):
         """
         Получить контрол редактирования по дочернему контролу.
         """
         for i, row_control in enumerate(self.edit_controls):
             # Не забыть проверить в дочерних объектах
-            find_parent = [control for control in row_control if Control_ in control.GetChildren()]
-            if Control_ in row_control:
-                return row_control[row_control.index(Control_)]
+            find_parent = [control for control in row_control if control in control.GetChildren()]
+            if control in row_control:
+                return row_control[row_control.index(control)]
             elif bool(find_parent):
                 find_control = find_parent[0]
                 return find_control
         return None
     
-    def _addRequisiteResult(self, RequisiteIdx_):
+    def _addRequisiteResult(self, requisite_idx):
         """
         Добавить в результат выбранный реквизит.
-        @param RequisiteIdx_: Индекс выбранного реквизита.
+        @param requisite_idx: Индекс выбранного реквизита.
         """
         self.result.append([])
         control = self.edit_controls[-1][1]
-        self.result[-1].append(self.environment['requisites'][RequisiteIdx_])                
+        self.result[-1].append(self.environment['requisites'][requisite_idx])
         
     def OnRequisiteChoice(self, event):
         """
@@ -290,12 +288,12 @@ class icFilterBuilderDialog(wx.Dialog):
         
         event.Skip()
     
-    def _getFuncChoiceFromRequisite(self, Requisite_):
+    def _getFuncChoiceFromRequisite(self, requisite):
         """
         Получить список выбора функций из реквизита.
         """
         result = []
-        for func in Requisite_['funcs']:
+        for func in requisite['funcs']:
             if isinstance(func, str):
                 # Это ссылка на стандартные функции
                 # Стандартные функции находятся в окружении
@@ -305,13 +303,13 @@ class icFilterBuilderDialog(wx.Dialog):
                 result.append(func['description'])
         return result
         
-    def _getFuncChoiceFromEnv(self, Idx_):
+    def _getFuncChoiceFromEnv(self, idx):
         """
         Получить список выбора функций из окружения.
-        @param Idx_: Индекс строки редактирования.
+        @param idx: Индекс строки редактирования.
         """
         result = []
-        requisite = self.result[Idx_][0]
+        requisite = self.result[idx][0]
         if requisite['funcs']:
             for func in requisite['funcs']:
                 if isinstance(func, dict):
@@ -324,13 +322,13 @@ class icFilterBuilderDialog(wx.Dialog):
                     log.warning(u'Ошибка. Не корректный тип функции: <%s<' % func)
         return result
     
-    def _getFunctions(self, Idx_):
+    def _getFunctions(self, idx):
         """
         Получить список выбора функций из окружения для указанной строки редактирования.
-        @param Idx_: Индекс строки редактирования.
+        @param idx: Индекс строки редактирования.
         """
         result = []
-        requisite = self.result[Idx_][0]
+        requisite = self.result[idx][0]
         if requisite['funcs']:
             for func in requisite['funcs']:
                 if isinstance(func, dict):
@@ -343,48 +341,47 @@ class icFilterBuilderDialog(wx.Dialog):
                     log.warning(u'Ошибка. Не корректный тип функции: <%s>' % func)
         return result
     
-    def delFuncChoice(self, Idx_):
+    def delFuncChoice(self, idx):
         """
         Удалить из редактора контрол выбора функции.
-        @param Idx_: Индекс строки редактирования.
+        @param idx: Индекс строки редактирования.
         """
         # Убрать контролы из сайзеров
-        for control in self.edit_controls[Idx_][2:]:
-            self.builder_panel_row_sizers[Idx_].Remove(control)
+        for control in self.edit_controls[idx][2:]:
+            self.builder_panel_row_sizers[idx].Remove(control)
             # Да и ваще удалить контрол
             control.Destroy()
         # Убрать контролы из списка редактирумых контролов
-        self.edit_controls[Idx_] = self.edit_controls[Idx_][:2]
+        self.edit_controls[idx] = self.edit_controls[idx][:2]
         # Очистить результат в последнюю очередь
-        self.result[Idx_] = self.result[Idx_][:1]
+        self.result[idx] = self.result[idx][:1]
         
-    def addFuncChoice(self, Idx_):
+    def addFuncChoice(self, idx):
         """
         Добавить в редактор контрол выбора функции.
-        @param Idx_: Индекс строки редактирования.
+        @param idx: Индекс строки редактирования.
         """
         # Перед добавлением удалить все ненужное
-        self.delFuncChoice(Idx_)
+        self.delFuncChoice(idx)
         
         new_choice = icCustomChoice(self.builder_panel, -1, size=wx.Size(200, -1))
-        new_choice.setData(self._getFunctions(Idx_))
-        new_choice.Bind(wx.EVT_TEXT, self.OnFuncChoice)
-        self.builder_panel_row_sizers[Idx_].Add(new_choice, 0, wx.ALIGN_LEFT | wx.ALL, 2)
+        new_choice.setData(self._getFunctions(idx))
+        new_choice.Bind(wx.EVT_TEXT, self.onFuncChoice)
+        self.builder_panel_row_sizers[idx].Add(new_choice, 0, wx.ALIGN_LEFT | wx.ALL, 2)
         # Запомнить новый контрол в списке контролов редактирования
-        self.edit_controls[Idx_].append(new_choice)
+        self.edit_controls[idx].append(new_choice)
         # Надо после добавления контрола обязательно запустить
         # перераспределение контролов
         self.GetSizer().Layout()
     
-    def _addFuncResult(self, FuncIdx_, Idx_=-1):
+    def _addFuncResult(self, function_idx, idx=-1):
         """
         Добавить в результат выбранную функцию.
-        @param RequisiteIdx_: Индекс выбранного реквизита.
         """
-        control = self.edit_controls[Idx_][2]
-        self.result[Idx_].append(control.data[FuncIdx_])
+        control = self.edit_controls[idx][2]
+        self.result[idx].append(control.data[function_idx])
         
-    def OnFuncChoice(self, event):
+    def onFuncChoice(self, event):
         """
         Обработчик изменения функции.
         """
@@ -401,52 +398,52 @@ class icFilterBuilderDialog(wx.Dialog):
         
         event.Skip()
         
-    def _getArgsFromEnv(self, Idx_):
+    def _getArgsFromEnv(self, idx):
         """
         Получить список аргументов из окружения для указанной строки редактирования.
         """
-        func = self.result[Idx_][1]
+        func = self.result[idx][1]
         return func['args']
         
-    def _addArgEdit(self, Idx_, Arg_):
+    def _addArgEdit(self, idx, arg):
         """
         Добавить в редактор контрол редактирования аргумента функции.
-        @param Idx_: Индекс строки редактирования.
-        @param Arg_: Структура описания аргумента. Формат filter_builder_env.FILTER_ARG.
+        @param idx: Индекс строки редактирования.
+        @param arg: Структура описания аргумента. Формат filter_builder_env.FILTER_ARG.
         """
         # Добавить подпись
-        new_arg_label = wx.StaticText(self.builder_panel, -1, label=Arg_['description']+u':')
-        self.builder_panel_row_sizers[Idx_].Add(new_arg_label, 0, wx.ALIGN_CENTER | wx.ALL, 2)
-        self.edit_controls[Idx_].append(new_arg_label)
+        new_arg_label = wx.StaticText(self.builder_panel, -1, label=arg['description'] + u':')
+        self.builder_panel_row_sizers[idx].Add(new_arg_label, 0, wx.ALIGN_CENTER | wx.ALL, 2)
+        self.edit_controls[idx].append(new_arg_label)
         
         # Добавить редактор
-        if 'ext_edit' in Arg_ and Arg_['ext_edit']:
+        if 'ext_edit' in arg and arg['ext_edit']:
             # Для аргумента определен расширенный редактор
             new_arg_edit = icArgExtededEdit(self.builder_panel, -1)
-            if 'default' in Arg_:
-                new_arg_edit.default = Arg_['default']
+            if 'default' in arg:
+                new_arg_edit.default = arg['default']
         else:
             # Обычный текстовый редактор
             new_arg_edit = wx.TextCtrl(self.builder_panel, -1)
-            if 'default' in Arg_:
-                new_arg_edit.SetValue(str(Arg_['default']))
+            if 'default' in arg:
+                new_arg_edit.SetValue(str(arg['default']))
         # Привязать обработчик изменения редактируемого текста
-        new_arg_edit.Bind(wx.EVT_TEXT, self.OnArgChange)
-        self.builder_panel_row_sizers[Idx_].Add(new_arg_edit, 0, wx.ALIGN_CENTER | wx.ALL, 2)
-        self.edit_controls[Idx_].append(new_arg_edit)
+        new_arg_edit.Bind(wx.EVT_TEXT, self.onArgChange)
+        self.builder_panel_row_sizers[idx].Add(new_arg_edit, 0, wx.ALIGN_CENTER | wx.ALL, 2)
+        self.edit_controls[idx].append(new_arg_edit)
         
-    def addArgsEdit(self, Idx_):
+    def addArgsEdit(self, idx):
         """
         Добавить в редактор контролы редактирования аргументов функции.
-        @param Idx_: Индекс строки редактирования.
+        @param idx: Индекс строки редактирования.
         """
-        args = self._getArgsFromEnv(Idx_)
+        args = self._getArgsFromEnv(idx)
         for arg in args:
             # Добавить контролы редактирования аргумента функции
-            self._addArgEdit(Idx_, arg)
+            self._addArgEdit(idx, arg)
 
         # Добавить выпадающий список логической связки строк
-        self._addLogicChoice(Idx_)
+        self._addLogicChoice(idx)
         
         # Надо после добавления контрола обязательно запустить
         # перераспределение контролов
@@ -455,29 +452,29 @@ class icFilterBuilderDialog(wx.Dialog):
     # Словарь преобразований логических связок надписей
     _logicTranslate = {'': '', u'И': 'AND', u'ИЛИ': 'OR', u'НЕ': 'NOT'}
     
-    def _addLogicChoice(self, Idx_):
+    def _addLogicChoice(self, idx):
         """
         Добавить выпадающий список логической связки строк - AND/OR/NOT.
-        @param Idx_: Индекс строки редактирования.
+        @param idx: Индекс строки редактирования.
         """
         new_logic_choice = wx.Choice(self.builder_panel, -1,
                                      choices=self._logicTranslate.keys())
-        new_logic_choice.Bind(wx.EVT_CHOICE, self.OnLogicChoice)
-        self.builder_panel_row_sizers[Idx_].Add(new_logic_choice, 0, wx.ALIGN_LEFT | wx.ALL, 2)
-        self.edit_controls[Idx_].append(new_logic_choice)
+        new_logic_choice.Bind(wx.EVT_CHOICE, self.onLogicChoice)
+        self.builder_panel_row_sizers[idx].Add(new_logic_choice, 0, wx.ALIGN_LEFT | wx.ALL, 2)
+        self.edit_controls[idx].append(new_logic_choice)
 
-    def _addLogicResult(self, Logic_, Idx_):
+    def _addLogicResult(self, logic, idx):
         """
         Добавить в результат логическую связку.
-        @param Logic_: AND/OR/NOT.
-        @param Idx_: Индекс строки редактирования.
+        @param logic: AND/OR/NOT.
+        @param idx: Индекс строки редактирования.
         """
-        if self.result[Idx_][-1] not in self._logicTranslate.values():
-            self.result[Idx_].append(Logic_)
+        if self.result[idx][-1] not in self._logicTranslate.values():
+            self.result[idx].append(logic)
         else:
-            self.result[Idx_][-1] = Logic_
+            self.result[idx][-1] = logic
         
-    def OnArgChange(self, event):
+    def onArgChange(self, event):
         """
         Обработчик изменения значения аргумента функции.
         """
@@ -494,41 +491,41 @@ class icFilterBuilderDialog(wx.Dialog):
                         
         event.Skip()
         
-    def _getArgResult(self, ArgIdx_, Idx_):
+    def _getArgResult(self, arg_idx, idx):
         """
         Получить аргумент из результат по индексу.
-        @param ArgIdx_: Индекс аргумента.
-        @param Idx_: Индекс строки редактирования.
+        @param arg_idx: Индекс аргумента.
+        @param idx: Индекс строки редактирования.
         """
-        arg_idx = 2+ArgIdx_
-        if arg_idx < len(self.result[Idx_]):
-            arg_str = self.result[Idx_][arg_idx]
+        cur_arg_idx = 2 + arg_idx
+        if cur_arg_idx < len(self.result[idx]):
+            arg_str = self.result[idx][cur_arg_idx]
             if arg_str not in self._logicTranslate.keys():
                 return arg_str
                 
         # Аргумент с таким индексом не добавлен в строку
         return None        
         
-    def _addArgResult(self, StrArg_, ArgIdx_, Idx_):
+    def _addArgResult(self, str_arg, arg_idx, idx):
         """
         Добавить в результат значение аргумента функции.
-        @param StrArg_: Строка аргумента.
-        @param ArgIdx_: Индекс аргумента.
-        @param Idx_: Индекс строки редактирования.
+        @param str_arg: Строка аргумента.
+        @param arg_idx: Индекс аргумента.
+        @param idx: Индекс строки редактирования.
         """
-        arg_idx = 2+ArgIdx_
+        cur_arg_idx = 2 + arg_idx
         # Сначала выяснить добавлен ли аргумент в результат уже
-        arg_str_result = self._getArgResult(ArgIdx_, Idx_)
+        arg_str_result = self._getArgResult(arg_idx, idx)
         if arg_str_result is None:
             # Аргумент уже присутствует
             # надо просто поменять его значение
-            self.result[Idx_][arg_idx] = StrArg_
+            self.result[idx][cur_arg_idx] = str_arg
         else:
             # Аргумента с таким индексом нет
             # нодо его добавить
-            self.result[Idx_].insert(arg_idx, StrArg_)
+            self.result[idx].insert(cur_arg_idx, str_arg)
         
-    def OnLogicChoice(self, event):
+    def onLogicChoice(self, event):
         """
         Обработчик выбор логического оператора.
         """
@@ -556,29 +553,29 @@ class icFilterBuilderDialog(wx.Dialog):
         self.builder_panel_sizer.Add(self.builder_panel_row_sizers[-1], 0, wx.ALIGN_LEFT | wx.ALL, 2)
         self.edit_controls.append([])
 
-    def delFilterEdit(self, Idx_=-1):
+    def delFilterEdit(self, idx=-1):
         """
         Удалить строку фильтрации.
-        @param Idx_: Индекс удаляемой строки редактирования.
+        @param idx: Индекс удаляемой строки редактирования.
         @return: True-строка удалена,False-строка не удалена.
         """
         # Если удаляемая строка не последняя
         # Последнюю строку удалить нельзя
-        if Idx_ < len(self.edit_controls)-1:
+        if idx < len(self.edit_controls)-1:
             
             # Очистить сайзер
-            self.builder_panel_row_sizers[Idx_].Clear()
+            self.builder_panel_row_sizers[idx].Clear()
             
             # Убрать контролы
-            for control in self.edit_controls[Idx_]:
+            for control in self.edit_controls[idx]:
                 # Да и ваще удалить контрол
                 control.Destroy()
             
             # Убрать контролы из списка редактирумых контролов
-            del self.edit_controls[Idx_]
+            del self.edit_controls[idx]
             # И удалить сайзер
-            del_sizer = self.builder_panel_row_sizers[Idx_]
-            del self.builder_panel_row_sizers[Idx_]
+            del_sizer = self.builder_panel_row_sizers[idx]
+            del self.builder_panel_row_sizers[idx]
             self.builder_panel_sizer.Detach(del_sizer)
             
             # Надо после удаления контрола обязательно запустить

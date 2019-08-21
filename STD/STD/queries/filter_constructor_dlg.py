@@ -5,7 +5,6 @@
 Диалоговое окно конструктора фильтров.
 """
 
-# Imports
 import wx
 
 from ic.bitmap import bmpfunc
@@ -21,44 +20,42 @@ try:
 except:
     filter_builder_env = None
 
-# Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
-def get_filter_constructor_dlg(ParentWin_=None, DefaultFilterData_=None, Env_=None):
+def get_filter_constructor_dlg(parent=None, default_filter_data=None, env=None):
     """
     Функция вызова диалогового окна конструктора фильтров.
-    @param ParentWin_: Родительское окно диалога конструктора фильтров.
-    @param DefaultFilterData_: Фильтр по умолчанию.
-    @param Env_: Окружение работы конструктора фильтров.
+    @param parent: Родительское окно диалога конструктора фильтров.
+    @param default_filter_data: Фильтр по умолчанию.
+    @param env: Окружение работы конструктора фильтров.
     """
-    if Env_ is None:
+    if env is None:
         log.warning(u'Не определено окружение для конструктора фильтров')
 
         # Окружение должно быть обязательно
         try:
-            Env_ = filter_builder_env.FILTER_ENVIRONMENT
+            env = filter_builder_env.FILTER_ENVIRONMENT
         except:
             from . import filter_builder_env
-            Env_ = filter_builder_env.FILTER_ENVIRONMENT
+            env = filter_builder_env.FILTER_ENVIRONMENT
 
     dlg = None
     win_clear = False
     try:
-        if ParentWin_ is None:
+        if parent is None:
             id_ = wx.NewId()
-            ParentWin_ = wx.Frame(None, id_, '')
+            parent = wx.Frame(None, id_, '')
             win_clear = True
 
-        dlg = icFilterConstructorDialog(ParentWin_, DefaultFilterData_, Env_)
+        dlg = icFilterConstructorDialog(parent, default_filter_data, env)
         if dlg.ShowModal() in (wx.ID_OK,):
             result = dlg.getFilterData()
             dlg.Destroy()
             # Удаляем созданное родительское окно
             if win_clear:
-                ParentWin_.Destroy()
+                parent.Destroy()
             return result
-
     except:
         log.fatal(u'Ошибка конструктора фильтра')
 
@@ -68,7 +65,7 @@ def get_filter_constructor_dlg(ParentWin_=None, DefaultFilterData_=None, Env_=No
 
         # Удаляем созданное родительское окно
         if win_clear:
-           ParentWin_.Destroy()
+           parent.Destroy()
 
     return None
 
@@ -78,7 +75,7 @@ class icFilterConstructorDialog(wx.Dialog):
     Диалоговое окно конструктора фильтров.
     """
 
-    def __init__(self, parent, DefaultFilterData_=None, Env_=None):
+    def __init__(self, parent, default_filter_data=None, env=None):
         """
         Конструктор.
         """
@@ -108,11 +105,11 @@ class icFilterConstructorDialog(wx.Dialog):
             # Кнопка -OK-
             id_ = wx.NewId()
             self._ok_button = wx.Button(self, id_, u'OK', size=wx.Size(-1, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnOK, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onOK, id=id_)
             # Кнопка -Отмена-
             id_ = wx.NewId()
             self._cancel_button = wx.Button(self, id_, u'Отмена', size=wx.Size(-1, -1))
-            self.Bind(wx.EVT_BUTTON, self.OnCancel, id=id_)
+            self.Bind(wx.EVT_BUTTON, self.onCancel, id=id_)
 
             self._button_boxsizer.Add(self._ok_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
             self._button_boxsizer.Add(self._cancel_button, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
@@ -123,13 +120,13 @@ class icFilterConstructorDialog(wx.Dialog):
 
             self._filter_constructor_ctrl = filter_constructor.icFilterConstructorTreeList(self)
 
-            if Env_:
+            if env:
                 # Устанивить окружение работы конструктора фильтров
-                self._filter_constructor_ctrl.setEnvironment(Env_)
+                self._filter_constructor_ctrl.setEnvironment(env)
 
             # Если надо то установить редатируемый список паспортов
-            if DefaultFilterData_:
-                self._filter_constructor_ctrl.setFilterData(DefaultFilterData_)
+            if default_filter_data:
+                self._filter_constructor_ctrl.setFilterData(default_filter_data)
             else:
                 self._filter_constructor_ctrl.setDefault()
 
@@ -141,13 +138,13 @@ class icFilterConstructorDialog(wx.Dialog):
         except:
             log.fatal(u'Ошибка создания объекта диалогового окна конструктора фильтров')
 
-    def OnOK(self, event):
+    def onOK(self, event):
         """
         Обработчик нажатия кнопки -OK-.
         """
         self.EndModal(wx.ID_OK)
 
-    def OnCancel(self, event):
+    def onCancel(self, event):
         """
         Обработчик нажатия кнопки -Отмена-.
         """
@@ -201,7 +198,7 @@ def test(parent=None):
                                                                     'arg_1': u'1000', 'function': 'lesser',
                                                                     '__sql__': ('cost', '<', '1000')}], 'logic': 'AND'}
 
-    result = get_filter_constructor_dlg(parent, DefaultFilterData_=default_filter, Env_=env)
+    result = get_filter_constructor_dlg(parent, default_filter_data=default_filter, env=env)
     print('TEST ... RESULT:', result)
     app.MainLoop()
     print('TEST ... STOP')

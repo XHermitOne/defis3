@@ -6,6 +6,8 @@
 ВНИМАНИЕ! У всех фильтров корневым элементом д.б. группа.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 def get_date_between_filter(requisite_name, min_date, max_date):
     """

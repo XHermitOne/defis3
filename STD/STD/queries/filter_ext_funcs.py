@@ -6,9 +6,10 @@
 """
 
 import datetime
-from STD.dlg import dlg
 
-__version__ = (0, 1, 1, 1)
+from ic.dlg import std_dlg
+
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_DATE_FMT = '%Y.%m.%d'
 
@@ -63,7 +64,7 @@ def get_args_choice_date():
     Получение аргументов даты с выбором.
     @return: Словарь заполненных аргументов.
     """
-    choice_date = dlg.getDateDlg()
+    choice_date = std_dlg.getDateDlg()
     if choice_date:
         str_date = choice_date.strftime(DEFAULT_DATE_FMT)
         return dict(arg_1=str_date)
@@ -75,7 +76,7 @@ def get_args_choice_month():
     Получение аргументов месяца с выбором.
     @return: Словарь заполненных аргументов.
     """
-    choice_month = dlg.getMonthDlg()
+    choice_month = std_dlg.getMonthDlg()
     if choice_month:
         str_first_date = choice_month.strftime(DEFAULT_DATE_FMT)
         next_month = choice_month+datetime.timedelta(35)
@@ -90,7 +91,7 @@ def get_args_choice_year():
     Получение аргументов года с выбором.
     @return: Словарь заполненных аргументов.
     """
-    choice_year = dlg.getYearDlg()
+    choice_year = std_dlg.getYearDlg()
     if choice_year:
         str_first_date = choice_year.strftime(DEFAULT_DATE_FMT)
         next_year = choice_year+datetime.timedelta(370)
@@ -105,7 +106,7 @@ def get_args_choice_date_range():
     Получение аргументов c выбором диапазона дат.
     @return: Словарь заполненных аргументов.
     """
-    choice_range = dlg.getDateRangeDlg()
+    choice_range = std_dlg.getDateRangeDlg()
     if choice_range:
         str_first_date = choice_range[0].strftime(DEFAULT_DATE_FMT)
         str_last_date = choice_range[1].strftime(DEFAULT_DATE_FMT)
@@ -118,7 +119,7 @@ def get_args_choice_month_range():
     Получение аргументов c выбором диапазона месяцев.
     @return: Словарь заполненных аргументов.
     """
-    choice_range = dlg.getMonthRangeDlg()
+    choice_range = std_dlg.getMonthRangeDlg()
     if choice_range:
         str_first_date = choice_range[0].strftime(DEFAULT_DATE_FMT)
         next_month = choice_range[1]+datetime.timedelta(35)
@@ -203,7 +204,7 @@ def get_args_choice_date_datetime():
     Получение аргументов даты с выбором.
     @return: Словарь заполненных аргументов.
     """
-    choice_date = dlg.getDateDlg()
+    choice_date = std_dlg.getDateDlg()
     if choice_date:
         next_date = choice_date + datetime.timedelta(days=1)
         return dict(arg_1=choice_date, arg_2=next_date)
@@ -215,7 +216,7 @@ def get_args_choice_month_datetime():
     Получение аргументов месяца с выбором.
     @return: Словарь заполненных аргументов.
     """
-    choice_month = dlg.getMonthDlg()
+    choice_month = std_dlg.getMonthDlg()
     if choice_month:
         next_month = choice_month+datetime.timedelta(35)
         last_date = datetime.datetime(year=next_month.year, month=next_month.month, day=1)
@@ -228,7 +229,7 @@ def get_args_choice_year_datetime():
     Получение аргументов года с выбором.
     @return: Словарь заполненных аргументов.
     """
-    choice_year = dlg.getYearDlg()
+    choice_year = std_dlg.getYearDlg()
     if choice_year:
         next_year = choice_year+datetime.timedelta(370)
         last_date = datetime.datetime(year=next_year.year, month=1, day=1)
@@ -241,7 +242,7 @@ def get_args_choice_date_range_datetime():
     Получение аргументов c выбором диапазона дат.
     @return: Словарь заполненных аргументов.
     """
-    choice_range = dlg.getDateRangeDlg()
+    choice_range = std_dlg.getDateRangeDlg()
     if choice_range:
         return dict(arg_1=choice_range[0], arg_2=choice_range[1])
     return {}
@@ -252,7 +253,7 @@ def get_args_choice_month_range_datetime():
     Получение аргументов c выбором диапазона месяцев.
     @return: Словарь заполненных аргументов.
     """
-    choice_range = dlg.getMonthRangeDlg()
+    choice_range = std_dlg.getMonthRangeDlg()
     if choice_range:
         next_month = choice_range[1]+datetime.timedelta(35)
         last_date = datetime.datetime(year=next_month.year, month=next_month.month, day=1)

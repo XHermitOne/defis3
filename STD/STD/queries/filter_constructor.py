@@ -18,7 +18,7 @@ from . import filter_builder_ctrl
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Constants
 DEFAULT_ITEM_LABEL = ''
@@ -62,13 +62,13 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             return result
         return None
         
-    def setEnvironment(self, Env_=None):
+    def setEnvironment(self, env=None):
         """
         Установить окружение для работы редактора.
-        @param Env_: Окружение, словарно-списковая структура формата
+        @param env: Окружение, словарно-списковая структура формата
         filter_builder_env.FILTER_ENVIRONMENT.
         """
-        self.environment = Env_
+        self.environment = env
         
     def getEditResult(self):
         """
@@ -78,13 +78,13 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
 
     getFilterData = getEditResult
     
-    def setEditResult(self, Result_):
+    def setEditResult(self, result):
         """
         Инициализация редактора по отредактированному значению.
         """
         self._addDefaultColumn()
         self.Clear()
-        result = self._setFilterData(Result_)
+        result = self._setFilterData(result)
         # Раскрыть дерево
         self.expandRoot()
         return result
@@ -211,12 +211,12 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             elif parent:
                 self.SelectItem(parent)
         
-    def setFuncChoice(self, item, RequisiteComboBox_):
+    def setFuncChoice(self, item, requisite_combobox):
         """
         Установить в указанный элемент контрол выбора функций, 
             соответствующих выбранному реквизиту.
         """
-        requisite = RequisiteComboBox_.getSelectedRequisite()
+        requisite = requisite_combobox.getSelectedRequisite()
         func_lst = self._getFuncList(requisite['funcs'], self.environment)
         # Если в элементе уже существуют контролы, которые
         # зависят от выбранного реквизита, то удалить их
@@ -230,12 +230,12 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         # Установить контролы на элементе
         self.SetItemWindow(item, func_combobox, 2)
         
-    def setArgsEdit(self, item, FuncComboBox_):
+    def setArgsEdit(self, item, function_combobox):
         """
         Установить в указанный элемент контролы редактирования аргументов, 
             соответствующих выбранной функции.
         """
-        func = FuncComboBox_.getSelectedFunc()
+        func = function_combobox.getSelectedFunc()
         args_lst = func['args']
         # Если в элементе уже существуют контролы, которые
         # зависят от выбранной функции сравнения, то удалить их
@@ -292,40 +292,40 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             self.SetItemWindow(item, arg_edit, i_col)
             i_col += 1
         
-    def _getFuncList(self, Funcs_, Env_):
+    def _getFuncList(self, funcs, env):
         """
         Получить список функций сравнений.
         """
         func_lst = list()
-        if Funcs_:
-            for func in Funcs_:
+        if funcs:
+            for func in funcs:
                 if isinstance(func, str):
                     # Функция сравнения задана именем
-                    func_lst.append(Env_['funcs'][func])
+                    func_lst.append(env['funcs'][func])
                 else:
                     func_lst.append(func)
         else:
             log.warning(u'Конструктор фильтров. Не определен список функций сравнения')
         return func_lst
         
-    def _findItemByCtrl(self, Ctrl_, Item_=None):
+    def _findItemByCtrl(self, ctrl, item=None):
         """
         Найти какой пункт соответствует указанному контролу.
         """
-        if Item_ is None:
-            Item_ = self.root
-        if Item_:
+        if item is None:
+            item = self.root
+        if item:
             col_count = self.getColumnCount()
             # Поискать по колонкам в текущем элементе
             for i in range(col_count):
-                window = self.GetItemWindow(Item_, i)
-                if window == Ctrl_:
+                window = self.GetItemWindow(item, i)
+                if window == ctrl:
                     # Нашли
-                    return Item_
-            if Item_.HasChildren():
+                    return item
+            if item.HasChildren():
                 # Если не нашли в текущем элементе, то поискать в дочерних
-                for child in Item_.GetChildren():
-                    find_item = self._findItemByCtrl(Ctrl_, child)
+                for child in item.GetChildren():
+                    find_item = self._findItemByCtrl(ctrl, child)
                     if find_item:
                         return find_item
         # Не нашли
@@ -337,12 +337,12 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         """
         return self._selected_item
     
-    def _setSelectedItem(self, Item_):
+    def _setSelectedItem(self, item):
         """
         Установить выбранный пользователем элемент.
         """
         if self.GetMainWindow().GetRootItem():
-            self._selected_item = Item_
+            self._selected_item = item
             if self._selected_item:
                 self.SelectItem(self._selected_item)
         
@@ -466,21 +466,21 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         # Раскрыть дерево
         self.expandRoot()
     
-    def _getFilterData(self, Item_=None, bAddPreSQL_=False):
+    def _getFilterData(self, item=None, bAddPreSQL_=False):
         """
         Получить отредактированные данные.
         """
-        if Item_ is None:
-            Item_ = self.root
+        if item is None:
+            item = self.root
             
         item_data = {}
         
         # Добавить сам элемент
-        type_item = self.GetPyData(Item_)
+        type_item = self.GetPyData(item)
         if type_item == 'group':
             # Группа
             item_data['type'] = type_item
-            logic_combobox = self.GetItemWindow(Item_, 1)
+            logic_combobox = self.GetItemWindow(item, 1)
             item_data['name'] = logic_combobox.getSelectedData()['name']
             item_data['logic'] = item_data['name']
             item_data['children'] = []
@@ -488,18 +488,18 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             # Сравнение
             item_data['type'] = type_item
             
-            requisite_combobox = self.GetItemWindow(Item_, 1)
+            requisite_combobox = self.GetItemWindow(item, 1)
             requisite = requisite_combobox.getSelectedData() or {'name': None}
             item_data['requisite'] = requisite['name']
             
-            func_combobox = self.GetItemWindow(Item_, 2)
+            func_combobox = self.GetItemWindow(item, 2)
             func = None
             if func_combobox:
                 func = func_combobox.getSelectedData() or {'name': None}
                 item_data['function'] = func['name']
 
             for i_col in range(3, self.GetColumnCount()):
-                arg_edit = self.GetItemWindow(Item_, i_col)
+                arg_edit = self.GetItemWindow(item, i_col)
                 if arg_edit:
                     key = 'arg_' + str(i_col - 2)
                     # log.debug(u'arg_edit %s' % str(arg_edit))
@@ -527,8 +527,8 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             return None
         
         # Добавить дочерние элементы
-        for item in Item_.GetChildren():
-            child = self._getFilterData(item, bAddPreSQL_)
+        for cur_item in item.GetChildren():
+            child = self._getFilterData(cur_item, bAddPreSQL_)
             if self._is_valid_requisite(child):
                 item_data['children'].append(child)
         return item_data
@@ -546,49 +546,49 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             return True
         return False
         
-    def _setFilterData(self, Data_, Item_=None):
+    def _setFilterData(self, data, item=None):
         """
         Установить данные.
         Функция может запускаться только после инициализации окружения.
         """
         result = True
         
-        if Item_ is None:
+        if item is None:
             self.Clear()
             
-        if Data_['type'] == 'group':
+        if data['type'] == 'group':
             # Обработка группы
-            grp_item = self.addGroup(Item_)
+            grp_item = self.addGroup(item)
             
             logic_combobox = self.GetItemWindow(grp_item, 1)
             if logic_combobox:
-                logic_combobox.selectByName(Data_['name'])            
+                logic_combobox.selectByName(data['name'])
                 
-            if 'children' in Data_:
+            if 'children' in data:
                 # Обработка дочерних элементов
-                for child in Data_['children']:
+                for child in data['children']:
                     result = result and self._setFilterData(child, grp_item)
                 
-        elif Data_['type'] == 'compare':
+        elif data['type'] == 'compare':
             # Обработка сравнения
-            compare_item = self.addCompare(Item_)
+            compare_item = self.addCompare(item)
             
             requisite_combobox = self.GetItemWindow(compare_item, 1)
             if requisite_combobox:
-                requisite_combobox.selectByName(Data_['requisite'])
+                requisite_combobox.selectByName(data['requisite'])
                 self.setFuncChoice(compare_item, requisite_combobox)
                 
             func_combobox = self.GetItemWindow(compare_item, 2)
             if func_combobox:
-                func_combobox.selectByName(Data_['function'])
+                func_combobox.selectByName(data['function'])
                 self.setArgsEdit(compare_item, func_combobox)
                 
             for i_col in range(3, self.GetColumnCount()):
                 arg_edit = self.GetItemWindow(compare_item, i_col)
                 if arg_edit:
-                    arg_edit.setValue(Data_['arg_'+str(i_col-2)])
+                    arg_edit.setValue(data['arg_' + str(i_col - 2)])
         else:
-            log.info(u'Ошибка определения типа элемента конструктора фильтров <%s>' % Data_['type'])
+            log.info(u'Ошибка определения типа элемента конструктора фильтров <%s>' % data['type'])
             return False
         return result
      
