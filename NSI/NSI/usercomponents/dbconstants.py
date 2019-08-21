@@ -27,8 +27,8 @@ from ic.dlg import ic_dlg
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-#from ic.imglib import common
-from NSI.nsi_sys import nsi_img
+# from ic.imglib import common
+# from NSI.nsi_sys import nsi_img
 from ic.PropertyEditor import icDefInf
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -43,41 +43,42 @@ ic_class_type = icDefInf._icUserType
 ic_class_name = 'icDBConstants'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
-#--- Спецификация на ресурсное описание класса ---
-ic_class_spc = {'__events__': {}, 
-    'type': 'DBConstants', 
-    'name': 'default', 
-    'child': [], 
-    'activate':1,
-    'init_expr':None,
-    '_uuid':None,    
+# --- Спецификация на ресурсное описание класса ---
+ic_class_spc = {'type': 'DBConstants',
+                'name': 'default',
+                'child': [],
+                'activate': 1,
+                'init_expr': None,
+                '_uuid': None,
 
-    'description':'',    #Описание справочника
-    'table':None,    #Имя таблицы храниения данных
-    'db':None,    #Имя БД хранения данных
-    'cache':1,  #Автоматически кэшировать?
-    'cache_frm':1, #Автоматически кешировать формы?
-    'choice_form':None, #Форма для просмотра и выбора кода справочника
-    'edit_form':None, #Форма для редактирования справочника
-    
-    #'__lists__':{'level_count':range(1,6)},
-    '__attr_types__': {0: ['name', 'type'],
-        icDefInf.EDT_TEXTFIELD: ['description','choice_form','edit_form'],
-        #icDefInf.EDT_CHOICE:['level_count'],
-        icDefInf.EDT_NUMBER:['cache','cache_frm'],
-        icDefInf.EDT_USER_PROPERTY:['db','table'],
-        },
-    '__parent__':parentModule.SPC_IC_DBCONSTANTS,
-    }
+                'description': '',    #Описание справочника
+                'table': None,    #Имя таблицы храниения данных
+                'db': None,    #Имя БД хранения данных
+                'cache': 1,  #Автоматически кэшировать?
+                'cache_frm': 1, #Автоматически кешировать формы?
+                'choice_form': None, #Форма для просмотра и выбора кода справочника
+                'edit_form': None, #Форма для редактирования справочника
+
+                '__styles__': ic_class_styles,
+                '__events__': {},
+                # '__lists__':{'level_count':range(1,6)},
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description', 'choice_form', 'edit_form'],
+                                   # icDefInf.EDT_CHOICE:['level_count'],
+                                   icDefInf.EDT_CHECK_BOX: ['cache', 'cache_frm'],
+                                   icDefInf.EDT_USER_PROPERTY: ['db', 'table'],
+                                   },
+                '__parent__': parentModule.SPC_IC_DBCONSTANTS,
+                }
                     
-ic_class_spc['__styles__'] = ic_class_styles
+# ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
-ic_class_pic = None #nsi_img.dbconstants
-ic_class_pic2 = None #nsi_img.dbconstants
+ic_class_pic = None     # nsi_img.dbconstants
+ic_class_pic2 = None    # nsi_img.dbconstants
 
 #   Путь до файла документации
 ic_class_doc = ''
@@ -91,7 +92,8 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0,0,0,1)
+__version__ = (0, 1, 1, 1)
+
 
 ### Функции редактирования
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):

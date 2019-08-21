@@ -8,8 +8,9 @@ import wx
 import ic.interfaces.ictemplate as ictemplate
 from ic.PropertyEditor import icDefInf
 from ic.utils import util
+from ic.bitmap import bmpfunc
 import copy
-from STD import reestr_img
+# from STD import reestr_img
 from ic.engine import glob_functions
 
 
@@ -27,8 +28,8 @@ ic_class_spc = {'name':'defaultAttribute',
                              'attrType':glob_functions.get_names_in_res(('mtd',), 'AttributeType')},
                 '__parent__':ictemplate.SPC_IC_TEMPLATE}
 
-ic_class_pic = reestr_img.Requisite
-ic_class_pic2 = reestr_img.Requisite
+ic_class_pic = bmpfunc.createLibraryBitmap('picture.png')  #reestr_img.Requisite
+ic_class_pic2 = bmpfunc.createLibraryBitmap('picture.png')  #reestr_img.Requisite
                 
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK

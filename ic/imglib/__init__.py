@@ -13,10 +13,27 @@ import ic
 __version__ = (0, 1, 1, 1)
 
 
+def import_image_by_expr(expr):
+    """
+    Импорт изображения из модуля по выражению
+    @param expr:
+    @param expr: Выражение.
+    @return: Образ или None в случае ошибки.
+    """
+    img = None
+    try:
+        mod = '.'.join(expr.split('.')[:-1])
+        exec('import %s' % mod)
+        img = eval(expr)
+    except:
+        print(u'Ошибка выполнения выражения <%s>' % str(expr))
+    return img
+
+
 def get_image_by_expr(expr):
     """
     Возвращет изображение по выражению.
-    Пример: '@ic.imglib.newstyle_img.foler'.
+    Пример: '@ic.imglib.newstyle_img.folder'.
     @param expr: Выражение.
     """
     import wx
@@ -31,9 +48,7 @@ def get_image_by_expr(expr):
         try:
             img = eval(expr)
         except AttributeError:
-            mod = '.'.join(expr.split('.')[:-1])
-            exec('import %s' % mod)
-            img = eval(expr)
+            img = import_image_by_expr(expr)
             
         expr = img
 

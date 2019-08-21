@@ -6,10 +6,11 @@
 import wx
 import ic.interfaces.ictemplate as ictemplate
 from ic.utils import util
+from ic.bitmap import bmpfunc
 import copy
 from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
-import STD.reestr_img as reestr_img
+# import STD.reestr_img as reestr_img
 import ic.components.icResourceParser as prs
 
 ### Общий интерфейс компонента
@@ -24,8 +25,8 @@ ic_class_spc = {'name':'defaultUnit',
                 '__brief_attrs__': ['name', 'value'],
                 '__parent__':icwidget.SPC_IC_SIMPLE}
 
-ic_class_pic = reestr_img.Item
-ic_class_pic2 = reestr_img.Item
+ic_class_pic = bmpfunc.createLibraryBitmap('picture.png')  #reestr_img.Item
+ic_class_pic2 = bmpfunc.createLibraryBitmap('picture.png')  #reestr_img.Item
 #ic_can_contain = ['Unit']
 
 class CUnit(icwidget.icSimple):

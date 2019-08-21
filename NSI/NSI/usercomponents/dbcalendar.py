@@ -26,9 +26,10 @@ import wx
 from ic.dlg import ic_dlg
 from ic.components import icwidget
 from ic.utils import util
+from ic.bitmap import bmpfunc
 import ic.components.icResourceParser as prs
-#from ic.imglib import common
-from NSI.nsi_sys import nsi_img
+# from ic.imglib import common
+# from NSI.nsi_sys import nsi_img
 from ic.PropertyEditor import icDefInf
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -76,8 +77,8 @@ ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории 
 #   ic/components/user/images
-ic_class_pic = nsi_img.DBCalendar
-ic_class_pic2 = nsi_img.DBCalendar
+ic_class_pic = bmpfunc.createLibraryBitmap('picture.png')  #nsi_img.DBCalendar
+ic_class_pic2 = bmpfunc.createLibraryBitmap('picture.png')  #nsi_img.DBCalendar
 
 #   Путь до файла документации
 ic_class_doc = ''

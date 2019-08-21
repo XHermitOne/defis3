@@ -23,8 +23,9 @@ import wx
 from ic.components import icwidget
 from ic.utils import util
 from ic.dlg import ic_dlg
+from ic.bitmap import bmpfunc
 import ic.components.icResourceParser as prs
-from NSI.nsi_sys import nsi_images
+# from NSI.nsi_sys import nsi_images
 from ic.PropertyEditor import icDefInf
 
 from ic.utils import coderror
@@ -98,8 +99,8 @@ ic_class_spc = {'type': 'SpravTreeComboCtrl',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = nsi_images.style_sprav_combo
-ic_class_pic2 = nsi_images.style_sprav_combo
+ic_class_pic = bmpfunc.createLibraryBitmap('picture.png')  # nsi_images.style_sprav_combo
+ic_class_pic2 = bmpfunc.createLibraryBitmap('picture.png')  # nsi_images.style_sprav_combo
 
 #   Путь до файла документации
 ic_class_doc = ''
@@ -113,7 +114,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования

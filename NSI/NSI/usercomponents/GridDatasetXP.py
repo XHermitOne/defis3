@@ -8,11 +8,12 @@ from ic.utils import util
 import ic.components.icgriddataset as parentModule
 from ic.components.renders import xpgridrenders as xpr
 from ic.components import icfont
+from ic.bitmap import bmpfunc
 
 ### Standart component interface
 ictemplate.inherit_component_interface(globals(), parentModule, ic_class_name='CGridDatasetXP')
-ic_class_pic = '@ic.imglib.newstyle_img.xpgrid'
-ic_class_pic2 = '@ic.imglib.newstyle_img.xpgrid'
+ic_class_pic = bmpfunc.createLibraryBitmap('table.png')  #'@ic.imglib.newstyle_img.xpgrid'
+ic_class_pic2 = bmpfunc.createLibraryBitmap('table.png')  #'@ic.imglib.newstyle_img.xpgrid'
 
 #   Component version
 __version__ = (1, 1, 1, 1)

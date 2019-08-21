@@ -12,10 +12,11 @@ from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
 from ic.dlg import ic_dlg
 from ic.utils import util
+from ic.bitmap import bmpfunc
 from ic.components import icwidget
 import ic.components.icResourceParser as prs
 
-from NSI.nsi_sys import nsi_images
+# from NSI.nsi_sys import nsi_images
 import NSI.nsi_sys.icspravlevelchoicectrl as parentModule
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -31,37 +32,38 @@ ic_class_name = 'icSpravLevelChoiceCtrl'
 ic_class_styles = {'DEFAULT': 0}
 
 # Спецификация на ресурсное описание класса
-ic_class_spc = dict({'type': 'SpravLevelChoiceCtrl',
-                     'name': 'default',
-                     'activate': True,
-                     'init_expr': None,
-                     '_uuid': None,
-                     'child': [],
+ic_class_spc = {'type': 'SpravLevelChoiceCtrl',
+                'name': 'default',
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
+                'child': [],
 
-                     'sprav': None,  # Паспорт справочника-источника данных
-                     'label': None,  # Заголовок области выбора справочника
-                                     # если не определена, то берется как descrption из справочника
-                     'auto_select': True,    # Производить авто заполнение
+                'sprav': None,  # Паспорт справочника-источника данных
+                'label': None,  # Заголовок области выбора справочника
+                                # если не определена, то берется как descrption из справочника
+                'auto_select': True,    # Производить авто заполнение
 
-                     'on_select_code': None,  # Код, который выполняется
-                                              # при заполнении кода
+               'on_select_code': None,  # Код, который выполняется
+                                        # при заполнении кода
 
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description', 'label'],
-                                        icDefInf.EDT_CHECK_BOX: ['auto_select'],
-                                        icDefInf.EDT_USER_PROPERTY: ['sprav'],
-                                        },
-                     '__events__': {'on_select_code': (None, 'onSelectCode', False),
-                                    },
-                     '__parent__': parentModule.SPC_IC_SPRAVLEVELCHOICECTRL,
-                     })
+               '__styles__': ic_class_styles,
+               '__attr_types__': {0: ['name', 'type'],
+                                  icDefInf.EDT_TEXTFIELD: ['description', 'label'],
+                                  icDefInf.EDT_CHECK_BOX: ['auto_select'],
+                                  icDefInf.EDT_USER_PROPERTY: ['sprav'],
+                                  },
+               '__events__': {'on_select_code': (None, 'onSelectCode', False),
+                             },
+               '__parent__': parentModule.SPC_IC_SPRAVLEVELCHOICECTRL,
+               }
 
-ic_class_spc['__styles__'] = ic_class_styles
+# ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = nsi_images.style_sprav_combo
-ic_class_pic2 = nsi_images.style_sprav_combo
+ic_class_pic = bmpfunc.createLibraryBitmap('picture.png')  # nsi_images.style_sprav_combo
+ic_class_pic2 = bmpfunc.createLibraryBitmap('picture.png') # nsi_images.style_sprav_combo
 
 #   Путь до файла документации
 ic_class_doc = ''

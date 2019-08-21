@@ -2,33 +2,40 @@
 # -*- coding: utf-8 -*-
 ### TEMPLATE_MODULE:
 
+import copy
 import wx
+import wx.grid as gridlib
+import wx.lib.mixins.gridlabelrenderer as glr
+
 import ic.interfaces.ictemplate as ictemplate
 from ic.utils import util
-import copy
 import ic.components.user.icsimplegrid as parentModule
 from ic.utils import graphicUtils
-import wx.lib.mixins.gridlabelrenderer as glr
 from ic.components import icfont
 from ic.components.renders import xpgridrenders as xpr
-from ic.kernel import io_prnt
-import  wx.grid as  gridlib
-from ic.imglib import newstyle_img
+# from ic.kernel import io_prnt
+# from ic.imglib import newstyle_img
+from ic.bitmap import bmpfunc
 
 ### Standart component interface
 ictemplate.inherit_component_interface(globals(), parentModule, ic_class_name = 'CXPSpravTable')
-ic_class_pic = '@ic.imglib.newstyle_img.xpgrid'
-ic_class_pic2 = '@ic.imglib.newstyle_img.xpgrid'
-#   Component version
-__version__ = (1,0,0,1)
 
-ic_class_spc = {'name':'default',
-                'type':'XPSpravTable',
-                '__parent__':parentModule.ic_class_spc}
+ic_class_pic = bmpfunc.createLibraryBitmap('table.png')  #'@ic.imglib.newstyle_img.xpgrid'
+ic_class_pic2 = bmpfunc.createLibraryBitmap('table.png')  #'@ic.imglib.newstyle_img.xpgrid'
+
+#   Component version
+__version__ = (1, 1, 1,1)
+
+ic_class_spc = {'name': 'default',
+                'type': 'XPSpravTable',
+                '__parent__': parentModule.ic_class_spc}
+
 
 # Имя объекта справочника в контексте
-#CONTEXT_SPRAV_NAME = 'OBJ'
+# CONTEXT_SPRAV_NAME = 'OBJ'
 parentClass = getattr(parentModule, parentModule.ic_class_name)
+
+
 class CXPSpravTable(parentClass):
     """ User component class.
     @type component_spc: C{dictionary}
@@ -349,6 +356,7 @@ class HugeTable(gridlib.PyGridTableBase):
     def SetValue(self, row, col, value):
         pass
 
+
 def test(par=0):
     """ Тестируем класс icGrid"""
     from ic.components import ictestapp
@@ -380,6 +388,7 @@ def test(par=0):
     grid.SetColRenderer(0, rr)
     frame.Show(True)
     app.MainLoop()
+
 
 if __name__ == '__main__':
     test()
