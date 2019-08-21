@@ -5,19 +5,17 @@
 Виджет конструктора фильтров.
 """
 
-# Imports
 import copy
 import wx
 from wx.lib.agw import hypertreelist
 
 import ic
-from ic.imglib import constructor_img as img_lib
+from ic.bitmap import bmpfunc
 from ic.components import icEvents
 from . import filter_builder_env
 from . import filter_builder_ctrl
 from ic.log import log
 
-# Version
 __version__ = (0, 1, 1, 2)
 
 # Constants
@@ -127,10 +125,11 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
                                                                 self.environment['logic'])
         logic_combobox.Select(0)
 
+        plus_small_img = bmpfunc.createLibraryBitmap('plus-small.png')
         add_button = filter_builder_ctrl.icBitmapButton(self.GetMainWindow(), -1,
-                                                        bitmap=img_lib.plus_small,
-                                                        size=(img_lib.plus_small.GetWidth()+4,
-                                                              img_lib.plus_small.GetHeight()+4),
+                                                        bitmap=plus_small_img,
+                                                        size=(plus_small_img.GetWidth() + 4,
+                                                              plus_small_img.GetHeight() + 4),
                                                         style=wx.NO_BORDER)
         self.Bind(wx.EVT_BUTTON, self.onAddButtonMouseClick, add_button)
         
@@ -180,10 +179,11 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         requisite_combobox.Bind(icEvents.EVT_LABEL_CHANGE,
                                 self.onRequisiteChangeComboBox)
 
+        cross_small_img = bmpfunc.createLibraryBitmap('cross-small.png')
         del_button = filter_builder_ctrl.icBitmapButton(self.GetMainWindow(), -1,
-                                                        bitmap=img_lib.cross_small,
-                                                        size=(img_lib.cross_small.GetWidth()+8,
-                                                              img_lib.cross_small.GetHeight()+8),
+                                                        bitmap=cross_small_img,
+                                                        size=(cross_small_img.GetWidth() + 8,
+                                                              cross_small_img.GetHeight() + 8),
                                                         style=wx.NO_BORDER)
         self.Bind(wx.EVT_BUTTON, self.onDelButtonMouseClick, del_button)
         
@@ -360,14 +360,14 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         
         id = wx.NewId()
         item = wx.MenuItem(menu, id, u'Добавить условие')
-        bmp = img_lib.node_select_child
+        bmp = bmpfunc.createLibraryBitmap('node-select-child.png')
         item.SetBitmap(bmp)
         menu.AppendItem(item)
         self.Bind(wx.EVT_MENU, self.onAddCompareMenuItem, id=id)
         
         id = wx.NewId()
         item = wx.MenuItem(menu, id, u'Добавить группу')
-        bmp = img_lib.node_select
+        bmp = bmpfunc.createLibraryBitmap('node-select.png')
         item.SetBitmap(bmp)
         menu.AppendItem(item)
         self.Bind(wx.EVT_MENU, self.onAddGroupMenuItem, id=id)
@@ -376,7 +376,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
             menu.AppendSeparator()
             id = wx.NewId()
             item = wx.MenuItem(menu, id, u'Удалить группу')
-            bmp = img_lib.node_delete_previous
+            bmp = bmpfunc.createLibraryBitmap('node-delete-previous.png')
             item.SetBitmap(bmp)
             menu.AppendItem(item)
             self.Bind(wx.EVT_MENU, self.onClearMenuItem, id=id)

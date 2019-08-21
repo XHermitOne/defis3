@@ -19,7 +19,7 @@ class icFilterChoiceDlgProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Выбор фильтров", pos = wx.DefaultPosition, size = wx.Size( 700,500 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -54,7 +54,7 @@ class icFilterChoiceDlgProto ( wx.Dialog ):
 		bSizer4.Add( self.limit_staticText, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
 		
-		bSizer4.AddSpacer( 5 )
+		bSizer4.AddStretchSpacer()
 		
 		self.addButton = wx.Button( self, wx.ID_ANY, u"Добавить...", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer4.Add( self.addButton, 0, wx.ALL, 5 )
