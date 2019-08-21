@@ -153,6 +153,22 @@ class icBalansImportManager(icImportManagerInterface):
             typ = '2002000000000' if in_out else '1002000000000'
         elif typ_doc.upper() == u'АКТ':
             typ = '2005000000000' if in_out else '1005000000000'
+        # Акты участка ОСНОВНЫЕ СРЕДСТВА
+        elif typ_doc.upper() == u'ОС1':
+            # Акт приема-передачи
+            typ = '9009100000000'
+        elif typ_doc.upper() == u'ОС3':
+            # Акт модернизации
+            typ = '9009300000000'
+        elif typ_doc.upper() == u'ОС4':
+            # Акт списания
+            typ = '9009400000000'
+        elif typ_doc.upper() == u'ОС4А':
+            # Акт списания автотранспорта
+            typ = '9009500000000'
+        elif typ_doc.upper() == u'ОС4Б':
+            # Акт группового списания
+            typ = '9009600000000'
         else:
             log.warning(u'Не определен тип документа <%s>' % typ_doc)
         return typ
@@ -167,7 +183,25 @@ class icBalansImportManager(icImportManagerInterface):
             return u'ТОРГ12'
         elif typ_doc.upper() == u'АКТ':
             return u'АКТ'
+        elif typ_doc.upper() in (u'ОС1', u'ОС3', u'ОС4', u'ОС4А', u'ОС4Б'):
+            return u'АКТ'
         return u''
+
+    def get_doc_name(self, typ_doc):
+        """
+        Поиск кода типа документа.
+        """
+        if typ_doc.upper() == u'ОС1':
+            return u'Акт приема-передачи'
+        elif typ_doc.upper() == u'ОС3':
+            return u'Акт модернизации'
+        elif typ_doc.upper() == u'ОС4':
+            return u'Акт списания'
+        elif typ_doc.upper() == u'ОС4А':
+            return u'Акт списания автотранспорта'
+        elif typ_doc.upper() == u'ОС4Б':
+            return u'Акт группового списания'
+        return typ_doc
 
     def get_sector_subcode(self, sType):
         """

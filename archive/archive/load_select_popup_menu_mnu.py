@@ -143,6 +143,19 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Продажа. Документы.'
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
             label += u'Покупка. Документы.'
+        # Участок ОСНОВНЫЕ СРЕДСТВА
+        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+            label += u'Продажа. СФ.'
+        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+            label += u'Покупка. СФ.'
+        #elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
+        #    label += u'Продажа. Акты.'
+        #elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
+        #    label += u'Покупка. Акты.'
+        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
+            label += u'Продажа. Документы.'
+        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
+            label += u'Покупка. Документы.'
         else:
             label += u'Документы'
 
@@ -285,12 +298,14 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         """
         log.debug(u'Выбор пункта меню загрузки документов <Основные средства>.')
 
-        if not self.downloadArchiveDBF():
+        arch_year, arch_quarter = self.getQuarterDlg()
+        if not arch_year:
             if event:
                 event.Skip()
             return
 
-        filename = self.choiceLoadFileName('O')
+        self.downloadArchiveDBF(arch_year, arch_quarter)
+        filename = self.choiceLoadFileName('O', arch_year, arch_quarter)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)

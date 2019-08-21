@@ -59,7 +59,7 @@ DOC_TYPE_DEFAULT_DATA = [('100', u'Приходные документы'),
                          ('5003000000000', u'Протокол разногласий'),
                          ('5003100000000', u'Протокол согласования'),
                          ('5004000000000', u'Доверенность'),
-                         ('900', u'Прочие документы'),                         
+                         ('900', u'Прочие документы'),
                          ('9001000000000', u'Приложение'),
                          ('9002000000000', u'Спецификация'),
                          ('9003000000000', u'Заявка'),
@@ -71,6 +71,8 @@ DOC_TYPE_DEFAULT_DATA = [('100', u'Приходные документы'),
                          ('9009100000000', u'ОС1. Акт о приеме-передаче объекта основных средств (кроме зданий, сооружений)'),
                          ('9009300000000', u'ОС3. Акт о приеме-сдаче отремонтированных, реконструированных, модернизированных объектов основных средств'),
                          ('9009400000000', u'ОС4. Акт о списании объекта основных средств (кроме автотранспортных средств)'),
+                         ('9009500000000', u'ОС4А. Акт о списании автотранспортных средств'),
+                         ('9009600000000', u'ОС4Б. Акт группового списания'),
                          ]
 
 
@@ -87,19 +89,19 @@ class icNSIDocTypeTabManager(icmanagerinterface.icWidgetManager):
         Установка значений справочника по умолчанию.
         Данные беруться по умолчанию.
         """
-        tab = self.get_object()        
+        tab = self.get_object()
         # Очистить таблицу
         tab.clear()
-        
+
         for record in DOC_TYPE_DEFAULT_DATA:
             new_cod = record[0]
             name = record[1]
             new_rec = dict(type='nsi_doc_type',
-                           cod=new_cod, 
+                           cod=new_cod,
                            name=name)
             tab.add(**new_rec)
-            
-        
+
+
     def set_default_data_balans(self):
         """
         Установка значений справочника по умолчанию.
@@ -109,7 +111,7 @@ class icNSIDocTypeTabManager(icmanagerinterface.icWidgetManager):
             log.warning(u'Отсутствует файл <%s> для импорта данных справочника типов документов')
             return
 
-        tab = self.get_object()        
+        tab = self.get_object()
         # Очистить таблицу
         tab.clear()
 
@@ -131,15 +133,15 @@ class icNSIDocTypeTabManager(icmanagerinterface.icWidgetManager):
                         log.debug('NSI [%s : %s : %s]' % (typ, cod, name))
                     except UnicodeDecodeError:
                         log.debug('NSI [%s : %s]' % (typ, cod))
-                    
+
                     new_cod = typ+cod
-                    # Удаление на случай двойного описания 
+                    # Удаление на случай двойного описания
                     # одного и того же в DBF файле
                     tab.del_where(tab.c.cod==new_cod)
                     new_rec = dict(type='nsi_doc_type',
                                    cod=new_cod, name=name)
                     tab.add(**new_rec)
-                
+
                 dbf_tab.Next()
                 record = dbf_tab.getRecDict()
             dbf_tab.Close()
