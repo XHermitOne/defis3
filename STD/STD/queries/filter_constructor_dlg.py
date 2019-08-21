@@ -89,8 +89,7 @@ class icFilterConstructorDialog(wx.Dialog):
             # Определение иконки диалогового окна
             icon = None
             try:
-                from ic.imglib import newstyle_img
-                icon_img = newstyle_img.data_filter
+                icon_img = bmpfunc.createLibraryBitmap('filter_advanced.png')
             except:
                 icon_img = bmpfunc.getSysImg('imgFilter')
             if icon_img:

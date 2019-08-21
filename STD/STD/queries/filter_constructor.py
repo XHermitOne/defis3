@@ -128,8 +128,8 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
         plus_small_img = bmpfunc.createLibraryBitmap('plus-small.png')
         add_button = filter_builder_ctrl.icBitmapButton(self.GetMainWindow(), -1,
                                                         bitmap=plus_small_img,
-                                                        size=(plus_small_img.GetWidth() + 4,
-                                                              plus_small_img.GetHeight() + 4),
+                                                        size=(plus_small_img.GetWidth() + 8,
+                                                              plus_small_img.GetHeight() + 8),
                                                         style=wx.NO_BORDER)
         self.Bind(wx.EVT_BUTTON, self.onAddButtonMouseClick, add_button)
         

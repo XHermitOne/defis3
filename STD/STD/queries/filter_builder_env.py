@@ -43,21 +43,18 @@ REQUISITE_TYPE_NSI='NSI' - Справочник
 Все делать по аналогии с другими функциями.
 """
 
-# Imports
 import wx
 import wx.adv
 
 from . import filter_py_funcs as pyf
 from . import filter_ext_funcs as exf
 
-# Образы
-# from ic.imglib import logic_img as img_lib
 
 from ic.log import log
 from ic.bitmap import bmpfunc
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Constants
