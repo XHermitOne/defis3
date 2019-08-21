@@ -23,6 +23,9 @@ DEFAULT_MASK_COLOUR = wx.LIGHT_GREY
 # Размер картинок библиотеки по умолчанию
 DEFAULT_LIB_BMP_SIZE = (16, 16)
 
+# Буфер картинок
+USER_BITMAP_CACHE = {}
+
 
 # Функции
 def getImageLibDir():
@@ -52,6 +55,8 @@ def createLibraryBitmap(img_filename, bMask=False):
     full_img_filename = os.path.normpath(os.path.join(imglib_dir, img_filename))
     if os.path.exists(full_img_filename):
         return createBitmap(full_img_filename, bMask)
+    else:
+        log.warning(u'Не найден библиотечный файл образа <%s>' % full_img_filename)
     return None
 
 
@@ -67,7 +72,7 @@ def createBitmap(img_filename, bMask=False):
         # Преобразовать относительные пути в абсолютные
         img_filename = ic_file.AbsolutePath(img_filename)
         if (not img_filename) or (not os.path.exists(img_filename)):
-            log.warning(u'Некорректное имя файла образа: <%s>' % img_filename)
+            log.warning(u'Не корректное имя файла образа: <%s>' % img_filename)
             return None
         bmp = wx.Bitmap(img_filename, getImageFileType(img_filename))
         if bMask:
@@ -77,7 +82,7 @@ def createBitmap(img_filename, bMask=False):
         return bmp
     except:
         log.fatal(u'Ошибка создания образа файла <%s>' % img_filename)
-        return None
+    return None
 
 
 def createEmptyBitmap(width, height, background_colour=None):
@@ -106,7 +111,7 @@ def createEmptyBitmap(width, height, background_colour=None):
         return bmp
     except:
         log.fatal(u'Ошибка создания пустого Bitmap. Размер <%s x %s>' % (width, height))
-        return None
+    return None
 
 
 def createAni(parent, size, freame_delay, *frame_filenames):
@@ -124,7 +129,7 @@ def createAni(parent, size, freame_delay, *frame_filenames):
         return throbber
     except:
         log.fatal(u'Ошибка создания анимированного объекта.')
-        return None
+    return None
 
 
 def getSysImg(image_name):
@@ -147,10 +152,6 @@ def findBitmap(*img_filenames):
         if os.path.exists(img_filename):
             return createBitmap(img_filename)
     return None
-
-
-# Буфер картинок
-USER_BITMAP_CACHE = {}
 
 
 def getBitmapType(filename):
@@ -191,32 +192,32 @@ def getBitmapType(filename):
     return None
 
 
-def getUserBitmap(fileName, subsys, dir='images'):
+def getUserBitmap(img_filename, subsys, dir='images'):
     """
     Функция возвращает объект картинки из пользовательской библиотеки.
 
     @type subsys: C{string}
     @param subsys: Имя подсистемы в которой ищется картинка.
-    @type fileName: C{string}
-    @param fileName: Имя картинки.
+    @type img_filename: C{string}
+    @param img_filename: Имя картинки.
     @rtype: C{wx.Bitmap}
     @return: Объект картинки.
     """
     global USER_BITMAP_CACHE
-    key = str(subsys) + os.path.sep + fileName
+    key = str(subsys) + os.path.sep + img_filename
 
     if key in USER_BITMAP_CACHE:
         return USER_BITMAP_CACHE[key]
     else:
-        typ = getBitmapType(fileName)
+        typ = getBitmapType(img_filename)
 
         if typ:
             import ic.utils.resource as resource
             path = resource.icGetResPath().replace('\\', '/')
             if not subsys:
-                path = os.path.join(path, dir, fileName)
+                path = os.path.join(path, dir, img_filename)
             else:
-                path = os.path.join(os.path.sep.join(path.split(os.path.sep)[:-1]), subsys, dir, fileName)
+                path = os.path.join(os.path.sep.join(path.split(os.path.sep)[:-1]), subsys, dir, img_filename)
 
             img = wx.Image(path, typ)
             bmp = img.ConvertToBitmap()

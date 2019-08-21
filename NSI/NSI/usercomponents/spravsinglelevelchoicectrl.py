@@ -58,8 +58,6 @@ ic_class_spc = {'type': 'SpravSingleLevelChoiceCtrl',
                 '__parent__': parentModule.SPC_IC_SPRAVSINGLELEVELCHOICECTRL,
                 }
 
-# ic_class_spc['__styles__'] = ic_class_styles
-
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = bmpfunc.createLibraryBitmap('picture.png')  #nsi_images.style_sprav_combo

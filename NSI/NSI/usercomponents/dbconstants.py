@@ -22,14 +22,15 @@
     компонент (ic_can_contain = -1).
 """
 
+import copy
 import wx
+
 from ic.dlg import ic_dlg
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
-# from ic.imglib import common
-# from NSI.nsi_sys import nsi_img
 from ic.PropertyEditor import icDefInf
+from ic.bitmap import bmpfunc
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
@@ -49,17 +50,17 @@ ic_class_styles = {'DEFAULT': 0}
 ic_class_spc = {'type': 'DBConstants',
                 'name': 'default',
                 'child': [],
-                'activate': 1,
+                'activate': True,
                 'init_expr': None,
                 '_uuid': None,
 
-                'description': '',    #Описание справочника
-                'table': None,    #Имя таблицы храниения данных
-                'db': None,    #Имя БД хранения данных
-                'cache': 1,  #Автоматически кэшировать?
-                'cache_frm': 1, #Автоматически кешировать формы?
-                'choice_form': None, #Форма для просмотра и выбора кода справочника
-                'edit_form': None, #Форма для редактирования справочника
+                'description': '',  # Описание справочника
+                'table': None,      # Имя таблицы храниения данных
+                'db': None,         # Имя БД хранения данных
+                'cache': True,         # Автоматически кэшировать?
+                'cache_frm': True,     # Автоматически кешировать формы?
+                'choice_form': None,    # Форма для просмотра и выбора кода справочника
+                'edit_form': None,      # Форма для редактирования справочника
 
                 '__styles__': ic_class_styles,
                 '__events__': {},
@@ -73,12 +74,10 @@ ic_class_spc = {'type': 'DBConstants',
                 '__parent__': parentModule.SPC_IC_DBCONSTANTS,
                 }
                     
-# ic_class_spc['__styles__'] = ic_class_styles
-
-#   Имя иконки класса, которые располагаются в директории 
+#   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = None     # nsi_img.dbconstants
-ic_class_pic2 = None    # nsi_img.dbconstants
+ic_class_pic = bmpfunc.createLibraryBitmap('large_tiles.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('large_tiles.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
@@ -101,7 +100,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
     """
     ret=None
-    if attr in ('db','table'):
+    if attr in ('db', 'table'):
         ret=pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
 
     if ret is None:
@@ -109,21 +108,22 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     
     return ret
 
+
 def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
     """
     Стандартная функция контроля.
     """
     if attr in ('db',):
-        #return pspEdt.property_editor_ctrl(value, propEdt)
+        # return pspEdt.property_editor_ctrl(value, propEdt)
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
-            if not ret[0][0] in ('PostgreSQLDB','SQLiteDB'):
+            if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
                 msgbox.MsgBox(parent, u'Выбранный объект не является БД.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('table',):
-        #return pspEdt.property_editor_ctrl(value, propEdt)
+        # return pspEdt.property_editor_ctrl(value, propEdt)
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
@@ -132,11 +132,12 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
+
 def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
     """
     Стандартная функция преобразования текста в значение.
     """
-    if attr in ('db','table'):
+    if attr in ('db', 'table'):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
@@ -151,11 +152,10 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsPrototype):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType = 0, evalSpace = None,
-                        bCounter=False, progressDlg=None):
+                 bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
 
@@ -179,40 +179,41 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsPrototype):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icDBConstantsPrototype.__init__(self,parent,component['name'])
+        parentModule.icDBConstantsPrototype.__init__(self, parent, component['name'])
         
-        #--- Свойства компонента ---
-        #Описание перечисления
-        self.description=''
+        # --- Свойства компонента ---
+        # Описание перечисления
+        self.description = ''
         if 'description' in component:
-            self.description=component['description']
+            self.description = component['description']
 
         #   Создаем дочерние компоненты
-        component=self.addConstantsLevelsSPC(component)
+        component = self.addConstantsLevelsSPC(component)
         
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
         
-    def addConstantsLevelsSPC(self,ComponentSpc_):
+    def addConstantsLevelsSPC(self, component_spc):
         """
         Сразу задается структура из 1 уровня.
         """
-        level_spc=util.DeepCopy(spravlevel.ic_class_spc)
-        level_spc['name']='Constants'
-        level_spc['len']=10
-        level_spc['description']='Константы:'
-        level_spc['notice']={'cod':'Имя константы','name':'Описание',
-            's1':'Тип значения'}
+        level_spc = copy.deepcopy(spravlevel.ic_class_spc)
+        level_spc['name'] = 'Constants'
+        level_spc['len'] = 10
+        level_spc['description'] = u'Константы:'
+        level_spc['notice'] = {'cod': 'Имя константы',
+                               'name': 'Описание',
+                               's1': 'Тип значения'}
         
-        ComponentSpc_['child']=[level_spc]
-        return ComponentSpc_
+        component_spc['child'] = [level_spc]
+        return component_spc
         
     def childCreator(self, bCounter, progressDlg):
         """
         Функция создает объекты, которые содержаться в данном компоненте.
         """
-        prs.icResourceParser(self, self.resource['child'], None, evalSpace = self.evalSpace, 
-                                bCounter = bCounter, progressDlg = progressDlg)
+        prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
+                             bCounter=bCounter, progressDlg=progressDlg)
       
     def getLevelCount(self):
         """
@@ -232,7 +233,7 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsPrototype):
         """
         Имя БД.
         """
-        db_psp=self.getICAttr('db')
+        db_psp = self.getICAttr('db')
         if db_psp:
             return db_psp[0][1]
         return None
@@ -241,7 +242,7 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsPrototype):
         """
         Имя объекта хранения/Таблицы.
         """
-        tab_psp=self.getICAttr('table')
+        tab_psp = self.getICAttr('table')
         if tab_psp:
             return tab_psp[0][1]
         return None
@@ -277,7 +278,7 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsPrototype):
         choice_form=self.getICAttr('choice_form')
         if choice_form is None:
             ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
-                u'В справочнике %s не определена форма выбора.'%(self.name))
+                            u'В справочнике %s не определена форма выбора.' % self.name)
         return choice_form
 
     def getEditFormName(self):
@@ -287,7 +288,7 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsPrototype):
         edit_form=self.getICAttr('edit_form')
         if edit_form is None:
             ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
-                u'В справочнике %s не определена форма редактирования.'%(self.name))
+                            u'В справочнике %s не определена форма редактирования.' % self.name)
         return edit_form
         
     def getChoiceFormPsp(self):

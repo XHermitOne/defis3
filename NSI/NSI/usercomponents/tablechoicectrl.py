@@ -83,7 +83,6 @@ ic_class_spc = {'type': 'TableChoiceCtrl',
                                  },
                 }
 
-
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = bmpfunc.createLibraryBitmap('ic_table_combobox.png')
@@ -101,7 +100,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 2, 1)
+__version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования

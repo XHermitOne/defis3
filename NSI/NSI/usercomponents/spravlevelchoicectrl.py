@@ -44,21 +44,19 @@ ic_class_spc = {'type': 'SpravLevelChoiceCtrl',
                                 # если не определена, то берется как descrption из справочника
                 'auto_select': True,    # Производить авто заполнение
 
-               'on_select_code': None,  # Код, который выполняется
-                                        # при заполнении кода
+                'on_select_code': None,  # Код, который выполняется
+                                         # при заполнении кода
 
-               '__styles__': ic_class_styles,
-               '__attr_types__': {0: ['name', 'type'],
-                                  icDefInf.EDT_TEXTFIELD: ['description', 'label'],
-                                  icDefInf.EDT_CHECK_BOX: ['auto_select'],
-                                  icDefInf.EDT_USER_PROPERTY: ['sprav'],
-                                  },
-               '__events__': {'on_select_code': (None, 'onSelectCode', False),
-                             },
-               '__parent__': parentModule.SPC_IC_SPRAVLEVELCHOICECTRL,
-               }
-
-# ic_class_spc['__styles__'] = ic_class_styles
+                '__styles__': ic_class_styles,
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description', 'label'],
+                                   icDefInf.EDT_CHECK_BOX: ['auto_select'],
+                                   icDefInf.EDT_USER_PROPERTY: ['sprav'],
+                                   },
+                '__events__': {'on_select_code': (None, 'onSelectCode', False),
+                               },
+                '__parent__': parentModule.SPC_IC_SPRAVLEVELCHOICECTRL,
+                }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -77,7 +75,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # Функции редактирования
 
@@ -132,7 +130,6 @@ class icSpravLevelChoiceCtrl(parentModule.icSpravLevelChoiceCtrlProto, icwidget.
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,

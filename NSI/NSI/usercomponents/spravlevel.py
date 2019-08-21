@@ -39,54 +39,53 @@ ic_class_name = 'icSpravLevel'
 ic_class_styles = None
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'type': 'SpravLevel',
-                     'name': 'default',
-                     'child': [],
-                     'activate': True,
-                     'init_expr': None,
-                     '_uuid': None,
-                     '__brief_attrs__': ['name', 'description'],
+ic_class_spc = {'type': 'SpravLevel',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
+                '__brief_attrs__': ['name', 'description'],
     
-                     'hlp_form': None,   # Форма для выбора кода на текушем уровне
-                     'edit_form': None,  # Форма для редактирования записей справоника текушего уровня
-                     'access': '',       # Права доступа
-                     'len': 2,    # Длина кода уровня
-                     'cod_type': 'string',  # Тип значения субкода (число/строка)
-                     'description': '',   # Описание
-                     'notice': {},  # Словарь описания семантики дополнительных полей данных справочника
-                     'pic': None,   # Картинка-образ
-                     'pic2': None,  # Картинка-образ
-                     'ref_sprav': None,     # Справочник, на который ссылается текущий уровень
-                     'ref_level': 0,
-                     'add_ctrl': None,  # Функция дополнительного контроля на добавление записи в справочник
-                     'update_ctrl': None,   # Функция дополнительного контроля на обновление/изменение записи в справочник
-                     'del_ctrl': None,  # Функция дополнительного контроля на удаление записи из справочника
+                'hlp_form': None,   # Форма для выбора кода на текушем уровне
+                'edit_form': None,  # Форма для редактирования записей справоника текушего уровня
+                'access': '',       # Права доступа
+                'len': 2,    # Длина кода уровня
+                'cod_type': 'string',  # Тип значения субкода (число/строка)
+                'description': '',   # Описание
+                'notice': {},  # Словарь описания семантики дополнительных полей данных справочника
+                'pic': None,   # Картинка-образ
+                'pic2': None,  # Картинка-образ
+                'ref_sprav': None,     # Справочник, на который ссылается текущий уровень
+                'ref_level': 0,
+                'add_ctrl': None,  # Функция дополнительного контроля на добавление записи в справочник
+                'update_ctrl': None,   # Функция дополнительного контроля на обновление/изменение записи в справочник
+                'del_ctrl': None,  # Функция дополнительного контроля на удаление записи из справочника
 
-                     '__events__': {},
-                     '__lists__': {'cod_type': ['number', 'string']},
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description', 'access', 'hlp_form', 'edit_form'],
-                                        icDefInf.EDT_CHOICE: ['cod_type'],
-                                        icDefInf.EDT_NUMBER: ['len', 'ref_level'],
-                                        icDefInf.EDT_TEXTDICT: ['notice'],
-                                        },
-                     '__parent__': parentModule.SPC_IC_SPRAVLEVEL,
-                     '__attr_hlp__': {'hlp_form': u'Форма для выбора кода на текушем уровне',
-                                      'edit_form': u'Форма для редактирования записей справоника текушего уровня',
-                                      'access': u'Права доступа',
-                                      'len': u'Длина кода уровня',
-                                      'cod_type': u'Тип значения субкода (число/строка)',
-                                      'notice': u'Словарь описания семантики дополнительных полей данных справочника',
-                                      'pic': u'Картинка-образ',
-                                      'pic2': u'Картинка-образ',
-                                      'ref_sprav': u'Справочник, на который ссылается текущий уровень',
-                                      'add_ctrl': u'Функция дополнительного контроля на добавление записи в справочник',
-                                      'update_ctrl': u'Функция дополнительного контроля на обновление/изменение записи в справочник',
-                                      'del_ctrl': u'Функция дополнительного контроля на удаление записи из справочника',
-                                      },
-                     })
-
-ic_class_spc['__styles__'] = ic_class_styles
+                '__styles__': ic_class_styles,
+                '__events__': {},
+                '__lists__': {'cod_type': ['number', 'string']},
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description', 'access', 'hlp_form', 'edit_form'],
+                                   icDefInf.EDT_CHOICE: ['cod_type'],
+                                   icDefInf.EDT_NUMBER: ['len', 'ref_level'],
+                                   icDefInf.EDT_TEXTDICT: ['notice'],
+                                   },
+                '__parent__': parentModule.SPC_IC_SPRAVLEVEL,
+                '__attr_hlp__': {'hlp_form': u'Форма для выбора кода на текушем уровне',
+                                 'edit_form': u'Форма для редактирования записей справоника текушего уровня',
+                                 'access': u'Права доступа',
+                                 'len': u'Длина кода уровня',
+                                 'cod_type': u'Тип значения субкода (число/строка)',
+                                 'notice': u'Словарь описания семантики дополнительных полей данных справочника',
+                                 'pic': u'Картинка-образ',
+                                 'pic2': u'Картинка-образ',
+                                 'ref_sprav': u'Справочник, на который ссылается текущий уровень',
+                                 'add_ctrl': u'Функция дополнительного контроля на добавление записи в справочник',
+                                 'update_ctrl': u'Функция дополнительного контроля на обновление/изменение записи в справочник',
+                                 'del_ctrl': u'Функция дополнительного контроля на удаление записи из справочника',
+                                 },
+                }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -105,7 +104,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 class icSpravLevel(icwidget.icSimple, parentModule.icSpravLevelPrototype):

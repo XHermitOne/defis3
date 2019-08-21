@@ -55,6 +55,7 @@ ic_class_spc = {'type': 'SpravManager',
                 'activate': True,
                 'init_expr': None,
                 '_uuid': None,
+
                 '__styles__': ic_class_styles,
                 '__events__': {},
                 '__attr_types__': {0: ['name', 'type']},
@@ -78,7 +79,7 @@ ic_can_contain = ['DBConstants', 'DBEnum', 'Sprav', 'DBCalendar']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerPrototype):

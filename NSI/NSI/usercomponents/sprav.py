@@ -56,43 +56,42 @@ ic_class_name = 'icSprav'
 ic_class_styles = {'DEFAULT': 0}
 
 # Спецификация на ресурсное описание класса
-ic_class_spc = dict({'__events__': {},
-                     'type': 'Sprav',
-                     'name': 'default',
-                     'child': [],
-                     'activate': 1,
-                     'init_expr': None,
-                     '_uuid': None,
-                     '__brief_attrs__': ['name', 'description'],
-                     'description': '',    # Описание справочника
+ic_class_spc = {'type': 'Sprav',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                'init_expr': None,
+                '_uuid': None,
+                '__brief_attrs__': ['name', 'description'],
+                'description': u'',    # Описание справочника
     
-                     'table': None,         # Имя таблицы храниения данных
-                     'db': None,            # Имя БД хранения данных
-                     'cache': True,         # Автоматически кэшировать?
-                     'is_tab_time': False,  # Есть ли у справочника таблица временных значений?
-                     'cache_frm': True,     # Автоматически кешировать формы?
-                     # 'choice_form': 'spravChoiceDlgStd',    # Форма для просмотра и выбора кода справочника
-                     # 'edit_form': 'spravEditDlgStd',        # Форма для редактирования справочника
-                     'choice_form': '',     # Форма для просмотра и выбора кода справочника
-                     'edit_form': '',       # Форма для редактирования справочника
+                'table': None,         # Имя таблицы храниения данных
+                'db': None,            # Имя БД хранения данных
+                'cache': True,         # Автоматически кэшировать?
+                'is_tab_time': False,  # Есть ли у справочника таблица временных значений?
+                'cache_frm': True,     # Автоматически кешировать формы?
+                # 'choice_form': 'spravChoiceDlgStd',    # Форма для просмотра и выбора кода справочника
+                # 'edit_form': 'spravEditDlgStd',        # Форма для редактирования справочника
+                'choice_form': '',     # Форма для просмотра и выбора кода справочника
+                'edit_form': '',       # Форма для редактирования справочника
 
-                     '__attr_types__': {0: ['name', 'type'],
-                                        icDefInf.EDT_TEXTFIELD: ['description', 'choice_form', 'edit_form'],
-                                        icDefInf.EDT_CHECK_BOX: ['is_tab_time', 'cache', 'cache_frm'],
-                                        icDefInf.EDT_USER_PROPERTY: ['db', 'table'],
-                                        },
-                     '__parent__': parentModule.SPC_IC_SPRAV,
-                     '__attr_hlp__': {'table': u'Паспорт таблицы храниения данных',
-                                      'db': u'Имя БД хранения данных',
-                                      'cache': u'Автоматически кэшировать?',
-                                      'is_tab_time': u'Есть ли у справочника таблица временных значений?',
-                                      'cache_frm': u'Автоматически кешировать формы?',
-                                      'choice_form': u'Форма для просмотра и выбора кода справочника',
-                                      'edit_form': u'Форма для редактирования справочника',
-                                      },
-                     })
-
-ic_class_spc['__styles__'] = ic_class_styles
+                '__styles__': ic_class_styles,
+                '__events__': {},
+                '__attr_types__': {0: ['name', 'type'],
+                                   icDefInf.EDT_TEXTFIELD: ['description', 'choice_form', 'edit_form'],
+                                   icDefInf.EDT_CHECK_BOX: ['is_tab_time', 'cache', 'cache_frm'],
+                                   icDefInf.EDT_USER_PROPERTY: ['db', 'table'],
+                                   },
+                '__parent__': parentModule.SPC_IC_SPRAV,
+                '__attr_hlp__': {'table': u'Паспорт таблицы храниения данных',
+                                 'db': u'Имя БД хранения данных',
+                                 'cache': u'Автоматически кэшировать?',
+                                 'is_tab_time': u'Есть ли у справочника таблица временных значений?',
+                                 'cache_frm': u'Автоматически кешировать формы?',
+                                 'choice_form': u'Форма для просмотра и выбора кода справочника',
+                                 'edit_form': u'Форма для редактирования справочника',
+                                 },
+                }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -111,7 +110,7 @@ ic_can_contain = ['SpravLevel']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 # Функции редактирования
 

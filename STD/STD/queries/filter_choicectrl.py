@@ -151,9 +151,9 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
             # Выбор условия соединения фильтров
             and_or = filter_data.get('logic', 'OR')
             if and_or == 'OR':
-                self.logicRadioBox.setSelection(0)
+                self.logicRadioBox.SetSelection(0)
             else:
-                self.logicRadioBox.setSelection(1)
+                self.logicRadioBox.SetSelection(1)
 
             self._filters = filter_data.get('children', [])
         else:

@@ -167,7 +167,6 @@ class icSpravTreeComboCtrl(parentModule.icSpravTreeComboCtrlPrototype, icwidget.
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
