@@ -308,7 +308,7 @@ class stateImageRenderer(wx.grid.PyGridCellRenderer):
 
     def DrawText(self, grid, dc, rect, text, hAlign, vAlign):
         """
-        Draw the label's text in the rectangle, using the alignment
+        draw the label's text in the rectangle, using the alignment
         flags, and the grid's specified label font and color.
         """
         dc.SetBackgroundMode(wx.TRANSPARENT)
@@ -382,7 +382,7 @@ class DefaultCellRenderer(wx.grid.PyGridCellRenderer):
 
     def DrawText(self, grid, dc, rect, text, hAlign, vAlign):
         """
-        Draw the label's text in the rectangle, using the alignment
+        draw the label's text in the rectangle, using the alignment
         flags, and the grid's specified label font and color.
         """
         dc.SetBackgroundMode(wx.TRANSPARENT)

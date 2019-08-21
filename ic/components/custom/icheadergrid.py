@@ -332,7 +332,7 @@ class icHeader(icBase, wx.ScrolledWindow):
         dc = wx.ClientDC(self)
         
         for obj in self.parAddList:
-            obj.Draw(dc)
+            obj.draw(dc)
 
     def Reconstruct(self):
         """
@@ -423,7 +423,7 @@ class icHeader(icBase, wx.ScrolledWindow):
             
             if rect.x <= x and rect.x + rect.width >= x+1:
                 dc_obj = wx.ClientDC(obj)
-                obj.Draw(dc_obj)
+                obj.draw(dc_obj)
             
     def OnLeftDown(self, evt):
         """

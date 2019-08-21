@@ -173,7 +173,7 @@ class icStaticBoxSizer(icwidget.icSizer, wx.StaticBoxSizer):
             except:
                 log.fatal(u'Ошибка при привязке сайзера')
 
-    def DrawShape(self, dc=None):
+    def drawShape(self, dc=None):
         """
         Рисует представление для StaticBoxSizer.
         """
@@ -182,7 +182,7 @@ class icStaticBoxSizer(icwidget.icSizer, wx.StaticBoxSizer):
             if self.shapeType == icwidget.icParentShapeType:
                 clr = (190, 0, 0)
 
-            self.DrawCursor(clr=clr)
+            self.drawCursor(clr=clr)
             #   Рисуем разметку для компонентов
             if not dc:
                 dc = wx.ClientDC(self.GetParent())

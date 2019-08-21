@@ -51,8 +51,8 @@ SPC_IC_PANEL = {'type': 'Panel',
 
                 '__default_page__': 1,
                 '__events__': {'onClose': ('wx.EVT_CLOSE', 'destroyObj', False),
-                               'onLeftMouseClick': ('wx.EVT_LEFT_DOWN', 'OnLeftDown', False),
-                               'onRightMouseClick': ('wx.EVT_RIGHT_DOWN', 'OnRightDown', False),
+                               'onLeftMouseClick': ('wx.EVT_LEFT_DOWN', 'onLeftDown', False),
+                               'onRightMouseClick': ('wx.EVT_RIGHT_DOWN', 'onRightDown', False),
                                },
                 '__attr_types__': {icDefInf.EDT_PY_SCRIPT: ['onClose', 'keyDown'],
                                    icDefInf.EDT_TEXTFIELD: ['docstr'],
@@ -93,7 +93,7 @@ ic_can_contain = -1
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 DESIGN_BORDER_CLR = (112, 146, 190)
 
@@ -167,14 +167,14 @@ class icWXPanel(icWidget, wx.Panel):
             clr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE)
             self.SetBackgroundColour(clr)
 
-        self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
-        self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
-        self.Bind(wx.EVT_SIZE, self.OnPanelSize)
+        self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
+        self.Bind(wx.EVT_RIGHT_DOWN, self.onRightDown)
+        self.Bind(wx.EVT_SIZE, self.onPanelSize)
         self.BindICEvt()
         #   Задаем режим положки редактора
         if (self.context['__runtime_mode'] == util.IC_RUNTIME_MODE_EDITOR and
            ('_root_obj' in self.context and self.context['_root_obj'] is None)):
-            self.SetEditorMode()
+            self.setEditorMode()
             
         #   Создаем дочерние компоненты
         self.childCreator(bCounter, progressDlg)
@@ -193,7 +193,7 @@ class icWXPanel(icWidget, wx.Panel):
             else:
                 log.warning('Not define kernel in widget <%s>' % self)
 
-    def DestroyWin(self):
+    def destroyWin(self):
         """
         Обрабатывает закрытие окна.
         """
@@ -208,7 +208,7 @@ class icWXPanel(icWidget, wx.Panel):
         except:
             log.fatal(u'Ошибка закрытия панели')
 
-    def Draw(self, dc):
+    def draw(self, dc):
         """
         Отрисовка панели.
         """
@@ -266,7 +266,7 @@ class icWXPanel(icWidget, wx.Panel):
                     
         dc.EndDrawing()
         
-    def ObjDestroy(self):
+    def destroyObj(self):
         """
         Обрабатывает сообщение о закрытии окна.
         """
@@ -274,7 +274,7 @@ class icWXPanel(icWidget, wx.Panel):
             self.evalSpace['self'] = self
             self.eval_attr('onClose')
 
-    def OnLeftDown(self, evt):
+    def onLeftDown(self, evt):
         """
         wx.EVT_LEFT_DOWN
         """
@@ -285,7 +285,7 @@ class icWXPanel(icWidget, wx.Panel):
             self.eval_attr('onLeftMouseClick')
         evt.Skip()
 
-    def OnRightDown(self, evt):
+    def onRightDown(self, evt):
         """
         wx.EVT_RIGHT_DOWN
         """
@@ -296,63 +296,63 @@ class icWXPanel(icWidget, wx.Panel):
             self.eval_attr('onRightMouseClick')
         evt.Skip()
 
-    def OnPaint(self, evt):
+    def onPaint(self, evt):
         """
         wx.EVT_PAINT.
         """
         dc = wx.BufferedPaintDC(self)
-        self.Draw(dc)
+        self.draw(dc)
 
-    def OnPanelSize(self, evt):
+    def onPanelSize(self, evt):
         """
         wx.EVT_SIZE
         """
         self.Refresh()
         evt.Skip()
 
-    def SetRoundBoundMode(self, boundClr=None, step=0):
+    def setRoundBoundMode(self, bound_colour=None, step=0):
         """
         Устанавливает режим скругленных границ.
-        @type boundClr: C{wx.Colour}
-        @param boundClr: Цвет границы.
+        @type bound_colour: C{wx.Colour}
+        @param bound_colour: Цвет границы.
         @type step: C{int}
         @param step: Отступ границы от края окна.
         """
         self.boundStep = step
-        if boundClr:
-            if isinstance(boundClr, tuple):
-                self.SetForegroundColour(wx.Colour(*boundClr))
+        if bound_colour:
+            if isinstance(bound_colour, tuple):
+                self.SetForegroundColour(wx.Colour(*bound_colour))
             else:
-                self.SetForegroundColour(boundClr)
+                self.SetForegroundColour(bound_colour)
         
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.Bind(wx.EVT_PAINT, self.onPaint)
         self.is_round_border = True
 
-    def SetBorderMode(self, boundClr=None, step=0):
+    def setBorderMode(self, bound_colour=None, step=0):
         """
         Устанавливает режим скругленных границ.
-        @type boundClr: C{wx.Colour}
-        @param boundClr: Цвет границы.
+        @type bound_colour: C{wx.Colour}
+        @param bound_colour: Цвет границы.
         @type step: C{int}
         @param step: Отступ границы от края окна.
         """
         self.boundStep = step
-        if boundClr:
-            if isinstance(boundClr, tuple):
-                self.SetForegroundColour(wx.Colour(*boundClr))
+        if bound_colour:
+            if isinstance(bound_colour, tuple):
+                self.SetForegroundColour(wx.Colour(*bound_colour))
             else:
-                self.SetForegroundColour(boundClr)
+                self.SetForegroundColour(bound_colour)
 
         if not self.is_round_border:
-            self.Bind(wx.EVT_PAINT, self.OnPaint)
+            self.Bind(wx.EVT_PAINT, self.onPaint)
         
         self.is_round_border = False
 
-    def SetEditorMode(self):
+    def setEditorMode(self):
         """
         Устанавливает режим редактора.
         """
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.Bind(wx.EVT_PAINT, self.onPaint)
         self.is_editor_mode = True
 
 
@@ -366,7 +366,7 @@ def test(par=0):
     win = icWXPanel(frame, -1,  {'keyDown': 'print(\'keyDown in Panel\')',
                                  'foregroundColor': (0, 100, 100),
                                  })
-    win.SetRoundBoundMode((200, 200, 200), 2)
+    win.setRoundBoundMode((200, 200, 200), 2)
 
     frame.Show(True)
     app.MainLoop()

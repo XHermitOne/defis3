@@ -262,7 +262,7 @@ class SortEvent(VetoableEvent):
     being used.
 
     When sortModelObjects is False, the event handler must sort the actual ListItems in
-    the OLV. It does this by calling SortListItemsBy(), passing a callable that accepts
+    the OLV. It does this by calling sortListItemsBy(), passing a callable that accepts
     two model objects as parameters. sortModelObjects must be True for a
     VirtualObjectListView (or a FastObjectListView) since virtual lists cannot sort items.
 

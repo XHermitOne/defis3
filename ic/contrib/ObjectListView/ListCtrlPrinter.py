@@ -460,7 +460,7 @@ class ReportEngine(object):
 
     def DrawPageDecorations(self, dc, over):
         """
-        Draw the page decorations
+        draw the page decorations
         """
         if not self.shouldDrawBlocks:
             return
@@ -978,11 +978,11 @@ class BlockFormat(object):
 
     * Frame(pen=None, space=0)
 
-        Draw a rectangle around the block in the given pen
+        draw a rectangle around the block in the given pen
 
     * Line(side=wx.BOTTOM, color=wx.BLACK, width=1, toColor=None, space=0, pen=None)
 
-        Draw a line on a given side of the block. If a pen is given, that is used to draw the
+        draw a line on a given side of the block. If a pen is given, that is used to draw the
         line (and the other parameters are ignored), otherwise a solid line (or a gradient
         line is *toColor* is not None) of *width* pixels is drawn.
 
@@ -1227,7 +1227,7 @@ class BlockFormat(object):
 
     def DrawDecorations(self, dc, bounds, block, over):
         """
-        Draw our decorations on the given block
+        draw our decorations on the given block
         """
         for x in self.decorations:
             if x.IsDrawOver() == over:
@@ -1409,7 +1409,7 @@ class Block(object):
 
     def Draw(self, dc, bounds):
         """
-        Draw this block and its decorations allowing for any padding
+        draw this block and its decorations allowing for any padding
         """
         fmt = self.GetFormat()
         decorationBounds = fmt.SubtractPadding(bounds)
@@ -1450,7 +1450,7 @@ class Block(object):
             imageIndex=-1,
             listCtrl=None):
         """
-        Draw the given text in the given DC according to the given characteristics.
+        draw the given text in the given DC according to the given characteristics.
 
         This is the workhorse text drawing method for our reporting engine.
 
@@ -1477,7 +1477,7 @@ class Block(object):
             else:
                 return RectUtils.Top(r)
 
-        # Draw any image
+        # draw any image
         if image:
             y = _CalcBitmapPosition(bounds, image.Height)
             dc.DrawBitmap(image, RectUtils.Left(bounds), y)
@@ -1488,7 +1488,7 @@ class Block(object):
         elif listCtrl and imageIndex >= 0:
             imageList = listCtrl.GetImageList(wx.IMAGE_LIST_SMALL)
             y = _CalcBitmapPosition(bounds, imageList.GetSize(0)[1])
-            imageList.Draw(
+            imageList.draw(
                 imageIndex,
                 dc,
                 RectUtils.Left(bounds),
@@ -1499,7 +1499,7 @@ class Block(object):
                 imageList.GetSize(0)[0] +
                 GAP_BETWEEN_IMAGE_AND_TEXT)
 
-        # Draw the text
+        # draw the text
         dc.SetFont(font or self.GetFont())
         dc.SetTextForeground(color or self.GetTextColor() or wx.BLACK)
         if canWrap:
@@ -1763,7 +1763,7 @@ class CellBlock(Block):
             RectUtils.SetWidth(cell, x.cellWidth)
             x.cell = list(cell)
 
-        # Draw each cell
+        # draw each cell
         font = self.GetFont()
         for x in combined:
             cellBounds = RectUtils.InsetRect(x.cell, cellPadding)
@@ -1784,12 +1784,12 @@ class CellBlock(Block):
             top = RectUtils.Top(bounds)
             bottom = RectUtils.Bottom(bounds)
 
-            # Draw the interior dividers
+            # draw the interior dividers
             for x in combined[:-1]:
                 right = RectUtils.Right(x.cell)
                 dc.DrawLine(right, top, right, bottom)
 
-            # Draw the surrounding frame
+            # draw the surrounding frame
             left = RectUtils.Left(combined[0].cell)
             right = RectUtils.Right(combined[-1].cell)
             dc.DrawRectangle(left, top, right - left, bottom - top)
@@ -1894,7 +1894,7 @@ class PageFooterBlock(ThreeCellBlock):
         """
         Calculate the bounds of this block
         """
-        # Draw the footer at the bottom of the page
+        # draw the footer at the bottom of the page
         height = self.CalculateHeight(dc)
         bounds = list(self.GetWorkBounds())
         return [RectUtils.Left(bounds), RectUtils.Bottom(bounds) - height,
@@ -2574,7 +2574,7 @@ class Decoration(object):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw this decoration
+        draw this decoration
         """
         pass
 
@@ -2641,7 +2641,7 @@ class RectangleDecoration(Decoration):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw this decoration
+        draw this decoration
         """
         rect = self._CalculateRect(bounds)
 
@@ -2730,7 +2730,7 @@ class LineDecoration(Decoration):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw this decoration
+        draw this decoration
         """
         if self.pen is None:
             return
@@ -2783,7 +2783,7 @@ class WatermarkDecoration(Decoration):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw the decoration
+        draw the decoration
         """
         dc.SetFont(self.font)
         dc.SetTextForeground(self.color)
@@ -2842,7 +2842,7 @@ class ImageDecoration(Decoration):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw the decoration
+        draw the decoration
         """
         if not self.bitmap:
             return

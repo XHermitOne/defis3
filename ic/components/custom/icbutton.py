@@ -83,7 +83,7 @@ SPC_IC_BUTTON = {'type': 'Button',
                  'mouseContextDown': None,  # Выражение, выполняемое после нажатия правой кнопки мыши
                  'attach_focus': False,     # Привязать фокус автоматически при создании
 
-                 '__events__': {'mouseClick': ('wx.EVT_BUTTON', 'OnMouseClick', False),
+                 '__events__': {'mouseClick': ('wx.EVT_BUTTON', 'onMouseClick', False),
                                 'mouseContextDown': ('wx.EVT_RIGHT_DOWN', 'OnMouseContextDown', False),
                                 'mouseDown': ('wx.EVT_LEFT_DOWN', 'OnMouseDown', False),
                                 'mouseUp': ('wx.EVT_LEFT_UP', 'OnMouseUp', False),

@@ -226,7 +226,7 @@ class AbsDesignerInterface:
         """
         Создаем панель инструментов.
         """
-        return self.designer.CreateToolPanel(ObjectsInfo, parent, *arg, **kwarg)
+        return self.designer.createToolPanel(ObjectsInfo, parent, *arg, **kwarg)
         
     def GetEditorPanel(self, *arg, **kwarg):
         """
@@ -329,7 +329,7 @@ class DesignerDoc(wx.Panel, EditraDocumentInterface, AbsDesignerInterface):
         Создаем панель инструментов.
         """
         if self.designer and issubclass(self.designer.object.__class__, icdesignerinterface.icDesignerInterface):
-            self.top_panel = self.designer.object.GetToolPanel(self)
+            self.top_panel = self.designer.object.getToolPanel(self)
         else:
             self.top_panel = self.default_panel_tool_cls(self)
         
@@ -350,7 +350,7 @@ class DesignerDoc(wx.Panel, EditraDocumentInterface, AbsDesignerInterface):
         
         # Определяем класс панели инструментов
         if issubclass(self.designer.object.__class__, icdesignerinterface.icDesignerInterface):
-            cls = self.designer.object.GetToolPanelCls()
+            cls = self.designer.object.getToolPanelCls()
         else:
             cls = self.default_panel_tool_cls
         

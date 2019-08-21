@@ -761,12 +761,11 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         if selection == 0:
             self.SetImageListCheck(13, 13)
         else:
-            import newstyle_img
             il = wx.ImageList(16, 16)
-            il.Add(newstyle_img.check_on)
-            il.Add(newstyle_img.check_off)
-            il.Add(newstyle_img.radio_on)
-            il.Add(newstyle_img.radio_off)
+            il.Add(bmpfunc.createLibraryBitmap('ui-check-box.png'))
+            il.Add(bmpfunc.createLibraryBitmap('ui-check-box-uncheck.png'))
+            il.Add(bmpfunc.createLibraryBitmap('ui-radio-button.png'))
+            il.Add(bmpfunc.createLibraryBitmap('ui-radio-button-uncheck.png'))
             self.SetImageListCheck(16, 16, il)        
         
     def _testTree(self):

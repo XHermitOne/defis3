@@ -71,7 +71,7 @@ class icDialogDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesign
         self.sizer.Add((20, self.head_h+1))
         
         self.panel = icwxpanel.icWXPanel(self, -1, {'backgroundColor': bgr})
-        self.panel.SetEditorMode()
+        self.panel.setEditorMode()
         self.panel.SetForegroundColour(clr)
         self.panel.resource['__item_id'] = self.resource.get('__item_id', None)
         # Запрещаем перемещать панель
@@ -182,7 +182,7 @@ class icDialogDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesign
 
         dc.EndDrawing()
 
-    def SetEditorMode(self):
+    def setEditorMode(self):
         """
         Устанавливает режим редактора.
         """

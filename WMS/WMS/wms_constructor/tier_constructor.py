@@ -288,7 +288,7 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
         for shape in self.shapes:
             if shape.shown:
                 # print 'draw', dc
-                shape.Draw(dc)
+                shape.draw(dc)
 
     def FindShape(self, point):
         """

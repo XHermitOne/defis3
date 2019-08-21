@@ -100,7 +100,7 @@ class icToggleImageButton(icWidget, buttons.ThemedGenBitmapTextToggleButton):
     B{Пример:}
     C{'mouseClick':'OnPressButton(evt)'.} evt - объект описание сообщения.
     C{'mouseDown':'OnDown(evt)'}
-    C{'mouseContextDown':'OnRightDown(evt)'}
+    C{'mouseContextDown':'onRightDown(evt)'}
     """
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):

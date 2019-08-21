@@ -25,7 +25,9 @@ import wx
 
 from ic.interfaces.icabstract import abstract
 
-__version__ = (0, 1, 1, 1)
+from ic.bitmap import bmpfunc
+
+__version__ = (0, 1, 1, 2)
 
 _ = wx.GetTranslation
 
@@ -77,8 +79,7 @@ class icItemCatalog(icAbsItemCatalog):
         """
         if not icItemCatalog._icon or bInit:
             try:
-                from ic.imglib import newstyle_img
-                icItemCatalog._icon = newstyle_img.getfile_ubBitmap()
+                icItemCatalog._icon = bmpfunc.createLibraryBitmap('file_small_normal_hover.png')
             except wx.PyNoAppError:
                 icItemCatalog._icon = None
         return icItemCatalog._icon
@@ -171,8 +172,7 @@ class icFolderItem(icItemCatalog):
         """
         if not icFolderItem._icon or bInit:
             try:
-                from ic.imglib import newstyle_img
-                icFolderItem._icon = newstyle_img.getfolder_ubBitmap()
+                icFolderItem._icon = bmpfunc.createLibraryBitmap('folderopen_small_normal_hover.png')
             except wx.PyNoAppError:
                 icFolderItem._icon = None
         return icFolderItem._icon

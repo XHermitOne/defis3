@@ -128,7 +128,7 @@ class icPlotPanel(wx.Panel):
 
     def draw_cursor(self, event):
         """
-        event is a MplEvent.  Draw a cursor over the axes
+        event is a MplEvent.  draw a cursor over the axes
         """
         if event.inaxes is None:
             self.erase_cursor()

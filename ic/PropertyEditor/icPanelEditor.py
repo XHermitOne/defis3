@@ -358,8 +358,8 @@ class icBackground(object):
         @parma pos: Позиция захвата относительно родительского окна.
         """
         self.bDrag = True
-        self.selectedObj.SetShapeType()
-        self.selectedObj.EraseCursor()
+        self.selectedObj.setShapeType()
+        self.selectedObj.eraseCursor()
         self.oldPoint = pos
 
     def DrawAll(self):
@@ -369,9 +369,9 @@ class icBackground(object):
         try:
             for indx, obj in enumerate(self.container):
                 try:
-                    obj.DrawShape()
+                    obj.drawShape()
                 except:
-                    log.fatal('DrawShape  Error')
+                    log.fatal('drawShape  Error')
 
             self.bRedrawCursor = True
         except:
@@ -532,7 +532,7 @@ class icBackground(object):
         dd = 5
         try:
             # Перемещение объекта
-            if self.bDrag and self.selectedObj.CanMoveObj():
+            if self.bDrag and self.selectedObj.canMoveObj():
                 if prnt and getattr(prnt, 'type', None) == 'Background':
                     return
 
@@ -541,69 +541,69 @@ class icBackground(object):
                 self.selectedObj.SetPosition((x, y))
                 self.oldPoint = pos
                 self.RefreshStatusBar()
-            elif self.bDragLT and self.selectedObj.CanResizeObj():
+            elif self.bDragLT and self.selectedObj.canResizeObj():
                 dx = pos.x - self.oldPoint.x
                 dy = pos.y - self.oldPoint.y
-                self.selectedObj.EraseCursor()
+                self.selectedObj.eraseCursor()
                 self.selectedObj.SetPosition((x+dx, y+dy))
                 self.selectedObj.SetSize((sx-dx, sy-dy))
-                self.selectedObj.DrawCursor()
+                self.selectedObj.drawCursor()
                 self.oldPoint = pos
                 self.RefreshStatusBar()
-            elif self.bDragRT and self.selectedObj.CanResizeObj():
+            elif self.bDragRT and self.selectedObj.canResizeObj():
                 dx = pos.x - self.oldPoint.x
                 dy = pos.y - self.oldPoint.y
-                self.selectedObj.EraseCursor()
+                self.selectedObj.eraseCursor()
                 self.selectedObj.SetPosition((x, y+dy))
                 self.selectedObj.SetSize((sx+dx, sy-dy))
-                self.selectedObj.DrawCursor()
+                self.selectedObj.drawCursor()
                 self.oldPoint = pos
                 self.RefreshStatusBar()
-            elif self.bDragRB and self.selectedObj.CanResizeObj():
+            elif self.bDragRB and self.selectedObj.canResizeObj():
                 sx += pos.x - self.oldPoint.x
                 sy += pos.y - self.oldPoint.y
-                self.selectedObj.EraseCursor()
+                self.selectedObj.eraseCursor()
                 self.selectedObj.SetSize((sx, sy))
-                self.selectedObj.DrawCursor()
+                self.selectedObj.drawCursor()
                 self.oldPoint = pos
                 self.RefreshStatusBar()
-            elif self.bDragLB and self.selectedObj.CanResizeObj():
+            elif self.bDragLB and self.selectedObj.canResizeObj():
                 dx = pos.x - self.oldPoint.x
                 dy = pos.y - self.oldPoint.y
-                self.selectedObj.EraseCursor()
+                self.selectedObj.eraseCursor()
                 self.selectedObj.SetPosition((x+dx, y))
                 self.selectedObj.SetSize((sx-dx, sy+dy))
-                self.selectedObj.DrawCursor()
+                self.selectedObj.drawCursor()
                 self.oldPoint = pos
                 self.RefreshStatusBar()
-            elif self.bDragL and self.selectedObj.CanResizeObj():
+            elif self.bDragL and self.selectedObj.canResizeObj():
                 dx = pos.x - self.oldPoint.x
-                self.selectedObj.EraseCursor()
+                self.selectedObj.eraseCursor()
                 self.selectedObj.SetPosition((x+dx, y))
                 self.selectedObj.SetSize((sx-dx, sy))
-                self.selectedObj.DrawCursor()
+                self.selectedObj.drawCursor()
                 self.oldPoint = pos
                 self.RefreshStatusBar()
-            elif self.bDragR and self.selectedObj.CanResizeObj():
+            elif self.bDragR and self.selectedObj.canResizeObj():
                 dx = pos.x - self.oldPoint.x
-                self.selectedObj.EraseCursor()
+                self.selectedObj.eraseCursor()
                 self.selectedObj.SetSize((sx+dx, sy))
-                self.selectedObj.DrawCursor()
+                self.selectedObj.drawCursor()
                 self.oldPoint = pos
                 self.RefreshStatusBar()
-            elif self.bDragT and self.selectedObj.CanResizeObj():
+            elif self.bDragT and self.selectedObj.canResizeObj():
                 dy = pos.y - self.oldPoint.y
-                self.selectedObj.EraseCursor()
+                self.selectedObj.eraseCursor()
                 self.selectedObj.SetPosition((x, y+dy))
                 self.selectedObj.SetSize((sx, sy-dy))
-                self.selectedObj.DrawCursor()
+                self.selectedObj.drawCursor()
                 self.oldPoint = pos
                 self.RefreshStatusBar()
-            elif self.bDragB and self.selectedObj.CanResizeObj():
+            elif self.bDragB and self.selectedObj.canResizeObj():
                 dy = pos.y - self.oldPoint.y
-                self.selectedObj.EraseCursor()
+                self.selectedObj.eraseCursor()
                 self.selectedObj.SetSize((sx, sy+dy))
-                self.selectedObj.DrawCursor()
+                self.selectedObj.drawCursor()
                 self.oldPoint = pos
                 self.RefreshStatusBar()
             else:
@@ -613,7 +613,7 @@ class icBackground(object):
                 
                 if not selR.Inside(pos):
                     cursor = wx.StockCursor(wx.CURSOR_DEFAULT)
-                elif self.selectedObj.CanMoveObj():
+                elif self.selectedObj.canMoveObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZING)
                 else:
                     cursor = wx.StockCursor(wx.CURSOR_NO_ENTRY)
@@ -623,40 +623,40 @@ class icBackground(object):
     
                 # Left-Top
                 r.Offset((xr-wm, yr-wm))
-                if r.Inside(pos) and self.selectedObj.CanResizeObj():
+                if r.Inside(pos) and self.selectedObj.canResizeObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZENWSE)
                 # Right-Top
                 r.Offset((sx+wm, 0))
-                if r.Inside(pos) and self.selectedObj.CanResizeObj():
+                if r.Inside(pos) and self.selectedObj.canResizeObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZENESW)
                 # Right-Bottom
                 r.Offset((0, sy+wm))
-                if r.Inside(pos) and self.selectedObj.CanResizeObj():
+                if r.Inside(pos) and self.selectedObj.canResizeObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZENWSE)
                 # Left-Bottom
                 r.Offset((-sx-wm, 0))
-                if r.Inside(pos) and self.selectedObj.CanResizeObj():
+                if r.Inside(pos) and self.selectedObj.canResizeObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZENESW)
     
                 # Проверяем стороны
                 # Left
                 r = wx.Rect(xr-wm, yr, wm, sy)
-                if r.Inside(pos) and self.selectedObj.CanResizeObj():
+                if r.Inside(pos) and self.selectedObj.canResizeObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZEWE)
                 # Right
                 r = wx.Rect(xr+sx, yr, wm, sy)
-                if r.Inside(pos) and self.selectedObj.CanResizeObj():
+                if r.Inside(pos) and self.selectedObj.canResizeObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZEWE)
                 # Top
                 r = wx.Rect(xr, yr-wm, sx, wm)
-                if r.Inside(pos) and self.selectedObj.CanResizeObj():
+                if r.Inside(pos) and self.selectedObj.canResizeObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZENS)
                 # Bottom
                 r = wx.Rect(xr, yr+sy, sx, wm)
-                if r.Inside(pos) and self.selectedObj.CanResizeObj():
+                if r.Inside(pos) and self.selectedObj.canResizeObj():
                     cursor = wx.StockCursor(wx.CURSOR_SIZENS)
             
-                if selR.Inside(pos) and self.toolpanel and self.toolpanel.GetToggleType():
+                if selR.Inside(pos) and self.toolpanel and self.toolpanel.getToggleType():
                     cursor = wx.StockCursor(wx.CURSOR_CROSS)
                 if cursor:
                     self.SetCursor(cursor)
@@ -664,7 +664,7 @@ class icBackground(object):
             # Некоторые компоненты (в частности CheckListBox) падают на SetSize
             self.oldPoint = pos
             self.RefreshStatusBar()
-            self.selectedObj.DrawCursor()
+            self.selectedObj.drawCursor()
             log.fatal('Except in OnMove')
             
         evt.Skip()
@@ -678,7 +678,7 @@ class icBackground(object):
         # Если выбран объект добавления в панели инструментов, то добавляем его
         # в текущий объект в позицию, на которую указывает курсор мыши
         if self.toolpanel:
-            toggleType = self.toolpanel.GetToggleType()
+            toggleType = self.toolpanel.getToggleType()
             # Убираем признак добавляемого объекта в панели инструментов
             self.toolpanel.ReleaseToggleType()
             if toggleType and self.AddObjectToRes(self.selectedObj, toggleType, evt.GetPosition()):
@@ -784,7 +784,7 @@ class icBackground(object):
         if self.bDrag or self.bDragLT or self.bDragL or self.bDragT:
             if self.bDrag:
                 self.bDrag = False
-                self.selectedObj.SetSelected()
+                self.selectedObj.setSelected()
 
             # Изменяем оответствующее свойство <position> в ресурсном описании текущего
             # компонента
@@ -915,7 +915,7 @@ class icBackground(object):
         if self.selectedObj and kcod in [wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_UP, wx.WXK_DOWN]:
             x, y = self.selectedObj.GetPosition()
             sx, sy = self.selectedObj.GetSize()
-            self.selectedObj.EraseCursor()
+            self.selectedObj.eraseCursor()
             ds = 1
             if 1:
                 ds = 1
@@ -951,7 +951,7 @@ class icBackground(object):
                             self.selectedObj.position = (row+1, col)
 
                         self.ChangeResProperty(self.selectedObj, 'position', self.selectedObj.position, bRefresh=True)
-                        self.selectedObj.DrawCursor()
+                        self.selectedObj.drawCursor()
                         self.selectedObj.SetFocus()
                         return
                     else:
@@ -966,7 +966,7 @@ class icBackground(object):
             except:
                 log.fatal('OnKeyDown')
             
-            self.selectedObj.DrawCursor()
+            self.selectedObj.drawCursor()
         evt.Skip()
 
     def OnChar(self, evt):
@@ -1060,15 +1060,15 @@ class icBackground(object):
                 self.bRedrawCursor = False
                 try:
                     if self.selectedObj and not issubclass(self.selectedObj.__class__, icBackgroundFrame):
-                        self.selectedObj.DrawCursor()
+                        self.selectedObj.drawCursor()
                     if (not issubclass(self.prntSelObj.__class__, icBackgroundFrame) and
                         not issubclass(self.selectedObj.__class__, icBackgroundPanel) and
                         not issubclass(self.selectedObj.__class__, icBackgroundDocumentFrame)) and self.prntSelObj:
-                        self.prntSelObj.DrawCursor(clr=PARENT_CURSOR_COLOR)
+                        self.prntSelObj.drawCursor(clr=PARENT_CURSOR_COLOR)
                     elif self.selectedObj:
-                        self.selectedObj.DrawCursor()
+                        self.selectedObj.drawCursor()
                 except:
-                    log.error('DrawCursor ERROR In OnUpdate')
+                    log.error('drawCursor ERROR In OnUpdate')
                     
             if self.bRedraw:
                 self.bRedraw = False
@@ -1124,7 +1124,7 @@ class icBackground(object):
             if obj:
                 obj.EraseCursor()
             if self.prntSelObj:
-                self.prntSelObj.EraseCursor()
+                self.prntSelObj.eraseCursor()
             if 1:
                 for obj in szr.objectList:
                     szr.Detach(obj)
@@ -1142,7 +1142,7 @@ class icBackground(object):
                 if obj:
                     obj.EraseCursor()
                 if self.prntSelObj:
-                    self.prntSelObj.EraseCursor()
+                    self.prntSelObj.eraseCursor()
             except:
                 pass
             
@@ -1246,25 +1246,25 @@ class icBackground(object):
             self.toolpanel.EnableCanAddObj(typObj, True)
             # Отображаем информацию (flag, proportion) в панели инструментов
             if self.get_style_panel():
-                self.get_style_panel().SetFlag(obj_evt.flag)
-                self.get_style_panel().SetProportionStyle(obj_evt.proportion)
+                self.get_style_panel().setFlag(obj_evt.flag)
+                self.get_style_panel().setProportionStyle(obj_evt.proportion)
         
         if self.selectedObj == obj_evt and not bDrag:
             return
             
         if self.selectedObj:
-            self.selectedObj.SetShapeType()
-            self.selectedObj.EraseCursor()
+            self.selectedObj.setShapeType()
+            self.selectedObj.eraseCursor()
             try:
-                self.prntSelObj.SetShapeType()
-                self.prntSelObj.EraseCursor()
+                self.prntSelObj.setShapeType()
+                self.prntSelObj.eraseCursor()
                 # Сохраняем размеры колонок грида
                 if self.selectedObj.type == 'GridDataset':
                     pass
             except:
                 pass
             
-        obj_evt.SetSelected()
+        obj_evt.setSelected()
         self.selectedObj = obj_evt
         pos = self.GetBGRPositionXY(obj_evt, x, y)
         if bDrag:
@@ -1273,7 +1273,7 @@ class icBackground(object):
         self.SetCursor(cursor)
         try:
             self.prntSelObj = prnt
-            self.prntSelObj.SetShapeType(icParentShapeType)
+            self.prntSelObj.setShapeType(icParentShapeType)
         except:
             pass
 
@@ -1292,9 +1292,9 @@ def BindEditorEvent(self, id=None):
     self.Bind(wx.EVT_UPDATE_UI, self.OnUpdate)
     self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
     self.Bind(wx.EVT_SIZE, self.OnSize)
-    self.Bind(wx.EVT_PAINT, self.OnPaint)
+    self.Bind(wx.EVT_PAINT, self.onPaint)
     self.Bind(wx.EVT_MOTION, self.OnMove)
-    self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
+    self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
     self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDownObj)
     self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
     self.Bind(wx.EVT_CHAR, self.OnChar)
@@ -1552,7 +1552,7 @@ class icBackgroundDocumentFrame(icBackground, icwidget.icBase, wx.ScrolledWindow
             # Не все компоненты наследники от wx.Window
             try:
                 self.object.SetPosition((5, 5))
-                self.object.SetEditorMode()
+                self.object.setEditorMode()
                 self.object.Bind(wx.EVT_SIZE, self.OnSizeWin)
                 self.object.Layout()
             except:

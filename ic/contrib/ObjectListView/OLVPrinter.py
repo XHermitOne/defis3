@@ -352,7 +352,7 @@ class ReportEngine(object):
         """
         fmt = self.GetNamedFormat("Page")
 
-        # Draw the page decorations
+        # draw the page decorations
         bounds = list(self.pageBounds)
         fmt.DrawDecorations(dc, bounds, self)
 
@@ -613,7 +613,7 @@ class BlockFormat(object):
 
     def DrawDecorations(self, dc, bounds, block):
         """
-        Draw our decorations on the given block
+        draw our decorations on the given block
         """
         for x in self.decorations:
             x.DrawDecoration(dc, bounds, block)
@@ -737,7 +737,7 @@ class Block(object):
 
     def Draw(self, dc, bounds):
         """
-        Draw this block and its decorations allowing for any padding
+        draw this block and its decorations allowing for any padding
         """
         fmt = self.GetFormat()
         bounds = fmt.SubtractPadding(bounds)
@@ -953,7 +953,7 @@ class CellBlock(Block):
             # dc.SetPen(wx.BLACK_PEN)
             # dc.DrawRectangle(*cell)
 
-        # Draw each cell
+        # draw each cell
         font = self.GetFont()
         for x in combined:
             cellBounds = RectUtils.InsetRect(x.cell, cellPadding)
@@ -968,12 +968,12 @@ class CellBlock(Block):
             top = RectUtils.Top(combined[0].cell)
             bottom = RectUtils.Bottom(combined[0].cell)
 
-            # Draw the interior dividers
+            # draw the interior dividers
             for x in combined[:-1]:
                 right = RectUtils.Right(x.cell)
                 dc.DrawLine(right, top, right, bottom)
 
-            # Draw the surrounding frame
+            # draw the surrounding frame
             left = RectUtils.Left(combined[0].cell)
             right = RectUtils.Right(combined[-1].cell)
             dc.DrawRectangle(left, top, right - left, bottom - top)
@@ -1068,7 +1068,7 @@ class PageFooterBlock(TextBlock):
         """
         height = self.CalculateHeight(dc)
 
-        # Draw the footer at the bottom of the page
+        # draw the footer at the bottom of the page
         bounds = self.GetWorkBounds()
         bounds = [RectUtils.Left(bounds), RectUtils.Bottom(bounds) - height,
                   RectUtils.Width(bounds), height]
@@ -1516,7 +1516,7 @@ class Decoration(object):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw this decoration
+        draw this decoration
         """
         pass
 
@@ -1534,7 +1534,7 @@ class BackgroundDecoration(Decoration):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw this decoration
+        draw this decoration
         """
         if self.color is None:
             return
@@ -1568,7 +1568,7 @@ class FrameDecoration(Decoration):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw this decoration
+        draw this decoration
         """
         if self.pen is None:
             return
@@ -1628,7 +1628,7 @@ class LineDecoration(Decoration):
 
     def DrawDecoration(self, dc, bounds, block):
         """
-        Draw this decoration
+        draw this decoration
         """
         if self.pen is None:
             return

@@ -178,11 +178,11 @@ def get_linux_name():
     try:
         if os.path.exists('/etc/issue'):
             # Обычно Debian/Ubuntu Linux
-            cmd = 'cat /etc/issue'
+            cmd = 'catalog /etc/issue'
             return os.popen3(cmd)[1].readline().replace('\\n', '').replace('\\l', '').strip()
         elif os.path.exists('/etc/release'):
             # Обычно RedHat Linux
-            cmd = 'cat /etc/release'
+            cmd = 'catalog /etc/release'
             return os.popen3(cmd)[1].readline().replace('\\n', '').replace('\\l', '').strip()
     except:
         print('Get linux name ERROR')

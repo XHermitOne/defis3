@@ -87,7 +87,7 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
         """
         for shape in self.shapes:
             if shape.shown:
-                shape.Draw(dc)
+                shape.draw(dc)
 
     def FindShape(self, pt):
         """

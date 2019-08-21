@@ -45,7 +45,7 @@ def HlpTreeList_onInit(obj):
     sprav_tree=sprav_storage.limitLevelTree(sprav_tree,sprav_code.count(None)-1)
 
     title = u'Редактирование справочника: '+(sprav.description or u'')
-    obj.GetContext().GetObject(HLP_DLG_NAME).SetTitle(title)
+    obj.GetContext().GetObject(HLP_DLG_NAME).setTitle(title)
     
     if not sprav_tree:
         print('SPRAV TREE ERROR',sprav_tree)

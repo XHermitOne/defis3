@@ -569,7 +569,7 @@ class icEditImportNames(icEditPropDict):
                                            'position': (50, 50), 'size': (500, 500)}, txt)
             frame.editor.SetModuleName(fn)
             frame.Show()
-            frame.SetTitle(u'Редактор (%s)' % fn)
+            frame.setTitle(u'Редактор (%s)' % fn)
 
 
 class icEditPropChoice(icEditPropCtrl):

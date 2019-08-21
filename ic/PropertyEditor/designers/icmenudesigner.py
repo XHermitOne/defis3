@@ -25,7 +25,7 @@ _ = wx.GetTranslation
 class icMenuDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesignerInterface):
     """ Класс дизайнер выпадающего меню."""
     @staticmethod
-    def GetToolPanelCls():
+    def getToolPanelCls():
         return None
 
     def __init__(self, parent = None, id = -1, component = {}, logType = 0,
@@ -104,7 +104,7 @@ class icMenuDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigner
             
         event.Skip()
         
-    def SetEditorMode(self):
+    def setEditorMode(self):
         """ 
         Устанавливает режим редактора.
         """

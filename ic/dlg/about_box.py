@@ -85,7 +85,7 @@ def showAbout(parent=None, name=None, version=None, description=None,
 
     if name is None:
         main_win = glob_functions.getMainWin()
-        name = main_win.GetTitle()
+        name = main_win.getTitle()
 
     prj_package = None
     if version is None or description is None:

@@ -43,7 +43,7 @@ ic_class_styles = {'FNB_ALLOW_FOREIGN_DND': fnb.FNB_ALLOW_FOREIGN_DND,
                    'FNB_VC71': fnb.FNB_VC71,
                    # Use fancy style - square tabs filled with gradient coloring
                    'FNB_FANCY_TABS': fnb.FNB_FANCY_TABS,
-                   # Draw thin border around the page
+                   # draw thin border around the page
                    'FNB_TABS_BORDER_SIMPLE': fnb.FNB_TABS_BORDER_SIMPLE,
                    # Do not display the 'X' button
                    'FNB_NO_X_BUTTON': fnb.FNB_NO_X_BUTTON,
@@ -352,8 +352,8 @@ def test(par=0):
     win.SetSizer(mainSizer)
     
     scr = '''
-import ic.imglib.collection1C as lib
-return [ic.imglib.collection1C.schema, ic.imglib.collection1C.addRec]
+from ic.bitmap import bmpfunc
+return [bmpfunc.crealeLibraryBitmap('schema.png'), bmpfunc.crealeLibraryBitmap('plus.png')]
 '''
     book = icFlatNotebook(win, -1, {'images': scr, 'style': fnb.FNB_VC8, 'colorFrom': (250, 100, 100)})
     book.Freeze()

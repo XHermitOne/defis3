@@ -92,7 +92,7 @@ SPC_IC_HEADCELL = {'type': 'HeadCell',
                    'alignment': ('centred', 'middle'),
                    'onLeftDown': None,
 
-                   '__events__': {'onLeftDown': ('wx.EVT_BUTTON', 'OnLeftDown', False),
+                   '__events__': {'onLeftDown': ('wx.EVT_BUTTON', 'onLeftDown', False),
                                   },
                    '__attr_types__': {icDefInf.EDT_CHOICE: ['alignment'],
                                       icDefInf.EDT_COMBINE: ['flag'],

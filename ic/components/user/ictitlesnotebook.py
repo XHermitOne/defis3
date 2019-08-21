@@ -519,7 +519,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
         try:
             return self.GetTitlesList()[indx]
         except:
-            log.fatal('##?: GetTitle ERROR')
+            log.fatal('##?: getTitle ERROR')
             return None
             
     def CanPressNext(self):

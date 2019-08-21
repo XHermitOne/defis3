@@ -140,11 +140,11 @@ class TestCatalog(unittest.TestCase):
             tab = iccatalogtable.CatalogTable(None, src).getObject()
             cat = icdbcatalog.icDBCatalog(src)
             if not 'path' in cat.keys():
-                #print '***** keys=', cat.keys()
+                #print '***** keys=', catalog.keys()
                 cat.add('path', (('Document', 'doc1', None, 'doc1.mtd', 'workflow'),'1'), 'Folder', 'title', 'description')
                 
             cat.ctg_refresh()
-            #print '***** keys=', cat.keys()
+            #print '***** keys=', catalog.keys()
             self.failUnlessEqual('path' in cat.keys(), True)
             item = cat['path']
             self.failUnlessEqual(item.pobj.type, 'Document')
@@ -166,7 +166,7 @@ class TestCatalog(unittest.TestCase):
         """ Тестируем компонент каталога."""
         if ic.Login('user',None, prj_dir):
             cat = ic.metadata.THIS.mtd.testcatalog.ObjectCatalog.create()
-            print('--- cat=', cat.ctg_refresh)
+            print('--- catalog=', cat.ctg_refresh)
             cat.table
             ic.Logout()
     

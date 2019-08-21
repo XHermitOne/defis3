@@ -495,4 +495,4 @@ def AnaliticProduct(ianlt):
     reg = tree.GetValFromSpravBuff('Region', cod[1]).strip()
     mens = tree.GetValFromSpravBuff('Menager', cod[2]).strip()
     grp = tree.GetValFromSpravBuff('Product', cod[3]).strip()
-    dlg.SetTitle('%s %s %s %s' % (cod[0], reg, mens, grp))
+    dlg.setTitle('%s %s %s %s' % (cod[0], reg, mens, grp))

@@ -83,7 +83,7 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
         user_name = ''
         if 'name' in data:
             user_name = data['name']
-        dlg.SetTitle(u'Пользователь: ' + user_name)
+        dlg.setTitle(u'Пользователь: ' + user_name)
         
         name_edit = self.GetNameObj('nameEdit')
         if name_edit:
@@ -196,7 +196,7 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
             name_edit = self.GetNameObj('nameEdit')
             name_edit.SetValue(name)
         dlg = self.getDialog()
-        dlg.SetTitle(u'Пользователь: '+str(name))
+        dlg.setTitle(u'Пользователь: ' + str(name))
         
         local_dir_edit = self.GetNameObj('localDirEdit')
         if local_dir_edit:
@@ -218,7 +218,7 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
             name = ic_str.rus2lat_keyboard(name)
             name_edit.SetValue(name)
         dlg = self.getDialog()
-        dlg.SetTitle(u'Пользователь: '+str(name))
+        dlg.setTitle(u'Пользователь: ' + str(name))
         
         local_dir_edit = self.GetNameObj('localDirEdit')
         if local_dir_edit:

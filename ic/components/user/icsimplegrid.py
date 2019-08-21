@@ -51,7 +51,7 @@ SPC_IC_SIMPLEGRID = {'col_count': 2,    # Количество колонок
                      'default_row_height': -1,  # Размер по умолчанию строк
                      'default_col_width': -1,   # Размер по умолчанию колонок
                      'selection_mode': 'cells',     # Режим выделения объектов грида
-                     'bReadonly': False,     # Не редакттируемые ячейки грида?
+                     'readonly': False,     # Не редакттируемые ячейки грида?
     
                      '__parent__': icwidget.SPC_IC_WIDGET,
                      '__attr_hlp__': {'col_count': u'Количество колонок',
@@ -65,7 +65,7 @@ SPC_IC_SIMPLEGRID = {'col_count': 2,    # Количество колонок
                                       'default_row_height': u'Размер по умолчанию строк',
                                       'default_col_width': u'Размер по умолчанию колонок',
                                       'selection_mode': u'Режим выделения объектов грида',
-                                      'bReadonly': u'Не редакттируемые ячейки грида?',
+                                      'readonly': u'Не редакттируемые ячейки грида?',
                                       },
                      }
 
@@ -102,7 +102,7 @@ ic_class_spc = {'type': 'SimpleGrid',
                 'default_row_height': -1,  # Размер по умолчанию строк
                 'default_col_width': -1,   # Размер по умолчанию колонок
                 'selection_mode': 'cells',     # Режим выделения объектов грида
-                'bReadonly': False,     # Не редакттируемые ячейки грида?
+                'readonly': False,     # Не редакттируемые ячейки грида?
 
                 '__styles__': ic_class_styles,
                 '__lists__': {'selection_mode': list(GRID_SELECTION_MODES.keys()),
@@ -115,13 +115,13 @@ ic_class_spc = {'type': 'SimpleGrid',
                                    icDefInf.EDT_TEXTLIST: ['col_labels',
                                                            'row_labels', 'wcols', 'hrows'],
                                    icDefInf.EDT_CHOICE: ['selection_mode'],
-                                   icDefInf.EDT_CHECK_BOX: ['bReadonly'],
+                                   icDefInf.EDT_CHECK_BOX: ['readonly'],
                                    },
                     
-                '__events__': {'cellChange': ('wx.EVT_GRID_CELL_CHANGE', 'OnCellChange', False),
-                               'cellSelect': ('wx.EVT_GRID_SELECT_CELL', 'OnCellSelect', False),
-                               'cellDClick': ('wx.grid.EVT_GRID_CELL_LEFT_DCLICK', 'OnDClick', False),
-                               'labelClick': ('wx.grid.EVT_GRID_LABEL_LEFT_CLICK', 'OnLabelClick', False),
+                '__events__': {'cellChange': ('wx.EVT_GRID_CELL_CHANGE', 'onCellChange', False),
+                               'cellSelect': ('wx.EVT_GRID_SELECT_CELL', 'onCellSelect', False),
+                               'cellDClick': ('wx.grid.EVT_GRID_CELL_LEFT_DCLICK', 'onDblClick', False),
+                               'labelClick': ('wx.grid.EVT_GRID_LABEL_LEFT_CLICK', 'onLabelClick', False),
                                },
                 '__parent__': SPC_IC_SIMPLEGRID,
                 }
@@ -143,7 +143,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 # --- Классы ---
@@ -159,7 +159,7 @@ class icSimpleImageRenderer(parentModule.PyGridCellRenderer):
         parentModule.PyGridCellRenderer.__init__(self)
         self._images = Images_
 
-    def Draw(self, Grid_, Attr_, DC_, Rect_, Row_, Col_, isSelected_):
+    def Draw(self, grid, attr, dc, rect, row, col, bSelected):
         """
         Отрисовка.
         """
@@ -168,27 +168,27 @@ class icSimpleImageRenderer(parentModule.PyGridCellRenderer):
         img_dc.SelectObject(img)
 
         # Очистка фона
-        DC_.SetBackgroundMode(wx.SOLID)
+        dc.SetBackgroundMode(wx.SOLID)
 
-        if isSelected_:
-            DC_.SetBrush(wx.Brush(wx.BLUE, wx.SOLID))
-            DC_.SetPen(wx.Pen(wx.BLUE, 1, wx.SOLID))
+        if bSelected:
+            dc.SetBrush(wx.Brush(wx.BLUE, wx.SOLID))
+            dc.SetPen(wx.Pen(wx.BLUE, 1, wx.SOLID))
         else:
-            DC_.SetBrush(wx.Brush(wx.WHITE, wx.SOLID))
-            DC_.SetPen(wx.Pen(wx.WHITE, 1, wx.SOLID))
-        DC_.DrawRectangle(Rect_)
+            dc.SetBrush(wx.Brush(wx.WHITE, wx.SOLID))
+            dc.SetPen(wx.Pen(wx.WHITE, 1, wx.SOLID))
+        dc.DrawRectangle(rect)
 
         # copy the image but only to the size of the grid cell
         width, height = img.GetWidth(), img.GetHeight()
 
-        if width > Rect_.width-2:
-            width = Rect_.width-2
+        if width > rect.width-2:
+            width = rect.width - 2
 
-        if height > Rect_.height-2:
-            height = Rect_.height-2
+        if height > rect.height-2:
+            height = rect.height - 2
 
-        DC_.Blit(Rect_.x+1, Rect_.y+1, width, height,
-                 img_dc, 0, 0, wx.COPY, True)
+        dc.Blit(rect.x + 1, rect.y + 1, width, height,
+                img_dc, 0, 0, wx.COPY, True)
 
 
 class icSimpleGrid(icwidget.icWidget,
@@ -264,10 +264,10 @@ class icSimpleGrid(icwidget.icWidget,
             self.EnableEditing(not self.readonly)
         
         #   Регистрация обработчиков событий
-        self.Bind(parentModule.EVT_GRID_CELL_CHANGED, self.OnCellChange)
-        self.Bind(parentModule.EVT_GRID_SELECT_CELL, self.OnCellSelect)
-        self.Bind(parentModule.EVT_GRID_CELL_LEFT_DCLICK, self.OnDClick)
-        self.Bind(parentModule.EVT_GRID_LABEL_LEFT_CLICK, self.OnLabelClick)
+        self.Bind(parentModule.EVT_GRID_CELL_CHANGED, self.onCellChange)
+        self.Bind(parentModule.EVT_GRID_SELECT_CELL, self.onCellSelect)
+        self.Bind(parentModule.EVT_GRID_CELL_LEFT_DCLICK, self.onDblClick)
+        self.Bind(parentModule.EVT_GRID_LABEL_LEFT_CLICK, self.onLabelClick)
         
         self.BindICEvt()
         
@@ -284,11 +284,11 @@ class icSimpleGrid(icwidget.icWidget,
         """
         return self._recordset
     
-    def get_record(self, RecIdx_):
+    def get_record(self, rec_idx):
         """
         Получить запись рекордсета.
         """
-        return self._recordset[RecIdx_]
+        return self._recordset[rec_idx]
     
     def get_selected_record(self):
         """
@@ -309,23 +309,23 @@ class icSimpleGrid(icwidget.icWidget,
                                  bCounter=bCounter, progressDlg=progressDlg)
     
     #   Обработчики событий
-    def setCellImg(self, Row_, Col_, Img_):
+    def setCellImg(self, row, col, img):
         """
         Установить образ в ячейку.
-        @param Row_: Строка ячейки.
-        @param Col_: Колонка ячейки.
-        @param Img_: Объект образа.
+        @param row: Строка ячейки.
+        @param col: Колонка ячейки.
+        @param img: Объект образа.
         """
-        img_renderer = icSimpleImageRenderer(Img_)
-        self.SetCellRenderer(Row_, Col_, img_renderer)
+        img_renderer = icSimpleImageRenderer(img)
+        self.SetCellRenderer(row, col, img_renderer)
 
-    def delCellImg(self, Row_, Col_):
+    def delCellImg(self, row, col):
         """
         Удалить образ из ячейки.
-        @param Row_: Строка ячейки.
-        @param Col_: Колонка ячейки.
+        @param row: Строка ячейки.
+        @param col: Колонка ячейки.
         """
-        self.SetCellRenderer(Row_, Col_, None)
+        self.SetCellRenderer(row, col, None)
 
     def getTable(self):
         """
@@ -342,16 +342,16 @@ class icSimpleGrid(icwidget.icWidget,
             table.append(tuple(rec))
         return table
         
-    def reCreateGrid(self, RowCount_, ColCount_):
+    def reCreateGrid(self, row_count, col_count):
         """
         Пересоздать грид.
-        @param RowCount_: Количество строк.
-        @param ColCount_: Количество колонок.
+        @param row_count: Количество строк.
+        @param col_count: Количество колонок.
         """
         # Сначала очистить грид
         self.ClearGrid()
-        d_row = RowCount_-self.GetNumberRows()
-        d_col = ColCount_-self.GetNumberCols()
+        d_row = row_count - self.GetNumberRows()
+        d_col = col_count - self.GetNumberCols()
         
         if d_row > 0:
             # Добавление строк
@@ -367,15 +367,15 @@ class icSimpleGrid(icwidget.icWidget,
             # Удаление колонок
             self.DeleteCols(numCols=abs(d_col))
             
-    def setTable(self, Table_, RowLabels_=None, ColLabels_=None):
+    def setTable(self, table, row_labels=None, col_labels=None):
         """
         Установить таблицу в грид.
-        @param Table_: Таблица, представляется в виде списка кортежей.
+        @param table: Таблица, представляется в виде списка кортежей.
             По строкам.
-        @param RowLabels_: Список надписей строк.
-        @param ColLabels_: Список надписей колонок.
+        @param row_labels: Список надписей строк.
+        @param col_labels: Список надписей колонок.
         """
-        self._recordset = Table_
+        self._recordset = table
         
         # Если таблица пустая, то просто очистить грид
         if not self._recordset:
@@ -383,9 +383,9 @@ class icSimpleGrid(icwidget.icWidget,
             self.ClearGrid()
             return
         
-        row_count = len(Table_)
-        if ColLabels_:
-            col_count = len(ColLabels_)
+        row_count = len(table)
+        if col_labels:
+            col_count = len(col_labels)
         else:
             try:
                 col_count = len(self.col_labels)
@@ -396,82 +396,82 @@ class icSimpleGrid(icwidget.icWidget,
         self.reCreateGrid(row_count, col_count)
         # Надписи
         # По строкам
-        if RowLabels_:
-            self.setRowLabels(RowLabels_[:row_count])
+        if row_labels:
+            self.setRowLabels(row_labels[:row_count])
         else:
             self.setRowLabels(self.row_labels)
         # По колонкам
-        if ColLabels_:
-            self.setColLabels(ColLabels_[:col_count])
+        if col_labels:
+            self.setColLabels(col_labels[:col_count])
         else:
             self.setColLabels(self.col_labels)
         
         # Заполнить данными
-        for i_row, row in enumerate(Table_):
+        for i_row, row in enumerate(table):
             for i_col, cell in enumerate(row):
                 if i_col < self.GetNumberCols():
                     cell_txt = ic_str.toUnicode(cell)
                     self.SetCellValue(i_row, i_col, cell_txt)
     
-    def setRowLabels(self, RowLabels_):
+    def setRowLabels(self, row_labels):
         """
         Установить надписи строк грида.
-        @param RowLabels_: Список надписей строк.
+        @param row_labels: Список надписей строк.
         """
         row_count = self.GetNumberRows()
-        for i, row_label in enumerate(RowLabels_):
+        for i, row_label in enumerate(row_labels):
             if row_label and i < row_count:
                 self.SetRowLabelValue(i, row_label)
             else:
                 break
         
-    def setColLabels(self, ColLabels_):
+    def setColLabels(self, col_labels):
         """
         Установить надписи колонок грида.
-        @param ColLabels_: Список надписей колонок.
+        @param col_labels: Список надписей колонок.
         """
         col_count = self.GetNumberCols()
-        for i, col_label in enumerate(ColLabels_):
+        for i, col_label in enumerate(col_labels):
             if col_label and i < col_count:
                 self.SetColLabelValue(i, col_label)
             else:
                 break
 
-    def setWidthCols(self, WCols_):
+    def setWidthCols(self, width_cols):
         """
         Установить размеры/ширину колонок грида.
-        @param WCols_: Список размеров колонок. Список целых чисел.
+        @param width_cols: Список размеров колонок. Список целых чисел.
         """
         col_count = self.GetNumberCols()
-        for i, wcol in enumerate(WCols_):
+        for i, wcol in enumerate(width_cols):
             if i < col_count:
                 self.SetColSize(i, int(wcol))
             else:
                 break
 
-    def setHeightRows(self, HRows_):
+    def setHeightRows(self, height_rows):
         """
         Установить размеры/высоту строк грида.
-        @param HRows_: Список размеров строк. Список целых чисел.
+        @param height_rows: Список размеров строк. Список целых чисел.
         """
         row_count = self.GetNumberRows()
-        for i, hrow in enumerate(HRows_):
+        for i, hrow in enumerate(height_rows):
             if i < row_count:
                 self.SetRowSize(i, hrow)
             else:
                 break
     
-    def setRow(self, Row_, *args):
+    def setRow(self, row, *args):
         """
         Установить значения в строку.
-        @param Row_: Индекс строки.
+        @param row: Индекс строки.
         """
         row_count = self.GetNumberRows()
-        if Row_ < row_count:
+        if row < row_count:
             col_count = self.GetNumberCols()
             for i, value in enumerate(args):
                 if i < col_count:
-                    self.SetCellValue(Row_, i, str(value))
+                    self.SetCellValue(row, i, str(value))
                 else:
                     break
         
@@ -484,29 +484,29 @@ class icSimpleGrid(icwidget.icWidget,
             self.setRow(self.GetNumberRows()-1, *args)
         return result
     
-    def deleteRow(self, Row_=-1, Sure_=True):
+    def deleteRow(self, row=-1, bAutoSure=True):
         """
         Удалить строку.
-        @param Row_: Индекс строки.
-        @param Sure_: Автоматическое подтверждение удаления.
+        @param row: Индекс строки.
+        @param bAutoSure: Автоматическое подтверждение удаления.
         """
-        if Sure_:
-            if Row_ >= 0:
-                return self.DeleteRows(Row_, 1)
+        if bAutoSure:
+            if row >= 0:
+                return self.DeleteRows(row, 1)
         else:
             if ic_dlg.icAskDlg(u'УДАЛЕНИЕ:',
-                               u'Удалить строку %d?' % Row_) == wx.YES:
-                if Row_ >= 0:
-                    return self.DeleteRows(Row_, 1)
+                               u'Удалить строку %d?' % row) == wx.YES:
+                if row >= 0:
+                    return self.DeleteRows(row, 1)
         return False
         
-    def deleteCurRow(self, Sure_=True):
+    def deleteCurRow(self, bAutoSure=True):
         """
         Удалить текущую строку.
-        @param Sure_: Автоматическое подтверждение удаления.
+        @param bAutoSure: Автоматическое подтверждение удаления.
         """
         cur_row = self.GetGridCursorRow()
-        return self.deleteRow(cur_row, Sure_)
+        return self.deleteRow(cur_row, bAutoSure)
 
     def getSelectionModeAttr(self):
         """
@@ -517,25 +517,25 @@ class icSimpleGrid(icwidget.icWidget,
                                                parentModule.Grid.wxGridSelectCells)
         
     # --- Обработчики событий ---
-    def OnDClick(self, event):
+    def onDblClick(self, event):
         """
         Двойное нажатие на ячейке.
         """
         self.eval_event('cellDClick', event, True)
 
-    def OnLabelClick(self, event):
+    def onLabelClick(self, event):
         """
         Нажатие на заголовок ячейки.
         """
         self.eval_event('labelClick', event, True)
     
-    def OnCellChange(self, event):
+    def onCellChange(self, event):
         """
         Значение ячейки изменилось.
         """
         self.eval_event('cellChange', event, True)
 
-    def OnCellSelect(self, event):
+    def onCellSelect(self, event):
         """
         Выделение ячейки.
         """

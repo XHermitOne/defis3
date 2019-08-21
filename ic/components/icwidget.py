@@ -117,7 +117,7 @@ from ic.kernel import icContext
 from ic.kernel import icsignalsrc
 import ic
 
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 1, 2)
 
 SPC_IC_SIMPLE = {'name': 'base',
                  'type': 'Base',
@@ -306,7 +306,7 @@ def icNewId():
     return icIdCountForm
 
 
-class icShape:
+class icShape(object):
     """
     Базовый класс для всех визуальных компонентов, описывает представление
     компонента в графическом редакторе форм.
@@ -321,68 +321,68 @@ class icShape:
         #   Указатель на подложку редактора
         self.editorBackground = None
         #   Флаг, разрешающий перетаскивать компонент
-        self.SetFlagMove()
+        self.setFlagMove()
         #   Флаг, разрешающий менять размер компонента
-        self.SetFlagResize()
+        self.setFlagResize()
         #   Отступ от краев при рисовании курсора
         self.cursorBorder = 0
 
-    def CanMoveObj(self):
+    def canMoveObj(self):
         """
         Функция возвращает значение флага, разрещающего перемещать объект.
         """
         return self.bMoveObj
 
-    def SetFlagMove(self, flag=True):
+    def setFlagMove(self, flag=True):
         """
         Функция устанавливает значение флага, разрещающего перемещать
         объект.
         """
         self.bMoveObj = flag
 
-    def CanResizeObj(self):
+    def canResizeObj(self):
         """
         Функция возвращает значение флага, разрещающего изменять размер
         объекта.
         """
         return self.bResizeObj
 
-    def SetFlagResize(self, flag=True):
+    def setFlagResize(self, flag=True):
         """
         Функция устанавливает значение флага, разрещающего изменять размер
         объекта.
         """
         self.bResizeObj = flag
 
-    def SetSelected(self):
+    def setSelected(self):
         """
         устанавливает объект в качестве текущего.
         """
         self.shapeType = icSelectedShapeType
 
-    def GetShapeType(self):
+    def getShapeType(self):
         """
         Возвращает тип формы.
         """
         return self.shapeType
 
-    def SetShapeType(self, type=icRealShapeType):
+    def setShapeType(self, shape_type=icRealShapeType):
         """
         Устанавливает тип формы.
         """
-        self.shapeType = type
+        self.shapeType = shape_type
 
-    def EraseCursor(self, dc=None):
+    def eraseCursor(self, dc=None):
         """
         Удаляет курсор.
         """
         if self.editorBackground:
             try:
-                self.DrawCursor(dc, self.GetParent().GetBackgroundColour())
+                self.drawCursor(dc, self.GetParent().GetBackgroundColour())
             except:
                 pass
 
-    def DrawCursor(self, dc=None, clr=(0, 0, 0)):
+    def drawCursor(self, dc=None, clr=(0, 0, 0)):
         """
         Рисует курсор.
         """
@@ -404,7 +404,7 @@ class icShape:
         dc.SetPen(pen)
         dc.DrawLines([(1, 1), (sx, 1), (sx, sy), (1, sy), (1, 1)], x-1, y-1)
         #   По необходимости рисуем маркеры для изменения размеров объекта
-        if self.CanResizeObj():
+        if self.canResizeObj():
             pen = wx.Pen(clr)
             dc.SetPen(pen)
 
@@ -418,13 +418,13 @@ class icShape:
         dc.SetBrush(oldbrush)
         dc.SetPen(oldpen)
 
-    def SetEditorMode(self):
+    def setEditorMode(self):
         """
         Устанавливает режим редактора.
         """
         self.is_editor_mode = True
 
-    def DrawShape(self, dc=None):
+    def drawShape(self, dc=None):
         """
         Функция перерисовывает компонент.
         @type dc: C{wx.DC}
@@ -433,11 +433,12 @@ class icShape:
         #   Вызываем метод перерисовки компонента
         if self.editorBackground:
             if self.shapeType == icParentShapeType:
-                self.DrawCursor(clr=(190, 0, 0))
+                self.drawCursor(clr=(190, 0, 0))
             elif self.shapeType == icSelectedShapeType:
-                self.DrawCursor()
+                self.drawCursor()
 
-msgEvalAttrError = ''' eval_attr(...)
+
+MSG_EVAL_ATTR_ERROR_FMT = ''' eval_attr(...)
 ###########################################################
 #### EVAL ATTRIBUTE Error in component=%s,
 ####                         attribute=%s
@@ -1165,7 +1166,7 @@ class icSimple(icobject.icObject):
             compileKey = None
 
         self.evalSpace['self'] = self
-        msg = msgEvalAttrError % (self.name, attr, compileKey)
+        msg = MSG_EVAL_ATTR_ERROR_FMT % (self.name, attr, compileKey)
         return util.ic_eval(expr, self.logType, self.evalSpace, msg, None, compileKey)
 
     def eval_event(self, attr, evt=None, bSkip=False):
@@ -1197,7 +1198,7 @@ class icSimple(icobject.icObject):
             compileKey = None
 
         self.evalSpace['self'] = self
-        msg = msgEvalAttrError % (self.name, subkey, compileKey)
+        msg = MSG_EVAL_ATTR_ERROR_FMT % (self.name, subkey, compileKey)
         return util.ic_eval(expr, self.logType, self.evalSpace, msg, None, compileKey)
 
     def countAttr(self, attr, subkey=''):
@@ -1660,7 +1661,7 @@ class icSizer(icBase):
     def Reconstruct(self):
         pass
 
-    def DrawShape(self, dc=None):
+    def drawShape(self, dc=None):
         """
         Рисует представление сайзера для графического редактора форм.
         """

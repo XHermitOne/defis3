@@ -284,7 +284,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
             
         return None
 
-    def DrawShape(self, dc=None):
+    def drawShape(self, dc=None):
         """
         Рисует представление GridBagSizer.
         """
@@ -293,7 +293,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
             if self.shapeType == icParentShapeType:
                 clr = (190, 0, 0)
 
-            self.DrawCursor(clr=clr)
+            self.drawCursor(clr=clr)
             #   Рисуем разметку для компонентов
             if not dc:
                 dc = wx.ClientDC(self.GetParent())
@@ -448,7 +448,7 @@ def test(par=0):
     win.SetSizer(sz)
     frame.Show(True)
     sz.editorBackground = True
-    sz.DrawShape()
+    sz.drawShape()
     print(sz.GetIndex(btn1))
     print(u'pos=%s, size=%s' % (sz.GetPosition(), sz.GetSize()))
     app.MainLoop()

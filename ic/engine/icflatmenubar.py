@@ -197,7 +197,7 @@ class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
                 else:
                     bmp = tbItem.GetDisabledBitmap()
 
-            # Draw the toolbar image
+            # draw the toolbar image
             if bmp.Ok():
 
                 x = xx

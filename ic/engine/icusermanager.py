@@ -4,8 +4,6 @@
 Менеджер управления пользователями системы.
 """
 
-
-# --- Imports ---
 import os
 import os.path
 import wx
@@ -17,13 +15,14 @@ from ic.utils import util
 from ic.utils import ic_res
 from ic.utils import ini
 from ic.log import log
+from ic.bitmap import bmpfunc
 
 from ic.engine import icusereditpanel
 
 from ic.engine import glob_functions
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def edit_user_dlg():
@@ -51,8 +50,7 @@ class icUserEditDialog(wx.Dialog):
                                pos=wx.DefaultPosition, size=wx.Size(700, 350),
                                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
-            from ic.imglib import newstyle_img
-            icon_img = newstyle_img.getusers7Bitmap()
+            icon_img = bmpfunc.createLibraryBitmap('group.png')
             if icon_img:
                 icon = wx.Icon(icon_img)
                 self.SetIcon(icon)

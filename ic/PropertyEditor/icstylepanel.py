@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+"""
+Стилизованная панель инструментов.
+"""
+
 import wx
+
 import ic.components.icwxpanel as icwxpanel
+from ic.bitmap import bmpfunc
+
+__version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
-class icStyleToolPanel(icwxpanel.icWXPanel):
 
+class icStyleToolPanel(icwxpanel.icWXPanel):
+    """
+    Стилизованная панель инструментов.
+    """
     BGR_PANEL_CLR = (140, 150, 160)
     FGR_PANEL_CLR = (100, 110, 120)
     PANEL_H = 27
@@ -20,16 +32,16 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         icwxpanel.icWXPanel.__init__(self, parent, -1, 
                                      {'backgroundColor': bgr_clr,
                                       'size': (-1, icStyleToolPanel.PANEL_H)})
-        self.SetBorderMode(icStyleToolPanel.FGR_PANEL_CLR, 0)
+        self.setBorderMode(icStyleToolPanel.FGR_PANEL_CLR, 0)
         self._toolList = []
-        self.CreateToolPanel()
+        self.createToolPanel()
         self.designer_panel = kwarg.get('designer_panel', None)
                 
-    def CreateToolPanel(self):
+    def createToolPanel(self):
         """
         Создаем панель инструментов.
         """
-        from ic.imglib import newstyle_img
+        # from ic.imglib import newstyle_img
         import ic.components.custom.ictoggleimagebutton as ictoggleimagebutton
 
         szr = wx.BoxSizer()
@@ -37,116 +49,116 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         btn_sz = (23, 23)
         bgr_clr = self.BGR_PANEL_CLR
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.align_left,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-stop-180.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('Align Left')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 2)
         img_btn.SetBackgroundColour(bgr_clr)
         self.flagCompDict[wx.ALIGN_LEFT] = img_btn
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
 
         #   Так как wx.ALIGN_LEFT == wx.ALIGN_TOP == 0
         self.flagCompDict['left'] = img_btn
 
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.align_right,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-stop.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('Align Right')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL)
         self.flagCompDict[wx.ALIGN_RIGHT] = img_btn
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
         
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.align_top,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-stop-090.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('Align Top')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL)
         self.flagCompDict[wx.ALIGN_TOP] = img_btn
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
         
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.align_bottom,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-stop-270.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('Align Bottom')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL)
         self.flagCompDict[wx.ALIGN_BOTTOM] = img_btn
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
         
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.align_vcenter,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-resize-090.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('Centred Vertical')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL)
         self.flagCompDict[wx.ALIGN_CENTER_VERTICAL] = img_btn
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
 
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.align_hcenter,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-resize.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('Centred Horizontal')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL)
         self.flagCompDict[wx.ALIGN_CENTER_HORIZONTAL] = img_btn
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
         
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.grow,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-move.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('EXPAND style')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL)
         self.flagCompDict[wx.EXPAND] = img_btn
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
 
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.proportional,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-out.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('PROPORTIONAL Style')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL)
         self.flagCompDict['proportion'] = img_btn
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
 
         # Обновление дизайнера
         img_btn = ictoggleimagebutton.icToggleImageButton(self, -1,
-                                                          {'image': newstyle_img.refresh3,
+                                                          {'image': bmpfunc.createLibraryBitmap('arrow-circle.png'),
                                                            'backgroundColor': bgr_clr,
                                                            'size': btn_sz,
                                                            'shortHelpString': _('Refresh')})
         szr.Add(img_btn, 0, wx.ALIGN_CENTER_VERTICAL)
-        img_btn.Bind(wx.EVT_BUTTON, self.OnRefresh, id=img_btn.GetId())
+        img_btn.Bind(wx.EVT_BUTTON, self.onRefresh, id=img_btn.GetId())
         self.refresh_tool = img_btn
         
         szr.Add((5,27), 0, wx.ALIGN_CENTER_VERTICAL)
-        self.AddTool(img_btn)
+        self.addTool(img_btn)
         
         self.SetSizer(szr)
 
-    def AddTool(self, tool):
+    def addTool(self, tool):
         """
         Добавлят инструмент в с надор инструментов.
         @type tool: C{ictoggleimagebutton.icToggleImageButton}
         @param tool: Инструмент палитры.
         """
         self._toolList.append(tool)
-        tool.Bind(wx.EVT_BUTTON, self.OnMouseClick, id=tool.GetId())
+        tool.Bind(wx.EVT_BUTTON, self.onMouseClick, id=tool.GetId())
 
-    def GetGraphEditor(self):
+    def getGraphEditor(self):
         """
         Возвращает указатель на графический редактор.
         """
         return self.designer_panel
 
-    def OnRefresh(self, evt):
+    def onRefresh(self, evt):
         """
         Обновление дизайнера.
         """
-        self.GetGraphEditor().GetPointer().open_formeditor_doc()
+        self.getGraphEditor().GetPointer().open_formeditor_doc()
         # В момент обновления панель может быть разрушена
         try:
             self.refresh_tool.SetToggle(False)
@@ -154,16 +166,16 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         except:
             pass
         
-    def OnMouseClick(self, evt):
+    def onMouseClick(self, evt):
         """
         Обрабатывет сообщение.
         """
         obj = evt.GetEventObject()
-        flag = self.GetFlag()
+        flag = self.getFlag()
         if obj in self.flagCompDict.values():
-            flag = self.GetFlag()
-            prop = self.GetProportionStyle()
-            edt = self.GetGraphEditor()
+            flag = self.getFlag()
+            prop = self.getProportionStyle()
+            edt = self.getGraphEditor()
             if edt and edt.selectedObj:
                 edt.ChangeResProperty(edt.selectedObj, 'flag', flag, bRefresh=True)
                 edt.ChangeSelItemProperty('flag', flag)
@@ -173,12 +185,12 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
             evt.Skip()
             return
 
-        for tool in self.GetToolList():
+        for tool in self.getToolList():
             if tool != obj and tool not in self.flagCompDict.values():
                 tool.SetToggle(False)
         evt.Skip()
 
-    def GetFlag(self):
+    def getFlag(self):
         """
         Возвращает стиль расположения компонета в сайзере.
         """
@@ -191,13 +203,13 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
                     flag = flag | key
         return flag
     
-    def GetToolList(self):
+    def getToolList(self):
         """
         Возвращает список инструментов.
         """
         return self._toolList
     
-    def SetFlag(self, flag):
+    def setFlag(self, flag):
         """
         Устанавливает для отображенмя в панели инструментов стиль расположения компонента
         в сайзере.
@@ -216,7 +228,7 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
                 else:
                     obj.SetToggle(False)
                     
-    def SetProportionStyle(self, prop):
+    def setProportionStyle(self, prop):
         """
         Устанавливает признак пропорциональности при размещении компонента в сайзере.
         @type prop: C{bool}
@@ -224,18 +236,18 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         """
         self.flagCompDict['proportion'].SetToggle(prop)
     
-    def GetProportionStyle(self):
+    def getProportionStyle(self):
         """
         Возвращает признак пропорциональность при размещении компонента в
         сайзере.
         """
         return self.flagCompDict['proportion'].GetToggle()
         
-    def GetToggleType(self):
+    def getToggleType(self):
         """
         Возвращает выбранный тип компонента.
         """
-        for tool in self.GetToolList():
+        for tool in self.getToolList():
             if tool.GetToggle() and tool not in self.flagCompDict.values():
                 return tool.shortHelpString
         return None

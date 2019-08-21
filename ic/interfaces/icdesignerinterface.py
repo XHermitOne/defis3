@@ -5,7 +5,7 @@
 Интерфейс визуального дизайнера компонентов.
 """
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icDesignerInterface(object):
@@ -19,18 +19,18 @@ class icDesignerInterface(object):
         pass
 
     @staticmethod
-    def GetToolPanelCls():
+    def getToolPanelCls():
         """
         Возвращает класс панели инструментов.
         """
         from ic.PropertyEditor import icstylepanel
         return icstylepanel.icStyleToolPanel
     
-    def GetToolPanel(self, parent, *arg, **kwarg):
+    def getToolPanel(self, parent, *arg, **kwarg):
         """
         Возвращает панель инструментов.
         """
-        cls = self.GetToolPanelCls()
+        cls = self.getToolPanelCls()
         if cls:
             return cls(parent)
 

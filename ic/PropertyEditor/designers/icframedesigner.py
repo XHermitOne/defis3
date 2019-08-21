@@ -6,17 +6,19 @@
 """
 
 import wx
+
+from ic.bitmap import bmpfunc
 from ic.utils import util
 from ic.components import icwidget
 import ic.components.icwxpanel as icwxpanel
-from ic.components.sizers import icboxsizer
-import ic.utils.resource as resource
+# from ic.components.sizers import icboxsizer
+# from ic.utils import resource
 import ic.utils.graphicUtils as graphicUtils
 from ic.interfaces import icdesignerinterface
 
 _ = wx.GetTranslation
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 2)
 
 HEADER_COLOR = (78, 117, 200)
 
@@ -77,10 +79,9 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
         self.SetSizer(self.sizer)
         self.SetAutoLayout(1)
 
-        from ic.imglib import newstyle_img
-        self.img_min = newstyle_img.minXP
-        self.img_exp = newstyle_img.expXP
-        self.img_close = newstyle_img.closeXP
+        self.img_min = bmpfunc.createLibraryBitmap('control-270.png')
+        self.img_exp = bmpfunc.createLibraryBitmap('control-stop-square.png')
+        self.img_close = bmpfunc.createLibraryBitmap('cross.png')
         
         self.border_pen = wx.Pen(wx.Colour(*icwxpanel.DESIGN_BORDER_CLR))
         
@@ -96,13 +97,13 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
                                             bCounter=bCounter, progressDlg=progressDlg)
             return self.context.FindObject(self.child[0]['type'], self.child[0]['name'])
 
-    def SetTitle(self, title):
+    def setTitle(self, title):
         """
         Устанавливает заголовок окна.
         """
         self.title = title
         
-    def GetTitle(self):
+    def getTitle(self):
         """
         Возвращает заголовок окна.
         """
@@ -113,9 +114,9 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
         Обрабатываем событие EVT_PAINT.
         """
         dc = wx.BufferedPaintDC(self)
-        self.Draw(dc)
+        self.draw(dc)
 
-    def Draw(self, dc):
+    def draw(self, dc):
         """
         Отрисовка дизайнера.
         """
@@ -182,7 +183,7 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
 
         dc.EndDrawing()
 
-    def SetEditorMode(self):
+    def setEditorMode(self):
         """
         Устанавливает режим редактора.
         """

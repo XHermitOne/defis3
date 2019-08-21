@@ -25,7 +25,7 @@ _ = wx.GetTranslation
 class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesignerInterface):
     """ Класс дизайнер горизонтального меню."""
     @staticmethod
-    def GetToolPanelCls():
+    def getToolPanelCls():
         return None
     
     def __init__(self, parent = None, id = -1, component = {}, logType = 0,
@@ -90,7 +90,7 @@ class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesig
                                 bCounter = bCounter, progressDlg = progressDlg)
             return self.get_children_lst()
 
-    def SetEditorMode(self):
+    def setEditorMode(self):
         """ 
         Устанавливает режим редактора.
         """

@@ -99,7 +99,7 @@ class icRendererXPPrototype(RendererBase):
                 penColor = ArtManager.Get().FrameColour()
                 brushColor = ArtManager.Get().BackgroundColor()
             
-        # Draw the button borders
+        # draw the button borders
         self.DrawButtonBorders(dc, rect, penColor, brushColor)
 
     def DrawButtonColour(self, dc, rect, state, color):
@@ -117,7 +117,7 @@ class icRendererXPPrototype(RendererBase):
             penColor = color
             brushColor = ArtManager.Get().LightColour(color, 75)
 
-        # Draw the button borders
+        # draw the button borders
         penColor = wx.BLACK
         self.DrawButtonBorders(dc, rect, penColor, brushColor)
 
@@ -143,7 +143,7 @@ class icRendererXPPrototype(RendererBase):
 
         artMgr.PaintStraightGradientBox(dc, rect, startColor, endColor, False)
 
-        # Draw the border
+        # draw the border
         if artMgr.GetMenuBarBorder():
             dc.SetPen(wx.Pen(startColor))
             dc.SetBrush(wx.TRANSPARENT_BRUSH)

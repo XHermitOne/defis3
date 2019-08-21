@@ -69,7 +69,7 @@ class WordWrapRenderer:
             valign=wx.ALIGN_TOP,
             allowClipping=False):
         """
-        Draw the given text word-wrapped within the given bounds.
+        draw the given text word-wrapped within the given bounds.
 
         bounds must be a wx.Rect or a 4-element collection: (left, top, width, height).
 
@@ -114,7 +114,7 @@ class WordWrapRenderer:
             ellipse=wx.RIGHT,
             ellipseChars="..."):
         """
-        Draw the given text truncated to the given bounds.
+        draw the given text truncated to the given bounds.
 
         bounds must be a wx.Rect or a 4-element collection: (left, top, width, height).
 

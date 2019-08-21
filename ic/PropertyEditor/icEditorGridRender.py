@@ -66,4 +66,4 @@ class PropValueRenderer(Grid.PyGridCellRenderer):
 
         cls = icDefInf.GetEditorClass(attr_type)
         if cls:
-            cls.Draw(self, grid, attr, dc, rect, row, col, isSelected)
+            cls.draw(self, grid, attr, dc, rect, row, col, isSelected)

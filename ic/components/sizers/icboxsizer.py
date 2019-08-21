@@ -222,7 +222,7 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
             except:
                 log.error(u'Ошибка при привязке сайзера')
 
-    def DrawShape(self, dc=None):
+    def drawShape(self, dc=None):
         """
         Рисует представление для BoxSizer.
         """
@@ -232,7 +232,7 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
             if self.shapeType == icwidget.icParentShapeType:
                 clr = (190, 0, 0)
 
-            self.DrawCursor(clr=clr)
+            self.drawCursor(clr=clr)
 
             #   Рисуем разметку для компонентов
             if not dc:

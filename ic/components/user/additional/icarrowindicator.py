@@ -79,7 +79,7 @@ ic_class_spc = {'type': 'ArrowIndicator',
                 '__events__': {'onGraph': ('wx.EVT_LEFT_DOWN', 'OnGraphClick', False),
                                'onLeftDblClick': ('wx.EVT_LEFT_DCLICK', 'OnLeftDblClick', False),
                                'onColor': ('wx.EVT_LEFT_DOWN', 'OnColorClick', False),
-                               'onSaveProperty': ('wx.EVT_RIGHT_DOWN', 'OnRightDown', False),
+                               'onSaveProperty': ('wx.EVT_RIGHT_DOWN', 'onRightDown', False),
                                },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type', 'typPar', 'cod'],
                                    icDefInf.EDT_NUMBER: ['factor'],
@@ -1476,7 +1476,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
                 self.DrawTextMode(dc)
         else:
             if self.skin:
-                self.skin.Draw(dc, self)
+                self.skin.draw(dc, self)
             else:
                 self.Draw(dc)
     

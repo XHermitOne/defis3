@@ -4,16 +4,20 @@
 """
 Представления каталога в виде списка и дерева.
 """
+import wx
+
 import ic
 from ic.contrib.ObjectListView import ObjectListView, GroupListView, ColumnDefn
 from ic.db import iccatalog
 from ic.db.iccatalog import icItemCatalog
-import wx
+from ic.bitmap import bmpfunc
+
+__version__ = (0, 1, 1, 2)
 
 _ = wx.GetTranslation
 
 
-class BackItem(icItemCatalog):
+class icBackItem(icItemCatalog):
     catalog_type = 'back'
     
     def __init__(self, path=''):
@@ -45,25 +49,25 @@ def cmpObj(func, obj1, obj2, *arg):
         return func(obj1, obj2, *arg)
 
 
-class BaseCatalogView(object):
-    def __init__(self, cat):
-        self.catalog = cat
-        bck = BackItem(cat.get_parent_path())
-        self.items = cat.get_child_items()
+class icBaseCatalogView(object):
+    def __init__(self, catalog):
+        self.catalog = catalog
+        bck = icBackItem(catalog.get_parent_path())
+        self.items = catalog.get_child_items()
         self.items.sort(cmp=sort_with_folders)
         self.items = [bck] + self.items
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated, id=-1)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onItemActivated, id=-1)
         
-    def OnItemActivated(self, evt):
+    def onItemActivated(self, evt):
         indx = evt.Index
         item = self.GetObjectAt(indx)
         prnt = cat.get_parent_path(item.path)
-        if isinstance(item, BackItem):
-            bck = BackItem(prnt)
+        if isinstance(item, icBackItem):
+            bck = icBackItem(prnt)
             self.items = cat.get_child_items(path=prnt)
             self.items.sort(cmp=sort_with_folders)
         else:
-            bck = BackItem(item.path)
+            bck = icBackItem(item.path)
             self.items = cat.get_child_items(item)
         
         self.items.sort(cmp=sort_with_folders)
@@ -73,17 +77,16 @@ class BaseCatalogView(object):
         self.SortBy(0)
         evt.Skip()
         
-    def InitObjectListView(self):
+    def initObjectListView(self):
         """
         Создаем описание колонок.
         """
-        from ic.imglib import newstyle_img
         objImage = self.AddImages(iccatalog.icItemCatalog.get_pic())
         fldImage = self.AddImages(iccatalog.icFolderItem.get_pic())
-        backImage = self.AddImages(newstyle_img.getextEditor2Bitmap())
+        backImage = self.AddImages(bmpfunc.createLibraryBitmap('pref.png'))
         
         def ObjectImageGetter(item):
-            if isinstance(item, BackItem):
+            if isinstance(item, icBackItem):
                 return backImage
             elif hasattr(item, 'catalog_type') and item.catalog_type == 'Folder':
                 return fldImage
@@ -103,7 +106,7 @@ class BaseCatalogView(object):
     def isFolder(self, item):
         pass
     
-    def SortListItemsBy(self, cmpFunc, ascending=None):
+    def sortListItemsBy(self, cmpFunc, ascending=None):
         """
         Sort the existing list items using the given comparison function.
 
@@ -124,57 +127,57 @@ class BaseCatalogView(object):
         self.SortItems(_sorter)
 
 
-class SimpleCatalogView(ObjectListView, BaseCatalogView):
+class icSimpleCatalogViewIc(ObjectListView, icBaseCatalogView):
     """
     Каталог в виде списка.
     """
 
-    def __init__(self, cat, *arg, **kwarg):
+    def __init__(self, catalog, *arg, **kwarg):
         """
         Конструктор.
-        @type cat: C{ic.db.iccatalog.icCatalog}
-        @param cat: Каталог.
+        @type catalog: C{ic.db.iccatalog.icCatalog}
+        @param catalog: Каталог.
         """
         ObjectListView.__init__(self, *arg, **kwarg)
-        BaseCatalogView.__init__(self, cat)
-        self.InitObjectListView()
+        icBaseCatalogView.__init__(self, catalog)
+        self.initObjectListView()
         self.SetObjects(self.items)
     
-    def SortListItemsBy(self, cmpFunc, ascending=None):
-        BaseCatalogView.SortListItemsBy(self, cmpFunc, ascending)
+    def sortListItemsBy(self, cmpFunc, ascending=None):
+        icBaseCatalogView.sortListItemsBy(self, cmpFunc, ascending)
 
 
-class GroupCatalogView(GroupListView, BaseCatalogView):
+class icGroupCatalogViewIc(GroupListView, icBaseCatalogView):
     """
     Каталог в виде списка.
     """
 
-    def __init__(self, cat, *arg, **kwarg):
+    def __init__(self, catalog, *arg, **kwarg):
         """ Конструктор.
-        @type cat: C{ic.db.iccatalog.icCatalog}
-        @param cat: Каталог.
+        @type catalog: C{ic.db.iccatalog.icCatalog}
+        @param catalog: Каталог.
         """
         GroupListView.__init__(self, *arg, **kwarg)
-        BaseCatalogView.__init__(self, cat)
-        self.InitObjectListView()
+        icBaseCatalogView.__init__(self, catalog)
+        self.initObjectListView()
         self.SetObjects(self.items)
     
-    def SortListItemsBy(self, cmpFunc, ascending=None):
-        BaseCatalogView.SortListItemsBy(self, cmpFunc, ascending)
+    def sortListItemsBy(self, cmpFunc, ascending=None):
+        icBaseCatalogView.sortListItemsBy(self, cmpFunc, ascending)
 
 
-class CatalogFrame(wx.Frame):
-    def __init__(self, cat, *args, **kwds):
+class icCatalogFrame(wx.Frame):
+    def __init__(self, catalog, *args, **kwds):
         wx.Frame.__init__(self, *args, **kwds)
-        self.InitWidgets(cat)
+        self.initWidgets(catalog)
 
-    def InitWidgets(self, cat):
+    def initWidgets(self, catalog):
         panel = wx.Panel(self, -1)
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(panel, 1, wx.ALL|wx.EXPAND)
         self.SetSizer(sizer_1)
 
-        self.myOlv = SimpleCatalogView(cat, panel, -1, style=wx.LC_REPORT|wx.SUNKEN_BORDER)
+        self.myOlv = icSimpleCatalogViewIc(catalog, panel, -1, style=wx.LC_REPORT | wx.SUNKEN_BORDER)
 
         sizer_2 = wx.BoxSizer(wx.VERTICAL)
         sizer_2.Add(self.myOlv, 1, wx.ALL|wx.EXPAND, 4)
@@ -202,7 +205,7 @@ if __name__ == '__main__':
     cat = get_test_catalog()
     app = wx.PySimpleApp()
     wx.InitAllImageHandlers()
-    frame_1 = CatalogFrame(cat, None, -1, 'Simple catalog view')
+    frame_1 = icCatalogFrame(cat, None, -1, 'Simple catalog view')
     app.SetTopWindow(frame_1)
     frame_1.Show()
     app.MainLoop()

@@ -2292,7 +2292,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             self.graphEditor.GetEditorPanel().SetPointer(self)
             self.graphEditor.Show()
             # Создаем панель инструментов
-            self.graphEditor.CreateToolPanel(GetObjectsInfo())
+            self.graphEditor.createToolPanel(GetObjectsInfo())
         if self.graphEditor and self.graphEditor.toolpanel:
             dx, dy = self.graphEditor.toolpanel.GetSize()
         else:
@@ -2471,7 +2471,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             self.graphEditor = edt or self.graphEditor
             mgr = main_win.GetFrameManager()
             if self.graphEditor and not self._toolpanel:
-                self._toolpanel = self.graphEditor.CreateToolPanel(ObjectsInfo=GetObjectsInfo(), parent=main_win)
+                self._toolpanel = self.graphEditor.createToolPanel(ObjectsInfo=GetObjectsInfo(), parent=main_win)
                 if self._toolpanel:
                     mgr.AddPane(self._toolpanel, wx.aui.AuiPaneInfo().
                                 Name(u'DefisToolPanel').
