@@ -8,3 +8,5 @@
 from .circle_marker import *
 from .pin_marker import *
 from .double_gis_map import *
+
+__version__ = (0, 1, 1, 1)
