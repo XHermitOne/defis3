@@ -736,10 +736,10 @@ FILTER_REQUISITE = {'name': None,         # Англоязычное имя ре
 
 # Стандартные используемые логические операции
 DEFAULT_ENV_LOGIC_OPERATIONS = [
-    {'name': 'AND', 'description': u'И', 'img': bmpfunc.createLibraryBitmap('picture.png')},  #img_lib.logic_and},
-    {'name': 'OR', 'description': u'ИЛИ', 'img': bmpfunc.createLibraryBitmap('picture.png')},  #img_lib.logic_or},
-    {'name': 'NOT', 'description': u'НЕ', 'img': bmpfunc.createLibraryBitmap('picture.png')},  #img_lib.logic_not_and},
-    {'name': 'NOT OR', 'description': u'НЕ ИЛИ', 'img': bmpfunc.createLibraryBitmap('picture.png')},  #img_lib.logic_not_or},
+    {'name': 'AND', 'description': u'И', 'img': bmpfunc.createLibraryBitmap('logic_and.png')},
+    {'name': 'OR', 'description': u'ИЛИ', 'img': bmpfunc.createLibraryBitmap('logic_or.png')},
+    {'name': 'NOT', 'description': u'НЕ', 'img': bmpfunc.createLibraryBitmap('logic_not_and.png')},
+    {'name': 'NOT OR', 'description': u'НЕ ИЛИ', 'img': bmpfunc.createLibraryBitmap('logic_not_or.png')},
     ]
     
 # Стандартные используемые функции
@@ -751,7 +751,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
                 {'name': 'value',
                  'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
         
     'not_equal': {
@@ -761,7 +761,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
                  {'name': 'value',
                   'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_not_equal.png'),
         },
         
     'great': {
@@ -771,7 +771,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),   #img_lib.logic_great,
+        'img': bmpfunc.createLibraryBitmap('logic_great.png'),
         },
         
     'great_or_equal': {
@@ -781,7 +781,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_great_or_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_great_or_equal.png'),
         },
         
     'lesser': {
@@ -791,7 +791,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_lesser,
+        'img': bmpfunc.createLibraryBitmap('logic_lesser.png'),
         },
         
     'lesser_or_equal': {
@@ -801,7 +801,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_lesser_or_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_lesser_or_equal.png'),
         },
         
     'between': {
@@ -814,7 +814,7 @@ DEFAULT_ENV_FUNCS = {
             {'name': 'maximum',
              'description': u'Максимальное значение'},
             ],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_between,
+        'img': bmpfunc.createLibraryBitmap('logic_between.png'),
         },
     
     'not_between': {
@@ -827,7 +827,7 @@ DEFAULT_ENV_FUNCS = {
             {'name': 'maximum',
              'description': u'Максимальное значение'},
             ],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_between,
+        'img': bmpfunc.createLibraryBitmap('logic_not_between.png'),
         },
         
     'contain': {
@@ -837,7 +837,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_contain,
+        'img': bmpfunc.createLibraryBitmap('logic_contain.png'),
         },
 
     'not_contain': {
@@ -847,7 +847,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_contain,
+        'img': bmpfunc.createLibraryBitmap('logic_not_contain.png'),
         },
         
     'left_equal': {
@@ -857,7 +857,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_left_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_left_equal.png'),
         },
 
     'right_equal': {
@@ -867,7 +867,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_right_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_right_equal.png'),
         },
 
     'startswith': {
@@ -877,7 +877,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_left_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_left_equal.png'),
     },
 
     'endswith': {
@@ -887,7 +887,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Значение'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_right_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_right_equal.png'),
     },
 
     'mask': {
@@ -897,7 +897,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Маска'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_mask,
+        'img': bmpfunc.createLibraryBitmap('logic_mask.png'),
         },
         
     'not_mask': {
@@ -907,7 +907,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'value',
              'description': u'Маска'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_mask,
+        'img': bmpfunc.createLibraryBitmap('logic_not_mask.png'),
         },
         
     'is_null': {
@@ -915,7 +915,7 @@ DEFAULT_ENV_FUNCS = {
         'func': is_null,
         'description': u'Пусто',
         'args': [],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_is_null,
+        'img': bmpfunc.createLibraryBitmap('logic_is_null.png'),
         },
         
     'is_not_null': {
@@ -923,7 +923,7 @@ DEFAULT_ENV_FUNCS = {
         'func': is_not_null,
         'description': u'Не пусто',
         'args': [],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_is_not_null,
+        'img': bmpfunc.createLibraryBitmap('logic_is_not_null.png'),
         },
         
     'into': {
@@ -933,7 +933,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'values',
              'description': u'Список значений'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_into,
+        'img': bmpfunc.createLibraryBitmap('logic_into.png'),
         },
         
     'not_into': {
@@ -943,7 +943,7 @@ DEFAULT_ENV_FUNCS = {
         'args': [
             {'name': 'values',
              'description': u'Список значений'}],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_into,
+        'img': bmpfunc.createLibraryBitmap('logic_not_into.png'),
         },
         
     }
@@ -1089,7 +1089,7 @@ DEFAULT_ENV_DATE_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
         
     'date_not_equal': {
@@ -1102,7 +1102,7 @@ DEFAULT_ENV_DATE_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_not_equal.png'),
         },
         
     'date_great': {
@@ -1115,7 +1115,7 @@ DEFAULT_ENV_DATE_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_great,
+        'img': bmpfunc.createLibraryBitmap('logic_great.png'),
         },
         
     'date_great_or_equal': {
@@ -1128,7 +1128,7 @@ DEFAULT_ENV_DATE_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_great_or_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_great_or_equal.png'),
         },
         
     'date_lesser': {
@@ -1141,7 +1141,7 @@ DEFAULT_ENV_DATE_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_lesser,
+        'img': bmpfunc.createLibraryBitmap('logic_lesser.png'),
         },
         
     'date_lesser_or_equal': {
@@ -1154,7 +1154,7 @@ DEFAULT_ENV_DATE_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_lesser_or_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_lesser_or_equal.png'),
         },
         
     'date_between': {
@@ -1173,7 +1173,7 @@ DEFAULT_ENV_DATE_FUNCS = {
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
             ],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_between,
+        'img': bmpfunc.createLibraryBitmap('logic_between.png'),
         },
     
     'date_not_between': {
@@ -1192,7 +1192,7 @@ DEFAULT_ENV_DATE_FUNCS = {
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
             ],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_between,
+        'img': bmpfunc.createLibraryBitmap('logic_not_between.png'),
         },
 
     # --- Дополнительные функции ---
@@ -1203,7 +1203,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         'description': u'Текущая дата',
         'args': [],
         'get_args': exf.get_args_sys_date,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
 
     'sys_month': {
@@ -1212,7 +1212,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         'description': u'Текущий месяц',
         'args': [],
         'get_args': exf.get_args_sys_month,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
 
     'sys_year': {
@@ -1221,7 +1221,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         'description': u'Текущий год',
         'args': [],
         'get_args': exf.get_args_sys_year,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
 
     'choice_date': {
@@ -1230,7 +1230,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         'description': u'Указанная дата',
         'args': [],
         'get_args': exf.get_args_choice_date,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
 
     'choice_month': {
@@ -1239,7 +1239,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         'description': u'Указанный месяц',
         'args': [],
         'get_args': exf.get_args_choice_month,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
 
     'choice_year': {
@@ -1248,7 +1248,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         'description': u'Указанный год',
         'args': [],
         'get_args': exf.get_args_choice_year,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
 
     'choice_date_range': {
@@ -1257,7 +1257,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         'description': u'Указанный период дат',
         'args': [],
         'get_args': exf.get_args_choice_date_range,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
 
     'choice_month_range': {
@@ -1266,7 +1266,7 @@ DEFAULT_ENV_DATE_FUNCS = {
         'description': u'Указанный период масяцев',
         'args': [],
         'get_args': exf.get_args_choice_month_range,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
 
     }
@@ -1285,7 +1285,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_not_equal': {
@@ -1298,7 +1298,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_not_equal.png'),
     },
 
     'datetime_great': {
@@ -1311,7 +1311,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_great,
+        'img': bmpfunc.createLibraryBitmap('logic_great.png'),
     },
 
     'datetime_great_or_equal': {
@@ -1324,7 +1324,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_great_or_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_great_or_equal.png'),
     },
 
     'datetime_lesser': {
@@ -1337,7 +1337,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_lesser,
+        'img': bmpfunc.createLibraryBitmap('logic_lesser.png'),
     },
 
     'datetime_lesser_or_equal': {
@@ -1350,7 +1350,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
              'ext_edit': filter_builder_ctrl.icDateArgExtEdit,
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_lesser_or_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_lesser_or_equal.png'),
     },
 
     'datetime_between': {
@@ -1369,7 +1369,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
         ],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_between,
+        'img': bmpfunc.createLibraryBitmap('logic_between.png'),
     },
 
     'datetime_not_between': {
@@ -1388,7 +1388,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
              'ext_kwargs': {'component': {'style': wx.adv.DP_DROPDOWN}}
              },
         ],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_between,
+        'img': bmpfunc.createLibraryBitmap('logic_not_between.png'),
     },
 
     # --- Дополнительные функции ---
@@ -1399,7 +1399,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Текущая системная дата',
         'args': [],
         'get_args': exf.get_args_sys_date_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_yesterday': {
@@ -1408,7 +1408,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Вчерашняя дата',
         'args': [],
         'get_args': exf.get_args_yesterday_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_two_days_ago': {
@@ -1417,7 +1417,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Позавчерашняя дата',
         'args': [],
         'get_args': exf.get_args_two_days_ago_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_sys_month': {
@@ -1426,7 +1426,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Текущий системный месяц',
         'args': [],
         'get_args': exf.get_args_sys_month_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_sys_year': {
@@ -1435,7 +1435,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Текущий системный год',
         'args': [],
         'get_args': exf.get_args_sys_year_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_oper_year': {
@@ -1444,7 +1444,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Текущий операционный год',
         'args': [],
         'get_args': exf.get_args_oper_year_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_choice_date': {
@@ -1453,7 +1453,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Указанная дата',
         'args': [],
         'get_args': exf.get_args_choice_date_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_choice_month': {
@@ -1462,7 +1462,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Указанный месяц',
         'args': [],
         'get_args': exf.get_args_choice_month_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_choice_year': {
@@ -1471,7 +1471,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Указанный год',
         'args': [],
         'get_args': exf.get_args_choice_year_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_choice_date_range': {
@@ -1480,7 +1480,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Указанный период дат',
         'args': [],
         'get_args': exf.get_args_choice_date_range_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
     'datetime_choice_month_range': {
@@ -1489,7 +1489,7 @@ DEFAULT_ENV_DATETIME_FUNCS = {
         'description': u'Указанный период масяцев',
         'args': [],
         'get_args': exf.get_args_choice_month_range_datetime,
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
     },
 
 }
@@ -1514,7 +1514,7 @@ DEFAULT_ENV_NSI_FUNCS = {
              'ext_edit': icSpravTreeComboCtrl,
              'ext_kwargs': {'component': {}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_equal.png'),
         },
         
     'nsi_not_equal': {
@@ -1527,7 +1527,7 @@ DEFAULT_ENV_NSI_FUNCS = {
              'ext_edit': icSpravTreeComboCtrl,
              'ext_kwargs': {'component': {}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_not_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_not_equal.png'),
         },
 
     'nsi_left_equal': {
@@ -1540,7 +1540,7 @@ DEFAULT_ENV_NSI_FUNCS = {
              'ext_edit': icSpravTreeComboCtrl,
              'ext_kwargs': {'component': {}}
              }],
-        'img': bmpfunc.createLibraryBitmap('picture.png'),  #img_lib.logic_left_equal,
+        'img': bmpfunc.createLibraryBitmap('logic_left_equal.png'),
         },
     }
 
