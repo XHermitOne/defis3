@@ -104,61 +104,61 @@ def overlayPseudoGraph(symb1=u' ', symb2=u' ', default_symb=None):
     return default_symb
 
 
-rusRegUpperDict = {'а': 'А', 'б': 'Б', 'в': 'В', 'г': 'Г', 'д': 'Д', 'е': 'Е', 'ё': 'Ё', 'ж': 'Ж',
-                   'з': 'З', 'и': 'И', 'й': 'Й', 'к': 'К', 'л': 'Л', 'м': 'М', 'н': 'Н', 'о': 'О', 'п': 'П',
-                   'р': 'Р', 'с': 'С', 'т': 'Т', 'у': 'У', 'ф': 'Ф', 'х': 'Х', 'ц': 'Ц', 'ч': 'Ч',
-                   'ш': 'Ш', 'щ': 'Щ', 'ь': 'Ь', 'ы': 'Ы', 'ъ': 'Ъ', 'э': 'Э', 'ю': 'Ю', 'я': 'Я'}
+RU_REG_UPPER_DICT = {'а': 'А', 'б': 'Б', 'в': 'В', 'г': 'Г', 'д': 'Д', 'е': 'Е', 'ё': 'Ё', 'ж': 'Ж',
+                     'з': 'З', 'и': 'И', 'й': 'Й', 'к': 'К', 'л': 'Л', 'м': 'М', 'н': 'Н', 'о': 'О', 'п': 'П',
+                     'р': 'Р', 'с': 'С', 'т': 'Т', 'у': 'У', 'ф': 'Ф', 'х': 'Х', 'ц': 'Ц', 'ч': 'Ч',
+                     'ш': 'Ш', 'щ': 'Щ', 'ь': 'Ь', 'ы': 'Ы', 'ъ': 'Ъ', 'э': 'Э', 'ю': 'Ю', 'я': 'Я'}
 
 
-def icUpper(str):
+def icUpper(text):
     """
     Тупой перевод к верхнему регистру русских букв.
     """
-    pyUpper = str.upper()
-    upper_str = list(pyUpper)
-    upper_str = [rusRegUpperDict.setdefault(pyUpper[ch[0]], ch[1]) for ch in enumerate(upper_str)]
+    py_upper = text.upper()
+    upper_str = list(py_upper)
+    upper_str = [RU_REG_UPPER_DICT.setdefault(py_upper[ch[0]], ch[1]) for ch in enumerate(upper_str)]
     return ''.join(upper_str)
 
 
-rusRegLowerDict = {'А': 'а', 'Б': 'б', 'В': 'в', 'Г': 'г', 'Д': 'д', 'Е': 'е', 'Ё': 'ё', 'Ж': 'ж',
-                   'З': 'з', 'И': 'и', 'Й': 'й', 'К': 'к', 'Л': 'л', 'М': 'м', 'Н': 'н', 'О': 'о', 'П': 'п',
-                   'Р': 'р', 'С': 'с', 'Т': 'т', 'У': 'у', 'Ф': 'ф', 'Х': 'х', 'Ц': 'ц', 'Ч': 'ч',
-                   'Ш': 'ш', 'Щ': 'щ', 'Ь': 'ь', 'Ы': 'ы', 'Ъ': 'ъ', 'Э': 'э', 'Ю': 'ю', 'Я': 'я'}
+RU_REG_LOWER_DICT = {'А': 'а', 'Б': 'б', 'В': 'в', 'Г': 'г', 'Д': 'д', 'Е': 'е', 'Ё': 'ё', 'Ж': 'ж',
+                     'З': 'з', 'И': 'и', 'Й': 'й', 'К': 'к', 'Л': 'л', 'М': 'м', 'Н': 'н', 'О': 'о', 'П': 'п',
+                     'Р': 'р', 'С': 'с', 'Т': 'т', 'У': 'у', 'Ф': 'ф', 'Х': 'х', 'Ц': 'ц', 'Ч': 'ч',
+                     'Ш': 'ш', 'Щ': 'щ', 'Ь': 'ь', 'Ы': 'ы', 'Ъ': 'ъ', 'Э': 'э', 'Ю': 'ю', 'Я': 'я'}
 
-u_rusRegLowerDict = {u'А': u'а', u'Б': u'б', u'В': u'в', u'Г': u'г', u'Д': u'д', u'Е': u'е', u'Ё': u'ё', u'Ж': u'ж',
-                     u'З': u'з', u'И': u'и', u'Й': u'й', u'К': u'к', u'Л': u'л', u'М': u'м', u'Н': u'н', u'О': u'о',
-                     u'П': u'п', u'Р': u'р', u'С': u'с', u'Т': u'т', u'У': u'у', u'Ф': u'ф', u'Х': u'х', u'Ц': u'ц',
-                     u'Ч': u'ч', u'Ш': u'ш', u'Щ': u'щ', u'Ь': u'ь', u'Ы': u'ы', u'Ъ': u'ъ', u'Э': u'э', u'Ю': u'ю',
-                     u'Я': u'я'}
+U_RU_REG_LOWER_DICT = {u'А': u'а', u'Б': u'б', u'В': u'в', u'Г': u'г', u'Д': u'д', u'Е': u'е', u'Ё': u'ё', u'Ж': u'ж',
+                       u'З': u'з', u'И': u'и', u'Й': u'й', u'К': u'к', u'Л': u'л', u'М': u'м', u'Н': u'н', u'О': u'о',
+                       u'П': u'п', u'Р': u'р', u'С': u'с', u'Т': u'т', u'У': u'у', u'Ф': u'ф', u'Х': u'х', u'Ц': u'ц',
+                       u'Ч': u'ч', u'Ш': u'ш', u'Щ': u'щ', u'Ь': u'ь', u'Ы': u'ы', u'Ъ': u'ъ', u'Э': u'э', u'Ю': u'ю',
+                       u'Я': u'я'}
 
-rusRegLowerLst = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж',
-                  'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п',
-                  'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч',
-                  'ш', 'щ', 'ь', 'ы', 'ъ', 'э', 'ю', 'я']
+RU_REG_LOWER_LIST = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж',
+                     'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п',
+                     'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч',
+                     'ш', 'щ', 'ь', 'ы', 'ъ', 'э', 'ю', 'я']
 
-u_rusRegLowerLst = [u'а', u'б', u'в', u'г', u'д', u'е', u'ё', u'ж',
-                    u'з', u'и', u'й', u'к', u'л', u'м', u'н', u'о', u'п',
-                    u'р', u'с', u'т', u'у', u'ф', u'х', u'ц', u'ч',
-                    u'ш', u'щ', u'ь', u'ы', u'ъ', u'э', u'ю', u'я']
+U_RU_REG_LOWER_LIST = [u'а', u'б', u'в', u'г', u'д', u'е', u'ё', u'ж',
+                       u'з', u'и', u'й', u'к', u'л', u'м', u'н', u'о', u'п',
+                       u'р', u'с', u'т', u'у', u'ф', u'х', u'ц', u'ч',
+                       u'ш', u'щ', u'ь', u'ы', u'ъ', u'э', u'ю', u'я']
 
-rusRegUpperLst = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж',
-                  'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П',
-                  'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч',
-                  'Ш', 'Щ', 'Ь', 'Ы', 'Ъ', 'Э', 'Ю', 'Я']
+RU_REG_UPPER_LIST = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж',
+                     'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П',
+                     'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч',
+                     'Ш', 'Щ', 'Ь', 'Ы', 'Ъ', 'Э', 'Ю', 'Я']
 
-u_rusRegUpperLst = [u'А', u'Б', u'В', u'Г', u'Д', u'Е', u'Ё', u'Ж',
-                    u'З', u'И', u'Й', u'К', u'Л', u'М', u'Н', u'О', u'П',
-                    u'Р', u'С', u'Т', u'У', u'Ф', u'Х', u'Ц', u'Ч',
-                    u'Ш', u'Щ', u'Ь', u'Ы', u'Ъ', u'Э', u'Ю', u'Я']
+U_RU_REG_UPPER_LIST = [u'А', u'Б', u'В', u'Г', u'Д', u'Е', u'Ё', u'Ж',
+                       u'З', u'И', u'Й', u'К', u'Л', u'М', u'Н', u'О', u'П',
+                       u'Р', u'С', u'Т', u'У', u'Ф', u'Х', u'Ц', u'Ч',
+                       u'Ш', u'Щ', u'Ь', u'Ы', u'Ъ', u'Э', u'Ю', u'Я']
 
 
-def icLower(s):
+def icLower(text):
     """
     Тупой перевод к нижнему регистру русских букв.
     """
-    pyLower = s.lower()
-    lower_str = list(pyLower)
-    lower_str = [rusRegLowerDict.setdefault(pyLower[ch[0]], ch[1]) for ch in enumerate(lower_str)]
+    py_lower = text.lower()
+    lower_str = list(py_lower)
+    lower_str = [RU_REG_LOWER_DICT.setdefault(py_lower[ch[0]], ch[1]) for ch in enumerate(lower_str)]
     return ''.join(lower_str)
 
 
@@ -166,9 +166,9 @@ def cmpLower(s1, s2):
     """
     Сравнивает два символа в нижнем регистре.
     """
-    if s1 in rusRegLowerLst and s2 in rusRegLowerLst:
-        p1 = rusRegLowerLst.index(s1)
-        p2 = rusRegLowerLst.index(s2)
+    if s1 in RU_REG_LOWER_LIST and s2 in RU_REG_LOWER_LIST:
+        p1 = RU_REG_LOWER_LIST.index(s1)
+        p2 = RU_REG_LOWER_LIST.index(s2)
     
         if p1 > p2:
             return -1
@@ -192,9 +192,9 @@ def cmpLowerU(str1, str2):
     for i in range(min(len(str1), len(str2))):
         s1 = str1[i]
         s2 = str2[i]
-        if s1 in u_rusRegLowerLst and s2 in u_rusRegLowerLst:
-            p1 = u_rusRegLowerLst.index(s1)
-            p2 = u_rusRegLowerLst.index(s2)
+        if s1 in U_RU_REG_LOWER_LIST and s2 in U_RU_REG_LOWER_LIST:
+            p1 = U_RU_REG_LOWER_LIST.index(s1)
+            p2 = U_RU_REG_LOWER_LIST.index(s2)
         
             if p1 > p2:
                 return -1
@@ -215,122 +215,122 @@ def cmpLowerU(str1, str2):
     return 0
 
 
-def str2unicode(String_, CP_='utf-8'):
+def str2unicode(text, code_page='utf-8'):
     """
     Перекодировка строки в юникод с проверкой типа входного аргумента.
-    @param String_: Строка.
-    @param CP_: Кодовая страница строки.
+    @param text: Строка.
+    @param code_page: Кодовая страница строки.
     @return: Строка в юникоде.
     """
-    if isinstance(String_, str):
-        return String_
-    elif isinstance(String_, bytes):
-        return String_.decode(CP_)
+    if isinstance(text, str):
+        return text
+    elif isinstance(text, bytes):
+        return text.decode(code_page)
     else:
-        str(String_)
+        str(text)
 
 
-def isLATText(Text_):
+def isLATText(text):
     """
     Текст написан в латинице?
     """
-    if isinstance(Text_, str):
-        rus_chr = [c for c in Text_ if ord(c) > 128]
+    if isinstance(text, str):
+        rus_chr = [c for c in text if ord(c) > 128]
         return not bool(rus_chr)
     # Это не строка
     return False
 
 
-def isLAT_DigitText(sText):
+def isLAT_DigitText(text):
     """
     Проверка того что текст состоит из латинских букв, цифр и знака подчеркивания.
     Эта функция используется для определения может ли текст являться наименованием
     например переменной/реквизита и т.п.
-    @param sText: Текст в виде строки или unicode.
+    @param text: Текст в виде строки или unicode.
     @return: True - текст состоит из латинских букв, цифр и знака подчеркивания.
         False - во всех других случаях.
     """
-    if isinstance(sText, str):
-        return all([c.isdigit() or c == u'_' or c in string.ascii_letters for c in sText])
+    if isinstance(text, str):
+        return all([c.isdigit() or c == u'_' or c in string.ascii_letters for c in text])
     # Это не строка
     return False
 
 
-def isRUSText(Text_):
+def isRUSText(text):
     """ 
     Строка с рускими буквами?
     """
-    if isinstance(Text_, str):
-        rus_chr = [c for c in Text_ if ord(c) > 128]
+    if isinstance(text, str):
+        rus_chr = [c for c in text if ord(c) > 128]
         return bool(rus_chr)
     # Это не строка
     return False
 
 
-def _rus2lat(Text_, TranslateDict_):
+def _rus2lat(text, translate_dict):
     """
     Перевод русских букв в латинские по словарю замен.
     """
-    if isinstance(Text_, bytes):
-        Text_ = Text_.decode('utf-8')
-    elif not isinstance(Text_, str):
+    if isinstance(text, bytes):
+        text = text.decode('utf-8')
+    elif not isinstance(text, str):
         # Привести к юникоду
-        Text_ = str(Text_)
+        text = str(text)
         
-    txt_list = list(Text_)
-    txt_list = [TranslateDict_.setdefault(ch, ch) for ch in txt_list]
+    txt_list = list(text)
+    txt_list = [translate_dict.setdefault(ch, ch) for ch in txt_list]
     return ''.join(txt_list)
     
     
-RUS2LATDict = {u'а': 'a', u'б': 'b', u'в': 'v', u'г': 'g', u'д': 'd', u'е': 'e', u'ё': 'yo', u'ж': 'j',
-               u'з': 'z', u'и': 'idx', u'й': 'y', u'к': 'k', u'л': 'l', u'м': 'm', u'н': 'n', u'о': 'o', u'п': 'p',
-               u'р': 'r', u'с': 's', u'т': 't', u'у': 'u', u'ф': 'function', u'х': 'h', u'ц': 'c', u'ч': 'ch',
-               u'ш': 'sh', u'щ': 'sch', u'ь': '', u'ы': 'y', u'ъ': '', u'э': 'e', u'ю': 'yu', u'я': 'ya',
-               u'А': 'A', u'Б': 'B', u'В': 'V', u'Г': 'G', u'Д': 'D', u'Е': 'E', u'Ё': 'YO', u'Ж': 'J',
-               u'З': 'Z', u'И': 'I', u'Й': 'Y', u'К': 'K', u'Л': 'L', u'М': 'M', u'Н': 'N', u'О': 'O', u'П': 'P',
-               u'Р': 'R', u'С': 'S', u'Т': 'T', u'У': 'U', u'Ф': 'F', u'Х': 'H', u'Ц': 'C', u'Ч': 'CH',
-               u'Ш': 'SH', u'Щ': 'SCH', u'Ь': '', u'Ы': 'Y', u'Ъ': '', u'Э': 'E', u'Ю': 'YU', u'Я': 'YA'}
+RUS2LAT_DICT = {u'а': 'a', u'б': 'b', u'в': 'v', u'г': 'g', u'д': 'd', u'е': 'e', u'ё': 'yo', u'ж': 'j',
+                u'з': 'z', u'и': 'idx', u'й': 'y', u'к': 'k', u'л': 'l', u'м': 'm', u'н': 'n', u'о': 'o', u'п': 'p',
+                u'р': 'r', u'с': 's', u'т': 't', u'у': 'u', u'ф': 'function', u'х': 'h', u'ц': 'c', u'ч': 'ch',
+                u'ш': 'sh', u'щ': 'sch', u'ь': '', u'ы': 'y', u'ъ': '', u'э': 'e', u'ю': 'yu', u'я': 'ya',
+                u'А': 'A', u'Б': 'B', u'В': 'V', u'Г': 'G', u'Д': 'D', u'Е': 'E', u'Ё': 'YO', u'Ж': 'J',
+                u'З': 'Z', u'И': 'I', u'Й': 'Y', u'К': 'K', u'Л': 'L', u'М': 'M', u'Н': 'N', u'О': 'O', u'П': 'P',
+                u'Р': 'R', u'С': 'S', u'Т': 'T', u'У': 'U', u'Ф': 'F', u'Х': 'H', u'Ц': 'C', u'Ч': 'CH',
+                u'Ш': 'SH', u'Щ': 'SCH', u'Ь': '', u'Ы': 'Y', u'Ъ': '', u'Э': 'E', u'Ю': 'YU', u'Я': 'YA'}
 
 
-def rus2lat(Text_):
+def rus2lat(text):
     """
     Перевод русских букв в латинские.
     """
-    return _rus2lat(Text_, RUS2LATDict)
+    return _rus2lat(text, RUS2LAT_DICT)
 
 
-RUS2LATKeyboardDict = {u'а': 'function', u'б': '_', u'в': 'd', u'г': 'u', u'д': 'l', u'е': 't', u'ё': '_', u'ж': '_',
-                       u'з': 'p', u'и': 'b', u'й': 'q', u'к': 'r', u'л': 'k', u'м': 'v', u'н': 'y', u'о': 'j',
-                       u'п': 'g', u'р': 'h', u'с': 'c', u'т': 'n', u'у': 'e', u'ф': 'a', u'х': '_', u'ц': 'w',
-                       u'ч': 'x', u'ш': 'idx', u'щ': 'o', u'ь': 'm', u'ы': 's', u'ъ': '_', u'э': '_', u'ю': '_',
-                       u'я': 'z', u'А': 'F', u'Б': '_', u'В': 'D', u'Г': 'U', u'Д': 'L', u'Е': 'T', u'Ё': '_',
-                       u'Ж': '_', u'З': 'P', u'И': 'B', u'Й': 'Q', u'К': 'R', u'Л': 'K', u'М': 'V', u'Н': 'Y',
-                       u'О': 'J', u'П': 'G', u'Р': 'H', u'С': 'C', u'Т': 'N', u'У': 'E', u'Ф': 'A', u'Х': '_',
-                       u'Ц': 'W', u'Ч': 'X', u'Ш': 'I', u'Щ': 'O', u'Ь': 'M', u'Ы': 'S', u'Ъ': '_', u'Э': '_',
-                       u'Ю': '_', u'Я': 'Z'}
+RUS2LAT_KEYBOARD_DICT = {u'а': 'f', u'б': '_', u'в': 'd', u'г': 'u', u'д': 'l', u'е': 't', u'ё': '_', u'ж': '_',
+                         u'з': 'p', u'и': 'b', u'й': 'q', u'к': 'r', u'л': 'k', u'м': 'v', u'н': 'y', u'о': 'j',
+                         u'п': 'g', u'р': 'h', u'с': 'c', u'т': 'n', u'у': 'e', u'ф': 'a', u'х': '_', u'ц': 'w',
+                         u'ч': 'x', u'ш': 'idx', u'щ': 'o', u'ь': 'm', u'ы': 's', u'ъ': '_', u'э': '_', u'ю': '_',
+                         u'я': 'z', u'А': 'F', u'Б': '_', u'В': 'D', u'Г': 'U', u'Д': 'L', u'Е': 'T', u'Ё': '_',
+                         u'Ж': '_', u'З': 'P', u'И': 'B', u'Й': 'Q', u'К': 'R', u'Л': 'K', u'М': 'V', u'Н': 'Y',
+                         u'О': 'J', u'П': 'G', u'Р': 'H', u'С': 'C', u'Т': 'N', u'У': 'E', u'Ф': 'A', u'Х': '_',
+                         u'Ц': 'W', u'Ч': 'X', u'Ш': 'I', u'Щ': 'O', u'Ь': 'M', u'Ы': 'S', u'Ъ': '_', u'Э': '_',
+                         u'Ю': '_', u'Я': 'Z'}
 
 
-def rus2lat_keyboard(Text_):
+def rus2lat_keyboard(text):
     """
     Перевод русских букв в латинские по раскладке клавиатуры.
     """
-    return _rus2lat(Text_, RUS2LATKeyboardDict)
+    return _rus2lat(text, RUS2LAT_KEYBOARD_DICT)
 
 
-rus_encodings = {'UTF-8':      'utf-8',
-                 'CP1251':     'windows-1251',
-                 'KOI8-R':     'koi8-r',
-                 'IBM866':     'ibm866',
-                 'ISO-8859-5': 'iso-8859-5',
-                 'MAC':        'mac',
-                 }
+RU_ENCODINGS = {'UTF-8': 'utf-8',
+                'CP1251': 'windows-1251',
+                'KOI8-R': 'koi8-r',
+                'IBM866': 'ibm866',
+                'ISO-8859-5': 'iso-8859-5',
+                'MAC': 'mac',
+                }
 
 
 def get_codepage(text=None):
     """
     Определение кодировки текста.
     Пример вызова функции:
-    print(rus_encodings[get_codepage(file('test.txt').read())])
+    print(RU_ENCODINGS[get_codepage(file('test.txt').read())])
     Есть альтернативный вариант определения кодировки (с помощью chardet):
     a = 'sdfds'
     import chardet
@@ -345,7 +345,7 @@ def get_codepage(text=None):
     utfupper = 5
     utflower = 7
     codepages = {}
-    for enc in rus_encodings.keys():
+    for enc in RU_ENCODINGS.keys():
         codepages[enc] = 0
     if text is not None and len(text) > 0:
         last_simb = 0
@@ -404,17 +404,17 @@ def get_codepage(text=None):
         return idx
 
 
-def toUnicode(Value_, CP_='utf-8'):
+def toUnicode(value, code_page='utf-8'):
     """
     Преобразовать любое значение в юникод.
-    @param Value_: Значение.
-    @param CP_: Кодовая страница для строк.
+    @param value: Значение.
+    @param code_page: Кодовая страница для строк.
     """
-    if isinstance(Value_, str):
-        return Value_
-    elif isinstance(Value_, bytes):
-        return Value_.decode(CP_)
-    return str(Value_)
+    if isinstance(value, str):
+        return value
+    elif isinstance(value, bytes):
+        return value.decode(code_page)
+    return str(value)
 
 
 def recode_text(txt, src_codepage='cp1251', dst_codepage='utf-8'):
@@ -519,27 +519,27 @@ def limit_len_text(txt, length,  filler=u' '):
     return txt
 
 
-def getNumEnding(iNumber, aEndings):
+def getNumEnding(number, endings):
     """
     Функция возвращает окончание для множественного числа слова на основании числа и
     массива окончаний.
     Функция взята с https://habrahabr.ru/post/105428/.
-    @param iNumber: Число на основе которого нужно сформировать окончание
-    @param aEndings: Массив слов или окончаний для чисел(1, 4, 5),
+    @param number: Число на основе которого нужно сформировать окончание
+    @param endings: Массив слов или окончаний для чисел(1, 4, 5),
         например ['яблоко', 'яблока', 'яблок']
     @return: Строку.
     """
-    iNumber %= 100
-    if 11 <= iNumber <= 19:
-        sEnding = aEndings[2]
+    number %= 100
+    if 11 <= number <= 19:
+        sEnding = endings[2]
     else:
-        i = iNumber % 10
+        i = number % 10
         if i == 1:
-           sEnding = aEndings[0]
+           sEnding = endings[0]
         elif i in (2, 3, 4):
-            sEnding = aEndings[1]
+            sEnding = endings[1]
         else:
-            sEnding = aEndings[2]
+            sEnding = endings[2]
     return sEnding
 
 
