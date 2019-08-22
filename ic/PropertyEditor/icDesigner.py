@@ -9,7 +9,7 @@ import wx
 import sys
 # import locale
 
-from ic.utils import ic_i18n
+from ic.utils import i18nfunc
 from ic.engine import glob_functions
 from ic.utils import ic_util
 from ic.log import log
@@ -40,7 +40,7 @@ class icDesignerApp(wx.App):
 
         self.locale = None
         lang = wx.LANGUAGE_DEFAULT
-        wx.Locale.AddCatalogLookupPathPrefix(ic_i18n.LANG_DIR)
+        wx.Locale.AddCatalogLookupPathPrefix(i18nfunc.LANG_DIR)
         self.updateLanguage(lang)
         return True
         

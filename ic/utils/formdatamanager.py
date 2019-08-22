@@ -16,7 +16,7 @@ import datetime
 from ic.components import icwidget
 from ic.log import log
 from ic.utils import ic_str
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from . import frequencydict
 
 
@@ -98,9 +98,9 @@ class icFormDataManager(object):
                 if isinstance(ctrl, wx.DatePickerCtrl):
                     # Преобразование типа для wxDatePickerCtrl
                     if isinstance(value, datetime.date):
-                        value = ic_time.pydate2wxdate(value)
+                        value = datetimefunc.pydate2wxdate(value)
                     elif isinstance(value, datetime.datetime):
-                        value = ic_time.pydatetime2wxdatetime(value)
+                        value = datetimefunc.pydatetime2wxdatetime(value)
                 log.info(u'Заполнение данных объекта <%s> методом SetValue.' % ctrl.__class__.__name__)
                 ctrl.SetValue(value)
                 result = True

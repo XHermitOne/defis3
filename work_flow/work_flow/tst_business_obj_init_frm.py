@@ -25,7 +25,7 @@ import wx
 import ic 
 from ic.interfaces import icmanagerinterface
 
-if ic.ic_mode.isDebugMode():
+if ic.modefunc.isDebugMode():
     print('import',__file__)
 
 class tst_business_obj_init_InitFormManager(icmanagerinterface.icWidgetManager):

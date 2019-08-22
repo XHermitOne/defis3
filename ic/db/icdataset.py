@@ -45,7 +45,7 @@ from ic.utils.util import icSpcDefStruct, ic_eval
 from ic.utils import util
 
 from ic.dlg import dlgfunc
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.utils import coderror
 from ic.log import log
 from ic.PropertyEditor import icDefInf
@@ -546,7 +546,7 @@ class icDataLink(icwidget.icSimple):
         self._uuid = component['_uuid']
         
         if not self._uuid:
-            self._uuid = ic_uuid.get_uuid()
+            self._uuid = uuidfunc.get_uuid()
 
         self.resource = self.getResource(component)
         
@@ -627,7 +627,7 @@ class icDataLink(icwidget.icSimple):
         link_expr = component['link_expr']
         self.evalSpace['self'] = self
         ret, val = ic_eval(link_expr, 0, self.evalSpace, 'icDataLink <link_expr>',
-                           compileKey=ic_uuid.get_uuid_attr(self._uuid, 'link_expr'))
+                           compileKey=uuidfunc.get_uuid_attr(self._uuid, 'link_expr'))
         if ret:
             if isinstance(val, dict) and 'name' in val and 'type' in val:
                 res = val
@@ -787,7 +787,7 @@ class icDataLink(icwidget.icSimple):
             
             self.evalSpace['self'] = self
             ret, val = ic_eval(link_expr, 0, self.evalSpace, 'icDataLink <link_expr>',
-                               compileKey=ic_uuid.get_uuid_attr(self._uuid, 'link_expr'))
+                               compileKey=uuidfunc.get_uuid_attr(self._uuid, 'link_expr'))
             
             if ret:
                 if isinstance(val, dict) and 'name' in val and 'type' in val:

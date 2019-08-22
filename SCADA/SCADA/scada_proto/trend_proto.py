@@ -10,7 +10,7 @@
 import datetime
 import wx
 
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -57,7 +57,7 @@ class icTrendProto(object):
             new_dt = datetime.datetime.combine(dt,
                                                datetime.datetime.min.time())
         elif isinstance(dt, wx.DateTime):
-            new_dt = ic_time.wxdatetime2pydatetime(dt)
+            new_dt = datetimefunc.wxdatetime2pydatetime(dt)
         elif dt is None:
             new_dt = datetime.datetime.now()
         elif isinstance(dt, datetime.datetime):
@@ -83,7 +83,7 @@ class icTrendProto(object):
         if isinstance(dt_value, datetime.datetime) or isinstance(dt_value, datetime.date):
             return dt_value.strftime(time_format)
         elif isinstance(dt_value, datetime.timedelta):
-            return ic_time.strfdelta(dt_value, fmt='{H:02}h {M:02}m {S:02}s')
+            return datetimefunc.strfdelta(dt_value, fmt='{H:02}h {M:02}m {S:02}s')
         else:
             log.warning(u'Не поддерживаемый тип временных значений <%s>' % dt_value.__class__.__name__)
         return ''

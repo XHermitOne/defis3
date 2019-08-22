@@ -14,7 +14,7 @@ from ic.components.icfont import *
 from ic.components.icframe import *
 from ic.components.icwidget import icEvent
 from . import icDefInf
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.log import log
 
 scrollBarWidth = 0
@@ -528,7 +528,7 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         icEvent.__init__(self)
         # UUID ресурса
         self._uuidRes = None
-        self._uuid = ic_uuid.get_uuid()
+        self._uuid = uuidfunc.get_uuid()
         
         # Список свойств
         self.NameValues = []
@@ -589,7 +589,7 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Генерирует новый идентификатор ресурса.
         """
-        self._uuidRes = ic_uuid.get_uuid()
+        self._uuidRes = uuidfunc.get_uuid()
         return self._uuidRes
         
     def getPopPropertyLst(self):

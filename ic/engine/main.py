@@ -23,7 +23,7 @@ import sys
 import copy
 
 from ic.engine import glob_functions
-from ic.utils import ic_mode
+from ic.utils import modefunc
 
 __version__ = (0, 1, 1, 2)
 
@@ -45,13 +45,13 @@ def main(args):
     if '-dbg' in args:
         del args[args.index('-dbg')]
         debug = True
-        ic_mode.setDebugMode(debug)
+        modefunc.setDebugMode(debug)
         
     if '-cfg' in args:
         del args[args.index('-cfg')]
         
         # Запуск конфигуратора
-        ic_mode.setRuntimeMode(False)
+        modefunc.setRuntimeMode(False)
 
         prj_path = None
         if args:
@@ -69,7 +69,7 @@ def main(args):
     elif '-run' in args:
         del args[args.index('-run')]
         
-        ic_mode.setRuntimeMode(True)
+        modefunc.setRuntimeMode(True)
         if args:
             prj_path = args[0]
             ic.set_log_prj(prj_path)

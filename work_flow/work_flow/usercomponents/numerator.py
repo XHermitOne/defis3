@@ -31,7 +31,7 @@ import ic.components.icResourceParser as prs
 from ic.bitmap import bmpfunc
 from ic.utils import coderror
 from ic.dlg import dlgfunc
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.PropertyEditor import icDefInf
 
 import work_flow.work_sys.numerator as parentModule
@@ -286,8 +286,8 @@ class icNumerator(icwidget.icSimple,
         @return: Значение года системы.
         """
         if self.getUseSysDT():
-            return ic_time.getNowYear()
+            return datetimefunc.getNowYear()
 
         operate_year = ic.getOperateYear()
         # print 'Operate year', operate_year, type(operate_year)
-        return operate_year if operate_year else ic_time.getNowYear()
+        return operate_year if operate_year else datetimefunc.getNowYear()

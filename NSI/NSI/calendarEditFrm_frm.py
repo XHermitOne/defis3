@@ -20,7 +20,7 @@
 __version__ = (0,0,0,1)
 
 #--- Подключение библиотек ---
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 
 #--- Общие переменные ---
 #Признак изменения справочника
@@ -36,7 +36,7 @@ def onInitDateChoiceCtrl(self,DBCalendar_,FullDateTxtCtrl_):
     date_txt=self.GetStrDate()
     full_date_txt=DBCalendar_.getFullDateTxt(date_txt,'%Y.%m.%d')
     FullDateTxtCtrl_.SetLabel(full_date_txt)
-    year=int(ic_time.convertDateTimeFmt(date_txt,'%Y.%m.%d','%Y'))
+    year=int(datetimefunc.convertDateTimeFmt(date_txt, '%Y.%m.%d', '%Y'))
     DBCalendar_.checkYear(year)
     rec=DBCalendar_.loadData(date_txt,'%Y.%m.%d')
     print('@@@',rec,year)

@@ -8,7 +8,7 @@
 # --- Подключение библиотек ---
 from ic.dlg import dlgfunc
 from ic.dlg import ic_proccess_dlg
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.log import log
 
 from ic.components import iccalendar
@@ -49,26 +49,26 @@ class icDBCalendarPrototype(icsprav.icSpravPrototype):
             log.fatal(u'Ошибка параметров DBCalendar <%s>' % MonthNum_)
             return None
 
-    def getFullDateTxt(self, Date_, Fmt_=ic_time.DEFAULT_DATETIME_FMT):
+    def getFullDateTxt(self, Date_, Fmt_=datetimefunc.DEFAULT_DATETIME_FMT):
         """
         Получить полную дату с указанием дня недели.
         """
-        date_tuple = ic_time.DateTimeTuple(Date_, Fmt_)
+        date_tuple = datetimefunc.DateTimeTuple(Date_, Fmt_)
         if date_tuple:
             day = date_tuple[2]
             month = self.getMonthNameByNum(date_tuple[1])
             year = date_tuple[0]
-            week_day = ic_time.getWeekList()[date_tuple[6]]
+            week_day = datetimefunc.getWeekList()[date_tuple[6]]
             return '%d %s %d года %s' % (day, month, year, week_day)
         return ''
 
-    def loadData(self, Date_, Fmt_=ic_time.DEFAULT_DATETIME_FMT):
+    def loadData(self, Date_, Fmt_=datetimefunc.DEFAULT_DATETIME_FMT):
         """
         Прочитать данные за день.
         @param Date_: День в виде строки.
         @param Fmt_: Формат строки.
         """
-        date_tuple = ic_time.DateTimeTuple(Date_, Fmt_)
+        date_tuple = datetimefunc.DateTimeTuple(Date_, Fmt_)
         year_str = '%04d' % date_tuple[0]
         month_str = '%02d' % (date_tuple[1]+1)
         day_str = '%02d' % (date_tuple[2]+1)
@@ -78,14 +78,14 @@ class icDBCalendarPrototype(icsprav.icSpravPrototype):
             return storage.getRecByCod(cod)
         return None
 
-    def saveData(self, RecDict_, Date_, Fmt_=ic_time.DEFAULT_DATETIME_FMT):
+    def saveData(self, RecDict_, Date_, Fmt_=datetimefunc.DEFAULT_DATETIME_FMT):
         """
         Сохранить данные на день.
         @param RecDict_: Заполненный словарь записи.
         @param Date_: День в виде строки.
         @param Fmt_: Формат строки.
         """
-        date_tuple = ic_time.DateTimeTuple(Date_, Fmt_)
+        date_tuple = datetimefunc.DateTimeTuple(Date_, Fmt_)
         year_str = '%04d' % date_tuple[0]
         month_str = '%02d' % (date_tuple[1] + 1)
         day_str = '%02d' % (date_tuple[2] + 1)
@@ -131,7 +131,7 @@ class icDBCalendarPrototype(icsprav.icSpravPrototype):
         for month in range(12):
             self._genMonthRec(Year_, month+1)
             # Опрделить сколько дней в месяце
-            days = ic_time.getMonthDaysCount(month+1, Year_)
+            days = datetimefunc.getMonthDaysCount(month + 1, Year_)
             for day in range(days):
                 ic_proccess_dlg.setProccessBoxLabel(u'Календарный график на %s год. Месяц: %s' % (str(Year_),
                                                                                                   self.getMonthNameByNum(month+1)),
@@ -180,7 +180,7 @@ class icDBCalendarPrototype(icsprav.icSpravPrototype):
         cod = self.ListCode2StrCode((str(Year_), month_str, day_str))
         name = '%s.%s.%s' % (day_str, month_str, str(Year_))
         # Проверка на нерабочие дни
-        week_day = ic_time.getWeekDay(Day_, Month_, Year_)
+        week_day = datetimefunc.getWeekDay(Day_, Month_, Year_)
         if week_day == 7 or week_day == 6:
             dontWork = 1
         else:

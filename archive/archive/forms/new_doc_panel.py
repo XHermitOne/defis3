@@ -20,8 +20,8 @@ from ic.utils import extfunc
 from ic.utils import ic_str
 from ic.utils import filefunc
 from ic.utils import txtgen
-from ic.utils import ic_time
-from ic.utils import ic_uuid
+from ic.utils import datetimefunc
+from ic.utils import uuidfunc
 from ic.scanner import scanner_manager
 from archive.forms import new_doc_form_proto
 from work_flow.doc_sys import icdocselectdlg
@@ -53,7 +53,7 @@ def gen_scan_filename(doc, file_ext='.pdf'):
         doc_year = doc_date.year
     else:
         doc_year = 'XXXX'
-    doc_uuid = doc.getUUID() if doc.getUUID() else ic_uuid.get_uuid()
+    doc_uuid = doc.getUUID() if doc.getUUID() else uuidfunc.get_uuid()
     scan_filename = '%s.%s.%s.%s%s' % (doc.getRequisiteValue('c_agent'),
                                        doc_year,
                                        doc.getRequisiteValue('doc_type'),
@@ -278,8 +278,8 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         data['file_name'] = self.select_filePicker.GetPath()
         data['n_doc'] = self.ndoc_textCtrl.GetValue()
         data['n_obj'] = self.nobj_textCtrl.GetValue()
-        data['doc_date'] = ic_time.wxdate2pydate(self.doc_datePicker.GetValue())
-        data['obj_date'] = ic_time.wxdate2pydate(self.obj_datePicker.GetValue())
+        data['doc_date'] = datetimefunc.wxdate2pydate(self.doc_datePicker.GetValue())
+        data['obj_date'] = datetimefunc.wxdate2pydate(self.obj_datePicker.GetValue())
         data['doc_name'] = self.docname_textCtrl.GetValue()
         data['doc_type'] = self.doc_type_ctrl.getValue()
         data['c_agent'] = self.contragent_ctrl.getValue()

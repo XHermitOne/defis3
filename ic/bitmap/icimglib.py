@@ -12,7 +12,7 @@ import os.path
 import ic.utils.impfunc
 from ic.log import log
 from ic.utils import util
-from ic.utils import ic_mode
+from ic.utils import modefunc
 from ic.bitmap import icimg2py
 
 __version__ = (0, 1, 1, 2)
@@ -97,7 +97,7 @@ class icImgLibResource:
             self._img_lib_file.close()
             self._img_lib_file = None
 
-            if ic_mode.isDebugMode():
+            if modefunc.isDebugMode():
                 log.info(u'Загрузка библиотеки образов <%s>' % img_lib_filename)
             return self._img_lib_text
         except:

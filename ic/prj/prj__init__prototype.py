@@ -9,7 +9,7 @@ import os
 import os.path
 
 from ic.engine import glob_functions
-from ic.utils import ic_mode
+from ic.utils import modefunc
 from ic.kernel import ic_dot_use
 
 # Версия
@@ -23,7 +23,7 @@ def init_env():
     pth, fl = os.path.split(__file__)
     pth = pth.replace('\\', '/')
     ln = pth.split('/')[-1]
-    ic_mode.setRuntimeMode(False)
+    modefunc.setRuntimeMode(False)
     glob_functions.icEditorLogin(None, None, '-s',
                                  PrjDir_=os.path.join(pth, ln), DEBUG_MODE=False)
 

@@ -24,7 +24,7 @@ __version__ = (0,0,0,1)
 import wx
 import ic 
 
-if ic.ic_mode.isDebugMode():
+if ic.modefunc.isDebugMode():
     print('import',__file__)
     
 def onCancelButtonMouseClick(Context_):

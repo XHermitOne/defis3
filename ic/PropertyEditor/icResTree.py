@@ -19,7 +19,7 @@ import ic.utils.impfunc
 from ic.imglib import common
 from ic import components
 from ic.utils import resource
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.db import icdataset
 from ic.components import icResourceParser
 from ic.components import icwidget
@@ -359,7 +359,7 @@ def findSpcStruct(component):
 
     #   Если уникальный идентификатор не опрделен, то генерируем его
     if '_uuid' in component and not component['_uuid']:
-        component['_uuid'] = ic_uuid.get_uuid()
+        component['_uuid'] = uuidfunc.get_uuid()
 
     return component, spc
 
@@ -2802,14 +2802,14 @@ def init_locale():
     """
     Инициализация локали.
     """
-    from ic.utils import ic_i18n
-    the_locale = wx.Locale(ic_i18n.GetLangId('Russian'))
+    from ic.utils import i18nfunc
+    the_locale = wx.Locale(i18nfunc.GetLangId('Russian'))
 
-    if the_locale.GetCanonicalName() in ic_i18n.GetAvailLocales():
-        the_locale.AddCatalogLookupPathPrefix(ic_i18n.LANG_DIR)
-        r1 = the_locale.AddCatalog(ic_i18n.PROG_NAME)
-        language = gettext.translation(ic_i18n.PROG_NAME,
-                                       ic_i18n.LANG_DIR,
+    if the_locale.GetCanonicalName() in i18nfunc.GetAvailLocales():
+        the_locale.AddCatalogLookupPathPrefix(i18nfunc.LANG_DIR)
+        r1 = the_locale.AddCatalog(i18nfunc.PROG_NAME)
+        language = gettext.translation(i18nfunc.PROG_NAME,
+                                       i18nfunc.LANG_DIR,
                                        [the_locale.GetCanonicalName()],
                                        fallback=True)
         language.install()

@@ -18,7 +18,7 @@ from ic.log import log
 from ic.imglib import common as imglib
 
 from ic.utils import resource
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.utils import coderror
 from ic.dlg import dlgfunc
 from ic.utils import ic_util
@@ -873,7 +873,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             log.info(u'Свойство [%s] значение <%s - \'%s\'>' % (name, value, str_value))
         self._resource[name] = value
         # Синхронизировать ресурс с редактором ресурса
-        resource.RefreshResUUID(self._resource, self.getParentResource(), ic_uuid.get_uuid())
+        resource.RefreshResUUID(self._resource, self.getParentResource(), uuidfunc.get_uuid())
 
     def setReadOnly(self, bEnable=True):
         """

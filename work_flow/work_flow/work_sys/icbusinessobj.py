@@ -29,7 +29,7 @@
 
 # Подключение библиотек
 import ic
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.utils import ic_util
 from ic.log import log
 from ic.interfaces import icdatasetinterface
@@ -930,7 +930,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         Инициализация объекта.
         """
         # Генерация идентификатора документа
-        self.uuid = ic_uuid.get_uuid()
+        self.uuid = uuidfunc.get_uuid()
         # Проинициализировать все дочерние объекты
         self.init_children_data()
         
@@ -1185,7 +1185,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             if 'uuid' in RequisiteData_:
                 obj_uuid = RequisiteData_['uuid']
             else:
-                obj_uuid = ic_uuid.get_uuid()
+                obj_uuid = uuidfunc.get_uuid()
             result = self.add(obj_uuid, RequisiteData_)
             return obj_uuid
         except:

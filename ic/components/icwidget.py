@@ -108,7 +108,7 @@ from . import icEvents
 from ic.utils import graphicUtils
 from ic.utils import resource
 from ic.utils import util
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.log import log
 from . import icEvents
 from ic.dlg import msgbox as msg
@@ -799,7 +799,7 @@ class icSimple(icobject.icObject):
 
         if not self._uuid:
             self._bUuidGen = True
-            self._uuid = ic_uuid.get_uuid()
+            self._uuid = uuidfunc.get_uuid()
         else:
             #   Признак того, что uuid компонента сгенерирован в конструкторе
             self._bUuidGen = False
@@ -1043,7 +1043,7 @@ class icSimple(icobject.icObject):
         """
         Возвращает уникальный иденификатор атрибута компонента.
         """
-        return ic_uuid.get_uuid_attr(self.GetUUID(), *attrs)
+        return uuidfunc.get_uuid_attr(self.GetUUID(), *attrs)
 
     def GetPropertyKey(self, prop):
         """

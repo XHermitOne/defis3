@@ -19,7 +19,7 @@ if cur_sub_sys_import_pth not in sys.path:
 import copy
 
 import ic
-from ic import ic_mode
+from ic import modefunc
 from work_flow.work_sys import icregister
 
 from ic.utils import util
@@ -29,14 +29,14 @@ def testClass():
     """
     Запуск тестов класса простого регистра.
     """
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER CLASS START TEST')
     reg=icregister.icRegisterPrototype()
     reg._db_psp=(('PostgreSQLDB','work_db_psgress',None,'work_db_psgress.src','work_flow'),)
 
     #Проверка создания ресурса таблицы
     tab_res=reg._createTabRes()
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER CLASS TEST CREATE TAB RES:',tab_res)
         if tab_res:
             print('>>> ...OK')
@@ -55,7 +55,7 @@ def testClass():
     #    if edit_frm_res:
     #        print '>>> ...OK'
             
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER CLASS STOP TEST')
 
 def testComponent():
@@ -65,7 +65,7 @@ def testComponent():
     from work_flow.usercomponents import register
     from work_flow.usercomponents import requisite
     
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER COMPONENT START TEST')
     reg_spc=copy.deepcopy(register.ic_class_spc)
     reg_spc['name']='tst_register'
@@ -81,17 +81,17 @@ def testComponent():
     #Создание объекта по спецификации
     reg=register.icRegister(None,-1,reg_spc,evalSpace=None)
     #reg=ic.getKernel().createObjBySpc(None,reg_spc)
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER SPC:',[child['name'] for child in reg_spc['child']])
         print('>>> REGISTER:',reg)
     
     #Проверить получение дочерних реквизитов
     children=reg.getChildrenRequisites()
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER CHILDREN REQUISITES:',children)
     #Проверка создания таблицы
     tab=reg.getTable()
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER TEST CREATE TAB:',tab)
         if tab:
             print('>>> ...OK')
@@ -100,7 +100,7 @@ def testComponent():
     #Синхронизация таблиц
     if tab:
         sync_ok=tab.syncDB()
-        if ic_mode.isDebugMode():
+        if modefunc.isDebugMode():
             print('TABLE',tab.getDBTableName(),'SYNC DB RESULT:',sync_ok)
 
     #Проверка регистрации записей
@@ -109,7 +109,7 @@ def testComponent():
     data['requisite2']='value---2'
     
     result=reg.reg(**data)
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER TEST REG: ...',result)
 
     #Проверка удаления объектов
@@ -119,29 +119,29 @@ def testComponent():
 
     #Проверка очистки
     result=reg.clear()
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER TEST CLEAR: ...',result)
 
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> REGISTER COMPONENT STOP TEST')
 
 def testClassAccumulating():
     """
     Запуск тестов класса накопительного регистра.
     """
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER CLASS START TEST')
     reg=icregister.icRegisterPrototype()
     reg._db_psp=(('PostgreSQLDB','work_db_psgress',None,'work_db_psgress.src','work_flow'),)
 
     #Проверка создания ресурса таблицы
     tab_res=reg._createTabRes()
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER CLASS TEST CREATE TAB RES:',tab_res)
         if tab_res:
             print('>>> ...OK')
             
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER CLASS STOP TEST')
 
 def testComponentAccumulating():
@@ -154,7 +154,7 @@ def testComponentAccumulating():
     from work_flow.usercomponents import reg_group
     from work_flow.usercomponents import reg_sum
     
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER COMPONENT START TEST')
         
     reg_spc=copy.deepcopy(accumulating_register.ic_class_spc)
@@ -184,17 +184,17 @@ def testComponentAccumulating():
     #Создание объекта по спецификации
     reg=accumulating_register.icAccumulatingRegister(None,-1,reg_spc,evalSpace=None)
     #reg=ic.getKernel().createObjBySpc(None,reg_spc)
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER SPC:',[child['name'] for child in reg_spc['child']])
         print('>>> ACCUMULATING REGISTER:',reg)
     
     #Проверить получение дочерних реквизитов
     children=reg.getChildrenRequisites()
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER CHILDREN REQUISITES:',children)
     #Проверка создания таблицы
     tab=reg.getTable()
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER TEST CREATE TAB:',tab)
         if tab:
             print('>>> ...OK')
@@ -203,7 +203,7 @@ def testComponentAccumulating():
     #Синхронизация таблиц
     if tab:
         sync_ok=tab.syncDB()
-        if ic_mode.isDebugMode():
+        if modefunc.isDebugMode():
             print('TABLE',tab.getDBTableName(),'SYNC DB RESULT:',sync_ok)
 
     #Проверка регистрации записей
@@ -216,7 +216,7 @@ def testComponentAccumulating():
     data['sum2']=20
     
     result=reg.reg(**data)
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER TEST REG: ...',result)
 
     #Проверка удаления объектов
@@ -229,10 +229,10 @@ def testComponentAccumulating():
     #if ic_mode.isDebugMode():
     #    print '>>> ACCUMULATING REGISTER TEST CLEAR: ...',result
 
-    if ic_mode.isDebugMode():
+    if modefunc.isDebugMode():
         print('>>> ACCUMULATING REGISTER COMPONENT STOP TEST')
                                 
 if __name__=='__main__':
-    ic_mode.setDebugMode()
+    modefunc.setDebugMode()
     print('>>> START DEBUG MODE')
     testClass()

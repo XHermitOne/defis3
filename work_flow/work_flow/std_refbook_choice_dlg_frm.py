@@ -22,8 +22,8 @@ Resource module </home/xhermit/develop/python_projects_svn_repository/work/defis
 __version__ = (0,0,0,1)
 
 #--- Imports ---
-from ic.utils import ic_mode
-if ic_mode.isDebugMode():
+from ic.utils import modefunc
+if modefunc.isDebugMode():
     print('import',__file__)
 
 import wx

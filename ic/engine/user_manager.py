@@ -26,7 +26,7 @@ import os
 import wx
 import hashlib
 
-from ic.utils import ic_mode
+from ic.utils import modefunc
 
 from ic.utils import util
 
@@ -121,7 +121,7 @@ def getUserRequisit(username):
         описание прав доступа указанного пользователя.
     @return: Функция возвращает реквизиты текущего пользователя.
     """
-    if ic_mode.isRuntimeMode():
+    if modefunc.isRuntimeMode():
         # Режим исполнения
         app = glob_functions.getEngine()
         return app.getUser().getUserRequisit(username)
@@ -141,7 +141,7 @@ def getAuthent(res_name, res_type, bShowMsg=True):
     @return: Возвращает права доступа к ресурсу для текущего пользователя
         в виде 8-символьной строки. Например '----dawr'
     """
-    if ic_mode.isRuntimeMode():
+    if modefunc.isRuntimeMode():
         # Режим исполнения
         app = glob_functions.getEngine()
         return app.getUser().getAuthent(res_name, res_type, bShowMsg)
@@ -170,7 +170,7 @@ def canAuthent(permit, res_name, res_type, bShowMsg=True):
         запрашиваемыми правами доступа, False - ресурс ограничен.
     """
     # ВНИМАНИЕ!!! Проверка осуществляется только в режиме выполнения
-    if ic_mode.isRuntimeMode():
+    if modefunc.isRuntimeMode():
         app = glob_functions.getEngine()
         if app:
             return app.getUser().canAuthent(permit, res_name, res_type, bShowMsg)
@@ -198,7 +198,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         # Реквизиты текущего пользователя:
         self._UserRequisit = {}
         # Режим работы с БД.
-        self._DBMode = ic_mode.DB_SHARE
+        self._DBMode = modefunc.DB_SHARE
         
         self._login_manager = login_manager
 
@@ -409,7 +409,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         Проверка зарегистрированного пользователя.
         @param username: Имя пользователя.
         """
-        if not ic_mode.isRuntimeMode():
+        if not modefunc.isRuntimeMode():
             # Если режим конфигурирования, то обязательно
             # проверять уникальность регистрации
             # чтобы проблем с блокировками не было
@@ -438,7 +438,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         return False
         
     def login_ok(self, username=SYS_ADMIN_NAME, password=None, password_crc=None,
-                 db_mode=ic_mode.DB_SHARE, bRuntimeMode=True):
+                 db_mode=modefunc.DB_SHARE, bRuntimeMode=True):
         """
         Залогинить пользователя.
         @param username: Имя пользователя.
@@ -509,7 +509,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         return crc_password
        
     def Login(self, default_username=SYS_ADMIN_NAME,
-              default_password=None, db_name=ic_mode.DB_SHARE,
+              default_password=None, db_name=modefunc.DB_SHARE,
               bRuntimeMode=True, bAutoLogin=False):
         """
         Сделать заполнение формы логина пользователя и в случае удачного входа в систему загрузить реквизиты пользователя.
@@ -588,7 +588,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         Выполнить при успешном логине.
         """
-        if ic_mode.isRuntimeMode():
+        if modefunc.isRuntimeMode():
             ic_exec.execute_method(exec_code, self)
         
     def logout_ok(self):
@@ -608,14 +608,14 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         logout_result = self.logout_ok()
 
-        ic_mode.setRuntimeMode(False)
+        modefunc.setRuntimeMode(False)
         return logout_result
 
     def _exec_on_logout(self, exec_code):
         """
         Выполнить при успешном логауте.
         """
-        if ic_mode.isRuntimeMode():
+        if modefunc.isRuntimeMode():
             ic_exec.execute_method(exec_code, self)
 
     def getUserRequisit(self, username=''):
@@ -720,7 +720,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         """
         return True
 
-    def canDBMode(self, db_mode=ic_mode.DB_SHARE):
+    def canDBMode(self, db_mode=modefunc.DB_SHARE):
         """
         Можно залогиниться с таким режимом работы с БД?
         @param db_mode: Режим использования БД.
@@ -833,7 +833,7 @@ class icLoginManager(object):
         return True
         
     def Login(self, default_username=SYS_ADMIN_NAME,
-              default_password=None, db_mode=ic_mode.DB_SHARE,
+              default_password=None, db_mode=modefunc.DB_SHARE,
               bRuntimeMode=True, res_filename=None):
         """
         Сделать заполнение формы логина пользователя и в случае удачного входа в систему загрузить реквизиты пользователя.
@@ -845,7 +845,7 @@ class icLoginManager(object):
         @return: Заполненную структуру ввода.
         """
         # Установить режим работы системы
-        ic_mode.setRuntimeMode(bRuntimeMode)
+        modefunc.setRuntimeMode(bRuntimeMode)
         
         # Сначала проверить защиту от копирования
         if not self.CopyDefender():
@@ -880,7 +880,7 @@ class icLoginManager(object):
         dlgfunc.openMsgBox(u'Вход в систему', u'Не зарегестрированная копия. Вход в систему не возможен.')
         return False
     
-    def canDBMode(self, db_mode=ic_mode.DB_SHARE):
+    def canDBMode(self, db_mode=modefunc.DB_SHARE):
         """
         Можно залогиниться с таким режимом работы с БД?
         @param db_mode: Режим использования БД.
@@ -896,15 +896,15 @@ class icLoginManager(object):
             param_names = self._reg_user_journal.getCurrentUserNames()
             if param_names:
                 param = self._reg_user_journal.getCurrentUserStartParam(param_names[0])
-                if param[4] == ic_mode.DB_MONOPOLY:
+                if param[4] == modefunc.DB_MONOPOLY:
                     return False
-                elif param[4] == ic_mode.DB_SHARE:
+                elif param[4] == modefunc.DB_SHARE:
                     return True
         # Если несколько пользователей то смотря какой режим нужен
         elif param_count > 1:
-            if db_mode == ic_mode.DB_MONOPOLY:
+            if db_mode == modefunc.DB_MONOPOLY:
                 return False
-            elif db_mode == ic_mode.DB_SHARE:
+            elif db_mode == modefunc.DB_SHARE:
                 return True
         return False
     
@@ -914,7 +914,7 @@ class icLoginManager(object):
         @param username: Имя пользователя.
         """
         prj_name = glob_functions.getVar('PrjName')
-        return self._reg_user_journal.register(username, prj_name, db_mode, ic_mode.isRuntimeMode())
+        return self._reg_user_journal.register(username, prj_name, db_mode, modefunc.isRuntimeMode())
     
     def getRegUserList(self):
         """

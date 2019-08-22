@@ -12,7 +12,7 @@ import wx
 import datetime
 from ic.utils import util
 from ic.bitmap import bmpfunc
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.components import icwidget
 from STD.queries import filter_choicectrl as parentModule
 from ic.PropertyEditor import icDefInf
@@ -132,7 +132,7 @@ class icFilterChoiceCtrl(icwidget.icWidget,
         psp = self.GetPassport()
         if psp:
             psp = tuple(psp)[0]
-        self._widget_psp_uuid = ic_uuid.get_passport_check_sum(psp, True)
+        self._widget_psp_uuid = uuidfunc.get_passport_check_sum(psp, True)
         return self._widget_psp_uuid
 
     def _canEditFilter(self):

@@ -7,13 +7,13 @@
 
 # --- Подключение пакетов ---
 import wx
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.components import iccalendar
 
 # --- ДИАЛОГОВЫЕ ФУНКЦИИ ----
 
 
-def icCalendarDlg(Parent_=None, DateFmt_=ic_time.DEFAULT_DATETIME_FMT):
+def icCalendarDlg(Parent_=None, DateFmt_=datetimefunc.DEFAULT_DATETIME_FMT):
     """
     Диалоговое окно календаря.
     @param Parent_: Родительское окно.
@@ -32,8 +32,8 @@ def icCalendarDlg(Parent_=None, DateFmt_=ic_time.DEFAULT_DATETIME_FMT):
         dlg = iccalendar.icCalendarDialog(Parent_)
         if dlg.ShowModal() == wx.ID_OK:
             py_date = dlg.getDate()
-            result = ic_time.convertDateTimeFmt(py_date,
-                                                ic_time.DEFAULT_DATETIME_FMT, DateFmt_)
+            result = datetimefunc.convertDateTimeFmt(py_date,
+                                                     datetimefunc.DEFAULT_DATETIME_FMT, DateFmt_)
         else:
             result = ''
     finally:

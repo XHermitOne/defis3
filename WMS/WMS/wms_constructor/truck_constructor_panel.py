@@ -10,7 +10,7 @@ import wx
 import wx.dataview
 
 from ic.log import log
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.dlg import dlgfunc
 from ic.engine import form_manager
 
@@ -94,7 +94,7 @@ class icAddBoxDialog(truck_constructor_panel_proto.icAddBoxDialogProto):
             result['nomenklature'] = dict(label=label, value=nomenklature)
             label = self.row_edit.getSprav().Find(self.row_edit.getValue(), 'name')
             result['row'] = dict(label=label, value=self.row_edit.getValue())
-            result['made_date'] = dict(label=u'Дата розлива:', value=ic_time.wxdate2pydate(self.made_datePicker.GetValue()))
+            result['made_date'] = dict(label=u'Дата розлива:', value=datetimefunc.wxdate2pydate(self.made_datePicker.GetValue()))
             return result
         else:
             log.warning(u'Не заполнена номенклатура продукции')

@@ -41,7 +41,7 @@ except:
 
 from ic.interfaces import icdataclassinterface
 from ic.utils import resource
-from ic.utils import ic_mode
+from ic.utils import modefunc
 from ic.utils import util
 
 from ic.utils import coderror
@@ -195,7 +195,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
 
         self.dataclass = self._createDataClass(Tab_)
         if self.dataclass is not None:
-            if not ic_mode.isRuntimeMode():
+            if not modefunc.isRuntimeMode():
                 # Если в режиме редактирования, то сразу провести
                 # синхронизацию с БД.
                 sync_ok = self.syncDB()
@@ -1276,8 +1276,8 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         @return: Возвращает True/False.
         """
         if BAKTableName_ is None:
-            from ic.utils import ic_time
-            time_name = str(ic_time.genUnicalTimeName())
+            from ic.utils import datetimefunc
+            time_name = str(datetimefunc.genUnicalTimeName())
             BAKTableName_ = self.dataclass.name+'_'+time_name
         return self.copy_to(BAKTableName_)
 

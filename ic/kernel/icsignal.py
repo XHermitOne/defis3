@@ -6,7 +6,7 @@
 Основные идеи:
 """
 
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -47,7 +47,7 @@ class icSignal:
         Функция инициации сигнала.
         """
         #   Генерируем uuid
-        self.uuid = ic_uuid.get_uuid()
+        self.uuid = uuidfunc.get_uuid()
         #   Значение
         self.value = None
         #   Признак дальнейшей обработки сигнала.
@@ -274,7 +274,7 @@ class icSlot:
         @type passport: C{icObjectPassport}
         @param passport: Объект идентификации (паспорт) объекта приемника сигнала.
         """
-        self.uuid = ic_uuid.get_uuid()
+        self.uuid = uuidfunc.get_uuid()
         self.passport = passport
         #   Указатель на объект, к которому прикреплен слот
         self._object = None

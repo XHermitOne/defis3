@@ -7,7 +7,7 @@
 """
 
 # Подключение библиотек
-from ic.utils import ic_mode
+from ic.utils import modefunc
 
 from ic.prj.prj_prototype import nodeReg
 from ic.engine import glob_functions
@@ -57,7 +57,7 @@ class icMetaDotUsePrototype(object):
         """
         Получить объект. Если не зарегистрирован в ядре, то создать его.
         """
-        if ic_mode.isDebugMode():
+        if modefunc.isDebugMode():
             log.debug('GET Object <%s>' % self.passport())
         kernel = glob_functions.getKernel()
         if kernel:

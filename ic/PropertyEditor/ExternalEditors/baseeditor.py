@@ -9,7 +9,7 @@ import os.path
 
 from ic.utils import coderror
 import wx.lib.dialogs
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from . import basefuncs
 from ic.log import log
 
@@ -375,7 +375,7 @@ class icPyScriptEdt(icBaseEdt):
                     # Если текст изменился генерируем новый uuid
                     if old != text:
                         prz = True
-                        uuid_attr = ic_uuid.get_uuid()
+                        uuid_attr = uuidfunc.get_uuid()
             if dlg:
                 dlg.Destroy()
         except:
@@ -650,7 +650,7 @@ class icTextListEdt(icBaseEdt):
                     # Если текст изменился генерируем новый uuid
                     if old != text:
                         prz = True
-                        uuid_attr = ic_uuid.get_uuid()
+                        uuid_attr = uuidfunc.get_uuid()
             if dlg:
                 dlg.Destroy()
         except:
@@ -737,7 +737,7 @@ class icTextDictEdt(icBaseEdt):
                     # Если текст изменился генерируем новый uuid
                     if old != text:
                         prz = True
-                        uuid_attr = ic_uuid.get_uuid()
+                        uuid_attr = uuidfunc.get_uuid()
             if dlg:
                 dlg.Destroy()
         except:

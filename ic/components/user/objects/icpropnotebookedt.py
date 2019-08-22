@@ -14,7 +14,7 @@ import wx.grid as Grid
 import ic.PropertyEditor.icEditorGridRender as icrender
 import ic.dlg.msgbox as msgbox
 import ic.utils.resource as Resource
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.log import log
 
 _ = wx.GetTranslation
@@ -610,7 +610,7 @@ class PropNotebookEdt:
                 if '_uuid' in res:
                     _uuid = res['_uuid']
                 else:
-                    _uuid = ic_uuid.get_uuid()
+                    _uuid = uuidfunc.get_uuid()
             
                 if _val and _val.find('\n') >= 0:
                     cls = icDefInf.GetEditorClass(type)
@@ -622,7 +622,7 @@ class PropNotebookEdt:
                         Resource.RefreshResUUID(res, self.GetPrntResource(), _uuid)
                         ret = _grid.setNameValue('values', val)
                 else:
-                    Resource.RefreshResUUID(res, self.GetPrntResource(), ic_uuid.get_uuid())
+                    Resource.RefreshResUUID(res, self.GetPrntResource(), uuidfunc.get_uuid())
                     _grid.EnableCellEditControl()
 
             self._last_sel = (row, col)
@@ -634,7 +634,7 @@ class PropNotebookEdt:
         Функция помощи на поле значения <hlp>.
         """
         import ic.PropertyEditor.icExternalEditors as edt
-        from ic.utils import ic_uuid
+        from ic.utils import uuidfunc
         import ic.utils.ic_util as ic_util
         attr = grid.GetTable().GetValue(row, 0)
         attr = attr.strip()
@@ -693,7 +693,7 @@ class PropNotebookEdt:
             if '_uuid' in res:
                 _uuid = res['_uuid']
             else:
-                _uuid = ic_uuid.get_uuid()
+                _uuid = uuidfunc.get_uuid()
         
             if type in (icDefInf.EDT_TEXTDICT, icDefInf.EDT_TEXTLIST):
                 _val = ic_util.StructToTxt(eval(_val))

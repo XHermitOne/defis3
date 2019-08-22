@@ -18,7 +18,7 @@ from ic.dlg import std_dlg
 from ic.dlg import dlgfunc
 from ic.dlg import quick_entry_panel
 from ic.utils import ic_str
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 
 from ic.engine import form_manager
 
@@ -402,14 +402,14 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
         Обновить список документов.
         """
         if dt_begin:
-            self.start_datePicker.SetValue(ic_time.pydate2wxdate(dt_begin))
+            self.start_datePicker.SetValue(datetimefunc.pydate2wxdate(dt_begin))
         if dt_end:
-            self.end_datePicker.SetValue(ic_time.pydate2wxdate(dt_end))
+            self.end_datePicker.SetValue(datetimefunc.pydate2wxdate(dt_end))
             
         if dt_begin is None:
-            dt_begin = ic_time.wxdate2pydate(self.start_datePicker.GetValue())
+            dt_begin = datetimefunc.wxdate2pydate(self.start_datePicker.GetValue())
         if dt_end is None:
-            dt_end = ic_time.wxdate2pydate(self.end_datePicker.GetValue())
+            dt_end = datetimefunc.wxdate2pydate(self.end_datePicker.GetValue())
         # if n_warehouse is None:
         #    n_warehouse = self.n_warehouse
         if ext_tag is None:
@@ -784,8 +784,8 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
         """
         Обработчик выбора диапазона дат.
         """
-        start_date = ic_time.wxdate2pydate(event.GetDate())
-        end_date = ic_time.wxdate2pydate(self.end_datePicker.GetValue())
+        start_date = datetimefunc.wxdate2pydate(event.GetDate())
+        end_date = datetimefunc.wxdate2pydate(self.end_datePicker.GetValue())
         
         if start_date > end_date:
             self.end_datePicker.SetValue(event.GetDate())
@@ -797,8 +797,8 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
         """
         Обработчик выбора диапазона дат.
         """
-        start_date = ic_time.wxdate2pydate(self.start_datePicker.GetValue())
-        end_date = ic_time.wxdate2pydate(event.GetDate())
+        start_date = datetimefunc.wxdate2pydate(self.start_datePicker.GetValue())
+        end_date = datetimefunc.wxdate2pydate(event.GetDate())
         
         if start_date > end_date:
             self.start_datePicker.SetValue(event.GetDate())

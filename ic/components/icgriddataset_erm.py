@@ -8,7 +8,7 @@ GridDataset Editor Resource Manager.
 import wx
 from ic.interfaces import icedtresourcemanager
 from ic.utils import util
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 
 _ = wx.GetTranslation
 
@@ -35,7 +35,7 @@ class ERMGridDataset(icedtresourcemanager.IEditorResourceManager):
             util.icSpcDefStruct(icgrid.SPC_IC_CELL, component, True)
             util.icSpcDefStruct(icgrid.SPC_IC_CELLATTR, component['cell_attr'], True)
             util.icSpcDefStruct(icfont.SPC_IC_FONT, component['cell_attr']['font'], True)
-            component['_uuid'] = ic_uuid.get_uuid()
+            component['_uuid'] = uuidfunc.get_uuid()
             res['cols'].append(component)
             wx.MessageBox(_('Editor add default column to GridDataset'))
             

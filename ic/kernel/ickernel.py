@@ -81,8 +81,8 @@ def createKernel():
     """
     Создать ядро.
     """
-    from ic.utils import ic_mode
-    if ic_mode.isRuntimeMode():
+    from ic.utils import modefunc
+    if modefunc.isRuntimeMode():
         return createRuntimeKernel()
     else:
         return createEditorKernel()

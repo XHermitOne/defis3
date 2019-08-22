@@ -10,7 +10,7 @@ import os.path
 import sys
 
 from ic.utils import filefunc
-from ic.utils import ic_mode
+from ic.utils import modefunc
 from ic.utils import impfunc
 from . import icContext
 from ic.log import log
@@ -211,7 +211,7 @@ class icKernelContext(icContext.BaseContext):
         """
         Определить главное окно системы.
         """
-        if ic_mode.isRuntimeMode():
+        if modefunc.isRuntimeMode():
             return self.kernel.getMainWin()
         return None
 

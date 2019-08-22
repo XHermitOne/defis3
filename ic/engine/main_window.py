@@ -46,7 +46,7 @@ from ic.utils import filefunc
 
 from ic.bitmap import ic_color
 from ic.utils import ic_exec
-from ic.utils import ic_mode
+from ic.utils import modefunc
 from ic.utils import ic_util
 from . import icnotebook
 from ic.dlg import splash_window
@@ -627,7 +627,7 @@ class icMainWindow(wx.Frame):
         Обработчик открытия главного окна.
         """
         # Если в режиме редактирования...
-        if not ic_mode.isRuntimeMode():
+        if not modefunc.isRuntimeMode():
             event.Skip()
             return
 
@@ -651,7 +651,7 @@ class icMainWindow(wx.Frame):
         """
         # Если в режиме редактирования,
         # то при закрытии окно не закрывать приложение
-        if not ic_mode.isRuntimeMode():
+        if not modefunc.isRuntimeMode():
             event.Skip()
             return
                         

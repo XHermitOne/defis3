@@ -9,13 +9,13 @@
 # Imports
 import time
 
-from ic.utils import ic_mode
+from ic.utils import modefunc
 
 from ic.utils import lock
 from ic.utils import ic_str
 from ic.utils import util
 from ic.engine import glob_functions
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.log import log
 from ic.dlg import dlgfunc
 
@@ -87,7 +87,7 @@ class icObjPersistentPrototype:
         Проверка корректного значения UUID.
         @return: True/False.
         """
-        return ic_uuid.valid_uuid(UUID)
+        return uuidfunc.valid_uuid(UUID)
 
     def setUUID(self, UUID):
         """
@@ -103,7 +103,7 @@ class icObjPersistentPrototype:
         """
         Генерировать уникальный идентификатор.
         """
-        self.uuid = ic_uuid.get_uuid()
+        self.uuid = uuidfunc.get_uuid()
         return self.uuid
     
     def getDBPsp(self):
@@ -692,7 +692,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     # Взять из таблиц
                     records = child._getData(Filter_={'parent': self.getUUID()})
                     
-                if ic_mode.isDebugMode():
+                if modefunc.isDebugMode():
                     log.info(u'CHILD: <%s> RECORDS: %s' % (child.name, records))
                     
                 data[child.name] = records
@@ -732,7 +732,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     # Взять из таблиц
                     pass
                     
-                if ic_mode.isDebugMode():
+                if modefunc.isDebugMode():
                     log.info(u'CHILD: <%s> RECORDS: %s' % (child.name, records))
                     
                 data[child.name] = records
@@ -776,7 +776,7 @@ class icObjPersistent(icObjPersistentPrototype):
             if tab:
                 return tab.queryAll(Filter_)
             else:
-                if ic_mode.isDebugMode():
+                if modefunc.isDebugMode():
                     log.error(u'Не определена таблица мета-объекта [%s]' % self.name)
         except:
             log.error(u'Ошибка получения отфильтрованных данных объекта [%s]' % self.name)
@@ -944,7 +944,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 transaction.begin()
 
                 # Получить данные объекта в каскадном представлении
-                if ic_mode.isDebugMode():
+                if modefunc.isDebugMode():
                     log.info(u'Meta-object [%s] Delete data: <%s>' % (self.name, UUID_))
                 recs = tab.get_where(tab.c.uuid == UUID_)
 
@@ -994,7 +994,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 # Получить идентификаторы объектов для каскадного удаления
                 records = transaction.query(tab.dataclass.columns.id).all()
                 obj_ids = [rec[0] for rec in records]
-                if ic_mode.isDebugMode():
+                if modefunc.isDebugMode():
                     log.info(u'Meta-object [%s] Clear all data %s' % (self.name, obj_ids))
 
                 result = True

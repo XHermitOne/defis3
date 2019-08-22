@@ -12,7 +12,7 @@ from . import icDefInf
 from ic.components import icfont
 import wx.lib.dialogs
 from . import ic_pyed
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 
 
 class icBaseEdt:
@@ -251,7 +251,7 @@ def PyScriptEdtDlg(parent, attr, text, pos, size, uuid_attr, bEnable=True):
             # Если текст изменился генерируем новый uuid
             if old != text:
                 prz = True
-                uuid_attr = ic_uuid.get_uuid()
+                uuid_attr = uuidfunc.get_uuid()
                             
         # запомнинаем точки останова
         dlg.editor.GetBreakpoints()

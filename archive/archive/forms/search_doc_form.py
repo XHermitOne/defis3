@@ -18,7 +18,7 @@ from ic import bmpfunc
 from ic import log
 from ic import dlgfunc
 import ic
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 
 # Version
 __version__ = (0, 1, 1, 1)
@@ -241,14 +241,14 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
         docname = self.search_crit_panel.docname_textCtrl.GetValue().strip()
         
         wx_date = self.search_crit_panel.start_datePicker.GetValue()
-        docdate_start = ic_time.wxdate2pydate(wx_date) if self.search_crit_panel.date_checkBox.IsChecked() else None
+        docdate_start = datetimefunc.wxdate2pydate(wx_date) if self.search_crit_panel.date_checkBox.IsChecked() else None
         wx_date = self.search_crit_panel.end_datePicker.GetValue()
-        docdate_end = ic_time.wxdate2pydate(wx_date) if self.search_crit_panel.date_checkBox.IsChecked() else None
+        docdate_end = datetimefunc.wxdate2pydate(wx_date) if self.search_crit_panel.date_checkBox.IsChecked() else None
         
         wx_date = self.search_crit_panel.obj_start_datePicker.GetValue()
-        objdate_start = ic_time.wxdate2pydate(wx_date) if self.search_crit_panel.obj_date_checkBox.IsChecked() else None
+        objdate_start = datetimefunc.wxdate2pydate(wx_date) if self.search_crit_panel.obj_date_checkBox.IsChecked() else None
         wx_date = self.search_crit_panel.obj_end_datePicker.GetValue()
-        objdate_end = ic_time.wxdate2pydate(wx_date) if self.search_crit_panel.obj_date_checkBox.IsChecked() else None
+        objdate_end = datetimefunc.wxdate2pydate(wx_date) if self.search_crit_panel.obj_date_checkBox.IsChecked() else None
 
         doctype = self.search_crit_panel.doc_type_ctrl.getValue()
         contragent = self.search_crit_panel.contragent_ctrl.getValue()
@@ -780,12 +780,12 @@ class icChoiceDocsDlg(icSearchDocPanelCtrl,
             elif requisite_name == 'doc_name':
                 self.search_crit_panel.docname_textCtrl.SetValue(requisite_value)
             elif requisite_name == 'doc_date':
-                wx_date = ic_time.pydate2wxdate(requisite_value)
+                wx_date = datetimefunc.pydate2wxdate(requisite_value)
                 self.search_crit_panel.date_checkBox.SetValue(True)
                 self.search_crit_panel.start_datePicker.SetValue(wx_date)
                 self.search_crit_panel.one_date_checkBox.SetValue(True)
             elif requisite_name == 'obj_date':
-                wx_date = ic_time.pydate2wxdate(requisite_value)
+                wx_date = datetimefunc.pydate2wxdate(requisite_value)
                 self.search_crit_panel.obj_date_checkBox.SetValue(True)
                 self.search_crit_panel.obj_start_datePicker.SetValue(wx_date)
                 self.search_crit_panel.obj_one_date_checkBox.SetValue(True)

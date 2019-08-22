@@ -29,7 +29,7 @@ from ic.utils import frequencydict
 from ic.utils import associationdict
 
 from ic.utils import util
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.utils.coderror import *
 from ic.utils import translate
 from ic.utils import lock as ic_lock
@@ -691,7 +691,7 @@ class icGridDatasetData(wx.grid.GridTableBase):
 
         if bRet:
             #   Из буфера берем значения введенных полей
-            keyExpr = ic_uuid.get_uuid_attr(self.GetView().GetUUID(), 'post_init')
+            keyExpr = uuidfunc.get_uuid_attr(self.GetView().GetUUID(), 'post_init')
             bRet = self.GetDataset().addRecord(postAddExpr=self.GetView().post_addrec,
                                                uuid_postAddExpr=keyExpr)
             # ---------------------------------------------

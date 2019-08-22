@@ -11,7 +11,7 @@
 import os
 import os.path
 
-from ic.utils import ic_mode
+from ic.utils import modefunc
 from ic.utils import ini
 from ic.utils import ic_exec
 from ic.engine import glob_functions
@@ -30,7 +30,7 @@ def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
     """
     prj_settings = None
     if glob_functions.getSettings() is None:
-        if ic_mode.isDebugMode():
+        if modefunc.isDebugMode():
             log.info(u'Не определена переменная настроек проекта.')
         prj_dir = glob_functions.getVar('PRJ_DIR')
         prj_name = glob_functions.getVar('PrjName')
@@ -53,7 +53,7 @@ def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
                         log.info(u'Переменная %s переопределена в окружении' % param)
                 else:
                     glob_functions.letVar(param, value)
-        if ic_mode.isDebugMode():
+        if modefunc.isDebugMode():
             glob_functions.printVarStorage()
         return True
     return False

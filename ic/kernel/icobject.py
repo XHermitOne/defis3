@@ -8,7 +8,7 @@
 
 import wx
 
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from . import icContext
 from . import icsignalsrc
 from . import icObjConnection
@@ -260,7 +260,7 @@ class icObject(object):
         #   Уникальный идентификатор объекта описания (ресурса, если он есть)
         self._uuid = None
         #   Уникальный универсальный идентификатор объекта
-        self._uuidObject = ic_uuid.get_uuid()
+        self._uuidObject = uuidfunc.get_uuid()
         #   Описание прав доступа к данному объект
         self._acl = None
         #   Атрибуты, за которыми ведется наблюдение

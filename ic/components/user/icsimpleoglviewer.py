@@ -733,8 +733,8 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
         elif ('name' not in Line_) and \
              ('from' in Line_ and 'to' in Line_):
             return Line_['from'] + '->' + Line_['to']
-        from ic.utils import ic_uuid
-        return ic_uuid.get_uuid()
+        from ic.utils import uuidfunc
+        return uuidfunc.get_uuid()
 
     def addDiagram(self, Diagram_, ReCreate_=False):
         """

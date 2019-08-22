@@ -16,7 +16,7 @@ from ic.log import log
 from ic.utils import smbfunc
 from ic.dlg import dlgfunc
 from ic.log import iclogbrowser
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 
 
 # Version
@@ -262,7 +262,7 @@ class icBalansImportManager(icImportManagerInterface):
         if len(find_uuid) == 1:
             find_uuid = find_uuid[0]
         elif not find_uuid:
-            find_uuid = ic_uuid.get_uuid()
+            find_uuid = uuidfunc.get_uuid()
         else:
             log.warning(u'Найдено несколько документов <%s> <%s> за %s %s' % (doc_type, n_doc, dt_doc, find_uuid))
             # Берем только первую счет фактуру

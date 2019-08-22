@@ -26,7 +26,7 @@ from . import log_browser_proto
 from . import log_file
 from . import log
 
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 
 # Version
 __version__ = (0, 1, 1, 1)
@@ -136,7 +136,7 @@ class icLogBrowserPanelManager:
         if self.filter_panel.start_checkBox.IsChecked():
             wx_date = self.filter_panel.start_datePicker.GetValue()
             wx_time = self.filter_panel.start_timeControl.GetValue()
-            py_date = ic_time.wxdate2pydate(wx_date)
+            py_date = datetimefunc.wxdate2pydate(wx_date)
             # py_time = ic_time.wxdatetime2pydatetime(wx_time)
             py_time = datetime.datetime.strptime(wx_time, TIME_FMT)
             result = py_time.replace(year=py_date.year, month=py_date.month, day=py_date.day)
@@ -151,7 +151,7 @@ class icLogBrowserPanelManager:
         if self.filter_panel.stop_checkBox.IsChecked():
             wx_date = self.filter_panel.stop_datePicker.GetValue()
             wx_time = self.filter_panel.stop_timeControl.GetValue()
-            py_date = ic_time.wxdate2pydate(wx_date)
+            py_date = datetimefunc.wxdate2pydate(wx_date)
             # py_time = ic_time.wxdatetime2pydatetime(wx_time)
             py_time = datetime.datetime.strptime(wx_time, TIME_FMT)
             result = py_time.replace(year=py_date.year, month=py_date.month, day=py_date.day)
@@ -209,7 +209,7 @@ class icLogBrowserPanelManager:
             self.filter_panel.start_datePicker.Enable(dtStartFilter is not None)
             self.filter_panel.start_timeControl.Enable(dtStartFilter is not None)
             self.filter_panel.start_spinBtn.Enable(dtStartFilter is not None)
-            wx_date = ic_time.pydate2wxdate(dtStartFilter)
+            wx_date = datetimefunc.pydate2wxdate(dtStartFilter)
             wx_time_str = dtStartFilter.strftime(TIME_FMT)
             self.filter_panel.start_datePicker.SetValue(wx_date)
             self.filter_panel.start_timeControl.SetValue(wx_time_str)
@@ -217,7 +217,7 @@ class icLogBrowserPanelManager:
             self.filter_panel.stop_datePicker.Enable(dtStopFilter is not None)
             self.filter_panel.stop_timeControl.Enable(dtStopFilter is not None)
             self.filter_panel.stop_spinBtn.Enable(dtStopFilter is not None)
-            wx_date = ic_time.pydate2wxdate(dtStopFilter)
+            wx_date = datetimefunc.pydate2wxdate(dtStopFilter)
             wx_time_str = dtStopFilter.strftime(TIME_FMT)
             self.filter_panel.stop_datePicker.SetValue(wx_date)
             self.filter_panel.stop_timeControl.SetValue(wx_time_str)

@@ -11,7 +11,7 @@ import wx.propgrid
 
 from ic.log import log
 from ic.dlg import dlgfunc
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic import bmpfunc
 from ic.utils import ic_str
 from ic.utils import coderror
@@ -116,11 +116,11 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
                     default_value = 0
             property = wx.propgrid.IntProperty(label=label, name=field['name'], value=default_value)
         elif field['type_val'] == icsqlalchemy.DATE_FIELD_TYPE:
-            py_date = ic_time.strDateFmt2DateTime(default_value)
-            wx_date = ic_time.pydate2wxdate(py_date)
+            py_date = datetimefunc.strDateFmt2DateTime(default_value)
+            wx_date = datetimefunc.pydate2wxdate(py_date)
             property = wx.propgrid.DateProperty(label=label, name=field['name'], value=wx_date)
         elif field['type_val'] == icsqlalchemy.DATETIME_FIELD_TYPE:
-            wx_date = ic_time.pydate2wxdate(default_value)
+            wx_date = datetimefunc.pydate2wxdate(default_value)
             property = wx.propgrid.DateProperty(label=label, name=field['name'], value=wx_date)
         else:
             # Если тип не определен то просто посмотреть в текстовом виде
@@ -210,7 +210,7 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
             value = str_value
         elif property_type == icsqlalchemy.DATETIME_FIELD_TYPE:
             # Дата/время
-            value = ic_time.strDateTimeFmt2DateTime(str_value.strip())
+            value = datetimefunc.strDateTimeFmt2DateTime(str_value.strip())
         else:
             log.warning(u'Не обрабатываемый тип <%s> редактора поля' % property_type)
             value = str_value

@@ -3,7 +3,7 @@
 
 from ic.db import icsqlalchemy
 import sqlalchemy as sql_
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -25,12 +25,12 @@ class SearchManager(object):
         date_min, date_max = None, None
         if min:
             if bConv:
-                date_min = ic_time.strDateFmt2DateTime(min.strip(), '%Y.%m.%d')
+                date_min = datetimefunc.strDateFmt2DateTime(min.strip(), '%Y.%m.%d')
             else:
                 date_min = min
         if max:
             if bConv:
-                date_max = ic_time.strDateFmt2DateTime(max.strip(), '%Y.%m.%d')
+                date_max = datetimefunc.strDateFmt2DateTime(max.strip(), '%Y.%m.%d')
             else:
                 date_max = max
         dq = None        

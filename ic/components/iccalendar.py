@@ -10,7 +10,7 @@ import wx
 
 from ic.dlg.msgbox import MsgBox
 from .icwidget import icWidget
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.log import log
 
 from ic.dlg import calendar_dlg_proto
@@ -61,7 +61,7 @@ class icCalendarDialog(icWidget, calendar_dlg_proto.icCalendarDialogProto):
         Ок.
         """
         wx_date = self.calendar_control.GetDate()
-        py_date = ic_time.wxdate2pydate(wx_date)
+        py_date = datetimefunc.wxdate2pydate(wx_date)
         self.result = py_date
         self.EndModal(wx.ID_OK)
         event.Skip()

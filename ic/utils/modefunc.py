@@ -5,10 +5,9 @@
 Библиотека функций определения режима работы движка.
 """
 
-# --- Подключение пакетов ---
 from ic.kernel.ickernelmode import *
 
-# --- Константы ---
+__version__ = (0, 1, 1, 1)
 
 # Режим работы с БД
 global DB_MODE
@@ -17,8 +16,6 @@ DB_MODE = None
 # Режим работы с БД
 DB_MONOPOLY = '-m'      # Монпольный режим работы с БД
 DB_SHARE = '-s'         # Многопользовательский режим работы с БД
-
-# --- Функции ---
 
 
 def isRuntimeMode():
@@ -29,12 +26,12 @@ def isRuntimeMode():
     return RUNTIME_MODE
 
 
-def setRuntimeMode(RuntimeMode_=True):
+def setRuntimeMode(runtime_mode=True):
     """
     Установить признак режима исполнения.
     """
     global RUNTIME_MODE
-    RUNTIME_MODE = RuntimeMode_
+    RUNTIME_MODE = runtime_mode
 
 
 def getDBMode():
@@ -45,12 +42,12 @@ def getDBMode():
     return DB_MODE
 
 
-def setDBMode(DBMode_=DB_SHARE):
+def setDBMode(db_mode=DB_SHARE):
     """
     Устаонвить режим работы с БД.
     """
     global DB_MODE
-    DB_MODE = DBMode_
+    DB_MODE = db_mode
 
 
 def isDebugMode():
@@ -61,9 +58,9 @@ def isDebugMode():
     return DEBUG_MODE
 
 
-def setDebugMode(DebugMode_=True):
+def setDebugMode(debug_mode=True):
     """
     Установить признак режима отладки.
     """
     global DEBUG_MODE
-    DEBUG_MODE = DebugMode_
+    DEBUG_MODE = debug_mode

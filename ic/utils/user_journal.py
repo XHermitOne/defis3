@@ -14,7 +14,7 @@ import os.path
 from . import filefunc
 from . import lock
 from . import ini
-from . import ic_mode
+from . import modefunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -121,7 +121,7 @@ class icRegUserJournal:
             # Указать в журнале текущего пользователя
             self.setCurUser(UserName_)
 
-            if ic_mode.isDebugMode():
+            if modefunc.isDebugMode():
                 log.info(u'Регистрация пользователя <%s>' % UserName_)
             return result
         except:
@@ -136,11 +136,11 @@ class icRegUserJournal:
             if self._del_reg_user:
                 cur_username = self.getCurUser()
                 if cur_username is None:
-                    if ic_mode.isDebugMode():
+                    if modefunc.isDebugMode():
                         log.warning(u'Не определен текущий пользователь')
                     return False
                 else:
-                    if ic_mode.isDebugMode():
+                    if modefunc.isDebugMode():
                         log.info(u'Снятие регистрации пользовтеля %s.' % cur_username)
                 return ini.delParamINI(self._journal_file_name, 'CURRENT_USERS',
                                        cur_username)

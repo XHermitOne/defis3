@@ -76,7 +76,7 @@ import string
 import time
 from ic.utils import util
 import ic.utils.resource as resource
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 import ic.utils.translate as translate
 
 from ic.utils.coderror import *
@@ -220,7 +220,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает уникальный иденификатор атрибута.
         """
-        return ic_uuid.get_uuid_attr(self.GetUUID(), *attrs)
+        return uuidfunc.get_uuid_attr(self.GetUUID(), *attrs)
 
     def eval_attr(self, attr):
         """
@@ -272,7 +272,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         self._uuid = component['_uuid']
         
         if not self._uuid:
-            self._uuid = ic_uuid.get_uuid()
+            self._uuid = uuidfunc.get_uuid()
         
         self.filter = util.getSpcAttr(component, 'filter', evalSpace)
         

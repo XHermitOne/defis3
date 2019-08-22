@@ -316,7 +316,7 @@ class icMenuItem(wx.MenuItem):
         Обработчик события выбора пункта меню.
         """
         try:
-            if not ic.ic_mode.isRuntimeMode():
+            if not ic.modefunc.isRuntimeMode():
                 # Если режим дизайнера, то ничего не делать
                 return
 

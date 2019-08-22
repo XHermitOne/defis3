@@ -39,7 +39,7 @@ import datetime
 from ic.kernel import icContext
 from ic.dlg import dlgfunc
 from . import coderror
-from . import ic_uuid
+from . import uuidfunc
 from ic.log import log
 import ic
 
@@ -818,7 +818,7 @@ def isAcivateRes(res, evalSpace):
     if 'activate' in res and res['activate'] != '1':
         exprKey = None
         if '_uuid' in res and res['_uuid']:
-            exprKey = ic_uuid.get_uuid_attr(res['_uuid'], 'activate')
+            exprKey = uuidfunc.get_uuid_attr(res['_uuid'], 'activate')
 
         ret, val = ic_eval(res['activate'], 0, evalSpace,
                            'Exception in util.isActivateRes <activate>', compileKey=exprKey)

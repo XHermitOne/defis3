@@ -12,7 +12,7 @@ import wx.gizmos
 import wx.dataview
 
 from ic.log import log
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -202,7 +202,7 @@ class icValidateManager(object):
                 value = ctrl.GetValue()
             elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):
                 wx_dt = ctrl.GetValue()
-                value = ic_time.wxdatetime2pydatetime(wx_dt)
+                value = datetimefunc.wxdatetime2pydatetime(wx_dt)
             elif issubclass(ctrl.__class__, wx.DirPickerCtrl):
                 value = ctrl.GetPath()
             elif issubclass(ctrl.__class__, wx.SpinCtrl):

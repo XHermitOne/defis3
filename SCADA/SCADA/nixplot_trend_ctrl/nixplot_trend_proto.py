@@ -17,7 +17,7 @@ import uuid
 
 from ic.log import log
 from ic.utils import filefunc
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.bitmap import bmpfunc
 
 from ic.components import icwidget
@@ -251,7 +251,7 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
             new_dt = datetime.datetime.combine(dt,
                                                datetime.datetime.min.time())
         elif isinstance(dt, wx.DateTime):
-            new_dt = ic_time.wxdatetime2pydatetime(dt)
+            new_dt = datetimefunc.wxdatetime2pydatetime(dt)
         elif dt is None:
             new_dt = datetime.datetime.now()
         elif isinstance(dt, datetime.datetime):

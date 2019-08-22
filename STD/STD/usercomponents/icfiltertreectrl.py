@@ -11,7 +11,7 @@ import wx
 from ic.bitmap import bmpfunc
 from ic.log import log
 from ic.utils import util
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.utils import coderror
 
 from ic.components import icwidget
@@ -154,7 +154,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
         psp = self.GetPassport()
         if psp:
             psp = tuple(psp)[0]
-        self._widget_psp_uuid = ic_uuid.get_passport_check_sum(psp, True)
+        self._widget_psp_uuid = uuidfunc.get_passport_check_sum(psp, True)
         return self._widget_psp_uuid
 
     def OnChange(self, event):

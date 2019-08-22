@@ -11,7 +11,7 @@ from . import std_dialogs_proto
 try:
     from ic.std.utils import ic_time
 except ImportError:
-    from ic.utils import ic_time
+    from ic.utils import datetimefunc
 
 try:
     from ic.log import log
@@ -39,7 +39,7 @@ class icDateRangeDialog(std_dialogs_proto.dateRangeDialogProto):
 
     def getSelectedDateRangeAsDatetime(self):
         if self._selected_range:
-            return ic_time.wxdate2pydate(self._selected_range[0]), ic_time.wxdate2pydate(self._selected_range[1])
+            return datetimefunc.wxdate2pydate(self._selected_range[0]), datetimefunc.wxdate2pydate(self._selected_range[1])
         return None
 
     def setConcreteDateCheck(self, checked=True):

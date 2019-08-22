@@ -9,10 +9,10 @@
 import time
 import copy
 from ic.components import icwidget
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.utils import resource
 from ic.log import log
-from ic.utils import ic_uuid
+from ic.utils import uuidfunc
 from ic.db import icsqlalchemy
 from ic.db import icdb
 from ic.engine import glob_functions
@@ -573,7 +573,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
             if ('uuid' not in field_data) or (not field_data['uuid']):
                 # Если уникальный идентификатор записи не определен,
                 # тогда сгенерировать его
-                field_data['uuid'] = ic_uuid.get_uuid()
+                field_data['uuid'] = uuidfunc.get_uuid()
                 
             return self._tab.add(type=sprav_type, count=0, **field_data)
         except:
@@ -636,7 +636,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         """
         try:
             buff = kwarg.get('change_buff', None)
-            today = ic_time.TodayFmt()
+            today = datetimefunc.TodayFmt()
             # Перебор по записям таблицы данных
             sprav_type = self.getSpravParent().getName()
             # Старые записи
@@ -714,7 +714,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         @return: Возвращает результат выполнения операции True/False.
         """
         try:
-            today = ic_time.TodayFmt()
+            today = datetimefunc.TodayFmt()
             # Перебор по записям таблицы данных
             sprav_type = self.getSpravParent().getName()
             # Старые записи
@@ -1166,7 +1166,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 if self._tab:
                     if fld_name == 'uuid':
                         # Если uuid не определен, то сгенерировать его
-                        value = ic_uuid.get_uuid()
+                        value = uuidfunc.get_uuid()
                         fld_dict[fld_name] = value
                     else:
                         if self._tab.isFieldDefault(fld_name):
@@ -1247,7 +1247,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 elif field_type == 'DateTime':
                     # Если это дата-время, то ищем точное совпадение, но необходимо
                     # сначала преобразовать строку в дату-время
-                    dt_value = ic_time.strDateFmt2DateTime(search_value)
+                    dt_value = datetimefunc.strDateFmt2DateTime(search_value)
                     sql = self._tab.dataclass.select(field == dt_value)
                 else:
                     log.warning(u'Поиск по полю типа <%s> не поддерживается системой' % field_type)

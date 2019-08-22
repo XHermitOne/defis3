@@ -15,7 +15,7 @@ import uuid
 
 from ic.log import log
 from ic.utils import filefunc
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.bitmap import bmpfunc
 
 from ic.components import icwidget

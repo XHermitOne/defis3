@@ -11,7 +11,7 @@ from . import std_dialogs_proto
 try:
     from ic.std.utils import ic_time
 except ImportError:
-    from ic.utils import ic_time
+    from ic.utils import datetimefunc
 
 __version__ = (0, 0, 1, 2)
 
@@ -33,7 +33,7 @@ class icCalendarDialog(std_dialogs_proto.calendarDialogProto):
         return self._selected_date
 
     def getSelectedDateAsDatetime(self):
-        return ic_time.wxdate2pydate(self._selected_date)
+        return datetimefunc.wxdate2pydate(self._selected_date)
 
     def onCancelButtonClick(self, event):
         self._selected_date = None

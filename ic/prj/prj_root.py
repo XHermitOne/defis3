@@ -22,7 +22,7 @@ from ic.utils import ic_util
 from ic.utils import impfunc
 
 from ic.engine import glob_functions
-import ic.utils.ic_mode as ic_mode
+import ic.utils.modefunc as ic_mode
 
 from . import PrjRes
 from . import menuRootNode

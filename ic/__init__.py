@@ -16,11 +16,11 @@ import ic.utils.impfunc
 from ic.kernel.icexceptions import *
 # from ic.kernel import io_prnt
 
-from ic.utils import ic_mode        # Режимы работы
+from ic.utils import modefunc        # Режимы работы
 from ic.utils import coderror       # Коды ошибок
 from ic.dlg import dlgfunc           # Диалоговые функции
 from ic.bitmap import bmpfunc        # Функции работы с образами
-from ic.utils import ic_time        # Функции работы с датой/временем
+from ic.utils import datetimefunc        # Функции работы с датой/временем
 from ic.utils import ini
 from ic.log import log
 from ic.utils import util
@@ -91,7 +91,7 @@ def Login(user, passw, path, runtime_mode=False):
     @param user: Имя пользователя.
     @param passw: Пароль пользователя.
     @param path: Путь до папки проекта (c:/defis/tutorial/tutorial/)."""
-    ic_mode.setRuntimeMode(runtime_mode)
+    modefunc.setRuntimeMode(runtime_mode)
     set_ini_file(path)
     if not runtime_mode:
         result = icEditorLogin(user, passw, '-s', PrjDir_=path, DEBUG_MODE=False)

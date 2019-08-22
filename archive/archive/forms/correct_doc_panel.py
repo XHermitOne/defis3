@@ -19,7 +19,7 @@ import datetime
 import ic
 from ic.log import log
 from ic.dlg import dlgfunc
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.bitmap import bmpfunc
 from ic.scanner import scanner_manager
 
@@ -70,8 +70,8 @@ class icCorrectFilterDlg(new_doc_form_proto.icCorrectFilterDlgProto):
         wx_begin_date = self.begin_datePicker.GetValue()
         wx_end_date = self.end_datePicker.GetValue()
         
-        self.sql = self.genSQL(begin_date=ic_time.wxdate2pydate(wx_begin_date),
-                               end_date=ic_time.wxdate2pydate(wx_end_date))
+        self.sql = self.genSQL(begin_date=datetimefunc.wxdate2pydate(wx_begin_date),
+                               end_date=datetimefunc.wxdate2pydate(wx_end_date))
         self.sql_textCtrl.SetValue(self.sql)
         
     def init(self):
@@ -346,7 +346,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
         
         self.doc_card_panel.ndoc_textCtrl.SetValue(doc.getRequisiteValue('n_doc'))
         doc_date = doc.getRequisiteValue('doc_date')
-        wx_doc_date = ic_time.pydate2wxdate(doc_date)
+        wx_doc_date = datetimefunc.pydate2wxdate(doc_date)
         self.doc_card_panel.doc_datePicker.SetValue(wx_doc_date)
         self.doc_card_panel.docname_textCtrl.SetValue(doc.getRequisiteValue('doc_name'))
         
@@ -406,7 +406,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
         filename = self.doc_card_panel.select_filePicker.GetPath().strip()
         docnum = self.doc_card_panel.ndoc_textCtrl.GetValue().strip()
         wx_docdate = self.doc_card_panel.doc_datePicker.GetValue()
-        docdate = ic_time.wxdate2pydate(wx_docdate)
+        docdate = datetimefunc.wxdate2pydate(wx_docdate)
         docname = self.doc_card_panel.docname_textCtrl.GetValue().strip()
         doctype = self.doc_card_panel.doc_type_ctrl.getValue()
         contragent = self.doc_card_panel.contragent_ctrl.getValue()

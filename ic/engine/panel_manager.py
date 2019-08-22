@@ -14,7 +14,7 @@ import wx.grid
 import types
 
 from ic.log import log
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 from ic.utils import ic_str
 from ic.utils import key_combins
 from ic.utils import wxfunc
@@ -74,7 +74,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
             ctrl.SetValue(value)
             result = True
         elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):
-            wx_dt = ic_time.pydatetime2wxdatetime(value)
+            wx_dt = datetimefunc.pydatetime2wxdatetime(value)
             ctrl.SetValue(wx_dt)
             result = True
         elif issubclass(ctrl.__class__, wx.DirPickerCtrl):
@@ -442,7 +442,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
             if ctrl.GetExtraStyle() & wx.adv.DP_ALLOWNONE:
                 ctrl.SetValue(None)
             else:
-                wx_date = ic_time.pydate2wxdate(ic_time.Today())
+                wx_date = datetimefunc.pydate2wxdate(datetimefunc.Today())
                 ctrl.SetValue(wx_date)
             result = True
         elif issubclass(ctrl.__class__, wx.DirPickerCtrl):

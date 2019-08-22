@@ -18,7 +18,7 @@ from archive.forms import scheme_doc_form
 from ic import bmpfunc
 from ic import log
 from ic import dlgfunc
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 import ic
 from archive.forms import search_doc_form
 from ic.dlg import ic_printer_dlg
@@ -127,9 +127,9 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         entity=self.search_crit_panel.entity_ctrl.getValue()
 
         wx_date = self.search_crit_panel.start_datePicker.GetValue()
-        docdate_start = ic_time.wxdate2pydate(wx_date).strftime(DB_DATE_FMT) if self.search_crit_panel.date_checkBox.IsChecked() else ''
+        docdate_start = datetimefunc.wxdate2pydate(wx_date).strftime(DB_DATE_FMT) if self.search_crit_panel.date_checkBox.IsChecked() else ''
         wx_date = self.search_crit_panel.end_datePicker.GetValue()
-        docdate_end = ic_time.wxdate2pydate(wx_date).strftime(DB_DATE_FMT) if self.search_crit_panel.date_checkBox.IsChecked() else ''
+        docdate_end = datetimefunc.wxdate2pydate(wx_date).strftime(DB_DATE_FMT) if self.search_crit_panel.date_checkBox.IsChecked() else ''
 
         orderby_idx = self.search_crit_panel.orderby_choice.GetSelection()
 

@@ -13,7 +13,7 @@ import os
 import os.path
 import wx
 
-from ic.utils import ic_mode
+from ic.utils import modefunc
 
 from ic.utils import util
 from ic.utils import filefunc
@@ -203,7 +203,7 @@ class icObjFormGenerator:
         except:
             if res_module:
                 res_module.close()
-            if ic_mode.isDebugMode():
+            if modefunc.isDebugMode():
                 log.fatal(u'Ошибка генерации файла модуля формы %s' % ResModuleFileName_)
             return None
     

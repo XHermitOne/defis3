@@ -15,7 +15,7 @@ from archive.forms import new_doc_panel
 
 import ic
 from ic import log
-from ic import ic_time
+from ic import datetimefunc
 from ic import bmpfunc
 from ic import filefunc
 from ic.dlg import dlgfunc
@@ -223,11 +223,11 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         self.edit_doc_panel.nobj_textCtrl.SetValue(n_obj)
 
         doc_date = self.document.getRequisiteValue('doc_date')
-        wx_doc_date = ic_time.pydate2wxdate(doc_date)
+        wx_doc_date = datetimefunc.pydate2wxdate(doc_date)
         self.edit_doc_panel.doc_datePicker.SetValue(wx_doc_date)
 
         obj_date = self.document.getRequisiteValue('obj_date')
-        wx_obj_date = ic_time.pydate2wxdate(obj_date) if obj_date else wx_doc_date
+        wx_obj_date = datetimefunc.pydate2wxdate(obj_date) if obj_date else wx_doc_date
         self.edit_doc_panel.obj_datePicker.SetValue(wx_obj_date)
 
         self.edit_doc_panel.docname_textCtrl.SetValue(self.document.getRequisiteValue('doc_name'))
@@ -348,9 +348,9 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         docnum = self.edit_doc_panel.ndoc_textCtrl.GetValue().strip()
         n_obj = self.edit_doc_panel.nobj_textCtrl.GetValue().strip()
         wx_docdate = self.edit_doc_panel.doc_datePicker.GetValue()
-        docdate = ic_time.wxdate2pydate(wx_docdate)
+        docdate = datetimefunc.wxdate2pydate(wx_docdate)
         wx_objdate = self.edit_doc_panel.obj_datePicker.GetValue()
-        objdate = ic_time.wxdate2pydate(wx_objdate)
+        objdate = datetimefunc.wxdate2pydate(wx_objdate)
         docname = self.edit_doc_panel.docname_textCtrl.GetValue().strip()
         doctype = self.edit_doc_panel.doc_type_ctrl.getValue()
         contragent = self.edit_doc_panel.contragent_ctrl.getValue()

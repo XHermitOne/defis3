@@ -8,7 +8,7 @@
 import datetime
 import wx
 from . import std_controls_proto
-from ic.utils import ic_time
+from ic.utils import datetimefunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -17,10 +17,10 @@ DEFAULT_MIN_YEAR = datetime.MINYEAR
 DEFAULT_MIN_MONTH = 1
 DEFAULT_MIN_DAY = 1
 
-DEFAULT_DATE_VALUE = ic_time.pydate2wxdate(datetime.datetime(DEFAULT_MIN_YEAR,
-                                           DEFAULT_MIN_MONTH, DEFAULT_MIN_DAY))
+DEFAULT_DATE_VALUE = datetimefunc.pydate2wxdate(datetime.datetime(DEFAULT_MIN_YEAR,
+                                                                  DEFAULT_MIN_MONTH, DEFAULT_MIN_DAY))
 
-TODAY_DATE_VALUE = ic_time.pydate2wxdate(datetime.date.today())
+TODAY_DATE_VALUE = datetimefunc.pydate2wxdate(datetime.date.today())
 
 DEFAULT_TIME_VALUE = dict(hour=0, minute=0, second=0)
 
@@ -158,7 +158,7 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
 
         if date_valid and time_valid:
             # И дата и время введены корректно
-            dt = ic_time.wxdatetime2pydatetime(self._getCtrlWXDateTime())
+            dt = datetimefunc.wxdatetime2pydatetime(self._getCtrlWXDateTime())
         elif not date_valid and time_valid:
             # Дата не корректна а время корректно
             lst_time = self._getCtrlTimeTuple()
@@ -170,7 +170,7 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
                                    second=lst_time[2])
         elif date_valid and not time_valid:
             # Дата корректна а время не корректно
-            dt = ic_time.wxdatetime2pydatetime(self.dateEdit.GetValue())
+            dt = datetimefunc.wxdatetime2pydatetime(self.dateEdit.GetValue())
         return dt
 
     def setDateTime(self, dt):
@@ -195,8 +195,8 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
         """
         assert isinstance(dt, (datetime.datetime, datetime.date))
 
-        wx_date = ic_time.pydate2wxdate(dt)
-        str_time = dt.strftime(ic_time.DEFAULT_TIME_FMT)
+        wx_date = datetimefunc.pydate2wxdate(dt)
+        str_time = dt.strftime(datetimefunc.DEFAULT_TIME_FMT)
         if wx_date.IsValid():
             self.dateEdit.SetValue(wx_date)
         lst_time = str_time.split(':')

@@ -13,13 +13,16 @@
 # --- Подключение библиотек ---
 import wx
 import os
-
-import ic.utils.impfunc
-from ic.log import log
+import sys
+import subprocess
+import locale
 
 from . import ic_util
 from . import filefunc
 from . import util
+
+from ic.utils import impfunc
+from ic.log import log
 
 __version__ = (0, 1, 1, 2)
 
@@ -390,7 +393,7 @@ def execFuncStr(function_str, name_space=None, bReImport=False, *args, **kwargs)
         try:
             try:
                 if bReImport:
-                    ic.utils.impfunc.unloadSource(func_mod)
+                    impfunc.unloadSource(func_mod)
                 import_str = 'import '+func_mod
                 exec(import_str)
             except:
@@ -403,3 +406,92 @@ def execFuncStr(function_str, name_space=None, bReImport=False, *args, **kwargs)
         log.fatal(u'Ошибка в функции ic_exec.execFuncStr, %s' % function_str)
     
     return result
+
+
+def exec_code(code_block='', bReImport=False, name_space=None, kwargs=None):
+    """
+    Выполнить блок кода.
+    @type code_block: C{string}
+    @param code_block: Блок кода.
+        Блок кода - строка в формате:
+            ИмяПакета.ИмяМодуля.ИмяФункции(аргументы).
+    @type bReImport: C{bool}
+    @param bReImport: Переимпортировать модуль функции?
+    @type name_space: C{dictionary}
+    @param name_space: Пространство имен.
+    @type kwargs: C{dictionary}
+    @param kwargs: Дополнительные аргументы функции.
+    """
+    result = None
+
+    # Подготовить пространство имен
+    if name_space is None or not isinstance(name_space, dict):
+        name_space = {}
+
+    # Определяем флаг что блок кода производит вызов функции
+    is_exec_func = '(' in code_block and ')' in code_block
+    # Элементы импорта
+    func_import = code_block.split('(')[0].split('.')
+    # Имя модуля или функции для работы с импортированным объектом
+    func_mod = '.'.join(func_import[:-1])
+
+    if bReImport:
+        impfunc.unloadSource(func_mod)
+
+    # Импортирование модуля
+    if func_mod:
+        import_str = 'import ' + func_mod
+        try:
+            exec(import_str)
+            log.info(u'Импорт функции/модуля <%s>' % import_str)
+        except:
+            log.fatal(u'Ошибка импорта <%s>' % import_str)
+            raise
+
+    # Добавить локальное пространство имен
+    name_space.update(locals())
+
+    if kwargs:
+        if isinstance(kwargs, dict):
+            name_space.update(kwargs)
+        else:
+            log.warning(u'Не поддерживаемый тип <%s> дополнительных аргументов функции <%s>' % (type(kwargs), code_block))
+
+    # Выполнение функции
+    if is_exec_func:
+        try:
+            result = eval(code_block, globals(), name_space)
+        except:
+            log.fatal(u'Ошибка выполнения выражения <%s>' % code_block)
+            raise
+    else:
+        log.warning(u'Не определен вызов функции в блоке кода <%s>' % code_block)
+
+    return result
+
+
+def exec_sys_cmd(command, split_lines=False):
+    """
+    Выполнить системную команду и получить результат ее выполнения.
+    @param command: Системная команда.
+    @param split_lines: Произвести разделение на линии?
+    @return: Если нет разделения по линиям, то возвращается текст который
+        отображается в консоли.
+        При разбитии по линиям возвращается список выводимых строк.
+        В случае ошибки возвращается None.
+    """
+    try:
+        cmd = command.strip().split(' ')
+        console_encoding = locale.getpreferredencoding()
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        if split_lines:
+            b_lines = process.stdout.readlines()
+            lines = [line.decode(console_encoding).strip() for line in b_lines]
+            return lines
+        else:
+            b_text = process.stdout.read()
+            text = b_text.decode(console_encoding)
+            return text
+    except:
+        log.fatal(u'Ошибка выполнения системной команды <%s>' % command)
+    return None
