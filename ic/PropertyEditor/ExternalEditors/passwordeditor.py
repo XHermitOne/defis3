@@ -49,7 +49,7 @@ class icPasswordExternalEdt(passportobj.ic_user_property_editor):
             return coderror.IC_CTRL_OK
         else:
             parent = propEdt.GetPropertyGrid().GetView()
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Введенная информация не является паролем.')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Введенная информация не является паролем.')
             return coderror.IC_CTRL_FAILED
             
         return coderror.IC_CTRL_OK

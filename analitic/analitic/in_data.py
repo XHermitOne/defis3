@@ -32,7 +32,7 @@ def saveInputDataDir():
     """
     Выбрать и сохранить папку входных данных.
     """
-    input_data_dir = ic_dlg.icDirDlg(None, u'Выберите папку входных данных')
+    input_data_dir = ic_dlg.getDirDlg(None, u'Выберите папку входных данных')
     if os.path.isdir(input_data_dir):
         setInputDataDir(input_data_dir)
 

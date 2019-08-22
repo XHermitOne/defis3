@@ -76,10 +76,10 @@ def setKLADRData(sprav_manager, is_progress=False):
     if sprav_manager:
         
         if is_progress:
-            ic_dlg.icOpenProgressDlg(wx.GetApp().GetTopWindow(), 
+            ic_dlg.openProgressDlg(wx.GetApp().GetTopWindow(),
                                      u'Загрузка данных KLADR', 
-                                     u'Загрузка данных о населенных пунктах', 
-                                     0, 100)
+                                     u'Загрузка данных о населенных пунктах',
+                                   0, 100)
         else:
             log.debug('Start set KLADR data')
         
@@ -110,7 +110,7 @@ def setKLADRData(sprav_manager, is_progress=False):
             raise
 
         if is_progress:
-            ic_dlg.icCloseProgressDlg()
+            ic_dlg.closeProgressDlg()
         else:
             log.debug('Stop set KLADR data')
 

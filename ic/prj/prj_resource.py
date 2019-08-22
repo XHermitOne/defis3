@@ -209,8 +209,8 @@ class icPrjResource(prj_node.icPrjNode):
         if spc:
             self.template = copy.deepcopy(spc)
             if not new_name:
-                new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
-                                                 prompt_text=u'Введите наименование ресурса', default_value=self.name)
+                new_name = ic_dlg.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                                  prompt_text=u'Введите наименование ресурса', default_value=self.name)
 
             # У ресурса такое имя как и у ресурса
             self.template['name'] = new_name
@@ -226,8 +226,8 @@ class icPrjResource(prj_node.icPrjNode):
         """
         # Ввести наименование при создании ресурса
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
-                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
+            new_name = ic_dlg.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                              prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -250,7 +250,7 @@ class icPrjResource(prj_node.icPrjNode):
             # Если ресурс/папка с таким именем уже есть в проекте, то
             # не создавать ресурс, а вывести сообщение.
             if self.getRoot().prj_res_manager.isResByNameANDType(res_name, res_ext):
-                ic_dlg.icMsgBox(u'ВНИМАНИЕ!', 
+                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Ресурс/папка <%s.%s> существует в проекте!' % (res_name, res_ext))
                 return None
             # Добавить ресурс в ресурс проекта
@@ -275,7 +275,7 @@ class icPrjResource(prj_node.icPrjNode):
             mod_ext = self.getResFileExt()
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_file):
-                ic_dlg.icMsgBox(u'ВНИМАНИЕ!', 
+                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Модуль <%s> уже существует!' % mod_file)
                 return False
             # Добавить модуль в ресурс проекта
@@ -320,7 +320,7 @@ class icPrjResource(prj_node.icPrjNode):
                 else:
                     lock_rec = ic_res.getLockResRecord(res_name, res_file,
                                                        res_ext, self.getRoot().lock_dir)
-                    ic_dlg.icWarningBox(u'БЛОКИРОВКА',
+                    ic_dlg.openWarningBox(u'БЛОКИРОВКА',
                                         u'Ресурс <%s> заблокирован пользователем <%s> с компьютера <%s>.' % (res_name,
                                                                                                              lock_rec['user'],
                                                                                                              lock_rec['computer']))
@@ -552,16 +552,16 @@ class icPrjTabRes(icPrjResource):
         """
         # Сначал спросить какую Таблицу будем создавать а затем создать ее
         global TableTypeChoice
-        spc = TableTypeChoice[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+        spc = TableTypeChoice[ic_dlg.getSingleChoiceDlg(self.getRoot().getParent(),
                                                        u'ТИПЫ ТАБЛИЦ', u'Выберите из списка типов таблиц:',
-                                                       [txt for txt in TableTypeChoice.keys() if isinstance(txt, str)])]
+                                                        [txt for txt in TableTypeChoice.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
             return False
 
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
-                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
+            new_name = ic_dlg.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                              prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -575,10 +575,10 @@ class icPrjTabRes(icPrjResource):
         """
         Удалить узел. Удалить таблицу из БД тоже.
         """
-        if ic_dlg.icAskDlg(u'ВНИМАНИЕ!', 
+        if ic_dlg.getAskDlg(u'ВНИМАНИЕ!',
                            u'Удалить таблицу из БД?') == wx.YES:
             del_cascade = False
-            if ic_dlg.icAskDlg(u'ВНИМАНИЕ!',
+            if ic_dlg.getAskDlg(u'ВНИМАНИЕ!',
                                u'Удалить дочерние таблицы из БД?') == wx.YES:
                 del_cascade = True
             import ic.db.icsqlalchemy
@@ -599,7 +599,7 @@ class icPrjTabRes(icPrjResource):
         new_name = new_name.lower()
         old_name = old_name.lower()
         if new_name != new_name or old_name != old_name:
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                             u'All table, field and link name must be in lower case')
         return icPrjResource.rename(self, old_name, new_name)
 
@@ -669,15 +669,15 @@ class icPrjDBRes(icPrjResource):
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global DATABASE_TYPE_CHOICE
-        spc = DATABASE_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+        spc = DATABASE_TYPE_CHOICE[ic_dlg.getSingleChoiceDlg(self.getRoot().getParent(),
                                                     u'ТИПЫ БД', u'Выберите из списка типов БД:',
-                                                            [txt for txt in DATABASE_TYPE_CHOICE.keys() if isinstance(txt, str)])]
+                                                             [txt for txt in DATABASE_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
             return False
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
-                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
+            new_name = ic_dlg.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                              prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -692,9 +692,9 @@ class icPrjDBRes(icPrjResource):
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global DATABASE_TYPE_CHOICE
-        self.template = DATABASE_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                                      _('Choose DB'), _('DB list:'),
-                                                                      [txt for txt in DATABASE_TYPE_CHOICE.keys() if isinstance(txt, str)])]
+        self.template = DATABASE_TYPE_CHOICE[ic_dlg.getSingleChoiceDlg(self.getRoot().getParent(),
+                                                                       _('Choose DB'), _('DB list:'),
+                                                                       [txt for txt in DATABASE_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         # Создать
         return icPrjResource.createResClass(self)
 
@@ -706,13 +706,13 @@ class icPrjDBRes(icPrjResource):
         res = self.getMyRes()
         name = list(res.keys())[0]
         spc = res.get(name, dict())
-        yes = ic_dlg.icAskBox(u'Проверка связи с БД', u'Поверить связь с БД <%s : %s>?' % (spc['name'], spc['type']))
+        yes = ic_dlg.openAskBox(u'Проверка связи с БД', u'Поверить связь с БД <%s : %s>?' % (spc['name'], spc['type']))
         if yes:
             from ic.db import icdb
             db_url = icdb.createDBUrl(spc)
             check_connect = icdb.checkDBConnect(db_url)
             msg = u'Связь с БД <%s> успешно установлена' % db_url if check_connect else u'Нет связи с БД <%s>' % db_url
-            ic_dlg.icMsgBox(u'Проверка связи с БД', msg)
+            ic_dlg.openMsgBox(u'Проверка связи с БД', msg)
 
 
 class icPrjSQLiteRes(icPrjResource):
@@ -757,14 +757,14 @@ class icPrjPostgreSQLRes(icPrjResource):
         Дополнительные инструменты узла.
         """
         # Данном случае проверка связи с БД
-        yes = ic_dlg.icAskBox(u'Поверить связь с БД?')
+        yes = ic_dlg.openAskBox(u'Поверить связь с БД?')
         if yes:
             from ic.db import icdb
             res = self.getMyRes()
             db_url = icdb.createDBUrl(res)
             check_connect = icdb.checkDBConnect(db_url)
             msg = u'Связь с БД <%s> успешно установлена' % db_url if check_connect else u'Нет связи с БД <%s>' % db_url
-            ic_dlg.icMsgBox(u'Проверка связи с БД', msg)
+            ic_dlg.openMsgBox(u'Проверка связи с БД', msg)
 
 
 class icPrjFrmRes(icPrjResource):
@@ -834,16 +834,16 @@ class icPrjWinRes(icPrjResource):
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global WINDOW_TYPE_CHOICE
-        spc = WINDOW_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+        spc = WINDOW_TYPE_CHOICE[ic_dlg.getSingleChoiceDlg(self.getRoot().getParent(),
                                                      u'ВИДЫ ГЛАВНОГО ОКНА',
                                                      u'Выберите из списка типов главного окна:',
-                                                          [txt for txt in WINDOW_TYPE_CHOICE.keys() if isinstance(txt, str)])]
+                                                           [txt for txt in WINDOW_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
             return False
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
-                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
+            new_name = ic_dlg.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                              prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -859,10 +859,10 @@ class icPrjWinRes(icPrjResource):
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global WINDOW_TYPE_CHOICE
-        self.template = WINDOW_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                                    _('Choose main window type'),
-                                                                    _('Main window type list:'),
-                                                                    [txt for txt in WINDOW_TYPE_CHOICE.keys() if isinstance(txt, str)])]
+        self.template = WINDOW_TYPE_CHOICE[ic_dlg.getSingleChoiceDlg(self.getRoot().getParent(),
+                                                                     _('Choose main window type'),
+                                                                     _('Main window type list:'),
+                                                                     [txt for txt in WINDOW_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         # Создать
         return icPrjResource.createResClass(self)
 
@@ -900,16 +900,16 @@ class icPrjMenuRes(icPrjResource):
         """
         # Сначал спросить какую меню будем создавать а затем создать ее
         global MENU_TYPE_CHOICE
-        spc = MENU_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
+        spc = MENU_TYPE_CHOICE[ic_dlg.getSingleChoiceDlg(self.getRoot().getParent(),
                                                       u'ВИДЫ ГЛАВНОГО МЕНЮ',
                                                       u'Выберите из списка видов главного меню:',
-                                                        [txt for txt in MENU_TYPE_CHOICE.keys() if isinstance(txt, str)])]
+                                                         [txt for txt in MENU_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
             return False
         if not new_name:
-            new_name = ic_dlg.icTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
-                                             prompt_text=u'Введите наименование ресурса', default_value=self.name)
+            new_name = ic_dlg.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                              prompt_text=u'Введите наименование ресурса', default_value=self.name)
             if new_name is None:
                 # Нажата ОТМЕНА
                 return False
@@ -924,10 +924,10 @@ class icPrjMenuRes(icPrjResource):
         """
         # Сначал спросить какую меню будем создавать а затем создать ее
         global MENU_TYPE_CHOICE
-        self.template = MENU_TYPE_CHOICE[ic_dlg.icSingleChoiceDlg(self.getRoot().getParent(),
-                                                                  _('Choose menu type'),
-                                                                  _('Menu type list:'),
-                                                                  [txt for txt in MENU_TYPE_CHOICE.keys() if isinstance(txt, str)])]
+        self.template = MENU_TYPE_CHOICE[ic_dlg.getSingleChoiceDlg(self.getRoot().getParent(),
+                                                                   _('Choose menu type'),
+                                                                   _('Menu type list:'),
+                                                                   [txt for txt in MENU_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         # Создать
         return icPrjResource.createResClass(self)
 
@@ -1017,9 +1017,9 @@ class icPrjMetaDataRes(icPrjResource):
                 # Генерация имени файла по умолчанию
                 fbp_base_filename = list(res.values())[0]['name'].lower() + '_frm_proto.fbp'
                 # Выбор имени файла проекта
-                fbp_dir = ic_dlg.icDirDlg(self.getPrjTreeCtrl(),
+                fbp_dir = ic_dlg.getDirDlg(self.getPrjTreeCtrl(),
                                           u'Выбор файла папки хранения проекта wxFormBuilder для генерации',
-                                          default_path=self.getPath())
+                                           default_path=self.getPath())
                 if not fbp_dir:
                     # Нажали отмену
                     return
@@ -1051,10 +1051,10 @@ class icPrjMetaDataRes(icPrjResource):
         ext_tools = self._getExtendToolList()
         if ext_tools:
             choices = [tool['label'] for tool in ext_tools]
-            i_select = ic_dlg.icSingleChoiceIdxDlg(self.getPrjTreeCtrl(),
+            i_select = ic_dlg.getSingleChoiceIdxDlg(self.getPrjTreeCtrl(),
                                                    u'Дополнительные инструменты',
                                                    u'Выберите операцию с ресурсом:',
-                                                   choices)
+                                                    choices)
             if i_select >= 0:
                 func = ext_tools[i_select]['function']
                 func()

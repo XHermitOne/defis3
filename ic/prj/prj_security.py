@@ -366,7 +366,7 @@ class icPrjUserPrototype(prj_node.icPrjNode):
                 else:
                     lock_rec = ic_res.getLockResRecord(res_name, res_file,
                                                        res_ext, self.getRoot().lock_dir)
-                    ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+                    ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                                     u'msgid "Resource %s is locked by user %s. Computer: %s."' % (res_name,
                                                                                                   lock_rec['user'],
                                                                                                   lock_rec['computer']))

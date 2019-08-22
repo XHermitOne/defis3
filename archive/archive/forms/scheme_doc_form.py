@@ -79,12 +79,12 @@ class icSchemeDocPanel(scheme_doc_form_proto.icSchemeDocPanelProto,
         if not scan_filename:
             msg = u'Файл скана не определен'
             log.warning(msg)
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', msg, parent=self)
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', msg, parent=self)
             return
         if not os.path.exists(scan_filename):
             msg = u'Файл <%s> не найден' % scan_filename
             log.warning(msg)
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', msg, parent=self)
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', msg, parent=self)
             return
         file_ext = os.path.splitext(scan_filename)[1]
         if file_ext in ('.pdf', '.PDF'):

@@ -166,7 +166,7 @@ class icSpravManagerPrototype(icSpravManagerInterface):
             ParentForm_ = glob_functions.getMainWin()
         spravs = self.getContainer().getAll().values()
         choice_str = [sprav.name+u' - '+sprav.description if sprav.description else u'' for sprav in spravs]
-        idx = ic_dlg.icSingleChoiceIdxDlg(ParentForm_, Title_, MsgTxt_, choice_str)
+        idx = ic_dlg.getSingleChoiceIdxDlg(ParentForm_, Title_, MsgTxt_, choice_str)
         if idx >= 0:
             edit_sprav = spravs[idx]
             log.info(u'Редактирование справочника: %d %s' % (idx, edit_sprav.name))

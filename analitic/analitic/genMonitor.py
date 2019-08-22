@@ -208,7 +208,7 @@ def createMonitor(Name_,Type_,Cod_):
         n1=0,n2=0,n3=0,n4=0,n5=0,
         f1=0.0,f2=0.0,f3=0.0)
         
-    if ic_dlg.icAskDlg('?','Произвести обновление данных'):
+    if ic_dlg.getAskDlg('?', 'Произвести обновление данных'):
         refreshAllView(Type_,Cod_)
 
 def refreshAllView(Type_,Cod_):

@@ -170,7 +170,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if ret[0][0] not in ('Sprav', ):
-                ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выбранный объект не является СПРАВОЧНИКОМ NSI.', parent)
+                ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выбранный объект не является СПРАВОЧНИКОМ NSI.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

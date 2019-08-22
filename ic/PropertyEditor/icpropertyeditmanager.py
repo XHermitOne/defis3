@@ -595,7 +595,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         if name == 'name':
             lst = tree.GetChildNameList(tree.GetSelection())
             if value in lst:
-                ic_dlg.icWarningBox(u'Контроль  значения',
+                ic_dlg.openWarningBox(u'Контроль  значения',
                                     u'Имя <%s> уже существует. Введите другое.' % value)
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             else:
@@ -606,15 +606,15 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             cls = icDefInf.GetEditorClass(typ)
             ret = cls.Ctrl(value, attr=name, propEdt=self)
             if typ is None:
-                ic_dlg.icWarningBox(u'Контроль  значения',
+                ic_dlg.openWarningBox(u'Контроль  значения',
                                     u'Не известный тип атрибута: <%s>' % value)
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret == coderror.IC_CTRL_FAILED:
-                ic_dlg.icWarningBox(u'Контроль  значения',
+                ic_dlg.openWarningBox(u'Контроль  значения',
                                     u'Не корректный тип значения: <%s>. Свойство <%s>' % (value, name))
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret is None:
-                ic_dlg.icWarningBox(u'Контроль  значения',
+                ic_dlg.openWarningBox(u'Контроль  значения',
                                     u'Ошибка записи значения: <%s> Свойство <%s>' % (value, name))
                 ret = coderror.IC_CTRL_FAILED_IGNORE
             elif ret == coderror.IC_CTRL_FAILED_IGNORE:

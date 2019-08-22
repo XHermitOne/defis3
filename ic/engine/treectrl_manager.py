@@ -1047,7 +1047,7 @@ class icTreeCtrlManager(object):
         do_del = True
         if ask:
             label = ctrl.GetItemText(item)
-            do_del = ic_dlg.icAskBox(u'УДАЛЕНИЕ', u'Удалить <%s>' % label)
+            do_del = ic_dlg.openAskBox(u'УДАЛЕНИЕ', u'Удалить <%s>' % label)
 
         if do_del:
             if isinstance(ctrl, wx.TreeCtrl):

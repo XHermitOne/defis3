@@ -200,7 +200,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 # синхронизацию с БД.
                 sync_ok = self.syncDB()
                 if sync_ok:
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ',
+                    ic_dlg.openWarningBox(u'ВНИМАНИЕ',
                                         u'Различие структур таблицы <%s> в описании и БД. В БД создана копия таблицы <%s>. Старая таблица удалена.' % (self.dataclass.name, self.dataclass.name))
 
         # Маппер
@@ -278,7 +278,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     fields_with_id_count = len([fld for fld in TabRes_['child'] if fld.get('activate', True)])+1
                     if len(metadata.tables[tab_name].columns) != fields_with_id_count:
                         log.warning(u'Ошибка создания таблицы <%s>!' % tab_name)
-                        ic_dlg.icWarningBox(u'ВНИМАНИЕ',
+                        ic_dlg.openWarningBox(u'ВНИМАНИЕ',
                                             u'В системе существует таблица <%s> с другой структурой!' % tab_name)
                         assert None, u'Изменена структура таблицы <%s>' % tab_name
                         return None
@@ -306,7 +306,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 log.info(u'Создана таблица <%s>' % tab_name)
             except:
                 log.fatal(u'Ошибка создания объекта таблицы %s' % tab_name)
-                ic_dlg.icErrBox(u'ОШИБКА', u'Create DataClass [%s] Error. Verify db connection parameters!' % tab_name)
+                ic_dlg.openErrBox(u'ОШИБКА', u'Create DataClass [%s] Error. Verify db connection parameters!' % tab_name)
 
         return tab
 

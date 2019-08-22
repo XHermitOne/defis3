@@ -75,7 +75,7 @@ def put_doc_catalog(doc, scan_filename, doRemoveScan=True):
     doc_filename = os.path.join(os.path.dirname(scan_filename), doc_filename)
 
     #if os.path.exists(doc_filename):
-    #    ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Сканированный файл <%s> уже зарегистрирован в БД. Скан не сохраняется' % doc_filename)
+    #    ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Сканированный файл <%s> уже зарегистрирован в БД. Скан не сохраняется' % doc_filename)
     #    return False
 
     filefunc.copyFile(scan_filename, doc_filename)
@@ -114,36 +114,36 @@ class icDocCardPanelManager():
             filename = data['file_name'].strip()
             if not filename:
                 # Если не определен файл документа
-                ic_dlg.icErrBox(u'ОШИБКА',
+                ic_dlg.openErrBox(u'ОШИБКА',
                                 u'Не определен файл регистрируемого документа')
                 return False
             elif not os.path.exists(filename):
                 # Если не существует файл документа
-                ic_dlg.icErrBox(u'ОШИБКА',
+                ic_dlg.openErrBox(u'ОШИБКА',
                                 u'Файл регистрируемого документа <%s> не существует' % filename)
                 return False
             elif not data['doc_name'].strip():
                 # Если не определено имя документа
-                ic_dlg.icErrBox(u'ОШИБКА',
+                ic_dlg.openErrBox(u'ОШИБКА',
                                 u'Имя документа не определено')
                 return False
             elif not data['n_doc'].strip():
                 # Если не определен номер документа
-                ic_dlg.icErrBox(u'ОШИБКА',
+                ic_dlg.openErrBox(u'ОШИБКА',
                                 u'Не определен номер документа')
                 return False
             elif not data.get('doc_type', None):
                 # Если не определен тип документа
                 # То валидация не проходит, т.к. тип документа присутствует в
                 # имени файла скана
-                ic_dlg.icErrBox(u'ОШИБКА',
+                ic_dlg.openErrBox(u'ОШИБКА',
                                 u'Не определен тип документа')
                 return False
             elif not data.get('c_agent', None):
                 # Если не определен контрагент
                 # То валидация не проходит, т.к. контрагент присутствует в
                 # имени файла скана
-                ic_dlg.icErrBox(u'ОШИБКА',
+                ic_dlg.openErrBox(u'ОШИБКА',
                                 u'Не определен контрагент документа')
                 return False
             return True
@@ -310,7 +310,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
         if not os.path.exists(doc_data['file_name']):
             msg = u'Не существует файла скана <%s>. Документ не зарегистрирован' % doc_data['file_name']
             log.warning(msg)
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', msg, parent=self)
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', msg, parent=self)
             return
         else:
             log.debug(u'Регистрация файла <%s>' % doc_data['file_name'])
@@ -407,9 +407,9 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
             self.reg_doc(ctrl_data)
             self.clear_ctrl_data()
 
-            ic_dlg.icMsgBox(u'РЕГИСТРАЦИЯ',
+            ic_dlg.openMsgBox(u'РЕГИСТРАЦИЯ',
                             u'Новый документ <%s> зарегистрирован в БД.' % ctrl_data.get('n_doc', u''))
-            #if not ic_dlg.icAskBox(u'РЕГИСТРАЦИЯ',
+            #if not ic_dlg.openAskBox(u'РЕГИСТРАЦИЯ',
             #                       u'Новый документ <%s> зарегистрирован в БД. Продолжить регистрацию?' % ctrl_data.get('n_doc', u'')):
             #    main_win = ic.getMainWin()
             #    main_win.delPageByTitle(u'Регистрация новых документов')
@@ -429,7 +429,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
 
                 if not self.valid_link(doc_uuid):
                     log.warning(u'Попытка добавления уже существующей связи с документом')
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'))
+                    ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'))
                     continue
 
                 self._link_to_uuids.append(doc_uuid)

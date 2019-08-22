@@ -978,7 +978,7 @@ class icObjPersistent(icObjPersistentPrototype):
         @param ask: Спросить об удалении всех объектов?
         @return: Возвращает результат выполнения операции True/False.
         """
-        is_clear = ic_dlg.icAskBox(u'ВНИМАНИЕ!', u'Удалить все объекты <%s>?' % self.name) if ask else True
+        is_clear = ic_dlg.openAskBox(u'ВНИМАНИЕ!', u'Удалить все объекты <%s>?' % self.name) if ask else True
         if not is_clear:
             # Не разрешео удалять действиями пользвателя
             return False

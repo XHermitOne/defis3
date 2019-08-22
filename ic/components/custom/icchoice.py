@@ -270,7 +270,7 @@ class icChoice(icWidget, wx.Choice):
             err = self.dataset.Lock()
             
             if err in [1, 2] and rec != self._oldLockReck:
-                ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Запись (%d) заблокирована err=%s' % (rec, str(err)), self.parent)
+                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Запись (%d) заблокирована err=%s' % (rec, str(err)), self.parent)
                 self._oldLockReck = rec
 
         self.evalSpace['self'] = self

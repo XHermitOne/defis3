@@ -665,9 +665,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
         if Type_ is None:
             container_meta_components = self.getContainerMetaItems()
             if container_meta_components:
-                Type_ = ic_dlg.icSingleChoiceDlg(None,
+                Type_ = ic_dlg.getSingleChoiceDlg(None,
                                                  u'Возможные типы>', u'Выбирите тип объекта:',
-                                                 list(container_meta_components.keys()))
+                                                  list(container_meta_components.keys()))
             else:
                 log.warning(u'Не опеределены типы мета-объектов')
                 return None
@@ -736,9 +736,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
         if Name_ is None:
             child_meta_objects = self._children
             if child_meta_objects:
-                Name_ = ic_dlg.icSingleChoiceDlg(None,
+                Name_ = ic_dlg.getSingleChoiceDlg(None,
                                                  u'Возможные объекты>', u'Выбирите объект:',
-                                                 child_meta_objects.keys())
+                                                  child_meta_objects.keys())
             else:
                 return False
 

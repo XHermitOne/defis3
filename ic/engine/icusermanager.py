@@ -155,7 +155,7 @@ class icUserManager(object):
         else:
             # Если ресурс заблокировн, то сообщить кем
             lock_rec = rl.get_lock_rec(path)
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                             u'Пользователи в настоящее время редактируются пользователем %s на компьютере %s' % (lock_rec['user'], lock_rec['computer']))
 
     def refreshPrj(self):
@@ -257,10 +257,10 @@ class icUserManager(object):
                 if reg_user_journal and 'CURRENT_USERS' in reg_user_journal:
                     users = [(True, usr) for usr in reg_user_journal['CURRENT_USERS'].keys()]
                     parent_win = glob_functions.getMainWin()
-                    selected_users = ic_dlg.icMultiChoiceDlg(parent_win,
+                    selected_users = ic_dlg.getMultiChoiceDlg(parent_win,
                                                              u'Зарегистрированные пользователи',
                                                              u'Снятие регистрации пользователей',
-                                                             tuple(users))
+                                                              tuple(users))
                     if selected_users:
                         for is_select, usr in selected_users:
                             if not is_select:

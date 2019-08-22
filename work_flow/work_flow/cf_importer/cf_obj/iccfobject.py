@@ -110,7 +110,7 @@ class icCFObject:
         """
         Переопределяемый метод инициализации  построения всех дочерних оъектов.
         """
-        ic_dlg.icUpdateProgressDlg(new_prompt_text=u'Метаобъект: ' + self.getStructUnicodeName())        
+        ic_dlg.updateProgressDlg(new_prompt_text=u'Метаобъект: ' + self.getStructUnicodeName())        
   
     def findByUID(self, uid):
         """

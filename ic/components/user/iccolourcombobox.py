@@ -175,7 +175,7 @@ class icColourComboBox(icwidget.icWidget, wx.ComboCtrl):
         if self.GetValue():
             colour = wx.Colour(*eval(self.GetValue()))
         
-        colour = ic_dlg.icColorDlg(self, u'Выбор цвета', colour)
+        colour = ic_dlg.getColorDlg(self, u'Выбор цвета', colour)
 
         self.SetValue(str(colour))
         self.SetBackgroundColour(colour)

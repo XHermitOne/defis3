@@ -718,7 +718,7 @@ class icDataLink(icwidget.icSimple):
         else:
             # Если ресурсное описание не найдено и выражение изменений не
             #   определено, то сообщаем об этом пльзователю
-            ic_dlg.icWarningBox(u'ОШИБКА', u'Описание объекта <%s> в %s не найдено.' % (res_query, psp_link))
+            ic_dlg.openWarningBox(u'ОШИБКА', u'Описание объекта <%s> в %s не найдено.' % (res_query, psp_link))
 
         return res
 
@@ -769,7 +769,7 @@ class icDataLink(icwidget.icSimple):
                 res['__resource_ext'] = res_ext
                 
             except IOError:
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Ошибка открытия файла %s.' % source)
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Ошибка открытия файла %s.' % source)
                 
         # ---- В ресурсе ищем описание нужного компанента
         #   (<key_in_fileres>:type.name)
@@ -803,8 +803,8 @@ class icDataLink(icwidget.icSimple):
         #   Если ресурсное описание не найдено и выражение изменений не
         #   определено, то сообщаем об этом пльзователю
         else:
-            ic_dlg.icWarningBox(u'ОШИБКА', u'Описание объект \'%s\' в ресурсном файле \'%s\' не найдено.' % (res_query,
-                                                                                                             source))
+            ic_dlg.openWarningBox(u'ОШИБКА', u'Описание объект \'%s\' в ресурсном файле \'%s\' не найдено.' % (res_query,
+                                                                                                               source))
 
         return res
     

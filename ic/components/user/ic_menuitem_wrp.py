@@ -109,7 +109,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Bitmap',):
-                ic_dlg.icWarningBox(u'ОШИБКА',
+                ic_dlg.openWarningBox(u'ОШИБКА',
                                     u'Выбранный объект не является картинкой.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK

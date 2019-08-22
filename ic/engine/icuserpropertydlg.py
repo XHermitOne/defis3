@@ -155,9 +155,9 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
                 else:
                     data['password'] = password1_md5
             else:
-                ic_dlg.icWarningBox(u'ВНИМАНИЕ!',
+                ic_dlg.openWarningBox(u'ВНИМАНИЕ!',
                                     u'Введенный пароль и подтверждение на совпадают. Введите еще раз.',
-                                    parent=self.getDialog())
+                                      parent=self.getDialog())
                 return None
         
         self._data = data

@@ -290,7 +290,7 @@ class icBalansImportManager(icImportManagerInterface):
         try:
             start_dt = datetime.datetime.now()
             result = self._import_docs()
-            if result and ic_dlg.icAskBox(u'Загрузка', u'Загрузка документов завершена. Показать журнал загрузки?'):
+            if result and ic_dlg.openAskBox(u'Загрузка', u'Загрузка документов завершена. Показать журнал загрузки?'):
                 iclogbrowser.show_log_browser_dlg(tLogTypes=('SERVICE',),
                                                   dtStartFilter=start_dt,
                                                   dtStopFilter=datetime.datetime.now())

@@ -274,7 +274,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
                 doc_data = doc.loadRequisiteData(doc_uuid)
                 if not self.valid_link(doc_uuid):
                     log.warning(u'Попытка добавления уже существующей связи с документом')
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'))
+                    ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'))
                     continue
             
                 self._link_to_uuids.append(doc_uuid)

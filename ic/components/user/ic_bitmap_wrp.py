@@ -152,7 +152,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     """
     if attr == 'file_name':
         parent = propEdt
-        img_file_name = ic_dlg.icImageDlg(parent)
+        img_file_name = ic_dlg.getImageDlg(parent)
         return img_file_name
 
 

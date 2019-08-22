@@ -632,8 +632,8 @@ def loadData():
     """
     date_range=loadDataStandart()
     if date_range<>None:
-        if ic_dlg.icAskDlg('Разнос сумм','Были приняты данные с %s по %s. Разнести суммы за данный период?'%(date_range[0],
-            date_range[1]))==wx.YES:
+        if ic_dlg.getAskDlg('Разнос сумм', 'Были приняты данные с %s по %s. Разнести суммы за данный период?' % (date_range[0],
+                                                                                                                 date_range[1]))==wx.YES:
 
             return refreshData(date_range)
 

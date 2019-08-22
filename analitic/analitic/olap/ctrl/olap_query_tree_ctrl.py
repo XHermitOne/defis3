@@ -318,8 +318,8 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
                 cur_item = self.GetSelection()
             if cur_item:
                 cur_label = self.GetItemText(cur_item)
-                label = ic_dlg.icTextEntryDlg(self, u'ПЕРЕИМЕНОВАНИЕ', u'Наименование',
-                                              cur_label)
+                label = ic_dlg.getTextEntryDlg(self, u'ПЕРЕИМЕНОВАНИЕ', u'Наименование',
+                                               cur_label)
 
                 if label:
                     bmp = None
@@ -395,8 +395,8 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             if cur_item is None:
                 cur_item = self.GetSelection()
             if cur_item:
-                label = ic_dlg.icTextEntryDlg(self, u'ДОБАВЛЕНИЕ', u'Наименование',
-                                              DEFAULT_NODE_LABEL)
+                label = ic_dlg.getTextEntryDlg(self, u'ДОБАВЛЕНИЕ', u'Наименование',
+                                               DEFAULT_NODE_LABEL)
 
                 if label:
                     bmp = None

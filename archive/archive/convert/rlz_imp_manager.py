@@ -331,9 +331,9 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             dbf_tab = dbf.icDBFFile()
             dbf_tab.Open(dbf_filename)
 
-            ic_dlg.icOpenProgressDlg(ic.getMainWin(),
+            ic_dlg.openProgressDlg(ic.getMainWin(),
                                      u'Пакетная обработка', u'Импорт данных',
-                                     max_value=dbf_tab.getRecCount())
+                                   max_value=dbf_tab.getRecCount())
             i = 0
             # i_code = 0
             record = dbf_tab.getRecDict()
@@ -360,13 +360,13 @@ class icRealizImportManager(import_manager.icBalansImportManager):
 
                 i += 1
                 if n_doc:
-                    ic_dlg.icUpdateProgressDlg(i, u'Загружены данные документа № <%s>' % n_doc)
+                    ic_dlg.updateProgressDlg(i, u'Загружены данные документа № <%s>' % n_doc)
 
             dbf_tab.Close()
             dbf_tab = None
 
-            ic_dlg.icUpdateProgressDlg(i, u'')
-            ic_dlg.icCloseProgressDlg()
+            ic_dlg.updateProgressDlg(i, u'')
+            ic_dlg.closeProgressDlg()
 
             # Подтвердить транзакцию
             transaction.commit()
@@ -374,7 +374,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             # Отменить транзакцию
             transaction.rollback()
             
-            ic_dlg.icCloseProgressDlg()
+            ic_dlg.closeProgressDlg()
             if dbf_tab:
                 dbf_tab.Close()
                 dbf_tab = None
@@ -414,9 +414,9 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             dbf_tab = dbf.icDBFFile()
             dbf_tab.Open(dbf_filename)
 
-            ic_dlg.icOpenProgressDlg(ic.getMainWin(),
+            ic_dlg.openProgressDlg(ic.getMainWin(),
                                      u'Пакетная обработка', u'Импорт данных',
-                                     max_value=dbf_tab.getRecCount())
+                                   max_value=dbf_tab.getRecCount())
             i = 0
             # i_code = 0
             record = dbf_tab.getRecDict()
@@ -428,7 +428,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                 if new_recs:
                     for new_rec in new_recs:
                         tab.add_rec_transact(rec=new_rec, transaction=transaction)
-                        ic_dlg.icUpdateProgressDlg(i, u'Загружены данные документа № <%s>' % new_rec['n_doc'])
+                        ic_dlg.updateProgressDlg(i, u'Загружены данные документа № <%s>' % new_rec['n_doc'])
 
                 dbf_tab.Next()
                 record = dbf_tab.getRecDict()
@@ -438,8 +438,8 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             dbf_tab.Close()
             dbf_tab = None
 
-            ic_dlg.icUpdateProgressDlg(i, u'')
-            ic_dlg.icCloseProgressDlg()
+            ic_dlg.updateProgressDlg(i, u'')
+            ic_dlg.closeProgressDlg()
 
             # Подтвердить транзакцию
             transaction.commit()
@@ -447,7 +447,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
             # Отменить транзакцию
             transaction.rollback()
 
-            ic_dlg.icCloseProgressDlg()
+            ic_dlg.closeProgressDlg()
             if dbf_tab:
                 dbf_tab.Close()
                 dbf_tab = None

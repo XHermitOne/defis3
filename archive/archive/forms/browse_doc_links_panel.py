@@ -52,7 +52,7 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
             else:
                 log.warning(u'Нет прикрепленных данных к элементу дерева')
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ', 
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ',
                                 u'Выберите документ для редактирования')
         event.Skip()
 
@@ -70,7 +70,7 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
             else:
                 log.warning(u'Нет прикрепленных данных к элементу дерева')
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ', 
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ',
                                 u'Выберите документ для просмотра')
         event.Skip()
 

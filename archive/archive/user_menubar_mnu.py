@@ -114,7 +114,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
         log.debug(u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_of_month), str(last_day)))
         tab.del_where(tab.c.doc_date.between(first_day_of_month, last_day))
 
-        ic_dlg.icMsgBox(u'УДАЛЕНИЕ', msg+u' успешно завершено')
+        ic_dlg.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
         event.Skip()
 
     def onClearZtrDocsMenuItemSelected(self, event):
@@ -148,7 +148,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
                                       tab.c.n_doc.ilike(u'ЗТР.%')))
 
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
-        ic_dlg.icMsgBox(u'УДАЛЕНИЕ', msg+u' успешно завершено')
+        ic_dlg.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
         event.Skip()
 
     def onClearMtDocsMenuItemSelected(self, event):
@@ -184,7 +184,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
                                       tab.c.n_doc.ilike(u'МТ.%')))
 
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
-        ic_dlg.icMsgBox(u'УДАЛЕНИЕ', msg+u' успешно завершено')
+        ic_dlg.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
         event.Skip()
 
     def onClearOsDocsMenuItemSelected(self, event):
@@ -221,7 +221,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
                                       tab.c.n_doc.ilike(u'ОС.%')))
 
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
-        ic_dlg.icMsgBox(u'УДАЛЕНИЕ', msg+u' успешно завершено')
+        ic_dlg.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
         event.Skip()
 
     def onPackDocMenuItemSelected(self, event):

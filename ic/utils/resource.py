@@ -402,7 +402,7 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
         else:
             log.warning(sp_f + (_('icGetRes: resource file <%s> is not found.') % fileRes))
 
-    ic_dlg.icWarningBox(u'ОШИБКА', u'icGetRes: Компонент <%s> не найден в ресурсном файле.' % className)
+    ic_dlg.openWarningBox(u'ОШИБКА', u'icGetRes: Компонент <%s> не найден в ресурсном файле.' % className)
     return None
 
 

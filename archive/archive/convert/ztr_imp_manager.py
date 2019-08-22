@@ -212,9 +212,9 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
             dbf_tab = dbf.icDBFFile()
             dbf_tab.Open(dbf_filename)
             
-            ic_dlg.icOpenProgressDlg(ic.getMainWin(),
+            ic_dlg.openProgressDlg(ic.getMainWin(),
                                      u'Пакетная обработка', u'Импорт данных',
-                                     max_value=dbf_tab.getRecCount())
+                                   max_value=dbf_tab.getRecCount())
             i = 0
             record = dbf_tab.getRecDict()
             while not dbf_tab.EOF():                
@@ -268,13 +268,13 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
                 
                 i += 1
                 if n_doc:
-                    ic_dlg.icUpdateProgressDlg(i, u'Загружены данные документа № <%s>' % n_doc)
+                    ic_dlg.updateProgressDlg(i, u'Загружены данные документа № <%s>' % n_doc)
 
             dbf_tab.Close()
             dbf_tab = None
             
-            ic_dlg.icUpdateProgressDlg(i, u'')
-            ic_dlg.icCloseProgressDlg()
+            ic_dlg.updateProgressDlg(i, u'')
+            ic_dlg.closeProgressDlg()
 
             # Подтвердить транзакцию
             transaction.commit()
@@ -282,7 +282,7 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
             # Отменить транзакцию
             transaction.rollback()
             
-            ic_dlg.icCloseProgressDlg()
+            ic_dlg.closeProgressDlg()
             if dbf_tab:
                 dbf_tab.Close()
                 dbf_tab = None

@@ -298,12 +298,12 @@ class icScanDocumentManager(icmanagerinterface.icWidgetManager):
         if not scan_filename:
             msg = u'Файл скана не определен'
             log.warning(msg)
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', msg)
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', msg)
             return
         if not os.path.exists(scan_filename):
             msg = u'Файл <%s> не найден для просмотра' % scan_filename
             log.warning(msg)
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', msg)
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', msg)
             return
 
         doc_file_ext = os.path.splitext(scan_filename)[1].lower()
@@ -372,7 +372,7 @@ class icScanDocumentManager(icmanagerinterface.icWidgetManager):
             if do_set:
                 doc.setRequisiteValue('scan_doc_to', to_docs)
         if do_save:
-            ask_ok = ic_dlg.icAskBox(u'ВНИМАНИЕ!', 
+            ask_ok = ic_dlg.openAskBox(u'ВНИМАНИЕ!',
                                      u'Найдены и удалены не существующие ссылки документа. Произвести сохранение изменений?')
             if ask_ok:
                 doc.update_obj(scan_doc_from=from_docs, scan_doc_to=to_docs)

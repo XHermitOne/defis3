@@ -43,7 +43,7 @@ class icMainWinManager(icmanagerinterface.icWidgetManager):
         """
         Закрытие главногое окна.
         """
-        result = ic_dlg.icAskBox(u'ВЫХОД', u'Закрыть приложение?')
+        result = ic_dlg.openAskBox(u'ВЫХОД', u'Закрыть приложение?')
         if event:
             event.Skip()
         return result
@@ -54,7 +54,7 @@ class icMainWinManager(icmanagerinterface.icWidgetManager):
         """
         # Проверка наличия уже запущенной копии программы
         if system.getActiveProcessCount('archivarius') > 1:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Уже запущена одна копия программы')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Уже запущена одна копия программы')
             ic.closeAppForce()
             return
             
@@ -63,7 +63,7 @@ class icMainWinManager(icmanagerinterface.icWidgetManager):
         if not valid_catalog.validZipDocCatalog():
             zipdoc_dir = ic.settings.archive.SETTINGS.zipdoc_dir.get()
             msg = u'Не подключен каталог документов <%s>. Дальнейшая работа не возможна' % zipdoc_dir
-            ic_dlg.icErrBox(u'ОШИБКА', msg)
+            ic_dlg.openErrBox(u'ОШИБКА', msg)
             ic.closeAppForce()
             return
         else:

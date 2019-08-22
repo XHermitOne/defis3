@@ -290,7 +290,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarPrototype):
         """
         choice_form = self.getICAttr('choice_form')
         if choice_form is None:
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                             u'В справочнике %s не определена форма выбора.' % self.name)
         return choice_form
 
@@ -300,7 +300,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarPrototype):
         """
         edit_form = self.getICAttr('edit_form')
         if edit_form is None:
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                             u'В справочнике %s не определена форма редактирования.' % self.name)
         return edit_form
         

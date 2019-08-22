@@ -139,7 +139,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
             mod_name = node.getModuleName()
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_name):
-                ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Модуль <%s> уже существует!' % mod_name)
                 return False
             # Добавить модуль в ресурс проекта

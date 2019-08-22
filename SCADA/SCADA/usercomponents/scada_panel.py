@@ -103,7 +103,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('ScanClass',):
-                ic_dlg.icWarningBox(u'ОШИБКА',
+                ic_dlg.openWarningBox(u'ОШИБКА',
                                     u'Выбранный объект не является КЛАССОМ СКАНИРОВАНИЯ.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
@@ -114,7 +114,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             first_menubar_type = ret[0][0][0]
             for cur_psp in ret:
                 if not cur_psp[0][0] in ('SCADAEngine',):
-                    ic_dlg.icWarningBox(u'ОШИБКА',
+                    ic_dlg.openWarningBox(u'ОШИБКА',
                                         u'Выбранный объект [%s] не является ДВИЖКОМ SCADA СИСТЕМЫ.' % cur_psp)
                     return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK

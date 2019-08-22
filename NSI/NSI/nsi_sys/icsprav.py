@@ -217,9 +217,9 @@ class icSpravInterface:
                 log.fatal(u'Ошибка создания SQL хранилища справочника <%s>' % self.getName())
 
         if ShowMsg_ and not self._storage:
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!', u'Не определено хранилище справочника: %s БД: %s Таблица: %s' % (self.getName(),
-                                                                                                           db_name,
-                                                                                                           self.getTableName()))
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Не определено хранилище справочника: %s БД: %s Таблица: %s' % (self.getName(),
+                                                                                                             db_name,
+                                                                                                             self.getTableName()))
         return self._storage
 
     def getDBName(self):
@@ -308,7 +308,7 @@ class icSpravInterface:
         storage = self.getStorage()
         if storage:
             if Ask_:
-                if ic_dlg.icAskBox(u'ВНИМАНИЕ!',
+                if ic_dlg.openAskBox(u'ВНИМАНИЕ!',
                                    u'Очистить справочник <%s> от всех данных?' % self.getName()):
                     return storage.clear()
             else:
@@ -465,7 +465,7 @@ class icSpravPrototype(icSpravInterface):
             level_len = self.getLevels()[x_level].getCodLen()
 
             if level_len is None:
-                ic_dlg.icMsgBox(u'ОШИБКА', u'Не определена длина кода уровня!')
+                ic_dlg.openMsgBox(u'ОШИБКА', u'Не определена длина кода уровня!')
                 return IC_HLP_FAILED_LEVEL, res_val
 
             result = IC_HLP_FAILED
@@ -492,7 +492,7 @@ class icSpravPrototype(icSpravInterface):
                 return IC_HLP_FAILED_IGNORE, code, None
 
             # if form is None:
-            #     ic_dlg.icMsgBox(u'ОШИБКА', u'Не определена форма выбора кода!')
+            #     ic_dlg.openMsgBox(u'ОШИБКА', u'Не определена форма выбора кода!')
             #     return False
 
             # Вывести окно и возвратить выбранный код
@@ -642,7 +642,7 @@ class icSpravPrototype(icSpravInterface):
             level_len = self.getLevels()[x_level].getCodLen()
 
             if level_len is None:
-                ic_dlg.icMsgBox(u'ОШИБКА', u'Не определена длина кода уровня!')
+                ic_dlg.openMsgBox(u'ОШИБКА', u'Не определена длина кода уровня!')
                 return False
 
             parent_len = len(parent_code_str)
@@ -661,7 +661,7 @@ class icSpravPrototype(icSpravInterface):
                 return icspraveditdlg.edit_sprav_dlg(parent=parent,
                                                      nsi_sprav=self)
             # if form is None:
-            #     ic_dlg.icMsgBox(u'ОШИБКА', u'Не определена форма редактирования уровня!')
+            #     ic_dlg.openMsgBox(u'ОШИБКА', u'Не определена форма редактирования уровня!')
             #     return False
 
             sql = '''SELECT id FROM %s

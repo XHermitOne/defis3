@@ -313,7 +313,7 @@ class SpravTreeList(icwidget.icWidget,
         Создает дерево со структрурой заданного иерархического справочника.
         """
         if not self.getTypeSprav():
-            ic_dlg.icWarningBox(u'ОШИБКА', u'Не указан тип справочника <typeSprav>')
+            ic_dlg.openWarningBox(u'ОШИБКА', u'Не указан тип справочника <typeSprav>')
             return False
         
         #   Получаем ссылку на класс данных

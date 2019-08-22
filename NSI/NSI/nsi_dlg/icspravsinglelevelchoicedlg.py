@@ -47,7 +47,7 @@ def select_single_level_choice_dlg(parent=None, sprav=None, n_level=0, parent_co
         records = [sprav_storage.record_tuple2record_dict(rec) for rec in level_table]
         choices = [rec.get('name', u'-')for rec in records]
 
-        select_idx = ic_dlg.icSingleChoiceIdxDlg(parent, sprav.getDescription(), level.getDescription(), choices)
+        select_idx = ic_dlg.getSingleChoiceIdxDlg(parent, sprav.getDescription(), level.getDescription(), choices)
         if select_idx >= 0:
             selected_code = records[select_idx].get(sprav_storage.getCodeFieldName(), None)
         return selected_code

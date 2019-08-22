@@ -119,7 +119,7 @@ class icMetaTreeListCtrlProto(wx.gizmos.TreeListCtrl,
             else:
                 msg = u'Не определено хранилище данных метадерева <%s>' % metatree.name
                 log.warning(msg)
-                ic_dlg.icWarningBox(u'ОШИБКА', msg)
+                ic_dlg.openWarningBox(u'ОШИБКА', msg)
         except:
             log.fatal(u'Ошибка построения метадерева <%s> в контроле <%s>' % (metatree.name, self.name))
         return False

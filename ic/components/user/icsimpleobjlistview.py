@@ -140,7 +140,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt
             if not ret[0][0] in ('Document', 'StateObj', 'BusinessObj',
                                  'Table', 'GridDataset', 'Recordset', 'Query'):
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является ИСТОЧНИКОМ ДАННЫХ.', parent)
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является ИСТОЧНИКОМ ДАННЫХ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     return coderror.IC_CTRL_OK

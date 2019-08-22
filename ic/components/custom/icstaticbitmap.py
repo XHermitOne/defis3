@@ -190,7 +190,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
                 err = self.dataset.Lock()
             
                 if err in [1, 2]:
-                    ic_dlg.icWarningBox(u'ОШИБКА', u'Запись заблокирована err=%s' % str(err))
+                    ic_dlg.openWarningBox(u'ОШИБКА', u'Запись заблокирована err=%s' % str(err))
             except:
                 pass
 

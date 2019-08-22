@@ -101,14 +101,14 @@ class icPrjXRCResource(prj_node.icPrjNode):
         """
         # В данном случае запуск генерации модуля форм
         xrc_filename = self.getPath()
-        yes = ic_dlg.icAskBox(u'Генерация Python модуля', u'Сгенерировать Python модуль из XRC файла <%s>?' % xrc_filename)
+        yes = ic_dlg.openAskBox(u'Генерация Python модуля', u'Сгенерировать Python модуль из XRC файла <%s>?' % xrc_filename)
         if yes:
             py_filename = os.path.join(os.path.dirname(xrc_filename),
                                        os.path.basename(xrc_filename).replace('.', '_')+'.py')
             cmd = 'pywxrc --python --output %s %s' % (py_filename, xrc_filename)
             ic_exec.doSysCmd(cmd)
             msg = u'Сгенерирован файл <%s>' % py_filename
-            ic_dlg.icMsgBox(u'Генерация Python модуля', msg)
+            ic_dlg.openMsgBox(u'Генерация Python модуля', msg)
 
             # Переоткрыть проект
             prj_root = self.getRoot()

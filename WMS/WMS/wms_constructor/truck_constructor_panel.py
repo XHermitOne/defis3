@@ -428,7 +428,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
 
         if selected_idx == wx.NOT_FOUND:
             log.warning(u'Не выбран ящик/паллет')
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Необходимо выбрать позицию для перемещения!')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Необходимо выбрать позицию для перемещения!')
             event.Skip()
             return
 
@@ -457,7 +457,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
 
         if selected_idx == wx.NOT_FOUND:
             log.warning(u'Не выбран ящик/паллет')
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Необходимо выбрать позицию для перемещения!')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Необходимо выбрать позицию для перемещения!')
             event.Skip()
             return
 

@@ -141,7 +141,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
             dlg.Destroy()
             return value
         else:
-            ic_dlg.icWarningBox(u'ОШИБКА', u'Типы сообщений в библиотеке <%s> не определены' % lib)
+            ic_dlg.openWarningBox(u'ОШИБКА', u'Типы сообщений в библиотеке <%s> не определены' % lib)
 
 
 def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):

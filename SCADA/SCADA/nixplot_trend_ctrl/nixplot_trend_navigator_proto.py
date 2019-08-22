@@ -179,7 +179,7 @@ class icNixplotTrendNavigatorProto(nixplot_trend_navigator_panel_proto.icNixPlot
         """
         Обработчик кнопки дополнительных настроек тренда.
         """
-        ic_dlg.icWarningBox(u'НАСТРОЙКИ', u'Эта функция пока не реализована')
+        ic_dlg.openWarningBox(u'НАСТРОЙКИ', u'Эта функция пока не реализована')
         event.Skip()
 
     def onUpButtonClick(self, event):

@@ -760,7 +760,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                         self.selectItem_list_ctrl(self.getSlaveListCtrl(), item_idx=idx)
                     return idx
         # Ничего не найдено
-        if ic_dlg.icAskBox(u'ПОИСК', u'Документ не найден в списке. Начать поиск с начала?'):
+        if ic_dlg.openAskBox(u'ПОИСК', u'Документ не найден в списке. Начать поиск с начала?'):
             return self.findDoc(requisite, value, fromIndex=0, bSelect=bSelect)
         return -1
 
@@ -864,7 +864,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             else:
                 msg = u'Ошибка открытия клипбоарда'
                 log.warning(msg)
-                ic_dlg.icWarningBox(u'ОШИБКА', msg)
+                ic_dlg.openWarningBox(u'ОШИБКА', msg)
         return doc_requisites
 
     def pasteDoc(self, index=None):
@@ -935,7 +935,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 result = document.View()
             return result
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
         return False
 
     def editDoc(self, UUID=None, index=None, edit_form_method=None):
@@ -979,7 +979,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 self.refreshDocListCtrlRow(index=idx)
             return result
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
         return False
 
     def updateDoc(self, UUID=None, index=None, update_form_method=None):
@@ -1016,7 +1016,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 self.refreshDocListCtrlRows()
             return result
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для обновления')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для обновления')
         return False
 
     def createDoc(self, create_form_method=None):
@@ -1072,7 +1072,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                 self.refreshDocListCtrlRows()
             return result
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для удаления')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для удаления')
         return False
 
     def insertDoc(self, UUID=None, index=None, insert_form_method=None):

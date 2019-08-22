@@ -147,7 +147,7 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
         select_period_idx=period_choice.GetSelection()
         select_period_rec=self.periods[select_period_idx]
         obj_uuid=select_period_rec['obj_uuid']
-        if ic.ic_dlg.icAskBox(u'Внимание!',
+        if ic.ic_dlg.openAskBox(u'Внимание!',
             u'Вы действительно хотите удалить выбранный период?'):
             result=self.OBJ.getHistory().delPeriod(select_period_rec['uuid'],
                 select_period_rec['prev_uuid'])
@@ -216,11 +216,11 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             if selected_record:
                 del_node_uuid=selected_record[0]
             else:
-                ic.ic_dlg.icMsgBox(u'Внимание!',
-                    u'Нельзя удалить этот элемент',hist_panel)
+                ic.ic_dlg.openMsgBox(u'Внимание!',
+                    u'Нельзя удалить этот элемент', hist_panel)
                 return
                     
-            if ic.ic_dlg.icAskBox(u'Внимание!',
+            if ic.ic_dlg.openAskBox(u'Внимание!',
                 u'Вы уверены, что хотите удалить этот объект?'):
                 attach_node.delNode(del_node_uuid)
                 #После удаления узла 
@@ -278,8 +278,8 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             if selected_record:
                 edit_node_uuid=selected_record[0]
             else:
-                ic.ic_dlg.icMsgBox(u'Внимание!',
-                    u'Не найден элемент',hist_panel)
+                ic.ic_dlg.openMsgBox(u'Внимание!',
+                    u'Не найден элемент', hist_panel)
                 return
                     
             attach_node=self.OBJ.getHistory().getStateByIdx(state_idx).getAttachNode()
@@ -303,8 +303,8 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             if selected_record:
                 edit_node_uuid=selected_record[0]
             else:
-                ic.ic_dlg.icMsgBox(u'Внимание!',
-                    u'Не найден элемент',hist_panel)
+                ic.ic_dlg.openMsgBox(u'Внимание!',
+                    u'Не найден элемент', hist_panel)
                 return
                     
             attach_node=self.OBJ.getHistory().getStateByIdx(state_idx).getAttachNode()
@@ -369,11 +369,11 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             if selected_record:
                 del_node_uuid=selected_record[0]
             else:
-                ic.ic_dlg.icMsgBox(u'Внимание!',
-                    u'Нельзя удалить этот элемент',hist_panel)
+                ic.ic_dlg.openMsgBox(u'Внимание!',
+                    u'Нельзя удалить этот элемент', hist_panel)
                 return
                     
-            if ic.ic_dlg.icAskBox(u'Внимание!',
+            if ic.ic_dlg.openAskBox(u'Внимание!',
                 u'Вы уверены, что хотите удалить этот документ?'):
                 attach_node.delNode(del_node_uuid)
                 #После удаления узла 
@@ -431,8 +431,8 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             if selected_record:
                 edit_node_uuid=selected_record[0]
             else:
-                ic.ic_dlg.icMsgBox(u'Внимание!',
-                    u'Не найден элемент',hist_panel)
+                ic.ic_dlg.openMsgBox(u'Внимание!',
+                    u'Не найден элемент', hist_panel)
                 return
                     
             attach_node=self.OBJ.getHistory().getStateByIdx(state_idx).getAttachNode()
@@ -456,8 +456,8 @@ class DefaultHistoryPanelManager(icmanagerinterface.icWidgetManager):
             if selected_record:
                 edit_node_uuid=selected_record[0]
             else:
-                ic.ic_dlg.icMsgBox(u'Внимание!',
-                    u'Не найден элемент',hist_panel)
+                ic.ic_dlg.openMsgBox(u'Внимание!',
+                    u'Не найден элемент', hist_panel)
                 return
                     
             attach_node=self.OBJ.getHistory().getStateByIdx(state_idx).getAttachNode()

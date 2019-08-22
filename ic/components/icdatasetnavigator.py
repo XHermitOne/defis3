@@ -161,7 +161,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('GridDataset', ):
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Тип выбранный объект не корректен.', parent)
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Тип выбранный объект не корректен.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

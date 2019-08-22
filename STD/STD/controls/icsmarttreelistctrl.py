@@ -568,7 +568,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
             self._last_find_col_idx = find_col_idx + 1
             self.SelectItem(item)
         else:
-            if ic_dlg.icAskDlg(u'ПОИСК', u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
+            if ic_dlg.getAskDlg(u'ПОИСК', u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
                 # Начать поиск сначала
                 find_result = self.findItemColumnString(string, None, columns, 0, bILike)
                 if find_result is not None:
@@ -682,7 +682,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         if find_item is not None:
             self.SelectItem(find_item)
         else:
-            if ic_dlg.icAskDlg(u'ПОИСК', u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
+            if ic_dlg.getAskDlg(u'ПОИСК', u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
                 # Начать поиск сначала
                 find_item = self.findItemString(string, None, bILike)
                 if find_item is not None:

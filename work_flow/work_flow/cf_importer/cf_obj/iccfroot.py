@@ -48,7 +48,7 @@ class icCFRoot(iccfobject.icCFObject):
                 msg = u'Ошибка парсинга CF файла. Не найден файл <%s>. Для Linux проверте установку библиотеки libboost-all-dev' % cf_root_filename
                 log.warning(msg)
                 time.sleep(1)
-                # ic_dlg.icWarningBox(u'ОШИБКА', msg)
+                # ic_dlg.openWarningBox(u'ОШИБКА', msg)
                 return
 
             cf_root_res = iccfresource.icCFResource(cf_root_filename)
@@ -95,9 +95,9 @@ class icCFRoot(iccfobject.icCFObject):
                     return self.DEFAULT_DB_PSP
                 else:
                     choices = [u'%s (%s)' % (db_res['name'], db_res['description']) for db_res in db_resources]
-                    idx = ic_dlg.icSingleChoiceDlg(title=u'БД',
-                                                   prompt_text=u'Выбор БД для генерации ресусов таблиц',
-                                                   choices=choices)
+                    idx = ic_dlg.getSingleChoiceDlg(title=u'БД',
+                                                    prompt_text=u'Выбор БД для генерации ресусов таблиц',
+                                                    choices=choices)
                     res = db_resources[idx] if idx >= 0 else None
                     db_psp = ((res['type'], res['name'], None, '%s.src' % res['name'], ic.getPrjName()),) if res else None
                     self.DEFAULT_DB_PSP = db_psp

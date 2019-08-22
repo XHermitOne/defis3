@@ -119,7 +119,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in (icsqlalchemy.TABLE_TYPE,):
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             try:
                 kernel = glob_functions.getKernel()
@@ -134,7 +134,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
                     link_db_psp = icobject.icObjectPassport(*link_db_psp)
 
                 if my_db_psp != link_db_psp:
-                    ic_dlg.icWarningBox(u'ОШИБКА', u'ВНИМАНИЕ! Связанные таблицы должны находиться в одной БД.')
+                    ic_dlg.openWarningBox(u'ОШИБКА', u'ВНИМАНИЕ! Связанные таблицы должны находиться в одной БД.')
                     return coderror.IC_CTRL_FAILED_IGNORE
             except:
                 log.error(u'Ошибка контроля вводимого значения %s : %s' % (attr, value))

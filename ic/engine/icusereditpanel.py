@@ -192,7 +192,7 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
                 if user_res:
                     self.updateData(user_res)
             else:
-                ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Выберите пользователя для редактирования.')
+                ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Выберите пользователя для редактирования.')
 
             if event:    
                 event.Skip()
@@ -206,12 +206,12 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
         try:
             if values:
                 user_name = values['user']
-                if ic_dlg.icAskBox(u'УДАЛЕНИЕ',
+                if ic_dlg.openAskBox(u'УДАЛЕНИЕ',
                                    u'Удалить пользователя %s?' % user_name):
                     del self._data[user_name]
                     self._init_data(self._data)
             else:
-                ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Выберите пользователя, которого надо удалить.')
+                ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Выберите пользователя, которого надо удалить.')
                     
             if event:
                 event.Skip()

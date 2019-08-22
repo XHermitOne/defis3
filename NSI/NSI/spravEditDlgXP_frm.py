@@ -87,9 +87,9 @@ def onCodControl(obj):
         prev_change_code= grid.getNameValue('cod')#dataset.getNameValue('cod')
         #Проверка, есть ли подкоды
         if prev_change_code and sprav.isSubCodes(prev_change_code):
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                 u'Нельзя изменять значение кода <%s>. Есть подкоды.' % prev_change_code,
-                evalSpace.GetObject(SPR_TREE_NAME))
+                              evalSpace.GetObject(SPR_TREE_NAME))
             return (coderror.IC_CTRL_FAILED_IGNORE,None)
 
         buff_codes=[rec['cod'] for rec in dataset.getDataDict()]
@@ -98,7 +98,7 @@ def onCodControl(obj):
             ctrl_ret=coderror.IC_CTRL_FAILED_IGNORE
 
         if not ctrl_ret in [coderror.IC_CTRL_OK,coderror.IC_CTRL_REPL]:
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!',u'Код %s есть уже в справочнике!'%value)
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Код %s есть уже в справочнике!' % value)
             return (ctrl_ret,None)
 
         # Проверяем по связанному справочнику, если он есть
@@ -270,7 +270,7 @@ def onSelectChangedSpravTree(obj):
         grid.ClearSortPrz()
         #Внесено изменение
         if grid.GetDataset().isChanged():
-            if ic_dlg.icAskDlg(u'ВНИМАНИЕ!',
+            if ic_dlg.getAskDlg(u'ВНИМАНИЕ!',
                 u'В справочник были внесены изменения. Сохранить?')==wx.YES:
                 onMouseClickSaveTool(obj)
             else:

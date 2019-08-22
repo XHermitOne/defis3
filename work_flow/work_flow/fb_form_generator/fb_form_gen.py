@@ -797,7 +797,7 @@ def gen_wxfb_prj(parent=None, resource=None, fbp_filename=None):
         return False
 
     if fbp_filename is None:
-        fbp_filename = ic_dlg.icFileDlg(parent,
+        fbp_filename = ic_dlg.getFileDlg(parent,
                                         u'Выбор файла проекта wxFormBuilder для генерации',
                                         u'wxFormBuilder project (*.fbp)|*.fbp')
 
@@ -806,14 +806,14 @@ def gen_wxfb_prj(parent=None, resource=None, fbp_filename=None):
         return False
 
     if os.path.exists(fbp_filename):
-        if not ic_dlg.icAskBox(u'ВНИМАНИЕ', u'Файл <%s> уже существует. Перезаписать его?' % fbp_filename):
+        if not ic_dlg.openAskBox(u'ВНИМАНИЕ', u'Файл <%s> уже существует. Перезаписать его?' % fbp_filename):
             # Не надо перезаписывать,
             # тогда нет смысла и генерировать его
             return False
 
     generator = icWxFBPrjGenerator()
     if not generator.isParsed(resource):
-        ic_dlg.icWarningBox(u'ОШИБКА', u'Тип ресурса не поддерживается генератором форм wxFormBuilder')
+        ic_dlg.openWarningBox(u'ОШИБКА', u'Тип ресурса не поддерживается генератором форм wxFormBuilder')
         return False
 
     generator.setResource(resource)

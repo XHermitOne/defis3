@@ -364,7 +364,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         @return: True/Falseю
         """
         if not os.path.exists(filename):
-            ic_dlg.icMsgBox(u'ПРОЕКТ',
+            ic_dlg.openMsgBox(u'ПРОЕКТ',
                             u'Редактирование. Файл <%s> не найден в проекте' % filename)
             return False
 
@@ -402,7 +402,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                 except:
                     log.error()
         else:
-            ic_dlg.icWarningBox(u'ПОМОЩЬ',
+            ic_dlg.openWarningBox(u'ПОМОЩЬ',
                                 u'Файл помощи <%s> не найден. Запустите генерацию документации :-)' % hlp_file_name)
 
     def onMakeInstall(self, event):
@@ -471,7 +471,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         prj_filename = node.getPrjFileName()
         # Проверить открыт ли какой-нибудь проект
         if not prj_filename:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ',
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ',
                                 u'''Импорт можно производить только в определенный проект.
  Откройте проект для возможности импорта''')
             return
@@ -479,7 +479,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         import_system_names = [sub_sys.name for sub_sys in node.getImpSystems().getSubSytems()]
         # Проверить импортированны ли NSI и work_flow
         if 'NSI' not in import_system_names or 'work_flow' not in import_system_names:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ',
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ',
                                 u'''Импортирование метаобъектов возможно
  только при подключенных подсистемах <NSI> и <work_flow>''')
 

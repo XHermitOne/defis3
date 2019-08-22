@@ -324,14 +324,14 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         label = u'Открытие справочника <%s>' % sprav_title
         len_level_data = len(level_data) if isinstance(level_data, list) else level_data.rowcount
         if is_progress:
-            ic_dlg.icOpenProgressDlg(self, u'Справочник', label, 0, len_level_data)
+            ic_dlg.openProgressDlg(self, u'Справочник', label, 0, len_level_data)
 
         try:
             for i, record in enumerate(level_data):
                 self.set_sprav_tree_item(parent_item, record)
 
                 if is_progress:
-                    ic_dlg.icUpdateProgressDlg(i + 1, label)
+                    ic_dlg.updateProgressDlg(i + 1, label)
 
             # Установить авто ширину колонок
             for i, field_name in enumerate(self.sprav_field_names):
@@ -340,7 +340,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             log.fatal(u'Ошибка построения дерева справочника')
 
         if is_progress:
-            ic_dlg.icCloseProgressDlg()
+            ic_dlg.closeProgressDlg()
 
     def get_sort_field(self, sort_column='name'):
         """
@@ -734,7 +734,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             if self.not_actual_search:
                 search_codes = self.getSearchCodes(search_txt)
                 if not search_codes:
-                    ic_dlg.icWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не найдены записи, соответствующие строке поиска')
+                    ic_dlg.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не найдены записи, соответствующие строке поиска')
                     do_find = False
                 self.not_actual_search = False
             else:
@@ -748,7 +748,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
                 find_code = self.search_codes[self.search_code_idx]
                 self.select_sprav_tree_item(find_code)
         else:
-            ic_dlg.icWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не выбрана строка поиска')
+            ic_dlg.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не выбрана строка поиска')
             
         event.Skip()        
         

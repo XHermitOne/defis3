@@ -159,7 +159,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('MainWindow', 'AUIMainWindow'):
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является главным окном.')
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является главным окном.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('menubars',):
@@ -169,11 +169,11 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             first_menubar_type = ret[0][0][0]
             for cur_psp in ret:
                 if not cur_psp[0][0] in ('MenuBar', 'FlatMenuBar'):
-                    ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект [%s] не является главным меню.' % cur_psp)
+                    ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект [%s] не является главным меню.' % cur_psp)
                     return coderror.IC_CTRL_FAILED_IGNORE
                 # Все горизонтальные  меню должны быть одного типа
                 if cur_psp[0][0] != first_menubar_type:
-                    ic_dlg.icWarningBox(u'ОШИБКА', u'Ошибка типа. Обект [%s].' % cur_psp)
+                    ic_dlg.openWarningBox(u'ОШИБКА', u'Ошибка типа. Обект [%s].' % cur_psp)
                     return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('password',):

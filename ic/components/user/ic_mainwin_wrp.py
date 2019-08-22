@@ -123,7 +123,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Panel', 'ScrolledWindow', 'Notebook', 'SplitterWindow'):
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является главным окном.', parent)
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является главным окном.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

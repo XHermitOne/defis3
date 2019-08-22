@@ -151,10 +151,10 @@ def outDevice(msg, Device_=IC_CONSOLE):
             return False
     if Device_ & IC_MSG_INFO:
         import ic.dlg.ic_dlg
-        ic.dlg.ic_dlg.icMsgBox(u'ВНИМАНИЕ', msg)
+        ic.dlg.ic_dlg.openMsgBox(u'ВНИМАНИЕ', msg)
     if Device_ & IC_MSG_ERR:
         import ic.dlg.ic_dlg
-        ic.dlg.ic_dlg.icErrBox(u'ОШИБКА', msg)
+        ic.dlg.ic_dlg.openErrBox(u'ОШИБКА', msg)
     return True
 
 

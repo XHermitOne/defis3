@@ -153,7 +153,7 @@ def genPlanTemplate(metaObj, source, yearTempl, monthTempl=1, year=2005, month=N
     """
 #    progress.icCloseProgressBar()
 #    progress.icOpenProgressBar("Выборка",0,100)
-    # ic_dlg.SetWaitBoxLabel('Получаем выборку')
+    # ic_dlg.setWaitBoxLabel('Получаем выборку')
     ic_proccess_dlg.setProccessBoxLabel('Получаем выборку', 10)
 
     if month is None:
@@ -211,7 +211,7 @@ ORDER BY codt, reg, mens''' % (str(yearTempl) + '.' + ('0' + str(monthTempl))[-2
         kwarg = {}
         mnthObj = itemObj
         
-        # ic_dlg.SetWaitBoxLabel('Создаем необходимую структуру')
+        # ic_dlg.setWaitBoxLabel('Создаем необходимую структуру')
         ic_proccess_dlg.setProccessBoxLabel('Создаем необходимую структуру', 20)
     
         #   Начинаем транзакцию
@@ -231,7 +231,7 @@ ORDER BY codt, reg, mens''' % (str(yearTempl) + '.' + ('0' + str(monthTempl))[-2
             
         #   Делаем пересчет плановых и агрегирующих сум (кроме месячных и
         #   годовых планов)
-        # ic_dlg.SetWaitBoxLabel('Делаем пересчет плановых сумм групп')
+        # ic_dlg.setWaitBoxLabel('Делаем пересчет плановых сумм групп')
         ic_proccess_dlg.setProccessBoxLabel(u'Делаем пересчет плановых сумм групп', 50)
         
         for r in rec:
@@ -250,7 +250,7 @@ ORDER BY codt, reg, mens''' % (str(yearTempl) + '.' + ('0' + str(monthTempl))[-2
             mnthObj.value.kol += obj.value.kol
         
         #   Деламе пересчет коэфициентов по вычисленным суммам планов
-        # ic_dlg.SetWaitBoxLabel('Делаем пересчет сумм и коэфициентов')
+        # ic_dlg.setWaitBoxLabel('Делаем пересчет сумм и коэфициентов')
         ic_proccess_dlg.setProccessBoxLabel(u'Делаем пересчет сумм и коэфициентов', 80)
         CountParPlan(mnthObj)
         
@@ -439,7 +439,7 @@ ORDER BY year,month,dtoper
         # Перебор записей в таблице-источнике
         recs = source_tab.queryRecs(src_query)
         # print 'RECS COUNT>>>>',recs.count()
-        # ic_dlg.icOpenProgressDlg(glob_functions.getMainWin(),
+        # ic_dlg.openProgressDlg(glob_functions.getMainWin(),
         #    'Подождите пожалуйста','Обнуление сумм',0,recs.count())
         # t_progress.icOpenThreadedProgressDlg('Разнос сумм','Обнуление сумм',0,recs.count())
         # ic_proccess_dlg.setProccessBoxLabel(label2='Разнос сумм', value2=10)
@@ -450,7 +450,7 @@ ORDER BY year,month,dtoper
         except:
             count_100 = 0
         for rec in recs:
-            # ic_dlg.icUpdateProgressDlg(idx,'Обнуление сумм')
+            # ic_dlg.updateProgressDlg(idx,'Обнуление сумм')
             # t_progress.icStepThreadedProgressDlg()
             # ic_proccess_dlg.setProccessBoxLabel(label1='Обнуление сумм', value1=idx)
             ic_proccess_dlg.setProccessBoxLabel(u'Обнуление сумм <%s>' % source_tab_name, count_100 * i)
@@ -477,7 +477,7 @@ ORDER BY year,month,dtoper
         # Обнуление суммы у года
         year_root.value.setProperty(**{source_tab_name: {'summa': [0, 0]}})
 
-        # ic_dlg.icCloseProgressDlg()
+        # ic_dlg.closeProgressDlg()
         # t_progress.icCloseThreadedProgressDlg()
 
     # Закончить транзакцию
@@ -637,7 +637,7 @@ ORDER BY year, month, dtoper
         # Перебор записей в таблице-источнике
         recs = source_tab.queryRecs(src_query)
 
-        # ic_dlg.icOpenProgressDlg(glob_functions.getMainWin(),
+        # ic_dlg.openProgressDlg(glob_functions.getMainWin(),
         #    'Подождите пожалуйста','Разнос сумм',0,recs.count())
         # t_progress.icOpenThreadedProgressDlg('Разнос сумм','Разнос сумм',0,recs.count())
         # ic_proccess_dlg.setProccessBoxLabel(label2='Разнос сумм', value2=10)
@@ -649,7 +649,7 @@ ORDER BY year, month, dtoper
             count_100 = 0
         # print 'ZERO SUMM',src_query,recs.count()
         for rec in recs:
-            # ic_dlg.icUpdateProgressDlg(idx,'Обнуление сумм')
+            # ic_dlg.updateProgressDlg(idx,'Обнуление сумм')
             # t_progress.icStepThreadedProgressDlg()
             # ic_proccess_dlg.setProccessBoxLabel(label1='Разнос сумм', value1=idx)
             ic_proccess_dlg.setProccessBoxLabel(u'Разнос сумм <%s>' % source_tab_name, count_100 * i)
@@ -674,7 +674,7 @@ ORDER BY year, month, dtoper
         # Подсчитать сумму года
         levelSum(year_root, source_tab_name)
         
-        # ic_dlg.icCloseProgressDlg()
+        # ic_dlg.closeProgressDlg()
         # t_progress.icCloseThreadedProgressDlg()
 
     # Закончить транзакцию
@@ -826,7 +826,7 @@ def buildStructByTable(mt, mMonthObj, modifLst, dict):
     Создаем структуру модификации плана по подготовленной таблице.
     """
     #   Создаем структуру
-    # ic_dlg.SetWaitBoxLabel('Прописываем суммы')
+    # ic_dlg.setWaitBoxLabel('Прописываем суммы')
     kwarg = {}
     for r in mt:
         spar, (summa, kol) = r
@@ -979,7 +979,7 @@ def _genModifPlan(parent, ibrows, id_modif, year=None, month=None):
         t = planTreeToTable(mnthObj)
         system_cache.systemCache.add('IManagePlans', mcod, t)
 
-    # ic_dlg.SetWaitBoxLabel('Преобразуем таблицу данных')
+    # ic_dlg.setWaitBoxLabel('Преобразуем таблицу данных')
     tm2 = time.clock()
     ic_proccess_dlg.setProccessBoxLabel(label2=u'Преобразуем таблицу данных', value2=40)
 
@@ -1175,7 +1175,7 @@ def _generateModifPlan(parent, metaclass, id_modif, year=None, month=None):
         except (ValueError, IndexError):
             dictIndxRepl[i] = -1
     
-    # ic_dlg.SetWaitBoxLabel('Преобразуем таблицу данных')
+    # ic_dlg.setWaitBoxLabel('Преобразуем таблицу данных')
     ic_proccess_dlg.setProccessBoxLabel(u'Генерация модификации плана ' + id_modif, 60)
     #   2. Заменяем колонки
     # print '.... dictIndxRepl=', dictIndxRepl

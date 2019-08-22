@@ -203,7 +203,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt
             ctrl_types = icdb.DB_TYPES + [icsqlalchemy.TABLE_TYPE, None]
             if ret[0][0] not in ctrl_types:
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Объект не БД типа.', parent)
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Объект не БД типа.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

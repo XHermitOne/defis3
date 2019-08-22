@@ -97,7 +97,7 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         """
         printer_info = ic_printer_dlg.choice_printer_dlg(self)
         if printer_info is None:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ', u'Не выбран принтер для печати. Печать документов отменена.')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Не выбран принтер для печати. Печать документов отменена.')
             event.Skip()
             return
 

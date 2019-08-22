@@ -48,10 +48,10 @@ def PlanMethodChoiceDlg(Parent_=None):
     """
     Диалог выбора метода расчета плановых значений.
     """
-    method_str = ic_dlg.icSingleChoiceDlg(Parent_,
+    method_str = ic_dlg.getSingleChoiceDlg(Parent_,
                                           u'Выберите метод',
                                           u'Методы расчета плановых значений',
-                                          getPlanMethodChoice(calc_plan))
+                                           getPlanMethodChoice(calc_plan))
     if method_str:
         method_str = method_str[:method_str.find(' ')]
         return calc_plan.__dict__[method_str]

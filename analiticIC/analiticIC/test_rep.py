@@ -17,7 +17,7 @@ def getSQLTest():
     Определение SQL запроса для тестового отчета.
     """
     print('getSQLTest')
-    if ic_dlg.icAskDlg('ЛаЛаЛа','?')==wx.YES:
+    if ic_dlg.getAskDlg('ЛаЛаЛа', '?')==wx.YES:
         return 'SQL SELECT * FROM nsi_list'
     else:
         return 'SQL SELECT * FROM nsi_std'

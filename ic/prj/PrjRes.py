@@ -178,7 +178,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
         Сохранить проект.
         """
         if not self.prj_file_name:
-            self.prj_file_name = ic_dlg.icFileDlg(None, u'Создание проекта',
+            self.prj_file_name = ic_dlg.getFileDlg(None, u'Создание проекта',
                                                   u'Project file (*.pro)|*.pro')
         if self.prj_file_name:
             prj_path = os.path.dirname(self.prj_file_name.strip())

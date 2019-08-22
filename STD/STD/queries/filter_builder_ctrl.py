@@ -130,7 +130,7 @@ class icCustomChoice(icCustomComboCtrl):
         Обработчик нажатия на кнопку расширенного выбора из списка.
         """
         if self.choice:
-            idx = ic_dlg.icSingleChoiceIdxDlg(self, u'ВЫБОР',
+            idx = ic_dlg.getSingleChoiceIdxDlg(self, u'ВЫБОР',
                                               u'Выберите один из следующих элементов', self.choice)
             self.choice_idx = idx
             if idx >= 0:

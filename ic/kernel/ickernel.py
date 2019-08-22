@@ -439,7 +439,7 @@ class icKernel(icBaseKernel):
 
             if res is None:
                 username, password = None, None
-                ic_dlg.icMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
+                ic_dlg.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
             else:
                 self._User = self.createObjBySpc(None, res)
                 self._User.setLoginManager(login_manager)
@@ -451,7 +451,7 @@ class icKernel(icBaseKernel):
                     if bAuto:
                         bAuto = False
                         username, password = None, None
-                        ic_dlg.icMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
+                        ic_dlg.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
                     else:
                         raise
 

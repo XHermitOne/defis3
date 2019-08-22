@@ -34,7 +34,7 @@ class icEditMaskedTextDlg(edit_masked_txt_dlg_proto.icEditMaskedTextDlgProto):
         else:
             msg = u'Не корректное введеное значение <%s>' % value
             log.warning(msg)
-            ic_dlg.icWarningBox(u'ОШИБКА', msg)
+            ic_dlg.openWarningBox(u'ОШИБКА', msg)
             self.edit_text = None
         self.EndModal(wx.ID_OK)
         event.Skip()

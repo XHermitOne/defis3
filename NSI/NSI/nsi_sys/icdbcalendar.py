@@ -106,7 +106,7 @@ class icDBCalendarPrototype(icsprav.icSpravPrototype):
         """
         Генерация календарного графика на год с опросом пользователя.
         """
-        if ic_dlg.icAskBox(u'ВНИМАНИЕ!', u'Создать календарный график на %s год?' % str(Year_)):
+        if ic_dlg.openAskBox(u'ВНИМАНИЕ!', u'Создать календарный график на %s год?' % str(Year_)):
             if self._delYearRec(Year_):
                 self.generateYear(Year_)
         
@@ -144,7 +144,7 @@ class icDBCalendarPrototype(icsprav.icSpravPrototype):
         Удалить год.
         """
         if self.isYear(Year_):
-            if ic_dlg.icAskBox(u'ВНИМАНИЕ!', u'Календарный график на %s год уже существует. Удалить?' % str(Year_)):
+            if ic_dlg.openAskBox(u'ВНИМАНИЕ!', u'Календарный график на %s год уже существует. Удалить?' % str(Year_)):
                 storage = self.getStorage()
                 if storage:
                     cod = self.ListCode2StrCode((str(Year_),))

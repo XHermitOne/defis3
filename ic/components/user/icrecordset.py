@@ -102,7 +102,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Table',):
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             return ret
 

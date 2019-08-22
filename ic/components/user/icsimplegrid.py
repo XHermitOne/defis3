@@ -494,7 +494,7 @@ class icSimpleGrid(icwidget.icWidget,
             if row >= 0:
                 return self.DeleteRows(row, 1)
         else:
-            if ic_dlg.icAskDlg(u'УДАЛЕНИЕ:',
+            if ic_dlg.getAskDlg(u'УДАЛЕНИЕ:',
                                u'Удалить строку %d?' % row) == wx.YES:
                 if row >= 0:
                     return self.DeleteRows(row, 1)

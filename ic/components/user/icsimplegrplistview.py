@@ -156,7 +156,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
                                  'Recordset',
                                  'Query',
                                  'AccumulatingRegistry'):
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является ИСТОЧНИКОМ ДАННЫХ.', parent)
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является ИСТОЧНИКОМ ДАННЫХ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     return coderror.IC_CTRL_OK

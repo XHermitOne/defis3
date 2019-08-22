@@ -94,7 +94,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
                 doc.save_obj()
                 self.refreshDocList()
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
         event.Skip()
 
     def onArchiveToolClicked(self, event):
@@ -115,18 +115,18 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
                                            requisite_replace={'scan_doc_to': 'scan_doc_pack_to',
                                                               'scan_doc_from': 'scan_doc_pack_from'})
                     if not result:
-                        ic_dlg.icWarningBox(u'ВНИМАНИЕ', 
+                        ic_dlg.openWarningBox(u'ВНИМАНИЕ',
                                             u'Ошибка переноса документа <%s> в архив' % doc.getRequisiteValue('n_doc'))
                 
                     pack_result = pack_result and result
                 else:
                     msg = u'Файл скана отсутствует в карточке документа <%s>. Перенос не выполнен' % doc.getRequisiteValue('n_doc')
                     log.warning(msg)
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ', msg)
+                    ic_dlg.openWarningBox(u'ВНИМАНИЕ', msg)
                     pack_result = False
 
             if pack_result:
-                ic_dlg.icMsgBox(u'АРХИВ', 
+                ic_dlg.openMsgBox(u'АРХИВ',
                                 u'Пакет документов перенесен в архив')
             self.refreshDocList()
 
@@ -152,7 +152,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
                 # Обновить список документов если нормально отредактировали документ
                 self.refreshDocList()
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для редактирования')
         
         event.Skip()
 
@@ -522,7 +522,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
                 if result:
                     doc.save_obj()
                 
-            ic_dlg.icMsgBox(u'СКАНИРОВАНИЕ',
+            ic_dlg.openMsgBox(u'СКАНИРОВАНИЕ',
                             u'Сканирование пакета документов завершено успешно')
             self.refreshDocList()
         
@@ -544,11 +544,11 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
                 self.viewDocFile(doc_filename)
             else:
                 if doc_filename:
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Не найден файл скана <%s> документа для просмотра' % doc_filename)
+                    ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Не найден файл скана <%s> документа для просмотра' % doc_filename)
                 else:
-                    ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Отсутствует файл скана документа')
+                    ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Отсутствует файл скана документа')
         else:
-            ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
+            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ для просмотра')
             
         event.Skip()
 

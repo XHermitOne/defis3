@@ -716,8 +716,8 @@ def SetFilter(dataset, flt=None):
         #   Если буфер заполнен, то необходимо запросить потверждение на
         #   обновление данных и обновить данные. В противном случае изменения
         #   будут потеряны
-        if dataset.isChangeRowBuff() and ic_dlg.icAskBox(None, _('Save changes?'),
-                                                         style=wx.YES_NO | wx.ICON_QUESTION) == wx.ID_YES:
+        if dataset.isChangeRowBuff() and ic_dlg.openAskBox(None, _('Save changes?'),
+                                                           style=wx.YES_NO | wx.ICON_QUESTION) == wx.ID_YES:
             dataset.update()
 
         dataset.FilterFields(flt)

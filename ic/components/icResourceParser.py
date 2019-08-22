@@ -434,7 +434,7 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
                 return frm
             return None
     except KeyError:
-        ic_dlg.icMsgBox(u'ОШИБКА', u'Форма <%s> не найдена в ресурсе <%s>' % (formName, fileRes))
+        ic_dlg.openMsgBox(u'ОШИБКА', u'Форма <%s> не найдена в ресурсе <%s>' % (formName, fileRes))
     except:
         log.fatal(u'Ошибка сборки формы <%s>' % formName)
     
@@ -705,7 +705,7 @@ def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, i
                         log.warning(u'Ошибка атрибута ### PostOnInitEvent() AttributeError <resource> obj: <%s>' % ob)
     except:
         log.fatal(u'Создание формы (icBuildObject):')
-        ic_dlg.icFatalBox(u'ОШИБКА', u'Создание формы (icBuildObject):')
+        ic_dlg.openFatalBox(u'ОШИБКА', u'Создание формы (icBuildObject):')
         obj = None
 
     #   Уничтожаем индикатор процесса

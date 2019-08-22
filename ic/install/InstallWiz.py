@@ -378,23 +378,23 @@ class NullsoftInstallSystem(PrjInstallMaker):
         """
         Создание инсталяционного пакета.
         """
-        install_dir = ic_dlg.icDirDlg(None,
+        install_dir = ic_dlg.getDirDlg(None,
                                       u'Выберите инсталяционную папку',
-                                      os.getcwd())
+                                       os.getcwd())
         if os.path.isdir(install_dir):
             try:
                 packages = self.getPackages()
-                ic_dlg.icOpenProgressDlg(None,
+                ic_dlg.openProgressDlg(None,
                                          u'Создание инсталяционного пакета проекта',
                                          u'Создание инсталяционного пакета проекта',
-                                         0, len(packages)+5)
+                                       0, len(packages) + 5)
                 i = 0
                 # Создать папку пакетов
                 os.makedirs(os.path.join(install_dir, 'package'))
 
                 # Скопировать иконку
                 i += 1
-                ic_dlg.icUpdateProgressDlg(i, u'Копирование иконки')
+                ic_dlg.updateProgressDlg(i, u'Копирование иконки')
                 ico_file = self.getPrjIcon()
                 if os.path.exists(ico_file):
                     filefunc.copyFile(ico_file,
@@ -404,7 +404,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 
                 # Создание пакета прикладной системы
                 i += 1
-                ic_dlg.icUpdateProgressDlg(i, u'Создание пакета прикладной системы')
+                ic_dlg.updateProgressDlg(i, u'Создание пакета прикладной системы')
                 arch_file = self._makePrjInstall()
                 if os.path.exists(arch_file):
                     filefunc.copyFile(arch_file,
@@ -416,7 +416,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 # Скопировать пакеты
                 for package in packages:
                     i += 1
-                    ic_dlg.icUpdateProgressDlg(i, u'Копирование пакета <%s>' % package)
+                    ic_dlg.updateProgressDlg(i, u'Копирование пакета <%s>' % package)
                     if os.path.exists(package):
                         filefunc.copyFile(package,
                                           os.path.join(install_dir, 'package',
@@ -426,7 +426,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
 
                 # Сохранить скрипт инсталятора
                 i += 1
-                ic_dlg.icUpdateProgressDlg(i, u'Создание скрипта инсталятора')
+                ic_dlg.updateProgressDlg(i, u'Создание скрипта инсталятора')
                 script = self.installScript()
                 nsi_file = None
                 try:
@@ -440,15 +440,15 @@ class NullsoftInstallSystem(PrjInstallMaker):
 
                 # Компилирование скрипта инсталятора
                 i += 1
-                ic_dlg.icUpdateProgressDlg(i, u'Компилирование скрипта инсталятора')
+                ic_dlg.updateProgressDlg(i, u'Компилирование скрипта инсталятора')
                 nsis_cmd = '%s %s' % (self.getInstallMaker(), os.path.join(install_dir, 'setup.ini'))
                 log.info(u'Компиляция скрипта инсталятора <%s>' % nsis_cmd)
                 ic_exec.doSysCmd(nsis_cmd)
 
-                ic_dlg.icCloseProgressDlg()
+                ic_dlg.closeProgressDlg()
             except:
                 log.fatal(u'Ошибка создания инсталяционного пакета')
-                ic_dlg.icCloseProgressDlg()
+                ic_dlg.closeProgressDlg()
                 
     def _makePrjInstall(self):
         """
@@ -531,9 +531,9 @@ class py2exeInstallSystem(PrjInstallMaker):
         """
         Создание инсталяционного пакета.
         """
-        install_dir = ic_dlg.icDirDlg(None,
+        install_dir = ic_dlg.getDirDlg(None,
                                       u'Выберите инсталяционную папку',
-                                      os.getcwd())
+                                       os.getcwd())
         if os.path.isdir(install_dir):
             try:
                 # Создание setup.py файла
@@ -607,9 +607,9 @@ def runInstallWizard(Parent_, PrjResFileName_):
 
         install_maker.makeInstallPackage()
 
-        ic_dlg.icMsgBox(u'ВНИМАНИЕ', u'Создан инсталяционный пакет проекта.')
+        ic_dlg.openMsgBox(u'ВНИМАНИЕ', u'Создан инсталяционный пакет проекта.')
     else:
-        ic_dlg.icMsgBox(u'ВЫХОД', u'Выход из визарда создания инсталяционного пакета проекта')
+        ic_dlg.openMsgBox(u'ВЫХОД', u'Выход из визарда создания инсталяционного пакета проекта')
 
 
 def makePrjAttrPage(wizPg, title, installMaker):
@@ -712,9 +712,9 @@ def runDemoWizard(Parent_, PrjResFileName_):
 
         install_maker.makeInstallPackage()
 
-        ic_dlg.icMsgBox(u'ВНИМАНИЕ', u'Создан демо-проект.')
+        ic_dlg.openMsgBox(u'ВНИМАНИЕ', u'Создан демо-проект.')
     else:
-        ic_dlg.icMsgBox(u'ВЫХОД', u'Выход из визарда создания демо-проекта')
+        ic_dlg.openMsgBox(u'ВЫХОД', u'Выход из визарда создания демо-проекта')
 
 
 def makeDemoPrjPage(wizPg, title, installMaker):
@@ -786,9 +786,9 @@ class zipPublicSystem(PrjInstallMaker):
         """
         Создание инсталяционного пакета.
         """
-        install_dir = ic_dlg.icDirDlg(None,
+        install_dir = ic_dlg.getDirDlg(None,
                                       u'Выберите инсталяционную папку',
-                                      os.getcwd())
+                                       os.getcwd())
         if os.path.isdir(install_dir):
             arch_file_name = self._makePrjInstall()
             filefunc.copyFile(arch_file_name,
@@ -898,9 +898,9 @@ def runPublicWizard(Parent_, PrjResFileName_):
 
         public_maker.makeInstallPackage()
 
-        ic_dlg.icMsgBox(u'ВНИМАНИЕ', u'Создан пакет публикации.')
+        ic_dlg.openMsgBox(u'ВНИМАНИЕ', u'Создан пакет публикации.')
     else:
-        ic_dlg.icMsgBox(u'ВЫХОД', u'Выход из визарда создания пакета публикации')
+        ic_dlg.openMsgBox(u'ВЫХОД', u'Выход из визарда создания пакета публикации')
 
 
 def makePublicPrjPage(wizPg, title, publicMaker):

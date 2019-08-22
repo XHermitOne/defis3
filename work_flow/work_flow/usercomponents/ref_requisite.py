@@ -168,7 +168,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if ret[0][0] not in ('BusinessObj', 'StateObj', 'Document'):
-                ic_dlg.icWarningBox(u'ОШИБКА', u'Выбранный объект не является Бизнес-объектом/Документом.', parent)
+                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является Бизнес-объектом/Документом.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

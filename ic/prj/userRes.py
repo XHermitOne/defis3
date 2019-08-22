@@ -271,7 +271,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
         """
         self._user_res_file_name = res_filename
         if self._user_res_file_name is None:
-            self._user_res_file_name = ic_dlg.icFileDlg(None, u'Create user access file',
+            self._user_res_file_name = ic_dlg.getFileDlg(None, u'Create user access file',
                                                         u'User access file (*.acc)|*.acc')
         
         if self._user_res_file_name:
@@ -290,7 +290,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
         """
         self._user_res_file_name = res_filename
         if self._user_res_file_name is None:
-            self._user_res_file_name = ic_dlg.icFileDlg(None, u'Create user access file',
+            self._user_res_file_name = ic_dlg.getFileDlg(None, u'Create user access file',
                                                         u'User access file (*.acc)|*.acc')
         self._user_res = None
         if self._user_res_file_name and \
@@ -400,7 +400,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
             self._user_res = {}
             
         if UserName_ in self._user_res:
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                             u'Пользователь <%s> уже существует!' % UserName_)
             return False    
         else:
@@ -417,7 +417,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
             self._user_res = {}
             
         if UserGrpName_ in self._user_res:
-            ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
                             u'Пользователь <%s> уже существует!' % UserGrpName_)
             return False    
         else:

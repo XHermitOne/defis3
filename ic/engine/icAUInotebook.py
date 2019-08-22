@@ -48,7 +48,7 @@ class icAUINotebook(aui.AuiNotebook):
                 msg = u'Страница <%s> уже открыта' % title
                 log.warning(msg)
                 page.Destroy()
-                ic_dlg.icWarningBox(u'ВНИМАНИЕ!', msg)
+                ic_dlg.openWarningBox(u'ВНИМАНИЕ!', msg)
                 return None
 
         # У объекта страницы поменять хозяина

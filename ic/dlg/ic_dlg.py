@@ -18,10 +18,10 @@ import wx.lib.imagebrowser
 from ic.log import log
 
 
-__version__ = (1, 1, 1, 3)
+__version__ = (1, 1, 2, 1)
 
 
-def icFileDlg(parent=None, title='', wildcard_filter='', default_path=''):
+def getFileDlg(parent=None, title='', wildcard_filter='', default_path=''):
     """
     Открыть диалог выбора файла для открытия/записи.
     @param parent: Ссылка на окно.
@@ -61,7 +61,7 @@ def icFileDlg(parent=None, title='', wildcard_filter='', default_path=''):
     return None
 
 
-def icDirDlg(parent=None, title='', default_path=''):
+def getDirDlg(parent=None, title='', default_path=''):
     """
     Диалог выбора каталога.
     @param parent: Ссылка на окно.
@@ -100,7 +100,7 @@ def icDirDlg(parent=None, title='', default_path=''):
     return result
 
 
-def icImageDlg(parent=None, default_img_path=None):
+def getImageDlg(parent=None, default_img_path=None):
     """
     Диалог выбора графических файлов.
     @param parent: Ссылка на родительское окно.
@@ -137,7 +137,7 @@ def icImageDlg(parent=None, default_img_path=None):
     return ret
 
 
-def icColorDlg(parent=None, title='', default_colour=wx.BLACK):
+def getColorDlg(parent=None, title='', default_colour=wx.BLACK):
     """
     Диалог выбора цвета
     @param parent: Ссылка на родительское окно.
@@ -170,7 +170,7 @@ def icColorDlg(parent=None, title='', default_colour=wx.BLACK):
            parent.Destroy()
 
 
-def icTextEntryDlg(parent=None, title='', prompt_text='', default_value=''):
+def getTextEntryDlg(parent=None, title='', prompt_text='', default_value=''):
     """
     Диалог ввода строки.
     @param parent: Ссылка на окно.
@@ -203,7 +203,7 @@ def icTextEntryDlg(parent=None, title='', prompt_text='', default_value=''):
     return None
 
 
-def icAskDlg(title='', prompt_text='', style=wx.YES_NO | wx.ICON_QUESTION):
+def getAskDlg(title='', prompt_text='', style=wx.YES_NO | wx.ICON_QUESTION):
     """
     Диалог вопроса.
     @param title: Заголовок диалогового окна.
@@ -217,14 +217,14 @@ def icAskDlg(title='', prompt_text='', style=wx.YES_NO | wx.ICON_QUESTION):
         log.fatal()
 
 
-def icAskBox(*args, **kwargs):
+def openAskBox(*args, **kwargs):
     """
     Диалог вопроса.
     """
-    return icAskDlg(*args, **kwargs) == wx.YES
+    return getAskDlg(*args, **kwargs) == wx.YES
 
 
-def icMsgBox(title='', prompt_text='', **kwargs):
+def openMsgBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения.
     @param parent: Родительское окно.
@@ -238,7 +238,7 @@ def icMsgBox(title='', prompt_text='', **kwargs):
         log.fatal()
 
 
-def icErrBox(title='', prompt_text='', **kwargs):
+def openErrBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об ошибке.
     @param parent: Родительское окно.
@@ -252,7 +252,7 @@ def icErrBox(title='', prompt_text='', **kwargs):
         log.fatal()
 
 
-def icFatalBox(title='', prompt_text='', **kwargs):
+def openFatalBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об ошибке вместе с Traceback.
     @param parent: Родительское окно.
@@ -262,10 +262,10 @@ def icFatalBox(title='', prompt_text='', **kwargs):
     """
     trace_txt = traceback.format_exc()
     txt = prompt_text + trace_txt
-    return icErrBox(title, txt, **kwargs)
+    return openErrBox(title, txt, **kwargs)
 
 
-def icWarningBox(title='', prompt_text='', **kwargs):
+def openWarningBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об предупреждении.
     @param parent: Родительское окно.
@@ -279,8 +279,8 @@ def icWarningBox(title='', prompt_text='', **kwargs):
         log.fatal()
 
 
-def icSingleChoiceDlg(parent=None, title='', prompt_text='', choices=[],
-                      default_idx=-1):
+def getSingleChoiceDlg(parent=None, title='', prompt_text='', choices=[],
+                       default_idx=-1):
     """
     Диалог выбора из списка.
     @param parent: Родительское окно.
@@ -314,8 +314,8 @@ def icSingleChoiceDlg(parent=None, title='', prompt_text='', choices=[],
     return None
 
 
-def icSingleChoiceIdxDlg(parent=None, title='', prompt_text='', choices=[],
-                         default_idx=-1):
+def getSingleChoiceIdxDlg(parent=None, title='', prompt_text='', choices=[],
+                          default_idx=-1):
     """
     Диалог выбора.
     @param parent: Родительское окно.
@@ -350,7 +350,7 @@ def icSingleChoiceIdxDlg(parent=None, title='', prompt_text='', choices=[],
     return idx
 
 
-def icMultiChoiceDlg(parent=None, title='', prompt_text='', choices=()):
+def getMultiChoiceDlg(parent=None, title='', prompt_text='', choices=()):
     """
     Диалог множественного выбора.
     @param parent: Родительское окно.
@@ -478,8 +478,8 @@ class icProgressDlg(wx.ProgressDialog):
 _PROGRESS_DLG = None    # Сам диалог прогресс бара
 
 
-def icOpenProgressDlg(parent=None, title='', prompt_text='',
-                      min_value=0, max_value=100, style=wx.PD_AUTO_HIDE):
+def openProgressDlg(parent=None, title='', prompt_text='',
+                    min_value=0, max_value=100, style=wx.PD_AUTO_HIDE):
     """
     Диалоговые функции прогресс бара.
     Создает и открывает прогресс бар.
@@ -500,7 +500,7 @@ def icOpenProgressDlg(parent=None, title='', prompt_text='',
     return _PROGRESS_DLG
 
 
-def icUpdateProgressDlg(value=-1, new_prompt_text=''):
+def updateProgressDlg(value=-1, new_prompt_text=''):
     """
     Диалоговые функции прогресс бара.
     Обновить данные програсс бара.
@@ -519,7 +519,7 @@ def icUpdateProgressDlg(value=-1, new_prompt_text=''):
         return False
 
 
-def icStepProgressDlg(step_value=1, new_prompt_text=u''):
+def stepProgressDlg(step_value=1, new_prompt_text=u''):
     """
     Диалоговые функции прогресс бара с приращением.
     Обновить данные програсс бара.
@@ -538,7 +538,7 @@ def icStepProgressDlg(step_value=1, new_prompt_text=u''):
         return False
 
 
-def icCloseProgressDlg():
+def closeProgressDlg():
     """
     Диалоговые функции прогресс бара.
     Закрыть прогресс бар.
@@ -557,7 +557,7 @@ def icCloseProgressDlg():
         return False
 
 
-def icStrComboBoxDlg(parent=None, title='', prompt_text='', choices=None, Default_=''):
+def getStrComboBoxDlg(parent=None, title='', prompt_text='', choices=None, Default_=''):
     """
     Диалог выбора/редактирования строки.
     @param parent: Ссылка на окно.
@@ -648,7 +648,7 @@ class icStrComboBoxDialog(wx.Dialog):
         return self._string
 
 
-def icAboutDlg(parent=None, title='', prompt_text='', logo_bitmap=None):
+def openAboutDlg(parent=None, title='', prompt_text='', logo_bitmap=None):
     """
     О программе...
     @param parent: Ссылка на окно.
@@ -728,7 +728,7 @@ LOGIN_PASSWORD_IDX = 1
 LOGIN_PASSWORD_MD5_IDX = 2
 
 
-def icLoginDlg(parent=None, title='', default_username='', reg_users=None):
+def getLoginDlg(parent=None, title='', default_username='', reg_users=None):
     """
     Ввод пароля и имени пользователя.
     @param parent: Ссылка на окно.
@@ -887,7 +887,7 @@ class icLoginDialog(wx.Dialog):
 _BUSY_INFO = None
 
 
-def BusyStart(prompt_text=''):
+def startBusy(prompt_text=''):
     """
     Занято/Ожидание.
     @param prompt_text: Текст диалога.
@@ -899,7 +899,7 @@ def BusyStart(prompt_text=''):
             _BUSY_INFO = wx.BusyInfo(prompt_text)  # Окно
 
 
-def BusyStop():
+def stopBusy():
     """
     Не занято.
     """
@@ -912,7 +912,7 @@ def BusyStop():
 ic_wait_proccess_dlg = None
 
 
-def WaitFunc(parent, prompt_text,
+def waitFunc(parent, prompt_text,
              function, function_args=(), function_kwargs={},
              img_frames=None):
     """
@@ -946,9 +946,9 @@ def WaitFunc(parent, prompt_text,
                       wait_dir + 'Wait14.png',
                       wait_dir + 'Wait15.png']
     ic_wait_proccess_dlg = wait_box = icWaitBox(parent, prompt_text, img_frames)
-    wait_box.SetResultList(wait_result)
+    wait_box.setResultList(wait_result)
     # Запустить функцию ожидания
-    _thread.start_new(wait_box.Run, (function, function_args, function_kwargs))
+    _thread.start_new(wait_box.run, (function, function_args, function_kwargs))
     wait_box.ShowModal()
     wait_box.Destroy()
     ic_wait_proccess_dlg = None
@@ -957,17 +957,17 @@ def WaitFunc(parent, prompt_text,
 
 def wait_deco(f):
     def func(*arg, **kwarg):
-        return WaitFunc(arg[0], u'Подождите   ', f, arg, kwarg)
+        return waitFunc(arg[0], u'Подождите   ', f, arg, kwarg)
     return func
 
 
 def wait_noparent_deco(f):
     def func(*arg, **kwarg):
-        return WaitFunc(None, u'Подождите   ', f, arg, kwarg)
+        return waitFunc(None, u'Подождите   ', f, arg, kwarg)
     return func
 
 
-def SetWaitBoxLabel(label):
+def setWaitBoxLabel(label):
     if ic_wait_proccess_dlg:
         sx, sy = ic_wait_proccess_dlg.GetSize()
         ic_wait_proccess_dlg.SetSize((len(label)*10 + 20, sy))
@@ -1008,7 +1008,7 @@ class icWaitBox(wx.Dialog):
         self._closed = False    # Признак закрытия окна
         self._result_list = None
         
-        self.Bind(wx.EVT_UPDATE_UI, self.OnCheckClose)
+        self.Bind(wx.EVT_UPDATE_UI, self.onCheckClose)
 
     def DirectRefresh(self):
         """
@@ -1016,10 +1016,10 @@ class icWaitBox(wx.Dialog):
         evt = wx.PaintEvent(self.GetId())
         return self.GetEventHandler().ProcessEvent(evt)
 
-    def SetResultList(self, result_list):
+    def setResultList(self, result_list):
         self._result_list = result_list
         
-    def NextState(self):
+    def setNextState(self):
         """
         Сменить состояние.
         """
@@ -1028,7 +1028,7 @@ class icWaitBox(wx.Dialog):
             self._cur_ani_state = 0
         return self._cur_ani_state
 
-    def DrawFrame(self, n_frame):
+    def drawFrame(self, n_frame):
         """
         Отрисовка кадра.
         @param n_frame: Номер кадра.
@@ -1042,13 +1042,13 @@ class icWaitBox(wx.Dialog):
         # dc.EndDrawing()
         self._picture.Refresh()
         
-    def OnCheckClose(self, event=None):
+    def onCheckClose(self, event=None):
         """
         Проверка закрытия окна.
         """
         # 2 Варианта отрисовки не знаю какой лучше выбрать!!!
         # 2-й вроде немного по быстрее
-        self.DrawFrame(self.NextState())    # Отрисовать очередной кадр
+        self.drawFrame(self.setNextState())    # Отрисовать очередной кадр
         time.sleep(self._delay)
 
         if not self._running and not self._closed:
@@ -1061,7 +1061,7 @@ class icWaitBox(wx.Dialog):
         if event:
             event.Skip()
 
-    def Run(self, function, function_args, function_kwargs):
+    def run(self, function, function_args, function_kwargs):
         """
         Запуск ожидания функции.
         """
