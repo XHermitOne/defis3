@@ -22,7 +22,7 @@ import ic.utils.lock
 from ic.utils import ic_util
 from ic.utils import filefunc
 from ic.interfaces import StorageInterface as storage_interface
-from ic.utils import ic_exec
+from ic.utils import execfunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 3)
@@ -1286,7 +1286,7 @@ class icObjectStorageSource(icTreeDirStorage,
         """
         storage_interface.icObjectStorageSourceInterface.__init__(self, Res_)
         self._spc = ic_util.SpcDefStruct(SPC_IC_OBJ_STORAGE_SRC, self._res)
-        storage_dir = filefunc.get_absolute_path(ic_exec.execute_code(self._spc['storage_dir'], self))
+        storage_dir = filefunc.get_absolute_path(execfunc.execute_code(self._spc['storage_dir'], self))
         icTreeDirStorage.__init__(self, storage_dir)
 
 

@@ -645,7 +645,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             Если не указано (None), то производиться выбор из списка пользователей,
             присутствующих в проекте.
         """
-        import ic.utils.ic_exec as ic_exec
+        import ic.utils.execfunc as ic_exec
 
         # ic_exec.createRunApp(app_dir)
         

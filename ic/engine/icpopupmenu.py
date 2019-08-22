@@ -8,7 +8,7 @@
 # --- Подключение библиотек ---
 import wx
 
-import ic.utils.ic_exec
+import ic.utils.execfunc
 import ic.utils.ic_util
 from ic.utils import ic_res
 from ic.log import log
@@ -253,13 +253,13 @@ class icPopupMenu(icmenu.icMenu):
         """
         Выполнить метод на открытие всплывающего меню.
         """
-        ic.utils.ic_exec.execute_method(self.GetOpenMethod(), self)
+        ic.utils.execfunc.execute_method(self.GetOpenMethod(), self)
         
     def DoCloseMethod(self):
         """
         Выполнить метод на закрытие всплывающего меню.
         """
-        ic.utils.ic_exec.execute_method(self.GetCloseMethod(), self)
+        ic.utils.execfunc.execute_method(self.GetCloseMethod(), self)
 
     def DoOpen(self, Win_, X_=0, Y_=0):
         """
@@ -311,7 +311,7 @@ class icPopupMenu(icmenu.icMenu):
                 self.SetTitle(Title_)
         else:
             if not self._TitleReadOnly and self._TitleFunc:
-                new_title = ic.utils.ic_exec.execute_method(self._TitleFunc, self)
+                new_title = ic.utils.execfunc.execute_method(self._TitleFunc, self)
                 if new_title and new_title:
                     self.SetTitle(new_title)
 

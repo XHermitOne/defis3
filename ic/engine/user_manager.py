@@ -33,7 +33,7 @@ from ic.utils import util
 from ic.log import log
 from ic.dlg import dlgfunc
 from ic.utils import filefunc
-from ic.utils import ic_exec
+from ic.utils import execfunc
 from ic.utils import ic_util
 from ic.utils import user_journal
 
@@ -589,7 +589,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         Выполнить при успешном логине.
         """
         if modefunc.isRuntimeMode():
-            ic_exec.execute_method(exec_code, self)
+            execfunc.execute_method(exec_code, self)
         
     def logout_ok(self):
         """
@@ -616,7 +616,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         Выполнить при успешном логауте.
         """
         if modefunc.isRuntimeMode():
-            ic_exec.execute_method(exec_code, self)
+            execfunc.execute_method(exec_code, self)
 
     def getUserRequisit(self, username=''):
         """

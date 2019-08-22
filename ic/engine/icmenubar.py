@@ -14,7 +14,7 @@
 import wx
 
 import ic.utils.ic_res
-import ic.utils.ic_exec
+import ic.utils.execfunc
 import ic.utils.ic_util
 import ic.utils.util
 from ic.log import log

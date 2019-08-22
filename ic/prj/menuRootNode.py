@@ -14,7 +14,7 @@ import os.path
 
 from ic.imglib import common as imglib
 from ic.utils import filefunc
-from ic.utils import ic_exec
+from ic.utils import execfunc
 from ic.install import InstallWiz as install_wiz
 from ic.bitmap import icimagelibrarybrowser
 from ic.utils import ini
@@ -394,11 +394,11 @@ class icMenuRootNode(flatmenu.FlatMenu):
         if os.path.exists(hlp_file_name):
             if wx.Platform == '__WXMSW__':
                 hlp_file_name = os.path.normpath(hlp_file_name)
-                ic_exec.doSysCmd('start explorer ' + hlp_file_name)
+                execfunc.doSysCmd('start explorer ' + hlp_file_name)
             elif wx.Platform == '__WXGTK__':
                 try:
                     www_browser = os.environ.get('BROWSER', DEFAULT_WWW_BROWSER)
-                    ic_exec.doSysCmd(www_browser + ' ' + hlp_file_name)
+                    execfunc.doSysCmd(www_browser + ' ' + hlp_file_name)
                 except:
                     log.error()
         else:

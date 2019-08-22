@@ -17,7 +17,7 @@ from ic.dlg import dlgfunc
 from ic.utils import filefunc
 from ic.utils import ini
 from ic.utils import ic_util
-from ic.utils import ic_exec
+from ic.utils import execfunc
 from ic.imglib import common as imglib
 from ic.log import log
 
@@ -443,7 +443,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 dlgfunc.updateProgressDlg(i, u'Компилирование скрипта инсталятора')
                 nsis_cmd = '%s %s' % (self.getInstallMaker(), os.path.join(install_dir, 'setup.ini'))
                 log.info(u'Компиляция скрипта инсталятора <%s>' % nsis_cmd)
-                ic_exec.doSysCmd(nsis_cmd)
+                execfunc.doSysCmd(nsis_cmd)
 
                 dlgfunc.closeProgressDlg()
             except:
@@ -491,7 +491,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
             arch_cmd = '%s a -r -s -ep1 -sfx -df %s %s/*.*' % (rar_util,
                                                                arch_file_name, temp_dir)
             log.info(u'INSTALL WIZARD Команда архивации: <%s>' % arch_cmd)
-            ic_exec.doSysCmd(arch_cmd)
+            execfunc.doSysCmd(arch_cmd)
             return arch_file_name
         except:
             log.error(u'Ошибка архивации прикладной системы')
@@ -857,7 +857,7 @@ class zipPublicSystem(PrjInstallMaker):
         arch_cmd = '%s a -r -s -ep1 -afzip -df %s %s/*.*' % (arch_util,
                                                              arch_file_name, TempDir_)
         log.info(u'PUBLIC WIZARD Команда архивации: '+arch_cmd)
-        ic_exec.doSysCmd(arch_cmd)
+        execfunc.doSysCmd(arch_cmd)
         return arch_file_name
         
     def _makeArchiveZIP(self, TempDir_, PrjName_):
@@ -870,7 +870,7 @@ class zipPublicSystem(PrjInstallMaker):
 
         arch_cmd = 'cd %s;%s -r %s *' % (TempDir_, arch_util, arch_file_name)
         log.info(u'PUBLIC WIZARD Команда архивации: '+arch_cmd)
-        ic_exec.doSysCmd(arch_cmd)
+        execfunc.doSysCmd(arch_cmd)
         return arch_file_name
         
     

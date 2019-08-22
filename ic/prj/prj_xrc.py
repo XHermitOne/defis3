@@ -9,7 +9,7 @@ from ic.bitmap import bmpfunc
 from ic.dlg import dlgfunc
 
 from ic.utils import filefunc
-from ic.utils import ic_exec
+from ic.utils import execfunc
 
 from . import prj_node
 
@@ -41,7 +41,7 @@ class icPrjXRCResource(prj_node.icPrjNode):
         filename = self.getPath()
         if os.path.exists(filename):
             cmd = 'xrced --meta %s&' % filename
-            ic_exec.doSysCmd(cmd)
+            execfunc.doSysCmd(cmd)
         return True
 
     def create(self, new_name=None):
@@ -50,7 +50,7 @@ class icPrjXRCResource(prj_node.icPrjNode):
         @param new_name: Указание нового имени созданного узла.
         """
         cmd = 'xrced --meta&'
-        ic_exec.doSysCmd(cmd)
+        execfunc.doSysCmd(cmd)
         return True
 
     def delete(self):
@@ -106,7 +106,7 @@ class icPrjXRCResource(prj_node.icPrjNode):
             py_filename = os.path.join(os.path.dirname(xrc_filename),
                                        os.path.basename(xrc_filename).replace('.', '_')+'.py')
             cmd = 'pywxrc --python --output %s %s' % (py_filename, xrc_filename)
-            ic_exec.doSysCmd(cmd)
+            execfunc.doSysCmd(cmd)
             msg = u'Сгенерирован файл <%s>' % py_filename
             dlgfunc.openMsgBox(u'Генерация Python модуля', msg)
 

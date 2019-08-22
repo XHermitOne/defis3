@@ -13,7 +13,7 @@ import wx
 import wx.lib.imagebrowser
 
 from ic.components import icfont
-import ic.utils.ic_exec     # Этот модуль подгружается для спецификации
+import ic.utils.execfunc     # Этот модуль подгружается для спецификации
 from ic.bitmap import bmpfunc
 
 

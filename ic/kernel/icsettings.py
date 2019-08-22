@@ -13,7 +13,7 @@ import os.path
 
 from ic.utils import modefunc
 from ic.utils import ini
-from ic.utils import ic_exec
+from ic.utils import execfunc
 from ic.engine import glob_functions
 from ic.log import log
 
@@ -185,7 +185,7 @@ class icPrjDotUse(icSettingsDotUsePrototype):
         ini_file_name = self._get_ini_file_name()
         if os.path.exists(ini_file_name):
             cmd = 'gedit %s &' % ini_file_name
-            ic_exec.doSysCmd(cmd)
+            execfunc.doSysCmd(cmd)
         else:
             log.warning(u'INI файл <%s> не найден' % ini_file_name)
 

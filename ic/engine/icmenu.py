@@ -17,7 +17,7 @@
 import wx
 
 import ic.utils.ic_res
-import ic.utils.ic_exec
+import ic.utils.execfunc
 import ic.utils.ic_util
 import ic.utils.util
 from ic.log import log
@@ -195,7 +195,7 @@ class icMenu(wx.Menu):
         if self._ChildOpenedMenu is not None:
             self._ChildOpenedMenu.Close()
         # Выполнить метод по закрытию
-        ic.utils.ic_exec.execute_method(self._Close, self)
+        ic.utils.execfunc.execute_method(self._Close, self)
         self.SetClosed()
         self._ParentMenu.SetChildOpenedMenu(None)
 
