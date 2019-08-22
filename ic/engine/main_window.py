@@ -40,7 +40,7 @@ import wx
 import wx.lib.splitter
 
 from ic.imglib import common
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import resource
 from ic.utils import filefunc
 
@@ -198,7 +198,7 @@ def openWinResFile(res_filename):
     global CUR_WIN_RES_FILE_NAME
     global CUR_WIN_RES_FILE
     CUR_WIN_RES_FILE_NAME = res_filename
-    CUR_WIN_RES_FILE = ic_res.ReadAndEvalFile(res_filename)
+    CUR_WIN_RES_FILE = resfunc.ReadAndEvalFile(res_filename)
     return CUR_WIN_RES_FILE
 
 

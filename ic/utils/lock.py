@@ -257,7 +257,7 @@ def DelMyLockInDir(LockMyID_, LockDir_, DirFilesLock_):
     Удалить блокировки только из указанной папки.
     @param LockMyID_: Идентификация хозяина блокировок.
     @param LockDir_: Папка блокировок.
-    @param DirFilesLock_: Имена файлов и папок в директории LockDir_
+    @param DirFilesLock_: Имена файлов и папок в директории lock_dir
     """
     try:
         # Отфильтровать только файлы

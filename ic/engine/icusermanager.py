@@ -12,7 +12,7 @@ import ic
 from ic.dlg import dlgfunc
 from ic.utils import filefunc
 from ic.utils import util
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import ini
 from ic.log import log
 from ic.bitmap import bmpfunc
@@ -171,13 +171,13 @@ class icUserManager(object):
         """
         Блокировка ресурса пользователей.
         """
-        return ic_res.lockRes(None, 'users', 'acc')
+        return resfunc.lockRes(None, 'users', 'acc')
 
     def unlockUserRes(self):
         """
         Разблокировка ресурса пользователей.
         """
-        return ic_res.unlockRes(None, 'users', 'acc')
+        return resfunc.unlockRes(None, 'users', 'acc')
 
     def _edit(self, parent=None, user_res=None):
         """

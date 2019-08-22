@@ -801,7 +801,7 @@ def method(id_meth, subsys, esp=locals(), **params):
 PICKLE_RES_FMT = 0
 TEXT_RES_FMT = 1
 
-from . import ic_res
+from . import resfunc
 
 
 def icSaveRes(className, ext, pathRes=None, nameRes='resource',
@@ -829,9 +829,9 @@ def icSaveRes(className, ext, pathRes=None, nameRes='resource',
     fileResName = os.path.join(pathRes, nameRes+'.'+ext)
 
     if ResFmt == PICKLE_RES_FMT:
-        return ic_res.SaveResourcePickle(fileResName, {className: resData})
+        return resfunc.saveResourcePickle(fileResName, {className: resData})
     elif ResFmt == TEXT_RES_FMT:
-        return ic_res.SaveResourceText(fileResName, {className: resData})
+        return resfunc.saveResourceText(fileResName, {className: resData})
 
 
 def updateImporsObjModule(fn, imp_path):

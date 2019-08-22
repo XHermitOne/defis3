@@ -14,7 +14,7 @@ import wx
 from . import config
 from ic.engine import glob_functions
 from ic.utils import extfunc
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import ic_str
 from ic.log import log
 
@@ -414,7 +414,7 @@ class icReportManager(object):
         @param report_filename: Полное имя файла шаблона отчета.
         @return: Данные шаблона отчета.
         """
-        return ic_res.LoadResource(report_filename)
+        return resfunc.loadResource(report_filename)
 
     def getReportDescription(self, report_filename):
         """

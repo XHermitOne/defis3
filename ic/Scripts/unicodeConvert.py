@@ -6,7 +6,7 @@ import sys
 import os
 import os.path
 
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import ic_util
 
 
@@ -136,10 +136,10 @@ def toUnicodeResource():
 
 def toUnicodeProject():
     pro_file = '/home/xhermit/develop/rep_py/rep_py/work/defis/%s/%s/%s.pro' % (PRJ_NAME, PRJ_NAME, PRJ_NAME)
-    replace_dict = ic_res.LoadResourcePickle(pro_file)
+    replace_dict = resfunc.loadResourcePickle(pro_file)
     x_dict = ic_util.icStructStrRecode(replace_dict, 'cp1251', 'UNICODE')
     print('>>', pro_file, ' : ', x_dict)
-    ok = ic_res.SaveResourcePickle(pro_file, x_dict)
+    ok = resfunc.saveResourcePickle(pro_file, x_dict)
     print('OK:', ok)
 
     

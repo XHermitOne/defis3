@@ -6,7 +6,7 @@ import ic
 import ic.components.icResourceParser as prs
 from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
-from ic.utils import ic_res
+from ic.utils import resfunc
 
 ### !!!! NO CHANGE !!!!
 ###BEGIN SPECIAL BLOCK
@@ -45,7 +45,7 @@ class icNewPeriodDialog(icobjectinterface.icObjectInterface):
         """
         #
         try:
-            ic_res.findSpcInResource('subject_choice',resource)['sprav']=OBJ.getHistory().getSubjectPsp()
+            resfunc.findSpcInResource('subject_choice', resource)['sprav']=OBJ.getHistory().getSubjectPsp()
         except:
             ic.log.error(u'Ошибка инициализации справочника субъектов контрола \'subject_choice\' в форме %s'%resource['name'])
             

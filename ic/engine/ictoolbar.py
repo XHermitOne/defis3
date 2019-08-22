@@ -219,7 +219,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
                 return None
             # Загрузить структуру пункта
             # if isinstance(self._ResData, str):
-            #    tool_struct = ic.utils.ic_res.LoadObjStruct(ic.utils.ic_res.RES_IDX_TOOL, tool_name, self._ResData)
+            #    tool_struct = ic.utils.ic_res.loadObjStruct(ic.utils.ic_res.RES_IDX_TOOL, tool_name, self._ResData)
             # elif type(self._ResData)==DictType:
             #    tool_struct=self._ResData[tool_name]
             # else:

@@ -15,7 +15,7 @@ from ic.log import log
 
 from ic.imglib import common as imglib
 from ic.utils import filefunc
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.dlg import dlgfunc
 from ic.kernel import icexceptions
 from ic.utils import ic_util
@@ -114,7 +114,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         self.unlockResInResEditor()
         log.info(u'DELETE ALL PROJECT LOCKS <%s>' % self.lock_dir)
         if self.lock_dir:
-            ic_res.delAllLockRes(self.lock_dir)
+            resfunc.delAllLockRes(self.lock_dir)
             
     def unlockResInResEditor(self, res_editor=None):
         """
@@ -133,8 +133,8 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             if res_file_name:
                 res_file_ext = os.path.splitext(os.path.basename(res_file_name))[1][1:]
                 res_file_name = os.path.splitext(os.path.basename(res_file_name))[0]
-                return ic_res.unlockRes(res_name, res_file_name,
-                                        res_file_ext, self.lock_dir)
+                return resfunc.unlockRes(res_name, res_file_name,
+                                         res_file_ext, self.lock_dir)
         return False
 
     def unlockPyFileInIDE(self, py_filename):
@@ -149,8 +149,8 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             py_file_ext = 'py'
             package_name = os.path.basename(os.path.dirname(py_filename))
             log.debug('UNLOCK PY FILE <%s> is open - %s' % (py_filename, ide.getAlreadyOpen()))
-            return ic_res.unlockRes(py_file_name, package_name,
-                                    py_file_ext, self.lock_dir)
+            return resfunc.unlockRes(py_file_name, package_name,
+                                     py_file_ext, self.lock_dir)
         return False
         
     def unlockAllPyFilesInIDE(self):

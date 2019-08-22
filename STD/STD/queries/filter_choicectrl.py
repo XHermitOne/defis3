@@ -13,7 +13,7 @@ import operator
 import wx
 
 from ic.dlg import dlgfunc
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.log import log
 
 from . import filter_choice_dlg
@@ -584,18 +584,18 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
         if filter_filename:
             if os.path.exists(filter_filename):
                 # Сначала прочитать файл
-                res = ic_res.LoadResource(filter_filename)
+                res = resfunc.loadResource(filter_filename)
                 if res:
                     # Затем расширить своими фильтрами и записать
                     res[self.getUUID()] = self._filter
-                    ic_res.SaveResourcePickle(filter_filename, res)
+                    resfunc.saveResourcePickle(filter_filename, res)
                 else:
                     log.warning(u'Ошибка ресурсного файла <%s>' % filter_filename)
                     return False
             else:
                 # Просто записать в файл
                 res = {self.getUUID(): self._filter}
-                ic_res.SaveResourcePickle(filter_filename, res)
+                resfunc.saveResourcePickle(filter_filename, res)
         else:
             log.warning(u'Не определен файл для сохранения фильтра')
             return False
@@ -613,7 +613,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
             filter_filename = self._filter_filename
 
         if filter_filename and os.path.exists(filter_filename):
-            res = ic_res.LoadResource(filter_filename)
+            res = resfunc.loadResource(filter_filename)
             if res:
                 if self.getUUID() not in res:
                     log.warning(u'Не найдены фильтры для комбобокса <%s> в файле <%s>!' % (self.getUUID(),

@@ -13,7 +13,7 @@
 # --- Подключение библиотек ---
 import wx
 
-import ic.utils.ic_res
+import ic.utils.resfunc
 import ic.utils.execfunc
 import ic.utils.ic_util
 import ic.utils.util
@@ -161,8 +161,8 @@ class icMenuBar(wx.MenuBar):
             item_id = subitem.GetID()
             for cur_item in ItemStruct_['child']:
                 if isinstance(self._ResData, str):
-                    subitem_struct = ic.utils.ic_res.LoadObjStruct(ic.utils.ic_res.RES_IDX_MENU_ITEM,
-                                                                   cur_item, self._ResData)
+                    subitem_struct = ic.utils.resfunc.loadObjStruct(ic.utils.resfunc.RES_IDX_MENU_ITEM,
+                                                                    cur_item, self._ResData)
                 elif isinstance(self._ResData, dict):
                     subitem_struct = self._ResData[cur_item]
                 else:

@@ -10,7 +10,7 @@ import wx
 
 import ic.utils.execfunc
 import ic.utils.ic_util
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.log import log
 
 from . import icmenu
@@ -66,7 +66,7 @@ def CreateICPopupMenu(Win_, Name_, PopupData_):
     """
     try:
         if isinstance(PopupData_, str):
-            popup_struct = ic_res.LoadObjStruct(ic_res.RES_IDX_POPUP, Name_, PopupData_)
+            popup_struct = resfunc.loadObjStruct(resfunc.RES_IDX_POPUP, Name_, PopupData_)
         elif isinstance(PopupData_, dict):
             popup_struct = PopupData_[Name_]
         else:
@@ -160,7 +160,7 @@ class icPopupMenu(icmenu.icMenu):
             for item_name in MenuItems_:
                 # Загрузить структуру пункта
                 if isinstance(self._ResData, str):
-                    item_struct = ic_res.LoadObjStruct(ic_res.RES_IDX_POPUP_ITEM, item_name, self._ResData)
+                    item_struct = resfunc.loadObjStruct(resfunc.RES_IDX_POPUP_ITEM, item_name, self._ResData)
                 elif isinstance(self._ResData, dict):
                     item_struct = self._ResData[item_name]
                 else:
@@ -197,7 +197,7 @@ class icPopupMenu(icmenu.icMenu):
             item_id = subitem.GetID()
             for cur_item in ItemStruct_['child']:
                 if isinstance(self._ResData, str):
-                    subitem_struct = ic_res.LoadObjStruct(ic_res.RES_IDX_MENU_ITEM, cur_item, self._ResData)
+                    subitem_struct = resfunc.loadObjStruct(resfunc.RES_IDX_MENU_ITEM, cur_item, self._ResData)
                 elif isinstance(self._ResData, dict):
                     subitem_struct = self._ResData[cur_item]
                 else:

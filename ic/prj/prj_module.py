@@ -15,7 +15,7 @@ import shutil
 import ic.utils.impfunc
 from ic.imglib import common as imglib
 from ic.utils import filefunc
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import util
 from ic.dlg import dlgfunc
 from ic.editor import ext_python_editor
@@ -486,8 +486,8 @@ class icPrjPackage(prj_node.icPrjFolder):
             if not ide.selectFile(py_file):
                 # Заблокировать файл
                 parent_pack = os.path.basename(os.path.dirname(pack_dir))
-                ic_res.lockRes(self.name, parent_pack, 'py',
-                               self.getRoot().lock_dir)
+                resfunc.lockRes(self.name, parent_pack, 'py',
+                                self.getRoot().lock_dir)
                 return ide.openFile(py_file, True, bReadonly=self.readonly)
             return True
         else:
@@ -640,7 +640,7 @@ class icPrjModule(prj_node.icPrjNode):
         # Добавить модуль в ресурс проекта
         self.getRoot().prj_res_manager.addModule(mod_name, mod_path)
         module_file_name = os.path.join(mod_path, mod_name+self.ext)
-        ok = ic_res.CreatePyFile(module_file_name)
+        ok = resfunc.createPyFile(module_file_name)
         # Для синхронизации дерева проекта
         self.getRoot().save()
         return ok
@@ -685,9 +685,9 @@ class icPrjModule(prj_node.icPrjNode):
                 parent_pack = os.path.basename(py_dir)
                 # Если модуль заблокирован,
                 # тогда открыть его только для просмотра
-                if ic_res.isLockRes(self.name, parent_pack, 'py',
-                                    self.getRoot().lock_dir):
-                    lock_rec = ic_res.getLockResRecord(self.name, parent_pack,
+                if resfunc.isLockRes(self.name, parent_pack, 'py',
+                                     self.getRoot().lock_dir):
+                    lock_rec = resfunc.getLockResRecord(self.name, parent_pack,
                                                        'py', self.getRoot().lock_dir)
 
                     lock_user = lock_rec.get('user', u'Не определен') if lock_rec else u'Не определен'
@@ -699,8 +699,8 @@ class icPrjModule(prj_node.icPrjNode):
                     self.readonly = True
                 else:
                     # Заблокировать файл
-                    ic_res.lockRes(self.name, parent_pack, 'py',
-                                   self.getRoot().lock_dir)
+                    resfunc.lockRes(self.name, parent_pack, 'py',
+                                    self.getRoot().lock_dir)
                 
             # Условие открытия в редакторе ресурса
             if self.isResClass(py_file):

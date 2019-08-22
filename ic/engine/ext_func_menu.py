@@ -6,7 +6,7 @@
 """
 
 # --- Подключение библиотек ---
-import ic.utils.ic_res
+import ic.utils.resfunc
 import ic.utils.execfunc
 import ic.utils.ic_util
 import ic.utils.util
@@ -51,7 +51,7 @@ def appendMenuBarByRes(parent, name, menubar_res, menubar=None):
     """
     try:
         if isinstance(menubar_res, str):
-            run_struct = ic.utils.ic_res.LoadObjStruct(name, menubar_res)
+            run_struct = ic.utils.resfunc.loadObjStruct(name, menubar_res)
         elif isinstance(menubar_res, dict):
             run_struct = menubar_res[name]
         else:
@@ -99,7 +99,7 @@ def appendMenuBar(parent, name, menubar_res, menubar=None, engine_res=None):
         from ic.components.user import ic_menubar_wrp
         
         if isinstance(menubar_res, str):
-            run_struct = ic.utils.ic_res.LoadObjStruct(name, menubar_res)
+            run_struct = ic.utils.resfunc.loadObjStruct(name, menubar_res)
         elif isinstance(menubar_res, dict):
             run_struct = menubar_res[name]
         else:

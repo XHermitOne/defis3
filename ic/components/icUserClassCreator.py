@@ -14,7 +14,7 @@ from ic.utils import resource
 from ic.PropertyEditor import icDefInf
 from ic.imglib import common
 import ic.dlg.msgbox as msg
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -483,7 +483,7 @@ def RunWizard(parent):
                                        'user', page4.modulName.GetLabel())
         elif not os.path.isdir(user_mod_dir):
             # Создаем пакет
-            ic_res.CreatePackage(user_mod_dir)
+            resfunc.createPackage(user_mod_dir)
             module_name = os.path.join(user_mod_dir, page4.modulName.GetLabel())
         else:
             module_name = os.path.join(user_mod_dir, page4.modulName.GetLabel())

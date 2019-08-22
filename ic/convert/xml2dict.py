@@ -281,8 +281,8 @@ def fb_prj_test():
 
     result = XmlFile2Dict(fb_prj_filename)
     result[TAG_KEY] = 'wxFormBuilderProject'
-    from ic.utils import ic_res
-    ic_res.SaveResourceText('./testfiles/debug.log', result, True)
+    from ic.utils import resfunc
+    resfunc.saveResourceText('./testfiles/debug.log', result, True)
     cmd = 'gedit ./testfiles/debug.log'
     import os
     os.system(cmd)

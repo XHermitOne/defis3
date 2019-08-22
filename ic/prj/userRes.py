@@ -12,7 +12,7 @@ import os
 import os.path
 
 import ic.interfaces.resManager as resManager
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import filefunc
 from ic.dlg import dlgfunc
 from ic.engine import user_manager
@@ -278,8 +278,8 @@ class UserIcResource(resManager.icResourceManagerInterface):
             # Создать путь к файлу
             filefunc.makeDirs(os.path.split(self._user_res_file_name)[0])
             # Сохранить сам файл
-            return ic_res.SaveResourceText(self._user_res_file_name,
-                                           self._user_res)
+            return resfunc.saveResourceText(self._user_res_file_name,
+                                            self._user_res)
         return False
 
     def load(self, res_filename=None):
@@ -297,7 +297,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
            os.path.exists(self._user_res_file_name):
             # Обновить ресурс?
             refresh = self._res_maker_time != filefunc.getMakeFileTime(self._user_res_file_name)
-            self._user_res = ic_res.ReadAndEvalFile(self._user_res_file_name, bRefresh=refresh)
+            self._user_res = resfunc.ReadAndEvalFile(self._user_res_file_name, bRefresh=refresh)
             self._res_maker_time = filefunc.getMakeFileTime(self._user_res_file_name)
         return self._user_res
 
@@ -308,7 +308,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
         if self._user_res is None:
             if self._user_res_file_name:
                 if os.path.exists(self._user_res_file_name):
-                    self._user_res = ic_res.ReadAndEvalFile(self._user_res_file_name)
+                    self._user_res = resfunc.ReadAndEvalFile(self._user_res_file_name)
                 else:
                     self._user_res = {'admin': self.newDefaultUser()}
                     self._user_res['admin']['name'] = 'admin'

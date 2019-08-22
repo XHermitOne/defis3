@@ -185,7 +185,7 @@ class icModelModuleGenerator(object):
             Если не определено, то генерируется.
         @return: True/False.
         """
-        tab_res = resfunc.LoadResource(tab_res_filename)
+        tab_res = resfunc.loadResource(tab_res_filename)
         return self.genModelModuleByTabRes(tab_res, dst_module_filename=dst_module_filename)
 
     def genModelManagerModuleByTabResFilename(self, tab_res_filename=None, dst_module_filename=None):
@@ -196,5 +196,5 @@ class icModelModuleGenerator(object):
             Если не определено, то генерируется.
         @return: True/False.
         """
-        tab_res = resfunc.LoadResource(tab_res_filename)
+        tab_res = resfunc.loadResource(tab_res_filename)
         return self.genModelManagerModuleByTabRes(tab_res, dst_module_filename=dst_module_filename)

@@ -13,7 +13,7 @@ import os.path
 import wx
 
 from . import filefunc
-from . import ic_res
+from . import resfunc
 from . import util
 from . import lock
 from ic.engine import glob_functions
@@ -130,7 +130,7 @@ class icPersistant:
                     lock_rec = {'computer': lock.ComputerName(),
                                 'user': glob_functions.getVar('UserName')}
                     lock.LockFile(lock_file_name, lock_rec)
-                    ic_res.SaveResourcePickle(full_file_name, res)
+                    resfunc.saveResourcePickle(full_file_name, res)
                     lock.UnLockFile(lock_file_name)
                 except:
                     log.fatal(u'Ошибка сохранение ресурсного файла <%s>' % full_file_name)

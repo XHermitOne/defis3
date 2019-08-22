@@ -59,7 +59,7 @@ class icFormManager(formdatamanager.icFormDataManager,
                                     glob_functions.getPrjName(),
                                     self.__class__.__name__)
         data = self._getCtrlData()
-        return resfunc.SaveResourcePickle(res_filename, data)
+        return resfunc.saveResourcePickle(res_filename, data)
 
     # Другое наименование метода
     save_ctrl = save_dlg
@@ -72,7 +72,7 @@ class icFormManager(formdatamanager.icFormDataManager,
         res_filename = os.path.join(config.PROFILE_DIRNAME,
                                     glob_functions.getPrjName(),
                                     self.__class__.__name__)
-        data = resfunc.LoadResourcePickle(res_filename)
+        data = resfunc.loadResourcePickle(res_filename)
         return self._setCtrlData(data)
 
     # Другое наименование метода

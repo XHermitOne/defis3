@@ -176,8 +176,8 @@ def GenComponent(componentType, modulName=None, res=None):
             modulName = os.path.join(mod_path, '%s.py' % componentType)
         if mod_path and not os.path.isdir(mod_path):
             # Создаем пакет usercomponents
-            from ic.utils import ic_res
-            ic_res.CreatePackage(mod_path)
+            from ic.utils import resfunc
+            resfunc.createPackage(mod_path)
             log.info(_('INFO') +
                      _('Create package %s') % mod_path)
             wx.MessageBox(_('WARRNING') + '! ' + _('Create package %s') % mod_path)
@@ -208,8 +208,8 @@ def InheritComponent(componentType, parentModule, modulName=None):
             modulName = os.path.join(mod_path, '%s.py' % componentType)
         if mod_path and not os.path.isdir(mod_path):
             # Создаем пакет usercomponents
-            from ic.utils import ic_res
-            ic_res.CreatePackage(mod_path)
+            from ic.utils import resfunc
+            resfunc.createPackage(mod_path)
             log.info(_('INFO') + _('Create package %s') % mod_path)
             wx.MessageBox(_('WARRNING') + '! ' + _('Create package %s') % mod_path)
         elif not mod_path:

@@ -13,7 +13,7 @@ import os.path
 
 from ic.imglib import common as imglib
 from ic.utils import filefunc
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import resfunc
 from ic.utils import util
 from ic.dlg import dlgfunc
@@ -270,7 +270,7 @@ class icPrjResource(prj_node.icPrjNode):
             res_name = self.getResName()
             mod_path = self.getParent().getPath()
             # Создать инит файл, если его нет
-            ic_res.CreateInitFile(mod_path)
+            resfunc.createInitFile(mod_path)
             mod_file = self.getResFileName()
             mod_ext = self.getResFileExt()
             # Есть уже модуль с таким именем?
@@ -308,18 +308,18 @@ class icPrjResource(prj_node.icPrjNode):
             res_ext = self.getResFileExt()
             self.getRoot().unlockResInResEditor(res_editor)
             if not self.readonly:
-                is_lock = ic_res.isLockRes(res_name, res_file, res_ext,
-                                           self.getRoot().lock_dir)
+                is_lock = resfunc.isLockRes(res_name, res_file, res_ext,
+                                            self.getRoot().lock_dir)
                 if not is_lock:
                     # Если ресурс не заблокирован, то заблокировать его
                     # и отдать на редактирование
-                    ic_res.lockRes(res_name, res_file, res_ext,
-                                   self.getRoot().lock_dir)
+                    resfunc.lockRes(res_name, res_file, res_ext,
+                                    self.getRoot().lock_dir)
                     return res_editor.SetResource(res_name, res_path, res_file, res_ext,
                                                   bEnable=True)
                 else:
-                    lock_rec = ic_res.getLockResRecord(res_name, res_file,
-                                                       res_ext, self.getRoot().lock_dir)
+                    lock_rec = resfunc.getLockResRecord(res_name, res_file,
+                                                        res_ext, self.getRoot().lock_dir)
                     dlgfunc.openWarningBox(u'БЛОКИРОВКА',
                                         u'Ресурс <%s> заблокирован пользователем <%s> с компьютера <%s>.' % (res_name,
                                                                                                              lock_rec['user'],
@@ -350,11 +350,11 @@ class icPrjResource(prj_node.icPrjNode):
             res_name = self.getResName()
             res_file = self.getResFileName()
             res_ext = self.getResFileExt()
-            is_lock = ic_res.isLockRes(res_name, res_file, res_ext,
-                                       self.getRoot().lock_dir)
+            is_lock = resfunc.isLockRes(res_name, res_file, res_ext,
+                                        self.getRoot().lock_dir)
             if is_lock:
-                ic_res.unlockRes(res_name, res_file, res_ext,
-                                 self.getRoot().lock_dir)
+                resfunc.unlockRes(res_name, res_file, res_ext,
+                                  self.getRoot().lock_dir)
             
             self.name = new_name
             new_res_name = self.getResName()
@@ -410,7 +410,7 @@ class icPrjResource(prj_node.icPrjNode):
         # ВНИМАНИЕ! Здесь нельзя использовать readAndEval,
         # т.к. эта функция создает *_pkl.* файл.
         # Работаем только с текстовым представлением
-        res = resfunc.LoadResourceText(copy_res_file_name)
+        res = resfunc.loadResourceText(copy_res_file_name)
         res[node.name] = res[self.name]
         del res[self.name]
         # Поменять наименование объекта

@@ -25,7 +25,7 @@
 # --- Подключение библиотек ---
 import wx
 
-import ic.utils.ic_res
+import ic.utils.resfunc
 import ic.utils.execfunc
 import ic.bitmap.ic_color as ic_color
 import ic.utils.ic_util

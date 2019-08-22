@@ -83,7 +83,7 @@ from ic.log import log
 
 from ic.interfaces import resManager
 from ic.utils import util
-from ic.utils import ic_res
+from ic.utils import resfunc
 import ic
 
 __version__ = (0, 1, 1, 1)
@@ -216,9 +216,9 @@ class icPrjRes(resManager.icResourceManagerInterface):
         """
         if project is None:
             project = self._prepareDataPrj(self._prj)
-        ok = ic_res.SaveResourceText(prj_filename.strip(), project)
+        ok = resfunc.saveResourceText(prj_filename.strip(), project)
         # Кроме того, что сохраняем проект, еще делаем его пакетом
-        ic_res.CreateInitFile(os.path.dirname(prj_filename.strip()))
+        resfunc.createInitFile(os.path.dirname(prj_filename.strip()))
         return ok
 
     def getPrjRes(self):
@@ -473,7 +473,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
         cur_package_path = package_path
         if new_package_name:
             cur_package_path = os.path.join(cur_package_path, new_package_name)
-        return ic_res.CreateInitFile(cur_package_path)
+        return resfunc.createInitFile(cur_package_path)
 
     def addModule(self, module_name, package_path):
         """

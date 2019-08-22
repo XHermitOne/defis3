@@ -10,7 +10,7 @@
 import wx
 
 from ic.imglib import common as imglib
-from ic.utils import ic_res
+from ic.utils import resfunc
 
 __version__ = (0, 1, 2, 1)
 
@@ -211,7 +211,7 @@ class icPrjNode(object):
         @return: Возвращает указатель узел.
         """
         new_node = self.__class__(self._Parent)
-        new_node.name = self.name + ic_res.getNewID()
+        new_node.name = self.name + resfunc.getNewID()
         new_node.description = self.description
         return new_node
 

@@ -11,7 +11,7 @@ import wx
 import uuid
 
 from ic.components import icwidget
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.dlg import dlgfunc
 from ic.log import log
 
@@ -119,17 +119,17 @@ class icFilterComboBoxProto(wx.ComboBox):
         """
         if os.path.exists(filters_filename):
             # Сначала прочитать файл
-            res = ic_res.LoadResource(filters_filename)
+            res = resfunc.loadResource(filters_filename)
             if res:
                 # Затем расширить своими фильтрами и записать
                 res[self.getUUID()] = self._filters
-                ic_res.SaveResourcePickle(filters_filename, res)
+                resfunc.saveResourcePickle(filters_filename, res)
             else:
                 log.warning(u'Error resource file <%s>' % filters_filename)
         else:
             # Просто записать в файл
             res = {self.getUUID(): self._filters}
-            ic_res.SaveResourcePickle(filters_filename, res)
+            resfunc.saveResourcePickle(filters_filename, res)
 
     def loadFilters(self, filters_filename=None):
         """
@@ -139,7 +139,7 @@ class icFilterComboBoxProto(wx.ComboBox):
         """
         filters_filename = os.path.normpath(filters_filename)
         if os.path.exists(filters_filename):
-            res = ic_res.LoadResource(filters_filename)
+            res = resfunc.loadResource(filters_filename)
             if res:
                 filters = res.get(self.getUUID(), None)
                 if filters:

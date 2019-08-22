@@ -22,7 +22,7 @@ import wx
 from . import user_manager
 
 from . import icpopupmenu
-import ic.utils.ic_res
+import ic.utils.resfunc
 import ic.utils.resource
 
 import ic.utils.filefunc
@@ -48,7 +48,7 @@ def getPrjSubSysDirs(prj_dirname):
     pro_files = ic.utils.filefunc.getFilenamesByExt(prj_dirname, '.pro')
     if pro_files:
         pro_file = pro_files[0]
-        prj = ic.utils.ic_res.ReadAndEvalFile(pro_file)
+        prj = ic.utils.resfunc.ReadAndEvalFile(pro_file)
         return [sub_sys['__py__'] for sub_sys in prj]
     return []
 
@@ -63,7 +63,7 @@ def getSubSysDirs(prj_dirname):
     pro_files = ic.utils.filefunc.getFilenamesByExt(prj_dirname, '.pro')
     if pro_files:
         pro_file = pro_files[0]
-        prj = ic.utils.ic_res.ReadAndEvalFile(pro_file)
+        prj = ic.utils.resfunc.ReadAndEvalFile(pro_file)
         return [sub_sys['__py__'] for sub_sys in prj[1:]]
     return []
 

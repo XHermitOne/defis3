@@ -11,7 +11,7 @@ import sqlalchemy as sa
 from sqlalchemy import orm
 from sqlalchemy.orm import interfaces as orm_ifs
 
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.utils import filefunc
 from ic.utils import lock as lockmod
 from ic.log import log
@@ -241,7 +241,7 @@ class icDBResLoadManager(object):
         """
         p, tail = os.path.split(path)
         nm, ext = tail.split('.')
-        ic_res.lockRes(None, nm, ext)
+        resfunc.lockRes(None, nm, ext)
 
     def unlock_file(self, path):
         """
@@ -250,7 +250,7 @@ class icDBResLoadManager(object):
         """
         p, tail = os.path.split(path)
         nm, ext = tail.split('.')
-        ic_res.unlockRes(None, nm, ext)
+        resfunc.unlockRes(None, nm, ext)
 
     def lock_res(self, path, ttl=None, bAdd=True):
         """
@@ -305,7 +305,7 @@ class icDBResLoadManager(object):
         """
         p, tail = os.path.split(path)
         nm, ext = tail.split('.')
-        ic_res.isLockRes(None, nm, ext)
+        resfunc.isLockRes(None, nm, ext)
 
     def is_lock_res(self, path):
         """
@@ -324,7 +324,7 @@ class icDBResLoadManager(object):
         """
         filename = filefunc.getAbsolutePath(path)
         log.debug(u'Загрузка ресурса <%s>. Файл ресурса <%s>' % (path, filename))
-        res = ic_res.ReadAndEvalFile(filename, bRefresh=bRefresh)
+        res = resfunc.ReadAndEvalFile(filename, bRefresh=bRefresh)
         return res
 
     def load_res(self, path, bRefresh=True):
@@ -354,7 +354,7 @@ class icDBResLoadManager(object):
         else:
             p, tail = os.path.split(path)
             nm, ext = tail.split('.')
-            return ic_res.getLockResRecord(None, nm, ext)
+            return resfunc.getLockResRecord(None, nm, ext)
 
     def get_user(self):
         if hasattr(self.ic, 'getCurUserName'):

@@ -12,7 +12,7 @@ import os.path
 import ic.imglib.common as imglib
 
 from ic.utils import filefunc
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.dlg import dlgfunc
 from ic.log import log
 
@@ -353,19 +353,19 @@ class icPrjUserPrototype(prj_node.icPrjNode):
 
             self.getRoot().unlockResInResEditor(res_editor)
             if not self.readonly:
-                is_lock = ic_res.isLockRes(res_name, res_file, res_ext,
-                                           self.getRoot().lock_dir)
+                is_lock = resfunc.isLockRes(res_name, res_file, res_ext,
+                                            self.getRoot().lock_dir)
                 if not is_lock:
                     # Если ресурс не заблокирован, то заблокировать его
                     # и отдать на редактирование
-                    ic_res.lockRes(res_name, res_file, res_ext,
-                                   self.getRoot().lock_dir)
+                    resfunc.lockRes(res_name, res_file, res_ext,
+                                    self.getRoot().lock_dir)
                     return res_editor.SetResource(res_name,
                                                   res_path, res_file, res_ext,
                                                   bEnable=True)
                 else:
-                    lock_rec = ic_res.getLockResRecord(res_name, res_file,
-                                                       res_ext, self.getRoot().lock_dir)
+                    lock_rec = resfunc.getLockResRecord(res_name, res_file,
+                                                        res_ext, self.getRoot().lock_dir)
                     dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                     u'msgid "Resource %s is locked by user %s. Computer: %s."' % (res_name,
                                                                                                   lock_rec['user'],

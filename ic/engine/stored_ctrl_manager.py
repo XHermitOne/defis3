@@ -12,7 +12,7 @@ import os.path
 from ic.log import log
 from ic.utils import resfunc
 from ic.utils import filefunc
-from ic.utils import ic_res
+from ic.utils import resfunc
 
 
 __version__ = (0, 1, 2, 1)
@@ -32,7 +32,7 @@ class icStoredCtrlManager(object):
         # Определить имя файла для хранения данных
         res_filename = os.path.join(filefunc.getPrjProfilePath(),
                                     name +'.ext')
-        return resfunc.SaveResourcePickle(res_filename, kwargs)
+        return resfunc.saveResourcePickle(res_filename, kwargs)
 
     def load_ext_data(self, name):
         """
@@ -43,7 +43,7 @@ class icStoredCtrlManager(object):
         """
         res_filename = os.path.join(filefunc.getPrjProfilePath(),
                                     name +'.ext')
-        data = resfunc.LoadResourcePickle(res_filename)
+        data = resfunc.loadResourcePickle(res_filename)
         if data is None:
             data = dict()
         return data
@@ -57,7 +57,7 @@ class icStoredCtrlManager(object):
         """
         if save_filename:
             # Просто записать в файл
-            ic_res.SaveResourcePickle(save_filename, save_data)
+            resfunc.saveResourcePickle(save_filename, save_data)
         else:
             log.warning(u'Не определен файл для сохранения фильтра')
             return False
@@ -71,7 +71,7 @@ class icStoredCtrlManager(object):
         """
         if save_filename:
             # Просто записать в файл
-            return ic_res.LoadResourcePickle(save_filename)
+            return resfunc.loadResourcePickle(save_filename)
         else:
             log.warning(u'Не определен файл для сохранения фильтра')
         return None

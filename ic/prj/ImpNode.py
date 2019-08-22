@@ -13,7 +13,7 @@ import wx
 from ic.imglib import common as imglib
 
 from ic.utils import filefunc
-from ic.utils import ic_res
+from ic.utils import resfunc
 from ic.dlg import dlgfunc
 from ic.log import log
 
@@ -356,9 +356,9 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
         """
         if prj_filename.endswith('_pkl.pro'):
             # Определяем тип ресурса по окончанию имени файла
-            return ic_res.LoadResourcePickle(prj_filename)
+            return resfunc.loadResourcePickle(prj_filename)
         else:
-            return ic_res.LoadResourceText(prj_filename)
+            return resfunc.loadResourceText(prj_filename)
 
     def getPath(self):
         """

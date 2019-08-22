@@ -348,7 +348,7 @@ class icVarStorage:
             if self._res_filename is None or self._res_filename == '':
                 return False, None
 
-            resfunc.SaveResourceText(self._res_filename, self._storage)
+            resfunc.saveResourceText(self._res_filename, self._storage)
         except:
             log.fatal()
 
@@ -361,7 +361,7 @@ class icVarStorage:
             if res_filename != '':
                 self.setResFilename(res_filename)
             if self._res_filename != '':
-                self._storage = resfunc.LoadResourceText(self._res_filename)
+                self._storage = resfunc.loadResourceText(self._res_filename)
         except:
             log.fatal()
 
