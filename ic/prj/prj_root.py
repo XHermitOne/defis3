@@ -237,9 +237,9 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         Создать новый __init__.py файл проекта.
         """
         log.info(_('__init__.py is created in folder %s') % prj_path)
-        return ic_file.icCopyFile(os.path.join(os.path.dirname(__file__),
+        return ic_file.copyFile(os.path.join(os.path.dirname(__file__),
                                                'prj__init__prototype.py'),
-                                  os.path.join(prj_path, '__init__.py'), False)
+                                os.path.join(prj_path, '__init__.py'), False)
         
     def newPrj(self):
         """
@@ -445,7 +445,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             self.imp_prj_file_name = prj_filename
             self._openDefault()
             # Сохранить время и размер до следующей синхронизации
-            self.prj_res_time = ic_file.GetMakeFileTime(prj_filename)
+            self.prj_res_time = ic_file.getMakeFileTime(prj_filename)
             self.prj_res_size = os.path.getsize(prj_filename)
 
             # определить папку блокировок
@@ -526,7 +526,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         """
         prj_file = self.getPrjFileName()
         if prj_file:
-            cur_prj_res_time = ic_file.GetMakeFileTime(prj_file)
+            cur_prj_res_time = ic_file.getMakeFileTime(prj_file)
             cur_prj_res_size = os.path.getsize(prj_file)
             if (cur_prj_res_time != self.prj_res_time) or \
                (cur_prj_res_size != self.prj_res_size) or \
@@ -566,7 +566,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         """
         ok = self.prj_res_manager.savePrj()
         # Сохранить время и размер до следующей синхронизации
-        self.prj_res_time = ic_file.GetMakeFileTime(self.getPrjFileName())
+        self.prj_res_time = ic_file.getMakeFileTime(self.getPrjFileName())
         self.prj_res_size = os.path.getsize(self.getPrjFileName())
         return ok
 

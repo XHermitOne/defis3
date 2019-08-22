@@ -182,7 +182,7 @@ def smb_download_file_rename(download_urls=None, filename=None, dst_filename=Non
             # Успешно загрузили
             # Перименование файла
             new_filename = os.path.join(tmp_path, filename)
-            ic_file.icCopyFile(new_filename, dst_filename, re_write)
+            ic_file.copyFile(new_filename, dst_filename, re_write)
 
             # После копирования удаляем временную директорию
             shutil.rmtree(tmp_path, True)

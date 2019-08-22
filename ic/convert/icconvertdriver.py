@@ -79,7 +79,7 @@ class icDBFConvertDriverPrototype(icConvertDriverPrototype):
         """
         dbf_file_name = self.resource['dbf_file']
         if dbf_file_name: 
-            return ic_file.AbsolutePath(dbf_file_name)
+            return ic_file.get_absolute_path(dbf_file_name)
         return None
         
     def First(self):

@@ -37,7 +37,7 @@ class icRegUserJournal:
         @param RegJrnFileName_: Файл журнала регистрации пользователей.
         """
         # Имя файла журнала регистрации
-        self._journal_file_name = ic_file.AbsolutePath(RegJrnFileName_)
+        self._journal_file_name = ic_file.get_absolute_path(RegJrnFileName_)
         # Имя текущего ползователя
         self._current_user = None
         # Удалить регистрацию о пользователе из журнала?

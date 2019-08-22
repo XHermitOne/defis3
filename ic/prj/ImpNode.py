@@ -222,7 +222,7 @@ class icPrjImportSystems(icPrjImportFolder):
         if subsys_dir and prj_dir:
             log.info(u'Копирование подсистемы <%s> в <%s>' % (subsys_dir, prj_dir))
             # Просто скопировать одну папку в другую
-            ok = ic_file.CopyDir(Dir_=subsys_dir, ToDir_=prj_dir, ReWrite_=True)
+            ok = ic_file.copyDir(src_dir=subsys_dir, dst_dir=prj_dir, bReWrite=True)
             # Кроме кодирования надо удалить все пикловсвие файлы из проекта
             # иначе бывает рассинхронизация с отредактированными ресурсами
             new_subsys_dir = os.path.join(prj_dir, os.path.basename(subsys_dir))
@@ -454,7 +454,7 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
             else:
                 # Скопировать в папку текущего проекта
                 prj_dir = self._Parent.copySubSys(prj_file_name)
-                prj_filenames = [filename for filename in ic_file.GetFilesByExt(prj_dir, '.pro') if not filename.startswith('_pkl.pro')]
+                prj_filenames = [filename for filename in ic_file.getFilenamesByExt(prj_dir, '.pro') if not filename.startswith('_pkl.pro')]
                 self.imp_prj_file_name = prj_filenames[0] if prj_filenames else None
                 # добавить в список
                 if self.imp_prj_file_name:

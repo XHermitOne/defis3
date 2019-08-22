@@ -135,7 +135,7 @@ def import_sprvent():
                 # Скопировать VNT в DBF
                 if os.path.exists(dbf_filename):
                     os.remove(dbf_filename)
-                ic_file.icCopyFile(vnt_filename, dbf_filename)
+                ic_file.copyFile(vnt_filename, dbf_filename)
             else:
                 log.debug(u'Справочник <%s> уже загружен' % local_filename)
 

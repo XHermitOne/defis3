@@ -63,8 +63,8 @@ class icPrjSecurity(prj_node.icPrjFolder):
         prj_file_name = self.getRoot().getPrjFileName()
         if prj_file_name is None:
             prj_name = self.getRoot().prj_res_manager.getPrjRootName()
-            return ic_file.AbsolutePath(prj_name,
-                                        os.path.join(os.path.dirname(self.getRoot().getPrjFileName()),
+            return ic_file.get_absolute_path(prj_name,
+                                             os.path.join(os.path.dirname(self.getRoot().getPrjFileName()),
                                                      user_manager.DEFAULT_USERS_RES_FILE))
         else:
             return os.path.join(os.path.split(prj_file_name)[0],
@@ -197,7 +197,7 @@ class icPrjSecurity(prj_node.icPrjFolder):
         Открытие файлов ролей.
         """
         prj_dir = ic.getVar('PRJ_DIR')
-        role_files = ic_file.GetFilesByExt(prj_dir, '.rol')
+        role_files = ic_file.getFilenamesByExt(prj_dir, '.rol')
         # Сразу отфильтровать Pkl файлы
         role_files = [role_file for role_file in role_files if '_pkl.rol' not in role_file.lower()]
 
@@ -322,8 +322,8 @@ class icPrjUserPrototype(prj_node.icPrjNode):
         prj_file_name = self.getRoot().getPrjFileName()
         if prj_file_name is None:
             prj_name = self.getRoot().prj_res_manager.getPrjRootName()
-            return ic_file.AbsolutePath(prj_name,
-                                        os.path.dirname(self.getRoot().getPrjFileName()))
+            return ic_file.get_absolute_path(prj_name,
+                                             os.path.dirname(self.getRoot().getPrjFileName()))
         else:
             return os.path.split(prj_file_name)[0]
         

@@ -44,7 +44,7 @@ class icAnaliticAggregate:
         # self._source_tab=None
 
         # Конфигурация подсистемы агрегирования
-        self._aggregate_ctrl = None     # ic_ini.Ini2Dict(ic_file.AbsolutePath(AggregateINIFileName_))
+        self._aggregate_ctrl = None     # ic_ini.Ini2Dict(ic_file.get_absolute_path(AggregateINIFileName_))
         if self._metatree:
             self._aggregate_ctrl = self.createAggregateCtrl(self._metatree)
 

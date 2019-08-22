@@ -577,7 +577,7 @@ class icPrjTree(wx.TreeCtrl):
             try:
                 # Затем построить дерево подсистемы
                 sub_sys_dir = node.getPathInPrj()
-                sub_sys_prj = ic_file.GetFilesByExt(sub_sys_dir, '.pro')[0]
+                sub_sys_prj = ic_file.getFilenamesByExt(sub_sys_dir, '.pro')[0]
                 node.buildSubSysTree(sub_sys_prj)
             
                 # Удалить все дочерние элементы

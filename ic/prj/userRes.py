@@ -276,7 +276,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
         
         if self._user_res_file_name:
             # Создать путь к файлу
-            ic_file.MakeDirs(os.path.split(self._user_res_file_name)[0])
+            ic_file.makeDirs(os.path.split(self._user_res_file_name)[0])
             # Сохранить сам файл
             return ic_res.SaveResourceText(self._user_res_file_name,
                                            self._user_res)
@@ -296,9 +296,9 @@ class UserIcResource(resManager.icResourceManagerInterface):
         if self._user_res_file_name and \
            os.path.exists(self._user_res_file_name):
             # Обновить ресурс?
-            refresh = self._res_maker_time != ic_file.GetMakeFileTime(self._user_res_file_name)
+            refresh = self._res_maker_time != ic_file.getMakeFileTime(self._user_res_file_name)
             self._user_res = ic_res.ReadAndEvalFile(self._user_res_file_name, bRefresh=refresh)
-            self._res_maker_time = ic_file.GetMakeFileTime(self._user_res_file_name)
+            self._res_maker_time = ic_file.getMakeFileTime(self._user_res_file_name)
         return self._user_res
 
     def getRes(self):

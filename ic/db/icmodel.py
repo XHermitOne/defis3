@@ -69,7 +69,7 @@ def createSchemeDir(scheme_dirname=None):
     if scheme_dirname is None:
         scheme_dirname = getSchemeDir(bAutoCreate=False)
 
-    result = ic_file.MakeDirs(scheme_dirname)
+    result = ic_file.makeDirs(scheme_dirname)
 
     # Т.к. папка схемы является пакетом,
     # то необходимо проверить наличие __init__.py файла

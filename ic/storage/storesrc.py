@@ -560,7 +560,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
         # Клонировать только если такого файла нет
         if not os.path.exists(new_file_name):
             self.closeFile()
-            ic_file.icCopyFile(self._FileName, new_file_name, False)
+            ic_file.copyFile(self._FileName, new_file_name, False)
             # Заменить имя узла в файле
             file = None
             try:
@@ -839,7 +839,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
             self._NodeDir = NodeDir_
 
         if not os.path.exists(self._NodeDir):
-            ic_file.MakeDirs(self._NodeDir)
+            ic_file.makeDirs(self._NodeDir)
 
     def renameNodeDir(self, NewNodeDir_):
         """
@@ -847,7 +847,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
         @param NewNodeDir_: Новая папка узла.
         """
         try:
-            if not ic_file.SamePathWin(NewNodeDir_, self._NodeDir):
+            if not ic_file.isSamePathWin(NewNodeDir_, self._NodeDir):
                 if NewNodeDir_ and os.path.exists(self._NodeDir):
                     self.closeAllFiles()
                     os.rename(self._NodeDir, NewNodeDir_)
@@ -862,7 +862,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
         @param NewNodeDir_: Новая папка узла.
         """
         try:
-            if not ic_file.SamePathWin(NewNodeDir_, self._NodeDir):
+            if not ic_file.isSamePathWin(NewNodeDir_, self._NodeDir):
                 if NewNodeDir_ and os.path.exists(self._NodeDir):
                     self.closeAllFiles()
                     shutil.copytree(self._NodeDir, NewNodeDir_)
@@ -997,7 +997,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
         # Клонировать только если такого директория нет
         if not os.path.exists(new_dir_name):
             self.closeAllFiles()
-            ic_file.CloneDir(self._NodeDir, new_dir_name, False)
+            ic_file.cloneDir(self._NodeDir, new_dir_name, False)
             # Установить имя в файле свойств
             file = None
             try:
@@ -1181,7 +1181,7 @@ class icTreeDirStorage(icDirStorage):
         if os.path.exists(StorageDir_):
             try:
                 shutil.rmtree(StorageDir_, True)
-                ic_file.MakeDirs(StorageDir_)
+                ic_file.makeDirs(StorageDir_)
             except:
                 log.fatal(u'Ошибка очистки папки объектного хранилища <%s>' % StorageDir_)
         
@@ -1286,7 +1286,7 @@ class icObjectStorageSource(icTreeDirStorage,
         """
         storage_interface.icObjectStorageSourceInterface.__init__(self, Res_)
         self._spc = ic_util.SpcDefStruct(SPC_IC_OBJ_STORAGE_SRC, self._res)
-        storage_dir = ic_file.AbsolutePath(ic_exec.execute_code(self._spc['storage_dir'], self))
+        storage_dir = ic_file.get_absolute_path(ic_exec.execute_code(self._spc['storage_dir'], self))
         icTreeDirStorage.__init__(self, storage_dir)
 
 

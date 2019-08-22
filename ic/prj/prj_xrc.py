@@ -66,7 +66,7 @@ class icPrjXRCResource(prj_node.icPrjNode):
         # Удалить файл
         if os.path.exists(res_file_name):
             # ВНИМАНИЕ! Файл удаляем, но оставляем его бекапную версию!!!
-            ic_file.icCreateBAKFile(res_file_name)
+            ic_file.createBAKFile(res_file_name)
             os.remove(res_file_name)
         # Для синхронизации дерева проекта
         self.getRoot().save()

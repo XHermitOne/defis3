@@ -94,7 +94,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         if result and os.path.exists(new_doc_panel.DEFAULT_SCAN_FILENAME):
             # Если файл существует, то значит сканирование прошло успешно
             # Необходимо скопировать в новый файл
-            ic_file.icCopyFile(new_doc_panel.DEFAULT_SCAN_FILENAME, new_scan_filename)
+            ic_file.copyFile(new_doc_panel.DEFAULT_SCAN_FILENAME, new_scan_filename)
             if not scan_filename:
                 # Если ранее не определен отсканированный файл, то расположить его в каталоге
                 new_doc_panel.put_doc_catalog(self.document, new_scan_filename)

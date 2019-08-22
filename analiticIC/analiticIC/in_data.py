@@ -51,35 +51,35 @@ def loadInputData(input_data_dir=None):
         input_data_dir=input_data.getInputDataDir()
 
     #   Загружаем файлы по реализации
-    dbf_files=ic_file.GetFilesByExt(input_data_dir, '.olp')
+    dbf_files=ic_file.getFilenamesByExt(input_data_dir, '.olp')
     dbf_files.sort()
     # print '--->>>loadInputData -> <analiticIC>',dbf_files,input_data_dir #,ic_file.ListDir(input_data_dir)
     for dbf_file in dbf_files:
         # print 'LOAD DATA FROM',dbf_file
         loadInputDataDBF(dbf_file,'analitic')
         #Поменять расширение
-        #ic_file.icChangeExt(dbf_file,'_rlz.bak')
+        #ic_file.changeExt(dbf_file,'_rlz.bak')
 
     #   Загружаем файлы по заявкам
-    dbf_files=ic_file.GetFilesByExt(input_data_dir, '.olp')
+    dbf_files=ic_file.getFilenamesByExt(input_data_dir, '.olp')
     dbf_files.sort()
     # print '--->>>loadInputData -> <zayavkiIC>',dbf_files,input_data_dir
     for dbf_file in dbf_files:
         # print 'LOAD DATA FROM',dbf_file
         loadInputDataDBF(dbf_file, 'zayavki')
         #Поменять расширение
-        ic_file.icChangeExt(dbf_file,'.bak')
+        ic_file.changeExt(dbf_file, '.bak')
         #Отметить в логе
         _logInputData(dbf_file)
 
     #   Загружаем файлы по оплате
-#    dbf_files=ic_file.GetFilesByExt(input_data_dir,'.grp')
+#    dbf_files=ic_file.getFilenamesByExt(input_data_dir,'.grp')
 #    print '--->>>loadInputData -> <pay>', dbf_files,input_data_dir
 #    for dbf_file in dbf_files:
 #        print 'LOAD DATA FROM',dbf_file
 #        loadInputDataDBF(dbf_file, 'pay')
 #        #Поменять расширение
-#        ic_file.icChangeExt(dbf_file,'_grp.bak')
+#        ic_file.changeExt(dbf_file,'_grp.bak')
 
     #print 'Refresh All Views'
     #refreshAllTabView()
@@ -571,7 +571,7 @@ def loadDataStandart():
                     ic_file.Remove(cur_file)
                 else:
                     #Поменять расширение
-                    ic_file.icChangeExt(cur_file,'.bak')
+                    ic_file.changeExt(cur_file, '.bak')
                 #Прописать в логе
                 if load_date:
                     log.add(date_log=ic_time.TodayFmt('%Y.%m.%d'),

@@ -45,7 +45,7 @@ def getPrjSubSysDirs(prj_dirname):
     @param prj_dirname: Папка проекта.
     """
     root_prj_dir = os.path.dirname(prj_dirname)
-    pro_files = ic.utils.ic_file.GetFilesByExt(prj_dirname, '.pro')
+    pro_files = ic.utils.ic_file.getFilenamesByExt(prj_dirname, '.pro')
     if pro_files:
         pro_file = pro_files[0]
         prj = ic.utils.ic_res.ReadAndEvalFile(pro_file)
@@ -60,7 +60,7 @@ def getSubSysDirs(prj_dirname):
     @param prj_dirname: Папка проекта.
     """
     root_prj_dir = os.path.dirname(prj_dirname)
-    pro_files = ic.utils.ic_file.GetFilesByExt(prj_dirname, '.pro')
+    pro_files = ic.utils.ic_file.getFilenamesByExt(prj_dirname, '.pro')
     if pro_files:
         pro_file = pro_files[0]
         prj = ic.utils.ic_res.ReadAndEvalFile(pro_file)

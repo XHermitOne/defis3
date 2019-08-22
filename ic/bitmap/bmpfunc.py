@@ -70,7 +70,7 @@ def createBitmap(img_filename, bMask=False):
     """
     try:
         # Преобразовать относительные пути в абсолютные
-        img_filename = ic_file.AbsolutePath(img_filename)
+        img_filename = ic_file.get_absolute_path(img_filename)
         if (not img_filename) or (not os.path.exists(img_filename)):
             log.warning(u'Не корректное имя файла образа: <%s>' % img_filename)
             return None

@@ -70,7 +70,7 @@ class icPrjWXCrafterProject(prj_node.icPrjNode,
         # Удалить файл
         if os.path.exists(res_file_name):
             # ВНИМАНИЕ! Файл удаляем, но оставляем его бекапную версию!!!
-            ic_file.icCreateBAKFile(res_file_name)
+            ic_file.createBAKFile(res_file_name)
             os.remove(res_file_name)
         # Также могут быть сопутствующие файлы, которые в принципе не нужны
         bitmap_res_filename = os.path.join(self.getModulePath(),

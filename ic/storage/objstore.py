@@ -49,7 +49,7 @@ class icObjectStorageDir(storesrc.icTreeDirStorage,
         @param Dir_: Папка - хранилище.
         """
         # Привести относительные пути к папке проекта
-        Dir_ = ic_file.AbsolutePath(Dir_)
+        Dir_ = ic_file.get_absolute_path(Dir_)
         storage_interface.icObjectStorageInterface.__init__(self, None)
         storesrc.icTreeDirStorage.__init__(self, Dir_)
         self.name = os.path.basename(Dir_)

@@ -141,7 +141,7 @@ def CreatePackage(PackageDir_):
     """
     Создать пакет. То же самое что и создать __init__ файл.
     """
-    return CreateInitFile(ic_file.AbsolutePath(PackageDir_))
+    return CreateInitFile(ic_file.get_absolute_path(PackageDir_))
 
 
 _PyFileDefault = '''#!/usr/bin/env python3
@@ -194,7 +194,7 @@ def LoadResource(FileName_):
     Получить ресурс в ресурсном файле.
     @param FileName_: Полное имя ресурсного файла.
     """
-    FileName_ = ic_file.AbsolutePath(FileName_)
+    FileName_ = ic_file.get_absolute_path(FileName_)
     # Сначала предположим что файл в формате Pickle.
     struct = LoadResourcePickle(FileName_)
     if struct is None:
@@ -212,7 +212,7 @@ def LoadResourcePickle(FileName_):
     Получить ресурс из ресурсного файла в формате Pickle.
     @param FileName_: Полное имя ресурсного файла.
     """
-    FileName_ = ic_file.AbsolutePath(FileName_)
+    FileName_ = ic_file.get_absolute_path(FileName_)
     if os.path.isfile(FileName_):
         f = None
         try:
@@ -235,7 +235,7 @@ def LoadResourceText(FileName_):
     Получить ресурс из ресурсного файла в текстовом формате.
     @param FileName_: Полное имя ресурсного файла.
     """
-    FileName_ = ic_file.AbsolutePath(FileName_)
+    FileName_ = ic_file.get_absolute_path(FileName_)
     if os.path.isfile(FileName_):
         f = None
         try:
@@ -260,7 +260,7 @@ def SaveResourcePickle(FileName_, Resource_):
     @param Resource_: Словарно-списковая структура спецификации.
     @return: Возвращает результат выполнения операции True/False.
     """
-    FileName_ = ic_file.AbsolutePath(FileName_)
+    FileName_ = ic_file.get_absolute_path(FileName_)
     f = None
     try:
         # Если необходимые папки не созданы, то создать их
@@ -290,7 +290,7 @@ def SaveResourceText(FileName_, Resource_, ToStruct_=False):
     @param ToStruct_: Сохранить в структурном виде ресурс?
     @return: Возвращает результат выполнения операции True/False.
     """
-    FileName_ = ic_file.AbsolutePath(FileName_)
+    FileName_ = ic_file.get_absolute_path(FileName_)
     f = None
     try:
         # Если необходимые папки не созданы, то создать их

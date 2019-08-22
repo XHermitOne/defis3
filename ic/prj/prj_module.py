@@ -252,7 +252,7 @@ class icPrjModules(prj_node.icPrjFolder):
         is_in_prj = False
         is_init_file = False
         if is_dir:
-            is_in_prj = ic_file.IsSubDir(directory, os.path.dirname(self.getRoot().getPrjFileName()))
+            is_in_prj = ic_file.isSubDir(directory, os.path.dirname(self.getRoot().getPrjFileName()))
             is_init_file = os.path.exists(os.path.join(directory, '__init__.py'))
         is_sub_sys = False
         return is_dir and is_in_prj and is_init_file and (not is_sub_sys)
@@ -462,8 +462,8 @@ class icPrjPackage(prj_node.icPrjFolder):
         if issubclass(self._Parent.__class__, icPrjPackage):
             cur_path = os.path.join(self._Parent.getPath(), cur_path)
         elif issubclass(self._Parent.__class__, icPrjModules):
-            cur_path = ic_file.AbsolutePath(os.path.join('.', self.getRoot().name, cur_path),
-                                            os.path.split(os.path.dirname(self.getRoot().getPrjFileName()))[0])
+            cur_path = ic_file.get_absolute_path(os.path.join('.', self.getRoot().name, cur_path),
+                                                 os.path.split(os.path.dirname(self.getRoot().getPrjFileName()))[0])
         # log.debug(u'Путь до пакета <%s>' % cur_path)
         return cur_path
             
@@ -529,7 +529,7 @@ class icPrjPackage(prj_node.icPrjFolder):
         """
         py_file = os.path.join(self.getPath(), '__init__.py')
         copy_py_file = self.getCopyModuleName()
-        ic_file.icCopyFile(py_file, copy_py_file)
+        ic_file.copyFile(py_file, copy_py_file)
         me_node = prj_node.icPrjNode.cut(self)
         self.delete()
         return me_node
@@ -541,7 +541,7 @@ class icPrjPackage(prj_node.icPrjFolder):
         py_file = os.path.join(self.getPath(), '__init__.py')
         copy_node = prj_node.icPrjNode.copy(self)
         copy_py_file = copy_node.getCopyModuleName()
-        ic_file.icCopyFile(py_file, copy_py_file)
+        ic_file.copyFile(py_file, copy_py_file)
         return copy_node
         
     def paste(self, node):
@@ -567,7 +567,7 @@ class icPrjPackage(prj_node.icPrjFolder):
             copy_module_file_name = node.getCopyModuleName()
             ok = False
             if os.path.exists(copy_module_file_name):
-                ok = ic_file.icCopyFile(copy_module_file_name, module_file_name)
+                ok = ic_file.copyFile(copy_module_file_name, module_file_name)
                 os.remove(copy_module_file_name)
             
             # Для синхронизации дерева проекта
@@ -747,7 +747,7 @@ class icPrjModule(prj_node.icPrjNode):
         # Выгрузить из редакторов
         self.getRoot().getParent().getIDE().closeFile(module_name)
         res_file_name = self.getRoot().getParent().res_editor.GetResFileName()
-        if res_file_name and ic_file.SamePathWin(module_name, res_file_name):
+        if res_file_name and ic_file.isSamePathWin(module_name, res_file_name):
             self.getRoot().getParent().res_editor.CloseResource()
             
         # Удалить все блокировки
@@ -757,7 +757,7 @@ class icPrjModule(prj_node.icPrjNode):
         if os.path.exists(module_name):
             # ВНИМАНИЕ! Удаляем файл, но оставляем его бекапную версию
             # для возможного восстановления!
-            ic_file.icCreateBAKFile(module_name)
+            ic_file.createBAKFile(module_name)
             os.remove(module_name)
         # Для синхронизации дерева проекта
         self.getRoot().save()
@@ -768,7 +768,7 @@ class icPrjModule(prj_node.icPrjNode):
         """
         module_name = os.path.join(self.getModulePath(),
                                    self.name+self.ext)
-        ic_file.icChangeExt(module_name, '.bak')
+        ic_file.changeExt(module_name, '.bak')
         me_node = prj_node.icPrjNode.cut(self)
         self.delete()
         return me_node
@@ -781,7 +781,7 @@ class icPrjModule(prj_node.icPrjNode):
                                    self.name+self.ext)
         copy_node = prj_node.icPrjNode.copy(self)
         copy_module_name = copy_node.getCopyModuleName()
-        ic_file.icCopyFile(module_name, copy_module_name)
+        ic_file.copyFile(module_name, copy_module_name)
         return copy_node
         
     def paste(self, node):
@@ -807,7 +807,7 @@ class icPrjModule(prj_node.icPrjNode):
             copy_module_file_name = node.getCopyModuleName()
             ok = False
             if os.path.exists(copy_module_file_name):
-                ok = ic_file.icCopyFile(copy_module_file_name, module_file_name)
+                ok = ic_file.copyFile(copy_module_file_name, module_file_name)
                 os.remove(copy_module_file_name)
             # Для синхронизации дерева проекта
             node.getRoot().save()

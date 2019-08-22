@@ -2177,7 +2177,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         @rtype: C{bool}
         @return: Возвращает признак успешного переименования.
         """
-        if ic_file.SamePathWin(self.file, oldNameRes) or ic_file.SamePathWin(self.file, fileName):
+        if ic_file.isSamePathWin(self.file, oldNameRes) or ic_file.isSamePathWin(self.file, fileName):
             self.CloseResource(bSaveAs=False, bCloseGrpEdt=False)
 
         # Читаем старый ресурс

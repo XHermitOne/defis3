@@ -796,7 +796,7 @@ class icLoginManager(object):
         self._loader = loader or db_res_load_manager.icDBResLoadManager()
         self._users_resource = None
         glob_functions.letVar('LOADER', self._loader)
-        users_res_file_name = ic_file.PathFile(glob_functions.getVar('SYS_RES'), users_res_filename)
+        users_res_file_name = ic_file.getPathFile(glob_functions.getVar('SYS_RES'), users_res_filename)
         self._users_resource = self._loader.load_res(users_res_file_name, bRefresh=True)
 
     def getResource(self):

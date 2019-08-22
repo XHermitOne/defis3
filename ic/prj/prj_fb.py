@@ -66,7 +66,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
         # Удалить файл
         if os.path.exists(res_file_name):
             # ВНИМАНИЕ! Файл удаляем, но оставляем его бекапную версию!!!
-            ic_file.icCreateBAKFile(res_file_name)
+            ic_file.createBAKFile(res_file_name)
             os.remove(res_file_name)
         # Для синхронизации дерева проекта
         self.getRoot().save()
@@ -94,3 +94,54 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
         """
         # Разблокировать себя
         pass
+
+    def cut(self):
+        """
+        Вырезать.
+        """
+        module_name = self.getPath()
+        ic_file.changeExt(module_name, '.bak')
+        me_node = prj_node.icPrjNode.cut(self)
+        self.delete()
+        return me_node
+
+    def copy(self):
+        """
+        Копировать.
+        """
+        module_name = os.path.join(self.getModulePath(),
+                                   self.name + self.ext)
+        copy_node = prj_node.icPrjNode.copy(self)
+        copy_module_name = copy_node.getCopyModuleName()
+        ic_file.copyFile(module_name, copy_module_name)
+        return copy_node
+
+    def paste(self, node):
+        """
+        Вставить.
+        @param node: Вставляемый узел.
+        """
+        # Можно вставлять толко модули или другие пакеты
+        if issubclass(node.__class__, icPrjModule) or \
+                issubclass(node.__class__, icPrjPackage):
+            prj_node.icPrjNode.paste(self, node)
+
+            mod_name = node.getModuleName()
+            mod_path = node.getPath()
+            # Есть уже модуль с таким именем?
+            if self.getRoot().prj_res_manager.isModByName(mod_name):
+                ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
+                                u'Модуль <%s> уже существует!' % mod_name)
+                return False
+            # Добавить модуль в ресурс проекта
+            node.getRoot().prj_res_manager.addModule(mod_name, mod_path)
+            module_file_name = os.path.join(mod_path, mod_name + self.ext)
+            copy_module_file_name = node.getCopyModuleName()
+            ok = False
+            if os.path.exists(copy_module_file_name):
+                ok = ic_file.copyFile(copy_module_file_name, module_file_name)
+                os.remove(copy_module_file_name)
+            # Для синхронизации дерева проекта
+            node.getRoot().save()
+            return ok
+        return False

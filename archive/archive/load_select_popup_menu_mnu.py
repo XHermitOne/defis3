@@ -217,7 +217,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         @return: True - загрузка произведена, False - нажата <Отмена>.
         """
         # Удалить все ранее загруженные файлы
-        dbf_filenames = ic_file.GetFilesByExt(load_net_config.DEST_PATH, '.DBF')
+        dbf_filenames = ic_file.getFilenamesByExt(load_net_config.DEST_PATH, '.DBF')
         for dbf_filename in dbf_filenames:
             if not dbf_filename.endswith('SPRVENT.DBF') and not dbf_filename.endswith('ZPL.DBF'):
                 ic_file.removeFile(dbf_filename)

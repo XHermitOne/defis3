@@ -228,11 +228,11 @@ class icObjFormGenerator:
         spc['onInit'] = 'GetManager(self).onInit(event)'
 
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'),
-                                                                 spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'),
+                                                                      spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), name + '.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), name + '.frm'))
         txt = frm_gen_templates._choiceDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                           form_file_name, res_module_file_name,
                                                           name+'_ChoicePanel', name+'_ChoicePanel')
@@ -291,10 +291,10 @@ class icObjFormGenerator:
         frm_spc['onInit'] = 'GetManager(self).onInit(event)'
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), name + '.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), name + '.frm'))
         txt = frm_gen_templates._choiceDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                           form_file_name, res_module_file_name,
                                                           name+'_ChoiceForm', name+'_ChoiceForm')
@@ -501,10 +501,10 @@ class icObjFormGenerator:
         frm_spc['title'] = u'Создание: '+self._getTxtDescription()
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
         txt = frm_gen_templates._initResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                      form_file_name, res_module_file_name,
                                                      FormName_+'_InitForm', FormName_+'_InitForm')
@@ -697,10 +697,10 @@ class icObjFormGenerator:
         frm_spc['title'] = u'Поиск: '+self._getTxtDescription()
 
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
         txt = frm_gen_templates._searchDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                           form_file_name, res_module_file_name,
                                                           FormName_+'_SearchDialog', FormName_+'_SearchDialog')
@@ -746,10 +746,10 @@ class icObjFormGenerator:
         frm_spc['description'] = u'Поиск: '+self._getTxtDescription()
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
         txt = frm_gen_templates._searchResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                        form_file_name, res_module_file_name,
                                                        FormName_+'_SearchPanel', FormName_+'_SearchPanel')
@@ -984,10 +984,10 @@ class icObjFormGenerator:
         # frm_spc['onInit'] = 'GetManager(self).onInit(event)'
 
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '_dlg.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '_dlg.frm'))
         txt = frm_gen_templates._editDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                         form_file_name, res_module_file_name,
                                                         FormName_+'_EditDialog', FormName_+'_EditDialog')
@@ -1054,10 +1054,10 @@ class icObjFormGenerator:
         frm_spc['description'] = u'Редактирование: '+self._getTxtDescription()
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
         txt = frm_gen_templates._editResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                      form_file_name, res_module_file_name,
                                                      FormName_+'_EditPanel', FormName_+'_EditPanel')
@@ -1270,10 +1270,10 @@ class icObjFormGenerator:
         frm_spc['title'] = u'Просмотр: '+self._getTxtDescription()
 
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
         txt = frm_gen_templates._viewDlgResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                         form_file_name, res_module_file_name,
                                                         FormName_+'_ViewDialog', FormName_+'_ViewDialog')
@@ -1320,10 +1320,10 @@ class icObjFormGenerator:
         frm_spc['description'] = u'Просмотр: '+self._getTxtDescription()
         
         # Модуль ресурса
-        res_module_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
+        res_module_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), frm_spc['res_module']))
         if os.path.exists(res_module_file_name):
             os.remove(res_module_file_name)
-        form_file_name = ic_file.AbsolutePath(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
+        form_file_name = ic_file.get_absolute_path(os.path.join(glob_functions.getVar('PRJ_DIR'), FormName_ + '.frm'))
         txt = frm_gen_templates._viewResModuleFmt % (form_file_name, '### RESOURCE_MODULE',
                                                      form_file_name, res_module_file_name,
                                                      FormName_+'_ViewPanel', FormName_+'_ViewPanel')

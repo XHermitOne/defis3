@@ -220,7 +220,7 @@ class icCubesOLAPServer(icwidget.icSimple,
             srv_path = os.path.join(cubes_olap_server.DEFAULT_OLAP_SERVER_DIRNAME, self.getName())
         if srv_path and not os.path.exists(srv_path):
             # Создать папку
-            ic_file.MakeDirs(srv_path)
+            ic_file.makeDirs(srv_path)
         return srv_path
 
     def getINIFileName(self):

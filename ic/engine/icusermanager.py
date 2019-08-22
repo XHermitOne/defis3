@@ -227,7 +227,7 @@ class icUserManager(object):
         """
         if prj_dir is None:
             prj_dir = glob_functions.getVar('PRJ_DIR')
-        role_files = ic_file.GetFilesByExt(prj_dir, '.rol')
+        role_files = ic_file.getFilenamesByExt(prj_dir, '.rol')
         # Отфильтровать pickle файлы
         role_files = [role_file for role_file in role_files if role_file[-8:].lower() != '_pkl.rol']
 

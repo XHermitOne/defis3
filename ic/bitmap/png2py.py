@@ -10,7 +10,7 @@ def img2gif_tmp():
     app = wx.PySimpleApp()
     img_lib = icimglib.icImgLibResource()
     img_lib.createNewImgLib()
-    png_files = ic_file.GetFilesByExt('./tmp/', '.png')
+    png_files = ic_file.getFilenamesByExt('./tmp/', '.png')
     for png_file in png_files:
         img_lib.addImg(png_file)
     img_lib.saveImgLib('new_img_lib.py')

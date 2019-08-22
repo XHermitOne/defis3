@@ -78,7 +78,7 @@ def put_doc_catalog(doc, scan_filename, doRemoveScan=True):
     #    ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Сканированный файл <%s> уже зарегистрирован в БД. Скан не сохраняется' % doc_filename)
     #    return False
 
-    ic_file.icCopyFile(scan_filename, doc_filename)
+    ic_file.copyFile(scan_filename, doc_filename)
 
     cataloger = ic.metadata.THIS.mtd.doc_cataloger.create()
     cataloger.put_object(doc_filename, do_remove=doRemoveScan)

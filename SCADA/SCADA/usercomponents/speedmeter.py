@@ -403,7 +403,7 @@ class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
         @param ICOFileName_: Имя файла *.ico.
         """
         if ICOFileName_:
-            ico_file_name = ic_file.AbsolutePath(ICOFileName_)
+            ico_file_name = ic_file.get_absolute_path(ICOFileName_)
             if os.path.exists(ico_file_name):
                 icon = wx.Icon(ico_file_name, wx.BITMAP_TYPE_ICO)
                 icon.SetWidth(24)
