@@ -212,7 +212,7 @@ def test(par=0):
     
     app = ictestapp.TestApp(par)
 
-    common.img_init()
+    common.init_img()
 
     frame = wx.Frame(None, -1, 'Test')
     win = wx.Panel(frame, -1)

@@ -7,7 +7,7 @@ from ic.imglib import common
 
 def img2png_tmp():
     app = wx.PySimpleApp()
-    common.img_init()
+    common.init_img()
     for img_name in dir(common):
         if not isinstance(common.__dict__[img_name], dict) and \
            not isinstance(common.__dict__[img_name], str) and \

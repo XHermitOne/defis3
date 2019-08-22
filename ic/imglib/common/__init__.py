@@ -30,7 +30,7 @@ import os.path
 import wx
 import importlib.util
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 # Ищем путь до модуля ic
 ic_spec = importlib.util.find_spec('ic')
@@ -44,6 +44,9 @@ def icImageLibName(file_name):
     """
     return os.path.join(img_path, file_name)
 
+
+# Флаг пройденной инициализации образов
+IS_INIT_IMG = False
 
 imgFirstData = None
 imgLastData = None
@@ -295,10 +298,19 @@ imgEdtPluginNot = None
 imgArrowIndicator = None
 
 
-def img_init():
+def init_img(bInitAllImageHandlers=False):
     """
-    функция инициализации картинок
+    Функция инициализации картинок.
+    После создания обекта приложения надо инициализировать поддержку
+    других форматов недокументированной функцией wx.InitAllImageHandlers.
+    В последних версиях wxPython этого делать не надо.
+    Поэтому вызов отключен по умолчанию.
+    @param bInitAllImageHandlers: Произвести инициализацию всех доступных обработчиков изображений WX?
     """
+    global IS_INIT_IMG
+    if IS_INIT_IMG:
+        return
+
     global img_path
     global imgFirstData
     global imgLastData
@@ -533,7 +545,9 @@ def img_init():
     global imgEdtFigures
     global imgArrowIndicator
     global imgDefis
-    wx.InitAllImageHandlers()
+
+    if bInitAllImageHandlers:
+        wx.InitAllImageHandlers()
 
     imgDbgPrompt = wx.Image(os.path.join(img_path, 'bug_go.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
     imgDebug = wx.Image(os.path.join(img_path, 'bug_delete.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
@@ -791,3 +805,14 @@ def img_init():
     
     # Картинки прикладных систем
     imgArrowIndicator = wx.Image(os.path.join(img_path, 'dashboard.png'), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+
+    IS_INIT_IMG = True
+
+
+def is_init_img():
+    """
+    Проверка пройденной инициализации образов.
+    @return: True инициализация уже прошла / False - нет.
+    """
+    global IS_INIT_IMG
+    return IS_INIT_IMG

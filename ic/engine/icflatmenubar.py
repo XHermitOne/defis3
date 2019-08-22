@@ -259,7 +259,7 @@ def simple_test():
     from wx.lib.agw.fmresources import FM_OPT_SHOW_CUSTOMIZE, FM_OPT_SHOW_TOOLBAR, FM_OPT_MINIBAR, SEPARATOR_WIDTH
 
     app = wx.PySimpleApp()
-    common.img_init()
+    common.init_img()
     frame = wx.Frame(None)
 
     mb = icFlatMenuBarPrototype(frame, wx.ID_ANY, 16, 7, options=FM_OPT_SHOW_TOOLBAR|FM_OPT_SHOW_CUSTOMIZE)

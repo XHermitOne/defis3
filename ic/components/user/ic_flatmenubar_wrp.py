@@ -258,7 +258,7 @@ def simple_test():
     from . import ic_menu_wrp
     
     app = wx.PySimpleApp()
-    common.img_init()
+    common.init_img()
     frame = wx.Frame(None)
     
     res = copy.deepcopy(ic_class_spc)

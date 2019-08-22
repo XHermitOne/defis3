@@ -532,7 +532,7 @@ def test(par=0):
     from ic.components import ictestapp
     from ic.PropertyEditor import icResTree
     app = ictestapp.TestApp(par)
-    common.img_init()
+    common.init_img()
     icResTree.InitObjectsInfo()
     frame = icPanelToolFrame(None, 'icPanelTool Test', layout='vertical')
     frame.Show(True)

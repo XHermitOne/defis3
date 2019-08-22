@@ -1773,7 +1773,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         @type evalSpace: C{dictionary}
         """
         # Инициализируем информационную структуру об объектах формы.
-        common.img_init()
+        common.init_img()
         if not GetObjectsInfo():
             InitObjectsInfo()
 
@@ -2824,7 +2824,7 @@ def GetProjectEditorOLD(parent, drFrame=None, ifs=None):
     @param drFrame: Главное окно ide.
     @param ifs: Интерфейс взаимодействия с ide.
     """
-    common.img_init()
+    common.init_img()
     if ifs is None:
         if drFrame:
             from ic.interfaces import drPythonInterface
@@ -2866,7 +2866,7 @@ def GetProjectEditor(parent, drFrame=None, ifs=None):
     from ic.log import default_log_config
     log.init(default_log_config)
 
-    common.img_init()
+    common.init_img()
 
     # Создаем ядро
     from ic.kernel import ickernel

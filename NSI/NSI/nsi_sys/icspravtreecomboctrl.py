@@ -22,7 +22,7 @@ __version__ = (0, 1, 1, 2)
 DEFAULT_ENCODE = 'utf-8'
 
 
-class BoxTree(CT.CustomTreeCtrl):
+class icBoxTree(CT.CustomTreeCtrl):
 
     def OnPaint(self, event):
         """
@@ -80,13 +80,18 @@ class icSpravTreeComboPopup(wx.ComboPopup):
         pass
     
     def Create(self, parent):
-        self.tree = CT.CustomTreeCtrl(parent, style=wx.TR_HIDE_ROOT
-                                      | wx.TR_HAS_BUTTONS
-                                      | wx.TR_SINGLE
-                                      | wx.TR_LINES_AT_ROOT
-                                      | wx.SIMPLE_BORDER)
-        self.tree.Bind(wx.EVT_MOTION, self.OnMotion)
-        self.tree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
+        try:
+            self.tree = CT.CustomTreeCtrl(parent, style=wx.TR_HIDE_ROOT
+                                          | wx.TR_HAS_BUTTONS
+                                          | wx.TR_SINGLE
+                                          | wx.TR_LINES_AT_ROOT
+                                          | wx.SIMPLE_BORDER)
+            self.tree.Bind(wx.EVT_MOTION, self.OnMotion)
+            self.tree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
+            return True
+        except:
+            log.fatal(u'Ошибка создания контрола выпадающего дерева справочника')
+        return False
 
     def GetControl(self):
         return self.tree
@@ -261,11 +266,11 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
     """
     def Create(self, parent):
         self.parent = parent
-        self.tree = BoxTree(parent, style=wx.TR_HIDE_ROOT
-                            | wx.TR_HAS_BUTTONS
-                            | wx.TR_SINGLE
-                            | wx.TR_LINES_AT_ROOT
-                            | wx.SIMPLE_BORDER)
+        self.tree = icBoxTree(parent, style=wx.TR_HIDE_ROOT
+                                            | wx.TR_HAS_BUTTONS
+                                            | wx.TR_SINGLE
+                                            | wx.TR_LINES_AT_ROOT
+                                            | wx.SIMPLE_BORDER)
 
         self.tree.Bind(wx.EVT_MOTION, self.OnMotion)
         self.tree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)

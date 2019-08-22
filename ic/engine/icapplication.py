@@ -105,7 +105,7 @@ class icApp(icwxapplication.icWXApp):
         # после создания обекта приложения надо инициализировать поддержку
         # других форматов недокументированной функцией wx.InitAllImageHandlers()
         # wx.InitAllImageHandlers()
-        imglib.img_init()
+        imglib.init_img()
 
         return True
 

@@ -759,7 +759,7 @@ class icPyEditorDlg(icEvent, wx.Dialog):
 # -------------------------------------------------------------------------------
 if __name__ == '__main__':
     app = wx.PySimpleApp(0)
-    wx.InitAllImageHandlers()
+    # wx.InitAllImageHandlers()
     
     f = open('icResTree.py', 'rt')
     res = f.read()

@@ -211,7 +211,7 @@ def test(par=0):
     """
     from ic.components.ictestapp import TestApp
     app = TestApp(par)
-    common.img_init()
+    common.init_img()
     frame = wx.Frame(None, -1, 'HTML Window', pos=(300, 50),
                      size=(500, 500), style=wx.DEFAULT_FRAME_STYLE | wx.CLIP_CHILDREN)
 

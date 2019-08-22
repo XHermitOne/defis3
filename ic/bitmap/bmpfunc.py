@@ -158,7 +158,6 @@ def getBitmapType(filename):
     """
     Определить тип графического файла по его расширению (.jpg, .png и т.п.)
     """
-
     if filename == '':
         return None
 

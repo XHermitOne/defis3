@@ -204,7 +204,7 @@ def get_test_catalog():
 if __name__ == '__main__':
     cat = get_test_catalog()
     app = wx.PySimpleApp()
-    wx.InitAllImageHandlers()
+    # wx.InitAllImageHandlers()
     frame_1 = icCatalogFrame(cat, None, -1, 'Simple catalog view')
     app.SetTopWindow(frame_1)
     frame_1.Show()

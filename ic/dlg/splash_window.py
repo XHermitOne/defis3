@@ -13,8 +13,9 @@ import os
 from ic.bitmap import bmpfunc
 from ic.bitmap import ic_color
 from ic.log import log
+import ic.imglib.common
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 # Задержка всплывающего окошка
 SPLASH_DELAY = 2000
@@ -90,7 +91,9 @@ def showSplash(img_filename=''):
             log.warning(u'Сплеш-окно <%s> не найдено!' % img_filename)
             return None
 
-        wx.InitAllImageHandlers()
+        if not ic.imglib.common.is_init_img():
+            ic.imglib.common.init_img()
+
         # Создать объект
         splash = icSplashScreen(img_filename)
         # Отобразить его

@@ -23,7 +23,7 @@ class TestApp(wx.App):
         self.locale = wx.Locale()
         self.locale.Init(wx.LANGUAGE_RUSSIAN)
 
-        common.img_init()
+        common.init_img()
         return True
 
 
