@@ -14,7 +14,7 @@ import compileall
 import wx.adv
 
 from ic.dlg import ic_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ini
 from ic.utils import ic_util
 from ic.utils import ic_exec
@@ -96,7 +96,7 @@ class PrjInstallMaker:
         ico_file = ini.loadParamINI(self._prj_ini_file_name,
                                     'INSTALL', 'prj_icon')
         if ico_file:
-            return ic_file.normPathWin(ico_file)
+            return filefunc.normPathWin(ico_file)
         return ico_file
 
     def setPrjIcon(self, ICOFileName_):
@@ -206,7 +206,7 @@ class PrjInstallMaker:
         install_maker = ini.loadParamINI(self._prj_ini_file_name,
                                          'INSTALL', 'install_maker')
         if install_maker:
-            return ic_file.normPathWin(install_maker)
+            return filefunc.normPathWin(install_maker)
         return install_maker
 
     def setInstallMaker(self,InstallMaker_):
@@ -327,13 +327,13 @@ class NullsoftInstallSystem(PrjInstallMaker):
         Копирование необходимых DLL в инсталяционный пакет.
         @param InstallDir_: Инсталяционная папка.
         """
-        python_dir = ic_file.getPythonDir()
+        python_dir = filefunc.getPythonDir()
         dll_name = os.path.join(python_dir, 'msvcp71.dll')
         if os.path.exists(dll_name):
-            ic_file.copyToDir(dll_name, InstallDir_)
+            filefunc.copyToDir(dll_name, InstallDir_)
         dll_name = os.path.join(python_dir, 'msvcr71.dll')
         if os.path.exists(dll_name):
-            ic_file.copyToDir(dll_name, InstallDir_)
+            filefunc.copyToDir(dll_name, InstallDir_)
             
     def _makeNSISSection(self, PackageName_):
         """
@@ -397,8 +397,8 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 ic_dlg.icUpdateProgressDlg(i, u'Копирование иконки')
                 ico_file = self.getPrjIcon()
                 if os.path.exists(ico_file):
-                    ic_file.copyFile(ico_file,
-                                     os.path.join(install_dir, os.path.basename(ico_file)))
+                    filefunc.copyFile(ico_file,
+                                      os.path.join(install_dir, os.path.basename(ico_file)))
                 else:
                     log.warning(u'Файл иконки <%s> не существует' % ico_file)
                 
@@ -407,8 +407,8 @@ class NullsoftInstallSystem(PrjInstallMaker):
                 ic_dlg.icUpdateProgressDlg(i, u'Создание пакета прикладной системы')
                 arch_file = self._makePrjInstall()
                 if os.path.exists(arch_file):
-                    ic_file.copyFile(arch_file,
-                                     os.path.join(install_dir, 'package',
+                    filefunc.copyFile(arch_file,
+                                      os.path.join(install_dir, 'package',
                                                     os.path.basename(arch_file)))
                     # Удалить временную папку
                     shutil.rmtree(os.path.dirname(arch_file), 1)
@@ -418,8 +418,8 @@ class NullsoftInstallSystem(PrjInstallMaker):
                     i += 1
                     ic_dlg.icUpdateProgressDlg(i, u'Копирование пакета <%s>' % package)
                     if os.path.exists(package):
-                        ic_file.copyFile(package,
-                                         os.path.join(install_dir, 'package',
+                        filefunc.copyFile(package,
+                                          os.path.join(install_dir, 'package',
                                                         os.path.basename(package)))
                     else:
                         log.warning(u'Файл пакета <%s> не существует' % package)
@@ -474,7 +474,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
             
             # Условие удаления исходников из ic
             if not self.getOpenSource():
-                ic_file.delAllFilesFilter(ic_tmp_dir, '*.py', '*.bak')
+                filefunc.delAllFilesFilter(ic_tmp_dir, '*.py', '*.bak')
 
             # Пакет прикладной системы
             log.info(u'INSTALL WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
@@ -791,8 +791,8 @@ class zipPublicSystem(PrjInstallMaker):
                                       os.getcwd())
         if os.path.isdir(install_dir):
             arch_file_name = self._makePrjInstall()
-            ic_file.copyFile(arch_file_name,
-                             os.path.join(install_dir, os.path.basename(arch_file_name)))
+            filefunc.copyFile(arch_file_name,
+                              os.path.join(install_dir, os.path.basename(arch_file_name)))
             
     def _publicWinRAR(self, InstallDir_):
         """
@@ -820,23 +820,23 @@ class zipPublicSystem(PrjInstallMaker):
             # Пакет ic
             log.info(u'PUBLIC WIZARD COPY ic PACKAGE <%s>' % main_dir)
             ic_tmp_dir = os.path.join(temp_dir, 'ic')
-            ic_file.copyDir(os.path.join(main_dir, 'ic'), temp_dir)
+            filefunc.copyDir(os.path.join(main_dir, 'ic'), temp_dir)
             
             # Условие удаления исходников из ic
-            ic_file.delAllFilesFilter(ic_tmp_dir, '*.bak', '*.pyc')
+            filefunc.delAllFilesFilter(ic_tmp_dir, '*.bak', '*.pyc')
 
             # Пакет прикладной системы
             log.info(u'PUBLIC WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
             usr_tmp_dir = os.path.join(temp_dir, os.path.basename(prj_dir))
-            ic_file.copyDir(prj_dir, temp_dir)
+            filefunc.copyDir(prj_dir, temp_dir)
             
             # Условие удаления исходников из ic
-            ic_file.delAllFilesFilter(usr_tmp_dir, '*.bak', '*.pyc', '*.lck', '/log/*.ini', '/log/*.log')
+            filefunc.delAllFilesFilter(usr_tmp_dir, '*.bak', '*.pyc', '*.lck', '/log/*.ini', '/log/*.log')
             
-            ic_file.copyFile(os.path.join(main_dir, 'readme.ru'),
-                             os.path.join(temp_dir, 'readme.ru'))
-            ic_file.copyFile(os.path.join(main_dir, 'license.ru'),
-                             os.path.join(temp_dir, 'license.ru'))
+            filefunc.copyFile(os.path.join(main_dir, 'readme.ru'),
+                              os.path.join(temp_dir, 'readme.ru'))
+            filefunc.copyFile(os.path.join(main_dir, 'license.ru'),
+                              os.path.join(temp_dir, 'license.ru'))
 
             if ic_util.isOSWindowsPlatform():
                 return self._makeArchiveRAR(main_dir, temp_dir, prj_name)

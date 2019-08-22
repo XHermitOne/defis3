@@ -12,7 +12,7 @@ from sqlalchemy import orm
 from sqlalchemy.orm import interfaces as orm_ifs
 
 from ic.utils import ic_res
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import lock as lockmod
 from ic.log import log
 
@@ -322,7 +322,7 @@ class icDBResLoadManager(object):
         Загрузка из файла.
         @param path: Идентификатор.
         """
-        filename = ic_file.getAbsolutePath(path)
+        filename = filefunc.getAbsolutePath(path)
         log.debug(u'Загрузка ресурса <%s>. Файл ресурса <%s>' % (path, filename))
         res = ic_res.ReadAndEvalFile(filename, bRefresh=bRefresh)
         return res

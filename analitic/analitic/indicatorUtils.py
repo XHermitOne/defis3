@@ -16,7 +16,7 @@ from ic.utils import util
 from ic.dlg import progress
 from ic.utils import resource
 from ic.storage import objstore
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.log import log
 
 from plan import plans

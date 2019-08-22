@@ -10,7 +10,7 @@ import wx
 
 import ic
 from ic.dlg import ic_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import util
 from ic.utils import ic_res
 from ic.utils import ini
@@ -227,7 +227,7 @@ class icUserManager(object):
         """
         if prj_dir is None:
             prj_dir = glob_functions.getVar('PRJ_DIR')
-        role_files = ic_file.getFilenamesByExt(prj_dir, '.rol')
+        role_files = filefunc.getFilenamesByExt(prj_dir, '.rol')
         # Отфильтровать pickle файлы
         role_files = [role_file for role_file in role_files if role_file[-8:].lower() != '_pkl.rol']
 
@@ -249,7 +249,7 @@ class icUserManager(object):
         """
         try:
             if cur_prj_dir is None:
-                cur_prj_dir = ic_file.getCurDirPrj()
+                cur_prj_dir = filefunc.getCurDirPrj()
             reg_user_journal_file_name = os.path.join(cur_prj_dir,
                                                       'log', 'reg_user_journal.ini')
             if os.path.exists(reg_user_journal_file_name):

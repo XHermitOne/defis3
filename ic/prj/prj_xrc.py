@@ -8,7 +8,7 @@ import os.path
 from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_exec
 
 from . import prj_node
@@ -66,7 +66,7 @@ class icPrjXRCResource(prj_node.icPrjNode):
         # Удалить файл
         if os.path.exists(res_file_name):
             # ВНИМАНИЕ! Файл удаляем, но оставляем его бекапную версию!!!
-            ic_file.createBAKFile(res_file_name)
+            filefunc.createBAKFile(res_file_name)
             os.remove(res_file_name)
         # Для синхронизации дерева проекта
         self.getRoot().save()

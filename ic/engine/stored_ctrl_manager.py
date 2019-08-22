@@ -11,7 +11,7 @@ import os.path
 
 from ic.log import log
 from ic.utils import resfunc
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_res
 
 
@@ -30,8 +30,8 @@ class icStoredCtrlManager(object):
         @return: True/False.
         """
         # Определить имя файла для хранения данных
-        res_filename = os.path.join(ic_file.getPrjProfilePath(),
-                                    name+'.ext')
+        res_filename = os.path.join(filefunc.getPrjProfilePath(),
+                                    name +'.ext')
         return resfunc.SaveResourcePickle(res_filename, kwargs)
 
     def load_ext_data(self, name):
@@ -41,8 +41,8 @@ class icStoredCtrlManager(object):
         @return: Загруженные данные в виде словаря или
             пустой словарь если данных нет.
         """
-        res_filename = os.path.join(ic_file.getPrjProfilePath(),
-                                    name+'.ext')
+        res_filename = os.path.join(filefunc.getPrjProfilePath(),
+                                    name +'.ext')
         data = resfunc.LoadResourcePickle(res_filename)
         if data is None:
             data = dict()

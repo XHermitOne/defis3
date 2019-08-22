@@ -13,7 +13,7 @@ import os
 import os.path
 
 from ic.imglib import common as imglib
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_exec
 from ic.install import InstallWiz as install_wiz
 from ic.bitmap import icimagelibrarybrowser
@@ -26,7 +26,7 @@ __version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
 
-PRJ_INI_FILE = os.path.join(ic_file.getProfilePath(), 'prjsettings.ini')
+PRJ_INI_FILE = os.path.join(filefunc.getProfilePath(), 'prjsettings.ini')
 
 DEFAULT_WWW_BROWSER = 'firefox'
 

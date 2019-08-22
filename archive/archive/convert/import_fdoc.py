@@ -14,7 +14,7 @@ import urlparse
 
 from ic.log import log
 import ic
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import filefunc
 from ic.utils import smbfunc
 
@@ -138,7 +138,7 @@ def import_ttn_docs(cur_year, cur_month, n_warehouse, min_dt, max_dt,
     src_filename_spc = os.path.join(str(cur_year), 'FDSB', base_filename)
 
     # Сначала загрузить DBF из бекапа
-    dst_path = os.path.join(ic_file.getRootProjectDir(), 'db')
+    dst_path = os.path.join(filefunc.getRootProjectDir(), 'db')
     dst_filename = os.path.join(dst_path, src_filename)
     dst_filename_spc = os.path.join(dst_path, src_filename_spc)
     result = smb_download_dbf(dbf_filename=src_filename, dst_path=dst_path)
@@ -152,10 +152,10 @@ def import_ttn_docs(cur_year, cur_month, n_warehouse, min_dt, max_dt,
             # Скопировать DCB в DBF
             if os.path.exists(dbf_filename):
                 os.remove(dbf_filename)
-            ic_file.CopyFile(dst_filename, dbf_filename)
+            filefunc.CopyFile(dst_filename, dbf_filename)
             if os.path.exists(dbf_filename_spc):
                 os.remove(dbf_filename_spc)
-            ic_file.CopyFile(dst_filename_spc, dbf_filename_spc)
+            filefunc.CopyFile(dst_filename_spc, dbf_filename_spc)
             
             pack_doc.GetManager().load_ttn_from_dbf(dbf_filename, min_dt, max_dt, is_input)
 
@@ -186,7 +186,7 @@ def import_rlz_docs(cur_year, cur_month, n_warehouse, min_dt, max_dt,
     src_filename = get_src_dbf_filename(cur_year, cur_month, n_warehouse, is_input)
         
     # Сначала загрузить DBF из бекапа
-    dst_path = os.path.join(ic_file.getRootProjectDir(), 'db')
+    dst_path = os.path.join(filefunc.getRootProjectDir(), 'db')
     dst_filename = os.path.join(dst_path, src_filename)
     result = smb_download_dbf(dbf_filename=src_filename, dst_path=dst_path)
     if result:
@@ -197,7 +197,7 @@ def import_rlz_docs(cur_year, cur_month, n_warehouse, min_dt, max_dt,
             # Скопировать DCM в DBF
             if os.path.exists(dbf_filename):
                 os.remove(dbf_filename)
-            ic_file.CopyFile(dst_filename, dbf_filename)
+            filefunc.CopyFile(dst_filename, dbf_filename)
             
             pack_doc.GetManager().load_rlz_from_dbf(dbf_filename, min_dt, max_dt, is_input)
 
@@ -265,7 +265,7 @@ def import_ztr_docs(cur_year, is_input=None, pack_doc=None,
     src_filename = os.path.join(str(cur_year), 'FDOC', base_filename)
         
     # Сначала загрузить DBF из бекапа
-    dst_path = os.path.join(ic_file.getRootProjectDir(), 'db')
+    dst_path = os.path.join(filefunc.getRootProjectDir(), 'db')
     dst_filename = os.path.join(dst_path, src_filename)
     result = smbfunc.smb_download_file(ZTR_FIND_SMB_URLS, filename=src_filename, 
                                        out_path=dst_path)
@@ -277,7 +277,7 @@ def import_ztr_docs(cur_year, is_input=None, pack_doc=None,
             # Скопировать DBS в DBF
             if os.path.exists(dbf_filename):
                 os.remove(dbf_filename)
-            ic_file.CopyFile(dst_filename, dbf_filename)
+            filefunc.CopyFile(dst_filename, dbf_filename)
             
             pack_doc.GetManager().load_ztr_from_dbf(dbf_filename, cur_year, is_input)
 
@@ -334,7 +334,7 @@ def import_mt_docs(cur_year, n_warehouse, is_input=True, pack_doc=None):
     src_filename = os.path.join(str(cur_year), 'FDOC', base_filename)
         
     # Сначала загрузить DBF из бекапа
-    dst_path = os.path.join(ic_file.getRootProjectDir(), 'db')
+    dst_path = os.path.join(filefunc.getRootProjectDir(), 'db')
     dst_filename = os.path.join(dst_path, src_filename)
     result = smbfunc.smb_download_file(MT_FIND_SMB_URLS, filename=src_filename, 
                                        out_path=dst_path)
@@ -346,7 +346,7 @@ def import_mt_docs(cur_year, n_warehouse, is_input=True, pack_doc=None):
             # Скопировать DCM в DBF
             if os.path.exists(dbf_filename):
                 os.remove(dbf_filename)
-            ic_file.CopyFile(dst_filename, dbf_filename)
+            filefunc.CopyFile(dst_filename, dbf_filename)
             
             pack_doc.GetManager().load_mt_from_dbf(dbf_filename, cur_year, is_input)
 

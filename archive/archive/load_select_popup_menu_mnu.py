@@ -15,7 +15,7 @@ from ic.log import log
 # from ic.log import iclogbrowser
 from ic.dlg import ic_dlg
 from ic.dlg import std_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import datefunc
 
 import ic
@@ -217,10 +217,10 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         @return: True - загрузка произведена, False - нажата <Отмена>.
         """
         # Удалить все ранее загруженные файлы
-        dbf_filenames = ic_file.getFilenamesByExt(load_net_config.DEST_PATH, '.DBF')
+        dbf_filenames = filefunc.getFilenamesByExt(load_net_config.DEST_PATH, '.DBF')
         for dbf_filename in dbf_filenames:
             if not dbf_filename.endswith('SPRVENT.DBF') and not dbf_filename.endswith('ZPL.DBF'):
-                ic_file.removeFile(dbf_filename)
+                filefunc.removeFile(dbf_filename)
 
         # Загрузить все данные за указанный год - месяц
         result = load_net_dbf.download_archive_files(arch_year, arch_month)

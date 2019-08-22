@@ -25,7 +25,7 @@ from . import icpopupmenu
 import ic.utils.ic_res
 import ic.utils.resource
 
-import ic.utils.ic_file
+import ic.utils.filefunc
 import ic.utils.ic_util
 from ic.kernel import icexceptions
 from ic.utils import lock  # Модуль необходим для удаления файлов-блокировок
@@ -45,7 +45,7 @@ def getPrjSubSysDirs(prj_dirname):
     @param prj_dirname: Папка проекта.
     """
     root_prj_dir = os.path.dirname(prj_dirname)
-    pro_files = ic.utils.ic_file.getFilenamesByExt(prj_dirname, '.pro')
+    pro_files = ic.utils.filefunc.getFilenamesByExt(prj_dirname, '.pro')
     if pro_files:
         pro_file = pro_files[0]
         prj = ic.utils.ic_res.ReadAndEvalFile(pro_file)
@@ -60,7 +60,7 @@ def getSubSysDirs(prj_dirname):
     @param prj_dirname: Папка проекта.
     """
     root_prj_dir = os.path.dirname(prj_dirname)
-    pro_files = ic.utils.ic_file.getFilenamesByExt(prj_dirname, '.pro')
+    pro_files = ic.utils.filefunc.getFilenamesByExt(prj_dirname, '.pro')
     if pro_files:
         pro_file = pro_files[0]
         prj = ic.utils.ic_res.ReadAndEvalFile(pro_file)

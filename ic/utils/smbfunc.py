@@ -22,7 +22,7 @@ import locale
 import datetime
 
 from ic.log import log
-from ic.utils import ic_file
+from ic.utils import filefunc
 
 __version__ = (0, 1, 3, 1)
 
@@ -86,7 +86,7 @@ def smb_download_file(download_urls=None, filename=None, out_path=None, re_write
         download_urls = [download_urls]
 
     if out_path is None:
-        out_path = ic_file.getPrjProfilePath()
+        out_path = filefunc.getPrjProfilePath()
 
     result = False
     do_close = False
@@ -182,7 +182,7 @@ def smb_download_file_rename(download_urls=None, filename=None, dst_filename=Non
             # Успешно загрузили
             # Перименование файла
             new_filename = os.path.join(tmp_path, filename)
-            ic_file.copyFile(new_filename, dst_filename, re_write)
+            filefunc.copyFile(new_filename, dst_filename, re_write)
 
             # После копирования удаляем временную директорию
             shutil.rmtree(tmp_path, True)

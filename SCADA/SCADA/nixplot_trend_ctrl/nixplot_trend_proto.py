@@ -16,7 +16,7 @@ import time
 import uuid
 
 from ic.log import log
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_time
 from ic.bitmap import bmpfunc
 
@@ -29,7 +29,7 @@ PACKAGE_PATH = os.path.dirname(__file__) if os.path.dirname(__file__) else '.'
 NIXPLOT_FILENAME = os.path.join(PACKAGE_PATH, 'nixplot')
 
 # Папка размещения кадров трендов
-DEFAULT_NIXPLOT_FRAME_PATH = os.path.join(ic_file.getProfilePath(), 'nixplot')
+DEFAULT_NIXPLOT_FRAME_PATH = os.path.join(filefunc.getProfilePath(), 'nixplot')
 
 # Минимальные размеры кадра
 MIN_FRAME_WIDTH = 640

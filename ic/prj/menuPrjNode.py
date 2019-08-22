@@ -12,7 +12,7 @@ from wx.lib.agw import flatmenu
 from ic.imglib import common as imglib
 from ic.dlg import ic_dlg
 from ic.utils import clipboard
-from ic.utils import ic_file
+from ic.utils import filefunc
 
 from . import prj_node
 
@@ -304,7 +304,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         res_file_name = ic_dlg.icFileDlg(tree_prj,
                                          u'Выберите ресурсный файл',
                                          self.import_res_filter,
-                                         default_path=ic_file.getRootDir())
+                                         default_path=filefunc.getRootDir())
 
         if res_file_name:
             node = self._Parent.importChild(res_file_name)

@@ -22,7 +22,7 @@
 import os.path
 import sqlalchemy.ext.declarative
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import extfunc
 
 __version__ = (0, 1, 1, 1)
@@ -52,7 +52,7 @@ def getSchemeDir(bAutoCreate=True):
     @return: Папка хранения модулей моделей.
         Папка хранения модулей моделей - пакет в проекте с именем scheme.
     """
-    prj_dir = ic_file.getProjectDir()
+    prj_dir = filefunc.getProjectDir()
     scheme_dir = os.path.join(prj_dir, SCHEME_DIR_NAME)
     if bAutoCreate:
         createSchemeDir(scheme_dirname=scheme_dir)
@@ -69,7 +69,7 @@ def createSchemeDir(scheme_dirname=None):
     if scheme_dirname is None:
         scheme_dirname = getSchemeDir(bAutoCreate=False)
 
-    result = ic_file.makeDirs(scheme_dirname)
+    result = filefunc.makeDirs(scheme_dirname)
 
     # Т.к. папка схемы является пакетом,
     # то необходимо проверить наличие __init__.py файла

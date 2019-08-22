@@ -14,7 +14,7 @@ import time
 import uuid
 
 from ic.log import log
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_time
 from ic.bitmap import bmpfunc
 
@@ -27,7 +27,7 @@ from SCADA.scada_proto import trend_proto
 GNUPLOT_FILENAME = 'gnuplot'
 
 # Папка размещения кадров трендов
-DEFAULT_GNUPLOT_FRAME_PATH = os.path.join(ic_file.getProfilePath(), 'gnuplot')
+DEFAULT_GNUPLOT_FRAME_PATH = os.path.join(filefunc.getProfilePath(), 'gnuplot')
 
 # Минимальные размеры кадра
 MIN_FRAME_WIDTH = 640
@@ -211,7 +211,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         frame_filename = self.getFrameFileName(PDF_FILE_TYPE)
         self.del_frame(frame_filename)
         dat_filename = os.path.splitext(frame_filename)[0] + DATA_FILE_EXT
-        ic_file.removeFile(dat_filename)
+        filefunc.removeFile(dat_filename)
         event.Skip()
 
     def getTrendUUID(self):
@@ -259,7 +259,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         if frame_filename is None:
             frame_filename = self.getFrameFileName()
 
-        return ic_file.removeFile(frame_filename)
+        return filefunc.removeFile(frame_filename)
 
     # Словарь замены форматов шкал
     _Fmt2GnuplotType = {'numeric': 'N',

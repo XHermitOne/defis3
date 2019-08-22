@@ -24,7 +24,7 @@ import ic.dlg.ic_dlg as ic_dlg
 import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
 
 import ic.engine.glob_functions as ic_user
-import ic.utils.ic_file as ic_file
+import ic.utils.filefunc as ic_file
 import ic.utils.ic_util as ic_util
 import ic.utils.ic_time as ic_time
 import ic.utils.ic_ini as ic_ini

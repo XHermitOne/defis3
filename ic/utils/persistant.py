@@ -12,7 +12,7 @@ import os
 import os.path
 import wx
 
-from . import ic_file
+from . import filefunc
 from . import ic_res
 from . import util
 from . import lock
@@ -90,7 +90,7 @@ class icPersistant:
         @param res_type: тип ресурса.
         @return: Возвращает ресурс или None в случае ошибки.
         """
-        local_dir = ic_file.getPrjProfilePath() if res_path is None else res_path
+        local_dir = filefunc.getPrjProfilePath() if res_path is None else res_path
         full_file_name = os.path.join(local_dir, res_name.replace(':', '_')+'.'+res_type)
         log.debug(u'Получение ресурса >>> name=%s, dir=%s, filename=%s' % (self.name, local_dir, full_file_name))
         if os.path.exists(full_file_name):
@@ -122,7 +122,7 @@ class icPersistant:
         @return: Возвращает True или False в случае ошибки.
         """
         try:
-            local_dir = ic_file.getPrjProfilePath() if res_path is None else res_path
+            local_dir = filefunc.getPrjProfilePath() if res_path is None else res_path
             full_file_name = os.path.join(local_dir, res_name.replace(':', '_')+'.'+res_type)
             lock_file_name = os.path.join(local_dir, '#lock', res_name.replace(':', '_')+lock.LOCK_FILE_EXT)
             if not lock.IsLockedFile(lock_file_name):

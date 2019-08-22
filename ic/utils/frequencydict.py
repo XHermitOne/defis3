@@ -20,7 +20,7 @@ except ImportError:
 except ValueError:
     import persistant
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_str
 
 
@@ -76,7 +76,7 @@ class icFrequencyDict(persistant.icPersistant):
         persistant.icPersistant.__init__(self, uniq_name, 'fdt', res_path=res_path, subsys=subsys)
         self.start_pos = start_pos
         self.buffSize = buffSize
-        local_dir = ic_file.getPrjProfilePath()
+        local_dir = filefunc.getPrjProfilePath()
         if not self.res_path and local_dir:
             self.res_path = os.path.normpath(local_dir)
         

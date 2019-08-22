@@ -15,7 +15,7 @@ import wx.lib.imagebrowser
 from ic.components import icfont
 import ic.utils.ic_exec   # Этот модуль подгружается для спецификации
 from ic.bitmap import bmpfunc
-from ic.utils import ic_file
+from ic.utils import filefunc
 
 __version__ = (0, 1, 1, 1)
 

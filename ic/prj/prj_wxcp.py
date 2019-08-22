@@ -11,7 +11,7 @@ import wx
 
 # from ic.imglib import common as imglib
 from ic.bitmap import bmpfunc
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.editor import wxc_manager
 
 from . import prj_node
@@ -70,7 +70,7 @@ class icPrjWXCrafterProject(prj_node.icPrjNode,
         # Удалить файл
         if os.path.exists(res_file_name):
             # ВНИМАНИЕ! Файл удаляем, но оставляем его бекапную версию!!!
-            ic_file.createBAKFile(res_file_name)
+            filefunc.createBAKFile(res_file_name)
             os.remove(res_file_name)
         # Также могут быть сопутствующие файлы, которые в принципе не нужны
         bitmap_res_filename = os.path.join(self.getModulePath(),

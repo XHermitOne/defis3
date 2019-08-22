@@ -32,7 +32,7 @@ from ic.utils import util
 
 from ic.log import log
 from ic.dlg import ic_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_exec
 from ic.utils import ic_util
 from ic.utils import user_journal
@@ -213,7 +213,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         Имя ресурсного файла пользователей.
         """
         if self._ResFile:
-            return ic_file.getAbsolutePath(self._ResFile)
+            return filefunc.getAbsolutePath(self._ResFile)
         return self._ResFile
     
     def setUserResFileName(self, res_filename):
@@ -796,7 +796,7 @@ class icLoginManager(object):
         self._loader = loader or db_res_load_manager.icDBResLoadManager()
         self._users_resource = None
         glob_functions.letVar('LOADER', self._loader)
-        users_res_file_name = ic_file.getPathFile(glob_functions.getVar('SYS_RES'), users_res_filename)
+        users_res_file_name = filefunc.getPathFile(glob_functions.getVar('SYS_RES'), users_res_filename)
         self._users_resource = self._loader.load_res(users_res_file_name, bRefresh=True)
 
     def getResource(self):

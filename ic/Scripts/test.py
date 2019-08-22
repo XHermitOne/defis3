@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 
-ok = ic_file.addCopyDir('d:/pythonProjects/defis/STD/STD/',
+ok = filefunc.addCopyDir('d:/pythonProjects/defis/STD/STD/',
                         'd:/pythonProjects/tmp/STD/')
 print(ok)

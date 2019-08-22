@@ -9,7 +9,7 @@ import os
 import os.path
 import sys
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_mode
 from ic.utils import impfunc
 from . import icContext
@@ -189,9 +189,9 @@ class icKernelContext(icContext.BaseContext):
         """
         subsys_res = [PrjDir_]
         root_prj_dir = os.path.dirname(os.path.normpath(PrjDir_))
-        sub_dirs = ic_file.getSubDirs(root_prj_dir)
+        sub_dirs = filefunc.getSubDirs(root_prj_dir)
         subsys_dirs = [dir_path for dir_path in sub_dirs if self._IsSubSysDir(dir_path) and \
-                       not ic_file.isSamePathWin(dir_path, PrjDir_)]
+                       not filefunc.isSamePathWin(dir_path, PrjDir_)]
         subsys_res.extend(subsys_dirs)
         return subsys_res
 
@@ -202,7 +202,7 @@ class icKernelContext(icContext.BaseContext):
         """
         is_dir = os.path.isdir(Dir_)
         is_init_file = os.path.exists(os.path.join(Dir_, '__init__.py'))
-        is_pro_file = bool(ic_file.getFilenamesByExt(Dir_, '.pro'))
+        is_pro_file = bool(filefunc.getFilenamesByExt(Dir_, '.pro'))
         return is_dir and is_init_file and is_pro_file
     
     def getMainWin(self):

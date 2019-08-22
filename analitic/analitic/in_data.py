@@ -17,7 +17,7 @@ from ic.db import dbf
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.engine import glob_functions
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_util
 from ic.utils import ini
 from ic.utils import resource
@@ -67,31 +67,31 @@ def loadInputData(InputDataDir_=None):
         InputDataDir_ = getInputDataDir()
     
     #   Загружаем файлы по реализации
-    dbf_files = ic_file.getFilenamesByExt(InputDataDir_, '.grf')
+    dbf_files = filefunc.getFilenamesByExt(InputDataDir_, '.grf')
     # print('--->>>loadInputData -> <analitik>', dbf_files, input_data_dir ) #,ic_file.ListDir(input_data_dir)
     for dbf_file in dbf_files:
         # print('LOAD DATA FROM', dbf_file)
         loadInputDataDBF(dbf_file)
         # Поменять расширение
-        ic_file.changeExt(dbf_file, '.bak')
+        filefunc.changeExt(dbf_file, '.bak')
         
     #   Загружаем файлы по заявкам
-    dbf_files = ic_file.getFilenamesByExt(InputDataDir_, '.grz')
+    dbf_files = filefunc.getFilenamesByExt(InputDataDir_, '.grz')
     # print('--->>>loadInputData -> <zayavki>',dbf_files,input_data_dir)
     for dbf_file in dbf_files:
         # print('LOAD DATA FROM',dbf_file)
         loadInputDataDBF(dbf_file, 'zayavki')
         # Поменять расширение
-        ic_file.changeExt(dbf_file, '_grz.bak')
+        filefunc.changeExt(dbf_file, '_grz.bak')
     
     #   Загружаем файлы по оплате
-    dbf_files = ic_file.getFilenamesByExt(InputDataDir_, '.grp')
+    dbf_files = filefunc.getFilenamesByExt(InputDataDir_, '.grp')
     # print('--->>>loadInputData -> <pay>', dbf_files,input_data_dir)
     for dbf_file in dbf_files:
         # print('LOAD DATA FROM',dbf_file)
         loadInputDataDBF(dbf_file, 'pay')
         # Поменять расширение
-        ic_file.changeExt(dbf_file, '_grp.bak')
+        filefunc.changeExt(dbf_file, '_grp.bak')
     
     # print('Refresh All Views')
     refreshAllTabView()

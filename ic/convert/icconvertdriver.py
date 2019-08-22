@@ -6,7 +6,7 @@
 """
 
 # --- Подключение библиотек ---
-from ic.utils import ic_file
+from ic.utils import filefunc
 
 from ic.components import icwidget
 from ic.interfaces import icconvertdriverinterface
@@ -79,7 +79,7 @@ class icDBFConvertDriverPrototype(icConvertDriverPrototype):
         """
         dbf_file_name = self.resource['dbf_file']
         if dbf_file_name: 
-            return ic_file.get_absolute_path(dbf_file_name)
+            return filefunc.get_absolute_path(dbf_file_name)
         return None
         
     def First(self):

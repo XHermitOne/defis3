@@ -11,7 +11,7 @@
 import os
 import os.path
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_util
 from ic.interfaces import StorageInterface as storage_interface
 from . import storesrc
@@ -49,7 +49,7 @@ class icObjectStorageDir(storesrc.icTreeDirStorage,
         @param Dir_: Папка - хранилище.
         """
         # Привести относительные пути к папке проекта
-        Dir_ = ic_file.get_absolute_path(Dir_)
+        Dir_ = filefunc.get_absolute_path(Dir_)
         storage_interface.icObjectStorageInterface.__init__(self, None)
         storesrc.icTreeDirStorage.__init__(self, Dir_)
         self.name = os.path.basename(Dir_)

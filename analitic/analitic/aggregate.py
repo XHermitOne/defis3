@@ -8,7 +8,7 @@
 # --- Подключение библиотек ---
 from ic.storage import storesrc
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.log import log
 
 

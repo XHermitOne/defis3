@@ -29,7 +29,7 @@ from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEd
 
 from ic.dlg import msgbox
 from ic.utils import coderror
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.engine import glob_functions
 
 import ic.engine.user_manager as icuser
@@ -122,8 +122,8 @@ class icUserGroup(icwidget.icSimple, icuser.icUserGroup):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        icuser.icUserGroup.__init__(self, ic_file.getPathFile(glob_functions.getVar('SYS_RES'),
-                                                              icuser.DEFAULT_USERS_RES_FILE))
+        icuser.icUserGroup.__init__(self, filefunc.getPathFile(glob_functions.getVar('SYS_RES'),
+                                                               icuser.DEFAULT_USERS_RES_FILE))
 
     def _exec_on_login(self, exec_code):
         """

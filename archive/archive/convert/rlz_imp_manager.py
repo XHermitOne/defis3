@@ -13,7 +13,7 @@ import ic
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.dlg import std_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import filefunc
 # from ic.utils import smbfunc
 from ic.db import dbf
@@ -226,7 +226,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         src_filename = self._get_src_dbf_filename(cur_year, cur_month, n_warehouse, is_input)
         
         # Сначала загрузить DBF из бекапа
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db')
+        dst_path = os.path.join(filefunc.getRootProjectDir(), 'db')
         dst_filename = os.path.join(dst_path, src_filename)
         result = self.smb_download_dbf(dbf_filename=src_filename, dst_path=dst_path)
         if result:
@@ -237,7 +237,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                 # Скопировать DCM в DBF
                 if os.path.exists(dbf_filename):
                     os.remove(dbf_filename)
-                ic_file.CopyFile(dst_filename, dbf_filename)
+                filefunc.CopyFile(dst_filename, dbf_filename)
             
                 self._load_rlz_from_dbf(dbf_filename, min_dt, max_dt, is_input)
             else:
@@ -270,7 +270,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         src_filename_spc = os.path.join(str(cur_year), 'FDSB', base_filename)
 
         # Сначала загрузить DBF из бекапа
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db')
+        dst_path = os.path.join(filefunc.getRootProjectDir(), 'db')
         dst_filename = os.path.join(dst_path, src_filename)
         dst_filename_spc = os.path.join(dst_path, src_filename_spc)
         result = self.smb_download_dbf(dbf_filename=src_filename, dst_path=dst_path)
@@ -284,10 +284,10 @@ class icRealizImportManager(import_manager.icBalansImportManager):
                 # Скопировать DCB в DBF
                 if os.path.exists(dbf_filename):
                     os.remove(dbf_filename)
-                ic_file.CopyFile(dst_filename, dbf_filename)
+                filefunc.CopyFile(dst_filename, dbf_filename)
                 if os.path.exists(dbf_filename_spc):
                     os.remove(dbf_filename_spc)
-                ic_file.CopyFile(dst_filename_spc, dbf_filename_spc)
+                filefunc.CopyFile(dst_filename_spc, dbf_filename_spc)
             
                 self._load_ttn_from_dbf(dbf_filename, min_dt, max_dt, is_input)
 

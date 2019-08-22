@@ -33,6 +33,31 @@ __version__ = (0, 1, 1, 1)
 DEFAULT_ENCODING = 'utf-8'
 
 
+def createTxtFile(filename, txt=None):
+    """
+    Создать текстовый файл.
+    @param filename: Имя создаваемого файла.
+    @param txt: Текст по умолчанию записываемый в файл.
+    @return: True/False.
+    """
+    txt = util.encodeText(txt)
+    f = None
+    try:
+        if os.path.exists(filename):
+            os.remove(filename)
+        f = open(filename, 'w')
+        if txt:
+            f.write(txt)
+        f.close()
+        return True
+    except:
+        if f:
+            f.close()
+            f = None
+        raise
+    return False
+
+
 def save_file_csv(csv_filename, records=(),
                   delim=u',', encoding=DEFAULT_ENCODING):
     """

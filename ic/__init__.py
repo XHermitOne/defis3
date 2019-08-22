@@ -28,7 +28,7 @@ from ic.utils import util
 from ic.engine.glob_functions import *
 from ic.engine.form_manager import *
 from ic.utils.extfunc import *
-from ic.utils.ic_file import *
+from ic.utils.filefunc import *
 
 from ic.report import REPORT_MANAGER
 

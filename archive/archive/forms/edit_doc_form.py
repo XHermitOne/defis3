@@ -17,7 +17,7 @@ import ic
 from ic import log
 from ic import ic_time
 from ic import bmpfunc
-from ic import ic_file
+from ic import filefunc
 from ic.dlg import ic_dlg
 from work_flow.doc_sys import icdocselectdlg
 from archive.forms import search_doc_form
@@ -94,7 +94,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         if result and os.path.exists(new_doc_panel.DEFAULT_SCAN_FILENAME):
             # Если файл существует, то значит сканирование прошло успешно
             # Необходимо скопировать в новый файл
-            ic_file.copyFile(new_doc_panel.DEFAULT_SCAN_FILENAME, new_scan_filename)
+            filefunc.copyFile(new_doc_panel.DEFAULT_SCAN_FILENAME, new_scan_filename)
             if not scan_filename:
                 # Если ранее не определен отсканированный файл, то расположить его в каталоге
                 new_doc_panel.put_doc_catalog(self.document, new_scan_filename)

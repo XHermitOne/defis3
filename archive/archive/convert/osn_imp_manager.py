@@ -13,7 +13,7 @@ import ic
 from ic.log import log
 from ic.dlg import ic_dlg
 from ic.dlg import std_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import filefunc
 from ic.utils import smbfunc
 from ic.db import dbf
@@ -157,7 +157,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
         src_filename = os.path.join(str(cur_year), 'FDOC', base_filename)
         
         # Сначала загрузить DBF из бекапа
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db')
+        dst_path = os.path.join(filefunc.getRootProjectDir(), 'db')
         dst_filename = os.path.join(dst_path, src_filename)
         result = smbfunc.smb_download_file(FIND_SMB_URLS, filename=src_filename, 
                                            out_path=dst_path)
@@ -169,7 +169,7 @@ class icOsnovnImportManager(import_manager.icBalansImportManager):
                 # Скопировать DCM в DBF
                 if os.path.exists(dbf_filename):
                     os.remove(dbf_filename)
-                ic_file.CopyFile(dst_filename, dbf_filename)
+                filefunc.CopyFile(dst_filename, dbf_filename)
             
                 self._load_os_from_dbf(dbf_filename, cur_year, is_nds)
 

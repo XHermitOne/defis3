@@ -18,7 +18,7 @@ from archive.forms import search_doc_form
 from archive.forms import print_doc_form
 from ic.dlg import about_box
 from ic.utils import datefunc
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.dlg import std_dlg
 from ic.dlg import ic_dlg
 from ic.log import log
@@ -90,7 +90,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
                                                   month=first_day_of_month.month)
 
         # Удалить файлы
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db',
+        dst_path = os.path.join(filefunc.getRootProjectDir(), 'db',
                                 str(first_day_of_month.year))
 
         str_month = '%X' % first_day_of_month.month
@@ -99,12 +99,12 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
                       'R%s*.DBF' % str_month, 'R%s*.DCM' % str_month,
                       'TI%s*.DBF' % str_month, 'TI%s*.DCM' % str_month,
                       'TO%s*.DBF' % str_month, 'TO%s*.DCM' % str_month)
-        ic_file.delAllFilesFilter(del_path, *file_masks)
+        filefunc.delAllFilesFilter(del_path, *file_masks)
 
         del_path = os.path.join(dst_path, 'FDSB')
         file_masks = ('SB%s111.DBF' % str_month, 'SB%s111.DCB' % str_month,
                       'SB%s111.DSB' % str_month, 'SB%s111S.DBF' % str_month)
-        ic_file.delAllFilesFilter(del_path, *file_masks)
+        filefunc.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
         doc = ic.metadata.archive.mtd.scan_document_pack.create()
@@ -128,12 +128,12 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
             return
 
         # Удалить файлы
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db',
+        dst_path = os.path.join(filefunc.getRootProjectDir(), 'db',
                                 str(clear_year.year))
 
         del_path = os.path.join(dst_path, 'FDOC')
         file_masks = ('BS0Z76.DBF', 'BS0Z76.DBS', 'BS7606.DBF', 'BS7606.DBS')
-        ic_file.delAllFilesFilter(del_path, *file_masks)
+        filefunc.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
         doc = ic.metadata.archive.mtd.scan_document_pack.create()
@@ -162,14 +162,14 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
             return
 
         # Удалить файлы
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db',
+        dst_path = os.path.join(filefunc.getRootProjectDir(), 'db',
                                 str(clear_year.year))
 
         del_path = os.path.join(dst_path, 'FDOC')
         file_masks = ('MI*.DBF', 'MI*.DCM', 'MI*.DCS',
                       'MO*.DBF', 'MO*.DCM', 'MO*.DCS',
                       'BS6068.DBF', 'BS6068.DBS',)
-        ic_file.delAllFilesFilter(del_path, *file_masks)
+        filefunc.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
         doc = ic.metadata.archive.mtd.scan_document_pack.create()
@@ -198,7 +198,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
             return
 
         # Удалить файлы
-        dst_path = os.path.join(ic_file.getRootProjectDir(), 'db',
+        dst_path = os.path.join(filefunc.getRootProjectDir(), 'db',
                                 str(clear_year.year))
 
         del_path = os.path.join(dst_path, 'FDOC')
@@ -206,7 +206,7 @@ class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
                       'ROSN*.DBF', 'ROSN*.DCM',
                       'XS*.DBF', 'XS*.DBS',
                       'PLO153.DBF', 'PLO153.PLD')
-        ic_file.delAllFilesFilter(del_path, *file_masks)
+        filefunc.delAllFilesFilter(del_path, *file_masks)
 
         # Удалить записи из таблицы пакетной обработки
         doc = ic.metadata.archive.mtd.scan_document_pack.create()

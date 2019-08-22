@@ -18,7 +18,7 @@ import urllib.parse
 
 from ic.log import log
 import ic
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import filefunc
 
 # Version
@@ -135,7 +135,7 @@ def import_sprvent():
                 # Скопировать VNT в DBF
                 if os.path.exists(dbf_filename):
                     os.remove(dbf_filename)
-                ic_file.copyFile(vnt_filename, dbf_filename)
+                filefunc.copyFile(vnt_filename, dbf_filename)
             else:
                 log.debug(u'Справочник <%s> уже загружен' % local_filename)
 

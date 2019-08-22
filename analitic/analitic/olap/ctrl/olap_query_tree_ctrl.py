@@ -15,7 +15,7 @@ from wx.lib.agw import flatmenu
 from ic.log import log
 from ic.bitmap import bmpfunc
 from ic.dlg import ic_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 
 from ic.engine import treectrl_manager
 from ic.engine import stored_ctrl_manager
@@ -531,7 +531,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             save_filename = os.path.normpath(save_filename)
         else:
             widget_uuid = self.getUUID()
-            save_filename = os.path.join(ic_file.getPrjProfilePath(),
+            save_filename = os.path.join(filefunc.getPrjProfilePath(),
                                          widget_uuid + '.dat')
 
         request_tree_data = self.getTreeData(ctrl=self)
@@ -550,7 +550,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             save_filename = os.path.normpath(save_filename)
         else:
             widget_uuid = self.getUUID()
-            save_filename = os.path.join(ic_file.getPrjProfilePath(),
+            save_filename = os.path.join(filefunc.getPrjProfilePath(),
                                          widget_uuid + '.dat')
 
         request_tree_data = self.load_data_file(save_filename=save_filename)

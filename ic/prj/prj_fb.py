@@ -7,7 +7,7 @@ import wx
 
 # from ic.imglib import common as imglib
 from ic.bitmap import bmpfunc
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.editor import wxfb_manager
 
 from . import prj_node
@@ -66,7 +66,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
         # Удалить файл
         if os.path.exists(res_file_name):
             # ВНИМАНИЕ! Файл удаляем, но оставляем его бекапную версию!!!
-            ic_file.createBAKFile(res_file_name)
+            filefunc.createBAKFile(res_file_name)
             os.remove(res_file_name)
         # Для синхронизации дерева проекта
         self.getRoot().save()
@@ -100,7 +100,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
         Вырезать.
         """
         module_name = self.getPath()
-        ic_file.changeExt(module_name, '.bak')
+        filefunc.changeExt(module_name, '.bak')
         me_node = prj_node.icPrjNode.cut(self)
         self.delete()
         return me_node
@@ -113,7 +113,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
                                    self.name + self.ext)
         copy_node = prj_node.icPrjNode.copy(self)
         copy_module_name = copy_node.getCopyModuleName()
-        ic_file.copyFile(module_name, copy_module_name)
+        filefunc.copyFile(module_name, copy_module_name)
         return copy_node
 
     def paste(self, node):
@@ -139,7 +139,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
             copy_module_file_name = node.getCopyModuleName()
             ok = False
             if os.path.exists(copy_module_file_name):
-                ok = ic_file.copyFile(copy_module_file_name, module_file_name)
+                ok = filefunc.copyFile(copy_module_file_name, module_file_name)
                 os.remove(copy_module_file_name)
             # Для синхронизации дерева проекта
             node.getRoot().save()

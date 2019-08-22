@@ -34,7 +34,7 @@ from ic.engine import glob_functions
 from ic.components import user
 from ic.components import icEvents
 from ic.dlg import ic_logo_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.dlg import ic_dlg
 from ic.utils import util
 from ic.log import log
@@ -2177,7 +2177,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         @rtype: C{bool}
         @return: Возвращает признак успешного переименования.
         """
-        if ic_file.isSamePathWin(self.file, oldNameRes) or ic_file.isSamePathWin(self.file, fileName):
+        if filefunc.isSamePathWin(self.file, oldNameRes) or filefunc.isSamePathWin(self.file, fileName):
             self.CloseResource(bSaveAs=False, bCloseGrpEdt=False)
 
         # Читаем старый ресурс
@@ -2517,7 +2517,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         Загружает ресурсное описание из выбранного файла.
         """
         dlg = wx.FileDialog(self, u'Выберите имя ресурсного файла',
-                            defaultDir=ic_file.getRootDir(), defaultFile=u'',
+                            defaultDir=filefunc.getRootDir(), defaultFile=u'',
                             wildcard=_ResCard, style=wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPaths()[0]

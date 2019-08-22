@@ -13,7 +13,7 @@ import wx.grid
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.dlg import ic_dlg
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ini
 from ic.bitmap import bmpfunc
 from ic.bitmap import icimglib

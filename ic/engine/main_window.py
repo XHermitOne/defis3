@@ -42,7 +42,7 @@ import wx.lib.splitter
 from ic.imglib import common
 from ic.utils import ic_res
 from ic.utils import resource
-from ic.utils import ic_file
+from ic.utils import filefunc
 
 from ic.bitmap import ic_color
 from ic.utils import ic_exec
@@ -527,7 +527,7 @@ class icMainWindow(wx.Frame):
         """
         # Вывести на экран окно приглашения к работе
         if self._splash:
-            splash_window.showSplash(ic_file.get_absolute_path(self._splash))
+            splash_window.showSplash(filefunc.get_absolute_path(self._splash))
 
     def getIconFilename(self):
         """
@@ -537,7 +537,7 @@ class icMainWindow(wx.Frame):
         """
         icon = self.resource.get(RES_WIN_ICON, None) if hasattr(self, 'resource') else None
         if icon and isinstance(icon, str):
-            return ic_file.get_absolute_path(icon)
+            return filefunc.get_absolute_path(icon)
         else:
             log.warning(u'Не определена иконка главного окна')
         return None
@@ -548,7 +548,7 @@ class icMainWindow(wx.Frame):
         @param icon: Или имя файла *.ico или объект wx.Icon.
         """
         if isinstance(icon, str):
-            ico_file_name = ic_file.get_absolute_path(icon)
+            ico_file_name = filefunc.get_absolute_path(icon)
             # Установить иконку (если файл существует)
             if os.path.exists(ico_file_name):
                 try:

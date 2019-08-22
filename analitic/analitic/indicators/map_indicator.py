@@ -14,7 +14,7 @@ import os.path
 import uuid
 
 from ic.log import log
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import wxfunc
 
 try:
@@ -405,7 +405,7 @@ class icMapIndicatorManagerProto(icMapIndicator):
         @return: Полное имя файла для отображения карты.
         """
         gen_uuid = str(uuid.uuid4())
-        gen_path = os.path.join(ic_file.getPrjProfilePath(), gen_uuid+'.html')
+        gen_path = os.path.join(filefunc.getPrjProfilePath(), gen_uuid + '.html')
         return gen_path
 
     def createMap(self, geo_latitude, geo_longitude,

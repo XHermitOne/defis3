@@ -8,7 +8,7 @@
 # Подключение библиотек
 import wx
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.components import icwidget
 from . import prj_root
 from ic.bitmap import bmpfunc
@@ -577,7 +577,7 @@ class icPrjTree(wx.TreeCtrl):
             try:
                 # Затем построить дерево подсистемы
                 sub_sys_dir = node.getPathInPrj()
-                sub_sys_prj = ic_file.getFilenamesByExt(sub_sys_dir, '.pro')[0]
+                sub_sys_prj = filefunc.getFilenamesByExt(sub_sys_dir, '.pro')[0]
                 node.buildSubSysTree(sub_sys_prj)
             
                 # Удалить все дочерние элементы

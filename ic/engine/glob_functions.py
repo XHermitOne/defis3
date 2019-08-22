@@ -20,7 +20,7 @@ from ic.log import log
 from ic.kernel import icexceptions
 
 from . import glob_variables
-from ic.utils import ic_file
+from ic.utils import filefunc
 
 __version__ = (0, 1, 1, 2)
 
@@ -610,7 +610,7 @@ def saveOperateYear(year=None):
         year = getOperateYear()
 
     from ic.utils import ini
-    prj_path = ic_file.getPrjProfilePath()
+    prj_path = filefunc.getPrjProfilePath()
     ini_basename = getPrjName() + '.ini'
     ini_filename = os.path.join(prj_path, ini_basename)
     ini.saveParamINI(ini_filename, 'SETTINGS', 'operate_year', year)
@@ -627,7 +627,7 @@ def setOperateYear(year=None):
     is_save = True
     if year is None:
         from ic.utils import ini
-        prj_path = ic_file.getPrjProfilePath()
+        prj_path = filefunc.getPrjProfilePath()
         ini_basename = getPrjName() + '.ini'
         ini_filename = os.path.join(prj_path, ini_basename)
         operate_year = ini.loadParamINI(ini_filename, 'SETTINGS', 'operate_year')

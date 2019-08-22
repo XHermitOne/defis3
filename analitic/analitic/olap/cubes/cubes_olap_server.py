@@ -38,7 +38,7 @@ import os.path
 from .. import olap_server_interface
 from .. import pivot_dataframe_manager
 from ic.components import icwidget
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.log import log
 from ic.utils import ini
 from ic.utils import system
@@ -50,7 +50,7 @@ from STD.spreadsheet import spreadsheet_manager
 __version__ = (0, 1, 1, 1)
 
 DEFAULT_SLICER_EXEC = 'slicer'
-ALTER_SLICER_EXEC = os.path.join(ic_file.getHomeDir(), '.local', 'bin', 'slicer')
+ALTER_SLICER_EXEC = os.path.join(filefunc.getHomeDir(), '.local', 'bin', 'slicer')
 
 # Спецификация
 SPC_IC_CUBESOLAPSERVER = {'source': None,    # Паспорт объекта БД хранения OLAP кубов
@@ -89,7 +89,7 @@ DEFAULT_INI_FILENAME = 'slicer.ini'
 DEFAULT_MODEL_FILENAME = 'model.json'
 START_COMMAND_FMT = '%s serve %s &'
 
-DEFAULT_OLAP_SERVER_DIRNAME = ic_file.getPrjProfilePath()
+DEFAULT_OLAP_SERVER_DIRNAME = filefunc.getPrjProfilePath()
 
 LOG_LEVELS = ('info', 'debug', 'warn', 'error')
 

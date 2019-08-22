@@ -12,7 +12,7 @@ import wx
 
 from ic.imglib import common as imglib
 
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_res
 from ic.dlg import ic_dlg
 from ic.log import log
@@ -222,11 +222,11 @@ class icPrjImportSystems(icPrjImportFolder):
         if subsys_dir and prj_dir:
             log.info(u'Копирование подсистемы <%s> в <%s>' % (subsys_dir, prj_dir))
             # Просто скопировать одну папку в другую
-            ok = ic_file.copyDir(src_dir=subsys_dir, dst_dir=prj_dir, bReWrite=True)
+            ok = filefunc.copyDir(src_dir=subsys_dir, dst_dir=prj_dir, bReWrite=True)
             # Кроме кодирования надо удалить все пикловсвие файлы из проекта
             # иначе бывает рассинхронизация с отредактированными ресурсами
             new_subsys_dir = os.path.join(prj_dir, os.path.basename(subsys_dir))
-            ic_file.delAllFilesFilter(new_subsys_dir, *ALL_PKL_FILES_MASK)
+            filefunc.delAllFilesFilter(new_subsys_dir, *ALL_PKL_FILES_MASK)
             if ok:
                 log.info(u'[+] Обновление подсистемы <%s> прошло успешно' % prj_dir)
                 return new_subsys_dir
@@ -442,7 +442,7 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
         # диалог выбора файла *.pro
         prj_file_name = ic_dlg.icFileDlg(self.getParentRoot().getParent().getIDEFrame(),
                                          u'Выберите подсистему', u'Project file (*.pro)|*.pro',
-                                         default_path=ic_file.getRootDir())
+                                         default_path=filefunc.getRootDir())
         if prj_file_name:
             # открыть файл *.pro
             prj_data = self.openPrjFile(prj_file_name)
@@ -454,7 +454,7 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
             else:
                 # Скопировать в папку текущего проекта
                 prj_dir = self._Parent.copySubSys(prj_file_name)
-                prj_filenames = [filename for filename in ic_file.getFilenamesByExt(prj_dir, '.pro') if not filename.startswith('_pkl.pro')]
+                prj_filenames = [filename for filename in filefunc.getFilenamesByExt(prj_dir, '.pro') if not filename.startswith('_pkl.pro')]
                 self.imp_prj_file_name = prj_filenames[0] if prj_filenames else None
                 # добавить в список
                 if self.imp_prj_file_name:

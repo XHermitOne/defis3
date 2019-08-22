@@ -14,7 +14,7 @@ import py_compile
 from ic.log import log
 
 from ic.imglib import common as imglib
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_res
 from ic.dlg import ic_dlg
 from ic.kernel import icexceptions
@@ -237,9 +237,9 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         Создать новый __init__.py файл проекта.
         """
         log.info(_('__init__.py is created in folder %s') % prj_path)
-        return ic_file.copyFile(os.path.join(os.path.dirname(__file__),
+        return filefunc.copyFile(os.path.join(os.path.dirname(__file__),
                                                'prj__init__prototype.py'),
-                                os.path.join(prj_path, '__init__.py'), False)
+                                 os.path.join(prj_path, '__init__.py'), False)
         
     def newPrj(self):
         """
@@ -247,7 +247,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         """
         tree_prj = self.getParent()
         dir_prj_file_name = ic_dlg.icDirDlg(tree_prj, u'Создать проект',
-                                            default_path=ic_file.getRootDir())
+                                            default_path=filefunc.getRootDir())
         if dir_prj_file_name:
             prj_name = os.path.basename(dir_prj_file_name)
             new_prj_file_name = os.path.join(dir_prj_file_name, prj_name, prj_name+'.pro')
@@ -406,7 +406,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         if prj_filename is None:
             prj_filename = ic_dlg.icFileDlg(tree_prj, u'Открыть проект',
                                             u'Файл проекта (*.pro)|*.pro',
-                                            default_path=ic_file.getRootDir())
+                                            default_path=filefunc.getRootDir())
 
         if prj_filename and not os.path.exists(prj_filename):
             ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Файл проекта <%s> не найден' % prj_filename)
@@ -445,7 +445,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             self.imp_prj_file_name = prj_filename
             self._openDefault()
             # Сохранить время и размер до следующей синхронизации
-            self.prj_res_time = ic_file.getMakeFileTime(prj_filename)
+            self.prj_res_time = filefunc.getMakeFileTime(prj_filename)
             self.prj_res_size = os.path.getsize(prj_filename)
 
             # определить папку блокировок
@@ -526,7 +526,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         """
         prj_file = self.getPrjFileName()
         if prj_file:
-            cur_prj_res_time = ic_file.getMakeFileTime(prj_file)
+            cur_prj_res_time = filefunc.getMakeFileTime(prj_file)
             cur_prj_res_size = os.path.getsize(prj_file)
             if (cur_prj_res_time != self.prj_res_time) or \
                (cur_prj_res_size != self.prj_res_size) or \
@@ -566,7 +566,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         """
         ok = self.prj_res_manager.savePrj()
         # Сохранить время и размер до следующей синхронизации
-        self.prj_res_time = ic_file.getMakeFileTime(self.getPrjFileName())
+        self.prj_res_time = filefunc.getMakeFileTime(self.getPrjFileName())
         self.prj_res_size = os.path.getsize(self.getPrjFileName())
         return ok
 

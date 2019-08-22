@@ -11,7 +11,7 @@ import os.path
 import wx
 from . import uprint_dlg
 from ic.log import log
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ini
 from ic.utils import printerfunc
 
@@ -178,7 +178,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
         Генерация имени файла параметров печати.
         """
         if self.opt_filename is None:
-            self.opt_filename = os.path.join(ic_file.getProfilePath(), DEFAULT_OPTIONS_FILENAME)
+            self.opt_filename = os.path.join(filefunc.getProfilePath(), DEFAULT_OPTIONS_FILENAME)
         return self.opt_filename
 
     def loadPrintOptions(self, filename=None):

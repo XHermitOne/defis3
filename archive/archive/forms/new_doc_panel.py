@@ -18,7 +18,7 @@ from ic.dlg import ic_dlg
 from ic.dlg import wait_box
 from ic.utils import extfunc
 from ic.utils import ic_str
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import txtgen
 from ic.utils import ic_time
 from ic.utils import ic_uuid
@@ -31,7 +31,7 @@ from ic.engine import form_manager
 # Version
 __version__ = (0, 1, 1, 2)
 
-DEFAULT_SCAN_FILENAME = os.path.join(ic_file.getPrjProfilePath(),
+DEFAULT_SCAN_FILENAME = os.path.join(filefunc.getPrjProfilePath(),
                                      'scan_filename.pdf')
 
 DEFAULT_SCAN_BMP_FILENAMES = ('/usr/share/icons/gnome/48x48/devices/scanner.png',
@@ -78,7 +78,7 @@ def put_doc_catalog(doc, scan_filename, doRemoveScan=True):
     #    ic_dlg.icWarningBox(u'ВНИМАНИЕ!', u'Сканированный файл <%s> уже зарегистрирован в БД. Скан не сохраняется' % doc_filename)
     #    return False
 
-    ic_file.copyFile(scan_filename, doc_filename)
+    filefunc.copyFile(scan_filename, doc_filename)
 
     cataloger = ic.metadata.THIS.mtd.doc_cataloger.create()
     cataloger.put_object(doc_filename, do_remove=doRemoveScan)
@@ -198,7 +198,7 @@ class icDocCardPanelManager():
         code = ic_str.limit_len_text(file_ext.replace('.', '').upper(), 4, '-')
         cmd = sprav.Find(code, 's2')
         replaces = {'FILENAME': doc_filename,
-                    'PROFILE_DIR': ic_file.getPrjProfilePath()}
+                    'PROFILE_DIR': filefunc.getPrjProfilePath()}
         cmd = txtgen.gen(cmd, replaces)
         log.info(u'run command <%s>' % cmd)
 

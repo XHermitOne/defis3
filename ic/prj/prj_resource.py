@@ -12,7 +12,7 @@ import os
 import os.path
 
 from ic.imglib import common as imglib
-from ic.utils import ic_file
+from ic.utils import filefunc
 from ic.utils import ic_res
 from ic.utils import resfunc
 from ic.utils import util
@@ -123,12 +123,12 @@ class icPrjResources(prj_node.icPrjFolder):
         new_node = None
         if os.path.exists(res_filename):
             # Сделать новое имя файла
-            new_res_file_name = ic_file.get_absolute_path(os.path.join('.', self.getRoot().name,
-                                                                       os.path.basename(res_filename)))
+            new_res_file_name = filefunc.get_absolute_path(os.path.join('.', self.getRoot().name,
+                                                                        os.path.basename(res_filename)))
             # Если новый файл существут, то спросить о его перезаписи
-            if not ic_file.isSamePathWin(res_filename, new_res_file_name):
+            if not filefunc.isSamePathWin(res_filename, new_res_file_name):
                 # Скопировать файл
-                ic_file.copyFile(res_filename, new_res_file_name, True)
+                filefunc.copyFile(res_filename, new_res_file_name, True)
             # Создать узел
             res_file_name_split = os.path.splitext(new_res_file_name)
             typ = res_file_name_split[1][1:]
@@ -163,8 +163,8 @@ class icPrjResource(prj_node.icPrjNode):
         prj_file_name = self.getRoot().getPrjFileName()
         if prj_file_name is None:
             prj_name = self.getRoot().prj_res_manager.getPrjRootName().strip()
-            return ic_file.getAbsolutePath(prj_name,
-                                           os.path.dirname(self.getRoot().getPrjFileName()))
+            return filefunc.getAbsolutePath(prj_name,
+                                            os.path.dirname(self.getRoot().getPrjFileName()))
         else:
             return os.path.split(prj_file_name)[0].strip()
 
@@ -387,8 +387,8 @@ class icPrjResource(prj_node.icPrjNode):
                                      self.getResFileName()+'.'+self.getResFileExt())
         res_pkl_file_name = os.path.join(self.getResPath(),
                                          self.getResFileName()+'_pkl.'+self.getResFileExt())
-        ic_file.changeExt(res_file_name, '.bak')
-        ic_file.changeExt(res_pkl_file_name, '.bak')
+        filefunc.changeExt(res_file_name, '.bak')
+        filefunc.changeExt(res_pkl_file_name, '.bak')
         # Удалить из проекта
         self.delete()
         # Удалить из дерева
@@ -404,7 +404,7 @@ class icPrjResource(prj_node.icPrjNode):
                                      self.getResFileName()+'.'+self.getResFileExt())
         copy_res_file_name = os.path.join(node.getResPath(),
                                           node.getResFileName()+'.bak')
-        ic_file.copyFile(res_file_name, copy_res_file_name)
+        filefunc.copyFile(res_file_name, copy_res_file_name)
         # Кроме копирования файла необходимо
         # поменять имя ресурса в этом файле
         # ВНИМАНИЕ! Здесь нельзя использовать readAndEval,
@@ -464,7 +464,7 @@ class icPrjResource(prj_node.icPrjNode):
         # Выгрузить из редактора
         edit_res_file_name = self.getRoot().getParent().res_editor.GetResFileName()
         if edit_res_file_name and \
-            ic_file.isSamePathWin(res_file_name, edit_res_file_name):
+            filefunc.isSamePathWin(res_file_name, edit_res_file_name):
             # Закрыть и разблокировать
             self.getRoot().getParent().res_editor.CloseResource()
             self.getRoot().unlockResInResEditor(self.getRoot().getParent().res_editor)
@@ -472,7 +472,7 @@ class icPrjResource(prj_node.icPrjNode):
         if os.path.exists(res_file_name):
             # ВНИМАНИЕ! Ресурс сам удаляем!!! Но чтобы можно было его
             # восстановить оставляем его бекапную версию!!!
-            ic_file.createBAKFile(res_file_name)
+            filefunc.createBAKFile(res_file_name)
             os.remove(res_file_name)
         if os.path.exists(res_pkl_file_name):
             os.remove(res_pkl_file_name)
