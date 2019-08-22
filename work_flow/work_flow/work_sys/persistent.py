@@ -1272,31 +1272,31 @@ class icObjPersistent(icObjPersistentPrototype):
                                                  limit=limit)
         return sql
 
-    def getFilterSQLAlchemy(self, Filter_=None, Fields_=None, limit=None):
+    def getFilterSQLAlchemy(self, sql_filter=None, fields=None, limit=None):
         """
         Фильтр в SQLAlchemy представлении.
-        @param Filter_: Фильтр.
-        @param Fields_: Поля выбора. Если None, то будут выбираться только 
+        @param sql_filter: Фильтр.
+        @param fields: Поля выбора. Если None, то будут выбираться только 
         идентифицирующие объект поля.
         @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
         """
-        if Fields_ is None:
+        if fields is None:
             field_list = [requisite.getFieldName() for requisite in self.getChildrenRequisites()
                           if requisite.isIDAttr()]
             # ВНИМАНИЕ! Обязательно должен присутствовать UUID
             # иначе идентифицировать объект никак не получится
             field_list += ['uuid'] if 'uuid' not in field_list else list()
-            Fields_ = tuple(field_list)
-        elif Fields_ == '*':
-            Fields_ = ('*',)
+            fields = tuple(field_list)
+        elif fields == '*':
+            fields = ('*',)
         else:
             # Необхдимо, что бы в результате запроса всегда
             # присутствовал UUID  объекта
-            fld_lst = list(Fields_)
+            fld_lst = list(fields)
             fld_lst.append('uuid')
-            Fields_ = tuple(fld_lst)
+            fields = tuple(fld_lst)
 
-        query = filter_convert.convertFilter2SQLAlchemy(Filter_, self.getTable(), Fields_,
+        query = filter_convert.convertFilter2SQLAlchemy(sql_filter, self.getTable(), fields,
                                                         limit=limit)
         return query
 
@@ -1416,12 +1416,12 @@ class icObjPersistent(icObjPersistentPrototype):
             limit = self._limit
         # log.info(u'\tФильтр: <%s>. Ограничение кол. записей: [%s]' % (data_filter, limit))
         query = self.getFilterSQLAlchemy(data_filter, limit=limit)
-        # log.info(u'\tЗапрос: <%s>' % query)
+        # log.info(u'\tЗапрос <%s>' % query)
         result = self.getTable().getConnection().execute(query)
         log.info(u'\tКол. записей результата: [%s]' % result.rowcount)
         start_time = time.time()
         recordset = self._resultFilter2Dataset(result.fetchall())
-        log.info(u'\tПреобразование списка записей. Время выполнения: %s' % str(time.time()-start_time))
+        # log.info(u'\tПреобразование списка записей. Время выполнения: %s' % str(time.time()-start_time))
         return recordset
 
     # Другие наименования метода
@@ -1609,7 +1609,7 @@ class icAccRegPersistent(icObjPersistent):
         @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
         """
         data_filter = self.filterRequisiteData()
-        query = self.getFilterSQLAlchemy(data_filter, Fields_='*', limit=limit)
+        query = self.getFilterSQLAlchemy(data_filter, fields='*', limit=limit)
         result = query.execute()
         log.info(u'ACCUMULATE REGISTRY get data\n\tResult: [%s]' % result.rowcount)
         return self._resultFilter2Dataset(result.fetchall())

@@ -22,7 +22,7 @@ def get_date_between_filter(requisite_name, min_date, max_date):
     filter_dict['type'] = 'compare'
     filter_dict['arg_1'] = min_date
     filter_dict['arg_2'] = max_date
-    filter_dict['func'] = 'between'
+    filter_dict['function'] = 'between'
     group_dict = dict()
     group_dict['name'] = 'grp'
     group_dict['type'] = 'group'

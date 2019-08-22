@@ -676,15 +676,20 @@ def getHomePath():
     return os.path.normpath(home_path)
 
 
-def getProfilePath(bAutoCreatePath=True):
+def getProfilePath(bAutoCreatePath=True, profile_dirname=None):
     """
     Папка профиля программы DEFIS.
     @param bAutoCreatePath: Создать автоматически путь если его нет?
+    @param profile_dirname: Явное указание папки профиля.
+        Если не указано, то берется ic.config.PROFILE_DIRNAME.
     @return: Путь до ~/.defis
     """
+    if profile_dirname is None:
+        profile_dirname = ic.config.PROFILE_DIRNAME
+
     home_path = getHomePath()
     if home_path:
-        profile_path = os.path.join(home_path, ic.config.PROFILE_DIRNAME)
+        profile_path = os.path.join(home_path, profile_dirname)
         if not os.path.exists(profile_path) and bAutoCreatePath:
             # Автоматическое создание пути
             try:
@@ -695,13 +700,15 @@ def getProfilePath(bAutoCreatePath=True):
     return '~/.defis'
 
 
-def getPrjProfilePath(bAutoCreatePath=True):
+def getPrjProfilePath(bAutoCreatePath=True, profile_dirname=None):
     """
     Папка профиля прикладного проекта.
     @param bAutoCreatePath: Создать автоматически путь если его нет?
+    @param profile_dirname: Явное указание папки профиля.
+        Если не указано, то берется ic.config.PROFILE_DIRNAME.
     @return: Путь до ~/.defis/имя_проекта/
     """
-    profile_path = getProfilePath(bAutoCreatePath)
+    profile_path = getProfilePath(bAutoCreatePath, profile_dirname=profile_dirname)
     from ic.engine import glob_functions
 
     prj_name = glob_functions.getPrjName()

@@ -607,7 +607,7 @@ def test():
 
     env = copy.deepcopy(filter_builder_env.FILTER_ENVIRONMENT)
     # env = filter_builder_env.FILTER_ENVIRONMENT
-    func1 = {'func': filter_builder_env.str_equal,
+    func1 = {'function': filter_builder_env.str_equal,
              'description': u'Строковое сравнение',
              'args': []
              }
@@ -626,7 +626,7 @@ def test():
     func_names = env['funcs'].keys()
     func_names.sort()
     requisite1['funcs'] = func_names
-    requisite1['funcs'].append({'func': None, 'description': u'Просто для отладки'})
+    requisite1['funcs'].append({'function': None, 'description': u'Просто для отладки'})
     env['requisites'].append(requisite1)
     
     requisite2 = copy.deepcopy(filter_builder_env.FILTER_REQUISITE)

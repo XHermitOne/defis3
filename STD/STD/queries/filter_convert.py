@@ -31,7 +31,7 @@
  'arg_1': Значение аргумента 1.
  'arg_2': Значение аргумента 2.
  'get_args': Дополнительная функция получения аргументов.
- 'func': Имя функции сравнения. Функция сравнения выбирается по имени из
+ 'function': Имя функции сравнения. Функция сравнения выбирается по имени из
             словаря функций сравнения, определенного 
             в модуле filter_builder_env.
  '__sql__': Кортеж элментов sql выражения соответствующего данному реквизиту.
@@ -147,6 +147,7 @@ def convertFilter2SQLAlchemy(filter_data, table, fields=('*',), limit=None):
     @param table: Таблица запроса.
     @param fields: Список/Кортеж имен полей используемых в запросе.
     @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
+    @return: Объект sqlalchemy.sql.selectable.Select.
     """
     converter = icFilter2SQLAlchemyConverter(filter_data, table)
     where = converter.convert()
@@ -227,66 +228,66 @@ class icFilter2SQLAlchemyConverter(object):
             ic.log.fatal(u'Ошибка получения аргументов')
 
         try:
-            if requisite['func'] == 'equal':
+            if requisite['function'] == 'equal':
                 # Проверка на <равно>
                 return getattr(self.table.c, requisite['requisite']) == requisite['arg_1']
-            elif requisite['func'] == 'not_equal':
+            elif requisite['function'] == 'not_equal':
                 # Проверка на <неравенство>
                 return getattr(self.table.c, requisite['requisite']) != requisite['arg_1']
-            elif requisite['func'] == 'great':
+            elif requisite['function'] == 'great':
                 # Проверка на <больше>
                 return getattr(self.table.c, requisite['requisite']) > requisite['arg_1']
-            elif requisite['func'] == 'great_or_equal':
+            elif requisite['function'] == 'great_or_equal':
                 # Проверка на <больше или равно>
                 return getattr(self.table.c, requisite['requisite']) >= requisite['arg_1']
-            elif requisite['func'] == 'lesser':
+            elif requisite['function'] == 'lesser':
                 # Проверка на <меньше>
                 return getattr(self.table.c, requisite['requisite']) < requisite['arg_1']
-            elif requisite['func'] == 'lesser_or_equal':
+            elif requisite['function'] == 'lesser_or_equal':
                 # Проверка на <меньше или равно>
                 return getattr(self.table.c, requisite['requisite']) <= requisite['arg_1']
-            elif requisite['func'] == 'between':
+            elif requisite['function'] == 'between':
                 # Проверка <МЕЖДУ>
                 return getattr(self.table.c, requisite['requisite']).between(requisite['arg_1'],
                                                                              requisite['arg_2'])
-            elif requisite['func'] == 'not_between':
+            elif requisite['function'] == 'not_between':
                 # Проверка <не МЕЖДУ>
                 return sqlalchemy.not_(getattr(self.table.c, requisite['requisite']).between(requisite['arg_1'],
                                                                                              requisite['arg_2']))
-            elif requisite['func'] == 'contain':
+            elif requisite['function'] == 'contain':
                 # Проверка <СОДЕРЖИТ>
                 return getattr(self.table.c, requisite['requisite']).contains(requisite['arg_1'])
-            elif requisite['func'] == 'not_contain':
+            elif requisite['function'] == 'not_contain':
                 # Проверка <не СОДЕРЖИТ>
                 return sqlalchemy.not_(getattr(self.table.c, requisite['requisite']).contains(requisite['arg_1']))
-            elif requisite['func'] in ('left_equal', 'startswith'):
+            elif requisite['function'] in ('left_equal', 'startswith'):
                 # Проверка <начинается с>
                 return getattr(self.table.c, requisite['requisite']).startswith(requisite['arg_1'])
-            elif requisite['func'] in ('right_equal', 'endswith'):
+            elif requisite['function'] in ('right_equal', 'endswith'):
                 # Проверка <заканчивается на>
                 return getattr(self.table.c, requisite['requisite']).endswith(requisite['arg_1'])
-            elif requisite['func'] == 'mask':
+            elif requisite['function'] == 'mask':
                 # Проверка <соответствует маске>
                 ic.log.warning(u'Проверка на соответствие маски пока не реализованно')
                 return None
-            elif requisite['func'] == 'not_mask':
+            elif requisite['function'] == 'not_mask':
                 # Проверка <не соответствует маске>
                 ic.log.warning(u'Проверка на не соответствие маски пока не реализованно')
                 return None
-            elif requisite['func'] == 'is_null':
+            elif requisite['function'] == 'is_null':
                 # Проверка <пусто>
                 return getattr(self.table.c, requisite['requisite']) is None
-            elif requisite['func'] == 'is_not_null':
+            elif requisite['function'] == 'is_not_null':
                 # Проверка <не пусто>
                 return getattr(self.table.c, requisite['requisite']) is not None
-            elif requisite['func'] == 'into':
+            elif requisite['function'] == 'into':
                 # Проверка <любое из>
                 return getattr(self.table.c, requisite['requisite']).in_(requisite['arg_1'])
-            elif requisite['func'] == 'not_into':
+            elif requisite['function'] == 'not_into':
                 # Проверка <не одно из>
                 return sqlalchemy.not_(getattr(self.table.c, requisite['requisite']).in_(requisite['arg_1']))
         
-            ic.log.warning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % requisite['func'])
+            ic.log.warning(u'Не определен тип функции <%s> реквизита фильтра при конвертации' % requisite['function'])
         except:
             ic.log.fatal(u'Ошибка конвертации реквизита фильтра <%s>' % requisite)
             

@@ -191,10 +191,10 @@ def test(parent=None):
 
     default_filter = {'name': 'AND', 'type': 'group', 'children': [{'requisite': 'Name',
                                                                     'type': 'compare', 'arg_1': u'qweer',
-                                                                    'func': 'equal',
+                                                                    'function': 'equal',
                                                                     '__sql__': ('name', '=', 'qweer')},
                                                                    {'requisite': 'Cost', 'type': 'compare',
-                                                                    'arg_1': u'1000', 'func': 'lesser',
+                                                                    'arg_1': u'1000', 'function': 'lesser',
                                                                     '__sql__': ('cost', '<', '1000')}], 'logic': 'AND'}
 
     result = get_filter_constructor_dlg(parent, default_filter_data=default_filter, env=env)
