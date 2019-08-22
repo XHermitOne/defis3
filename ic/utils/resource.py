@@ -17,7 +17,7 @@ import importlib.util
 import ic.utils.impfunc
 from ic.dlg import dlgfunc
 from ic.log import log
-from . import lock
+from . import lockfunc
 from ic.PropertyEditor import icDefInf
 import ic.storage.storesrc
 from . import util
@@ -125,7 +125,7 @@ def icSetUserVariable(varName, value, subsys='', bClose = False):
     else:
         storage = USER_OBJECT_STORAGE
 
-    keyObj = lock.GetMyHostName()+'Property'
+    keyObj = lockfunc.GetMyHostName() + 'Property'
     #   По необходимости создаем файл
     # ВНИМАНИЕ! При работе с хранилищем используем исключительно функцию
     # наличия ключа <has_key> т.к. она определена в классе
@@ -174,7 +174,7 @@ def icGetUserVariable(varName, subsys='', bClose = False):
     else:
         storage = USER_OBJECT_STORAGE
 
-    keyObj = lock.GetMyHostName()+'Property'
+    keyObj = lockfunc.GetMyHostName() + 'Property'
     result = None
     #   По необходимости создаем файл
     # ВНИМАНИЕ! При работе с хранилищем используем исключительно функцию

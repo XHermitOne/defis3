@@ -32,7 +32,7 @@ from ic.utils import util
 from ic.utils import uuidfunc
 from ic.utils.coderror import *
 from ic.utils import translate
-from ic.utils import lock as ic_lock
+from ic.utils import lockfunc as ic_lock
 from ic.log import log
 from . import icGridCellEditors as icEdt
 from . import icgriddataset_erm

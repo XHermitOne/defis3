@@ -28,7 +28,7 @@ import ic.utils.resource
 import ic.utils.filefunc
 import ic.utils.toolfunc
 from ic.kernel import icexceptions
-from ic.utils import lock  # Модуль необходим для удаления файлов-блокировок
+from ic.utils import lockfunc  # Модуль необходим для удаления файлов-блокировок
 import ic.imglib.common as imglib
 from ic.dlg import dlgfunc
 from . import icwxapplication
@@ -117,7 +117,7 @@ class icApp(icwxapplication.icWXApp):
         from ic.engine import glob_functions
         from ic.utils import resource
         
-        lock.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
+        lockfunc.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
         # Сохраняем локальное хранилище настроек 
         resource.icCloseLocalStorage()
         
@@ -150,11 +150,11 @@ class icApp(icwxapplication.icWXApp):
         if ok:
             # self.run(self._User.getMainWinPsp(), self._User.getMenubarsPsp())
             # Удалить файлы блокировок при входе в систему
-            lock.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
+            lockfunc.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
             return True
 
         # Удалить файлы блокировок при входе в систему
-        lock.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
+        lockfunc.UnLockAllFile(glob_functions.getVar('LOCK_DIR'))
         
         return False
 

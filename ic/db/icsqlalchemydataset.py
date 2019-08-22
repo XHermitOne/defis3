@@ -87,7 +87,7 @@ from ic.log import log
 from . import icdataset
 
 from ic.db import icsqlalchemy
-import ic.utils.lock as ic_lock
+import ic.utils.lockfunc as ic_lock
 
 from ic.engine import user_manager as icuser
 from ic.components import icwidget

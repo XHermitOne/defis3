@@ -11,7 +11,7 @@ import time
 
 from ic.utils import modefunc
 
-from ic.utils import lock
+from ic.utils import lockfunc
 from ic.utils import strfunc
 from ic.utils import util
 from ic.engine import glob_functions
@@ -221,7 +221,7 @@ class icObjPersistentPrototype:
         """
         # Система блокировки
         lock_dir = glob_functions.getVar('LOCK_DIR')
-        self._lockSystem = lock.icLockSystem(lock_dir)
+        self._lockSystem = lockfunc.icLockSystem(lock_dir)
 
     def lock(self, UUID=None):
         """
@@ -278,7 +278,7 @@ class icObjPersistentPrototype:
         Моя блокировка?
         @param UUID: UUID блокируемого объекта.
         """
-        return self.ownerLock(UUID) == lock.ComputerName()
+        return self.ownerLock(UUID) == lockfunc.ComputerName()
 
     def getFieldName(self):
         """

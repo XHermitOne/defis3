@@ -12,7 +12,7 @@ import os
 import os.path
 
 from . import filefunc
-from . import lock
+from . import lockfunc
 from . import inifunc
 from . import modefunc
 from ic.log import log
@@ -59,7 +59,7 @@ class icRegUserJournal:
         """
         Имя компьютера.
         """
-        return lock.ComputerName()
+        return lockfunc.ComputerName()
         
     def getRegLastUserName(self):
         """

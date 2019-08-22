@@ -13,7 +13,7 @@ from sqlalchemy.orm import interfaces as orm_ifs
 
 from ic.utils import resfunc
 from ic.utils import filefunc
-from ic.utils import lock as lockmod
+from ic.utils import lockfunc as lockmod
 from ic.log import log
 
 try:

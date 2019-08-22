@@ -18,7 +18,7 @@ except ImportError:
 
 from ic.interfaces import icsourceinterface
 
-from ic.utils import lock
+from ic.utils import lockfunc
 from ic.kernel import icobject
 from ic.utils import resource
 from ic.dlg import dlgfunc
@@ -634,23 +634,23 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         """
         Блокирует таблицу.
         """
-        return lock.LockTable(name)
+        return lockfunc.LockTable(name)
 
     def unLockTable(self, name):
         """
         Разблокирует таблицу.
         """
-        return lock.UnLockTable(name)
+        return lockfunc.UnLockTable(name)
 
     def LockRec(self, name, id, LockRec_=None):
         """
         Блокировка записи.
         """
         if LockRec_ is None:
-            comp_name = lock.ComputerName()
+            comp_name = lockfunc.ComputerName()
             user_name = glob_functions.getCurUserName()
             LockRec_ = str({'computer': comp_name, 'user': user_name})
-        result = lock.LockRecord(name, id, LockRec_)
+        result = lockfunc.LockRecord(name, id, LockRec_)
         log.debug(u'Запись заблокирована <%s : %s : %s : %s>' % (name, id, LockRec_, result))
         if result != 0:
             return False
@@ -662,20 +662,20 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         """
         if not self.IsLockRec(name, id):
             log.debug(u'Запись разблокирована <%s : %s>' % (name, id))
-            return lock.unLockRecord(name, id)
+            return lockfunc.unLockRecord(name, id)
         return False
 
     def IsLockTable(self, name):
         """
         Возвращает признак блокировки таблицы.
         """
-        return lock.isLockTable(name)
+        return lockfunc.isLockTable(name)
 
     def IsLockRec(self, name, id):
         """
         Возвращает признак блокировки записи.
         """
-        lock_msg = lock.readMessage(name, id)
+        lock_msg = lockfunc.readMessage(name, id)
 
         if lock_msg:
             lock_rec = eval(lock_msg)
@@ -684,7 +684,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             log.debug(u'Проверка блокироваки записи <%s : %s> ' % (lock_rec, type(lock_rec)))
             if lock_rec and lock_rec['user'] == glob_functions.getCurUserName():
                 return False
-            return lock.isLockRecord(name, id)
+            return lockfunc.isLockRecord(name, id)
         return False
 
     def releaseConnection(self, conn):

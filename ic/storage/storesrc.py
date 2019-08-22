@@ -18,7 +18,7 @@ import shelve
 import copy
 import shutil
 
-import ic.utils.lock
+import ic.utils.lockfunc
 from ic.utils import toolfunc
 from ic.utils import filefunc
 from ic.interfaces import StorageInterface as storage_interface
@@ -1169,7 +1169,7 @@ class icTreeDirStorage(icDirStorage):
         # Создать системму блокировки
         if StorageDir_:
             lock_dir = os.path.join(StorageDir_, '#lock')
-            self._lockSys = ic.utils.lock.icLockSystem(lock_dir)
+            self._lockSys = ic.utils.lockfunc.icLockSystem(lock_dir)
         return self.makeNodeDir(StorageDir_)
 
     def clearStorageDir(self, StorageDir_=None):
@@ -1256,7 +1256,7 @@ class icTreeDirStorage(icDirStorage):
         """
         Проверка, является ли эта блокировка моей.
         """
-        return ic.utils.lock.ComputerName() == self.ownerLock(Name_)
+        return ic.utils.lockfunc.ComputerName() == self.ownerLock(Name_)
         
     def unLockAllMy(self):
         """

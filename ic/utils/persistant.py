@@ -15,7 +15,7 @@ import wx
 from . import filefunc
 from . import resfunc
 from . import util
-from . import lock
+from . import lockfunc
 from ic.engine import glob_functions
 from ic.log import log
 
@@ -124,17 +124,17 @@ class icPersistant:
         try:
             local_dir = filefunc.getPrjProfilePath() if res_path is None else res_path
             full_file_name = os.path.join(local_dir, res_name.replace(':', '_')+'.'+res_type)
-            lock_file_name = os.path.join(local_dir, '#lock', res_name.replace(':', '_')+lock.LOCK_FILE_EXT)
-            if not lock.IsLockedFile(lock_file_name):
+            lock_file_name = os.path.join(local_dir, '#lock', res_name.replace(':', '_') + lockfunc.LOCK_FILE_EXT)
+            if not lockfunc.IsLockedFile(lock_file_name):
                 try:
-                    lock_rec = {'computer': lock.ComputerName(),
+                    lock_rec = {'computer': lockfunc.ComputerName(),
                                 'user': glob_functions.getVar('UserName')}
-                    lock.LockFile(lock_file_name, lock_rec)
+                    lockfunc.LockFile(lock_file_name, lock_rec)
                     resfunc.saveResourcePickle(full_file_name, res)
-                    lock.UnLockFile(lock_file_name)
+                    lockfunc.UnLockFile(lock_file_name)
                 except:
                     log.fatal(u'Ошибка сохранение ресурсного файла <%s>' % full_file_name)
-                    lock.UnLockFile(lock_file_name)
+                    lockfunc.UnLockFile(lock_file_name)
             else:
                 log.warning(u'Файл <%s> заблокирован для записи' % full_file_name)
                 return False
