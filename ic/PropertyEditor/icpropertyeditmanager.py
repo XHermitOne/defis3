@@ -21,7 +21,7 @@ from ic.utils import resource
 from ic.utils import uuidfunc
 from ic.utils import coderror
 from ic.dlg import dlgfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 
 from .ExternalEditors import icedituserproperty
 from .ExternalEditors import icpyscriptproperty
@@ -175,21 +175,21 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
             # Словарь в синтаксисе Python.
             # value = str(value)
             # Привести словарь к структурному виду
-            value = ic_util.StructToTxt(value)
+            value = toolfunc.StructToTxt(value)
             wx_property = wx.propgrid.LongStringProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_DICT:
             # Словарь
             # value = str(value)
             # Привести словарь к структурному виду
-            value = ic_util.StructToTxt(value)
+            value = toolfunc.StructToTxt(value)
             wx_property = wx.propgrid.LongStringProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_IMPORT_NAMES:
             # Словарь импортируемых имен
             # value = str(value)
             # Привести словарь к структурному виду
-            value = ic_util.StructToTxt(value)
+            value = toolfunc.StructToTxt(value)
             wx_property = wx.propgrid.LongStringProperty(name, value=value)
 
         elif property_type == icDefInf.EDT_NUMBER:

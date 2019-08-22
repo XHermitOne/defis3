@@ -9,7 +9,7 @@
 import wx
 
 import ic.utils.execfunc
-import ic.utils.ic_util
+import ic.utils.toolfunc
 from ic.utils import resfunc
 from ic.log import log
 
@@ -104,7 +104,7 @@ class icPopupMenu(icmenu.icMenu):
 
         try:
             # Расширение структуры до спецификации
-            MenuStruct_ = ic.utils.ic_util.SpcDefStruct(SPC_IC_POPUPMENU, MenuStruct_)
+            MenuStruct_ = ic.utils.toolfunc.defineSpcStruct(SPC_IC_POPUPMENU, MenuStruct_)
 
             # Вызов конструктора родителя
             icmenu.icMenu.__init__(self, None, MenuName_, MenuStruct_)

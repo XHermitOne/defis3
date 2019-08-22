@@ -898,8 +898,8 @@ msgid "Sunday"
 msgstr "Воскресенье"
 
 #: ../utils/ic_util.py:406
-msgid "Argument error in icOctHexString."
-msgstr "Ошибка аргумента в icOctHexString."
+msgid "Argument error in toOctHexString."
+msgstr "Ошибка аргумента в toOctHexString."
 
 #: ../utils/ic_util.py:553
 msgid "Define HDD serial number error."

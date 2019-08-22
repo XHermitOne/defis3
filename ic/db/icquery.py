@@ -12,7 +12,7 @@
 import copy
 from . import icsqlalchemydataset
 
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.utils import resource
 from ic.log import log
 from ic.utils import txtgen
@@ -116,7 +116,7 @@ def getQueryTable(Query_, PostFilter_=None):
                 field_name2idx[field_name] = field_names.index(field_name)
             # Фильтрация
             filter_if_str_lst = ['r[%d]==%s' % (field_name2idx[fld],
-                                 ic_util.getStrInQuotes(PostFilter_[fld])) for fld in PostFilter_.keys()]
+                                                toolfunc.getStrInQuotes(PostFilter_[fld])) for fld in PostFilter_.keys()]
             filter_if_str = 'lambda r: '+' and '.join(filter_if_str_lst)
             log.debug(u'getQueryTable PostFilter: ' + filter_if_str)
             filter_if = eval(filter_if_str)
@@ -363,7 +363,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         if isinstance(table, str) or table is None:
             return self._to_table_by_name(table, bReCreateRes=bReCreateRes, bData=bData,
                                           bClear=bClear, bTransact=bTransact)
-        elif ic_util.is_pasport(table):
+        elif toolfunc.is_pasport(table):
             kernel = glob_functions.getKernel()
             tab = kernel.Create(passport=table)
             return self._to_table(tab, bReCreateRes=bReCreateRes, bData=bData,
@@ -552,7 +552,7 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
             # Таблица задается именем
             kernel = glob_functions.getKernel()
             table = kernel.createObjByRes(table, table, 'tab')
-        elif ic_util.is_pasport(table):
+        elif toolfunc.is_pasport(table):
             # Таблица задается паспортом
             kernel = glob_functions.getKernel()
             table = kernel.Create(table)

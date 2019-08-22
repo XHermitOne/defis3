@@ -47,7 +47,7 @@ from ic.utils import filefunc
 from ic.bitmap import ic_color
 from ic.utils import execfunc
 from ic.utils import modefunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from . import icnotebook
 from ic.dlg import splash_window
 from ic.log import log
@@ -365,7 +365,7 @@ class icMainWindow(wx.Frame):
 
         # --- Инициализация ---
         # Расширение структуры до спецификации
-        win_struct = ic_util.SpcDefStruct(SPC_IC_WIN, win_struct)
+        win_struct = toolfunc.defineSpcStruct(SPC_IC_WIN, win_struct)
 
         # Содержит линейку меню? По умолчанию - да
         self.is_menubar = win_struct.get('is_menubar', True)

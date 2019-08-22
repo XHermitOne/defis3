@@ -617,8 +617,8 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
                         # Получить значение поля
                         if bILike:
                             # Без учета регистра?
-                            value = strfunc.icUpper(str(cur_item_rec[col]))
-                            find_str = strfunc.icUpper(string)
+                            value = strfunc.toUpper(str(cur_item_rec[col]))
+                            find_str = strfunc.toUpper(string)
                             find_col_idx = i
                         else:
                             value = str(cur_item_rec[col])
@@ -722,8 +722,8 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
                 # Получить значение
                 if bILike:
                     # Без учета регистра?
-                    value = strfunc.icUpper(label)
-                    find_str = strfunc.icUpper(string)
+                    value = strfunc.toUpper(label)
+                    find_str = strfunc.toUpper(string)
                 else:
                     value = label
                     find_str = string

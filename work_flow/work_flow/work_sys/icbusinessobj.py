@@ -30,7 +30,7 @@
 # Подключение библиотек
 import ic
 from ic.utils import uuidfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.log import log
 from ic.interfaces import icdatasetinterface
 
@@ -427,7 +427,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         if UUID_ is not None:
             self.loadRequisiteData(UUID_)
             
-        description = u' '.join([ic_util.toUnicode(requisite.getValue()) for requisite in self.getChildrenRequisites() if requisite.isDescription()])
+        description = u' '.join([toolfunc.toUnicode(requisite.getValue()) for requisite in self.getChildrenRequisites() if requisite.isDescription()])
 
         if description:
             return description

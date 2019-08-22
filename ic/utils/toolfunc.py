@@ -32,22 +32,10 @@ from . import strfunc
 
 _ = wx.GetTranslation
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
-# Функции
-def IsSubClass(Class1_, Class2_):
-    """
-    Функция определяет является ли Class1_ базовым для Class2_. Проверка
-    производится рекурсивно.
-    @param Class1_: Объект класса.
-    @param Class2_: Объект класса.
-    @return: Возвращает результат отношения (1/0).
-    """
-    return issubclass(Class2_, Class1_)
-
-
-def SpcDefStruct(spc, struct):
+def defineSpcStruct(spc, struct):
     """
     Дополняет структуру описания объекта до требований спецификации.
     @type spc: C{dictionary}.
@@ -74,344 +62,237 @@ def SpcDefStruct(spc, struct):
         return struct
 
 
-def getAttrValue(AttrName_, SPC_):
+def getAttrValue(attr_name, spc):
     """
     Получить нормированное значение свойства из спецификации.
-    @param AttrName_: Имя атрибута.
-    @param SPC_: Спецификация.
+    @param attr_name: Имя атрибута.
+    @param spc: Спецификация.
     """
     try:
         # Нормализация по типам
-        if isinstance(SPC_[AttrName_], str):
+        if isinstance(spc[attr_name], str):
             try:
                 # Возможно это не строка
-                value = eval(SPC_[AttrName_])
+                value = eval(spc[attr_name])
             except:
                 # Нет это все таки строка
-                value = SPC_[AttrName_]
-            SPC_[AttrName_] = value
-        return SPC_[AttrName_]
+                value = spc[attr_name]
+            spc[attr_name] = value
+        return spc[attr_name]
     except:
-        log.fatal()
-        return None
+        log.fatal(u'Ошибка получения нормированного значения свойства из спецификации')
+    return None
 
 
-def getStrInQuotes(Value_):
+def getStrInQuotes(value):
     """
     Если value - строка то обрамляет ее одинарными кавычками, если нет,
-    то просто преабразует в строку.
+    то просто преобразует в строку.
     """
-    if isinstance(Value_, str):
-        return '\'%s\'' % Value_
+    if isinstance(value, str):
+        return '\'%s\'' % value
     else:
-        return str(Value_)
+        return str(value)
 
 
-def KeyToText(Key_, Shift_=0, Alt_=0, Ctrl_=0):
-    """
-    Функция преабразует код клавиши в текстовый эквивалент.
-    @param Key_: код клавиши.
-    @param Shift_: флаг клавиши Shift.
-    @param Alt_: флаг клавиши Alt.
-    @param Ctrl_: флаг клавиши Ctrl.
-    @return: Возвращает текстовую строку, например 'Alt+X'.
-    """
-    result = ''
-    if Shift_ == 1:
-        result += 'Shift+'
-    if Alt_ == 1:
-        result += 'Alt+'
-    if Ctrl_ == 1:
-        result += 'Ctrl+'
-    if Key_ == wx.WXK_RETURN:
-        result += 'Enter'
-    elif Key_ == wx.WXK_ESCAPE:
-        result += 'Esc'
-    elif Key_ == wx.WXK_DELETE:
-        result += 'Del'
-    elif Key_ == wx.WXK_TAB:
-        result += 'Tab'
-    elif Key_ == wx.WXK_SPACE:
-        result += 'Space'
-    elif Key_ == wx.WXK_END:
-        result += 'End'
-    elif Key_ == wx.WXK_HOME:
-        result += 'Home'
-    elif Key_ == wx.WXK_PAUSE:
-        result += 'Pause'
-    elif Key_ == wx.WXK_LEFT:
-        result += 'Left'
-    elif Key_ == wx.WXK_UP:
-        result += 'Up'
-    elif Key_ == wx.WXK_RIGHT:
-        result += 'Right'
-    elif Key_ == wx.WXK_DOWN:
-        result += 'Down'
-    elif Key_ == wx.WXK_INSERT:
-        result += 'Ins'
-    elif Key_ == wx.WXK_F1:
-        result += 'F1'
-    elif Key_ == wx.WXK_F2:
-        result += 'F2'
-    elif Key_ == wx.WXK_F3:
-        result += 'F3'
-    elif Key_ == wx.WXK_F4:
-        result += 'F4'
-    elif Key_ == wx.WXK_F5:
-        result += 'F5'
-    elif Key_ == wx.WXK_F6:
-        result += 'F6'
-    elif Key_ == wx.WXK_F7:
-        result += 'F7'
-    elif Key_ == wx.WXK_F8:
-        result += 'F8'
-    elif Key_ == wx.WXK_F9:
-        result += 'F9'
-    elif Key_ == wx.WXK_F10:
-        result += 'F10'
-    elif Key_ == wx.WXK_F11:
-        result += 'F11'
-    elif Key_ == wx.WXK_F12:
-        result += 'F12'
-    elif Key_ == wx.WXK_F13:
-        result += 'F13'
-    elif Key_ == wx.WXK_F14:
-        result += 'F14'
-    elif Key_ == wx.WXK_F15:
-        result += 'F15'
-    elif Key_ == wx.WXK_F16:
-        result += 'F16'
-    elif Key_ == wx.WXK_F17:
-        result += 'F17'
-    elif Key_ == wx.WXK_F18:
-        result += 'F18'
-    elif Key_ == wx.WXK_F19:
-        result += 'F19'
-    elif Key_ == wx.WXK_F20:
-        result += 'F20'
-    elif Key_ == wx.WXK_F21:
-        result += 'F21'
-    elif Key_ == wx.WXK_F22:
-        result += 'F22'
-    elif Key_ == wx.WXK_F23:
-        result += 'F23'
-    elif Key_ == wx.WXK_F24:
-        result += 'F24'
-    else:
-        if Key_ < 256:
-            result += chr(Key_)
-            
-    return result
-
-# Наполнитель позиций при отображении вложенности пунктов в компоненте списка
+# Наполнитель позиций при отображении вложенности пунктов
+# в компоненте списка
 PADDING = '    '
 
 
-def StructToTxt(Struct_, Level_=0):
+def StructToTxt(struct, level=0):
     """
     Перевод словарно-списковой структуры в форматированный текст.
-    @param Struct_ : словарно-списковая структура.
-    @param Level_: уровень вложенности (д.б. 0).
+    @param struct : словарно-списковая структура.
+    @param level: уровень вложенности (д.б. 0).
     """
+    txt = ''
     try:
-        txt = ''
-        obj_type = type(Struct_)
+        obj_type = type(struct)
         if obj_type == list:
-            txt = txt+'\n'+Level_*PADDING+'[\n'
-            for obj in Struct_:
-                txt += Level_*PADDING
-                txt += StructToTxt(obj, Level_+1)
+            txt = txt + '\n' + level * PADDING + '[\n'
+            for obj in struct:
+                txt += level * PADDING
+                txt += StructToTxt(obj, level + 1)
                 txt += ',\n'
-            if len(Struct_) != 0:
+            if len(struct) != 0:
                 txt = txt[:-2]
-            txt = txt+'\n'+Level_*PADDING+']'
+            txt = txt + '\n' + level * PADDING + ']'
         elif obj_type == dict:
-            txt = txt+'\n'+Level_*PADDING+'{\n'
-            keys = Struct_.keys()
-            values = Struct_.values()
+            txt = txt + '\n' + level * PADDING + '{\n'
+            keys = struct.keys()
+            values = struct.values()
             for key in keys:
-                txt = txt+Level_*PADDING+'\''+key+'\':'
-                txt += StructToTxt(Struct_[key], Level_+1)
+                txt = txt + level * PADDING + '\'' + key + '\':'
+                txt += StructToTxt(struct[key], level + 1)
                 txt += ',\n'
             if len(keys) != 0:
                 txt = txt[:-2]
-            txt = txt+'\n'+Level_*PADDING+'}'
+            txt = txt + '\n' + level * PADDING + '}'
         elif obj_type == str:
             # Появляется косяк с разделителем папок в именах путей
             # Проверка на кавычки
-            txt = txt+'\''+Struct_.replace('\'',
-                                           '\\\'').replace('\'',
-                                                           '\\\'').replace('\r',
-                                                                           '\\r').replace('\n',
-                                                                                          '\\n').replace('\t',
-                                                                                                         '\\t')+'\''
+            txt = txt + '\'' + struct.replace('\'',
+                                              '\\\'').replace('\'',
+                                                              '\\\'').replace('\r',
+                                                                              '\\r').replace('\n',
+                                                                                             '\\n').replace('\t',
+                                                                                                            '\\t') + '\''
         else:
-            txt = txt+str(Struct_)
+            txt = txt + str(struct)
 
         # Убрать первый перевод каретки
-        if txt[0] == '\n' and (not Level_):
+        if txt[0] == '\n' and (not level):
             txt = txt[1:]
-        return txt
     except:
-        log.fatal(u'Ошибка Level <%d>' % Level_)
+        log.fatal(u'Ошибка Level <%d>' % level)
+    return txt
 
 
-def DelKeyInDictTree(Dict_, Key_):
+def delKeyInDictTree(struct, key):
     """
     Функция удаляет из словаря рекурсивно все указанные ключи.
-    @param Dict_: Непосредственно словарь или список.
-    @param Key_: Ключ, который необходимо удалить.
+    @param struct: Непосредственно словарь или список.
+    @param key: Ключ, который необходимо удалить.
     """
     # Если это у нас словарь, то ...
-    if isinstance(Dict_, dict):
+    if isinstance(struct, dict):
         try:
             # Сначала удаляем ключ на этом уровне.
-            del Dict_[Key_]
+            del struct[key]
         except:
             pass
         # Затем спускаемся на уровень ниже и обрабатываем
-        for item in Dict_.values():
-            DelKeyInDictTree(item, Key_)
+        for item in struct.values():
+            delKeyInDictTree(item, key)
     # а если список, то перебираем элементы
-    elif isinstance(Dict_, list):
-        for item in Dict_:
-            DelKeyInDictTree(item, Key_)
+    elif isinstance(struct, list):
+        for item in struct:
+            delKeyInDictTree(item, key)
     # а если не то и не другое, то ничего с ним не делать
     else:
         return
 
 
-def SetKeyInDictTree(Dict_, Key_, Value_):
+def setKeyInDictTree(struct, key, value):
     """
     Функция устанавливает значенеи ключа в словаре рекурсивно.
-    @param Dict_: Непосредственно словарь или список.
-    @param Key_: Ключ, который необходимо установить.
-    @param Value_: Значение ключа.
+    @param struct: Непосредственно словарь или список.
+    @param key: Ключ, который необходимо установить.
+    @param value: Значение ключа.
     """
     # Если это у нас словарь, то ...
-    if isinstance(Dict_, dict):
+    if isinstance(struct, dict):
         try:
             # Сначала устанавливаем ключ на этом уровне.
-            Dict_[Key_] = Value_
+            struct[key] = value
         except:
             pass
         # Затем спускаемся на уровень ниже и обрабатываем
-        for item in Dict_.values():
-            SetKeyInDictTree(item, Key_, Value_)
+        for item in struct.values():
+            setKeyInDictTree(item, key, value)
     # а если список, то перебираем элементы
-    elif isinstance(Dict_, list):
-        for item in Dict_:
-            SetKeyInDictTree(item, Key_, Value_)
+    elif isinstance(struct, list):
+        for item in struct:
+            setKeyInDictTree(item, key, value)
     # а если не то и не другое, то ничего с ним не делать
     else:
         return
 
 
-def icEval(Code_, LogType_=-1, LocalSpace_=None, GlobalSpace_=None, Msg_=''):
+def doEval(code_block, log_type=-1,
+           local_namespace=None, global_namespace=None, message=''):
     """
     Функция выполняет предобработку вычисляемого выражения, вычисляет с
     использование стандартной, функции eval(...), а также обрабатывает исключения. 
     В качестве локального пространства имен используется словарь LocalSpace. 
     В качестве глобального пространства имен берется словарь GlobalSpace.
-    @type Code_: C{string}
-    @param Code_: Вычисляемое выражение.
-    @type LogType_: C{int}
-    @param LogType_: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-    @param LocalSpace_: Пространство имен, необходимых для вычисления выражения
-    @type LocalSpace: C{dictionary}
-    @param GlobalSpace_: Глобальное пространство имен.
-    @type GlobalSpace: C{dictionary}
+    @type code_block: C{string}
+    @param code_block: Вычисляемое выражение.
+    @type log_type: C{int}
+    @param log_type: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+    @param local_namespace: Пространство имен, необходимых для вычисления выражения
+    @type local_namespace: C{dictionary}
+    @param global_namespace: Глобальное пространство имен.
+    @type global_namespace: C{dictionary}
     """
-    if LocalSpace_ is None:
-        LocalSpace_ = {}
+    if local_namespace is None:
+        local_namespace = {}
 
-    ret_val = util.ic_eval(Code_, LogType_, LocalSpace_, Msg_, GlobalSpace_)
+    ret_val = util.ic_eval(code_block, log_type, local_namespace, message, global_namespace)
     # Проверка правильно ли выполнена операция
     if ret_val[0] == 1:
         return ret_val[1]
     return None
 
 
-def icObjToGlob(ObjName_, Obj_):
-    """
-    Поместить объект в глобальное пространство имен.
-    @param ObjName_: Имя объекта в глобальном пространстве имен.
-    @param Obj_: Сам объект.
-    """
-    try:
-        globals()[ObjName_] = Obj_
-        return True
-    except:
-        return False
-
-
-def icFilesToGlob(*args):
+def setFilesToGlob(*args):
     """
     Поместить структуры, хранящиеся в файлах в глобальное пространство имен.
     @param args: Имена файлов и имена структур в глобальном пространстве состояний
         передаются в формате:
-            (ИмяСтруктуры1,ИмяФайла1),(ИмяСтруктуры2,ИмяФайла2),...
+            (ИмяСтруктуры1, ИмяФайла1), (ИмяСтруктуры2, ИмяФайла2),...
     """
     try:
         for cur_arg in args:
             if os.path.isfile(cur_arg[1]):
                 tmp_buff = util.readAndEvalFile(cur_arg[1])
-                icObjToGlob(cur_arg[0], tmp_buff)
+                globals()[cur_arg[0]] = tmp_buff
             else:
                 log.warning(u'Не найден файл <%s>' % cur_arg[1])
         return True
     except:
-        return False
+        log.fatal(u'Ошибка размещения файлов в глобальном пространстве имен')
+    return False
 
 
-def ReCodeString(String_, StringCP_, NewCP_):
+def recodeText(text, old_codepage, new_codepage):
     """
     Перекодировать из одной кодировки в другую.
-    @param String_: Строка.
-    @param StringCP_: Кодовая страница строки.
-    @param NewCP_: Новая кодовая страница строки.
+    @param text: Строка.
+    @param old_codepage: Кодовая страница строки.
+    @param new_codepage: Новая кодовая страница строки.
+    @return: Перекодированная строка.
     """
-    if NewCP_.upper() == 'UNICODE':
+    if new_codepage.upper() == 'UNICODE':
         # Кодировка в юникоде.
-        return String_
+        return text
 
-    if NewCP_.upper() == 'OCT' or NewCP_.upper() == 'HEX':
+    if new_codepage.upper() == 'OCT' or new_codepage.upper() == 'HEX':
         # Закодировать строку в восьмеричном/шестнадцатеричном виде.
-        return icOctHexString(String_, NewCP_)
+        return toOctHexString(text, new_codepage)
 
-    string = String_
-    if isinstance(String_, str):
-        if StringCP_.upper() != 'UNICODE':
-            string = String_
-    elif isinstance(String_, str):
-        string = String_
-    elif isinstance(String_, bytes):
-        string = String_.decode(NewCP_)
+    string = text
+    if isinstance(text, str):
+        if old_codepage.upper() != 'UNICODE':
+            string = text
+    elif isinstance(text, bytes):
+        string = text.decode(new_codepage)
 
     return string
 
 
-def icOctHexString(String_, Code_):
+def toOctHexString(text, to_code):
     """
     Закодировать строку в восьмеричном/шестнадцатеричном виде.
     Символы с кодом < 128 не кодируются.
-    @param String_:
-    @param Code_: Кодировка 'OCT'-восьмеричное представление.
+    @param text:
+    @param to_code: Кодировка 'OCT'-восьмеричное представление.
                             'HEX'-шестнадцатеричное представление.
     @return: Возвращает закодированную строку.
     """
     try:
-        if Code_.upper() == 'OCT':
+        if to_code.upper() == 'OCT':
             fmt = '\\%o'
-        elif Code_.upper() == 'HEX':
+        elif to_code.upper() == 'HEX':
             fmt = '\\x%x'
         else:
             # Ошибка аргументов
-            log.warning('Argument error in icOctHexString.')
+            log.warning('Argument error in toOctHexString.')
             return None
         # Перебор строки по символам
         ret_str = ''
-        for char in String_:
+        for char in text:
             code_char = ord(char)
             # Символы с кодом < 128 не кодируются.
             if code_char > 128:
@@ -424,81 +305,71 @@ def icOctHexString(String_, Code_):
         return None
 
 
-def icListStrRecode(List_, StringCP_, NewCP_):
+def recodeListStr(list_data, old_codepage, new_codepage):
     """
     Перекодировать все строки в списке рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param List_: Сам список.
-    @param StringCP_: Кодовая страница строки.
-    @param NewCP_: Новая кодовая страница строки.
+    @param list_data: Сам список.
+    @param old_codepage: Кодовая страница строки.
+    @param new_codepage: Новая кодовая страница строки.
     @return: Возвращает преобразованный список.
     """
     lst = []
     # Перебор всех элементов списка
-    for i in range(len(List_)):
-        if isinstance(List_[i], list):
+    for i in range(len(list_data)):
+        if isinstance(list_data[i], list):
             # Елемент - список
-            value = icListStrRecode(List_[i], StringCP_, NewCP_)
-        elif isinstance(List_[i], dict):
+            value = recodeListStr(list_data[i], old_codepage, new_codepage)
+        elif isinstance(list_data[i], dict):
             # Елемент списка - словарь
-            value = icDictStrRecode(List_[i], StringCP_, NewCP_)
-        elif isinstance(List_[i], tuple):
+            value = recodeDictStr(list_data[i], old_codepage, new_codepage)
+        elif isinstance(list_data[i], tuple):
             # Елемент списка - кортеж
-            value = icTupleStrRecode(List_[i], StringCP_, NewCP_)
-        elif isinstance(List_[i], str):
-            value = ReCodeString(List_[i], StringCP_, NewCP_)
+            value = recodeTupleStr(list_data[i], old_codepage, new_codepage)
+        elif isinstance(list_data[i], str):
+            value = recodeText(list_data[i], old_codepage, new_codepage)
         else:
-            value = List_[i]
+            value = list_data[i]
         lst.append(value)
     return lst
 
 
-def _isRUSString(String_):
-    """
-    Строка с рускими буквами?
-    """
-    if isinstance(String_, str):
-        rus_chr = [c for c in String_ if ord(c) > 128]
-        return bool(rus_chr)
-    return False
-
-
-def icDictStrRecode(Dict_, StringCP_, NewCP_):
+def recodeDictStr(dict_data, old_codepage, new_codepage):
     """
     Перекодировать все строки в словаре рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param Dict_: Сам словарь.
-    @param StringCP_: Кодовая страница строки.
-    @param NewCP_: Новая кодовая страница строки.
+    @param dict_data: Сам словарь.
+    @param old_codepage: Кодовая страница строки.
+    @param new_codepage: Новая кодовая страница строки.
     @return: Возвращает преобразованный словарь.
     """
-    keys_ = Dict_.keys()
+    keys_ = dict_data.keys()
     # Перебор всех ключей словаря
     for cur_key in keys_:
-        value = Dict_[cur_key]
+        value = dict_data[cur_key]
         # Нужно ключи конвертировать?
-        if _isRUSString(cur_key):
-            new_key = ReCodeString(cur_key, StringCP_, NewCP_)
-            del Dict_[cur_key]
+        if strfunc.isRUSText(cur_key):
+            new_key = recodeText(cur_key, old_codepage, new_codepage)
+            del dict_data[cur_key]
         else:
             new_key = cur_key
             
         if isinstance(value, list):
             # Елемент - список
-            Dict_[new_key] = icListStrRecode(value, StringCP_, NewCP_)
+            dict_data[new_key] = recodeListStr(value, old_codepage, new_codepage)
         elif isinstance(value, dict):
             # Елемент - cловарь
-            Dict_[new_key] = icDictStrRecode(value, StringCP_, NewCP_)
+            dict_data[new_key] = recodeDictStr(value, old_codepage, new_codepage)
         elif isinstance(value, tuple):
             # Елемент - кортеж
-            Dict_[new_key] = icTupleStrRecode(value, StringCP_, NewCP_)
+            dict_data[new_key] = recodeTupleStr(value, old_codepage, new_codepage)
         elif isinstance(value, str):
-            Dict_[new_key] = ReCodeString(value, StringCP_, NewCP_)
+            dict_data[new_key] = recodeText(value, old_codepage, new_codepage)
 
-    return Dict_
+    return dict_data
 
 
-def icTupleStrRecode(Tuple_, StringCP_, NewCP_):
+def recodeTupleStr(Tuple_, StringCP_, NewCP_):
     """
     Перекодировать все строки в кортеже рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
@@ -510,54 +381,38 @@ def icTupleStrRecode(Tuple_, StringCP_, NewCP_):
     # Перевести кортеж в список
     lst = list(Tuple_)
     # и обработать как список
-    list_ = icListStrRecode(lst, StringCP_, NewCP_)
+    list_ = recodeListStr(lst, StringCP_, NewCP_)
     # Обратно перекодировать
     return tuple(list_)
 
 
-def icStructStrRecode(Struct_, StringCP_, NewCP_):
+def recodeStructStr(struct, old_codepage, new_codepage):
     """
     Перекодировать все строки в структуре рекурсивно в другую кодировку.
-    @param Struct_: Сруктура (список, словарь, кортеж).
-    @param StringCP_: Кодовая страница строки.
-    @param NewCP_: Новая кодовая страница строки.
+    @param struct: Сруктура (список, словарь, кортеж).
+    @param old_codepage: Кодовая страница строки.
+    @param new_codepage: Новая кодовая страница строки.
     @return: Возвращает преобразованную структру.
     """
-    if isinstance(Struct_, list):
+    if isinstance(struct, list):
         # Список
-        struct = icListStrRecode(Struct_, StringCP_, NewCP_)
-    elif isinstance(Struct_, dict):
+        cur_struct = recodeListStr(struct, old_codepage, new_codepage)
+    elif isinstance(struct, dict):
         # Словарь
-        struct = icDictStrRecode(Struct_, StringCP_, NewCP_)
-    elif isinstance(Struct_, tuple):
+        cur_struct = recodeDictStr(struct, old_codepage, new_codepage)
+    elif isinstance(struct, tuple):
         # Кортеж
-        struct = icTupleStrRecode(Struct_, StringCP_, NewCP_)
-    elif isinstance(Struct_, str):
+        cur_struct = recodeTupleStr(struct, old_codepage, new_codepage)
+    elif isinstance(struct, str):
         # Строка
-        struct = ReCodeString(Struct_, StringCP_, NewCP_)
+        cur_struct = recodeText(struct, old_codepage, new_codepage)
     else:
         # Тип не определен
-        struct = Struct_
-    return struct
+        cur_struct = struct
+    return cur_struct
 
 
-def icList2Str(List_, DivChar_):
-    """
-    Конвертация списка в строку с разделением символом разделителя.
-    @param List_: Список.
-    @param DivChar_: Символ разделителя
-    @return: Возвращает сформированную строку.
-    """
-    ret_str = ''
-    for cur_element in List_:
-        ret_str += str(cur_element)
-        # Если элемент не последний, то добавить символ разделителя
-        if cur_element != List_[-1]:
-            ret_str += DivChar_
-    return ret_str
-
-
-def GetHDDSerialNo():
+def getHDDSerialNo():
     """
     Определить серийный номер HDD.
     """
@@ -566,20 +421,20 @@ def GetHDDSerialNo():
         return hdd_info[2]
     except:
         # Ошибка определения серийного номера HDD.
-        log.fatal('Define HDD serial number error.')
-        return ''
+        log.fatal('Ошибка определения серийного номера HDD')
+    return ''
 
 
-def GetRegValue(RegKey_, RegValue_=None):
+def getRegValue(reg_key, reg_value=None):
     """
     Взять информацию из реестра относительно данного проекта.
-    @param RegKey_: Ключ реестра.
-    @param RegValue_: Имя значения из реестра.
+    @param reg_key: Ключ реестра.
+    @param reg_value: Имя значения из реестра.
     """
+    hkey = None
     try:
-        hkey = None
-        hkey = win32api.RegOpenKey(win32con.HKEY_LOCAL_MACHINE, RegKey_)
-        value = win32api.RegQueryValueEx(hkey, RegValue_)
+        hkey = win32api.RegOpenKey(win32con.HKEY_LOCAL_MACHINE, reg_key)
+        value = win32api.RegQueryValueEx(hkey, reg_value)
         win32api.RegCloseKey(hkey)
         return value[0]
     except:
@@ -587,34 +442,34 @@ def GetRegValue(RegKey_, RegValue_=None):
             win32api.RegCloseKey(hkey)
         # Ошибка определения информации из реестра.
         # ic.log.ic_log.icWin32Err()
-        log.fatal()
-        return None
+        log.fatal(u'Ошибка получения значения из реестра')
+    return None
 
 
-def findChildResByName(ChildrenRes_, ChildName_):
+def findChildResByName(children_res, child_name):
     """
     Поиск ресурсного описания дочернего объекта по имени.
-    @param ChildrenRes_: Список ресурсов-описаний дечерних объектов.
+    @param children_res: Список ресурсов-описаний дечерних объектов.
     @return child_name: Имя искомого дочернего объекта.
     @return: Индекс ресурсного описания в списке, если 
         описания с таким именем не найдено, то возвращается -1.
     """
     try:
-        return [child['name'] for child in ChildrenRes_].index(ChildName_)
+        return [child['name'] for child in children_res].index(child_name)
     except ValueError:
         return -1
 
 
-def getFuncListInModule(ModuleObj_=None):
+def getFuncListInModule(module_obj=None):
     """
     Получить список имен функций в модуле.
-    @param ModuleObj_: Объект модуля. 
+    @param module_obj: Объект модуля.
         Для использования модуль д.б. импортирован.
     @return: Возвращает список кортежей:
         [(имя функции, описание функции, объект функции),...]
     """
-    if ModuleObj_:
-        return [(func_name,ModuleObj_.__dict__[func_name].__doc__, ModuleObj_.__dict__[func_name]) for func_name in [f_name for f_name in ModuleObj_.__dict__.keys() if type(ModuleObj_.__dict__[f_name]) == FunctionType]]
+    if module_obj:
+        return [(func_name, module_obj.__dict__[func_name].__doc__, module_obj.__dict__[func_name]) for func_name in [f_name for f_name in module_obj.__dict__.keys() if type(module_obj.__dict__[f_name]) == FunctionType]]
     return None
 
 
@@ -643,22 +498,22 @@ def get_encodings_list():
         return ['utf_8', 'utf_16', 'cp1251', 'cp866', 'koi8_r']
 
 
-def encode_unicode_struct(Struct_, CP_='utf-8'):
+def encode_unicode_struct(struct, code_page='utf-8'):
     """
     Перекодировать все строки unicode структуры в  указанную кодировку.
     """
-    return icStructStrRecode(Struct_, 'UNICODE', CP_)
+    return recodeStructStr(struct, 'UNICODE', code_page)
 
 
-def get_check_summ(Value_):
+def get_check_summ(value):
     """
     Посчитать контрольную сумму переменной.
-    @param Value_: Переменная, которая м.б. представлена в виде строки.
+    @param value: Переменная, которая м.б. представлена в виде строки.
     @return: Возвращает md5 контрольную сумму или None в случае ошибки.
     """
     check_summ = None
     try:
-        val = str(Value_)
+        val = str(value)
         check_summ = hashlib.md5(val).hexdigest()
     except:
         log.fatal(u'Ошибка определения контрольной суммы')

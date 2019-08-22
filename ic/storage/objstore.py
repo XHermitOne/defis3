@@ -12,7 +12,7 @@ import os
 import os.path
 
 from ic.utils import filefunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.interfaces import StorageInterface as storage_interface
 from . import storesrc
 
@@ -68,7 +68,7 @@ class icObjectStorage(storesrc.icObjStorageSrc,
         @param Resource_: Ресурс описания объекта.
         """
         storage_interface.icObjectStorageInterface.__init__(self, Resource_)
-        self._spc = ic_util.SpcDefStruct(SPC_IC_OBJ_STORAGE, self._res)
+        self._spc = toolfunc.defineSpcStruct(SPC_IC_OBJ_STORAGE, self._res)
         # self._storage_src_name = ic_exec.execute_code(self._spc['storage_src'], self)
         self._storage_src_psp = self._spc['storage_src']
         self._storage_src_name = self._storage_src_psp[0][1]

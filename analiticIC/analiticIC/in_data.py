@@ -25,7 +25,7 @@ import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
 
 import ic.engine.glob_functions as ic_user
 import ic.utils.filefunc as ic_file
-import ic.utils.ic_util as ic_util
+import ic.utils.toolfunc as ic_util
 import ic.utils.datetimefunc as ic_time
 import ic.utils.ic_ini as ic_ini
 #import ic.db.ic_sqlobjtab as ic_sqlobjtab
@@ -115,7 +115,7 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
             dt_oper=dbf_f.getDateFieldFmtByName('DTOPER',
                 '%Y.%m.%d')
             grp_cod='%03d'%(int(dbf_f.getFieldByName('GRUP').strip()))
-            grp_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMGRUP'),
+            grp_name=ic_util.recodeText(dbf_f.getFieldByName('NAMGRUP'),
                 'CP866','CP1251')
             t_cod_str='0000' #dbf_f.getFieldByName('CODT').strip()
             if t_cod_str and grp_cod:
@@ -128,9 +128,9 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
             else:
                 grp_cod='000'
                 t_cod='0000'
-            t_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMS'),
+            t_name=ic_util.recodeText(dbf_f.getFieldByName('NAMS'),
                 'CP866','CP1251')
-            ei_name=ic_util.ReCodeString(dbf_f.getFieldByName('EI'),
+            ei_name=ic_util.recodeText(dbf_f.getFieldByName('EI'),
                 'CP866','CP1251')
             kol_str=dbf_f.getFieldByName('KOLF').strip()
             if kol_str:
@@ -150,12 +150,12 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
 
             reg_str=dbf_f.getFieldByName('REG').strip()
             reg_cod='%04d'%(int(reg_str))
-            reg_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMREG'),
+            reg_name=ic_util.recodeText(dbf_f.getFieldByName('NAMREG'),
                 'CP866','CP1251')
 
             men_str=dbf_f.getFieldByName('MENS').strip()
             men_cod='%04d'%(int(men_str))
-            men_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMMENS'),
+            men_name=ic_util.recodeText(dbf_f.getFieldByName('NAMMENS'),
                 'CP866','CP1251')
 
             #Загрузка данных
@@ -203,17 +203,17 @@ def syncInputDataDBF(DBFFileName_):
         dt_oper=dbf_f.getDateFieldFmtByName('DTOPER',
             '%d/%m/%Y %H:%M:%S')
         grp_cod=int(dbf_f.getFieldByName('GRUP'))
-        grp_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMGRUP'),'CP866','CP1251')
+        grp_name=ic_util.recodeText(dbf_f.getFieldByName('NAMGRUP'), 'CP866', 'CP1251')
         t_cod=int(dbf_f.getFieldByName('CODT'))
-        t_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMS'),'CP866','CP1251')
-        ei_name=ic_util.ReCodeString(dbf_f.getFieldByName('EI'),'CP866','CP1251')
+        t_name=ic_util.recodeText(dbf_f.getFieldByName('NAMS'), 'CP866', 'CP1251')
+        ei_name=ic_util.recodeText(dbf_f.getFieldByName('EI'), 'CP866', 'CP1251')
         kol=float(dbf_f.getFieldByName('KOLF'))
         cen=float(dbf_f.getFieldByName('CENA'))
         sum=float(dbf_f.getFieldByName('SUMMA'))
         reg_cod=int(dbf_f.getFieldByName('REG'))
-        reg_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMREG'),'CP866','CP1251')
+        reg_name=ic_util.recodeText(dbf_f.getFieldByName('NAMREG'), 'CP866', 'CP1251')
         men_cod=int(dbf_f.getFieldByName('MENS'))
-        men_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMMENS'),'CP866','CP1251')
+        men_name=ic_util.recodeText(dbf_f.getFieldByName('NAMMENS'), 'CP866', 'CP1251')
 
         #Синхронизация справочников
         _syncSpravProducts(grp_cod,grp_name,t_cod,t_name)
@@ -427,7 +427,7 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
             dt_oper=dbf_f.getDateFieldFmtByName('DTOPER',
                 '%Y.%m.%d')
             grp_cod='%03d'%(int(dbf_f.getFieldByName('GRUP').strip()))
-            grp_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMGRUP'),
+            grp_name=ic_util.recodeText(dbf_f.getFieldByName('NAMGRUP'),
                 'CP866','CP1251')
             t_cod_str='0000' #dbf_f.getFieldByName('CODT').strip()
             if t_cod_str and grp_cod:
@@ -440,9 +440,9 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
             else:
                 grp_cod='000'
                 t_cod='0000'
-            t_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMS'),
+            t_name=ic_util.recodeText(dbf_f.getFieldByName('NAMS'),
                 'CP866','CP1251')
-            ei_name=ic_util.ReCodeString(dbf_f.getFieldByName('EI'),
+            ei_name=ic_util.recodeText(dbf_f.getFieldByName('EI'),
                 'CP866','CP1251')
             kol_str=dbf_f.getFieldByName('KOLF').strip()
             if kol_str:
@@ -462,12 +462,12 @@ def loadDataDBFStandart(DBFFileName_,ToTabName_,OfficeCod_):
 
             reg_str=dbf_f.getFieldByName('REG').strip()
             reg_cod='%04d'%(int(reg_str))
-            reg_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMREG'),
+            reg_name=ic_util.recodeText(dbf_f.getFieldByName('NAMREG'),
                 'CP866','CP1251')
 
             men_str=dbf_f.getFieldByName('MENS').strip()
             men_cod='%04d'%(int(men_str))
-            men_name=ic_util.ReCodeString(dbf_f.getFieldByName('NAMMENS'),
+            men_name=ic_util.recodeText(dbf_f.getFieldByName('NAMMENS'),
                 'CP866','CP1251')
 
             #Загрузка данных

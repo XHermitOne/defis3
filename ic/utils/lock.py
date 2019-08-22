@@ -16,7 +16,7 @@ import os
 import os.path
 import stat
 
-from . import ic_util
+from . import toolfunc
 from . import strfunc
 from ic.engine import glob_functions
 from ic.log import log
@@ -418,7 +418,7 @@ def ComputerName():
     # Под Win32 можно задать имя компа русскими буквами и тогда
     # приходится заменять все на латиницу.
     if isinstance(comp_name, str):
-        if ic_util.isOSWindowsPlatform():
+        if toolfunc.isOSWindowsPlatform():
             comp_name = strfunc.rus2lat(comp_name)
     return comp_name
 

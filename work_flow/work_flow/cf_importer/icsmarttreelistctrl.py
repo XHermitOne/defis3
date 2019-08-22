@@ -33,7 +33,7 @@ from . import img_lst
 from ic.log import log
 from ic.utils import strfunc
 from ic.dlg import dlgfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.bitmap import bmpfunc
 
 _ = wx.GetTranslation
@@ -367,7 +367,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         if Tree_ is not None:
             try:
                 if is_progress:
-                    tree_len = ic_util.get_tree_length(Tree_)
+                    tree_len = toolfunc.get_tree_length(Tree_)
                     dlgfunc.openProgressDlg(self, u'Загрузка...', u'Загрузка данных контрола',
                                             min_value=0, max_value=tree_len)
 
@@ -499,8 +499,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                         # Получить значение поля
                         if bILike:
                             # Без учета регистра?
-                            value = strfunc.icUpper(str(cur_item_rec[col]))
-                            find_str = strfunc.icUpper(string)
+                            value = strfunc.toUpper(str(cur_item_rec[col]))
+                            find_str = strfunc.toUpper(string)
                             find_col_idx = i
                         else:
                             value = str(cur_item_rec[col])
@@ -607,8 +607,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                 # Получить значение
                 if bILike:
                     # Без учета регистра?
-                    value = strfunc.icUpper(label)
-                    find_str = strfunc.icUpper(string)
+                    value = strfunc.toUpper(label)
+                    find_str = strfunc.toUpper(string)
                 else:
                     value = label
                     find_str = string

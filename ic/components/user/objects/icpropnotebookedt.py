@@ -635,7 +635,7 @@ class PropNotebookEdt:
         """
         import ic.PropertyEditor.icExternalEditors as edt
         from ic.utils import uuidfunc
-        import ic.utils.ic_util as ic_util
+        import ic.utils.toolfunc as ic_util
         attr = grid.GetTable().GetValue(row, 0)
         attr = attr.strip()
         type = grid.render.GetColAttrType(attr)

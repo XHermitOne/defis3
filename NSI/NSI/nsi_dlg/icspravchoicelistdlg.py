@@ -17,7 +17,7 @@ except ImportError:
 
 import ic
 from ic.log import log
-from ic.utils import ic_util
+from ic.utils import toolfunc
 
 #   Version
 __version__ = (0, 1, 1, 2)
@@ -285,7 +285,7 @@ def getSpravChoiceListDlg(parent=None, sprav=None):
     if parent is None:
         parent = wx.GetApp().GetTopWindow()
     if sprav:
-        if ic_util.is_pasport(sprav):
+        if toolfunc.is_pasport(sprav):
             # Справочник задается паспортом
             # Надо создать объект
             sprav = ic.getKernel().Create(sprav)

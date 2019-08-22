@@ -11,7 +11,7 @@ from . import edit_plan_panel_proto
 from ic.log import log
 from ic.engine import form_manager
 from ic.engine import glob_functions
-from ic.utils import ic_util
+from ic.utils import toolfunc
 
 
 __version__ = (0, 1, 1, 1)
@@ -78,7 +78,7 @@ def show_edit_plan_panel(parent=None, plan_metatree=None):
 
         panel = icEditPlanPanel(parent=parent)
 
-        if ic_util.is_pasport(plan_metatree):
+        if toolfunc.is_pasport(plan_metatree):
             # Если план задается паспортом, то необходимо
             # создать объект
             kernel = glob_functions.getKernel()

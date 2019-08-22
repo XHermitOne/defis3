@@ -18,7 +18,7 @@ from ic.utils import filefunc
 from ic.utils import resfunc
 from ic.dlg import dlgfunc
 from ic.kernel import icexceptions
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.utils import impfunc
 
 from ic.engine import glob_functions
@@ -98,7 +98,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         """
         # Удалить все блокировки при выходе из редактора
         log.info('PROJECT EXIT')
-        ic_util.print_defis_logo()
+        toolfunc.print_defis_logo()
 
         kernel = glob_functions.getKernel()
         if kernel:
@@ -663,7 +663,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
             dbg_mode_cmd = '-dbg'
 
         ic_engine_path = os.path.join(os.path.dirname(app_dir), 'ic', 'engine')
-        if ic_util.isOSWindowsPlatform():
+        if toolfunc.isOSWindowsPlatform():
             cmd = '\"%s/python.exe\" \"%s/run.py\" -run %s \"%s/\" -s %s' % (sys.prefix, ic_engine_path,
                                                                              dbg_mode_cmd, prj_path, username)
         else:

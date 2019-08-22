@@ -28,7 +28,7 @@ from ic.log import log
 from ic.utils import util
 from ic.utils import strfunc
 from ic.utils import resource
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from . import icworkbase
 from . import form_generator
 from ic.components.user import ic_field_wrp
@@ -340,7 +340,7 @@ class icREFRequisitePrototype(icworkbase.icRequisiteBase):
             Можно также задавать паспортом.
         @return:
         """
-        if ic_util.is_pasport(ref_obj):
+        if toolfunc.is_pasport(ref_obj):
             self.setRefObjByPsp(ref_obj)
         else:
             self.ref_obj = ref_obj

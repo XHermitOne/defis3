@@ -59,7 +59,7 @@ import ic
 
 from ic.utils import util
 from ic.utils import resource
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.log import log
 
 import work_flow.work_sys.icworkbase as icworkbase
@@ -756,7 +756,7 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
             Можно также задавать паспортом.
         @return:
         """
-        if ic_util.is_pasport(sprav):
+        if toolfunc.is_pasport(sprav):
             self.setSpravByPsp(sprav)
         else:
             self.sprav = sprav

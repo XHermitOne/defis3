@@ -17,7 +17,7 @@ import pickle
 from . import util
 from . import filefunc
 
-from . import ic_util
+from . import toolfunc
 from ic.log import log
 from ic.engine import glob_functions
 # Функции блокировки ресурсов
@@ -302,7 +302,7 @@ def saveResourceText(res_filename, resource_data, bToStruct=False):
 
         f = open(res_filename, 'wt')
         if bToStruct:
-            text = ic_util.StructToTxt(resource_data)
+            text = toolfunc.StructToTxt(resource_data)
         else:
             text = str(resource_data)
         f.write(text)

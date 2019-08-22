@@ -13,7 +13,7 @@ import wx
 from ic.log import log
 
 from ic.bitmap import bmpfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 
 __version__ = (0, 1, 1, 1)
 

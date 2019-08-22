@@ -26,13 +26,13 @@ import ic.utils.resfunc
 import ic.utils.resource
 
 import ic.utils.filefunc
-import ic.utils.ic_util
+import ic.utils.toolfunc
 from ic.kernel import icexceptions
 from ic.utils import lock  # Модуль необходим для удаления файлов-блокировок
 import ic.imglib.common as imglib
 from ic.dlg import dlgfunc
 from . import icwxapplication
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -125,7 +125,7 @@ class icApp(icwxapplication.icWXApp):
         self._User.Logout()
         # Выполнение обработчика события при старте движка
         log.info(u'Выход из системы.')
-        ic_util.print_defis_logo()
+        toolfunc.print_defis_logo()
         return True
 
     def Stop(self):

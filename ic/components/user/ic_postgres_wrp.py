@@ -28,7 +28,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
-from ic.utils import ic_util
+from ic.utils import toolfunc
 
 from ic.db import icdb
 
@@ -58,7 +58,7 @@ ic_class_spc = {'type': icdb.POSTGRES_DB_TYPE,
                 'convert_unicode': False,
 
                 '__styles__': ic_class_styles,
-                '__lists__': {'encoding': ic_util.get_encodings_list(),
+                '__lists__': {'encoding': toolfunc.get_encodings_list(),
                               },
 
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['name', 'type',

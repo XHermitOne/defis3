@@ -34,7 +34,7 @@ from ic.log import log
 from ic.dlg import dlgfunc
 from ic.utils import filefunc
 from ic.utils import execfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.utils import user_journal
 
 from ic.kernel import icexceptions
@@ -362,7 +362,7 @@ class icUserPrototype(icbaseuser.icRootUser):
                 user_requisit = {}
 
             user_data = access_dict[username]
-            user_data = copy.deepcopy(ic_util.SpcDefStruct(SPC_IC_USER, user_data))
+            user_data = copy.deepcopy(toolfunc.defineSpcStruct(SPC_IC_USER, user_data))
 
             if 'group' in user_data and user_data['group']:
                 requisites = self._cutGroupRequisite(access_dict, user_data['group'])
@@ -873,8 +873,8 @@ class icLoginManager(object):
         if not COPY_DEFENDER_ON:
             return True
 
-        hdd_sn = ic_util.GetHDDSerialNo()
-        reg_hdd_sn = ic_util.GetRegValue('Software\\DEFIS\\HDD', 'SerialNo')
+        hdd_sn = toolfunc.getHDDSerialNo()
+        reg_hdd_sn = toolfunc.getRegValue('Software\\DEFIS\\HDD', 'SerialNo')
         if hdd_sn == reg_hdd_sn:
             return True
         dlgfunc.openMsgBox(u'Вход в систему', u'Не зарегестрированная копия. Вход в систему не возможен.')

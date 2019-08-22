@@ -10,7 +10,7 @@ import wx
 import os.path
 
 from ic.utils import execfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.bitmap import bmpfunc
 from ic.log import log
 
@@ -123,7 +123,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     
         try:
             # Расширение структуры до спецификации
-            ToolBarStruct_ = ic_util.SpcDefStruct(SPC_IC_TOOLBAR, ToolBarStruct_)
+            ToolBarStruct_ = toolfunc.defineSpcStruct(SPC_IC_TOOLBAR, ToolBarStruct_)
 
             self._Name = Name_
             self._ResData = ResData_
@@ -326,7 +326,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
         """
         try:
             # Расширение структуры до спецификации
-            ToolStruct_ = ic_util.SpcDefStruct(SPC_IC_TOOL, ToolStruct_)
+            ToolStruct_ = toolfunc.defineSpcStruct(SPC_IC_TOOL, ToolStruct_)
             # Добавить новый инструмент на панель
             tool = None
             tool_id = wx.NewId()

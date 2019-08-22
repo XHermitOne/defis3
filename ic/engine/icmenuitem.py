@@ -28,7 +28,7 @@ import wx
 import ic.utils.resfunc
 import ic.utils.execfunc
 import ic.bitmap.ic_color as ic_color
-import ic.utils.ic_util
+import ic.utils.toolfunc
 import ic.utils.util
 from ic.log import log
 from ic.bitmap import bmpfunc
@@ -107,7 +107,7 @@ class icMenuItem(wx.MenuItem):
             item_hotkey = ''
 
             # Расширение структуры до спецификации
-            ItemStruct_ = ic.utils.ic_util.SpcDefStruct(SPC_IC_MENUITEM, ItemStruct_)
+            ItemStruct_ = ic.utils.toolfunc.defineSpcStruct(SPC_IC_MENUITEM, ItemStruct_)
 
             if 'hot_key' in ItemStruct_ and ItemStruct_['hot_key']:
                 item_hotkey = ItemStruct_['hot_key']

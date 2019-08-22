@@ -11,7 +11,7 @@ import sys
 
 from ic.utils import i18nfunc
 from ic.engine import glob_functions
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.log import log
 
 _ = wx.GetTranslation
@@ -54,7 +54,7 @@ class icDesignerApp(wx.App):
             cur_user.Logout()
         # Выполнение обработчика события при старте движка
         log.info(u'Выход из системы. Режим редактора')
-        ic_util.print_defis_logo()
+        toolfunc.print_defis_logo()
         return True
 
     def updateLanguage(self, lang):

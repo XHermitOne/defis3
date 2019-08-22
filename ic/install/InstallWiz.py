@@ -16,7 +16,7 @@ import wx.adv
 from ic.dlg import dlgfunc
 from ic.utils import filefunc
 from ic.utils import ini
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.utils import execfunc
 from ic.imglib import common as imglib
 from ic.log import log
@@ -838,7 +838,7 @@ class zipPublicSystem(PrjInstallMaker):
             filefunc.copyFile(os.path.join(main_dir, 'license.ru'),
                               os.path.join(temp_dir, 'license.ru'))
 
-            if ic_util.isOSWindowsPlatform():
+            if toolfunc.isOSWindowsPlatform():
                 return self._makeArchiveRAR(main_dir, temp_dir, prj_name)
             else:
                 return self._makeArchiveZIP(temp_dir, prj_name)

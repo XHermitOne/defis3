@@ -7,7 +7,7 @@ import os
 import os.path
 
 from ic.utils import resfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 
 
 __version__ = (0, 1, 1, 1)
@@ -66,7 +66,7 @@ def _toUnicodeResourcePyWalk(args, CurDir_, CurNames_):
             replace_dict_txt = text[n+len('resource='):n+n_].strip()
             try:
                 replace_dict = eval(replace_dict_txt)
-                x_dict = ic_util.icStructStrRecode(replace_dict, 'cp1251', 'UNICODE')
+                x_dict = toolfunc.recodeStructStr(replace_dict, 'cp1251', 'UNICODE')
                 new_text = text.replace(replace_dict_txt, str(x_dict))
                 print('>>', py_file, ' : ', x_dict)
                 try:
@@ -112,7 +112,7 @@ def _toUnicodeResourceWalk(args, CurDir_, CurNames_):
         replace_dict_txt = text.strip()
         try:
             replace_dict = eval(replace_dict_txt)
-            x_dict = ic_util.icStructStrRecode(replace_dict, 'cp1251', 'UNICODE')
+            x_dict = toolfunc.recodeStructStr(replace_dict, 'cp1251', 'UNICODE')
             new_text = str(x_dict)
             print('>>', res_file, ' : ', x_dict)
             try:
@@ -137,7 +137,7 @@ def toUnicodeResource():
 def toUnicodeProject():
     pro_file = '/home/xhermit/develop/rep_py/rep_py/work/defis/%s/%s/%s.pro' % (PRJ_NAME, PRJ_NAME, PRJ_NAME)
     replace_dict = resfunc.loadResourcePickle(pro_file)
-    x_dict = ic_util.icStructStrRecode(replace_dict, 'cp1251', 'UNICODE')
+    x_dict = toolfunc.recodeStructStr(replace_dict, 'cp1251', 'UNICODE')
     print('>>', pro_file, ' : ', x_dict)
     ok = resfunc.saveResourcePickle(pro_file, x_dict)
     print('OK:', ok)

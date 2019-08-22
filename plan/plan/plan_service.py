@@ -6,7 +6,7 @@
 """
 
 # --- Подключение библиотек ---
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.dlg import dlgfunc
 from . import calc_plan
 
@@ -37,7 +37,7 @@ def getPlanMethodChoice(PlanModule_=None):
     @return: Возвращает список строк в формате
         'имя функции-метода  описание'.
     """
-    func_list = ic_util.getFuncListInModule(PlanModule_)
+    func_list = toolfunc.getFuncListInModule(PlanModule_)
     if func_list:
         return map(lambda func: func[0]+' '+func[1].splitlines()[1],
                    func_list)

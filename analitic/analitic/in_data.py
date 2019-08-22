@@ -18,7 +18,7 @@ from ic.log import log
 from ic.dlg import dlgfunc
 from ic.engine import glob_functions
 from ic.utils import filefunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.utils import ini
 from ic.utils import resource
 # import NSI.spravfunc as nsi
@@ -114,7 +114,7 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
         # Прочитать все данные из записи
         dt_oper = dbf_f.getDateFieldFmtByName('DTOPER', '%Y.%m.%d')
         grp_cod = dbf_f.getFieldByName('GRUP').strip()
-        grp_name = ic_util.ReCodeString(dbf_f.getFieldByName('NAMGRUP'), 'cp866', 'cp1251')
+        grp_name = toolfunc.recodeText(dbf_f.getFieldByName('NAMGRUP'), 'cp866', 'cp1251')
         t_cod_str = dbf_f.getFieldByName('CODT').strip()
         if t_cod_str and grp_cod:
             try:
@@ -126,8 +126,8 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
         else:
             grp_cod = '000'
             t_cod = '0000'
-        t_name = ic_util.ReCodeString(dbf_f.getFieldByName('NAMS'), 'cp866', 'cp1251')
-        ei_name = ic_util.ReCodeString(dbf_f.getFieldByName('EI'), 'cp866', 'cp1251')
+        t_name = toolfunc.recodeText(dbf_f.getFieldByName('NAMS'), 'cp866', 'cp1251')
+        ei_name = toolfunc.recodeText(dbf_f.getFieldByName('EI'), 'cp866', 'cp1251')
         kol_str = dbf_f.getFieldByName('KOLF').strip()
         if kol_str:
             kol = float(kol_str)
@@ -144,9 +144,9 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
         else:
             sum = 0.0
         reg_cod = '0'*(max(0, 4-len(dbf_f.getFieldByName('REG').strip())))+dbf_f.getFieldByName('REG').strip()
-        reg_name = ic_util.ReCodeString(dbf_f.getFieldByName('NAMREG'), 'cp866', 'cp1251')
+        reg_name = toolfunc.recodeText(dbf_f.getFieldByName('NAMREG'), 'cp866', 'cp1251')
         men_cod = '0'*(max(0,4-len(dbf_f.getFieldByName('MENS').strip())))+dbf_f.getFieldByName('MENS').strip()
-        men_name = ic_util.ReCodeString(dbf_f.getFieldByName('NAMMENS'), 'cp866', 'cp1251')
+        men_name = toolfunc.recodeText(dbf_f.getFieldByName('NAMMENS'), 'cp866', 'cp1251')
 
         # Синхронизация справочников
         # _syncSpravProducts(grp_cod,grp_name,t_cod,t_name)
@@ -178,17 +178,17 @@ def syncInputDataDBF(DBFFileName_):
         # Прочитать все данные из записи
         dt_oper = dbf_f.getDateFieldFmtByName('DTOPER', '%d/%m/%Y %H:%M:%S')
         grp_cod = int(dbf_f.getFieldByName('GRUP'))
-        grp_name = ic_util.ReCodeString(dbf_f.getFieldByName('NAMGRUP'), 'cp866', 'cp1251')
+        grp_name = toolfunc.recodeText(dbf_f.getFieldByName('NAMGRUP'), 'cp866', 'cp1251')
         t_cod = int(dbf_f.getFieldByName('CODT'))
-        t_name = ic_util.ReCodeString(dbf_f.getFieldByName('NAMS'), 'cp866', 'cp1251')
-        ei_name = ic_util.ReCodeString(dbf_f.getFieldByName('EI'), 'cp866', 'cp1251')
+        t_name = toolfunc.recodeText(dbf_f.getFieldByName('NAMS'), 'cp866', 'cp1251')
+        ei_name = toolfunc.recodeText(dbf_f.getFieldByName('EI'), 'cp866', 'cp1251')
         kol = float(dbf_f.getFieldByName('KOLF'))
         cen = float(dbf_f.getFieldByName('CENA'))
         sum = float(dbf_f.getFieldByName('SUMMA'))
         reg_cod = int(dbf_f.getFieldByName('REG'))
-        reg_name = ic_util.ReCodeString(dbf_f.getFieldByName('NAMREG'), 'cp866', 'cp1251')
+        reg_name = toolfunc.recodeText(dbf_f.getFieldByName('NAMREG'), 'cp866', 'cp1251')
         men_cod = int(dbf_f.getFieldByName('MENS'))
-        men_name = ic_util.ReCodeString(dbf_f.getFieldByName('NAMMENS'), 'cp866', 'cp1251')
+        men_name = toolfunc.recodeText(dbf_f.getFieldByName('NAMMENS'), 'cp866', 'cp1251')
 
         # Синхронизация справочников
         _syncSpravProducts(grp_cod, grp_name, t_cod, t_name)

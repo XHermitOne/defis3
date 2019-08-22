@@ -15,7 +15,7 @@ import wx
 
 import ic.utils.resfunc
 import ic.utils.execfunc
-import ic.utils.ic_util
+import ic.utils.toolfunc
 import ic.utils.util
 from ic.log import log
 
@@ -40,7 +40,7 @@ class icMenuBar(wx.MenuBar):
         Конструктор.
         """
         # Расширение структуры до спецификации
-        ResData_ = ic.utils.ic_util.SpcDefStruct(SPC_IC_MENUBAR, ResData_)
+        ResData_ = ic.utils.toolfunc.defineSpcStruct(SPC_IC_MENUBAR, ResData_)
 
         # --- Свойства класса ---
         # Имя объекта
@@ -118,7 +118,7 @@ class icMenuBar(wx.MenuBar):
                 # Если меню с таким именем уже существует,  то не создавать его
                 item = self.FindMenuByAlias(item_struct['name'])
                 if item is None:
-                    if ic.utils.ic_util.getAttrValue('activate', item_struct):
+                    if ic.utils.toolfunc.getAttrValue('activate', item_struct):
                         from ic.components.user import ic_menu_wrp
                         item = ic_menu_wrp.icMenu(self, component=item_struct,
                                                   evalSpace=self.GetContext())
@@ -152,7 +152,7 @@ class icMenuBar(wx.MenuBar):
             subitem = Menu_.FindMenuItemByAlias(ItemName_)
             find = True
             if subitem is None:
-                if ic.utils.ic_util.getAttrValue('activate', ItemStruct_):
+                if ic.utils.toolfunc.getAttrValue('activate', ItemStruct_):
                     find = False
                     # Создать подменю и заполнить его
                     from ic.components.user import ic_menu_wrp

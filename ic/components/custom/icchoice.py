@@ -33,7 +33,7 @@
 
 import wx
 from ic.utils import util
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 from ic.utils import coderror
 from ic.components import icwindow
@@ -155,7 +155,7 @@ class icChoice(icWidget, wx.Choice):
         
         #   Заполняем список новыми значениями
         for item in items:
-            self.Append(ic_util.toUnicode(item))
+            self.Append(toolfunc.toUnicode(item))
 
         return True
     

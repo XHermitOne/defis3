@@ -37,7 +37,7 @@ from ic.utils import coderror
 from ic.interfaces import icdatasetinterface
 from ic.utils import translate
 from ic.utils import strfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.db import icsqlalchemy
 from ic.log import log
 
@@ -703,7 +703,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         Устанавливает буфер таблицы.
         """
         # ВНИМАНИЕ! Перекодировка необходима для грида!
-        buff = ic_util.icStructStrRecode(buff, icsqlalchemy.DEFAULT_DB_ENCODING, 'unicode')
+        buff = toolfunc.recodeStructStr(buff, icsqlalchemy.DEFAULT_DB_ENCODING, 'unicode')
         self.data = buff
         self.clearChangeRowBuff()
         self.Move()

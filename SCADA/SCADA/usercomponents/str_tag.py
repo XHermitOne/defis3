@@ -24,7 +24,7 @@ from ic.log import log
 from ic.bitmap import bmpfunc
 from ic.utils import coderror
 from ic.dlg import dlgfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 
 from SCADA.scada_proto import scada_tag
 
@@ -57,8 +57,8 @@ ic_class_spc = {'type': 'StrSCADATag',
                 '_uuid': None,
 
                 '__events__': {},
-                '__lists__': {'src_encoding': ic_util.get_encodings_list(),
-                              'dst_encoding': ic_util.get_encodings_list(),
+                '__lists__': {'src_encoding': toolfunc.get_encodings_list(),
+                              'dst_encoding': toolfunc.get_encodings_list(),
                               },
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid'],
                                    icDefInf.EDT_USER_PROPERTY: ['node', 'scan_class'],

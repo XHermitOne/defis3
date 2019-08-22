@@ -524,8 +524,8 @@ class icObject(object):
         @param passport: Проверяемый паспорт.
         @return: True - это паспорт. False - нет.
         """
-        from ic.utils import ic_util
-        return ic_util.is_pasport(passport)
+        from ic.utils import toolfunc
+        return toolfunc.is_pasport(passport)
 
     def GetUniqId(self):
         """

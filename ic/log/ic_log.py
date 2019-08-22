@@ -8,7 +8,7 @@
 # Подключение библотек
 import sys
 from . import iclog
-import ic.utils.ic_util
+import ic.utils.toolfunc
 
 # Константы и переменные
 # Кодовая страница консоли
@@ -21,7 +21,7 @@ def getConsoleEncoding():
     """
     global CONSOLE_ENCODING
     if CONSOLE_ENCODING is None:
-        if ic.utils.ic_util.isOSWindowsPlatform():
+        if ic.utils.toolfunc.isOSWindowsPlatform():
             CONSOLE_ENCODING = 'CP866'
         else:
             import locale

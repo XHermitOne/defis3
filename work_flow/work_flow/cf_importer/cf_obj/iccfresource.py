@@ -11,7 +11,7 @@ import re
 import string
 
 from ic.log import log
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.utils import strfunc
 
 __version__ = (0, 1, 1, 1)
@@ -167,7 +167,7 @@ class icCFResource:
         """
         Преобразовать данные в текст.
         """
-        data = ic_util.icStructStrRecode(data, 'unicode', 'utf-8')
+        data = toolfunc.recodeStructStr(data, 'unicode', 'utf-8')
         txt_data = self._data2txt(data)
         txt_data = RESOURCE_PREFIX + txt_data
         

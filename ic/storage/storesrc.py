@@ -19,7 +19,7 @@ import copy
 import shutil
 
 import ic.utils.lock
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.utils import filefunc
 from ic.interfaces import StorageInterface as storage_interface
 from ic.utils import execfunc
@@ -1285,7 +1285,7 @@ class icObjectStorageSource(icTreeDirStorage,
         Конструктор.
         """
         storage_interface.icObjectStorageSourceInterface.__init__(self, Res_)
-        self._spc = ic_util.SpcDefStruct(SPC_IC_OBJ_STORAGE_SRC, self._res)
+        self._spc = toolfunc.defineSpcStruct(SPC_IC_OBJ_STORAGE_SRC, self._res)
         storage_dir = filefunc.get_absolute_path(execfunc.execute_code(self._spc['storage_dir'], self))
         icTreeDirStorage.__init__(self, storage_dir)
 

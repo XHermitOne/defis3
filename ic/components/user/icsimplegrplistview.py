@@ -24,7 +24,7 @@ import wx
 
 from ic.components import icwidget
 from ic.utils import util
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 from ic.utils import coderror
@@ -363,7 +363,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         """
         if not self._data_src_obj:
             self._data_src_obj = None
-            if ic_util.is_pasport(data_source):
+            if toolfunc.is_pasport(data_source):
                 # Источник данных задается паспортом
                 self._data_src_obj = self.GetKernel().Create(data_source)
             else:

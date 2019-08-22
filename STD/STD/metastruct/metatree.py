@@ -10,7 +10,7 @@ from ic.log import log
 
 from ic.utils import resource
 from ic.storage import objstore
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.engine import glob_functions
 
 try:
@@ -62,7 +62,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
         """
         if isinstance(ObjectStorage_, str):
             return self.setStorageByName(ObjectStorage_)
-        elif ic_util.is_pasport(ObjectStorage_):
+        elif toolfunc.is_pasport(ObjectStorage_):
             return self.setStorageByPsp(ObjectStorage_)
         else:
             if self._object_storage_name != ObjectStorage_.name:

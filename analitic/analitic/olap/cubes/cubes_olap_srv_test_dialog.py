@@ -12,7 +12,7 @@ import wx.stc
 from . import cubes_olap_srv_test_dlg
 
 from ic.log import log
-from ic.utils import ic_util
+from ic.utils import toolfunc
 
 from STD.spreadsheet import spreadsheet_view_manager
 
@@ -143,7 +143,7 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
 
             # self.json_scintilla.SetText(str(result))
             self.json_scintilla.ClearAll()
-            self.json_scintilla.AddText(ic_util.StructToTxt(result))
+            self.json_scintilla.AddText(toolfunc.StructToTxt(result))
 
             if result:
                 if self.request_panel.drilldown_checkBox.GetValue() and '|' in self.request_panel.drilldown_textCtrl.GetValue():

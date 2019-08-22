@@ -13,7 +13,7 @@ import wx.lib.agw.customtreectrl as CT
 from ic.components import icwidget
 import wx.lib.platebtn as platebtn
 
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.log import log
 
 # Version
@@ -450,7 +450,7 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
         Установить дерево справочника по его паспорту.
         @param sprav_psp: Паспорт справочника.
         """
-        if not ic_util.is_pasport(sprav_psp):
+        if not toolfunc.is_pasport(sprav_psp):
             log.warning(u'Не корректное значение паспорта <%s>' % sprav_psp)
             return
 

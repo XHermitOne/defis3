@@ -9,7 +9,7 @@ import wx
 
 from ic.log import log
 from ic.dlg import dlgfunc
-from ic.utils import ic_util
+from ic.utils import toolfunc
 from ic.engine import glob_functions
 
 __version__ = (0, 1, 1, 1)
@@ -28,7 +28,7 @@ def select_single_level_choice_dlg(parent=None, sprav=None, n_level=0, parent_co
         Если не определен, то считается что это самый первый уровень.
     @return: Выбранный код или None, если нажата <Отмена>.
     """
-    if ic_util.is_pasport(sprav):
+    if toolfunc.is_pasport(sprav):
         # Справочник задается паспортом. Необходимо создать объект
         sprav = glob_functions.getKernel().Create(sprav)
 

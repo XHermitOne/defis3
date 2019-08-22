@@ -8,7 +8,7 @@
 # --- Подключение библиотек ---
 import ic.utils.resfunc
 import ic.utils.execfunc
-import ic.utils.ic_util
+import ic.utils.toolfunc
 import ic.utils.util
 from ic.log import log
 
@@ -60,8 +60,8 @@ def appendMenuBarByRes(parent, name, menubar_res, menubar=None):
         if not run_struct:
             log.warning(u'Данные горизонтального меню <%s> не найдены!' % name)
             return None
-        find_menubar_res = ic.utils.ic_util.findChildResByName(run_struct['type'],
-                                                               run_struct['menubar'])
+        find_menubar_res = ic.utils.toolfunc.findChildResByName(run_struct['type'],
+                                                                run_struct['menubar'])
         if find_menubar_res >= 0:
             menubar_struct = run_struct['child'][find_menubar_res]
         else:
@@ -108,8 +108,8 @@ def appendMenuBar(parent, name, menubar_res, menubar=None, engine_res=None):
         if not run_struct:
             log.warning(u'Данные горизонтального меню <%s> не найдены!' % name)
             return None
-        find_menubar_res = ic.utils.ic_util.findChildResByName(run_struct['type'],
-                                                               run_struct['menubar'])
+        find_menubar_res = ic.utils.toolfunc.findChildResByName(run_struct['type'],
+                                                                run_struct['menubar'])
         if find_menubar_res >= 0:
             menubar_struct = run_struct['child'][find_menubar_res]
         else:

@@ -5,69 +5,14 @@
 Сервисные функции программиста.
 """
 
-import types
 import os
 import os.path
-# import imp
 import wx
 
 import ic.utils.impfunc
-from . import util
 from . import strfunc
 
-__version__ = (0, 1, 1, 2)
-
-# Наполнитель позиций при отображении вложенности пунктов в компоненте списка
-DEFAULT_PADDING = '....'
-
-
-# def StructToTxt(Struct_, Level_=0, PADDING=DEFAULT_PADDING):
-#     """
-#     Перевод словарно-списковой структуры в форматированный текст.
-#     @param Struct_ : словарно-списковая структура.
-#     @param Level_: уровень вложенности (д.б. 0).
-#     """
-#     try:
-#         txt = ''
-#         obj_type = type(Struct_)
-#         if isinstance(obj_type, list):
-#             txt = txt+'\n'+Level_*PADDING+'[\n'
-#             for obj in Struct_:
-#                 txt += Level_*PADDING
-#                 txt += StructToTxt(obj, Level_+1, PADDING)
-#                 txt += ',\n'
-#             if len(Struct_) != 0:
-#                 txt = txt[:-2]
-#             txt = txt+'\n'+Level_*PADDING+']'
-#         elif isinstance(obj_type, dict):
-#             txt = txt+'\n'+Level_*PADDING+'{\n'
-#             keys = Struct_.keys()
-#             values = Struct_.values()
-#             for key in keys:
-#                 txt = txt+Level_*PADDING+'\''+key+'\':'
-#                 txt += StructToTxt(Struct_[key], Level_+1, PADDING)
-#                 txt += ',\n'
-#             if len(keys) != 0:
-#                 txt = txt[:-2]
-#             txt = txt+'\n'+Level_*PADDING+'}'
-#         elif isinstance(obj_type, str):
-#             # Появляется косяк с разделителем папок в именах путей
-#             # Проверка на кавычки
-#             txt = txt+'\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
-#         # elif isinstance(obj_type, unicode):
-#         #     # Появляется косяк с разделителем папок в именах путей
-#         #     # Проверка на кавычки
-#         #     txt = txt+'u\''+Struct_.replace('\'', '\\\'').replace('\'', '\\\'').replace('\r', '\\r').replace('\n', '\\n').replace('\t', '\\t')+'\''
-#         else:
-#             txt += str(Struct_)
-#
-#         # Убрать первый перевод каретки
-#         if txt[0] == '\n' and (not Level_):
-#             txt = txt[1:]
-#         return txt
-#     except:
-#         print('ERROR! Level: <%d>' % Level_)
-#         raise
+__version__ = (0, 1, 2, 1)
 
 
 def findValueIndexPath(cur_list, value, idx=None):
@@ -181,311 +126,10 @@ def encodeText(text, src_codepage=None, dst_codepage='utf-8'):
             txt = str(text, encoding=src_codepage)
         else:
             txt = str(text, encoding='utf-8')
-        
-    # elif isinstance(text, str):
-    #     txt = text
+    else:
+        txt = str(text)
         
     return txt.encode(dst_codepage)
-
-
-def listStrRecode(cur_list, src_codepage, dst_codepage):
-    """ 
-    Перекодировать все строки в списке рекурсивно в другую кодировку.
-    Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param cur_list: Сам список.
-    @param src_codepage: Кодовая страница строки.
-    @param dst_codepage: Новая кодовая страница строки.
-    @return: Возвращает преобразованный список.
-    """
-    lst = []
-    # Перебор всех элементов списка
-    for i in range(len(cur_list)):
-        if isinstance(cur_list[i], list):
-            # Елемент - список
-            value = listStrRecode(cur_list[i], src_codepage, dst_codepage)
-        elif isinstance(cur_list[i], dict):
-            # Елемент списка - словарь
-            value = dictStrRecode(cur_list[i], src_codepage, dst_codepage)
-        elif isinstance(cur_list[i], tuple):
-            # Елемент списка - кортеж
-            value = tupleStrRecode(cur_list[i], src_codepage, dst_codepage)
-        elif isinstance(cur_list[i], str):
-            value = encodeText(cur_list[i], src_codepage, dst_codepage)
-        else:
-            value = cur_list[i]
-        lst.append(value)
-    return lst
-
-
-def _isRUSString(cur_string):
-    """
-    Строка с рускими буквами?
-    """
-    if isinstance(cur_string, str):
-        rus_chr = [c for c in cur_string if ord(c) > 128]
-        return bool(rus_chr)
-    return False
-
-
-def dictStrRecode(cur_dict, src_codepage, dst_codepage):
-    """ 
-    Перекодировать все строки в словаре рекурсивно в другую кодировку. 
-    Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param cur_dict: Сам словарь.
-    @param src_codepage: Кодовая страница строки.
-    @param dst_codepage: Новая кодовая страница строки.
-    @return: Возвращает преобразованный словарь.
-    """
-    keys_ = cur_dict.keys()
-    # Перебор всех ключей словаря
-    for cur_key in keys_:
-        value = cur_dict[cur_key]
-        # Нужно ключи конвертировать?
-        if _isRUSString(cur_key):
-            new_key = encodeText(cur_key, src_codepage, dst_codepage)
-            del cur_dict[cur_key]
-        else:
-            new_key = cur_key
-            
-        if isinstance(value, list):
-            # Елемент - список
-            cur_dict[new_key] = listStrRecode(value, src_codepage, dst_codepage)
-        elif isinstance(value, dict):
-            # Елемент - cловарь
-            cur_dict[new_key] = dictStrRecode(value, src_codepage, dst_codepage)
-        elif isinstance(value, tuple):
-            # Елемент - кортеж
-            cur_dict[new_key] = tupleStrRecode(value, src_codepage, dst_codepage)
-        elif isinstance(value, str):
-            cur_dict[new_key] = encodeText(value, src_codepage, dst_codepage)
-
-    return cur_dict
-
-
-def tupleStrRecode(Tuple_, src_codepage, dst_codepage):
-    """ 
-    Перекодировать все строки в кортеже рекурсивно в другую кодировку.
-    Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param Tuple_: Сам кортеж.
-    @param src_codepage: Кодовая страница строки.
-    @param dst_codepage: Новая кодовая страница строки.
-    @return: Возвращает преобразованный кортеж.
-    """
-    # Перевести кортеж в список
-    lst = list(Tuple_)
-    # и обработать как список
-    list_ = listStrRecode(lst, src_codepage, dst_codepage)
-    # Обратно перекодировать
-    return tuple(list_)
-
-
-def structStrRecode(Struct_, src_codepage, dst_codepage):
-    """ 
-    Перекодировать все строки в структуре рекурсивно в другую кодировку.
-    @param Struct_: Сруктура (список, словарь, кортеж).
-    @param src_codepage: Кодовая страница строки.
-    @param dst_codepage: Новая кодовая страница строки.
-    @return: Возвращает преобразованную структру.
-    """
-    if isinstance(Struct_, list):
-        # Список
-        struct = listStrRecode(Struct_, src_codepage, dst_codepage)
-    elif isinstance(Struct_, dict):
-        # Словарь
-        struct = dictStrRecode(Struct_, src_codepage, dst_codepage)
-    elif isinstance(Struct_, tuple):
-        # Кортеж
-        struct = tupleStrRecode(Struct_, src_codepage, dst_codepage)
-    elif isinstance(Struct_, str):
-        # Строка
-        struct = encodeText(Struct_, src_codepage, dst_codepage)
-    else:
-        # Тип не определен
-        struct = Struct_
-    return struct
-
-
-rusRegUpperDict = {'а': 'А', 'б': 'Б', 'в': 'В', 'г': 'Г', 'д': 'Д', 'е': 'Е', 'ё': 'Ё', 'ж': 'Ж',
-                   'з': 'З', 'и': 'И', 'й': 'Й', 'к': 'К', 'л': 'Л', 'м': 'М', 'н': 'Н', 'о': 'О', 'п': 'П',
-                   'р': 'Р', 'с': 'С', 'т': 'Т', 'у': 'У', 'ф': 'Ф', 'х': 'Х', 'ц': 'Ц', 'ч': 'Ч',
-                   'ш': 'Ш', 'щ': 'Щ', 'ь': 'Ь', 'ы': 'Ы', 'ъ': 'Ъ', 'э': 'Э', 'ю': 'Ю', 'я': 'Я'}
-
-
-def icUpper(str):
-    """
-    Тупой перевод к верхнему регистру русских букв.
-    """
-    pyUpper = str.upper()
-    upper_str = list(pyUpper)
-    upper_str = [rusRegUpperDict.setdefault(pyUpper[ch[0]], ch[1]) for ch in enumerate(upper_str)]
-    return ''.join(upper_str)
-
-
-rusRegLowerDict = {'А': 'а', 'Б': 'б', 'В': 'в', 'Г': 'г', 'Д': 'д', 'Е': 'е', 'Ё': 'ё', 'Ж': 'ж',
-                   'З': 'з', 'И': 'и', 'Й': 'й', 'К': 'к', 'Л': 'л', 'М': 'м', 'Н': 'н', 'О': 'о', 'П': 'п',
-                   'Р': 'р', 'С': 'с', 'Т': 'т', 'У': 'у', 'Ф': 'ф', 'Х': 'х', 'Ц': 'ц', 'Ч': 'ч',
-                   'Ш': 'ш', 'Щ': 'щ', 'Ь': 'ь', 'Ы': 'ы', 'Ъ': 'ъ', 'Э': 'э', 'Ю': 'ю', 'Я': 'я'}
-
-u_rusRegLowerDict = {u'А': u'а', u'Б': u'б', u'В': u'в', u'Г': u'г', u'Д': u'д', u'Е': u'е', u'Ё': u'ё', u'Ж': u'ж',
-                     u'З': u'з', u'И': u'и', u'Й': u'й', u'К': u'к', u'Л': u'л', u'М': u'м', u'Н': u'н', u'О': u'о',
-                     u'П': u'п', u'Р': u'р', u'С': u'с', u'Т': u'т', u'У': u'у', u'Ф': u'ф', u'Х': u'х', u'Ц': u'ц',
-                     u'Ч': u'ч', u'Ш': u'ш', u'Щ': u'щ', u'Ь': u'ь', u'Ы': u'ы', u'Ъ': u'ъ', u'Э': u'э', u'Ю': u'ю',
-                     u'Я': u'я'}
-            
-rusRegLowerLst = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж',
-                  'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п',
-                  'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч',
-                  'ш', 'щ', 'ь', 'ы', 'ъ', 'э', 'ю', 'я']
-
-u_rusRegLowerLst = [u'а', u'б', u'в', u'г', u'д', u'е', u'ё', u'ж',
-                    u'з', u'и', u'й', u'к', u'л', u'м', u'н', u'о', u'п',
-                    u'р', u'с', u'т', u'у', u'ф', u'х', u'ц', u'ч',
-                    u'ш', u'щ', u'ь', u'ы', u'ъ', u'э', u'ю', u'я']
-
-rusRegUpperLst = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж',
-                  'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П',
-                  'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч',
-                  'Ш', 'Щ', 'Ь', 'Ы', 'Ъ', 'Э', 'Ю', 'Я']
-
-u_rusRegUpperLst = [u'А', u'Б', u'В', u'Г', u'Д', u'Е', u'Ё', u'Ж',
-                    u'З', u'И', u'Й', u'К', u'Л', u'М', u'Н', u'О', u'П',
-                    u'Р', u'С', u'Т', u'У', u'Ф', u'Х', u'Ц', u'Ч',
-                    u'Ш', u'Щ', u'Ь', u'Ы', u'Ъ', u'Э', u'Ю', u'Я']
-
-
-def icLower(s):
-    """
-    Тупой перевод к нижнему регистру русских букв.
-    """
-    pyLower = s.lower()
-    lower_str = list(pyLower)
-    lower_str = [rusRegLowerDict.setdefault(pyLower[ch[0]], ch[1]) for ch in enumerate(lower_str)]
-    return ''.join(lower_str)
-
-
-def cmpLower(s1, s2):
-    """
-    Сравнивает два символа в нижнем регистре.
-    """
-    if s1 in rusRegLowerLst and s2 in rusRegLowerLst:
-        p1 = rusRegLowerLst.index(s1)
-        p2 = rusRegLowerLst.index(s2)
-    
-        if p1 > p2:
-            return -1
-        elif p1 < p2:
-            return 1
-        else:
-            return 0
-    else:
-        if s1 > s2:
-            return -1
-        elif s1 < s2:
-            return 1
-        else:
-            return 0
-
-
-def cmpLowerU(str1, str2):
-    """
-    Сравнивает два символа в нижнем регистре.
-    """
-    for i in range(min(len(str1), len(str2))):
-        s1 = str1[i]
-        s2 = str2[i]
-        if s1 in u_rusRegLowerLst and s2 in u_rusRegLowerLst:
-            p1 = u_rusRegLowerLst.index(s1)
-            p2 = u_rusRegLowerLst.index(s2)
-        
-            if p1 > p2:
-                return -1
-            elif p1 < p2:
-                return 1
-            else:
-                return 0
-        else:
-            if s1 > s2:
-                return -1
-            elif s1 < s2:
-                return 1
-    if len(str1) > len(str2):
-        return -1
-    elif len(str1) < len(str2):
-        return 1
-
-    return 0
-
-
-def isLATText(Text_):
-    """
-    Текст написан в латинице?
-    """
-    if isinstance(Text_, str):
-        rus_chr = [c for c in Text_ if ord(c) > 128]
-        return not bool(rus_chr)
-    else:
-        # Это не строка
-        return False
-    return True
-
-
-def isRUSText(Text_):
-    """ 
-    Строка с рускими буквами?
-    """
-    if isinstance(Text_, str):
-        rus_chr = [c for c in Text_ if ord(c) > 128]
-        return bool(rus_chr)
-    # Это не строка
-    return False
-
-
-def _rus2lat(Text_, TranslateDict_):
-    """
-    Перевод русских букв в латинские по словарю замен.
-    """
-    if not isinstance(Text_, str):
-        # Привести к юникоду
-        Text_ = str(Text_, encoding='utf-8')
-        
-    txt_list = list(Text_)
-    txt_list = [TranslateDict_.setdefault(ch, ch) for ch in txt_list]
-    return ''.join(txt_list)
-    
-    
-RUS2LATDict = {u'а': 'a', u'б': 'b', u'в': 'v', u'г': 'g', u'д': 'd', u'е': 'e', u'ё': 'yo', u'ж': 'j',
-               u'з': 'z', u'и': 'idx', u'й': 'y', u'к': 'k', u'л': 'l', u'м': 'm', u'н': 'n', u'о': 'o', u'п': 'p',
-               u'р': 'r', u'с': 's', u'т': 't', u'у': 'u', u'ф': 'f', u'х': 'h', u'ц': 'c', u'ч': 'ch',
-               u'ш': 'sh', u'щ': 'sch', u'ь': '', u'ы': 'y', u'ъ': '', u'э': 'e', u'ю': 'yu', u'я': 'ya',
-               u'А': 'A', u'Б': 'B', u'В': 'V', u'Г': 'G', u'Д': 'D', u'Е': 'E', u'Ё': 'YO', u'Ж': 'J',
-               u'З': 'Z', u'И': 'I', u'Й': 'Y', u'К': 'K', u'Л': 'L', u'М': 'M', u'Н': 'N', u'О': 'O', u'П': 'P',
-               u'Р': 'R', u'С': 'S', u'Т': 'T', u'У': 'U', u'Ф': 'F', u'Х': 'H', u'Ц': 'C', u'Ч': 'CH',
-               u'Ш': 'SH', u'Щ': 'SCH', u'Ь': '', u'Ы': 'Y', u'Ъ': '', u'Э': 'E', u'Ю': 'YU', u'Я': 'YA'}
-
-
-def rus2lat(Text_):
-    """
-    Перевод русских букв в латинские.
-    """
-    return _rus2lat(Text_, RUS2LATDict)
-
-
-RUS2LATKeyboardDict = {u'а': 'f', u'б': '_', u'в': 'd', u'г': 'u', u'д': 'l', u'е': 't', u'ё': '_', u'ж': '_',
-                       u'з': 'p', u'и': 'b', u'й': 'q', u'к': 'r', u'л': 'k', u'м': 'v', u'н': 'y', u'о': 'j',
-                       u'п': 'g', u'р': 'h', u'с': 'c', u'т': 'n', u'у': 'e', u'ф': 'a', u'х': '_', u'ц': 'w',
-                       u'ч': 'x', u'ш': 'idx', u'щ': 'o', u'ь': 'm', u'ы': 's', u'ъ': '_', u'э': '_', u'ю': '_',
-                       u'я': 'z', u'А': 'F', u'Б': '_', u'В': 'D', u'Г': 'U', u'Д': 'L', u'Е': 'T', u'Ё': '_',
-                       u'Ж': '_', u'З': 'P', u'И': 'B', u'Й': 'Q', u'К': 'R', u'Л': 'K', u'М': 'V', u'Н': 'Y',
-                       u'О': 'J', u'П': 'G', u'Р': 'H', u'С': 'C', u'Т': 'N', u'У': 'E', u'Ф': 'A', u'Х': '_',
-                       u'Ц': 'W', u'Ч': 'X', u'Ш': 'I', u'Щ': 'O', u'Ь': 'M', u'Ы': 'S', u'Ъ': '_', u'Э': '_',
-                       u'Ю': '_', u'Я': 'Z'}
-
-
-def rus2lat_keyboard(Text_):
-    """
-    Перевод русских букв в латинские по раскладке клавиатуры.
-    """
-    return _rus2lat(Text_, RUS2LATKeyboardDict)
 
 
 def splitName1CWord(Txt_):
@@ -506,8 +150,8 @@ def _splitName1CWordUTF8(Txt_):
     if len(Txt_):
         result = Txt_[0]
         for symbol in Txt_[1:]:
-            if symbol in rusRegUpperLst:
-                symbol = ' '+rusRegLowerDict[symbol]
+            if symbol in strfunc.RU_REG_UPPER_LIST:
+                symbol = ' ' + strfunc.RU_REG_LOWER_DICT[symbol]
             result += symbol
     return result
 
@@ -517,7 +161,7 @@ def _splitName1CWordUNICODE(Txt_):
     if len(Txt_):
         result = Txt_[0]
         for symbol in Txt_[1:]:
-            if symbol in u_rusRegUpperLst:
-                symbol = u' '+u_rusRegLowerDict[symbol]
+            if symbol in strfunc.U_RU_REG_UPPER_LIST:
+                symbol = u' ' + strfunc.U_RU_REG_LOWER_DICT[symbol]
             result += symbol
     return result

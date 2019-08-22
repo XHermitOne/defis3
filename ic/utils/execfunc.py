@@ -17,7 +17,7 @@ import sys
 import subprocess
 import locale
 
-from . import ic_util
+from . import toolfunc
 from . import filefunc
 from . import util
 
@@ -101,7 +101,7 @@ def execute_code(code_block, self=None):
         if self is not None:
             code_block = code_block.replace(SELF_DOT_TAG, 'self.')
         # Выполнить
-        return ic_util.icEval(code_block, 0, locals(), globals())
+        return toolfunc.doEval(code_block, 0, locals(), globals())
     except:
         log.fatal(u'Ошибка выполнения блока кода')
 
@@ -262,7 +262,7 @@ def runTask(command):
     @type command: C{string}
     @param command: Комманда системы.
     """
-    if ic_util.isOSWindowsPlatform():
+    if toolfunc.isOSWindowsPlatform():
         return runTaskBAT(command)
     return runTaskSH(command)
 

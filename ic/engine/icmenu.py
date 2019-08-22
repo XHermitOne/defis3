@@ -18,7 +18,7 @@ import wx
 
 import ic.utils.resfunc
 import ic.utils.execfunc
-import ic.utils.ic_util
+import ic.utils.toolfunc
 import ic.utils.util
 from ic.log import log
 
@@ -83,7 +83,7 @@ class icMenu(wx.Menu):
             self._ID = wx.NewId()
 
             # Расширение структуры до спецификации
-            MenuStruct_ = ic.utils.ic_util.SpcDefStruct(SPC_IC_MENU, MenuStruct_)
+            MenuStruct_ = ic.utils.toolfunc.defineSpcStruct(SPC_IC_MENU, MenuStruct_)
 
             if 'on_open' in MenuStruct_:
                 self._Open = MenuStruct_['on_open']
@@ -143,7 +143,7 @@ class icMenu(wx.Menu):
         @return: Возвращает ссылку на меню или None.
         """
         # Создать подменю и заполнить его
-        if ic.utils.ic_util.getAttrValue('activate', MenuStruct_):
+        if ic.utils.toolfunc.getAttrValue('activate', MenuStruct_):
             from ic.components.user import ic_menu_wrp
             submenu = ic_menu_wrp.icMenu(self, component=MenuStruct_, evalSpace=self.GetContext())
             self.AppendMenu(submenu.GetID(), submenu.GetCaption(), submenu)
@@ -157,7 +157,7 @@ class icMenu(wx.Menu):
         @param ItemStruct_: структура пункта.
         @return: Возвращает ссылку на пункт меню или None.
         """
-        if not ic.utils.ic_util.getAttrValue('activate', ItemStruct_):
+        if not ic.utils.toolfunc.getAttrValue('activate', ItemStruct_):
             return None
         # Если надпись у объекта не определена, то не обрабатывать его
         if 'label' in ItemStruct_ and ItemStruct_['label']:
