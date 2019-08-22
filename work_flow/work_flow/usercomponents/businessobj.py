@@ -447,7 +447,7 @@ class icBusinessObj(parentModule.icBusinessObjPrototype, icwidget.icSimple):
         if history_psp and (self._history_obj is None):
             self._history_obj = self.GetKernel().Create(history_psp)
             # Сразу установить у объекта истории регистрируемы объект
-            self._history_obj.setObj(self)
+            self._history_obj.Set(self)
         return self._history_obj        
     
     def GetPassport(self):

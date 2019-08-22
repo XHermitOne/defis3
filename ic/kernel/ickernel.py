@@ -469,7 +469,7 @@ class icKernel(icBaseKernel):
         """
         logout_result = False
         if self.context:
-            self.context._DestroyEnv()
+            self.context._destroyEnv()
         if self._User:
             logout_result = self._User.logout_ok()
             self._User = None

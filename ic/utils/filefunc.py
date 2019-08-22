@@ -139,19 +139,19 @@ def createBAKFile(filename, bak_file_ext='.bak'):
 def getSubDirs(path):
     """
     Функция возвращает список поддиректорий.
-    @param path: Дирикторий.
+    @param path: Дирeкторий.
     @return: В случае ошибки возвращает None.
     """
     try:
         if not os.path.exists(path):
             log.warning(u'Путь <%s> не найден для определения списка поддриекторий' % path)
             return list()
-        dir_list = [os.path.join(path, path) for path in os.listdir(path)]
-        dir_list = [path for path in dir_list if os.path.isdir(path)]
+        dir_list = [os.path.join(path, cur_name) for cur_name in os.listdir(path)]
+        dir_list = [cur_path for cur_path in dir_list if os.path.isdir(cur_path)]
         return dir_list
     except:
         log.fatal(u'Ошибка чтения списка поддиректорий <%s>' % path)
-        return None
+    return None
 
 
 def getSubDirsFilter(path, dir_filters=('.svn', '.SVN', '.Svn')):

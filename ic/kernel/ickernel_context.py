@@ -40,31 +40,31 @@ class icKernelContext(icContext.BaseContext):
         self['schemas'] = icscheme.icDBSchemasDotUse()
         self['settings'] = icsettings.icSettingsDotUse()
         
-    def Get(self, Name_):
+    def Get(self, name):
         """
         Получить копию объекта.
-        @param Name_: Имя объекта.
+        @param name: Имя объекта.
         @return: Возвращает копию объекта не связанную с оригиналом
             или None, если нет такого объекта.
         """
-        return self.get(Name_, None)
+        return self.get(name, None)
 
-    def Set(self, Name_, Data_):
+    def Set(self, name, data):
         """
         Сохранить объект.
-        @param Name_: Имя объекта.
-        @param Data_: Данные.
+        @param name: Имя объекта.
+        @param data: Данные.
         @return: Возвращает результат выполнения операции (False или True).
         """
-        return self.__setitem__(Name_, Data_)
+        return self.__setitem__(name, data)
 
-    def Del(self, Name_):
+    def Del(self, name):
         """
         Удалить объект.
-        @param Name_: Имя объекта.
+        @param name: Имя объекта.
         @return: Возвращает удаленный из хранилища объект.
         """
-        return self.__delitem__(Name_)
+        return self.__delitem__(name)
         
     def Clear(self):
         """
@@ -92,7 +92,7 @@ class icKernelContext(icContext.BaseContext):
                 log.info('%-20s %-50s' % (str(name)[:20], str(value)[:50]))
             log.info('-------------------------------------------------------------------------------')
         except:
-            log.error(u'Ошибка метода icKernelContext.Print')
+            log.fatal(u'Ошибка метода icKernelContext.Print')
 
     # ФУНКЦИИ ДВИЖКА
     def saveImports(self):
@@ -122,43 +122,43 @@ class icKernelContext(icContext.BaseContext):
         self.clearImports()
         self.saveImports()
 
-    def initEnv(self, PrjDir_, **environ):
+    def initEnv(self, prj_dir, **environ):
         """
         Инициализация окружения по папке проекта.
-        @param PrjDir_: Папке проекта.
+        @param prj_dir: Папке проекта.
         """
-        if isinstance(PrjDir_, str):
+        if isinstance(prj_dir, str):
             # prj_dirname = prj_dirname.encode(sys.getfilesystemencoding())
             pass
             
-        if PrjDir_ and os.path.isdir(PrjDir_):
+        if prj_dir and os.path.isdir(prj_dir):
             # !!!Обязательно нормировать для использования!!!
-            PrjDir_ = os.path.normpath(PrjDir_)
+            prj_dir = os.path.normpath(prj_dir)
         
             # Прописать для импорта родительскую папку проекта
-            parent_prj_dir = os.path.dirname(PrjDir_)
+            parent_prj_dir = os.path.dirname(prj_dir)
             if parent_prj_dir not in sys.path:
                 # sys.path.append(parent_prj_dir)
                 sys.path = impfunc.addImportPath(parent_prj_dir)
             # Прописать папку проекта для импорта
-            if PrjDir_ not in sys.path:
+            if prj_dir not in sys.path:
                 # sys.path.append(prj_dirname)
-                sys.path = impfunc.addImportPath(PrjDir_)
+                sys.path = impfunc.addImportPath(prj_dir)
 
             log.info(u'vvvvvvvvvvvvvvvvvvvvvvvv')
             log.info(u'Окружение системы. Пути:')
             log.info(impfunc.getSysPathStr())
             log.info(u'^^^^^^^^^^^^^^^^^^^^^^^^')
 
-            prj_name = os.path.basename(PrjDir_)
+            prj_name = os.path.basename(prj_dir)
             # Папка ресурсов проекта
-            self.Set('SYS_RES', PrjDir_)
-            self.Set('PRJ_DIR', PrjDir_)
-            self.Set('LOG_DIR', os.path.join(os.path.dirname(PrjDir_), 'log'))
-            self.Set('LOCK_DIR', os.path.join(os.path.dirname(PrjDir_), 'lock'))
+            self.Set('SYS_RES', prj_dir)
+            self.Set('PRJ_DIR', prj_dir)
+            self.Set('LOG_DIR', os.path.join(os.path.dirname(prj_dir), 'log'))
+            self.Set('LOCK_DIR', os.path.join(os.path.dirname(prj_dir), 'lock'))
         
             # Список папок подсистем
-            self.Set('SUBSYS_RES', self._getSubSysRes(PrjDir_))
+            self.Set('SUBSYS_RES', self._getSubSysRes(prj_dir))
 
         # Дополнительные параметры окружения
         if environ:
@@ -169,7 +169,7 @@ class icKernelContext(icContext.BaseContext):
         self.clearImports()
         self.saveImports()
   
-    def _DestroyEnv(self):
+    def _destroyEnv(self):
         """
         Сброс/разрушение окружения системы.
         """
@@ -183,26 +183,28 @@ class icKernelContext(icContext.BaseContext):
         
         self.clearImports()
         
-    def _getSubSysRes(self, PrjDir_):
+    def _getSubSysRes(self, prj_dir):
         """
         Получить список директорий подсистем вместе с проектом.
         """
-        subsys_res = [PrjDir_]
-        root_prj_dir = os.path.dirname(os.path.normpath(PrjDir_))
+        subsys_res = [prj_dir]
+        root_prj_dir = os.path.dirname(os.path.normpath(prj_dir))
         sub_dirs = filefunc.getSubDirs(root_prj_dir)
-        subsys_dirs = [dir_path for dir_path in sub_dirs if self._IsSubSysDir(dir_path) and \
-                       not filefunc.isSamePathWin(dir_path, PrjDir_)]
+        # log.debug(u'Проверка списка директорий проектов %s' % str(sub_dirs))
+        subsys_dirs = [dir_path for dir_path in sub_dirs if self._isSubSysDir(dir_path) and \
+                       not filefunc.isSamePathWin(dir_path, prj_dir)]
         subsys_res.extend(subsys_dirs)
         return subsys_res
 
-    def _IsSubSysDir(self, Dir_):
+    def _isSubSysDir(self, dir_path):
         """
         Проверить, является ли папка папкой подсистемы.
-        @param Dir_: Исследуемая папка.
+        @param dir_path: Исследуемая папка.
         """
-        is_dir = os.path.isdir(Dir_)
-        is_init_file = os.path.exists(os.path.join(Dir_, '__init__.py'))
-        is_pro_file = bool(filefunc.getFilenamesByExt(Dir_, '.pro'))
+        is_dir = os.path.isdir(dir_path)
+        is_init_file = os.path.exists(os.path.join(dir_path, '__init__.py'))
+        is_pro_file = bool(filefunc.getFilenamesByExt(dir_path, '.pro'))
+        # log.debug(u'Проверка PRO файла %s в директории <%s>' % (is_pro_file, dir_path))
         return is_dir and is_init_file and is_pro_file
     
     def getMainWin(self):

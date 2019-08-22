@@ -633,7 +633,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         try:
             return self.data[rec]
         except IndexError:
-            log.fatal(u'icSimpleDataset getObj IndexError, rec=%s data=%s' % (rec, self.data))
+            log.fatal(u'icSimpleDataset Get IndexError, rec=%s data=%s' % (rec, self.data))
         return None
 
     def SortField(self, fld, direction=None):

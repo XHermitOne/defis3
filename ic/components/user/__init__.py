@@ -55,6 +55,12 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
         #   Ищем прикладные пользовательские компоненты
         if resource.icGetSubsysResPaths() and resource.icGetSubsysResPaths()[0] is not None:
             lst_dir += resource.icGetSubsysResPaths()
+        else:
+            log.warning(u'Не обнаружены ползовательские компоненты')
+
+        # log.info(u'Список путей подсистем:')
+        # for user_dir in lst_dir:
+        #     log.info(u'\t%s' % user_dir)
         
         for i, user_dir in enumerate(lst_dir):
             subsys = ''
@@ -119,6 +125,9 @@ def icGetUserModulDict(not_load_lst=None, bRefresh = False):
                             except:
                                 log.fatal(u'###! Ошибка импорта модуля: %s' % md, bForcePrint=True)
                                 log.warning(u'ВНИМАНИЕ! Возможно в корневой папке подсистемы находится __init__.py.')
+                        else:
+                            # log.warning(u'Файл <%s> не является модулем компонента' % md)
+                            pass
 
     return user_modules_dict
 
