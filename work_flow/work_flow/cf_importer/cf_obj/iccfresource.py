@@ -59,7 +59,7 @@ class icCFResource:
                 f_res = open(self.cf_res_filename, 'rt', encoding=DEFAULT_FILE_ENCODING)
                 txt_data = f_res.read()
                 # ВНИМАНИЕ! Здесь необходимо удалить все символы, которые
-                # не смогут быть распарсенными коммандой eval.
+                # не смогут быть распарсенными командой eval.
                 # В файлах могут попадать не печатные символы
                 txt_data = ''.join([symb for symb in txt_data if symb in VALID_SYMBOLS])
                 f_res.close()

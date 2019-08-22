@@ -895,7 +895,7 @@ class icVExcel(icprototype.icVPrototype):
                     # Непосредственный вызов функции
                     getattr(self, cmd[0])(*args, **kwargs)
                 except:
-                    log.error(u'Выполнение комманды <%s>' % cmd)
+                    log.error(u'Выполнение команды <%s>' % cmd)
                     raise
         if bAutoSave:
             self.save()

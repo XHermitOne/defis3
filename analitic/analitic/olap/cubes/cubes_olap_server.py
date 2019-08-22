@@ -155,10 +155,10 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
 
         try:
             os.system(run_command)
-            log.info(u'Выполнена комманда <%s>' % run_command)
+            log.info(u'Выполнена команда <%s>' % run_command)
             return True
         except:
-            log.fatal(u'Ошибка выполнения комманды <%s>' % run_command)
+            log.fatal(u'Ошибка выполнения команды <%s>' % run_command)
         return False
 
     def stop(self):

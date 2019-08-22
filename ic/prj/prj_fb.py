@@ -5,14 +5,16 @@ import os
 import os.path
 import wx
 
-# from ic.imglib import common as imglib
 from ic.bitmap import bmpfunc
 from ic.utils import filefunc
 from ic.editor import wxfb_manager
+from ic.dlg import ic_dlg
+from ic.log import log
 
 from . import prj_node
+from . import prj_module
 
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 3, 1)
 
 _ = wx.GetTranslation
 
@@ -95,6 +97,14 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
         # Разблокировать себя
         pass
 
+    def getModuleName(self):
+        return self.name
+
+    def getCopyModuleName(self):
+        module_name = self.getPath()
+        module_name = os.path.splitext(module_name)[0] + '.bak'
+        return module_name
+
     def cut(self):
         """
         Вырезать.
@@ -109,8 +119,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
         """
         Копировать.
         """
-        module_name = os.path.join(self.getModulePath(),
-                                   self.name + self.ext)
+        module_name = self.getPath()
         copy_node = prj_node.icPrjNode.copy(self)
         copy_module_name = copy_node.getCopyModuleName()
         filefunc.copyFile(module_name, copy_module_name)
@@ -122,18 +131,19 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
         @param node: Вставляемый узел.
         """
         # Можно вставлять толко модули или другие пакеты
-        if issubclass(node.__class__, icPrjModule) or \
-                issubclass(node.__class__, icPrjPackage):
+        if issubclass(node.__class__, prj_module.icPrjModule) or \
+           issubclass(node.__class__, prj_module.icPrjPackage) or \
+           issubclass(node.__class__, self.__class__):
             prj_node.icPrjNode.paste(self, node)
 
             mod_name = node.getModuleName()
-            mod_path = node.getPath()
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_name):
                 ic_dlg.icMsgBox(u'ВНИМАНИЕ!',
                                 u'Модуль <%s> уже существует!' % mod_name)
                 return False
             # Добавить модуль в ресурс проекта
+            mod_path = node.getModulePath()
             node.getRoot().prj_res_manager.addModule(mod_name, mod_path)
             module_file_name = os.path.join(mod_path, mod_name + self.ext)
             copy_module_file_name = node.getCopyModuleName()
@@ -144,4 +154,20 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
             # Для синхронизации дерева проекта
             node.getRoot().save()
             return ok
+        else:
+            log.warning(u'Не корректный тип <%s> для вставки узла' % node.__class__.__name__)
         return False
+
+    def rename(self, old_name, new_name):
+        """
+        Переименование модуля.
+        """
+        mod_path = self.getModulePath()
+        old_filename = os.path.join(mod_path, old_name + self.ext)
+        self.name = new_name
+        new_filename = os.path.join(mod_path, new_name + self.ext)
+        if os.path.isfile(old_filename):
+            os.rename(old_filename, new_filename)
+        # Для синхронизации дерева проекта
+        self.getRoot().save()
+        return True

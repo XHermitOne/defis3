@@ -420,7 +420,7 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                 points_str = ','.join(points_lst)
                 cmd += '--pen0=%s ' % points_str
 
-        log.info(u'Запуск комманды: <%s>' % cmd)
+        log.info(u'Запуск команды: <%s>' % cmd)
         os.system(cmd)
         if os.path.exists(frame_filename):
             self.set_frame(frame_filename)

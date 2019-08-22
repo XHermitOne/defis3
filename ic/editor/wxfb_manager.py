@@ -89,10 +89,10 @@ def run_wxformbuilder(filename=None, do_generate=False, language=None):
 
     if cmd:
         try:
-            log.info(u'Выполнение комманды ОС <%s>' % cmd)
+            log.info(u'Выполнение команды ОС <%s>' % cmd)
             os.system(cmd)
         except:
-            log.fatal(u'Ошибка выполнения комманды ОС <%s>' % cmd)
+            log.fatal(u'Ошибка выполнения команды ОС <%s>' % cmd)
 
 
 class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):

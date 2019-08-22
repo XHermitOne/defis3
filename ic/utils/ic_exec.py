@@ -149,7 +149,7 @@ def getNameFuncFromCode(code_block):
 
 def doSysCmd(command):
     """
-    Функция выполняет комманду системы.
+    Функция выполняет команду системы.
     @param command: Строка системной команды.
     """
     log.debug(u'Выполнение команды: <%s>' % command)
@@ -255,7 +255,7 @@ def createRunApp(prj_dir):
     
 def runTask(command):
     """
-    Запуск комманды, как отдельной задачи.
+    Запуск команды, как отдельной задачи.
     @type command: C{string}
     @param command: Комманда системы.
     """
@@ -266,7 +266,7 @@ def runTask(command):
 
 def runTaskSH(command):
     """
-    Запуск комманды, как отдельной задачи с отдельной консолью в Linux.
+    Запуск команды, как отдельной задачи с отдельной консолью в Linux.
     @type command: C{string}
     @param command: Комманда системы.
     """
@@ -290,7 +290,7 @@ def runTaskSH(command):
 
 def runTaskBAT(command):
     """
-    Запуск комманды, как отдельной задачи с отдельной консолью.
+    Запуск команды, как отдельной задачи с отдельной консолью.
     @type command: C{string}
     @param command: Комманда системы.
     """
@@ -307,7 +307,7 @@ def runTaskBAT(command):
         log.info(u'run task: %s' % run_bat_name)
         os.startfile(run_bat_name)
     except:
-        log.fatal(u'Ошибка запуска коммандного файла: %s' % run_bat_name)
+        log.fatal(u'Ошибка запуска командного файла: %s' % run_bat_name)
         if f:
             f.close()
 
@@ -317,7 +317,7 @@ def runProgramm(command, exec_mode=os.P_NOWAIT):
     Запуск программы на выполнение.
     @type command: C{string}
     @param command: Комманда системы.
-    @param exec_mode: Режим выполнения комманды. См os режимы выполнения.
+    @param exec_mode: Режим выполнения команды. См os режимы выполнения.
     @return: True/False.
     """
     try:
@@ -348,7 +348,7 @@ def runProgramm(command, exec_mode=os.P_NOWAIT):
 
 def runOSCommand(command, bWait=True):
     """
-    Запуск комманды OC.
+    Запуск команды OC.
     @type command: C{string}
     @param command: Комманда системы.
     @param bWait: Команда ожидания процесса.
@@ -362,7 +362,7 @@ def runOSCommand(command, bWait=True):
             return runProgramm(command)
         return True
     except:
-        log.fatal(u'Ошибка запуска комманды ОС: %s' % command)
+        log.fatal(u'Ошибка запуска команды ОС: %s' % command)
         return False
 
 

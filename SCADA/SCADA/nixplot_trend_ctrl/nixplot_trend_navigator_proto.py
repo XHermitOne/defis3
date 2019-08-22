@@ -167,11 +167,11 @@ class icNixplotTrendNavigatorProto(nixplot_trend_navigator_panel_proto.icNixPlot
 
         if frame_filename and os.path.exists(frame_filename):
             cmd = VIEW_REPORT_FILE_FMT % frame_filename
-            log.info(u'Выполнение комманды <%s>' % cmd)
+            log.info(u'Выполнение команды <%s>' % cmd)
             try:
                 os.system(cmd)
             except:
-                log.fatal(u'Ошибка выполнения комманды <%s>' % cmd)
+                log.fatal(u'Ошибка выполнения команды <%s>' % cmd)
 
         event.Skip()
 

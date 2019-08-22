@@ -101,7 +101,7 @@ def run_external_programm(programm_name=None, run_cmd=None):
 
 def run_command(run_cmd):
     """
-    Запуск комманды ОС.
+    Запуск команды ОС.
     @param run_cmd: Команндная строка запуска.
     @return: True/False.
     """

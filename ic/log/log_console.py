@@ -49,15 +49,15 @@ def log_to_file(txt, filename=DEFAULT_LOG_FILENAME, datetime_fmt=DEFAULT_LOG_DAT
 
 def log_cmd(cmd, txt_ctrl=None):
     """
-    Запуск комманды ОС с логированием.
-    @param cmd: Текст комманды.
+    Запуск команды ОС с логированием.
+    @param cmd: Текст команды.
     @param txt_ctrl: Объект wxTextCtrl для логирования.
         Если указывается, то вывод лога производим в wxTextControl,
         иначе вывод будет производиться в текстовый файл.
     """
     try:
         # result = os.popen3(cmd)
-        log.info(u'Запуск комманды <%s>' % cmd)
+        log.info(u'Запуск команды <%s>' % cmd)
         cmd_list = [elem.strip('"') for elem in cmd.split(u' ')]
         result = subprocess.Popen(cmd_list)
         if txt_ctrl:
@@ -99,9 +99,9 @@ def cmd2Txt(cmd):
 
 def log_to_ctrl(txt_ctrl, cmd=None):
     """
-    Вывод результата выполнения комманды в объект wxTextCtrl.
+    Вывод результата выполнения команды в объект wxTextCtrl.
     @param txt_ctrl: Объект wxTextCtrl для логирования.
-    @param cmd: Текст комманды.
+    @param cmd: Текст команды.
     """
     if txt_ctrl is None:
         log.warning(u'Не определен объект для логирования')

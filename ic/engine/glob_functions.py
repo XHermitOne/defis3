@@ -437,7 +437,7 @@ def delMainOrgPage(page_index):
 def startDRPythonIDE(param=None):
     """
     Запуск drPython отдельной задачей.
-    @param param: Параметры коммандной строки.
+    @param param: Параметры командной строки.
     """
     # Очистить параметры командной строки
     del sys.argv[1:]

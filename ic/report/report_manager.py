@@ -291,10 +291,10 @@ class icReportManager(object):
 
     def _addCmdPostCommand(self, cmd, command=None):
         """
-        Добавить комманду после генерации в командную строку.
+        Добавить команду после генерации в командную строку.
         @param cmd: Строка команды.
         @param command: Комманда после генерации.
-            Все возможне комманды определены константами в данном модуле:
+            Все возможне команды определены константами в данном модуле:
                 DO_COMMAND_PRINT = 'print'
                 DO_COMMAND_PREVIEW = 'preview'
                 DO_COMMAND_EXPORT = 'export'
@@ -319,7 +319,7 @@ class icReportManager(object):
     def _addCmdExtArgs(self, cmd, db_url=None, sql=None, command=None,
                        stylelib_filename=None, variables=None):
         """
-        Добавление в коммандную строку дополнительных параметров запуска.
+        Добавление в командную строку дополнительных параметров запуска.
         @param cmd: Строка команды.
         @param db_url: Connection string в виде url. Например
             postgresql+psycopg2://postgres:postgres@10.0.0.3:5432/realization.

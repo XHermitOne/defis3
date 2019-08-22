@@ -373,7 +373,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
 
     def _getCtrlArgs(self):
         """
-        Получить аргументы для коммандной строки из контролов.
+        Получить аргументы для командной строки из контролов.
         """
         result = {}
 

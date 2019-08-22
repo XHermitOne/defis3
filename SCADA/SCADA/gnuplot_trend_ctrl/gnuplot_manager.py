@@ -4,7 +4,7 @@
 """
 Класс менеджера управления утилитой построения графиков gnuplot.
 
-Примеры комманд использования gnuplot:
+Примеры команд использования gnuplot:
 
 gnuplot -e "
 set xdata time;
@@ -34,7 +34,7 @@ from ic.utils import txtfunc
 # Версия
 __version__ = (0, 1, 3, 1)
 
-# Разделитель комманд gnuplot
+# Разделитель команд gnuplot
 COMMAND_DELIMETER = ';'
 
 GNUPLOT_COMMAND_FMT = 'gnuplot -e \"%s\"'
@@ -50,15 +50,15 @@ class icGnuplotManager(object):
         """
         Конструктор.
         """
-        # Список комманд для последующей
-        # генерации коммандной строки запуска gnuplot
+        # Список команд для последующей
+        # генерации командной строки запуска gnuplot
         self.commands = list()
 
         self.__x_format = None
 
     def clearCommands(self):
         """
-        Очистить список комманд.
+        Очистить список команд.
         @return: True/False.
         """
         self.commands = list()
@@ -66,9 +66,9 @@ class icGnuplotManager(object):
 
     def _findCommand(self, command_word):
         """
-        Поиск комманды в списке комманд по ключевому слову.
+        Поиск команды в списке команд по ключевому слову.
         @param command_word: Ключевое слово.
-        @return: Индекс в списке комманд или -1 если такая команда не найдена.
+        @return: Индекс в списке команд или -1 если такая команда не найдена.
         """
         for i, command in enumerate(self.commands):
             if command_word in command:
@@ -77,8 +77,8 @@ class icGnuplotManager(object):
 
     def _appendCommand(self, command, command_word=None):
         """
-        Произвести добавление комманды в список комманд.
-        Если в списке найдена комманда по ключевому слову, то она заменяется.
+        Произвести добавление команды в список команд.
+        Если в списке найдена команда по ключевому слову, то она заменяется.
         Если не найдена, то просто команда добавляется в список.
         @param command: Комманда.
         @param command_word: Ключевое слово.
@@ -102,8 +102,8 @@ class icGnuplotManager(object):
 
     def _deleteCommand(self, command_word=None):
         """
-        Произвести удаление комманды из списка комманд.
-        Если в списке найдена комманда по ключевому слову, то она удаляется.
+        Произвести удаление команды из списка команд.
+        Если в списке найдена команда по ключевому слову, то она удаляется.
         @param command_word: Ключевое слово.
             Если None, то просто происходит добавление команды в список.
         @return: True/False.
@@ -122,9 +122,9 @@ class icGnuplotManager(object):
 
     def _enableCommand(self, command, enable=True):
         """
-        Включить/Исключить комманду из списка комманд.
+        Включить/Исключить команду из списка команд.
         @param command: Комманда gnuplot.
-        @param enable: True - включить комманду/False - исключить комманду.
+        @param enable: True - включить команду/False - исключить команду.
         @return: True/False.
         """
         if enable:
@@ -148,7 +148,7 @@ class icGnuplotManager(object):
         """
         Установить формат даты-времени.
         @param dt_format: Формат даты-времени.
-            Если None, то установка формата исключается из списка комманд.
+            Если None, то установка формата исключается из списка команд.
         @return: True/False.
         """
         global DATETIME_GRAPH_DATA_FMT
@@ -165,7 +165,7 @@ class icGnuplotManager(object):
         """
         Установить формат оси X.
         @param x_format: Формат оси X.
-            Если None, то установка формата исключается из списка комманд.
+            Если None, то установка формата исключается из списка команд.
         @return: True/False.
         """
         cmd_sign = 'set format x'
@@ -323,7 +323,7 @@ class icGnuplotManager(object):
             log.warning(u'Не найден файл данных графиков <%s>' % graph_filename)
             cmd = 'plot [-pi:pi] sin(x), cos(x)'
 
-        # Команда отрисовки графиков может быть только последней коммандой
+        # Команда отрисовки графиков может быть только последней командой
         if not self.commands:
             self.commands.append(cmd)
         else:
@@ -370,8 +370,8 @@ class icGnuplotManager(object):
 
     def getRunCommand(self):
         """
-        Получить результирующую комманду для запуска генерации.
-        @return: Результирующая комманда для генерации файла графика.
+        Получить результирующую команду для запуска генерации.
+        @return: Результирующая команда для генерации файла графика.
         """
         commands = COMMAND_DELIMETER.join(self.commands)
         return GNUPLOT_COMMAND_FMT % commands
@@ -383,7 +383,7 @@ class icGnuplotManager(object):
         @return: True/False.
         """
         cmd = self.getRunCommand()
-        log.info(u'Выполнение комманды <%s>' % cmd)
+        log.info(u'Выполнение команды <%s>' % cmd)
         os.system(cmd)
         return True
 

@@ -51,10 +51,10 @@ def run_wxcrafter(filename=None):
 
     if cmd:
         try:
-            log.info(u'Выполнение комманды ОС <%s>' % cmd)
+            log.info(u'Выполнение команды ОС <%s>' % cmd)
             os.system(cmd)
         except:
-            log.fatal(u'Ошибка выполнения комманды ОС <%s>' % cmd)
+            log.fatal(u'Ошибка выполнения команды ОС <%s>' % cmd)
 
 
 class icWXCrafterManager(icdesignerinterface.icExtFormDesignerInterface):

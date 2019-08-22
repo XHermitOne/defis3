@@ -159,7 +159,7 @@ def check_deb_package_install(package_name):
 
 def get_uname(option='-a'):
     """
-    Результат выполнения комманды uname.
+    Результат выполнения команды uname.
     """
     cmd = None
     try:
@@ -662,8 +662,8 @@ def sym_link(link_path, linkname, username=None, bOverwrite=True):
 
 def get_options(arguments=None):
     """
-    Преобразование параметров коммандной строки в словарь python.
-    Параметры коммандной строки в виде --ключ=значение.
+    Преобразование параметров командной строки в словарь python.
+    Параметры командной строки в виде --ключ=значение.
     @param arguments: Список строк параметров.
     @return: Словарь значений или None в случае ошибки.
     """
@@ -795,9 +795,9 @@ def changeExt(filename, new_ext):
 
 def parseCmd(command):
     """
-    Распарсить комманду.
+    Распарсить команду.
     @type command: c{string}
-    @param command: Строковое представление комманды.
+    @param command: Строковое представление команды.
     @return: Список [<Комманда>,<Аргумент1>,<Аргумент2>,..]
     """
     parse_args = command.strip().split(' ')

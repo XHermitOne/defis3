@@ -37,7 +37,7 @@ def isLinuxPlatform():
 
 def getTerminalCodePage():
     """
-    Кодировка коммандной оболочки по умолчанию.
+    Кодировка командной оболочки по умолчанию.
     @return:
     """
     cmd_encoding = sys.stdout.encoding if isWindowsPlatform() else locale.getpreferredencoding()

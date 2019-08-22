@@ -28,17 +28,17 @@ NO_DEFAULT_PRINTER_MSG = 'no system default destination'
 
 def _get_exec_cmd_stdout_lines(cmd):
     """
-    Выполнить комманду ОС и верноть список строк выходного потока.
+    Выполнить команду ОС и верноть список строк выходного потока.
     @param cmd: Комманда. М.б. в строковом виде или в виде списка.
         Напрмер:
         'lpstat -d' или ('lpstat', '-d')
-    @return: Список строк - результат выполнения комманды в stdout.
+    @return: Список строк - результат выполнения команды в stdout.
         В случае ошибки возвращается пустой список.
     """
     if isinstance(cmd, str):
         cmd = cmd.split(u' ')
     if not isinstance(cmd, tuple) and not isinstance(cmd, list):
-        log.warning(u'Не поддерживаемый тип комманды OS <%s>' % str(cmd))
+        log.warning(u'Не поддерживаемый тип команды OS <%s>' % str(cmd))
         return list()
 
     lines = list()
@@ -48,14 +48,14 @@ def _get_exec_cmd_stdout_lines(cmd):
         console_encoding = locale.getpreferredencoding()
         lines = [line.decode(console_encoding).strip() for line in b_lines]
     except:
-        log.fatal(u'Ошибка выполнения комманды ОС <%s> и получения списка строк из stdout' % cmd)
+        log.fatal(u'Ошибка выполнения команды ОС <%s> и получения списка строк из stdout' % cmd)
     return lines
 
 
 def noDefaultPrinter(sLPStatResult=None):
     """
     Проверка на установленный по умолчанию принтер в системе.
-    @param sLPStatResult: Результат комманды lpstat -d. Если None,
+    @param sLPStatResult: Результат команды lpstat -d. Если None,
                 то функция сама вызовет команду lpstat -d.
     @return: True-нет принтера по умалчанию, False - есть принтер по умолчанию.
     """

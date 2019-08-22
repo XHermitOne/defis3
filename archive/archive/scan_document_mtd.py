@@ -315,7 +315,7 @@ class icScanDocumentManager(icmanagerinterface.icWidgetManager):
         else:
             log.warning(u'Не поддерживаемый тип файла <%s>' % doc_file_ext)
         if cmd:
-            log.info(u'Выполнение комманды <%s>' % cmd)
+            log.info(u'Выполнение команды <%s>' % cmd)
             os.system(cmd)
         
     def clear_not_exist_links(self, doc=None):

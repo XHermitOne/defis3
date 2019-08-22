@@ -64,9 +64,9 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
                 if encoding != icideinterface.DEFAULT_ENCODINT_STR:
                     encoding_param = GEDIT_EXT_ENCODING_PARAM_FMT % encoding
 
-            # Формирование коммандной строки запуска внешнего редактора
+            # Формирование командной строки запуска внешнего редактора
             cmd = GEDIT_EXT_PYTHON_EDITOR_FMT % (encoding_param, filename)
-            log.info(u'Запуск комманды <%s>' % cmd)
+            log.info(u'Запуск команды <%s>' % cmd)
             os.system(cmd)
         except:
             log.fatal(u'Ошибка открытия файла <%s> в IDE' % filename)
@@ -115,10 +115,10 @@ class icGeanyPythonEditor(icideinterface.icIDEInterface):
         @return: Признак успешной загрузки.
         """
         try:
-            # Формирование коммандной строки запуска внешнего редактора
+            # Формирование командной строки запуска внешнего редактора
             cmd = GEANY_EXT_PYTHON_EDITOR_FMT % ('--read-only' if bReadonly else '',
                                                  filename)
-            log.info(u'Запуск комманды <%s>' % cmd)
+            log.info(u'Запуск команды <%s>' % cmd)
             os.system(cmd)
         except:
             log.fatal(u'Ошибка открытия файла <%s> в IDE' % filename)

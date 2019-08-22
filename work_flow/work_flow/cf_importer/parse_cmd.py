@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
 """ 
-Функции-комманды управления процессом изменения конфигурации.
+Функции-команды управления процессом изменения конфигурации.
 """
 
 # --- Imports ---
@@ -66,7 +66,7 @@ def parse_cf_file(cf_filename, cf_dirname=None, txt_ctrl=None):
     Парсинг файла конфигурации 1с.
     @param cf_filename: Полное имя CF файла конфигурации 1c.
     @param cf_dirname: Директория, в которую будет происходить парсинг.
-    @param txt_ctrl: Объект wxTxtCtrl для вывода результатов выполнения комманды парсинга.
+    @param txt_ctrl: Объект wxTxtCtrl для вывода результатов выполнения команды парсинга.
     """
     try:
         if not os.path.exists(cf_filename):

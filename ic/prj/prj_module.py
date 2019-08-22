@@ -28,7 +28,7 @@ from . import prj_fb
 from . import prj_xrc
 from . import prj_wxcp
 
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 3, 2)
 
 _ = wx.GetTranslation
 
@@ -791,7 +791,8 @@ class icPrjModule(prj_node.icPrjNode):
         """
         # Можно вставлять толко модули или другие пакеты
         if issubclass(node.__class__, icPrjModule) or \
-           issubclass(node.__class__, icPrjPackage):
+           issubclass(node.__class__, icPrjPackage) or \
+           issubclass(node.__class__, prj_fb.icPrjWXFormBuilderProject):
             prj_node.icPrjNode.paste(self, node)
 
             mod_name = node.getModuleName()
@@ -812,6 +813,8 @@ class icPrjModule(prj_node.icPrjNode):
             # Для синхронизации дерева проекта
             node.getRoot().save()
             return ok
+        else:
+            log.warning(u'Не корректный тип <%s> для вставки узла' % node.__class__.__name__)
         return False
         
     def isResClass(self, module_filename):

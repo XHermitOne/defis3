@@ -101,7 +101,7 @@ class icEMailSender(object):
 
     def _do_cmd_list(self, cmd_list, mode=os.P_WAIT):
         """
-        Выполнение списка комманд ОС.
+        Выполнение списка команд ОС.
         @param cmd_list: Список команд ОС.
         """
         if cmd_list and isinstance(cmd_list, list):
@@ -305,7 +305,7 @@ class icEMailSender(object):
 
 def send_mail(*args, **kwargs):
     """
-    Отсылка письма из коммандной строки.
+    Отсылка письма из командной строки.
     @param from_adr: Адрес отправителя.
     @param to_adr: Адрес/адреса получаетелей.
         Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.

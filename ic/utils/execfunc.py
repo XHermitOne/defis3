@@ -85,8 +85,8 @@ def exec_code(sCode='', bReImport=False, name_space=None, kwargs=None):
 
 def exec_sys_cmd(command, split_lines=False):
     """
-    Выполнить системную комманду и получить результат ее выполнения.
-    @param command: Системная комманда.
+    Выполнить системную команду и получить результат ее выполнения.
+    @param command: Системная команда.
     @param split_lines: Произвести разделение на линии?
     @return: Если нет разделения по линиям, то возвращается текст который
         отображается в консоли.
@@ -106,5 +106,5 @@ def exec_sys_cmd(command, split_lines=False):
             text = b_text.decode(console_encoding)
             return text
     except:
-        log.fatal(u'Ошибка выполнения системной комманды <%s>' % command)
+        log.fatal(u'Ошибка выполнения системной команды <%s>' % command)
     return None
