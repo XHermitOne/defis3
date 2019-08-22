@@ -15,7 +15,7 @@ from . import iccfdocform
 
 from ic.log import log
 from ic.utils import util1c
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import util
 import ic
 
@@ -129,7 +129,7 @@ class icCFDocTab(iccfobject.icCFObject):
         from work_flow.usercomponents import tab_requisite
 
         # Преобразовать русское наименование из 1С в латинское
-        name_lat = ic_str.rus2lat(self.name)
+        name_lat = strfunc.rus2lat(self.name)
         res = util.icSpcDefStruct(copy.deepcopy(tab_requisite.ic_class_spc), None)
         res['name'] = name_lat
         res['_uuid'] = self.uid
@@ -144,7 +144,7 @@ class icCFDocTab(iccfobject.icCFObject):
             else:
                 requisite_res = util.icSpcDefStruct(copy.deepcopy(requisite.ic_class_spc), None)
                 requisite_res['type_val'] = cf_requisite._gen_field_type_res()
-            requisite_res['name'] = ic_str.rus2lat(cf_requisite.name)
+            requisite_res['name'] = strfunc.rus2lat(cf_requisite.name)
             requisite_res['_uuid'] = cf_requisite.uid
             requisite_res['description'] = cf_requisite.description
             requisite_res['label'] = cf_requisite.description
@@ -411,7 +411,7 @@ class icCFDocument(iccfobject.icCFObject):
         from work_flow.usercomponents import nsi_requisite
 
         # Преобразовать русское наименование из 1С в латинское
-        name_lat = ic_str.rus2lat(name)
+        name_lat = strfunc.rus2lat(name)
         res = util.icSpcDefStruct(copy.deepcopy(document.ic_class_spc), None)
         res['name'] = name_lat
         res['_uuid'] = uuid
@@ -426,7 +426,7 @@ class icCFDocument(iccfobject.icCFObject):
             else:
                 requisite_res = util.icSpcDefStruct(copy.deepcopy(requisite.ic_class_spc), None)
                 requisite_res['type_val'] = cf_requisite._gen_field_type_res()
-            requisite_res['name'] = ic_str.rus2lat(cf_requisite.name)
+            requisite_res['name'] = strfunc.rus2lat(cf_requisite.name)
             requisite_res['_uuid'] = cf_requisite.uid
             requisite_res['description'] = cf_requisite.description
             requisite_res['label'] = cf_requisite.description
@@ -452,7 +452,7 @@ class icCFDocument(iccfobject.icCFObject):
         doc_res = self._gen_doc_res(prj_res_ctrl, name=self.name,
                                     description=self.description, uuid=self.uid)
 
-        res_name = ic_str.rus2lat(self.name)
+        res_name = strfunc.rus2lat(self.name)
 
         if prj_res_ctrl.isRes(res_name, 'mtd'):
             prj_res_ctrl.delRes(res_name, 'mtd')

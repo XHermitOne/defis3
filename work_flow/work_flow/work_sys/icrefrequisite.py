@@ -26,7 +26,7 @@ import os
 import os.path
 from ic.log import log
 from ic.utils import util
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import resource
 from ic.utils import ic_util
 from . import icworkbase

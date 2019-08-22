@@ -13,7 +13,7 @@ from ic.log import log
 from ic.dlg import dlgfunc
 from ic.utils import datetimefunc
 from ic import bmpfunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import coderror
 from ic.db import icsqlalchemy
 from . import nsi_dialogs_proto
@@ -359,7 +359,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         """
         # Запись в виде словаря
         rec_dict = self.sprav.getStorage()._getSpravFieldDict(record)
-        name = ic_str.toUnicode(rec_dict['name'])
+        name = strfunc.toUnicode(rec_dict['name'])
         # В случае многострочных наименования выделять только первую строку
         name = [line.strip() for line in name.split(u'\n')][0]
         item = self.sprav_treeCtrl.AppendItem(parent_item, name)
@@ -421,7 +421,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         fields = self.get_tab_editable_fields()
         list_item = -1
         for i, field in enumerate(fields):
-            value = ic_str.toUnicode(record[field['name']])
+            value = strfunc.toUnicode(record[field['name']])
             # В случае многострочных наименования выделять только первую строку
             value = [line.strip() for line in value.split(u'\n')][0]
 
@@ -528,7 +528,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
 
             fields = self.get_tab_editable_fields()
             for i, field in enumerate(fields):
-                value = ic_str.toUnicode(sprav_record[field['name']])
+                value = strfunc.toUnicode(sprav_record[field['name']])
                 self.recs_listCtrl.SetStringItem(find_idx, i, value)                    
 
     def del_sprav_tree_item(self, parent_item, sprav_code=None):
@@ -780,14 +780,14 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
             if i_row == 0:
                 for i_col, field in enumerate(fields[start_col:]):
                     field_name = field['name']
-                    value = ic_str.toUnicode(row[field_name]).lower()
+                    value = strfunc.toUnicode(row[field_name]).lower()
                     if find_word in value:
                         log.debug(u'Найдено соответствие %s <%s> в <%s>'  % (field_name, find_word, value))
                         return start_row+i_row, start_col+i_col
             else:
                 for i_col, field in enumerate(fields):
                     field_name = field['name']
-                    value = ic_str.toUnicode(row[field_name]).lower()
+                    value = strfunc.toUnicode(row[field_name]).lower()
                     if find_word in value:
                         log.debug(u'Найдено соответствие в поле %s <%s> : <%s>'  % (field_name, find_word, value))
                         return start_row+i_row, i_col

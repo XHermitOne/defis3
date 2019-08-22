@@ -15,7 +15,7 @@ import wx.dataview
 import wx.grid
 
 from ic.log import log
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import wxfunc
 from ic.bitmap import bmpfunc
 from ic import config
@@ -99,12 +99,12 @@ class icListCtrlManager(object):
                         i_colname = self_col_names.index(colname)
                         idx = wxfunc.get_index_wx_object_in_list(self_cols[i_colname],
                                                                  ctrl.GetColumns())
-                        wx_rec[idx] = ic_str.toUnicode(value)
+                        wx_rec[idx] = strfunc.toUnicode(value)
                     else:
                         log.warning(u'Не найдено имя колонки <%s> при заполнении wxDataViewListCtrl контрола данными' % colname)
                 elif isinstance(colname, int):
                     # Колонка задается индексом
-                    wx_rec[colname] = ic_str.toUnicode(value)
+                    wx_rec[colname] = strfunc.toUnicode(value)
                 else:
                     log.warning(u'Не поддерживаемый тип имени колонки <%s> при заполнении wxDataViewListCtrl контрола данными' % colname)
             ctrl.AppendItem(wx_rec)
@@ -692,7 +692,7 @@ class icListCtrlManager(object):
                 cursor_pos = ctrl.GetFirstSelected()
 
             for i, item in enumerate(row):
-                item_str = ic_str.toUnicode(item, config.DEFAULT_ENCODING)
+                item_str = strfunc.toUnicode(item, config.DEFAULT_ENCODING)
                 # ctrl.SetStringItem(row_idx, idx, item_str)
                 ctrl.SetItem(row_idx, i, item_str)
                 if evenBackgroundColour and not (row_idx % 2):

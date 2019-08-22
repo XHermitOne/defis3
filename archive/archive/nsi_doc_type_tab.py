@@ -11,7 +11,7 @@ import os.path
 from ic import log
 import ic
 from ic.db import dbf
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.interfaces import icmanagerinterface
 
 ### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/nsi_doc_type.tab
@@ -122,10 +122,10 @@ class icNSIDocTypeTabManager(icmanagerinterface.icWidgetManager):
             record = dbf_tab.getRecDict()
             while not dbf_tab.EOF():
                 if int(record['TYP']) in SPRAV_TYPE_CODES:
-                    typ = ic_str.limit_len_text(record['TYP'], 3, '_')
+                    typ = strfunc.limit_len_text(record['TYP'], 3, '_')
                     if record['COD'].strip():
                         cod = unicode(record['COD'].strip(), DBF_DEFAULT_ENCODE)
-                        cod = ic_str.limit_len_text(ic_str.rus2lat(cod), 10, '_')
+                        cod = strfunc.limit_len_text(strfunc.rus2lat(cod), 10, '_')
                     else:
                         cod = u''
                     name = unicode(record['NAM'], DBF_DEFAULT_ENCODE)

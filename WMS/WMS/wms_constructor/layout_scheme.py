@@ -11,7 +11,7 @@ except ValueError:
     import board
 
 from ic.log import log
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 DEFAULT_X_OFFSET = 0
 DEFAULT_Y_OFFSET = 0
@@ -54,8 +54,8 @@ def _gen_pseudograph_line(line, pseudograph_symb, i):
     @return: Измененная строка.
     """
     prev_symb = line[i]
-    result_symb = ic_str.overlayPseudoGraph(pseudograph_symb, prev_symb,
-                                            default_symb=pseudograph_symb)
+    result_symb = strfunc.overlayPseudoGraph(pseudograph_symb, prev_symb,
+                                             default_symb=pseudograph_symb)
     # log.debug(u'%d. Слияние символов <%s> + <%s> = <%s>' % (idx, pseudograph_symb, prev_symb, result_symb))
     return line[:i]+result_symb+line[i+1:]
 
@@ -91,21 +91,21 @@ def gen_layout_scheme_txt(positions):
             for i_col in range(col_start, col_stop):
                 # log.debug(u'Колонка: %s' % i_col)
                 if i_col == col_start:
-                    lines[line_0] = _gen_pseudograph_line(lines[line_0], ic_str.PSEUDOGRAPH[2], i_col)    # ┌
-                    lines[line_1] = _gen_pseudograph_line(lines[line_1], ic_str.PSEUDOGRAPH[0], i_col)    # │
-                    lines[line_2] = _gen_pseudograph_line(lines[line_2], ic_str.PSEUDOGRAPH[4], i_col)    # └
+                    lines[line_0] = _gen_pseudograph_line(lines[line_0], strfunc.PSEUDOGRAPH[2], i_col)    # ┌
+                    lines[line_1] = _gen_pseudograph_line(lines[line_1], strfunc.PSEUDOGRAPH[0], i_col)    # │
+                    lines[line_2] = _gen_pseudograph_line(lines[line_2], strfunc.PSEUDOGRAPH[4], i_col)    # └
                 elif i_col == (col_stop-1):
-                    lines[line_0] = _gen_pseudograph_line(lines[line_0], ic_str.PSEUDOGRAPH[3], i_col)    # ┐
-                    lines[line_1] = _gen_pseudograph_line(lines[line_1], ic_str.PSEUDOGRAPH[0], i_col)    # │
-                    lines[line_2] = _gen_pseudograph_line(lines[line_2], ic_str.PSEUDOGRAPH[5], i_col)    # ┘
+                    lines[line_0] = _gen_pseudograph_line(lines[line_0], strfunc.PSEUDOGRAPH[3], i_col)    # ┐
+                    lines[line_1] = _gen_pseudograph_line(lines[line_1], strfunc.PSEUDOGRAPH[0], i_col)    # │
+                    lines[line_2] = _gen_pseudograph_line(lines[line_2], strfunc.PSEUDOGRAPH[5], i_col)    # ┘
                 elif i_col == (col_start+1):
                     n = (u' ' + str(i + 1)) if len(str(i + 1)) == 1 else str(i + 1)
                     lines[line_1] = lines[line_1][:i_col] + n + lines[line_1][i_col + 2:]
-                    lines[line_0] = _gen_pseudograph_line(lines[line_0], ic_str.PSEUDOGRAPH[1], i_col)    # ─
-                    lines[line_2] = _gen_pseudograph_line(lines[line_2], ic_str.PSEUDOGRAPH[1], i_col)    # ─
+                    lines[line_0] = _gen_pseudograph_line(lines[line_0], strfunc.PSEUDOGRAPH[1], i_col)    # ─
+                    lines[line_2] = _gen_pseudograph_line(lines[line_2], strfunc.PSEUDOGRAPH[1], i_col)    # ─
                 else:
-                    lines[line_0] = _gen_pseudograph_line(lines[line_0], ic_str.PSEUDOGRAPH[1], i_col)    # ─
-                    lines[line_2] = _gen_pseudograph_line(lines[line_2], ic_str.PSEUDOGRAPH[1], i_col)    # ─
+                    lines[line_0] = _gen_pseudograph_line(lines[line_0], strfunc.PSEUDOGRAPH[1], i_col)    # ─
+                    lines[line_2] = _gen_pseudograph_line(lines[line_2], strfunc.PSEUDOGRAPH[1], i_col)    # ─
         except:
             log.fatal(u'Ошибка определения позиции %s расположения ячейки' % str(pos))
 

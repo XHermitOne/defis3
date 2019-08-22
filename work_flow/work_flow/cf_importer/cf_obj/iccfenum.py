@@ -15,7 +15,7 @@ from . import iccfobject
 from ic.log import log
 from ic.utils import util1c
 from ic.utils import util
-from ic.utils import ic_str
+from ic.utils import strfunc
 import ic
 
 
@@ -148,7 +148,7 @@ class icCFEnum(iccfobject.icCFObject):
         if prj_res_ctrl.isRes(tab_name, 'tab'):
             tab = ic.getKernel().CreateObj(tab_name, tab_name, 'tab')
             if tab:
-                name_lat = ic_str.rus2lat(self.name)
+                name_lat = strfunc.rus2lat(self.name)
                 len_code = self._get_enum_spravlevel_len()
                 code_fmt = '%%0%dd' % len_code
                 # Сначала удалить все данные представления
@@ -205,7 +205,7 @@ class icCFEnum(iccfobject.icCFObject):
         tab_res = util.icSpcDefStruct(copy.deepcopy(ic_tab_wrp.ic_class_spc), None)
         # Установить свойства таблицы
         tab_res['name'] = table_name
-        tab_res['description'] = ic_str.str2unicode(self.description)
+        tab_res['description'] = strfunc.str2unicode(self.description)
         tab_res['table'] = table_name.lower()
         tab_res['source'] = self._get_db_psp(prj_res_ctrl)
 
@@ -307,7 +307,7 @@ class icCFEnum(iccfobject.icCFObject):
         from NSI.usercomponents import spravlevel
 
         # Преобразовать русское наименование из 1С в латинское
-        name_lat = ic_str.rus2lat(name)
+        name_lat = strfunc.rus2lat(name)
         tab_name = self._get_enum_tabname(prj_res_ctrl)
         res = util.icSpcDefStruct(copy.deepcopy(sprav.ic_class_spc), None)
         res['name'] = name_lat

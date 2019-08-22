@@ -36,7 +36,7 @@ from ic.engine import user_manager
 from ic.utils import coderror
 from ic.interfaces import icdatasetinterface
 from ic.utils import translate
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import ic_util
 from ic.db import icsqlalchemy
 from ic.log import log
@@ -173,7 +173,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         sx = (x[col] or '').lower()
         sy = (y[col] or '').lower()
 
-        return ic_str.cmpLowerU(sx, sy)*d
+        return strfunc.cmpLowerU(sx, sy) * d
 
     def _getSortCol(self):
         """

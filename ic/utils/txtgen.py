@@ -14,7 +14,7 @@ import os
 import os.path
 
 from ic.log import log
-from . import ic_str
+from . import strfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -86,8 +86,8 @@ def auto_replace(sTxt, dReplaces=None):
         replaces = dict([(place, dReplaces.get(_getVarName(place), FIND_REPLACEMENT_ERR)) for place in replace_places])
             
         for place, value in replaces.items():
-            place = ic_str.toUnicode(place, DEFAULT_ENCODING)
-            value = ic_str.toUnicode(value, DEFAULT_ENCODING)
+            place = strfunc.toUnicode(place, DEFAULT_ENCODING)
+            value = strfunc.toUnicode(value, DEFAULT_ENCODING)
             try:
                 log.debug(u'Автозамена %s -> <%s>' % (place, value))
             except UnicodeEncodeError:
@@ -155,11 +155,11 @@ def gen_txt_file(sTxtTemplateFilename, sTxtOutputFilename, dContext=None, output
 
     try:
         # Определить кодовую страницу текста
-        template_encoding = ic_str.get_codepage(template_txt)
+        template_encoding = strfunc.get_codepage(template_txt)
         log.debug(u'Кодовая страница шаблона <%s>' % template_encoding)
 
         # Шаблон необходимо проебразовать в юникод перед заполнением
-        template_txt = ic_str.toUnicode(template_txt, template_encoding)
+        template_txt = strfunc.toUnicode(template_txt, template_encoding)
     except:
         log.fatal(u'Ошибка преобразования текста шаблона в Unicode')
         return False

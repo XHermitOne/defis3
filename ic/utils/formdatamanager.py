@@ -15,7 +15,7 @@ import datetime
 
 from ic.components import icwidget
 from ic.log import log
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import datetimefunc
 from . import frequencydict
 
@@ -111,7 +111,7 @@ class icFormDataManager(object):
             # Обработка методом SetValue (Только для объектов wxStaticText)
             try:
                 log.info(u'Заполнение данных объекта <%s> методом SetLabel.' % ctrl.__class__.__name__)
-                value = ic_str.toUnicode(value)
+                value = strfunc.toUnicode(value)
                 ctrl.SetLabel(value)
                 result = True
             except:

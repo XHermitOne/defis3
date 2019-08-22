@@ -37,7 +37,7 @@ import wx.lib.agw.hypertreelist
 import wx.lib.gizmos as parentModule
 from wx.lib.agw import customtreectrl
 
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -617,8 +617,8 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
                         # Получить значение поля
                         if bILike:
                             # Без учета регистра?
-                            value = ic_str.icUpper(str(cur_item_rec[col]))
-                            find_str = ic_str.icUpper(string)
+                            value = strfunc.icUpper(str(cur_item_rec[col]))
+                            find_str = strfunc.icUpper(string)
                             find_col_idx = i
                         else:
                             value = str(cur_item_rec[col])
@@ -722,8 +722,8 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
                 # Получить значение
                 if bILike:
                     # Без учета регистра?
-                    value = ic_str.icUpper(label)
-                    find_str = ic_str.icUpper(string)
+                    value = strfunc.icUpper(label)
+                    find_str = strfunc.icUpper(string)
                 else:
                     value = label
                     find_str = string

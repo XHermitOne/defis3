@@ -15,7 +15,7 @@ import types
 
 from ic.log import log
 from ic.utils import datetimefunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import key_combins
 from ic.utils import wxfunc
 from ic import config
@@ -66,11 +66,11 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
             ctrl.SetValue(value)
             result = True
         elif issubclass(ctrl.__class__, wx.StaticText):
-            value = value if isinstance(value, str) else ic_str.toUnicode(value, config.DEFAULT_ENCODING)
+            value = value if isinstance(value, str) else strfunc.toUnicode(value, config.DEFAULT_ENCODING)
             ctrl.SetLabel(value)
             result = True
         elif issubclass(ctrl.__class__, wx.TextCtrl):
-            value = value if isinstance(value, str) else ic_str.toUnicode(value, config.DEFAULT_ENCODING)
+            value = value if isinstance(value, str) else strfunc.toUnicode(value, config.DEFAULT_ENCODING)
             ctrl.SetValue(value)
             result = True
         elif issubclass(ctrl.__class__, wx.adv.DatePickerCtrl):

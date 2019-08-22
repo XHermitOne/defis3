@@ -17,7 +17,7 @@ from ic.log import log
 from ic.dlg import dlgfunc
 from ic.dlg import wait_box
 from ic.utils import extfunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import filefunc
 from ic.utils import txtgen
 from ic.utils import datetimefunc
@@ -195,7 +195,7 @@ class icDocCardPanelManager():
         sprav_manager = ic.metadata.THIS.mtd.nsi_archive.create()
         sprav = sprav_manager.getSpravByName('nsi_body_type')
 
-        code = ic_str.limit_len_text(file_ext.replace('.', '').upper(), 4, '-')
+        code = strfunc.limit_len_text(file_ext.replace('.', '').upper(), 4, '-')
         cmd = sprav.Find(code, 's2')
         replaces = {'FILENAME': doc_filename,
                     'PROFILE_DIR': filefunc.getPrjProfilePath()}
@@ -335,7 +335,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
 
         file_ext = os.path.splitext(doc_data['file_name'])[1]
         doc.setRequisiteValue('body_type',
-                              ic_str.limit_len_text(file_ext.upper(), 4, '-'))
+                              strfunc.limit_len_text(file_ext.upper(), 4, '-'))
 
         doc.setRequisiteValue('file_name', doc_data['file_name'])
 

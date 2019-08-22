@@ -14,7 +14,7 @@ from . import iccfobject
 
 from ic.log import log
 from ic.utils import util1c
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import util
 import ic
 
@@ -292,7 +292,7 @@ class icCFSprav(iccfobject.icCFObject):
         Имя таблицы хранения справочника 1С.
         @param prj_res_ctrl: Контроллер управления ресурсом проекта.
         """
-        name_lat = ic_str.rus2lat(self.name)
+        name_lat = strfunc.rus2lat(self.name)
         return 'nsi_' + name_lat
 
     def _gen_sprav_field_res(self, field_name, field_type='T', field_len=0,
@@ -329,7 +329,7 @@ class icCFSprav(iccfobject.icCFObject):
         tab_res = util.icSpcDefStruct(copy.deepcopy(ic_tab_wrp.ic_class_spc), None)
         # Установить свойства таблицы
         tab_res['name'] = table_name
-        tab_res['description'] = ic_str.str2unicode(self.description)
+        tab_res['description'] = strfunc.str2unicode(self.description)
         tab_res['table'] = table_name.lower()
         tab_res['source'] = self._get_db_psp(prj_res_ctrl)
 
@@ -353,7 +353,7 @@ class icCFSprav(iccfobject.icCFObject):
                                                           field_description=u'UID объекта из 1С'))
         # Генерация полей реквизитов
         for requisite in self.requisites:
-            field_name = ic_str.rus2lat(requisite.name)
+            field_name = strfunc.rus2lat(requisite.name)
             field_type = requisite._gen_field_type_res()
             tab_res['child'].append(self._gen_sprav_field_res(field_name=field_name,
                                                               field_type=field_type,
@@ -440,7 +440,7 @@ class icCFSprav(iccfobject.icCFObject):
         from NSI.usercomponents import spravlevel
 
         # Преобразовать русское наименование из 1С в латинское
-        name_lat = ic_str.rus2lat(name)
+        name_lat = strfunc.rus2lat(name)
         tab_name = self._get_sprav_tabname(prj_res_ctrl)
         res = util.icSpcDefStruct(copy.deepcopy(sprav.ic_class_spc), None)
         res['name'] = name_lat

@@ -14,7 +14,7 @@ from ic.log import log
 from ic.bitmap import bmpfunc
 from ic.dlg import dlgfunc
 from . import icspraveditdlg
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import wxfunc
 from ic.engine import form_manager
 
@@ -175,7 +175,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             return TREE_ITEM_LABEL
         label = field['label'] if field.get('label', None) else \
             (field['description'] if field.get('description', None) else field['name'])
-        return ic_str.toUnicode(label)
+        return strfunc.toUnicode(label)
 
     def init_columns(self, *fields):
         """
@@ -768,7 +768,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         item = event.GetItem()
         if item:
             record = self.getItemData_tree(ctrl=self.sprav_treeListCtrl, item=item)
-            if record and ic_str.isMultiLineTxt(record['name']):
+            if record and strfunc.isMultiLineTxt(record['name']):
                 # Если текст многостроковый, то выводить
                 # дополнительное всплывающее окно
                 self.hidePopupInfo()

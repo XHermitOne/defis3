@@ -10,7 +10,7 @@ import wx
 
 from ic.log import log
 from ic.components import icwidget
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -214,7 +214,7 @@ class icTableChoiceCtrlProto(wx.ComboBox):
             # Определено имя поля надписи в явном виде
             field_names = [field[0] for field in table_data.get('__fields__', [])]
             field_idx = field_names.index(label_field_name)
-            label = ic_str.toUnicode(record[field_idx])
+            label = strfunc.toUnicode(record[field_idx])
         else:
             # Если не определено имя поля,
             # то должна быть определена функция определения надписи элемента
@@ -226,7 +226,7 @@ class icTableChoiceCtrlProto(wx.ComboBox):
                 if label is None:
                     label = u''
                 else:
-                    label = ic_str.toUnicode(label)
+                    label = strfunc.toUnicode(label)
             else:
                 log.warning(u'Не определен метод получения надписи элемента списка выбора в компоненте <%s>' % self.name)
         return label

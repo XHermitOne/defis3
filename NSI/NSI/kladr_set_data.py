@@ -12,7 +12,7 @@ import wx
 from ic import dlgfunc
 from ic import log
 from ic.db import dbf
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 from . import config
 
@@ -127,16 +127,16 @@ def splitKLADRCode(str_code):
     code = list()
     cc = str_code[:2]
     code.append(cc)
-    if not ic_str.is_serial_zero(str_code[2:]):
+    if not strfunc.is_serial_zero(str_code[2:]):
         rrr = str_code[2:5]
         code.append(rrr)
-        if not ic_str.is_serial_zero(str_code[5:]):
+        if not strfunc.is_serial_zero(str_code[5:]):
             ggg = str_code[5:8]
             code.append(ggg)
-            if not ic_str.is_serial_zero(str_code[8:]):
+            if not strfunc.is_serial_zero(str_code[8:]):
                 ppp = str_code[8:11]
                 code.append(ppp)
-                if not ic_str.is_serial_zero(str_code[11:]):
+                if not strfunc.is_serial_zero(str_code[11:]):
                     aa = str_code[11:]
                     code.append(aa)
     return tuple(code)

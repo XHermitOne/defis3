@@ -17,7 +17,7 @@ from ic.log import log
 from ic.dlg import std_dlg
 from ic.dlg import dlgfunc
 from ic.dlg import quick_entry_panel
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import datetimefunc
 
 from ic.engine import form_manager
@@ -239,8 +239,8 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
         """
         sub_n_doc = doc_rec['n_doc'].split('.')[-1]
         num_n_doc = sub_n_doc.split(u'/')[0]
-        n_doc = u'%s%s' % (u'0'*(9-len(num_n_doc))+num_n_doc, 
-                           ic_str.toUnicode(doc_rec['doc_name']))
+        n_doc = u'%s%s' % (u'0' * (9-len(num_n_doc)) + num_n_doc,
+                           strfunc.toUnicode(doc_rec['doc_name']))
         return n_doc
     
     def _extractNWarehouse(self, doc_rec):
@@ -318,9 +318,9 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
                                key=lambda item: self._extractNDoc(item))
         elif sort_contragent:
             documents = sorted(documents, 
-                               key=lambda item: (item['c_agent'].upper() if item['c_agent'] else u'', 
+                               key=lambda item: (item['c_agent'].upper() if item['c_agent'] else u'',
                                                  item['doc_date'],
-                                                 ic_str.get_str_digit_as_int(item['n_doc']),
+                                                 strfunc.get_str_digit_as_int(item['n_doc']),
                                                  item['_doc_type']), 
                                reverse=False)
         elif sort_date:

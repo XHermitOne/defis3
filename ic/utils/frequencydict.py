@@ -21,7 +21,7 @@ except ValueError:
     import persistant
 
 from ic.utils import filefunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 
 __version__ = (1, 0, 2, 1)
@@ -175,7 +175,7 @@ class icFrequencyDict(persistant.icPersistant):
         result = list()
         for value in value_list:
             if not isinstance(value, str):
-                value = ic_str.toUnicode(value, DEFAULT_ENCODING)
+                value = strfunc.toUnicode(value, DEFAULT_ENCODING)
             words = value.split(u' ')
 
             sub_value = u''

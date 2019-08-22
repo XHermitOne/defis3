@@ -18,7 +18,7 @@ import traceback
 import struct
 
 try:
-    from ic.utils import ic_str
+    from ic.utils import strfunc
 except:
     print(u'Import error ic_str module')
 
@@ -540,7 +540,7 @@ def load_file_unicode(filename, code_page=None):
     """
     body_text = load_file_text(filename)
     if not code_page:
-        code_page = ic_str.get_codepage(body_text)
+        code_page = strfunc.get_codepage(body_text)
     return str(body_text)   # , code_page)
 
 

@@ -16,7 +16,7 @@ from ic.dlg import std_dlg
 from ic.utils import filefunc
 from ic.utils import filefunc
 from ic.utils import smbfunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.db import dbf
 from ic.utils import extfunc
 from ic.engine import glob_functions
@@ -383,7 +383,7 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         @return: True-да есть проводка по счету 91-84 / False - нет.
         """
         # log.debug(u'91-84: %s' % str(self._9184_ndocs))
-        n_doc = ic_str.toUnicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
+        n_doc = strfunc.toUnicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
         return n_doc in self._9184_ndocs
         
     def _create_schet_factura(self, record, transaction=None, 
@@ -712,7 +712,7 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
 
                 # Главная проверка наличия проводок по счету 91-84
                 if record and (int(record['SSD']) == 9184 or int(record['SSK']) == 9184):
-                    n_doc = ic_str.toUnicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
+                    n_doc = strfunc.toUnicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
                     if n_doc not in self._9184_ndocs:
                         self._9184_ndocs.append(n_doc)
                     

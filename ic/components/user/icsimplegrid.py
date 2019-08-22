@@ -30,7 +30,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 import wx.lib.mixins.gridlabelrenderer as glr
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 from ic.dlg import dlgfunc
 
@@ -410,7 +410,7 @@ class icSimpleGrid(icwidget.icWidget,
         for i_row, row in enumerate(table):
             for i_col, cell in enumerate(row):
                 if i_col < self.GetNumberCols():
-                    cell_txt = ic_str.toUnicode(cell)
+                    cell_txt = strfunc.toUnicode(cell)
                     self.SetCellValue(i_row, i_col, cell_txt)
     
     def setRowLabels(self, row_labels):

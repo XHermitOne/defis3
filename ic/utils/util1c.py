@@ -13,7 +13,7 @@ import wx
 
 import ic.utils.impfunc
 from . import util
-from . import ic_str
+from . import strfunc
 
 __version__ = (0, 1, 1, 2)
 

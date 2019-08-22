@@ -12,7 +12,7 @@ import string
 
 from ic.log import log
 from ic.utils import ic_util
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -25,7 +25,7 @@ RESOURCE_PREFIX = '\xef\xbb\xbf'
 
 DEFAULT_FILE_ENCODING = 'utf-8'
 
-VALID_SYMBOLS = string.printable + ic_str.RUS_LETTERS
+VALID_SYMBOLS = string.printable + strfunc.RUS_LETTERS
 
 
 class icCFResource:

@@ -10,7 +10,7 @@ import os.path
 
 from ic.log import log
 from ic.utils import resfunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import extfunc
 
 from . import icsqlalchemy
@@ -80,9 +80,9 @@ class icModelModuleGenerator(object):
         try:
             tab_name = tab_res.keys()[0]
             tab_spc = tab_res[tab_name]
-            model_name = 'ic%sModel' % ic_str.lower_symbols2_upper(tab_name)
+            model_name = 'ic%sModel' % strfunc.lower_symbols2_upper(tab_name)
             manager_module_name = '%s_manager' % tab_name
-            manager_name = 'ic%sModelManager' % ic_str.lower_symbols2_upper(tab_name)
+            manager_name = 'ic%sModelManager' % strfunc.lower_symbols2_upper(tab_name)
 
             fields = tab_spc.get('child', list())
             field_lines = list()
@@ -162,7 +162,7 @@ class icModelModuleGenerator(object):
             tab_name = tab_res.keys()[0]
             tab_spc = tab_res[tab_name]
             manager_module_name = '%s_manager' % tab_name
-            manager_name = 'ic%sModelManager' % ic_str.lower_symbols2_upper(tab_name)
+            manager_name = 'ic%sModelManager' % strfunc.lower_symbols2_upper(tab_name)
 
             description = tab_spc.get('description', u'')
             module_txt = MODEL_MANAGER_TXT_FMT % (description,

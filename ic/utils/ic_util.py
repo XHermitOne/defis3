@@ -28,7 +28,7 @@ except:
 
 from ic.log import log
 from . import util
-from . import ic_str
+from . import strfunc
 
 _ = wx.GetTranslation
 
@@ -723,6 +723,6 @@ def print_defis_logo(text_colour=None):
 
     version = '.'.join([str(v) for v in ic.__version__])
     copyright = ic.__copyright__.replace(u'Copyright', u'').strip()
-    defis_logo_txt = ic_str.DEFIS_LOGO_TXT % (version, copyright)
+    defis_logo_txt = strfunc.DEFIS_LOGO_TXT % (version, copyright)
     for line in defis_logo_txt.splitlines():
         log.print_color_txt(line, text_colour)

@@ -7,7 +7,7 @@
 
 from ic.log import log
 from ic.utils import util
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.engine import glob_functions
 
 from ic.components.user import ic_tab_wrp
@@ -101,7 +101,7 @@ class icSpravTableResGenerator():
             sTableName = self.getTableName()
 
         tab_spc['name'] = sTableName
-        tab_spc['description'] = ic_str.str2unicode(self.getDescription())
+        tab_spc['description'] = strfunc.str2unicode(self.getDescription())
         tab_spc['table'] = sTableName.lower()
         tab_spc['source'] = self.getDBPsp()
         tab_spc['children'] = list()  # Список имен подчиненных таблиц

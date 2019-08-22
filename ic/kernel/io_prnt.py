@@ -13,7 +13,7 @@ import sys
 
 import ic.config
 from ic.log import log
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -166,7 +166,7 @@ def outLog(msg, TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=IC_C
     @param DevCP_: Кодовая страница вывода на устройство.
     @param Device_: Указание устройства вывода.
     """
-    txt = ic_str.recode_text(msg, TxtCP_, DevCP_)
+    txt = strfunc.recode_text(msg, TxtCP_, DevCP_)
     if Device_ == IC_LOG:
         log.info(txt)
         return True
@@ -199,7 +199,7 @@ def outErr(msg=u'', TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=
     """
     txt = u''
     if msg:
-        txt = ic_str.recode_text(msg, TxtCP_, DevCP_)
+        txt = strfunc.recode_text(msg, TxtCP_, DevCP_)
 
     if Device_ == IC_LOG:
         log.error(txt)

@@ -31,7 +31,7 @@ from wx.lib.agw import customtreectrl
 
 from . import img_lst
 from ic.log import log
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 
@@ -496,8 +496,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                         # Получить значение поля
                         if bILike:
                             # Без учета регистра?
-                            value = ic_str.icUpper(str(cur_item_rec[col]))
-                            find_str = ic_str.icUpper(string)
+                            value = strfunc.icUpper(str(cur_item_rec[col]))
+                            find_str = strfunc.icUpper(string)
                             find_col_idx = i
                         else:
                             value = str(cur_item_rec[col])
@@ -602,8 +602,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
                 # Получить значение
                 if bILike:
                     # Без учета регистра?
-                    value = ic_str.icUpper(label)
-                    find_str = ic_str.icUpper(string)
+                    value = strfunc.icUpper(label)
+                    find_str = strfunc.icUpper(string)
                 else:
                     value = label
                     find_str = string

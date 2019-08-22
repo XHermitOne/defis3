@@ -25,7 +25,7 @@ from .extfunc import text_file_subreplace
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 from . import extfunc
-from . import ic_str
+from . import strfunc
 from ic.log import log
 
 __version__ = (0, 1, 1, 1)
@@ -69,7 +69,7 @@ def save_file_csv(csv_filename, records=(),
     @param encoding: Кодировка результирующего файла.
     @return: True/False
     """
-    txt = u'\n'.join([delim.join([ic_str.toUnicode(field, encoding) for field in record]) for record in records])
+    txt = u'\n'.join([delim.join([strfunc.toUnicode(field, encoding) for field in record]) for record in records])
     return save_file_text(csv_filename, txt)
 
 

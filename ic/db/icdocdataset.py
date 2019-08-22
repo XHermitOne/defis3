@@ -38,7 +38,7 @@ import copy
 import ic.utils.translate as translate
 from ic.db import icsimpledataset
 from ic.kernel import io_prnt
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 SPC_IC_DOC_DATASET = {'name': 'DefaultName',
                       'type': 'SimpleDataset',

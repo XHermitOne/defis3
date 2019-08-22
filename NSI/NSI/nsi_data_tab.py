@@ -23,7 +23,7 @@ import ic
 from ic import log
 from ic.interfaces import icmanagerinterface
 from ic.db import dbf
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 #   Version
 __version__ = (0,0,0,1)
@@ -63,10 +63,10 @@ class icNSIDataTabManager(icmanagerinterface.icWidgetManager):
             record = dbf_tab.getRecDict()
             while not dbf_tab.EOF():
                 if int(record['TYP']) in SPRAV_TYPE_CODES:
-                    typ = ic_str.limit_len_text(record['TYP'], 3, '0')
+                    typ = strfunc.limit_len_text(record['TYP'], 3, '0')
                     if record['COD'].strip():
                         cod = unicode(record['COD'].strip(), DBF_DEFAULT_ENCODE)
-                        cod = ic_str.limit_len_text(ic_str.rus2lat(cod), 10, '0')
+                        cod = strfunc.limit_len_text(strfunc.rus2lat(cod), 10, '0')
                     else:
                         cod = u''
                     name = unicode(record['NAM'], DBF_DEFAULT_ENCODE)

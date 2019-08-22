@@ -12,7 +12,7 @@ import time
 from ic.utils import modefunc
 
 from ic.utils import lock
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import util
 from ic.engine import glob_functions
 from ic.utils import uuidfunc
@@ -187,7 +187,7 @@ class icObjPersistentPrototype:
         # Установить свойства связи с таблицей
         field_name = FieldName_
         field_spc['name'] = field_name
-        field_spc['description'] = ic_str.str2unicode(Description_)
+        field_spc['description'] = strfunc.str2unicode(Description_)
         field_spc['field'] = field_name.lower()
         field_spc['type_val'] = 'D'
         field_spc['len'] = None
@@ -205,7 +205,7 @@ class icObjPersistentPrototype:
         # Установить свойства связи с таблицей
         field_name = FieldName_
         field_spc['name'] = field_name
-        field_spc['description'] = ic_str.str2unicode(Description_)
+        field_spc['description'] = strfunc.str2unicode(Description_)
         field_spc['field'] = field_name.lower()
         field_spc['type_val'] = 'I'
         field_spc['len'] = None
@@ -1133,7 +1133,7 @@ class icObjPersistent(icObjPersistentPrototype):
         link_spc = util.icSpcDefStruct(util.DeepCopy(ic_link_wrp.ic_class_spc), None)
         # Установить свойства связи с таблицей
         link_spc['name'] = 'id_'+TableName_.lower()
-        link_spc['description'] = ic_str.str2unicode('Связь с таблицей '+TableName_)
+        link_spc['description'] = strfunc.str2unicode('Связь с таблицей ' + TableName_)
         link_spc['table'] = (('Table', TableName_, None, None, None),)
         link_spc['del_lnk'] = True
         return link_spc
@@ -1175,7 +1175,7 @@ class icObjPersistent(icObjPersistentPrototype):
         if TableName_ is None:
             TableName_ = self.getTableName()
         tab_spc['name'] = TableName_
-        tab_spc['description'] = ic_str.str2unicode(self.description)
+        tab_spc['description'] = strfunc.str2unicode(self.description)
         tab_spc['table'] = TableName_.lower()
         tab_spc['source'] = self.getDBPsp()
         
@@ -1549,7 +1549,7 @@ class icAttrPersistent:
         # Установить свойства связи с таблицей
         field_name = self.getFieldName()
         field_spc['name'] = field_name
-        field_spc['description'] = ic_str.str2unicode(self.description)
+        field_spc['description'] = strfunc.str2unicode(self.description)
         field_spc['field'] = field_name.lower()
         field_spc['type_val'] = self.type_val
         field_spc['len'] = self.len

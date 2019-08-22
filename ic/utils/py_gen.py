@@ -16,7 +16,7 @@ from ic.log import log
 from ic.dlg import dlgfunc
 from . import extfunc
 from . import util
-from . import ic_str
+from . import strfunc
 
 __version__ = (0, 1, 1, 2)
 
@@ -165,7 +165,7 @@ def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
             dst_module_name = dst_module_name[2:] if dst_module_name.startswith('ic') else dst_module_name
             dst_module_name = dst_module_name[:-9] if dst_module_name.endswith('Prototype') else dst_module_name
             dst_module_name = dst_module_name[:-5] if dst_module_name.endswith('Proto') else dst_module_name
-            dst_module_name = ic_str.upper_symbols2_lower(dst_module_name)
+            dst_module_name = strfunc.upper_symbols2_lower(dst_module_name)
 
             output_filename = os.path.join(src_module_path, '%s.py' % dst_module_name)
 
@@ -197,7 +197,7 @@ def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
 
             # Функция вызова формы
             frm_body_function = u''
-            frm_function_name = 'show_%s' % ic_str.upper_symbols2_lower(dst_class_name[2:] if dst_class_name.startswith('ic') else dst_class_name)
+            frm_function_name = 'show_%s' % strfunc.upper_symbols2_lower(dst_class_name[2:] if dst_class_name.startswith('ic') else dst_class_name)
             if issubclass(src_class, wx.Panel):
                 frm_body_function = SHOW_PANEL_FUNC_BODY_FMT % (frm_function_name, dst_class_name)
             elif issubclass(src_class, wx.Dialog):

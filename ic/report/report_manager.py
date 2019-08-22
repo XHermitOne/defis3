@@ -15,7 +15,7 @@ from . import config
 from ic.engine import glob_functions
 from ic.utils import extfunc
 from ic.utils import resfunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.log import log
 
 from . import icreportactiondlg
@@ -136,7 +136,7 @@ class icReportManager(object):
                                           stylelib_filename, variables)
                 # if isinstance(cmd, unicode):
                 #    cmd = cmd.encode(config.DEFAULT_ENCODING)
-                msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
+                msg_cmd = strfunc.toUnicode(cmd, config.DEFAULT_ENCODING)
                 try:
                     log.info(u'Запуск внешней программы <%s>' % msg_cmd)
                     os.system(cmd)
@@ -172,7 +172,7 @@ class icReportManager(object):
                                           stylelib_filename, variables)
                 # if isinstance(cmd, unicode):
                 #    cmd = cmd.encode(config.DEFAULT_ENCODING)
-                msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
+                msg_cmd = strfunc.toUnicode(cmd, config.DEFAULT_ENCODING)
                 try:
                     log.info(u'Запуск внешней программы <%s>' % msg_cmd)
                     os.system(cmd)
@@ -208,7 +208,7 @@ class icReportManager(object):
                                           stylelib_filename, variables)
                 # if isinstance(cmd, unicode):
                 #    cmd = cmd.encode(config.DEFAULT_ENCODING)
-                msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
+                msg_cmd = strfunc.toUnicode(cmd, config.DEFAULT_ENCODING)
                 try:
                     log.info(u'Запуск внешней программы <%s>' % msg_cmd)
                     os.system(cmd)
@@ -244,7 +244,7 @@ class icReportManager(object):
                                                        self.getReportDir())
                 cmd = self._addCmdExtArgs(cmd, db_url, sql, command,
                                           stylelib_filename, variables)
-                msg_cmd = ic_str.toUnicode(cmd, config.DEFAULT_ENCODING)
+                msg_cmd = strfunc.toUnicode(cmd, config.DEFAULT_ENCODING)
                 try:
                     log.info(u'Запуск внешней программы <%s>' % msg_cmd)
                     os.system(cmd)
@@ -425,4 +425,4 @@ class icReportManager(object):
         res_filename = self.getReportResourceFilename(report_filename, self.getReportDir())
         report_res = self.loadReportResource(res_filename)
         description = report_res.get('description', u'') if report_res and report_res.get('description', None) else report_filename
-        return ic_str.toUnicode(description)
+        return strfunc.toUnicode(description)

@@ -17,7 +17,7 @@ import os.path
 import stat
 
 from . import ic_util
-from . import ic_str
+from . import strfunc
 from ic.engine import glob_functions
 from ic.log import log
 
@@ -419,7 +419,7 @@ def ComputerName():
     # приходится заменять все на латиницу.
     if isinstance(comp_name, str):
         if ic_util.isOSWindowsPlatform():
-            comp_name = ic_str.rus2lat(comp_name)
+            comp_name = strfunc.rus2lat(comp_name)
     return comp_name
 
 

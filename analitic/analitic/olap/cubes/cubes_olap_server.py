@@ -42,7 +42,7 @@ from ic.utils import filefunc
 from ic.log import log
 from ic.utils import ini
 from ic.utils import system
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 from STD.json import json_manager
 from STD.spreadsheet import spreadsheet_manager
@@ -910,7 +910,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
             if not name:
                 return label
 
-            if ic_str.isLATText(name):
+            if strfunc.isLATText(name):
                 # Имя уровня определено
                 if '.' in name:
                     # Это уровень измерения

@@ -11,7 +11,7 @@ import os.path
 from ic import log
 import ic
 from ic.db import dbf
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic import dlgfunc
 from ic.interfaces import icmanagerinterface
 

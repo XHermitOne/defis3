@@ -20,7 +20,7 @@ except:
 
 from ic.log import log
 from ic.utils import extfunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 
 # Описания функций
@@ -211,10 +211,10 @@ def convert_xml_file2dict(xml_filename, codepage='utf-8'):
     body_xml = extfunc.load_file_text(xml_filename, 'utf-8')
 
     # Перекодировать текст, если надо
-    src_codepage = ic_str.get_codepage(body_xml)
+    src_codepage = strfunc.get_codepage(body_xml)
     if src_codepage and src_codepage.lower() != codepage:
             log.info(u'Перекодировка XML файла <%s> из <%s> в <%s> кодировку' % (xml_filename, src_codepage, codepage))
-            body_xml = ic_str.recode_text(body_xml, src_codepage, codepage)
+            body_xml = strfunc.recode_text(body_xml, src_codepage, codepage)
     elif not src_codepage:
         log.warning(u'Не возможно определить кодовую страницу XML файла <%s>' % xml_filename)
         return dict()

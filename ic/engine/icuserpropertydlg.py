@@ -11,7 +11,7 @@ import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.engine import user_manager
 from ic.dlg import dlgfunc
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.utils import coderror
 from ic.log import log
 
@@ -191,8 +191,8 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
         Изменение значения имени полььзователя в редакторе.
         """
         name = event.GetString()
-        if not ic_str.isLATText(name):
-            name = ic_str.rus2lat_keyboard(name)
+        if not strfunc.isLATText(name):
+            name = strfunc.rus2lat_keyboard(name)
             name_edit = self.GetNameObj('nameEdit')
             name_edit.SetValue(name)
         dlg = self.getDialog()
@@ -214,8 +214,8 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
         name_edit = self.GetNameObj('nameEdit')
         isChanged = name_edit.IsModified()
         old = name = name_edit.GetValue()
-        if not ic_str.isLATText(name):
-            name = ic_str.rus2lat_keyboard(name)
+        if not strfunc.isLATText(name):
+            name = strfunc.rus2lat_keyboard(name)
             name_edit.SetValue(name)
         dlg = self.getDialog()
         dlg.setTitle(u'Пользователь: ' + str(name))

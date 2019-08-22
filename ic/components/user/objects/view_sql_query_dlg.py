@@ -13,7 +13,7 @@ from. import view_sql_query_dlg_proto
 import ic
 from ic.log import log
 from ic.utils import txtgen
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
@@ -211,7 +211,7 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
                 query_table['__fields__'] = [field[0] for field in query_table['__fields__']]
                 query_table['__data__'] = list(query_table['__data__'])
                 for i, rec in enumerate(query_table['__data__']):
-                    query_table['__data__'][i] = [ic_str.toUnicode(value, self.db.getEncoding()) for value in rec]
+                    query_table['__data__'][i] = [strfunc.toUnicode(value, self.db.getEncoding()) for value in rec]
                 return query_table
             except:
                 error_txt = traceback.format_exc()

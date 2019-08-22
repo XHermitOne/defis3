@@ -13,7 +13,7 @@ import wx.dataview
 import wx.gizmos
 
 from ic.log import log
-from ic.utils import ic_str
+from ic.utils import strfunc
 from ic.bitmap import bmpfunc
 from ic.dlg import dlgfunc
 
@@ -110,13 +110,13 @@ class icTreeCtrlManager(object):
         @return:
         """
         # Добавление корневого элемента
-        label = ic_str.toUnicode(node.get(columns[0], UNKNOWN))
+        label = strfunc.toUnicode(node.get(columns[0], UNKNOWN))
         # log.debug(u'Надпись %s : %s' % (columns, label))
         if isinstance(treelist_ctrl, wx.gizmos.TreeListCtrl):
             parent_item = treelist_ctrl.AddRoot(label)
             # Заполнение данных колонок
             for i, column in enumerate(columns[1:]):
-                label = ic_str.toUnicode(node.get(columns[i + 1], UNKNOWN))
+                label = strfunc.toUnicode(node.get(columns[i + 1], UNKNOWN))
                 treelist_ctrl.SetItemText(parent_item, label, i + 1)
             # Прикрепляем данные к элементу дерева
             treelist_ctrl.SetItemData(parent_item, node)
@@ -125,7 +125,7 @@ class icTreeCtrlManager(object):
             parent_item = treelist_ctrl.AppendItem(root, label)
             # Заполнение данных колонок
             for i, column in enumerate(columns[1:]):
-                label = ic_str.toUnicode(node.get(columns[i + 1], UNKNOWN))
+                label = strfunc.toUnicode(node.get(columns[i + 1], UNKNOWN))
                 treelist_ctrl.SetItemText(parent_item, i + 1, label)
             # Прикрепляем данные к элементу дерева
             treelist_ctrl.SetItemData(parent_item, node)
@@ -187,16 +187,16 @@ class icTreeCtrlManager(object):
                 return False
 
         for record in node.get('__children__', list()):
-            label = ic_str.toUnicode(record.get(columns[0], u''))
+            label = strfunc.toUnicode(record.get(columns[0], u''))
             if isinstance(treelist_ctrl, wx.gizmos.TreeListCtrl):
                 item = treelist_ctrl.AppendItem(parent_item, label)
                 for i, column in enumerate(columns[1:]):
-                    label = ic_str.toUnicode(record.get(columns[i + 1], u''))
+                    label = strfunc.toUnicode(record.get(columns[i + 1], u''))
                     treelist_ctrl.SetItemText(item, label, i + 1)
             elif isinstance(treelist_ctrl, wx.dataview.TreeListCtrl):
                 item = treelist_ctrl.AppendItem(parent_item, label)
                 for i, column in enumerate(columns[1:]):
-                    label = ic_str.toUnicode(record.get(columns[i + 1], u''))
+                    label = strfunc.toUnicode(record.get(columns[i + 1], u''))
                     treelist_ctrl.SetItemText(item, i + 1, label)
             elif isinstance(treelist_ctrl, wx.TreeCtrl):
                 item = treelist_ctrl.AppendItem(parent_item, label)
@@ -575,7 +575,7 @@ class icTreeCtrlManager(object):
                 return False
 
         for record in node.get('__children__', list()):
-            item_label = ic_str.toUnicode(record.get(label, UNKNOWN))
+            item_label = strfunc.toUnicode(record.get(label, UNKNOWN))
             item = tree_ctrl.AppendItem(parent_item, item_label)
 
             # Дополнительная обработка

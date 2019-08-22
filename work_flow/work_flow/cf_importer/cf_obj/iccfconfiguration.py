@@ -18,7 +18,7 @@ from . import iccfinforeg
 
 from ic.log import log
 from ic.utils import util1c
-from ic.utils import ic_str
+from ic.utils import strfunc
 
 
 __version__ = (0, 0, 1, 1)
@@ -72,7 +72,7 @@ class icCFConfiguration(iccfobject.icCFObject):
             log.warning(u'Ошибка загрузки данных дерева конфигурации')
             return
         
-        self.name = ic_str.toUnicode(cf_cfg_res.data[3][1][1][1][1][2], DEFAULT_ENCODING)
+        self.name = strfunc.toUnicode(cf_cfg_res.data[3][1][1][1][1][2], DEFAULT_ENCODING)
         # После определения имени метаобъекта можно изменить прогресс бар
         iccfobject.icCFObject.build(self)
 
