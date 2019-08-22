@@ -114,7 +114,7 @@ from . import icwidget
 from .icfont import SPC_IC_FONT
 from ic.PropertyEditor import icDefInf
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
@@ -295,7 +295,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Sprav',):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является Справочником.', parent)
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является Справочником.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):

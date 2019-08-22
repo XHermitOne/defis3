@@ -15,7 +15,7 @@ from ic.db import dbf
 # from ic.db import ic_tabview
 
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.engine import glob_functions
 from ic.utils import filefunc
 from ic.utils import ic_util
@@ -32,7 +32,7 @@ def saveInputDataDir():
     """
     Выбрать и сохранить папку входных данных.
     """
-    input_data_dir = ic_dlg.getDirDlg(None, u'Выберите папку входных данных')
+    input_data_dir = dlgfunc.getDirDlg(None, u'Выберите папку входных данных')
     if os.path.isdir(input_data_dir):
         setInputDataDir(input_data_dir)
 

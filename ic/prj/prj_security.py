@@ -13,7 +13,7 @@ import ic.imglib.common as imglib
 
 from ic.utils import filefunc
 from ic.utils import ic_res
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 
 from ic.engine import user_manager
@@ -366,7 +366,7 @@ class icPrjUserPrototype(prj_node.icPrjNode):
                 else:
                     lock_rec = ic_res.getLockResRecord(res_name, res_file,
                                                        res_ext, self.getRoot().lock_dir)
-                    ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                    dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                     u'msgid "Resource %s is locked by user %s. Computer: %s."' % (res_name,
                                                                                                   lock_rec['user'],
                                                                                                   lock_rec['computer']))

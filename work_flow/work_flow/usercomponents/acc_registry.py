@@ -33,7 +33,7 @@ import ic.components.icResourceParser as prs
 from ic.bitmap import bmpfunc
 from ic.log import log
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.PropertyEditor import icDefInf
 
 import work_flow.work_sys.icregistry as parentModule
@@ -143,7 +143,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

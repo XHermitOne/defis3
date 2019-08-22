@@ -22,7 +22,7 @@
 
 import wx
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
@@ -138,7 +138,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -149,7 +149,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Table',):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является таблицей.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является таблицей.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 
@@ -340,7 +340,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         """
         choice_form = self.getICAttr('choice_form')
         if choice_form is None:
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                             u'В справочнике [%s] не определена форма выбора.' % self.name)
         return choice_form
 
@@ -350,7 +350,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         """
         edit_form = self.getICAttr('edit_form')
         if edit_form is None:
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                             u'В справочнике [%s] не определена форма редактирования.' % self.name)
         return edit_form
 

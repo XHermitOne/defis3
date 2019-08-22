@@ -9,7 +9,7 @@
 import wx
 from wx.lib.agw import aui
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 __version__ = (0, 1, 1, 2)
 
@@ -48,7 +48,7 @@ class icAUINotebook(aui.AuiNotebook):
                 msg = u'Страница <%s> уже открыта' % title
                 log.warning(msg)
                 page.Destroy()
-                ic_dlg.openWarningBox(u'ВНИМАНИЕ!', msg)
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!', msg)
                 return None
 
         # У объекта страницы поменять хозяина

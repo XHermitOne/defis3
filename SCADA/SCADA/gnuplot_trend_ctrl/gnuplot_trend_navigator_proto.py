@@ -13,7 +13,7 @@ import wx
 from ic.components import icwidget
 from ic.log import log
 from ic.engine import form_manager
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import printerfunc
 
 from . import gnuplot_trend_navigator_panel_proto
@@ -180,7 +180,7 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
         """
         Обработчик кнопки дополнительных настроек тренда.
         """
-        ic_dlg.openWarningBox(u'НАСТРОЙКИ', u'Эта функция пока не реализована')
+        dlgfunc.openWarningBox(u'НАСТРОЙКИ', u'Эта функция пока не реализована')
         event.Skip()
 
     def onUpButtonClick(self, event):

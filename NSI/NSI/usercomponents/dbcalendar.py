@@ -25,7 +25,7 @@
 import copy
 import wx
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.components import icwidget
 from ic.utils import util
 from ic.bitmap import bmpfunc
@@ -290,7 +290,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarPrototype):
         """
         choice_form = self.getICAttr('choice_form')
         if choice_form is None:
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                             u'В справочнике %s не определена форма выбора.' % self.name)
         return choice_form
 
@@ -300,7 +300,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarPrototype):
         """
         edit_form = self.getICAttr('edit_form')
         if edit_form is None:
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                             u'В справочнике %s не определена форма редактирования.' % self.name)
         return edit_form
         

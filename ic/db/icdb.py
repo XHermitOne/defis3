@@ -21,7 +21,7 @@ from ic.interfaces import icsourceinterface
 from ic.utils import lock
 from ic.kernel import icobject
 from ic.utils import resource
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.engine import glob_functions
 
 # Типы БД
@@ -273,14 +273,14 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                 metadata.name = DBRes_['name']
             except:
                 log.fatal(u'Ошибка создания связи с БД <%s>.' % DBRes_['name'])
-                ic_dlg.openErrBox(u'ОШИБКА',
+                dlgfunc.openErrBox(u'ОШИБКА',
                                 u'Ошибка создания связи с БД <%s>. Проверте параметры подключения!' % DBRes_['name'])
                 return None
             return metadata
         except:
             # Вывести сообщение об ошибке в лог
             log.fatal(u'Ошибка создания связи c БД <%s>.' % DBRes_['name'])
-            ic_dlg.openErrBox(u'ОШИБКА', u'Ошибка создания связи c БД <%s>.' % DBRes_['name'])
+            dlgfunc.openErrBox(u'ОШИБКА', u'Ошибка создания связи c БД <%s>.' % DBRes_['name'])
             return None
 
     def _changeDialect(self, Buff_, NewDialect_):
@@ -411,7 +411,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             return self._metadata.bind.connect()
         except:
             log.fatal(u'Ошибка определения связи с БД')
-            ic_dlg.openErrBox(u'ОШИБКА',
+            dlgfunc.openErrBox(u'ОШИБКА',
                             u'Ошибка определения связи с БД [%s]. Проверте параметры соединения' % self._metadata)
             return None
 
@@ -573,7 +573,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         except:
             err_txt = u'Ошибка выполнения запроса <%s>' % str(SQLQuery_)
             log.fatal(err_txt)
-            ic_dlg.openErrBox(u'ОШИБКА', err_txt)
+            dlgfunc.openErrBox(u'ОШИБКА', err_txt)
 
             return None
 
@@ -606,7 +606,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         except:
             err_txt = u'Ошибка выполнения запроса <%s>' % str(SQLQuery_)
             log.fatal(err_txt)
-            ic_dlg.openErrBox(u'ОШИБКА', err_txt)
+            dlgfunc.openErrBox(u'ОШИБКА', err_txt)
 
             return None
 

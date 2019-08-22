@@ -14,7 +14,7 @@ from ic.imglib import common as imglib
 
 from ic.utils import filefunc
 from ic.utils import ic_res
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 
 from ic.interfaces import subsysinterface
@@ -187,9 +187,9 @@ class icPrjImportSystems(icPrjImportFolder):
                     imp_sys_node._is_build = False
                 except:
                     log.error(u'Ошибка подключения подсистемы <%s>' % sub_sys_dir)
-                    ic_dlg.openMsgBox(u'ОШИБКА', u'Ошибка подключения подсистемы <%s>' % sub_sys_dir)
+                    dlgfunc.openMsgBox(u'ОШИБКА', u'Ошибка подключения подсистемы <%s>' % sub_sys_dir)
             else:
-                ic_dlg.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
+                dlgfunc.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
                 # Добавить узел не импортированной подсистемы
                 not_imp_sys_node = icPrjNotImportSys(self)
                 not_imp_sys_node.name = sub_sys['name']
@@ -206,10 +206,10 @@ class icPrjImportSystems(icPrjImportFolder):
         sub_sys_dir = os.path.dirname(subsys_prj_filename)
         prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
         if (not os.path.isdir(sub_sys_dir)) or (not os.path.exists(sub_sys_dir)):
-            ic_dlg.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
+            dlgfunc.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
             return None
         if (not os.path.isdir(prj_dir)) or (not os.path.exists(prj_dir)):
-            ic_dlg.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % prj_dir)
+            dlgfunc.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % prj_dir)
             return None
         return self._copySubSysDir(sub_sys_dir, prj_dir)
 
@@ -241,17 +241,17 @@ class icPrjImportSystems(icPrjImportFolder):
         sub_systems = self.getRoot().prj_res_manager.getImportSystems()
         prj_dir = os.path.dirname(os.path.dirname(self.getRoot().getPrjFileName()))
         try:
-            ic_dlg.openProgressDlg(None, u'Обновление подсистем',
+            dlgfunc.openProgressDlg(None, u'Обновление подсистем',
                                      u'Обновление подсистем', 0, len(sub_systems))
             for i_sub_sys in range(len(sub_systems)):
                 sub_sys_dir = os.path.dirname(sub_systems[i_sub_sys]['path'])
 
-                ic_dlg.updateProgressDlg(i_sub_sys, _('Refreshing') + ': ' + sub_sys_dir)
+                dlgfunc.updateProgressDlg(i_sub_sys, _('Refreshing') + ': ' + sub_sys_dir)
                 if (not os.path.isdir(sub_sys_dir)) or (not os.path.exists(sub_sys_dir)):
-                    ic_dlg.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
+                    dlgfunc.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
                     continue
                 if (not os.path.isdir(prj_dir)) or (not os.path.exists(prj_dir)):
-                    ic_dlg.openMsgBox(u'ОШИБКА', u'Не корректный путь к проекту <%s>' % prj_dir)
+                    dlgfunc.openMsgBox(u'ОШИБКА', u'Не корректный путь к проекту <%s>' % prj_dir)
                     continue
                 self._copySubSysDir(sub_sys_dir, prj_dir)
 
@@ -261,10 +261,10 @@ class icPrjImportSystems(icPrjImportFolder):
             tree_prj.res_editor.CloseResource()
             tree_prj.res_editor.InitObjectsInfo(bRefresh=True)
 
-            ic_dlg.closeProgressDlg()
+            dlgfunc.closeProgressDlg()
         except:
             log.error(u'Ошибка обновления подсистем')
-            ic_dlg.closeProgressDlg()
+            dlgfunc.closeProgressDlg()
             return False
 
         # Обновить дерево проекта
@@ -440,15 +440,15 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
         """
         prj_data = None
         # диалог выбора файла *.pro
-        prj_file_name = ic_dlg.getFileDlg(self.getParentRoot().getParent().getIDEFrame(),
+        prj_file_name = dlgfunc.getFileDlg(self.getParentRoot().getParent().getIDEFrame(),
                                          u'Выберите подсистему', u'Project file (*.pro)|*.pro',
-                                          default_path=filefunc.getRootDir())
+                                           default_path=filefunc.getRootDir())
         if prj_file_name:
             # открыть файл *.pro
             prj_data = self.openPrjFile(prj_file_name)
             new_name = self.readPrjName(prj_data)
             if self.getParentRoot().prj_res_manager.isImpSubSys(new_name):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ',
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ',
                                 u'Подсистема с таким наименованием уже сеществует!')
                 return None
             else:
@@ -654,10 +654,10 @@ class icPrjImportSys(icPrjNotImportSys):
             sub_sys_dir = os.path.dirname(sub_systems.getSubSysPath(self.name))
             # Проверка входных данных
             if (not os.path.isdir(sub_sys_dir)) or (not os.path.exists(sub_sys_dir)):
-                ic_dlg.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
+                dlgfunc.openMsgBox(u'ОШИБКА', u'Не корректный путь к подсистеме <%s>' % sub_sys_dir)
                 return
             if (not os.path.isdir(prj_dir)) or (not os.path.exists(prj_dir)):
-                ic_dlg.openMsgBox(u'ОШИБКА', u'Не корректный путь к проекту <%s>' % prj_dir)
+                dlgfunc.openMsgBox(u'ОШИБКА', u'Не корректный путь к проекту <%s>' % prj_dir)
                 return
             # Копировать подсистему в текущий проект
             sub_systems._copySubSysDir(sub_sys_dir, prj_dir)

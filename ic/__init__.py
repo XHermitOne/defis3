@@ -18,7 +18,7 @@ from ic.kernel.icexceptions import *
 
 from ic.utils import ic_mode        # Режимы работы
 from ic.utils import coderror       # Коды ошибок
-from ic.dlg import ic_dlg           # Диалоговые функции
+from ic.dlg import dlgfunc           # Диалоговые функции
 from ic.bitmap import bmpfunc        # Функции работы с образами
 from ic.utils import ic_time        # Функции работы с датой/временем
 from ic.utils import ini

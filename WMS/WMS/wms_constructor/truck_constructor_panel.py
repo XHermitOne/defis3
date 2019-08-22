@@ -11,7 +11,7 @@ import wx.dataview
 
 from ic.log import log
 from ic.utils import ic_time
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.engine import form_manager
 
 from . import constructor_ctrl
@@ -428,7 +428,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
 
         if selected_idx == wx.NOT_FOUND:
             log.warning(u'Не выбран ящик/паллет')
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Необходимо выбрать позицию для перемещения!')
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Необходимо выбрать позицию для перемещения!')
             event.Skip()
             return
 
@@ -457,7 +457,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
 
         if selected_idx == wx.NOT_FOUND:
             log.warning(u'Не выбран ящик/паллет')
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Необходимо выбрать позицию для перемещения!')
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Необходимо выбрать позицию для перемещения!')
             event.Skip()
             return
 

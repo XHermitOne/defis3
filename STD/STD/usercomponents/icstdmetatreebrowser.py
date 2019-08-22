@@ -8,7 +8,7 @@
 import wx
 from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import util
 from ic.bitmap import bmpfunc
 from ic.components import icwidget

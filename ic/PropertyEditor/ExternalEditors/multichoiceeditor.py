@@ -8,7 +8,7 @@
 # --- Imports ---
 import wx
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.log import log
 from . import passportobj
@@ -40,9 +40,9 @@ class icMultiChoiceUserEdt(passportobj.ic_user_property_editor):
             if 'edt_txt' in kwarg:
                 edt_txt = kwarg['edt_txt']
                 
-            result = ic_dlg.getMultiChoiceDlg(parent,
-                                              title, edt_txt,
-                                              choices=tuple(choice))
+            result = dlgfunc.getMultiChoiceDlg(parent,
+                                               title, edt_txt,
+                                               choices=tuple(choice))
             if result:
                 result = [row[1] for row in result if row[0]]
             else:

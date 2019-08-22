@@ -10,14 +10,14 @@ __version__ = (0, 0, 0, 1)
 
 #--- Функции
 import wx
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 def getSQLTest():
     """
     Определение SQL запроса для тестового отчета.
     """
     print('getSQLTest')
-    if ic_dlg.getAskDlg('ЛаЛаЛа', '?')==wx.YES:
+    if dlgfunc.getAskDlg('ЛаЛаЛа', '?')==wx.YES:
         return 'SQL SELECT * FROM nsi_list'
     else:
         return 'SQL SELECT * FROM nsi_std'

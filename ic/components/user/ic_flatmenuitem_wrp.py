@@ -34,7 +34,7 @@ from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEd
 from ic.engine import icflatmenuitem
 from ic.engine import icflatmenu
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 
 #   Тип компонента
@@ -135,7 +135,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Bitmap',):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Выбранный объект не является картинкой.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK

@@ -8,7 +8,7 @@ import wx
 from ic.bitmap import bmpfunc
 from ic.utils import filefunc
 from ic.editor import wxfb_manager
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 
 from . import prj_node
@@ -139,7 +139,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
             mod_name = node.getModuleName()
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_name):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Модуль <%s> уже существует!' % mod_name)
                 return False
             # Добавить модуль в ресурс проекта

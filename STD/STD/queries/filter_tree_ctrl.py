@@ -13,7 +13,7 @@ from wx.lib.agw import flatmenu
 
 # from ic.log import log
 # from ic.bitmap import ic_bmp
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import filefunc
 from ic.engine import treectrl_manager
 from ic.engine import stored_ctrl_manager
@@ -488,8 +488,8 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                 cur_item = self.GetSelection()
             if cur_item:
                 cur_label = self.GetItemText(cur_item)
-                label = ic_dlg.getTextEntryDlg(self, u'ПЕРЕИМЕНОВАНИЕ', u'Наименование',
-                                               cur_label)
+                label = dlgfunc.getTextEntryDlg(self, u'ПЕРЕИМЕНОВАНИЕ', u'Наименование',
+                                                cur_label)
 
                 if label:
                     bmp = None
@@ -565,8 +565,8 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
             if cur_item is None:
                 cur_item = self.GetSelection()
             if cur_item:
-                label = ic_dlg.getTextEntryDlg(self, u'ДОБАВЛЕНИЕ', u'Наименование',
-                                               DEFAULT_NODE_LABEL)
+                label = dlgfunc.getTextEntryDlg(self, u'ДОБАВЛЕНИЕ', u'Наименование',
+                                                DEFAULT_NODE_LABEL)
 
                 if label:
                     bmp = None
@@ -769,10 +769,10 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                 if item is None:
                     item = self.GetRootItem()
                 children_count = self.getItemChildrenCount(ctrl=self, item=item)
-                ic_dlg.openProgressDlg(parent=self,
-                                       title=u'ОБНОВЛЕНИЕ ИНДИКАТОРОВ',
-                                       prompt_text=u'Обновление индикаторов...',
-                                       min_value=0, max_value=children_count)
+                dlgfunc.openProgressDlg(parent=self,
+                                        title=u'ОБНОВЛЕНИЕ ИНДИКАТОРОВ',
+                                        prompt_text=u'Обновление индикаторов...',
+                                        min_value=0, max_value=children_count)
             # Сначала запоминаем выбранный элемент
             cur_item = self.GetSelection()
             # Обновляем все индикаторы
@@ -787,7 +787,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         except:
             log.fatal(u'Ошибка обновления индикаторов дерева фильтров')
         if bProgress:
-            ic_dlg.closeProgressDlg()
+            dlgfunc.closeProgressDlg()
         return result
 
     def _refreshIndicators(self, bVisibleItems=True, item=None, bProgress=False):
@@ -824,7 +824,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
                 self._refreshIndicators(bVisibleItems, item=child)
                 if bProgress:
                     label = self.GetItemText(child)
-                    ic_dlg.stepProgressDlg(new_prompt_text=u'Обновление индикатора... %s' % label)
+                    dlgfunc.stepProgressDlg(new_prompt_text=u'Обновление индикатора... %s' % label)
 
         return True
 

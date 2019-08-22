@@ -32,7 +32,7 @@ from ic.PropertyEditor import icDefInf
 import wx.lib.mixins.gridlabelrenderer as glr
 from ic.utils import ic_str
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 # --- Спецификация ---
 GRID_SELECTION_MODES = {'cells': parentModule.Grid.wxGridSelectCells,
@@ -494,7 +494,7 @@ class icSimpleGrid(icwidget.icWidget,
             if row >= 0:
                 return self.DeleteRows(row, 1)
         else:
-            if ic_dlg.getAskDlg(u'УДАЛЕНИЕ:',
+            if dlgfunc.getAskDlg(u'УДАЛЕНИЕ:',
                                u'Удалить строку %d?' % row) == wx.YES:
                 if row >= 0:
                     return self.DeleteRows(row, 1)

@@ -28,7 +28,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 from ic.engine import treectrl_manager
 
@@ -313,7 +313,7 @@ class SpravTreeList(icwidget.icWidget,
         Создает дерево со структрурой заданного иерархического справочника.
         """
         if not self.getTypeSprav():
-            ic_dlg.openWarningBox(u'ОШИБКА', u'Не указан тип справочника <typeSprav>')
+            dlgfunc.openWarningBox(u'ОШИБКА', u'Не указан тип справочника <typeSprav>')
             return False
         
         #   Получаем ссылку на класс данных

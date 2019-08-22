@@ -10,7 +10,7 @@ from ic.log import log
 from ic.bitmap import bmpfunc
 from ic.utils import util
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
@@ -87,7 +87,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Grid', ):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Выбранный объект не является объектом Grid.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK

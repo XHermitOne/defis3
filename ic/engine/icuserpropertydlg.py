@@ -10,7 +10,7 @@ from ic.utils import util
 import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.engine import user_manager
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import ic_str
 from ic.utils import coderror
 from ic.log import log
@@ -155,9 +155,9 @@ class icUserPropertyDialog(icobjectinterface.icObjectInterface):
                 else:
                     data['password'] = password1_md5
             else:
-                ic_dlg.openWarningBox(u'ВНИМАНИЕ!',
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
                                     u'Введенный пароль и подтверждение на совпадают. Введите еще раз.',
-                                      parent=self.getDialog())
+                                       parent=self.getDialog())
                 return None
         
         self._data = data

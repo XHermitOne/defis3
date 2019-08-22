@@ -29,7 +29,7 @@ from ic.PropertyEditor import icDefInf
 from ic.engine import icAUImainwin
 
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
 # --- Константы и переменные ---
@@ -175,7 +175,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Panel', 'ScrolledWindow', 'Notebook', 'SplitterWindow'):
-                ic_dlg.openMsgBox(u'ОШИБКА РЕДАКТИРОВАНИЯ', u'Выбранный объект не является главным окном.', parent)
+                dlgfunc.openMsgBox(u'ОШИБКА РЕДАКТИРОВАНИЯ', u'Выбранный объект не является главным окном.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

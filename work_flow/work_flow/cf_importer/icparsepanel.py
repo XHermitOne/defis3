@@ -10,7 +10,7 @@ import os.path
 
 from . import icWizardPanelProto
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 # from ic.log import util
 
 __version__ = (0, 1, 1, 1)
@@ -31,7 +31,7 @@ class icParsePanel(icWizardPanelProto.icParsePanelPrototype):
         Обработчик кнопки выбора CF файла конфигурации 1с.
         """
         default_dir = os.getcwd()
-        cf_file_name = ic_dlg.getFileDlg(self, u'Выберите файл конфигурации 1с',
+        cf_file_name = dlgfunc.getFileDlg(self, u'Выберите файл конфигурации 1с',
                                         u'Файл конфигурации 1с(*.cf)|*.cf', default_dir)
         if cf_file_name:
             self.cfFileTxt.SetValue(cf_file_name)
@@ -54,7 +54,7 @@ class icParsePanel(icWizardPanelProto.icParsePanelPrototype):
         Обработчик кнопки выбора папки конфигурации 1с.
         """
         default_dir = os.getcwd()
-        cf_dir_path = ic_dlg.getDirDlg(self, u'Выберите папку конфигурации 1с', default_dir)
+        cf_dir_path = dlgfunc.getDirDlg(self, u'Выберите папку конфигурации 1с', default_dir)
         if cf_dir_path:
             self.cfDirTxt.SetValue(cf_dir_path)
             

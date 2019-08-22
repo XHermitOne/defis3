@@ -74,7 +74,7 @@ from ic.components import icwidget
 from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.bitmap import bmpfunc
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.log import log
 from ic.PropertyEditor import icDefInf
@@ -162,20 +162,20 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Document', 'NodeDocument', 'BusinessObj', 'StateObj'):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является документом/бизнес объектом.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является документом/бизнес объектом.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         else:
             # Не определена БД
             parent = propEdt
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                             u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
     elif attr in ('list_ctrl',):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt
             if not ret[0][0] in ('ListCtrl', 'Grid'):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является списковым контролом', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является списковым контролом', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

@@ -12,7 +12,7 @@ import wx
 import wx.grid
 import ic.interfaces.icobjectinterface as icobjectinterface
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import filefunc
 from ic.utils import ini
 from ic.bitmap import bmpfunc
@@ -95,13 +95,13 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         Создание нового файла библиотеки образов.
         """
         dlg = self.GetNameObj('ImgLibDlg')
-        img_lib_name = ic_dlg.getTextEntryDlg(dlg, u'Имя библиотеки образов',
+        img_lib_name = dlgfunc.getTextEntryDlg(dlg, u'Имя библиотеки образов',
                                              u'Введите имя библиотеки образов:', 'default')
-        img_lib_dir = ic_dlg.getDirDlg(dlg, u'Папка размещения библиотеки образов')
+        img_lib_dir = dlgfunc.getDirDlg(dlg, u'Папка размещения библиотеки образов')
         if img_lib_dir and img_lib_name:
             img_lib_file_name = os.path.join(img_lib_dir, img_lib_name+'.py')
             if os.path.exists(img_lib_file_name):
-                ic_dlg.openMsgBox(title=u'ОШИБКА', prompt_text=u'Файл %s уже существует!' % img_lib_file_name, parent=dlg)
+                dlgfunc.openMsgBox(title=u'ОШИБКА', prompt_text=u'Файл %s уже существует!' % img_lib_file_name, parent=dlg)
                 return False
             # Создать новый файл
             self._img_lib_res.createNewImgLib()
@@ -113,13 +113,13 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         Добавить новый образ в библиотеку.
         """
         if self._img_lib_res.isEmpty():
-            ic_dlg.openMsgBox(title=u'ОШИБКА', prompt_text=u'Не определена библиотека образов!',
-                              parent=self.getObject())
+            dlgfunc.openMsgBox(title=u'ОШИБКА', prompt_text=u'Не определена библиотека образов!',
+                               parent=self.getObject())
             return None
 
         dlg = self.GetNameObj('ImgLibDlg')
         if img_filename is None:
-            img_filename = ic_dlg.getImageDlg(dlg, self._img_dir)
+            img_filename = dlgfunc.getImageDlg(dlg, self._img_dir)
             # Сохранить выбранную папку как папку картинок
             self.setImgDir(os.path.dirname(img_filename))
             self.saveImgDir()
@@ -143,7 +143,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         """
         Добавить новый образ в библиотеку.
         """
-        yes_del = ic_dlg.getAskDlg(u'УДАЛЕНИЕ',
+        yes_del = dlgfunc.getAskDlg(u'УДАЛЕНИЕ',
                                   u'Удалить образ <%s> из библиотеки образов?' % image_name)
         
         if (yes_del == wx.YES) and image_name:
@@ -178,7 +178,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         """
         dlg = self.GetNameObj('ImgLibDlg')
         if img_lib_filename is None:
-            img_lib_filename = ic_dlg.getFileDlg(dlg, u'',
+            img_lib_filename = dlgfunc.getFileDlg(dlg, u'',
                                                u'Библиотеки образов (*.py)|*.py')
 
         if img_lib_filename:

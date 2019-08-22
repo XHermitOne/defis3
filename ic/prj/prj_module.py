@@ -17,7 +17,7 @@ from ic.imglib import common as imglib
 from ic.utils import filefunc
 from ic.utils import ic_res
 from ic.utils import util
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.editor import ext_python_editor
 from ic.log import log
 from ic.editor import wxfb_manager
@@ -425,8 +425,8 @@ class icPrjPackage(prj_node.icPrjFolder):
         """
         # Ввести наименование при создании
         if not new_name:
-            new_name = ic_dlg.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
-                                              prompt_text=u'Введите наименование пакета', default_value=self.name)
+            new_name = dlgfunc.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                               prompt_text=u'Введите наименование пакета', default_value=self.name)
         if new_name:
             self.name = new_name
 
@@ -558,7 +558,7 @@ class icPrjPackage(prj_node.icPrjFolder):
             mod_path = node.getPath()
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_name):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Модуль <%s> уже существует!' % mod_name)
                 return False
             # Добавить модуль в ресурс проекта
@@ -625,8 +625,8 @@ class icPrjModule(prj_node.icPrjNode):
         """
         # Ввести наименование при создании
         if not new_name:
-            new_name = ic_dlg.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
-                                              prompt_text=u'Введите наименование модуля', default_value=self.name)
+            new_name = dlgfunc.getTextEntryDlg(self.getPrjTreeCtrl(), title=u'НАИМЕНОВАНИЕ',
+                                               prompt_text=u'Введите наименование модуля', default_value=self.name)
         if new_name:
             self.name = new_name
 
@@ -634,7 +634,7 @@ class icPrjModule(prj_node.icPrjNode):
         mod_path = self.getModulePath()
         # Есть уже модуль с таким именем?
         if self.getRoot().prj_res_manager.isModByName(mod_name):
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                             u'Модуль <%s> уже существует!' % mod_name)
             return False
         # Добавить модуль в ресурс проекта
@@ -692,7 +692,7 @@ class icPrjModule(prj_node.icPrjNode):
 
                     lock_user = lock_rec.get('user', u'Не определен') if lock_rec else u'Не определен'
                     lock_computer = lock_rec.get('computer', u'Не определен') if lock_rec else u'Не определен'
-                    ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                    dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                     u'Ресурс <%s> заблокирован пользователем <%s>. Компьютер: <%s>.' % (self.name, 
                                                                                                         lock_user,
                                                                                                         lock_computer))
@@ -799,7 +799,7 @@ class icPrjModule(prj_node.icPrjNode):
             mod_path = node.getPath()
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_name):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Модуль <%s> уже существует!' % mod_name)
                 return False
             # Добавить модуль в ресурс проекта
@@ -955,7 +955,7 @@ class icPrjImageModule(icPrjModule):
         """
         Редактирование модуля.
         """
-        ic_dlg.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
+        dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
                             u'''Редактирование модуля библиотеки образов запрещено.
 Модули библиотеки образов генерируются в редакторе библиотеки образов.''')
 
@@ -980,7 +980,7 @@ class icPrjFBModule(icPrjModule, wxfb_manager.icWXFormBuilderManager):
         """
         Редактирование модуля.
         """
-        ic_dlg.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
+        dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
                             u'''Редактирование модуля форм wxFormBuilder запрещено.
 Модули форм генерируются в среде wxFormBuilder.''')
 
@@ -1045,9 +1045,9 @@ class icPrjFBModule(icPrjModule, wxfb_manager.icWXFormBuilderManager):
         fb_py_module_filename = self.getFullModuleFileName()
         result = self.adaptation_form_py(fb_py_module_filename)
         if not result:
-            ic_dlg.openWarningBox(u'ОШИБКА', u'Ошибка адаптации модуля формы wxFormBuilder')
+            dlgfunc.openWarningBox(u'ОШИБКА', u'Ошибка адаптации модуля формы wxFormBuilder')
         else:
-            ic_dlg.openMsgBox(u'АДАПТАЦИЯ', u'Адаптация модуля <%s> прошла успешно' % fb_py_module_filename)
+            dlgfunc.openMsgBox(u'АДАПТАЦИЯ', u'Адаптация модуля <%s> прошла успешно' % fb_py_module_filename)
         event.Skip()
 
 
@@ -1071,7 +1071,7 @@ class icPrjXRCModule(icPrjModule):
         """
         Редактирование модуля.
         """
-        ic_dlg.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
+        dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
                             u'''Редактирование модуля форм, сгенерированных утилитой pywxrc (из XRC ресурса), запрещено.
 Модули форм генерируются средствами дизайнера XRC файла.''')
 

@@ -8,7 +8,7 @@
 import wx
 import wx.lib.calendar
 
-from . import ic_dlg
+from . import dlgfunc
 
 try:
     from . import iccalendardlg
@@ -189,7 +189,7 @@ def getMonthNumDlg(parent=None, title=None, text=None):
 
     title = u'МЕСЯЦ' if title is None else title
     text = u'Выберите месяц' if text is None else text
-    selected_idx = ic_dlg.getSingleChoiceIdxDlg(parent, title=title, prompt_text=text, choices=MONTH_CHOICES)
+    selected_idx = dlgfunc.getSingleChoiceIdxDlg(parent, title=title, prompt_text=text, choices=MONTH_CHOICES)
     if selected_idx >= 0:
         return selected_idx + 1
     # Нажата ОТМЕНА

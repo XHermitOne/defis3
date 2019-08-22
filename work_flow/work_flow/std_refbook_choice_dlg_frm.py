@@ -192,7 +192,7 @@ def onDelObjTool(Context_):
         if tree_ctrl:
             selection_rec=tree_ctrl.getSelectionRecord()
             if selection_rec <> None:
-                ask=ic.ic_dlg.openAskBox(u'ВНИМАНИЕ!', u'Удалить %s?' % selection_rec[0])
+                ask=ic.dlgfunc.openAskBox(u'ВНИМАНИЕ!', u'Удалить %s?' % selection_rec[0])
                 if ask:
                     #Ответ утвердительный. Нужно удалять
                     OBJ=Context_['OBJ']

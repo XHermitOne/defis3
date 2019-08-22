@@ -30,7 +30,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.engine import glob_functions
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.PropertyEditor.ExternalEditors import baseeditor
@@ -141,7 +141,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
             dlg.Destroy()
             return value
         else:
-            ic_dlg.openWarningBox(u'ОШИБКА', u'Типы сообщений в библиотеке <%s> не определены' % lib)
+            dlgfunc.openWarningBox(u'ОШИБКА', u'Типы сообщений в библиотеке <%s> не определены' % lib)
 
 
 def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):

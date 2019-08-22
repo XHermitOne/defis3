@@ -12,7 +12,7 @@ from ic.utils import util
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 from analitic.olap import cube_dimension_hierarchy_proto
 
@@ -70,9 +70,9 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     if attr in ('levels', ):
         choices = [(spc['name'] in value, u'%s : %s' % (spc['name'], spc.get('description', u''))) for spc in propEdt.getParentResource()['child'] if spc.get('type', None) == 'CubeDimensionLevel']
         # log.debug(u'ВЫБОР %s' % str(choices))
-        items = ic_dlg.getMultiChoiceDlg(parent=None, title=u'Уровни измерения',
-                                         prompt_text=u'Выберите уровни измерения',
-                                         choices=choices)
+        items = dlgfunc.getMultiChoiceDlg(parent=None, title=u'Уровни измерения',
+                                          prompt_text=u'Выберите уровни измерения',
+                                          choices=choices)
         # log.debug(u'Выбранные элементы %s' % str(items))
         ret = [item.split(u' : ')[0].strip() for check, item in items if check] if items else value
 

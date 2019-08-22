@@ -9,7 +9,7 @@ from . import passportobj
 
 from ic.editor import icpasswordedit
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -49,7 +49,7 @@ class icPasswordExternalEdt(passportobj.ic_user_property_editor):
             return coderror.IC_CTRL_OK
         else:
             parent = propEdt.GetPropertyGrid().GetView()
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Введенная информация не является паролем.')
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ', u'Введенная информация не является паролем.')
             return coderror.IC_CTRL_FAILED
             
         return coderror.IC_CTRL_OK

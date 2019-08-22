@@ -17,7 +17,7 @@ from ic.utils import util
 from ic.engine import glob_functions
 from ic.utils import ic_uuid
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 from ic.db import icsqlalchemy
 
@@ -978,7 +978,7 @@ class icObjPersistent(icObjPersistentPrototype):
         @param ask: Спросить об удалении всех объектов?
         @return: Возвращает результат выполнения операции True/False.
         """
-        is_clear = ic_dlg.openAskBox(u'ВНИМАНИЕ!', u'Удалить все объекты <%s>?' % self.name) if ask else True
+        is_clear = dlgfunc.openAskBox(u'ВНИМАНИЕ!', u'Удалить все объекты <%s>?' % self.name) if ask else True
         if not is_clear:
             # Не разрешео удалять действиями пользвателя
             return False

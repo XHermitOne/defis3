@@ -9,7 +9,7 @@ import os
 import os.path
 import wx
 
-from ic import ic_dlg
+from ic import dlgfunc
 from ic import log
 from ic.db import dbf
 from ic.utils import ic_str
@@ -76,10 +76,10 @@ def setKLADRData(sprav_manager, is_progress=False):
     if sprav_manager:
         
         if is_progress:
-            ic_dlg.openProgressDlg(wx.GetApp().GetTopWindow(),
+            dlgfunc.openProgressDlg(wx.GetApp().GetTopWindow(),
                                      u'Загрузка данных KLADR', 
                                      u'Загрузка данных о населенных пунктах',
-                                   0, 100)
+                                    0, 100)
         else:
             log.debug('Start set KLADR data')
         
@@ -110,7 +110,7 @@ def setKLADRData(sprav_manager, is_progress=False):
             raise
 
         if is_progress:
-            ic_dlg.closeProgressDlg()
+            dlgfunc.closeProgressDlg()
         else:
             log.debug('Stop set KLADR data')
 

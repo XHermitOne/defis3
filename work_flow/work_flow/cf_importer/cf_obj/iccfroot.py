@@ -15,7 +15,7 @@ from . import iccfconfiguration
 
 from ic.dlg import wait_box
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 import ic
 
 __version__ = (0, 1, 1, 1)
@@ -95,9 +95,9 @@ class icCFRoot(iccfobject.icCFObject):
                     return self.DEFAULT_DB_PSP
                 else:
                     choices = [u'%s (%s)' % (db_res['name'], db_res['description']) for db_res in db_resources]
-                    idx = ic_dlg.getSingleChoiceDlg(title=u'БД',
-                                                    prompt_text=u'Выбор БД для генерации ресусов таблиц',
-                                                    choices=choices)
+                    idx = dlgfunc.getSingleChoiceDlg(title=u'БД',
+                                                     prompt_text=u'Выбор БД для генерации ресусов таблиц',
+                                                     choices=choices)
                     res = db_resources[idx] if idx >= 0 else None
                     db_psp = ((res['type'], res['name'], None, '%s.src' % res['name'], ic.getPrjName()),) if res else None
                     self.DEFAULT_DB_PSP = db_psp

@@ -12,7 +12,7 @@ from ic import log
 import ic
 from ic.db import dbf
 from ic.utils import ic_str
-from ic import ic_dlg
+from ic import dlgfunc
 from ic.interfaces import icmanagerinterface
 
 ### RESOURCE_MODULE: /mnt/defis/defis3/archive/archive/nsi_c_agent.tab
@@ -76,9 +76,9 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
             dbf_tab = dbf.icDBFFileReadOnly()
             dbf_tab.Open(dbf_filename)
 
-            ic_dlg.openProgressDlg(ic.getMainWin(),
+            dlgfunc.openProgressDlg(ic.getMainWin(),
                                      u'Справочник контрагентов', u'Импорт данных',
-                                   max_value=dbf_tab.getRecCount())
+                                    max_value=dbf_tab.getRecCount())
             i = 0
             i_code = 0
             record = dbf_tab.getRecDict()
@@ -152,13 +152,13 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
                 record = dbf_tab.getRecDict()
 
                 i += 1
-                ic_dlg.updateProgressDlg(i, u'Загружены данные <%s>' % name)
+                dlgfunc.updateProgressDlg(i, u'Загружены данные <%s>' % name)
 
             dbf_tab.Close()
             dbf_tab = None
 
-            ic_dlg.updateProgressDlg(i, u'')
-            ic_dlg.closeProgressDlg()
+            dlgfunc.updateProgressDlg(i, u'')
+            dlgfunc.closeProgressDlg()
 
             # Подтвердить транзакцию
             transaction.commit()
@@ -166,7 +166,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
             # Отменить транзакцию
             transaction.rollback()
 
-            ic_dlg.closeProgressDlg()
+            dlgfunc.closeProgressDlg()
             if dbf_tab:
                 dbf_tab.Close()
                 dbf_tab = None
@@ -193,9 +193,9 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
             dbf_tab = dbf.icDBFFileReadOnly()
             dbf_tab.Open(dbf_filename)
 
-            ic_dlg.openProgressDlg(ic.getMainWin(),
+            dlgfunc.openProgressDlg(ic.getMainWin(),
                                      u'Справочник физических лиц', u'Импорт данных',
-                                   max_value=dbf_tab.getRecCount())
+                                    max_value=dbf_tab.getRecCount())
             i = 0
             i_code = 0
             record = dbf_tab.getRecDict()
@@ -276,13 +276,13 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
                 record = dbf_tab.getRecDict()
 
                 i += 1
-                ic_dlg.updateProgressDlg(i, u'Загружены данные <%s>' % name)
+                dlgfunc.updateProgressDlg(i, u'Загружены данные <%s>' % name)
 
             dbf_tab.Close()
             dbf_tab = None
 
-            ic_dlg.updateProgressDlg(i, u'')
-            ic_dlg.closeProgressDlg()
+            dlgfunc.updateProgressDlg(i, u'')
+            dlgfunc.closeProgressDlg()
 
             # Подтвердить транзакцию
             transaction.commit()
@@ -290,7 +290,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
             # Отменить транзакцию
             transaction.rollback()
 
-            ic_dlg.closeProgressDlg()
+            dlgfunc.closeProgressDlg()
             if dbf_tab:
                 dbf_tab.Close()
                 dbf_tab = None

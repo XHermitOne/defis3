@@ -12,7 +12,7 @@ import re
 import wx
 
 from ic.utils import util1c
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 
 __version__ = (0, 0, 0, 3)
@@ -110,7 +110,7 @@ class icCFObject:
         """
         Переопределяемый метод инициализации  построения всех дочерних оъектов.
         """
-        ic_dlg.updateProgressDlg(new_prompt_text=u'Метаобъект: ' + self.getStructUnicodeName())        
+        dlgfunc.updateProgressDlg(new_prompt_text=u'Метаобъект: ' + self.getStructUnicodeName())
   
     def findByUID(self, uid):
         """

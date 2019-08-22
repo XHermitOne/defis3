@@ -35,7 +35,7 @@ from ic.components import user
 from ic.components import icEvents
 from ic.dlg import ic_logo_dlg
 from ic.utils import filefunc
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import util
 from ic.log import log
 from ic.PropertyEditor.icProjectNotebook import icProjectNB
@@ -1030,9 +1030,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if not self.findItem(item, findStr):
             self.lastfindItem = None
             if not self.findItem(self.root, findStr):
-                ic_dlg.openWarningBox(ParentWin_=self,
-                                      title=u'ВНИМАНИЕ',
-                                      prompt_text=u'Не найдена подстрока \'%s\' в ресурсе' % findStr)
+                dlgfunc.openWarningBox(ParentWin_=self,
+                                       title=u'ВНИМАНИЕ',
+                                       prompt_text=u'Не найдена подстрока \'%s\' в ресурсе' % findStr)
                 if self.finddlg:
                     self.finddlg.SetFocus()
 
@@ -1065,7 +1065,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         if evt.GetKeyCode() == wx.WXK_DELETE and not evt.ControlDown() and not evt.ShiftDown() \
            and not evt.AltDown():
-            if ic_dlg.getAskDlg(u'УДАЛЕНИЕ', u'Действительно удалить объект?') == wx.ID_YES:
+            if dlgfunc.getAskDlg(u'УДАЛЕНИЕ', u'Действительно удалить объект?') == wx.ID_YES:
                 self.OnDeleteItem(None)
         elif evt.GetKeyCode() == wx.WXK_INSERT and evt.ControlDown():
             self.OnCopyItem(None)
@@ -1254,7 +1254,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                 mod_dir = os.path.join(resource.icGetICPath(), 'components', 'user', 'objects')
 
             module_name = os.path.join(mod_dir, 'ic'+className.lower()+'.py')
-            ic_dlg.openMsgBox(u'СООБЩЕНИЕ', u'Класс <%s> в модуле <%s>' % (className, module_name))
+            dlgfunc.openMsgBox(u'СООБЩЕНИЕ', u'Класс <%s> в модуле <%s>' % (className, module_name))
             # Удаляем из ресурса служебную информацию
             item = self.GetSelection()
             data = self.GetItemData(item)
@@ -1455,7 +1455,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             if self._isCanContain(res['type'], el['type']) and res != self.resource:
                 self.AddItem(item, res_obj, bRefreshEditor=False)
             else:
-                ic_dlg.openWarningBox(u'ОШИБКА',
+                dlgfunc.openWarningBox(u'ОШИБКА',
                                     u'Не возможно вставить объект %s в %s' % (el['type'], res['type']))
 
         if lst:
@@ -1479,7 +1479,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if self._isCanContain(res['type'], insObj['type']) and res != self.resource:
             self.InsItem(sel, copy.deepcopy(insObj))
         else:
-            ic_dlg.openWarningBox(u'ОШИБКА',
+            dlgfunc.openWarningBox(u'ОШИБКА',
                                 u'Не возможно вставить объект %s в %s' % (insObj['type'], res['type']))
 
     def OnPasteItemAfter(self, evt):
@@ -1500,7 +1500,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if self._isCanContain(res['type'], insObj['type']) and res != self.resource:
             self.InsItem(sel, copy.deepcopy(insObj), 1)
         else:
-            ic_dlg.openWarningBox(u'ОШИБКА',
+            dlgfunc.openWarningBox(u'ОШИБКА',
                                 u'Не возможно вставить объект %s в %s' % (insObj['type'], res['type']))
 
     def OnPasteItemInstead(self, evt):
@@ -1520,7 +1520,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if self._isCanContain(res['type'], insObj['type']) and res != self.resource:
             self.InsItem(sel, copy.deepcopy(insObj), 2)
         else:
-            ic_dlg.openWarningBox(u'ОШИБКА',
+            dlgfunc.openWarningBox(u'ОШИБКА',
                                 u'Не возможно вставить объект %s в %s' % (insObj['type'], res['type']))
 
     def OnAddItem(self, evt):
@@ -1633,7 +1633,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             elif res is not None and res != {}:
                 self.addBranch(self.root, res)
         except:
-            ic_dlg.openFatalBox(u'ОШИБКА')
+            dlgfunc.openFatalBox(u'ОШИБКА')
             return False
 
         if self._lastTreeId:
@@ -2075,7 +2075,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         @param fn: Имя файла ресурса.
         """
         if os.path.isfile(fn):
-            ic_dlg.openMsgBox(u'СООБЩЕНИЕ', u'Файл <%s> существует' % fn)
+            dlgfunc.openMsgBox(u'СООБЩЕНИЕ', u'Файл <%s> существует' % fn)
             return fn
 
         txt = resource.genObjModuleHead(name, fn)
@@ -2350,7 +2350,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                     self.res = _res[formName]
                     self._formName = formName
                 elif formName and formName not in _res.keys():
-                    ic_dlg.openWarningBox(u'ОШИБКА',
+                    dlgfunc.openWarningBox(u'ОШИБКА',
                                         u'Не найдена форма <%s> в <%s>' % (formName, path))
                 elif len(_res.keys()) == 1:
                     self._formName = list(_res.keys())[0]
@@ -2461,7 +2461,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if main_win is None:
                 msg = u'Не определено окно IDE. Редактор форм не может быть запущен в IDE.'
                 log.warning(msg)
-                ic_dlg.openWarningBox(u'ОШИБКА', msg)
+                dlgfunc.openWarningBox(u'ОШИБКА', msg)
                 return
 
             icResourceParser.ClearComponentModulDict()
@@ -2533,7 +2533,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         """
         if self.file is None or self.file == '' and bSaveAs:
             #
-            if ic_dlg.openAskBox(u'ВНИМАНИЕ', u'Сохранить изменения в ресурсе?'):
+            if dlgfunc.openAskBox(u'ВНИМАНИЕ', u'Сохранить изменения в ресурсе?'):
                 self.OnSaveAs(evt)
         elif self.is_res_module(self.file):
             resource.updateICObject(self.file, self._formName, self.getResource(), self._version)
@@ -2544,7 +2544,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                 if alreadyopen:
                     if fl in alreadyopen and not ide.getModify(fl):
                         ide.reloadFile(fl)
-                    elif fl in alreadyopen and ic_dlg.openAskBox(u'ВНИМАНИЕ',
+                    elif fl in alreadyopen and dlgfunc.openAskBox(u'ВНИМАНИЕ',
                                                                u'Будет перегружет текущий <%s> файл.\nИзменения будут потеряны.\nУверены?' % fl):
                         ide.reloadFile(fl)
         else:
@@ -2562,7 +2562,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if self.is_res_module(path):
                 ret = wx.ID_YES
                 if os.path.isfile(path):
-                    ret = ic_dlg.getAskDlg(u'ВНИМАНИЕ',
+                    ret = dlgfunc.getAskDlg(u'ВНИМАНИЕ',
                                           u'Файл существует. Переписать?')
                 if ret == wx.ID_YES:
                     #   Ввод имени класса
@@ -2735,7 +2735,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             _res = util.readAndEvalFile(path)
             if _res is None:
                 _res = {}
-            if self._formName in [None, ''] or (self._formName in _res.keys() and bAsk and ic_dlg.getAskDlg(u'ВНИМАНИЕ',
+            if self._formName in [None, ''] or (self._formName in _res.keys() and bAsk and dlgfunc.getAskDlg(u'ВНИМАНИЕ',
                                                                                                            u'Форма c таким именем уже существует, переписать?') != wx.ID_YES):
                 # Ввод нового имени формы
                 dlg = wx.TextEntryDialog(self,
@@ -2760,7 +2760,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             if file_obj:
                 file_obj.close()
         except:
-            ic_dlg.openFatalBox(u'ОШИБКА', u'Ошибка в SaveRes ...')
+            dlgfunc.openFatalBox(u'ОШИБКА', u'Ошибка в SaveRes ...')
             return False
         return True
 

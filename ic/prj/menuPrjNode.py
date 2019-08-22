@@ -10,7 +10,7 @@ import wx
 from wx.lib.agw import flatmenu
 
 from ic.imglib import common as imglib
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import clipboard
 from ic.utils import filefunc
 
@@ -287,10 +287,10 @@ class icMenuPrjNode(flatmenu.FlatMenu):
             ok = False
             
         if ok:
-            ic_dlg.openMsgBox(u'Синхронизация таблицы',
+            dlgfunc.openMsgBox(u'Синхронизация таблицы',
                             u'Создана копия таблицы <%s>. Старая таблица удалена.' % self._Parent.name)
         else:
-            ic_dlg.openMsgBox(u'Синхронизация таблицы',
+            dlgfunc.openMsgBox(u'Синхронизация таблицы',
                             u'Ошибка синхронизации таблицы <%s>' % self._Parent.name)
             
     import_res_filter = u'Tables (*.tab)|*.tab|DB (*.src)|*.src|ODB (*.odb)|*.odb|Forms (*.frm)|*.frm|Main window (*.win)|*.win|Menu (*.mnu)|*.mnu|Metadata (*.mtd)|*.mtd'
@@ -301,10 +301,10 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         """
         tree_prj = self._Parent.getRoot().getParent()
 
-        res_file_name = ic_dlg.getFileDlg(tree_prj,
+        res_file_name = dlgfunc.getFileDlg(tree_prj,
                                          u'Выберите ресурсный файл',
-                                          self.import_res_filter,
-                                          default_path=filefunc.getRootDir())
+                                           self.import_res_filter,
+                                           default_path=filefunc.getRootDir())
 
         if res_file_name:
             node = self._Parent.importChild(res_file_name)

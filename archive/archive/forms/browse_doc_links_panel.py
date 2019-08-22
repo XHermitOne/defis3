@@ -10,7 +10,7 @@ import wx
 
 import ic
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
@@ -52,7 +52,7 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
             else:
                 log.warning(u'Нет прикрепленных данных к элементу дерева')
         else:
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ',
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ',
                                 u'Выберите документ для редактирования')
         event.Skip()
 
@@ -70,7 +70,7 @@ class icBrowseDocLinksPanel(browse_doc_links_proto.icBrowseDocLinksPanelProto, f
             else:
                 log.warning(u'Нет прикрепленных данных к элементу дерева')
         else:
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ',
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ',
                                 u'Выберите документ для просмотра')
         event.Skip()
 

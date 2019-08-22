@@ -28,7 +28,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
@@ -128,7 +128,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('RendererXP',):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Выбранный объект не является РЕНДЕРОМ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK

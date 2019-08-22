@@ -59,7 +59,7 @@ import wx
 
 from ic.utils import util
 from ic.bitmap import bmpfunc
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
@@ -211,7 +211,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('icImageList', ):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является списком картинок icImageList.')
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является списком картинок icImageList.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

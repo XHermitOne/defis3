@@ -35,7 +35,7 @@ import io
 import wx
 
 from ic.utils import util
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.components.icwidget import icWidget,  SPC_IC_WIDGET
 from ic.bitmap import bmpfunc
@@ -190,7 +190,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
                 err = self.dataset.Lock()
             
                 if err in [1, 2]:
-                    ic_dlg.openWarningBox(u'ОШИБКА', u'Запись заблокирована err=%s' % str(err))
+                    dlgfunc.openWarningBox(u'ОШИБКА', u'Запись заблокирована err=%s' % str(err))
             except:
                 pass
 

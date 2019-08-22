@@ -18,7 +18,7 @@ from ic.utils import util
 from ic.components.icResourceParser import *
 from ic.components import icwidget
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 __version__ = (0, 1, 1, 1)
 

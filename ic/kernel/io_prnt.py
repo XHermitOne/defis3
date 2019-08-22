@@ -150,11 +150,11 @@ def outDevice(msg, Device_=IC_CONSOLE):
                 log_file.close()
             return False
     if Device_ & IC_MSG_INFO:
-        import ic.dlg.ic_dlg
-        ic.dlg.ic_dlg.openMsgBox(u'ВНИМАНИЕ', msg)
+        import ic.dlg.dlgfunc
+        ic.dlg.dlgfunc.openMsgBox(u'ВНИМАНИЕ', msg)
     if Device_ & IC_MSG_ERR:
-        import ic.dlg.ic_dlg
-        ic.dlg.ic_dlg.openErrBox(u'ОШИБКА', msg)
+        import ic.dlg.dlgfunc
+        ic.dlg.dlgfunc.openErrBox(u'ОШИБКА', msg)
     return True
 
 

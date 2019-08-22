@@ -22,7 +22,7 @@
 import wx
 from ic.components import icwidget
 from ic.utils import util
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 import ic.components.icResourceParser as prs
 from ic.PropertyEditor import icDefInf
 from ic.bitmap import bmpfunc
@@ -127,7 +127,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Table', 'Query'):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является ТАБЛИЧНЫМ ОБЪЕКТОМ.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является ТАБЛИЧНЫМ ОБЪЕКТОМ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):

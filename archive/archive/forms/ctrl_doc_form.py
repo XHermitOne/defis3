@@ -18,7 +18,7 @@ from archive.forms import edit_doc_form
 from archive.forms import scheme_doc_form
 from ic import bmpfunc
 from ic import log
-from ic import ic_dlg
+from ic import dlgfunc
 import ic
 from archive.forms import search_doc_form
 
@@ -109,17 +109,17 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
         is_checked = bool(len([i for i in range(item_count) if self.docs_listCtrl.IsChecked(i)]))
         if is_checked:
             # Есть помеченные для удаления документы
-            do_del_card = ic_dlg.openAskBox(u'УДАЛЕНИЕ', u'Удалить карточки документов?')
-            do_del_scanfile = ic_dlg.openAskBox(u'УДАЛЕНИЕ', u'Удалить электронные версии документов?')
+            do_del_card = dlgfunc.openAskBox(u'УДАЛЕНИЕ', u'Удалить карточки документов?')
+            do_del_scanfile = dlgfunc.openAskBox(u'УДАЛЕНИЕ', u'Удалить электронные версии документов?')
             if not do_del_card and not do_del_scanfile:
                 # Отмена операции удаления
                 event.Skip()
                 return
             
             try:
-                ic_dlg.openProgressDlg(ic.getMainWin(),
+                dlgfunc.openProgressDlg(ic.getMainWin(),
                                          u'Пакетная обработка', u'Удаление документов из архива',
-                                       max_value=item_count)
+                                        max_value=item_count)
                 i_progress = 0
                 for i in range(item_count - 1, -1, -1):
                     if self.docs_listCtrl.IsChecked(i):
@@ -135,11 +135,11 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
                         log.debug(u'Пропуск удаления [%d]' % i)                    
                         
                     i_progress += 1
-                    ic_dlg.updateProgressDlg(i_progress, u'Удаление документов из архива')
+                    dlgfunc.updateProgressDlg(i_progress, u'Удаление документов из архива')
 
-                ic_dlg.closeProgressDlg()
+                dlgfunc.closeProgressDlg()
             except:
-                ic_dlg.closeProgressDlg()
+                dlgfunc.closeProgressDlg()
                 log.fatal(u'Ошибка удаления документов')
         else:
             # Нет отмеченных документов, но есть текущий документ
@@ -147,8 +147,8 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
             if idx != -1:
                 document = self.documents[idx]
                 doc_uuid = document['uuid']
-                do_del_card = ic_dlg.openAskBox(u'УДАЛЕНИЕ', u'Удалить карточку документа?')
-                do_del_scanfile = ic_dlg.openAskBox(u'УДАЛЕНИЕ', u'Удалить электронную версию документа?')
+                do_del_card = dlgfunc.openAskBox(u'УДАЛЕНИЕ', u'Удалить карточку документа?')
+                do_del_scanfile = dlgfunc.openAskBox(u'УДАЛЕНИЕ', u'Удалить электронную версию документа?')
                 if not do_del_card and not do_del_scanfile:
                     # Отмена операции удаления
                     event.Skip()

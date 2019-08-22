@@ -50,7 +50,7 @@ from ic.components.custom import ictoolbar
 from ic.PropertyEditor import icDefInf
 from ic.log import log
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
@@ -161,7 +161,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('GridDataset', ):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Тип выбранный объект не корректен.', parent)
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Тип выбранный объект не корректен.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

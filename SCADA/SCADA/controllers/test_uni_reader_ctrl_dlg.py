@@ -10,7 +10,7 @@ import wx
 from . import test_uni_reader_ctrl_dlg_proto
 from ic.engine import form_manager
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 __version__ = (0, 0, 1, 4)
 
@@ -114,7 +114,7 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
         if self.controller is None:
             msg = u'Не определен объект контроллера для тестирования'
             log.warning(msg)
-            ic_dlg.openWarningBox(u'ОШИБКА', msg)
+            dlgfunc.openWarningBox(u'ОШИБКА', msg)
             return None
 
         tag_values = self.controller.read_tags(**tags)
@@ -152,7 +152,7 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
         else:
             msg = u'Тег <%s> уже есть в списке' % tag_name
             log.warning(msg)
-            ic_dlg.openWarningBox(u'ОШИБКА', msg)
+            dlgfunc.openWarningBox(u'ОШИБКА', msg)
 
         event.Skip()
 

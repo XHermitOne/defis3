@@ -30,7 +30,7 @@ import ic.utils.ic_util
 from ic.kernel import icexceptions
 from ic.utils import lock  # Модуль необходим для удаления файлов-блокировок
 import ic.imglib.common as imglib
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from . import icwxapplication
 from ic.utils import ic_util
 from ic.log import log
@@ -173,15 +173,15 @@ class icApp(icwxapplication.icWXApp):
             user_data = login_manager.Login(username, password, db_mode)
             if user_data is None:
                 break
-            user_name = user_data[ic_dlg.LOGIN_USER_IDX]
-            user_password = user_data[ic_dlg.LOGIN_PASSWORD_IDX]
-            user_password_md5 = user_data[ic_dlg.LOGIN_PASSWORD_MD5_IDX]
+            user_name = user_data[dlgfunc.LOGIN_USER_IDX]
+            user_password = user_data[dlgfunc.LOGIN_PASSWORD_IDX]
+            user_password_md5 = user_data[dlgfunc.LOGIN_PASSWORD_MD5_IDX]
             res = login_manager.getUserResource(user_name)
             # Если пользователя с таким именем нет, просим пользователя еще раз ввести
             # логин и пароль
             if res is None:
                 username, password = None, None
-                ic_dlg.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
+                dlgfunc.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
             else:
                 self._User = self.createObjBySpc(None, res)
                 self._User.setLoginManager(login_manager)

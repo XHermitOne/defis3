@@ -420,7 +420,7 @@ class icKernel(icBaseKernel):
         @param password: Пароль.
         @param db_mode: Режим использования БД.
         """
-        from ic.dlg import ic_dlg
+        from ic.dlg import dlgfunc
         from ic.engine import user_manager
 
         login_ok = False
@@ -432,14 +432,14 @@ class icKernel(icBaseKernel):
                                             bRuntimeMode=False)
             if user_data is None:
                 break
-            user_name = user_data[ic_dlg.LOGIN_USER_IDX]
-            user_password = user_data[ic_dlg.LOGIN_PASSWORD_IDX]
-            user_password_md5 = user_data[ic_dlg.LOGIN_PASSWORD_MD5_IDX]
+            user_name = user_data[dlgfunc.LOGIN_USER_IDX]
+            user_password = user_data[dlgfunc.LOGIN_PASSWORD_IDX]
+            user_password_md5 = user_data[dlgfunc.LOGIN_PASSWORD_MD5_IDX]
             res = login_manager.getUserResource(user_name)
 
             if res is None:
                 username, password = None, None
-                ic_dlg.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
+                dlgfunc.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
             else:
                 self._User = self.createObjBySpc(None, res)
                 self._User.setLoginManager(login_manager)
@@ -451,7 +451,7 @@ class icKernel(icBaseKernel):
                     if bAuto:
                         bAuto = False
                         username, password = None, None
-                        ic_dlg.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
+                        dlgfunc.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
                     else:
                         raise
 

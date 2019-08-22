@@ -19,7 +19,7 @@ import wx
 
 import ic.db.dbf as dbf
 import ic.log.ic_log as ic_log
-import ic.dlg.ic_dlg as ic_dlg
+import ic.dlg.dlgfunc as ic_dlg
 #import ic.dlg.threaded_progress as progress
 import ic.dlg.ic_proccess_dlg as ic_proccess_dlg
 

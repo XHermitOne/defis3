@@ -16,7 +16,7 @@ from archive.forms import scheme_doc_form
 from archive.forms import browse_doc_links_panel
 from ic import bmpfunc
 from ic import log
-from ic import ic_dlg
+from ic import dlgfunc
 import ic
 from ic.utils import ic_time
 
@@ -333,7 +333,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
             if cmd:
                 os.system(cmd)
         else:
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
 
         event.Skip()
 
@@ -357,7 +357,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
                 # Обновить список документов если нормально отредактировали документ
                 self.refreshDocList()
         else:
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
 
         event.Skip()
 
@@ -380,7 +380,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
             scheme_page.scheme_viewer_ctrl.setDiagram(scheme)
             main_win.addOrgPage(scheme_page, u'Схема документа <%s>' % doc.getRequisiteValue('doc_name'))
         else:
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
 
         event.Skip()
 
@@ -398,7 +398,7 @@ class icSearchDocPanelCtrl(icSearchCritPanelCtrl):
 
             browse_doc_links_panel.browse_doc_links_panel(doc)
         else:
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Выберите документ')
         
         event.Skip()
 

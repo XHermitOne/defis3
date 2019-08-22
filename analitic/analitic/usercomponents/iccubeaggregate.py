@@ -9,7 +9,7 @@ from ic.log import log
 from ic.bitmap import bmpfunc
 from ic.utils import util
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 from ic.components import icwidget
 from ic.PropertyEditor import icDefInf
@@ -72,9 +72,9 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     ret = None
     if attr in ('measure',):
         choices = [u''] + [u'%s : %s' % (spc['name'], spc.get('description', u'')) for spc in propEdt.getParentResource()['child'] if spc.get('type', None) == 'CubeMeasure']
-        text = ic_dlg.getSingleChoiceDlg(parent=None, title=u'Меры/Факты',
-                                         prompt_text=u'Выберите меру/факт агрегации',
-                                         choices=choices)
+        text = dlgfunc.getSingleChoiceDlg(parent=None, title=u'Меры/Факты',
+                                          prompt_text=u'Выберите меру/факт агрегации',
+                                          choices=choices)
         ret = text.split(u' : ')[0].strip() if text else u''
 
     if ret is None:

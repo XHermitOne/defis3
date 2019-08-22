@@ -31,7 +31,7 @@ from ic.utils import ic_mode
 from ic.utils import util
 
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import filefunc
 from ic.utils import ic_exec
 from ic.utils import ic_util
@@ -527,7 +527,7 @@ class icUserPrototype(icbaseuser.icRootUser):
         if not os.path.exists(res_filename):
             err_msg = u'Файл прав пользователей <%s> не найден.' % res_filename
             log.warning(err_msg)
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', err_msg)
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', err_msg)
             return False
         sys_enter = False   # Флаг входа в систему
         
@@ -548,35 +548,35 @@ class icUserPrototype(icbaseuser.icRootUser):
             return sys_enter
             
         # Проверка на вход в систему под рутом
-        if user_login[ic_dlg.LOGIN_USER_IDX] == 'root':
+        if user_login[dlgfunc.LOGIN_USER_IDX] == 'root':
             icbaseuser.icRootUser.Login(self,
-                                        user_login[ic_dlg.LOGIN_USER_IDX],
-                                        user_login[ic_dlg.LOGIN_PASSWORD_IDX])
+                                        user_login[dlgfunc.LOGIN_USER_IDX],
+                                        user_login[dlgfunc.LOGIN_PASSWORD_IDX])
             log.info(u'Вход в систему с правами Администратора...OK')
             return True
 
         # Переопределить пользователя по умолчани.
-        default_username = user_login[ic_dlg.LOGIN_USER_IDX]
+        default_username = user_login[dlgfunc.LOGIN_USER_IDX]
             
         try:
-            sys_enter = self.login_ok(user_login[ic_dlg.LOGIN_USER_IDX],
-                                      user_login[ic_dlg.LOGIN_PASSWORD_IDX],
-                                      user_login[ic_dlg.LOGIN_PASSWORD_MD5_IDX],
+            sys_enter = self.login_ok(user_login[dlgfunc.LOGIN_USER_IDX],
+                                      user_login[dlgfunc.LOGIN_PASSWORD_IDX],
+                                      user_login[dlgfunc.LOGIN_PASSWORD_MD5_IDX],
                                       db_name, bRuntimeMode)
         except icexceptions.LoginInvalidException:
             if bAutoLogin:
                 raise
             else:
-                ic_dlg.openMsgBox(u'Вход в систему',
+                dlgfunc.openMsgBox(u'Вход в систему',
                                 u'Неправильный пользователь или пароль. Доступ запрещен.')
         except icexceptions.LoginErrorException:
-            ic_dlg.openMsgBox(u'Вход в систему',
+            dlgfunc.openMsgBox(u'Вход в систему',
                             u'Пользователь %s уже зарегистрирован в системе. Вход в систему запрещен.' % user_login[0])
         except icexceptions.LoginDBExclusiveException:
-            ic_dlg.openMsgBox(u'Вход в систему',
+            dlgfunc.openMsgBox(u'Вход в систему',
                             u'БД открыта в монопольном режиме другим пользователем. Вход в систему запрещен.')
         except icexceptions.LoginWorkTimeException:
-            ic_dlg.openMsgBox(u'Вход в систему',
+            dlgfunc.openMsgBox(u'Вход в систему',
                             u'Попытка входа в систему в не регламентированное время пользователем %s. Вход в систему запрещен.' % user_login[0])
         except:
             log.fatal(u'Ошибка входа пользователя в систему. Параметры входа <%s> ' % user_login)
@@ -693,7 +693,7 @@ class icUserPrototype(icbaseuser.icRootUser):
             # Если определен тип ресурса, ...
             # Вывести сообщение
             if (not can) and bShowMsg:
-                ic_dlg.openMsgBox(u'Ошибка!',
+                dlgfunc.openMsgBox(u'Ошибка!',
                                 u'Доступ к ресурсу <%s> заблокирован.' % res_name)
             return can
         except:
@@ -856,8 +856,8 @@ class icLoginManager(object):
         if default_password is None:
             # Вызов диалога логина
             user_name = self.getRegLastUser()
-            user_login = ic_dlg.getLoginDlg(None, u' Вход в систему',
-                                            user_name, self.getRegUserList())
+            user_login = dlgfunc.getLoginDlg(None, u' Вход в систему',
+                                             user_name, self.getRegUserList())
         else:
             md5_password = hashlib.md5(default_password.encode()).hexdigest()
             # Автологин
@@ -877,7 +877,7 @@ class icLoginManager(object):
         reg_hdd_sn = ic_util.GetRegValue('Software\\DEFIS\\HDD', 'SerialNo')
         if hdd_sn == reg_hdd_sn:
             return True
-        ic_dlg.openMsgBox(u'Вход в систему', u'Не зарегестрированная копия. Вход в систему не возможен.')
+        dlgfunc.openMsgBox(u'Вход в систему', u'Не зарегестрированная копия. Вход в систему не возможен.')
         return False
     
     def canDBMode(self, db_mode=ic_mode.DB_SHARE):

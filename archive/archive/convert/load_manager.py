@@ -15,7 +15,7 @@ from ic.log import log
 from ic.db import dbf
 from ic.utils import extfunc
 from ic.engine import glob_functions
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 import ic
 
@@ -136,9 +136,9 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
             dbf_tab = dbf.icDBFFileReadOnly()
             dbf_tab.Open(doc_dbf_filename)
 
-            ic_dlg.openProgressDlg(ic.getMainWin(),
+            dlgfunc.openProgressDlg(ic.getMainWin(),
                                      u'Пакетная обработка', u'Загрузка данных',
-                                   max_value=dbf_tab.getRecCount())
+                                    max_value=dbf_tab.getRecCount())
             i = 0
             record = dbf_tab.getRecDict()
             while not dbf_tab.EOF():
@@ -158,13 +158,13 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
 
                 i += 1
                 if n_doc:
-                    ic_dlg.updateProgressDlg(i, u'Загружены данные документа № <%s>' % n_doc)
+                    dlgfunc.updateProgressDlg(i, u'Загружены данные документа № <%s>' % n_doc)
 
             dbf_tab.Close()
             dbf_tab = None
 
-            ic_dlg.updateProgressDlg(i, u'')
-            ic_dlg.closeProgressDlg()
+            dlgfunc.updateProgressDlg(i, u'')
+            dlgfunc.closeProgressDlg()
 
             # Подтвердить транзакцию
             transaction.commit()
@@ -172,7 +172,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
             # Отменить транзакцию
             transaction.rollback()
 
-            ic_dlg.closeProgressDlg()
+            dlgfunc.closeProgressDlg()
             if dbf_tab:
                 dbf_tab.Close()
                 dbf_tab = None

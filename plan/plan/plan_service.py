@@ -7,7 +7,7 @@
 
 # --- Подключение библиотек ---
 from ic.utils import ic_util
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from . import calc_plan
 
 # Версия
@@ -48,10 +48,10 @@ def PlanMethodChoiceDlg(Parent_=None):
     """
     Диалог выбора метода расчета плановых значений.
     """
-    method_str = ic_dlg.getSingleChoiceDlg(Parent_,
+    method_str = dlgfunc.getSingleChoiceDlg(Parent_,
                                           u'Выберите метод',
                                           u'Методы расчета плановых значений',
-                                           getPlanMethodChoice(calc_plan))
+                                            getPlanMethodChoice(calc_plan))
     if method_str:
         method_str = method_str[:method_str.find(' ')]
         return calc_plan.__dict__[method_str]

@@ -24,7 +24,7 @@ import wx
 from ic.components import icwidget
 from ic.utils import util
 from ic.utils import ic_util
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 import ic.components.icResourceParser as prs
 from ic.imglib import common
@@ -140,7 +140,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt
             if not ret[0][0] in ('Document', 'StateObj', 'BusinessObj',
                                  'Table', 'GridDataset', 'Recordset', 'Query'):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является ИСТОЧНИКОМ ДАННЫХ.', parent)
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является ИСТОЧНИКОМ ДАННЫХ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     return coderror.IC_CTRL_OK

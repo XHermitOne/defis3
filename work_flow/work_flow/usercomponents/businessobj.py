@@ -23,7 +23,7 @@
 import wx
 from ic.components import icwidget
 from ic.utils import util
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 import ic.components.icResourceParser as prs
 # from work_flow.work_sys import workflow_img
@@ -179,13 +179,13 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('PostgreSQLDB', 'SQLiteDB'):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БД.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         else:
             # Не определена БД
             parent = propEdt
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                             u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
             
     elif attr in ('init_form', 'edit_form', 'view_form', 'search_form', 'choice_form'):
@@ -193,7 +193,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('Dialog', 'Frame', 'Panel', 'ScrolledWindow'):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является формой.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является формой.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('prototype',):
@@ -201,7 +201,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('BusinessObj',):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БИЗНЕС-ОБЪЕКТОМ.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является БИЗНЕС-ОБЪЕКТОМ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     elif attr in ('history',):
@@ -209,7 +209,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('ObjHistory',):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является ИСТОРИЕЙ БИЗНЕС-ОБЪЕКТА.', parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Выбранный объект не является ИСТОРИЕЙ БИЗНЕС-ОБЪЕКТА.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

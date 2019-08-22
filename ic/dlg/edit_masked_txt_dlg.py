@@ -8,7 +8,7 @@
 import wx
 from . import edit_masked_txt_dlg_proto
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 
 class icEditMaskedTextDlg(edit_masked_txt_dlg_proto.icEditMaskedTextDlgProto):
@@ -34,7 +34,7 @@ class icEditMaskedTextDlg(edit_masked_txt_dlg_proto.icEditMaskedTextDlgProto):
         else:
             msg = u'Не корректное введеное значение <%s>' % value
             log.warning(msg)
-            ic_dlg.openWarningBox(u'ОШИБКА', msg)
+            dlgfunc.openWarningBox(u'ОШИБКА', msg)
             self.edit_text = None
         self.EndModal(wx.ID_OK)
         event.Skip()

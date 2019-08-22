@@ -11,7 +11,7 @@ from . import cubes_olap_srv_request_form_proto
 import ic
 from ic.log import log
 from ic.utils import wxfunc
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
@@ -418,11 +418,11 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
         i_dimension = self.cut_dimension_choice.GetSelection()
 
         if i_dimension <= 0:
-            ic_dlg.openWarningBox(u'СРЕЗ', u'Не выбрано измерение среза')
+            dlgfunc.openWarningBox(u'СРЕЗ', u'Не выбрано измерение среза')
         else:
             value = self.cut_value_textCtrl.GetValue()
             if not value.strip():
-                ic_dlg.openWarningBox(u'СРЕЗ', u'Не указано значение среза')
+                dlgfunc.openWarningBox(u'СРЕЗ', u'Не указано значение среза')
             else:
                 cube = self._OLAP_server.getCubes()[i_cube]
                 dimension = cube.getDimensions()[i_dimension - 1]
@@ -441,7 +441,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
         """
         i_del_row = self.getItemSelectedIdx(self.cut_listCtrl)
         if i_del_row < 0:
-            ic_dlg.openWarningBox(u'СРЕЗ', u'Не выбран срез для удаления из списка')
+            dlgfunc.openWarningBox(u'СРЕЗ', u'Не выбран срез для удаления из списка')
         else:
             self.cut_listCtrl.DeleteItem(i_del_row)
         event.Skip()

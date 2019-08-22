@@ -25,7 +25,7 @@ import wx
 from ic.components import icwidget
 from ic.utils import util
 from ic.utils import ic_util
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 from ic.utils import coderror
 import ic.components.icResourceParser as prs
@@ -156,7 +156,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
                                  'Recordset',
                                  'Query',
                                  'AccumulatingRegistry'):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является ИСТОЧНИКОМ ДАННЫХ.', parent)
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является ИСТОЧНИКОМ ДАННЫХ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
     return coderror.IC_CTRL_OK

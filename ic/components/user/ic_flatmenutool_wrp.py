@@ -26,7 +26,7 @@ from wx.lib.agw import flatmenu
 from ic.components import icwidget
 from ic.utils import util
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
@@ -129,7 +129,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Bitmap',):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является картинкой.')
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является картинкой.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

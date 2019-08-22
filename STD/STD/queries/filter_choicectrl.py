@@ -12,7 +12,7 @@ import uuid
 import operator
 import wx
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import ic_res
 from ic.log import log
 
@@ -69,7 +69,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
 
             if new_filter:
                 filter_id = self._genUUID()
-                filter_description = ic_dlg.getTextEntryDlg(self, u'Фильтр',
+                filter_description = dlgfunc.getTextEntryDlg(self, u'Фильтр',
                                                            u'Введите наименование фильтра')
                 new_filter['id'] = filter_id
                 new_filter['description'] = filter_description
@@ -91,7 +91,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
             # Если имя не определено удалить выбранный фильтр
             i = self.filterCheckList.GetSelection()
             if i >= 0:
-                do_del = ic_dlg.openAskBox(u'Удаление', u'Удалить фильтр?')
+                do_del = dlgfunc.openAskBox(u'Удаление', u'Удалить фильтр?')
                 if do_del:
                     del self._filters[i]
                     self.filterCheckList.Delete(i)

@@ -15,7 +15,7 @@ import wx.gizmos
 from ic.log import log
 from ic.utils import ic_str
 from ic.bitmap import bmpfunc
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 
 __version__ = (0, 1, 6, 1)
@@ -1047,7 +1047,7 @@ class icTreeCtrlManager(object):
         do_del = True
         if ask:
             label = ctrl.GetItemText(item)
-            do_del = ic_dlg.openAskBox(u'УДАЛЕНИЕ', u'Удалить <%s>' % label)
+            do_del = dlgfunc.openAskBox(u'УДАЛЕНИЕ', u'Удалить <%s>' % label)
 
         if do_del:
             if isinstance(ctrl, wx.TreeCtrl):

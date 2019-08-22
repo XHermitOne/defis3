@@ -20,7 +20,7 @@ import fnmatch
 import pwd
 
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 import ic.config
 
@@ -84,7 +84,7 @@ def copyFile(filename, new_filename, bRewrite=True):
         if not os.path.exists(filename):
             msg = u'Копирование <%s> -> <%s>. Исходный файл <%s> не существует.' % (filename, new_filename, filename)
             log.warning(msg)
-            ic_dlg.openWarningBox(u'ОШИБКА', msg)
+            dlgfunc.openWarningBox(u'ОШИБКА', msg)
             return False
 
         # --- Проверка копирования файла в самого себя ---
@@ -99,7 +99,7 @@ def copyFile(filename, new_filename, bRewrite=True):
         if not bRewrite:
             # Файл уже существует?
             if os.path.exists(new_filename):
-                if ic_dlg.getAskDlg(u'КОПИРВАНИЕ',
+                if dlgfunc.getAskDlg(u'КОПИРВАНИЕ',
                                    u'Файл <%s> уже существует. Переписать?' % new_filename) == wx.NO:
                     return False
         else:

@@ -31,7 +31,7 @@ from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 
 from ic.bitmap import icimg2py
@@ -152,7 +152,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     """
     if attr == 'file_name':
         parent = propEdt
-        img_file_name = ic_dlg.getImageDlg(parent)
+        img_file_name = dlgfunc.getImageDlg(parent)
         return img_file_name
 
 

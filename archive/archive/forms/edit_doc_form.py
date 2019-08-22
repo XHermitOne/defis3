@@ -18,7 +18,7 @@ from ic import log
 from ic import ic_time
 from ic import bmpfunc
 from ic import filefunc
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from work_flow.doc_sys import icdocselectdlg
 from archive.forms import search_doc_form
 from ic.scanner import scanner_manager
@@ -141,9 +141,9 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
                 doc_data = doc.loadRequisiteData(doc_uuid)
                 if not self.valid_link(doc_uuid):
                     log.warning(u'Попытка добавления уже существующей связи с документом')
-                    ic_dlg.openWarningBox(u'ВНИМАНИЕ',
+                    dlgfunc.openWarningBox(u'ВНИМАНИЕ',
                                         u'Связь с документом <%s> уже есть в списке' % doc_data.get('doc_name', u'-'),
-                                          parent=self)
+                                           parent=self)
                     continue
 
                 self._link_to_uuids.append(doc_uuid)
@@ -213,7 +213,7 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         if n_doc is None:
             msg = u'Не определен номер документа'
             log.warning(msg)
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Ошибка данных документа: %s' % msg, parent=self)
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Ошибка данных документа: %s' % msg, parent=self)
             # При ошибке данных документа вообще не отображать
             return
 
@@ -399,17 +399,17 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
             #    return False
             if not data['doc_name'].strip():
                 # Если не определено имя документа
-                ic_dlg.openErrBox(u'ОШИБКА',
+                dlgfunc.openErrBox(u'ОШИБКА',
                                 u'Имя документа не определено', parent=self)
                 return False
             elif not data['n_doc'].strip():
                 # Если не определен номер документа
-                ic_dlg.openErrBox(u'ОШИБКА',
+                dlgfunc.openErrBox(u'ОШИБКА',
                                 u'Не определен номер документа', parent=self)
                 return False
             elif self.document.getUUID() in data['links_to']:
                 # Если документ ссылается сам на себя, это считается ошибкой
-                ic_dlg.openErrBox(u'ОШИБКА',
+                dlgfunc.openErrBox(u'ОШИБКА',
                                 u'Документ ссылается сам на себя', parent=self)
                 return False
             return True
@@ -429,7 +429,7 @@ def valid_edit_doc(parent=None, doc=None):
     if n_doc is None:
         msg = u'Контроль данных редактируемого документа. Не определен номер документа'
         log.warning(msg)
-        ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Ошибка данных документа: %s' % msg, parent=parent)
+        dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Ошибка данных документа: %s' % msg, parent=parent)
         # При ошибке данных документа вообще не отображать
         return False
     return True

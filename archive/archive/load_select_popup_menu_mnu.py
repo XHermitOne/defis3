@@ -13,7 +13,7 @@ import os.path
 from ic.interfaces import icmanagerinterface
 from ic.log import log
 # from ic.log import iclogbrowser
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.dlg import std_dlg
 from ic.utils import filefunc
 from ic.utils import datefunc
@@ -77,13 +77,13 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             labels = [self.getLabelByDBFFilename(filename) for filename in filenames]
 
             if filenames:
-                filename_idx = ic_dlg.getSingleChoiceIdxDlg(None, u'ЗАГРУЗКА', u'Выберите файл загрузки', labels)
+                filename_idx = dlgfunc.getSingleChoiceIdxDlg(None, u'ЗАГРУЗКА', u'Выберите файл загрузки', labels)
                 if filename_idx >= 0:
                     filename = os.path.join(load_doc_dir, filenames[filename_idx])
                     log.info(u'Загрузка документа <%s>' % filename)
                     return filename
             else:
-                ic_dlg.openErrBox(u'ЗАГРУЗКА', u'Файлы списка документов для загрузки не найдены!')
+                dlgfunc.openErrBox(u'ЗАГРУЗКА', u'Файлы списка документов для загрузки не найдены!')
         return None
 
     def getLabelByDBFFilename(self, dbf_filename):
@@ -225,7 +225,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         # Загрузить все данные за указанный год - месяц
         result = load_net_dbf.download_archive_files(arch_year, arch_month)
         if not result:
-            ic_dlg.openWarningBox(u'ЗАГРУЗКА', u'Ошибка загрузки файлов данных архива')
+            dlgfunc.openWarningBox(u'ЗАГРУЗКА', u'Ошибка загрузки файлов данных архива')
         return result
 
     def onLoadRlzDocMenuItemSelected(self, event):

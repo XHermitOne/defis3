@@ -23,7 +23,7 @@
 import wx
 from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 from ic.utils import util
 from ic.components import icwidget
@@ -115,7 +115,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('BusinessObj', 'Document'):
-                ic_dlg.openWarningBox(u'ОШИБКА',
+                dlgfunc.openWarningBox(u'ОШИБКА',
                                     u'Выбранный объект не является бизнес объектом/документом.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK

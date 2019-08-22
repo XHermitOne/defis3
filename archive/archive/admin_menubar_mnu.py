@@ -12,7 +12,7 @@ import os.path
 import ic
 from ic.log import log
 from ic.dlg import std_dlg
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import datefunc
 from ic.utils import filefunc
 # from ic.interfaces import icmanagerinterface
@@ -233,7 +233,7 @@ class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
         log.debug(u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_of_month), str(last_day)))
         tab.del_where(tab.c.doc_date.between(first_day_of_month, last_day))
 
-        ic_dlg.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
+        dlgfunc.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
         event.Skip()
 
     def onClearZtrDocsMenuItemSelected(self, event):
@@ -267,7 +267,7 @@ class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
                                       tab.c.n_doc.ilike(u'ЗТР.%')))
 
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
-        ic_dlg.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
+        dlgfunc.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
         event.Skip()
 
     def onClearMtDocsMenuItemSelected(self, event):
@@ -303,7 +303,7 @@ class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
                                       tab.c.n_doc.ilike(u'МТ.%')))
 
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
-        ic_dlg.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
+        dlgfunc.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
         event.Skip()
 
     def onClearOsDocsMenuItemSelected(self, event):
@@ -340,7 +340,7 @@ class icAdminMenuBarManager(user_menubar_mnu.icUserMenuBarManager):
                                       tab.c.n_doc.ilike(u'ОС.%')))
 
         msg = u'Удаление пакета документов с <%s> по <%s>' % (str(first_day_year), str(last_day_year))
-        ic_dlg.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
+        dlgfunc.openMsgBox(u'УДАЛЕНИЕ', msg + u' успешно завершено')
         event.Skip()
     ###END EVENT BLOCK
 

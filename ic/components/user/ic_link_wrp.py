@@ -31,7 +31,7 @@ from ic.kernel import icobject
 
 from ic.db import icsqlalchemy
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 
 from ic.kernel import io_prnt
@@ -119,7 +119,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in (icsqlalchemy.TABLE_TYPE,):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             try:
                 kernel = glob_functions.getKernel()
@@ -134,7 +134,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
                     link_db_psp = icobject.icObjectPassport(*link_db_psp)
 
                 if my_db_psp != link_db_psp:
-                    ic_dlg.openWarningBox(u'ОШИБКА', u'ВНИМАНИЕ! Связанные таблицы должны находиться в одной БД.')
+                    dlgfunc.openWarningBox(u'ОШИБКА', u'ВНИМАНИЕ! Связанные таблицы должны находиться в одной БД.')
                     return coderror.IC_CTRL_FAILED_IGNORE
             except:
                 log.error(u'Ошибка контроля вводимого значения %s : %s' % (attr, value))

@@ -8,7 +8,7 @@ import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.log import log
 from ic.engine import user_manager
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 from ic.engine import glob_functions
 from ic.engine import icuserpropertydlg
@@ -192,7 +192,7 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
                 if user_res:
                     self.updateData(user_res)
             else:
-                ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Выберите пользователя для редактирования.')
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ', u'Выберите пользователя для редактирования.')
 
             if event:    
                 event.Skip()
@@ -206,12 +206,12 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
         try:
             if values:
                 user_name = values['user']
-                if ic_dlg.openAskBox(u'УДАЛЕНИЕ',
+                if dlgfunc.openAskBox(u'УДАЛЕНИЕ',
                                    u'Удалить пользователя %s?' % user_name):
                     del self._data[user_name]
                     self._init_data(self._data)
             else:
-                ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Выберите пользователя, которого надо удалить.')
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ', u'Выберите пользователя, которого надо удалить.')
                     
             if event:
                 event.Skip()

@@ -78,7 +78,7 @@ import re
 import os.path
 import wx
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 
 from ic.interfaces import resManager
@@ -178,7 +178,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
         Сохранить проект.
         """
         if not self.prj_file_name:
-            self.prj_file_name = ic_dlg.getFileDlg(None, u'Создание проекта',
+            self.prj_file_name = dlgfunc.getFileDlg(None, u'Создание проекта',
                                                   u'Project file (*.pro)|*.pro')
         if self.prj_file_name:
             prj_path = os.path.dirname(self.prj_file_name.strip())

@@ -27,7 +27,7 @@ from ic.PropertyEditor import icDefInf
 
 from ic.bitmap import bmpfunc
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 
 from STD.metastruct import metaitem
@@ -110,7 +110,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('ObjectStorage',):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является объектным хранилищем.', ParentWin_=parent)
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является объектным хранилищем.', ParentWin_=parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

@@ -12,7 +12,7 @@ import wx.gizmos
 from ic.components import icwidget
 from ic.engine import treectrl_manager
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 __version__ = (0, 1, 1, 1)
 
@@ -119,7 +119,7 @@ class icMetaTreeListCtrlProto(wx.gizmos.TreeListCtrl,
             else:
                 msg = u'Не определено хранилище данных метадерева <%s>' % metatree.name
                 log.warning(msg)
-                ic_dlg.openWarningBox(u'ОШИБКА', msg)
+                dlgfunc.openWarningBox(u'ОШИБКА', msg)
         except:
             log.fatal(u'Ошибка построения метадерева <%s> в контроле <%s>' % (metatree.name, self.name))
         return False

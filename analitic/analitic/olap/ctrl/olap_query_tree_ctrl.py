@@ -14,7 +14,7 @@ from wx.lib.agw import flatmenu
 
 from ic.log import log
 from ic.bitmap import bmpfunc
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import filefunc
 
 from ic.engine import treectrl_manager
@@ -318,8 +318,8 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
                 cur_item = self.GetSelection()
             if cur_item:
                 cur_label = self.GetItemText(cur_item)
-                label = ic_dlg.getTextEntryDlg(self, u'ПЕРЕИМЕНОВАНИЕ', u'Наименование',
-                                               cur_label)
+                label = dlgfunc.getTextEntryDlg(self, u'ПЕРЕИМЕНОВАНИЕ', u'Наименование',
+                                                cur_label)
 
                 if label:
                     bmp = None
@@ -395,8 +395,8 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
             if cur_item is None:
                 cur_item = self.GetSelection()
             if cur_item:
-                label = ic_dlg.getTextEntryDlg(self, u'ДОБАВЛЕНИЕ', u'Наименование',
-                                               DEFAULT_NODE_LABEL)
+                label = dlgfunc.getTextEntryDlg(self, u'ДОБАВЛЕНИЕ', u'Наименование',
+                                                DEFAULT_NODE_LABEL)
 
                 if label:
                     bmp = None

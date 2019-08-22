@@ -10,7 +10,7 @@ import wx
 from ic.log import log
 from ic.PropertyEditor import icDefInf
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import util
 from ic.bitmap import bmpfunc
 from ic.components import icwidget
@@ -125,7 +125,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt
             if not ret[0][0] in ('MetaTree', 'Plan'):
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                                 u'Выбранный объект не является объектом описания мета-дерева.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK

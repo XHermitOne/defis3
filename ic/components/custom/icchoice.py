@@ -38,7 +38,7 @@ from ic.components.icwidget import icWidget, SPC_IC_WIDGET
 from ic.utils import coderror
 from ic.components import icwindow
 from ic.kernel import io_prnt
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 
@@ -270,7 +270,7 @@ class icChoice(icWidget, wx.Choice):
             err = self.dataset.Lock()
             
             if err in [1, 2] and rec != self._oldLockReck:
-                ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Запись (%d) заблокирована err=%s' % (rec, str(err)), self.parent)
+                dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Запись (%d) заблокирована err=%s' % (rec, str(err)), self.parent)
                 self._oldLockReck = rec
 
         self.evalSpace['self'] = self

@@ -10,7 +10,7 @@ import os.path
 import datetime
 
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from . import load_net_config
 from ic.utils import smbfunc
 from ic.utils import filefunc
@@ -39,9 +39,9 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
     results = [False] * len(urls)
     try:
         if bProgress:
-            ic_dlg.openProgressDlg(title=u'Загрузка файлов',
-                                   prompt_text=u'Загрузка файлов...',
-                                   min_value=0, max_value=100)
+            dlgfunc.openProgressDlg(title=u'Загрузка файлов',
+                                    prompt_text=u'Загрузка файлов...',
+                                    min_value=0, max_value=100)
 
         for i, url in enumerate(urls):
             smb_results = list()
@@ -53,7 +53,7 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
 
                     for filename in filenames:
                         if bProgress:
-                            ic_dlg.stepProgressDlg(new_prompt_text=u'Загрузка файла <%s>' % filename)
+                            dlgfunc.stepProgressDlg(new_prompt_text=u'Загрузка файла <%s>' % filename)
 
                         # Загрузка из samba ресурса
                         name, ext = os.path.splitext(filename)
@@ -71,7 +71,7 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
 
                     for filename in filenames:
                         if bProgress:
-                            ic_dlg.stepProgressDlg(new_prompt_text=u'Загрузка файла <%s>' % filename)
+                            dlgfunc.stepProgressDlg(new_prompt_text=u'Загрузка файла <%s>' % filename)
 
                         name, ext = os.path.splitext(filename)
                         base_filename = name + ext.upper().replace('.', '_') + dst_file_ext
@@ -84,7 +84,7 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
         log.fatal(u'Ошибка загрузки файлов')
 
     if bProgress:
-        ic_dlg.closeProgressDlg()
+        dlgfunc.closeProgressDlg()
 
     return all(results)
 

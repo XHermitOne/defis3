@@ -12,7 +12,7 @@ import uuid
 
 from ic.components import icwidget
 from ic.utils import ic_res
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 
 from . import filter_constructor_dlg
@@ -200,7 +200,7 @@ class icFilterComboBoxProto(wx.ComboBox):
 
             if new_filter:
                 filter_id = self._genUUID()
-                filter_description = ic_dlg.getTextEntryDlg(self, u'Фильтр',
+                filter_description = dlgfunc.getTextEntryDlg(self, u'Фильтр',
                                                            u'Введите наименование фильтра')
                 new_filter['id'] = filter_id
                 new_filter['description'] = filter_description
@@ -225,7 +225,7 @@ class icFilterComboBoxProto(wx.ComboBox):
             # Если имя не определено удалить выбранный фильтр
             i = self.GetSelection()
             if i > 0:
-                do_del = ic_dlg.openAskBox(u'Удаление', u'Удалить фильтр?')
+                do_del = dlgfunc.openAskBox(u'Удаление', u'Удалить фильтр?')
                 if do_del:
                     del self._filters[i-1]
                     self.Delete(i)

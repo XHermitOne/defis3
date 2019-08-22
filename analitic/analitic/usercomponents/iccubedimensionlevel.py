@@ -8,7 +8,7 @@
 from ic.log import log
 from ic.bitmap import bmpfunc
 from ic.utils import util
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 
 from ic.components import icwidget
@@ -80,9 +80,9 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
     if attr in ('key', 'label_attribute'):
         spc = propEdt.getResource()
         choices = [u''] + [attribute for attribute in spc.get('attributes', [])] if spc.get('attributes', None) else []
-        result = ic_dlg.getSingleChoiceDlg(parent=None, title=u'Аттрибуты',
-                                           prompt_text=u'Выберите аттрибут',
-                                           choices=choices)
+        result = dlgfunc.getSingleChoiceDlg(parent=None, title=u'Аттрибуты',
+                                            prompt_text=u'Выберите аттрибут',
+                                            choices=choices)
         if result == u'':
             return None
         else:

@@ -16,7 +16,7 @@ from ic.log import log
 from ic.imglib import common as imglib
 from ic.utils import filefunc
 from ic.utils import ic_res
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.kernel import icexceptions
 from ic.utils import ic_util
 from ic.utils import impfunc
@@ -246,8 +246,8 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         Новый проект.
         """
         tree_prj = self.getParent()
-        dir_prj_file_name = ic_dlg.getDirDlg(tree_prj, u'Создать проект',
-                                             default_path=filefunc.getRootDir())
+        dir_prj_file_name = dlgfunc.getDirDlg(tree_prj, u'Создать проект',
+                                              default_path=filefunc.getRootDir())
         if dir_prj_file_name:
             prj_name = os.path.basename(dir_prj_file_name)
             new_prj_file_name = os.path.join(dir_prj_file_name, prj_name, prj_name+'.pro')
@@ -354,27 +354,27 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         try:
             result = glob_functions.getKernel().Login(username, password)
         except icexceptions.LoginInvalidException:
-            ic_dlg.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
+            dlgfunc.openMsgBox(u'Вход в систему', u'Неправильный пользователь или пароль. Доступ запрещен.')
         except icexceptions.LoginErrorException:
-            if ic_dlg.openAskBox(u'Вход в систему',
+            if dlgfunc.openAskBox(u'Вход в систему',
                                u'Пользователь уже зарегистрирован в системе. Снять регистрацию пользователя?'):
                 from ic.engine import icusermanager
                 user_mngr = icusermanager.icUserManager()
                 tree_ctrl = self.getParent()
                 pro_file_name = prj_filename
                 if not os.path.exists(pro_file_name):
-                    pro_file_name = ic_dlg.getFileDlg(tree_ctrl,
+                    pro_file_name = dlgfunc.getFileDlg(tree_ctrl,
                                                      u'Удаление регистрационной информации о пользователе из проекта',
-                                                      _('Project file (*.pro)|*.pro'))
+                                                       _('Project file (*.pro)|*.pro'))
                 if pro_file_name:
                     prj_dir = os.path.dirname(os.path.dirname(pro_file_name))
                     if os.path.exists(prj_dir):
                         user_mngr.unregisterUser(prj_dir)
         except icexceptions.LoginDBExclusiveException:
-            ic_dlg.openMsgBox(u'Вход в систему',
+            dlgfunc.openMsgBox(u'Вход в систему',
                             u'БД открыта в монопольном режиме другим пользователем. Вход в систему запрещен.')
         except icexceptions.LoginWorkTimeException:
-            ic_dlg.openMsgBox(u'Вход в систему',
+            dlgfunc.openMsgBox(u'Вход в систему',
                             u'Попытка входа в систему в не регламентированное время пользователем. Вход в систему запрещен.')
         except:
             log.fatal(u'Ошибка регистрации пользователя')
@@ -404,19 +404,19 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         """
         tree_prj = self.getParent()
         if prj_filename is None:
-            prj_filename = ic_dlg.getFileDlg(tree_prj, u'Открыть проект',
+            prj_filename = dlgfunc.getFileDlg(tree_prj, u'Открыть проект',
                                             u'Файл проекта (*.pro)|*.pro',
-                                             default_path=filefunc.getRootDir())
+                                              default_path=filefunc.getRootDir())
 
         if prj_filename and not os.path.exists(prj_filename):
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ!', u'Файл проекта <%s> не найден' % prj_filename)
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ!', u'Файл проекта <%s> не найден' % prj_filename)
             return
 
         if prj_filename and os.path.exists(prj_filename):
             # Проверка тот ли мы проект загрузили
             prj_name, sub_sys_name = self.getPrjSubsys(prj_filename)
             if prj_name != sub_sys_name:
-                ic_dlg.openWarningBox(u'ВНИМАНИЕ!',
+                dlgfunc.openWarningBox(u'ВНИМАНИЕ!',
                                     u'Подключение подсистемы <%s> к проекту <%s>! Все изменения будут утеряны. Подсистема: <%s>, Проект: <%s>!' % (sub_sys_name,
                                     prj_name, sub_sys_name, prj_name), parent=tree_prj)
             self.delMyLocks()   # Удалить блокировки из старого проекта
@@ -628,9 +628,9 @@ class icPrjRoot(ImpNode.icPrjImportSys):
         # По умолчанию выбираем Администратора проекта
         usernames = [user[0] for user in users_description_list]
         selection = usernames.index('admin') if 'admin' in usernames else -1
-        selected_idx = ic_dlg.getSingleChoiceIdxDlg(parent, u'ПОЛЬЗОВАТЕЛЬ',
+        selected_idx = dlgfunc.getSingleChoiceIdxDlg(parent, u'ПОЛЬЗОВАТЕЛЬ',
                                                    u'Выберите пользователя',
-                                                    choices=choices, default_idx=selection)
+                                                     choices=choices, default_idx=selection)
         username = None
         if selected_idx >= 0:
             username = users_description_list[selected_idx][0]

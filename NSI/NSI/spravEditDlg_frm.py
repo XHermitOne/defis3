@@ -20,7 +20,7 @@
 
 import wx
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 from ic.utils import coderror
 
@@ -89,7 +89,7 @@ def onCodControl(evalSpace):
 
         # Проверка, есть ли подкоды
         if old_value and sprav.isSubCodes(old_value):
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Нельзя изменять значение кода. Есть подкоды.')
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Нельзя изменять значение кода. Есть подкоды.')
             return 3, None
 
         try:
@@ -103,7 +103,7 @@ def onCodControl(evalSpace):
             ctrl_ret = coderror.IC_CTRL_FAILED_IGNORE
 
         if ctrl_ret not in [coderror.IC_CTRL_OK,coderror.IC_CTRL_REPL]:
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!', u'Такой код есть уже в справочнике!')
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!', u'Такой код есть уже в справочнике!')
             return ctrl_ret, None
 
         # Проверяем по связанному справочнику, если он есть
@@ -230,7 +230,7 @@ def onSelectChangedSpravTree(evalSpace):
         # Внесено изменение
         global is_changed
         if is_changed:
-            if ic_dlg.getAskDlg(u'ВНИМАНИЕ!',
+            if dlgfunc.getAskDlg(u'ВНИМАНИЕ!',
                                u'В справочник были внесены изменения. Сохранить?') == wx.YES:
                 is_changed = False
                 onMouseClickSaveTool(evalSpace)

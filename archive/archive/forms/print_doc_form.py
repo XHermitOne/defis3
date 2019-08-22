@@ -17,7 +17,7 @@ from archive.forms import edit_doc_form
 from archive.forms import scheme_doc_form
 from ic import bmpfunc
 from ic import log
-from ic import ic_dlg
+from ic import dlgfunc
 from ic.utils import ic_time
 import ic
 from archive.forms import search_doc_form
@@ -97,7 +97,7 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
         """
         printer_info = ic_printer_dlg.choice_printer_dlg(self)
         if printer_info is None:
-            ic_dlg.openWarningBox(u'ВНИМАНИЕ', u'Не выбран принтер для печати. Печать документов отменена.')
+            dlgfunc.openWarningBox(u'ВНИМАНИЕ', u'Не выбран принтер для печати. Печать документов отменена.')
             event.Skip()
             return
 

@@ -9,7 +9,7 @@
 import hashlib
 import wx
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 from ic.log import log
 
@@ -161,9 +161,9 @@ class icPasswordEditDialog(wx.Dialog):
         password1_md5 = hashlib.md5(password1_txt.encode()).hexdigest()
         password2_md5 = hashlib.md5(password2_txt.encode()).hexdigest()
         if password1_md5 != password2_md5:
-            ic_dlg.openMsgBox(u'ВНИМАНИЕ!',
+            dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
                             u'Введенный пароль и подтверждение на совпадают. Введите еще раз.',
-                              ParentWin_=self)
+                               ParentWin_=self)
             self._password_edit_panel._password_edit1.SetValue('')
             self._password_edit_panel._password_edit2.SetValue('')
         else:

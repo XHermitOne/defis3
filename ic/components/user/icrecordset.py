@@ -30,7 +30,7 @@ from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 import ic.db.icsqlalchemydataset as parentModule
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 
 #   Тип компонента
@@ -102,7 +102,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Table',):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является таблицей.')
                 return coderror.IC_CTRL_FAILED_IGNORE
             return ret
 

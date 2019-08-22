@@ -30,7 +30,7 @@ from ic.PropertyEditor import icDefInf
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.db import icsqlalchemy
 from ic.db import icdb
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.engine import glob_functions
 from ic.log import log
@@ -203,7 +203,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt
             ctrl_types = icdb.DB_TYPES + [icsqlalchemy.TABLE_TYPE, None]
             if ret[0][0] not in ctrl_types:
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Объект не БД типа.', parent)
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Объект не БД типа.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

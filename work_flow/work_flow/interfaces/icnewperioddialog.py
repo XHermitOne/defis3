@@ -93,7 +93,7 @@ class icNewPeriodDialog(icobjectinterface.icObjectInterface):
         """
         try:
             if not Result_['subj_cod']:
-                ic.ic_dlg.openMsgBox(u'Внимание!',
+                ic.dlgfunc.openMsgBox(u'Внимание!',
                     u'Требуется выбор субъекта', ParentWin_=self.getObject())
                 return False
             return True

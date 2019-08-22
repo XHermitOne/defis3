@@ -30,7 +30,7 @@ from ic.PropertyEditor import icDefInf
 import ic.engine.main_window as ic_win
 from ic.engine import glob_functions
 from ic.utils import coderror
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
 #   Тип компонента
@@ -123,7 +123,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         if ret:
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Panel', 'ScrolledWindow', 'Notebook', 'SplitterWindow'):
-                ic_dlg.openWarningBox(u'ОШИБКА', u'Выбранный объект не является главным окном.', parent)
+                dlgfunc.openWarningBox(u'ОШИБКА', u'Выбранный объект не является главным окном.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

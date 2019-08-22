@@ -10,7 +10,7 @@ import wx
 import wx.propgrid
 
 from ic.log import log
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.utils import ic_time
 from ic import bmpfunc
 from ic.utils import ic_str
@@ -686,7 +686,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         if rec_idx != -1:
             record = self._list_ctrl_dataset[rec_idx]
             del_code = record['cod']
-            if ic_dlg.openAskBox(u'УДАЛЕНИЕ', u'Удаление записи справочника <%s>. Вы уверены?' % record['name']):
+            if dlgfunc.openAskBox(u'УДАЛЕНИЕ', u'Удаление записи справочника <%s>. Вы уверены?' % record['name']):
                 self.sprav.delRec(del_code)
                 self.del_sprav_tree_item(self.sprav_treeCtrl.GetSelection(),
                                          del_code)
@@ -722,7 +722,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
             else:
                 msg = u'Код <%s> уже присутствует в справочнике <%s>' % (add_rec['cod'], self.sprav.getDescription())
                 log.warning(msg)
-                ic_dlg.openWarningBox(u'ОШИБКА', msg)
+                dlgfunc.openWarningBox(u'ОШИБКА', msg)
             
         event.Skip()
 
@@ -740,7 +740,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
                     self.search_codes.sort()
                     self.search_code_idx = 0                    
                 else:
-                    ic_dlg.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не найдены записи, соответствующие строке поиска')
+                    dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не найдены записи, соответствующие строке поиска')
                     do_find = False
                 self.not_actual_search = False
             else:
@@ -754,7 +754,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
                 find_code = self.search_codes[self.search_code_idx]
                 self.select_sprav_tree_item(find_code)
         else:
-            ic_dlg.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не выбрана строка поиска')
+            dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не выбрана строка поиска')
             
         event.Skip()        
 
@@ -815,7 +815,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
             self.selectItem_list_ctrl(self.recs_listCtrl, find_row)
         else:
             msg = u'Не найдено поисковое слово. Начать поиск с начала?'
-            if ic_dlg.openAskBox(u'ВНИМАНИЕ', msg):
+            if dlgfunc.openAskBox(u'ВНИМАНИЕ', msg):
                 self.findWordInRecordsListCtrl(-1)
 
     def onFindToolClicked(self, event):
@@ -826,7 +826,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         if find_txt:
             self.findWordInRecordsListCtrl()
         else:
-            ic_dlg.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не выбрана строка поиска')
+            dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ', u'Не выбрана строка поиска')
             
         event.Skip()        
         

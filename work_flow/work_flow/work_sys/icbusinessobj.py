@@ -816,7 +816,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             return False
 
         # Определить можно ли удалить объект
-        is_del = (not ask) or (ask and ic.ic_dlg.openAskBox(u'УДАЛЕНИЕ ОБЪЕКТА', u'Удалить текущий объект?'))
+        is_del = (not ask) or (ask and ic.dlgfunc.openAskBox(u'УДАЛЕНИЕ ОБЪЕКТА', u'Удалить текущий объект?'))
         if is_del:
             # Заполнение значений реквизитов через контекст
             del_values = self.loadRequisiteData(UUID_)

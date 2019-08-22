@@ -11,7 +11,7 @@ import datetime
 from ic.interfaces import icmanagerinterface
 from ic.log import log
 from ic.log import iclogbrowser
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 from archive.convert import rlz_imp_manager
 from archive.convert import ztr_imp_manager

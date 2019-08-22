@@ -12,7 +12,7 @@ import shutil
 
 from ic.log import log
 from ic.log import log_console
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.dlg import wait_box
 
 
@@ -71,7 +71,7 @@ def parse_cf_file(cf_filename, cf_dirname=None, txt_ctrl=None):
     try:
         if not os.path.exists(cf_filename):
             log.warning(u'ERROR! CF file <%s> not exists!' % cf_filename)
-            ic_dlg.openWarningBox(u'ОШИБКА', u'CF файл <%s> не найден!' % cf_filename)
+            dlgfunc.openWarningBox(u'ОШИБКА', u'CF файл <%s> не найден!' % cf_filename)
             return
         else:
             if cf_dirname is None:
@@ -80,8 +80,8 @@ def parse_cf_file(cf_filename, cf_dirname=None, txt_ctrl=None):
                 cf_dirname = CUR_CF_DIR
 
         if os.path.exists(cf_dirname):
-            if not ic_dlg.openAskBox(Title_=u'ВНИМАНИЕ',
-                                     Text_=u'Папка <%s> распарсенного файла конфигурации уже существует. Заменить?' % cf_dirname):
+            if not dlgfunc.openAskBox(Title_=u'ВНИМАНИЕ',
+                                      Text_=u'Папка <%s> распарсенного файла конфигурации уже существует. Заменить?' % cf_dirname):
                 return
             # Удалить папку конфигурации, если она существует
             shutil.rmtree(cf_dirname, True)
@@ -91,7 +91,7 @@ def parse_cf_file(cf_filename, cf_dirname=None, txt_ctrl=None):
         v8unpack_filename = os.path.abspath(v8unpack_filename)
         if not os.path.exists(v8unpack_filename):
             log.warning(u'ERROR! V8Unpack file <%s> not exists!' % v8unpack_filename)
-            ic_dlg.openWarningBox(u'ОШИБКА', u'V8Unpack файл <%s> не найден!' % v8unpack_filename)
+            dlgfunc.openWarningBox(u'ОШИБКА', u'V8Unpack файл <%s> не найден!' % v8unpack_filename)
             return
 
         run_parser(v8unpack_filename, cf_filename, cf_dirname, txt_ctrl)

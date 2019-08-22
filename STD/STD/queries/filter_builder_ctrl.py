@@ -10,7 +10,7 @@ import wx
 import wx.adv
 import wx.lib.platebtn
 
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.bitmap import bmpfunc
 from ic.components import icEvents
 from ic.log import log
@@ -130,7 +130,7 @@ class icCustomChoice(icCustomComboCtrl):
         Обработчик нажатия на кнопку расширенного выбора из списка.
         """
         if self.choice:
-            idx = ic_dlg.getSingleChoiceIdxDlg(self, u'ВЫБОР',
+            idx = dlgfunc.getSingleChoiceIdxDlg(self, u'ВЫБОР',
                                               u'Выберите один из следующих элементов', self.choice)
             self.choice_idx = idx
             if idx >= 0:

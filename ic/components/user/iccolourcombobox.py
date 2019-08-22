@@ -27,7 +27,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -175,7 +175,7 @@ class icColourComboBox(icwidget.icWidget, wx.ComboCtrl):
         if self.GetValue():
             colour = wx.Colour(*eval(self.GetValue()))
         
-        colour = ic_dlg.getColorDlg(self, u'Выбор цвета', colour)
+        colour = dlgfunc.getColorDlg(self, u'Выбор цвета', colour)
 
         self.SetValue(str(colour))
         self.SetBackgroundColour(colour)

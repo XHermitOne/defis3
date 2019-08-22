@@ -43,7 +43,7 @@ from ic.utils import util
 import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-from ic.dlg import ic_dlg
+from ic.dlg import dlgfunc
 from ic.log import log
 from ic.engine import treectrl_manager
 from ic.engine import listctrl_manager
@@ -688,7 +688,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
             self._last_find_col_idx = find_col_idx + 1
             self.SelectItem(item)
         else:
-            if ic_dlg.getAskDlg(u'ПОИСК', u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
+            if dlgfunc.getAskDlg(u'ПОИСК', u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
                 # Начать поиск сначала
                 find_result = self.findItemColumnString(string, None, columns, 0, bILike)
                 if find_result is not None:
@@ -803,7 +803,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
         if find_item is not None:
             self.SelectItem(find_item)
         else:
-            if ic_dlg.getAskDlg(u'ПОИСК', u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
+            if dlgfunc.getAskDlg(u'ПОИСК', u'Строка <%s> не найдена. Начать поиск сначала?' % string) == wx.YES:
                 # Начать поиск сначала
                 find_item = self.findItemString(string, None, bILike)
                 if find_item is not None:
