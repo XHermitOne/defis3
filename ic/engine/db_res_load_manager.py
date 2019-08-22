@@ -91,7 +91,7 @@ class icDBResLoadManager(object):
         self.ic = ic
         self.dbstore = None
         self.sysdb = None
-        ic.resource_loader = self
+        ic.RESOURCE_LOADER = self
         self.typdb = typdb = ic.load_ini_param('SYSDB', 'DB_ENGINE')
         if typdb == 'PostgreSQLDB':
             self.init_ini_auth()

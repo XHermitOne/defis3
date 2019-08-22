@@ -40,7 +40,7 @@ from .. import pivot_dataframe_manager
 from ic.components import icwidget
 from ic.utils import filefunc
 from ic.log import log
-from ic.utils import ini
+from ic.utils import inifunc
 from ic.utils import system
 from ic.utils import strfunc
 
@@ -390,7 +390,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         else:
             log.warning(u'Не определен файл описания кубов OLAP сервера <%s>' % self.getName())
 
-        return ini.Dict2INI(ini_content, ini_filename, rewrite=bReWrite)
+        return inifunc.Dict2INI(ini_content, ini_filename, rewrite=bReWrite)
 
     def save_ini(self, ini_filename=None, bReWrite=True):
         """

@@ -609,11 +609,11 @@ def saveOperateYear(year=None):
     if year is None:
         year = getOperateYear()
 
-    from ic.utils import ini
+    from ic.utils import inifunc
     prj_path = filefunc.getPrjProfilePath()
     ini_basename = getPrjName() + '.ini'
     ini_filename = os.path.join(prj_path, ini_basename)
-    ini.saveParamINI(ini_filename, 'SETTINGS', 'operate_year', year)
+    inifunc.saveParamINI(ini_filename, 'SETTINGS', 'operate_year', year)
 
 
 def setOperateYear(year=None):
@@ -626,11 +626,11 @@ def setOperateYear(year=None):
     """
     is_save = True
     if year is None:
-        from ic.utils import ini
+        from ic.utils import inifunc
         prj_path = filefunc.getPrjProfilePath()
         ini_basename = getPrjName() + '.ini'
         ini_filename = os.path.join(prj_path, ini_basename)
-        operate_year = ini.loadParamINI(ini_filename, 'SETTINGS', 'operate_year')
+        operate_year = inifunc.loadParamINI(ini_filename, 'SETTINGS', 'operate_year')
         if not operate_year:
             import datetime
             today = datetime.date.today()

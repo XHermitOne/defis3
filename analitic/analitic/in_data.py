@@ -19,7 +19,7 @@ from ic.dlg import dlgfunc
 from ic.engine import glob_functions
 from ic.utils import filefunc
 from ic.utils import toolfunc
-from ic.utils import ini
+from ic.utils import inifunc
 from ic.utils import resource
 # import NSI.spravfunc as nsi
 
@@ -43,7 +43,7 @@ def getInputDataDir():
     """
     prj_path = glob_functions.getVar('SYS_RES')
     ini_file = os.path.join(prj_path, os.path.basename(prj_path)+'.ini')
-    return ini.loadParamINI(ini_file, 'SETTINGS', 'input_data_dir')
+    return inifunc.loadParamINI(ini_file, 'SETTINGS', 'input_data_dir')
 
 
 def setInputDataDir(InputDataDir_):
@@ -55,7 +55,7 @@ def setInputDataDir(InputDataDir_):
     if InputDataDir_ and os.path.isdir(InputDataDir_):
         prj_path = glob_functions.getVar('SYS_RES')
         ini_file = os.path.join(prj_path, os.path.basename(prj_path)+'.ini')
-        return ini.saveParamINI(ini_file, 'SETTINGS', 'input_data_dir', InputDataDir_)
+        return inifunc.saveParamINI(ini_file, 'SETTINGS', 'input_data_dir', InputDataDir_)
 
 
 def loadInputData(InputDataDir_=None):

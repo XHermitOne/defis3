@@ -17,7 +17,7 @@ from ic.utils import filefunc
 from ic.utils import execfunc
 from ic.install import InstallWiz as install_wiz
 from ic.bitmap import icimagelibrarybrowser
-from ic.utils import ini
+from ic.utils import inifunc
 from ic.bitmap import bmpfunc
 from ic.dlg import dlgfunc
 from ic.log import log
@@ -62,7 +62,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         prj_tree_ctrl.Bind(wx.EVT_MENU, self.onOpen, id=self.openID)
         
         # Последний открытый проект
-        pth = ini.loadParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths')
+        pth = inifunc.loadParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths')
         if pth:
             self.lastOpenID = wx.NewId()
             item = flatmenu.FlatMenuItem(self, self.lastOpenID,
@@ -72,7 +72,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
             prj_tree_ctrl.Bind(wx.EVT_MENU, self.onLastOpen, id=self.lastOpenID)
 
         # Список открытых ранее проектов
-        prj_paths = ini.loadParamINIValue(PRJ_INI_FILE, 'PRJ', 'OpenedPaths')
+        prj_paths = inifunc.loadParamINIValue(PRJ_INI_FILE, 'PRJ', 'OpenedPaths')
         if prj_paths:
             prj_submenu = flatmenu.FlatMenu()
             for prj_path in prj_paths:
@@ -276,19 +276,19 @@ class icMenuRootNode(flatmenu.FlatMenu):
         Сохранить в INI файле путь открытого проекта.
         @param prj_path: Путь открытого проекта.
         """
-        ini.saveParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths', prj_path)
-        prj_paths = ini.loadParamINIValue(PRJ_INI_FILE, 'PRJ', 'OpenedPaths')
+        inifunc.saveParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths', prj_path)
+        prj_paths = inifunc.loadParamINIValue(PRJ_INI_FILE, 'PRJ', 'OpenedPaths')
         if not prj_paths:
             prj_paths = list()
         if prj_path not in prj_paths:
             prj_paths.append(prj_path)
-        ini.saveParamINI(PRJ_INI_FILE, 'PRJ', 'OpenedPaths', prj_paths)
+        inifunc.saveParamINI(PRJ_INI_FILE, 'PRJ', 'OpenedPaths', prj_paths)
 
     def onLastOpen(self, event):
         """
         Открыть последний открытый проект.
         """
-        path = ini.loadParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths')
+        path = inifunc.loadParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths')
         node = self._Parent
         node.openPrj(path)
         # Обновление дерева проектов

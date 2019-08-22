@@ -14,7 +14,7 @@ import ic.interfaces.icobjectinterface as icobjectinterface
 
 from ic.dlg import dlgfunc
 from ic.utils import filefunc
-from ic.utils import ini
+from ic.utils import inifunc
 from ic.bitmap import bmpfunc
 from ic.bitmap import icimglib
 from ic.log import log
@@ -254,7 +254,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
             self._ini_file = ini_filename
         
         if self._ini_file:
-            img_dir = ini.loadParamINI(self._ini_file, 'IMAGES', 'img_dir')
+            img_dir = inifunc.loadParamINI(self._ini_file, 'IMAGES', 'img_dir')
             self.setImgDir(img_dir)
         
     def saveImgDir(self, ini_filename=None):
@@ -266,7 +266,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
         
         if self._ini_file:
             if self._img_dir:
-                return ini.saveParamINI(self._ini_file, 'IMAGES', 'img_dir', self._img_dir)
+                return inifunc.saveParamINI(self._ini_file, 'IMAGES', 'img_dir', self._img_dir)
         return None
         
     ###BEGIN EVENT BLOCK

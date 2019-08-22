@@ -12,7 +12,7 @@ import wx
 from . import uprint_dlg
 from ic.log import log
 from ic.utils import filefunc
-from ic.utils import ini
+from ic.utils import inifunc
 from ic.utils import printerfunc
 
 __version__ = (0, 1, 1, 1)
@@ -189,7 +189,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
         if filename is None:
             filename = self.genOptFileName()
 
-        ini_dict = ini.INI2Dict(filename)
+        ini_dict = inifunc.INI2Dict(filename)
         if ini_dict:
             self.printer = ini_dict['OPTIONS'].get('printer', None)
             self.size = ini_dict['OPTIONS'].get('size', None)
@@ -215,7 +215,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
             filename = self.genOptFileName()
 
         ini_dict = self.getOptions()
-        ini.Dict2INI(ini_dict, filename)
+        inifunc.Dict2INI(ini_dict, filename)
 
     def showPrintOptions(self):
         """

@@ -14,14 +14,13 @@ import os.path
 # Импортируем исключения ядра
 import ic.utils.impfunc
 from ic.kernel.icexceptions import *
-# from ic.kernel import io_prnt
 
 from ic.utils import modefunc        # Режимы работы
 from ic.utils import coderror       # Коды ошибок
 from ic.dlg import dlgfunc           # Диалоговые функции
 from ic.bitmap import bmpfunc        # Функции работы с образами
 from ic.utils import datetimefunc        # Функции работы с датой/временем
-from ic.utils import ini
+from ic.utils import inifunc
 from ic.log import log
 from ic.utils import util
 
@@ -39,9 +38,11 @@ __version__ = (0, 1, 1, 1)
 # Copyright notice string
 __copyright__ = u'Copyright (c) 2002, Kolchanov Alexander xhermitone@gmail.com'
 
-ini_file = None
+# Файл настроек
+INI_FILE = None
+
 # Загрузчик ресурсов
-resource_loader = None
+RESOURCE_LOADER = None
 
 
 def set_log_prj(prj_path):
@@ -62,24 +63,24 @@ def set_ini_file(prj_path):
     """
     Устанавливает имя ini файла проекта.
     """
-    global ini_file
+    global INI_FILE
     prj_path = os.path.normpath(prj_path)
-    ini_file = os.path.join(prj_path, '%s.ini' % prj_path.split('/')[-2])
-    log.info('SET INI FILE VARIABLE ini_file=%s' % ini_file)
+    INI_FILE = os.path.join(prj_path, '%s.ini' % prj_path.split('/')[-2])
+    log.info('SET INI FILE VARIABLE INI_FILE=%s' % INI_FILE)
 
 
 def load_ini_param(section, par):
-    if ini_file and os.path.isfile(ini_file):
-        return ini.loadParamINI(ini_file, section, par)
+    if INI_FILE and os.path.isfile(INI_FILE):
+        return inifunc.loadParamINI(INI_FILE, section, par)
     else:
-        log.info('(!) INI File [%s] not found' % ini_file)
+        log.info('(!) INI File [%s] not found' % INI_FILE)
 
 
 def get_loader():
-    global resource_loader
-    if not resource_loader:
-        resource_loader = getVar('LOADER')
-    return resource_loader
+    global RESOURCE_LOADER
+    if not RESOURCE_LOADER:
+        RESOURCE_LOADER = getVar('LOADER')
+    return RESOURCE_LOADER
 
 
 def Login(user, passw, path, runtime_mode=False):

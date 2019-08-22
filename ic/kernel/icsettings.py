@@ -12,7 +12,7 @@ import os
 import os.path
 
 from ic.utils import modefunc
-from ic.utils import ini
+from ic.utils import inifunc
 from ic.utils import execfunc
 from ic.engine import glob_functions
 from ic.log import log
@@ -36,7 +36,7 @@ def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
         prj_name = glob_functions.getVar('PrjName')
         if prj_dir and prj_name:
             prj_ini_file_name = os.path.join(prj_dir, prj_name+'.ini')
-            prj_settings = ini.INI2Dict(prj_ini_file_name)
+            prj_settings = inifunc.INI2Dict(prj_ini_file_name)
     else:    
         if ProjectName_ is None:
             prj_settings = glob_functions.getSettings().THIS.get()
@@ -166,7 +166,7 @@ class icPrjDotUse(icSettingsDotUsePrototype):
         Функция получения значения.
         """
         ini_file_name = self._get_ini_file_name()
-        return ini.INI2Dict(ini_file_name)
+        return inifunc.INI2Dict(ini_file_name)
     
     def set(self, value):
         """
@@ -175,7 +175,7 @@ class icPrjDotUse(icSettingsDotUsePrototype):
         """
         if isinstance(value, dict):
             ini_file_name = self._get_ini_file_name()
-            return ini.Dict2INI(value, ini_file_name, True)
+            return inifunc.Dict2INI(value, ini_file_name, True)
         return None
 
     def edit(self):
@@ -218,7 +218,7 @@ class icSectionDotUse(icSettingsDotUsePrototype):
         Функция получения значения.
         """
         ini_file_name = self._get_ini_file_name()
-        settings_dict = ini.INI2Dict(ini_file_name)
+        settings_dict = inifunc.INI2Dict(ini_file_name)
         if self._cur_settings_list[1] in settings_dict:
             return settings_dict[self._cur_settings_list[1]]
         return None
@@ -230,9 +230,9 @@ class icSectionDotUse(icSettingsDotUsePrototype):
         """
         if isinstance(value, dict):
             ini_file_name = self._get_ini_file_name()
-            settings_dict = ini.INI2Dict(ini_file_name)
+            settings_dict = inifunc.INI2Dict(ini_file_name)
             settings_dict[self._cur_settings_list[1]] = value
-            return ini.Dict2INI(settings_dict, ini_file_name, True)
+            return inifunc.Dict2INI(settings_dict, ini_file_name, True)
         return None
 
 
@@ -253,7 +253,7 @@ class icParamDotUse(icSettingsDotUsePrototype):
         юникодными строками, поэтому все строки автоматически приводим к юникоду.
         """
         ini_file_name = self._get_ini_file_name()
-        value = ini.loadParamINI(ini_file_name, self._cur_settings_list[1], self._cur_settings_list[2])
+        value = inifunc.loadParamINI(ini_file_name, self._cur_settings_list[1], self._cur_settings_list[2])
         value = u'' if value is None else value
         # value = unicode(value, ini.DEFAULT_ENCODE) if isinstance(value, str) else value
         return value
@@ -264,4 +264,4 @@ class icParamDotUse(icSettingsDotUsePrototype):
         @param value: Сохраняемое значение.
         """
         ini_file_name = self._get_ini_file_name()
-        return ini.saveParamINI(ini_file_name, self._cur_settings_list[1], self._cur_settings_list[2], value)
+        return inifunc.saveParamINI(ini_file_name, self._cur_settings_list[1], self._cur_settings_list[2], value)

@@ -13,7 +13,7 @@ import os.path
 
 from . import filefunc
 from . import lock
-from . import ini
+from . import inifunc
 from . import modefunc
 from ic.log import log
 
@@ -65,15 +65,15 @@ class icRegUserJournal:
         """
         Последний зарегестрированный пользователь.
         """
-        return ini.loadParamINI(self._journal_file_name, 'REG_LAST_USER',
-                                self.getComputerName())
+        return inifunc.loadParamINI(self._journal_file_name, 'REG_LAST_USER',
+                                    self.getComputerName())
             
     def getRegUserList(self):
         """
         Зарегестированные на текущей машине полизовательские имена.
         """
-        param = ini.loadParamINI(self._journal_file_name, 'REG_USER_LIST',
-                                 self.getComputerName())
+        param = inifunc.loadParamINI(self._journal_file_name, 'REG_USER_LIST',
+                                     self.getComputerName())
         if isinstance(param, str) and bool(param):
             return eval(param)
         return []
@@ -108,15 +108,15 @@ class icRegUserJournal:
 
             if UserName_ not in user_list:
                 user_list.append(UserName_)
-            ini.saveParamINI(self._journal_file_name, 'REG_USER_LIST',
-                             host_name, str(user_list))
+            inifunc.saveParamINI(self._journal_file_name, 'REG_USER_LIST',
+                                 host_name, str(user_list))
             # Прописать текущего пользователя как последнего зарегестрированного
-            ini.saveParamINI(self._journal_file_name, 'REG_LAST_USER',
-                             host_name, str(UserName_))
+            inifunc.saveParamINI(self._journal_file_name, 'REG_LAST_USER',
+                                 host_name, str(UserName_))
             
             # Прописать машину,  юзеря и время входа в систему
-            result = ini.saveParamINI(self._journal_file_name, 'CURRENT_USERS',
-                                      UserName_, str(tuple(full_start_param)))
+            result = inifunc.saveParamINI(self._journal_file_name, 'CURRENT_USERS',
+                                          UserName_, str(tuple(full_start_param)))
                 
             # Указать в журнале текущего пользователя
             self.setCurUser(UserName_)
@@ -142,8 +142,8 @@ class icRegUserJournal:
                 else:
                     if modefunc.isDebugMode():
                         log.info(u'Снятие регистрации пользовтеля %s.' % cur_username)
-                return ini.delParamINI(self._journal_file_name, 'CURRENT_USERS',
-                                       cur_username)
+                return inifunc.delParamINI(self._journal_file_name, 'CURRENT_USERS',
+                                           cur_username)
             return True
         except:
             log.fatal(u'Ошибка удаления пользователя из журнала <%s>' % self._journal_file_name)
@@ -155,7 +155,7 @@ class icRegUserJournal:
         """
         try:
             if os.path.exists(self._journal_file_name):
-                return ini.getParamCountINI(self._journal_file_name, 'CURRENT_USERS')
+                return inifunc.getParamCountINI(self._journal_file_name, 'CURRENT_USERS')
             return 0
         except:
             log.fatal(u'Ошибка определения количества текущих пользователей системы. Журанал <%s>' % self._journal_file_name)
@@ -166,7 +166,7 @@ class icRegUserJournal:
         Имена текущих зарегистрированных пользователей.
         """
         try:
-            return ini.getParamNamesINI(self._journal_file_name, 'CURRENT_USERS')
+            return inifunc.getParamNamesINI(self._journal_file_name, 'CURRENT_USERS')
         except:
             log.fatal(u'Ошибка определения имен текущих пользователей системы. Журнал <%s>' % self._journal_file_name)
             return None
@@ -183,7 +183,7 @@ class icRegUserJournal:
         @param UserName_: Имя пользователя.
         """
         try:
-            return eval(ini.loadParamINI(self._journal_file_name,
+            return eval(inifunc.loadParamINI(self._journal_file_name,
                                          'CURRENT_USERS', UserName_))
         except:
             log.fatal(u'Ошибка определения параметров запуска пользователя <%s>. Журнал <%s>' % (UserName_,

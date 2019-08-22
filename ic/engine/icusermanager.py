@@ -13,7 +13,7 @@ from ic.dlg import dlgfunc
 from ic.utils import filefunc
 from ic.utils import util
 from ic.utils import resfunc
-from ic.utils import ini
+from ic.utils import inifunc
 from ic.log import log
 from ic.bitmap import bmpfunc
 
@@ -130,7 +130,7 @@ class icUserManager(object):
         Открыть окно редактирования пользователей.
         """
         # Если ресурс уже не заблокирован
-        rl = ic.resource_loader
+        rl = ic.RESOURCE_LOADER
         path = path or os.path.join(glob_functions.getVar('PRJ_DIR'), 'users.acc')
         if not rl.is_lock_res(path):
             # Заблокировать ресурс
@@ -253,7 +253,7 @@ class icUserManager(object):
             reg_user_journal_file_name = os.path.join(cur_prj_dir,
                                                       'log', 'reg_user_journal.ini')
             if os.path.exists(reg_user_journal_file_name):
-                reg_user_journal = ini.INI2Dict(reg_user_journal_file_name)
+                reg_user_journal = inifunc.INI2Dict(reg_user_journal_file_name)
                 if reg_user_journal and 'CURRENT_USERS' in reg_user_journal:
                     users = [(True, usr) for usr in reg_user_journal['CURRENT_USERS'].keys()]
                     parent_win = glob_functions.getMainWin()
@@ -269,8 +269,8 @@ class icUserManager(object):
                             del reg_user_journal['CURRENT_USERS']
                         print(reg_user_journal)
                         # Сохранить изменения
-                        return ini.Dict2INI(reg_user_journal,
-                                            reg_user_journal_file_name, rewrite=True)
+                        return inifunc.Dict2INI(reg_user_journal,
+                                                reg_user_journal_file_name, rewrite=True)
         except:
             log.fatal(u'Ошибка в функции управления регистрационной информацией пользователей.')
         return False
@@ -304,9 +304,9 @@ def test():
 
     if ic.Login('test', '', prj_dir):
         try:
-            print(ic.resource_loader.dbstore)
-            ic.resource_loader.save_res('c:\\defis\\Registr/Registr/users1.acc', res)
-            res1 = ic.resource_loader.load_res('D:\\defis\Registr\\Registr/users1.acc')
+            print(ic.RESOURCE_LOADER.dbstore)
+            ic.RESOURCE_LOADER.save_res('c:\\defis\\Registr/Registr/users1.acc', res)
+            res1 = ic.RESOURCE_LOADER.load_res('D:\\defis\Registr\\Registr/users1.acc')
             user_mngr = icUserManager()
             user_mngr.edit(form, False)
 
