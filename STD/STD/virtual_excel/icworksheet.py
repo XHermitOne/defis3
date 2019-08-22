@@ -2,26 +2,24 @@
 # -*- coding: utf-8 -*-
 
 import copy
-import sys
-
-from . import icprototype
-from . import icrange
-from . import paper_size
-from . import config
+# import sys
 
 try:
-    # Если Virtual Excel работает в окружении ic
+    from . import icprototype
+    from . import icrange
+    from . import paper_size
+    from . import config
     from . import icexceptions
 except ImportError:
-    # Если Virtual Excel работает в окружении icReport
-    from ic.std import icexceptions
+    # Для запуска тестов
+    import icprototype
+    import icrange
+    import paper_size
+    import config
+    import icexceptions
 
-try:
-    from ic.log import log
-except:
-    from ic.std.log import log
 
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 2, 1)
 
 
 class icVWorksheet(icprototype.icVPrototype):
@@ -45,16 +43,16 @@ class icVWorksheet(icprototype.icVPrototype):
         # ВНИМАНИЕ! Кэшируется для увеличения производительности
         self._table = None
 
-    def _is_worksheets_name(self, Worksheets_, Name_):
+    def _is_worksheets_name(self, worksheets, name):
         """
         Существуют листы с именем name?
         """
-        for sheet in Worksheets_:
+        for sheet in worksheets:
             if not isinstance(sheet['Name'], str):
-                name = str(sheet['Name'])   # 'utf-8')
+                sheet_name = str(sheet['Name'])   # 'utf-8')
             else:
-                name = sheet['Name']
-            if name == Name_:
+                sheet_name = sheet['Name']
+            if sheet_name == name:
                 return True
         return False
 
@@ -174,7 +172,7 @@ class icVWorksheet(icprototype.icVPrototype):
                 return n_copies
         return None
 
-    def setPrintNumberofCopies(self, NumberofCopies_=1):
+    def setPrintNumberofCopies(self, number_of_copies=1):
         """
         Количество копий припечати листа.
         """
@@ -182,40 +180,40 @@ class icVWorksheet(icprototype.icVPrototype):
         if options:
             print_section = options.getPrint()
             if print_section:
-                return print_section.setNumberofCopies(NumberofCopies_)
+                return print_section.setNumberofCopies(number_of_copies)
         return False
 
-    def clone(self, NewName_):
+    def clone(self, new_name):
         """
         Создать клон листа и добавить его в книгу.
         param new_name: Новое имя листа.
         """
         new_attributes = copy.deepcopy(self._attributes)
-        new_attributes['Name'] = NewName_
+        new_attributes['Name'] = new_name
 
         new_worksheet = self._parent.createWorksheet()
         new_worksheet.update_attributes(new_attributes)
         return new_worksheet
 
-    def delColumn(self, Idx_=-1):
+    def delColumn(self, idx=-1):
         """
         Удалить колонку.
         """
-        return self.getTable().delColumn(Idx_)
+        return self.getTable().delColumn(idx)
 
-    def delRow(self, Idx_=-1):
+    def delRow(self, idx=-1):
         """
         Удалить строку.
         """
-        return self.getTable().delRow(Idx_)
+        return self.getTable().delRow(idx)
 
-    def getColumns(self, iStartIDX=0, iStopIDX=None):
+    def getColumns(self, start_idx=0, stop_idx=None):
         """
         Список объектов колонок.
-        @param iStartIDX: Индекс первой колонки. По умолчанию с первой.
-        @param iStopIDX: Индекс последней колонки. По умолчанию до последней.
+        @param start_idx: Индекс первой колонки. По умолчанию с первой.
+        @param stop_idx: Индекс последней колонки. По умолчанию до последней.
         """
-        return self.getTable().getColumns(iStartIDX, iStopIDX)
+        return self.getTable().getColumns(start_idx, stop_idx)
 
     def getPageBreaks(self):
         """
@@ -236,36 +234,6 @@ class icVWorksheet(icprototype.icVPrototype):
         page_breaks = icVPageBreaks(self)
         attrs = page_breaks.create()
         return page_breaks
-
-    def build(self, data):
-        """
-        Построить все дочерние объекты.
-        @param data: Данные текущего объекта.
-        @return: True/False
-        """
-        children = data.get('children', list())
-
-        for child in children:
-            child_type = child.get('name', None)
-            if child_type == 'Table':
-                # log.debug(u'Создание Table')
-                table = icVTable(self)
-                table.set_attributes(child)
-                table.build(child)
-            elif child_type == 'WorksheetOptions':
-                # log.debug(u'Создание WorksheetOptions')
-                options = icVWorksheetOptions(self)
-                options.set_attributes(child)
-                options.build(child)
-            elif child_type == 'PageBreaks':
-                # log.debug(u'Создание PageBreaks')
-                page_breaks = icVPageBreaks(self)
-                page_breaks.set_attributes(child)
-                page_breaks.build(child)
-            else:
-                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
-
-        return True
 
 
 class icVTable(icprototype.icVPrototype):
@@ -302,19 +270,19 @@ class icVTable(icprototype.icVPrototype):
         attrs = col.create()
         return col
 
-    def getColumns(self, iStartIDX=0, iStopIDX=None):
+    def getColumns(self, start_idx=0, stop_idx=None):
         """
         Список объектов колонок.
-        @param iStartIDX: Индекс первой колонки. По умолчанию с первой.
-        @param iStopIDX: Индекс последней колонки. По умолчанию до последней.
+        @param start_idx: Индекс первой колонки. По умолчанию с первой.
+        @param stop_idx: Индекс последней колонки. По умолчанию до последней.
         """
         col_count = self.getColumnCount()
-        if iStopIDX is None:
-            iStopIDX = col_count
+        if stop_idx is None:
+            stop_idx = col_count
         # Защита от не корректных входных данных
-        if iStartIDX > iStopIDX:
-            iStartIDX = iStopIDX
-        return [self.getColumn(idx) for idx in range(iStartIDX, iStopIDX)]
+        if start_idx > stop_idx:
+            start_idx = stop_idx
+        return [self.getColumn(idx) for idx in range(start_idx, stop_idx)]
 
     def getColumnsAttrs(self):
         """
@@ -328,44 +296,44 @@ class icVTable(icprototype.icVPrototype):
         """
         return self._maxColIdx()+1
 
-    def _reIndexCol(self, Col_, Index_, i_):
+    def _reIndexCol(self, column, index, idx):
         """
         Переиндексирование колонки в таблице.
         """
-        return self._getBasisCol()._reIndexElement('Column', Col_, Index_, i_)
+        return self._getBasisCol()._reIndexElement('Column', column, index, idx)
 
-    def _createColIdx(self, Idx_, i_):
+    def _createColIdx(self, index, idx):
         """
         Создать колонку с индексом.
-        @param Idx_: Индекс Excel.
-        @param i_: Индекс в списке children.
+        @param index: Индекс Excel.
+        @param idx: Индекс в списке children.
         """
         col = icrange.icVColumn(self)
         idx = 0
         for i, child in enumerate(self._attributes['children']):
             if child['name'] == 'Column':
-                if idx >= i_:
+                if idx >= idx:
                     attrs = col.create_idx(idx)
 
-                    self._reIndexCol(col, Idx_, idx)
+                    self._reIndexCol(col, index, idx)
                     break
                 idx += 1
 
         return col
 
-    def getColumn(self, Idx_=-1):
+    def getColumn(self, idx=-1):
         """
         Взять колонку по индексу.
         """
         col = None
-        idxs, _i, col_data = self._findColIdxAttr(Idx_)
+        idxs, _i, col_data = self._findColIdxAttr(idx)
         if col_data is not None:
             col = icrange.icVColumn(self)
             col.set_attributes(col_data)
         elif _i >= 0 and col_data is None:
             for i in idxs:
-                if Idx_ <= i:
-                    return self._createColIdx(Idx_, _i)
+                if idx <= i:
+                    return self._createColIdx(idx, _i)
             return self.createColumn()
         return col
 
@@ -377,40 +345,40 @@ class icVTable(icprototype.icVPrototype):
         attrs = row.create()
         return row
 
-    def cloneRow(self, bClearCell=True, iRow=-1):
+    def cloneRow(self, bClearCell=True, row=-1):
         """
         Клонировать строку таблицы.
         @param bClearCell: Очистить значения в ячейках.
-        @param iRow: Индекс(Начинаяется с 0) клонируемой ячейки. -1 - Последняя.
+        @param row: Индекс(Начинаяется с 0) клонируемой ячейки. -1 - Последняя.
         @return: Возвращает объект клонированной строки. Если строк в таблице нет, то возвращает None.
         """
         if self._attributes['children']:
-            row_attr = copy.deepcopy(self._attributes['children'][iRow])
+            row_attr = copy.deepcopy(self._attributes['children'][row])
             if bClearCell:
                 row_attr['children'] = [dict(cell.items()+[('value', None)]) for cell in row_attr['children']]
 
-            row = icrange.icVRow(self)
-            row.set_attributes(row_attr)
-            return row
+            row_obj = icrange.icVRow(self)
+            row_obj.set_attributes(row_attr)
+            return row_obj
         return None
 
-    def _reIndexRow(self, Row_, Index_, i_):
+    def _reIndexRow(self, row, index, idx):
         """
         Переиндексирование строки в таблице.
         """
-        return self._getBasisRow()._reIndexElement('Row', Row_, Index_, i_)
+        return self._getBasisRow()._reIndexElement('Row', row, index, idx)
 
-    def _createRowIdx(self, Idx_, i_):
+    def _createRowIdx(self, index, idx):
         """
         Создать строку с индексом.
         """
         row = icrange.icVRow(self)
-        for i,child in enumerate(self._attributes['children']):
+        for i, child in enumerate(self._attributes['children']):
             if child['name'] == 'Row':
-                if i >= i_:
+                if i >= idx:
                     attrs = row.create_idx(i)
 
-                    self._reIndexRow(row, Idx_, i)
+                    self._reIndexRow(row, index, i)
                     break
 
         return row
@@ -427,19 +395,19 @@ class icVTable(icprototype.icVPrototype):
         """
         return self._maxRowIdx()+1
 
-    def getRow(self, Idx_=-1):
+    def getRow(self, idx=-1):
         """
         Взять строку по индексу.
         """
         row = None
-        idxs, _i, row_data = self._findRowIdxAttr(Idx_)
+        idxs, _i, row_data = self._findRowIdxAttr(idx)
         if row_data is not None:
             row = icrange.icVRow(self)
             row.set_attributes(row_data)
         else:
             for i in idxs:
-                if Idx_ <= i:
-                    return self._createRowIdx(Idx_, _i)
+                if idx <= i:
+                    return self._createRowIdx(idx, _i)
             return self.createRow()
         return row
 
@@ -449,18 +417,18 @@ class icVTable(icprototype.icVPrototype):
         """
         col_count = self.getColumnCount()
         if col > col_count:
-            for i in range(col-col_count):
+            for i in range(col - col_count):
                 self.createColumn()
 
         row_count = self.getRowCount()
         if row > row_count:
-            for i in range(row-row_count):
+            for i in range(row - row_count):
                 self.createRow()
 
         # Проверка на попадание в объединенную ячейку
         if self.isInMergeCell(row, col):
             sheet_name = self.get_parent_by_name('Worksheet').getName()
-            err_txt = 'Getting cell (sheet: %s, row: %d, column: %d) into merge cell!' % (sheet_name, row, col)
+            err_txt = 'Getting new_cell (sheet: %s, row: %d, column: %d) into merge new_cell!' % (sheet_name, row, col)
             raise icexceptions.icMergeCellError((100, err_txt))
 
         cur_row = self.getRow(row)
@@ -469,11 +437,7 @@ class icVTable(icprototype.icVPrototype):
 
     def getCell(self, row, col):
         """
-        Получить ячейку (row, col).
-        @param row: Строка 1 .. 65535.
-        @param col: Колонка 1 .. 256.
-        @return: Объект ячейки или
-            None в случае если колонка не может быть определена.
+        Получить ячейку (row,col).
         """
         # Если координаты недопустимы, тогда ошибка
         if row <= 0:
@@ -501,7 +465,7 @@ class icVTable(icprototype.icVPrototype):
         if self.isInMergeCell(row, col):
             if config.DETECT_MERGE_CELL_ERROR:
                 sheet_name = self.get_parent_by_name('Worksheet').getName()
-                err_txt = 'Getting cell (sheet: %s, row: %d, column: %d) into merge cell!' % (sheet_name, row, col)
+                err_txt = 'Getting new_cell (sheet: %s, row: %d, column: %d) into merge new_cell!' % (sheet_name, row, col)
                 raise icexceptions.icMergeCellError((100, err_txt))
             else:
                 cell = self.getInMergeCell(row, col)
@@ -520,40 +484,40 @@ class icVTable(icprototype.icVPrototype):
         """
         return self.clear()
 
-    def _findColIdxAttr(self, Idx_):
+    def _findColIdxAttr(self, idx):
         """
         Найти атрибуты колонки в таблице по индексу.
         ВНИМАНИЕ! В этой функции индексация начинается с 0.
         """
-        return self._getBasisCol()._findElementIdxAttr(Idx_, 'Column')
+        return self._getBasisCol()._findElementIdxAttr(idx, 'Column')
 
-    def _findRowIdxAttr(self, Idx_):
+    def _findRowIdxAttr(self, idx):
         """
         Найти атрибуты строки в таблице по индексу.
         ВНИМАНИЕ! В этой функции индексация начинается с 0.
         """
-        return self._getBasisRow()._findElementIdxAttr(Idx_, 'Row')
+        return self._getBasisRow()._findElementIdxAttr(idx, 'Row')
 
     def _maxColIdx(self):
         """
         Максимальный индекс колонок в таблице.
         ВНИМАНИЕ! В этой функции индексация начинается с 0.
         """
-        return self._getBasisCol()._maxElementIdx(Elements_=self.getColumnsAttrs())
+        return self._getBasisCol()._maxElementIdx(elements=self.getColumnsAttrs())
 
     def _maxRowIdx(self):
         """
         Максимальный индекс строк в таблице.
         ВНИМАНИЕ! В этой функции индексация начинается с 0.
         """
-        return self._getBasisRow()._maxElementIdx(Elements_=self.getRowsAttrs())
+        return self._getBasisRow()._maxElementIdx(elements=self.getRowsAttrs())
 
-    def setExpandedRowCount(self, ExpandedRowCount_=None):
+    def setExpandedRowCount(self, expanded_row_count=None):
         """
         Вычисление максимального количества строк таблицы.
         """
-        if ExpandedRowCount_:
-            self._attributes['ExpandedRowCount'] = ExpandedRowCount_
+        if expanded_row_count:
+            self._attributes['ExpandedRowCount'] = expanded_row_count
         else:
             if 'ExpandedRowCount' in self._attributes:
                 cur_count = int(self._attributes['ExpandedRowCount'])
@@ -564,12 +528,12 @@ class icVTable(icprototype.icVPrototype):
                 # Ограничение количества строк 65535
                 self._attributes['ExpandedRowCount'] = min(max(calc_count, cur_count), 65535)
 
-    def setExpandedColCount(self, ExpandedColCount_=None):
+    def setExpandedColCount(self, expanded_col_count=None):
         """
         Вычисление максимального количества колонок в строке.
         """
-        if ExpandedColCount_:
-            self._attributes['ExpandedColumnCount'] = ExpandedColCount_
+        if expanded_col_count:
+            self._attributes['ExpandedColumnCount'] = expanded_col_count
         else:
             if 'ExpandedColumnCount' in self._attributes:
                 cur_count = int(self._attributes['ExpandedColumnCount'])
@@ -580,32 +544,32 @@ class icVTable(icprototype.icVPrototype):
                 # Ограничение количества колонок 256
                 self._attributes['ExpandedColumnCount'] = min(max(calc_count, cur_count), 256)
 
-    def paste(self, Paste_, To_=None):
+    def paste(self, paste, to=None):
         """
         Вставить копию атрибутов Past_ объекта внутрь текущего объекта
-        по адресу To_. Если To_ None, тогда происходит замена.
+        по адресу to. Если to None, тогда происходит замена.
         """
-        if Paste_['name'] == 'Range':
-            return self._pasteRange(Paste_, To_)
+        if paste['name'] == 'Range':
+            return self._pasteRange(paste, to)
         else:
-            print('ERROR: Error paste object attributes %s' % Paste_)
+            print('ERROR: Error paste object attributes %s' % paste)
         return False
 
-    def _pasteRange(self, Paste_, To_):
+    def _pasteRange(self, paste, to):
         """
         Вставить Range в таблицу по адресу ячейки.
         """
-        if isinstance(To_, tuple) and len(To_) == 2:
-            to_row, to_col = To_
+        if isinstance(to, tuple) and len(to) == 2:
+            to_row, to_col = to
             # Адресация ячеек задается как (row,col)
-            for i_row in range(Paste_['height']):
-                for i_col in range(Paste_['width']):
-                    cell_attrs = Paste_['children'][i_row][i_col]
+            for i_row in range(paste['height']):
+                for i_col in range(paste['width']):
+                    cell_attrs = paste['children'][i_row][i_col]
                     cell = self.getCell(to_row+i_row, to_col+i_col)
                     cell.set_attributes(cell_attrs)
             return True
         else:
-            print('ERROR: Paste address error %s' % To_)
+            print('ERROR: Paste address error %s' % to)
         return False
 
     def _getBasisRow(self):
@@ -655,7 +619,7 @@ class icVTable(icprototype.icVPrototype):
 
         return merge_cells
 
-    def isInMergeCell(self, Row_, Col_):
+    def isInMergeCell(self, row, column):
         """
         Попадает указанная ячейка в объединенную?
         """
@@ -666,13 +630,13 @@ class icVTable(icprototype.icVPrototype):
 
         for cell in self._merge_cells.items():
             cell_region = cell[0]
-            if (Row_ >= cell_region[0]) and (Row_ <= (cell_region[0]+cell_region[2])) and \
-                    (Col_ >= cell_region[1]) and (Col_ <= (cell_region[1]+cell_region[3])):
-                if Row_ != cell_region[0] or Col_ != cell_region[1]:
+            if (row >= cell_region[0]) and (row <= (cell_region[0]+cell_region[2])) and \
+                    (column >= cell_region[1]) and (column <= (cell_region[1]+cell_region[3])):
+                if row != cell_region[0] or column != cell_region[1]:
                     return True
         return False
 
-    def getInMergeCell(self, Row_, Col_):
+    def getInMergeCell(self, row, column):
         """
         Получить объединенную ячейку на которую указывают координаты.
         """
@@ -683,62 +647,38 @@ class icVTable(icprototype.icVPrototype):
 
         for cell in self._merge_cells.items():
             cell_region = cell[0]
-            if (Row_ >= cell_region[0]) and (Row_<= (cell_region[0]+cell_region[2])) and \
-                    (Col_ >= cell_region[1]) and (Col_ <= (cell_region[1]+cell_region[3])):
-                if Row_ != cell_region[0] or Col_ != cell_region[1]:
+            if (row >= cell_region[0]) and (row<= (cell_region[0]+cell_region[2])) and \
+                    (column >= cell_region[1]) and (column <= (cell_region[1]+cell_region[3])):
+                if row != cell_region[0] or column != cell_region[1]:
                     return cell[1]
         return None
 
-    def delColumn(self, Idx_=-1):
+    def delColumn(self, idx=-1):
         """
         Удалить колонку.
         """
-        col = self.getColumn(Idx_)
+        col = self.getColumn(idx)
         if col:
             # Удалить колонку из таблицы
-            result = col._delElementIdxAttr(Idx_-1, 'Column')
+            result = col._delElementIdxAttr(idx - 1, 'Column')
             # Кроме этого удалить ячейку, соответствующую текущей колонке
             for i_row in range(self.getRowCount()):
                 row = self.getRow(i_row+1)
                 if row:
-                    row.delCell(Idx_)
+                    row.delCell(idx)
             return result
         return False
 
-    def delRow(self, Idx_=-1):
+    def delRow(self, idx=-1):
         """
         Удалить строку.
         """
-        row = self.getRow(Idx_)
+        row = self.getRow(idx)
 
         if row:
             # Удалить строку из таблицы
-            return row._delElementIdxAttr(Idx_-1, 'Row')
+            return row._delElementIdxAttr(idx - 1, 'Row')
         return False
-
-    def build(self, data):
-        """
-        Построить все дочерние объекты.
-        @param data: Данные текущего объекта.
-        @return: True/False
-        """
-        children = data.get('children', list())
-
-        for child in children:
-            child_type = child.get('name', None)
-            if child_type == 'Column':
-                # log.debug(u'Создание Column')
-                column = icrange.icVColumn(self)
-                column.set_attributes(child)
-                column.build(child)
-            elif child_type == 'Row':
-                # log.debug(u'Создание Row')
-                row = icrange.icVRow(self)
-                row.set_attributes(child)
-                row.build(child)
-            else:
-                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
-        return True
 
 
 class icVWorksheetOptions(icprototype.icVPrototype):
@@ -798,30 +738,6 @@ class icVWorksheetOptions(icprototype.icVPrototype):
         """
         fit_to_page = [element for element in self._attributes['children'] if element['name'] == 'FitToPage']
         return bool(fit_to_page)
-
-    def build(self, data):
-        """
-        Построить все дочерние объекты.
-        @param data: Данные текущего объекта.
-        @return: True/False
-        """
-        children = data.get('children', list())
-
-        for child in children:
-            child_type = child.get('name', None)
-            if child_type == 'Print':
-                # log.debug(u'Создание Print')
-                print_option = icVPrint(self)
-                print_option.set_attributes(child)
-                print_option.build(child)
-            elif child_type == 'PageSetup':
-                # log.debug(u'Создание PageSetup')
-                page_setup = icVPageSetup(self)
-                page_setup.set_attributes(child)
-                page_setup.build(child)
-            else:
-                log.warning(u'Не обрабатываемый тип SpreadSheet <%s>' % child_type)
-        return True
 
 
 class icVPageSetup(icprototype.icVPrototype):
@@ -993,11 +909,11 @@ class icVPrint(icprototype.icVPrototype):
         # По умолчанию 1
         return 1
 
-    def setNumberofCopies(self, NumberofCopies_=1):
+    def setNumberofCopies(self, number_of_copies=1):
         """
         Количество копий листа.
         """
-        number_of_copies = min(max(int(NumberofCopies_), 1), 256)
+        number_of_copies = min(max(int(number_of_copies), 1), 256)
         n_copies = {'name': 'NumberofCopies', 'value': number_of_copies}
         self._attributes['children'].append(n_copies)
         return n_copies
@@ -1014,10 +930,10 @@ class icVPageBreaks(icprototype.icVPrototype):
         icprototype.icVPrototype.__init__(self, parent, *args, **kwargs)
         self._attributes = {'name': 'PageBreaks', 'children': [{'name': 'RowBreaks', 'children': []}]}
 
-    def addRowBreak(self, iRow):
+    def addRowBreak(self, row):
         """
         Добавить разрыв страницы по строке.
-        @param iRow: Номер строки.
+        @param row: Номер строки.
         """
-        row_break = {'name': 'RowBreak', 'children': [{'name': 'Row', 'value': iRow}]}
+        row_break = {'name': 'RowBreak', 'children': [{'name': 'Row', 'value': row}]}
         self._attributes['children'][0]['children'].append(row_break)

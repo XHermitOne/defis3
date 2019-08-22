@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 """
-Исключения Virtual Excel.
+Исключения, используемые в VirtualExcel.
 """
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 class icMergeCellError(Exception):
