@@ -21,11 +21,6 @@ try:
 except ImportError:
     pass
 
-try:
-    from . import DevId
-except:
-    pass
-
 from ic.log import log
 from . import util
 from . import strfunc
@@ -410,19 +405,6 @@ def recodeStructStr(struct, old_codepage, new_codepage):
         # Тип не определен
         cur_struct = struct
     return cur_struct
-
-
-def getHDDSerialNo():
-    """
-    Определить серийный номер HDD.
-    """
-    try:
-        hdd_info = DevId.GetHDDInfo()
-        return hdd_info[2]
-    except:
-        # Ошибка определения серийного номера HDD.
-        log.fatal('Ошибка определения серийного номера HDD')
-    return ''
 
 
 def getRegValue(reg_key, reg_value=None):
