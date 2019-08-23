@@ -105,7 +105,7 @@ SPC_IC_LIST_DATASET = {'type': 'ListDataset',
                        'recount': [],
                        'cols': [],
 
-                       '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'OnItemSelected', False),
+                       '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'onItemSelected', False),
                                       'activated': ('wx.EVT_LIST_ITEM_ACTIVATED', 'onItemActivated', False),
                                       },
                        '__attr_types__': {icDefInf.EDT_NUMBER: ['indxFldFind'],
@@ -334,11 +334,11 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         try:
             self.rowDict.update(self.dataset.getDict(self.currentItem, True))
         except:
-            LogLastError(u'OnItemSelected ERROR:')
+            LogLastError(u'onItemSelected ERROR:')
             self.rowDict = {}
         
         self.evalSpace['values'] = self.rowDict
-        self.evalSpace['_lfp'] = {'function': 'OnItemSelected',
+        self.evalSpace['_lfp'] = {'function': 'onItemSelected',
                                   'evt': evt,
                                   'currentItem': self.currentItem,
                                   'row': self.currentItem,

@@ -83,8 +83,9 @@ def %s(parent=None, title=u''):
     @param title: Заголовок страницы нотебука главного окна.
     \"\"\"
     try:
+        main_win = ic.getMainWin()
         if parent is None:
-            parent = ic.getMainWin()
+            parent = main_win
         
         panel = %s(parent)
         panel.init()

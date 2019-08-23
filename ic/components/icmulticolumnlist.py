@@ -55,7 +55,7 @@ SPC_IC_MCLIST = {'type': 'MultiColumnList',
 
                  '__attr_types__': {icDefInf.EDT_TEXTLIST: ['items', 'fields', 'col_width'],
                                     },
-                 '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'OnItemSelected', True),
+                 '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'onItemSelected', True),
                                 'activated': ('wx.EVT_LIST_ITEM_ACTIVATED', 'onItemActivated', True),
                                 },
                  '__parent__': SPC_IC_WIDGET,

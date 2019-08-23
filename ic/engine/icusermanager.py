@@ -156,7 +156,7 @@ class icUserManager(object):
             # Если ресурс заблокировн, то сообщить кем
             lock_rec = rl.get_lock_rec(path)
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'Пользователи в настоящее время редактируются пользователем %s на компьютере %s' % (lock_rec['user'], lock_rec['computer']))
+                               u'Пользователи в настоящее время редактируются пользователем %s на компьютере %s' % (lock_rec['user'], lock_rec['computer']))
 
     def refreshPrj(self):
         """
@@ -258,8 +258,8 @@ class icUserManager(object):
                     users = [(True, usr) for usr in reg_user_journal['CURRENT_USERS'].keys()]
                     parent_win = glob_functions.getMainWin()
                     selected_users = dlgfunc.getMultiChoiceDlg(parent_win,
-                                                             u'Зарегистрированные пользователи',
-                                                             u'Снятие регистрации пользователей',
+                                                               u'Зарегистрированные пользователи',
+                                                               u'Снятие регистрации пользователей',
                                                                tuple(users))
                     if selected_users:
                         for is_select, usr in selected_users:
@@ -267,12 +267,11 @@ class icUserManager(object):
                                 del reg_user_journal['CURRENT_USERS'][usr]
                         if not reg_user_journal['CURRENT_USERS']:
                             del reg_user_journal['CURRENT_USERS']
-                        print(reg_user_journal)
                         # Сохранить изменения
                         return inifunc.Dict2INI(reg_user_journal,
-                                                reg_user_journal_file_name, rewrite=True)
+                                                reg_user_journal_file_name, bRewrite=True)
         except:
-            log.fatal(u'Ошибка в функции управления регистрационной информацией пользователей.')
+            log.fatal(u'Ошибка в функции управления регистрационной информацией пользователей')
         return False
 
 

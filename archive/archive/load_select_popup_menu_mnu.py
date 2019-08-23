@@ -76,6 +76,11 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 # log.debug(u'Список файлов за месяц %s' % str(filenames))
             labels = [self.getLabelByDBFFilename(filename) for filename in filenames]
 
+            #  Загрузка некоторых файлов может быть отключена через список надписей
+            filenames = [None if labels[i] is None else filename for i, filename in enumerate(filenames)]
+            filenames = [filename for filename in filenames if filename is not None]
+            labels = [label for label in labels if label is not None]
+
             if filenames:
                 filename_idx = dlgfunc.getSingleChoiceIdxDlg(None, u'ЗАГРУЗКА', u'Выберите файл загрузки', labels)
                 if filename_idx >= 0:
@@ -119,39 +124,39 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Покупка. ТОРГ12.'
         # Участок ЗАТРАТЫ
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ.'
+            return None
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ.'
+            return None
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
-            label += u'Продажа. Акты.'
+            return None
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
-            label += u'Покупка. Акты.'
+            return None
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
             label += u'Продажа. Документы.'
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
             label += u'Покупка. Документы.'
         # Участок АРЕНДА
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ.'
+            return None
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ.'
-        #elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
-        #    label += u'Продажа. Акты.'
-        #elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
-        #    label += u'Покупка. Акты.'
+            return None
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
+            return None
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
+            return None
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
             label += u'Продажа. Документы.'
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
             label += u'Покупка. Документы.'
         # Участок ОСНОВНЫЕ СРЕДСТВА
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ.'
+            return None
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ.'
-        #elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
-        #    label += u'Продажа. Акты.'
-        #elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
-        #    label += u'Покупка. Акты.'
+            return None
+        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
+            return None
+        elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
+            return None
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
             label += u'Продажа. Документы.'
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':

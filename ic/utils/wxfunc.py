@@ -14,6 +14,9 @@ __version__ = (0, 1, 2, 1)
 # Кеш цветов для адаптации под системную тему
 WX_ADAPT_COLOURS = dict()
 
+# Цвет по умолчанию
+DEFAULT_COLOUR = 'default'
+
 
 def is_same_wx_object(wx_obj1, wx_obj2):
     """
@@ -197,6 +200,29 @@ def adaptSysThemeColour(dark_theme_colour=None, light_theme_colour=None):
         log.warning(u'Не возможно адаптировать цвет под оттенок системной темы')
 
     return wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
+
+
+def getTintColour(colour, calc_rate=None):
+    """
+    Получить оттененный цвет от указанного.
+    @param colour: Основной цвет wx.Colour.
+    @param calc_rate: Коэффициент расчета оттенения. Если не указан то берется 7/8.
+    @return: Оттененный цвет.
+    """
+    if calc_rate is None:
+        calc_rate = 7.0 / 8.0
+    return wx.Colour(tuple([int(c * calc_rate) for c in tuple(colour)[:-1]]))
+
+
+def isDefaultColour(colour):
+    """
+    Проверка является ли указанный цвет цветом по умолчанию?
+    wxPython при сравнении цвета со строкой, которую не возможно преобразовать в цвет,
+    выдает предупреждение. Чтобы избежать этого реализована эта фуенкция.
+    @param colour: Проверяемый цвет.
+    @return: True - цвет указан как цвет по умолчанию. False - нет.
+    """
+    return isinstance(colour, str) and colour == DEFAULT_COLOUR
 
 
 def getWxPythonMajorVersion():

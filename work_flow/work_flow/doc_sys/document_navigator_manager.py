@@ -411,7 +411,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             dataset.insert(index, doc_requisites)
         return dataset
 
-    def setDocListCtrlColumns(self, *columns):
+    def setDocListCtrlColumns(self, *columns, bSetColumns=True):
         """
         Определение колонок спискового контрола.
         @param columns: Список функций получения значений колонок.
@@ -420,18 +420,20 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             Если в качестве колонки передается lambda выражение/функция,
             то оно выполняется. В качестве аргумента lambda/функция должна принимать
             словарь текущей записи.
+        @param bSetColumns: Установить колонки в контрол?
         """
         self.__document_navigator_slave_list_columns = columns
 
-        # Если определены колонки и определен контрол списка,
-        # то установить колонки в контрол
-        list_ctrl = self.getSlaveListCtrl()
-        doc = self.getSlaveDocument()
-        if list_ctrl and columns and doc:
-            cols = [dict(label=doc.findRequisite(column).getLabel(),
-                         width=wx.LIST_AUTOSIZE) if isinstance(column, str) else dict(label=u'Колонка %d' % (i+1),
+        if bSetColumns:
+            # Если определены колонки и определен контрол списка,
+            # то установить колонки в контрол
+            list_ctrl = self.getSlaveListCtrl()
+            doc = self.getSlaveDocument()
+            if list_ctrl and columns and doc:
+                cols = [dict(label=doc.findRequisite(column).getLabel(),
+                             width=wx.LIST_AUTOSIZE) if isinstance(column, str) else dict(label=u'Колонка %d' % (i+1),
                                                                                       width=wx.LIST_AUTOSIZE) for i, column in enumerate(columns)]
-            self.setColumns_list_ctrl(list_ctrl, cols=cols)
+                self.setColumns_list_ctrl(list_ctrl, cols=cols)
 
     def setDocListCtrlColumnLabel(self, n_column=0, label=u''):
         """

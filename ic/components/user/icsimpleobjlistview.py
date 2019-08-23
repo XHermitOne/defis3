@@ -54,8 +54,8 @@ ic_class_spc = {'type': 'SimpleObjectListView',
                 'init_expr': None,
                 '_uuid': None,
 
-                'evenRowsBackColor': None,
-                'oddRowsBackColor': None,
+                'evenRowsBackColour': None,
+                'oddRowsBackColour': None,
 
                 'data_src': None,  # Паспорт источника данных
                 'get_dataset': None,   # Функция получения данных в виде списка словарей
@@ -70,13 +70,13 @@ ic_class_spc = {'type': 'SimpleObjectListView',
                 'row_background_color': None,  # Получение цвета фона строки
 
                 '__styles__': ic_class_styles,
-                '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'OnItemSelected', False),
+                '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'onItemSelected', False),
                                'activated': ('wx.EVT_LIST_ITEM_ACTIVATED', 'onItemActivated', False),
                                },
                 '__attr_types__': {0: ['name', 'type'],
                                    icDefInf.EDT_CHECK_BOX: ['activate', 'sortable'],
                                    icDefInf.EDT_TEXTFIELD: ['description'],
-                                   icDefInf.EDT_COLOR: ['evenRowsBackColor', 'oddRowsBackColor'],
+                                   icDefInf.EDT_COLOR: ['evenRowsBackColour', 'oddRowsBackColour'],
                                    icDefInf.EDT_USER_PROPERTY: ['data_src'],
                                    },
                 '__parent__': icwidget.SPC_IC_WIDGET,
@@ -205,8 +205,8 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
                                              sortable=self.sortable,
                                              useAlternateBackColors=True)
         # Цвет фона линий четных/не четных
-        self.evenRowsBackColor = self.getEvenRowsBGColour()
-        self.oddRowsBackColor = self.getOddRowsBGColour()
+        self.evenRowsBackColour = self.getEvenRowsBGColour()
+        self.oddRowsBackColour = self.getOddRowsBGColour()
 
         self._data_src_obj = None
 
@@ -228,14 +228,14 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         """
         Цвет фона четных строк.
         """
-        colour = self.getICAttr('evenRowsBackColor')
+        colour = self.getICAttr('evenRowsBackColour')
         return colour if colour else tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]
 
     def getOddRowsBGColour(self):
         """
         Цвет фона не четных строк.
         """
-        colour = self.getICAttr('oddRowsBackColor')
+        colour = self.getICAttr('oddRowsBackColour')
         return colour if colour else tuple([int(c / 3 * 2) for c in tuple(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))[:-1]])
 
     def getDataSource(self):
@@ -384,7 +384,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         self.evalSpace['row'] = currentItem
 
         self.evalSpace['values'] = self.GetObjectAt(currentItem)
-        self.evalSpace['_lfp'] = {'function': 'OnItemSelected', 'evt': evt,
+        self.evalSpace['_lfp'] = {'function': 'onItemSelected', 'evt': evt,
                                   'currentItem': currentItem, 'row': currentItem, 'self': self}
         
         if not self.getSelectedRecord() in [None, '', 'None']:
@@ -504,7 +504,7 @@ def test():
 
     app = wx.PySimpleApp()
     form = wx.Frame(None)
-    grid = icSimpleObjectListView(form, component={'oddRowsBackColor': (255, 255, 255)})
+    grid = icSimpleObjectListView(form, component={'oddRowsBackColour': (255, 255, 255)})
     grid.SetColumns(columns)
     grid.SetObjects(dataset)
     form.Show()

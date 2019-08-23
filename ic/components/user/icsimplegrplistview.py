@@ -32,6 +32,7 @@ import ic.components.icResourceParser as prs
 from ic.imglib import common
 from ic.PropertyEditor import icDefInf
 from ic.log import log
+from ic.utils import wxfunc
 
 import ic.contrib.ObjectListView as parentModule
 
@@ -44,7 +45,26 @@ ic_class_type = icDefInf._icComboType
 ic_class_name = 'icSimpleGroupListView'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT': 0}
+ic_class_styles = {# 'DEFAULT': 0,
+                   # wx.ListCtrl styles
+                   'LC_LIST': wx.LC_LIST,
+                   'LC_REPORT': wx.LC_REPORT,
+                   'LC_VIRTUAL': wx.LC_VIRTUAL,
+                   'LC_ICON': wx.LC_ICON,
+                   'LC_SMALL_ICON': wx.LC_SMALL_ICON,
+                   'LC_ALIGN_TOP': wx.LC_ALIGN_TOP,
+                   'LC_ALIGN_LEFT': wx.LC_ALIGN_LEFT,
+                   'LC_AUTOARRANGE': wx.LC_AUTOARRANGE,
+                   'LC_EDIT_LABELS': wx.LC_EDIT_LABELS,
+                   'LC_NO_HEADER': wx.LC_NO_HEADER,
+                   'LC_SINGLE_SEL': wx.LC_SINGLE_SEL,
+                   'LC_SORT_ASCENDING': wx.LC_SORT_ASCENDING,
+                   'LC_SORT_DESCENDING': wx.LC_SORT_DESCENDING,
+                   'LC_HRULES': wx.LC_HRULES,
+                   'LC_VRULES': wx.LC_VRULES,
+                   #
+                   'SUNKEN_BORDER': wx.SUNKEN_BORDER,
+                   }
 
 # Спецификация на ресурсное описание класса
 ic_class_spc = {'type': 'SimpleGroupListView',
@@ -55,11 +75,11 @@ ic_class_spc = {'type': 'SimpleGroupListView',
                 'init_expr': None,
                 '_uuid': None,
 
-                'evenRowsBackColor': (160, 160, 160),
-                'oddRowsBackColor': (224, 224, 224),
+                'evenRowsBackColour': None,
+                'oddRowsBackColour': None,
 
-                'foregroundColor': (0, 0, 0),
-                'backgroundColor': (255, 255, 255),
+                'foregroundColour': None,
+                'backgroundColour': None,
 
                 'data_src': None,  # Паспорт источника данных
                 'get_dataset': None,   # Функция получения данных в виде списка словарей
@@ -70,21 +90,28 @@ ic_class_spc = {'type': 'SimpleGroupListView',
                 'conv_record': None,   # Преобразование записи
                 'conv_dataset': None,  # Преобразование набора записи
 
-                'row_text_color': None,        # Получение цвета текста строки
-                'row_background_color': None,  # Получение цвета фона строки
+                'row_text_colour': None,        # Получение цвета текста строки
+                'row_background_colour': None,  # Получение цвета фона строки
 
                 'show_item_counts': False,  # Признак отображения количесва элементов группы
 
                 '__styles__': ic_class_styles,
-                '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'OnItemSelected', False),
+                '__events__': {'selected': ('wx.EVT_LIST_ITEM_SELECTED', 'onItemSelected', False),
                                'activated': ('wx.EVT_LIST_ITEM_ACTIVATED', 'onItemActivated', False),
+                               'conv_record': (None, None, False),  # Преобразование записи
+                               'conv_dataset': (None, None, False),  # Преобразование набора записи
+
+                               'row_text_colour': (None, None, False),  # Получение цвета текста строки
+                               'row_background_colour': (None, None, False),  # Получение цвета фона строки
                                },
                 '__attr_types__': {0: ['name', 'type'],
                                    icDefInf.EDT_CHECK_BOX: ['activate', 'sortable', 'show_item_counts'],
                                    icDefInf.EDT_TEXTFIELD: ['description'],
-                                   icDefInf.EDT_COLOR: ['evenRowsBackColor', 'oddRowsBackColor',
-                                                        'foregroundColor', 'backgroundColor'],
+                                   icDefInf.EDT_COLOR: ['evenRowsBackColour', 'oddRowsBackColour',
+                                                        'foregroundColour', 'backgroundColour'],
                                    icDefInf.EDT_USER_PROPERTY: ['data_src'],
+                                   icDefInf.EDT_PY_SCRIPT: ['conv_record', 'conv_dataset', 
+                                                            'row_text_colour', 'row_background_colour']
                                    },
                 '__parent__': icwidget.SPC_IC_WIDGET,
                 '__attr_hlp__': {'data_src': u'Паспорт источника данных',
@@ -96,8 +123,8 @@ ic_class_spc = {'type': 'SimpleGroupListView',
                                  'conv_record': u'Преобразование записи',
                                  'conv_dataset': u'Преобразование набора записи',
 
-                                 'row_text_color': u'Получение цвета текста строки',
-                                 'row_background_color': u'Получение цвета фона строки',
+                                 'row_text_colour': u'Получение цвета текста строки',
+                                 'row_background_colour': u'Получение цвета фона строки',
 
                                  'show_item_counts': u'Признак отображения количесва элементов группы',
                                  },
@@ -215,7 +242,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         for key in lst_keys:
             setattr(self, key, component[key])
 
-        style = wx.LC_REPORT | wx.SUNKEN_BORDER
+        style = component['style']  # wx.LC_REPORT | wx.SUNKEN_BORDER
         parentModule.GroupListView.__init__(self, parent, id,
                                             style=style,
                                             sortable=self.sortable,
@@ -223,8 +250,16 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
                                             showItemCounts=self.show_item_counts)
 
         # Цвет фона линий четных/не четных
-        self.evenRowsBackColor = self.getICAttr('evenRowsBackColor')
-        self.oddRowsBackColor = self.getICAttr('oddRowsBackColor')
+        colour = self.getICAttr('evenRowsBackColour')
+        if colour:
+            self.evenRowsBackColor = colour
+        else:
+            self.evenRowsBackColor = wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX)
+        colour = self.getICAttr('oddRowsBackColour')
+        if colour:
+            self.oddRowsBackColor = colour
+        else:
+            self.oddRowsBackColor = wxfunc.getTintColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))
 
         self._data_src_obj = None
 
@@ -232,8 +267,8 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         self.setColumnsSpc(*self.resource['child'])
         self.rowFormatter = self.rowFormatterFunction
 
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, id=self.GetId())
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated, id=self.GetId())
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.onItemSelected, id=self.GetId())
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onItemActivated, id=self.GetId())
         self.BindICEvt()
 
         self.SetFocus()
@@ -431,7 +466,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         return self.setDataset(data_src_filter=data_src_filter)
 
     #   Обработчики событий
-    def OnItemSelected(self, evt):
+    def onItemSelected(self, evt):
         """ 
         Обрабатываем сообщение о выборе строки списка.
         """
@@ -445,7 +480,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         self.evalSpace['row'] = currentItem
 
         self.evalSpace['values']=self.GetObjectAt(currentItem)
-        self.evalSpace['_lfp'] = {'function': 'OnItemSelected', 'evt': evt,
+        self.evalSpace['_lfp'] = {'function': 'onItemSelected', 'evt': evt,
                                   'currentItem': currentItem, 'row': currentItem, 'self': self}
         
         if not self.getSelectedRecord() in [None, '', 'None']:
@@ -453,7 +488,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
             if ret:
                 result = bool(val)
 
-    def OnItemActivated(self, evt):
+    def onItemActivated(self, evt):
         """ 
         Активация (Enter/DobleClick) строки.
         """
@@ -508,19 +543,19 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         @param record: Словарь записи.
         """
         self.context['RECORD'] = record
-        text_colour = self.getICAttr('row_text_color')
-        bg_colour = self.getICAttr('row_background_color')
+        text_colour = self.getICAttr('row_text_colour')
+        bg_colour = self.getICAttr('row_background_colour')
 
         if text_colour and isinstance(text_colour, wx.Colour):
             list_item.SetTextColour(text_colour)
-        elif self.foregroundColor:
-            text_colour = wx.Colour(*self.foregroundColor)
+        elif self.foregroundColour:
+            text_colour = wx.Colour(*self.foregroundColour)
             list_item.SetTextColour(text_colour)
 
         if bg_colour and isinstance(bg_colour, wx.Colour):
             list_item.SetBackgroundColour(bg_colour)
-        elif self.backgroundColor:
-            bg_colour = wx.Colour(*self.backgroundColor)
+        elif self.backgroundColour:
+            bg_colour = wx.Colour(*self.backgroundColour)
             list_item.SetBackgroundColour(bg_colour)
 
 
@@ -557,7 +592,7 @@ def test():
 
     app = wx.PySimpleApp()
     form = wx.Frame(None)
-    grid = icSimpleGroupListView(form, component={'oddRowsBackColor': (255, 255, 255)})
+    grid = icSimpleGroupListView(form, component={'oddRowsBackColour': (255, 255, 255)})
     grid.SetColumns(columns)
     grid.SetObjects(dataset)
     form.Show()
