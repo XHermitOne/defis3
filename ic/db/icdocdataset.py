@@ -37,7 +37,7 @@ import wx.grid as grid
 import copy
 import ic.utils.translate as translate
 from ic.db import icsimpledataset
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.utils import strfunc
 
 SPC_IC_DOC_DATASET = {'name': 'DefaultName',
@@ -48,7 +48,7 @@ SPC_IC_DOC_DATASET = {'name': 'DefaultName',
                       'data_buff': []}
 
 #   Версия компонента
-__version__ = (1, 0, 1, 2)
+__version__ = (1, 1, 1, 1)
 
 
 class icDocDataset(icsimpledataset.icSimpleDataset):

@@ -26,6 +26,8 @@ except ImportError:
 from ic.interfaces import icsourceinterface
 from ic.log import log
 
+__version__ = (0, 1, 1 ,1)
+
 # Константы
 # Тип БД
 ODBC_DATASOURCE_TYPE = 'ODBC'
@@ -40,34 +42,34 @@ SPC_IC_ODBC = {'type': ODBC_DATASOURCE_TYPE,
                }
 
 
-def _db_connection_odbc(DB_):
+def _db_connection_odbc(db_resource):
     """
     Создать коннекшн.
     """
-    log.info(u'Создание коннекшна ODBC <%s : %s : %s : %s>' % (DB_['dbname'],
-                                                                     DB_['host'],
-                                                                     DB_['user'],
-                                                                     DB_['password']))
-    db = MSSQLConnection(db=DB_['dbname'], host=DB_['host'],
-                         user=DB_['user'], password=DB_['password'], autoCommit=1)
+    log.info(u'Создание коннекшна ODBC <%s : %s : %s : %s>' % (db_resource['dbname'],
+                                                               db_resource['host'],
+                                                               db_resource['user'],
+                                                               db_resource['password']))
+    db = MSSQLConnection(db=db_resource['dbname'], host=db_resource['host'],
+                         user=db_resource['user'], password=db_resource['password'], autoCommit=1)
     return db
 
 
-class icODBCDataSourcePrototype(icsourceinterface.icSourceInterface):
+class icODBCDataSourceProto(icsourceinterface.icSourceInterface):
     """
     Источник данных ODBC.
     """
     
-    def __init__(self, Resource_=None):
+    def __init__(self, resource=None):
         """
         Конструктор.
-        @param Resource_: Ресурс описания компонента.
+        @param resource: Ресурс описания компонента.
         """
-        icsourceinterface.icSourceInterface.__init__(self, Resource_)
+        icsourceinterface.icSourceInterface.__init__(self, resource)
         
-        self._connection_string = Resource_['connection_string']
-        self._user = Resource_['user']
-        self._password = Resource_['password']
+        self._connection_string = resource['connection_string']
+        self._user = resource['user']
+        self._password = resource['password']
         
         self.conection = None   # Связь с БД
         self.cursor = None      # Курсор последнего запроса
@@ -114,22 +116,22 @@ class icODBCDataSourcePrototype(icsourceinterface.icSourceInterface):
             log.error(u'ODBC: Ошибка разрыва связи с БД.')
         return self.connection
     
-    def execSQL(self, SQLTxt_):
+    def execSQL(self, sql_text):
         """
         Выполнить SQL запрос.
-        @param SQLTxt_: Текст SQL запроса.
+        @param sql_text: Текст SQL запроса.
         @return: Результат возвращается в формате icquery.QUERY_TABLE_RESULT.
         Либо None в случае ошибки.
         """
         result = None
         self.createCursor()
         try:
-            self.cursor.execute(SQLTxt_)
+            self.cursor.execute(sql_text)
             recordset = self.cursor.fetchall()
             fields = self.cursor.description
             result = {'__fields__': fields, '__data__': recordset}
         except:
-            log.error(u'ODBC: Ошибка выполнения запроса. SQL: <%s>' % SQLTxt_)
+            log.error(u'ODBC: Ошибка выполнения запроса. SQL: <%s>' % sql_text)
         self.closeCursor()
         return result
             

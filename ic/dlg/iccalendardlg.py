@@ -13,7 +13,7 @@ try:
 except ImportError:
     from ic.utils import datetimefunc
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icCalendarDialog(std_dialogs_proto.calendarDialogProto):

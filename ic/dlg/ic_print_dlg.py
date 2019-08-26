@@ -15,7 +15,7 @@ from ic.utils import filefunc
 from ic.utils import inifunc
 from ic.utils import printerfunc
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_OPTIONS_FILENAME = 'printer_options.ini'
 
@@ -465,7 +465,7 @@ def get_print_option_dlg(parent=None):
 
     dlg = icPrintDlg(parent=parent)
     result = dlg.ShowModal()
-    ret =None
+    ret = None
     if result == wx.ID_OK:
         ret = dlg.getOptions()
     dlg.Destroy()

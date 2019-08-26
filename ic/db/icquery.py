@@ -31,17 +31,17 @@ QUERY_TABLE_RESULT = {'__fields__': (),     # Описание полей - ко
                       }
 
 
-def getQueryTableFields(Query_):
+def getQueryTableFields(query):
     """
     Получить описания полей таблицы запроса.
-    @param Query_: Имя запроса/dataset объект.
+    @param query: Имя запроса/dataset объект.
     """
     try:
-        if isinstance(Query_, str):
+        if isinstance(query, str):
             # Сначала получить dataset
-            dataset = icsqlalchemydataset.getDataset(Query_)
+            dataset = icsqlalchemydataset.getDataset(query)
         else:
-            dataset = Query_
+            dataset = query
         # Заполнить поля
         fields = []
         for field_name in dataset.getFieldList():
@@ -51,7 +51,7 @@ def getQueryTableFields(Query_):
         return fields
     except:
         # Вывести сообщение об ошибке в лог
-        log.fatal(u'Ошибка получения описаний полей таблицы запроса <%s>.' % str(Query_))
+        log.fatal(u'Ошибка получения описаний полей таблицы запроса <%s>.' % str(query))
         return None
 
 
@@ -61,11 +61,11 @@ _fieldType = {'T': 6,   # Код текстового поля
               }
 
 
-def getQueryTable(Query_, PostFilter_=None):
+def getQueryTable(query, post_filter=None):
     """
     Получить таблицу запроса.
-    @param Query_: Имя запроса/dataset объект.
-    @param PostFilter_: Дополнительный фильтр для дополнительной фильтрации 
+    @param query: Имя запроса/dataset объект.
+    @param post_filter: Дополнительный фильтр для дополнительной фильтрации
         данных таблицы запроса. Структура такая же как у структурного 
         фильтра Dataset'а.
     @return: Функция возвращает словарь -
@@ -74,12 +74,12 @@ def getQueryTable(Query_, PostFilter_=None):
     """
     try:
         log.info(u'getQueryTable: НАЧАЛО')
-        if isinstance(Query_, str):
+        if isinstance(query, str):
             # Сначала получить dataset
-            dataset = icsqlalchemydataset.getDataset(Query_)
+            dataset = icsqlalchemydataset.getDataset(query)
             dataset.clearChangeRowBuff(-1)
         else:
-            dataset = Query_
+            dataset = query
         
         # Установить буфер на полную таблицу
         dataset.buffAllData() 
@@ -108,7 +108,7 @@ def getQueryTable(Query_, PostFilter_=None):
         log.debug(u'getQueryTable: ДО ФИЛЬТРАЦИИ ' + str_print)
 
         # Дополнительная фильтрация
-        if PostFilter_ and isinstance(PostFilter_, dict):
+        if post_filter and isinstance(post_filter, dict):
             # Заполниь соответчтвие имен и индексов полей
             field_name2idx = {}
             field_names = [fld[0] for fld in fields]
@@ -116,7 +116,7 @@ def getQueryTable(Query_, PostFilter_=None):
                 field_name2idx[field_name] = field_names.index(field_name)
             # Фильтрация
             filter_if_str_lst = ['r[%d]==%s' % (field_name2idx[fld],
-                                                toolfunc.getStrInQuotes(PostFilter_[fld])) for fld in PostFilter_.keys()]
+                                                toolfunc.getStrInQuotes(post_filter[fld])) for fld in post_filter.keys()]
             filter_if_str = 'lambda r: '+' and '.join(filter_if_str_lst)
             log.debug(u'getQueryTable PostFilter: ' + filter_if_str)
             filter_if = eval(filter_if_str)
@@ -128,7 +128,7 @@ def getQueryTable(Query_, PostFilter_=None):
         return {'__fields__': fields, '__data__': data}
     except:
         # Вывести сообщение об ошибке в лог
-        log.fatal(u'Ошибка получения таблицы запроса %s.' % str(Query_))
+        log.fatal(u'Ошибка получения таблицы запроса %s.' % str(query))
         return None
 
 
@@ -151,20 +151,20 @@ WIN_CR = '\r\n'
 
 
 # --- Классы ---
-class icQueryPrototype(icdataclassinterface.icDataClassInterface):
+class icQueryProto(icdataclassinterface.icDataClassInterface):
     """
     SQL Запрос к источнику данных в табличном представлении.
     """
     
-    def __init__(self, Resource_):
+    def __init__(self, resource):
         """
         Конструктор.
-        @param Resource_: Ресурсное описание запроса.
+        @param resource: Ресурсное описание запроса.
         """
-        icdataclassinterface.icDataClassInterface.__init__(self, Resource_)
+        icdataclassinterface.icDataClassInterface.__init__(self, resource)
         
-        self._data_src = Resource_['source']
-        self._sql_txt = Resource_['sql_txt']
+        self._data_src = resource['source']
+        self._sql_txt = resource['sql_txt']
         
         self.data_source = None
 
@@ -199,11 +199,11 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
 
         return sql_txt
 
-    def setSQLTxt(self, SQLTxt_):
+    def setSQLTxt(self, sql_text):
         """
         Установить текст SQL запроса.
         """
-        self._sql_txt = SQLTxt_
+        self._sql_txt = sql_text
         
     def queryAll(self, **kwargs):
         """
@@ -621,11 +621,11 @@ class icQueryPrototype(icdataclassinterface.icDataClassInterface):
         except:
             # Вернуть транзакцию
             transaction.rollback()
-            log.fatal(u'Ошибка заполнения таблицы <%s> результатом запроса <%s>' % (table_name, self.getName()))
+            log.fatal(u'Ошибка заполнения таблицы <%s> результатом запроса <%s>' % (table.getName(), self.getName()))
         return False
 
 
-class icNamedQueryPrototype(icQueryPrototype):
+class icNamedQueryProto(icQueryProto):
     """
     Именованный запрос (Создание объекта по имени).
     """
@@ -635,6 +635,4 @@ class icNamedQueryPrototype(icQueryPrototype):
         Конструктор.
         @param QueryName_: Имя запроса.
         """
-        icQueryPrototype.__init__(self,
-                                  resource.icGetRes(QueryName_, 'mtd',
-                                                    nameRes=QueryName_))
+        icQueryProto.__init__(self, resource.icGetRes(QueryName_, 'mtd', nameRes=QueryName_))

@@ -384,7 +384,7 @@ def onChangedGrid(obj):
 
 def spravGrid_onInit(obj, evt):
     # Устанавливаем буфер изменений у датасета
-    buff = icsimpledataset.CChangeBuff([0])
+    buff = icsimpledataset.icDatasetChangeBuff([0])
     obj.context.GetObject(SPR_GRID_NAME).GetDataset().set_change_buff(buff)
 
 

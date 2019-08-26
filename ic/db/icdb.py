@@ -38,7 +38,7 @@ from .icMySQL import SPC_IC_MYSQL
 
 import ic
 
-__version__ = (1, 1, 2, 2)
+__version__ = (1, 1, 2, 3)
 
 DB_TYPES = (SQLITE_DB_TYPE, POSTGRES_DB_TYPE, MSSQL_DB_TYPE, MYSQL_DB_TYPE)
 
@@ -124,15 +124,15 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                                    MYSQL_DB_TYPE: None,
                                    }
 
-    def __init__(self, DB_=None, AutoScheme_=False):
+    def __init__(self, db_resource=None, bAutoScheme=False):
         """
         Конструктор.
-        @param DB_: Ресурсное описание БД.
-        @param AutoScheme_: Автоматическое создание схемы.
+        @param db_resource: Ресурсное описание БД.
+        @param bAutoScheme: Автоматическое создание схемы.
         """
-        icsourceinterface.icSourceInterface.__init__(self, DB_)
+        icsourceinterface.icSourceInterface.__init__(self, db_resource)
         # URL
-        self._db_url = createDBUrl(DB_)
+        self._db_url = createDBUrl(db_resource)
         # Связь с БД
         self._connection = None
 
@@ -142,21 +142,21 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         self._db_type = None
         self._name = None
         self._metadata = None
-        if DB_:
-            if isinstance(DB_, dict):
-                self._db_type = DB_['type']
-                self._name = DB_['name']
+        if db_resource:
+            if isinstance(db_resource, dict):
+                self._db_type = db_resource['type']
+                self._name = db_resource['name']
 
-            if not DB_.get('dbname', None):
+            if not db_resource.get('dbname', None):
                 # Читаем параметры соединения из ini файла
                 if ic.load_ini_param('SYSDB', 'DB_ENGINE') == self._db_type:
-                    DB_ = self.load_ini_par(DB_)
-                self._metadata = self._createDBMetadata(DB_)
+                    db_resource = self.load_ini_par(db_resource)
+                self._metadata = self._createDBMetadata(db_resource)
                 icSQLAlchemyDB.connections_pool[self._name] = self._metadata
             elif icSQLAlchemyDB.connections_pool.get(self._name, None):
                 self._metadata = icSQLAlchemyDB.connections_pool[self._name]
             else:
-                self._metadata = self._createDBMetadata(DB_)
+                self._metadata = self._createDBMetadata(db_resource)
                 icSQLAlchemyDB.connections_pool[self._name] = self._metadata
 
         # Таблицы, зарегистрированные в БД
@@ -164,7 +164,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         # Буфер сессии
         self._session = None
 
-        if AutoScheme_:
+        if bAutoScheme:
             self.createScheme()
         if hasattr(self, 'countAttr'):
             self.countAttr('init_expr')
@@ -237,26 +237,26 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def getDBType(self):
         return self._db_type
 
-    def _createDBMetadata(self, DBRes_=None):
+    def _createDBMetadata(self, db_resource=None):
         """
         Создание метаданных работы с БД.
         """
         # В качестве указания БД может быть указано, только имя БД
-        if isinstance(DBRes_, str):
-            DBRes_ = resource.icGetRes(DBRes_, ext='src', bRefresh=False, nameRes=DBRes_)
+        if isinstance(db_resource, str):
+            db_resource = resource.icGetRes(db_resource, ext='src', bRefresh=False, nameRes=db_resource)
         try:
             metadata = None
             try:
-                connection_url = self._getConnectionURL(DBRes_)
-                connection_args = self._getConnectionArgs(DBRes_)
+                connection_url = self._getConnectionURL(db_resource)
+                connection_args = self._getConnectionArgs(db_resource)
                 # Параметры кодировки БД
-                encoding = DBRes_.get('encoding', 'UTF-8')
+                encoding = db_resource.get('encoding', 'UTF-8')
                 if isinstance(encoding, str):
                     # ВНИМАНИЕ! В Unicode этот параметр быть не должен
                     # иначе ошибка в sqlalchemy появляется.
                     # Надо обязательно переводить в строку
                     encoding = str(encoding)
-                self.to_unicode = DBRes_.get('convert_unicode', False)
+                self.to_unicode = db_resource.get('convert_unicode', False)
 
                 log.info(u'Создание связи с БД <%s : %s : %s>' % (self._name, connection_url, connection_args))
                 log.info('\t->to_unicode: <%s>' % self.to_unicode)
@@ -270,66 +270,66 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                                                      convert_unicode=self.to_unicode)
 
                 metadata = sqlalchemy.MetaData(db_engine)
-                metadata.name = DBRes_['name']
+                metadata.name = db_resource['name']
             except:
-                log.fatal(u'Ошибка создания связи с БД <%s>.' % DBRes_['name'])
+                log.fatal(u'Ошибка создания связи с БД <%s>.' % db_resource['name'])
                 dlgfunc.openErrBox(u'ОШИБКА',
-                                u'Ошибка создания связи с БД <%s>. Проверте параметры подключения!' % DBRes_['name'])
+                                u'Ошибка создания связи с БД <%s>. Проверте параметры подключения!' % db_resource['name'])
                 return None
             return metadata
         except:
             # Вывести сообщение об ошибке в лог
-            log.fatal(u'Ошибка создания связи c БД <%s>.' % DBRes_['name'])
-            dlgfunc.openErrBox(u'ОШИБКА', u'Ошибка создания связи c БД <%s>.' % DBRes_['name'])
+            log.fatal(u'Ошибка создания связи c БД <%s>.' % db_resource['name'])
+            dlgfunc.openErrBox(u'ОШИБКА', u'Ошибка создания связи c БД <%s>.' % db_resource['name'])
             return None
 
-    def _changeDialect(self, Buff_, NewDialect_):
+    def _changeDialect(self, buffer, new_dialect):
         """
         Смена диалекта в буфере.
         Так как диалек на каждый тип БД должен быть только один, надо
         у всех БД, при создании новой БД, менять диалект
         Смена происходит только у БД того же типа
         """
-        for name, db in Buff_.items():
+        for name, db in buffer.items():
             try:
                 metadata = db.getMetaData()
-                if metadata.engine._dialect.__class__.__name__ == NewDialect_.__class__.__name__:
-                    metadata.engine._dialect = NewDialect_
+                if metadata.engine._dialect.__class__.__name__ == new_dialect.__class__.__name__:
+                    metadata.engine._dialect = new_dialect
             except:
                 pass
-        return Buff_
+        return buffer
 
-    def _getConnectionURL(self, DBRes_=None):
+    def _getConnectionURL(self, db_resource=None):
         """
         Создать по ресурсу БД URL связи с БД.
         """
         url = dict()
-        url['drivername'] = self._connectionTypesCreate.setdefault(DBRes_['type'], None)
+        url['drivername'] = self._connectionTypesCreate.setdefault(db_resource['type'], None)
         if url['drivername'] is None:
             log.warning(u'Тип драйвера БД не поддерживается.')
             return None
         # Словарь
-        url['query'] = DBRes_.get('query', None)
+        url['query'] = db_resource.get('query', None)
 
-        if 'user' in DBRes_:
-            url['username'] = DBRes_['user']
-        if 'password' in DBRes_:
-            url['password'] = DBRes_['password']
-        if 'host' in DBRes_:
-            url['host'] = DBRes_['host']
-        if 'port' in DBRes_:
-            url['port'] = DBRes_['port']
-        if 'dbname' in DBRes_:
-            url['database'] = DBRes_['dbname']
-        if 'filename' in DBRes_ and 'path' in DBRes_:
+        if 'user' in db_resource:
+            url['username'] = db_resource['user']
+        if 'password' in db_resource:
+            url['password'] = db_resource['password']
+        if 'host' in db_resource:
+            url['host'] = db_resource['host']
+        if 'port' in db_resource:
+            url['port'] = db_resource['port']
+        if 'dbname' in db_resource:
+            url['database'] = db_resource['dbname']
+        if 'filename' in db_resource and 'path' in db_resource:
             full_path = ''
-            if DBRes_['filename'] and not DBRes_['path']:
-                full_path = os.path.abspath(DBRes_['filename'])
-            elif DBRes_['filename'] and DBRes_['path']:
-                full_path = os.path.abspath(os.path.join(DBRes_['path'], DBRes_['filename']))
+            if db_resource['filename'] and not db_resource['path']:
+                full_path = os.path.abspath(db_resource['filename'])
+            elif db_resource['filename'] and db_resource['path']:
+                full_path = os.path.abspath(os.path.join(db_resource['path'], db_resource['filename']))
             else:
                 log.warning(
-                    u'Ошибка определения файла БД: path: <%s> filename: <%s>' % (DBRes_['path'], DBRes_['filename']))
+                    u'Ошибка определения файла БД: path: <%s> filename: <%s>' % (db_resource['path'], db_resource['filename']))
             # Проверка существования папки БД
             dir_path = os.path.dirname(full_path)
             if not os.path.exists(dir_path):
@@ -343,39 +343,39 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         url_obj = sqlalchemy.engine.url.URL(**url)
         return str(url_obj)
 
-    def getConnectionDict(self, DBRes_=None):
+    def getConnectionDict(self, db_resource=None):
         """
         Создать по ресурсу БД словарь описания связи с БД.
         Эта функция необходима для получения словаря описания связи и
         последующем его сохранении в настроечных файлах.
-        @param DBRes_: Ресурс БД.
+        @param db_resource: Ресурс БД.
         @return: Словарь атрибутов связи с БД.
         """
         conn_dict = dict()
-        conn_dict['drivername'] = self._connectionTypesCreate.setdefault(DBRes_['type'], None)
+        conn_dict['drivername'] = self._connectionTypesCreate.setdefault(db_resource['type'], None)
         if conn_dict['drivername'] is None:
             log.warning(u'Тип драйвера БД не поддерживается.')
             return None
 
-        if 'user' in DBRes_:
-            conn_dict['username'] = DBRes_['user']
-        if 'password' in DBRes_:
-            conn_dict['password'] = DBRes_['password']
-        if 'host' in DBRes_:
-            conn_dict['host'] = DBRes_['host']
-        if 'port' in DBRes_:
-            conn_dict['port'] = DBRes_['port']
-        if 'dbname' in DBRes_:
-            conn_dict['database'] = DBRes_['dbname']
-        if 'filename' in DBRes_ and 'path' in DBRes_:
+        if 'user' in db_resource:
+            conn_dict['username'] = db_resource['user']
+        if 'password' in db_resource:
+            conn_dict['password'] = db_resource['password']
+        if 'host' in db_resource:
+            conn_dict['host'] = db_resource['host']
+        if 'port' in db_resource:
+            conn_dict['port'] = db_resource['port']
+        if 'dbname' in db_resource:
+            conn_dict['database'] = db_resource['dbname']
+        if 'filename' in db_resource and 'path' in db_resource:
             full_path = ''
-            if DBRes_['filename'] and not DBRes_['path']:
-                full_path = os.path.abspath(DBRes_['filename'])
-            elif DBRes_['filename'] and DBRes_['path']:
-                full_path = os.path.abspath(os.path.join(DBRes_['path'], DBRes_['filename']))
+            if db_resource['filename'] and not db_resource['path']:
+                full_path = os.path.abspath(db_resource['filename'])
+            elif db_resource['filename'] and db_resource['path']:
+                full_path = os.path.abspath(os.path.join(db_resource['path'], db_resource['filename']))
             else:
                 log.warning(
-                    u'Ошибка определения файла БД: path: <%s> filename: <%s>' % (DBRes_['path'], DBRes_['filename']))
+                    u'Ошибка определения файла БД: path: <%s> filename: <%s>' % (db_resource['path'], db_resource['filename']))
             # Проверка существования папки БД
             dir_path = os.path.dirname(full_path)
             if not os.path.exists(dir_path):
@@ -388,11 +388,11 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
 
         return conn_dict
 
-    def _getConnectionArgs(self, DBRes_=None):
+    def _getConnectionArgs(self, db_resource=None):
         """
         Создать дополнительные аргументы для связи с БД.
         """
-        args = self._connectionTypesConnectArgs.setdefault(DBRes_['type'], None)
+        args = self._connectionTypesConnectArgs.setdefault(db_resource['type'], None)
         if args:
             return args
         return {}
@@ -415,13 +415,13 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                             u'Ошибка определения связи с БД [%s]. Проверте параметры соединения' % self._metadata)
             return None
 
-    def createScheme(self, reCreate=True):
+    def createScheme(self, bReCreate=True):
         """
         Создать схему БД (все таблицы в БД).
-        @param reCreate: признак пересоздания схемы.
+        @param bReCreate: признак пересоздания схемы.
         """
         # Сначала отфильтровать таблицы которые не ссылаются на текущую БД
-        if not self._tables or reCreate:
+        if not self._tables or bReCreate:
             tab_resources = resource.getResourcesByType(ext='tab', pathRes=None)
             tab_resources = dict([(tab_res_name, tab_res) for tab_res_name, tab_res in tab_resources.items() \
                                   if tab_res])
@@ -539,17 +539,17 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def getTableByName(self, name):
         return self._tables.get(name, None)
 
-    def _isSQLReturnResult(self, SQLQuery_):
+    def _isSQLReturnResult(self, sql_query):
         """
         Проверка, должен ли результат запроса возвращать значения.
-        @param SQLQuery_: Строка запроса.
+        @param sql_query: Строка запроса.
         """
-        return bool(SQLQuery_.lower().find('select') != -1)
+        return bool(sql_query.lower().find('select') != -1)
 
-    def executeSQL(self, SQLQuery_, to_dict=False):
+    def executeSQL(self, sql_query, to_dict=False):
         """
         Выполнить строку запроса.
-        @param SQLQuery_: Строка запроса.
+        @param sql_query: Строка запроса.
         @param to_dict: Преобразовать все записи в словари?
         @return: Возвражает словарь {'__fields__':((..),(..),..),'__data__':[(..),(..),..]}.
             Или None в случае ошибки.
@@ -560,10 +560,10 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             # Доступ к конекшену DBAPI2
             connection = self._metadata.bind.connect().connection
             cursor = connection.cursor()
-            cursor.execute(SQLQuery_)
-            if self._isSQLReturnResult(SQLQuery_):
+            cursor.execute(sql_query)
+            if self._isSQLReturnResult(sql_query):
                 fields = cursor.description
-                # log.debug(u'SQL: %s RESULT FIELDS: %s' % (ic_str.toUnicode(SQLQuery_), fields))
+                # log.debug(u'SQL: %s RESULT FIELDS: %s' % (ic_str.toUnicode(sql_query), fields))
                 data = cursor.fetchall()
                 if data and to_dict:
                     new_data = [dict([(fields[i][0], val) for i, val in enumerate(rec)]) for rec in data]
@@ -571,7 +571,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                 result = copy.deepcopy({'__fields__': fields, '__data__': data})
             cursor.close()
         except:
-            err_txt = u'Ошибка выполнения запроса <%s>' % str(SQLQuery_)
+            err_txt = u'Ошибка выполнения запроса <%s>' % str(sql_query)
             log.fatal(err_txt)
             dlgfunc.openErrBox(u'ОШИБКА', err_txt)
 
@@ -579,10 +579,10 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
 
         return result
 
-    def executeSQLOne(self, SQLQuery_, to_dict=False):
+    def executeSQLOne(self, sql_query, to_dict=False):
         """
         Выполнить строку запроса и вернуть только одну запись.
-        @param SQLQuery_: Строка запроса.
+        @param sql_query: Строка запроса.
         @param to_dict: Преобразовать запись в словарь?
         @return: Возвражает словарь {'__fields__':((..),(..),..),'__data__':[(..),(..),..]}.
             Или None в случае ошибки.
@@ -593,10 +593,10 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             # Доступ к конекшену DBAPI2
             connection = self._metadata.bind.connect().connection
             cursor = connection.cursor()
-            cursor.execute(SQLQuery_)
-            if self._isSQLReturnResult(SQLQuery_):
+            cursor.execute(sql_query)
+            if self._isSQLReturnResult(sql_query):
                 fields = cursor.description
-                # log.debug(u'SQL: %s RESULT FIELDS: %s' % (ic_str.toUnicode(SQLQuery_), fields))
+                # log.debug(u'SQL: %s RESULT FIELDS: %s' % (ic_str.toUnicode(sql_query), fields))
                 data = cursor.fetchone()
                 if data and to_dict:
                     new_data = [dict([(fields[i][0], val) for i, val in enumerate(rec)]) for rec in data]
@@ -604,7 +604,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                 result = copy.deepcopy({'__fields__': fields, '__data__': data})
             cursor.close()
         except:
-            err_txt = u'Ошибка выполнения запроса <%s>' % str(SQLQuery_)
+            err_txt = u'Ошибка выполнения запроса <%s>' % str(sql_query)
             log.fatal(err_txt)
             dlgfunc.openErrBox(u'ОШИБКА', err_txt)
 
@@ -642,16 +642,16 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         """
         return lockfunc.UnLockTable(name)
 
-    def LockRec(self, name, id, LockRec_=None):
+    def LockRec(self, name, id, lock_record=None):
         """
         Блокировка записи.
         """
-        if LockRec_ is None:
+        if lock_record is None:
             comp_name = lockfunc.ComputerName()
             user_name = glob_functions.getCurUserName()
-            LockRec_ = str({'computer': comp_name, 'user': user_name})
-        result = lockfunc.LockRecord(name, id, LockRec_)
-        log.debug(u'Запись заблокирована <%s : %s : %s : %s>' % (name, id, LockRec_, result))
+            lock_record = str({'computer': comp_name, 'user': user_name})
+        result = lockfunc.LockRecord(name, id, lock_record)
+        log.debug(u'Запись заблокирована <%s : %s : %s : %s>' % (name, id, lock_record, result))
         if result != 0:
             return False
         return True

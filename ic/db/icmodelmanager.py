@@ -13,7 +13,7 @@ from ic.log import log
 __version__ = (0, 1, 1, 1)
 
 
-class icModelManager:
+class icModelManager(object):
     """
     Класс системного менеджера моделей на основе SQLAlchemy.
     """

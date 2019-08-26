@@ -72,7 +72,7 @@ ic_can_not_contain = None
 __version__ = (0, 0, 0, 2)
 
 
-class icODBCDataSource(icwidget.icSimple, ic_odbc.icODBCDataSourcePrototype):
+class icODBCDataSource(icwidget.icSimple, ic_odbc.icODBCDataSourceProto):
     """
     Источник данных ODBC.
     """
@@ -103,4 +103,4 @@ class icODBCDataSource(icwidget.icSimple, ic_odbc.icODBCDataSourcePrototype):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        ic_odbc.icODBCDataSourcePrototype.__init__(self, component)
+        ic_odbc.icODBCDataSourceProto.__init__(self, component)

@@ -21,49 +21,50 @@ __version__ = (1, 0, 1, 2)
 
 
 # --- Функции ---
-def editConnectionPostgreSQL(Parent_, DBResName_):
+def editConnectionPostgreSQL(parent, db_res_name):
     """
     Отредактировать ресурс описывающи связь с БД POstgreSQL.
-    @param Parent_: Родительское окно диалога.
-    @param DBResName_: Имя ресурса БД.
+    @param parent: Родительское окно диалога.
+    @param db_res_name: Имя ресурса БД.
     """
     # Сначала получить ресурс
-    db_res = res.icGetRes(DBResName_, 'src', nameRes=DBResName_)
-    db_res = icConnectionPostgresDlg(Parent_, db_res)
-    return res.icSaveRes(DBResName_, 'src', nameRes=DBResName_, resData=db_res)
+    db_res = res.icGetRes(db_res_name, 'src', nameRes=db_res_name)
+    db_res = getConnectionPostgresDlg(parent, db_res)
+    return res.icSaveRes(db_res_name, 'src', nameRes=db_res_name, resData=db_res)
 
 
-def icConnectionPostgresDlg(Parent_, Title_, DBRes_):
+def getConnectionPostgresDlg(parent, title, db_resource):
     """
     Функция вызова диалога для редактирования коннекшн стринга PostgreSQL.
-    @param Parent_: Родительское окно диалога.
-    @param Title_: Заголовок диалогового окна.
-    @param DBRes_: Ресурс БД.
+    @param parent: Родительское окно диалога.
+    @param title: Заголовок диалогового окна.
+    @param db_resource: Ресурс БД.
     """
     try:
         win_clear = False
-        if Parent_ is None:
+        if parent is None:
             id_ = wx.NewId()
-            Parent_ = wx.Frame(None, id_, '')
+            parent = wx.Frame(None, id_, '')
             win_clear = True
 
-        dlg = icConnectionPostgresDialog(Parent_)
-        dlg.setTitle(Title_)
-        if dlg.editConnectionString(DBRes_) == wx.ID_OK:
+        dlg = icConnectionPostgresDialog(parent)
+        dlg.setTitle(title)
+        if dlg.editConnectionString(db_resource) == wx.ID_OK:
             result = dlg.getDBResource()
             dlg.destroyDlg()
             # Удаляем созданное родительское окно
             if win_clear:
-                Parent_.Destroy()
+                parent.Destroy()
             return result
     finally:
         dlg.Destroy()
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Parent_.Destroy()
-        return None
-    
+           parent.Destroy()
+    return None
+
+
 #   Имя класса
 ic_class_name = 'icConnectionPostgresDialog'
 

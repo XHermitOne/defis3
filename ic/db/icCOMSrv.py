@@ -29,23 +29,23 @@ SPC_IC_COMSRV = {'type': COMSRV_TYPE,
 COM_EXCEL_APP_LNK = 'Excel.Application'
 COM_1CV8_APP_LNK = 'V8.Application'
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Класы ---
-class icCOMServerPrototype(icsourcinterface.icSourceInterface):
+class icCOMServerProto(icsourcinterface.icSourceInterface):
     """
     Источник данных COM сервер.
     """
-    def __init__(self, Resource_=None):
+    def __init__(self, resource_data=None):
         """
         Конструктор.
-        @param Resource_: Ресурс описания компонента.
+        @param resource_data: Ресурс описания компонента.
         """
-        icsourcinterface.icSourceInterface.__init__(self, Resource_)
+        icsourcinterface.icSourceInterface.__init__(self, resource_data)
 
-        self._comsrv_app_link = Resource_['app_link']
-        self._connection_string = Resource_['connection_string']
+        self._comsrv_app_link = resource_data['app_link']
+        self._connection_string = resource_data['connection_string']
         
         # Объект приложения COM сервера
         self.app = None

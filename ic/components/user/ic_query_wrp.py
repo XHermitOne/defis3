@@ -143,7 +143,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icQuery(icwidget.icSimple, icquery.icQueryPrototype):
+class icQuery(icwidget.icSimple, icquery.icQueryProto):
     """
     Запрос к источнику данных в табличном представлении.
     """
@@ -193,7 +193,7 @@ class icQuery(icwidget.icSimple, icquery.icQueryPrototype):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        icquery.icQueryPrototype.__init__(self, component)
+        icquery.icQueryProto.__init__(self, component)
         self.countAttr('init_expr')
 
     def getDataSource(self):

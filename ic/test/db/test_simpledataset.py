@@ -27,7 +27,7 @@ class TestBuff(unittest.TestCase):
         """ test ."""
         r1 = data[0]
         r2 = data[1]
-        buff = icsimpledataset.CChangeBuff([0])
+        buff = icsimpledataset.icDatasetChangeBuff([0])
         buff.reg_add(r1)
         k1 = ('1',)
         self.failUnlessEqual(buff.add_rows_dct[k1], r1)

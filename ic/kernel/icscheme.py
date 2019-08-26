@@ -98,7 +98,7 @@ class icDBSchemeDotUse(icDataDotUsePrototype):
         db = icDataDotUsePrototype.create(self, parent, *arg, **kwarg)
         if db:
             # создать схему сразу
-            return db.createScheme(reCreate=kwarg.get('reCreate', True))
+            return db.createScheme(bReCreate=kwarg.get('bReCreate', True))
         return db
         
 

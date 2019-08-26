@@ -247,7 +247,7 @@ def _onInitSpravTree(obj, bRefresh=True):
         if level_tab is not None:
             grid=evalSpace.GetObject(SPR_GRID_NAME)
             # Устанвливаем буфер изменений, [0] - задает список индексных колонок
-            buff = icsimpledataset.CChangeBuff([0])
+            buff = icsimpledataset.icDatasetChangeBuff([0])
             grid.GetDataset().set_change_buff(buff)
             dataset=grid.GetDataset()
             if dataset:

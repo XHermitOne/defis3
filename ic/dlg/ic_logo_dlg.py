@@ -24,14 +24,14 @@ __version__ = (0, 1, 1, 1)
 ic_proccess_dlg = None
 
 
-def load_proccess_deco(f):
+def load_proccess_deco(function):
     """
     Декоратор для индикатора процесса с одной полосой индикации (без указания
     родительского оконного объекта).
     """
 
     def func(*arg, **kwarg):
-        return loadProjectProccess(None, u'Подождите   ', f, arg, kwarg)
+        return loadProjectProccess(None, u'Подождите   ', function, arg, kwarg)
 
     return func
 
@@ -204,12 +204,12 @@ class icThreadLoadProjectDlg(wx.Dialog):
             self._cur_ani_state = 0
         return self._cur_ani_state
     
-    def drawFrame(self, NFrame_):
+    def drawFrame(self, n_frame):
         """
         Отрисовка кадра.
-        @param NFrame_: Номер кадра.
+        @param n_frame: Номер кадра.
         """
-        frame_bmp = self._ani[NFrame_]
+        frame_bmp = self._ani[n_frame]
         
         dc = wx.WindowDC(self._picture)
         dc.BeginDrawing()

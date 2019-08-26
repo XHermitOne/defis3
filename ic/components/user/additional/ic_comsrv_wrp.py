@@ -73,7 +73,7 @@ ic_can_not_contain = None
 #   Версия компонента
 __version__ = (0,0,0,1)
 
-class icCOMServer(icwidget.icSimple,ic_comsrv.icCOMServerPrototype):
+class icCOMServer(icwidget.icSimple, ic_comsrv.icCOMServerProto):
     """
     Источник данных COM сервер.
     """
@@ -104,7 +104,7 @@ class icCOMServer(icwidget.icSimple,ic_comsrv.icCOMServerPrototype):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self,parent,id,component,logType,evalSpace)
-        ic_comsrv.icCOMServerPrototype.__init__(self,component)
+        ic_comsrv.icCOMServerProto.__init__(self, component)
 
     def getConnectionString(self):
         """

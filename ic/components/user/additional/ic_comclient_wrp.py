@@ -69,7 +69,7 @@ ic_can_not_contain = None
 #   Версия компонента
 __version__ = (0,0,0,1)
 
-class icCOMClient(icwidget.icSimple,ic_comclient.icCOMClientPrototype):
+class icCOMClient(icwidget.icSimple, ic_comclient.icCOMClientProto):
     """
     COM клиент.
     """
@@ -100,7 +100,7 @@ class icCOMClient(icwidget.icSimple,ic_comclient.icCOMClientPrototype):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self,parent,id,component,logType,evalSpace)
-        ic_comclient.icCOMClientPrototype.__init__(self,component)
+        ic_comclient.icCOMClientProto.__init__(self, component)
 
     def getData(self,*args,**kwargs):
         """

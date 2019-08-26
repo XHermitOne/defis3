@@ -10,6 +10,8 @@ from . import edit_masked_txt_dlg_proto
 from ic.log import log
 from ic.dlg import dlgfunc
 
+__version__ = (0, 1, 1, 1)
+
 
 class icEditMaskedTextDlg(edit_masked_txt_dlg_proto.icEditMaskedTextDlgProto):
     """
@@ -111,6 +113,7 @@ def test():
     result = dlg.ShowModal()
     if result == wx.ID_OK:
         print(dlg.getEditText())
+
 
 if __name__ == '__main__':
     test()

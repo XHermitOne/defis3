@@ -25,20 +25,20 @@ SPC_IC_COMCLIENT = {'type': COMCLIENT_TYPE,
                     }
 
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 # --- Класы ---
-class icCOMClientPrototype:
+class icCOMClientProto:
     """
     COM клиент.
     """
-    def __init__(self, Resource_=None):
+    def __init__(self, resource_data=None):
         """
         Конструктор.
-        @param Resource_: Ресурс описания компонента.
+        @param resource_data: Ресурс описания компонента.
         """
-        self._com_server_name = Resource_['server']
+        self._com_server_name = resource_data['server']
 
     def getCOMServer(self):
         """

@@ -10,30 +10,29 @@ import wx
 from ic.utils import datetimefunc
 from ic.components import iccalendar
 
-# --- ДИАЛОГОВЫЕ ФУНКЦИИ ----
+__version__ = (0, 1, 1, 1)
 
 
-def icCalendarDlg(Parent_=None, DateFmt_=datetimefunc.DEFAULT_DATETIME_FMT):
+def openCalendarDlg(parent=None, date_fmt=datetimefunc.DEFAULT_DATETIME_FMT):
     """
     Диалоговое окно календаря.
-    @param Parent_: Родительское окно.
-    @param DateFmt_: Формат дыты.
+    @param parent: Родительское окно.
+    @param date_fmt: Формат дыты.
     @return: Возвращает строку выбранной даты в указанном формате или 
-    пустую строку, если дата не выбрана.
+        пустую строку, если дата не выбрана.
     """
     result = ''
     dlg = None
     win_clear = False
     try:
-        if Parent_ is None:
-           Parent_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = iccalendar.icCalendarDialog(Parent_)
+        dlg = iccalendar.icCalendarDialog(parent)
         if dlg.ShowModal() == wx.ID_OK:
             py_date = dlg.getDate()
-            result = datetimefunc.convertDateTimeFmt(py_date,
-                                                     datetimefunc.DEFAULT_DATETIME_FMT, DateFmt_)
+            result = datetimefunc.convertDateTimeFmt(py_date, datetimefunc.DEFAULT_DATETIME_FMT, date_fmt)
         else:
             result = ''
     finally:
@@ -42,14 +41,14 @@ def icCalendarDlg(Parent_=None, DateFmt_=datetimefunc.DEFAULT_DATETIME_FMT):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Parent_.Destroy()
+           parent.Destroy()
     return result
 
 
-def getDateDlg(Parent_=None):
+def getDateDlg(parent=None):
     """
     Диалоговое окно календаря.
-    @param Parent_: Родительское окно.
+    @param parent: Родительское окно.
     @return: Возвращает выбранную дату datetime.date.
         Или None, если нажата <Отмена>.
     """
@@ -57,11 +56,11 @@ def getDateDlg(Parent_=None):
     dlg = None
     win_clear = False
     try:
-        if Parent_ is None:
-           Parent_ = wx.Frame(None, -1, '')
+        if parent is None:
+           parent = wx.Frame(None, -1, '')
            win_clear = True
 
-        dlg = iccalendar.icCalendarDialog(Parent_)
+        dlg = iccalendar.icCalendarDialog(parent)
         if dlg.ShowModal() == wx.ID_OK:
             result = dlg.getDate()
         else:
@@ -72,5 +71,5 @@ def getDateDlg(Parent_=None):
 
         # Удаляем созданное родительское окно
         if win_clear:
-           Parent_.Destroy()
+           parent.Destroy()
     return result

@@ -338,7 +338,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
             db = icdb.icSQLAlchemyDB(db_res)
         
         # Таблица данных
-        # self._tab = icsqlalchemy.icSQLAlchemyTabClass(TabName_, DB_=db, SubSys_=TabSubSys_)
+        # self._tab = icsqlalchemy.icSQLAlchemyTabClass(TabName_, db_resource=db, SubSys_=TabSubSys_)
         self._tab = None
         self._tab = self.getTable()
         # Таблица данных, изменненных во времени

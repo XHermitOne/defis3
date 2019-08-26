@@ -54,7 +54,7 @@ SPC_IC_SIMPLE_DATASET = {'type': 'SimpleDataset',
 __version__ = (1, 1, 1, 1)
 
 
-class CChangeBuff(object):
+class icDatasetChangeBuff(object):
     """
     Буфер изменений датасета.
     """
@@ -187,7 +187,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         self.__sort_col_num = col
 
-    def ConvertTxtToSruct(self):
+    def txt2sruct(self):
         """
         Подготавливаем данные.
         """

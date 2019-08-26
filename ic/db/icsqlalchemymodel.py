@@ -9,7 +9,7 @@
 SQLALCHEMY_MODEL_TYPE = 'SQLAlchemyModel'
 
 
-class icSQLAlchemyModelProto():
+class icSQLAlchemyModelProto(object):
     """
     Модель схемы БД на движке SQLAlchemy.
     """
