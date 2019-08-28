@@ -59,7 +59,7 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
         n_doc = u'%s.%s.%s' % (self.get_sector_subcode(sType),
                                self.get_doc_type_subcode(dbf_record['TYP_DOC'], dbf_record['IN_OUT']),
                                str_n_doc)
-        alt_n_doc = dbf_record['ALTNDOC']
+        alt_n_doc = dbf_record['NOMDOC']
         dt_doc = dbf_record['DTDOC']
         dt_obj = dbf_record['DATE1']
         dt_oper = dbf_record['DTOPER']

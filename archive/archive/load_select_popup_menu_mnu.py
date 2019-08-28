@@ -157,6 +157,8 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             return None
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
             return None
+        elif dbf_filename.startswith('O') and file_ext == 'ATG':
+            return None
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
             label += u'Продажа. Документы.'
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
@@ -164,19 +166,35 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         else:
             label += u'Документы'
 
-        prefix = u' за'
+        prefix = u' '
         try:
-            if int(dbf_filename[2:5]) and not dbf_filename.startswith('U'):
+            if not dbf_filename[2:5].isdigit() and not dbf_filename.startswith('0'):
+                # Это основные средства. Акты
+                if dbf_filename[2:5].upper() == 'OC1':
+                    prefix += 'Акты приема-передачи '
+                elif dbf_filename[2:5].upper() == 'OC3':
+                    prefix += 'Акты модернизации '
+                elif dbf_filename[2:5].upper() == 'OC4':
+                    prefix += 'Акты списания '
+                elif dbf_filename[2:5].upper() == 'OCA':
+                    prefix += 'Акты списания автотранспорта '
+                quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
+                if quartal:
+                    prefix += u'за %d квартал' % quartal
+
+            elif int(dbf_filename[2:5]) and not dbf_filename.startswith('U'):
                 # Если цифры склада определены, то считаем что
                 # следующие 2 цифры это месяц ...
                 month = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
                 str_month = datefunc.MONTHS[month - 1] if 1 <= month <= 12 else u''
-                prefix += u' ' + str_month
+                prefix += u'за ' + str_month
             elif int(dbf_filename[2:5]) == 0:
                 # ... иначе это квартал
                 quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
                 if quartal:
-                    prefix += u' %d квартал' % quartal
+                    prefix += u'за %d квартал' % quartal
+            else:
+                log.warning(u'Ошибка определения префикса по имени файла <%s>' % dbf_filename)
         except:
             log.fatal(u'Ошибка определения префикса. Файл <%s>' % dbf_filename)
 

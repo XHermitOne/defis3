@@ -501,6 +501,25 @@ class icListCtrlManager(object):
                 # if align:
                 #     ctrl.SetColLabelAlignment()
             return True
+        elif isinstance(ctrl, wx.dataview.DataViewListCtrl):
+            result = True
+            for i_col, col in enumerate(cols):
+                if isinstance(col, dict):
+                    label = col.get('label', u'')
+                    width = col.get('width', 100)
+                elif isinstance(col, list) or isinstance(col, tuple):
+                    label = col[0]
+                    width = col[1]
+                else:
+                    label = u''
+                    width = 100
+                if i_col >= ctrl.GetColumnCount():
+                    ctrl.AppendTextColumn(label=label, width=width)
+                else:
+                    column = ctrl.GetColumn(i_col)
+                    column.SetTitle(label)
+                    column.SetWidth(width)
+            return result
         else:
             log.warning(u'Добавление колонок списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
         return False
@@ -670,9 +689,24 @@ class icListCtrlManager(object):
             return True
         elif isinstance(ctrl, wx.grid.Grid):
             ctrl.AppendRows(1)
+
+            colour = None
+            # Определяем цвет фона линий
+            row_idx = ctrl.GetNumberRows() - 1
+            if row_idx != -1:
+                if evenBackgroundColour and not (row_idx & 1):
+                    # Добавляемая строка четная?
+                    colour = self.defaultEvenRowsBGColour() if wxfunc.isDefaultColour(evenBackgroundColour) else evenBackgroundColour
+                elif oddBackgroundColour and (row_idx & 1):
+                    # Добавляемая строка не четная?
+                    colour = self.defaultOddRowsBGColour() if wxfunc.isDefaultColour(oddBackgroundColour) else oddBackgroundColour
+            # Заполняем строку
             for i_col, cell in enumerate(row):
                 if cell is not None:
-                    ctrl.SetCellValue(ctrl.GetNumberRows()-1, i_col, str(cell))
+                    ctrl.SetCellValue(row_idx, i_col, str(cell))
+                    if colour:
+                        # Если цвет фона линии определен, то устанавливаем
+                        ctrl.SetCellBackgroundColour(row=row_idx, col=i_col, colour=colour)
             return True
         else:
             log.warning(u'Добавление колонок списка контрола типа <%s> не поддерживается' % ctrl.__class__.__name__)
@@ -1323,10 +1357,13 @@ class icListCtrlManager(object):
 
     def setItemImage_list_ctrl(self, ctrl=None, item=None, image=None):
         """
-        Установить картинку элемента дерева.
+        Установить картинку элемента списка.
         @param ctrl: Объект контрола wx.ListCtrl.
-        @param item: Элемент списка. Если None, то имеется текущий выбранный элемент.
-        @param image: Объект картинки wx.Bitmap. Если не определен, то картинка удаляется.
+        @param item: Элемент списка.
+            Элемент списка может задаваться как индексом так и объектом wx.ListItem.
+            Если None, то имеется текущий выбранный элемент.
+        @param image: Объект картинки wx.Bitmap.
+            Если не определен, то картинка удаляется.
         @return: True/False.
         """
         if ctrl is None:
@@ -1334,16 +1371,26 @@ class icListCtrlManager(object):
             return None
 
         if item is None:
-            item = self.getItemSelectedIdx(ctrl)
+            item_idx = self.getItemSelectedIdx(ctrl)
+            item = ctrl.GetItem(item_idx)
+        elif isinstance(item, wx.ListItem):
+            item_idx = item.GetId()
+        elif isinstance(item, int):
+            item_idx = item
+            item = ctrl.GetItem(item_idx)
 
         if image is None:
             ctrl.SetItemImage(item, None)
         else:
-            if item >= 0:
-                img_idx = self.getImageIndex_list_ctrl(ctrl=ctrl, image=image, auto_add=True)
-                ctrl.SetItemImage(item, img_idx)
+            if item_idx >= 0:
+                try:
+                    img_idx = self.getImageIndex_list_ctrl(ctrl=ctrl, image=image, auto_add=True)
+                    # log.debug(u'Индекс образа в списке [%d]' % img_idx)
+                    ctrl.SetItemImage(item_idx, img_idx, selImage=wx.TreeItemIcon_Normal)
+                except:
+                    log.fatal(u'Ошибка установки образа [%d] элемента списка <%s>' % (img_idx, item))
             else:
-                log.warning(u'Не корректный индекс строки <%s>' % str(item))
+                log.warning(u'Не корректный индекс строки <%s>' % str(item_idx))
         return True
 
     def getImageIndex_list_ctrl(self, ctrl=None, image=None, auto_add=True):
