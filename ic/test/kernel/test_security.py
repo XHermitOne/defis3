@@ -100,7 +100,7 @@ class TestUser(unittest.TestCase):
             self.failUnlessEqual('Root login', False)
             
         root.Login('root')
-        self.failUnlessEqual(root.getRoles()[0].id, 'Admin')
+        self.failUnlessEqual(root.getRoles()[0].id, 'admin')
         # Проверяем, что роли bReadonly атрибут
         try:
             root.roles = []
@@ -132,7 +132,7 @@ class TestBaseKernel(unittest.TestCase):
         
         kernel.Login('root', None)
         root = kernel.getUser()
-        self.failUnlessEqual(root.getRoles()[0].id, 'Admin')
+        self.failUnlessEqual(root.getRoles()[0].id, 'admin')
         #print '>>> context=', kernel.context.get_kernel()
         kernel.Logout()
         user = kernel.getUser()

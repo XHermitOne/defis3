@@ -185,7 +185,7 @@ class icSpravMultipleChoiceComboCtrlProto(wx.ComboCtrl):
             self._selected_codes = list()
 
         if self._sprav is not None:
-            result = self._sprav.Hlp(field='name', parentForm=self,
+            result = self._sprav.Hlp(field='name', parent=self,
                                      view_fields=self._view_fieldnames,
                                      search_fields=self._search_fieldnames)
             if result[0] in (0, coderror.IC_HLP_OK):

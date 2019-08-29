@@ -95,7 +95,7 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-### Функции редактирования
+# Функции редактирования
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).

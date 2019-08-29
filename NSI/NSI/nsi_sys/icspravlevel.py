@@ -8,7 +8,7 @@ from ic.components import icwidget
 from ic.log import log
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # --- Спецификация ---
@@ -31,19 +31,19 @@ SPC_IC_SPRAVLEVEL = {'hlp_form': None,      # Форма для выбора к�
                      }
 
 
-class icSpravLevelInterface:
+class icSpravLevelInterface(object):
     """
     Класс абстрактного уровня справочника. Реализует только интерфейс.
     """
 
-    def __init__(self, SpravParent_, Index_=-1):
+    def __init__(self, parent_sprav, index=-1):
         """
         Конструктор.
-        @param SpravParent_: Справочник-родитель.
-        @param Index_: Индекс уровня в справочнике-родителе.
+        @param parent_sprav: Справочник-родитель.
+        @param index: Индекс уровня в справочнике-родителе.
         """
-        self._sprav = SpravParent_
-        self._index = Index_
+        self._sprav = parent_sprav
+        self._index = index
 
     def getEditFormName(self):
         """
@@ -69,10 +69,10 @@ class icSpravLevelInterface:
         """
         return {}
 
-    def labelsNotice(self, Labels_=None):
+    def labelsNotice(self, labels=None):
         """
         Список замененных имен полей-реквизитов справочника.
-        @param Labels_: Список имен полей-реквизитов, которые необходимо заменить.
+        @param labels: Список имен полей-реквизитов, которые необходимо заменить.
         """
         return None
 
@@ -142,13 +142,13 @@ class icSpravLevelPrototype(icSpravLevelInterface):
     Класс уровня справочника.
     """
 
-    def __init__(self, SpravParent_, Index_=-1):
+    def __init__(self, parent_sprav, index=-1):
         """
         Конструктор.
-        @param SpravParent_: Справочник-родитель.
-        @param Index_: Индекс уровня в справочнике-родителе.
+        @param parent_sprav: Справочник-родитель.
+        @param index: Индекс уровня в справочнике-родителе.
         """
-        icSpravLevelInterface.__init__(self, SpravParent_, Index_)
+        icSpravLevelInterface.__init__(self, parent_sprav, index)
         # Форма для редактирования данных текущего уровня.
         # self._edit_form_name=None
         # Форма для выбора данных текущего уровня.
@@ -156,25 +156,25 @@ class icSpravLevelPrototype(icSpravLevelInterface):
         # Длина кода уровня
         # self._cod_len=None
 
-    def labelsNotice(self, Labels_=None):
+    def labelsNotice(self, labels=None):
         """
         Список замененных имен полей-реквизитов справочника.
-        @param Labels_: Список имен полей-реквизитов, которые необходимо заменить.
+        @param labels: Список имен полей-реквизитов, которые необходимо заменить.
         """
         try:
-            if Labels_ is None:
-                Labels_ = ['cod', 'name', 'access',
-                           's1', 's2', 's3',
-                           'n1', 'n2', 'n3',
-                           'f1', 'f2', 'f3']
+            if labels is None:
+                labels = ['cod', 'name', 'access',
+                          's1', 's2', 's3',
+                          'n1', 'n2', 'n3',
+                          'f1', 'f2', 'f3']
             notice_dict = self.getNoticeDict()
 
             for old_label, new_label in notice_dict.items():
-                if old_label in Labels_:
-                    Labels_[Labels_.index(old_label)] = new_label
+                if old_label in labels:
+                    labels[labels.index(old_label)] = new_label
         except:
             log.fatal(u'Ошибка определения списка замен имен реквизитов')
-        return Labels_
+        return labels
 
     def isNext(self):
         """

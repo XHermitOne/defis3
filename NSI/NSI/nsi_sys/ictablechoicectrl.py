@@ -12,7 +12,7 @@ from ic.log import log
 from ic.components import icwidget
 from ic.utils import strfunc
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # Спецификация
 SPC_IC_TABLECHOICECTRL = {'table': None,  # Паспорт таблицы/запроса источника данных

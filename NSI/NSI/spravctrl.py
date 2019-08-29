@@ -81,7 +81,7 @@ def HlpSprav(typSprav, ParentCode=(None,),
         sprav_manager = createSpravManager(SpravManager)
         sprav_obj = getattr(sprav_manager, typSprav)
         # print('<<<!>>>', sprav_manager.container.getAll().keys())
-        return sprav_obj.Hlp(ParentCode, field, form, parentForm, DateTime_=datatime)
+        return sprav_obj.Hlp(ParentCode, field, form, parentForm, dt=datatime)
     except:
         # print(sprav_obj)
         log.fatal(u'Ошибка выбора из справочника <%s>' % typSprav)
@@ -121,7 +121,7 @@ def CtrlSprav(typSprav, val, old=None,
             SpravManager = DEFAULT_SPRAV_MANAGER_NAME
         sprav_manager = createSpravManager(SpravManager)
         sprav_obj = getattr(sprav_manager, typSprav)
-        return sprav_obj.Ctrl(val, old, field, flds, bCount, cod, DateTime_=datatime)
+        return sprav_obj.Ctrl(val, old, field, flds, bCount, cod, dt=datatime)
     except:
         log.fatal(u'Ошибка контроля наличия значения <%s> в справочнике <%s>' % (str(val), typSprav))
         return None
@@ -149,7 +149,7 @@ def FSprav(typSprav, cod, field='name', datatime=None, SpravManager=None):
             SpravManager = DEFAULT_SPRAV_MANAGER_NAME
         sprav_manager = createSpravManager(SpravManager)
         sprav_obj = getattr(sprav_manager, typSprav)
-        return sprav_obj.Find(cod, field, DateTime_=datatime)
+        return sprav_obj.Find(cod, field, dt=datatime)
     except:
         log.fatal(u'Ошибка поиска по коду <%s> в справочнике <%s>' % (str(cod), typSprav))
         return None

@@ -193,7 +193,7 @@ class icSpravChoiceComboCtrl(parentModule.icSpravChoiceComboCtrlProto, icwidget.
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
 
-        # self.Bind(wx.EVT_TEXT, self.OnSelect, id=id)
+        # self.Bind(wx.EVT_TEXT, self.onSelect, id=id)
         self.BindICEvt()
 
     def getSpravPsp(self):
@@ -221,7 +221,7 @@ class icSpravChoiceComboCtrl(parentModule.icSpravChoiceComboCtrlProto, icwidget.
         prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
                              bCounter=bCounter, progressDlg=progressDlg)
 
-    def OnSelect(self, event):
+    def onSelect(self, event):
         """
         Обработчик изменения комбобокса.
         """
@@ -242,4 +242,4 @@ class icSpravChoiceComboCtrl(parentModule.icSpravChoiceComboCtrlProto, icwidget.
         prev_selected_code = self.getCode()
         selected_code = self.choiceSprav()
         if prev_selected_code != selected_code:
-            self.OnSelect(event=None)
+            self.onSelect(event=None)

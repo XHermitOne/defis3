@@ -323,7 +323,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def DictToTree(self, dict):
         """
         Преобразовать словарь из файла *.acc в словарно-списковую структуру следующего формата:
-        ['Admin',{'Users':['User1','User2']},
+        ['admin',{'Users':['User1','User2']},
         {'Dirs':[{'Dir1':['Dir1_1','Dir1_2']},'Dir2']}].
         Если элемент списка - строка, то это НЕ группа.
         Если элемент списка - словарь, то это группа.
@@ -338,7 +338,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
         for key in dict.keys():
             if dict[key]['group'] is not None:
                 rel.append((key, dict[key]['group']))
-                # формируем словарь уровней элементов, формата: {'Admin':1,'Users':1,'User1':1,...}
+                # формируем словарь уровней элементов, формата: {'admin':1,'Users':1,'User1':1,...}
                 lev[dict[key]['group']] = 1
                 lev[key] = 1
         # дополнить словарно-списковую структуру tree, ключами, которые 'остались за бортом'

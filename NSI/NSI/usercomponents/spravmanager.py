@@ -131,10 +131,10 @@ class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerPrototype):
             self.childCreator(bCounter, progressDlg)
         
     # Установка ограничения администрирования/редактирования справочников
-    security.declareProtected('sprav_admin', 'Admin')
+    security.declareProtected('sprav_admin', 'admin')
 
-    def Admin(self, *args, **kwargs):
-        return parentModule.icSpravManagerPrototype.Admin(self, *args, **kwargs)
+    def admin(self, *args, **kwargs):
+        return parentModule.icSpravManagerPrototype.admin(self, *args, **kwargs)
     
     def childCreator(self, bCounter, progressDlg):
         """

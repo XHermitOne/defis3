@@ -484,23 +484,23 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
 
     setNSIPsp = setSpravByPsp
 
-    def init(self, SpravPsp_=None, RootCode_=None, ViewAll_=False,
+    def init(self, sprav_psp=None, root_code=None, bViewAll=False,
              complex_load=True):
         """
         Инициализация выпадающего дерева справочника.
         ВНИМАНИЕ! После создания объекта надо обязательно вызвать
         init метод для построения дерева справочника.
-        @param SpravPsp_: Паспорт справочника-источника данных.
-        @param RootCode_: Корневой элемент разрешенной ветки выбора.
-        @param ViewAll_: Показывать все элементы справочника?
+        @param sprav_psp: Паспорт справочника-источника данных.
+        @param root_code: Корневой элемент разрешенной ветки выбора.
+        @param bViewAll: Показывать все элементы справочника?
         @param complex_load: Комплесная загрузка всех данных справочника.
         """
-        self.view_code = RootCode_
-        self.view_all = ViewAll_
+        self.view_code = root_code
+        self.view_all = bViewAll
         self.root_code = None if self.view_all else self.view_code
 
-        if SpravPsp_:
-            self._data_source = icspravtreedatasource.icSpravTreeDataSource(SpravPsp_, self.root_code)
+        if sprav_psp:
+            self._data_source = icspravtreedatasource.icSpravTreeDataSource(sprav_psp, self.root_code)
             self._combo_popup.root_name = self._data_source.getSpravDescription()
 
         if self._data_source:
@@ -589,38 +589,38 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
         """
         return None
 
-    def _isNotSelectable(self, ViewCode_, CurCode_):
+    def _isNotSelectable(self, view_code, cur_code):
         """
         Проверка на элемент, который можно выбрать.
         """
-        if ViewCode_:
+        if view_code:
             # Элементы проверяются только если
             # есть ограничение на выбор
-            return self.view_all and ((CurCode_ == ViewCode_) or (ViewCode_ not in CurCode_))
+            return self.view_all and ((cur_code == view_code) or (view_code not in cur_code))
         return False
 
-    def _isDisabledItem(self, ViewCode_, LevelEnable_, DataSrcItem_):
+    def _isDisabledItem(self, view_code, level_enable, data_src_item):
         """
         Проверка элемента выключен он или нет.
         """
-        if DataSrcItem_ is None:
+        if data_src_item is None:
             return True
 
-        if ViewCode_:
+        if view_code:
             # Элементы проверяются только если
             # есть ограничение на выбор
-            cur_code = DataSrcItem_.getCode()
-            return self.view_all and ((cur_code == ViewCode_) or (ViewCode_ not in cur_code))
-        elif LevelEnable_ > 0:
-            level_idx = DataSrcItem_.getLevelIdx()
-            return LevelEnable_ > level_idx
+            cur_code = data_src_item.getCode()
+            return self.view_all and ((cur_code == view_code) or (view_code not in cur_code))
+        elif level_enable > 0:
+            level_idx = data_src_item.getLevelIdx()
+            return level_enable > level_idx
         return False
 
-    def _addBranch(self, DataItem_, ParentItem_=None):
+    def _addBranch(self, data_item, parent_item=None):
         """
         Добавить ветку дерева элементов.
         """
-        children = DataItem_.getChildren()
+        children = data_item.getChildren()
 
         for child in children:
             # Установить текущий обрабатываемый элемент данных
@@ -632,7 +632,7 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
 
             # Т.к. корневой элемент скрыт, то родитель у всех объектов
             # выставляется None
-            item = self._combo_popup.AddItem(label, parent=ParentItem_, data=child)
+            item = self._combo_popup.AddItem(label, parent=parent_item, data=child)
             if self._isDisabledItem(self.view_code, self.getLevelEnable(), child):
                 self._combo_popup.tree.SetItemTextColour(item, DEFAULT_DISABLE_ITEM_COLOUR)
             else:
@@ -645,11 +645,11 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
 
         self._cur_data_item = None
 
-    def _addTree(self, DataItem_, ParentItem_=None):
+    def _addTree(self, data_item, parent_item=None):
         """
         Добавить все дерево элементов.
         """
-        children = DataItem_.getChildren()
+        children = data_item.getChildren()
 
         for child in children:
             # Установить текущий обрабатываемый элемент данных
@@ -661,7 +661,7 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
 
             # Т.к. корневой элемент скрыт, то родитель у всех объектов
             # выставляется None
-            item = self._combo_popup.AddItem(label, parent=ParentItem_, data=child)
+            item = self._combo_popup.AddItem(label, parent=parent_item, data=child)
             if self._isDisabledItem(self.view_code, self.getLevelEnable(), child):
                 self._combo_popup.tree.SetItemTextColour(item, DEFAULT_DISABLE_ITEM_COLOUR)
             else:
@@ -670,7 +670,7 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
             if child.hasChildren():
                 # Если есть дочерние элементы у текущего элемента,
                 # то сделать фиктивный элемент.
-                self._addTree(child, ParentItem_=item)
+                self._addTree(child, parent_item=item)
 
         self._cur_data_item = None
 
@@ -692,21 +692,21 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
 
         event.Skip()
 
-    def findItem(self, FindStr_, RunFindItemFunc_=True, *args, **kwargs):
+    def findItem(self, find_text, bRunFindItemFunc=True, *args, **kwargs):
         """
         Найти элемент по строке поиска.
-        @param FindStr_: Строка поиска.
-        @param RunFindItemFunc_: Запустить альтернативную функцию поиска?
+        @param find_text: Строка поиска.
+        @param bRunFindItemFunc: Запустить альтернативную функцию поиска?
         @return: Возвращает элемент дерева источника данных.
         """
-        if RunFindItemFunc_:
-            kwargs['FindStr_'] = FindStr_
+        if bRunFindItemFunc:
+            kwargs['find_text'] = find_text
             result = self.getFindItemFunc(*args, **kwargs)
             if result:
                 return result
 
         if self._data_source:
-            return self._data_source.find(FindStr_)
+            return self._data_source.find(find_text)
         return None
 
     def onTextEnter(self, event):
@@ -724,7 +724,7 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
             # Произвести поиск
             label = self.findItem(find_str)
 
-        code = self.getSelectedCode(Value_=label)
+        code = self.getSelectedCode(value=label)
         data_item = self._data_source.findItemByCode(code)
 
         if label and not self._isDisabledItem(self.view_code, self.getLevelEnable(), data_item):
@@ -734,54 +734,54 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
 
         event.Skip()
 
-    def getSelectedCode(self, SelectedCodeFunc_=None, Value_=None):
+    def getSelectedCode(self, celected_code_func=None, value=None):
         """
         Получить выбранный код.
-        @param SelectedCodeFunc_: Альтернативная функция полчения кода.
+        @param celected_code_func: Альтернативная функция полчения кода.
         @return: Возвращает выбранный код в виде строки или None,
             если код не выбран.
         """
-        if SelectedCodeFunc_:
-            return SelectedCodeFunc_
+        if celected_code_func:
+            return celected_code_func
 
         return self.get_selected_sprav_code()
 
-    def get_selected_sprav_code(self, AltCodeField_=None):
+    def get_selected_sprav_code(self, alt_code_field=None):
         """
         Получить выбранный код справочника.
-        @param AltCodeField_: Поле хранения альтернативного кода.
+        @param alt_code_field: Поле хранения альтернативного кода.
         """
-        return self._combo_popup.get_selected_sprav_code(AltCodeField_)
+        return self._combo_popup.get_selected_sprav_code(alt_code_field)
 
-    def set_selected_sprav_code(self, Code_, AltCodeField_=None):
+    def set_selected_sprav_code(self, code, alt_code_field=None):
         """
         Установить выбранный код справочника.
-        @param Code_: Код справочника.
-        @param AltCodeField_: Поле хранения альтернативного кода.
+        @param code: Код справочника.
+        @param alt_code_field: Поле хранения альтернативного кода.
         """
-        self._oldCode = Code_
-        value, pref = self._combo_popup.set_selected_sprav_code(self._data_source, Code_, AltCodeField_)
+        self._oldCode = code
+        value, pref = self._combo_popup.set_selected_sprav_code(self._data_source, code, alt_code_field)
         if value or pref:
             str_value = value if isinstance(value, str) else u''
             return self.SetValue(str_value)
         else:
             return self.SetValue(u'')
 
-    def setSelectedCode(self, Value_=None, RunSelectedCodeFunc_=True, *args, **kwargs):
+    def setSelectedCode(self, value=None, bRunSelectedCodeFunc=True, *args, **kwargs):
         """
         Установить выбранный код.
-        @param Value_: Значение установливаемого кода.
-        @param RunSelectedCodeFunc_: Запустить альтернативную функцию установки кода.
+        @param value: Значение установливаемого кода.
+        @param bRunSelectedCodeFunc: Запустить альтернативную функцию установки кода.
         @return: Возвращает выбранный код в виде строки или None,
             если код не выбран.
         """
-        if RunSelectedCodeFunc_:
-            kwargs['value'] = Value_
+        if bRunSelectedCodeFunc:
+            kwargs['value'] = value
             result = self.setSelectedCodeFunc(*args, **kwargs)
             if result:
                 return result
 
-        code = Value_
+        code = value
         self.set_selected_sprav_code(code)
         return True
 
@@ -791,22 +791,22 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
         """
         return self.getSelectedCode()
     
-    def setValue(self, Value_):
+    def setValue(self, value):
         """
         Установка значения контрола.
         ВНИМАНИЕ! Значение может задаваться в виде строки,
         а может в виде словаря-записи справочника.
         """
         code = None
-        if isinstance(Value_, str):
-            code = Value_
-        elif isinstance(Value_, dict):
-            code = Value_.get('cod', None)
-        elif Value_ is None:
+        if isinstance(value, str):
+            code = value
+        elif isinstance(value, dict):
+            code = value.get('cod', None)
+        elif value is None:
             code = None
             self._combo_popup.curitem = None
         else:
-            log.warning(u'Не корректный тип <%s> значения контрола %s' % (type(Value_), self.__class__.__name__))
+            log.warning(u'Не корректный тип <%s> значения контрола %s' % (type(value), self.__class__.__name__))
         return self.setSelectedCode(code)
     
     def getSelectedRecord(self):

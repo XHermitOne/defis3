@@ -8,7 +8,7 @@
 from . import icsprav
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 # --- Specification ---
 SPC_IC_DBCONSTANTS = {'type': 'DBConstants',
@@ -22,10 +22,10 @@ class icDBConstantsPrototype(icsprav.icSpravPrototype):
     """
     Класс констант.
     """
-    def __init__(self, SpravManager_=None, Name_=None):
+    def __init__(self, sprav_manager=None, name=None):
         """
         Конструктор.
-        @param SpravManager_: Объект менеджера справочника.
-        @param Name_: Имя в списке менеджера справочников.
+        @param sprav_manager: Объект менеджера справочника.
+        @param name: Имя в списке менеджера справочников.
         """
-        icsprav.icSpravPrototype.__init__(self, SpravManager_, Name_)
+        icsprav.icSpravPrototype.__init__(self, sprav_manager, name)

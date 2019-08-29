@@ -20,7 +20,7 @@ from ic.kernel import icexceptions
 from ic.engine import glob_functions
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Константы
@@ -35,12 +35,12 @@ class icSpravManagerContainer(object):
         справочникам ч/з точку из менеджера справочников.
     """
 
-    def __init__(self, ParentSpravManager_):
+    def __init__(self, parent_sprav_manager):
         """
         Конструктор.
 
         """
-        self._parent = ParentSpravManager_
+        self._parent = parent_sprav_manager
         # Справочники и перечисления вместе
         self.__dict__['_all'] = {}
         # Справочники, разложенные по именам
@@ -78,13 +78,13 @@ class icSpravManagerContainer(object):
         """
         return name in self._all
 
-    def setSprav(self, Sprav_=None):
+    def setSprav(self, sprav=None):
         """
         Установить справочник/перечисление.
         """
-        if Sprav_:
-            self._all[Sprav_.name] = Sprav_
-            self._all[Sprav_.name]._sprav_manager = self._parent
+        if sprav:
+            self._all[sprav.name] = sprav
+            self._all[sprav.name]._sprav_manager = self._parent
 
     def getSpravByName(self, SpravName_):
         """
@@ -128,12 +128,12 @@ class icSpravManagerPrototype(icSpravManagerInterface):
 
     container = property(getContainer)
 
-    def getSpravByName(self, SpravName_):
+    def getSpravByName(self, sprav_name):
         """
         Получить справочник по имени.
-        @param SpravName_: Имя справочника.
+        @param sprav_name: Имя справочника.
         """
-        return self._container.getSpravByName(SpravName_)
+        return self._container.getSpravByName(sprav_name)
 
     def __nonzero__(self):
         """
@@ -155,63 +155,63 @@ class icSpravManagerPrototype(icSpravManagerInterface):
             except KeyError:
                 return None
 
-    def Admin(self, ParentForm_=None,
-              Title_=u'Администрирование справочников',
-              MsgTxt_=u'Выберите справочник для редактирования:'):
+    def admin(self, parent=None,
+              title=u'Администрирование справочников',
+              prompt_text=u'Выберите справочник для редактирования:'):
         """
         Администрирование справочной системы, описываемой данным менеджером.
-        @param ParentForm_: Родительское окно для формы редактирования справочника.
+        @param parent: Родительское окно для формы редактирования справочника.
         """
-        if ParentForm_ is None:
-            ParentForm_ = glob_functions.getMainWin()
+        if parent is None:
+            parent = glob_functions.getMainWin()
         spravs = self.getContainer().getAll().values()
         choice_str = [sprav.name+u' - '+sprav.description if sprav.description else u'' for sprav in spravs]
-        idx = dlgfunc.getSingleChoiceIdxDlg(ParentForm_, Title_, MsgTxt_, choice_str)
+        idx = dlgfunc.getSingleChoiceIdxDlg(parent, title, prompt_text, choice_str)
         if idx >= 0:
             edit_sprav = spravs[idx]
             log.info(u'Редактирование справочника: %d %s' % (idx, edit_sprav.name))
             try:
-                edit_sprav.edit(parent=ParentForm_)
+                edit_sprav.edit(parent=parent)
             except icexceptions.MethodAccessDeniedException:
                 wx.MessageBox(u'У пользователя [%s] нет прав на редактирвоние справочников.' % ic.getCurUserName())
 
-    def EditSprav(self, SpravName_, ParentForm_=None):
+    def editSprav(self, sprav_name, parent=None):
         """
         Вызов редактирования справочника по имени.
-        @param SpravName_: Имя справочника.
-        @param ParentForm_: Родительское окно для формы редактирования справочника.
+        @param sprav_name: Имя справочника.
+        @param parent: Родительское окно для формы редактирования справочника.
         """
-        if ParentForm_ is None:
-            ParentForm_ = glob_functions.getMainWin()
+        if parent is None:
+            parent = glob_functions.getMainWin()
 
-        edit_sprav = self.getSpravByName(SpravName_)
+        edit_sprav = self.getSpravByName(sprav_name)
         if edit_sprav:
-            return edit_sprav.Edit(ParentForm_=ParentForm_)
+            return edit_sprav.Edit(ParentForm_=parent)
         else:
-            log.warning(u'Справочник <%s> не найден в менеджере <%s>' % (SpravName_, self.name))
+            log.warning(u'Справочник <%s> не найден в менеджере <%s>' % (sprav_name, self.name))
         return None
 
-    def ChoiceSprav(self, SpravName_, ParentForm_=None, default_selected_code=None):
+    def choiceSprav(self, sprav_name, parent=None, default_selected_code=None):
         """
         Вызов выбора значения справочника по имени.
-        @param SpravName_: Имя справочника.
-        @param ParentForm_: Родительское окно для формы редактирования справочника.
+        @param sprav_name: Имя справочника.
+        @param parent: Родительское окно для формы редактирования справочника.
         @param default_selected_code: Выбранный код по умолчанию.
             Если None, то ничего не выбирается.
         @return: Функция возвращает выбранный код справочника
             или None в случае ошибки или если нажата кнопка <Отмена>.
         """
-        if ParentForm_ is None:
-            ParentForm_ = glob_functions.getMainWin()
+        if parent is None:
+            parent = glob_functions.getMainWin()
 
-        choice_sprav = self.getSpravByName(SpravName_)
+        choice_sprav = self.getSpravByName(sprav_name)
         if choice_sprav:
-            result = choice_sprav.Choice(parentForm=ParentForm_,
+            result = choice_sprav.Choice(parentForm=parent,
                                          default_selected_code=default_selected_code)
             if result[0] == coderror.IC_CTRL_OK:
                 return result[1]
         else:
-            log.warning(u'Справочник <%s> не найден в менеджере <%s>' % (SpravName_, self.name))
+            log.warning(u'Справочник <%s> не найден в менеджере <%s>' % (sprav_name, self.name))
         return None
 
 

@@ -919,7 +919,7 @@ def test(par=0):
                           'foregroundColor': (120, 120, 100),
                           'backgroundColor': (240, 240, 240),
                           'titles': ['first page', 'second', 'third', 'forth'],
-                          'onSelectTitle': 'print \'OnSelect->\', self.GetSelected()',
+                          'onSelectTitle': 'print \'onSelect->\', self.GetSelected()',
                           'path': 'C:/Python23/Lib/site-packages/ic/imglib/common/',
                           'images': ['py_src.png', 'blankCorel.png'],
                           'font': {'style': 'regular', 'size': 8, 'underline': False, 'faceName': 'MS Sans Serif', 'family': 'sansSerif'}})

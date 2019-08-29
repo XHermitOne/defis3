@@ -38,7 +38,7 @@ def OnHelp(obj, evt):
     """ """
     print('Help Sprav')
     sprav = ic.metadata.NSI.mtd.nsi_sprav.create()
-    result = sprav.NSITst.Hlp(parentForm=obj)
+    result = sprav.NSITst.Hlp(parent=obj)
     val = result[1]
     #wx.MessageBox(str(result[1]))
     ctrl = obj.GetContext().GetObject('default_1047')

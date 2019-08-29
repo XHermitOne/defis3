@@ -125,7 +125,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt
             if not ret[0][0] in ('Sprav',):
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является Справочником.', parent)
+                                   u'Выбранный объект не является Справочником.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -222,7 +222,7 @@ class icSpravMultipleChoiceComboCtrl(parentModule.icSpravMultipleChoiceComboCtrl
         prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
                              bCounter=bCounter, progressDlg=progressDlg)
 
-    def OnSelect(self, event):
+    def onSelect(self, event):
         """
         Обработчик изменения комбобокса.
         """
@@ -243,4 +243,4 @@ class icSpravMultipleChoiceComboCtrl(parentModule.icSpravMultipleChoiceComboCtrl
         prev_selected_codes = self.getCodes()
         selected_code = self.choiceSprav()
         if selected_code not in prev_selected_codes:
-            self.OnSelect(event=None)
+            self.onSelect(event=None)

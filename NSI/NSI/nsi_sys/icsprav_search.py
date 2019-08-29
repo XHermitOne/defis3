@@ -5,25 +5,25 @@
 Модуль управления буфером поиска.
 """
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
-class search_buff(object):
+class icSearchBuff(object):
     """
     Буфер поиска.
     """
 
-    def __init__(self, find_str, searchResult=None, *arg, **kwarg):
+    def __init__(self, find_str, search_result=None, *arg, **kwarg):
         """
         Конструктор.
         """
         # Буфер данных
 #        self.find_str = find_str
-#        self.searchResult = searchResult
+#        self.search_result = search_result
 #        # Курсор текущей строки
 #        self.cursor = -1
 #        self.bEOF = False
-        self.set_data(find_str, searchResult)
+        self.set_data(find_str, search_result)
 
     def next(self):
         """
@@ -35,12 +35,12 @@ class search_buff(object):
         elif self.cursor:
             return self.searchResult[self.cursor]
 
-    def set_data(self, find_str, searchResult):
+    def set_data(self, find_str, search_result):
         """
         Устанавливает буфер поиска.
         """
         self.find_str = find_str
-        self.searchResult = searchResult
+        self.searchResult = search_result
         self.cursor = -1
         self.bEOF = False
 
@@ -48,13 +48,13 @@ class search_buff(object):
         return self.bEOF
 
 
-class sparv_search(search_buff):
+class icSpravSearchBuff(icSearchBuff):
     """
     Буфер поиска по справочнику.
     """
 
-    def __init__(self, find_str, searchResult=None, *arg, **kwarg):
-        search_buff.__init__(self, find_str, searchResult, *arg, **kwarg)
+    def __init__(self, find_str, search_result=None, *arg, **kwarg):
+        icSearchBuff.__init__(self, find_str, search_result, *arg, **kwarg)
         self.cod_indx = kwarg.get('cod_indx', None)
 
     def next(self):

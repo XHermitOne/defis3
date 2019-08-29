@@ -9,19 +9,19 @@ import ic
 from ic.interfaces import ictreedatasourceinterface
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
-def _str2unicode(Str_):
+def _str2unicode(text):
     """
     Т.к. мы ориентированы на контролы отображающие юникод,
     тогда надо делать корректное преобразование строк.
     """
-    if isinstance(Str_, str):
-        return Str_
-    elif isinstance(Str_, bytes):
-        return Str_.decode('utf-8')
-    return str(Str_)
+    if isinstance(text, str):
+        return text
+    elif isinstance(text, bytes):
+        return text.decode('utf-8')
+    return str(text)
 
 
 class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterface):
@@ -29,17 +29,17 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
     Элемент справочника.
     """
 
-    def __init__(self, ParentItem_, Code_):
+    def __init__(self, parent_item, code):
         """
         Конструктор.
-        @param ParentItem_: Родительский элемент.
+        @param parent_item: Родительский элемент.
         """
         ictreedatasourceinterface.icTreeItemDataSourceInterface.__init__(self)
         
         # Родительский элемент
-        self._parent_item = ParentItem_
+        self._parent_item = parent_item
         # Код справочника, соответствующий этому элементу
-        self._code = Code_
+        self._code = code
         # Данные, прикрепленные к этому элементу
         self._data = None
         # Дочерние элементы
@@ -69,11 +69,11 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
         """
         return self._parent_item
         
-    def setData(self, Data_):
+    def setData(self, data):
         """
         Установить данные, прикрепленные к элементу.
         """
-        self._data = Data_
+        self._data = data
         
     def getDescription(self):
         """
@@ -81,12 +81,12 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
         """
         return self._data[1]
     
-    def getLabel(self, LabelFunc_=None):
+    def getLabel(self, label_func=None):
         """
         Надпись в контроле, соответствующая данному элементу.
         """
-        if LabelFunc_:
-            return LabelFunc_
+        if label_func:
+            return label_func
         # По умолчанию надпис: Код+Наименование
         # return _str2unicode(self._code)+u' '+_str2unicode(self.getDescription())
         # Изменено для тупых пользователей: Наименование
@@ -102,10 +102,10 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
             return sprav.isSubCodes(self._code)
         return False
 
-    def _loadChildren(self, Code_=None, AutoSort_=True):
+    def _loadChildren(self, code=None, bAutoSort=True):
         """
         Згрузить данные дочерних элементов.
-        @param AutoSort_: Сортировать записи автоматически по коду?
+        @param bAutoSort: Сортировать записи автоматически по коду?
         @return: Возвращает список объектов дочерних элементов.
         """
         children = []
@@ -113,8 +113,8 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
         sprav = root.getSprav()
         if sprav:
             storage = sprav.getStorage()
-            tab_data = storage.getLevelTable(Code_)
-            if AutoSort_:
+            tab_data = storage.getLevelTable(code)
+            if bAutoSort:
                 tab_data.sort()
             for rec in tab_data:
                 code = rec[0]
@@ -144,17 +144,17 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
                 return level.getIndex()
         return -1
 
-    def findItemByCode(self, Code_):
+    def findItemByCode(self, code):
         """
         Найти рекурсивно элемент по коду.        
         @return: Возвращает объект элемента дерева данных.
         """
         find_child = None
         for child in self.getChildren():
-            if child.getCode() == Code_:
+            if child.getCode() == code:
                 return child
             if child.hasChildren():
-                find_child = child.findItemByCode(Code_)
+                find_child = child.findItemByCode(code)
                 if find_child is not None:
                     return find_child
         return None
@@ -165,16 +165,16 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
     Источник данных справочника в виде дерева.
     """
 
-    def __init__(self, SpravPsp_, RootCode_=None):
+    def __init__(self, sprav_psp, root_code=None):
         """
         Конструктор.
-        @param SpravPsp_: Паспорт справочника - источника данных.
-        @param RootCode_: Код корневого элемента справочника.
+        @param sprav_psp: Паспорт справочника - источника данных.
+        @param root_code: Код корневого элемента справочника.
         """
         ictreedatasourceinterface.icTreeDataSourceInterface.__init__(self)
         
-        self._sprav = self._createSprav(SpravPsp_)
-        self._children = self._loadChildren(RootCode_)
+        self._sprav = self._createSprav(sprav_psp)
+        self._children = self._loadChildren(root_code)
 
     def getSprav(self):
         """
@@ -190,16 +190,16 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
             return self._sprav.getDescription()
         return None
 
-    def _createSprav(self, SpravPsp_):
+    def _createSprav(self, sprav_psp):
         """
         Создание справочника.
         """
         kernel = ic.getKernel()
         if kernel:
-            return kernel.Create(SpravPsp_)
+            return kernel.Create(sprav_psp)
         return None
     
-    def _loadChildren(self, Code_=None):
+    def _loadChildren(self, code=None):
         """
         Згрузить данные дочерних элементов.
         @return: Возвращает список объектов дочерних элементов.
@@ -207,7 +207,7 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
         children = []
         if self._sprav:
             storage = self._sprav.getStorage()
-            tab_data = storage.getLevelTable(Code_)
+            tab_data = storage.getLevelTable(code)
             for rec in tab_data or []:
                 code = rec[0]
                 item = icSpravItemDataSource(self, code)
@@ -222,14 +222,14 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
         """
         return self._children
     
-    def find(self, FindStr_):
+    def find(self, find_text):
         """
         Поиск элемента по строке.
         @return: Функция возвращает лейбл найденного элемента и None, если 
             элемент не найден.
         """
         if self._sprav:
-            code = FindStr_
+            code = find_text
             find_dict = self._sprav.Find(code, ['cod', 'name'])
             if not find_dict:
                 label = None
@@ -240,31 +240,31 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
             return label
         return None
     
-    def find_record(self, FindStr_, FieldName_=None):
+    def find_record(self, find_text, field_name=None):
         """
         Поиск записи по значению поля.
-        @param FindStr_: Искомое значение.
-        @param FieldName_: Имя поля, если None, то ищется по коду.
+        @param find_text: Искомое значение.
+        @param field_name: Имя поля, если None, то ищется по коду.
         @return: Возвращает словарь искомой записи или None если запись не найдена.
         """
         if self._sprav:
-            if FieldName_ is None:
-                rec_dict = self._sprav.getRec(FindStr_)
+            if field_name is None:
+                rec_dict = self._sprav.getRec(find_text)
             else:
-                rec_dict = self._sprav.getStorage().getRecByFieldValue(FieldName_, FindStr_)
+                rec_dict = self._sprav.getStorage().getRecByFieldValue(field_name, find_text)
             return rec_dict
         return None
 
-    def findItemByCode(self, Code_):
+    def findItemByCode(self, code):
         """
         Найти рекурсивно элемент по коду.        
         @return: Возвращает объект элемента дерева данных.
         """
         for child in self.getChildren():
-            if child.getCode() == Code_:
+            if child.getCode() == code:
                 return child
             if child.hasChildren():
-                find_child = child.findItemByCode(Code_)
+                find_child = child.findItemByCode(code)
                 if find_child is not None:
                     return find_child
         return None

@@ -612,7 +612,7 @@ def HlpSprav(typSprav,ParentCode=(None,),field=None,datatime=None,form=None,rec=
             form=NsiHlpFormName(typSprav,x_level)
         #Вывести окно и возвратить выбранный код
         print('SQL Query: ', sql)
-        #evsp=util.InitEvalSpace({'sprav_type':typSprav, 'sprav_code':parent_code,'sprav_field':field,'parent_form':parentForm})
+        #evsp=util.InitEvalSpace({'sprav_type':typSprav, 'sprav_code':parent_code,'sprav_field':field,'parent_form':parent})
         evsp = icwidget.icResObjContext()
         evsp.update({'sprav_type':typSprav, 'sprav_code':parent_code,'sprav_field':field,'parent_form':parentForm})
         res_val=ResultForm(form,filter={sprav:sql},evalSpace=evsp, parent=parentForm,bBuff=True)

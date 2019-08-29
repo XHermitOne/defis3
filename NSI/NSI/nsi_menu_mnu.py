@@ -57,7 +57,7 @@ def addRec(sprav, cod, RecDict_):
 def admin_sprav_sys(*arg, **kwarg):
     print('********* admin')
     sprav_manager = ic.metadata.NSI.mtd.nsi_sprav.create()
-    sprav_manager.Admin()
+    sprav_manager.admin()
    
 
 def edit_sprav_menuitem():

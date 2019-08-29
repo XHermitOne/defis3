@@ -131,7 +131,7 @@ def LoadIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
     rs = _NsiStd.select(AND(_NsiStd.q.type == typeSprav,
                             _NsiStd.q.cod == cod))
 
-    lrs = spravfunc.GetRecordCount(rs)
+    lrs = spravfunc.getRecordCount(rs)
     
     if lrs > 0:
         obj = rs[0]
@@ -360,7 +360,7 @@ def SaveIndicatorProperty(indicator, cod, typeSprav='Indicators'):
     rs = _NsiStd.select(AND(_NsiStd.q.type == typeSprav,
                             _NsiStd.q.cod == cod))
 
-    lrs = spravfunc.GetRecordCount(rs)
+    lrs = spravfunc.getRecordCount(rs)
     
     if lrs > 0:
       obj = rs[0]

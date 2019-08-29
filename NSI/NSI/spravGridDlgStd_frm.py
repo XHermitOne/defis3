@@ -163,12 +163,12 @@ def onCodHlpSprav(evalSpace):
     sprav.setCurCode(cod)
     ref_sprav = sprav.getLevelRefSpravByCod(cod)
     if ref_sprav:
-#        res, new_cod, flds = ref_sprav.Hlp(field={'name':'name'}, parentForm=self.GetView())
+#        res, new_cod, flds = ref_sprav.Hlp(field={'name':'name'}, parent=self.GetView())
 #        print '*** RESULT:', (res, cod+new_cod, flds)
         cod_lst = sprav._get_refspr_parent_cod(cod)
         print(' **** _get_refspr_parent_cod(cod)=', cod, cod_lst)
         prnt_cod = ''.join(cod_lst)
-        res, new_cod, flds = ref_sprav.Hlp(ParentCode=cod_lst+[None], field={'name':'name'}, parentForm=self.GetView())
+        res, new_cod, flds = ref_sprav.Hlp(parent_code=cod_lst + [None], field={'name': 'name'}, parent=self.GetView())
         # Выделяем у кода внедренную часть
         if prnt_cod:
             pcod = cod[:-len(prnt_cod)]
@@ -267,7 +267,7 @@ def _find(obj):
 
             prnt_cod = sprav.getParentLevelCod(fcod)
             tree_grid.select_cod(prnt_cod, sel_cod=fcod)
-            #print '.... select cod:', prnt_cod, fcod, len(prnt_cod), len(fcod), type(fcod)
+            #print '.... select cod:', parent_cod, fcod, len(parent_cod), len(fcod), type(fcod)
             tree_grid.cod_name_lst = []
 
         elif buff_find_str.cursor == -1:

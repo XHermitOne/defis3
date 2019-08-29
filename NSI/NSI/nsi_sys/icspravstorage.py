@@ -20,28 +20,28 @@ from ic.utils import extfunc
 from . import gen_nsi_table_res
 
 # Версия
-__version__ = (1, 1, 2, 2)
+__version__ = (1, 1, 2, 3)
 
 # Зарезервированные имена полей
 RESERVER_FIELD_NAMES = ('type', 'count', 'cod', 'name', 'access', 'uuid')
 
 
-class icSpravStorageInterface:
+class icSpravStorageInterface(object):
     """
     Класс абстрактного хранилища справочников. Реализует только интерфейс.
     """
 
-    def __init__(self, SpravParent_, SourceName_=None, ObjectName_=None):
+    def __init__(self, parent_sprav, source_name=None, object_name=None):
         """
         Конструктор.
-        @param SpravParent_: Объект справочника, к которому прикреплено
+        @param parent_sprav: Объект справочника, к которому прикреплено
             хранилище справочников.
-        @param SourceName_: Имя БД. Источник данных.
-        @param ObjectName_: Объект хранилища. Таблица.
+        @param source_name: Имя БД. Источник данных.
+        @param object_name: Объект хранилища. Таблица.
         """
-        self._sprav_parent = SpravParent_
-        self._src_name = SourceName_
-        self._obj_name = ObjectName_
+        self._sprav_parent = parent_sprav
+        self._src_name = source_name
+        self._obj_name = object_name
 
     def getSpravParent(self):
         """
@@ -55,14 +55,14 @@ class icSpravStorageInterface:
         """
         return ['cod', 'name', 's1', 's2', 's3', 'n1', 'n2', 'n3', 'f1', 'f2', 'f3', 'access']
 
-    def _str(self, Value_):
-        return str(Value_)
+    def _str(self, value):
+        return str(value)
 
-    def _int(self, Value_):
-        return int(float(Value_))
+    def _int(self, value):
+        return int(float(value))
 
-    def _float(self, Value_):
-        return float(Value_)
+    def _float(self, value):
+        return float(value)
 
     def typeSpravField(self):
         """
@@ -73,7 +73,7 @@ class icSpravStorageInterface:
                 self.__class__._int, self.__class__._int, self.__class__._float,
                 self.__class__._float, self.__class__._float, self.__class__._str]
 
-    def setTypeLevelTable(self, Table_):
+    def setTypeLevelTable(self, table):
         """
         Преобразование таблицы данных уровня по типам.
         @return: Возвращает таблицу с преобразованными типами
@@ -81,7 +81,7 @@ class icSpravStorageInterface:
         field_types = self.typeSpravField()
         tab = []
         # Перебор по строкам
-        for rec in Table_:
+        for rec in table:
             # Перебор по полям
             rec = list(rec)
             for i_field in range(len(rec)):
@@ -89,11 +89,11 @@ class icSpravStorageInterface:
             tab.append(rec)
         return tab
 
-    def getLevelBranch(self, StructCod_=None):
+    def getLevelBranch(self, struct_cod=None):
         """
         Получить ветку данных уровня,
         включая дочерние элементы по структурному коду.
-        @param StructCod_: Структурный код ('COD1','COD2',None).
+        @param struct_cod: Структурный код ('COD1','COD2',None).
         @return: Словарно-списковую структуру следующего формата:
             [
                 {
@@ -105,18 +105,18 @@ class icSpravStorageInterface:
             ]
             или None  в случае ошибки.
         """
-        if StructCod_ is None:
+        if struct_cod is None:
             return self.getLevelTree()
-        level_cod = ''.join([subcod for subcod in StructCod_ if subcod is not None])
+        level_cod = ''.join([subcod for subcod in struct_cod if subcod is not None])
         if level_cod:
             return self.getLevelTree(level_cod)
         else:
             return self.getLevelTree()
 
-    def getLevelTree(self, LevelCod_=None):
+    def getLevelTree(self, level_cod=None):
         """
         Дерево данных уровня, включая дочерние элементы.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то возвращаются данные самого верхнего уровня.
         @return: Словарно-списковую структуру следующего формата:
             [
@@ -129,12 +129,12 @@ class icSpravStorageInterface:
             ]
             или None  в случае ошибки.
         """
-        return self._getLevelTree(LevelCod_)
+        return self._getLevelTree(level_cod)
 
-    def _getLevelTree(self, LevelCod_=None):
+    def _getLevelTree(self, level_cod=None):
         """
         Дерево данных уровня, включая дочерние элементы.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то возвращаются данные самого верхнего уровня.
         @return: Словарно-списковую структуру следующего формата:
             [
@@ -150,7 +150,7 @@ class icSpravStorageInterface:
         try:
             result = []
             # Получить таблицу уровня
-            recs = self.getLevelTable(LevelCod_)
+            recs = self.getLevelTable(level_cod)
             if recs:
                 for rec in recs:
                     item = {}
@@ -161,14 +161,14 @@ class icSpravStorageInterface:
                     result.append(item)
             return result
         except:
-            log.fatal(u'Ошибка определения дерева данных уровня %s справочника %s.' % (LevelCod_,
-                                                                                             self.getSpravParent().getName()))
+            log.fatal(u'Ошибка определения дерева данных уровня %s справочника %s.' % (level_cod,
+                                                                                       self.getSpravParent().getName()))
             return None
 
-    def limitLevelTree(self, Tree_, Depth_=-1):
+    def limitLevelTree(self, tree_data, depth=-1):
         """
         Ограничение дерева справочника до определенного уровня.
-        @param Tree_: Дерево данных. Формат:
+        @param tree_data: Дерево данных. Формат:
             [
                 {
                 'name':Имя узла,
@@ -177,41 +177,41 @@ class icSpravStorageInterface:
                 },
                 ...
             ]
-        @param Depth_: Глубина ограничения, если -1,
+        @param depth: Глубина ограничения, если -1,
             то ограничение делать не надо.
         """
         try:
-            if Depth_ < 0:
-                return Tree_
-            for i, item in enumerate(Tree_):
-                if Depth_:
-                    item['child'] = self.limitLevelTree(item['child'], Depth_-1)
+            if depth < 0:
+                return tree_data
+            for i, item in enumerate(tree_data):
+                if depth:
+                    item['child'] = self.limitLevelTree(item['child'], depth - 1)
                 else:
                     item['child'] = []
-                Tree_[i] = item
-            return Tree_
+                tree_data[i] = item
+            return tree_data
         except:
             log.fatal(u'Ошибка ограничения дерева данных справочника %s.' % self.getSpravParent().getName())
-            return Tree_
+            return tree_data
 
-    def setLevelTree(self, LevelCod_, Table_):
+    def setLevelTree(self, level_cod, table):
         """
         Сохранить таблицу данных уровня вместе с дочерними уровнями.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то данные самого верхнего уровня.
-        @param Table_: Таблица данных уровня - список кортежей,
+        @param table: Таблица данных уровня - список кортежей,
             соответствующий данным запрашиваемого уровня.
         @return: Возвращает результат выполнения операции True/False.
         """
         return False
 
-    def getLevelTable(self, LevelCod_=None, DateTime_=None):
+    def getLevelTable(self, level_cod=None, dt=None):
         """
         Таблица данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то возвращаются данные самого верхнего уровня.
-        @type DateTime_: C{string}
-        @param DateTime_: Время актуальности данных.
+        @type dt: C{string}
+        @param dt: Время актуальности данных.
         @return: Список кортежей, соответствующий данным запрашиваемого уровня.
             Имена полей таблицы данных уровня определятся с помощью функции
             getSpravFieldNames().
@@ -219,12 +219,12 @@ class icSpravStorageInterface:
         """
         return None
 
-    def setLevelTable(self, LevelCod_, Table_):
+    def setLevelTable(self, level_cod, table):
         """
         Сохранить таблицу данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то данные самого верхнего уровня.
-        @param Table_: Таблица данных уровня - список кортежей,
+        @param table: Таблица данных уровня - список кортежей,
             соответствующий данным запрашиваемого уровня.
             Имена полей таблицы данных уровня определятся с помощью функции
             getSpravFieldNames().
@@ -232,28 +232,28 @@ class icSpravStorageInterface:
         """
         return False
 
-    def getRecByCod(self, Cod_, DateTime_=None):
+    def getRecByCod(self, cod, dt=None):
         """
         Получить запись по коду.
-        @param Cod_: Код.
-        @param DateTime_: Период актуальности.
+        @param cod: Код.
+        @param dt: Период актуальности.
         """
         return None
 
-    def updateRecByCod(self, Cod_, RecDict_, DateTime_=None):
+    def updateRecByCod(self, cod, record_dict, dt=None):
         """
         Изменить запись по коду.
-        @param Cod_: Код.
-        @param RecDict_: Словарь изменений.
-        @param DateTime_: Период актуальности.
+        @param cod: Код.
+        @param record_dict: Словарь изменений.
+        @param dt: Период актуальности.
         """
         return None
 
-    def delRecByCod(self, Cod_, DateTime_=None):
+    def delRecByCod(self, cod, dt=None):
         """
         Удалить запись по коду.
-        @param Cod_: Код.
-        @param DateTime_: Период актуальности.
+        @param cod: Код.
+        @param dt: Период актуальности.
         """
         assert None, 'Abstract method delRecByCod in class %s!' % self.__class__.__name__
 
@@ -270,10 +270,10 @@ class icSpravStorageInterface:
         """
         return False
 
-    def isCod(self, Cod_):
+    def isCod(self, cod):
         """
         Есть такой код в справочнике?
-        @param Cod_: Код.
+        @param cod: Код.
         """
         assert None, 'Abstract method isCod in class %s!' % self.__class__.__name__
 
@@ -314,31 +314,31 @@ class icSpravSQLStorage(icSpravStorageInterface,
     Класс SQL хранилища справочника.
     """
 
-    def __init__(self, SpravParent_, DBName_, TabName_, DBSubSys_=None, TabSubSys_=None):
+    def __init__(self, parent_sprav, db_name, table_name, db_subsys=None, table_subsys=None):
         """
         Конструктор.
-        @param SpravParent_: Объект справочника, к которому прикреплено
+        @param parent_sprav: Объект справочника, к которому прикреплено
             хранилище справочников.
-        @param DBName_: Имя БД.
-        @param TabName_: Имя таблицы данных справочника.
-        @param DBSubSys_: Имя подсистемы, откуда берется ресурс БД.
-        @param TabSubSys_: Имя подсистемы, откуда берется ресурс таблицы.
+        @param db_name: Имя БД.
+        @param table_name: Имя таблицы данных справочника.
+        @param db_subsys: Имя подсистемы, откуда берется ресурс БД.
+        @param table_subsys: Имя подсистемы, откуда берется ресурс таблицы.
         """
-        icSpravStorageInterface.__init__(self, SpravParent_, DBName_, TabName_)
+        icSpravStorageInterface.__init__(self, parent_sprav, db_name, table_name)
 
         # Если указана БД, тогда создать БД и подменить в таблицах хранения
         # в противном случае таблица сама знает в какой БД ей храниться
         db = None
-        if DBName_:
+        if db_name:
             pathRes = None
-            if DBSubSys_:
-                pathRes = resource.getSubsysPath(DBSubSys_)
+            if db_subsys:
+                pathRes = resource.getSubsysPath(db_subsys)
             
-            db_res = resource.icGetRes(DBName_, 'src', pathRes=pathRes, nameRes=DBName_)
+            db_res = resource.icGetRes(db_name, 'src', pathRes=pathRes, nameRes=db_name)
             db = icdb.icSQLAlchemyDB(db_res)
         
         # Таблица данных
-        # self._tab = icsqlalchemy.icSQLAlchemyTabClass(TabName_, db_resource=db, SubSys_=TabSubSys_)
+        # self._tab = icsqlalchemy.icSQLAlchemyTabClass(table_name, db_resource=db, SubSys_=table_subsys)
         self._tab = None
         self._tab = self.getTable()
         # Таблица данных, изменненных во времени
@@ -346,7 +346,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         
         self._tab_time = None
         if tab_time_name:
-            self._tab_time = icsqlalchemy.icSQLAlchemyTabClass(tab_time_name, DB_=db, SubSys_=TabSubSys_)
+            self._tab_time = icsqlalchemy.icSQLAlchemyTabClass(tab_time_name, DB_=db, SubSys_=table_subsys)
 
     def isTabTime(self):
         """
@@ -381,12 +381,12 @@ class icSpravSQLStorage(icSpravStorageInterface,
     # Объект таблицы справочника
     getTable = getSpravTabClass
 
-    def getLevelTable(self, LevelCod_=None, DateTime_=None):
+    def getLevelTable(self, level_cod=None, dt=None):
         """
         Таблица данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
-        @type DateTime_: C{string}
-        @param DateTime_: Время актуальности данных.
+        @param level_cod: Код, запрашиваемого уровня.
+        @type dt: C{string}
+        @param dt: Время актуальности данных.
         @return: Список кортежей, соответствующий данным запрашиваемого уровня.
             Или None в случае ошибки.
         """
@@ -394,35 +394,35 @@ class icSpravSQLStorage(icSpravStorageInterface,
         is_auto_cache = self._sprav_parent.getAutoCache()
         if is_auto_cache:
             # Если включено автокеширование...
-            if cache.hasObject(self._sprav_parent.getName(), (LevelCod_, DateTime_)):
+            if cache.hasObject(self._sprav_parent.getName(), (level_cod, dt)):
                 # И в кеше эта таблица есть, то просто вернуть ее
-                return cache.get(self._sprav_parent.getName(), (LevelCod_, DateTime_))
-        if DateTime_:
-            tab = self._getLevelTabDatetime(LevelCod_, DateTime_)
+                return cache.get(self._sprav_parent.getName(), (level_cod, dt))
+        if dt:
+            tab = self._getLevelTabDatetime(level_cod, dt)
         else:
-            tab = self._getLevelTab(LevelCod_)
+            tab = self._getLevelTab(level_cod)
         # Прописать в кэше
         if is_auto_cache:
             # Если включено автокеширование...
-            cache.add(self._sprav_parent.getName(), (LevelCod_, DateTime_), tab)
+            cache.add(self._sprav_parent.getName(), (level_cod, dt), tab)
         return tab
 
-    def _getLevelTab(self, LevelCod_):
+    def _getLevelTab(self, level_cod):
         """
         Таблица данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
         @return: Список кортежей, соответствующий данным запрашиваемого уровня.
             Или None в случае ошибки.
         """
         try:
-            if not LevelCod_:
-                LevelCod_ = ''
+            if not level_cod:
+                level_cod = ''
                 # Длина кода уровня
-                level = self.getSpravParent().getLevelByCod(LevelCod_)
+                level = self.getSpravParent().getLevelByCod(level_cod)
                 level_len = level.getCodLen()
             else:
                 # Длина кода уровня
-                level = self.getSpravParent().getLevelByCod(LevelCod_).getNext()
+                level = self.getSpravParent().getLevelByCod(level_cod).getNext()
                 if level:
                     level_len = level.getCodLen()
                 else:
@@ -432,8 +432,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
             tab_name = self._tab.getDBTableName()
 
             # Длина родительского кода уровня
-            parent_len = len(LevelCod_)
-            parent_code_str = LevelCod_
+            parent_len = len(level_cod)
+            parent_code_str = level_cod
 
             # Генерация выборки данных, соответствующих текущему уровню
             field_names_str = ','.join(self.getSpravFieldNames())
@@ -456,8 +456,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
             recs = self._tab.queryAll(sql)
             return recs
         except:
-            log.fatal(u'Ошибка определения таблицы данных уровня %s справочника %s.' % (LevelCod_,
-                                                                                              self.getSpravParent().getName()))
+            log.fatal(u'Ошибка определения таблицы данных уровня %s справочника %s.' % (level_cod,
+                                                                                        self.getSpravParent().getName()))
             return None
 
     def record_tuple2record_dict(self, record_tuple):
@@ -473,12 +473,12 @@ class icSpravSQLStorage(icSpravStorageInterface,
             log.fatal(u'Ошибка преобразования кортежа записи %s к словарю' % str(record_tuple))
         return dict()
 
-    def _getLevelTabDatetime(self, LevelCod_, DateTime_):
+    def _getLevelTabDatetime(self, level_cod, dt):
         """
         Таблица данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
-        @type DateTime_: C{string}
-        @param DateTime_: Время актуальности данных.
+        @param level_cod: Код, запрашиваемого уровня.
+        @type dt: C{string}
+        @param dt: Время актуальности данных.
         @return: Список кортежей, соответствующий данным запрашиваемого уровня.
             Или None в случае ошибки.
         """
@@ -487,14 +487,14 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 log.warning(u'Для справочника %s не определена таблица временных значений.' % self.getSpravParent().getName())
                 return None
             
-            if not LevelCod_:
-                LevelCod_ = ''
+            if not level_cod:
+                level_cod = ''
                 # Длина кода уровня
-                level = self.getSpravParent().getLevelByCod(LevelCod_)
+                level = self.getSpravParent().getLevelByCod(level_cod)
                 level_len = level.getCodLen()
             else:
                 # Длина кода уровня
-                level = self.getSpravParent().getLevelByCod(LevelCod_).getNext()
+                level = self.getSpravParent().getLevelByCod(level_cod).getNext()
                 if level:
                     level_len = level.getCodLen()
                 else:
@@ -502,8 +502,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
             # Имя таблицы данных
             tab_name = self._tab_time.getDBTableName()
             # Длина родительского кода уровня
-            parent_len = len(LevelCod_)
-            parent_code_str = LevelCod_
+            parent_len = len(level_cod)
+            parent_code_str = level_cod
             # Генерация выборки данных, соответствующих текущему уровню
             field_names_str = ','.join(self.getSpravFieldNames())
 
@@ -518,57 +518,57 @@ class icSpravSQLStorage(icSpravStorageInterface,
                                                                            parent_len,
                                                                            parent_code_str,
                                                                            tab_name,
-                                                                           parent_len+1,
+                                                                           parent_len + 1,
                                                                            tab_name,
                                                                            parent_len,
                                                                            level_len,
-                                                                           DateTime_,
-                                                                           DateTime_)
+                                                                           dt,
+                                                                           dt)
 
             recs = self._tab_time.queryAll(sql)
             return recs
         except:
-            log.fatal(u'Ошибка определения таблицы данных уровня с учетом временных значений %s справочника %s.' % (LevelCod_,
-                                                                                                                          self.getSpravParent().getName()))
+            log.fatal(u'Ошибка определения таблицы данных уровня с учетом временных значений %s справочника %s.' % (level_cod,
+                                                                                                                    self.getSpravParent().getName()))
             return None
 
-    def _setRecDataTab(self, Rec_, RecData_):
+    def _setRecDataTab(self, record, record_data):
         """
         Установить/обновить запись в таблице данных.
-        @param Rec_: Объект записи таблицы данных.
-        @param RecData_: Кортеж данных записи.
+        @param record: Объект записи таблицы данных.
+        @param record_data: Кортеж данных записи.
         """
         try:
             sprav_type = self.getSpravParent().getName()
-            field_data = self._getSpravFieldDict(RecData_)
-            return self._tab.update(id=Rec_[0], type=sprav_type, count=0, **field_data)
+            field_data = self._getSpravFieldDict(record_data)
+            return self._tab.update(id=record[0], type=sprav_type, count=0, **field_data)
         except:
             log.fatal(u'Ошибка обновления записи в таблице данных справочника [%s].' % self.getSpravParent().getName())
             return None
 
-    def _setRecTimeTab(self, Rec_, RecData_, DateTime_):
+    def _setRecTimeTab(self, record, record_data, dt):
         """
         Установить/обновить запись в таблице временных значений.
-        @param Rec_: Объект записи таблицы данных.
-        @param RecData_: Кортеж данных записи.
-        @param DateTime_: Фиксируемое время.
+        @param record: Объект записи таблицы данных.
+        @param record_data: Кортеж данных записи.
+        @param dt: Фиксируемое время.
         """
         try:
             if self._tab_time:
-                return self._tab_time.update(id=Rec_[0], time_end=str(DateTime_))
+                return self._tab_time.update(id=record[0], time_end=str(dt))
         except:
             log.fatal(u'Ошибка обновления записи в таблице временныйх значений справочника [%s].' % self.getSpravParent().getName())
         return None
 
-    def _addRecDataTab(self, Tab_, RecData_):
+    def _addRecDataTab(self, table, record_data):
         """
         Добавить запись в таблице данных.
-        @param Tab_: Объект таблицы данных.
-        @param RecData_: Кортеж данных записи.
+        @param table: Объект таблицы данных.
+        @param record_data: Кортеж данных записи.
         """
         try:
             sprav_type = self.getSpravParent().getName()
-            field_data = self._getSpravFieldDict(RecData_)
+            field_data = self._getSpravFieldDict(record_data)
             
             if ('uuid' not in field_data) or (not field_data['uuid']):
                 # Если уникальный идентификатор записи не определен,
@@ -580,42 +580,42 @@ class icSpravSQLStorage(icSpravStorageInterface,
             log.fatal(u'Ошибка добавления записи в таблицу данных справочника [%s].' % self.getSpravParent().getName())
             return None
 
-    def _addRecTimeTab(self, Tab_, RecData_, RecId_, DateTime_):
+    def _addRecTimeTab(self, table, record_data, record_id, dt):
         """
         Добавить запись в таблице временных значений.
-        @param Tab_: Объект таблицы временных значений.
-        @param RecData_: Кортеж данных записи.
-        @param RecId_: Идентификатор родительской записи таблицы данных.
-        @param DateTime_: Фиксируемое время.
+        @param table: Объект таблицы временных значений.
+        @param record_data: Кортеж данных записи.
+        @param record_id: Идентификатор родительской записи таблицы данных.
+        @param dt: Фиксируемое время.
         """
         try:
             sprav_type = self.getSpravParent().getName()
-            field_data = self._getSpravFieldDict(RecData_)
-            return Tab_.add(type=sprav_type, id_nsi_data=RecId_,
-                            time_start=str(DateTime_), time_end='', **field_data)
+            field_data = self._getSpravFieldDict(record_data)
+            return table.add(type=sprav_type, id_nsi_data=record_id,
+                             time_start=str(dt), time_end='', **field_data)
         except:
             log.fatal(u'Ошибка добавления записи в таблицу временных значений справочника %s.' % self.getSpravParent().getName())
             return None
 
-    def setLevelTable(self, LevelCod_, Table_, *arg, **kwarg):
+    def setLevelTable(self, level_cod, table, *arg, **kwarg):
         """
         Сохранить таблицу данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то данные самого верхнего уровня.
-        @param Table_: Таблица данных уровня - список кортежей,
+        @param table: Таблица данных уровня - список кортежей,
             соответствующий данным запрашиваемого уровня.
         @return: Возвращает результат выполнения операции True/False.
         """
-        ok = self._setLevelTabBuff(LevelCod_, Table_, *arg, **kwarg)
+        ok = self._setLevelTabBuff(level_cod, table, *arg, **kwarg)
         if ok:
             # Если запись прошла удачно, то сбросить кэш
             self._sprav_parent.clearInCache()
 
-    def _get_cod_lst(self, Table_, indx=0):
+    def _get_cod_lst(self, table, indx=0):
         """
         Возвращает список кодов таблицы.
         """
-        return [r[indx] for r in Table_]
+        return [r[indx] for r in table]
 
     def _cod2u(self, cod):
         """
@@ -625,12 +625,12 @@ class icSpravSQLStorage(icSpravStorageInterface,
             return str(cod)
         return cod
 
-    def _setLevelTabBuff(self, LevelCod_, Table_, *arg, **kwarg):
+    def _setLevelTabBuff(self, level_cod, table, *arg, **kwarg):
         """
         Сохранить таблицу данных уровня по буферу изменений.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то данные самого верхнего уровня.
-        @param Table_: Таблица данных уровня буфера - список кортежей,
+        @param table: Таблица данных уровня буфера - список кортежей,
             соответствующий данным запрашиваемого уровня.
         @return: Возвращает результат выполнения операции True/False.
         """
@@ -642,9 +642,9 @@ class icSpravSQLStorage(icSpravStorageInterface,
             # Старые записи
             t1 = time.clock()
 
-            old_tab = self.getLevelTable(LevelCod_)
+            old_tab = self.getLevelTable(level_cod)
             old_cod_lst = self._get_cod_lst(old_tab)
-            cod_lst = self._get_cod_lst(Table_)
+            cod_lst = self._get_cod_lst(table)
 
             t2 = time.clock()
 
@@ -659,7 +659,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 upd_rec = buff.update_rows_dct.values()+[el for key, el in buff.add_rows_dct.items() if key not in buff.update_rows_dct.keys()]
                 upd_rec = [r for r in upd_rec if r[0] in cod_lst]
             else:
-                upd_rec = Table_
+                upd_rec = table
 
             # Обновляем записи
             for rec in upd_rec:
@@ -700,16 +700,16 @@ class icSpravSQLStorage(icSpravStorageInterface,
             print('\tall time: ', t3-t1)
             return True
         except:
-            log.fatal(u'Ошибка сохранения таблицы данных уровня %s справочника [%s].' % (LevelCod_,
-                                                                                               self.getSpravParent().getName()))
+            log.fatal(u'Ошибка сохранения таблицы данных уровня %s справочника [%s].' % (level_cod,
+                                                                                         self.getSpravParent().getName()))
             return False
 
-    def _setLevelTab(self, LevelCod_, Table_, *arg, **kwarg):
+    def _setLevelTab(self, level_cod, table, *arg, **kwarg):
         """
         Сохранить таблицу данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то данные самого верхнего уровня.
-        @param Table_: Таблица данных уровня - список кортежей,
+        @param table: Таблица данных уровня - список кортежей,
             соответствующий данным запрашиваемого уровня.
         @return: Возвращает результат выполнения операции True/False.
         """
@@ -719,17 +719,17 @@ class icSpravSQLStorage(icSpravStorageInterface,
             sprav_type = self.getSpravParent().getName()
             # Старые записи
             t1 = time.clock()
-            old_tab = self.getLevelTable(LevelCod_)
+            old_tab = self.getLevelTable(level_cod)
             t2 = time.clock()
             # Удаление старых записей
             del_recs = []
             for old_rec in old_tab:
-                if not self._inTableIsRecord(Table_, old_rec, [0]):
+                if not self._inTableIsRecord(table, old_rec, [0]):
                     del_recs.append(old_rec)
             if del_recs:
                 self.delLevelTable(del_recs)
             # Затем добавить
-            for rec in Table_:
+            for rec in table:
                 # !!! Строка приходит в unicode
                 new_cod = self._cod2u(rec[0])
                 sql_result = self._tab.select(icsqlalchemy.and_(self._tab.c.type == sprav_type,
@@ -766,35 +766,35 @@ class icSpravSQLStorage(icSpravStorageInterface,
             print('\tall time: ', t3-t1)
             return True
         except:
-            log.fatal(u'Ошибка сохранения таблицы данных уровня %s справочника %s.'%(LevelCod_,
-                                                                                           self.getSpravParent().getName()))
+            log.fatal(u'Ошибка сохранения таблицы данных уровня %s справочника %s.'%(level_cod,
+                                                                                     self.getSpravParent().getName()))
             return False
 
-    def _compareValue(self, Value1_, Value2_):
+    def _compareValue(self, value1, value2):
         """
         Сравнение двух значений с учетом unicode.
         """
         # Внимание! Проверять нужно только строковые представления!
-        if isinstance(Value1_, str) or isinstance(Value2_, str):
+        if isinstance(value1, str) or isinstance(value2, str):
             # Если хотя бы одно значение в unicode
             # то сравнивать нужно unicode
             encoding = self._tab.db.getEncoding()
-            val1 = str(Value1_) if not isinstance(Value1_, bytes) else Value1_.decode(encoding)
-            val2 = str(Value2_) if not isinstance(Value2_, bytes) else Value2_.decode(encoding)
+            val1 = str(value1) if not isinstance(value1, bytes) else value1.decode(encoding)
+            val2 = str(value2) if not isinstance(value2, bytes) else value2.decode(encoding)
             return val1 == val2
-        return str(Value1_) == str(Value2_)
+        return str(value1) == str(value2)
 
-    def _inTableIsRecord(self, Table_, Record_, Fields_=None):
+    def _inTableIsRecord(self, table, record, fields=None):
         """
         Поверка, есть ли в таблице такая запись.
-        @param Table_: Таблица-список кортежей.
-        @param Record_: Запись-кортеж.
-        @param Fields_: Список индексов проверяемых полей.
+        @param table: Таблица-список кортежей.
+        @param record: Запись-кортеж.
+        @param fields: Список индексов проверяемых полей.
         """
-        for rec in Table_:
+        for rec in table:
             ok = True
-            if Fields_ is None:
-                for i, value in enumerate(Record_):
+            if fields is None:
+                for i, value in enumerate(record):
                     try:
                         # Внимание! Проверять нужно только строковые представления!
                         if not self._compareValue(value, rec[i]):
@@ -803,10 +803,10 @@ class icSpravSQLStorage(icSpravStorageInterface,
                     except IndexError:
                         break
             else:
-                for i in Fields_:
+                for i in fields:
                     try:
                         # Внимание! Проверять нужно только строковые представления!
-                        if not self._compareValue(Record_[i], rec[i]):
+                        if not self._compareValue(record[i], rec[i]):
                             ok = False
                             break
                     except IndexError:
@@ -815,23 +815,23 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 return True
         return False
 
-    def delLevelTable(self, Table_, isCascade_=True):
+    def delLevelTable(self, table, bIsCascade=True):
         """
         Удалить таблицу данных уровня.
-        @param Table_: Таблица данных уровня - список кортежей,
+        @param table: Таблица данных уровня - список кортежей,
             соответствующий данным запрашиваемого уровня.
-        @param isCascade_: Каскадное удаление?
+        @param bIsCascade: Каскадное удаление?
         @return: Возвращает результат выполнения операции True/False.
         """
         try:
             # Перебор по записям таблицы данных
             sprav_type = self.getSpravParent().getName()
-            for rec in Table_:
+            for rec in table:
                 # Удаление записи
                 # !!! Строка приходит в unicode
                 cod = self._cod2u(rec[0])
 
-                if not isCascade_:
+                if not bIsCascade:
                     self._tab.del_where(icsqlalchemy.and_(self._tab.c.type == sprav_type,
                                                           self._tab.c.cod == cod))
                 else:
@@ -860,22 +860,22 @@ class icSpravSQLStorage(icSpravStorageInterface,
         """
         return 'cod'
 
-    def _str(self, Value_):
-        if isinstance(Value_, bytes):
-            return Value_.decode(self._tab.db.getEncoding())
-        elif not isinstance(Value_, str):
-            return str(Value_)
-        return Value_
+    def _str(self, value):
+        if isinstance(value, bytes):
+            return value.decode(self._tab.db.getEncoding())
+        elif not isinstance(value, str):
+            return str(value)
+        return value
 
-    def _int(self, Value_):
-        if not Value_:
+    def _int(self, value):
+        if not value:
             return 0
-        return int(float(Value_))
+        return int(float(value))
 
-    def _float(self, Value_):
-        if not Value_:
+    def _float(self, value):
+        if not value:
             return 0.0
-        return float(Value_)
+        return float(value)
 
     _TypeField2TypePy = {'T': _str,
                          'D': _str,
@@ -900,17 +900,17 @@ class icSpravSQLStorage(icSpravStorageInterface,
                     icSpravStorageInterface.float, icSpravStorageInterface.float,
                     icSpravStorageInterface.float, icSpravStorageInterface.str]
 
-    def _getSpravFieldDict(self, FieldValues_):
+    def _getSpravFieldDict(self, field_values):
         """
         Получить запись таблицы данных справочника в виде словаря.
-        @param FieldValues_: Список значений записи таблицы значений уровня.
+        @param field_values: Список значений записи таблицы значений уровня.
         """
         fld_names = self.getSpravFieldNames()
         fld_dict = {}
         for i_fld, fld_name in enumerate(fld_names):
             value = None
             try:
-                value = FieldValues_[i_fld]
+                value = field_values[i_fld]
                 fld_dict[fld_name] = value
             except IndexError:
                 # Не все поля есть в гриде
@@ -925,34 +925,34 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 fld_dict[fld_name] = glob_functions.getCurUserName()
         return fld_dict
 
-    def getRecByFieldValue(self, FieldName_, FieldValue_, DateTime_=None):
+    def getRecByFieldValue(self, field_name, field_value, dt=None):
         """
         Получить словарь записи по уникальному значению поля.
-        @param FieldName_: Имя поля.
-        @param FieldValue_: Значение поля.
-        @param DateTime_: Период актуальности.
+        @param field_name: Имя поля.
+        @param field_value: Значение поля.
+        @param dt: Период актуальности.
         @return: Возвращает словарь записи или None в случае ошибки.
         """
         try:
             recs = None
-            if DateTime_ is None:
-                recs = self._getRecByFldVal(FieldName_, FieldValue_)
+            if dt is None:
+                recs = self._getRecByFldVal(field_name, field_value)
             else:
-                recs = self._getRecByFldValDatetime(FieldName_, FieldValue_, DateTime_)
+                recs = self._getRecByFldValDatetime(field_name, field_value, dt)
 
             if recs is not None:
                 if len(recs):
                     return recs[0]
         except:
-            log.fatal(u'Ошибка определения словаря записи по значению <%s> поля <%s> записи' % (FieldValue_,
-                                                                                                FieldName_))
+            log.fatal(u'Ошибка определения словаря записи по значению <%s> поля <%s> записи' % (field_value,
+                                                                                                field_name))
         return None
 
-    def _getRecByFldVal(self, FieldName_, FieldValue_):
+    def _getRecByFldVal(self, field_name, field_value):
         """
         Получить словарь записи по уникальному значению поля.
-        @param FieldName_: Имя поля.
-        @param FieldValue_: Значение поля.
+        @param field_name: Имя поля.
+        @param field_value: Значение поля.
         @return: Возвращает словарь записи или None в случае ошибки.
         """
         sql = None
@@ -960,10 +960,10 @@ class icSpravSQLStorage(icSpravStorageInterface,
             # Имя таблицы данных
             tab_name = self._tab.getDBTableName()
 
-            if isinstance(FieldValue_, str):
-                field_val_str = '\'' + FieldValue_ + '\''
+            if isinstance(field_value, str):
+                field_val_str = '\'' + field_value + '\''
             else:
-                field_val_str = str(FieldValue_)
+                field_val_str = str(field_value)
 
             field_names = self.getSpravFieldNames()
             field_names_str = ','.join(field_names)
@@ -972,7 +972,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                                                                            tab_name,
                                                                            self.getSpravParent().getName(),
                                                                            tab_name,
-                                                                           FieldName_,
+                                                                           field_name,
                                                                            field_val_str)
             
             recs = self._tab.queryAll(sql)
@@ -982,16 +982,16 @@ class icSpravSQLStorage(icSpravStorageInterface,
                     recs[i] = dict([(fld[1], rec[fld[0]]) for fld in enumerate(field_names)])
             return recs
         except:
-            log.fatal(u'Ошибка определения словаря записи по значению %s поля %s' % (FieldValue_, FieldName_))
+            log.fatal(u'Ошибка определения словаря записи по значению %s поля %s' % (field_value, field_name))
             log.error('SQL: <%s>' % sql)
             return None
 
-    def _getRecByFldValDatetime(self, FieldName_, FieldValue_, DateTime_):
+    def _getRecByFldValDatetime(self, field_name, field_value, dt):
         """
         Получить словарь записи по уникальному значению поля.
-        @param FieldName_: Имя поля.
-        @param FieldValue_: Значение поля.
-        @param DateTime_: Период актуальности.
+        @param field_name: Имя поля.
+        @param field_value: Значение поля.
+        @param dt: Период актуальности.
         @return: Возвращает словарь записи или None в случае ошибки.
         """
         sql = None
@@ -1003,8 +1003,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
             # Имя таблицы данных
             tab_name = self._tab_time.getDBTableName()
 
-            field_val_str = str(FieldValue_)
-            if isinstance(FieldValue_, str):
+            field_val_str = str(field_value)
+            if isinstance(field_value, str):
                 field_val_str = '\''+field_val_str+'\''
 
             field_names = self.getSpravFieldNames()
@@ -1016,10 +1016,10 @@ class icSpravSQLStorage(icSpravStorageInterface,
                                                                            tab_name,
                                                                            self.getSpravParent().getName(),
                                                                            tab_name,
-                                                                           FieldName_,
+                                                                           field_name,
                                                                            field_val_str,
-                                                                           DateTime_,
-                                                                           DateTime_)
+                                                                           dt,
+                                                                           dt)
 
             recs = self._tab.queryAll(sql)
             # Сконвертировать список кортежей в список словарей
@@ -1027,42 +1027,42 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 recs[i] = dict([(fld[1], rec[fld[0]]) for fld in enumerate(field_names)])
             return recs
         except:
-            log.fatal(u'Ошибка определения словаря записи по значению %s поля %s' % (FieldValue_, FieldName_))
+            log.fatal(u'Ошибка определения словаря записи по значению %s поля %s' % (field_value, field_name))
             log.debug('SQL: <%s>' % sql)
             return None
 
-    def getRecByCod(self, Cod_, DateTime_=None):
+    def getRecByCod(self, cod, dt=None):
         """
         Получить запись по коду.
-        @param Cod_: Код.
-        @param DateTime_: Период актуальности.
+        @param cod: Код.
+        @param dt: Период актуальности.
         """
-        if Cod_:
-            return self.getRecByFieldValue('cod', Cod_, DateTime_)
+        if cod:
+            return self.getRecByFieldValue('cod', cod, dt)
         return None
 
-    def delRecByCod(self, Cod_, DateTime_=None, isCascade_=True):
+    def delRecByCod(self, cod, dt=None, bIsCascade=True):
         """
         Удалить запись по коду.
-        @param Cod_: Код.
-        @param DateTime_: Период актуальности.
-        @param isCascade_: Каскадное удаление.
+        @param cod: Код.
+        @param dt: Период актуальности.
+        @param bIsCascade: Каскадное удаление.
         """
-        if Cod_:
-            code = self._cod2u(Cod_)
+        if cod:
+            code = self._cod2u(cod)
             try:
                 sprav_type = self.getSpravParent().getName()
                 # Удаление записи
-                if not isCascade_:
+                if not bIsCascade:
                     self._tab.del_where(icsqlalchemy.and_(self._tab.c.type == sprav_type,
                                                           self._tab.c.cod == code))
-                    if DateTime_ and self._tab_time:
+                    if dt and self._tab_time:
                         self._tab_time.del_where(icsqlalchemy.and_(self._tab.c.type == sprav_type,
                                                                    self._tab.c.cod == code))
                 else:
                     self._tab.del_where(icsqlalchemy.and_(self._tab.c.type == sprav_type,
                                                           self._tab.c.cod.startswith(code)))
-                    if DateTime_ and self._tab_time:
+                    if dt and self._tab_time:
                         self._tab_time.del_where(icsqlalchemy.and_(self._tab.c.type == sprav_type,
                                                                    self._tab.c.cod.startswith(code)))
 
@@ -1072,37 +1072,37 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 return False
         return None
 
-    def isCod(self, Cod_):
+    def isCod(self, cod):
         """
         Есть такой код в справочнике?
-        @param Cod_: Код.
+        @param cod: Код.
         """
-        return bool(self.getRecByCod(Cod_))
+        return bool(self.getRecByCod(cod))
 
-    def updateRecByCod(self, Cod_, RecDict_, DateTime_=None):
+    def updateRecByCod(self, cod, record_dict, dt=None):
         """
         Изменить запись по коду.
-        @param Cod_: Код.
-        @param RecDict_: Словарь изменений.
-        @param DateTime_: Период актуальности.
+        @param cod: Код.
+        @param record_dict: Словарь изменений.
+        @param dt: Период актуальности.
         @return: Возвращает результат выполнения операции.
         """
         try:
-            if DateTime_ is None:
+            if dt is None:
                 if self._tab:
                     sprav_type = self.getSpravParent().getType()
                     sql_result = self._tab.select(icsqlalchemy.and_(self._tab.c.type == sprav_type,
-                                                                    self._tab.c.cod == Cod_))
+                                                                    self._tab.c.cod == cod))
                     recs = self._tab.listRecs(sql_result)
                     if len(recs):
-                        if 'id' in RecDict_:
-                            del RecDict_['id']
-                        if 'computer' in RecDict_ and not RecDict_['computer']:
-                            RecDict_['computer'] = extfunc.getComputerName()
-                        if 'username' in RecDict_ and not RecDict_['username']:
-                            RecDict_['username'] = glob_functions.getCurUserName()
+                        if 'id' in record_dict:
+                            del record_dict['id']
+                        if 'computer' in record_dict and not record_dict['computer']:
+                            record_dict['computer'] = extfunc.getComputerName()
+                        if 'username' in record_dict and not record_dict['username']:
+                            record_dict['username'] = glob_functions.getCurUserName()
 
-                        self._tab.update(id=recs[0][0], **RecDict_)
+                        self._tab.update(id=recs[0][0], **record_dict)
                     else:
                         # Нет записи с таким кодом
                         return False
@@ -1115,19 +1115,19 @@ class icSpravSQLStorage(icSpravStorageInterface,
                         time_start<='%s' AND (time_end>='%s' OR time_end='')''' % (tab_time_name,
                                                                                    self.getSpravParent().getType(),
                                                                                    tab_time_name,
-                                                                                   Cod_,
-                                                                                   DateTime_,
-                                                                                   DateTime_))
+                                                                                   cod,
+                                                                                   dt,
+                                                                                   dt))
 
                     recs = self._tab.listRecs(sql_result)
                     if len(recs):
-                        if 'id' in RecDict_:
-                            del RecDict_['id']
-                        if 'computer' in RecDict_ and not RecDict_['computer']:
-                            RecDict_['computer'] = extfunc.getComputerName()
-                        if 'username' in RecDict_ and not RecDict_['username']:
-                            RecDict_['username'] = glob_functions.getCurUserName()
-                        self._tab.update(recs[0][0], **RecDict_)
+                        if 'id' in record_dict:
+                            del record_dict['id']
+                        if 'computer' in record_dict and not record_dict['computer']:
+                            record_dict['computer'] = extfunc.getComputerName()
+                        if 'username' in record_dict and not record_dict['username']:
+                            record_dict['username'] = glob_functions.getCurUserName()
+                        self._tab.update(recs[0][0], **record_dict)
                     else:
                         # Нет записи с таким кодом
                         return False
@@ -1136,30 +1136,30 @@ class icSpravSQLStorage(icSpravStorageInterface,
             log.fatal('Error in updateRecByCod in sprav parent: <%s>' % self.getSpravParent().getType())
             return False
 
-    def addRecDictDataTab(self, RecData_):
+    def addRecDictDataTab(self, record_dict):
         """
         Добавить запись в таблице данных.
-        @param RecData_: Словарь данных записи.
+        @param record_dict: Словарь данных записи.
         """
         try:
             sprav_type = self.getSpravParent().getName()
-            field_data = self._normRecDict(RecData_)
+            field_data = self._normRecDict(record_dict)
             return self._tab.add(type=sprav_type, count=0, **field_data)
         except:
             log.fatal(u'Ошибка добавления записи в таблицу данных справочника [%s].' % self.getSpravParent().getName())
             return None
 
-    def _normRecDict(self, RecDict_):
+    def _normRecDict(self, record_dict):
         """
         Нормализация словаря записи.
-        @param RecData_: Словарь данных записи.
+        @param record_dict: Словарь данных записи.
         """
         fld_names = self.getSpravFieldNames()
         fld_dict = {}
         for fld_name in fld_names:
             value = None
             try:
-                value = RecDict_[fld_name]
+                value = record_dict[fld_name]
                 fld_dict[fld_name] = value
             except KeyError:
                 # Не все поля есть
@@ -1197,22 +1197,22 @@ class icSpravSQLStorage(icSpravStorageInterface,
         rec_count = self._tab.count(icsqlalchemy.and_(self._tab.c.type == sprav_type))
         return not rec_count
 
-    def getRecByUUID(self, UUID_, DateTime_=None):
+    def getRecByUUID(self, UUID, dt=None):
         """
         Получить словарь записи по уникальному идентификатору.
-        @param UUID_: Уникальный идентификатор.
-        @param DateTime_: Период актуальности.
+        @param UUID: Уникальный идентификатор.
+        @param dt: Период актуальности.
         @return: Возвращает словарь данных записи или None в случае ошибки.
         """
-        if UUID_:
-            return self.getRecByFieldValue('uuid', UUID_, DateTime_)
+        if UUID:
+            return self.getRecByFieldValue('uuid', UUID, dt)
         return None
         
-    def getUUIDByCod(self, Cod_):
+    def getUUIDByCod(self, cod):
         """
         Получить уникальный идентификатор по коду.
         """
-        rec = self.getRecByCod(Cod_)
+        rec = self.getRecByCod(cod)
         if rec:
             return rec.get('uuid')
         return None

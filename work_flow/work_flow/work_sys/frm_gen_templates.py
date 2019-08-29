@@ -180,7 +180,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
         obj_uuid = obj_list.getSelectedObjUUID()
         if obj_uuid:
             obj = self.context['OBJ']
-            obj.View(UUID_=obj_uuid)        
+            obj.View(UUID=obj_uuid)        
 
     def onEditObjTool(self, event):
         \"\"\"
@@ -190,7 +190,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
         obj_uuid = obj_list.getSelectedObjUUID()
         if obj_uuid:
             obj = self.context['OBJ']
-            obj.edit(UUID_=obj_uuid)        
+            obj.edit(UUID=obj_uuid)        
             obj_list.refreshDataset()
 
     def onAddObjTool(self, event):
@@ -212,7 +212,7 @@ class %sManager(icmanagerinterface.icWidgetManager):
         obj_uuid = obj_list.getSelectedObjUUID()
         if obj_uuid:
             obj = self.context['OBJ']
-            obj.Del(UUID_=obj_uuid)
+            obj.Del(UUID=obj_uuid)
             obj_list.refreshDataset()
 
     def getSelectedObjUUID(self):

@@ -1962,7 +1962,7 @@ class icGridFormGenerator:
                 
                 if child_requisite._getEditType() == NSI_EDIT_TYPE:
                     # Для реквизитов связи со справочником указать функцию вызова справочника
-                    hlp_script = u'return OBJ.findRequisite(\'%s\').getSprav().Hlp(ParentCode=None)\n' % child_requisite.name
+                    hlp_script = u'return OBJ.findRequisite(\'%s\').getSprav().Hlp(parent_code=None)\n' % child_requisite.name
                     column_spc['hlp'] = hlp_script
                 
                 grid_spc['cols'].append(column_spc)            

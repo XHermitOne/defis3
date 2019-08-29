@@ -154,7 +154,7 @@ def onCodHlpSprav(evalSpace):
     if ref_sprav:
         cod_lst = _get_refspr_parent_cod(sprav, cod)
         prnt_cod = ''.join(cod_lst)
-        res, new_cod, flds = ref_sprav.Hlp(ParentCode=cod_lst+[None], field={'name': 'name'}, parentForm=self.GetView())
+        res, new_cod, flds = ref_sprav.Hlp(parent_code=cod_lst + [None], field={'name': 'name'}, parent=self.GetView())
         # Выделяем у кода внедренную часть
         if prnt_cod:
             pcod = cod[:-len(prnt_cod)]

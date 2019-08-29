@@ -8,26 +8,26 @@
 import time
 
 from . import icspravstorage
-from .icodb_spravobject import IODBNsi
+from . import icodb_spravobject
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
-class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
+class icSpravODBStorage(icodb_spravobject.icODBNsiInterface, icspravstorage.icSpravStorageInterface):
     """
     Класс SQL хранилища справочника.
     """
-    def __init__(self,spravObj, DBName_,TabName_):
+    def __init__(self, sprav, db_name, table_name):
         """
         Конструктор.
-        @param spravObj: Объект справочника, к которому прикреплено
+        @param sprav: Объект справочника, к которому прикреплено
             хранилище справочников.
-        @param DBName_: Имя источника.
-        @param TabName_: Имя таблицы данных справочника.
+        @param db_name: Имя источника.
+        @param table_name: Имя таблицы данных справочника.
         """
-        IODBNsi.__init__(self, None, spravObj, DBName_,TabName_)
-        icspravstorage.icSpravStorageInterface.__init__(self,spravObj,DBName_,TabName_)
+        icodb_spravobject.icODBNsiInterface.__init__(self, None, sprav, db_name, table_name)
+        icspravstorage.icSpravStorageInterface.__init__(self, sprav, db_name, table_name)
         
         # Признак использования лога для хранения изменений
         self._bLog = True
@@ -38,13 +38,13 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
         """
         return self._sprav_parent
         
-    def getLevelTable(self,LevelCod_=None, DateTime_=None):
+    def getLevelTable(self, level_cod=None, dt=None):
         """
         Таблица данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то возвращаются данные самого верхнего уровня.
-        @type DateTime_: C{string}
-        @param DateTime_: Время актуальности данных.
+        @type dt: C{string}
+        @param dt: Время актуальности данных.
         @return: Список кортежей, соответствующий данным запрашиваемого уровня.
             Или None в случае ошибки.
         """
@@ -52,34 +52,33 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
         if not self.metaSprav:
             return lst
             
-        if not LevelCod_:
-            LevelCod_ = ''
-            level=self.getSpravParent().getLevelByCod(LevelCod_)
+        if not level_cod:
+            level_cod = ''
+            level = self.getSpravParent().getLevelByCod(level_cod)
         else:
-            level=self.getSpravParent().getLevelByCod(LevelCod_).getNext()
+            level = self.getSpravParent().getLevelByCod(level_cod).getNext()
             
         if level:
-            level_len=len(LevelCod_) + level.getCodLen()
+            level_len = len(level_cod) + level.getCodLen()
         else:
-            print('')
             return []
 
-        if not DateTime_:
+        if not dt:
             for r in self.metaSprav.value.data:
                 cod = r[0]
-                if len(cod) == level_len and cod.startswith(LevelCod_):
+                if len(cod) == level_len and cod.startswith(level_cod):
                     lst.append(r)
         else:
             # Отбираем нужные коды
             for cod, rr in self.metaSpravLog.value.log.items():
-                if len(cod) == level_len and cod.startswith(LevelCod_):
+                if len(cod) == level_len and cod.startswith(level_cod):
                 
                     # Отбираем строки с нужным временем актуальности
                     for r in rr:
                         t1, t2 = r[-2:]
                         if not t2:
                             t2 = '9999.12.31 23:59:59'
-                        if t1 < DateTime_ and t2 > DateTime_:
+                        if t1 < dt < t2:
                             lst.append(r)
                             break
         return lst
@@ -90,24 +89,24 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
         """
         return self._bLog
         
-    def setLevelTable(self, LevelCod_, Table_):
+    def setLevelTable(self, level_cod, table):
         """
         Сохранить таблицу данных уровня.
-        @param LevelCod_: Код, запрашиваемого уровня.
+        @param level_cod: Код, запрашиваемого уровня.
             Если None, то данные самого верхнего уровня.
-        @param Table_: Таблица данных уровня - список кортежей,
+        @param table: Таблица данных уровня - список кортежей,
             соответствующий данным запрашиваемого уровня.
         @return: Возвращает результат выполнения операции True/False.
         """
         if not self.metaSprav:
             return False
         
-        if not LevelCod_:
-            LevelCod_ = ''
+        if not level_cod:
+            level_cod = ''
             
-        level = self.getSpravParent().getLevelByCod(LevelCod_).getNext()
+        level = self.getSpravParent().getLevelByCod(level_cod).getNext()
         if level:
-            level_len = len(LevelCod_) + level.getCodLen()
+            level_len = len(level_cod) + level.getCodLen()
         else:
             return False
         
@@ -116,7 +115,7 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
         updDct = {}
         # Словарь кодов
         codUpdDct = {}
-        for r in Table_:
+        for r in table:
             codUpdDct[r[0]] = r
             
         codLst = list(range(len(self.metaSprav.value.data)))
@@ -124,14 +123,14 @@ class icSpravODBStorage(IODBNsi, icspravstorage.icSpravStorageInterface):
         for i, r in enumerate(self.metaSprav.value.data):
             codLst[i] = r[0]
             
-            if not r[0].startswith(LevelCod_) or (len(r[0]) != level_len):
+            if not r[0].startswith(level_cod) or (len(r[0]) != level_len):
                 lst.append(r)
             # Словарь измененных значений
             elif r[0] in codUpdDct and codUpdDct[r[0]] != r:
                 updDct[r[0]] = codUpdDct[r[0]]#r
             
         # Добавляем измененные
-        for r in Table_:
+        for r in table:
             lst.append(r)
             
             if not r[0] in codLst:

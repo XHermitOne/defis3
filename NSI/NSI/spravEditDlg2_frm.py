@@ -277,7 +277,7 @@ def onCodHlpSprav(evalSpace):
     ref_sprav = sprav.getLevelRefSpravByCod(cod)
     if ref_sprav:
         return ref_sprav.Hlp(field={'name': 'name', 'cod': 'cod'},
-                             parentForm=self.GetView())
+                             parent=self.GetView())
 
 
 def onChangedGrid2(evalSpace):

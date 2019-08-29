@@ -38,7 +38,7 @@ class icAdminRole(icRole):
     """
     Администратор системы.
     """
-    id = 'Admin'
+    id = 'admin'
     permissions = icprotector.readonly((icpermission.view_permission,
                                         icpermission.edit_permission,
                                         icpermission.add_permission,
