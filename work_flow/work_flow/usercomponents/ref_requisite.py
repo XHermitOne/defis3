@@ -181,7 +181,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icREFRequisite(parentModule.icREFRequisitePrototype,icwidget.icSimple):
+class icREFRequisite(parentModule.icREFRequisiteProto, icwidget.icSimple):
     """
     Реквизит-ссылка на бизнес объект/документ.
 
@@ -220,7 +220,7 @@ class icREFRequisite(parentModule.icREFRequisitePrototype,icwidget.icSimple):
             component['fields'] = {component['name']: 'uuid'}
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icREFRequisitePrototype.__init__(self, parent)
+        parentModule.icREFRequisiteProto.__init__(self, parent)
         
         # --- Свойства компонента ---
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)

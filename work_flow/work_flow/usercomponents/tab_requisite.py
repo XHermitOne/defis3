@@ -154,7 +154,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icTABRequisite(parentModule.icTABRequisitePrototype,
+class icTABRequisite(parentModule.icTABRequisiteProto,
                      icwidget.icSimple):
     """
     Табличный реквизит.
@@ -194,7 +194,7 @@ class icTABRequisite(parentModule.icTABRequisitePrototype,
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icTABRequisitePrototype.__init__(self, parent)
+        parentModule.icTABRequisiteProto.__init__(self, parent)
         
         # --- Свойства компонента ---
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)

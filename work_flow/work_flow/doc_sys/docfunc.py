@@ -32,12 +32,12 @@ def document_remove_to(doc_uuid, src_doc, dst_doc,
         src_tabname = None
         if src_doc.isRequisite(requisite_src_name):
             src_requisite = src_doc.getRequisite(requisite_src_name)
-            if isinstance(src_requisite, ictabrequisite.icTABRequisitePrototype):
+            if isinstance(src_requisite, ictabrequisite.icTABRequisiteProto):
                 src_tabname = src_requisite.getTableName()
         dst_tabname = None
         if dst_doc.isRequisite(requisite_dst_name):
             dst_requisite = dst_doc.getRequisite(requisite_dst_name)
-            if isinstance(dst_requisite, ictabrequisite.icTABRequisitePrototype):
+            if isinstance(dst_requisite, ictabrequisite.icTABRequisiteProto):
                 dst_tabname = dst_requisite.getTableName()
 
         if src_tabname is None and dst_tabname is None:

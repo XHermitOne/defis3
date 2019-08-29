@@ -223,7 +223,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icBusinessObj(parentModule.icBusinessObjPrototype, icwidget.icSimple):
+class icBusinessObj(parentModule.icBusinessObjProto, icwidget.icSimple):
     """
     Бизнес-объект.
     @type component_spc: C{dictionary}
@@ -284,7 +284,7 @@ class icBusinessObj(parentModule.icBusinessObjPrototype, icwidget.icSimple):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icBusinessObjPrototype.__init__(self, parent)
+        parentModule.icBusinessObjProto.__init__(self, parent)
         
         # Свойства компонента
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)

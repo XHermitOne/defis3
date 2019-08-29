@@ -133,7 +133,7 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-class icRequisite(parentModule.icRequisitePrototype, icwidget.icSimple):
+class icRequisite(parentModule.icRequisiteProto, icwidget.icSimple):
     """
     Реквизит.
 
@@ -172,7 +172,7 @@ class icRequisite(parentModule.icRequisitePrototype, icwidget.icSimple):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icRequisitePrototype.__init__(self, parent)
+        parentModule.icRequisiteProto.__init__(self, parent)
         
         # Свойства компонента
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)

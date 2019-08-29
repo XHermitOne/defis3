@@ -183,7 +183,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icNSIRequisite(parentModule.icNSIRequisitePrototype, icwidget.icSimple):
+class icNSIRequisite(parentModule.icNSIRequisiteProto, icwidget.icSimple):
     """
     Реквизит связи со справочником NSI.
 
@@ -224,7 +224,7 @@ class icNSIRequisite(parentModule.icNSIRequisitePrototype, icwidget.icSimple):
             component['fields'] = {component['name']: 'cod'}
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icNSIRequisitePrototype.__init__(self, parent)
+        parentModule.icNSIRequisiteProto.__init__(self, parent)
 
         # Обязательные параметры для генерации таблицы
         self.type_val = 'T'

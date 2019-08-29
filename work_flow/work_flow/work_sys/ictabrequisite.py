@@ -68,7 +68,7 @@ SPC_IC_TAB_REQUISITE = {'type': 'TABRequisite',
                         }
 
 
-class icTABRequisitePrototype(icworkbase.icTabRequisiteBase):
+class icTABRequisiteProto(icworkbase.icTabRequisiteBase):
     """
     Табличный реквизит.
     """

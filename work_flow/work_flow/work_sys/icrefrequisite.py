@@ -99,7 +99,7 @@ SPC_IC_REF_REQUISITE = {'type': 'REFRequisite',
                         }
 
 
-class icREFRequisitePrototype(icworkbase.icRequisiteBase):
+class icREFRequisiteProto(icworkbase.icRequisiteBase):
     """
     Реквизит-ссылка на бизнес объект/документ.
     """

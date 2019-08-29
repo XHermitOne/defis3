@@ -11,7 +11,7 @@
 from ic.components import icwidget
 
 # Версия
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 # Спецификация
@@ -27,7 +27,7 @@ SPC_IC_OPERATION = dict({'type': 'Operation',
                          })
 
     
-class icOperationInterface:
+class icOperationInterface(object):
     """
     Интерфейс абстрактной операции.
     """
@@ -60,7 +60,7 @@ class icOperationInterface:
         return False
 
 
-class icOperationPrototype(icOperationInterface):
+class icOperationProto(icOperationInterface):
     """
     Абстрактная операция.
     Атрибуты спецификации:
@@ -87,7 +87,7 @@ SPC_IC_FUNCOPERATION = dict({'type': 'FuncOperation',
                              })
 
 
-class icFuncOperationProto(icOperationPrototype):
+class icFuncOperationProto(icOperationProto):
     """
     Функциональная операция.
     Методы выполнения и отмены задаются функциями пользователя.
@@ -100,7 +100,7 @@ class icFuncOperationProto(icOperationPrototype):
         """
         Конструктор.
         """
-        icOperationPrototype.__init__(self, *args, **kwargs)
+        icOperationProto.__init__(self, *args, **kwargs)
 
     def do(self):
         """

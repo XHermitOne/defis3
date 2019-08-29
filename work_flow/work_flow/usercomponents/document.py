@@ -509,14 +509,14 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         Дочерние реквизиты и спецификации.
         """
         # Нужно отфильтровать дочерние объекты операций
-        return [child for child in self.component_lst if not isinstance(child, icoperation.icOperationPrototype)]
+        return [child for child in self.component_lst if not isinstance(child, icoperation.icOperationProto)]
 
     def getChildrenOperations(self):
         """
         Дочерние операции.
         """
         # Нужно отфильтровать дочерние объекты операций
-        return [child for child in self.component_lst if isinstance(child, icoperation.icOperationPrototype)]
+        return [child for child in self.component_lst if isinstance(child, icoperation.icOperationProto)]
 
     # Сделано для более короткой записи
     getOperations = getChildrenOperations

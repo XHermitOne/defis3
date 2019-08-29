@@ -448,7 +448,7 @@ class icRegGroupProto(icworkbase.icRequisiteBase):
         return [self.getFieldName()]
 
 
-class icRegSumPrototype(icworkbase.icRequisiteBase):
+class icRegSumProto(icworkbase.icRequisiteBase):
     """
     Итоги регистра.
     """
@@ -488,7 +488,7 @@ class icRegSumPrototype(icworkbase.icRequisiteBase):
         return self._aggregate_func
 
 
-class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
+class icNSIRequisiteProto(icworkbase.icRequisiteBase):
     """
     Реквизит связи со справочником системы NSI.
     """

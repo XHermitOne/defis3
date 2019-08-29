@@ -29,7 +29,7 @@ from . filter_generate import *
 # from ic.PropertyEditor import select_component_menu
 
 
-__version__ = (0, 1, 3, 2)
+__version__ = (0, 1, 4, 1)
 
 # Значения по умолчанию
 DEFAULT_ROOT_LABEL = u'...'
@@ -226,6 +226,19 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
         @return: UUID.
         """
         return str(uuid.uuid4())
+
+    def setSaveFilename(self, filename):
+        """
+        Установить полное имя файла хранения фильтров.
+        @param filename: Имя файла.
+        """
+        self._save_filename = filename
+
+    def getSaveFilename(self):
+        """
+        Имя файла хранения фильтров.
+        """
+        return self._save_filename
 
     def getLimit(self):
         """
