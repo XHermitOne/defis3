@@ -123,7 +123,7 @@ def CreatUserClass(discr, file_templ=None):
                     if not func:
                         func = 'On_' + attr
                     if id:
-                        text += ot + 'self.Bind(%s, self.%s, record_id=record_id)' % (tp, func)+'\n'
+                        text += ot + 'self.Bind(%s, self.%s, id=id)' % (tp, func)+'\n'
                     else:
                         text += ot + 'self.Bind(%s, self.%s)' % (tp, func) + '\n'
                     

@@ -89,7 +89,7 @@ def sortLen(lst):
         return False
 
 
-def dictFilterToSQL(flt, tables, _id='record_id'):
+def dictFilterToSQL(flt, tables, _id='id'):
     """
     Функция конвертирует структурный фильтр в SQL выражение. Структурный фильтр
     задается словарем. В качестве ключей используются поля, в качестве значений

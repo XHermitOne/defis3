@@ -445,7 +445,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 return sqlalchemy.Column(name, sqlalchemy_field_type_Integer)
             else:
                 return sqlalchemy.Column(name, sqlalchemy_field_type_Integer,
-                                         sqlalchemy.ForeignKey('%s.record_id' % link_tab))
+                                         sqlalchemy.ForeignKey('%s.id' % link_tab))
         return None
 
     def getAliasTableName(self):
@@ -479,11 +479,11 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             if IsID_:
                 result = [column.name for column in self.dataclass.columns]
             else:
-                result = [column.name for column in self.dataclass.columns if column.name != u'record_id']
+                result = [column.name for column in self.dataclass.columns if column.name != u'id']
         else:
             res = self.getResource()
             if IsID_:
-                result = ['record_id']+[field['field'] for field in res['child']]
+                result = ['id']+[field['field'] for field in res['child']]
             else:
                 result = [field['field'] for field in res['child']]
         return result
@@ -585,9 +585,9 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
 
     def getIdName(self):
         """
-        Возвращает имя поля с уникальным идентификатором (обычно 'record_id')
+        Возвращает имя поля с уникальным идентификатором (обычно 'id')
         """
-        return 'record_id'
+        return 'id'
 
     def delete(self, id):
         """

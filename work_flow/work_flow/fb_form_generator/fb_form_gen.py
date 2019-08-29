@@ -261,7 +261,7 @@ class icWxFBPrjGenerator(object):
         psp_txt = str(requisite_res['nsi_psp'])
         psp_txt = psp_txt.replace('\'',  '& apos;')
         name = requisite_res['name']
-        txt = u'self.%s = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self.attr_scrollWin, record_id=wx.NewId(), component={ & apos; sprav & apos;: %s})' % (name, psp_txt)
+        txt = u'self.%s = spravchoicecomboctrl.icSpravChoiceComboCtrl(parent=self.attr_scrollWin, id=wx.NewId(), component={ & apos; sprav & apos;: %s})' % (name, psp_txt)
         return txt
 
     def genNSIRequisiteEditBlock(self, requisite_res):

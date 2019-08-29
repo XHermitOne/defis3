@@ -13,7 +13,7 @@
         Словарь задает фильтр на значение определенных полей в объекте данных (Пример: {'peopleId': 5, 'town':'Moscow'}).
         Строка задает SQL выражение на список уникальных идентификаторов, по которым происходит привязка к номеру строки
         более подробнее см. описание функцию db.translate.InitValidValue()
-        (Пример: C{Select record_id from table where record_id < 1000'}).
+        (Пример: C{Select id from table where id < 1000'}).
 
     - B{scheme/child=[]}: Схема данных - содержит список описаний полей.
     - B{init=None,['@']}: Выражение, вычисляемое при добавлении записи после вычисления всех полей записи
@@ -399,7 +399,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         # ----- Атрибуты, используемые для сортировок и поиска ------------------
         
         #   Список полей или выражений, по которым сортируется таблица
-        self._sortExprList = ['record_id']
+        self._sortExprList = ['id']
         
         #   Признак, указывающий направление сортировки
         self._isSortDESC = False
@@ -616,7 +616,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             #   работать непредсказуемо, то будет добавлять, то не будет, поскольку
             #   идентификаторы могут распологаться неравномерно. Поэтому оставляем
             #   один вариант, когда фильтр и выражение для сортировки (за исключением
-            #   сортировки по record_id) для объекта данных не определены.
+            #   сортировки по id) для объекта данных не определены.
             if (id > self.getMaxId() and self._bStructedFilter and self.filter == {} and
                     not bSortExpr and id not in self._add_indexBuff):
                 self._add_indexBuff.append(id)
@@ -692,7 +692,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             #   работать непредсказуемо, то будет добавлять, то не будет, поскольку
             #   идентификаторы могут распологаться неравномерно. Поэтому оставляем
             #   один вариант, когда фильтр и выражение для сортировки (за исключением
-            #   сортировки по record_id) для объекта данных не определены.
+            #   сортировки по id) для объекта данных не определены.
             if (id > self.getMaxId() and self._bStructedFilter and self.filter == {} and
                     not bSortExpr and id not in self._add_indexBuff):
                 self._add_indexBuff.append(id)
@@ -762,7 +762,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                     if res:
                         value = val
                         
-                # ---- Для ссылок по record_id заменяем record_id на значение из справочника ---------
+                # ---- Для ссылок по id заменяем id на значение из справочника ---------
                 pt = self.pointType(info)
 
                 if pt == 'R' and not bReal and value is not None:
@@ -1029,7 +1029,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             try:
                 id_name = self.GetIDataclass().getIdName()
             except AttributeError:
-                id = 'record_id'
+                id = 'id'
 
             id = list(self.rowBuff)[-1][0]
             bLock = self.GetIDataclass().IsLockObject(id)
@@ -1158,7 +1158,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             indx = self.indexFld[fieldName]
             
             if fieldName == self.GetIDataclass().getIdName():
-                return {'name': 'record_id', 'attr': 0, 'init': None, 'ctrl': None}
+                return {'name': 'id', 'attr': 0, 'init': None, 'ctrl': None}
             
             #
             if self.scheme[indx]['attr'] is None:
@@ -1505,7 +1505,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Открытие источника данных.
         
         @type filter_tab: C{string | dictionary}
-        @param filter_tab: SQL выражение для фильтрации данных. Пример: C{ds.Open('select record_id from table where record_id > 100 and record_id < 200')}
+        @param filter_tab: SQL выражение для фильтрации данных. Пример: C{ds.Open('select id from table where id > 100 and id < 200')}
         @rtype: C{bool}
         @return: Признак успешного открытия.
         """
@@ -1597,7 +1597,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         буфера изменений должен проводится (функцией C{isChangeRowBuff()}) перед вызовом этой функции.
         
         @type filt: C{string}
-        @param filt: Строка запроса на фильтрацию. Пример: 'select record_id from table1 where record_id > 10 and record_id < 1000 order by ...'
+        @param filt: Строка запроса на фильтрацию. Пример: 'select id from table1 where id > 10 and id < 1000 order by ...'
         @type bReplNames: C{bool}
         @param bReplNames: Признак того, что предварительно необходимо провести
             замену имен из SQLObject представления в представление SQL базы.
@@ -1646,7 +1646,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
     
     def FilterField(self, fldName, val, bReplNames=True):
         """
-        Функция отфильторвывает записи, у которых значение определенного поля <fldName> соответствуют выбранному занчению <record_id>.
+        Функция отфильторвывает записи, у которых значение определенного поля <fldName> соответствуют выбранному занчению <id>.
         @type fldName: C{string}
         @param fldName: Имя поля, по которому фильтруются записи.
         @type val: C{int}
@@ -1668,7 +1668,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         else:
             conv_val = val
 
-        filter = 'select record_id from %s where %s=%s' % (self.getDBTableName(), fld, str(conv_val))
+        filter = 'select id from %s where %s=%s' % (self.getDBTableName(), fld, str(conv_val))
         self.FilterData(filter, bReplNames=bReplNames)
 
         self.filter = {fldName: val}
@@ -1677,7 +1677,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
     def FilterFields(self, filter_tab=0, bReplNames=True):
         """
         Функция отфильторвывает записи, у которых значение определенного поля
-        <fldName> соответствуют выбранному занчению <record_id>.
+        <fldName> соответствуют выбранному занчению <id>.
         
         @type filter_tab: C{string | dictionary}
         @param filter_tab: Фильтр объекта данных.
@@ -2120,10 +2120,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
             if id in self.bufferPageDict:
                 dict = self.bufferPageDict[id]
             elif len(self.bufferPageDict.keys()) > 0:
-                # log.info(u'DEL row from indexBuff record_id=%s' % record_id)
+                # log.info(u'DEL row from indexBuff id=%s' % id)
                 self._del_indexBuff[cursor] = id
         except KeyError:
-            log.fatal(u'Ошибка ключа в getDict row=%d, record_id=%d' % (cursor, id))
+            log.fatal(u'Ошибка ключа в getDict row=%d, id=%d' % (cursor, id))
             dict = None
         except:
             log.fatal(u'Ошибка в getDict row=%d, autocomit=' % cursor)

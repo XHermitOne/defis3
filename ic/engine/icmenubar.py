@@ -239,9 +239,9 @@ class icMenuBar(wx.MenuBar):
 
     def FindMenuItemByID(self, ID_):
         """
-        Найти пункт меню по его record_id во всей иерархии.
+        Найти пункт меню по его id во всей иерархии.
         Поиск производится рекурсивно во всех подменю данного меню.
-        @param ID_: record_id пункта меню.
+        @param ID_: id пункта меню.
         @return: Возвращает ссылку на пункт меню или None.
         """
         prev_menu = None

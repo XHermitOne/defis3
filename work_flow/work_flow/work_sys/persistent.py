@@ -464,7 +464,7 @@ class icObjPersistent(icObjPersistentProto):
                     new_rec['uuid'] = self.genUUID()
                     link_names = [fld['name'].lower() for fld in tab.res['child'] if fld['type'] == 'Link']
                     for lnk_name in link_names:
-                        new_rec[lnk_name] = parent_record['record_id']
+                        new_rec[lnk_name] = parent_record['id']
                     tab.add(**new_rec)
                      
             result = True
@@ -1020,7 +1020,7 @@ class icObjPersistent(icObjPersistentProto):
                 child_recs = child_tab.get_where(where)
                 if child_recs:
                     for child_rec in child_recs.fetchall():
-                        result = result and child_obj._delCascadeData(child_tab, child_rec['record_id'], transaction)
+                        result = result and child_obj._delCascadeData(child_tab, child_rec['id'], transaction)
                 else:
                     log.info(u'Не найдено дочерних записей в таблице <%s>' % child_tab.getDBTableName())
 

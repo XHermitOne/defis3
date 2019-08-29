@@ -57,7 +57,7 @@ def make_id(element, start=100000, end=999999):
     return '%s_%s' % (element, randint(start, end))
 
 def get_unique_id(element):
-    """Returns a unique record_id for a given element"""
+    """Returns a unique id for a given element"""
     this_id = make_id(element)
     dup = True
     while dup == True:
@@ -155,7 +155,7 @@ def convert_dict(obj, ids, parent, attr_type):
     for key, val in obj.items():
         LOG.info('Looping inside convert_dict(): key="%s", val="%s", type(val)="%s"' % (unicode_me(key), unicode_me(val), type(val).__name__))
 
-        attr = {} if not ids else {'record_id': '%s' % (get_unique_id(parent)) }
+        attr = {} if not ids else {'id': '%s' % (get_unique_id(parent)) }
 
         key, attr = make_valid_xml_name(key, attr)
 
@@ -197,7 +197,7 @@ def convert_list(items, ids, parent, attr_type):
 
     for i, item in enumerate(items):
         LOG.info('Looping inside convert_list(): item="%s", type="%s"' % (unicode_me(item), type(item).__name__))
-        attr = {} if not ids else { 'record_id': '%s_%s' % (this_id, i+1) }
+        attr = {} if not ids else { 'id': '%s_%s' % (this_id, i+1) }
         if isinstance(item, numbers.Number) or type(item) in (str, unicode):
             addline(convert_kv('item', item, attr_type, attr))
         elif hasattr(item, 'isoformat'): # datetime

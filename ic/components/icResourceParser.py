@@ -66,7 +66,7 @@ def GetComponentModulDict():
 #   Фильтр может быть задан двумя способами: словарем и строкой. Словарь задает фильтр на значение определенных
 #   полей в объекте данных (Пример: {'peopleId': 5, 'town':'Moscow'}).
 #   Строка задает SQL выражение на список уникальных идентивикаторов, по которому
-#   происходит привязка к номеру строки (Пример: 'Select record_id from table where record_id < 1000').
+#   происходит привязка к номеру строки (Пример: 'Select id from table where id < 1000').
 DatasetFilterBuff = {}
 
 
@@ -1092,7 +1092,7 @@ def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, cl
             if not context:
                 context = icwidget.icResObjContext()
             
-            return icBuildObject(parent, res, evalSpace=context, id=kwargs.get('record_id', None))
+            return icBuildObject(parent, res, evalSpace=context, id=kwargs.get('id', None))
         return None
     except:
         log.fatal(u'Ошибка сборки объекта [%s . %s]' % (ResName_, ResExt_))

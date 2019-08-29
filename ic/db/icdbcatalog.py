@@ -85,8 +85,8 @@ class icDBCatalog(iccatalog.icCatalog):
     def psp_to_val(self, psp):
         """ 
         Преобразования паспорта в значение поля. Значение вида:
-            (('Document','doc1',None,'doc1.mtd','workflow'), record_id, uuid) пробразуется к виду
-            <Document,doc1,None,doc1.mtd,workflow:[record_id]:[uuid]>
+            (('Document','doc1',None,'doc1.mtd','workflow'), id, uuid) пробразуется к виду
+            <Document,doc1,None,doc1.mtd,workflow:[id]:[uuid]>
         @type psp: C{ic.kernrl.icobject.icObjectPassport}
         @param psp: Паспорт.
         """

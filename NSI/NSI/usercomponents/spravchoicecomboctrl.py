@@ -193,7 +193,7 @@ class icSpravChoiceComboCtrl(parentModule.icSpravChoiceComboCtrlProto, icwidget.
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
 
-        # self.Bind(wx.EVT_TEXT, self.onSelect, record_id=record_id)
+        # self.Bind(wx.EVT_TEXT, self.onSelect, id=id)
         self.BindICEvt()
 
     def getSpravPsp(self):

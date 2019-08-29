@@ -211,7 +211,7 @@ class icFlatMenuItem(icwidget.icWidget, icflatmenuitem.icFlatMenuItemPrototype):
         else:
             menu = self.GetMenu()
             menu.GetParent().Bind(flatmenu.EVT_FLAT_MENU_SELECTED, self.OnSelected, id=id)
-            # menu.Bind(flatmenu.EVT_FLAT_MENU_SELECTED, self.OnSelected, record_id=record_id)
+            # menu.Bind(flatmenu.EVT_FLAT_MENU_SELECTED, self.OnSelected, id=id)
 
     def appendIntoParent(self, Parent_):
         """

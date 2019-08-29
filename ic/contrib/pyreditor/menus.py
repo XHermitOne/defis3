@@ -194,7 +194,7 @@ class EditInsertMenu(wx.Menu):
         
     def _OnInsertItem(self, event):
         # All the "insertions" (insertmenus and templates) are handled here,
-        # according to the record_id that fired this callback.
+        # according to the id that fired this callback.
         name = self._id2name[event.Id]
         if self._insertitems != None:
             for menu_name in self._insertitems:
@@ -240,6 +240,6 @@ class EditInsertMenu(wx.Menu):
         return self.ids
     
     def _updateid2name(self):
-        # Updates self._id2name dictionary, an record_id-to-name-mapping
+        # Updates self._id2name dictionary, an id-to-name-mapping
         self._id2name = dict([(self.ids[key], key) for key in self.ids])
         

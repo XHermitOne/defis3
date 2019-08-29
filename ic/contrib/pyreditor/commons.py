@@ -88,7 +88,7 @@ M_ITEMS = {'Groups': ['group.png', {
                 'c_ifnotnext': ['(?!...)\tIF NOT next', True, r'(?!%s)', None],
                 'c_ifprev': ['(?<=...)\tIF previous', True, r'(?<=%s)', None],
                 'c_ifnotprev': ['(?<!...)\tIF NOT previous', True, r'(?<!%s)', None],
-                'c_ifpatt': ['(?(record_id/name)Y|N)\tYES/NO', True, r'(?(record_id/name)%s)', (3, 7)],
+                'c_ifpatt': ['(?(id/name)Y|N)\tYES/NO', True, r'(?(id/name)%s)', (3, 7)],
             }],
             'Other': [r'other.png', {
                 'op_.': ['.\tMatches any character', False, r'.', None],

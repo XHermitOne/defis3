@@ -47,7 +47,7 @@ def GetLocaleDict(loc_list, opt=OPT_NO_OP):
     """Takes a list of cannonical locale names and by default returns a 
     dictionary of available language values using the canonical name as 
     the key. Supplying the Option OPT_DESCRIPT will return a dictionary
-    of language record_id's with languages description as the key.
+    of language id's with languages description as the key.
     @param loc_list: list of locals
     @keyword opt: option for configuring return data
     @return: dict of locales mapped to wx.LANGUAGE_*** values
@@ -70,7 +70,7 @@ def GetLangId(lang_n):
     """Gets the ID of a language from the description string. If the 
     language cannot be found the function simply returns the default language
     @param lang_n: Canonical name of a language
-    @return: wx.LANGUAGE_*** record_id of language
+    @return: wx.LANGUAGE_*** id of language
     
     """
     lang_desc = GetLocaleDict(GetAvailLocales(), OPT_DESCRIPT)

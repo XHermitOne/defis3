@@ -118,7 +118,7 @@ class icModelModuleGenerator(object):
                     column = u'sqlalchemy.Column(%s,  )' % (col_type, )
                 elif obj_type == icsqlalchemy.LINK_TYPE:
                     # Это связь
-                    column = u'sqlalchemy.ForeignKey(\'%s.record_id\')' % field_spc['table']
+                    column = u'sqlalchemy.ForeignKey(\'%s.id\')' % field_spc['table']
                 else:
                     log.warning(u'Генерация модели. Не обрабатываемый тип <%s>' % obj_type)
                     continue

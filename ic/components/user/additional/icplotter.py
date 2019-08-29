@@ -127,7 +127,7 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         parentModule.icPlotPanel.__init__(self, parent, id, self.position, self.size,
                                         self.style, bWxAgg=self.wxAgg)
         #img = common.imgEdtImage
-        #parentModule.GenBitmapTextButton.__init__(self, parent, record_id, img, self.label, self.position, self.size, style = self.style, name = self.name)
+        #parentModule.GenBitmapTextButton.__init__(self, parent, id, img, self.label, self.position, self.size, style = self.style, name = self.name)
 
         #   Регистрация обработчиков событий
         
