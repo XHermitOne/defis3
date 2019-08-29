@@ -188,7 +188,7 @@ class icPlanModifManager(icwidget.icSimple):
 
 #        kernel = glob_functions.getEngine()
 #        if self.metaclass and kernel:
-#            self.metaclass = kernel.Create(self.metaclass, parent, evalSpace)
+#            self.metaclass = kernel.Create(self.metaclass, parent, eval_space)
         
         #   Создаем дочерние компоненты
         if 'child' in component:

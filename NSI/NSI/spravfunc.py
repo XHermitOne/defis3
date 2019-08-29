@@ -171,7 +171,7 @@ def FSpravId(typSprav, id, field='name', datatime=None, tab=None):
     @return: Значение или словарь значений (ключи - имена полей). Если None, то
         необходимые значения не найдены.
     """
-    # print('FSPRAV_ID ENTER, id=', id)
+    # print('FSPRAV_ID ENTER, record_id=', record_id)
     if isinstance(field, str):
         flds = [field]
         isRetDict = False
@@ -351,7 +351,7 @@ def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True
     #   2. Класс хранения справочника (поле tab класса типов)
     #   3. Класс хранения изменяемых во времени параметров
     #       (поле tab класса типов + 'T').
-    print('CtrlSprav_id, id, flds, tab=',value, flds,tab)
+    print('CtrlSprav_id, record_id, flds, tab=',value, flds,tab)
     try:
         
         if not tab:
@@ -390,7 +390,7 @@ def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True
                     try:
                         res_val[key] = getattr(row, fld_sprav)
                     except:
-                        print('Invalid attribute name "%s" in CtrlSprav class=%s, id=%s' % (fld_sprav, tab, str(value)))
+                        print('Invalid attribute name "%s" in CtrlSprav class=%s, record_id=%s' % (fld_sprav, tab, str(value)))
                 
         except IndexError:
             result = IC_CTRL_FAILED
@@ -584,7 +584,7 @@ def HlpSprav(typSprav,ParentCode=(None,),field=None,datatime=None,form=None,rec=
         #--- Если указана дата актуальности ---
         if datatime:
             sprav_t=spr.tab+'T'
-            sql='''SELECT id FROM %s
+            sql='''SELECT record_id FROM %s
                 WHERE SUBSTR(cod,1,%d) LIKE(\'%s\') AND
                 LENGTH(SUBSTR(cod,%d,LENGTH(cod)-%d))=%d AND
                 time_start<=%s AND time_end>=%s'''%(sprav_t,
@@ -595,7 +595,7 @@ def HlpSprav(typSprav,ParentCode=(None,),field=None,datatime=None,form=None,rec=
         #---  Если дата актуальности не указана либо в таблице актуальности нет инф.
         #   за нужный период, то проверяем по справочной таблице
         if not datatime:
-            sql='''SELECT id FROM %s
+            sql='''SELECT record_id FROM %s
                 WHERE %s.id_nsi_list=%d AND
                 SUBSTR(%s.cod,1,%d) LIKE(\'%s\') AND
                 LENGTH(SUBSTR(%s.cod,%d,LENGTH(%s.cod)-%d))=%d'''%(spr.tab,
@@ -630,7 +630,7 @@ def HlpSprav(typSprav,ParentCode=(None,),field=None,datatime=None,form=None,rec=
 #Структура:
 #   {
 #   typeSprav:{
-#             cod/id:{cod:___,name:___,s1:___,...}
+#             cod/record_id:{cod:___,name:___,s1:___,...}
 #             }
 #   }
 _SpravBuffer={}
@@ -1295,7 +1295,7 @@ def getSpravLevel(Type_,Level_=1):
         #sql='''SELECT * FROM %s
         #    WHERE %s.id_nsi_list=%d AND
         #    LENGTH(%s.cod)=%d'''%(spr.tab,
-        #    spr.tab,spr.id,spr.tab,cod_level_len)
+        #    spr.tab,spr.record_id,spr.tab,cod_level_len)
         #Завершить транзакцию
         _NsiList._connection.getConnection().commit()
 

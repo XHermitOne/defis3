@@ -19,7 +19,7 @@
         должно соответствовать типу компонента (стандартные классы начинаются с 'ic');
         параметрами конструктора должны быть стандартные параметры конструекторов
         системных компонентов;
-        component_module.<type>.(parent, id=-1, component=None, logType = 0, evalSpace = None).
+        component_module.<type>.(parent, record_id=-1, component=None, logType = 0, eval_space = None).
     - B{res_module=None}: Имя модуля ресурса (+обработчики событий).
     - B{obj_module=None}: Имя модуля объекта.
     - B{data_name=None}: Имя данных из контекста для инициализации объекта.

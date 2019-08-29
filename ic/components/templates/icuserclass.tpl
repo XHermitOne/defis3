@@ -121,7 +121,7 @@ class $class_name:<icUserBase>$(icwidget.icWidget, parentModule.$parent_class:<p
         #   На этапе генерации их не всегда можно определить.
         parentModule.$parent_class:<pclass>$.__init__(self, $init_arg: <self.parent, id, ... >$)
         #img = common.imgEdtImage
-        #parentModule.GenBitmapTextButton.__init__(self, parent, id, img, self.label, self.position, self.size, style = self.style, name = self.name)
+        #parentModule.GenBitmapTextButton.__init__(self, parent, record_id, img, self.label, self.position, self.size, style = self.style, name = self.name)
         
         #   Регистрация обработчиков событий
         $bind_events: <Описание обработчиков сообщений>$

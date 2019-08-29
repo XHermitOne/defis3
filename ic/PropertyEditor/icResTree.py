@@ -672,7 +672,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                     self.lastSel = None
                     self.SelectItem(item)
         except:
-            log.error(u'ChangePropertyId ERROR id=%s, property=%s, value=%s' % (id, property, value))
+            log.error(u'ChangePropertyId ERROR record_id=%s, property=%s, value=%s' % (id, property, value))
 
     def _get_res_class(self, res):
         """
@@ -1685,7 +1685,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             self.SelectItem(treeId)
             return True
         except:
-            log.error(u'Элемент с id = %s не найден' % str(res_id))
+            log.error(u'Элемент с record_id = %s не найден' % str(res_id))
 
         return False
 

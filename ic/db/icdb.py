@@ -504,7 +504,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         Возвращает объект запроса.
         Пример:
         >>> r = scheme.getQuery('user')
-        >>> obj_lst = r.filter('id < 100').all()
+        >>> obj_lst = r.filter(rrecord_idord_id).all()
         @param tab_name: Имя таблицы.
         @param sess: Сессия.
         """

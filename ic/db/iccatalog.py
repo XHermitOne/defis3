@@ -102,7 +102,7 @@ class icItemCatalog(icAbsItemCatalog):
         @param catalog: Ссылка на каталог, в котором зарегистрирован элемент.
         """
         self.get_pic(bInit=True)
-        self.id = kwarg.get('id', None)
+        self.id = kwarg.get('record_id', None)
         self.path = path
         self.pobj = pobj
         self.title = title

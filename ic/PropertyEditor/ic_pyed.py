@@ -550,8 +550,8 @@ class icPyEditorFrame(icframe.icFrame):
 
         @type parent: C{wx.Window}
         @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
+        @type record_id: C{int}
+        @param record_id: Идентификатор окна
         @type component: C{dictionary}
         @param component: Словарь описания компонента.
         @type txt: C{string}

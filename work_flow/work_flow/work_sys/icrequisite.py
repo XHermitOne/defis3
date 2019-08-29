@@ -70,7 +70,7 @@ from STD.queries import filter_builder_env
 from ic.components.user import ic_field_wrp
 
 # Версия
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # --- Specifications ---
 SPC_IC_REQUISITE = {'type': 'Requisite',
@@ -253,17 +253,17 @@ DEFAULT_INT_WIDTH = 50
 DEFAULT_FLOAT_WIDTH = 50
 
 
-class icRequisitePrototype(icworkbase.icRequisiteBase):
+class icRequisiteProto(icworkbase.icRequisiteBase):
     """
     Реквизит.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icworkbase.icRequisiteBase.__init__(self, Parent_)
+        icworkbase.icRequisiteBase.__init__(self, parent)
         
         # Имя реквизита
         self.name = None
@@ -283,13 +283,13 @@ class icRequisitePrototype(icworkbase.icRequisiteBase):
         """
         return self.type_val
 
-    def setMyData(self, Rec_):
+    def setMyData(self, record):
         """
         Установить мои данные из строки.
-        @param Rec_: Строка в виде словаря.
+        @param record: Строка в виде словаря.
         """
-        if self.field in Rec_:
-            self.setData(Rec_[self.field])
+        if self.field in record:
+            self.setData(record[self.field])
 
     def getFieldNames(self):
         """
@@ -388,46 +388,46 @@ class icRequisitePrototype(icworkbase.icRequisiteBase):
             ic.log.info(u'Не определен тип хранения \'%s\' реквизита <%s>' % (self.type_val, self.name))
         return DEFAULT_CTRL_WIDTH
     
-    def createLabelCtrl(self, Parent_=None):
+    def createLabelCtrl(self, parent=None):
         """
         Создание объекта контрола надписи реквизита.
         """
         spc=self._genStdLabelRes()
-        return self.GetKernel().createObjBySpc(Parent_, spc)
+        return self.GetKernel().createObjBySpc(parent, spc)
         
-    def createEditorCtrl(self, Parent_=None):
+    def createEditorCtrl(self, parent=None):
         """
         Создание объекта контрола редактора реквизита.
-        @param Parent_: Родительское окно.
+        @param parent: Родительское окно.
         """
         if self.type_val == 'T':
             spc = self._genTxtEditorRes(self.name+'_edit')
-            return self.GetKernel().createObjBySpc(Parent_, spc)
+            return self.GetKernel().createObjBySpc(parent, spc)
         elif self.type_val == 'D':
             spc = self._genDateEditorRes(self.name+'_edit')
-            return self.GetKernel().createObjBySpc(Parent_, spc)
+            return self.GetKernel().createObjBySpc(parent, spc)
         elif self.type_val == 'I':
             spc = self._genIntEditorRes(self.name+'_edit')
-            return self.GetKernel().createObjBySpc(Parent_, spc)
+            return self.GetKernel().createObjBySpc(parent, spc)
         elif self.type_val == 'F':
             spc = self._genFloatEditorRes(self.name+'_edit')
-            return self.GetKernel().createObjBySpc(Parent_, spc)
+            return self.GetKernel().createObjBySpc(parent, spc)
         else:
             ic.log.info(u'Не определен тип хранения \'%s\' реквизита <%s>' % (self.type_val, self.name))
         return None
 
 
-class icRegGroupPrototype(icworkbase.icRequisiteBase):
+class icRegGroupProto(icworkbase.icRequisiteBase):
     """
     Группа регистра.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icworkbase.icRequisiteBase.__init__(self, Parent_)
+        icworkbase.icRequisiteBase.__init__(self, parent)
         
         # Имя
         self.name = None
@@ -453,12 +453,12 @@ class icRegSumPrototype(icworkbase.icRequisiteBase):
     Итоги регистра.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icworkbase.icRequisiteBase.__init__(self, Parent_)
+        icworkbase.icRequisiteBase.__init__(self, parent)
         
         # Имя
         self.name = None
@@ -493,12 +493,12 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
     Реквизит связи со справочником системы NSI.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icworkbase.icRequisiteBase.__init__(self, Parent_)
+        icworkbase.icRequisiteBase.__init__(self, parent)
         
         # Текущее значение реквизита - код справочника
         self.value = None
@@ -580,32 +580,32 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
         """
         return self.getDefaults()
         
-    def _getNSIFieldsSpc(self, NSIRes_, NSIType_, FieldNames_):
+    def _getNSIFieldsSpc(self, nsi_resource_name, nsi_type, field_names):
         """
         Взять спецификацию поля справочника.
-        @param NSIRes_: Имя ресурсного файла справочника.
-        @param NSIType_: Тип справочника.
-        @param FieldNames_: Список имен полей справочника.
+        @param nsi_resource_name: Имя ресурсного файла справочника.
+        @param nsi_type: Тип справочника.
+        @param field_names: Список имен полей справочника.
         """
-        if NSIRes_ is None:
+        if nsi_resource_name is None:
             nsi_res_name = 'nsi_sprav'
             nsi_res_ext = 'mtd'
         else:
-            nsi_res = os.path.splitext(os.path.basename(NSIRes_))
+            nsi_res = os.path.splitext(os.path.basename(nsi_resource_name))
             nsi_res_name = nsi_res[0]
             nsi_res_ext = nsi_res[1][1:]  # И стереть первую точку
             
         # Получить ресурсное описание справочника
         nsi_sprav_manager_res = resource.icGetRes(nsi_res_name,
                                                   nsi_res_ext, nameRes=nsi_res_name)
-        if nsi_sprav_manager_res['name'] == NSIType_:
+        if nsi_sprav_manager_res['name'] == nsi_type:
             # Справочник определен просто в ресурсе
             nsi_sprav_res = [nsi_sprav_manager_res]
         else:
             # Справочник определен в менеджере справочников
-            nsi_sprav_res = [sprav for sprav in nsi_sprav_manager_res['child'] if sprav['name'] == NSIType_]
+            nsi_sprav_res = [sprav for sprav in nsi_sprav_manager_res['child'] if sprav['name'] == nsi_type]
         if not nsi_sprav_res:
-            ic.log.warning(u'Не найден справочник <%s> в ресурсе [%s]' % (NSIType_, NSIRes_))
+            ic.log.warning(u'Не найден справочник <%s> в ресурсе [%s]' % (nsi_type, nsi_resource_name))
             return None
         nsi_sprav_res = nsi_sprav_res[0]
         # Получить ресурсное описание полей
@@ -615,7 +615,7 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
         else:
             nsi_tab_name = 'nsi_data'
         nsi_tab_spc = resource.icGetRes(nsi_tab_name, 'tab', nameRes=nsi_tab_name)
-        nsi_fields_spc = [util.DeepCopy(field_spc) for field_spc in [fld for fld in nsi_tab_spc['child'] if fld['name'] in FieldNames_]]
+        nsi_fields_spc = [util.DeepCopy(field_spc) for field_spc in [fld for fld in nsi_tab_spc['child'] if fld['name'] in field_names]]
         return nsi_fields_spc
         
     def _createFieldsSpc(self):
@@ -685,16 +685,16 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
             return name
         return str(self._value) if self._value is not None else ''
 
-    def setData(self, Data_):
+    def setData(self, data):
         """
         Установить текущее значение объекта.
-        @param Data_: Данные справочника в виде словаря в формате 'defaults'.
+        @param data: Данные справочника в виде словаря в формате 'defaults'.
         """
         if self.value is None:
             self.value = dict()
-        self.value.update(Data_)
+        self.value.update(data)
 
-    def _getRequisiteData(self, ParentID_=None):
+    def _getRequisiteData(self, parent_id=None):
         """
         Текущее значение объекта.
         """
@@ -708,15 +708,15 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
         """
         return form_generator.NSI_EDIT_TYPE        
 
-    def setMyData(self, Rec_):
+    def setMyData(self, record):
         """
         Установить мои данные из строки.
-        @param Rec_: Строка в виде словаря.
+        @param record: Строка в виде словаря.
         """
         for field_name in self.getFields().keys():
-            if Rec_ is not None:
-                if field_name in Rec_:
-                    self.setData({field_name: Rec_[field_name]})
+            if record is not None:
+                if field_name in record:
+                    self.setData({field_name: record[field_name]})
             else:
                 log.warning(u'Не определен словарь записи в функции setMyData класса <%s>' % self.__class__.__name__)
 
@@ -734,20 +734,20 @@ class icNSIRequisitePrototype(icworkbase.icRequisiteBase):
         """
         return 300
     
-    def createLabelCtrl(self, Parent_=None):
+    def createLabelCtrl(self, parent=None):
         """
         Создание объекта контрола надписи реквизита.
         """
         spc = self._genStdLabelRes()
-        return self.GetKernel().createObjBySpc(Parent_, spc)
+        return self.GetKernel().createObjBySpc(parent, spc)
         
-    def createEditorCtrl(self, Parent_=None):
+    def createEditorCtrl(self, parent=None):
         """
         Создание объекта контрола редактора реквизита.
-        @param Parent_: Родительское окно.
+        @param parent: Родительское окно.
         """
         spc = self._genNSIEditorRes(self.name+'_edit')
-        return self.GetKernel().createObjBySpc(Parent_, spc)
+        return self.GetKernel().createObjBySpc(parent, spc)
 
     def setSprav(self, sprav):
         """

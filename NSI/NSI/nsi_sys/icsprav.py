@@ -664,7 +664,7 @@ class icSpravPrototype(icSpravInterface):
             #     ic_dlg.openMsgBox(u'ОШИБКА', u'Не определена форма редактирования уровня!')
             #     return False
 
-            sql = '''SELECT id FROM %s
+            sql = '''SELECT record_id FROM %s
                 WHERE SUBSTR(%s.cod,1,%d) LIKE(\'%s\') AND
                 LENGTH(SUBSTR(%s.cod,%d,LENGTH(%s.cod)-%d))=%d''' % (tab_name,
                                                                      tab_name,

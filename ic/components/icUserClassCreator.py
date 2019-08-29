@@ -123,7 +123,7 @@ def CreatUserClass(discr, file_templ=None):
                     if not func:
                         func = 'On_' + attr
                     if id:
-                        text += ot + 'self.Bind(%s, self.%s, id=id)' % (tp, func)+'\n'
+                        text += ot + 'self.Bind(%s, self.%s, record_id=record_id)' % (tp, func)+'\n'
                     else:
                         text += ot + 'self.Bind(%s, self.%s)' % (tp, func) + '\n'
                     
@@ -143,8 +143,8 @@ def CreatUserClass(discr, file_templ=None):
                     text += ot + u'    """\n'
                     text += ot + u'    Event %s, attribute=%s' % (tp, attr) + '\n'
                     text += ot + u'    """\n'
-                    text += ot + '    self.evalSpace[\'evt\'] = evt\n'
-                    text += ot + '    self.evalSpace[\'self\'] = self\n'
+                    text += ot + '    self.eval_space[\'evt\'] = evt\n'
+                    text += ot + '    self.eval_space[\'self\'] = self\n'
                     text += ot + '    ret, val = self.eval_attr(\'%s\')' % attr + '\n'
                     text += ot + '    if ret and val:\n'
                     text += ot + '        evt.Skip()\n'

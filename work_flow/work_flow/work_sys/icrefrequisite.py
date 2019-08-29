@@ -104,12 +104,12 @@ class icREFRequisitePrototype(icworkbase.icRequisiteBase):
     Реквизит-ссылка на бизнес объект/документ.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icworkbase.icRequisiteBase.__init__(self, Parent_)
+        icworkbase.icRequisiteBase.__init__(self, parent)
         
         # Текущее значение реквизита ссылка uuid
         self.value = None
@@ -179,18 +179,18 @@ class icREFRequisitePrototype(icworkbase.icRequisiteBase):
         """
         return self.getDefaults()
 
-    def _getREFFieldsSpc(self, RefObjRes_, RefObjName_, FieldNames_):
+    def _getREFFieldsSpc(self, ref_obj_resource, ref_obj_name, field_names):
         """
         Взять спецификацию поля связи с бизнес объектом/документом.
-        @param RefObjRes_: Имя ресурсного файла связи с бизнес объектом/документом.
-        @param RefObjName_: Имя бизнес объекта/документа.
-        @param FieldNames_: Список имен полей.
+        @param ref_obj_resource: Имя ресурсного файла связи с бизнес объектом/документом.
+        @param ref_obj_name: Имя бизнес объекта/документа.
+        @param field_names: Список имен полей.
         """
-        if RefObjRes_ is None:
+        if ref_obj_resource is None:
             log.warning(u'Не определено имя ресурсного файла связи с бизнес объектом/документом.')
             return None
 
-        obj_res = os.path.splitext(os.path.basename(RefObjRes_))
+        obj_res = os.path.splitext(os.path.basename(ref_obj_resource))
         obj_res_name = obj_res[0]
         obj_res_ext = obj_res[1][1:]  # И стереть первую точку
 
@@ -198,14 +198,14 @@ class icREFRequisitePrototype(icworkbase.icRequisiteBase):
         obj_res = resource.icGetRes(obj_res_name, obj_res_ext, nameRes=obj_res_name)
 
         if not obj_res:
-            log.warning(u'Не найден ресурс <%s>' % RefObjName_)
+            log.warning(u'Не найден ресурс <%s>' % ref_obj_name)
             return None
 
         # Получить ресурсное описание полей
         obj_tab_name = str(obj_res['name']).lower() + '_tab'
         obj_tab_spc = resource.icGetRes(obj_tab_name, 'tab', nameRes=obj_tab_name)
 
-        obj_fields_spc = [util.DeepCopy(field_spc) for field_spc in [fld for fld in obj_tab_spc['child'] if fld['name'] in FieldNames_]]
+        obj_fields_spc = [util.DeepCopy(field_spc) for field_spc in [fld for fld in obj_tab_spc['child'] if fld['name'] in field_names]]
         return obj_fields_spc
 
     def _createFieldsSpc(self):
@@ -270,19 +270,19 @@ class icREFRequisitePrototype(icworkbase.icRequisiteBase):
             n_obj = ref_obj.getRequisiteValue('n_obj')
             if n_obj is None:
                 n_obj = ''
-            elif type(n_obj) not in (str, unicode):
+            elif not isinstance(n_obj, str):
                 n_obj = str(n_obj)
             return n_obj
         return str(self._value) if self._value is not None else ''
 
-    def setData(self, Data_):
+    def setData(self, data):
         """
         Установить текущее значение объекта.
-        @param Data_: Данные в виде словаря в формате 'defaults'.
+        @param data: Данные в виде словаря в формате 'defaults'.
         """
         if self.value is None:
             self.value = dict()
-        self.value.update(Data_)
+        self.value.update(data)
 
     def _getEditType(self):
         """
@@ -292,15 +292,15 @@ class icREFRequisitePrototype(icworkbase.icRequisiteBase):
         """
         return form_generator.REF_EDIT_TYPE
 
-    def setMyData(self, Rec_):
+    def setMyData(self, record):
         """
         Установить мои данные из записи.
-        @param Rec_: Запись в виде словаря.
+        @param record: Запись в виде словаря.
         """
         for field_name in self.getFields().keys():
-            if Rec_ is not None:
-                if field_name in Rec_:
-                    self.setData({field_name: Rec_[field_name]})
+            if record is not None:
+                if field_name in record:
+                    self.setData({field_name: record[field_name]})
             else:
                 log.warning(u'Не определен словарь записи в функции setMyData класса <%s>' % self.__class__.__name__)
 
@@ -318,20 +318,20 @@ class icREFRequisitePrototype(icworkbase.icRequisiteBase):
         """
         return 300
 
-    def createLabelCtrl(self, Parent_=None):
+    def createLabelCtrl(self, parent=None):
         """
         Создание объекта контрола надписи реквизита.
         """
         spc = self._genStdLabelRes()
-        return self.GetKernel().createObjBySpc(Parent_, spc)
+        return self.GetKernel().createObjBySpc(parent, spc)
 
-    def createEditorCtrl(self, Parent_=None):
+    def createEditorCtrl(self, parent=None):
         """
         Создание объекта контрола редактора реквизита.
-        @param Parent_: Родительское окно.
+        @param parent: Родительское окно.
         """
         spc = self._genREFEditorRes(self.name+'_edit')
-        return self.GetKernel().createObjBySpc(Parent_, spc)
+        return self.GetKernel().createObjBySpc(parent, spc)
 
     def setRefObj(self, ref_obj):
         """

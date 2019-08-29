@@ -124,15 +124,15 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
     Интерфейс абстрактного бизнес-объекта.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icworkbase.icWorkBase.__init__(self, Parent_)
+        icworkbase.icWorkBase.__init__(self, parent)
         
-        persistent.icObjPersistent.__init__(self, Parent_)
-        form_generator.icObjFormGenerator.__init__(self, Parent_)
+        persistent.icObjPersistent.__init__(self, parent)
+        form_generator.icObjFormGenerator.__init__(self, parent)
         icdatasetinterface.icDatasetInterface.__init__(self)
         
     def getWorkStorage(self):
@@ -147,12 +147,12 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
         """
         return None
        
-    def Init(self, ParentForm_=None, Context_=None, auto_add=False,
+    def Init(self, parent=None, context=None, auto_add=False,
              init_form_psp=None):
         """
         Запуск инициализации/создания.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Контекст.
+        @param parent: Родительская форма.
+        @param context: Контекст.
         @param auto_add: Признак автодобавления в БД.
         @param init_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
@@ -160,96 +160,96 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
 
     Add = Init
 
-    def Edit(self, ParentForm_=None, Context_=None, UUID_=None,
+    def Edit(self, parent=None, context=None, UUID=None,
              edit_form_psp=None):
         """
         Запуск на редактирование.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Контекст.
-        @param UUID_: Уникальный идентификатор редактируемого объекта.
+        @param parent: Родительская форма.
+        @param context: Контекст.
+        @param UUID: Уникальный идентификатор редактируемого объекта.
             Если None, то уникальный идентификатор self.uuid
         @param edit_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <edit> in class %s' % self.__class__.__name__
         
-    def View(self, ParentForm_=None, Context_=None, UUID_=None,
+    def View(self, parent=None, context=None, UUID=None,
              view_form_psp=None):
         """
         Режим просмотра.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Контекст.
+        @param parent: Родительская форма.
+        @param context: Контекст.
         @param view_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <View> in class %s' % self.__class__.__name__
     
-    def Search(self, ParentForm_=None, Context_=None,
+    def Search(self, parent=None, context=None,
                search_form_psp=None):
         """
         Режим поиска объекта.
-        @param ParentForm_: Родительская форма.
-        @param Context_:Контекст.
+        @param parent: Родительская форма.
+        @param context:Контекст.
         @param search_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <Search> in class %s' % self.__class__.__name__
     
-    def Choice(self, ParentForm_=None, Context_=None,
+    def Choice(self, parent=None, context=None,
                choice_form_psp=None):
         """
         Режим выбора объекта с элементом поиска/фильтра.
-        @param ParentForm_: Родительская форма.
-        @param Context_:Контекст.
+        @param parent: Родительская форма.
+        @param context:Контекст.
         @param choice_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <Choice> in class %s' % self.__class__.__name__
 
-    def Browse(self, ParentForm_=None, Context_=None,
+    def Browse(self, parent=None, context=None,
                choice_form_psp=None):
         """
         Режим выбора объекта с элементом поиска/фильтра.
         В виде страницы главного нотебука.
-        @param ParentForm_: Родительская форма.
-        @param Context_:Контекст.
+        @param parent: Родительская форма.
+        @param context:Контекст.
         @param choice_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <ChoicePage> in class %s' % self.__class__.__name__
 
-    def Print(self, Report_=None, Preview_=False, evalSpace=None):
+    def Print(self, report=None, bPreview=False, eval_space=None):
         """
         Печать.
-        @param Report_: Указание альтернативного отчета вывода.
+        @param report: Указание альтернативного отчета вывода.
             Если None, то отчет берется из спецификации.
-        @param Preview_: Открыть отчет в режиме предварительного просмотра?
+        @param bPreview: Открыть отчет в режиме предварительного просмотра?
         @param evalSpace_: Пространство имен.
         """
         assert None, 'Abstract method <Print> in class %s' % self.__class__.__name__
     
-    def Del(self, UUID_=None, evalSpace=None):
+    def Del(self, UUID=None, eval_space=None):
         """
         Удаление.
-        @param UUID_: uuid удаляемого объекта.
+        @param UUID: uuid удаляемого объекта.
         @param evalSpace_: Пространство имен.
         """
         assert None, 'Abstract method <Del> in class %s' % self.__class__.__name__
         
-    def SendTo(self, To_=None, evalSpace=None):
+    def sendTo(self, to_address=None, eval_space=None):
         """
         Отправка.
-        @param To_: Указание адресата.
+        @param to_address: Указание адресата.
         @param evalSpace_: Пространство имен.
         """
-        assert None, 'Abstract method <SendTo> in class %s' % self.__class__.__name__
+        assert None, 'Abstract method <sendTo> in class %s' % self.__class__.__name__
     
-    def save_obj(self, UUID_=None):
+    def save_obj(self, UUID=None):
         """
         Сохранить внутренние данные в хранилище.
-        @param UUID_: Идентификатор. Если None, то сохранить текущий.
+        @param UUID: Идентификатор. Если None, то сохранить текущий.
         """
         assert None, 'Abstract method <save_obj> in class %s' % self.__class__.__name__
         
-    def load_obj(self, UUID_=None):
+    def load_obj(self, UUID=None):
         """
         Загрузить внутренние данные из хранилища.
-        @param UUID_: Идентификатор.
+        @param UUID: Идентификатор.
         """
         assert None, 'Abstract method <load_obj> in class %s' % self.__class__.__name__
         
@@ -265,7 +265,7 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
         """
         assert None, 'Abstract method <getObjId> in class %s' % self.__class__.__name__
         
-    def startEdit(self, UUID_=None):
+    def startEdit(self, UUID=None):
         """
         Запуск на редактирование.
         """
@@ -278,17 +278,17 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
         assert None, 'Abstract method <stopEdit> in class %s' % self.__class__.__name__
 
 
-class icBusinessObjPrototype(icBusinessObjInterface):
+class icBusinessObjProto(icBusinessObjInterface):
     """
     Бизнесс-объект.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icBusinessObjInterface.__init__(self, Parent_)
+        icBusinessObjInterface.__init__(self, parent)
         
         # Описание объекта. Храниться в таблице для каждого объекта
 
@@ -419,13 +419,13 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         """
         return None
 
-    def getObjDescription(self, UUID_=None):
+    def getObjDescription(self, UUID=None):
         """
         Описание бизнес-объекта  предметной области.
-        @param UUID_: Уникальный идентификатор объекта.
+        @param UUID: Уникальный идентификатор объекта.
         """
-        if UUID_ is not None:
-            self.loadRequisiteData(UUID_)
+        if UUID is not None:
+            self.loadRequisiteData(UUID)
             
         description = u' '.join([toolfunc.toUnicode(requisite.getValue()) for requisite in self.getChildrenRequisites() if requisite.isDescription()])
 
@@ -442,14 +442,13 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         """
         return self.getChildrenRequisites()
         
-    def Init(self, ParentForm_=None, Context_=None, auto_add=False,
-             init_form_psp=None):
+    def Init(self, parent=None, context=None, auto_add=False, init_form_psp=None):
         """
         Запуск инициализации/создания.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Контекст.
+        @param parent: Родительская форма.
+        @param context: Контекст.
         @param auto_add: Признак автодобавления в БД.
-        @param init_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        @param init_form_psp: Паспорт формы для подмены стандартной формы вывода.
         @return: Словарь нового объекта или None в случае ошибки.
         """
         # Перед созданием формы необходмо создать
@@ -467,11 +466,11 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
         try:
             # Сначала полностью проинициализировать контекст
-            if Context_ is None:
-                Context_ = self.GetContext()
+            if context is None:
+                context = self.GetContext()
                 
             # Добавить в пространство имен указатель на текущий БИЗНЕС-ОБЪЕКТ
-            Context_['OBJ'] = self
+            context['OBJ'] = self
             
             # Заполнение значений по умолчанию реквизитов через контекст
             requisite_values = self.getRequisiteDataDefault()
@@ -479,8 +478,8 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             init_values = None
             if not self.isDoInit():
                 # Создать и открыть форму инициализации документа
-                frm_obj = ic.getKernel().Create(frm_psp, parent=ParentForm_,
-                                                context=Context_)
+                frm_obj = ic.getKernel().Create(frm_psp, parent=parent,
+                                                context=context)
                 frm_obj.GetContext().setValueInCtrl(frm_obj, requisite_values)
                 frm_obj.ShowModal()
 
@@ -508,18 +507,17 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             # Сохранение реквизитов не произошло
             return init_values
         except:
-            log.error(u'Ошибка  инициализации БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.fatal(u'Ошибка  инициализации БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
         return None
 
     Add = Init
 
-    def Search(self, ParentForm_=None, Context_=None,
-               search_form_psp=None):
+    def Search(self, parent=None, context=None, search_form_psp=None):
         """
         Режим поиска объекта.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Пространство имен.
-        @param search_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        @param parent: Родительская форма.
+        @param context: Пространство имен.
+        @param search_form_psp: Паспорт формы для подмены стандартной формы вывода.
         @return: Возвращает UUID выбранного объекта или None,
         если объект не выбран.
         """
@@ -538,21 +536,21 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             
         try:
             # Сначала полностью проинициализировать контекст
-            if Context_ is None:
-                Context_ = self.GetContext()
+            if context is None:
+                context = self.GetContext()
                 
             # Добавить в пространство имен указатель на текущий БИЗНЕС-ОБЪЕКТ
-            Context_['OBJ'] = self
+            context['OBJ'] = self
 
             obj_uuid = None
             if not self.isDoSearch():
                 # Создать и открыть форму
-                panel_obj = ic.getKernel().Create(frm_psp, parent=ParentForm_,
-                                                  context=Context_)
+                panel_obj = ic.getKernel().Create(frm_psp, parent=parent,
+                                                  context=context)
                 
                 # Создать и открыть форму
-                frm_obj = ic.getKernel().Create(frm_psp, parent=ParentForm_,
-                                                context=Context_)
+                frm_obj = ic.getKernel().Create(frm_psp, parent=parent,
+                                                context=context)
                 frm_obj.ShowModal()
 
                 if frm_obj.isPressOk():
@@ -567,15 +565,15 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             return obj_uuid
         except:
-            log.error(u'Ошибка режима поиска БИЗНЕС-ОБЪЕКТА %s' % self.name)
+            log.fatal(u'Ошибка режима поиска БИЗНЕС-ОБЪЕКТА %s' % self.name)
+        return None
         
-    def Choice(self, ParentForm_=None, Context_=None,
-               choice_form_psp=None):
+    def Choice(self, parent=None, context=None, choice_form_psp=None):
         """
         Режим выбора объекта сэлементом поиска/фильтра.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Контекст формы.
-        @param choice_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        @param parent: Родительская форма.
+        @param context: Контекст формы.
+        @param choice_form_psp: Паспорт формы для подмены стандартной формы вывода.
         @return: Возвращает UUID выбранного объекта или None,
         если объект не выбран.
         """
@@ -594,17 +592,17 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             
         try:
             # Сначала полностью проинициализировать контекст
-            if Context_ is None:
-                Context_ = self.GetContext()
+            if context is None:
+                context = self.GetContext()
                 
             # Добавить в пространство имен указатель на текущий БИЗНЕС-ОБЪЕКТ
-            Context_['OBJ'] = self
+            context['OBJ'] = self
 
             obj_uuid = None
             if not self.isDoChoice():
                 # Создать и открыть форму
-                frm_obj = ic.getKernel().Create(frm_psp, parent=ParentForm_,
-                                                context=Context_)
+                frm_obj = ic.getKernel().Create(frm_psp, parent=parent,
+                                                context=context)
                 frm_obj.ShowModal()
 
                 if frm_obj.isPressOk():
@@ -619,15 +617,15 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             return obj_uuid
         except:
-            log.error(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.fatal(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+        return None
 
-    def Browse(self, ParentForm_=None, Context_=None,
-               choice_form_psp=None):
+    def Browse(self, parent=None, context=None, choice_form_psp=None):
         """
         Режим выбора объекта с элементом поиска/фильтра.
         В виде страницы главного нотебука.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Контекст.
+        @param parent: Родительская форма.
+        @param context: Контекст.
         @param choice_form_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         # Перед созданием необходмо создать
@@ -645,27 +643,26 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
         try:
             # Сначала полностью проинициализировать контекст
-            if Context_ is None:
-                Context_ = self.GetContext()
+            if context is None:
+                context = self.GetContext()
 
             # Добавить в пространство имен указатель на текущий БИЗНЕС-ОБЪЕКТ
-            Context_['OBJ'] = self
+            context['OBJ'] = self
 
             # Создать и открыть
-            obj = ic.getKernel().Create(psp, parent=ParentForm_, context=Context_)
+            obj = ic.getKernel().Create(psp, parent=parent, context=context)
             ic.getKernel().GetContext().getMainWin().addOrgPage(obj, self.description)
         except:
-            log.error(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.fatal(u'Ошибка режима выбора БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
 
-    def Edit(self, ParentForm_=None, Context_=None, UUID_=None,
-             edit_form_psp=None):
+    def Edit(self, parent=None, context=None, UUID=None, edit_form_psp=None):
         """
         Запуск объекта на редактирование.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Контекст.
-        @param UUID_: Уникальный идентификатор редактируемого объекта.
+        @param parent: Родительская форма.
+        @param context: Контекст.
+        @param UUID: Уникальный идентификатор редактируемого объекта.
         Если None, то идентификатор берется из текущего объекта.
-        @param edit_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        @param edit_form_psp: Паспорт формы для подмены стандартной формы вывода.
         @return: True-исменения успешно сохранены, False-нажата <Отмена>.
         """
         # Перед созданием формы необходмо создать
@@ -681,8 +678,8 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         else:
             frm_psp = edit_form_psp
 
-        if UUID_ is None:
-            UUID_ = self.getUUID()
+        if UUID is None:
+            UUID = self.getUUID()
             
         if not self.startEdit():
             # Объект заблокирован
@@ -690,28 +687,28 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         
         try:
             # Сначала полностью проинициализировать контекст
-            if Context_ is None:
-                Context_ = self.GetContext()
+            if context is None:
+                context = self.GetContext()
                 
             # Добавить в пространство имен указатель на текущий БИЗНЕС-ОБЪЕКТ
-            Context_['OBJ'] = self
+            context['OBJ'] = self
             
             # Заполнение значений реквизитов через контекст
-            requisite_values = self.loadRequisiteData(UUID_)
+            requisite_values = self.loadRequisiteData(UUID)
 
             ok_save = False
             edit_values = None
             if not self.isDoEdit():
                 # Создать и открыть форму инициализации документа
-                frm_obj = ic.getKernel().Create(frm_psp, parent=ParentForm_,
-                                                context=Context_)
+                frm_obj = ic.getKernel().Create(frm_psp, parent=parent,
+                                                context=context)
                 frm_obj.GetContext().setValueInCtrl(frm_obj, requisite_values)
                 frm_obj.ShowModal()
 
                 if frm_obj.isPressOk():
                     # Сохранить реквизиты объекта
                     edit_values = frm_obj.GetContext().getValueInCtrl(frm_obj)
-                    edit_ok = self.validEdit(requisite_values=edit_values, obj_uuid=UUID_) if self.isValidEdit() else True
+                    edit_ok = self.validEdit(requisite_values=edit_values, obj_uuid=UUID) if self.isValidEdit() else True
                     if edit_ok:
                         ok_save = self.saveRequisiteData(edit_values)
 
@@ -721,7 +718,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                 frm_obj.Destroy()
             else:
                 edit_values = self.doEdit(requisite_values=requisite_values)
-                edit_ok = self.validEdit(requisite_values=edit_values, obj_uuid=UUID_) if self.isValidEdit() else True
+                edit_ok = self.validEdit(requisite_values=edit_values, obj_uuid=UUID) if self.isValidEdit() else True
                 if edit_ok:
                     ok_save = self.saveRequisiteData(edit_values)
 
@@ -729,20 +726,19 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             return ok_save
         except:
-            log.error(u'Ошибка редактирования БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.fatal(u'Ошибка редактирования БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
 
         # Снять блокировку
         self.stopEdit()
         return False        
         
-    def View(self, ParentForm_=None, Context_=None, UUID_=None,
-             view_form_psp=None):
+    def View(self, parent=None, context=None, UUID=None, view_form_psp=None):
         """
         Режим просмотра объекта.
-        @param ParentForm_: Родительская форма.
-        @param Context_: Контекст.
-        @param UUID_: Уникальный идентификатор.
-        @param view_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        @param parent: Родительская форма.
+        @param context: Контекст.
+        @param UUID: Уникальный идентификатор.
+        @param view_form_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         # Перед созданием формы необходмо создать
         # все ресурсы таблиц хранения объекта, если
@@ -757,25 +753,25 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         else:
             frm_psp = view_form_psp
 
-        if UUID_ is None:
-            UUID_ = self.getUUID()
+        if UUID is None:
+            UUID = self.getUUID()
 
         try:
             # Сначала полностью проинициализировать контекст
-            if Context_ is None:
-                Context_ = self.GetContext()
+            if context is None:
+                context = self.GetContext()
                 
             # Добавить в пространство имен указатель на текущий БИЗНЕС-ОБЪЕКТ
-            Context_['OBJ'] = self
+            context['OBJ'] = self
             
             # Заполнение значений по умолчанию реквизитов через контекст
-            requisite_values = self.loadRequisiteData(UUID_)
+            requisite_values = self.loadRequisiteData(UUID)
 
             ok = None
             if not self.isDoView():
                 # Создать и открыть форму инициализации документа
-                frm_obj = ic.getKernel().Create(frm_psp, parent=ParentForm_,
-                                                context=Context_)
+                frm_obj = ic.getKernel().Create(frm_psp, parent=parent,
+                                                context=context)
                 frm_obj.GetContext().setValueInCtrl(frm_obj, requisite_values)
                 frm_obj.ShowModal()
 
@@ -789,29 +785,29 @@ class icBusinessObjPrototype(icBusinessObjInterface):
 
             return ok
         except:
-            log.error(u'Ошибка просмотра БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
+            log.fatal(u'Ошибка просмотра БИЗНЕС-ОБЪЕКТА <%s>' % self.name)
         return False        
     
-    def Print(self, Report_=None, Preview_=False, evalSpace=None):
+    def Print(self, report=None, bPreview=False, eval_space=None):
         """
         Печать документа.
-        @param Report_: Указание альтернативного отчета вывода.
+        @param report: Указание альтернативного отчета вывода.
             Если None, то отчет берется из спецификации.
-        @param Preview_: Открыть отчет в режиме предварительного просмотра?
+        @param bPreview: Открыть отчет в режиме предварительного просмотра?
         @param evalSpace_: Пространство имен.
         """
         pass
         
-    def Del(self, UUID_=None, evalSpace=None, ask=True):
+    def Del(self, UUID=None, eval_space=None, ask=True):
         """
         Удаление документа.
-        @param UUID_: uuid удаляемого объекта.
+        @param UUID: uuid удаляемого объекта.
         @param evalSpace_: Пространство имен.
         @param ask: Спросить об удалении?
         @return: True - удаление прошло успешно.
             False - удаление отменено по какойто причине
         """
-        if UUID_ is None:
+        if UUID is None:
             log.warning(u'Не определен объект для удаления')
             return False
 
@@ -819,17 +815,17 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         is_del = (not ask) or (ask and ic.dlgfunc.openAskBox(u'УДАЛЕНИЕ ОБЪЕКТА', u'Удалить текущий объект?'))
         if is_del:
             # Заполнение значений реквизитов через контекст
-            del_values = self.loadRequisiteData(UUID_)
-            del_ok = self.validDel(requisite_values=del_values, obj_uuid=UUID_) if self.isValidDel() else True
+            del_values = self.loadRequisiteData(UUID)
+            del_ok = self.validDel(requisite_values=del_values, obj_uuid=UUID) if self.isValidDel() else True
             if del_ok:
-                self.delete(UUID_)
+                self.delete(UUID)
             return del_ok
         return False
 
-    def SendTo(self, To_=None, evalSpace=None):
+    def sendTo(self, to_address=None, eval_space=None):
         """
         Отправка документа.
-        @param To_: Указание адресата.
+        @param to_address: Указание адресата.
         @param evalSpace_: Пространство имен.
         """
         pass
@@ -841,17 +837,17 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         storage = self.getWorkStorage()
         storage.saveObject(self)
 
-    def save_obj(self, UUID_=None):
+    def save_obj(self, UUID=None):
         """
         Сохранить внутренние данные документа в хранилище.
         ВНИМАНИЕ! Метод нельзя называть save, т.к.
         будет происходить переопределение метода save
         в персистент классе.
-        @param UUID_: Идентификатор документа. 
+        @param UUID: Идентификатор документа.
         Если None, то сохранить текущий документ.
         """
-        if UUID_ is not None:
-            self.uuid = UUID_   # Запомнить идентификатор документа
+        if UUID is not None:
+            self.uuid = UUID   # Запомнить идентификатор документа
         # log.debug(u'Запись объекта <%s>' % self.uuid)
         if self.uuid is None:
             log.warning(u'Не определен UUID объекта. Запись не возможна')
@@ -865,24 +861,24 @@ class icBusinessObjPrototype(icBusinessObjInterface):
     # в персистент классе.
     # save = save_obj
 
-    def load_obj(self, UUID_=None):
+    def load_obj(self, UUID=None):
         """
         Загрузить внутренние данные документа из хранилища.
-        @param UUID_: Идентификатор документа.
+        @param UUID: Идентификатор документа.
         """
-        if UUID_ is not None:
-            self.uuid = UUID_   # Запомнить идентификатор документа
+        if UUID is not None:
+            self.uuid = UUID   # Запомнить идентификатор документа
         storage = self.getWorkStorage()
         storage.loadObject(self, self.uuid)
 
-    def update_obj(self, UUID_=None, **requisite_values):
+    def update_obj(self, UUID=None, **requisite_values):
         """
         Изменить внутренние данные документа из хранилища.
-        @param UUID_: Идентификатор документа.
+        @param UUID: Идентификатор документа.
         @param requisite_values: Словарь значений изменяемых реквизитов.
         """
-        if UUID_ is not None:
-            self.uuid = UUID_   # Запомнить идентификатор документа
+        if UUID is not None:
+            self.uuid = UUID   # Запомнить идентификатор документа
         storage = self.getWorkStorage()
         # Загрузить данные объекта
         storage.loadObject(self, self.uuid)
@@ -892,28 +888,28 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         # Сохранить объект
         storage.saveObject(self)
 
-    def is_obj(self, UUID_=None):
+    def is_obj(self, UUID=None):
         """
         Проверка на существование данных документа в хранилище.
-        @param UUID_: Идентификатор документа.
+        @param UUID: Идентификатор документа.
         @return: True/False.
         """
-        if UUID_ is None:
-             UUID_ = self.uuid   # Запомнить идентификатор документа
+        if UUID is None:
+             UUID = self.uuid   # Запомнить идентификатор документа
         storage = self.getWorkStorage()
-        return storage.isObject(self, UUID_)
+        return storage.isObject(self, UUID)
 
-    def delete_obj(self, UUID_=None):
+    def delete_obj(self, UUID=None):
         """
         Удаление данных документа из хранилища.
-        @param UUID_: Идентификатор документа.
+        @param UUID: Идентификатор документа.
         @return: True/False.
         """
-        if UUID_ is None:
-             UUID_ = self.uuid   # Запомнить идентификатор документа
+        if UUID is None:
+             UUID = self.uuid   # Запомнить идентификатор документа
         # ВНИМАНИЕ! Не определен метод в icWorkStorage! Поэтому используем метод
         # в icObjPersistent. Надо бы дописать метод в icWorkStorage
-        return self.delete(UUID_)
+        return self.delete(UUID)
 
     def getAllUUID(self, order_sort=None):
         """
@@ -965,7 +961,7 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         try:
             return self._getRequisiteData()
         except:
-            log.error(u'ОШИБКА определения словаря данных ДОКУМЕНТЫ <%s>' % self.name)
+            log.fatal(u'ОШИБКА определения словаря данных ДОКУМЕНТЫ <%s>' % self.name)
         return None
 
     def _getRequisiteData(self, parent_id=None):
@@ -1016,10 +1012,10 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                 
         return data
         
-    def saveRequisiteData(self, RequisiteData_=None):
+    def saveRequisiteData(self, requisite_data=None):
         """
         Сохранить все реквизиты объекта в хранилище. Данные реквизитов в виде словаря.
-        @param RequisiteData_: Словарь значений реквизитов.
+        @param requisite_data: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -1032,20 +1028,20 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         @return: Возвращает True-сохранение прошло удачно, False-не удачно,None-ошибка.
         """
         try:
-            if RequisiteData_ is None:
-                RequisiteData_ = self.getRequisiteData()
+            if requisite_data is None:
+                requisite_data = self.getRequisiteData()
                 
-            if 'uuid' in RequisiteData_:
-                obj_uuid = RequisiteData_['uuid']
+            if 'uuid' in requisite_data:
+                obj_uuid = requisite_data['uuid']
             else:
                 obj_uuid = self.getUUID()
-            result = self.save(obj_uuid, RequisiteData_)
+            result = self.save(obj_uuid, requisite_data)
             return result
         except:
-            log.error(u'ОШИБКА сохранения словаря данных объекта <%s>' % self.name)
-            return None
+            log.fatal(u'ОШИБКА сохранения словаря данных объекта <%s>' % self.name)
+        return None
 
-    def loadRequisiteData(self, UUID_=None):
+    def loadRequisiteData(self, UUID=None):
         """
         Загрузить данные всех реквизитов объекта из хранилища. 
         Данные реквизитов в виде словаря.
@@ -1056,14 +1052,14 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                 'имя спецификации документа':[список словарей реквизитов],
                 ...
                 }
-        @param UUID_: Уникальный идентификатор объекта, если
+        @param UUID: Уникальный идентификатор объекта, если
             None, то берется текущий uuid объекта.
         @return: Данные реквизитов в виде словаря или None-ошибка.
         """
-        if UUID_ is None:
-            UUID_ = self.getUUID()
+        if UUID is None:
+            UUID = self.getUUID()
         try:
-            requisite_data = self._load_data(UUID_)
+            requisite_data = self._load_data(UUID)
             # Идентифицировать загруженный объект
             if requisite_data:
                 self.uuid = requisite_data.get('uuid', None)
@@ -1074,13 +1070,13 @@ class icBusinessObjPrototype(icBusinessObjInterface):
             
             return requisite_data
         except:
-            log.error(u'ОШИБКА загрузки словаря данных объекта <%s>' % self.name)
-            return None
+            log.fatal(u'ОШИБКА загрузки словаря данных объекта <%s>' % self.name)
+        return None
 
-    def _setRequisiteData(self, RequisiteData_):
+    def _setRequisiteData(self, requisite_data):
         """
         Установить значений реквизитов объекта из данных.
-        @param RequisiteData_: Словарь значений реквизитов.
+        @param requisite_data: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -1091,9 +1087,9 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         @return: Возвращает True-установка прошла удачно, 
             False-не удачно,None-ошибка.
         """
-        RequisiteData_ = self._correctRequisiteData(RequisiteData_)
+        requisite_data = self._correctRequisiteData(requisite_data)
         
-        if not RequisiteData_:
+        if not requisite_data:
             log.warning(u'Не заполнен словарь реквизитов для сохранения в бизнес объекте <%s>' % self.name)
             return False
 
@@ -1105,19 +1101,19 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                     # и по имени реквизита. Необходимо обрабатывать оба случая.
                     req_field_name = requisite.getFieldName()
                     req_name = requisite.getName()
-                    req_data_name = req_field_name if req_field_name in RequisiteData_ else req_name
+                    req_data_name = req_field_name if req_field_name in requisite_data else req_name
                 elif issubclass(requisite.__class__, icworkbase.icTabRequisiteBase):
                     # ВНИМАНИЕ! Данные табличной части могут передаваться по имени таблицы
                     # и по имени реквизита. Необходимо обрабатывать оба случая.
                     req_tab_name = requisite.getTableName()
                     req_name = requisite.getName()
-                    req_data_name = req_tab_name if req_tab_name in RequisiteData_ else req_name
+                    req_data_name = req_tab_name if req_tab_name in requisite_data else req_name
                 else:
                     log.info(u'Не определен тип реквизита <%s>' % requisite)
                     return False
                 
-                if req_data_name in RequisiteData_:
-                    requisite.setValue(RequisiteData_[req_data_name])
+                if req_data_name in requisite_data:
+                    requisite.setValue(requisite_data[req_data_name])
                 else:
                     log.warning(u'Не определено значение реквизита <%s>. Используется значение по умолчанию' % req_data_name)
                     # Если данные в словаре значений не определены,
@@ -1125,8 +1121,8 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                     requisite.setValue(requisite.getDefault())
             return True
         except:
-            log.error(u'Ошибка в функции _setRequisiteData объекта <%s>' % self.name)
-            return None
+            log.fatal(u'Ошибка в функции _setRequisiteData объекта <%s>' % self.name)
+        return None
 
     setRequisiteData = _setRequisiteData
 
@@ -1163,11 +1159,11 @@ class icBusinessObjPrototype(icBusinessObjInterface):
                     requisite_data[requisite_name][i] = self._correctRequisiteData(record)
         return requisite_data
         
-    def addRequisiteData(self, RequisiteData_=None):
+    def addRequisiteData(self, requisite_data=None):
         """
         Создать новую запись со всеми реквизиты объекта в хранилище. 
         Данные реквизитов в виде словаря.
-        @param RequisiteData_: Словарь значений реквизитов.
+        @param requisite_data: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -1180,26 +1176,26 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         @return: Возвращает True-сохранение прошло удачно, False-не удачно,None-ошибка.
         """
         try:
-            self._setRequisiteData(RequisiteData_)
+            self._setRequisiteData(requisite_data)
                 
-            if 'uuid' in RequisiteData_:
-                obj_uuid = RequisiteData_['uuid']
+            if 'uuid' in requisite_data:
+                obj_uuid = requisite_data['uuid']
             else:
                 obj_uuid = uuidfunc.get_uuid()
-            result = self.add(obj_uuid, RequisiteData_)
+            result = self.add(obj_uuid, requisite_data)
             return obj_uuid
         except:
-            log.error(u'ОШИБКА сохранения словаря данных объекта <%s>' % self.name)
-            return None
+            log.fatal(u'ОШИБКА сохранения словаря данных объекта <%s>' % self.name)
+        return None
 
-    def startEdit(self, UUID_=None):
+    def startEdit(self, UUID=None):
         """
         Запуск на редактирование.
         @return: True - запуск редактирования, 
         False - объект заблокирован.
         """
-        if UUID_ is not None:
-            self.uuid = UUID_   # Запомнить идентификатор документа
+        if UUID is not None:
+            self.uuid = UUID   # Запомнить идентификатор документа
             
         if not self.isLock() or self.isMyLock():
             # Поставить блокировку на документ
@@ -1234,20 +1230,20 @@ class icBusinessObjPrototype(icBusinessObjInterface):
         """
         return self._history_obj
     
-    def findRequisite(self, RequisiteName_):
+    def findRequisite(self, requisite_name):
         """
         Найти реквизит по имени.
         Поиск ведется рекурсивно.
-        @param RequisiteName_: Имя искомого реквизита.
+        @param requisite_name: Имя искомого реквизита.
         @return: Возвращает объект реквизита или None,
             если реквизит с таким именем не найден.
         """
         for requisite in self.getChildrenRequisites():
-            if requisite.name == RequisiteName_:
+            if requisite.name == requisite_name:
                 return requisite
             # Проверка стоит ли искать в дочерних реквизитах
             if hasattr(requisite, 'findRequisite'):
-                find_requisite = requisite.findRequisite(RequisiteName_)
+                find_requisite = requisite.findRequisite(requisite_name)
                 # Если нашли реквизит то вернуть его
                 if find_requisite:
                     return find_requisite

@@ -32,29 +32,29 @@ from STD.queries import filter_generate
 
 
 # Version
-__version__ = (0, 1, 1, 3)
+__version__ = (0, 1, 1, 4)
 
 # Префикс для кода справочника в словаре записи
 NSI_CODE_PREFIX = '_'
 
 
-class icObjPersistentPrototype:
+class icObjPersistentProto(object):
     """
     Прототип компонентов, хранимых в БД.
         Реализует простейшие функции генерации имен таблиц и т.п.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
         self.uuid = None
         self.name = ''
         self.description = ''
         
         # Инициализация родительского класса
-        self._parent = Parent_
+        self._parent = parent
 
         # Имя таблицы хранения
         self._table_name = ''
@@ -142,14 +142,13 @@ class icObjPersistentPrototype:
         """
         return self._table
     
-    def _createUuidFieldSpc(self, FieldName_='uuid'):
+    def _createUuidFieldSpc(self, field_name='uuid'):
         """
         Создать спецификацию поля идентифицирующего документ.
-        @param FieldName_: Имя идентифицирующего поля.
+        @param field_name: Имя идентифицирующего поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
         # Установить свойства связи с таблицей
-        field_name = FieldName_
         field_spc['name'] = field_name
         field_spc['description'] = u'Идентификатор UUID документа'
         field_spc['field'] = field_name.lower()
@@ -160,14 +159,13 @@ class icObjPersistentPrototype:
         
         return field_spc
     
-    def _createCodFieldSpc(self, FieldName_='cod'):
+    def _createCodFieldSpc(self, field_name='cod'):
         """
         Создать спецификацию поля идентифицирующего объект по коду.
-        @param FieldName_: Имя идентифицирующего поля.
+        @param field_name: Имя идентифицирующего поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
         # Установить свойства связи с таблицей
-        field_name = FieldName_
         field_spc['name'] = field_name
         field_spc['description'] = u'Код'
         field_spc['field'] = field_name.lower()
@@ -178,16 +176,15 @@ class icObjPersistentPrototype:
         
         return field_spc
 
-    def _createDateFieldSpc(self, FieldName_='x_date', Description_=''):
+    def _createDateFieldSpc(self, field_name='x_date', description=''):
         """
         Создать спецификацию поля даты/времени.
-        @param FieldName_: Имя идентифицирующего поля.
+        @param field_name: Имя идентифицирующего поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
         # Установить свойства связи с таблицей
-        field_name = FieldName_
         field_spc['name'] = field_name
-        field_spc['description'] = strfunc.str2unicode(Description_)
+        field_spc['description'] = strfunc.str2unicode(description)
         field_spc['field'] = field_name.lower()
         field_spc['type_val'] = 'D'
         field_spc['len'] = None
@@ -196,16 +193,15 @@ class icObjPersistentPrototype:
         
         return field_spc
     
-    def _createIntFieldSpc(self, FieldName_='x_int', Description_=''):
+    def _createIntFieldSpc(self, field_name='x_int', description=''):
         """
         Создать спецификацию целочисленного поля.
-        @param FieldName_: Имя идентифицирующего поля.
+        @param field_name: Имя идентифицирующего поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
         # Установить свойства связи с таблицей
-        field_name = FieldName_
         field_spc['name'] = field_name
-        field_spc['description'] = strfunc.str2unicode(Description_)
+        field_spc['description'] = strfunc.str2unicode(description)
         field_spc['field'] = field_name.lower()
         field_spc['type_val'] = 'I'
         field_spc['len'] = None
@@ -289,18 +285,18 @@ class icObjPersistentPrototype:
         return None
 
 
-class icObjPersistent(icObjPersistentPrototype):
+class icObjPersistent(icObjPersistentProto):
     """
     Базовый класс компонентов хранимых в БД.
         Реализует внутри себя механизм генерации спецификаций таблиц хранения.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icObjPersistentPrototype.__init__(self, Parent_)
+        icObjPersistentProto.__init__(self, parent)
 
         # Окружение конструктора фильтров для объектов
         self.filter_environment = None
@@ -352,12 +348,12 @@ class icObjPersistent(icObjPersistentPrototype):
             self._table = self.GetKernel().createObjBySpc(parent=None, res=tab_res)
         return self._table
 
-    def save(self, UUID_=None, Data_=None):
+    def save(self, UUID=None, data=None):
         """
         Сохранить внутренние данные в хранилище.
-        @param UUID_: Идентификатор. 
+        @param UUID: Идентификатор.
         Если None, то сохранить текущий.
-        @param Data_: Сохраняемые данные в виде каскадного словаря:
+        @param data: Сохраняемые данные в виде каскадного словаря:
         {
         'имя поля реквизита':значение,
         ...
@@ -374,11 +370,11 @@ class icObjPersistent(icObjPersistentPrototype):
             session = tab.db.getSession()
             session.begin()
             
-            if UUID_ is None:
-                UUID_ = self.getUUID()
-            if Data_ is None:
-                Data_ = self._getCascadeDataObj()
-            result = self._saveCascadeData(tab, UUID_, Data_)
+            if UUID is None:
+                UUID = self.getUUID()
+            if data is None:
+                data = self._getCascadeDataObj()
+            result = self._saveCascadeData(tab, UUID, data)
             # Завершить транзакцию
             session.commit()
             return result
@@ -388,15 +384,15 @@ class icObjPersistent(icObjPersistentPrototype):
                 session.rollback()
                 # if session.is_active:
                 #    session.clear()
-            log.error(u'Ошибка сохранения данных мета-объекта [%s]' % self.name)
-            return None
+            log.fatal(u'Ошибка сохранения данных мета-объекта [%s]' % self.name)
+        return None
             
-    def _saveCascadeData(self, Tab_, UUID_, Data_):
+    def _saveCascadeData(self, table, UUID, data):
         """
         Сохранить каскадные данные в хранилище.
-        @param Tab_: Таблица.
-        @param UUID_: Уникальный идентификатор.
-        @param Data_: Словарь каскадных данных:
+        @param table: Таблица.
+        @param UUID: Уникальный идентификатор.
+        @param data: Словарь каскадных данных:
         {
         'имя поля реквизита':значение,
         ...
@@ -406,12 +402,12 @@ class icObjPersistent(icObjPersistentPrototype):
         @return: Возвращает True/False.
         """
         try:
-            tab = self._tabObj(Tab_)
+            tab = self._tabObj(table)
             if tab:
                 # Выбрать только реквизиты
-                rec = dict([(str(fld_name), fld_value) for fld_name, fld_value in Data_.items() if not isinstance(fld_value, list)])
-                save_rec = tab.get_where(tab.c.uuid == UUID_).fetchone()
-                tab.update_where(tab.c.uuid == UUID_, **rec)
+                rec = dict([(str(fld_name), fld_value) for fld_name, fld_value in data.items() if not isinstance(fld_value, list)])
+                save_rec = tab.get_where(tab.c.uuid == UUID).fetchone()
+                tab.update_where(tab.c.uuid == UUID, **rec)
 
                 result = True
                 children_obj = [child for child in self.getChildrenRequisites() if issubclass(child.__class__, icObjPersistent)]
@@ -419,27 +415,27 @@ class icObjPersistent(icObjPersistentPrototype):
                 for child_obj in children_obj:
                     child_tab_name = child_obj.getTableName()
                     child_name = child_obj.getName()
-                    if child_tab_name in Data_:
+                    if child_tab_name in data:
                         # В данных указана дочерняя таблица по имени таблицы
                         result = result and child_obj._updateChildCascadeData(child_obj.getTable(),
-                                                                              Data_[child_tab_name], save_rec)
-                    elif child_name in Data_:
+                                                                              data[child_tab_name], save_rec)
+                    elif child_name in data:
                         # В данных указана дочерняя таблица по имени табличного реквизита
                         result = result and child_obj._updateChildCascadeData(child_obj.getTable(),
-                                                                              Data_[child_name], save_rec)
+                                                                              data[child_name], save_rec)
                     else:
                         log.warning(u'Не найдены данные для дочерней таблицы/реквизита <%s>/<%s>' % (child_tab_name, child_name))
                 return result
         except:
-            log.error(u'Ошибка сохранения каскада данных мета-объекта [%s]' % self.name)
+            log.fatal(u'Ошибка сохранения каскада данных мета-объекта [%s]' % self.name)
         return False
 
-    def _updateChildCascadeData(self, Tab_, Data_, ParentRecord_):
+    def _updateChildCascadeData(self, table, data, parent_record):
         """
         Сохранить каскадные данные в хранилище у дочерних объектов.
-        @param Tab_: Таблица.
-        @param ParentRecord_: Родительская запись.
-        @param Data_: Список словарей каскадных данных:
+        @param table: Таблица.
+        @param parent_record: Родительская запись.
+        @param data: Список словарей каскадных данных:
         [{
         'имя поля реквизита':значение,
         ...
@@ -448,14 +444,14 @@ class icObjPersistent(icObjPersistentPrototype):
         },...]
         @return: Возвращает True/False.
         """
-        tab = self._tabObj(Tab_)
+        tab = self._tabObj(table)
         if tab:
-            recs = tab.get_where(tab.c.parent == ParentRecord_['uuid']).fetchall()
-            data_rec_count = len(Data_)
+            recs = tab.get_where(tab.c.parent == parent_record['uuid']).fetchall()
+            data_rec_count = len(data)
             for i, rec in enumerate(recs):
                 if i < data_rec_count:
                     # Обновление записи
-                    data_rec = dict([(str(key), value) for key, value in Data_[i].items()])
+                    data_rec = dict([(str(key), value) for key, value in data[i].items()])
                     tab.update_where(tab.c.uuid == rec['uuid'], **data_rec)
                 else:
                     # Удаление записи
@@ -463,12 +459,12 @@ class icObjPersistent(icObjPersistentPrototype):
             if data_rec_count > len(recs):
                 for i in range(len(recs), data_rec_count):
                     # Добавление записи
-                    new_rec = dict([(str(key), value) for key, value in Data_[i].items()])
-                    new_rec['parent'] = ParentRecord_['uuid']
+                    new_rec = dict([(str(key), value) for key, value in data[i].items()])
+                    new_rec['parent'] = parent_record['uuid']
                     new_rec['uuid'] = self.genUUID()
                     link_names = [fld['name'].lower() for fld in tab.res['child'] if fld['type'] == 'Link']
                     for lnk_name in link_names:
-                        new_rec[lnk_name] = ParentRecord_['id']
+                        new_rec[lnk_name] = parent_record['record_id']
                     tab.add(**new_rec)
                      
             result = True
@@ -476,44 +472,18 @@ class icObjPersistent(icObjPersistentPrototype):
             # Обработка дочерних объектов
             for child_obj in children_obj:
                 child_tab_name = child_obj.getTableName()
-                for rec in Data_:
+                for rec in data:
                     if child_tab_name in rec:
                         child_uuid = rec['uuid']
                         result = result and child_obj._updateChildCascadeData(child_obj.getTable(),
                                                                               rec[child_tab_name], rec)
             return result
         return False
-        
-    def _saveCascadeData_old_2010_05_19(self, Tab_, UUID_, Data_):
-        """
-        Сохранить каскадные данные в хранилище.
-        @param Tab_: Таблица.
-        @param UUID_: Уникальный идентификатор.
-        @param Data_: Словарь каскадных данных:
-        {
-        'имя поля реквизита':значение,
-        ...
-        'имя дочернего объекта':[список словарей значений],
-        ...
-        }
-        @return: Возвращает True/False.
-        """
-        try:
-            # Проще сначала все удалить а затем добавить,
-            # чем проверять что нужно добавить а что удалить
-            self._delCascadeData(Tab_, UUID_)
-            # Чтобы корневой элемент создавался с темже uuidом
-            Data_['uuid'] = UUID_
-            result = self._addCascadeData(Tab_, Data_)
-            return result
-        except:
-            log.error(u'Ошибка сохранения каскада данных мета-объекта [%s]' % self.name)
-        return False
-        
-    def _load_data(self, UUID_=None):
+
+    def _load_data(self, UUID=None):
         """
         Загрузить внутренние данные из хранилища.
-        @param UUID_: Идентификатор.
+        @param UUID: Идентификатор.
         @return: Возвращает словарь каскада данных:
         {
         'имя поля реквизита':значение,
@@ -524,17 +494,17 @@ class icObjPersistent(icObjPersistentPrototype):
         .
         """
         try:
-            if UUID_ is None:
-                UUID_ = self.getUUID()
-            return self._getCascadeDataTab(self.getTable(), UUID_, True)
+            if UUID is None:
+                UUID = self.getUUID()
+            return self._getCascadeDataTab(self.getTable(), UUID, True)
         except:
             log.error(u'Ошибка загрузки данных мета-объекта [%s]' % self.name)
             return None
         
-    def load_data(self, UUID_=None):
+    def load_data(self, UUID=None):
         """
         Загрузить внутренние данные из хранилища.
-        @param UUID_: Идентификатор.
+        @param UUID: Идентификатор.
         @return: Возвращает словарь каскада данных:
         {
         'имя поля реквизита':значение,
@@ -544,27 +514,27 @@ class icObjPersistent(icObjPersistentPrototype):
         }
         .
         """
-        return self._load_data(UUID_=UUID_)
+        return self._load_data(UUID=UUID)
 
-    def load(self, UUID_=None):
+    def load(self, UUID=None):
         """
         Загрузить внутренние данные из хранилища.
-        @param UUID_: Идентификатор.
+        @param UUID: Идентификатор.
         @return: True/False.
         """
         try:
-            cascade_data = self._load_data(UUID_)
+            cascade_data = self._load_data(UUID)
             return self._setCascadeData(cascade_data)
         except:
             log.error(u'Ошибка загрузки данных мета-объекта [%s]' % self.name)
             return None
     
-    def _getCascadeDataTab(self, Tab_, UUID_, OneBreak_=False):
+    def _getCascadeDataTab(self, table, UUID, bOneBreak=False):
         """
         Получить каскад данных из хранилища.
-        @param Tab_: Таблица.
-        @param UUID_: Иникальный идентификатор.
-        @param OneBreak_: В данных дочерних объектов только одна запись?
+        @param table: Таблица.
+        @param UUID: Иникальный идентификатор.
+        @param bOneBreak: В данных дочерних объектов только одна запись?
         @return: Словарь каскада данных:
         {
         'имя поля реквизита':значение,
@@ -574,9 +544,9 @@ class icObjPersistent(icObjPersistentPrototype):
         }
         """
         try:
-            tab = self._tabObj(Tab_)
+            tab = self._tabObj(table)
             if tab:
-                rec = tab.get_where(tab.c.uuid == UUID_).fetchone()
+                rec = tab.get_where(tab.c.uuid == UUID).fetchone()
                 data = dict([(fld_name, rec[fld_name]) for fld_name in tab.getFieldNames()]) if rec else dict()
                 
                 # Обработать дочерние объекты
@@ -584,18 +554,18 @@ class icObjPersistent(icObjPersistentPrototype):
                                                                                               icObjPersistent)]
                 for child_obj in children_obj:
                     tab_name = child_obj.getTableName()
-                    data[tab_name] = child_obj._getChildCascadeDataTab(child_obj.getTable(), UUID_)
+                    data[tab_name] = child_obj._getChildCascadeDataTab(child_obj.getTable(), UUID)
                 
                 return data
         except:
             log.error(u'Ошибка определения каскада данных объекта [%s] из хранилища' % self.name)
         return None
 
-    def _getChildCascadeDataTab(self, Tab_, ParentUUID_):
+    def _getChildCascadeDataTab(self, table, parent_uuid):
         """
         Получить каскад данных из хранилища.
-        @param Tab_: Таблица.
-        @param ParentUUID_: Уникальный идентификатор родительской записи.
+        @param table: Таблица.
+        @param parent_uuid: Уникальный идентификатор родительской записи.
         @return: Словарь каскада данных:
         {
         'имя поля реквизита':значение,
@@ -604,9 +574,9 @@ class icObjPersistent(icObjPersistentPrototype):
         ...
         }
         """
-        tab = self._tabObj(Tab_)
+        tab = self._tabObj(table)
         if tab:
-            recs = tab.get_where(tab.c.parent == ParentUUID_).fetchall()
+            recs = tab.get_where(tab.c.parent == parent_uuid).fetchall()
             children_obj = [child for child in self.getChildrenRequisites() if issubclass(child.__class__,
                                                                                           icObjPersistent)]
             data = []
@@ -622,10 +592,10 @@ class icObjPersistent(icObjPersistentPrototype):
             return data
         return None
         
-    def _setCascadeData(self, Data_):
+    def _setCascadeData(self, data):
         """
         Каскадная установка значений реквизитов.
-        @param Data_: Словарь данных:
+        @param data: Словарь данных:
         {
         'имя поля реквизита':значение,
         ...
@@ -638,7 +608,7 @@ class icObjPersistent(icObjPersistentPrototype):
             fld_requisites_dict = dict([(requisite.getFieldName(), requisite) for requisite in self.getChildrenRequisites()])
             
             # Выбрать только данные реквизитов
-            requisites_data = dict([(fld_name, fld_value) for fld_name, fld_value in Data_.items()
+            requisites_data = dict([(fld_name, fld_value) for fld_name, fld_value in data.items()
                                     if not isinstance(fld_value, list)])
             # Раставить значения реквизитов
             for fld_name, fld_value in requisites_data.items():
@@ -650,14 +620,14 @@ class icObjPersistent(icObjPersistentPrototype):
             children_obj = [child for child in self.getChildrenRequisites() if issubclass(child.__class__,
                                                                                           icObjPersistent)]
             for child_obj in children_obj:
-                if child_obj.name in Data_ and Data_[child_obj.name]:
+                if child_obj.name in data and data[child_obj.name]:
                     # ВНИМАНИЕ!!!
                     # Заполнение реквизитов дочерних объектов производится только по первой строке
-                    result = result and child_obj._setCascadeData(Data_[child_obj.name][0])
+                    result = result and child_obj._setCascadeData(data[child_obj.name][0])
             return result
         except:
-            log.error(u'Ошибка каскадной установки значений реквизитов мета-объекта [%s]' % self.name)
-            return False
+            log.fatal(u'Ошибка каскадной установки значений реквизитов мета-объекта [%s]' % self.name)
+        return False
 
     def _getCascadeDataObj(self, bInsertChildData_=True):
         """
@@ -684,13 +654,13 @@ class icObjPersistent(icObjPersistentPrototype):
                 else:
                     data[child.getFieldName()] = child_data
             elif issubclass(child.__class__, icObjPersistent):
-                records = child._getData(Filter_={'parent': self.getUUID()})
+                records = child._getData(data_filter={'parent': self.getUUID()})
                 if bInsertChildData_:
                     # Взять из объектов
                     records = [child._getCascadeDataObj(bInsertChildData_)]
                 else:
                     # Взять из таблиц
-                    records = child._getData(Filter_={'parent': self.getUUID()})
+                    records = child._getData(data_filter={'parent': self.getUUID()})
                     
                 if modefunc.isDebugMode():
                     log.info(u'CHILD: <%s> RECORDS: %s' % (child.name, records))
@@ -746,64 +716,64 @@ class icObjPersistent(icObjPersistentPrototype):
         try:
             return self._getCascadeDataObj()
         except:
-            log.error(u'Ошибка определения данных мета-объекта [%s]' % self.name)
+            log.fatal(u'Ошибка определения данных мета-объекта [%s]' % self.name)
         return None
 
-    def setValue(self, Value_):
+    def setValue(self, value):
         """
         Установить значения всех реквизитов.
-        @param Value_: Словарь значений реквизитов.
+        @param value: Словарь значений реквизитов.
         """
         try:
             for child in self.getChildrenRequisites():
-                child.setValue(Value_[child.getFieldName()])
+                child.setValue(value[child.getFieldName()])
             return True
         except:
-            log.error(u'Ошибка установки данных мета-объекта [%s]' % self.name)
-            return None
+            log.fatal(u'Ошибка установки данных мета-объекта [%s]' % self.name)
+        return None
 
-    def _getData(self, Tab_=None, Filter_=None):
+    def _getData(self, table=None, data_filter=None):
         """
         Отфильтрованные данные.
-        @param Tab_: Объект таблицы.
-        @param Filter_: Дополнительный фильтр.
+        @param table: Объект таблицы.
+        @param data_filter: Дополнительный фильтр.
         @return: Возвращает список отфильтрованных данных.
         """
-        if Tab_ is None:
-            Tab_ = self.getTable()
+        if table is None:
+            table = self.getTable()
         try:
-            tab = self._tabObj(Tab_)
+            tab = self._tabObj(table)
             if tab:
-                return tab.queryAll(Filter_)
+                return tab.queryAll(data_filter)
             else:
                 if modefunc.isDebugMode():
                     log.error(u'Не определена таблица мета-объекта [%s]' % self.name)
         except:
-            log.error(u'Ошибка получения отфильтрованных данных объекта [%s]' % self.name)
+            log.fatal(u'Ошибка получения отфильтрованных данных объекта [%s]' % self.name)
         return None
 
-    def add(self, UUID_=None, Data_=None, table=None):
+    def add(self, UUID=None, data=None, table=None):
         """
         Добавить в хранилище текущий объект.
-        @param UUID_: Идентификатор.
+        @param UUID: Идентификатор.
         Если None, то генерируется новый uuid.
         @param table: Главная таблица объекта. Если не указана, то генерируется.
         @return: Возвращает результат выполнения операции True/False.
         """
-        if UUID_ is None:
+        if UUID is None:
             # Если uuid не указан явно, то сгенерировать новый
-            UUID_ = self.genUUID()
+            UUID = self.genUUID()
         # Если сразу указаны данные для заполненения, то записать их
         data_dict = self.getChildrenDefault()
-        if Data_ is None:
+        if data is None:
             # Получить данные объекта в каскадном представлении
             data_dict_obj = self._getCascadeDataObj(True)
             data_dict.update(data_dict_obj)
-        elif isinstance(Data_, dict):
-            data_dict.update(Data_)
+        elif isinstance(data, dict):
+            data_dict.update(data)
         else:
-            log.warning(u'Не корректный тип данных <%s> объекта <%s>' % (Data_.__class__.__name__,
-                                                                                self.getName()))
+            log.warning(u'Не корректный тип данных <%s> объекта <%s>' % (data.__class__.__name__,
+                                                                         self.getName()))
             return False
 
         session = None
@@ -828,7 +798,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 # Откатить транзакцию
                 session.rollback()
                 # session.clear()
-            log.error(u'Ошибка добавления в хранилище объекта [%s]' % self.name)
+            log.fatal(u'Ошибка добавления в хранилище объекта [%s]' % self.name)
         return False
 
     def findChildByName(self, child_name):
@@ -845,37 +815,37 @@ class icObjPersistent(icObjPersistentPrototype):
 
     getRequisite = findChildByName
 
-    def _tabObj(self, Tab_):
+    def _tabObj(self, table):
         """
         Таблица объекта.
-        @param Tab_: Объект/таблица, в который будет сохраняться запись.
+        @param table: Объект/таблица, в который будет сохраняться запись.
         """
         # Таблица данных
-        if isinstance(Tab_, str):
+        if isinstance(table, str):
             # Таблица данных передается в виде имени
-            if Tab_ == self.getTableName():
+            if table == self.getTableName():
                 # Таблица задается именем таблицы
                 tab = self.getTable()
-            elif self.findChildByName(Tab_):
+            elif self.findChildByName(table):
                 # Таблица задается именем табличного реквизита
-                child = self.findChildByName(Tab_)
+                child = self.findChildByName(table)
                 tab = icsqlalchemy.icSQLAlchemyTabClass(child.getTableName())
             else:
                 # Просто определить таблицу по имени
-                tab = icsqlalchemy.icSQLAlchemyTabClass(Tab_)
-        elif isinstance(Tab_, tuple):
+                tab = icsqlalchemy.icSQLAlchemyTabClass(table)
+        elif isinstance(table, tuple):
             # Таблица данных передается в виде паспорта
-            tab = self.getKernel().Create(Tab_)
+            tab = self.getKernel().Create(table)
         else:
             # Таблица передается как есть
-            tab = Tab_
+            tab = table
         return tab
         
-    def _addCascadeData(self, Tab_, Dict_, ParentRecord_=None):
+    def _addCascadeData(self, table, data_dict, parent_record=None):
         """
         Добавление каскадного словаря значений в объект хранилища.
-        @param Tab_: Объект/таблица, в который будет сохраняться запись.
-        @param Dict_: Словарь значений.
+        @param table: Объект/таблица, в который будет сохраняться запись.
+        @param data_dict: Словарь значений.
             Словарь представлен в виде 
                 {
                 'имя поля реквизита':значение,
@@ -888,9 +858,9 @@ class icObjPersistent(icObjPersistentPrototype):
         """
         try:
             # Таблица данных
-            tab = self._tabObj(Tab_)
+            tab = self._tabObj(table)
             # Добавление записи
-            rec = dict([(str(key), value)for key, value in Dict_.items() if not isinstance(value, list)])
+            rec = dict([(str(key), value) for key, value in data_dict.items() if not isinstance(value, list)])
             
             # Если при добавлении не указан UUID, то сгенерировать его
             if ('uuid' not in rec) or (not rec['uuid']):
@@ -902,38 +872,38 @@ class icObjPersistent(icObjPersistentPrototype):
                 
             # Если есть родительская таблица, то проинициализировать
             # ссылки на ее в текущей записи
-            if ParentRecord_:
+            if parent_record:
                 link_names = [fld['name'].lower() for fld in tab.res['child'] if fld['type'] == 'Link']
                 for lnk_name in link_names:
-                    inserted_rec = ParentRecord_.last_inserted_params()
+                    inserted_rec = parent_record.last_inserted_params()
                     # ВНИМАНИЕ! В sqlalchemy идентификатор последней добавленной записи
                     #                                    v
-                    rec[lnk_name] = ParentRecord_.inserted_primary_key[0] if ParentRecord_.inserted_primary_key else 0
+                    rec[lnk_name] = parent_record.inserted_primary_key[0] if parent_record.inserted_primary_key else 0
                     rec['parent'] = inserted_rec.get('uuid', None)
                 
             # Если вдруг ключи юникодовые то изменить их на строковые
             rec_obj = tab.add(**rec)
             # Обработка дочерних таблиц
-            children_obj = dict([(name, data) for name, data in Dict_.items() if isinstance(data, list)])
+            children_obj = dict([(name, data) for name, data in data_dict.items() if isinstance(data, list)])
             for tab_name in children_obj.keys():
                 # Обработка дочерних таблиц
                 for rec in children_obj[tab_name]:
                     self._addCascadeData(tab_name, rec, rec_obj)
             return True
         except:
-            log.error(u'Ошибка добавления данных в каскад таблицы <%s>.' % Tab_)
-            return None
+            log.fatal(u'Ошибка добавления данных в каскад таблицы <%s>.' % table)
+        return None
 
-    def delete(self, UUID_=None):
+    def delete(self, UUID=None):
         """
         Удалить из хранилища текущий объект.
-        @param UUID_: Идентификатор.
+        @param UUID: Идентификатор.
         Если None, то берется uuid объекта.
         @return: Возвращает результат выполнения операции True/False.
         """
-        if UUID_ is None:
+        if UUID is None:
             # Если uuid не указан явно, то взять текущий объекта
-            UUID_ = self.getUUID()
+            UUID = self.getUUID()
 
         transaction = None
         try:
@@ -945,8 +915,8 @@ class icObjPersistent(icObjPersistentPrototype):
 
                 # Получить данные объекта в каскадном представлении
                 if modefunc.isDebugMode():
-                    log.info(u'Meta-object [%s] Delete data: <%s>' % (self.name, UUID_))
-                recs = tab.get_where(tab.c.uuid == UUID_)
+                    log.info(u'Meta-object [%s] Delete data: <%s>' % (self.name, UUID))
+                recs = tab.get_where(tab.c.uuid == UUID)
 
                 # Получить идентификатор записи
                 rec_id = 0
@@ -957,7 +927,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 if rec_id:
                     result = self._delCascadeData(tab, rec_id, transaction)
                 else:
-                    log.warning(u'Не найдена запись объекта с UUID <%s>' % UUID_)
+                    log.warning(u'Не найдена запись объекта с UUID <%s>' % UUID)
                     result = False
                 
                 # Завершить транзакцию
@@ -969,16 +939,16 @@ class icObjPersistent(icObjPersistentPrototype):
                 # Откатить транзакцию
                 transaction.rollback()
                 # session.clear()
-            log.error(u'Ошибка удаления из хранилища объекта [%s]' % self.name)
+            log.fatal(u'Ошибка удаления из хранилища объекта [%s]' % self.name)
         return False
 
-    def clear(self, ask=False):
+    def clear(self, bAsk=False):
         """
         Удалить из хранилища все объекты.
-        @param ask: Спросить об удалении всех объектов?
+        @param bAsk: Спросить об удалении всех объектов?
         @return: Возвращает результат выполнения операции True/False.
         """
-        is_clear = dlgfunc.openAskBox(u'ВНИМАНИЕ!', u'Удалить все объекты <%s>?' % self.name) if ask else True
+        is_clear = dlgfunc.openAskBox(u'ВНИМАНИЕ!', u'Удалить все объекты <%s>?' % self.name) if bAsk else True
         if not is_clear:
             # Не разрешео удалять действиями пользвателя
             return False
@@ -1011,30 +981,30 @@ class icObjPersistent(icObjPersistentPrototype):
                 # Откатить транзакцию
                 transaction.rollback()
                 # session.clear()
-            log.error(u'Ошибка очистки объектов [%s] из хранилища' % self.name)
+            log.fatal(u'Ошибка очистки объектов [%s] из хранилища' % self.name)
         return False
 
-    def _getUuidsByParent(self, Tab_, ParentUUID_):
+    def _getUuidsByParent(self, table, parent_uuid):
         """
         Получение уникальных идентификаторов по идентификатору родителя.
         """
-        tab = self._tabObj(Tab_)
-        return [rec.uuid for rec in tab.select(tab.c.parent == ParentUUID_)]
+        tab = self._tabObj(table)
+        return [rec.uuid for rec in tab.select(tab.c.parent == parent_uuid)]
 
-    def _delCascadeData(self, Tab_, rec_id, transaction=None):
+    def _delCascadeData(self, table, rec_id, transaction=None):
         """
         Удалить каскад данных из хранилища по уникальонму идентификатору.
-        @param Tab_: Объект таблицы.
+        @param table: Объект таблицы.
         @param rec_id: Идентификатор удаляемой записи.
         @param transaction: Объект транзакции.
         @return: True/False.
         """
         result = True
         # Таблица данных
-        tab = self._tabObj(Tab_)
+        tab = self._tabObj(table)
         if not tab:
             # Таблица не определена по какойто причине
-            log.warning(u'Удаление данных. Не определена таблица <%s>' % Tab_)
+            log.warning(u'Удаление данных. Не определена таблица <%s>' % table)
             return False
         try:
             # ВНИМАНИЕ! Сначала нужно удалять записи
@@ -1050,7 +1020,7 @@ class icObjPersistent(icObjPersistentPrototype):
                 child_recs = child_tab.get_where(where)
                 if child_recs:
                     for child_rec in child_recs.fetchall():
-                        result = result and child_obj._delCascadeData(child_tab, child_rec['id'], transaction)
+                        result = result and child_obj._delCascadeData(child_tab, child_rec['record_id'], transaction)
                 else:
                     log.info(u'Не найдено дочерних записей в таблице <%s>' % child_tab.getDBTableName())
 
@@ -1059,7 +1029,7 @@ class icObjPersistent(icObjPersistentPrototype):
                                    transaction=transaction)
             return result
         except:
-            log.error(u'Ошибка каскадного удаления данных из таблицы <%s>.' % Tab_)
+            log.fatal(u'Ошибка каскадного удаления данных из таблицы <%s>.' % table)
         return False
 
     def getChildrenRequisites(self):
@@ -1102,11 +1072,11 @@ class icObjPersistent(icObjPersistentPrototype):
         return defaults
 
     # Функции создания ресурса таблиц хранения объекта
-    def _createTableResource(self, ParentTableName_=None):
+    def _createTableResource(self, parent_tabname=None):
         """
         Создание по описанию объекта ресурса таблицы, в 
             которой хранятся данные объекта.
-        @param ParentTableName_: Имя родительской таблицы.
+        @param parent_tabname: Имя родительской таблицы.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()
@@ -1119,33 +1089,33 @@ class icObjPersistent(icObjPersistentPrototype):
         if table_name and not prj_res_ctrl.isRes(table_name, 'tab'):
             table_res = self._createTabRes(table_name)
             # Создать связь с родительской таблицей
-            if ParentTableName_:
-                link_spc = self._createLinkSpc(ParentTableName_)
+            if parent_tabname:
+                link_spc = self._createLinkSpc(parent_tabname)
                 table_res['child'].append(link_spc)
             # Сохранить ресурс
             prj_res_ctrl.saveRes(table_name, 'tab', table_res)
             
-    def _createLinkSpc(self, TableName_):
+    def _createLinkSpc(self, table_name):
         """
         Создать спецификацию связи c таблицей.
         """
         # Инициализировать спецификацию связи
         link_spc = util.icSpcDefStruct(util.DeepCopy(ic_link_wrp.ic_class_spc), None)
         # Установить свойства связи с таблицей
-        link_spc['name'] = 'id_'+TableName_.lower()
-        link_spc['description'] = strfunc.str2unicode('Связь с таблицей ' + TableName_)
-        link_spc['table'] = (('Table', TableName_, None, None, None),)
+        link_spc['name'] = 'id_' + table_name.lower()
+        link_spc['description'] = strfunc.str2unicode('Связь с таблицей ' + table_name)
+        link_spc['table'] = (('Table', table_name, None, None, None),)
         link_spc['del_lnk'] = True
         return link_spc
         
-    def _createTabRes(self, TableName_=None):
+    def _createTabRes(self, table_name=None):
         """
         Создать ресурс таблицы хранения спецификации/объекта.
         """
-        if TableName_ is None:
-            TableName_ = self.getTableName()
+        if table_name is None:
+            table_name = self.getTableName()
 
-        tab_res = self._createTabSpc(TableName_)
+        tab_res = self._createTabSpc(table_name)
         # Перебрать дочерние компоненты
         children_requisites = self.getChildrenRequisites()
         if children_requisites:
@@ -1158,7 +1128,7 @@ class icObjPersistent(icObjPersistentPrototype):
                     tab_res['child'].append(fields_spc)
                 elif issubclass(child_requisite.__class__, icObjPersistent):
                     # Это спецификация табличной части
-                    child_requisite._createTableResource(TableName_)
+                    child_requisite._createTableResource(table_name)
                     # Прописать имя дочерней ьаблицы в списке подчиненных таблиц
                     tab_res['children'].append(child_requisite.getTableName())
                 else:
@@ -1166,17 +1136,17 @@ class icObjPersistent(icObjPersistentPrototype):
                     
         return tab_res
        
-    def _createTabSpc(self, TableName_=None):
+    def _createTabSpc(self, table_name=None):
         """
         Создать спецификацию таблицы.
         """
         tab_spc = util.icSpcDefStruct(util.DeepCopy(ic_tab_wrp.ic_class_spc), None)
         # Установить свойства таблицы
-        if TableName_ is None:
-            TableName_ = self.getTableName()
-        tab_spc['name'] = TableName_
+        if table_name is None:
+            table_name = self.getTableName()
+        tab_spc['name'] = table_name
         tab_spc['description'] = strfunc.str2unicode(self.description)
-        tab_spc['table'] = TableName_.lower()
+        tab_spc['table'] = table_name.lower()
         tab_spc['source'] = self.getDBPsp()
         
         tab_spc['children'] = []    # Список имен подчиненных таблиц
@@ -1199,7 +1169,7 @@ class icObjPersistent(icObjPersistentPrototype):
             
         return tab_spc
 
-    def _createFieldSpc(self, FieldName_, FieldType_='T', FieldLen_=None, FieldDefault_=None):
+    def _createFieldSpc(self, field_name, field_type='T', field_len=None, field_default=None):
         """
         Создать спецификацию поля.
         Функция необходима для вспомогательных и 
@@ -1207,12 +1177,12 @@ class icObjPersistent(icObjPersistentPrototype):
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
 
-        field_spc['name'] = FieldName_
-        field_spc['field'] = FieldName_.lower()
-        field_spc['type_val'] = FieldType_
-        field_spc['len'] = FieldLen_
+        field_spc['name'] = field_name
+        field_spc['field'] = field_name.lower()
+        field_spc['type_val'] = field_type
+        field_spc['len'] = field_len
         field_spc['attr'] = 0
-        field_spc['default'] = FieldDefault_
+        field_spc['default'] = field_default
         
         return field_spc
 
@@ -1249,26 +1219,26 @@ class icObjPersistent(icObjPersistentPrototype):
                 env['requisites'].append(req_env)
         return env
     
-    def getFilterSQL(self, Filter_=None, Fields_=None, limit=None):
+    def getFilterSQL(self, data_filter=None, fields=None, limit=None):
         """
         Фильтр в SQL представлении.
-        @param Filter_: Фильтр.
-        @param Fields_: Поля выбора. Если None, то будут выбираться только 
+        @param data_filter: Фильтр.
+        @param fields: Поля выбора. Если None, то будут выбираться только
         идентифицирующие объект поля.
         @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
         """
-        if Fields_ is None:
-            Fields_ = tuple([requisite.getFieldName() for requisite in self.getChildrenRequisites() if requisite.isIDAttr()])
-        if not Fields_:
-            Fields_ = ('*',)
+        if fields is None:
+            fields = tuple([requisite.getFieldName() for requisite in self.getChildrenRequisites() if requisite.isIDAttr()])
+        if not fields:
+            fields = ('*',)
         else:
             # Необхдимо, что бы в результате запроса всегда
             # присутствовал UUID  объекта
-            fld_lst = list(Fields_)
+            fld_lst = list(fields)
             fld_lst.append('uuid')
-            Fields_ = tuple(fld_lst)
+            fields = tuple(fld_lst)
             
-        sql = filter_convert.convertFilter2PgSQL(Filter_, self.getTableName(), Fields_,
+        sql = filter_convert.convertFilter2PgSQL(data_filter, self.getTableName(), fields,
                                                  limit=limit)
         return sql
 
@@ -1489,16 +1459,16 @@ class icObjPersistent(icObjPersistentPrototype):
         return find_dataset
 
 
-class icAttrPersistent:
+class icAttrPersistent(object):
     """
     Базовый класс атрибута компонента хранимого в БД.
         Реализует внутри себя механизм генерации спецификации хранения.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
         self.name = ''
 

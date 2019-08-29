@@ -70,7 +70,7 @@ import ic.components.icResourceParser as prs
 from ic.bitmap import bmpfunc
 from ic.dlg import dlgfunc
 from ic.utils import coderror
-from ic.kernel import io_prnt
+from ic.log import log
 from ic.PropertyEditor import icDefInf
 
 import work_flow.doc_sys.icdocument as parentModule

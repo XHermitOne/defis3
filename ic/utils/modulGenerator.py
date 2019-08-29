@@ -58,13 +58,13 @@ class %s(ictemplate.icTemplateInterface):
     # resource replace attributes list
     replace_spc_keys = REPLACE_SPC_KEYS
     
-    def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None, bCounter=False, progressDlg=None):
+    def __init__(self, parent, record_id=-1, component=None, logType=0, eval_space=None, bCounter=False, progressDlg=None):
         \"\"\"
         Interface constructor.
         \"\"\"
         # Append for specification
         component = util.icSpcDefStruct(ic_class_spc, component)
-        ictemplate.icTemplateInterface.__init__(self, parent, id, component, logType, evalSpace,
+        ictemplate.icTemplateInterface.__init__(self, parent, record_id, component, logType, eval_space,
                                                 bCounter, progressDlg)
                 
     def _init_template_resource(self):
@@ -130,13 +130,13 @@ class %s(parentClass):
         - B{name='default'}:
     \"\"\"
     
-    def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None, bCounter=False, progressDlg=None):
+    def __init__(self, parent, record_id=-1, component=None, logType=0, eval_space=None, bCounter=False, progressDlg=None):
         \"\"\"
         Interface constructor.
         \"\"\"
         # Append for specification
         component = util.icSpcDefStruct(ic_class_spc, component)
-        parentClass.__init__(self, parent, id, component, logType, evalSpace,
+        parentClass.__init__(self, parent, record_id, component, logType, eval_space,
                              bCounter, progressDlg)
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
         for key in [x for x in component.keys() if not x.startswith('__')]:

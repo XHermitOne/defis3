@@ -1095,8 +1095,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
                                                                     self._tab.c.cod == cod))
                     recs = self._tab.listRecs(sql_result)
                     if len(recs):
-                        if 'id' in record_dict:
-                            del record_dict['id']
+                        if 'record_id' in record_dict:
+                            del record_dict['record_id']
                         if 'computer' in record_dict and not record_dict['computer']:
                             record_dict['computer'] = extfunc.getComputerName()
                         if 'username' in record_dict and not record_dict['username']:
@@ -1121,8 +1121,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
 
                     recs = self._tab.listRecs(sql_result)
                     if len(recs):
-                        if 'id' in record_dict:
-                            del record_dict['id']
+                        if 'record_id' in record_dict:
+                            del record_dict['record_id']
                         if 'computer' in record_dict and not record_dict['computer']:
                             record_dict['computer'] = extfunc.getComputerName()
                         if 'username' in record_dict and not record_dict['username']:

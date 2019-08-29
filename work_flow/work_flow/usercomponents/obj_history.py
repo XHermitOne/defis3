@@ -102,7 +102,7 @@ ic_can_contain = ['Requisite', 'NSIRequisite', 'REFRequisite']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 # Словарь конвертации типов значений реквизитов ресурса
 # к типу полей таблиц регистра накопления

@@ -20,35 +20,35 @@ __version__ = (0, 1, 1, 2)
 _WORK_SQL_STORAGE = dict()
 
 
-def getWorkSQLStorageByPsp(DBPsp_):
+def getWorkSQLStorageByPsp(db_psp):
     """
     Получить объект SQL хранилища документов по имени.
     """
     global _WORK_SQL_STORAGE
     
-    if DBPsp_ is None:
+    if db_psp is None:
         assert None, 'getWorkSQLStorageByPsp Function: Data Base pasport not defined!'
         
-    work_storage_name = DBPsp_[0][1]
+    work_storage_name = db_psp[0][1]
     if work_storage_name not in _WORK_SQL_STORAGE:
-        _WORK_SQL_STORAGE[work_storage_name] = icWorkSQLStorage(None, DBPsp_)
+        _WORK_SQL_STORAGE[work_storage_name] = icWorkSQLStorage(None, db_psp)
         log.info(u'Регистрация БД <%s> в списке хранилищ' % work_storage_name)
     return _WORK_SQL_STORAGE[work_storage_name]
 
 
-class icWorkStorageInterface:
+class icWorkStorageInterface(object):
     """
     Интерфейс абстрактного хранилища/БД документов.
     """
 
-    def __init__(self, Parent_, DBPsp_):
+    def __init__(self, parent, db_psp):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
-        @param DBPsp_: Паспорт БД.
+        @param parent: Родительский объект.
+        @param db_psp: Паспорт БД.
         """
-        self._parent = Parent_
-        self._db_psp = DBPsp_
+        self._parent = parent
+        self._db_psp = db_psp
 
     def getParent(self):
         """
@@ -56,18 +56,18 @@ class icWorkStorageInterface:
         """
         return self._parent
     
-    def saveObject(self, Obj_):
+    def saveObject(self, obj):
         """
         Сохранить объект в хранилище.
-        @param Obj_: Сохраняемый объект.
+        @param obj: Сохраняемый объект.
         """
         pass
         
-    def loadObject(self, Obj_, ID_):
+    def loadObject(self, obj, obj_id):
         """
         Загрузить данные объекта из хранилища по идентификатору.
-        @param Obj_: Объект.
-        @param ID_: Идентификатор объекта.
+        @param obj: Объект.
+        @param obj_id: Идентификатор объекта.
         """
         pass
 
@@ -99,25 +99,25 @@ class icWorkSQLStorageContainer(object):
         """
         return name in self._all
         
-    def setTable(self, TabName_=None):
+    def setTable(self, table_name=None):
         """
         Установить таблицу, по ее имени.
-        @param TabName_: Имя таблицы.
+        @param table_name: Имя таблицы.
         @return: Возвращает объект таблицы или None, если таблицу получить нельзя.
         """
-        if TabName_:
-            if not self.hasName(TabName_):
+        if table_name:
+            if not self.hasName(table_name):
                 # Создать таблицу
-                self._all[TabName_] = icsqlalchemy.icSQLAlchemyTabClass(TabName_)
-            return self._all[TabName_]
+                self._all[table_name] = icsqlalchemy.icSQLAlchemyTabClass(table_name)
+            return self._all[table_name]
         return None
         
-    def getTable(self, TabName_):
+    def getTable(self, table_name):
         """
         Получить таблицу по имени. Если ее нет, то создает ее.
         """
-        self.setTable(TabName_)
-        return self._all[TabName_]
+        self.setTable(table_name)
+        return self._all[table_name]
             
 
 class icWorkSQLStorage(icWorkStorageInterface):
@@ -125,13 +125,13 @@ class icWorkSQLStorage(icWorkStorageInterface):
     SQL хранилище/БД всяких бизнес объектов.
     """
 
-    def __init__(self, Parent_, DBPsp_):
+    def __init__(self, parent, db_psp):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
-        @param DBPsp_: Паспорт БД.
+        @param parent: Родительский объект.
+        @param db_psp: Паспорт БД.
         """
-        icWorkStorageInterface.__init__(self, Parent_, DBPsp_)
+        icWorkStorageInterface.__init__(self, parent, db_psp)
         # Контейнер
         self._container = icWorkSQLStorageContainer()
 
@@ -166,13 +166,13 @@ class icWorkSQLStorage(icWorkStorageInterface):
                 return None
 
     # --- Методы каскадной записи/чтения данных ---
-    def setCascadeDict(self, Obj_, ID_, Dict_, IdentFields_=None):
+    def setCascadeDict(self, obj, record_id, data_dict, ident_fields=None):
         """
         Сохранение каскадного словаря значений в объект хранилища.
-        @param Obj_: Объект/таблица, в который будет сохраняться запись.
-        @param ID_: Идентификатор записи. 
+        @param obj: Объект/таблица, в который будет сохраняться запись.
+        @param record_id: Идентификатор записи. 
             Если None, то запись будет добавлена.
-        @param Dict_: Словарь значений.
+        @param data_dict: Словарь значений.
             Словарь представлен в виде 
                 {
                 'имя реквизита':значение,
@@ -180,32 +180,32 @@ class icWorkSQLStorage(icWorkStorageInterface):
                 'имя спецификации':[список словарей значений],
                 ...
                 }
-        @param IdentFields_: Список имен полей идентифицирующих запись,
+        @param ident_fields: Список имен полей идентифицирующих запись,
             если не указан идентификатор записи.
         @return: Результат выполнения True/False или None в случае ошибки.
         """
-        if ID_ is None:
-            if IdentFields_ is None:
-                return self.addCascadeDict(Obj_, Dict_)
+        if record_id is None:
+            if ident_fields is None:
+                return self.addCascadeDict(obj, data_dict)
             else:
-                _id_ = self._identRecord(Obj_, Dict_, IdentFields_)
+                _id_ = self._identRecord(obj, data_dict, ident_fields)
                 if _id_ == -1:
-                    return self.addCascadeDict(Obj_, Dict_)
+                    return self.addCascadeDict(obj, data_dict)
                 elif isinstance(_id_, int) and _id_ >= 0:
-                    return self._setCascadeDict(Obj_, _id_, Dict_)
+                    return self._setCascadeDict(obj, _id_, data_dict)
                 elif isinstance(_id_, list):
                     log.info(u'Ошибка идентификации записи. Много записей соответствуют запросу %s' % _id_)
                     return None
                 else:
                     return None
         else:
-            return self._setCascadeDict(Obj_, ID_, Dict_)
+            return self._setCascadeDict(obj, record_id, data_dict)
 
-    def _identRecord(self, Obj_, Dict_, IdentFields_):
+    def _identRecord(self, obj, data_dict, ident_fields):
         """
         Идентифицировать запись в объекте.
-        @param Obj_: Объект/таблица, в который будет сохраняться запись.
-        @param Dict_: Словарь значений.
+        @param obj: Объект/таблица, в который будет сохраняться запись.
+        @param data_dict: Словарь значений.
             Словарь представлен в виде 
                 {
                 'имя реквизита':значение,
@@ -213,14 +213,14 @@ class icWorkSQLStorage(icWorkStorageInterface):
                 'имя спецификации':[список словарей значений],
                 ...
                 }
-        @param IdentFields_: Список имен полей идентифицирующих запись,
+        @param ident_fields: Список имен полей идентифицирующих запись,
             если не указан идентификатор записи.
         @return: Идентификатор записи или -1 в случае если запись не найдена.
         """
         try:
             # Таблица данных
-            tab = self._tabObj(Obj_)
-            indent_rec = [getattr(tab.c, fld_name) == Dict_[fld_name] for fld_name in IdentFields_]
+            tab = self._tabObj(obj)
+            indent_rec = [getattr(tab.c, fld_name) == data_dict[fld_name] for fld_name in ident_fields]
             find_rec = tab.get_where(icsqlalchemy.and_(*indent_rec))
             if find_rec:
                 if find_rec.rowcount == 1:
@@ -228,17 +228,17 @@ class icWorkSQLStorage(icWorkStorageInterface):
                 elif find_rec.rowcount > 1:
                     return [rec.id for rec in find_rec]
         except:
-            log.fatal(u'Ошибка идентификации записи в таблице %s.' % Obj_)
+            log.fatal(u'Ошибка идентификации записи в таблице %s.' % obj)
             return None
         return -1
 
-    def _setCascadeDict(self, Obj_, ID_, Dict_):
+    def _setCascadeDict(self, obj, record_id, data_dict):
         """
         Сохранение каскадного словаря значений в объект хранилища.
-        @param Obj_: Объект/таблица, в который будет сохраняться запись.
-        @param ID_: Идентификатор записи. 
+        @param obj: Объект/таблица, в который будет сохраняться запись.
+        @param record_id: Идентификатор записи.
             Если None, то запись будет добавлена.
-        @param Dict_: Словарь значений.
+        @param data_dict: Словарь значений.
             Словарь представлен в виде 
                 {
                 'имя реквизита':значение,
@@ -250,47 +250,47 @@ class icWorkSQLStorage(icWorkStorageInterface):
         """
         try:
             # Таблица данных
-            if isinstance(Obj_, str):
-                tab = icsqlalchemy.icSQLAlchemyTabClass(Obj_)
+            if isinstance(obj, str):
+                tab = icsqlalchemy.icSQLAlchemyTabClass(obj)
             else:
-                tab = Obj_
+                tab = obj
             # Добавление записи
-            rec = dict([item for item in Dict_.items() if not isinstance(item[1], list)])
-            tab.update(ID_, **rec)
+            rec = dict([item for item in data_dict.items() if not isinstance(item[1], list)])
+            tab.update(record_id, **rec)
             # Обработка дочерних таблиц
-            children_tabs = dict([item for item in Dict_.items() if isinstance(item[1], list)])
+            children_tabs = dict([item for item in data_dict.items() if isinstance(item[1], list)])
             for child_tab_name in children_tabs.keys():
                 for child_rec in children_tabs[child_tab_name]:
                     # Если есть возможнось,
                     # то прописать UUID родительской записи
                     child_rec['parent'] = rec.get('uuid', u'')
-                    self._setCascadeDict(child_tab_name, ID_, child_rec)
+                    self._setCascadeDict(child_tab_name, record_id, child_rec)
             return True
         except:
-            log.fatal(u'Ошибка обновления данных в каскад таблицы %s.' % Obj_)
-            return None
+            log.fatal(u'Ошибка обновления данных в каскад таблицы %s.' % obj)
+        return None
 
-    def _tabObj(self, Obj_):
+    def _tabObj(self, obj):
         """
         Таблица объекта.
-        @param Obj_: Объект/таблица, в который будет сохраняться запись.
+        @param obj: Объект/таблица, в который будет сохраняться запись.
         """
         # Таблица данных
-        if isinstance(Obj_, str):
+        if isinstance(obj, str):
             # Таблица данных передается в виде имени
-            tab = icsqlalchemy.icSQLAlchemyTabClass(Obj_)
-        elif isinstance(Obj_, tuple):
+            tab = icsqlalchemy.icSQLAlchemyTabClass(obj)
+        elif isinstance(obj, tuple):
             # Таблица данных передается в виде паспорта
-            tab = self.getKernel().Create(Obj_)
+            tab = self.getKernel().Create(obj)
         else:
-            tab = Obj_
+            tab = obj
         return tab
         
-    def addCascadeDict(self, Obj_, Dict_):
+    def addCascadeDict(self, obj, data_dict):
         """
         Добавление каскадного словаря значений в объект хранилища.
-        @param Obj_: Объект/таблица, в который будет сохраняться запись.
-        @param Dict_: Словарь значений.
+        @param obj: Объект/таблица, в который будет сохраняться запись.
+        @param data_dict: Словарь значений.
             Словарь представлен в виде 
                 {
                 'имя реквизита':значение,
@@ -302,22 +302,22 @@ class icWorkSQLStorage(icWorkStorageInterface):
         """
         try:
             # Таблица данных
-            tab = self._tabObj(Obj_)
+            tab = self._tabObj(obj)
             # Добавление записи
-            rec = dict([(str(key),value)for key, value in Dict_.items() if not isinstance(value, list)])
+            rec = dict([(str(key),value) for key, value in data_dict.items() if not isinstance(value, list)])
             # Если вдруг ключи юникодовые то изменить их на строковые
             tab.add(**rec)
             # Обработка дочерних таблиц
-            children_tabs = dict([item for item in Dict_.items() if isinstance(item[1], list)])
+            children_tabs = dict([item for item in data_dict.items() if isinstance(item[1], list)])
             for child_tab_name in children_tabs.keys():
                 for rec in children_tabs[child_tab_name]:
                     self.addCascadeDict(child_tab_name, rec)
             return True
         except:
-            log.error(u'Ошибка добавления данных в каскад таблицы %s.' % Obj_)
-            return None
+            log.fatal(u'Ошибка добавления данных в каскад таблицы %s.' % obj)
+        return None
 
-    def saveObject(self, Obj_):
+    def saveObject(self, obj):
         """
         Сохранить объект в хранилище.
         Все каскадное сохранение объекта должно производится
@@ -328,9 +328,9 @@ class icWorkSQLStorage(icWorkStorageInterface):
         пустыми списками перед записью:
             doc.setRequisiteValue('tab1', list())
             doc.setRequisiteValue('tab2', list())
-        @param Obj_: Сохраняемый объект.
+        @param obj: Сохраняемый объект.
         """
-        doc_table = self.container.getTable(Obj_.getTableName())
+        doc_table = self.container.getTable(obj.getTableName())
 
         # --- Начать транзакцию ---
         result = False
@@ -341,17 +341,17 @@ class icWorkSQLStorage(icWorkStorageInterface):
         try:
             # Расширить словарь реквизитов значениями по умолчачнию
             requisite_dict = doc_table.getDefaultRecDict()
-            requisite_dict.update(Obj_.getRequisiteData())
+            requisite_dict.update(obj.getRequisiteData())
             try:
                 log.info(u'WorkStorage Сохранение записи %s' % str(requisite_dict.keys()))
             except UnicodeDecodeError:
                 log.warning(u'UnicodeDecodeError. WorkStorage Сохранение записи...')
 
             save_rec = dict([(str(fld_name), value) for fld_name, value in requisite_dict.items() if not isinstance(value, list)])
-            if not doc_table.count(doc_table.c.uuid == Obj_.getUUID()):
+            if not doc_table.count(doc_table.c.uuid == obj.getUUID()):
                 # Добавить
                 try:
-                    log.info(u'WorkStorage Добавление записи объекта <%s>' % Obj_.getUUID())
+                    log.info(u'WorkStorage Добавление записи объекта <%s>' % obj.getUUID())
                 except UnicodeDecodeError:
                     log.warning(u'UnicodeDecodeError. WorkStorage Добавление записи...')
 
@@ -360,13 +360,13 @@ class icWorkSQLStorage(icWorkStorageInterface):
                 id = doc_table.getLastInsertedId()
             else:
                 # Отредактировать уже существующий
-                rec = doc_table.select(doc_table.c.uuid == Obj_.getUUID()).first()
+                rec = doc_table.select(doc_table.c.uuid == obj.getUUID()).first()
                 id = rec.id if rec else 0
                 doc_table.update_rec_transact(id, rec=save_rec,
                                               transaction=transaction)
 
             # Сохранить дочерние объекты
-            children = [child for child in Obj_.getChildrenRequisites() if issubclass(child.__class__,
+            children = [child for child in obj.getChildrenRequisites() if issubclass(child.__class__,
                                                                                      persistent.icObjPersistent)]
             for child in children:
                 self._saveObjectData(child,
@@ -382,33 +382,33 @@ class icWorkSQLStorage(icWorkStorageInterface):
         except:
             # Вернуть транзакцию
             transaction.rollback()
-            log.fatal(u'Ошибка сохранения реквизитов объекта <%s>' % Obj_.__class__.__name__)
+            log.fatal(u'Ошибка сохранения реквизитов объекта <%s>' % obj.__class__.__name__)
 
         doc_table.db.disconnect()
         return result
             
-    def _saveObjectData(self, CurObj_, parent_table=None,
+    def _saveObjectData(self, cur_obj, parent_table=None,
                         parent_id=None, transaction=None,
                         parent_uuid=''):
         """
         Сохранить данные объекта в хранилище.
-        @param CurObj_: Текущий объект спецификации документа.
+        @param cur_obj: Текущий объект спецификации документа.
         @param parent_table: Объект родительской таблицы.
         @param parent_id: Идентификатор родительской записи.
         @param transaction: Объект транзакции (если надо).
         @param parent_uuid: UUID родительской записи.
         """
-        table = self.container.getTable(CurObj_.getTableName())
+        table = self.container.getTable(cur_obj.getTableName())
 
         parent_id_fieldname = table.getLinkIdFieldName(parent_table)
         # Удалить записей спецификации
         where = sqlalchemy.and_(getattr(table.c, parent_id_fieldname) == parent_id)
         table.del_where_transact(where, transaction=transaction)
 
-        children = [child for child in CurObj_.getChildrenRequisites() if issubclass(child.__class__,
+        children = [child for child in cur_obj.getChildrenRequisites() if issubclass(child.__class__,
                                                                                      persistent.icObjPersistent)]
         # Добавить записи спецификации
-        obj_data = CurObj_.getData()
+        obj_data = cur_obj.getData()
         if obj_data:
             for rec in obj_data:
                 save_rec = table.getDefaultRecDict()
@@ -432,59 +432,59 @@ class icWorkSQLStorage(icWorkStorageInterface):
         
         return True
 
-    def isObject(self, Obj_, UUID_):
+    def isObject(self, obj, UUID):
         """
         Проверка существования данных объекта в хранилище по идентификатору.
-        @param Obj_: Объект.
-        @param UUID_: Уникальный идентификатор объекта.
+        @param obj: Объект.
+        @param UUID: Уникальный идентификатор объекта.
         @return: True/False.
         """
         try:
             # Проинициализировать все дочерние объекты
-            Obj_.init_children_data()
+            obj.init_children_data()
 
-            tab = self.container.getTable(Obj_.getTableName())
+            tab = self.container.getTable(obj.getTableName())
             try:
-                count = tab.count(tab.c.uuid == UUID_)
+                count = tab.count(tab.c.uuid == UUID)
             except:
                 log.fatal(u'ОШИБКА наличия объекта в хранилище')
                 return False
             return True if count > 0 else False
         except:
-            log.fatal(u'ОШИБКА определения существования объекта <%s>' % UUID_)
-            return False
+            log.fatal(u'ОШИБКА определения существования объекта <%s>' % UUID)
+        return False
 
-    def loadObject(self, Obj_, UUID_):
+    def loadObject(self, obj, UUID):
         """
         Загрузить данные объекта из хранилища по идентификатору.
-        @param Obj_: Объект.
-        @param UUID_: Уникальный идентификатор объекта.
+        @param obj: Объект.
+        @param UUID: Уникальный идентификатор объекта.
         @return: True/False.
         """
         try:
             # Проинициализировать все дочерние объекты
-            Obj_.init_children_data()
+            obj.init_children_data()
             
-            tab = self.container.getTable(Obj_.getTableName())
+            tab = self.container.getTable(obj.getTableName())
             try:
-                result = tab.select(tab.c.uuid == UUID_)
+                result = tab.select(tab.c.uuid == UUID)
             except:
                 log.fatal(u'ОШИБКА чтения объекта их хранилища')
                 return False
 
             if result.rowcount:
                 # Запомнить идентификатор документа
-                Obj_.uuid = UUID_
+                obj.uuid = UUID
                 # Получить все данные документа в виде словаря
                 cascade_data = tab.getCascadeDict(result.first().id)
                 # log.info(u'GET Cascade Data %s' % cascade_data)
             else:
-                log.info(u'Данные объекта <%s> не найдены' % UUID_)
+                log.info(u'Данные объекта <%s> не найдены' % UUID)
                 return False
             # Установка внутренних данных в объекте
             # Только реквизиты
-            obj_requisites = [requisite for requisite in Obj_.getAllRequisites() if issubclass(requisite.__class__,
-                                                                                               persistent.icAttrPersistent)]
+            obj_requisites = [requisite for requisite in obj.getAllRequisites() if issubclass(requisite.__class__,
+                                                                                              persistent.icAttrPersistent)]
             
             # Перебор реквизитов
             for requisite in obj_requisites:
@@ -492,113 +492,113 @@ class icWorkSQLStorage(icWorkStorageInterface):
                 requisite.setValue(value)
                 
             # Только табличные реквизиты
-            obj_tab = [obj_spc for obj_spc in Obj_.getAllRequisites() if issubclass(obj_spc.__class__,
-                                                                                    persistent.icObjPersistent)]
+            obj_tab = [obj_spc for obj_spc in obj.getAllRequisites() if issubclass(obj_spc.__class__,
+                                                                                   persistent.icObjPersistent)]
             for obj_spc in obj_tab:
                 tab_name = obj_spc.getTableName()
                 if tab_name in cascade_data:
                     self._setObjectData(obj_spc, cascade_data[tab_name])
             return True
         except:
-            log.fatal(u'ОШИБКА загрузки реквизитов объекта %s' % Obj_.getUUID())
-            return False
+            log.fatal(u'ОШИБКА загрузки реквизитов объекта %s' % obj.getUUID())
+        return False
 
-    def _setObjectData(self, CurObj_, Data_):
+    def _setObjectData(self, cur_obj, obj_data):
         """
         Установка данных объекта.
-        @param CurObj_: Текущий объект.
-        @param Data_: Данные объекта.
+        @param cur_obj: Текущий объект.
+        @param obj_data: Данные объекта.
         """
         # Только реквизиты
-        requisites = [requisite for requisite in CurObj_.getChildrenRequisites() if issubclass(requisite.__class__,
+        requisites = [requisite for requisite in cur_obj.getChildrenRequisites() if issubclass(requisite.__class__,
                                                                                                persistent.icAttrPersistent)]
         # Табличные реквизиты
-        tab_requisites = [requisite for requisite in CurObj_.getChildrenRequisites() if issubclass(requisite.__class__,
+        tab_requisites = [requisite for requisite in cur_obj.getChildrenRequisites() if issubclass(requisite.__class__,
                                                                                                    persistent.icObjPersistent)]
-        for rec_data in Data_:
+        for rec_data in obj_data:
             row = dict()
             for requisite in requisites:
                 value = rec_data.get(requisite.getName(), None)
                 row[requisite.getName()] = value
-            CurObj_.addRow(**row)
+            cur_obj.addRow(**row)
 
             for tab_requisite in tab_requisites:
                 tab_name = tab_requisite.getTableName()
                 if tab_name in rec_data:
                     self._setObjectData(tab_requisite, rec_data[tab_name])
 
-    def _resultLen(self, Result_):
+    def _resultLen(self, query_result):
         """
         Количество записей результата запроса.
-        @param Result_: Результат запроса.
+        @param query_result: Результат запроса.
         """
-        if isinstance(Result_, list):
-            return len(Result_)
-        elif not Result_:
+        if isinstance(query_result, list):
+            return len(query_result)
+        elif not query_result:
             return 0
         else:
-            return Result_.rowcount
+            return query_result.rowcount
         return -1
     
-    def getFieldNames(self, Obj_):
+    def getFieldNames(self, obj):
         """
         Список имен полей таблицы хранения объекта.
-        @param Obj_: Объект.
+        @param obj: Объект.
         """
-        obj_requisites = [requisite for requisite in Obj_.getAllRequisites() if issubclass(requisite.__class__,
-                                                                                           persistent.icAttrPersistent)]
+        obj_requisites = [requisite for requisite in obj.getAllRequisites() if issubclass(requisite.__class__,
+                                                                                          persistent.icAttrPersistent)]
         fields = [obj_requisite.getFieldName() for obj_requisite in obj_requisites]
-        log.info(u'icworkstorage.getFieldNames::: %s' % fields)
+        # log.info(u'icworkstorage.getFieldNames::: %s' % fields)
         return fields
         
-    def delAllData(self, Obj_, Filter_=None):
+    def delAllData(self, obj, data_filter=None):
         """
         Удалить все данные объекта.
-        @param Obj_: Объект.
-        @param Filter_: Дополнительный фильтр. Словарь {'имя поля':значение}
+        @param obj: Объект.
+        @param data_filter: Дополнительный фильтр. Словарь {'имя поля':значение}
         @return: Возвращает True/False или None  в случае ошибки.
         """
         try:
-            obj_table = self.container.getTable(Obj_.getTableName())
-            if Filter_:
-                filter = [getattr(obj_table.c, fld_name) == fld_value for fld_name, fld_value in Filter_.items()]
+            obj_table = self.container.getTable(obj.getTableName())
+            if data_filter:
+                cur_filter = [getattr(obj_table.c, fld_name) == fld_value for fld_name, fld_value in data_filter.items()]
                 # Фильтрация производится по "И"
-                return obj_table.del_where(icsqlalchemy.and_(*filter))
+                return obj_table.del_where(icsqlalchemy.and_(*cur_filter))
             else:
                 return obj_table.dataclass.select().delete().execute()            
         except:
-            log.fatal(u'ОШИБКА удаления объекта %s их хранилища' % Obj_.name)
-            return None
+            log.fatal(u'ОШИБКА удаления объекта %s их хранилища' % obj.name)
+        return None
         
-    def getAllData(self, Obj_, Filter_=None):
+    def getAllData(self, obj, data_filter=None):
         """
         Получить все данные объекта.
-        @param Obj_: Объект.
-        @param Filter_: Дополнительный фильтр.
+        @param obj: Объект.
+        @param data_filter: Дополнительный фильтр.
         @return: Возвращает список или None  в случае ошибки.
         """
         try:
             # Проинициализировать все дочерние объекты
-            Obj_.init_children_data()
+            obj.init_children_data()
             
-            obj_table = self.container.getTable(Obj_.getTableName())
+            obj_table = self.container.getTable(obj.getTableName())
             try:
-                if Filter_:
-                    result = obj_table.queryAll(Filter_)
+                if data_filter:
+                    result = obj_table.queryAll(data_filter)
                 else:
                     result = obj_table.select()
 
                 if not self._resultLen(result):
-                    log.info(u'Данные объекта %s не найдены' % Obj_.name)
+                    log.info(u'Данные объекта %s не найдены' % obj.name)
                     # Только реквизиты
-                    fields = self.getFieldNames(Obj_)
+                    fields = self.getFieldNames(obj)
                     return {'fields': fields, 'data': []}
             except:
-                log.error(u'ОШИБКА чтения объекта %s их хранилища' % Obj_.name)
-                return None
+                log.fatal(u'ОШИБКА чтения объекта %s их хранилища' % obj.name)
+            return None
 
             # Только реквизиты
-            fields = self.getFieldNames(Obj_)
+            fields = self.getFieldNames(obj)
 
             # Перебор записей
             data = []
@@ -615,19 +615,19 @@ class icWorkSQLStorage(icWorkStorageInterface):
                 
             return {'fields': fields, 'data': data}
         except:
-            log.fatal(u'ОШИБКА. Получения всех данных объекта %s' % Obj_.name)
-            return None
+            log.fatal(u'ОШИБКА. Получения всех данных объекта %s' % obj.name)
+        return None
 
-    def getAllUUID(self, Obj_, order_sort=None):
+    def getAllUUID(self, obj, order_sort=None):
         """
         Получить все уникальные идентификаторы объектов UUID.
-        @param Obj_: Объект документа.
+        @param obj: Объект документа.
         @param order_sort: Порядок сортировки.
             Список имен полей, в котором надо сортировать.
         @return: Список уникальных идентификаторов UUID
         """
         try:
-            doc_table = self.container.getTable(Obj_.getTableName())
+            doc_table = self.container.getTable(obj.getTableName())
             # ВНИМАНИЕ! Пример SQL select'а с выбором опрределенных колонок
             sql = sqlalchemy.sql.select(columns=[doc_table.c.uuid],
                                         from_obj=[doc_table.dataclass])

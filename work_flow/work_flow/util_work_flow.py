@@ -20,4 +20,4 @@ def browseDocJournal(DocJournalRes_):
     '''
     doc_jrnl=icResourceParser.icCreateObject(DocJournalRes_,'mtd')
     print('!!',doc_jrnl)
-    doc_jrnl.Browse(ParentForm_=glob_functions.getMainWin())
+    doc_jrnl.Browse(parent=glob_functions.getMainWin())

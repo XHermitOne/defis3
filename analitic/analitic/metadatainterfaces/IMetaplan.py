@@ -185,7 +185,7 @@ class IMetaplan(icobjectinterface.icObjectInterface):
         elif modif_plan_id:
             lst = self.planMenager.getCanContainLst(modif_plan_id, metatype)
             # lst = brws.getCanContainLst(modif_plan_id, metatype)
-            # print '<modif plan id=%s>: %s' % (modif_plan_id, str(lst))
+            # print '<modif plan record_id=%s>: %s' % (modif_plan_id, str(lst))
             return lst
 #        else:
 #            #print '<> ********** <> can_containFuncmMonth', "['mVidProd']"
@@ -221,10 +221,10 @@ class IMetaplan(icobjectinterface.icObjectInterface):
         if self.planMenager:
             return self.planMenager.setMetaplanById(id)
 #        if self._baseStorageName:
-#            if id in (None, '__base__'):
+#            if record_id in (None, '__base__'):
 #                storage_name = self._baseStorageName
 #            else:
-#                storage_name = self._baseStorageName+'_'+id
+#                storage_name = self._baseStorageName+'_'+record_id
 #
 #            metatree = self.getObject()
 #            object_storage = objstore.CreateObjectStorageByDir(storage_name)

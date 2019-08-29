@@ -141,7 +141,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt.GetPropertyGrid().GetView()
             if not ret[0][0] in ('Table',):
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является ТАБЛИЦЕЙ.', parent)
+                                   u'Выбранный объект не является ТАБЛИЦЕЙ.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
 

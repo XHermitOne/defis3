@@ -71,7 +71,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
                 filter_id = self._genUUID()
                 filter_description = dlgfunc.getTextEntryDlg(self, u'Фильтр',
                                                            u'Введите наименование фильтра')
-                new_filter['id'] = filter_id
+                new_filter['record_id'] = filter_id
                 new_filter['description'] = filter_description
             else:
                 log.warning(u'Не определен фильтр для добавления')
@@ -79,7 +79,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
 
         if new_filter:
             self._filters.append(new_filter)
-            self.filterCheckList.Append(new_filter['description'], new_filter['id'])
+            self.filterCheckList.Append(new_filter['description'], new_filter['record_id'])
 
     def delFilter(self, filter_name=None):
         """
@@ -98,7 +98,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
                     return True
                 return False
         else:
-            filters_id = [filter_dict['id'] for filter_dict in self._filters]
+            filters_id = [filter_dict['record_id'] for filter_dict in self._filters]
             try:
                 i = filters_id.index(filter_name)
             except IndexError:

@@ -166,7 +166,7 @@ def loadInputDataDBF(DBFFileName_, className='analitic'):
             #print idx,recs
             #if recs.count():
             #    for rec in recs:
-            #        tab.update(rec.id,dtoper=dt_oper,grup=grp_cod,codt=t_cod,
+            #        tab.update(rec.record_id,dtoper=dt_oper,grup=grp_cod,codt=t_cod,
             #            ei=ei_name,kolf=kol,cena=cen,summa=sum,
             #            reg=reg_cod,mens=men_cod,
             #            plan_kol=None,plan_sum=None)
@@ -315,11 +315,11 @@ def _syncSprav(Type_,Cod_,Name_):
 #            #Изменилось название
 #            #Надо синхронизировать со справочником
 #            ic_log.icToLog('NSI %s CHANGE %s %s <> %s'%(res_type,cod,name_,s_name))
-#            id=nsi.getSpravCodeId(res_type,cod)
-#            if id<>None:
+#            record_id=nsi.getSpravCodeId(res_type,cod)
+#            if record_id<>None:
 #                tab=ic_sqlobjtab.icSQLObjDataClass(resource.icGetRes('NsiStd',
 #                    nameRes='NsiStd'))
-#                tab.update(id,type=res_type,cod=cod,name=name_,id_nsi_list=nsi.getSpravId(res_type))
+#                tab.update(record_id,type=res_type,cod=cod,name=name_,id_nsi_list=nsi.getSpravId(res_type))
 
 def _syncSpravProducts(GroupCod_,GroupName_,ProductCod_,ProductName_):
     """

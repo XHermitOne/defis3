@@ -40,7 +40,7 @@ class TestObjectMenubarManager(icmanagerinterface.icWidgetManager):
         #Тестируемый бизнес объект
         #print 'DEBUGER ic.metadata:',ic.metadata
         self.business_obj=ic.metadata.work_flow.mtd.test_businessobject.BusinessObj.create()
-        #print 'Context DEBUG::::::',self.business_obj.GetContext().__class__,self.business_obj.evalSpace.__class__
+        #print 'Context DEBUG::::::',self.business_obj.GetContext().__class__,self.business_obj.eval_space.__class__
 
     def onCreateObjectMenuItem(self,event):
         """

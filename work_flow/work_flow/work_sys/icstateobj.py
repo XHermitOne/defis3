@@ -19,7 +19,7 @@ from ic.engine import glob_functions
 from ic.utils import extfunc
 
 # Версия
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # Спецификация
 SPC_IC_STATEOBJ = {'type': 'StateObj',
@@ -37,7 +37,7 @@ SPC_IC_STATEOBJ = {'type': 'StateObj',
 DEFAULT_STATE_REQUISITE_NAME = 'state'
 
 
-class icStateObjProto(icbusinessobj.icBusinessObjPrototype):
+class icStateObjProto(icbusinessobj.icBusinessObjProto):
     """
     ОБЪЕКТ ИМЕЮЩИЙ СОСТОЯНИЕ. Прототип компонента.
     """
@@ -46,7 +46,7 @@ class icStateObjProto(icbusinessobj.icBusinessObjPrototype):
         """
         Конструтор.
         """
-        icbusinessobj.icBusinessObjPrototype.__init__(self, *args, **kwargs)
+        icbusinessobj.icBusinessObjProto.__init__(self, *args, **kwargs)
 
     def getHistory(self):
         """

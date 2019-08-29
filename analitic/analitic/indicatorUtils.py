@@ -477,7 +477,7 @@ def AnaliticProduct(ianlt):
     # print('---->', row, tree.idataclass)
     # print('----> t1, t2:', t1, t2)
 
-    flt = "select id from %s where dtoper<='%s' and dtoper>='%s' and reg='%s' and mens='%s' and codt LIKE '%s" % (tableName, t1, t2, cod[1], '0'+cod[2], cod[3])
+    flt = "select record_id from %s where dtoper<='%s' and dtoper>='%s' and reg='%s' and mens='%s' and codt LIKE '%s" % (tableName, t1, t2, cod[1], '0'+cod[2], cod[3])
 
     flt += "%'"
     # print('----> tableName:', tableName)

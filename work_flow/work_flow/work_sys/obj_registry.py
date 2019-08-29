@@ -17,7 +17,7 @@ from sqlalchemy.orm import sessionmaker
 # from services.ic_std.log import log
 from ic.log import log
 
-__version__ = (0, 0, 1, 8)
+__version__ = (0, 1, 1, 2)
 
 # Имя таблицы движения по умолчанию
 DEFAULT_OPERATIONS_TABLE = 'operations'

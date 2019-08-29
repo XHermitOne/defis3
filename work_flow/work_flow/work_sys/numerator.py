@@ -19,7 +19,7 @@ from sqlalchemy.sql import func
 
 from ic.log import log
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 2)
 
 # Формат номера строки в качестве подкода
 N_RECORD_PATTERN = r'(\%.[0-9]N)'

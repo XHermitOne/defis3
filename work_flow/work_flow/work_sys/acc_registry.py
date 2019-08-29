@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 # from services.ic_std.log import log
 from ic.log import log
 
-__version__ = (0, 0, 1, 31)
+__version__ = (0, 1, 1, 31)
 
 
 # Имя таблицы движения по умолчанию

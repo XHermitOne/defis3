@@ -26,12 +26,12 @@
 # --- Подключение библиотек ---
 import ic
 from ic.utils import resource
-from ic.kernel import io_prnt
+from ic.log import log
 
 import work_flow.work_sys.icworkbase as icworkbase
 
 # Версия
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 # --- Specifications ---
 SPC_IC_TAB_REQUISITE = {'type': 'TABRequisite',
@@ -67,37 +67,33 @@ SPC_IC_TAB_REQUISITE = {'type': 'TABRequisite',
                                          },
                         }
 
-# --- Функции ---
-
-# --- Классы ---
-
 
 class icTABRequisitePrototype(icworkbase.icTabRequisiteBase):
     """
     Табличный реквизит.
     """
 
-    def __init__(self, Parent_=None):
+    def __init__(self, parent=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        @param parent: Родительский объект.
         """
-        icworkbase.icTabRequisiteBase.__init__(self, Parent_)
+        icworkbase.icTabRequisiteBase.__init__(self, parent)
         
-    def findRequisite(self, RequisiteName_):
+    def findRequisite(self, requisite_name):
         """
         Найти реквизит по имени.
         Поиск ведется рекурсивно.
-        @param RequisiteName_: Имя искомого реквизита.
+        @param requisite_name: Имя искомого реквизита.
         @return: Возвращает объект реквизита или None,
             если реквизит с таким именем не найден.
         """
         for requisite in self.getChildrenRequisites():
-            if requisite.name == RequisiteName_:
+            if requisite.name == requisite_name:
                 return requisite
             # Проверка стоит ли искать в дочерних реквизитах
             if hasattr(requisite, 'findRequisite'):
-                find_requisite = requisite.findRequisite(RequisiteName_)
+                find_requisite = requisite.findRequisite(requisite_name)
                 # Если нашли реквизит то вернуть его
                 if find_requisite:
                     return find_requisite
@@ -125,16 +121,16 @@ class icTABRequisitePrototype(icworkbase.icTabRequisiteBase):
             str_data.append(new_rec)
         return str_data
 
-    def del_children(self, UUID_=None):
+    def del_children(self, UUID=None):
         """
         Удалить из таблицы реквизита все записи текущего родительского объекта.
-        @param UUID_: Идентификатор родительского объекта.
+        @param UUID: Идентификатор родительского объекта.
         Если None, то берется uuid родительского объекта.
         @return: Возвращает результат выполнения операции True/False.
         """
-        if UUID_ is None:
+        if UUID is None:
             # Если uuid не указан явно, то взять текущий объекта
-            UUID_ = self.getParent().getUUID()
+            UUID = self.getParent().getUUID()
 
         transaction = None
         try:
@@ -145,12 +141,12 @@ class icTABRequisitePrototype(icworkbase.icTabRequisiteBase):
                 transaction.begin()
 
                 # Получить данные объекта в каскадном представлении
-                recs = tab.get_where(tab.c.parent == UUID_)
+                recs = tab.get_where(tab.c.parent == UUID)
                 rec_id = recs.first().id if recs else 0
                 if rec_id:
                     result = self._delCascadeData(tab, rec_id, transaction)
                 else:
-                    log.warning(u'Не найдены дочерние записи объекта с UUID <%s>' % UUID_)
+                    log.warning(u'Не найдены дочерние записи объекта с UUID <%s>' % UUID)
                     result = False
 
                 # Завершить транзакцию
@@ -161,5 +157,5 @@ class icTABRequisitePrototype(icworkbase.icTabRequisiteBase):
             if transaction:
                 # Откатить транзакцию
                 transaction.rollback()
-            log.error(u'Ошибка удаления из хранилища дочерних записей объекта [%s]' % self.getParent().name)
+            log.fatal(u'Ошибка удаления из хранилища дочерних записей объекта [%s]' % self.getParent().name)
         return False

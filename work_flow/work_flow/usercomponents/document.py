@@ -767,8 +767,8 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         # то и валидацию производить не надо
         if not self.isValidDel():
             return True
-        else:
-            print('>>>', self.isValidDel(), self.isICAttrValue('valid_del'))
+        # else:
+        #     print('>>>', self.isValidDel(), self.isICAttrValue('valid_del'))
 
         context = self.GetContext()
         context['ARGS'] = args

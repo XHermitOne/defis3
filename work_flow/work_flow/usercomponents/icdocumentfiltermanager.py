@@ -103,7 +103,7 @@ class icDocumentFilterManager(icdocumentnavigatormanager.icDocumentNavigatorMana
         @param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
-        # icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
+        # icwidget.icSimple.__init__(self, parent, record_id, component, logType, eval_space)
         icdocumentnavigatormanager.icDocumentNavigatorManager.__init__(self, parent, id, component, logType, evalSpace)
 
         # Родительский класс icDocumentFilterManagerProto не имеет конструктора.

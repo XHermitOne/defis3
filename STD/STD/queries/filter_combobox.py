@@ -158,7 +158,7 @@ class icFilterComboBoxProto(wx.ComboBox):
         @param filter_name: Имя фильтра.
         @return: Структура выбранного фильтра, или None если фильтр не найден.
         """
-        find_filter = [(i, filter_dict) for i, filter_dict in enumerate(self._filters) if filter_dict['id'] == filter_name]
+        find_filter = [(i, filter_dict) for i, filter_dict in enumerate(self._filters) if filter_dict['record_id'] == filter_name]
         if find_filter:
             self.Select(find_filter[0][0]+1)
             return find_filter[0][1]
@@ -202,7 +202,7 @@ class icFilterComboBoxProto(wx.ComboBox):
                 filter_id = self._genUUID()
                 filter_description = dlgfunc.getTextEntryDlg(self, u'Фильтр',
                                                            u'Введите наименование фильтра')
-                new_filter['id'] = filter_id
+                new_filter['record_id'] = filter_id
                 new_filter['description'] = filter_description
             else:
                 log.warning(u'Не определен фильтр для добавления')
@@ -211,7 +211,7 @@ class icFilterComboBoxProto(wx.ComboBox):
         if new_filter:
             self._filters.append(new_filter)
             i = len(self._filters)
-            self.Append(new_filter['description'], new_filter['id'])
+            self.Append(new_filter['description'], new_filter['record_id'])
             if auto_select:
                 self.Select(i)
 
@@ -232,7 +232,7 @@ class icFilterComboBoxProto(wx.ComboBox):
                     return True
                 return False
         else:
-            filters_id = [filter_dict['id'] for filter_dict in self._filters]
+            filters_id = [filter_dict['record_id'] for filter_dict in self._filters]
             try:
                 i = filters_id.index(filter_name)
             except IndexError:

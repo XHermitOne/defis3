@@ -276,7 +276,7 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
             #   Перегружаем методерево
             if self.setMetaplanById(id):
                 # tree = self.GetNameObj('plansTreeCtrl')
-                print('..... ReLoadRoot id=', id)
+                print('..... ReLoadRoot record_id=', id)
                 tree.ReLoadRoot()
                 
                 # print '...... re variantChoice onChoice storage_name=', storage_name

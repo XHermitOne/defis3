@@ -141,7 +141,7 @@ def onCodControl(evalSpace):
 def onCodHlpSprav(evalSpace):
     """Вызов заполнения кода из справочнка по F1."""
     sprav=evalSpace[CONTEXT_SPRAV_NAME]
-#    GetObject=evalSpace['GetObject']
+#    GetObject=eval_space['GetObject']
     self=evalSpace['self']
     # Вызываем форму выбора для связанных справочников
     tree_grid = evalSpace.GetObject(SPR_TREE_NAME)
@@ -167,7 +167,7 @@ def onCodHlpSprav(evalSpace):
 def onMouseClickDelTool(obj):
     """ Нажатие кнопки delTool на панели инструментов."""
     try:
-        #evalSpace = obj.GetContext()
+        #eval_space = obj.GetContext()
         grid=obj.GetContext().GetObject(SPR_GRID_NAME)
         i_row=grid.GetGridCursorRow()
         grid.DelRows(i_row)

@@ -504,7 +504,7 @@ class PyReditorFrm(wx.Frame):
         # The toolbar
         #------------
         # Note that, as the tools that have a corresponding
-        # menu item will have the same id, there is no need to bind them again as
+        # menu item will have the same record_id, there is no need to bind them again as
         # this will be done automatically (see wxMenuBar help)
         self.toolBar1.ClearTools()
         self.toolBar1.DoAddTool(bitmap=self._set_png(r'fileopen_re22.png'), bmpDisabled=wx.NullBitmap,

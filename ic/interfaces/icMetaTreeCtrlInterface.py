@@ -284,7 +284,7 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
                 if ifs and hasattr(ifs, 'doc'):
                     ifs.doc.init_data()
                     new_obj.value.doc_uuid = ifs.doc.getDocId()
-                    log.info(u'>>> Инициализирован документ: <%s> id=%s' % (ifs.doc.name, new_obj.value.doc_uuid))
+                    log.info(u'>>> Инициализирован документ: <%s> record_id=%s' % (ifs.doc.name, new_obj.value.doc_uuid))
                     new_obj.Save()
                 
                 #   Обновляем дерево

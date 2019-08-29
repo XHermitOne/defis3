@@ -22,7 +22,7 @@ HTML_TEMPLATE = '''
         {{ map }}
     </head>
     <body>
-        <div id="map" style="width:{{ width[0] }}{{ width[1] }}; height:{{ height[0] }}{{ height[1] }}"></div>
+        <div record_id="map" style="width:{{ width[0] }}{{ width[1] }}; height:{{ height[0] }}{{ height[1] }}"></div>
     </body>
 </html>
 '''

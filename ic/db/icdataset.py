@@ -21,7 +21,7 @@
     - B{filter=None}: Фильтр на объект данных. Если словарь, то фильтр на значение поля. Если строка, то фильтрация
         проводится по SQL выражению, записанному в данном атрибуте.
         Пример 1: {'cod':'001','typ':0}
-        Пример 2: 'select id from analitic where reg='0241''
+        Пример 2: 'select record_id from analitic where reg='0241''
         Пример 3: 'reg>'0241' and reg>'0250'' - пока не работает
     - B{res_query=''}: Имя либо выражение(возвращающее имя) нужного объекта ресурсного описания.
         Выражение определяется по символу '@'.
@@ -529,7 +529,7 @@ class icDataLink(icwidget.icSimple):
         """
         icwidget.icSimple.__init__(self, parent=None, component=component,
                                    logType=logType, evalSpace=evalSpace)
-        # self.evalSpace = evalSpace
+        # self.eval_space = eval_space
         # self.logType = logType
         self.obj = None
 

@@ -8,6 +8,8 @@
 from ic.log import log
 from work_flow.work_sys import ictabrequisite
 
+__version__ = (0, 1, 1, 1)
+
 
 def document_remove_to(doc_uuid, src_doc, dst_doc,
                        requisite_replace=None, ask_del=False):

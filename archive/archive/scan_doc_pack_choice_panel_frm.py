@@ -116,7 +116,7 @@ class scan_doc_pack_choice_panel_ChoicePanelManager(icmanagerinterface.icWidgetM
         obj_uuid = obj_list.getSelectedObjUUID()
         if obj_uuid:
             obj = self.context['OBJ']
-            obj.View(UUID_=obj_uuid)        
+            obj.View(UUID=obj_uuid)
 
     def onEditObjTool(self, event):
         """
@@ -148,7 +148,7 @@ class scan_doc_pack_choice_panel_ChoicePanelManager(icmanagerinterface.icWidgetM
         obj_uuid = obj_list.getSelectedObjUUID()
         if obj_uuid:
             obj = self.context['OBJ']
-            obj.Del(UUID_=obj_uuid)
+            obj.Del(UUID=obj_uuid)
             obj_list.refreshDataset()
 
     def getSelectedObjUUID(self):
