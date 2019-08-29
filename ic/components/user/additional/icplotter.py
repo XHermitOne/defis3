@@ -36,22 +36,22 @@ ic_class_type = icDefInf._icUserType
 ic_class_name = 'icPloter'
 
 #   Описание стилей компонента
-ic_class_styles = {'DEFAULT':0}
+ic_class_styles = {'DEFAULT': 0}
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'__events__': {},
-                'type': 'Trend',
+ic_class_spc = {'type': 'Trend',
                 'onDrawCursor':None,
                 'onMouseLeftDown':None,
                 'name': 'default',
-                'wxAgg':0,
-                '__parent__':icwidget.SPC_IC_WIDGET,
-                '__events__':{'onDrawCursor':('DRAW_CURSOR','draw_cursor',False),
-                              'onMouseLeftDown':('MOUSE_LEFT_DOWN','onMouseLeftDown',False)},
+                'wxAgg': 0,
+
+                '__styles__': ic_class_styles,
+                '__parent__': icwidget.SPC_IC_WIDGET,
+                '__events__': {'onDrawCursor': ('DRAW_CURSOR', 'draw_cursor', False),
+                               'onMouseLeftDown': ('MOUSE_LEFT_DOWN', 'onMouseLeftDown', False)},
                 '__attr_types__': {0: ['name', 'type'],
-                                    icDefInf.EDT_CHECK_BOX:['wxAgg']}}
+                                   icDefInf.EDT_CHECK_BOX: ['wxAgg']}}
                     
-ic_class_spc['__styles__'] = ic_class_styles
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -70,7 +70,8 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0,0,0,2)
+__version__ = (0, 1, 1, 1)
+
 
 class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
     """
@@ -87,11 +88,10 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         - B{onMouseLeftDown=None}: Выражение, выполняемое при нажатии левой
             кнопки мыши на графике.
     """
-
     component_spc = ic_class_spc
     
-    def __init__(self, parent, id, component, logType = 0, evalSpace = None,
-                        bCounter=False, progressDlg=None):
+    def __init__(self, parent, id, component, logType=0, evalSpace=None,
+                 bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
 
@@ -116,7 +116,7 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        lst_keys = [x for x in component.keys() if x.find('__') <> 0]
+        lst_keys = [x for x in component.keys() if x.find('__') != 0]
         
         for key in lst_keys:
             setattr(self, key, component[key])
@@ -125,14 +125,11 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         #   Необходимо вставить реальные параметры конструкора.
         #   На этапе генерации их не всегда можно определить.
         parentModule.icPlotPanel.__init__(self, parent, id, self.position, self.size,
-                                        self.style, bWxAgg=self.wxAgg)
-        #img = common.imgEdtImage
-        #parentModule.GenBitmapTextButton.__init__(self, parent, id, img, self.label, self.position, self.size, style = self.style, name = self.name)
+                                          self.style, bWxAgg=self.wxAgg)
 
         #   Регистрация обработчиков событий
-        
-
         self.BindICEvt()
+
         #   Создаем дочерние компоненты
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
@@ -154,10 +151,10 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         
         if self.IsSizer() and self.child:
             prs.icResourceParser(self.parent, self.child, self, evalSpace = self.evalSpace,
-                                bCounter = bCounter, progressDlg = progressDlg)
+                                 bCounter=bCounter, progressDlg=progressDlg)
         elif self.child:
-            prs.icResourceParser(self, self.child, None, evalSpace = self.evalSpace,
-                                bCounter = bCounter, progressDlg = progressDlg)
+            prs.icResourceParser(self, self.child, None, evalSpace=self.evalSpace,
+                                 bCounter=bCounter, progressDlg=progressDlg)
       
     #   Обработчики событий
     def OnMouseLeftDown(self, evt):
@@ -169,6 +166,7 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         self.evalSpace['evt'] = evt
         self.evalSpace['self'] = self
         self.eval_attr('onMouseLeftDown')
+
 
 def test(par=0):
     """
@@ -202,10 +200,10 @@ def test(par=0):
     
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
     """
     Тестируем пользовательский класс.
     """
     test()
-
