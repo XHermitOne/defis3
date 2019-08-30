@@ -275,7 +275,7 @@ class icChoice(icWidget, wx.Choice):
 
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('setFocus')
         event.Skip()
 
@@ -285,7 +285,7 @@ class icChoice(icWidget, wx.Choice):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('loseFocus')
         event.Skip()
 
@@ -316,7 +316,7 @@ class icChoice(icWidget, wx.Choice):
         self.bChanged = 1
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
 
         # Обрабатываем выбор пункта из списка
         self.eval_attr('choice')

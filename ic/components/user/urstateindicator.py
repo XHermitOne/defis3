@@ -172,6 +172,7 @@ class StateIndicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
         Обработчик события wx.EVT_LEFT_DOWN, атрибут=onLeftDown
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         ret, val = util.ic_eval(self.onLeftDown, 0, self.evalSpace,
                                 'EVAL ATTRIBUTE ERROR: attr=onLeftDown')
@@ -185,6 +186,7 @@ class StateIndicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
         Обработчик события wx.EVT_LEFT_UP, атрибут=onLeftUp
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         ret, val = util.ic_eval(self.onLeftUp, 0, self.evalSpace,
                                 'EVAL ATTRIBUTE ERROR: attr=onLeftUp')
@@ -198,6 +200,7 @@ class StateIndicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
         Обработчик события wx.EVT_BUTTON, атрибут=onButton
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         ret, val = util.ic_eval(self.onButton, 0, self.evalSpace,
                                 'EVAL ATTRIBUTE ERROR: attr=onButton')

@@ -174,7 +174,7 @@ class icImgButtonPrototype(icWidget):
         Обрабатываем нажатие на кнопку (сообщение C{EVT_BUTTON}).
         """
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
 
         self.eval_attr('mouseClick')
@@ -186,7 +186,7 @@ class icImgButtonPrototype(icWidget):
         Обрабатываем нажатие левой кнопки мыши (сообщение C{EVT_LEFT_DOWN}).
         """
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
 
         self.eval_attr('mouseDown')
@@ -197,7 +197,7 @@ class icImgButtonPrototype(icWidget):
         Обрабатываем отпускание левой кнопки мыши (сообщение C{EVT_LEFT_UP}).
         """
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         self.eval_attr('mouseUp')
         
@@ -208,7 +208,7 @@ class icImgButtonPrototype(icWidget):
         Обрабатываем нажатие правой кнопки мыши (сообщение C{EVT_RIGHT_DOWN}).
         """
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         self.eval_attr('mouseContextDown')
 

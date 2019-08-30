@@ -139,6 +139,7 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         """
         if self.resource['onDrawCursor']:
             self.evalSpace['event'] = event
+            self.evalSpace['evt'] = event
             self.evalSpace['self'] = self
             
             parentModule.icPlotPanel.draw_cursor(self, event)
@@ -164,6 +165,7 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         parentModule.icPlotPanel.draw_cursor(self, event)
         parentModule.icPlotPanel.OnMouseLeftDown(self, event)
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         self.eval_attr('onMouseLeftDown')
 

@@ -143,6 +143,7 @@ class Indicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
         Обработчик события wx.EVT_KEY_DOWN, атрибут=keyDown
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('keyDown')
         if ret and val:

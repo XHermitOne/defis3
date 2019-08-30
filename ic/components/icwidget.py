@@ -792,7 +792,7 @@ class icSimple(icobject.icObject):
         self.evalSpace = self.GetContext()
         self.evalSpace['self'] = self
         self.evalSpace['event'] = None
-        self.evalSpace['event'] = None
+        self.evalSpace['evt'] = None
 
         #   Уникальный идентификатор описания объекта (ресурс)
         self._uuid = component['_uuid']
@@ -1174,7 +1174,8 @@ class icSimple(icobject.icObject):
         Обработчик события.
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
-            self.context['event'] = self.context['event'] = event
+            self.context['event'] = event
+            self.context['evt'] = event
             self.eval_attr(attr)
 
         if bSkip and event:
@@ -1833,7 +1834,7 @@ class icWidget(icBase, icEvent):
         if self.keydown:
             self.evalSpace['self'] = self
             self.evalSpace['event'] = event
-            self.evalSpace['event'] = event
+            self.evalSpace['evt'] = event
             ret, val = self.eval_attr('keyDown')
             if ret and not val is None:
                 try:
@@ -1849,7 +1850,7 @@ class icWidget(icBase, icEvent):
         Обрабатываем сообщение <icEvents.EVT_POST_INIT>.
         """
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         if 'onInit' in self.resource:
             self.eval_attr('onInit')
         else:

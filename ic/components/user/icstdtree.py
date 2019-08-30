@@ -155,6 +155,7 @@ class icStdTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
 
         if self.GetContext().getMode() != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('activated')
@@ -165,6 +166,7 @@ class icStdTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
 
         if self.GetContext().getMode() != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('activated')
@@ -175,6 +177,7 @@ class icStdTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
 
         if self.GetContext().getMode() != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('activated')
@@ -185,6 +188,7 @@ class icStdTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
 
         if self.GetContext().getMode() != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('activated')

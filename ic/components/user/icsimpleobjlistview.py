@@ -380,7 +380,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         currentItem = self.GetFocusedRow()
         #   Формируем пространство имен
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['row'] = currentItem
 
         self.evalSpace['values'] = self.GetObjectAt(currentItem)
@@ -400,7 +400,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         rowData = []
         #   Формируем пространство имен
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['row'] = currentItem
         
         rowDict = self.GetObjectAt(currentItem)

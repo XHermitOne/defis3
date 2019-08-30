@@ -347,7 +347,7 @@ class icTextField(icWidget, wx.TextCtrl):
         #   Формируем пространство имен
         value = self.GetValue()
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['value'] = value
         # --- Запускаем внешний обработчик нажатия клавиш. Если он вернет дальнейшая
         #   обработка будет прекращена
@@ -466,7 +466,7 @@ class icTextField(icWidget, wx.TextCtrl):
         if value is None:
             value = self.GetValue()
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         self.evalSpace['value'] = value
         ctrl_val = IC_CTRL_OK
@@ -566,7 +566,7 @@ class icTextField(icWidget, wx.TextCtrl):
             return
 
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('changed')
         self.bChanged = True
         event.Skip()
@@ -663,7 +663,7 @@ class icTextField(icWidget, wx.TextCtrl):
         #   Формируем пространство имен
         value = self.GetValue()
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['value'] = value
         event.Skip()
         #   Блокируем запись для редактирования, если позволяет объект данных

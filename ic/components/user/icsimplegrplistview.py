@@ -476,7 +476,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         currentItem = self.GetFocusedRow()
         #   Формируем пространство имен
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['row'] = currentItem
 
         self.evalSpace['values']=self.GetObjectAt(currentItem)
@@ -496,7 +496,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         rowData = []
         #   Формируем пространство имен
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['row'] = currentItem
         
         rowDict = self.GetObjectAt(currentItem)

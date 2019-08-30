@@ -178,7 +178,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
             try:
                 if self.isICAttrValue(main_window.RES_WIN_OPEN):
                     self.evalSpace['event'] = event
-                    self.evalSpace['event'] = event
+                    self.evalSpace['evt'] = event
                     self.eval_attr(main_window.RES_WIN_OPEN)
             except:
                 log.fatal(u'Ошибка открытия главного окна')
@@ -195,7 +195,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
         try:
             if self.isICAttrValue(main_window.RES_WIN_CLOSE):
                 self.evalSpace['event'] = event
-                self.evalSpace['event'] = event
+                self.evalSpace['evt'] = event
                 result = self.eval_attr(main_window.RES_WIN_CLOSE)
                 if result and not result[1]:
                     # Не нажато подтверждение выхода из главного окна

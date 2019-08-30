@@ -421,6 +421,7 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
         id = event.GetId()
         if id in self._onToolDict:
             self.evalSpace['event'] = event
+            self.evalSpace['evt'] = event
             self.evalSpace['self'] = self
             
             if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:

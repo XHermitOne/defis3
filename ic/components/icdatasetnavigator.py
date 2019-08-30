@@ -367,6 +367,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         """
         #   Заносим в пространство имен параметры функции для последующего использования
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         #   Выполняем функционал для удаления строки
         if self.onhelp:
             self.eval_attr('onHelp')
@@ -378,6 +379,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         """
         #   Заносим в пространство имен параметры функции для последующего использования
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         #   Выполняем функционал для удаления строки
         if self.onprint:
             self.eval_attr('onPrint')
@@ -460,6 +462,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
             #   Заносим в пространство имен параметры функции для последующего использования
             self.evalSpace['self'] = self
             self.evalSpace['event'] = event
+            self.evalSpace['evt'] = event
             bRet = 1
             #   Выполняем функционал для удаления строки
             if self.onadd not in [None, '', 'None']:
@@ -498,6 +501,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
             #   Заносим в пространство имен параметры функции для последующего использования
             self.evalSpace['self'] = self
             self.evalSpace['event'] = event
+            self.evalSpace['evt'] = event
             bRet = 1
             #   Выполняем функционал для обновления данных
             if self.onupdate not in [None, '']:
@@ -526,6 +530,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
             cur = self.dataset.Recno()
             #   Заносим в пространство имен параметры функции для последующего использования
             self.evalSpace['event'] = event
+            self.evalSpace['evt'] = event
             self.evalSpace['row'] = cur
             bRet = 1
             #   Выполняем функционал для удаления строки

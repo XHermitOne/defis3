@@ -208,6 +208,7 @@ class icGRButton(icwidget.icWidget, GB.GradientButton):
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.context['event'] = event
+            self.context['evt'] = event
             self.eval_attr('mouseClick')
         event.Skip()
     
@@ -217,6 +218,7 @@ class icGRButton(icwidget.icWidget, GB.GradientButton):
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.context['event'] = event
+            self.context['evt'] = event
             self.eval_attr('mouseDown')
         event.Skip()
 
@@ -226,6 +228,7 @@ class icGRButton(icwidget.icWidget, GB.GradientButton):
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.context['event'] = event
+            self.context['evt'] = event
             self.eval_attr('mouseUp')
         event.Skip()
 
@@ -235,6 +238,7 @@ class icGRButton(icwidget.icWidget, GB.GradientButton):
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.context['event'] = event
+            self.context['evt'] = event
             self.eval_attr('mouseContextDown')
         event.Skip()
 

@@ -1360,6 +1360,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         Обрабатываем сообщение <icEvents.EVT_POST_INIT>.
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         self.eval_attr('onInit')
         event.Skip()
@@ -1411,6 +1412,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         sx, sy = self.GetSize()
         p = event.GetPosition()
@@ -1443,6 +1445,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         Обработчик события wx.EVT_DCLICK, атрибут=onLeftDblClick
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('onLeftDblClick')
         if ret and val:

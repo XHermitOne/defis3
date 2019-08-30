@@ -230,6 +230,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
         Обрабатывает событие установки фокуса (EVT_SET_FOCUS).
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('setFocus')
         event.Skip()
         
@@ -238,6 +239,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
         Обрабатывает событие установки фокуса (EVT_SET_FOCUS).
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('killFocus')
         event.Skip()
 
@@ -265,6 +267,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
             self.SaveUserProperty('size', self.GetSize())
             self.evalSpace['__block_lock_rec'] = True
             self.evalSpace['event'] = event
+            self.evalSpace['evt'] = event
             ret, val = self.eval_attr('onClose')
             #   Если выражение вернет False, то отменяем закрытие окна. None трактуем
             #   как True,  поскольку если выражение не определяет возвращаемое значение,

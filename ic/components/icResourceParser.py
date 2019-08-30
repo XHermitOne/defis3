@@ -1014,7 +1014,7 @@ def icResourceParser(parent, components, sizer=None, logType=0,
                     sizer.reg_child(wxw, name)
                 # Выполняем выражения инициализации для компонентов
                 if 'init_expr' in component and not component['init_expr'] in [None, 'None', '']:
-                    evalSpace['event'] = evalSpace.get('event', None)
+                    evalSpace['evt'] = evalSpace.get('event', None)
                     evalSpace['self'] = wxw
                     if '_uuid' in component and component['_uuid']:
                         util.ic_eval(component['init_expr'], 0, evalSpace,

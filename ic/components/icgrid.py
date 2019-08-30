@@ -497,6 +497,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         self.PostSelect()
         #   Обработчик на изменения размеров грида
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('onSize')
         event.Skip()
 

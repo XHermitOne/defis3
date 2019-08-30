@@ -280,7 +280,7 @@ class icWXPanel(icWidget, wx.Panel):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('onLeftMouseClick')
         event.Skip()
@@ -291,7 +291,7 @@ class icWXPanel(icWidget, wx.Panel):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('onRightMouseClick')
         event.Skip()

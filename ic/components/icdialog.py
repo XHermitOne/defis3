@@ -300,6 +300,7 @@ class icDialog(icWidget, wx.Dialog):
         Обрабатывает событие установки фокуса (EVT_SET_FOCUS).
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('setFocus')
         event.Skip()
 
@@ -308,6 +309,7 @@ class icDialog(icWidget, wx.Dialog):
         Обрабатывает событие установки фокуса (EVT_SET_FOCUS).
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('killFocus')
         event.Skip()
 
@@ -353,6 +355,7 @@ class icDialog(icWidget, wx.Dialog):
         if self.isICAttrValue('onClose'):
             self.canClose = False
             self.evalSpace['event'] = event
+            self.evalSpace['evt'] = event
             self.SaveUserProperty('position', self.GetPosition())
             self.SaveUserProperty('size', self.GetSize())
             ret, val = self.eval_attr('onClose')

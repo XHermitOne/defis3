@@ -228,7 +228,7 @@ class icSpravMultipleChoiceComboCtrl(parentModule.icSpravMultipleChoiceComboCtrl
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['SPRAV'] = self.getSprav()
         self.evalSpace['SPRAV_CODES'] = self.getCodes()
 

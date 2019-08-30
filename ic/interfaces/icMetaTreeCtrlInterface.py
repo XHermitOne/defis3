@@ -255,6 +255,7 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
         двойному щелчку мыщи.
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('activated')
         if ret and val:
@@ -347,6 +348,7 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
 
         #   Отрабатываем функционал, определенный пользователем
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         ret, val = self.eval_attr('onExpand')
         if ret and val:
             event.Skip()
@@ -433,6 +435,7 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
         Событие посылается после перемещения курсора на другой пункт дерева.
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         ret, val = self.eval_attr('selected')
         if ret and val:
             event.Skip()

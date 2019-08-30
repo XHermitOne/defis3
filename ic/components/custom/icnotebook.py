@@ -232,7 +232,8 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        
+        self.evalSpace['evt'] = event
+
         self.eval_attr('onLeftMouseClick')
         event.Skip()
 
@@ -241,7 +242,8 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        
+        self.evalSpace['evt'] = event
+
         self.eval_attr('onRightMouseClick')
         event.Skip()
 
@@ -260,7 +262,8 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        
+        self.evalSpace['evt'] = event
+
         self.eval_attr('pageChanged')
 
     def SetStatusVisible(self, bVisible=True, lst=None):

@@ -1412,6 +1412,7 @@ class icGridDataset(icGrid):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('dclickEditor')
 
@@ -1498,6 +1499,7 @@ class icGridDataset(icGrid):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('post_select')
         event.Skip()
 
@@ -1527,6 +1529,7 @@ class icGridDataset(icGrid):
         #   Вычисляем выражение, записанное в атрибуте 'selected'
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['row'] = row
         self.evalSpace['col'] = col
         #   Если установлен флаг блокировки обработку сообщения  <EVT_GRID_SELECT_CELL>,
@@ -1740,6 +1743,7 @@ class icGridDataset(icGrid):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         x, y = event.GetPosition()
         #   Приходится извращается так как кнопка может перехватывать сообщение
         #   EVT_LEFT_DOWN c EVT_BUTTON вообще перестало работать с
@@ -1840,6 +1844,7 @@ class icGridDataset(icGrid):
             return
 
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         keycod = event.GetKeyCode()
         bCtrl = event.ControlDown()
         bShift = event.ShiftDown()

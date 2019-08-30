@@ -323,6 +323,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         self.currentItem = event.Index
         #   Формируем пространство имен
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['row'] = self.currentItem
 
         #   Уведомляем другие компоненты формы о том, что положение курсора изменилось
@@ -357,6 +358,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         rowData = []
         #   Формируем пространство имен
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['row'] = currentItem
         try:
             self.rowDict.update(self.dataset.getDict(currentItem, True))

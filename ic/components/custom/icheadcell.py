@@ -401,6 +401,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         
         # --- onLeftDown
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('onLeftDown')

@@ -206,6 +206,7 @@ class icCheckBox(icWidget, wx.CheckBox):
             pass
 
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         self.eval_attr('setFocus')
         event.Skip()
@@ -216,6 +217,7 @@ class icCheckBox(icWidget, wx.CheckBox):
         Обрабатывается потеря фокуса - используется для контроля значения поля.
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         self.eval_attr('loseFocus')
         event.Skip()
@@ -238,6 +240,7 @@ class icCheckBox(icWidget, wx.CheckBox):
         """
         """
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.evalSpace['self'] = self
         self.bChanged = 1
 

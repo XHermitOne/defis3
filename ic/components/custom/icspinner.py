@@ -211,6 +211,7 @@ class icSpinner(icWidget, wx.SpinCtrl):
 
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('setFocus')
         event.Skip()
 
@@ -220,6 +221,7 @@ class icSpinner(icWidget, wx.SpinCtrl):
         """
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
+        self.evalSpace['evt'] = event
         self.eval_attr('loseFocus')
         event.Skip()
         
@@ -253,7 +255,8 @@ class icSpinner(icWidget, wx.SpinCtrl):
         self.bChanged = 1
         self.evalSpace['self'] = self
         self.evalSpace['event'] = event
-        
+        self.evalSpace['evt'] = event
+
         self.eval_attr('onSpin')
         event.Skip()
             
