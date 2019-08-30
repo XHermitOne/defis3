@@ -167,44 +167,44 @@ class StateIndicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
                                             bCounter=bCounter, progressDlg=progressDlg)
       
     #   Обработчики событий
-    def OnLeft_DWN(self, evt):
+    def OnLeft_DWN(self, event):
         """
         Обработчик события wx.EVT_LEFT_DOWN, атрибут=onLeftDown
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = util.ic_eval(self.onLeftDown, 0, self.evalSpace,
                                 'EVAL ATTRIBUTE ERROR: attr=onLeftDown')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
-    def OnLeft_Up(self, evt):
+    def OnLeft_Up(self, event):
         """
         Обработчик события wx.EVT_LEFT_UP, атрибут=onLeftUp
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = util.ic_eval(self.onLeftUp, 0, self.evalSpace,
                                 'EVAL ATTRIBUTE ERROR: attr=onLeftUp')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
-    def On_onButton(self, evt):
+    def On_onButton(self, event):
         """
         Обработчик события wx.EVT_BUTTON, атрибут=onButton
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = util.ic_eval(self.onButton, 0, self.evalSpace,
                                 'EVAL ATTRIBUTE ERROR: attr=onButton')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
 
 def test(par=0):

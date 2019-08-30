@@ -109,7 +109,7 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
         """
         return self.title
         
-    def OnPaint(self, evt):
+    def OnPaint(self, event):
         """
         Обрабатываем событие EVT_PAINT.
         """

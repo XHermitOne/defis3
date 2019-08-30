@@ -81,7 +81,7 @@ class icNSIDocTypeTabManager(icmanagerinterface.icWidgetManager):
     Менеджер таблицы справочника типов документов.
     """
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def set_default_data(self):

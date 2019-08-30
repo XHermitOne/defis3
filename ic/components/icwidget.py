@@ -499,7 +499,7 @@ class icResObjContext(icContext.Context):
         #   Имя файла ресурса
         self['__file_res'] = None
         #   Стандартное имя обработчика событий
-        self.setKey('evt', None)
+        self.setKey('event', None)
 
     def setValueInCtrl(self, Control_, DataDict_):
         """
@@ -791,7 +791,7 @@ class icSimple(icobject.icObject):
         #   Пространство имен объекта
         self.evalSpace = self.GetContext()
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = None
+        self.evalSpace['event'] = None
         self.evalSpace['event'] = None
 
         #   Уникальный идентификатор описания объекта (ресурс)
@@ -1169,16 +1169,16 @@ class icSimple(icobject.icObject):
         msg = MSG_EVAL_ATTR_ERROR_FMT % (self.name, attr, compileKey)
         return util.ic_eval(expr, self.logType, self.evalSpace, msg, None, compileKey)
 
-    def eval_event(self, attr, evt=None, bSkip=False):
+    def eval_event(self, attr, event=None, bSkip=False):
         """
         Обработчик события.
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
-            self.context['event'] = self.context['evt'] = evt
+            self.context['event'] = self.context['event'] = event
             self.eval_attr(attr)
 
-        if bSkip and evt:
-            evt.Skip()
+        if bSkip and event:
+            event.Skip()
 
     def eval_expr(self, expr, subkey='expr', bReUse=True ):
         """
@@ -1760,8 +1760,8 @@ class icWidget(icBase, icEvent):
         """
         Посылает сообщение на перерисовку компонента.
         """
-        evt = wx.PaintEvent(self.GetId())
-        return self.GetEventHandler().ProcessEvent(evt)
+        event = wx.PaintEvent(self.GetId())
+        return self.GetEventHandler().ProcessEvent(event)
 
     def GetBestSize(self):
         return wx.Size(*self.getResource()['size'])
@@ -1795,20 +1795,20 @@ class icWidget(icBase, icEvent):
         try:
             for con in self.srcCntLst:
                 if con.src and issubclass(con.src.__class__, icsignalsrc.icWxEvtSignalSrc):
-                    self.Bind(con.src.evt_id, self._generate_signal)
+                    self.Bind(con.src.event_id, self._generate_signal)
         except:
             log.fatal(_('ERROR: Init source signal error.'))
 
-    def _generate_signal(self, evt):
+    def _generate_signal(self, event):
         """
         Генерирует сигналы.
         """
         # Определяем соединение
         for con in self.srcCntLst:
-            if evt.GetEventType() == con.src.get_signal_type():
-                sign = con.src.generate(evt, self)
+            if event.GetEventType() == con.src.get_signal_type():
+                sign = con.src.generate(event, self)
                 if con.src.isWxSkip():
-                    evt.Skip()
+                    event.Skip()
                 self.send_signal(sign, con)
 
     def BlockKeyDownEvent(self):
@@ -1823,7 +1823,7 @@ class icWidget(icBase, icEvent):
         """
         self.evalSpace['__block_key_down'] = False
 
-    def OnKeyDown(self, evt):
+    def OnKeyDown(self, event):
         """
         Стандартный обработчик события <EVT_KEY_DOWN> -атрибут 'keyDown'.
         """
@@ -1832,8 +1832,8 @@ class icWidget(icBase, icEvent):
         bSkip = True
         if self.keydown:
             self.evalSpace['self'] = self
-            self.evalSpace['evt'] = evt
-            self.evalSpace['event'] = evt
+            self.evalSpace['event'] = event
+            self.evalSpace['event'] = event
             ret, val = self.eval_attr('keyDown')
             if ret and not val is None:
                 try:
@@ -1842,19 +1842,19 @@ class icWidget(icBase, icEvent):
                     log.fatal()
                     bSkip = True
         if bSkip:
-            evt.Skip()
+            event.Skip()
 
-    def OnInit(self, evt):
+    def OnInit(self, event):
         """
         Обрабатываем сообщение <icEvents.EVT_POST_INIT>.
         """
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         if 'onInit' in self.resource:
             self.eval_attr('onInit')
         else:
             log.warning(u'### KeyError obj=(%s, %s, %s)' % (self.resource['name'], self.resource['type'], self))
-        evt.Skip()
+        event.Skip()
 
     def PostOnInitEvent(self):
         """
@@ -1945,7 +1945,7 @@ class icWidget(icBase, icEvent):
                 except:
                     pass
 
-    def BackPropKeyDownEvt(self, evt):
+    def BackPropKeyDownEvt(self, event):
         """
         Посылает сообщение главному окну формы, о нажатии клавиши.
         """
@@ -1966,11 +1966,11 @@ class icWidget(icBase, icEvent):
                     prnt = prnt.GetParent()
             if src:
                 try:
-                    event = evt.Clone()
+                    event = event.Clone()
                     src.GetEventHandler().AddPendingEvent(event)
                 except:
                     log.fatal(u'Ошибка в BackPropKeyDownEvt')
-        evt.Skip()
+        event.Skip()
 
     def getRootObject(self):
         """
@@ -2117,7 +2117,7 @@ class icShortHelpString(wx.PopupWindow):
                                       (self.edgeClr, self.edgeClr, self.edgeClr, self.edgeClr))
         dc.EndDrawing()
 
-    def OnPaint(self, evt):
+    def OnPaint(self, event):
         dc = wx.BufferedPaintDC(self)
         self.Draw(dc)
 

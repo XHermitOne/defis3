@@ -149,42 +149,42 @@ class icStdTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl):
         self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.OnRightClick)
         self.BindICEvt()
 
-    def OnActivated(self, evt):
+    def OnActivated(self, event):
         """
         Обработка 'активации' узла дерева.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
 
         if self.GetContext().getMode() != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('activated')
         
-    def OnExpand(self, evt):
+    def OnExpand(self, event):
         """
         Обработка раскрытия узла дерева.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
 
         if self.GetContext().getMode() != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('activated')
 
-    def OnRightClick(self, evt):
+    def OnRightClick(self, event):
         """
         Обработка нажатия правой кнопки мыши.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
 
         if self.GetContext().getMode() != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('activated')
 
-    def OnSelected(self, evt):
+    def OnSelected(self, event):
         """
         Обработка выбора узла дерева.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
 
         if self.GetContext().getMode() != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('activated')

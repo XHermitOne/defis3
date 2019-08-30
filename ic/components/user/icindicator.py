@@ -284,11 +284,11 @@ class IndicatorState(parentModule.icHeadCell):
       
     #   Обработчики событий
     
-    def OnMouseClick(self, evt):
+    def OnMouseClick(self, event):
         """
         Обработчик события wx.EVT_LEFT_UP, атрибут=mouseClick.
         """
-        self.eval_event('mouseClick', evt, True)
+        self.eval_event('mouseClick', event, True)
 
 
 def test(par=0):

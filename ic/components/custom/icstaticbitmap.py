@@ -180,7 +180,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
         self.Bind(wx.EVT_LEFT_DOWN, self.OnSelect)
         self.BindICEvt()
         
-    def OnSelect(self, evt):
+    def OnSelect(self, event):
         """
         Обрабатываем установку фокуса на компонент
         """
@@ -208,7 +208,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
             except:
                 pass
             
-    def OnHelp(self, evt):
+    def OnHelp(self, event):
         """
         Обрабатываем нажатия кнопки выбора новой картинки.
         """
@@ -228,7 +228,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
                 except:
                     pass
 
-        evt.Skip()
+        event.Skip()
                 
     def GetValue(self):
         """

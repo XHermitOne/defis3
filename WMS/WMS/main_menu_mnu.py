@@ -20,7 +20,7 @@ from .wms_constructor import truck_constructor_panel
 
 class icMainMenuBarManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     ###BEGIN EVENT BLOCK

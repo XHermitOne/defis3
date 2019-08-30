@@ -361,29 +361,29 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
             self.setLink(object_link)
         return self.object_link
         
-    def OnHelp(self, evt):
+    def OnHelp(self, event):
         """
         Обработка нажатия кнопки <Помощь>.
         """
         #   Заносим в пространство имен параметры функции для последующего использования
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         #   Выполняем функционал для удаления строки
         if self.onhelp:
             self.eval_attr('onHelp')
-        evt.Skip()
+        event.Skip()
         
-    def OnPrint(self, evt):
+    def OnPrint(self, event):
         """
         Обработка нажатия кнопки <Печать отчета>.
         """
         #   Заносим в пространство имен параметры функции для последующего использования
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         #   Выполняем функционал для удаления строки
         if self.onprint:
             self.eval_attr('onPrint')
-        evt.Skip()
+        event.Skip()
 
-    def OnFirstData(self, evt):
+    def OnFirstData(self, event):
         """
         Переход на первую запись таблицы данных.
         """
@@ -400,7 +400,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                 object_link.moveCursorFirst()
             self.UpdateViewFromDB()
 
-    def OnPrevData(self, evt):
+    def OnPrevData(self, event):
         """
         Переход на предыдущую запись таблицы данных.
         """
@@ -417,7 +417,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                 object_link.moveCursorPrev()
                 self.UpdateViewFromDB()
 
-    def OnNextData(self, evt):
+    def OnNextData(self, event):
         """
         Переход на следующую запись таблицы данных.
         """
@@ -434,7 +434,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                 object_link.moveCursorNext()
                 self.UpdateViewFromDB()
 
-    def OnLastData(self, evt):
+    def OnLastData(self, event):
         """
         Переход на последнюю запись таблицы данных.
         """
@@ -451,7 +451,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                 object_link.moveCursorLast()
                 self.UpdateViewFromDB()
 
-    def OnAddData(self, evt):
+    def OnAddData(self, event):
         """
         Добавить новую запись в таблицу данных.
         """
@@ -459,7 +459,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         if self.dataset is not None:
             #   Заносим в пространство имен параметры функции для последующего использования
             self.evalSpace['self'] = self
-            self.evalSpace['evt'] = evt
+            self.evalSpace['event'] = event
             bRet = 1
             #   Выполняем функционал для удаления строки
             if self.onadd not in [None, '', 'None']:
@@ -489,7 +489,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                 self.datasize.Refresh()
                 self.UpdateViewFromDB()
 
-    def OnUpdateData(self, evt):
+    def OnUpdateData(self, event):
         """
         Сообщает другим компонентам формы о том, что данные изменились.
         """
@@ -497,7 +497,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         if self.dataset is not None:
             #   Заносим в пространство имен параметры функции для последующего использования
             self.evalSpace['self'] = self
-            self.evalSpace['evt'] = evt
+            self.evalSpace['event'] = event
             bRet = 1
             #   Выполняем функционал для обновления данных
             if self.onupdate not in [None, '']:
@@ -517,7 +517,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                     except:
                         pass
 
-    def OnDelData(self, evt):
+    def OnDelData(self, event):
         """
         Удалить запись из таблицы данных.
         """
@@ -525,7 +525,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         if self.dataset is not None:
             cur = self.dataset.Recno()
             #   Заносим в пространство имен параметры функции для последующего использования
-            self.evalSpace['evt'] = evt
+            self.evalSpace['event'] = event
             self.evalSpace['row'] = cur
             bRet = 1
             #   Выполняем функционал для удаления строки
@@ -555,7 +555,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                 self.datasize.Refresh()
                 self.UpdateViewFromDB()
 
-    def OnSearchData(self, evt):
+    def OnSearchData(self, event):
         """
         Ищет поле удовлетворяющее запросу и устанавливает курсор на эту
         запись.
@@ -618,7 +618,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
             except:
                 log.fatal(u'Ошибка поиска')
     
-    def OnTextEnteredCursor(self, evt):
+    def OnTextEnteredCursor(self, event):
         """
         Отлавливает сообщение EVT_ENTER от поля со значением положения
         курсора и устанавливает курсор в нужную позицию.
@@ -633,15 +633,15 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
             except:
                 pass
         
-        evt.Skip()
+        event.Skip()
         
-    def OnTextEnteredFind(self, evt):
+    def OnTextEnteredFind(self, event):
         """
         Обрабатывает нажатия кнопки <поиск> - ищет поле, удовлетворяющее
         запросу и устанавливает курсор в эту позицию.
         """
-        self.OnSearchData(evt)
-        evt.Skip()
+        self.OnSearchData(event)
+        event.Skip()
     
     def UpdateViewFromDB(self, db_name=None):
         """

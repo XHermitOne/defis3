@@ -312,7 +312,7 @@ class icTextField(icWidget, wx.TextCtrl):
         event = icEvents.icTextTemplEvent(icEvents.icEVT_TEXT_TEMPL, self.GetId())
         self.GetEventHandler().AddPendingEvent(event)
 
-    def OnTempl(self, evt):
+    def OnTempl(self, event):
         """
         Преобразуем к шаблонному виду.
         """
@@ -323,31 +323,31 @@ class icTextField(icWidget, wx.TextCtrl):
         self.SetValue(text, 1)
         self.SetInsertionPoint(pt)
 
-    def OnAutoTextFill(self, evt):
+    def OnAutoTextFill(self, event):
         """
         Функция отрабатывает после.
         """
         if self.use_fdict and self._freqDict and self.pictype in (IC_N_STRING_FORMAT, IC_STRING_FORMAT):
-            self._freqDict.AutoTextFill(self, evt.GetData())
+            self._freqDict.AutoTextFill(self, event.GetData())
 
     #   Используется для вызова справки по F1
-    def OnKeyDown(self, evt):
+    def OnKeyDown(self, event):
         """
         Обработка нажатия клавиши (событие EVT_KEY_DOWN).
         Порядок действий:
         - обработка выражениия, записанного в аттрибуте keydown
         - обработка выражениия, записанного в аттрибуте hlp
         - обработка шаблонов
-        - действия компонента по умолчанию на данное событие (evt.Skip())
+        - действия компонента по умолчанию на данное событие (event.Skip())
         """
-        kcod = evt.m_keyCode
+        kcod = event.m_keyCode
         if self.GetInsertionPoint() == self.GetLastPosition():
-            evt.bTabUse = 1
+            event.bTabUse = 1
 
         #   Формируем пространство имен
         value = self.GetValue()
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['value'] = value
         # --- Запускаем внешний обработчик нажатия клавиш. Если он вернет дальнейшая
         #   обработка будет прекращена
@@ -363,7 +363,7 @@ class icTextField(icWidget, wx.TextCtrl):
         #   Запускаем внешний обработчик нажатия клавиши F1. Контроль ввода временно
         #   отключаем посколку при выполнении выражения фокус может теряться, что будет приводить
         #   к запуску контроля ввода.
-        if evt.m_keyCode == wx.WXK_F1 and self.hlp:
+        if event.m_keyCode == wx.WXK_F1 and self.hlp:
             self.bkillfocus = False
             ret, val = self.eval_attr('hlp')
             #   Записываем выбранное значение в поле. Признак изменения устанавливаем.
@@ -411,10 +411,10 @@ class icTextField(icWidget, wx.TextCtrl):
             return
 
         #   Перемещаемся на следующий компонент в порядке очереди
-        elif evt.m_keyCode == wx.WXK_TAB:
+        elif event.m_keyCode == wx.WXK_TAB:
             self.Navigate()
             return
-        elif evt.m_keyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER) and not self.style & wx.TE_MULTILINE:
+        elif event.m_keyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER) and not self.style & wx.TE_MULTILINE:
             self.Navigate()
             return
 
@@ -422,13 +422,13 @@ class icTextField(icWidget, wx.TextCtrl):
         try:
             text = wx.TextCtrl.GetValue(self)
             templ = self.pic
-            if evt.ShiftDown() and kcod == wx.WXK_INSERT:
+            if event.ShiftDown() and kcod == wx.WXK_INSERT:
                 self.PostTempl()
-            elif evt.ControlDown() or evt.ShiftDown():
+            elif event.ControlDown() or event.ShiftDown():
                 pass
             elif kcod in (wx.WXK_DELETE, wx.WXK_BACK):
                 self.PostTempl()
-                evt.Skip()
+                event.Skip()
                 return
             elif kcod not in KEYTEMPLATE:
                 #   Проверяем соответствут ли вводимый символ шаблону вывода
@@ -444,7 +444,7 @@ class icTextField(icWidget, wx.TextCtrl):
         except:
             LogLastError('Exception')
 
-        evt.Skip()
+        event.Skip()
 
     def IsModified(self):
         """
@@ -458,15 +458,15 @@ class icTextField(icWidget, wx.TextCtrl):
         """
         self.bChanged = False
 
-    def Ctrl(self, evt=None, bAsk=True, value=None):
+    def Ctrl(self, event=None, bAsk=True, value=None):
         """
         Функция контроля введенного текста.
         """
         #   Готовим пространство имен
         if value is None:
             value = self.GetValue()
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         self.evalSpace['value'] = value
         ctrl_val = IC_CTRL_OK
@@ -534,20 +534,20 @@ class icTextField(icWidget, wx.TextCtrl):
                 return False
         return True
 
-    def OnKillFocus(self, evt):
+    def OnKillFocus(self, event):
         """
         Обрабатывает потерю фокуса (событие EVT_KILL_FOCUS).
         Порядок действий:
         - обработка выражениия, записанного в аттрибуте losefocus
         - обработка выражениия, записанного в аттрибуте ctrl
-        - действия компонента по умолчканию на данное событие (evt.Skip())
+        - действия компонента по умолчканию на данное событие (event.Skip())
         """
         #   Если не стоит признак обработи сообщения потери фокуса, устанавливаем
         #   признак временной потери фокуса. Для того, чтобы функция OnSetFocus
         #   правильно обработала возврат фокуса.
         if not self.bkillfocus:
             self.bTimeLosefocus = True
-            evt.Skip()
+            event.Skip()
             return
 
         self.CtrlValue()
@@ -558,18 +558,18 @@ class icTextField(icWidget, wx.TextCtrl):
         except:
             pass
 
-    def OnTextChanged(self, evt):
+    def OnTextChanged(self, event):
         """
         Обрабатывает сообщение об изменении текста (сообщение EVT_TEXT).
         """
         if self.bBlockChangeEvt:
             return
 
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.eval_attr('changed')
         self.bChanged = True
-        evt.Skip()
+        event.Skip()
 
     def GetValue(self):
         """
@@ -652,20 +652,20 @@ class icTextField(icWidget, wx.TextCtrl):
                 return True
         return False
 
-    def OnSetFocus(self, evt):
+    def OnSetFocus(self, event):
         """
         Обрабатывает установку фокуса (сообщение EVT_SET_FOCUS).
         """
         if self.bTimeLosefocus:
             self.bTimeLosefocus = False
-            evt.Skip()
+            event.Skip()
             return
         #   Формируем пространство имен
         value = self.GetValue()
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['value'] = value
-        evt.Skip()
+        event.Skip()
         #   Блокируем запись для редактирования, если позволяет объект данных
         if self.dataset and not self.evalSpace['__block_lock_rec']:
             rec = self.dataset.Recno()

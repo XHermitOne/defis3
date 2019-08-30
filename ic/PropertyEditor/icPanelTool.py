@@ -335,8 +335,8 @@ class icPanelTool(wx.Panel):
                     flag = flag | key
         return flag
 
-    def OnSize(self, evt):
-        evt.Skip()
+    def OnSize(self, event):
+        event.Skip()
         
     def OnCloseMe(self, event):
         self.Close(True)
@@ -344,11 +344,11 @@ class icPanelTool(wx.Panel):
     def OnCloseWindow(self, event):
         self.Destroy()
 
-    def OnMouseClick(self, evt):
+    def OnMouseClick(self, event):
         """
         Обрабатывет сообщение.
         """
-        obj = evt.GetEventObject()
+        obj = event.GetEventObject()
         if obj in self.flagCompDict.values():
             flag = self.GetFlag()
             prop = self.GetProportionStyle()
@@ -359,13 +359,13 @@ class icPanelTool(wx.Panel):
                 edt.ChangeResProperty(edt.selectedObj, 'proportion', int(prop), bRefresh=True)
                 edt.ChangeSelItemProperty('proportion', int(prop))
                 
-            evt.Skip()
+            event.Skip()
             return
 
         for tool in self.GetToolList():
             if tool != obj and tool not in self.flagCompDict.values():
                 tool.SetToggle(False)
-        evt.Skip()
+        event.Skip()
 
     def PanelGroupsRefresh(self):
         """

@@ -274,41 +274,41 @@ class icWXPanel(icWidget, wx.Panel):
             self.evalSpace['self'] = self
             self.eval_attr('onClose')
 
-    def onLeftDown(self, evt):
+    def onLeftDown(self, event):
         """
         wx.EVT_LEFT_DOWN
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('onLeftMouseClick')
-        evt.Skip()
+        event.Skip()
 
-    def onRightDown(self, evt):
+    def onRightDown(self, event):
         """
         wx.EVT_RIGHT_DOWN
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('onRightMouseClick')
-        evt.Skip()
+        event.Skip()
 
-    def onPaint(self, evt):
+    def onPaint(self, event):
         """
         wx.EVT_PAINT.
         """
         dc = wx.BufferedPaintDC(self)
         self.draw(dc)
 
-    def onPanelSize(self, evt):
+    def onPanelSize(self, event):
         """
         wx.EVT_SIZE
         """
         self.Refresh()
-        evt.Skip()
+        event.Skip()
 
     def setRoundBoundMode(self, bound_colour=None, step=0):
         """

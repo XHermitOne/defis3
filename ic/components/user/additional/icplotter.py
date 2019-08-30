@@ -134,14 +134,14 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
         if 'child' in component:
             self.childCreator(bCounter, progressDlg)
         
-    def draw_cursor(self, evt):
+    def draw_cursor(self, event):
         """
         """
         if self.resource['onDrawCursor']:
-            self.evalSpace['evt'] = evt
+            self.evalSpace['event'] = event
             self.evalSpace['self'] = self
             
-            parentModule.icPlotPanel.draw_cursor(self, evt)
+            parentModule.icPlotPanel.draw_cursor(self, event)
             self.eval_attr('onDrawCursor')
         
     def childCreator(self, bCounter, progressDlg):
@@ -157,13 +157,13 @@ class icPloter(icwidget.icWidget, parentModule.icPlotPanel):
                                  bCounter=bCounter, progressDlg=progressDlg)
       
     #   Обработчики событий
-    def OnMouseLeftDown(self, evt):
+    def OnMouseLeftDown(self, event):
         """
         Обрабатываем нажатие правой кнопки мыши.
         """
-        parentModule.icPlotPanel.draw_cursor(self, evt)
-        parentModule.icPlotPanel.OnMouseLeftDown(self, evt)
-        self.evalSpace['evt'] = evt
+        parentModule.icPlotPanel.draw_cursor(self, event)
+        parentModule.icPlotPanel.OnMouseLeftDown(self, event)
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         self.eval_attr('onMouseLeftDown')
 

@@ -414,18 +414,18 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
         """
         return self.EnableTool(self.getToolId(ToolName_), Enable_)
         
-    def OnToolClick(self, evt):
+    def OnToolClick(self, event):
         """
         Обрабатываем нажатие кнопки соответствующего инструмента панели.
         """
-        id = evt.GetId()
+        id = event.GetId()
         if id in self._onToolDict:
-            self.evalSpace['evt'] = evt
+            self.evalSpace['event'] = event
             self.evalSpace['self'] = self
             
             if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
                 self.eval_expr(self._onToolDict[id], 'onTool'+str(id))
-        evt.Skip()
+        event.Skip()
 
 
 def test(par=0):

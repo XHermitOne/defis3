@@ -466,7 +466,7 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
             nb.GetTopLevelParent().Freeze()
             nb.pg_num += 1
             nb.control = ctrl
-            nb.LOG('[ed_pages][evt] Page Creation ID: %d' % ctrl.GetId())
+            nb.LOG('[ed_pages][event] Page Creation ID: %d' % ctrl.GetId())
 
             nb.control.Hide()
             nb.AddPage(nb.control, title)

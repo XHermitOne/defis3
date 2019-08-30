@@ -839,7 +839,7 @@ SPC_IC_KEY_ACTION = {'name': 'key',
                      }
 
 
-def getKeyExpr(expr, keycod, evt, evalSpace={}):
+def getKeyExpr(expr, keycod, event, evalSpace={}):
     """
     Функция возвращает выражения для обработки нажатия клавиш. Словарь
     expr задает способы реакции на некоторые клавиши.
@@ -877,8 +877,8 @@ def getKeyExpr(expr, keycod, evt, evalSpace={}):
         if isinstance(key_val, dict):
             #   Дополняем до спецификации
             act = icSpcDefStruct(SPC_IC_KEY_ACTION, key_val)
-            if (act['bShift'] == evt.ShiftDown() and act['bCtrl'] == evt.ControlDown()
-                    and act['bAlt'] == evt.AltDown()):
+            if (act['bShift'] == event.ShiftDown() and act['bCtrl'] == event.ControlDown()
+                    and act['bAlt'] == event.AltDown()):
                 result = act['expr']
             else:
                 result = None

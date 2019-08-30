@@ -139,7 +139,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 3)
+__version__ = (1, 1, 1, 4)
 
 
 # Кнопка сортировки по убыванию
@@ -238,14 +238,14 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         self.SetSize(wx.Size(rw, rh))
         # ----------------------------------------------------------------------
 
-        self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
-        self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
-        self.Bind(wx.EVT_MOTION, self.OnMove)
-        self.Bind(wx.EVT_LEAVE_WINDOW, self.OnLeave)
-        self.Bind(wx.EVT_ENTER_WINDOW, self.OnEnter)
-        self.Bind(wx.EVT_SIZE, self.OnSize)
+        self.Bind(wx.EVT_ERASE_BACKGROUND, self.onEraseBackground)
+        self.Bind(wx.EVT_PAINT, self.onPaint)
+        self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
+        self.Bind(wx.EVT_LEFT_UP, self.onLeftUp)
+        self.Bind(wx.EVT_MOTION, self.onMove)
+        self.Bind(wx.EVT_LEAVE_WINDOW, self.onLeave)
+        self.Bind(wx.EVT_ENTER_WINDOW, self.onEnter)
+        self.Bind(wx.EVT_SIZE, self.onSize)
         
         self.BindICEvt()
 
@@ -316,7 +316,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         self._buttonEnter = False
 
         # Описание наличия скругленных углов границы в виде (LT, RT, RB, LB)
-        self.SetRoundCorners(((component.get('roundConer', None) or []) + [0]*4)[:4])
+        self.setRoundCorners(((component.get('roundConer', None) or []) + [0] * 4)[:4])
 
         #   Создаем дочерние компоненты
         self.child = component['child']
@@ -331,26 +331,26 @@ class icHeadCell(icwidget.icWidget, wx.Control):
             self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
                                             bCounter=bCounter, progressDlg=progressDlg)
 
-    def SetButtonStyle(self, style=True):
+    def setButtonStyle(self, style=True):
         """
         Устанавоивает стиль кнопки.
         """
         self.bButton = style
         
-    def CanSort(self):
+    def canSort(self):
         """
         Возвращает признак сортировки колонки.
         """
         return self._isSort
 
-    def OnMove(self, evt):
+    def onMove(self, event):
         """
         Обработка сообщения <wx.EVT_MOTION>.
         """
         try:
             x, y = self.GetPosition()
             sx, sy = self.GetSize()
-            px, py = p = evt.GetPosition()
+            px, py = p = event.GetPosition()
             d = 5
             r = wx.Rect(d, d, sx-2*d, sy-2*d)
 
@@ -369,14 +369,14 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         except:
             log.fatal(u'Ошибка обработки сообщения wx.EVT_MOTION ЯЧЕЙКИ ЗАГООЛВКА ГРИДА')
         
-        evt.Skip()
+        event.Skip()
         
-    def OnLeftDown(self, evt):
+    def onLeftDown(self, event):
         if self.bButton:
             self._buttonPress = True
             self.Refresh()
         
-        if self.CanSort():
+        if self.canSort():
             if self.sortDirection == 0:
                 self.sortDirection = -1
             elif self.sortDirection == -1:
@@ -395,37 +395,37 @@ class icHeadCell(icwidget.icWidget, wx.Control):
 
             # Убираем признак сортировки у других колонок
             for obj in self.GetParent().parAddList:
-                if obj.CanSort() and obj != self:
+                if obj.canSort() and obj != self:
                     obj.sortDirection = 0
                     obj.Refresh()
         
         # --- onLeftDown
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('onLeftDown')
 
-    def OnLeftUp(self, evt):
+    def onLeftUp(self, event):
         if self.bButton:
             self._buttonPress = False
             self.Refresh()
 
-        evt.Skip()
+        event.Skip()
         
-    def OnLeave(self, evt):
+    def onLeave(self, event):
         if self.bButton:
             self._buttonPress = False
             self.Refresh()
             
-        evt.Skip()
+        event.Skip()
         self._buttonEnter = False
         
-    def OnEnter(self, evt):
-        evt.Skip()
+    def onEnter(self, event):
+        event.Skip()
         self._buttonEnter = True
         self.Refresh()
         
-    def OnSize(self, evt):
+    def onSize(self, event):
         self.Refresh()
         
     def SetLabel(self, label):
@@ -463,7 +463,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
             self.SetSize(self.GetBestSize())
         self.Refresh()
         
-    def SetRoundCorners(self, corners):
+    def setRoundCorners(self, corners):
         """
         Устанавливает скругленные углы.
         @type corners: C{tuple}
@@ -498,7 +498,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         """
         return False
 
-    def _drawSquareEdge(self, dc, idEdgeMode=0):
+    def _drawSquareEdge(self, dc, edge_mode=0):
         """
         Рисует границы компонента.
         """
@@ -576,7 +576,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
                                               self.bottomColor or bgr, self.leftColor or bgr),
                                              self._corners, self.backgroundType)
 
-    def Draw(self, dc):
+    def draw(self, dc):
         """
         Функция рисует ячейку.
         @type dc: C{wx.DC}
@@ -639,7 +639,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
             if horz == 'centred':
                 x = (width - w)/2
 
-            if self.CanSort() and x <= mark_shith_x + 11:
+            if self.canSort() and x <= mark_shith_x + 11:
                 x = mark_shith_x + 12
 
             dc.DrawText(line, x, y)
@@ -648,7 +648,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         st = self.borderStep
         
         #   Рисуем признак сортируемой ячейки
-        if self.CanSort():
+        if self.canSort():
             penBound = wx.Pen((150, 150, 150))
             # Колока не сортирована
             if self.sortDirection == 0:
@@ -689,15 +689,15 @@ class icHeadCell(icwidget.icWidget, wx.Control):
 
         # dc.EndDrawing()
         
-    def OnPaint(self, event):
+    def onPaint(self, event):
         dc = wx.PaintDC(self)
         width, height = self.GetClientSize()
         if not width or not height:
             return
 
-        self.Draw(dc)
+        self.draw(dc)
         
-    def OnEraseBackground(self, event):
+    def onEraseBackground(self, event):
         pass
 
 

@@ -88,30 +88,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBar', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
-
-
-# def depricated_sortCell(x, y):
-#     """
-#     Функция сортировки.
-#     """
-#     if x.span == (1, 1) and y.span == (1, 1):
-#         X_row, X_col = x.position
-#         Y_row, Y_col = y.position
-#
-#         if X_row < Y_row:
-#             return 1
-#         elif X_row > Y_row:
-#             return -1
-#         else:
-#             return 0
-#
-#     elif x.span == (1, 1) and y.span != (1, 1):
-#         return -1
-#     elif x.span != (1, 1) and y.span == (1, 1):
-#         return 1
-#     else:
-#         return 0
+__version__ = (1, 1, 1, 2)
 
 
 def sortCell(cell):
@@ -155,10 +132,10 @@ class icHeader(icBase, wx.ScrolledWindow):
         self.SetSizer(self.sz)
             
         #   Обработчики событий
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_MOTION, self.OnMove)
-        self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
-        self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
+        self.Bind(wx.EVT_PAINT, self.onPaint)
+        self.Bind(wx.EVT_MOTION, self.onMove)
+        self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
+        self.Bind(wx.EVT_LEFT_UP, self.onLeftUp)
 
         #   Цвета текста и фона
         self.bgr = bgr = component['backgroundColor']
@@ -200,9 +177,9 @@ class icHeader(icBase, wx.ScrolledWindow):
                                   bCounter=bCounter, progressDlg=progressDlg)
 
             for el in self.component_lst:
-                self.AddCell(el)
+                self.addCell(el)
         
-    def ConnectGrid(self, grid, bAuto=False, bHideOldHead=False):
+    def connectGrid(self, grid, bAuto=False, bHideOldHead=False):
         """
         Присоединяет грид к шапке.
 
@@ -235,7 +212,7 @@ class icHeader(icBase, wx.ScrolledWindow):
                                               'foregroundColor': self.fgr,
                                               'font': self.font,
                                               'isSort': 1})
-                self.AddCell(cell)
+                self.addCell(cell)
 
         #   По необходимости старую шапку скрываем
         if bHideOldHead:
@@ -243,7 +220,7 @@ class icHeader(icBase, wx.ScrolledWindow):
                 
         return True
     
-    def SetViewStart(self, x, y):
+    def setViewStart(self, x, y):
         """
         Подстраивает шапку под грид при наличии горизонтальной и вертикальной прокрутки.
 
@@ -260,7 +237,7 @@ class icHeader(icBase, wx.ScrolledWindow):
         self.scroll_pos = (x, y)
         self.ScrollWindow(dx, dy)
 
-    def AddCell(self, cell):
+    def addCell(self, cell):
         """
         Функция добавляет ячейку заголовока.
 
@@ -283,7 +260,7 @@ class icHeader(icBase, wx.ScrolledWindow):
         self.parAddList = sorted(self.parAddList, key=sortCell)
         self.sz.Layout()
 
-    def GetMaxRow(self):
+    def getMaxRow(self):
         """
         Определяе максимальный номер строки.
         """
@@ -295,7 +272,7 @@ class icHeader(icBase, wx.ScrolledWindow):
 
         return self.maxRow
     
-    def GetMaxCol(self):
+    def getMaxCol(self):
         """
         Определяе максимальный номер колонки.
         """
@@ -307,7 +284,7 @@ class icHeader(icBase, wx.ScrolledWindow):
                 
         return self.maxCol
 
-    def FindCell(self, row, col):
+    def findCell(self, row, col):
         """
         Возвращает по заданным координатам объект, который в ней находится.
 
@@ -325,7 +302,7 @@ class icHeader(icBase, wx.ScrolledWindow):
             
         return None
 
-    def DrawAll(self):
+    def drawAll(self):
         """
         Перерисовывает все объекты помещенные в шапке.
         """
@@ -334,7 +311,7 @@ class icHeader(icBase, wx.ScrolledWindow):
         for obj in self.parAddList:
             obj.draw(dc)
 
-    def Reconstruct(self):
+    def reconstruct(self):
         """
         Переконструирует шапку.
         """
@@ -371,7 +348,7 @@ class icHeader(icBase, wx.ScrolledWindow):
             self.ScrollWindow(-vx * dx, 0)
             self.scroll_pos = (vx * dx, 0)
 
-    def OnPaint(self, event):
+    def onPaint(self, event):
         """
         Обрабатывает сообщение <EVT_PAINT>.
         """
@@ -395,7 +372,7 @@ class icHeader(icBase, wx.ScrolledWindow):
         dc.Clear()
         dc.SetFont(self.GetFont())
         
-    def DrawDiv(self, dc, clr=(100, 100, 100)):
+    def drawDiv(self, dc, clr=(100, 100, 100)):
         """
         Рисует разделитель.
 
@@ -410,12 +387,12 @@ class icHeader(icBase, wx.ScrolledWindow):
         x_p, y_p = self.mv_pos
         dc.DrawLine(x_p, 0, x_p, height)
 
-    def EraseDiv(self, dc):
+    def eraseDiv(self, dc):
         """
         Чистит изображение разделителя.
         """
         clr = self.GetBackgroundColour()
-        self.DrawDiv(dc, clr)
+        self.drawDiv(dc, clr)
         x, y = self.mv_pos
         
         for obj in self.parAddList:
@@ -425,11 +402,11 @@ class icHeader(icBase, wx.ScrolledWindow):
                 dc_obj = wx.ClientDC(obj)
                 obj.draw(dc_obj)
             
-    def OnLeftDown(self, evt):
+    def onLeftDown(self, event):
         """
         Обработка нажатия левой кнопки мыши <wx.EVT_LEFT_DOWN>.
         """
-        x, y = self.oldPosition = evt.GetPosition()
+        x, y = self.oldPosition = event.GetPosition()
         
         for obj in self.parAddList:
             rect = obj.GetRect()
@@ -439,26 +416,26 @@ class icHeader(icBase, wx.ScrolledWindow):
                 self.selObj = obj
                 return
             
-    def OnLeftUp(self, evt):
+    def onLeftUp(self, event):
         """
         Обработка отпускания левой кнопки мыши <wx.EVT_LEFT_UP>.
         """
         cursor = wx.StockCursor(wx.CURSOR_DEFAULT)
         self.SetCursor(cursor)
         dc = wx.ClientDC(self)
-        self.EraseDiv(dc)
+        self.eraseDiv(dc)
 
         # Если объект был захвачен, то изменяем его размеры и освобождаем
         # объект от захвата
         if self.selObj:
-            x, y = evt.GetPosition()
+            x, y = event.GetPosition()
             sx, sy = self.selObj.GetSize()
             _x, _y = self.selObj.GetPosition()
 
             if x > _x:
                 self.selObj.size = wx.Size(x - _x, sy)
                 self.selObj.SetSize(self.selObj.size)
-                self.Reconstruct()
+                self.reconstruct()
                 
             self.selObj = None
             
@@ -467,11 +444,11 @@ class icHeader(icBase, wx.ScrolledWindow):
         """
         return self.GetSize()
         
-    def OnMove(self, evt):
+    def onMove(self, event):
         """
         Обработка сообщения <wx.EVT_MOTION>.
         """
-        x, y = evt.GetPosition()
+        x, y = event.GetPosition()
         width, height = self.GetClientSize()
         bEdge = False
 
@@ -484,18 +461,18 @@ class icHeader(icBase, wx.ScrolledWindow):
                 bEdge = True
                 break
             
-        if not bEdge and not evt.Dragging():
+        if not bEdge and not event.Dragging():
             cursor = wx.StockCursor(wx.CURSOR_DEFAULT)
             self.SetCursor(cursor)
 
-        if evt.Dragging() and self.selObj:
+        if event.Dragging() and self.selObj:
             # Двигаем курсор
             dc = wx.ClientDC(self)
-            self.EraseDiv(dc)
+            self.eraseDiv(dc)
             self.mv_pos = (x, y)
-            self.DrawDiv(dc)
+            self.drawDiv(dc)
             
-        evt.Skip()
+        event.Skip()
 
 
 def test(par=0):
@@ -525,55 +502,55 @@ def test(par=0):
                                   'position': (1, 0), 'span': (1, 2),
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, 2,
                                  {'label': 'row- 2:0', 'size': sz_cell,
                                   'position': (2, 0), 'isSort': True,
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, 3,
                                  {'label': 'row- 2:1', 'size': sz_cell,
                                   'position': (2, 1), 'isSort': True,
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, 4,
                                  {'label': 'row- 2:2', 'size': sz_cell,
                                   'position': (2, 2), 'isSort': True,
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, 5,
                                  {'label': 'row- 2:3', 'size': sz_cell,
                                   'position': (2, 3), 'isSort': True,
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 2:4', 'size': sz_cell,
                                   'position': (2, 4),
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 1:5', 'size': (-1, -1),
                                   'position': (1, 5),
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 2:5', 'size': (70, 20),
                                   'position': (2, 5),
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 1:2', 'size': (-1, 20),
                                   'position': (1, 2), 'span': (1, 3),
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 0:0', 'size': (-1, 20),
                                   'position': (0, 0),
@@ -581,7 +558,7 @@ def test(par=0):
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1,
                                   'borderTopColor': (100, 100, 100)})
-    header.AddCell(cell)
+    header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 0:6\ntest', 'size': (70, 120),
                                   'position': (0, 6), 'span': (3, 1),
@@ -589,7 +566,7 @@ def test(par=0):
                                   'backgroundColor': (120, 170, 220),
                                   'backgroundType': 3,
                                   'borderStep': 2})
-    header.AddCell(cell)
+    header.addCell(cell)
     bsz.Add(header, (0, 0), (1, 1), 0, wx.EXPAND)
     
     log.info(u'header.GetSize() = %s\t%s' % (header.GetSize(), header.size))

@@ -86,8 +86,8 @@ def ClearStaticTextBuff(uuid):
         staticTextBuff.pop(uuid)
 
 
-def OnButt(evt):
-    evt.Skip()
+def OnButt(event):
+    event.Skip()
 
 
 class icTextValue(GenStaticText):
@@ -283,11 +283,11 @@ class NameValue(icEvent):
         """
         return self.__editorEnable
         
-    def OnExpand(self, evt):
+    def OnExpand(self, event):
         """
         """
         if self.edit_ctrl is not None:
-            self.edit_ctrl.OnExpand(evt)
+            self.edit_ctrl.OnExpand(event)
             self.main.RefreshPos()
             self.main.refreshSplitter()
 
@@ -478,13 +478,13 @@ class NameValue(icEvent):
             
         return -1
     
-    def OnEditorKeyDown(self, evt):
+    def OnEditorKeyDown(self, event):
         """
         """
         indx = self.GetIndx()
         wOffset, hOffset = self.main.GetViewStart()
             
-        if evt.GetKeyCode() == wx.WXK_UP:
+        if event.GetKeyCode() == wx.WXK_UP:
             if indx > 0:
                 indx -= 1
                 self.main.SelectEdt(indx)
@@ -492,7 +492,7 @@ class NameValue(icEvent):
             if self.line_name.GetPosition()[1] < (hOffset+1)*oiLineHeight:
                 self.main.Scroll(0, hOffset - 1)
             
-        elif evt.GetKeyCode() == wx.WXK_DOWN or evt.GetKeyCode() == wx.WXK_RETURN:
+        elif event.GetKeyCode() == wx.WXK_DOWN or event.GetKeyCode() == wx.WXK_RETURN:
             
             if indx < len(self.main.NameValues)-1:
                 indx += 1
@@ -504,16 +504,16 @@ class NameValue(icEvent):
             if self.line_name.GetPosition()[1] > sy*oiLineHeight:
                 self.main.Scroll(0, self.line_name.GetPosition()[1]/oiLineHeight + 1)
                 
-        elif evt.GetKeyCode() == wx.WXK_HOME and evt.ControlDown(): 
+        elif event.GetKeyCode() == wx.WXK_HOME and event.ControlDown():
             self.main.SelectEdt(0)
             self.main.Scroll(0, 0)
             
-        elif evt.GetKeyCode() == wx.WXK_END and evt.ControlDown():
+        elif event.GetKeyCode() == wx.WXK_END and event.ControlDown():
             indx = len(self.main.NameValues)-1
             self.main.SelectEdt(indx)
             self.main.Scroll(0, indx)
         else:
-            evt.Skip()
+            event.Skip()
 
         
 class icPropWin(icEvent, wx.ScrolledWindow):
@@ -835,11 +835,11 @@ class icPropWin(icEvent, wx.ScrolledWindow):
     
         self.selectedEdt = None
         
-    def OnNameSize(self, evt):
+    def OnNameSize(self, event):
         """
         Отрабатывает сообщение об размеров окна.
         """
-        sz = evt.GetSize()[0]
+        sz = event.GetSize()[0]
 
         for obj in self.NameValues:
             obj.name_ctrl.SetSize((sz+4, obj.height))
@@ -854,12 +854,12 @@ class icPropWin(icEvent, wx.ScrolledWindow):
             else:
                 obj.value_ctrl.Refresh(True)
             
-        evt.Skip()
+        event.Skip()
         
-    def OnSashChanged(self, evt):
+    def OnSashChanged(self, event):
         """
         """
-        sz = evt.GetSashPosition()
+        sz = event.GetSashPosition()
 
         for obj in self.NameValues:
             obj.name_ctrl.SetSize((sz+4, obj.height))
@@ -874,10 +874,10 @@ class icPropWin(icEvent, wx.ScrolledWindow):
             else:
                 obj.value_ctrl.Refresh(True)
             
-        evt.Skip()
+        event.Skip()
         
-    def OnSize(self, evt):
-        evt.Skip()
+    def OnSize(self, event):
+        event.Skip()
         self.refreshSplitter()
         self.RefreshSize()
 
@@ -1034,16 +1034,16 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         except:
             LogLastError('ERROR in PostSelectProperty(indx=%d)' % indx)
 
-    def OnSelect(self, evt):
+    def OnSelect(self, event):
         """
         """
         # Ищем объект, передавщий сообщение
         for i, obj in enumerate(self.NameValues):
-            if evt.GetId() in [obj.value_ctrl.GetId(), obj.name_ctrl.GetId()]:
+            if event.GetId() in [obj.value_ctrl.GetId(), obj.name_ctrl.GetId()]:
                 self.SelectEdt(i)
                 break
         
-        evt.Skip()
+        event.Skip()
 
 
 if __name__ == '__main__':

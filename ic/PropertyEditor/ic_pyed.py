@@ -340,35 +340,35 @@ class icPyEditor(stc.StyledTextCtrl):
 
             event.Skip()
 
-    def OnLeaveWin(self, evt):
+    def OnLeaveWin(self, event):
         """
         """
-        evt.Skip()
+        event.Skip()
         
         try:
-            self.parent.OnLeaveWin(evt)
+            self.parent.OnLeaveWin(event)
         except:
             pass
             
-    def OnMouseLeft(self, evt):
+    def OnMouseLeft(self, event):
         """
         """
-        evt.Skip()
+        event.Skip()
         
         try:
-            self.parent.OnMouseLeft(evt)
+            self.parent.OnMouseLeft(event)
         except:
             pass
 
-    def OnKillFocus(self, evt):
+    def OnKillFocus(self, event):
         """
         """
         try:
-            self.parent.OnKillFocus(evt)
+            self.parent.OnKillFocus(event)
         except:
             pass
         
-        evt.Skip()
+        event.Skip()
 
     def OnUpdateUI(self, event):
         """
@@ -597,7 +597,7 @@ class icPyEditorFrame(icframe.icFrame):
         self.editor.IsChanged = False
         self.editor.closed = False
         
-    def OnChangeText(self, evt):
+    def OnChangeText(self, event):
         """
         Обрабатывает изменения текста в редакторе.
         """
@@ -612,7 +612,7 @@ class icPyEditorFrame(icframe.icFrame):
         self.editor.IsFirstLoad = False
         self.editor.closed = False
 
-    def OnClose(self, evt):
+    def OnClose(self, event):
         """
         Обрабатываем закрытие окна.
         """
@@ -625,13 +625,13 @@ class icPyEditorFrame(icframe.icFrame):
                 self.editor.IsChanged = False
                 self.Save()
         
-        evt.Skip()
+        event.Skip()
         
-    def OnLoad(self, evt):
+    def OnLoad(self, event):
         """
         Загружает файл.
         """
-        evt.Skip()
+        event.Skip()
         
         if self.editor.IsChanged and MsgBox(self, u'Файл %s был изменен. Сохранить?' % self.editor.GetModuleName(),
                                             style=wx.YES_NO | wx.NO_DEFAULT) == wx.ID_YES:
@@ -678,17 +678,17 @@ class icPyEditorFrame(icframe.icFrame):
         
         return True
     
-    def OnSave(self, evt):
+    def OnSave(self, event):
         """
         """
         if self.editor.GetModuleName() in [None, '']:
-            self.OnSaveAs(evt)
+            self.OnSaveAs(event)
         else:
             self.Save(self.editor.GetModuleName())
             
-        evt.Skip()
+        event.Skip()
         
-    def OnSaveAs(self, evt):
+    def OnSaveAs(self, event):
         """
         Обрабатывает нажатие кнопки 'сохранить как'.
         """
@@ -701,7 +701,7 @@ class icPyEditorFrame(icframe.icFrame):
             self.editor.SetModuleName(path)
             self.SetTitle(u'Редактор (%s)' % path)
 
-        evt.Skip()
+        event.Skip()
 
 
 class icPyEditorDlg(icEvent, wx.Dialog):
@@ -725,31 +725,31 @@ class icPyEditorDlg(icEvent, wx.Dialog):
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
         self.Bind(stc.EVT_STC_CHANGE, self.OnChangeText, id=editor_id)
 
-    def OnLeaveWin(self, evt):
+    def OnLeaveWin(self, event):
         """
         """
         return
 
-    def OnChangeText(self, evt):
+    def OnChangeText(self, event):
         """
         """
-        evt.Skip()
+        event.Skip()
         
-    def OnKeyDown(self, evt):
+    def OnKeyDown(self, event):
         """
         """
-        key = evt.GetKeyCode()
-        evt.Skip()
+        key = event.GetKeyCode()
+        event.Skip()
         
         if key == wx.WXK_ESCAPE:
             if not self.bEndModal:
                 self.EndModal(wx.ID_OK)
                 self.bEndModal = True
         
-    def OnKillFocus(self, evt):
+    def OnKillFocus(self, event):
         """
         """
-        evt.Skip()
+        event.Skip()
         
         if not self.bEndModal:
             self.EndModal(wx.ID_OK)

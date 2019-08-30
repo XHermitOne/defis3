@@ -214,21 +214,21 @@ class icSimpleObjectGrid(icwidget.icWidget, parentModule.GroupListView):
         """
         return self.SetObjects(DatasetList_)
 
-    def OnItemSelected(self, evt):
+    def OnItemSelected(self, event):
         """ 
         Обрабатываем сообщение о выборе строки списка.
         """
         self.SetFocus()
-        evt.Skip()
+        event.Skip()
         result = True
         currentItem = self.GetFocusedRow()
         #   Формируем пространство имен
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['row'] = currentItem
 
         self.evalSpace['values'] = self.GetObjectAt(currentItem)
-        self.evalSpace['_lfp'] = {'function': 'onItemSelected', 'evt': evt,
+        self.evalSpace['_lfp'] = {'function': 'onItemSelected', 'event': event,
                                   'currentItem': currentItem, 'row': currentItem,
                                   'self': self}
         
@@ -237,24 +237,24 @@ class icSimpleObjectGrid(icwidget.icWidget, parentModule.GroupListView):
             if ret:
                 result = bool(val)
 
-    def OnItemActivated(self, evt):
+    def OnItemActivated(self, event):
         """ 
         Активация (Enter/DobleClick) строки.
         """
         currentItem = self.GetFocusedRow()
         rowData = []
         #   Формируем пространство имен
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['row'] = currentItem
         
         rowDict = self.GetObjectAt(currentItem)
         self.evalSpace['values'] = rowDict
-        self.evalSpace['_lfp'] = {'function': 'onItemActivated', 'evt': evt,
+        self.evalSpace['_lfp'] = {'function': 'onItemActivated', 'event': event,
                                   'currentItem': currentItem, 'result': rowDict,
                                   'self': self}
         self.eval_attr('activated')
-        evt.Skip()
+        event.Skip()
         
 
 def test():

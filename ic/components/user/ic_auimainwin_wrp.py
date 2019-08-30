@@ -259,7 +259,7 @@ class icAUIMainWindow(icwidget.icSimple, icAUImainwin.icAUIMainWinPrototype):
         event.Skip()
 
         #   Формируем пространство имен
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['event'] = event
 
         self.eval_attr('on_close_page')
@@ -271,7 +271,7 @@ class icAUIMainWindow(icwidget.icSimple, icAUImainwin.icAUIMainWinPrototype):
         event.Skip()
 
         #   Формируем пространство имен
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['event'] = event
 
         self.eval_attr('on_closed_page')

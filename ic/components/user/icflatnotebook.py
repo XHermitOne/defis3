@@ -249,15 +249,15 @@ class icFlatNotebook(icwidget.icWidget, fnb.FlatNotebook):
                 self.SetGradientColourTo(wx.Colour(*self.colorTo))
             self.Refresh()
         
-    def OnPageChanged(self, evt):
+    def OnPageChanged(self, event):
         self.init_clr()
-        self.eval_event('onPageChanged', evt, True)
+        self.eval_event('onPageChanged', event, True)
         
-    def OnPageChanging(self, evt):
-        self.eval_event('onPageChanging', evt, True)
+    def OnPageChanging(self, event):
+        self.eval_event('onPageChanging', event, True)
         
-    def OnPageClosing(self, evt):
-        self.eval_event('onPageClosing', evt, True)
+    def OnPageClosing(self, event):
+        self.eval_event('onPageClosing', event, True)
         
     def addChildsToNotebook(self):
         """

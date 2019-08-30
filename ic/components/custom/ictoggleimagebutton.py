@@ -98,9 +98,9 @@ class icToggleImageButton(icWidget, buttons.ThemedGenBitmapTextToggleButton):
     в файле ресурсов поле с ключем (событие) указать нужную функцию.
 
     B{Пример:}
-    C{'mouseClick':'OnPressButton(evt)'.} evt - объект описание сообщения.
-    C{'mouseDown':'OnDown(evt)'}
-    C{'mouseContextDown':'onRightDown(evt)'}
+    C{'mouseClick':'OnPressButton(event)'.} event - объект описание сообщения.
+    C{'mouseDown':'OnDown(event)'}
+    C{'mouseContextDown':'onRightDown(event)'}
     """
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
@@ -178,13 +178,13 @@ class icToggleImageButton(icWidget, buttons.ThemedGenBitmapTextToggleButton):
         self.Bind(wx.EVT_MOTION, self.OnMouseMove)
         self.BindICEvt()
 
-    def OnMouseMove(self, evt):
+    def OnMouseMove(self, event):
         """
         """
         x, y = self.GetPosition()
         sx, sy = self.GetSize()
 
-        px, py = p = evt.GetPosition()
+        px, py = p = event.GetPosition()
         d = 5
         r = wx.Rect(d, d, sx-2*d, sy-2*d)
 
@@ -201,29 +201,29 @@ class icToggleImageButton(icWidget, buttons.ThemedGenBitmapTextToggleButton):
         else:
             self._helpWin = None
 
-    def OnMouseClick(self, evt):
+    def OnMouseClick(self, event):
         """
         Обрабатываем нажатие на кнопку (сообщение C{EVT_BUTTON}).
         """
-        self.eval_event('mouseClick', evt, True)
+        self.eval_event('mouseClick', event, True)
 
-    def OnMouseDown(self, evt):
+    def OnMouseDown(self, event):
         """
         Обрабатываем нажатие левой кнопки мыши (сообщение C{EVT_LEFT_DOWN}).
         """
-        self.eval_event('mouseDown', evt, True)
+        self.eval_event('mouseDown', event, True)
 
-    def OnMouseUp(self, evt):
+    def OnMouseUp(self, event):
         """
         Обрабатываем отпускание левой кнопки мыши (сообщение C{EVT_LEFT_UP}).
         """
-        self.eval_event('mouseUp', evt, True)
+        self.eval_event('mouseUp', event, True)
 
-    def OnMouseContextDown(self, evt):
+    def OnMouseContextDown(self, event):
         """
         Обрабатываем нажатие правой кнопки мыши (сообщение C{EVT_RIGHT_DOWN}).
         """
-        self.eval_event('mouseContextDown', evt, True)
+        self.eval_event('mouseContextDown', event, True)
 
     def DrawFocusIndicator(self, dc, w, h):
         if self.bFocusIndicator:

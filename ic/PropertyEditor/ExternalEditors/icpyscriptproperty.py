@@ -75,13 +75,13 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
         """
         if event.GetEventType() == wx.wxEVT_COMMAND_BUTTON_CLICKED:
             buttons = self.buttons
-            evtId = event.GetId()
+            eventId = event.GetId()
 
-            if evtId == buttons.GetButtonId(0):
+            if eventId == buttons.GetButtonId(0):
                 # Do something when the first button is pressed
                 wx.LogDebug('First button pressed')
                 return False  # Return false since value did not change
-            if evtId == buttons.GetButtonId(1):
+            if eventId == buttons.GetButtonId(1):
                 # Do something when the second button is pressed
                 value = prop.GetValue()
                 result = False

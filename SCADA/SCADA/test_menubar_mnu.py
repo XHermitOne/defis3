@@ -21,7 +21,7 @@ __version__ = (0, 0, 0, 2)
 
 class icTestMenubarManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     ###BEGIN EVENT BLOCK

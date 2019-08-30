@@ -54,7 +54,7 @@ CONTRAGENT_SPRAV = ARCHIVE_SPRAV_MANAGER.getSpravByName('nsi_c_agent')
 
 class icScanDocumentManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def create(self, doc=None):

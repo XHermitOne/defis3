@@ -189,8 +189,8 @@ class icThreadLoadProjectDlg(wx.Dialog):
     def DirectRefresh(self):
         """
         """
-        evt = wx.PaintEvent(self.GetId())
-        return self.GetEventHandler().ProcessEvent(evt)
+        event = wx.PaintEvent(self.GetId())
+        return self.GetEventHandler().ProcessEvent(event)
 
     def setResultList(self, ResultList_):
         self._result_list = ResultList_
@@ -305,7 +305,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
         if event:
             event.Skip()
 
-    def OnPaint(self, evt=None):
+    def OnPaint(self, event=None):
         """
         """
         t = time.clock()
@@ -334,12 +334,12 @@ class icThreadLoadProjectDlg(wx.Dialog):
         
         dc.EndDrawing()
         
-        if evt:
-            evt.Skip
+        if event:
+            event.Skip
         
         self.onCheckClose()
         
-    def onTimer(self, evt):
+    def onTimer(self, event):
         """
         """
         if self._autoIncr:

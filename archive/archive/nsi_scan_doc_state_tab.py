@@ -29,7 +29,7 @@ class icNSIScanDocStateTabManager(icmanagerinterface.icWidgetManager):
     Менеджер таблицы состояния архивного документа.
     """
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def set_default_data(self):

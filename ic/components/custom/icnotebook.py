@@ -227,39 +227,39 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         except:
             pass
     
-    def OnLeftDown(self, evt):
+    def OnLeftDown(self, event):
         """
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         
         self.eval_attr('onLeftMouseClick')
-        evt.Skip()
+        event.Skip()
 
-    def OnRightDown(self, evt):
+    def OnRightDown(self, event):
         """
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         
         self.eval_attr('onRightMouseClick')
-        evt.Skip()
+        event.Skip()
 
-    def OnPageChanged(self, evt):
+    def OnPageChanged(self, event):
         """
         Обрабатываем изменение текущей страницы органайзера.
         """
         old_id_page = self.GetSelection()
-        new_id_page = evt.GetSelection()
+        new_id_page = event.GetSelection()
 
         #   Устанавливаем нужную страницу в качестве активной
-        evt.Skip()
+        event.Skip()
         self.activePage = new_id_page
         lst = self.SetStatusVisible(True)
         self.UpdateRelObj(lst)
         
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         
         self.eval_attr('pageChanged')
 

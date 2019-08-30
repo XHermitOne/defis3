@@ -251,7 +251,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
         """
         Index_ = min(self.GetItemCount()-1, max(0, Index_))
         self.currentItem = Index_
-        self.evalSpace['evt'] = None
+        self.evalSpace['event'] = None
         self.evalSpace[self.name+'_currentItem'] = self.currentItem
         self.eval_attr('selected')
         self.Focus(Index_)
@@ -265,23 +265,23 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
         Index_ = min(self.GetItemCount()-1, max(0, Index_))
         return self.Select(Index_, int(SelectOn_))
         
-    def OnItemSelected(self, evt):
+    def OnItemSelected(self, event):
         """
         Обрабатываем выбор строки списка.
         """
-        self.currentItem = evt.Index
-        self.evalSpace['evt'] = evt
+        self.currentItem = event.Index
+        self.evalSpace['event'] = event
         self.evalSpace[self.name+'_currentItem'] = self.currentItem
         self.eval_attr('selected')
         
-    def OnItemActivated(self, evt):
+    def OnItemActivated(self, event):
         """
         Обрабатываем активацию (Enter | DblClick) строки списка.
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace[self.name+'_activatedItem'] = self.currentItem
         self.eval_attr('activated')
-        evt.Skip()
+        event.Skip()
 
 
 def test(par=0):

@@ -209,7 +209,7 @@ def defPicType(pic, valid):
     return spctype, typ
 
 
-def isEqTemplate(typ, templ, oldText, key_cod, ins_pos, evt=None):
+def isEqTemplate(typ, templ, oldText, key_cod, ins_pos, event=None):
     """
     Функция определяет удолетворяет ли вводимый символ шаблону.
     @param typ: Тип шаблона.
@@ -225,7 +225,7 @@ def isEqTemplate(typ, templ, oldText, key_cod, ins_pos, evt=None):
     """
     txt = None
     try:
-        bShift = evt.ShiftDown()
+        bShift = event.ShiftDown()
     except:
         bShift = False
         

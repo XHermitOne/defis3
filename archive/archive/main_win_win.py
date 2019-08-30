@@ -27,7 +27,7 @@ __version__ = (0, 1, 1, 2)
 
 class icMainWinManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def onOpen(self, event):

@@ -375,14 +375,14 @@ class icBackground(object):
 
             self.bRedrawCursor = True
         except:
-            log.error('DrawAll Error')
+            log.error('drawAll Error')
     
-    def getEvtObj(self, evt):
+    def getEvtObj(self, event):
         """
-        Определяет объект, который послал сообщение. evt.GetEventObject()
+        Определяет объект, который послал сообщение. event.GetEventObject()
         не подходит т. к. он возвращает wx-ий объект.
         """
-        name = evt.GetEventObject().GetName()
+        name = event.GetEventObject().GetName()
         for obj in self.container:
             try:
                 if name == obj.GetName():
@@ -403,21 +403,21 @@ class icBackground(object):
         """
         return self.editorFrame
 
-    def GetBGRPositionXY(self, obj_evt, x, y):
+    def GetBGRPositionXY(self, obj_event, x, y):
         """
         Вычисляет позицию отностиельно панели редактора по позиции на
         выбранном компоненте.
         """
         try:
-            name = obj_evt.GetName()
+            name = obj_event.GetName()
         except:
             name = ''
             
         if name != '__EditorBackground__':
-            pos = obj_evt.GetPosition()
+            pos = obj_event.GetPosition()
             x = x + pos.x
             y = y + pos.y
-            prnt = obj_evt.GetParent()
+            prnt = obj_event.GetParent()
             while prnt and prnt.GetName() != '__EditorBackground__':
                 pos = prnt.GetPosition()
                 x = x + pos.x
@@ -426,17 +426,17 @@ class icBackground(object):
         
         return wx.Point(x, y)
 
-    def GetBGRPosition(self, evt):
+    def GetBGRPosition(self, event):
         """
         Вычисляет позицию события отностиельно панели редактора.
         """
-        obj_evt = evt.GetEventObject()
-        x, y = evt.GetPosition()
-        if obj_evt.GetName() != '__EditorBackground__':
-            pos = obj_evt.GetPosition()
+        obj_event = event.GetEventObject()
+        x, y = event.GetPosition()
+        if obj_event.GetName() != '__EditorBackground__':
+            pos = obj_event.GetPosition()
             x = x + pos.x
             y = y + pos.y
-            prnt = obj_evt.GetParent()
+            prnt = obj_event.GetParent()
 
             while prnt and prnt.GetName() != '__EditorBackground__':
                 pos = prnt.GetPosition()
@@ -446,15 +446,15 @@ class icBackground(object):
         
         return wx.Point(x, y)
 
-    def GetParentPos(self, evt):
+    def GetParentPos(self, event):
         """
         Вычисляет позицию отностиельно родительского окна компонента, который
         инициировал сообщение.
         """
-        obj_evt = evt.GetEventObject()
-        x, y = evt.GetPosition()
-        if obj_evt.GetName() != '__EditorBackground__':
-            pos = obj_evt.GetPosition()
+        obj_event = event.GetEventObject()
+        x, y = event.GetPosition()
+        if obj_event.GetName() != '__EditorBackground__':
+            pos = obj_event.GetPosition()
             x = x + pos.x
             y = y + pos.y
 
@@ -486,47 +486,47 @@ class icBackground(object):
             
         return False
         
-    def OnSize(self, evt):
+    def OnSize(self, event):
         """
         Отрабатывает после изменения размеров <EVT_SIZE>.
         """
-        evt.Skip()
+        event.Skip()
         self.Refresh()
         self.ReSizer()
         self.bRedraw = True
 
-    def OnLeftDClick(self, evt):
+    def OnLeftDClick(self, event):
         """
         Обработка сообщения <EVT_LEFT_DCLICK>.
         """
-        obj_evt = evt.GetEventObject()
-        x, y = evt.GetPosition()
-        self.SelectObj(obj_evt, x, y)
+        obj_event = event.GetEventObject()
+        x, y = event.GetPosition()
+        self.SelectObj(obj_event, x, y)
         
-    def OnSelectObj(self, evt, bDrag=True):
+    def OnSelectObj(self, event, bDrag=True):
         """
         Обработка сообщения <EVT_LEFT_DOWN>.
         """
-        obj_evt = evt.GetEventObject()
-        x, y = evt.GetPosition()
+        obj_event = event.GetEventObject()
+        x, y = event.GetPosition()
         try:
-            obj = self.getEvtObj(evt)
+            obj = self.getEvtObj(event)
             if obj and obj != self.selectedObj:
                 self.propertyTree.tree.SelectResId(obj.resource['__item_id'])
         except:
             log.fatal('OnSelectObj ERROR')
             
-        self.SelectObj(obj_evt, x, y, bDrag=bDrag)
+        self.SelectObj(obj_event, x, y, bDrag=bDrag)
         self.RefreshStatusBar()
         
-    def OnMove(self, evt):
+    def OnMove(self, event):
         """ Обработка события мыши <wx.EVT_MOTION>."""
         if not self.selectedObj or self.selectedObj.name == '__EditorBackground__':
-            evt.Skip()
+            event.Skip()
             return
 
         prnt = self.selectedObj.GetParent()
-        pos = self.GetBGRPosition(evt)
+        pos = self.GetBGRPosition(event)
         x, y = self.selectedObj.GetPosition()
         sx, sy = self.selectedObj.GetSize()
         dd = 5
@@ -665,32 +665,32 @@ class icBackground(object):
             self.oldPoint = pos
             self.RefreshStatusBar()
             self.selectedObj.drawCursor()
-            log.fatal('Except in OnMove')
+            log.fatal('Except in onMove')
             
-        evt.Skip()
+        event.Skip()
 
-    def OnLeftDown(self, evt):
+    def OnLeftDown(self, event):
         """
         Обработка нажатия левой кнопки мыши <EVT_LEFT_DOWN>.
         """
         self.bBlockDestroy = True
-        obj_evt = evt.GetEventObject()
+        obj_event = event.GetEventObject()
         # Если выбран объект добавления в панели инструментов, то добавляем его
         # в текущий объект в позицию, на которую указывает курсор мыши
         if self.toolpanel:
             toggleType = self.toolpanel.getToggleType()
             # Убираем признак добавляемого объекта в панели инструментов
             self.toolpanel.ReleaseToggleType()
-            if toggleType and self.AddObjectToRes(self.selectedObj, toggleType, evt.GetPosition()):
+            if toggleType and self.AddObjectToRes(self.selectedObj, toggleType, event.GetPosition()):
                 self.bBlockDestroy = False
-                evt.Skip()
+                event.Skip()
                 return
             else:
                 log.error('Add: selected object <%s>. toggle type <%s>' % (self.selectedObj, toggleType))
                 
         #   Если курсор мыши на выбранном объекте, то происходит захват объекта.
         if self.selectedObj:
-            pos = self.GetBGRPosition(evt)
+            pos = self.GetBGRPosition(event)
             x,y = self.selectedObj.GetPosition()
             sx, sy = self.selectedObj.GetSize()
 
@@ -748,36 +748,36 @@ class icBackground(object):
 
         if True not in (self.bDragLT, self.bDragRT, self.bDragLB, self.bDragRB,
                         self.bDragL, self.bDragR, self.bDragT, self.bDragB):
-            self.OnSelectObj(evt)
+            self.OnSelectObj(event)
 
-        evt.Skip()
+        event.Skip()
         self.bBlockDestroy = False
         
-    def OnRightDownObj(self, evt):
+    def OnRightDownObj(self, event):
         """
         Обработка нажатия правой кнопки.
         """
         self.bBlockDestroy = True
-        obj_evt = evt.GetEventObject()
+        obj_event = event.GetEventObject()
                 
         if True not in (self.bDragLT, self.bDragRT, self.bDragLB, self.bDragRB,
                         self.bDragL, self.bDragR, self.bDragT, self.bDragB):
-            self.OnSelectObj(evt, bDrag=False)
+            self.OnSelectObj(event, bDrag=False)
             if self.GetPointer():
-                self.GetPointer().tree.OnRightClick(evt, bgr_win=self)
+                self.GetPointer().tree.OnRightClick(event, bgr_win=self)
 
-        evt.Skip()
+        event.Skip()
         self.bBlockDestroy = False
         
-    def OnLeftUp(self, evt):
+    def OnLeftUp(self, event):
         """
         Обрабатывет сообщение от мышки EVT_LEFT_UP.
         """
         if not self.selectedObj:
-            evt.Skip()
+            event.Skip()
             return
             
-        pos = self.GetBGRPosition(evt)
+        pos = self.GetBGRPosition(event)
         x, y = self.selectedObj.GetPosition()
         sx, sy = self.selectedObj.GetSize()
         #   Отпускаем захваченный объект
@@ -823,13 +823,13 @@ class icBackground(object):
             self.ChangeResProperty(self.selectedObj, 'size', self.selectedObj.GetSize(), bRefresh=True)
 
         self.ReSizer()
-        evt.Skip()
+        event.Skip()
         
-    def OnKeyUp(self, evt):
+    def OnKeyUp(self, event):
         """
         Обработка отпускание клавишь <EVT_KEY_UP>.
         """
-        kcod = evt.GetKeyCode()
+        kcod = event.GetKeyCode()
         if self.selectedObj and kcod in (wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_UP, wx.WXK_DOWN):
             self.ChangeResProperty(self.selectedObj, 'size', self.selectedObj.GetSize(), bRefresh=True)
 
@@ -847,16 +847,16 @@ class icBackground(object):
                     self.ChangeResProperty(self.selectedObj, 'position', self.selectedObj.GetPosition(), bRefresh=True)
 
             self.ReSizer()
-        evt.Skip()
+        event.Skip()
     
-    def OnKeyDown(self, evt):
+    def OnKeyDown(self, event):
         """
         Обработка нажатия клавишь <EVT_KEY_DOWN>.
         """
-        kcod = evt.GetKeyCode()
-        bCtrl = evt.ControlDown()
-        bShift = evt.ShiftDown()
-        bAlt = evt.AltDown()
+        kcod = event.GetKeyCode()
+        bCtrl = event.ControlDown()
+        bShift = event.ShiftDown()
+        bAlt = event.AltDown()
         sel = None
         
         # Обработка табуляции - выбор следующего объекта в качестве текущего.
@@ -967,10 +967,10 @@ class icBackground(object):
                 log.fatal('OnKeyDown')
             
             self.selectedObj.drawCursor()
-        evt.Skip()
+        event.Skip()
 
-    def OnChar(self, evt):
-        evt.Skip()
+    def OnChar(self, event):
+        event.Skip()
 
     def ClearBckground(self, dc):
         dc = dc or wx.PaintDC(self)
@@ -1021,7 +1021,7 @@ class icBackground(object):
         
         wx.CallAfter(self.DrawAll)
 
-    def OnClose(self, evt):
+    def OnClose(self, event):
         """
         Обрабатываем сообщение о закрытии окна  <EVT_CLOSE>.
         """
@@ -1048,10 +1048,10 @@ class icBackground(object):
                 log.fatal('###')
                 
         # Удаляем форму
-        if evt:
-            evt.Skip()
+        if event:
+            event.Skip()
 
-    def OnUpdate(self, evt):
+    def OnUpdate(self, event):
         """
         Update. По соответствующему сообщению, а также по таймеру.
         """
@@ -1074,8 +1074,8 @@ class icBackground(object):
                 self.bRedraw = False
                 self.DrawAll()
                 self.OnSizeBgr(None)
-            if evt:
-                evt.Skip()
+            if event:
+                event.Skip()
         except wx.PyDeadObjectError:
             pass
 
@@ -1216,12 +1216,12 @@ class icBackground(object):
         """
         return self.toolpanel
         
-    def SelectObj(self, obj_evt, x=1, y=1, bDrag=True):
+    def SelectObj(self, obj_event, x=1, y=1, bDrag=True):
         """
         Функция выбора объкта в качестве текущего. Выбор происходит по
         нажатию левой кнопки мыши на выбираемом объекте.
-        @type obj_evt: C{наследник от wx.Window}
-        @param obj_evt: Выбираемый объект.
+        @type obj_event: C{наследник от wx.Window}
+        @param obj_event: Выбираемый объект.
         @type x: C{int}
         @param x: Координата x, где произошло событие.
         @type y: C{int}
@@ -1229,15 +1229,15 @@ class icBackground(object):
         """
         # Отображаем в панели инструментов стили выбранного компонента и типы комопнентов,
         # которые можно добавлять в текущий компонент
-        if not getattr(obj_evt, 'type', None):
+        if not getattr(obj_event, 'type', None):
             return
         
         # Не даем захватывать корневой элемент
-        prnt = obj_evt.GetParent()
+        prnt = obj_event.GetParent()
 
         if self.toolpanel:
             # Определяем тип текущего объекта
-            typObj = getattr(obj_evt, 'type', None)
+            typObj = getattr(obj_event, 'type', None)
             # Для подложки диалогового окна типы компонентов, которые можно
             # добавлять такие же как и у диалогового окна
             if typObj == 'Background':
@@ -1246,10 +1246,10 @@ class icBackground(object):
             self.toolpanel.EnableCanAddObj(typObj, True)
             # Отображаем информацию (flag, proportion) в панели инструментов
             if self.get_style_panel():
-                self.get_style_panel().setFlag(obj_evt.flag)
-                self.get_style_panel().setProportionStyle(obj_evt.proportion)
+                self.get_style_panel().setFlag(obj_event.flag)
+                self.get_style_panel().setProportionStyle(obj_event.proportion)
         
-        if self.selectedObj == obj_evt and not bDrag:
+        if self.selectedObj == obj_event and not bDrag:
             return
             
         if self.selectedObj:
@@ -1264,9 +1264,9 @@ class icBackground(object):
             except:
                 pass
             
-        obj_evt.setSelected()
-        self.selectedObj = obj_evt
-        pos = self.GetBGRPositionXY(obj_evt, x, y)
+        obj_event.setSelected()
+        self.selectedObj = obj_event
+        pos = self.GetBGRPositionXY(obj_event, x, y)
         if bDrag:
             self.DragSelObj(pos)
         cursor = wx.StockCursor(wx.CURSOR_SIZING)
@@ -1291,12 +1291,12 @@ def BindEditorEvent(self, id=None):
     self.Bind(wx.EVT_CLOSE, self.OnClose)
     self.Bind(wx.EVT_UPDATE_UI, self.OnUpdate)
     self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
-    self.Bind(wx.EVT_SIZE, self.OnSize)
+    self.Bind(wx.EVT_SIZE, self.onSize)
     self.Bind(wx.EVT_PAINT, self.onPaint)
-    self.Bind(wx.EVT_MOTION, self.OnMove)
+    self.Bind(wx.EVT_MOTION, self.onMove)
     self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
     self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDownObj)
-    self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
+    self.Bind(wx.EVT_LEFT_UP, self.onLeftUp)
     self.Bind(wx.EVT_CHAR, self.OnChar)
 
 
@@ -1324,9 +1324,9 @@ class icBackgroundDialog(icBackground, icdialog.icDialog):
         # Обработчики событий
         BindEditorEvent(self)
         
-    def OnCharHook(self, evt):
-        wx.Dialog.OnCharHook(self, evt)
-        evt.Skip()
+    def OnCharHook(self, event):
+        wx.Dialog.OnCharHook(self, event)
+        event.Skip()
 
 
 class icBackgroundPanel(icBackground, wx.Panel):
@@ -1411,10 +1411,10 @@ class icBackgroundFDialog(icwidget.icSimple, wx.Frame):
         self.toolframe.Show(True)
         self.toolpanel.SetGraphEditor(self.editorPanel)
 
-    def OnKeyDown(self, evt):
-        self.editorPanel.OnKeyDown(evt)
+    def OnKeyDown(self, event):
+        self.editorPanel.OnKeyDown(event)
         
-    def OnClose(self, evt):
+    def OnClose(self, event):
         try:
             self.editorPanel.propertyTree.ReleasePointer()
             self.editorPanel.propertyTree = None
@@ -1427,8 +1427,8 @@ class icBackgroundFDialog(icwidget.icSimple, wx.Frame):
         except:
             log.fatal('###')
 
-        if evt:
-            evt.Skip()
+        if event:
+            event.Skip()
         
     def GetEditorPanel(self):
         """
@@ -1575,10 +1575,10 @@ class icBackgroundDocumentFrame(icBackground, icwidget.icBase, wx.ScrolledWindow
         #
         self._old_pos = None
         
-    def TimerHandler(self, evt):
-        self.OnUpdate(evt)
+    def TimerHandler(self, event):
+        self.OnUpdate(event)
     
-    def OnSizeBgr(self, evt):
+    def OnSizeBgr(self, event):
         sx, sy = self.GetViewStart()
         if self.object:
             # Обкладываем try на случай не визуальных компонентов
@@ -1592,14 +1592,14 @@ class icBackgroundDocumentFrame(icBackground, icwidget.icBase, wx.ScrolledWindow
             except Exception as msg:
                 log.error('OnSizeBgr <%s>' % msg)
                 
-        if evt:
-            evt.Skip()
+        if event:
+            event.Skip()
 
-    def OnSizeWin(self, evt):
-        sx, sy = evt.GetSize()
+    def OnSizeWin(self, event):
+        sx, sy = event.GetSize()
         self.SetVirtualSize((sx+50, sy+50))
         self.Refresh()
-        evt.Skip()
+        event.Skip()
         
     def getWidth(self):
         try:

@@ -9,7 +9,7 @@ from ic.PropertyEditor.images import grptoolimg
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK
 #   Resource description of class
-resource = {'activate': u'1', 'obj_module': None, 'keyDown': u'None', 'show': u'1', 'init_expr': u'WrapperObj.init_view(self)', 'borderRightColor': (100, 100, 100), 'child': [], 'states': [0, 1, 2], 'mouseClick': u'WrapperObj.OnIndicatorMouseClick(evt)', 'images': [], 'borderTopColor': (100, 100, 100), 'font': {'style': 'bold', 'name': 'defaultFont', 'family': 'sansSerif', 'faceName': u'Arial', 'type': 'Font', 'underline': False, 'size': 8}, 'border': 0, 'alignment': u"('left', 'middle')", 'size': (243, 24), 'style': 0, 'foregroundColor': (59, 59, 59), 'span': (1, 1), 'component_module': None, 'proportion': 0, 'label': u'', 'alignmentImg': u"('left', 'middle')", 'source': u'None', 'backgroundColor': None, 'isSort': False, 'type': u'IndicatorState', 'res_module': None, 'enable': True, 'description': None, 'shortHelpString': u'', 'backgroundColor2': None, '_uuid': 'e5bcd7cdd52872382613d6f53914b2e1', 'moveAfterInTabOrder': u'', 'bgrImage': None, 'flag': 8192, 'alias': u'None', 'recount': u'None', 'path': u'', 'onLeftDown': None, 'cursorColor': (100, 100, 100), 'borderStyle': u'None', 'borderStep': 0, 'borderLeftColor': (100, 100, 100), 'roundConer': [0, 0, 0, 0], 'name': u'groupTitle', 'data_name': None, 'borderBottomColor': (100, 100, 100), 'refresh': u'None', 'borderWidth': 1, 'position': (0, 0), 'backgroundType': 1, 'onInit': None}
+resource = {'activate': u'1', 'obj_module': None, 'keyDown': u'None', 'show': u'1', 'init_expr': u'WrapperObj.init_view(self)', 'borderRightColor': (100, 100, 100), 'child': [], 'states': [0, 1, 2], 'mouseClick': u'WrapperObj.OnIndicatorMouseClick(event)', 'images': [], 'borderTopColor': (100, 100, 100), 'font': {'style': 'bold', 'name': 'defaultFont', 'family': 'sansSerif', 'faceName': u'Arial', 'type': 'Font', 'underline': False, 'size': 8}, 'border': 0, 'alignment': u"('left', 'middle')", 'size': (243, 24), 'style': 0, 'foregroundColor': (59, 59, 59), 'span': (1, 1), 'component_module': None, 'proportion': 0, 'label': u'', 'alignmentImg': u"('left', 'middle')", 'source': u'None', 'backgroundColor': None, 'isSort': False, 'type': u'IndicatorState', 'res_module': None, 'enable': True, 'description': None, 'shortHelpString': u'', 'backgroundColor2': None, '_uuid': 'e5bcd7cdd52872382613d6f53914b2e1', 'moveAfterInTabOrder': u'', 'bgrImage': None, 'flag': 8192, 'alias': u'None', 'recount': u'None', 'path': u'', 'onLeftDown': None, 'cursorColor': (100, 100, 100), 'borderStyle': u'None', 'borderStep': 0, 'borderLeftColor': (100, 100, 100), 'roundConer': [0, 0, 0, 0], 'name': u'groupTitle', 'data_name': None, 'borderBottomColor': (100, 100, 100), 'refresh': u'None', 'borderWidth': 1, 'position': (0, 0), 'backgroundType': 1, 'onInit': None}
 
 #   Version
 __version__ = (1, 1, 1, 2)
@@ -114,7 +114,7 @@ class ToolGroupPanel(icobjectinterface.icObjectInterface):
             bsz.Hide(panel)
             bsz.Layout()
 
-    def OnIndicatorMouseClick(self, evt):
+    def OnIndicatorMouseClick(self, event):
         """
         Обработка нажатия левой кнопки мыши на индикаторе.
         """

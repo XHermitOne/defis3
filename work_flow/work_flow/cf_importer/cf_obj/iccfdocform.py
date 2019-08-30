@@ -409,25 +409,25 @@ class icCFDocForm(iccfobject.icCFObject):
             return
 
         obj_name_requisite = util1c.encodeText(name_requisites[0], 'unicode', 'utf-8')
-        evt_name_requisite = util1c.encodeText(name_requisites[1], 'unicode', 'utf-8')        
+        event_name_requisite = util1c.encodeText(name_requisites[1], 'unicode', 'utf-8')
         obj_idx = self._findObjResIdx(res.data, obj_name_requisite)
         
-        if evt_name_requisite == 'ПередНачаломДобавления':
+        if event_name_requisite == 'ПередНачаломДобавления':
             if obj_idx:
-                evt_idx = (1, 27, 73)
-                evt_res = res.getByIdxList(evt_idx)
-                if evt_res == [0]:
+                event_idx = (1, 27, 73)
+                event_res = res.getByIdxList(event_idx)
+                if event_res == [0]:
                     # Если событие не определено
-                    evt_template = copy.deepcopy(CTRL_BEFORE_ADD_START_EVENT_TEMPLATE)
-                    evt_template[-1] = util1c.encodeText(value, 'unicode', 'utf-8')
-                    res.data[1][27][73] = evt_template
+                    event_template = copy.deepcopy(CTRL_BEFORE_ADD_START_EVENT_TEMPLATE)
+                    event_template[-1] = util1c.encodeText(value, 'unicode', 'utf-8')
+                    res.data[1][27][73] = event_template
         else:
-            log.warning(u'Event \'%s\' not support' % evt_name_requisite)
+            log.warning(u'Event \'%s\' not support' % event_name_requisite)
             return
         
         return res.saveData()
 
-    _evtID = {'ПередНачаломДобавления': 40,
+    _eventID = {'ПередНачаломДобавления': 40,
               'ПриПовторномОткрытии': 70008,
               'ПередОткрытием': 70000,
               'ПриОткрытии': 70001,
@@ -436,15 +436,15 @@ class icCFDocForm(iccfobject.icCFObject):
     def _createFormObjEventResStd(self, event_name, value, id):
         """
         """
-        evt_template = copy.deepcopy(STD_BEFORE_ADD_START_EVENT_TEMPLATE)
-        evt_template[0] = id
-        evt_template[2][1] = event_name
-        evt_template[2][2][1] = value
+        event_template = copy.deepcopy(STD_BEFORE_ADD_START_EVENT_TEMPLATE)
+        event_template[0] = id
+        event_template[2][1] = event_name
+        event_template[2][2][1] = value
         description = util1c.splitName1CWord(event_name)
-        evt_template[2][2][2][2][1] = description
-        evt_template[2][2][3][2][1] = description
-        evt_template[2][2][4][2][1] = description
-        return evt_template
+        event_template[2][2][2][2][1] = description
+        event_template[2][2][3][2][1] = description
+        event_template[2][2][4][2][1] = description
+        return event_template
         
     _SupportEventNames = ('ПередНачаломДобавления', 'ПередОткрытием')
 
@@ -465,34 +465,34 @@ class icCFDocForm(iccfobject.icCFObject):
             return
 
         obj_name_requisite = util1c.encodeText(name_requisites[0], 'unicode', 'utf-8')
-        evt_name_requisite = util1c.encodeText(name_requisites[1], 'unicode', 'utf-8')
+        event_name_requisite = util1c.encodeText(name_requisites[1], 'unicode', 'utf-8')
         value = util1c.encodeText(value, 'unicode', 'utf-8')
         
-        if evt_name_requisite in self._SupportEventNames:
+        if event_name_requisite in self._SupportEventNames:
             if obj_name_requisite:
                 # Если имя объекта указано, то это объект формы
                 for obj_res in res.data[1][2][2][1:]:
                     if obj_res[4][1] == obj_name_requisite:
-                        full_evt_name_requisite = obj_name_requisite + evt_name_requisite
-                        res_evt_name_requisites = [evt[2][1] for evt in obj_res[2][4][1:]]
-                        if full_evt_name_requisite not in res_evt_name_requisites:
-                            evt_template = self._createFormObjEventResStd(full_evt_name_requisite,
-                                                                          value, self._evtID[evt_name_requisite])
-                            obj_res[2][4].append(evt_template)
+                        full_event_name_requisite = obj_name_requisite + event_name_requisite
+                        res_event_name_requisites = [event[2][1] for event in obj_res[2][4][1:]]
+                        if full_event_name_requisite not in res_event_name_requisites:
+                            event_template = self._createFormObjEventResStd(full_event_name_requisite,
+                                                                          value, self._eventID[event_name_requisite])
+                            obj_res[2][4].append(event_template)
                             # Увеличить счетчик событий формы
                             obj_res[2][4][0] += 1
                         break
             else:
-                res_evt_name_requisites = [evt[2][1] for evt in res.data[4][1:]]
-                if evt_name_requisite not in res_evt_name_requisites:
+                res_event_name_requisites = [event[2][1] for event in res.data[4][1:]]
+                if event_name_requisite not in res_event_name_requisites:
                     # Если имя объекта не указано, то это сама форма
-                    evt_template = self._createFormObjEventResStd(evt_name_requisite, value,
-                                                                  self._evtID[evt_name_requisite])
-                    res.data[4].append(evt_template)
+                    event_template = self._createFormObjEventResStd(event_name_requisite, value,
+                                                                  self._eventID[event_name_requisite])
+                    res.data[4].append(event_template)
                     # Увеличить счетчик событий формы
                     res.data[4][0] += 1
         else:
-            log.warning(u'Event \'%s\' not support' % evt_name_requisite)
+            log.warning(u'Event \'%s\' not support' % event_name_requisite)
             return
         
         return res.saveData()

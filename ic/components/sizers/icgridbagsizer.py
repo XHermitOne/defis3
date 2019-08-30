@@ -261,7 +261,7 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
                     elif obj.flag != wx.EXPAND:
                         self.SetItemMinSize(obj, obj.size)
                 except:
-                    LogLastError('Reconstruct Error')
+                    LogLastError('reconstruct Error')
             else:
                 self.objectList.append(obj)
                 

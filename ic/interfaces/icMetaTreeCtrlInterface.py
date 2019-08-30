@@ -248,25 +248,25 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
     
             self.SaveUserProperty('wcols', self.wcols)
 
-    def OnActivated(self, evt):
+    def OnActivated(self, event):
         """
         Обработчик события wx.EVT_TREE_ITEM_ACTIVATED, атрибут=activated.
         Событие посылается после выбора определенного пункт дерева по <Enter> или
         двойному щелчку мыщи.
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('activated')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
-    def OnAddItem(self, evt):
+    def OnAddItem(self, event):
         """
         Добавление нового узла.
         """
-        id = evt.GetId()
+        id = event.GetId()
         lst = self.treeDict.getRoot().components.values()
         for obj in lst:
             if obj.GetUniqId() == id:
@@ -296,7 +296,7 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
                 self.SelectItem(item)
                 break
                 
-    def OnCloneItem(self, evt):
+    def OnCloneItem(self, event):
         """
         Клонирование объекта плана.
         """
@@ -305,14 +305,14 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
         clone = data.Clone()
         self.ReLoadParentItemData(item)
     
-    def OnCopy(self, evt):
+    def OnCopy(self, event):
         """
         """
         item = self.GetSelection()
         level, data = self.getItemData_tree(ctrl=self, item=item)
         self.bObjBuff = data.copyChildren()
 
-    def OnDelItem(self, evt):
+    def OnDelItem(self, event):
         """
         Удаляем элемент дерева.
         """
@@ -326,10 +326,10 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
         if self.root != prnt_item:
             self.SelectItem(prnt_item)
                 
-    def OnExpand(self, evt):
+    def OnExpand(self, event):
         """
         """
-        root = evt.GetItem()
+        root = event.GetItem()
         if self.treeDict:
             level, res = self.getItemData_tree(ctrl=self, item=root)
             self.DeleteChildren(root)
@@ -346,14 +346,14 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
             t2 = time.clock()
 
         #   Отрабатываем функционал, определенный пользователем
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         ret, val = self.eval_attr('onExpand')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
     
-    def OnRightClick(self, evt):
+    def OnRightClick(self, event):
         """
         Обрабатываем сообщение <EVT_RIGHT_DOWN>.
         """
@@ -416,9 +416,9 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
                 menuObj.AppendItem(item)
                 self.Bind(wx.EVT_MENU, self.OnPaste, id=id)
 
-        self.PopupMenu(menuObj, evt.GetPoint())
+        self.PopupMenu(menuObj, event.GetPoint())
 
-    def OnPaste(self, evt):
+    def OnPaste(self, event):
         """
         """
         item = self.GetSelection()
@@ -427,17 +427,17 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
         if data.pastChildren():
             self.ReLoadParentItemData(item)
 
-    def OnSelected(self, evt):
+    def OnSelected(self, event):
         """
         Обработчик события wx.EVT_TREE_SEL_CHANGED, атрибут=<selected>.
         Событие посылается после перемещения курсора на другой пункт дерева.
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         ret, val = self.eval_attr('selected')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
      
     def ReLoadItemData(self, item):
         """

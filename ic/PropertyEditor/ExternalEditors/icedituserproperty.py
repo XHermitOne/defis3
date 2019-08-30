@@ -198,17 +198,17 @@ class icEditUserPropertyEditor(wx.propgrid.PGTextCtrlAndButtonEditor):
         if not ctrl:
             return False
 
-        evtType = event.GetEventType()
+        eventType = event.GetEventType()
 
-        if evtType == wx.wxEVT_COMMAND_BUTTON_CLICKED:
+        if eventType == wx.wxEVT_COMMAND_BUTTON_CLICKED:
             value = self._get_edit_dlg(attr=property.GetName(), value=self.tc.GetValue(),
                                        propEdt=self.property_edit_manager)
             property.SetValueInEvent(value)
             return True
-        # elif evtType == wx.wxEVT_COMMAND_TEXT_ENTER:
+        # elif eventType == wx.wxEVT_COMMAND_TEXT_ENTER:
         #     if propgrid.IsEditorsValueModified():
         #         return True
-        # elif evtType == wx.wxEVT_COMMAND_TEXT_UPDATED:
+        # elif eventType == wx.wxEVT_COMMAND_TEXT_UPDATED:
         #     #
         #     # Pass this event outside wxPropertyGrid so that,
         #     # if necessary, program can tell when user is editing

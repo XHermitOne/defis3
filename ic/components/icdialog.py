@@ -16,7 +16,7 @@
     - B{foregroundColor=None}: Цвет текста.
     - B{backgroundColor=None}: Цвет фона.
     - B{onClose = None}: Выражение, выполняемое при закрытии окна (обработка события EVT_CLOSE).
-        Если выражение вернет False, то окно не будет закрыто (не будет вызываться evt.Skip() ).
+        Если выражение вернет False, то окно не будет закрыто (не будет вызываться event.Skip() ).
     - B{setFocus = None}: Выражение, выполняемое при установлении фокуса на диалог (обработка события EVT_SET_FOCUS).
     - B{killFocus = None}: Выражение, выполняемое при потере фокуса на диалог (обработка события EVT_KILL_FOCUS).
     - B{style=0}: Стиль окна.
@@ -287,29 +287,29 @@ class icDialog(icWidget, wx.Dialog):
         """
         self._bChildsDestroied = prz
 
-    def OnSize(self, evt):
+    def OnSize(self, event):
         """
         Обрабатывает изменение размеров окна (EVT_SIZE).
         """
         self.Layout()
         self.Refresh()
-        evt.Skip()
+        event.Skip()
 
-    def OnSetFocus(self, evt):
+    def OnSetFocus(self, event):
         """
         Обрабатывает событие установки фокуса (EVT_SET_FOCUS).
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.eval_attr('setFocus')
-        evt.Skip()
+        event.Skip()
 
-    def OnKillFocus(self, evt):
+    def OnKillFocus(self, event):
         """
         Обрабатывает событие установки фокуса (EVT_SET_FOCUS).
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.eval_attr('killFocus')
-        evt.Skip()
+        event.Skip()
 
     def ShowModal(self):
         res = wx.Dialog.ShowModal(self)
@@ -342,7 +342,7 @@ class icDialog(icWidget, wx.Dialog):
         """
         return self.GetReturnCode() == wx.ID_OK
 
-    def OnClose(self, evt):
+    def OnClose(self, event):
         """
         Обрабатывает сообщение EVT_CLOSE на закрытие окна.
         """
@@ -352,7 +352,7 @@ class icDialog(icWidget, wx.Dialog):
 
         if self.isICAttrValue('onClose'):
             self.canClose = False
-            self.evalSpace['evt'] = evt
+            self.evalSpace['event'] = event
             self.SaveUserProperty('position', self.GetPosition())
             self.SaveUserProperty('size', self.GetSize())
             ret, val = self.eval_attr('onClose')
@@ -378,8 +378,8 @@ class icDialog(icWidget, wx.Dialog):
         self.evalSpace['__block_lock_rec'] = False
         self.canClose = True
 
-        if evt:
-            evt.Skip()
+        if event:
+            event.Skip()
 
     def Update(self, bAsk=False):
         """

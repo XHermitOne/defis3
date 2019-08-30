@@ -50,7 +50,7 @@ MT_IGNORED_CODF = (u'ВП', u'АС')
 
 class icScanDocPackManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
     
     def init(self):

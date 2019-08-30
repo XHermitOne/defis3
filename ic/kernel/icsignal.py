@@ -110,7 +110,7 @@ class icWxEvtSignal(icSignal):
     """
     Сигнал генерируемый на основе wx - события.
     """
-    def __init__(self, passport, obj, evt, *arg, **kwarg):
+    def __init__(self, passport, obj, event, *arg, **kwarg):
         """
         Конструктор сигнала.
         
@@ -119,7 +119,7 @@ class icWxEvtSignal(icSignal):
         """
         self.passport = passport
         #   Событие, которое сгенерировало сигнал (если оно было)
-        self.event = evt
+        self.event = event
 
         # Инициация сигнала
         self.init_signal()

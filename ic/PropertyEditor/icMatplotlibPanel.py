@@ -223,17 +223,17 @@ class icPlotPanel(wx.Panel):
         a.grid(True)
         self.toolbar.update()
         
-    def OnMouseMove(self, evt):
+    def OnMouseMove(self, event):
         """
         """
-        self.draw_cursor(evt)
+        self.draw_cursor(event)
         
-    def OnMouseLeftDown(self, evt):
+    def OnMouseLeftDown(self, event):
         """
         """
         self._statCursor = self.GetCursorPos()
         
-    def OnPaint(self, evt):
+    def OnPaint(self, event):
         """
         """
         self.erase_cursor()
@@ -243,7 +243,7 @@ class icPlotPanel(wx.Panel):
             pass
             
         self.canvas.draw()
-        evt.Skip()
+        event.Skip()
 
     def plot_data(self):
         a = self.subplot

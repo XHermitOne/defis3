@@ -19,8 +19,8 @@ class icKeyDownEvent(wx.PyCommandEvent):
     Класс события нажатия кнопки. Используется для передачи сообщения главному окну
     формы.
     """
-    def __init__(self, evtType, id):
-        wx.PyCommandEvent.__init__(self, evtType, id)
+    def __init__(self, eventType, id):
+        wx.PyCommandEvent.__init__(self, eventType, id)
         #   Пользовательские данные
         self.data = None
         #   Указатель на объект возбудивший событие
@@ -28,8 +28,8 @@ class icKeyDownEvent(wx.PyCommandEvent):
         #   Указатель на сообщение, по которому было инициировано текущее
         self._key_event = None
         
-    def SetKeyEvt(self, evt):
-        self._key_event = evt
+    def SetKeyEvt(self, event):
+        self._key_event = event
 
     def GetKeyEvt(self):
         return self._key_event
@@ -57,8 +57,8 @@ class icGridDestroyEvent(wx.PyEvent):
     Используется для передачи сообщения гриду о том, что ему пора разрушаться.
     """
 
-    def __init__(self, evtType, id):
-        wx.PyEvent.__init__(self, id, evtType)
+    def __init__(self, eventType, id):
+        wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
         self.id = id
         self.data = None
@@ -74,8 +74,8 @@ class icDlgPreDestroyEvent(wx.PyEvent):
     Используется для разрушения диалогов.
     """
 
-    def __init__(self, evtType, id):
-        wx.PyEvent.__init__(self, id, evtType)
+    def __init__(self, eventType, id):
+        wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
         self.id = id
         self.data = None
@@ -89,8 +89,8 @@ EVT_TEXT_TEMPL = wx.PyEventBinder(icEVT_TEXT_TEMPL)
 class icTextTemplEvent(wx.PyEvent):
     """
     """
-    def __init__(self, evtType, id):
-        wx.PyEvent.__init__(self, id, evtType)
+    def __init__(self, eventType, id):
+        wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
         self.id = id
         self.data = None
@@ -109,8 +109,8 @@ EVT_AUTO_TEXT_FILL = wx.PyEventBinder(icEVT_AUTO_TEXT_FILL)
 
 class icAutoTextFillEvent(wx.PyEvent):
 
-    def __init__(self, evtType, id):
-        wx.PyEvent.__init__(self, id, evtType)
+    def __init__(self, eventType, id):
+        wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
         self.id = id
         self.data = None
@@ -131,8 +131,8 @@ class icGridPostSelectEvent(wx.PyEvent):
     """
     """
 
-    def __init__(self, evtType, id):
-        wx.PyEvent.__init__(self, id, evtType)
+    def __init__(self, eventType, id):
+        wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
         self.id = id
         self.data = None
@@ -153,8 +153,8 @@ class icPostInitEvent(wx.PyEvent):
     """
     """
 
-    def __init__(self, evtType, id):
-        wx.PyEvent.__init__(self, id, evtType)
+    def __init__(self, eventType, id):
+        wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
         self.id = id
         self.data = None
@@ -176,8 +176,8 @@ class icLabelChangeEvent(wx.PyEvent):
     Сообщение, на изменение надписи визуального компонента.
     """
 
-    def __init__(self, evtType, id):
-        wx.PyEvent.__init__(self, id, evtType)
+    def __init__(self, eventType, id):
+        wx.PyEvent.__init__(self, id, eventType)
         #   Пользовательские данные
         self.id = id
         self.data = None

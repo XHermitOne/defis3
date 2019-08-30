@@ -386,9 +386,9 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
                     log.fatal('')
         self.SelectTitle()
 
-    def OnSize(self, evt):
-        evt.Layout()
-        evt.Skip()
+    def OnSize(self, event):
+        event.Layout()
+        event.Skip()
         
     def childCreator(self, bCounter, progressDlg):
         """
@@ -557,7 +557,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
             
         return False
         
-    def OnLeave(self, evt):
+    def OnLeave(self, event):
         """
         Обработчик события wx.EVT_LEAVE_WINDOW.
         """
@@ -565,14 +565,14 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
             self._helpWin.Show(False)
             self._helpWin.Destroy()
             self._helpWin = None
-        evt.Skip()
+        event.Skip()
             
-    def OnMove(self, evt):
+    def OnMove(self, event):
         """
         Обработчик события wx.EVT_MOTION.
         """
-        evt.Skip()
-        pos = x, y = evt.GetPosition()
+        event.Skip()
+        pos = x, y = event.GetPosition()
         px, py = self.GetPosition()
         sx, sy = self.GetSize()
         findx = self.GetTitleIndx(pos)
@@ -621,11 +621,11 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
             w += wo
         return findx
         
-    def OnPreSelect(self, evt):
+    def OnPreSelect(self, event):
         """
         Обработчик события wx.EVT_LEFT_DOWN.
         """
-        pos = evt.GetPosition()
+        pos = event.GetPosition()
         sx, sy = self.GetSize()
         
         # Определяем номер страницы, которая будет выбранна
@@ -658,21 +658,21 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
                     menu.AppendItem(item)
                     self.Bind(wx.EVT_MENU, self.OnMenu, id=id)
                 id += 1
-            self.PopupMenu(menu, evt.GetPosition())
+            self.PopupMenu(menu, event.GetPosition())
         else:
-            evt.Skip()
+            event.Skip()
 
-    def OnMenu(self, evt):
-        sel = evt.GetId() - 10000
+    def OnMenu(self, event):
+        sel = event.GetId() - 10000
         self.SetFirstVisible(sel)
         self.SelectTitle(sel)
-        evt.Skip()
+        event.Skip()
         
-    def OnSelectTitle(self, evt):
+    def OnSelectTitle(self, event):
         """
         Обработчик события wx.EVT_LEFT_UP, атрибут=onSelectTitle.
         """
-        evt.Skip()
+        event.Skip()
 
     def AcceptsFocus(self):
         """
@@ -848,7 +848,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
         dc.DrawPolygon(PrevPointsDark, sx - IC_NB_SERV_ZONE+19, (IC_NB_HEIGHT - 8)/2)
         dc.EndDrawing()
         
-    def OnPaint(self, evt):
+    def OnPaint(self, event):
         dc = wx.PaintDC(self)
         width, height = self.GetClientSize()
 

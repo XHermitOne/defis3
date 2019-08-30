@@ -34,7 +34,7 @@ class icNSIBodyTypeTabManager(icmanagerinterface.icWidgetManager):
     содержания отсканированных документов.
     """
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def set_default_data(self):

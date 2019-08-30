@@ -190,7 +190,7 @@ class icCheckBox(icWidget, wx.CheckBox):
         self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
         self.BindICEvt()
 
-    def OnSetFocus(self, evt):
+    def OnSetFocus(self, event):
         """
         Обрабатывает установку фокуса.
         Обрабатывается потеря фокуса - используется для контроля значения поля.
@@ -205,20 +205,20 @@ class icCheckBox(icWidget, wx.CheckBox):
         except:
             pass
 
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         self.eval_attr('setFocus')
-        evt.Skip()
+        event.Skip()
 
-    def OnKillFocus(self, evt):
+    def OnKillFocus(self, event):
         """
         Обрабатывает потерю фокуса
         Обрабатывается потеря фокуса - используется для контроля значения поля.
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         self.eval_attr('loseFocus')
-        evt.Skip()
+        event.Skip()
         
         if self.IsModified() and self.dataset is not None:
             value = self.GetValue()
@@ -234,10 +234,10 @@ class icCheckBox(icWidget, wx.CheckBox):
         except:
             pass
 
-    def OnCheckBox(self, evt):
+    def OnCheckBox(self, event):
         """
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         self.bChanged = 1
 
@@ -246,7 +246,7 @@ class icCheckBox(icWidget, wx.CheckBox):
         else:
             self.eval_attr('check')
             
-        evt.Skip()
+        event.Skip()
 
     def IsModified(self):
         """

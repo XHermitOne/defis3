@@ -58,7 +58,7 @@ def HlpTreeList_onInit(obj):
     ctrl.loadTree(sprav_tree)
 
 
-def ok_button_mouseClick(obj, evt):
+def ok_button_mouseClick(obj, event):
     """ 
     Обработка нажатия кнопки ОК.
     """
@@ -81,7 +81,7 @@ def ok_button_mouseClick(obj, evt):
     obj.GetContext()['_resultEval'] = cod
 
 
-def cancel_button_mouseClick(obj, evt):
+def cancel_button_mouseClick(obj, event):
     """ 
     Обработка нажатия кнопки Cancel.
     """
@@ -89,26 +89,26 @@ def cancel_button_mouseClick(obj, evt):
     obj.GetContext()['result'] = None
 
 
-def HlpTreeList_itemActivated(obj, evt):
+def HlpTreeList_itemActivated(obj, event):
     """ 
     Обработка выбора элемента списка.
     """
-    return ok_button_mouseClick(obj, evt)
+    return ok_button_mouseClick(obj, event)
 
 
-def HlpTreeList_keyDown(obj, evt):
+def HlpTreeList_keyDown(obj, event):
     """ 
     Обработка нажатия кнопки.
     """
-    key = evt.GetKeyCode()
+    key = event.GetKeyCode()
     if key == wx.WXK_ESCAPE:
         obj.GetContext()['result'] = None
         obj.GetContext().GetObject(HLP_DLG_NAME).EndModal(wx.ID_CANCEL)
     elif key == wx.WXK_RETURN:
-        return ok_button_mouseClick(obj, evt)
+        return ok_button_mouseClick(obj, event)
 
 
-def HlpTreeList_selectChanged(obj, evt):
+def HlpTreeList_selectChanged(obj, event):
     """ 
     Обработка изменения текущего элемента списка.
     """

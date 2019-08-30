@@ -162,15 +162,15 @@ class icSpravTreeComboPopup(wx.ComboPopup):
         """
         return self.FindItem(parentItem, TREE_HIDDEN_ITEM_LABEL).IsOk()
 
-    def OnMotion(self, evt):
+    def OnMotion(self, event):
         """
         have the selection follow the mouse, like in a real combobox
         """
-        item, flags = self.tree.HitTest(evt.GetPosition())
+        item, flags = self.tree.HitTest(event.GetPosition())
         if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
             self.tree.SelectItem(item)
             self.curitem = item
-        evt.Skip()
+        event.Skip()
 
     def _isEnableItem(self, Item_):
         """
@@ -180,18 +180,18 @@ class icSpravTreeComboPopup(wx.ComboPopup):
         # Если текст черный тогда его можно выбирать
         return colour == DEFAULT_ENABLE_ITEM_COLOUR
 
-    def OnLeftDown(self, evt):
+    def OnLeftDown(self, event):
         """
         Обработчик выбора элемента дерева.
         """
         # do the combobox selection
         self.curitem = None
-        item, flags = self.tree.HitTest(evt.GetPosition())
+        item, flags = self.tree.HitTest(event.GetPosition())
         if item and self._isEnableItem(item) and flags & wx.TREE_HITTEST_ONITEMLABEL:
             self.curitem = item
             self.value = item
             self.Dismiss()
-        evt.Skip()
+        event.Skip()
 
     def get_selected_sprav_code(self, AltCodeField_=None):
         """
@@ -283,7 +283,7 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
         self.tbtn.SetBackgroundColour(wx.LIGHT_GREY)
         self.tree.Bind(wx.EVT_BUTTON, self.OnOk)
 
-    def OnOk(self, evt):
+    def OnOk(self, event):
         cod = self._combo.get_selected_sprav_code('s1')
         self.Dismiss()
 
@@ -314,23 +314,23 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
         txt = u','.join([self.tree.GetItemText(item).split(u' ')[0] for item in self.check_items])
         return txt
 
-    def OnMotion(self, evt):
+    def OnMotion(self, event):
         self.tbtn.SetPosition((0, 0))
-        evt.Skip()
+        event.Skip()
 
-    def OnChecking(self, evt):
+    def OnChecking(self, event):
         """
         Выбор элемента дерева.
         """
-        item = evt.GetItem()
+        item = event.GetItem()
         if item and self._isEnableItem(item):
-            evt.Skip()
+            event.Skip()
 
-    def OnChecked(self, evt):
+    def OnChecked(self, event):
         """
         Выбор элемента дерева.
         """
-        item = evt.GetItem()
+        item = event.GetItem()
         if self.tree.IsItemChecked(item) and item not in self.check_items:
             self.check_items.append(item)
         elif item in self.check_items:
@@ -361,12 +361,12 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
             if child in self.check_items:
                 self.check_items.remove(child)
 
-    def OnLeftDown(self, evt):
+    def OnLeftDown(self, event):
         """
         Обработчик выбора элемента дерева.
         """
         self.tbtn.SetPosition((0, 0))
-        evt.Skip()
+        event.Skip()
 
     def get_selected_sprav_code(self, *arg, **kwarg):
         """

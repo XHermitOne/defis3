@@ -177,7 +177,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
             # обработчика OnShow
             try:
                 if self.isICAttrValue(main_window.RES_WIN_OPEN):
-                    self.evalSpace['evt'] = event
+                    self.evalSpace['event'] = event
                     self.evalSpace['event'] = event
                     self.eval_attr(main_window.RES_WIN_OPEN)
             except:
@@ -194,7 +194,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
         """
         try:
             if self.isICAttrValue(main_window.RES_WIN_CLOSE):
-                self.evalSpace['evt'] = event
+                self.evalSpace['event'] = event
                 self.evalSpace['event'] = event
                 result = self.eval_attr(main_window.RES_WIN_CLOSE)
                 if result and not result[1]:
@@ -251,8 +251,8 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
             log.fatal(u'Ошибка добавления страницы в главное окно.')
         return None
     
-    def OnPaint(self, evt):
-        evt.Skip()
+    def OnPaint(self, event):
+        event.Skip()
         
     def addOrgPage(self, page, title, open_exists=False, image=None,
                    bCanClose=True, open_script=None, close_script=None, default_page=-1,

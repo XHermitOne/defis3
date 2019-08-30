@@ -11,7 +11,7 @@ import re
 
 # --- Шаблоны
 interfaceTemplate = '''
-    def %s(self, evt):
+    def %s(self, event):
         \"\"\"
         Функция обрабатывает событие <?>.
         \"\"\"

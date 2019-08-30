@@ -227,7 +227,7 @@ class icSpravMultipleChoiceComboCtrl(parentModule.icSpravMultipleChoiceComboCtrl
         Обработчик изменения комбобокса.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['event'] = event
         self.evalSpace['SPRAV'] = self.getSprav()
         self.evalSpace['SPRAV_CODES'] = self.getCodes()

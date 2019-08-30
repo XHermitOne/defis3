@@ -139,17 +139,17 @@ def CreatUserClass(discr, file_templ=None):
                     tp, func, id = val
                     if not func:
                         func = 'On_' + attr
-                    text += ot + 'def %s(self, evt):' % func + '\n'
+                    text += ot + 'def %s(self, event):' % func + '\n'
                     text += ot + u'    """\n'
                     text += ot + u'    Event %s, attribute=%s' % (tp, attr) + '\n'
                     text += ot + u'    """\n'
-                    text += ot + '    self.eval_space[\'evt\'] = evt\n'
+                    text += ot + '    self.eval_space[\'event\'] = event\n'
                     text += ot + '    self.eval_space[\'self\'] = self\n'
                     text += ot + '    ret, val = self.eval_attr(\'%s\')' % attr + '\n'
                     text += ot + '    if ret and val:\n'
-                    text += ot + '        evt.Skip()\n'
+                    text += ot + '        event.Skip()\n'
                     text += ot + '    elif not ret:\n'
-                    text += ot + '        evt.Skip()\n\n'
+                    text += ot + '        event.Skip()\n\n'
                     
                 text = '\n'+text
             cur, templ = ReplaceTag(templ, cur, name, text)

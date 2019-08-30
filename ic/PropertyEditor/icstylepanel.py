@@ -154,7 +154,7 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         """
         return self.designer_panel
 
-    def onRefresh(self, evt):
+    def onRefresh(self, event):
         """
         Обновление дизайнера.
         """
@@ -162,15 +162,15 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         # В момент обновления панель может быть разрушена
         try:
             self.refresh_tool.SetToggle(False)
-            evt.Skip()
+            event.Skip()
         except:
             pass
         
-    def onMouseClick(self, evt):
+    def onMouseClick(self, event):
         """
         Обрабатывет сообщение.
         """
-        obj = evt.GetEventObject()
+        obj = event.GetEventObject()
         flag = self.getFlag()
         if obj in self.flagCompDict.values():
             flag = self.getFlag()
@@ -182,13 +182,13 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
                 edt.ChangeResProperty(edt.selectedObj, 'proportion', int(prop), bRefresh=True)
                 edt.ChangeSelItemProperty('proportion', int(prop))
                 
-            evt.Skip()
+            event.Skip()
             return
 
         for tool in self.getToolList():
             if tool != obj and tool not in self.flagCompDict.values():
                 tool.SetToggle(False)
-        evt.Skip()
+        event.Skip()
 
     def getFlag(self):
         """

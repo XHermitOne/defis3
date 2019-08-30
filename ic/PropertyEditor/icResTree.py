@@ -256,7 +256,7 @@ def InitObjectsInfo(bRefresh=False):
     t2 = time.clock()
 
 
-def OnFile(evt):
+def OnFile(event):
     """
     Выбирает имя файла.
     """
@@ -265,7 +265,7 @@ def OnFile(evt):
     path = ''
     if dlg.ShowModal() == wx.ID_OK:
         path = dlg.GetPaths()[0]
-        obj = evt.GetEventObject().editor
+        obj = event.GetEventObject().editor
         obj.nameValue.value = path
         obj.nameValue.oldValue = obj.value
         obj.nameValue.edit_ctrl.SetValue(obj.nameValue.GetStr())
@@ -1050,32 +1050,32 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def OnFindClose(self, event):
         event.GetDialog().Destroy()
 
-    def OnKeyDown(self, evt):
+    def OnKeyDown(self, event):
         """
         Обрабатывает нажатие клавиши.
         """
-        if evt.GetKeyCode() in (ord(u'function'), ord(u'F'), ord(u'А'), ord(u'а')) and evt.ControlDown():
+        if event.GetKeyCode() in (ord(u'function'), ord(u'F'), ord(u'А'), ord(u'а')) and event.ControlDown():
             self.OnHelpFind()
-        elif evt.GetKeyCode() in (ord(u'g'), ord(u'G'), ord(u'П'), ord(u'п')) and evt.ControlDown():
-            self.OnFindNext(evt)
+        elif event.GetKeyCode() in (ord(u'g'), ord(u'G'), ord(u'П'), ord(u'п')) and event.ControlDown():
+            self.OnFindNext(event)
 
         if not self.editor.isToggleEnable():
-            evt.Skip()
+            event.Skip()
             return
 
-        if evt.GetKeyCode() == wx.WXK_DELETE and not evt.ControlDown() and not evt.ShiftDown() \
-           and not evt.AltDown():
+        if event.GetKeyCode() == wx.WXK_DELETE and not event.ControlDown() and not event.ShiftDown() \
+           and not event.AltDown():
             if dlgfunc.getAskDlg(u'УДАЛЕНИЕ', u'Действительно удалить объект?') == wx.ID_YES:
                 self.OnDeleteItem(None)
-        elif evt.GetKeyCode() == wx.WXK_INSERT and evt.ControlDown():
+        elif event.GetKeyCode() == wx.WXK_INSERT and event.ControlDown():
             self.OnCopyItem(None)
 
-        elif evt.GetKeyCode() == wx.WXK_INSERT and evt.ShiftDown():
+        elif event.GetKeyCode() == wx.WXK_INSERT and event.ShiftDown():
             self.OnPasteItem(None)
 
-        evt.Skip()
+        event.Skip()
 
-    def OnSize(self, evt):
+    def OnSize(self, event):
         try:
             h = self.editor.GetSashPosition()
             sz = self.editor.notebook.GetSize()
@@ -1083,14 +1083,14 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         except:
             pass
 
-        evt.Skip()
+        event.Skip()
 
-    def OnRightClick(self, evt, bgr_win=None):
+    def OnRightClick(self, event, bgr_win=None):
         """
         Обрабатывается нажатие на правую кнопку мыши. Выводится
         меню с объектами которые могут быть добавлены в ресурсное
         описание.
-        @param evt: Event.
+        @param event: Event.
         @param bgr_win: Окно, на которое выводится меню.
         """
         bgr_win = bgr_win or self
@@ -1235,9 +1235,9 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             item = menu.FindItem(self._menu_insert_inst_id)
             item.Enable(False)
 
-        menu.Popup(evt.GetPosition(), bgr_win)
+        menu.Popup(event.GetPosition(), bgr_win)
 
-    def OnGenClass(self, evt):
+    def OnGenClass(self, event):
         """
         Генерирует класс по ресурсу при выборе соответствующего пункта меню.
         """
@@ -1266,7 +1266,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         dlg_inp.Destroy()
 
-    def OnObjModule(self, evt):
+    def OnObjModule(self, event):
         """
         Создание модуля объекта.
         """
@@ -1345,7 +1345,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             else:
                 return
 
-    def OnTempl(self, evt):
+    def OnTempl(self, event):
         """
         Вызывает функцию генерации компонента по ресурсу.
         """
@@ -1365,7 +1365,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         dlg_inp.Destroy()
 
-    def OnInheritComponent(self, evt):
+    def OnInheritComponent(self, event):
         """
         Наследует компонент от другого компонента системы.
         """
@@ -1392,7 +1392,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             prnt_dlg.Destroy()
         dlg_inp.Destroy()
 
-    def OnCopyItem(self, evt):
+    def OnCopyItem(self, event):
         """
         Копирует описание объекта в буффер.
         """
@@ -1402,7 +1402,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         item = self.GetSelection()
         setCopyBuffEdt(self.GetItemData(item))
 
-    def OnCopyChildItems(self, evt):
+    def OnCopyChildItems(self, event):
         if not self.editor.isToggleEnable():
             return
         item = self.GetSelection()
@@ -1440,7 +1440,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
         return False
 
-    def OnPasteChildItems(self, evt):
+    def OnPasteChildItems(self, event):
         """
         Вставляем в ресурс дочерние элементы скопированного ресурса.
         """
@@ -1461,7 +1461,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         if lst:
             self.GetResEditor().RefreshGraphEditor()
 
-    def OnPasteItem(self, evt):
+    def OnPasteItem(self, event):
         """
         Вставляет описание объекта из буффера перед текущим элементом
         описания.
@@ -1482,7 +1482,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             dlgfunc.openWarningBox(u'ОШИБКА',
                                 u'Не возможно вставить объект %s в %s' % (insObj['type'], res['type']))
 
-    def OnPasteItemAfter(self, evt):
+    def OnPasteItemAfter(self, event):
         """
         Вставляет описание объекта из буффера после текущего
         элемента описания.
@@ -1503,7 +1503,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             dlgfunc.openWarningBox(u'ОШИБКА',
                                 u'Не возможно вставить объект %s в %s' % (insObj['type'], res['type']))
 
-    def OnPasteItemInstead(self, evt):
+    def OnPasteItemInstead(self, event):
         """
         Вставляет описание объекта из буффера вместо текущего элемента описания.
         """
@@ -1523,11 +1523,11 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
             dlgfunc.openWarningBox(u'ОШИБКА',
                                 u'Не возможно вставить объект %s в %s' % (insObj['type'], res['type']))
 
-    def OnAddItem(self, evt):
+    def OnAddItem(self, event):
         """
         Добавляет описание объекта в ресурс.
         """
-        id = evt.GetId()
+        id = event.GetId()
         obj_type = self.menuDict[id]
         item = self.GetSelection()
         res = self.GetItemData(item)
@@ -1537,7 +1537,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         res_obj, spc = findSpcStruct(res_obj)
         self.AddItem(item, res_obj)
         
-    def OnDeleteItem(self, evt):
+    def OnDeleteItem(self, event):
         """
         Удаляет из ресурса описание объекта.
         """
@@ -1545,12 +1545,12 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         item = self.GetSelection()
         self.DeleteItem(item)
 
-    def OnSelChanged(self, evt, item=None):
+    def OnSelChanged(self, event, item=None):
         """
         Функция отрабатывает при изменении выбранного пункта дерева.
         """
-        if evt:
-            item = evt.GetItem()
+        if event:
+            item = event.GetItem()
             
         if not item:
             return
@@ -1595,8 +1595,8 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
                         pnl.toolpanel.EnableAllType(True)
 
         self.lastSel = item
-        if evt:
-            evt.Skip()
+        if event:
+            event.Skip()
 
     def OnHelpFind(self):
         """
@@ -2380,7 +2380,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
 
         return True
 
-    def OnClose(self, evt):
+    def OnClose(self, event):
         """
         Обрабатываем сообщение о закрытии окна  <EVT_CLOSE>.
         """
@@ -2390,7 +2390,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         if self.graphEditor:
             self.graphEditor.Close(True)
 
-        evt.Skip()
+        event.Skip()
 
     def open_ide_py_module(self, py_filename=None):
         """
@@ -2422,13 +2422,13 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             log.warning(u'Не определен файл модуля ресурса')
         return False
 
-    def OnPyScript(self, evt):
+    def OnPyScript(self, event):
         """
         Вызывает на редактирование обработчик событий для ресурсов, оформленных в виде
         питоновского модуля.
         """
         self.open_ide_py_module()
-        # evt.Skip()
+        # event.Skip()
 
     def OpenIDEFile(self, fl):
         """
@@ -2447,7 +2447,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         else:
             log.warning(u'Не определен объект IDE для открытия файла <%s>' % fl)
 
-    def OnGraphEditor(self, evt):
+    def OnGraphEditor(self, event):
         """
         Обработка нажатия кнопки вызова графического редактора.
         """
@@ -2487,7 +2487,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             mgr.GetPane(u'DefisToolPanel').Show()
             mgr.Update()
 
-    def OnUserClass(self, evt):
+    def OnUserClass(self, event):
         """
         Генерирует пользовательский компонент.
         """
@@ -2497,22 +2497,22 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             #   Обновляем информацию о компонентах системы
             InitObjectsInfo()
 
-    def OnHelp(self, evt):
+    def OnHelp(self, event):
         """
         Вызов справки на компонент.
         """
         self.tree.HelpItem()
 
-    def OnEditor(self, evt):
+    def OnEditor(self, event):
         """
         Вызов редактора.
         """
         frame = ic_pyed.icPyEditorFrame(None, {'name': 'editor', 'type': 'PyEditor',
                                                'position': (50, 50), 'size': (500, 500)})
         frame.Show()
-        evt.Skip()
+        event.Skip()
 
-    def OnLoad(self, evt):
+    def OnLoad(self, event):
         """
         Загружает ресурсное описание из выбранного файла.
         """
@@ -2525,16 +2525,16 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             # Если редактор встроен в IDE - открываем файл в редакторе
             self.OnPyScript(None)
 
-        evt.Skip()
+        event.Skip()
 
-    def OnSave(self, evt, bSaveAs=True):
+    def OnSave(self, event, bSaveAs=True):
         """
         Обрабатывает нажатие кнопки 'сохранить'.
         """
         if self.file is None or self.file == '' and bSaveAs:
             #
             if dlgfunc.openAskBox(u'ВНИМАНИЕ', u'Сохранить изменения в ресурсе?'):
-                self.OnSaveAs(evt)
+                self.OnSaveAs(event)
         elif self.is_res_module(self.file):
             resource.updateICObject(self.file, self._formName, self.getResource(), self._version)
             ide = self.GetIDEInterface()
@@ -2550,7 +2550,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
         else:
             self.SaveRes(self.file)
 
-    def OnSaveAs(self, evt):
+    def OnSaveAs(self, event):
         """
         Обрабатывает нажатие кнопки 'сохранить как'.
         """
@@ -2598,14 +2598,14 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
 
             self.tree.SetItemText(self.tree.root, text_old + ' ( ' + path.split('\\')[-1] + ' )')
 
-    def OnDelete(self, evt):
+    def OnDelete(self, event):
         """
         Удаляет объект из ресурсного описания.
         """
         if self.isToggleEnable():
             self.tree.OnDeleteItem(None)
 
-    def OnTest(self, evt):
+    def OnTest(self, event):
         """
         Тестируем компонент, который строится по ресурсному описанию.
         """
@@ -2661,14 +2661,14 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             except:
                 cls.TestComponentResource(res, context=evalSpace, parent=self)
 
-    def OnSize(self, evt):
+    def OnSize(self, event):
         """
         Обработка события на изменение размеров окна.
         """
-        sz = evt.GetSize()
+        sz = event.GetSize()
         h = self.GetSashPosition()
         self.notebook.GetPropertyEditor().Refresh()
-        evt.Skip()
+        event.Skip()
 
     def RefreshTree(self):
         """
@@ -2790,7 +2790,7 @@ class ResourseEditorFrame(wx.Frame):
         self.res_edt = icResourceEditor(self, -1, {'style_work': 'single', 'res': None, 'size': (300, 100)})
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
-    def OnClose(self, evt):
+    def OnClose(self, event):
         """
         Обработка закрытия окна.
         """
@@ -2898,7 +2898,7 @@ class ResourseEditorFrame2(wx.Frame):
         self._edt = GetProjectEditor(self)
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
-    def OnClose(self, evt):
+    def OnClose(self, event):
         """
         Обработка закрытия окна.
         """

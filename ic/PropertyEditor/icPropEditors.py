@@ -399,12 +399,12 @@ class icEditPropCombine(icEditPropCtrl):
         self.nameValue.main.RefreshPos()
         self.nameValue.main.refreshSplitter()
         
-    def OnExpand(self, evt):
+    def OnExpand(self, event):
         """
         Функция запускается при выборе CheckBox в строке свойств.
         """
         self.Expand()
-        evt.Skip()
+        event.Skip()
 
 
 class icEditPropDict(icEditPropCtrl):
@@ -484,12 +484,12 @@ class icEditPropDict(icEditPropCtrl):
         self.nameValue.main.RefreshPos()
         self.nameValue.main.refreshSplitter()
         
-    def OnExpand(self, evt):
+    def OnExpand(self, event):
         """
         Функция запускается при выборе CheckBox в строке свойств.
         """
         self.Expand()
-        evt.Skip()
+        event.Skip()
 
     def AddProp(self):
         """
@@ -520,7 +520,7 @@ class icEditImportNames(icEditPropDict):
         """
         icEditPropDict.__init__(self, nameValue, pos, size, style)
         
-    def OnExpand(self, evt):
+    def OnExpand(self, event):
         """
         Функция запускается при выборе CheckBox в строке свойств.
         """
@@ -537,13 +537,13 @@ class icEditImportNames(icEditPropDict):
                 if indx > last_indx:
                     break
         
-        evt.Skip()
+        event.Skip()
         
-    def OnDblClick(self, evt):
+    def OnDblClick(self, event):
         """
         Обрабатывает двойной щелчок мыши на редакторе импортируемых имен.
         """
-        ctrl = evt.GetEventObject()
+        ctrl = event.GetEventObject()
         
         dirs = [os.getcwd()] + sys.path
         fname = os.sep + ctrl.GetLabel().replace(' ', '').replace('.', os.sep)+'.py'
@@ -649,7 +649,7 @@ class icEditPropCheckBox(icEditPropCtrl):
         self.editorCtrl.Bind(wx.EVT_CHECKBOX, self.OnCheckBox, id=self.wID)
         self.editorCtrl.SetFocus()
         
-    def OnCheckBox(self, evt):
+    def OnCheckBox(self, event):
         
         if self.GetValue():
             self.value = 0
@@ -660,7 +660,7 @@ class icEditPropCheckBox(icEditPropCtrl):
             self.checkBox.SetValue(1)
             self.checkBox.SetLabel('True')
             
-        evt.Skip()
+        event.Skip()
 
 
 EPBSize = 26
@@ -698,17 +698,17 @@ class icEditPropTButton(icEditPropCtrl):
 
         self.nameValue.main.panel2.Bind(wx.EVT_TEXT, self.OnText, id=self.wID)
         
-    def OnButton(self, evt):
+    def OnButton(self, event):
         """
         """
                 
         self.nameValue.value = self.propEditor['OnButton']()
         self.nameValue.oldValue = self.value
         self.nameValue.edit_ctrl.SetValue(self.nameValue.GetStr())
-        evt.Skip()
+        event.Skip()
         
-    def OnText(self, evt):
-        evt.Skip()
+    def OnText(self, event):
+        event.Skip()
         self.button.Refresh(True)
         
     def SetSize(self, width, height):
@@ -765,7 +765,7 @@ class icEditColor(icEditPropTButton):
             ret = (ret.Red(), ret.Green(), ret.Blue())
         return ret
     
-    def OnSelectColor(self, evt):
+    def OnSelectColor(self, event):
         """
         Запускает стандартное диалоговое окно для выбора цвета.
         """
@@ -787,7 +787,7 @@ class icEditColor(icEditPropTButton):
             self.nameValue.edit_ctrl.SetFocus()
         
         dlg.Destroy()
-        evt.Skip()
+        event.Skip()
 
 
 class icEditFont(icEditPropTButton):
@@ -822,7 +822,7 @@ class icEditFont(icEditPropTButton):
             MsgBox(None, u'Ошибка ввода <%s>' % self.editorCtrl.GetValue())
         return ret
             
-    def OnSelectFont(self, evt):
+    def OnSelectFont(self, event):
         """
         Запускает стандартное диалоговое окно для выбора шрифта.
         """
@@ -850,7 +850,7 @@ class icEditFont(icEditPropTButton):
 
         dlg.Destroy()
             
-    def OnExpand(self, evt):
+    def OnExpand(self, event):
         """
         Функция запускается при выборе CheckBox.
         """
@@ -901,7 +901,7 @@ class icEditFont(icEditPropTButton):
         self.nameValue.main.RefreshPos()
         self.nameValue.main.refreshSplitter()
             
-        evt.Skip()
+        event.Skip()
 
 
 class icEditPropPyScript(icEditPropTButton):
@@ -927,13 +927,13 @@ class icEditPropPyScript(icEditPropTButton):
         icEditPropTButton.__init__(self, nameValue, pos, size, style, label='Py')
         self.editorCtrl.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
         
-    def OnKeyDown(self, evt):
+    def OnKeyDown(self, event):
         """
         Отлавливаем нажатие <Ctrl-M> для выбора метода из библиотеки методов.
         """
-        cod = evt.GetKeyCode()
+        cod = event.GetKeyCode()
         
-        if (cod in [ord('m'), ord('M')] and evt.ControlDown()) or cod == wx.WXK_F1:
+        if (cod in [ord('m'), ord('M')] and event.ControlDown()) or cod == wx.WXK_F1:
             dlg = MthDialog(self.nameValue.main, icwidget.icNewId(), u'Выбери метод', size=(400, 350))
             ret = dlg.ShowModal()
         
@@ -956,7 +956,7 @@ class icEditPropPyScript(icEditPropTButton):
                                                 
             dlg.Destroy()
          
-        evt.Skip()
+        event.Skip()
         
     def isScript(self):
         """
@@ -965,7 +965,7 @@ class icEditPropPyScript(icEditPropTButton):
         value = self.nameValue.value
         return isinstance(value, str) and ('\r\n' in value or '\n' in value)
         
-    def OnEditScript(self, evt):
+    def OnEditScript(self, event):
         """
         """
         #   Определяем смещение видимой части окна
@@ -1090,7 +1090,7 @@ class icEditNewProperty(icEditPropTButton):
         nameValue.dict['OnButton'] = self.OnAddProperty
         icEditPropTButton.__init__(self, nameValue, pos, size, style, '+')
 
-    def OnAddProperty(self, evt):
+    def OnAddProperty(self, event):
         """
         Добавляет дополнительное свойство в редактор.
         """
@@ -1117,7 +1117,7 @@ class icEditNewProperty(icEditPropTButton):
             else:
                 MsgBox(self.nameValue.main, u'Свойств с именем <%s> уже есть.' % propName)
             
-        evt.Skip()
+        event.Skip()
 
 
 class icEditAddProperty(icEditPropPyScript):
@@ -1151,16 +1151,16 @@ class icEditAddProperty(icEditPropPyScript):
         
         self.editorCtrl.Bind(wx.EVT_BUTTON, self.OnDelProperty, id=idButtonDel)
         
-    def OnText(self, evt):
-        evt.Skip()
+    def OnText(self, event):
+        event.Skip()
         self.button.Refresh(True)
         self.buttonDel.Refresh(True)
 
-    def OnDelProperty(self, evt):
+    def OnDelProperty(self, event):
         """
         Удаляет дополнительное свойство из редактора.
         """
-        evt.Skip()
+        event.Skip()
         indx = self.nameValue.GetIndx()
         msg = u'Вы действительно хотите удалить свойство <%s>?' % self.nameValue.name
                 

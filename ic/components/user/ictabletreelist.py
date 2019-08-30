@@ -576,41 +576,41 @@ class icTableTreeList(icwidget.icWidget,
         self._stateFunction = func
         
     # --- Обработчики событий
-    def OnSelected(self, evt):
+    def OnSelected(self, event):
         """
         Обработчик события wx.EVT_TREE_SEL_CHANGED, атрибут=selected
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('selected')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
-    def OnActivated(self, evt):
+    def OnActivated(self, event):
         """
         Обработчик события wx.EVT_TREE_ITEM_ACTIVATED, атрибут=activated
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('activated')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
-    def OnKeyDWN(self, evt):
+    def OnKeyDWN(self, event):
         """
         Обработчик события wx.EVT_KEY_DOWN, атрибут=keyDown
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('keyDown')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
     def OnTimer(self):
         """

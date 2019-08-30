@@ -157,7 +157,7 @@ class icMetaItem(icwidget.icSimple, metaitem.icMetaItemEngine):
         """
         context = self.GetContext()
         context['self'] = self
-        context['evt'] = event
+        context['event'] = event
         context['event'] = event
         return self.eval_attr('on_init')
 
@@ -168,7 +168,7 @@ class icMetaItem(icwidget.icSimple, metaitem.icMetaItemEngine):
         """
         context = self.GetContext()
         context['self'] = self
-        context['evt'] = event
+        context['event'] = event
         context['event'] = event
         return self.eval_attr('on_del')
 
@@ -179,7 +179,7 @@ class icMetaItem(icwidget.icSimple, metaitem.icMetaItemEngine):
         """
         context = self.GetContext()
         context['self'] = self
-        context['evt'] = event
+        context['event'] = event
         context['event'] = event
         return self.eval_attr('on_edit')
 
@@ -190,6 +190,6 @@ class icMetaItem(icwidget.icSimple, metaitem.icMetaItemEngine):
         """
         context = self.GetContext()
         context['self'] = self
-        context['evt'] = event
+        context['event'] = event
         context['event'] = event
         return self.eval_attr('on_edit')

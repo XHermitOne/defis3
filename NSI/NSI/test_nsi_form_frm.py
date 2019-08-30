@@ -34,7 +34,7 @@ def test_urls():
             
     ic.Logout()
 
-def OnHelp(obj, evt):
+def OnHelp(obj, event):
     """ """
     print('Help Sprav')
     sprav = ic.metadata.NSI.mtd.nsi_sprav.create()
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     test_urls()
 
 
-def fieldCtrl(obj, value, evt):
+def fieldCtrl(obj, value, event):
     sprav = ic.metadata.NSI.mtd.nsi_sprav.create()
     ret = sprav.NSITst.Ctrl(value, field='cod')
     print('*** CtrlSprav', value, ret)

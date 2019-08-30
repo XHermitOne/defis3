@@ -466,21 +466,21 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         return self.setDataset(data_src_filter=data_src_filter)
 
     #   Обработчики событий
-    def onItemSelected(self, evt):
+    def onItemSelected(self, event):
         """ 
         Обрабатываем сообщение о выборе строки списка.
         """
         self.SetFocus()
-        evt.Skip()
+        event.Skip()
         result = True
         currentItem = self.GetFocusedRow()
         #   Формируем пространство имен
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['row'] = currentItem
 
         self.evalSpace['values']=self.GetObjectAt(currentItem)
-        self.evalSpace['_lfp'] = {'function': 'onItemSelected', 'evt': evt,
+        self.evalSpace['_lfp'] = {'function': 'onItemSelected', 'event': event,
                                   'currentItem': currentItem, 'row': currentItem, 'self': self}
         
         if not self.getSelectedRecord() in [None, '', 'None']:
@@ -488,24 +488,24 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
             if ret:
                 result = bool(val)
 
-    def onItemActivated(self, evt):
+    def onItemActivated(self, event):
         """ 
         Активация (Enter/DobleClick) строки.
         """
         currentItem = self.GetFocusedRow()
         rowData = []
         #   Формируем пространство имен
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['row'] = currentItem
         
         rowDict = self.GetObjectAt(currentItem)
         self.evalSpace['values'] = rowDict
         self.evalSpace['_lfp'] = {'function': 'onItemActivated',
-                                  'evt': evt, 'currentItem': currentItem,
+                                  'event': event, 'currentItem': currentItem,
                                   'result': rowDict, 'self': self}
         self.eval_attr('activated')
-        evt.Skip()
+        event.Skip()
         
     #   Свойства
     def getSelectedRecord(self):

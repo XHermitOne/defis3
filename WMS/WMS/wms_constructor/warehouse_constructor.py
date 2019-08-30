@@ -52,7 +52,7 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
         self.Bind(wx.EVT_MOTION, self.OnMotion)
         self.Bind(wx.EVT_LEAVE_WINDOW, self.OnLeaveWindow)
 
-    def OnLeaveWindow(self, evt):
+    def OnLeaveWindow(self, event):
         """
         We're not doing anything here, but you might have reason to.
         for example, if you were dragging something, you might elect to
@@ -99,12 +99,12 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
                 return shape
         return None
 
-    def OnEraseBackground(self, evt):
+    def OnEraseBackground(self, event):
         """
         Clears the background, then redraws it. If the DC is passed, then
         we only do so in the area so designated. Otherwise, it's the whole thing.
         """
-        dc = evt.GetDC()
+        dc = event.GetDC()
         if not dc:
             dc = wx.ClientDC(self)
             rect = self.GetUpdateRegion().GetBox()
@@ -112,7 +112,7 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
         self.TileBackground(dc)
 
     # Fired whenever a paint event occurs
-    def OnPaint(self, evt):
+    def OnPaint(self, event):
         """
         Fired whenever a paint event occurs
         """
@@ -120,21 +120,21 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
         self.PrepareDC(dc)
         self.DrawShapes(dc)
 
-    def OnLeftDown(self, evt):
+    def OnLeftDown(self, event):
         """
         Left mouse button is down.
         """
         # Did the mouse go down on one of our shapes?
-        shape = self.FindShape(evt.GetPosition())
+        shape = self.FindShape(event.GetPosition())
 
         # If a shape was 'hit', then set that as the shape we're going to
         # drag around. Get our start position. Dragging has not yet started.
         # That will happen once the mouse moves, OR the mouse is released.
         if shape:
             self.dragShape = shape
-            self.dragStartPos = evt.GetPosition()
+            self.dragStartPos = event.GetPosition()
 
-    def OnLeftUp(self, evt):
+    def OnLeftUp(self, event):
         """
         Left mouse button up.
         """
@@ -157,7 +157,7 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
         # Note by jmg 11/28/03
         # Here's the original:
         #
-        # self.dragShape.pos = self.dragShape.pos + evt.GetPosition() - self.dragStartPos
+        # self.dragShape.pos = self.dragShape.pos + event.GetPosition() - self.dragStartPos
         #
         # So if there are any problems associated with this, use that as
         # a starting place in your investigation. I've tried to simulate the
@@ -168,20 +168,20 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
         #
 
         self.dragShape.pos = (
-            self.dragShape.pos[0] + evt.GetPosition()[0] - self.dragStartPos[0],
-            self.dragShape.pos[1] + evt.GetPosition()[1] - self.dragStartPos[1]
+            self.dragShape.pos[0] + event.GetPosition()[0] - self.dragStartPos[0],
+            self.dragShape.pos[1] + event.GetPosition()[1] - self.dragStartPos[1]
             )
 
         self.dragShape.shown = True
         self.RefreshRect(self.dragShape.GetRect())
         self.dragShape = None
 
-    def OnMotion(self, evt):
+    def OnMotion(self, event):
         """
         The mouse is moving
         """
         # Ignore mouse movement if we're not dragging.
-        if not self.dragShape or not evt.Dragging() or not evt.LeftIsDown():
+        if not self.dragShape or not event.Dragging() or not event.LeftIsDown():
             return
 
         # if we have a shape, but haven't started dragging yet
@@ -189,7 +189,7 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
 
             # only start the drag after having moved a couple pixels
             tolerance = 2
-            pt = evt.GetPosition()
+            pt = event.GetPosition()
             dx = abs(pt.x - self.dragStartPos.x)
             dy = abs(pt.y - self.dragStartPos.y)
             if dx <= tolerance and dy <= tolerance:
@@ -217,7 +217,7 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
 
         # if we have shape and image then move it, posibly highlighting another shape.
         elif self.dragShape and self.dragImage:
-            onShape = self.FindShape(evt.GetPosition())
+            onShape = self.FindShape(event.GetPosition())
             unhiliteOld = False
             hiliteNew = False
 
@@ -244,7 +244,7 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
                 self.hiliteShape.Draw(dc, wx.INVERT)
 
             # now move it and show it again if needed
-            self.dragImage.Move(evt.GetPosition())
+            self.dragImage.Move(event.GetPosition())
             if unhiliteOld or hiliteNew:
                 self.dragImage.Show()
 

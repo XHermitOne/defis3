@@ -1013,8 +1013,8 @@ class icWaitBox(wx.Dialog):
     def DirectRefresh(self):
         """
         """
-        evt = wx.PaintEvent(self.GetId())
-        return self.GetEventHandler().ProcessEvent(evt)
+        event = wx.PaintEvent(self.GetId())
+        return self.GetEventHandler().ProcessEvent(event)
 
     def setResultList(self, result_list):
         self._result_list = result_list
@@ -1079,5 +1079,5 @@ class icWaitBox(wx.Dialog):
             self.DirectRefresh()
             if label:
                 self.msg.SetLabel(label)
-            evt = wx.PaintEvent(self.msg.GetId())
-            self.msg.GetEventHandler().ProcessEvent(evt)
+            event = wx.PaintEvent(self.msg.GetId())
+            self.msg.GetEventHandler().ProcessEvent(event)

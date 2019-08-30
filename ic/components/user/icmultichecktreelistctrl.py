@@ -246,15 +246,15 @@ class icMultiCheckTreeListCtrl(icsimpletreelistctrl.icSimpleTreeListCtrl):
             if chld.GetChildren():
                 self.set_state_down(chld, state)
 
-    def MultiCheckTree_itemChecked(self, evt):
-        item = evt.GetItem()
+    def MultiCheckTree_itemChecked(self, event):
+        item = event.GetItem()
         if item:
             # Disenable child items
             bch = self.IsItemChecked(item)
             self.set_state_down(item, bch)
             self.set_state_up(item, bch)
             
-        return icsimpletreelistctrl.icSimpleTreeListCtrl.OnItemChecked(self, evt)
+        return icsimpletreelistctrl.icSimpleTreeListCtrl.OnItemChecked(self, event)
 
 
 def load_data(tree=None):

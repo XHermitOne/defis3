@@ -37,7 +37,7 @@ __version__ = (0, 1, 2, 1)
 
 class icUserMenuBarManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     ###BEGIN EVENT BLOCK

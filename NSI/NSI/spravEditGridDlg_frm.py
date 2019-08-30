@@ -43,7 +43,7 @@ def spravToolBar_init_expr(obj):
     bgr = obj.GetParent().GetBackgroundColour()
     obj.SetBackgroundColour(bgr)
 
-def spravTable_onInit(obj, evt):
+def spravTable_onInit(obj, event):
     try:
         grid=obj.GetContext().GetObject(SPR_TREE_NAME)
         sprav=obj.GetContext()[CONTEXT_SPRAV_NAME]
@@ -56,12 +56,12 @@ def spravTable_onInit(obj, evt):
     except:
         log.error(u'Ошибка инициализации таблицы справочника.')
 
-def spravTable_keyDown(obj, evt):
-    key = evt.GetKeyCode()
+def spravTable_keyDown(obj, event):
+    key = event.GetKeyCode()
     if key == wx.WXK_RETURN:
         obj.select_cod()
 
-def spravTable_cellDClick(obj, evt):
+def spravTable_cellDClick(obj, event):
     obj.select_cod()
 
 def onMouseClickAddTool(obj):
@@ -257,7 +257,7 @@ def onMouseClickFindTool(obj):
     except:
         log.error(u'Ошибка обработчика конпки поиска в справочнике.')
 
-def spravTable_cellSelect(obj, evt):
+def spravTable_cellSelect(obj, event):
     """ Обработчик смены элемента дерева справочника."""
     try:
         evalSpace = context = obj.GetContext()
@@ -277,7 +277,7 @@ def spravTable_cellSelect(obj, evt):
 
         # Сбрасываем признак изменения таблицы
         #Выбранный код
-        row = evt.GetRow()
+        row = event.GetRow()
         cod=tree_grid.get_sel_cod(row) or ''
         sprav.setCurCode(cod)
         #Сохранение внесенных изменений
@@ -347,20 +347,20 @@ def onChangedGrid(obj):
     obj.GetContext().GetObject(SPR_GRID_NAME).GetDataset().set_change_prz(True)
     return coderror.IC_CTRL_OK
 
-def spravGrid_onInit(obj, evt):
+def spravGrid_onInit(obj, event):
     # Устанавливаем буфер изменений у датасета
     buff = icsimpledataset.icDatasetChangeBuff([0])
     obj.context.GetObject(SPR_GRID_NAME).GetDataset().set_change_buff(buff)
 
-def cancel_button_mouseClick(obj, evt):
+def cancel_button_mouseClick(obj, event):
     """ Обработка нажатия кнопки <Отмена>."""
     obj.GetContext().GetObject(HLP_DLG_NAME).EndModal(wx.ID_CANCEL)
 
-def ok_button_mouseClick(obj, evt):
+def ok_button_mouseClick(obj, event):
     """ Обработка нажатия кнопки <ОК>."""
     obj.GetContext().GetObject(HLP_DLG_NAME).EndModal(wx.ID_OK)
 
-def spravEditGridDlg_onInit(obj, evt):
+def spravEditGridDlg_onInit(obj, event):
     # Устанавливаем заголовок окна
     tree_grid = obj.GetContext().GetObject(SPR_TREE_NAME)
     sprav=tree_grid.get_sprav()

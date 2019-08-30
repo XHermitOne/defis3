@@ -44,7 +44,7 @@ class icNSIContrAgentTabManager(icmanagerinterface.icWidgetManager):
     Менеджер таблицы справочника контрагентов.
     """
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def set_default_data(self):

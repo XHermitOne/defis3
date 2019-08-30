@@ -64,7 +64,7 @@ DEFAULT_TAB_DATA = (dict(cod='00', name=u'Аян. Головное предпр�
 
 class icNSIEntityTabManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def set_default_data(self):

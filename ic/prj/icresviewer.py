@@ -61,7 +61,7 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
             return self.GetItemData(item)
         return None
 
-    def OnSelChanged(self, evt):
+    def OnSelChanged(self, event):
         """
         Функция отрабатывает при изменении выбранного пункта дерева.
         """

@@ -58,8 +58,8 @@ class icBaseCatalogView(object):
         self.items = [bck] + self.items
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onItemActivated, id=-1)
         
-    def onItemActivated(self, evt):
-        indx = evt.Index
+    def onItemActivated(self, event):
+        indx = event.Index
         item = self.GetObjectAt(indx)
         prnt = cat.get_parent_path(item.path)
         if isinstance(item, icBackItem):
@@ -75,7 +75,7 @@ class icBaseCatalogView(object):
         self.SetObjects(self.items)
         self.RepopulateList()
         self.SortBy(0)
-        evt.Skip()
+        event.Skip()
         
     def initObjectListView(self):
         """

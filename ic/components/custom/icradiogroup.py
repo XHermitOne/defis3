@@ -148,8 +148,8 @@ class icRadioGroup(icWidget, wx.RadioBox):
         self.Bind(wx.EVT_RADIOBOX, self.OnSelected)
         self.BindICEvt()
 
-    def OnSelected(self, evt):
-        self.eval_event('onSelected', evt, True)
+    def OnSelected(self, event):
+        self.eval_event('onSelected', event, True)
 
 
 def test(par=0):

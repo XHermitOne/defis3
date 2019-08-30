@@ -30,7 +30,7 @@ __version__ = (0, 0, 2, 1)
 
 class icImportSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def setPackScanPanel(self, pack_scan_panel):

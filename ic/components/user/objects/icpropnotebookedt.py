@@ -22,7 +22,7 @@ _ = wx.GetTranslation
 ### !!!! Данный блок изменять не рекомендуется !!!!
 ###BEGIN SPECIAL BLOCK
 #   Resource description of class
-resource = {'activate': u'1', 'obj_module': None, 'show': u'1', 'child': [{'size': (-1, -1), 'style': 0, 'activate': u'1', 'obj_module': None, 'description': None, 'alias': u'None', '__item_id': 1, 'modules': {}, 'border': 0, '_uuid': '61843d9340d13ce7c738f5fa1c3cc850', 'proportion': 0, 'data_name': None, 'object': u'None', 'component_module': None, 'flag': 0, 'init_expr': u'GetInterface().resource_init_expr()', 'span': (1, 1), 'position': (-1, -1), 'res_module': None, 'type': u'Import', 'name': u'resource'}, {'hgap': 0, 'activate': u'1', 'obj_module': None, '__default_page__': 0, '__attr_types__': {0: ['name', 'type', 'alias', 'data_name'], 1: ['layout', 'alignment'], 7: ['flag', 'style'], 40: ['proportion', 'border', 'vgap, hgap'], 10: ['position', 'span'], 11: ['size'], 12: ['activate', 'init_expr', 'pre_init_expr', 'description', 'component_module', 'hgap', 'child', 'vgap'], 17: ['res_module', '_uuid', 'obj_module']}, 'data_name': None, 'border': 0, 'size': (-1, -1), 'style': 0, 'layout': u'vertical', 'alias': u'', 'component_module': None, 'proportion': 0, '__lists__': {'layout': ['vertical', 'horizontal'], 'alignment': ["('left', 'middle')", "('left', 'top')", "('left', 'bottom')", "('centred', 'middle')", "('centred', 'top')", "('centred', 'bottom')", "('right', 'middle')", "('right', 'top')", "('right', 'bottom')"]}, '__version__': '0.0.0.0', 'type': u'BoxSizer', '__doc__': None, 'res_module': None, '__styles__': {'DEFAULT': 0}, 'description': None, '__item_id': 2, '_uuid': u'4a4ca30ae69f315d5afcac400a4ee0f4', '__brief_attrs__': [], 'flag': 0, 'child': [{'activate': u'1', 'obj_module': None, 'show': u'1', '__attr_types__': {0: ['moveAfterInTabOrder', 'name', 'type', 'data_name', 'label', 'alias', 'field_name'], 1: ['layout', 'alignment'], 2: ['icDelButton', 'isLocaleTitles', 'enable'], 7: ['flag', 'style'], 8: ['selPageColor', 'foregroundColor', 'backgroundColor'], 9: ['font'], 10: ['position', 'span'], 11: ['size'], 12: ['recount', 'activate', 'description', 'show', 'component_module', 'pre_init_expr', 'refresh', 'source', 'onSelectTitle', 'keyDown', 'child', 'path', 'onInit', 'init_expr'], 17: ['obj_module', '_uuid', 'res_module'], 20: ['images', 'titles'], 40: ['border', 'proportion']}, 'selPageColor': (232, 232, 208), 'recount': u'WrapperObj.recountFuncNB(evt)', 'onSelectTitle': u'WrapperObj.OnSelectPage(self.GetSelected())', 'titles': ['Base', 'Visual', 'Special', 'Events', 'All'], 'keyDown': u'None', 'path': u"@# \u041e\u043f\u0440\u0435\u0434\u0435\u043b\u044f\u0435\u043c \u043f\u0443\u0442\u044c \u0434\u043e \u0431\u0438\u0431\u043b\u0438\u043e\u0442\u0435\u043a\u0438 \u043a\u0430\u0440\u0442\u0438\u043d\u043e\u043a\r\nimport ic.utils.resource as resource\r\n_resultEval = resource.icGetICPath()+'/PropertyEditor/images'\r\n", 'images': [u'cog.png', u'color_picker.png', u'', u'', u'page_white_stack.png'], 'font': {'style': 'regular', 'name': 'defaultFont', 'family': 'sansSerif', 'faceName': 'Arial', 'type': 'Font', 'underline': False, 'size': 8}, 'border': 0, 'size': (393, 27), 'style': 0, 'foregroundColor': (100, 100, 100), 'span': (1, 1), '__init_res_by_wizard__': None, 'component_module': None, '__default_page__': 0, 'proportion': 0, 'source': u'', '__lists__': {'layout': ['vertical', 'horizontal'], 'alignment': ["('left', 'middle')", "('left', 'top')", "('left', 'bottom')", "('centred', 'middle')", "('centred', 'top')", "('centred', 'bottom')", "('right', 'middle')", "('right', 'top')", "('right', 'bottom')"]}, 'backgroundColor': (245, 245, 245), '__version__': '0.0.0.0', 'type': u'TitlesNotebook', '__doc__': None, 'res_module': None, '__styles__': {'DEFAULT': 0}, '__events__': {'onSelectTitle': ('wx.EVT_LEFT_UP', 'OnSelectTitle', False), 'onInit': ('icEvents.EVT_POST_INIT', 'OnInit', False), 'keyDown': ('wx.EVT_KEY_DOWN', 'OnKeyDown', False)}, 'enable': True, 'description': None, '__item_id': 3, '_uuid': '5c5fa1b4-05e9-44a1-a6ec-e670c36f4738', 'moveAfterInTabOrder': u'', '__brief_attrs__': [], 'flag': 8192, 'alias': u'None', 'child': [], 'isLocaleTitles': True, 'name': u'NB', 'icDelButton': False, 'data_name': None, 'refresh': u'None', '__version__icwidget': '0.0.0.0', '__version__base': '0.0.0.0', '__interface__': None, 'init_expr': u'GetInterface().OnInitExpr()', 'position': (0, 0), 'onInit': None}, {'line_color': (255, 255, 255), 'activate': u'1', 'obj_module': None, 'enable_freq_dict': False, '_uuid': '2e4a3d1619bdd6bce0d1d683109406f6', 'show': u'1', 'init_expr': u'GetWrapper().PropertyGrid_init_expr()', 'data_name': None, 'cols': [{'activate': u'1', 'ctrl': u'', 'pic': u'S', 'getvalue': u'', 'style': 0, 'show': u'1', 'label': u'', 'width': 120, 'init': u'', 'valid': u'None', 'type': u'GridCell', 'sort': u'None', 'cell_attr': {'activate': '1', 'name': '', '__item_id': 6, '_uuid': '23fd87416a6b09f3ca925a9314584fc5', 'foregroundColor': (0, 0, 0), 'init_expr': 'None', 'backgroundColor': (245, 245, 245), 'font': {'style': 'regular', 'name': 'defaultFont', 'family': 'sansSerif', 'faceName': 'Arial', 'type': 'Font', 'underline': False, 'size': 8}, 'type': 'cell_attr', 'alignment': "('left', 'middle')"}, 'shortHelpString': u'', '__item_id': 5, '_uuid': u'7ed8b82e86d35d9e1e0dee428a03f15b', 'recount': u'None', 'hlp': u'None', 'name': u'attributes', 'setvalue': u'', 'attr': u'R', 'keyDown': u'None', 'alias': u'None', 'init_expr': u'None'}, {'activate': u'1', 'obj_module': None, 'ctrl': u'WrapperObj.Ctrl(self.GetView(), value, row, col)', 'pic': u'S', 'getvalue': u'', 'style': 0, 'component_module': None, 'show': u'1', 'label': u'col', 'width': 200, 'init': u'', 'valid': u'None', 'type': u'GridCell', 'res_module': None, 'sort': u'None', 'cell_attr': {'activate': '1', 'name': '', '__item_id': 8, '_uuid': '23fd87416a6b09f3ca925a9314584fc5', 'foregroundColor': (0, 0, 0), 'init_expr': 'None', 'backgroundColor': (255, 255, 255), 'font': {'style': None, 'name': 'defaultFont', 'family': None, '__attr_types__': {}, 'faceName': '', 'type': 'Font', 'underline': 0, 'size': 8}, 'type': 'cell_attr', 'alignment': ('left', 'middle')}, 'description': None, 'shortHelpString': u'', '__item_id': 7, '_uuid': u'fd27d78ef4194499c466535b7d69734a', 'recount': u'None', 'hlp': u'WrapperObj.OnHelpFuncValues(self.GetView(), row, col, evt)', 'name': u'values', 'setvalue': u'', 'attr': u'W', 'data_name': None, 'keyDown': u'', 'alias': u'None', 'init_expr': u'None'}], 'onSize': u'WrapperObj.OnSizeGrid(evt)', 'border': 0, 'post_select': u'GetWrapper().PropertyGrid_post_select(evt)', 'size': (220, 207), 'style': 0, 'dclickEditor': u'WrapperObj.OnDClickEditorFuncPropertyGrid(evt)', 'span': (1, 1), 'delRec': u'', 'row_height': 20, 'selected': u'WrapperObj.OnSelectGridCell(row, col)', 'proportion': 1, 'getattr': u'GetWrapper().PropertyGrid_getattr(col)', 'label': u'Grid', 'source': u'', 'init': u'@False', 'backgroundColor': (255, 255, 255), 'fixRowSize': 1, 'type': u'GridDataset', 'selection_mode': 'cells', 'res_module': None, 'enable': True, 'fixColSize': 0, 'description': None, 'post_del': u'None', 'post_init': u'None', 'cell_attr': {'activate': '1', 'name': '', '__item_id': 9, '_uuid': '6c62e5d9286f17d110c8db3613ae518b', 'foregroundColor': (0, 0, 0), 'init_expr': 'None', 'backgroundColor': (255, 255, 255), 'font': {'style': None, 'name': 'defaultFont', 'family': None, '__attr_types__': {}, 'faceName': '', 'type': 'Font', 'underline': 0, 'size': 8}, 'type': 'cell_attr', 'alignment': "('left', 'middle')"}, 'moveAfterInTabOrder': u'', 'docstr': 'ic.components.icgrid.html', 'flag': 8192, 'foregroundColor': None, 'recount': u'None', 'label_attr': {'activate': '1', 'name': '', '__item_id': 10, '_uuid': '6c62e5d9286f17d110c8db3613ae518b', 'foregroundColor': (255, 255, 255), 'init_expr': 'None', 'backgroundColor': (100, 100, 100), 'font': {'style': None, 'name': 'defaultFont', 'family': None, '__attr_types__': {}, 'faceName': '', 'type': 'Font', 'underline': 0, 'size': 8}, 'type': 'label_attr', 'alignment': ('left', 'middle')}, '__item_id': 4, 'keyDown': u'WrapperObj.GridKeyDown(evt)', 'name': u'PropertyGrid', 'label_height': 0, 'changed': u'None', 'refresh': u'None', 'alias': u'None', 'component_module': None, 'position': (2, 2), 'onInit': None}], 'span': (1, 1), 'name': u'DefaultName_1121', '__version__base': '0.0.0.0', '__init_res_by_wizard__': None, '__interface__': None, 'init_expr': u'None', 'position': (191, 25), 'vgap': 0}], 'moveAfterInTabOrder': u'', 'refresh': u'None', 'border': 0, 'size': (300, -1), 'onRightMouseClick': None, 'style': 524288, 'foregroundColor': None, 'span': (1, 1), 'component_module': None, 'proportion': 0, 'source': u'', 'onLeftMouseClick': None, 'backgroundColor': (255, 255, 255), 'type': u'Panel', 'res_module': None, 'enable': True, 'description': None, '__item_id': 0, 'onClose': u'None', '_uuid': u'0a7bc1e3ebd8b631b85cc406658ed078', 'docstr': 'ic.components.icwxpanel-module.html', 'flag': 0, 'recount': u'None', 'name': u'PropertyPanel', 'data_name': None, 'keyDown': u'None', 'alias': u'None', 'init_expr': u'None', 'position': wx.Point(5, 5), 'onInit': None}
+resource = {'activate': u'1', 'obj_module': None, 'show': u'1', 'child': [{'size': (-1, -1), 'style': 0, 'activate': u'1', 'obj_module': None, 'description': None, 'alias': u'None', '__item_id': 1, 'modules': {}, 'border': 0, '_uuid': '61843d9340d13ce7c738f5fa1c3cc850', 'proportion': 0, 'data_name': None, 'object': u'None', 'component_module': None, 'flag': 0, 'init_expr': u'GetInterface().resource_init_expr()', 'span': (1, 1), 'position': (-1, -1), 'res_module': None, 'type': u'Import', 'name': u'resource'}, {'hgap': 0, 'activate': u'1', 'obj_module': None, '__default_page__': 0, '__attr_types__': {0: ['name', 'type', 'alias', 'data_name'], 1: ['layout', 'alignment'], 7: ['flag', 'style'], 40: ['proportion', 'border', 'vgap, hgap'], 10: ['position', 'span'], 11: ['size'], 12: ['activate', 'init_expr', 'pre_init_expr', 'description', 'component_module', 'hgap', 'child', 'vgap'], 17: ['res_module', '_uuid', 'obj_module']}, 'data_name': None, 'border': 0, 'size': (-1, -1), 'style': 0, 'layout': u'vertical', 'alias': u'', 'component_module': None, 'proportion': 0, '__lists__': {'layout': ['vertical', 'horizontal'], 'alignment': ["('left', 'middle')", "('left', 'top')", "('left', 'bottom')", "('centred', 'middle')", "('centred', 'top')", "('centred', 'bottom')", "('right', 'middle')", "('right', 'top')", "('right', 'bottom')"]}, '__version__': '0.0.0.0', 'type': u'BoxSizer', '__doc__': None, 'res_module': None, '__styles__': {'DEFAULT': 0}, 'description': None, '__item_id': 2, '_uuid': u'4a4ca30ae69f315d5afcac400a4ee0f4', '__brief_attrs__': [], 'flag': 0, 'child': [{'activate': u'1', 'obj_module': None, 'show': u'1', '__attr_types__': {0: ['moveAfterInTabOrder', 'name', 'type', 'data_name', 'label', 'alias', 'field_name'], 1: ['layout', 'alignment'], 2: ['icDelButton', 'isLocaleTitles', 'enable'], 7: ['flag', 'style'], 8: ['selPageColor', 'foregroundColor', 'backgroundColor'], 9: ['font'], 10: ['position', 'span'], 11: ['size'], 12: ['recount', 'activate', 'description', 'show', 'component_module', 'pre_init_expr', 'refresh', 'source', 'onSelectTitle', 'keyDown', 'child', 'path', 'onInit', 'init_expr'], 17: ['obj_module', '_uuid', 'res_module'], 20: ['images', 'titles'], 40: ['border', 'proportion']}, 'selPageColor': (232, 232, 208), 'recount': u'WrapperObj.recountFuncNB(event)', 'onSelectTitle': u'WrapperObj.OnSelectPage(self.GetSelected())', 'titles': ['Base', 'Visual', 'Special', 'Events', 'All'], 'keyDown': u'None', 'path': u"@# \u041e\u043f\u0440\u0435\u0434\u0435\u043b\u044f\u0435\u043c \u043f\u0443\u0442\u044c \u0434\u043e \u0431\u0438\u0431\u043b\u0438\u043e\u0442\u0435\u043a\u0438 \u043a\u0430\u0440\u0442\u0438\u043d\u043e\u043a\r\nimport ic.utils.resource as resource\r\n_resultEval = resource.icGetICPath()+'/PropertyEditor/images'\r\n", 'images': [u'cog.png', u'color_picker.png', u'', u'', u'page_white_stack.png'], 'font': {'style': 'regular', 'name': 'defaultFont', 'family': 'sansSerif', 'faceName': 'Arial', 'type': 'Font', 'underline': False, 'size': 8}, 'border': 0, 'size': (393, 27), 'style': 0, 'foregroundColor': (100, 100, 100), 'span': (1, 1), '__init_res_by_wizard__': None, 'component_module': None, '__default_page__': 0, 'proportion': 0, 'source': u'', '__lists__': {'layout': ['vertical', 'horizontal'], 'alignment': ["('left', 'middle')", "('left', 'top')", "('left', 'bottom')", "('centred', 'middle')", "('centred', 'top')", "('centred', 'bottom')", "('right', 'middle')", "('right', 'top')", "('right', 'bottom')"]}, 'backgroundColor': (245, 245, 245), '__version__': '0.0.0.0', 'type': u'TitlesNotebook', '__doc__': None, 'res_module': None, '__styles__': {'DEFAULT': 0}, '__events__': {'onSelectTitle': ('wx.EVT_LEFT_UP', 'OnSelectTitle', False), 'onInit': ('icEvents.EVT_POST_INIT', 'OnInit', False), 'keyDown': ('wx.EVT_KEY_DOWN', 'OnKeyDown', False)}, 'enable': True, 'description': None, '__item_id': 3, '_uuid': '5c5fa1b4-05e9-44a1-a6ec-e670c36f4738', 'moveAfterInTabOrder': u'', '__brief_attrs__': [], 'flag': 8192, 'alias': u'None', 'child': [], 'isLocaleTitles': True, 'name': u'NB', 'icDelButton': False, 'data_name': None, 'refresh': u'None', '__version__icwidget': '0.0.0.0', '__version__base': '0.0.0.0', '__interface__': None, 'init_expr': u'GetInterface().OnInitExpr()', 'position': (0, 0), 'onInit': None}, {'line_color': (255, 255, 255), 'activate': u'1', 'obj_module': None, 'enable_freq_dict': False, '_uuid': '2e4a3d1619bdd6bce0d1d683109406f6', 'show': u'1', 'init_expr': u'GetWrapper().PropertyGrid_init_expr()', 'data_name': None, 'cols': [{'activate': u'1', 'ctrl': u'', 'pic': u'S', 'getvalue': u'', 'style': 0, 'show': u'1', 'label': u'', 'width': 120, 'init': u'', 'valid': u'None', 'type': u'GridCell', 'sort': u'None', 'cell_attr': {'activate': '1', 'name': '', '__item_id': 6, '_uuid': '23fd87416a6b09f3ca925a9314584fc5', 'foregroundColor': (0, 0, 0), 'init_expr': 'None', 'backgroundColor': (245, 245, 245), 'font': {'style': 'regular', 'name': 'defaultFont', 'family': 'sansSerif', 'faceName': 'Arial', 'type': 'Font', 'underline': False, 'size': 8}, 'type': 'cell_attr', 'alignment': "('left', 'middle')"}, 'shortHelpString': u'', '__item_id': 5, '_uuid': u'7ed8b82e86d35d9e1e0dee428a03f15b', 'recount': u'None', 'hlp': u'None', 'name': u'attributes', 'setvalue': u'', 'attr': u'R', 'keyDown': u'None', 'alias': u'None', 'init_expr': u'None'}, {'activate': u'1', 'obj_module': None, 'ctrl': u'WrapperObj.Ctrl(self.GetView(), value, row, col)', 'pic': u'S', 'getvalue': u'', 'style': 0, 'component_module': None, 'show': u'1', 'label': u'col', 'width': 200, 'init': u'', 'valid': u'None', 'type': u'GridCell', 'res_module': None, 'sort': u'None', 'cell_attr': {'activate': '1', 'name': '', '__item_id': 8, '_uuid': '23fd87416a6b09f3ca925a9314584fc5', 'foregroundColor': (0, 0, 0), 'init_expr': 'None', 'backgroundColor': (255, 255, 255), 'font': {'style': None, 'name': 'defaultFont', 'family': None, '__attr_types__': {}, 'faceName': '', 'type': 'Font', 'underline': 0, 'size': 8}, 'type': 'cell_attr', 'alignment': ('left', 'middle')}, 'description': None, 'shortHelpString': u'', '__item_id': 7, '_uuid': u'fd27d78ef4194499c466535b7d69734a', 'recount': u'None', 'hlp': u'WrapperObj.OnHelpFuncValues(self.GetView(), row, col, event)', 'name': u'values', 'setvalue': u'', 'attr': u'W', 'data_name': None, 'keyDown': u'', 'alias': u'None', 'init_expr': u'None'}], 'onSize': u'WrapperObj.OnSizeGrid(event)', 'border': 0, 'post_select': u'GetWrapper().PropertyGrid_post_select(event)', 'size': (220, 207), 'style': 0, 'dclickEditor': u'WrapperObj.OnDClickEditorFuncPropertyGrid(event)', 'span': (1, 1), 'delRec': u'', 'row_height': 20, 'selected': u'WrapperObj.OnSelectGridCell(row, col)', 'proportion': 1, 'getattr': u'GetWrapper().PropertyGrid_getattr(col)', 'label': u'Grid', 'source': u'', 'init': u'@False', 'backgroundColor': (255, 255, 255), 'fixRowSize': 1, 'type': u'GridDataset', 'selection_mode': 'cells', 'res_module': None, 'enable': True, 'fixColSize': 0, 'description': None, 'post_del': u'None', 'post_init': u'None', 'cell_attr': {'activate': '1', 'name': '', '__item_id': 9, '_uuid': '6c62e5d9286f17d110c8db3613ae518b', 'foregroundColor': (0, 0, 0), 'init_expr': 'None', 'backgroundColor': (255, 255, 255), 'font': {'style': None, 'name': 'defaultFont', 'family': None, '__attr_types__': {}, 'faceName': '', 'type': 'Font', 'underline': 0, 'size': 8}, 'type': 'cell_attr', 'alignment': "('left', 'middle')"}, 'moveAfterInTabOrder': u'', 'docstr': 'ic.components.icgrid.html', 'flag': 8192, 'foregroundColor': None, 'recount': u'None', 'label_attr': {'activate': '1', 'name': '', '__item_id': 10, '_uuid': '6c62e5d9286f17d110c8db3613ae518b', 'foregroundColor': (255, 255, 255), 'init_expr': 'None', 'backgroundColor': (100, 100, 100), 'font': {'style': None, 'name': 'defaultFont', 'family': None, '__attr_types__': {}, 'faceName': '', 'type': 'Font', 'underline': 0, 'size': 8}, 'type': 'label_attr', 'alignment': ('left', 'middle')}, '__item_id': 4, 'keyDown': u'WrapperObj.GridKeyDown(event)', 'name': u'PropertyGrid', 'label_height': 0, 'changed': u'None', 'refresh': u'None', 'alias': u'None', 'component_module': None, 'position': (2, 2), 'onInit': None}], 'span': (1, 1), 'name': u'DefaultName_1121', '__version__base': '0.0.0.0', '__init_res_by_wizard__': None, '__interface__': None, 'init_expr': u'None', 'position': (191, 25), 'vgap': 0}], 'moveAfterInTabOrder': u'', 'refresh': u'None', 'border': 0, 'size': (300, -1), 'onRightMouseClick': None, 'style': 524288, 'foregroundColor': None, 'span': (1, 1), 'component_module': None, 'proportion': 0, 'source': u'', 'onLeftMouseClick': None, 'backgroundColor': (255, 255, 255), 'type': u'Panel', 'res_module': None, 'enable': True, 'description': None, '__item_id': 0, 'onClose': u'None', '_uuid': u'0a7bc1e3ebd8b631b85cc406658ed078', 'docstr': 'ic.components.icwxpanel-module.html', 'flag': 0, 'recount': u'None', 'name': u'PropertyPanel', 'data_name': None, 'keyDown': u'None', 'alias': u'None', 'init_expr': u'None', 'position': wx.Point(5, 5), 'onInit': None}
 
 #   Version
 __version__ = (1, 2, 1, 1)
@@ -265,18 +265,18 @@ class PropNotebookEdt:
         attr = attr.strip()
         return attr
         
-    def GridKeyDown(self, evt):
+    def GridKeyDown(self, event):
         """
         Обработка нажатия клавиши в гриде.
         """
         attr = self.GetAttr()
         if not self.GetSpc():
-            evt.Skip()
+            event.Skip()
             return
             
         spc = self.GetSpc().keys()
         #   Если атрибут не описан в спецификации, то его можно удалить
-        if evt.GetKeyCode() == wx.WXK_DELETE and attr not in spc and not self.isReadOnly():
+        if event.GetKeyCode() == wx.WXK_DELETE and attr not in spc and not self.isReadOnly():
             grid = self.GetPropertyGrid()
             row = grid.GetGridCursorRow()
             retmsg = msgbox.MsgBox(grid.GetView(), u'Вы действительно хотите удалить атрибут <%s>?' % attr,
@@ -285,18 +285,18 @@ class PropNotebookEdt:
                 grid.GetTable().DeleteRows(row, bAsk=False)
                 self.DelProperty(attr)
 
-            evt.Skip()
+            event.Skip()
             return False
 
-        elif evt.GetKeyCode() == wx.WXK_DELETE:
+        elif event.GetKeyCode() == wx.WXK_DELETE:
             return False
             
-        elif evt.GetKeyCode() == wx.WXK_RETURN:
+        elif event.GetKeyCode() == wx.WXK_RETURN:
             self.GetPropertyGrid().DisableCellEditControl()
             self.GetPropertyGrid().MoveCursorDown(False)
             return False
             
-        elif evt.GetKeyCode() == wx.WXK_INSERT:
+        elif event.GetKeyCode() == wx.WXK_INSERT:
             res = self.getResource()
             nb = self.GetNB()
             if res and 'type' in res and res['type'] == 'DataLink':
@@ -392,7 +392,7 @@ class PropNotebookEdt:
             return None
     
     # --- BEGIN EVENT BLOCK ---
-    def OnDClickEditorFuncPropertyGrid(self, evt):
+    def OnDClickEditorFuncPropertyGrid(self, event):
         """
         Функция обрабатывает событие <EVT_LEFT_DCLICK> на редакторе
         ячеки грида.
@@ -445,9 +445,9 @@ class PropNotebookEdt:
                             # '.py' - вызываем метод интерфейса, в противном случае
                             # функцию модуля ресусра
                             if ext == '.py':
-                                ptFunc = 'GetWrapper().%s(evt)' % func
+                                ptFunc = 'GetWrapper().%s(event)' % func
                             else:
-                                ptFunc = 'GetManager().%s(evt)' % func
+                                ptFunc = 'GetManager().%s(event)' % func
                             
                             grid.setNameValue('values', ptFunc, row)
                             
@@ -504,7 +504,7 @@ class PropNotebookEdt:
         #   Включаем контроль на значения свойств
         self.EnableCtrl(True)
 
-    def OnSizeGrid(self, evt):
+    def OnSizeGrid(self, event):
         """
         Обработка изменения размера грида.
         """
@@ -539,8 +539,8 @@ class PropNotebookEdt:
                 if col == 0:
                     pass
                 elif type != icDefInf.EDT_PY_SCRIPT and row < grid.GetTable().GetNumberRows():
-                    select_evt = wx.grid.GridEvent(wx.NewId(), wx.grid.wxEVT_GRID_CELL_LEFT_DCLICK, grid, row, col)
-                    grid.GetEventHandler().AddPendingEvent(select_evt)
+                    select_event = wx.grid.GridEvent(wx.NewId(), wx.grid.wxEVT_GRID_CELL_LEFT_DCLICK, grid, row, col)
+                    grid.GetEventHandler().AddPendingEvent(select_event)
 
                 # Ищем функцию в тексте модуля
                 # GetInterface и WrapperObj синонимы
@@ -629,7 +629,7 @@ class PropNotebookEdt:
         except:
             log.fatal('###')
     
-    def OnHelpFuncValues(self, grid, row, col, evt):
+    def OnHelpFuncValues(self, grid, row, col, event):
         """
         Функция помощи на поле значения <hlp>.
         """
@@ -747,8 +747,8 @@ class PropNotebookEdt:
         else:
             return None
     
-    def PropertyGrid_post_select(self, evt):
-        _row, _col = evt.GetData()
+    def PropertyGrid_post_select(self, event):
+        _row, _col = event.GetData()
         return self.OnPostSelectGridCell(_row, _col)
 
     def PropertyGrid_init_expr(self):
@@ -1050,9 +1050,9 @@ class TestFrame(wx.Frame):
         wx.Frame.__init__(self, parent, id, label)
         self.Bind(wx.EVT_SIZE, self.OnSize)
 
-    def OnSize(self, evt):
+    def OnSize(self, event):
         self.Refresh()
-        evt.Skip()
+        event.Skip()
 
 
 def test(par=0):

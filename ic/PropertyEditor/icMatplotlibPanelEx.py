@@ -110,7 +110,7 @@ class icCanvasPanel(wx.Panel):
         # update the axes menu on the toolbar
         self.toolbar.update()
 
-    def OnButton(self, evt):
+    def OnButton(self, event):
         """
         """
         dd = 20
@@ -122,7 +122,7 @@ class icCanvasPanel(wx.Panel):
         line, = self.axes.plot(t, s, 'r:d')
         line.set_markersize(5)
         self.Refresh()
-        evt.Skip()
+        event.Skip()
         
     def OnPaint(self, event):
         self.erase_cursor()

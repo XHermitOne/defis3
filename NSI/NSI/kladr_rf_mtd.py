@@ -21,7 +21,7 @@ from ic.interfaces import icmanagerinterface
 
 class icKLADRManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     ###BEGIN EVENT BLOCK

@@ -614,7 +614,7 @@ __version__ = %s
 
 class %s(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     ###BEGIN EVENT BLOCK

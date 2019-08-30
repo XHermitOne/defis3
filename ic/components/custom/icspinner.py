@@ -197,7 +197,7 @@ class icSpinner(icWidget, wx.SpinCtrl):
         self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
         self.BindICEvt()
 
-    def OnSetFocus(self, evt):
+    def OnSetFocus(self, event):
         """
         Обрабатывает установку фокуса.
         """
@@ -210,18 +210,18 @@ class icSpinner(icWidget, wx.SpinCtrl):
                 self._oldLockReck = rec
 
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.eval_attr('setFocus')
-        evt.Skip()
+        event.Skip()
 
-    def OnKillFocus(self, evt):
+    def OnKillFocus(self, event):
         """
         Обрабатывает потерю фокуса.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.eval_attr('loseFocus')
-        evt.Skip()
+        event.Skip()
         
         if self.IsModified() and self.dataset is not None:
             value = self.GetValue()
@@ -244,7 +244,7 @@ class icSpinner(icWidget, wx.SpinCtrl):
 
         return self.bChanged
 
-    def OnSpin(self, evt):
+    def OnSpin(self, event):
         """
         Обрабатывает сообщение о изменении выбора.
         Флаг изменения объекта устанавливается в true
@@ -252,10 +252,10 @@ class icSpinner(icWidget, wx.SpinCtrl):
 
         self.bChanged = 1
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         
         self.eval_attr('onSpin')
-        evt.Skip()
+        event.Skip()
             
     def UpdateViewFromDB(self, db_name=None):
         """

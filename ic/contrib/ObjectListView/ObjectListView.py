@@ -1393,8 +1393,8 @@ class ObjectListView(wx.ListCtrl):
     #-------------------------------------------------------------------------
     # Event handling
 
-    def _HandleChar(self, evt):
-        if evt.GetKeyCode() == wx.WXK_F2 and not self.IsCellEditing():
+    def _HandleChar(self, event):
+        if event.GetKeyCode() == wx.WXK_F2 and not self.IsCellEditing():
             return self._PossibleStartCellEdit(
                 self.GetFocusedRow(),
                 self.GetPrimaryColumnIndex())
@@ -1403,62 +1403,62 @@ class ObjectListView(wx.ListCtrl):
         # (e.g. ComboBox, UserControl) don't trigger key events that we can listen for.
         # Treat Return or Enter as committing the current edit operation unless the control
         # is a multiline text control, in which case we treat it as data
-        if evt.GetKeyCode() in (
+        if event.GetKeyCode() in (
                 wx.WXK_RETURN,
                 wx.WXK_NUMPAD_ENTER) and self.IsCellEditing():
             if self.cellEditor and self.cellEditor.HasFlag(wx.TE_MULTILINE):
-                return evt.Skip()
+                return event.Skip()
             else:
                 return self.FinishCellEdit()
 
         # Treat Escape as cancel the current edit operation
-        if evt.GetKeyCode() in (
+        if event.GetKeyCode() in (
                 wx.WXK_ESCAPE,
                 wx.WXK_CANCEL) and self.IsCellEditing():
             return self.CancelCellEdit()
 
         # Tab to the next editable column
-        if evt.GetKeyCode() == wx.WXK_TAB and self.IsCellEditing():
-            return self._HandleTabKey(evt.ShiftDown())
+        if event.GetKeyCode() == wx.WXK_TAB and self.IsCellEditing():
+            return self._HandleTabKey(event.ShiftDown())
 
         # Space bar with a selection on a listview with checkboxes toggles the
         # checkboxes
-        if (evt.GetKeyCode() == wx.WXK_SPACE and
+        if (event.GetKeyCode() == wx.WXK_SPACE and
                 not self.IsCellEditing() and
                 self.checkStateColumn is not None and
                 self.GetSelectedItemCount() > 0):
             return self._ToggleCheckBoxForSelection()
 
         if not self.IsCellEditing():
-            if self._HandleTypingEvent(evt):
+            if self._HandleTypingEvent(event):
                 return
 
         if not self.IsCellEditing() and self.handleStandardKeys:
             # Copy selection on Ctrl-C
             # Why is Ctrl-C represented by 3?! Is this Windows only?
-            if (evt.GetKeyCode() == 3):
+            if (event.GetKeyCode() == 3):
                 self.CopySelectionToClipboard()
                 return
             # Select All on Ctrl-A
-            if (evt.GetKeyCode() == 1):
+            if (event.GetKeyCode() == 1):
                 self.SelectAll()
                 return
 
-        evt.Skip()
+        event.Skip()
 
-    def _HandleTypingEvent(self, evt):
+    def _HandleTypingEvent(self, event):
         """
         """
         if self.GetItemCount() == 0 or self.GetColumnCount() == 0:
             return False
 
-        if evt.GetModifiers() != 0 and evt.GetModifiers() != wx.MOD_SHIFT:
+        if event.GetModifiers() != 0 and event.GetModifiers() != wx.MOD_SHIFT:
             return False
 
-        if evt.GetKeyCode() > wx.WXK_START:
+        if event.GetKeyCode() > wx.WXK_START:
             return False
 
-        if evt.GetKeyCode() in (wx.WXK_BACK, wx.WXK_DELETE):
+        if event.GetKeyCode() in (wx.WXK_BACK, wx.WXK_DELETE):
             self.searchPrefix = u""
             return True
 
@@ -1473,9 +1473,9 @@ class ObjectListView(wx.ListCtrl):
 
         # On Linux, GetUnicodeKey() always returns 0 -- on my 2.8.7.1
         # (gtk2-unicode)
-        uniKey = evt.UnicodeKey
+        uniKey = event.UnicodeKey
         if uniKey == 0:
-            uniChar = six.unichr(evt.KeyCode)
+            uniChar = six.unichr(event.KeyCode)
         else:
             # on some versions of wxPython UnicodeKey returns the character
             # on others it is an integer
@@ -1486,7 +1486,7 @@ class ObjectListView(wx.ListCtrl):
         if not self._IsPrintable(uniChar):
             return False
 
-        # On Linux, evt.GetTimestamp() isn't reliable so use time.time()
+        # On Linux, event.GetTimestamp() isn't reliable so use time.time()
         # instead
         timeNow = time.time()
         if (timeNow - self.whenLastTypingEvent) > self.SEARCH_KEYSTROKE_DELAY:
@@ -1624,53 +1624,53 @@ class ObjectListView(wx.ListCtrl):
             self.SetCheckState(x, newValue)
         self.RefreshObjects(selection)
 
-    def _HandleColumnBeginDrag(self, evt):
+    def _HandleColumnBeginDrag(self, event):
         """
         Handle when the user begins to resize a column
         """
         self._PossibleFinishCellEdit()
-        colIndex = evt.GetColumn()
+        colIndex = event.GetColumn()
         if 0 > colIndex >= len(self.columns):
-            evt.Skip()
+            event.Skip()
         else:
             col = self.columns[colIndex]
             if col.IsFixedWidth() or col.isSpaceFilling:
-                evt.Veto()
+                event.Veto()
             else:
-                evt.Skip()
+                event.Skip()
 
-    def _HandleColumnClick(self, evt):
+    def _HandleColumnClick(self, event):
         """
         The user has clicked on a column title
         """
-        evt.Skip()
+        event.Skip()
         self._PossibleFinishCellEdit()
 
         # Toggle the sort column on the second click
-        if evt.GetColumn() == self.sortColumnIndex:
+        if event.GetColumn() == self.sortColumnIndex:
             self.sortAscending = not self.sortAscending
         else:
             self.sortAscending = True
 
-        self.SortBy(evt.GetColumn(), self.sortAscending)
+        self.SortBy(event.GetColumn(), self.sortAscending)
 
-    def _HandleColumnDragging(self, evt):
+    def _HandleColumnDragging(self, event):
         """
         A column is being dragged
         """
         # When is this triggered?
 
         # The processing should be the same processing as Dragged
-        evt.Skip()
+        event.Skip()
 
-    def _HandleColumnEndDrag(self, evt):
+    def _HandleColumnEndDrag(self, event):
         """
         The user has finished resizing a column. Make sure that it is not
         bigger than it should be, then resize any space filling columns.
         """
-        colIndex = evt.GetColumn()
+        colIndex = event.GetColumn()
         if 0 > colIndex >= len(self.columns):
-            evt.Skip()
+            event.Skip()
         else:
             currentWidth = self.GetColumnWidth(colIndex)
             col = self.columns[colIndex]
@@ -1678,24 +1678,24 @@ class ObjectListView(wx.ListCtrl):
             if currentWidth != newWidth:
                 wx.CallAfter(self._SetColumnWidthAndResize, colIndex, newWidth)
             else:
-                evt.Skip()
+                event.Skip()
                 wx.CallAfter(self._ResizeSpaceFillingColumns)
 
     def _SetColumnWidthAndResize(self, colIndex, newWidth):
         self.SetColumnWidth(colIndex, newWidth)
         self._ResizeSpaceFillingColumns()
 
-    def _HandleLeftDown(self, evt):
+    def _HandleLeftDown(self, event):
         """
         Handle a left down on the ListView
         """
-        evt.Skip()
+        event.Skip()
 
         # Test for a mouse down on the image of the check box column
         if self.InReportView():
-            (row, flags, subitem) = self.HitTestSubItem(evt.GetPosition())
+            (row, flags, subitem) = self.HitTestSubItem(event.GetPosition())
         else:
-            (row, flags) = self.HitTest(evt.GetPosition())
+            (row, flags) = self.HitTest(event.GetPosition())
             subitem = 0
 
         if flags == wx.LIST_HITTEST_ONITEMICON:
@@ -1717,11 +1717,11 @@ class ObjectListView(wx.ListCtrl):
                 not column.GetCheckState(modelObject))
             self.RefreshIndex(rowIndex, modelObject)
 
-    def _HandleLeftClickOrDoubleClick(self, evt):
+    def _HandleLeftClickOrDoubleClick(self, event):
         """
         Handle a left click or left double click on the ListView
         """
-        evt.Skip()
+        event.Skip()
 
         # IF any modifiers are down, OR
         #    the listview isn't editable, OR
@@ -1729,21 +1729,21 @@ class ObjectListView(wx.ListCtrl):
         #    we should edit on single click and this is a double click,
         # THEN we don't try to start a cell edit operation
         if wx.VERSION > (2, 9, 1, 0):
-            if evt.altDown or evt.controlDown or evt.shiftDown:
+            if event.altDown or event.controlDown or event.shiftDown:
                 return
         else:
-            if evt.m_altDown or evt.m_controlDown or evt.m_shiftDown:
+            if event.m_altDown or event.m_controlDown or event.m_shiftDown:
                 return
         if self.cellEditMode == self.CELLEDIT_NONE:
             return
-        if evt.LeftUp() and self.cellEditMode == self.CELLEDIT_DOUBLECLICK:
+        if event.LeftUp() and self.cellEditMode == self.CELLEDIT_DOUBLECLICK:
             return
-        if evt.LeftDClick() and self.cellEditMode == self.CELLEDIT_SINGLECLICK:
+        if event.LeftDClick() and self.cellEditMode == self.CELLEDIT_SINGLECLICK:
             return
 
         # Which item did the user click?
         (rowIndex, flags, subItemIndex) = self.HitTestSubItem(
-            evt.GetPosition())
+            event.GetPosition())
         if (flags & wx.LIST_HITTEST_ONITEM) == 0 or subItemIndex == -1:
             return
 
@@ -1753,26 +1753,26 @@ class ObjectListView(wx.ListCtrl):
 
         self._PossibleStartCellEdit(rowIndex, subItemIndex)
 
-    def _HandleMouseWheel(self, evt):
+    def _HandleMouseWheel(self, event):
         """
         The user spun the mouse wheel
         """
         self._PossibleFinishCellEdit()
-        evt.Skip()
+        event.Skip()
 
-    def _HandleScroll(self, evt):
+    def _HandleScroll(self, event):
         """
         The ListView is being scrolled
         """
         self._PossibleFinishCellEdit()
-        evt.Skip()
+        event.Skip()
 
-    def _HandleSize(self, evt):
+    def _HandleSize(self, event):
         """
         The ListView is being resized
         """
         self._PossibleFinishCellEdit()
-        evt.Skip()
+        event.Skip()
         self._ResizeSpaceFillingColumns()
         # Make sure our empty msg is reasonably positioned
         sz = self.GetClientSize()
@@ -1841,16 +1841,16 @@ class ObjectListView(wx.ListCtrl):
 
         # fire a SortEvent that can be catched by a OLV-using developer
         # who Bind() to this event
-        evt = OLVEvent.SortEvent(
+        event = OLVEvent.SortEvent(
             self,
             self.sortColumnIndex,
             self.sortAscending,
             self.IsVirtual())
-        self.GetEventHandler().ProcessEvent(evt)
-        if evt.IsVetoed():
+        self.GetEventHandler().ProcessEvent(event)
+        if event.IsVetoed():
             return
 
-        if not evt.wasHandled:
+        if not event.wasHandled:
             self._SortItemsNow()
 
         self._UpdateColumnSortIndicators(
@@ -1932,13 +1932,13 @@ class ObjectListView(wx.ListCtrl):
             return
 
         # Let the world have a chance to sort the model objects
-        evt = OLVEvent.SortEvent(
+        event = OLVEvent.SortEvent(
             self,
             self.sortColumnIndex,
             self.sortAscending,
             True)
-        self.GetEventHandler().ProcessEvent(evt)
-        if evt.IsVetoed() or evt.wasHandled:
+        self.GetEventHandler().ProcessEvent(event)
+        if event.IsVetoed() or event.wasHandled:
             return
 
         # When sorting large groups, this is called a lot. Make it efficent.
@@ -2117,7 +2117,7 @@ class ObjectListView(wx.ListCtrl):
             rowIndex,
             subItemIndex,
             cellValue)
-        evt = OLVEvent.CellEditStartingEvent(
+        event = OLVEvent.CellEditStartingEvent(
             self,
             rowIndex,
             subItemIndex,
@@ -2125,15 +2125,15 @@ class ObjectListView(wx.ListCtrl):
             cellValue,
             cellBounds,
             defaultEditor)
-        self.GetEventHandler().ProcessEvent(evt)
-        if evt.IsVetoed():
+        self.GetEventHandler().ProcessEvent(event)
+        if event.IsVetoed():
             defaultEditor.Destroy()
             return
 
         # Remember that we are editing something (and make sure we can see it)
         self.selectionBeforeCellEdit = self.GetSelectedObjects()
         self.DeselectAll()
-        self.cellEditor = evt.newEditor or evt.editor
+        self.cellEditor = event.newEditor or event.editor
         self.cellBeingEdited = (rowIndex, subItemIndex)
 
         # If we aren't using the default editor, destroy it
@@ -2141,17 +2141,17 @@ class ObjectListView(wx.ListCtrl):
             defaultEditor.Destroy()
 
         # If the event handler hasn't already configured the editor, do it now.
-        if evt.shouldConfigureEditor:
+        if event.shouldConfigureEditor:
             self.cellEditor.SetFocus()
-            self.cellEditor.SetValue(evt.cellValue)
+            self.cellEditor.SetValue(event.cellValue)
             self._ConfigureCellEditor(
                 self.cellEditor,
-                evt.cellBounds,
+                event.cellBounds,
                 rowIndex,
                 subItemIndex)
 
         # Let the world know the cell editing has started
-        evt = OLVEvent.CellEditStartedEvent(
+        event = OLVEvent.CellEditStartedEvent(
             self,
             rowIndex,
             subItemIndex,
@@ -2159,7 +2159,7 @@ class ObjectListView(wx.ListCtrl):
             cellValue,
             cellBounds,
             defaultEditor)
-        self.GetEventHandler().ProcessEvent(evt)
+        self.GetEventHandler().ProcessEvent(event)
 
         self.cellEditor.Show()
         self.cellEditor.Raise()
@@ -2232,14 +2232,14 @@ class ObjectListView(wx.ListCtrl):
                     return value
         return None
 
-    def _Editor_OnChar(self, evt):
+    def _Editor_OnChar(self, event):
         """
         A character has been pressed in a cell editor
         """
-        self._HandleChar(evt)
+        self._HandleChar(event)
 
-    def _Editor_KillFocus(self, evt):
-        evt.Skip()
+    def _Editor_KillFocus(self, event):
+        event.Skip()
 
         # Some control trigger FocusLost events even when they still have focus
         focusWindow = wx.Window.FindFocus()
@@ -2256,7 +2256,7 @@ class ObjectListView(wx.ListCtrl):
         # Give the world the chance to veto the edit, or to change its
         # characteristics
         rowModel = self.GetObjectAt(rowIndex)
-        evt = OLVEvent.CellEditFinishingEvent(
+        event = OLVEvent.CellEditFinishingEvent(
             self,
             rowIndex,
             subItemIndex,
@@ -2264,18 +2264,18 @@ class ObjectListView(wx.ListCtrl):
             self.cellEditor.GetValue(),
             self.cellEditor,
             False)
-        self.GetEventHandler().ProcessEvent(evt)
-        if not evt.IsVetoed() and evt.cellValue is not None:
-            self.columns[subItemIndex].SetValue(rowModel, evt.cellValue)
+        self.GetEventHandler().ProcessEvent(event)
+        if not event.IsVetoed() and event.cellValue is not None:
+            self.columns[subItemIndex].SetValue(rowModel, event.cellValue)
             self.RefreshIndex(rowIndex, rowModel)
 
-        evt = OLVEvent.CellEditFinishedEvent(
+        event = OLVEvent.CellEditFinishedEvent(
             self,
             rowIndex,
             subItemIndex,
             rowModel,
             False)
-        self.GetEventHandler().ProcessEvent(evt)
+        self.GetEventHandler().ProcessEvent(event)
 
         self._CleanupCellEdit()
 
@@ -2286,20 +2286,20 @@ class ObjectListView(wx.ListCtrl):
         # Tell the world that the user cancelled the edit
         (rowIndex, subItemIndex) = self.cellBeingEdited
         rowModel = self.GetObjectAt(rowIndex)
-        evt = OLVEvent.CellEditFinishingEvent(self, rowIndex, subItemIndex,
+        event = OLVEvent.CellEditFinishingEvent(self, rowIndex, subItemIndex,
                                               rowModel,
                                               self.cellEditor.GetValue(),
                                               self.cellEditor,
                                               True)
-        self.GetEventHandler().ProcessEvent(evt)
+        self.GetEventHandler().ProcessEvent(event)
 
-        evt = OLVEvent.CellEditFinishedEvent(
+        event = OLVEvent.CellEditFinishedEvent(
             self,
             rowIndex,
             subItemIndex,
             rowModel,
             True)
-        self.GetEventHandler().ProcessEvent(evt)
+        self.GetEventHandler().ProcessEvent(event)
 
         self._CleanupCellEdit()
 
@@ -2986,10 +2986,10 @@ class GroupListView(FastObjectListView):
             self._BuildGroupTitles(groups, groupingColumn)
 
         # Let the world know that we are creating the given groups
-        evt = OLVEvent.GroupCreationEvent(self, groups)
-        self.GetEventHandler().ProcessEvent(evt)
+        event = OLVEvent.GroupCreationEvent(self, groups)
+        self.GetEventHandler().ProcessEvent(event)
 
-        return evt.groups
+        return event.groups
 
     def _BuildGroupTitles(self, groups, groupingColumn):
         """
@@ -3161,24 +3161,24 @@ class GroupListView(FastObjectListView):
 
         # Let the world know that the given groups are about to be
         # expanded/collapsed
-        evt = OLVEvent.ExpandingCollapsingEvent(self, groups, isExpanding)
-        self.GetEventHandler().ProcessEvent(evt)
-        if evt.IsVetoed():
+        event = OLVEvent.ExpandingCollapsingEvent(self, groups, isExpanding)
+        self.GetEventHandler().ProcessEvent(event)
+        if event.IsVetoed():
             return
 
         # Expand/contract the groups, then put those changes into effect
-        for x in evt.groups:
+        for x in event.groups:
             x.isExpanded = isExpanding
         self._BuildInnerList()
         self.SetItemCount(len(self.innerList))
 
         # Refresh eveything from the first group down
-        i = min([self.GetIndexOf(x) for x in evt.groups])
+        i = min([self.GetIndexOf(x) for x in event.groups])
         self.RefreshItems(i, len(self.innerList) - 1)
 
         # Let the world know that the given groups have been expanded/collapsed
-        evt = OLVEvent.ExpandedCollapsedEvent(self, evt.groups, isExpanding)
-        self.GetEventHandler().ProcessEvent(evt)
+        event = OLVEvent.ExpandedCollapsedEvent(self, event.groups, isExpanding)
+        self.GetEventHandler().ProcessEvent(event)
 
     def Reveal(self, modelObject):
         """
@@ -3304,28 +3304,28 @@ class GroupListView(FastObjectListView):
     #-------------------------------------------------------------------------
     # Event handlers
 
-    def _HandleChar(self, evt):
+    def _HandleChar(self, event):
 
         if not self.IsCellEditing() and self.handleStandardKeys:
-            if (evt.GetKeyCode() == wx.WXK_LEFT):
+            if (event.GetKeyCode() == wx.WXK_LEFT):
                 self.CollapseAll(self.GetSelectedGroups())
                 return
-            if (evt.GetKeyCode() == wx.WXK_RIGHT):
+            if (event.GetKeyCode() == wx.WXK_RIGHT):
                 self.ExpandAll(self.GetSelectedGroups())
                 return
 
-        FastObjectListView._HandleChar(self, evt)
+        FastObjectListView._HandleChar(self, event)
 
-    def _HandleColumnClick(self, evt):
+    def _HandleColumnClick(self, event):
         """
         The user has clicked on a column title
         """
 
         # If they click on a new column, we have to rebuild our groups
-        if evt.GetColumn() != self.sortColumnIndex:
+        if event.GetColumn() != self.sortColumnIndex:
             self.groups = None
 
-        FastObjectListView._HandleColumnClick(self, evt)
+        FastObjectListView._HandleColumnClick(self, event)
 
     def _HandleLeftDownOnImage(self, rowIndex, subItemIndex):
         """
@@ -3363,9 +3363,9 @@ class GroupListView(FastObjectListView):
             sortCol = self.GetGroupByColumn()
 
         # Let the world have a change to sort the items
-        evt = OLVEvent.SortGroupsEvent(self, groups, sortCol, ascending)
-        self.GetEventHandler().ProcessEvent(evt)
-        if evt.wasHandled:
+        event = OLVEvent.SortGroupsEvent(self, groups, sortCol, ascending)
+        self.GetEventHandler().ProcessEvent(event)
+        if event.wasHandled:
             return
 
         # Sorting event wasn't handled, so we do the default sorting
@@ -4015,12 +4015,12 @@ class ColumnDefn(object):
         Set the check state of the given model object
         """
         # Let the world know the check state
-        evt = OLVEvent.ItemCheckedEvent(self, modelObject, state)
+        event = OLVEvent.ItemCheckedEvent(self, modelObject, state)
         # Is there a shorter way to get at the EventHandler?
         if self._EventHandler:
-            wx.CallAfter(self._EventHandler.ProcessEvent, evt)
+            wx.CallAfter(self._EventHandler.ProcessEvent, event)
         else:
-            wx.CallAfter(wx.GetApp().GetTopWindow().GetEventHandler().ProcessEvent, evt)
+            wx.CallAfter(wx.GetApp().GetTopWindow().GetEventHandler().ProcessEvent, event)
 
         if self.checkStateSetter is None:
             return self._SetValueUsingMunger(
@@ -4267,7 +4267,7 @@ class BatchedUpdate(object):
     #-------------------------------------------------------------------------
     # Event processing
 
-    def _HandleIdle(self, evt):
+    def _HandleIdle(self, event):
         """
         The app is idle. Process any outstanding requests
         """
@@ -4278,7 +4278,7 @@ class BatchedUpdate(object):
             if self.freezeUntil < time.clock():
                 self._ApplyChanges()
             else:
-                evt.RequestMore()
+                event.RequestMore()
 
     def _ApplyChanges(self):
         """

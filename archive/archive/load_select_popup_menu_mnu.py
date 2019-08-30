@@ -37,7 +37,7 @@ DOC_FILE_TYPES = ('RLZ', 'ZTR', 'MTS', 'OSN', 'ARN')
 
 class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def setPackScanPanel(self, pack_scan_panel):

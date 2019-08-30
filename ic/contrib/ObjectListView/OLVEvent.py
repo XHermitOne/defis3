@@ -29,8 +29,8 @@ import wx
 
 
 def _EventMaker():
-    evt = wx.NewEventType()
-    return (evt, wx.PyEventBinder(evt))
+    event = wx.NewEventType()
+    return (event, wx.PyEventBinder(event))
 
 (olv_EVT_CELL_EDIT_STARTING, EVT_CELL_EDIT_STARTING) = _EventMaker()
 (olv_EVT_CELL_EDIT_STARTED, EVT_CELL_EDIT_STARTED) = _EventMaker()
@@ -55,8 +55,8 @@ class VetoableEvent(wx.PyCommandEvent):
     Base class for all cancellable actions
     """
 
-    def __init__(self, evtType):
-        wx.PyCommandEvent.__init__(self, evtType, -1)
+    def __init__(self, eventType):
+        wx.PyCommandEvent.__init__(self, eventType, -1)
         self.veto = False
 
     def Veto(self, isVetoed=True):

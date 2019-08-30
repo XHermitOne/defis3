@@ -612,10 +612,10 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
             self.diagram.AddShape(shape)
             shape.Show(True)
 
-            evt_handler = icShapeEvtHandler()
-            evt_handler.SetShape(shape)
-            evt_handler.SetPreviousHandler(shape.GetEventHandler())
-            shape.SetEventHandler(evt_handler)
+            event_handler = icShapeEvtHandler()
+            event_handler.SetShape(shape)
+            event_handler.SetPreviousHandler(shape.GetEventHandler())
+            shape.SetEventHandler(event_handler)
 
             # Зарегистрировать фигуру в списке фигур диаграммы
             shape_name = None

@@ -91,28 +91,28 @@ class DefisProjectPlugin(plugin.Plugin):
         """
         return [(ID_DEFIS_TOOL, self.OnUpdateMenu)]
 
-    def OnShow(self, evt):
+    def OnShow(self, event):
         """
         Show the pane
-        @param evt: wx.MenuEvent
+        @param event: wx.MenuEvent
         """
-        if evt.GetId() == ID_DEFIS_TOOL:
+        if event.GetId() == ID_DEFIS_TOOL:
             mgr = self.main_win.GetFrameManager()
             pane = mgr.GetPane(PANE_NAME)
             pane.Show(not pane.IsShown())
             mgr.Update()
             self.OnShowAUIPane()
         else:
-            evt.Skip()
+            event.Skip()
 
-    def OnUpdateMenu(self, evt):
+    def OnUpdateMenu(self, event):
         """
         UpdateUI handler for the panels menu item, to update the check
         mark.
-        @param evt: wx.UpdateUIEvent
+        @param event: wx.UpdateUIEvent
         """
         pane = self.main_win.GetFrameManager().GetPane(PANE_NAME)
-        evt.Check(pane.IsShown())
+        event.Check(pane.IsShown())
 
     def OnShowAUIPane(self):
         """

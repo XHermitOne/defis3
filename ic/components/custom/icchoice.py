@@ -261,7 +261,7 @@ class icChoice(icWidget, wx.Choice):
         self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
         self.BindICEvt()
 
-    def OnSetFocus(self, evt):
+    def OnSetFocus(self, event):
         """
         Обрабатывает установку фокуса.
         """
@@ -274,20 +274,20 @@ class icChoice(icWidget, wx.Choice):
                 self._oldLockReck = rec
 
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.eval_attr('setFocus')
-        evt.Skip()
+        event.Skip()
 
-    def OnKillFocus(self, evt):
+    def OnKillFocus(self, event):
         """
         Обрабатывает потерю фокуса.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.eval_attr('loseFocus')
-        evt.Skip()
+        event.Skip()
 
         if self.IsModified() and self.dataset is not None:
             value = self.GetValue()
@@ -309,18 +309,18 @@ class icChoice(icWidget, wx.Choice):
         """
         return self.bChanged
 
-    def OnChoice(self, evt):
+    def OnChoice(self, event):
         """
         Обрабатывает сообщение о изменении выбора. Флаг изменения объекта устанавливается в True.
         """
         self.bChanged = 1
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
 
         # Обрабатываем выбор пункта из списка
         self.eval_attr('choice')
-        evt.Skip()
+        event.Skip()
 
     def GetValue(self):
         """

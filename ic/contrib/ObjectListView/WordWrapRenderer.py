@@ -204,7 +204,7 @@ The bottom of the red rectangle should be immediately below this."""
                 wx.NORMAL,
                 faceName="Gill Sans")
 
-        def OnPaint(self, evt):
+        def OnPaint(self, event):
             dc = wx.PaintDC(self)
             inset = (20, 20, 20, 20)
             rect = [

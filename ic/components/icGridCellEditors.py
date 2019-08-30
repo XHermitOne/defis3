@@ -89,10 +89,10 @@ class icGridCellDateEditor(wx.grid.GridCellEditor):
         """
         Конструктор.
         """
-        self._evtHandler = None
+        self._eventHandler = None
         wx.grid.GridCellEditor.__init__(self)
 
-    def Create(self, parent, id, evtHandler):
+    def Create(self, parent, id, eventHandler):
         """
         Called to create the control, which must derive from wx.Control.
         """
@@ -100,14 +100,14 @@ class icGridCellDateEditor(wx.grid.GridCellEditor):
                                          dt=wx.DefaultDateTime,
                                          style=wx.adv.DP_DEFAULT)
         self.SetControl(self._tc)
-        self._evtHandler = evtHandler
+        self._eventHandler = eventHandler
         self._blockHandle = False
         self.grid = None
-        if evtHandler:
-            self._tc.PushEventHandler(evtHandler)
+        if eventHandler:
+            self._tc.PushEventHandler(eventHandler)
         
-    def OnKeyDown(self, evt):
-        cod = evt.GetKeyCode()
+    def OnKeyDown(self, event):
+        cod = event.GetKeyCode()
         if cod == wx.WXK_RETURN and self.grid:
             self.grid.DisableCellEditControl()
         elif cod == wx.WXK_ESCAPE:
@@ -115,7 +115,7 @@ class icGridCellDateEditor(wx.grid.GridCellEditor):
             if self.grid:
                 self.grid.DisableCellEditControl()
         else:
-            evt.Skip()
+            event.Skip()
 
     def SetSize(self, rect):
         """
@@ -179,23 +179,23 @@ class icGridCellDateEditor(wx.grid.GridCellEditor):
         """
         self._tc.SetValue(self.startValue)
 
-    def IsAcceptedKey(self, evt):
+    def IsAcceptedKey(self, event):
         """
         Return True to allow the given key to start editing: the base class
         version only checks that the event has no modifiers.  F2 is special
         and will always start the editor.
         """
         # or do it ourselves
-        return (not (evt.ControlDown() or evt.AltDown()) and
-                evt.GetKeyCode() != wx.WXK_SHIFT)
+        return (not (event.ControlDown() or event.AltDown()) and
+                event.GetKeyCode() != wx.WXK_SHIFT)
 
-    def StartingKey(self, evt):
+    def StartingKey(self, event):
         """
         If the editor is enabled by pressing keys on the grid, this will be
         called to let the editor do something about that first key if desired.
         """
-        key = evt.GetKeyCode()
-        evt.Skip()
+        key = event.GetKeyCode()
+        event.Skip()
 
     def StartingClick(self):
         """
@@ -231,7 +231,7 @@ class icDatasetComboCellEditor(wx.grid.GridCellEditor):
     def __init__(self):
         wx.grid.GridCellEditor.__init__(self)
 
-    def Create(self, parent, id, evtHandler):
+    def Create(self, parent, id, eventHandler):
         """
         Создание контрола редактирования.
         Переопределяемый метод.
@@ -239,8 +239,8 @@ class icDatasetComboCellEditor(wx.grid.GridCellEditor):
         self._tc = icextendedcomboctrl.icGridDatasetComboCtrl(parent, id)
         self._tc.SetInsertionPoint(0)
         self.SetControl(self._tc)
-        if evtHandler:
-            self._tc.PushEventHandler(evtHandler)
+        if eventHandler:
+            self._tc.PushEventHandler(eventHandler)
 
     def SetSize(self, rect):
         """
@@ -297,20 +297,20 @@ class icDatasetComboCellEditor(wx.grid.GridCellEditor):
         self._tc.GetTextCtrl().SetValue(self.startValue)
         self._tc.GetTextCtrl().SetInsertionPointEnd()
 
-    def IsAcceptedKey(self, evt):
+    def IsAcceptedKey(self, event):
         """
         Переопределяемый метод.
         """
         # or do it ourselves
-        return (not (evt.ControlDown() or evt.AltDown()) and
-                evt.GetKeyCode() != wx.WXK_SHIFT)
+        return (not (event.ControlDown() or event.AltDown()) and
+                event.GetKeyCode() != wx.WXK_SHIFT)
 
-    def StartingKey(self, evt):
+    def StartingKey(self, event):
         """
         Нажатие клавиши .
         Переопределяемый метод.
         """
-        key = evt.GetKeyCode()
+        key = event.GetKeyCode()
         ch = None
         if key in [wx.WXK_NUMPAD0, wx.WXK_NUMPAD1, wx.WXK_NUMPAD2, wx.WXK_NUMPAD3,
                    wx.WXK_NUMPAD4, wx.WXK_NUMPAD5, wx.WXK_NUMPAD6, wx.WXK_NUMPAD7,
@@ -326,7 +326,7 @@ class icDatasetComboCellEditor(wx.grid.GridCellEditor):
             self._tc.GetTextCtrl().SetValue(ch)
             self._tc.GetTextCtrl().SetInsertionPointEnd()
         else:
-            evt.Skip()
+            event.Skip()
 
     def StartingClick(self):
         """
@@ -362,10 +362,10 @@ class icGridCellNSIEditor(wx.grid.GridCellEditor):
         Конструктор.
         @param NSIPassport: Паспорт справочника.
         """
-        self._evtHandler = None
+        self._eventHandler = None
         wx.grid.GridCellEditor.__init__(self)
 
-    def Create(self, parent, id, evtHandler):
+    def Create(self, parent, id, eventHandler):
         """
         Called to create the control, which must derive from wx.Control.
         """
@@ -373,14 +373,14 @@ class icGridCellNSIEditor(wx.grid.GridCellEditor):
 
         self._tc = icspravtreecomboctrl.icSpravTreeComboCtrlPrototype(parent=parent, id=id)
         self.SetControl(self._tc)
-        self._evtHandler = evtHandler
+        self._eventHandler = eventHandler
         self._blockHandle = False
         self.grid = None
-        if evtHandler:
-            self._tc.PushEventHandler(evtHandler)
+        if eventHandler:
+            self._tc.PushEventHandler(eventHandler)
 
-    def OnKeyDown(self, evt):
-        cod = evt.GetKeyCode()
+    def OnKeyDown(self, event):
+        cod = event.GetKeyCode()
         if cod == wx.WXK_RETURN and self.grid:
             self.grid.DisableCellEditControl()
         elif cod == wx.WXK_ESCAPE:
@@ -388,7 +388,7 @@ class icGridCellNSIEditor(wx.grid.GridCellEditor):
             if self.grid:
                 self.grid.DisableCellEditControl()
         else:
-            evt.Skip()
+            event.Skip()
 
     def SetSize(self, rect):
         """
@@ -450,23 +450,23 @@ class icGridCellNSIEditor(wx.grid.GridCellEditor):
         """
         self._tc.setValue(self.startValue)
 
-    def IsAcceptedKey(self, evt):
+    def IsAcceptedKey(self, event):
         """
         Return True to allow the given key to start editing: the base class
         version only checks that the event has no modifiers.  F2 is special
         and will always start the editor.
         """
         # or do it ourselves
-        return (not (evt.ControlDown() or evt.AltDown()) and
-                evt.GetKeyCode() != wx.WXK_SHIFT)
+        return (not (event.ControlDown() or event.AltDown()) and
+                event.GetKeyCode() != wx.WXK_SHIFT)
 
-    def StartingKey(self, evt):
+    def StartingKey(self, event):
         """
         If the editor is enabled by pressing keys on the grid, this will be
         called to let the editor do something about that first key if desired.
         """
-        key = evt.GetKeyCode()
-        evt.Skip()
+        key = event.GetKeyCode()
+        event.Skip()
 
     def StartingClick(self):
         """

@@ -261,7 +261,7 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
 
         self.default_id = default_id
         
-    def choiceFuncVariantChoice(self, evt):
+    def choiceFuncVariantChoice(self, event):
         """
         Функция обрабатывает событие <onChoice>.
         """
@@ -296,13 +296,13 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
         choice = self.GetNameObj('variantChoice')
         choice.setDictRepl(varDict)
         
-    def mouseClickFuncManageBtn(self, evt):
+    def mouseClickFuncManageBtn(self, event):
         """
         Функция обрабатывает событие <mouseClick>.
         """
         pass
         
-    def OnInitFuncVariantChoice(self, evt):
+    def OnInitFuncVariantChoice(self, event):
         """
         Функция обрабатывает событие <?>.
         """
@@ -317,7 +317,7 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
         else:
             ctrl.setSelection(0)
 
-        # self.choiceFuncVariantChoice(evt)
+        # self.choiceFuncVariantChoice(event)
 
         # print '...... re variantChoice onInnit'
         return None
@@ -402,7 +402,7 @@ class icPlanBrows(icMultiSrcBrows):
         
         self.GetNameObj('manageBtn').Show(False)
         
-    def mouseClickFuncManageBtn(self, evt):
+    def mouseClickFuncManageBtn(self, event):
         """
         Функция обрабатывает событие <mouseClick>.
         """
@@ -431,5 +431,5 @@ class icPlanBrows(icMultiSrcBrows):
         else:
             ctrl.setSelection(0)
         
-        self.choiceFuncVariantChoice(evt)
+        self.choiceFuncVariantChoice(event)
         dlg.Destroy()

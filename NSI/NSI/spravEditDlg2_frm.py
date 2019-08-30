@@ -289,26 +289,26 @@ def onChangedGrid2(evalSpace):
     return coderror.IC_CTRL_OK
 
 
-def onTreeKeyDown(obj, evt):
+def onTreeKeyDown(obj, event):
     """
     Обработка нажатия клавиши в дереве.
     """
     GetObject = obj.GetContext()['GetObject']
-    key = evt.GetKeyCode()
+    key = event.GetKeyCode()
     if key == wx.WXK_ESCAPE:
         obj.GetContext()['result'] = None
         GetObject('SpravEditDlg').EndModal(wx.ID_CANCEL)
         return True
-    evt.Skip()
+    event.Skip()
     return False
 
 
-def onGridKeyDown(obj, evt):
+def onGridKeyDown(obj, event):
     """
     Обработка нажатия клавиши на гриде.
     """
     GetObject = obj.GetContext()['GetObject']
-    key = evt.GetKeyCode()
+    key = event.GetKeyCode()
     if key == wx.WXK_ESCAPE:
         obj.GetContext()['result'] = None
         GetObject('SpravEditDlg').EndModal(wx.ID_CANCEL)
@@ -316,8 +316,8 @@ def onGridKeyDown(obj, evt):
     return True
 
 
-def onDlgKeyDown(obj, evt):
+def onDlgKeyDown(obj, event):
     """
     Обработка нажатия клавиши в диалоговом окне.
     """
-    return onTreeKeyDown(obj, evt)
+    return onTreeKeyDown(obj, event)

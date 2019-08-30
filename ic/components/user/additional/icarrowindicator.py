@@ -1355,24 +1355,24 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         return t1, t2
         
     # --- Обработчики событий
-    def OnInit(self, evt):
+    def OnInit(self, event):
         """
         Обрабатываем сообщение <icEvents.EVT_POST_INIT>.
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         self.eval_attr('onInit')
-        evt.Skip()
+        event.Skip()
         self._blockEvtPoint = False
         
-    def OnMove(self, evt):
+    def OnMove(self, event):
         """
         Обработка сообщения <wx.EVT_MOTION>.
         """
         x, y = self.GetPosition()
         sx, sy = self.GetSize()
         
-        px,py = p = evt.GetPosition()
+        px,py = p = event.GetPosition()
         d = 5
         r = wx.Rect(d, d, sx-2*d, sy-2*d)
 
@@ -1405,15 +1405,15 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             cursor = wx.StockCursor(wx.CURSOR_DEFAULT)
 
         self.SetCursor(cursor)
-        evt.Skip()
+        event.Skip()
     
-    def OnLeftDown(self, evt):
+    def OnLeftDown(self, event):
         """
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         sx, sy = self.GetSize()
-        p = evt.GetPosition()
+        p = event.GetPosition()
         r = wx.Rect(sx - WIDTH_BTN-4, SHIFT_Y_LABEL+2, WIDTH_GRPH_BTN, HEIGHT_GRPH_BTN)
         
         if r.Inside(p):
@@ -1436,26 +1436,26 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
                 
             self.eval_attr('onColor')
             
-        evt.Skip()
+        event.Skip()
 
-    def OnLeftDblClick(self, evt):
+    def OnLeftDblClick(self, event):
         """
         Обработчик события wx.EVT_DCLICK, атрибут=onLeftDblClick
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('onLeftDblClick')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
-    def OnLeftUp(self, evt):
+    def OnLeftUp(self, event):
         """
         """
         pass
 
-    def OnPaint(self, evt):
+    def OnPaint(self, event):
         """
         """
         if self._blockEvtPoint:
@@ -1480,13 +1480,13 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
             else:
                 self.Draw(dc)
     
-    def OnRightDown(self, evt):
+    def OnRightDown(self, event):
         """
         Обрабатываем нажатие правой кнопки мыши.
         """
         return
         
-    def OnSize(self, evt):
+    def OnSize(self, event):
         self.Refresh()
 
     def RecountScalePar(self, min=None, max=None, majorStep=None, minorStep=None, factor=None, bChangeTitles=True):

@@ -488,7 +488,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
 
         return self.labelsize
 
-    def OnSizeGrid(self, evt):
+    def OnSizeGrid(self, event):
         """
         Обрабатывает изменение размера грида.
         """
@@ -496,11 +496,11 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         #   Для некоторых ситуаций необходимо
         self.PostSelect()
         #   Обработчик на изменения размеров грида
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.eval_attr('onSize')
-        evt.Skip()
+        event.Skip()
 
-    def OnSelected(self, evt):
+    def OnSelected(self, event):
         """
         Выбор ячейки грида.
         """
@@ -509,16 +509,16 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         if self.header and self.header.scroll_pos[0] != vx*dx:
             self.ReconstructHeader()
             
-        evt.Skip()
+        event.Skip()
         
-    def OnColSize(self, evt):
+    def OnColSize(self, event):
         """
         Изменение размера колонки.
         """
         # ----------------------------------------------------
         #   В режиме редактирования надо отслеживать
         #   изменение размеров колонок
-        col = evt.GetRowOrCol()
+        col = event.GetRowOrCol()
         w = self.GetColSize(col)
         mode = self.GetRunTimeMode()
         if mode == util.IC_RUNTIME_MODE_EDITOR:
@@ -526,72 +526,72 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
             iditem = res['__item_id']
             self.evalSpace['_root_obj'].GetEditorPanel().ChangeResItemProperty(iditem, 'width', w)
         # ----------------------------------------------------
-        evt.Skip()
+        event.Skip()
         vx, vy = self.GetViewStart()
         dx, dy = self.GetScrollPixelsPerUnit()
         self.ReconstructHeader()
         
-    def OnScrollLineUp(self, evt):
+    def OnScrollLineUp(self, event):
         """
         """
-        if evt.GetOrientation() == wx.HORIZONTAL:
+        if event.GetOrientation() == wx.HORIZONTAL:
             vx, vy = self.GetViewStart()
             dx, dy = self.GetScrollPixelsPerUnit()
             if self.header and vx != 0:
-                self.header.SetViewStart(vx*dx-dx, 0)
-        evt.Skip()
+                self.header.setViewStart(vx * dx - dx, 0)
+        event.Skip()
 
-    def OnScrollLineDown(self, evt):
+    def OnScrollLineDown(self, event):
         """
         """
-        if evt.GetOrientation() == wx.HORIZONTAL:
+        if event.GetOrientation() == wx.HORIZONTAL:
             vx, vy = self.GetViewStart()
             dx, dy = self.GetScrollPixelsPerUnit()
             w = self.GetWidthGrid()
             sx, sy = self.GetSize()
             if self.header and vx*dx+dx <= w - sx+dx:
-                self.header.SetViewStart(vx*dx+dx, 0)
+                self.header.setViewStart(vx * dx + dx, 0)
             else:
                 self.PostSelect()
 
-        evt.Skip()
+        event.Skip()
 
-    def OnScrollPageUp(self, evt):
+    def OnScrollPageUp(self, event):
         """
         """
-        if evt.GetOrientation() == wx.HORIZONTAL:
+        if event.GetOrientation() == wx.HORIZONTAL:
             vx, vy = self.GetViewStart()
             dx, dy = self.GetScrollPixelsPerUnit()
             sx, sy = self.GetSize()
             if self.header and vx != 0:
                 if vx*dx > sx:
-                    self.header.SetViewStart(vx*dx-sx, 0)
+                    self.header.setViewStart(vx * dx - sx, 0)
                 else:
-                    self.header.SetViewStart(0, 0)
-        evt.Skip()
+                    self.header.setViewStart(0, 0)
+        event.Skip()
         
-    def OnScrollPageDown(self, evt):
+    def OnScrollPageDown(self, event):
         """
         """
-        if evt.GetOrientation() == wx.HORIZONTAL:
+        if event.GetOrientation() == wx.HORIZONTAL:
             self.PostSelect()
             
-        evt.Skip()
+        event.Skip()
         
-    def OnScrollTrack(self, evt):
+    def OnScrollTrack(self, event):
         """
         """
-        if evt.GetOrientation() == wx.HORIZONTAL:
-            vx = evt.GetPosition()
+        if event.GetOrientation() == wx.HORIZONTAL:
+            vx = event.GetPosition()
             dx, dy = self.GetScrollPixelsPerUnit()
             w = self.GetWidthGrid()
             sx, sy = self.GetSize()
             if self.header and vx*dx <= w - sx + dx:
-                self.header.SetViewStart(vx*dx, 0)
+                self.header.setViewStart(vx * dx, 0)
             else:
                 self.PostSelect()
                 
-        evt.Skip()
+        event.Skip()
 
     def PostSelect(self, row=-1, col=-1):
         """
@@ -606,8 +606,8 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         self._selEventRow = row
         self._selEventCol = col
 
-        select_evt = grid.GridEvent(wx.NewId(), grid.wxEVT_GRID_SELECT_CELL, self, row, col)
-        self.GetEventHandler().AddPendingEvent(select_evt)
+        select_event = grid.GridEvent(wx.NewId(), grid.wxEVT_GRID_SELECT_CELL, self, row, col)
+        self.GetEventHandler().AddPendingEvent(select_event)
         
     def ReconstructHeader(self):
         """
@@ -616,10 +616,10 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         if not self.header:
             return
 
-        row = self.header.GetMaxRow()
+        row = self.header.getMaxRow()
         self.labelsize = 0
         for col in range(self.GetNumberCols()):
-            cell = self.header.FindCell(row, col)
+            cell = self.header.findCell(row, col)
             w = self.GetColSize(col)
             self.labelsize += w
             if cell:
@@ -631,7 +631,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
                     
                 cell.SetSize(cell.size)
                 
-        self.header.Reconstruct()
+        self.header.reconstruct()
 
     def SetHeader(self, header, bAuto=False, bHideOldHead=False):
         """
@@ -643,9 +643,9 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         """
         self.header = header
         try:
-            header.ConnectGrid(self, bAuto, bHideOldHead)
+            header.connectGrid(self, bAuto, bHideOldHead)
         except:
-            log.fatal(u'Can\'t ConnectGrid() in icGrid.SetHeader')
+            log.fatal(u'Can\'t connectGrid() in icGrid.SetHeader')
         
     def getSelectionModeAttr(self):
         """

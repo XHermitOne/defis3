@@ -128,7 +128,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
         Обработчик вкл./выкл. элемента списка.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['event'] = event
         self.evalSpace['CHECK'] = self.IsChecked(event.Index) if event else check
         self.evalSpace['ITEM'] = self.GetFirstSelected() if index_item is None else index_item
@@ -159,7 +159,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
         """
         selected_item_idx = event.Index if event else self.GetFirstSelected()
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['event'] = event
         self.evalSpace['CHECK'] = self.IsChecked(selected_item_idx) if selected_item_idx >= 0 else False
         self.evalSpace['ITEM'] = selected_item_idx

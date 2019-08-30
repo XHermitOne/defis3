@@ -86,7 +86,7 @@ __version__ = (0, 1, 1, 1)
 
 
 # Функции редактора
-def _get_lib_evt_lst(lib='wx', bPref=False):
+def _get_lib_event_lst(lib='wx', bPref=False):
     """
     Возвращает список идентификаторов заданной библиотеки.
     """
@@ -129,7 +129,7 @@ def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwa
 
     elif attr == 'wx_signal_type':
         lib = propEdt.getResource()['lib']
-        lst = _get_lib_evt_lst(lib)
+        lst = _get_lib_event_lst(lib)
         if lst:
             dlg = baseeditor.ChoiceMenu(parent, lst)
             parent.PopupMenu(dlg, pos)
@@ -152,7 +152,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         return pspEdt.property_editor_ctrl(value, propEdt)
     elif attr == 'wx_signal_type':
         lib = propEdt.getResource()['lib']
-        lst = _get_lib_evt_lst(lib, True)
+        lst = _get_lib_event_lst(lib, True)
         if value in lst:
             return coderror.IC_CTRL_OK
     elif attr == 'lib':
@@ -243,7 +243,7 @@ class icWX_SignalType(icwidget.icSimple):
         """
         Возвращет идентификатор сообщения.
         """
-        exec('from %s import %s as evt_id' % (self.lib, self.wx_signal_type))
-        return evt_id
+        exec('from %s import %s as event_id' % (self.lib, self.wx_signal_type))
+        return event_id
         
     #   Обработчики событий

@@ -43,33 +43,33 @@ class icWxEvtSignalSrc(icSignalSrc):
     Описание источника, который генерирует сигнал по событийному механизму библиотеки
     wx.
     """
-    def __init__(self, passport, evt_id, bSkip=True, *arg, **kwarg):
+    def __init__(self, passport, event_id, bSkip=True, *arg, **kwarg):
         """
         Конструктор.
         
         @type passport: C{icobject.icObjectPassport}
         @param passport: Паспорт объекта источника.
-        @type evt_id: C{int}
-        @param evt_id: Идентификатор события. Пример: wx.EVT_LEFT_DOWN.
+        @type event_id: C{int}
+        @param event_id: Идентификатор события. Пример: wx.EVT_LEFT_DOWN.
         """
         icSignalSrc.__init__(self, passport)
-        self.evt_id = evt_id
+        self.event_id = event_id
         self.bSkip = bSkip
         
-    def generate(self, evt, obj):
+    def generate(self, event, obj):
         """
         Генерация сигнала.
         
-        @type evt: C{wx.Event}
-        @param evt: Событие, по которому генерируется сигнал.
+        @type event: C{wx.Event}
+        @param event: Событие, по которому генерируется сигнал.
         """
-        return icsignal.icWxEvtSignal(self.passport, obj, evt)
+        return icsignal.icWxEvtSignal(self.passport, obj, event)
         
     def get_signal_type(self):
         """
         Возвращает тип возбуждаемого сигнала.
         """
-        return self.evt_id.evtType[0]
+        return self.event_id.eventType[0]
 
     def isWxSkip(self):
         """

@@ -20,7 +20,7 @@ __version__ = (0, 0, 0, 1)
 
 class ResObjectManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     ###BEGIN EVENT BLOCK

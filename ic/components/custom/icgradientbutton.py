@@ -202,41 +202,41 @@ class icGRButton(icwidget.icWidget, GB.GradientButton):
         self.Bind(wx.EVT_RIGHT_DOWN, self.OnMouseContextDown)
         self.BindICEvt()
         
-    def OnMouseClick(self, evt):
+    def OnMouseClick(self, event):
         """
         Обрабатываем нажатие кнопки (сообщение EVT_BUTTON).
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
-            self.context['evt'] = evt
+            self.context['event'] = event
             self.eval_attr('mouseClick')
-        evt.Skip()
+        event.Skip()
     
-    def OnMouseDown(self, evt):
+    def OnMouseDown(self, event):
         """
         Обрабатываем нажатие кнопки (сообщение EVT_LEFT_DOWN).
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
-            self.context['evt'] = evt
+            self.context['event'] = event
             self.eval_attr('mouseDown')
-        evt.Skip()
+        event.Skip()
 
-    def OnMouseUp(self, evt):
+    def OnMouseUp(self, event):
         """
         Обрабатываем нажатие кнопки (сообщение EVT_LEFT_UP).
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
-            self.context['evt'] = evt
+            self.context['event'] = event
             self.eval_attr('mouseUp')
-        evt.Skip()
+        event.Skip()
 
-    def OnMouseContextDown(self, evt):
+    def OnMouseContextDown(self, event):
         """
         Обрабатываем нажатие кнопки (сообщение EVT_RIGHT_DOWN).
         """
         if self.context['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
-            self.context['evt'] = evt
+            self.context['event'] = event
             self.eval_attr('mouseContextDown')
-        evt.Skip()
+        event.Skip()
 
 
 def test(par=0):

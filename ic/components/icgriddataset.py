@@ -1254,16 +1254,16 @@ class icGridDataset(icGrid):
             asscDict = associationdict.icAssociationDict(asscDictName, key_tuple, val_tuple)
             self._asscDict[key_tuple] = asscDict
 
-    def OnAutoTextFill(self, evt):
+    def OnAutoTextFill(self, event):
         """
         Обрабатывает сообщение <icEvents.EVT_TEXT_TEMPL>. Используется для
         того, чтобы предаставить пользователю вариант текста, который он уже вводил.
         """
         if self._freqDict and self.IsEnableFreqDict():
-            ctrl = evt.GetEventObject().GetTextCtrl()
-            self._freqDict.AutoTextFill(ctrl, evt.GetData())
+            ctrl = event.GetEventObject().GetTextCtrl()
+            self._freqDict.AutoTextFill(ctrl, event.GetData())
 
-        evt.Skip()
+        event.Skip()
 
     def GetColName(self, col):
         """
@@ -1406,31 +1406,31 @@ class icGridDataset(icGrid):
         """
         return self.GetTable().GetNumberCols()
 
-    def OnDClickEditor(self, evt):
+    def OnDClickEditor(self, event):
         """
         Обрабатываем сообщение EVT_LEFT_DCLICK на редакторе ячейки.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
             self.eval_attr('dclickEditor')
 
-        evt.Skip()
+        event.Skip()
 
-    def OnLabelRightClick(self, evt):
+    def OnLabelRightClick(self, event):
         """
         Обрабатываем сообщение EVT_GRID_LABEL_RIGHT_CLICK.
         """
-        col = evt.GetCol()
+        col = event.GetCol()
         title = self.GetTable().exCols[col]['shortHelpString']
         if not title:
             title = self.GetTable().exCols[col]['label']
 
-        x, y = evt.GetPosition()
+        x, y = event.GetPosition()
         self._helpWin = icwidget.icShortHelpString(self, title, (x, y), 1500)
-        evt.Skip()
+        event.Skip()
 
-    def OnLabelClick(self, evt):
+    def OnLabelClick(self, event):
         """
         Обрабатываем сообщение EVT_GRID_LABEL_LEFT_CLICK. Отменяем стандартную
         обработку этого сообщения. Для больших объемов информации в сетевом
@@ -1440,7 +1440,7 @@ class icGridDataset(icGrid):
         при втором по убыванию.
         """
         #   Определяем колонку
-        col = evt.GetCol()
+        col = event.GetCol()
         self.SortCol(col)
 
     def GetDataset(self):
@@ -1449,7 +1449,7 @@ class icGridDataset(icGrid):
         """
         return self.GetTable().dataset
 
-    def OnDestroyGrid(self, evt=None):
+    def OnDestroyGrid(self, event=None):
         """
         Вызывается перед уничтожением грида.
         """
@@ -1492,27 +1492,27 @@ class icGridDataset(icGrid):
         """
         self.OnDestroyGrid()
 
-    def OnPostSelect(self, evt):
+    def OnPostSelect(self, event):
         """
         Обрабатываем сообщение, которое генерируется после выбора ячейки.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.eval_attr('post_select')
-        evt.Skip()
+        event.Skip()
 
-    def OnSelected(self, evt):
+    def OnSelected(self, event):
         """
         Обрабатываем сообщение о выборе новой ячейки.
         """
         self.SetFocus()
-        icGrid.OnSelected(self, evt)
+        icGrid.OnSelected(self, event)
         bPostsel = False
         #   В некоторых случаях эти сообщения генерируются функцией PostSelect, когда компонент
         #   еще не готов к работе
         try:
-            row = evt.GetRow()
-            col = evt.GetCol()
+            row = event.GetRow()
+            col = event.GetCol()
         except:
             row = self._selEventRow
             col = self._selEventCol
@@ -1526,7 +1526,7 @@ class icGridDataset(icGrid):
         #
         #   Вычисляем выражение, записанное в атрибуте 'selected'
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['row'] = row
         self.evalSpace['col'] = col
         #   Если установлен флаг блокировки обработку сообщения  <EVT_GRID_SELECT_CELL>,
@@ -1534,7 +1534,7 @@ class icGridDataset(icGrid):
         if not self._isIgnoreSelectedAttr:
             self.eval_attr('selected')
 
-        evt.Skip()
+        event.Skip()
         #   Если изменился номер строки, то обновляем данные в базе и перемещаем
         #   курсор объекта данных в новое положение
         if self.dataset is not None:
@@ -1578,21 +1578,21 @@ class icGridDataset(icGrid):
                             result = dct.DelAssociation(tuple(key_lst))
                             break
 
-    def OnEditorCreat(self, evt):
+    def OnEditorCreat(self, event):
         """
         Отлавливаем сообщение на создание редактора, чтобы перенаправить обработку в свою функцию.
         Сообщение на создание редактора всегда генерируется после обработки
         события <EVT_GRID_EDITOR_SHOWN> в функции OnShownEditor().
-        @param evt: Обработчик событий
-        @type evt: C{wx.grid.GridEvent}
+        @param event: Обработчик событий
+        @type event: C{wx.grid.GridEvent}
         """
-        row = evt.GetRow()
-        col = evt.GetCol()
+        row = event.GetRow()
+        col = event.GetCol()
         if self.GetTable().CanGetValueAs(row, col, wx.grid.GRID_VALUE_STRING):
             self.GetTable().row = row
             self.GetTable().col = col
             self.GetTable().oldVar = self.GetTable().GetValue(row, col)
-            editor = evt.GetControl()
+            editor = event.GetControl()
             # ВНИМАНИЕ! Для редактора НСИ необходимо
             # сделать привязку к справочнику
             if self.GetTable().exCols[col]['pic'] == 'NSI':
@@ -1615,14 +1615,14 @@ class icGridDataset(icGrid):
             editor.GetTextCtrl().Bind(wx.EVT_LEFT_DCLICK, self.OnDClickEditor)
             sx, sy = self.GetColSize(col), self.GetDefaultRowSize()
 
-    def OnShownEditor(self, evt):
+    def OnShownEditor(self, event):
         """
         Обрабатывает сообщение о начале редактирования.
         """
         # Если поставить Skip, то данное сообщение будет обрабатываться
         # и другими гридам. Это может приводить к проблемам с блокировками
-        row = evt.GetRow()
-        col = evt.GetCol()
+        row = event.GetRow()
+        col = event.GetCol()
         #   Блокируем запись для редактирования, если позволяет объект данных
         if self.GetDataset():
             try:
@@ -1649,13 +1649,13 @@ class icGridDataset(icGrid):
             else:
                 editor.GetButton().Enable(True)
 
-        evt.Skip()
+        event.Skip()
 
-    def OnKeyDownEditor(self, evt):
+    def OnKeyDownEditor(self, event):
         """
         Функция обработки нажатия клавиши в редакторе (компонент wx.TextCtrl).
-        @param evt: Обработчик событий
-        @type evt: C{wx.CommandEvent}
+        @param event: Обработчик событий
+        @type event: C{wx.CommandEvent}
         """
         row = self.GetGridCursorRow()
         col = self.GetGridCursorCol()
@@ -1673,10 +1673,10 @@ class icGridDataset(icGrid):
             else:
                 text = ''
 
-            kcod = evt.GetKeyCode()
-            bCtrl = evt.ControlDown()
-            bShift = evt.ShiftDown()
-            bAlt = evt.AltDown()
+            kcod = event.GetKeyCode()
+            bCtrl = event.ControlDown()
+            bShift = event.ShiftDown()
+            bAlt = event.AltDown()
             templ = self.GetTable().exCols[col]['pic']
             if (kcod not in (wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_BACK, wx.WXK_UP, wx.WXK_DOWN,
                 wx.WXK_HOME, wx.WXK_DELETE, wx.WXK_END) and not bAlt
@@ -1708,13 +1708,13 @@ class icGridDataset(icGrid):
         except:
             log.error(u'KEYDOWN EDITOR ERROR')
 
-        evt.Skip()
+        event.Skip()
 
-    def OnHiddenEditor(self, evt):
+    def OnHiddenEditor(self, event):
         """
         Обработка сообщения о закрытии редактра
-        @param evt: Обработчик событий
-        @type evt: C{wx.grid.GridEvent}
+        @param event: Обработчик событий
+        @type event: C{wx.grid.GridEvent}
         """
         row = self.GetGridCursorRow()
         col = self.GetGridCursorCol()
@@ -1732,15 +1732,15 @@ class icGridDataset(icGrid):
         except:
             log.fatal(u'GridDataset. Unlock row <%s>' % row)
 
-        evt.Skip()
+        event.Skip()
 
-    def OnButtonExtend(self, evt):
+    def OnButtonExtend(self, event):
         """
         Нажатие кнопки внешнего редектора.
         """
         self.evalSpace['self'] = self
-        self.evalSpace['evt'] = evt
-        x, y = evt.GetPosition()
+        self.evalSpace['event'] = event
+        x, y = event.GetPosition()
         #   Приходится извращается так как кнопка может перехватывать сообщение
         #   EVT_LEFT_DOWN c EVT_BUTTON вообще перестало работать с
         #   версии wx 2.6.1.0
@@ -1748,7 +1748,7 @@ class icGridDataset(icGrid):
             self.OnExtend()
         else:
             self.DisableCellEditControl()
-            evt.Skip()
+            event.Skip()
 
     def OnExtend(self):
         """
@@ -1830,19 +1830,19 @@ class icGridDataset(icGrid):
         self.SetFocus()
         self.SetCursor(row)
 
-    def OnKeyDown(self, evt):
+    def OnKeyDown(self, event):
         """
         Обработка нажатия клавиш в гриде.
-        @param evt: Обработчик событий
-        @type evt: C{wx.grid.GridEvent}
+        @param event: Обработчик событий
+        @type event: C{wx.grid.GridEvent}
         """
         if self._isIgnoreKeyDown:
             return
 
-        self.evalSpace['evt'] = evt
-        keycod = evt.GetKeyCode()
-        bCtrl = evt.ControlDown()
-        bShift = evt.ShiftDown()
+        self.evalSpace['event'] = event
+        keycod = event.GetKeyCode()
+        bCtrl = event.ControlDown()
+        bShift = event.ShiftDown()
         #
         #   Выполняем выражение обработки нажатия клавиш клавиатуры. Пока работает
         #   обработчик блокируем обработку сообщений от клавиатуры.
@@ -1883,8 +1883,8 @@ class icGridDataset(icGrid):
                     self.DisableCellEditControl()
                 else:
                     self.GetTable().Update()
-            evt.Skip()
-        elif keycod == 83 and evt.ControlDown():
+            event.Skip()
+        elif keycod == 83 and event.ControlDown():
             self.GetTable().Update()
         elif keycod in [wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER]:
             self.DisableCellEditControl()
@@ -1905,12 +1905,12 @@ class icGridDataset(icGrid):
             return
 
         # Ctrl-Home
-        elif keycod == wx.WXK_HOME and evt.ControlDown():
+        elif keycod == wx.WXK_HOME and event.ControlDown():
             self.SetGridCursor(0, 0)
             self.MakeCellVisible(0, 0)
             self.PostSelect()
         # Ctrl-End
-        elif keycod == wx.WXK_END and evt.ControlDown():
+        elif keycod == wx.WXK_END and event.ControlDown():
             maxrow = self.GetNumberRows()
             maxcol = self.GetNumberCols()
             if maxcol > 0:
@@ -1930,18 +1930,18 @@ class icGridDataset(icGrid):
             self.PostSelect()
         elif keycod == wx.WXK_TAB:
             self.DisableCellEditControl()
-            evt.Skip()
-        elif keycod == wx.WXK_INSERT and not evt.ControlDown() and not evt.ShiftDown() and not evt.AltDown():
+            event.Skip()
+        elif keycod == wx.WXK_INSERT and not event.ControlDown() and not event.ShiftDown() and not event.AltDown():
             self.DisableCellEditControl()
             self.AddRows()
-        elif keycod == wx.WXK_INSERT and evt.ControlDown() and self.CanEnableCellControl():
+        elif keycod == wx.WXK_INSERT and event.ControlDown() and self.CanEnableCellControl():
             self.EnableCellEditControl()
             #   Копируем значение в Clipboard
             try:
                 self.editors[col].Copy()
             except:
                 log.fatal(u'GridDataset. Copy clipboard')
-        elif keycod == wx.WXK_INSERT and evt.ShiftDown() and self.CanEnableCellControl():
+        elif keycod == wx.WXK_INSERT and event.ShiftDown() and self.CanEnableCellControl():
             self.EnableCellEditControl()
             #   Копируем значение из Clipboard
             try:
@@ -1949,9 +1949,9 @@ class icGridDataset(icGrid):
             except:
                 log.fatal(u'GridDataset. Paste clipboard')
         elif keycod in (wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_UP, wx.WXK_DOWN):
-            evt.Skip()
+            event.Skip()
         else:
-            evt.Skip()
+            event.Skip()
 
     def SetCursor(self, row, col=-1):
         """
@@ -2144,14 +2144,14 @@ class icGridDataset(icGrid):
 
         return True
 
-    def OnLeftDClick(self, evt):
+    def OnLeftDClick(self, event):
         if self.CanEnableCellControl():
             self.EnableCellEditControl()
 
-    def OnClose(self, evt):
+    def OnClose(self, event):
         if self.data is not None:
             self.data.Close()
-        evt.Skip()
+        event.Skip()
 
     def set_struct_filter(self, **flt):
         """

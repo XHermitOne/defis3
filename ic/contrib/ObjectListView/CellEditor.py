@@ -593,8 +593,8 @@ class AutoCompleteHelper(object):
             self.possibleValues = possibleValues or []
         self.lowerCasePossibleValues = [x.lower() for x in self.possibleValues]
 
-    def _OnTextEvent(self, evt):
-        evt.Skip()
+    def _OnTextEvent(self, event):
+        event.Skip()
         # After the SetValue() we want to ignore this event. If we get this event
         # and the value hasn't been modified, we know it was a SetValue() call.
         if hasattr(
@@ -604,12 +604,12 @@ class AutoCompleteHelper(object):
 
         # If the text has changed more than the user just typing one letter,
         # then don't try to autocomplete it.
-        if len(evt.GetString()) != len(self.lastUserEnteredString) + 1:
-            self.lastUserEnteredString = evt.GetString()
+        if len(event.GetString()) != len(self.lastUserEnteredString) + 1:
+            self.lastUserEnteredString = event.GetString()
             return
 
-        self.lastUserEnteredString = evt.GetString()
-        s = evt.GetString().lower()
+        self.lastUserEnteredString = event.GetString()
+        s = event.GetString().lower()
         for i, x in enumerate(self.lowerCasePossibleValues):
             if x.startswith(s):
                 self._AutocompleteWith(self.possibleValues[i])

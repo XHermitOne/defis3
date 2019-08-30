@@ -69,7 +69,7 @@ class icConnection:
                 
         return False
         
-    def generate(self, evt):
+    def generate(self, event):
         """
         """
         

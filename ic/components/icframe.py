@@ -14,7 +14,7 @@
     - B{foregroundColor=None}: Цвет текста.
     - B{backgroundColor=None}: Цвет фона.
     - B{onClose = None}: Выражение, выполняемое при закрытии окна (обработка события EVT_CLOSE).
-        Если выражение вернет False, то окно не будет закрыто (не будет вызываться evt.Skip() ).
+        Если выражение вернет False, то окно не будет закрыто (не будет вызываться event.Skip() ).
     - B{setFocus = None}: Выражение, выполняемое при установлении фокуса (обработка события EVT_SET_FOCUS).
     - B{killFocus = None}: Выражение, выполняемое при потере фокуса (обработка события EVT_KILL_FOCUS).
     - B{keyDown=None}: Выражение, выполняемое после нажатия любой кнопки в любом компоненте,
@@ -221,25 +221,25 @@ class icFrame(icwidget.icWidget, wx.Frame):
             self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
                                             bCounter=bCounter, progressDlg=progressDlg)
 
-    def OnSize(self, evt):
+    def OnSize(self, event):
         self.Refresh()
-        evt.Skip()
+        event.Skip()
         
-    def OnSetFocus(self, evt):
+    def OnSetFocus(self, event):
         """
         Обрабатывает событие установки фокуса (EVT_SET_FOCUS).
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.eval_attr('setFocus')
-        evt.Skip()
+        event.Skip()
         
-    def OnKillFocus(self, evt):
+    def OnKillFocus(self, event):
         """
         Обрабатывает событие установки фокуса (EVT_SET_FOCUS).
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.eval_attr('killFocus')
-        evt.Skip()
+        event.Skip()
 
     def DestroyWin(self):
         """
@@ -255,7 +255,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
         except:
             log.warning(u'Ошибка разрушения фрейма')
 
-    def OnCloseFrame(self, evt):
+    def OnCloseFrame(self, event):
         """
         Обрабатывает сообщение о закрытии окна.
         """
@@ -264,7 +264,7 @@ class icFrame(icwidget.icWidget, wx.Frame):
             self.SaveUserProperty('position', self.GetPosition())
             self.SaveUserProperty('size', self.GetSize())
             self.evalSpace['__block_lock_rec'] = True
-            self.evalSpace['evt'] = evt
+            self.evalSpace['event'] = event
             ret, val = self.eval_attr('onClose')
             #   Если выражение вернет False, то отменяем закрытие окна. None трактуем
             #   как True,  поскольку если выражение не определяет возвращаемое значение,
@@ -277,8 +277,8 @@ class icFrame(icwidget.icWidget, wx.Frame):
             self.evalSpace['_sources'][key].UnlockAll()
 
         # self.destroyWin()
-        if evt:
-            evt.Skip()
+        if event:
+            event.Skip()
         
     def Destroy(self):
         try:

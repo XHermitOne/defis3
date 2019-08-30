@@ -138,17 +138,17 @@ class Indicator(icwidget.icWidget, parentModule.GenBitmapTextButton):
       
     #   Обработчики событий
     
-    def OnKeyDown(self, evt):
+    def OnKeyDown(self, event):
         """
         Обработчик события wx.EVT_KEY_DOWN, атрибут=keyDown
         """
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         ret, val = self.eval_attr('keyDown')
         if ret and val:
-            evt.Skip()
+            event.Skip()
         elif not ret:
-            evt.Skip()
+            event.Skip()
 
 
 def test(par=0):

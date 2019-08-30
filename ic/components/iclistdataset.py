@@ -280,7 +280,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         self.SetFocus()
         self.SetCursor(0)
         
-    def OnCommandLeftClick(self, evt):
+    def OnCommandLeftClick(self, event):
         """
         Обрабатываем сообщение <EVT_COMMAND_LEFT_CLICK>.
         """
@@ -289,15 +289,15 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         except:
             pass
         
-        evt.Skip()
+        event.Skip()
         
-    def OnColClick(self, evt):
+    def OnColClick(self, event):
         """
         Обрабатываем сообщение <EVT_LIST_COL_CLICK>.
         """
         if self.dataset is not None:
             #   Определяем колонку
-            col = evt.GetColumn()
+            col = event.GetColumn()
             fld = self.colNames[col]
             #   Проверяем есть ли по данной колонке индексное выражение либо
             #   выражение для сортировки (атрибут 'sort')
@@ -311,23 +311,23 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
                 self.dataset.FilterData()
                 self.Refresh()
 
-        evt.Skip()
+        event.Skip()
         
-    def OnItemSelected(self, evt):
+    def OnItemSelected(self, event):
         """
         Обрабатываем сообщение о выборе строки списка.
         """
         self.SetFocus()
-        evt.Skip()
+        event.Skip()
         result = True
-        self.currentItem = evt.Index
+        self.currentItem = event.Index
         #   Формируем пространство имен
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['row'] = self.currentItem
 
         #   Уведомляем другие компоненты формы о том, что положение курсора изменилось
         if self.dataset is not None:
-            row = evt.GetIndex()
+            row = event.GetIndex()
             self.dataset.Move(row)
             self.UpdateRelObj()
         
@@ -339,7 +339,7 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         
         self.evalSpace['values'] = self.rowDict
         self.evalSpace['_lfp'] = {'function': 'onItemSelected',
-                                  'evt': evt,
+                                  'event': event,
                                   'currentItem': self.currentItem,
                                   'row': self.currentItem,
                                   'self': self}
@@ -349,14 +349,14 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
             if ret:
                 result = bool(val)
 
-    def OnItemActivated(self, evt):
+    def OnItemActivated(self, event):
         """
         Активация (Enter/DobleClick) строки.
         """
-        currentItem = evt.Index
+        currentItem = event.Index
         rowData = []
         #   Формируем пространство имен
-        self.evalSpace['evt'] = evt
+        self.evalSpace['event'] = event
         self.evalSpace['row'] = currentItem
         try:
             self.rowDict.update(self.dataset.getDict(currentItem, True))
@@ -366,12 +366,12 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         
         self.evalSpace['values'] = self.rowDict
         self.evalSpace['_lfp'] = {'function': 'onItemActivated',
-                                  'evt': evt,
+                                  'event': event,
                                   'currentItem': currentItem,
                                   'result': self.rowDict,
                                   'self': self}
         self.eval_attr('activated')
-        evt.Skip()
+        event.Skip()
    
     def getColumnText(self, index, col):
         """

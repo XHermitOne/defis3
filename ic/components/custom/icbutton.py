@@ -283,29 +283,29 @@ class icButton(icwidget.icWidget, wx.Button):
         self.Bind(wx.EVT_RIGHT_DOWN, self.OnMouseContextDown)
         self.BindICEvt()
 
-    def OnMouseClick(self, evt):
+    def OnMouseClick(self, event):
         """
         Обрабатываем нажатие кнопки (сообщение EVT_BUTTON).
         """
-        self.eval_event('mouseClick', evt, True)
+        self.eval_event('mouseClick', event, True)
 
-    def OnMouseDown(self, evt):
+    def OnMouseDown(self, event):
         """
         Обрабатываем нажатие кнопки (сообщение EVT_LEFT_DOWN).
         """
-        self.eval_event('mouseDown', evt, True)
+        self.eval_event('mouseDown', event, True)
 
-    def OnMouseUp(self, evt):
+    def OnMouseUp(self, event):
         """
         Обрабатываем нажатие кнопки (сообщение EVT_LEFT_UP).
         """
-        self.eval_event('mouseUp', evt, True)
+        self.eval_event('mouseUp', event, True)
 
-    def OnMouseContextDown(self, evt):
+    def OnMouseContextDown(self, event):
         """
         Обрабатываем нажатие кнопки (сообщение EVT_RIGHT_DOWN).
         """
-        self.eval_event('mouseContextDown', evt, True)
+        self.eval_event('mouseContextDown', event, True)
 
 
 def test(par=0):

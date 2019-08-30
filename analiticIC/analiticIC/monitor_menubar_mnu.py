@@ -23,7 +23,7 @@ __version__ = (0, 0, 0, 1)
 
 class icMonitorMenubarManager(icmanagerinterface.icWidgetManager):
 
-    def onInit(self, evt):
+    def onInit(self, event):
         pass
 
     def onCompareAnalizeMenuItemSelected(self, event):

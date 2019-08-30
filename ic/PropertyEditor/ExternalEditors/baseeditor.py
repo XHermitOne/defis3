@@ -415,11 +415,11 @@ class ChoiceMenu(wx.Menu):
             return False
         return True
 
-    def OnChoice(self, evt):
+    def OnChoice(self, event):
         """
         Обработка выбора одного из пунктов меню.
         """
-        id = evt.GetId()
+        id = event.GetId()
         self._sel = self._idLst.index(id)
 
 
@@ -435,7 +435,7 @@ class icChoiceEdt(icBaseEdt):
     AttrListDict = {}
     CHOICE_ITEM = None
 
-    def OnChoiceItem(self, evt):
+    def OnChoiceItem(self, event):
         """
         Обработка выбора меню.
         """

@@ -119,7 +119,7 @@ class icDialogDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesign
         """
         return self.title
         
-    def OnPaint(self, evt):
+    def OnPaint(self, event):
         """
         Обрабатываем событие EVT_PAINT.
         """

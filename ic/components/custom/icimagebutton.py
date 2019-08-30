@@ -146,13 +146,13 @@ class icImgButtonPrototype(icWidget):
         util.icSpcDefStruct(SPC_IC_IMGBUTTON, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
-    def OnMouseMove(self, evt):
+    def OnMouseMove(self, event):
         """
         """
         x, y = self.GetPosition()
         sx, sy = self.GetSize()
 
-        px, py = p = evt.GetPosition()
+        px, py = p = event.GetPosition()
         d = 5
         r = wx.Rect(d, d, sx-2*d, sy-2*d)
 
@@ -169,50 +169,50 @@ class icImgButtonPrototype(icWidget):
         else:
             self._helpWin = None
         
-    def OnMouseClick(self, evt):
+    def OnMouseClick(self, event):
         """
         Обрабатываем нажатие на кнопку (сообщение C{EVT_BUTTON}).
         """
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
 
         self.eval_attr('mouseClick')
         
-        evt.Skip()
+        event.Skip()
 
-    def OnMouseDown(self, evt):
+    def OnMouseDown(self, event):
         """
         Обрабатываем нажатие левой кнопки мыши (сообщение C{EVT_LEFT_DOWN}).
         """
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
 
         self.eval_attr('mouseDown')
-        evt.Skip()
+        event.Skip()
 
-    def OnMouseUp(self, evt):
+    def OnMouseUp(self, event):
         """
         Обрабатываем отпускание левой кнопки мыши (сообщение C{EVT_LEFT_UP}).
         """
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         self.eval_attr('mouseUp')
         
-        evt.Skip()
+        event.Skip()
 
-    def OnMouseContextDown(self, evt):
+    def OnMouseContextDown(self, event):
         """
         Обрабатываем нажатие правой кнопки мыши (сообщение C{EVT_RIGHT_DOWN}).
         """
-        self.evalSpace['evt'] = evt
-        self.evalSpace['event'] = evt
+        self.evalSpace['event'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         self.eval_attr('mouseContextDown')
 
-        evt.Skip()
+        event.Skip()
 
 
 class icImageButton(icImgButtonPrototype, buttons.GenBitmapTextButton):

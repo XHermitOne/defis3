@@ -120,24 +120,24 @@ class icIEHtmlPanel(icWidget, wx.Window):
     def ShutdownDemo(self):
         pass
 
-    def OnSize(self, evt):
+    def OnSize(self, event):
         self.Layout()
 
-    def OnLocationSelect(self, evt):
+    def OnLocationSelect(self, event):
         url = self.location.GetStringSelection()
         self.ie.Navigate(url)
 
-    def OnLocationKey(self, evt):
-        if evt.KeyCode() == wx.WXK_RETURN:
+    def OnLocationKey(self, event):
+        if event.KeyCode() == wx.WXK_RETURN:
             URL = self.location.GetValue()
             self.location.Append(URL)
             self.ie.Navigate(URL)
         else:
-            evt.Skip()
+            event.Skip()
 
-    def IgnoreReturn(self, evt):
-        if evt.GetKeyCode() != wx.WXK_RETURN:
-            evt.Skip()
+    def IgnoreReturn(self, event):
+        if event.GetKeyCode() != wx.WXK_RETURN:
+            event.Skip()
 
     def OnOpenButton(self, event):
         dlg = wx.TextEntryDialog(self, 'Open Location',
@@ -158,38 +158,38 @@ class icIEHtmlPanel(icWidget, wx.Window):
     def OnNextPageButton(self, event):
         self.ie.GoForward()
 
-    def OnStopButton(self, evt):
+    def OnStopButton(self, event):
         self.ie.Stop()
 
-    def OnSearchPageButton(self, evt):
+    def OnSearchPageButton(self, event):
         self.ie.GoSearch()
 
-    def OnRefreshPageButton(self, evt):
+    def OnRefreshPageButton(self, event):
         self.ie.Refresh(iewin.IEHTML_REFRESH_COMPLETELY)
 
     def logEvt(self, name, event):
         pass
 
-    def OnBeforeNavigate2(self, evt):
-        self.logEvt('OnBeforeNavigate2', evt)
+    def OnBeforeNavigate2(self, event):
+        self.logEvt('OnBeforeNavigate2', event)
         
-    def OnNewWindow2(self, evt):
-        self.logEvt('OnNewWindow2', evt)
-        evt.Veto()  # don't allow it
+    def OnNewWindow2(self, event):
+        self.logEvt('OnNewWindow2', event)
+        event.Veto()  # don't allow it
 
-    def OnDocumentComplete(self, evt):
-        self.logEvt('OnDocumentComplete', evt)
-        self.current = evt.URL
+    def OnDocumentComplete(self, event):
+        self.logEvt('OnDocumentComplete', event)
+        self.current = event.URL
         try:
             self.location.SetValue(self.current)
         except:
             pass
 
-    def OnTitleChange(self, evt):
-        self.logEvt('OnTitleChange', evt)
+    def OnTitleChange(self, event):
+        self.logEvt('OnTitleChange', event)
 
-    def OnStatusTextChange(self, evt):
-        self.logEvt('OnStatusTextChange', evt)
+    def OnStatusTextChange(self, event):
+        self.logEvt('OnStatusTextChange', event)
 
 
 def startMiniHtmlBrows(fileDoc=None):

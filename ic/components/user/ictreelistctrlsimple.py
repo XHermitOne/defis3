@@ -556,7 +556,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
             
             self.addBranch(root, res, 0, level+1)
 
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
@@ -568,7 +568,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
         """
         Сворачивание узла.
         """
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
@@ -585,7 +585,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
         if select_item:
             self._last_selection = self.getItemPathLabel(select_item)
             
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
@@ -597,7 +597,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
         """
         Активизация узла.
         """
-        self.evalSpace['evt'] = event
+        self.evalSpace['event'] = event
         self.evalSpace['self'] = self
         
         if self.evalSpace['__runtime_mode'] != util.IC_RUNTIME_MODE_EDITOR:
