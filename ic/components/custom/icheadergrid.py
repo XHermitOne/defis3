@@ -30,13 +30,15 @@
 """
 
 import wx
-import  wx.grid as  gridlib
 
-import ic.components.icgrid as icgrid
-from ic.components.icwidget import icBase, icWidget, SPC_IC_WIDGET
-from ic.utils.util import icSpcDefStruct, getICAttr
-from ic.components.icfont import icFont
-from . import icheadcell
+from ic.components import icwidget
+from ic.utils import util
+
+try:
+    from . import icheadcell
+except ImportError:
+    import icheadcell
+
 from ic.log import log
 from ic.PropertyEditor import icDefInf
 
@@ -51,7 +53,7 @@ SPC_IC_HEAD = {'type': 'Head',
                'font': {},
                'alignment': ('left', 'middle'),
 
-               '__parent__': SPC_IC_WIDGET,
+               '__parent__': icwidget.SPC_IC_WIDGET,
                }
 
 # -------------------------------------------
@@ -88,7 +90,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBar', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 
 def sortCell(cell):
@@ -98,7 +100,7 @@ def sortCell(cell):
     return str(cell.span) + str(cell.position)
 
 
-class icHeader(icBase, wx.ScrolledWindow):
+class icHeader(icwidget.icBase, wx.ScrolledWindow):
     """
     Класс описания сложной шапки.
     """
@@ -119,8 +121,8 @@ class icHeader(icBase, wx.ScrolledWindow):
         @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
         @type evalSpace: C{dictionary}
         """
-        icSpcDefStruct(SPC_IC_HEAD, component)
-        icBase.__init__(self, parent, id, component, logType, evalSpace)
+        util.icSpcDefStruct(SPC_IC_HEAD, component)
+        icwidget.icBase.__init__(self, parent, id, component, logType, evalSpace)
         pos = component['position']
         size = component['size']
         

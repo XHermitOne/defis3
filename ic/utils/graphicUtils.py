@@ -21,7 +21,7 @@
 
 import wx
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 #   Идентификаторы типов заливки ячейки
 BGR_SOLID = 0
@@ -30,13 +30,8 @@ BGR_GRAD_BOTTOM = 2
 BGR_GRAD_LEFT = 3
 BGR_GRAD_RIGHT = 4
 
-# Version 2.9.1
-if wx.VERSION > (2, 8, 11, 10):
-    wx.Colour = wx.Colour
 
 # --- Функции для работы с градиентами
-
-
 def getMidColour(clr1, clr2, part=0.5):
     """ 
     Функция возвращает промежуточный цвет между двумя.
@@ -220,7 +215,7 @@ def drawRoundCorners(dc, size, fgr, bgr, bgr_prnt,
                      st=0, clrLst=None, corners=(1, 1, 1, 1), backgroundType=0):
     """
     """
-    return drawRoundCornersRect(dc, (0,0), size, fgr, bgr, bgr_prnt,
+    return drawRoundCornersRect(dc, (0, 0), size, fgr, bgr, bgr_prnt,
                                 st, clrLst, corners, backgroundType)
 
     
@@ -322,8 +317,6 @@ def drawRoundCornersRect(dc, pos, size, fgr, bgr, bgr_prnt,
                         pen = wx.Pen(clr)
                         dc.SetPen(pen)
                     dc.DrawPoint(x0+x+st, y0+height-y-st-1)
-
-# ------ new
 
 
 def getAdjustColour(color, percent, alpha=wx.ALPHA_OPAQUE):

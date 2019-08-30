@@ -51,14 +51,12 @@
 """
 
 import wx
-import wx.grid as gridlib
 
-import ic.components.icgrid as icgrid
 from ic.components import icwidget
-from ic.utils.util import icSpcDefStruct, getICAttr
+from ic.utils import util
 from ic.components.icfont import icFont
 from ic.PropertyEditor import icDefInf
-import ic.utils.graphicUtils as graphicUtils
+from ic.utils import graphicUtils
 from ic.utils import util
 from ic.log import log
 
@@ -176,7 +174,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
         @type evalSpace: C{dictionary}
         """
-        icSpcDefStruct(SPC_IC_HEADCELL, component)
+        util.icSpcDefStruct(SPC_IC_HEADCELL, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
         self.position = pos = component['position']
         self.size = size = component['size']
@@ -186,8 +184,8 @@ class icHeadCell(icwidget.icWidget, wx.Control):
             label = ''
 
         self.add_style = wx.EXPAND | wx.GROW
-        self._isSort = getICAttr('@'+str(component['isSort']), self.evalSpace,
-                                 'Error in icheadgrid.__init__()<isSort>. Name:' + self.name)
+        self._isSort = util.getICAttr('@'+str(component['isSort']), self.evalSpace,
+                                      'Error in icheadgrid.__init__()<isSort>. Name:' + self.name)
         self.shortHelpString = component['shortHelpString']
         self._helpWin = None
         # -----------------------------------------------------------------------
@@ -437,11 +435,7 @@ class icHeadCell(icwidget.icWidget, wx.Control):
         label = label.replace('\\r\\n', '\n').replace('\\n', '\n').replace('\r\n', '\n')
         # Заглушка!!!
         if isinstance(label, str):
-            try:
-                label = str(label)
-            except:
-                log.info(_('WARRNING')+':' + 'icHeadCell, label is not in utf-8 encoding.')
-                label = str(label)
+            label = str(label)
         # Заглушка!!!
         if label.strip().startswith('_('):
             label = label.replace('_(', '').replace(')', '').replace('\'', '').replace('"', '')
