@@ -1175,7 +1175,7 @@ class icGridDataset(icGrid):
         self.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.OnLeftDClick)
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
         self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self.OnEditorCreat)
-        self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self.OnSelected)
+        self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self.onSelected)
         self.Bind(wx.EVT_CLOSE, self.OnClose, parent)
         self.Bind(wx.grid.EVT_GRID_EDITOR_SHOWN, self.OnShownEditor)
         self.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self.OnHiddenEditor)
@@ -1503,14 +1503,14 @@ class icGridDataset(icGrid):
         self.eval_attr('post_select')
         event.Skip()
 
-    def OnSelected(self, event):
+    def onSelected(self, event):
         """
         Обрабатываем сообщение о выборе новой ячейки.
         """
         self.SetFocus()
-        icGrid.OnSelected(self, event)
+        icGrid.onSelected(self, event)
         bPostsel = False
-        #   В некоторых случаях эти сообщения генерируются функцией PostSelect, когда компонент
+        #   В некоторых случаях эти сообщения генерируются функцией doPostSelect, когда компонент
         #   еще не готов к работе
         try:
             row = event.GetRow()
@@ -1905,7 +1905,7 @@ class icGridDataset(icGrid):
                     else:
                         self.SetGridCursor(row, 0)
                         self.MakeCellVisible(row, 0)
-            self.PostSelect()
+            self.doPostSelect()
             self._isIgnoreKeyDown = False
             return
 
@@ -1913,7 +1913,7 @@ class icGridDataset(icGrid):
         elif keycod == wx.WXK_HOME and event.ControlDown():
             self.SetGridCursor(0, 0)
             self.MakeCellVisible(0, 0)
-            self.PostSelect()
+            self.doPostSelect()
         # Ctrl-End
         elif keycod == wx.WXK_END and event.ControlDown():
             maxrow = self.GetNumberRows()
@@ -1921,18 +1921,18 @@ class icGridDataset(icGrid):
             if maxcol > 0:
                 self.SetGridCursor(maxrow-1, maxcol-1)
                 self.MakeCellVisible(maxrow-1, maxcol-1)
-            self.PostSelect()
+            self.doPostSelect()
 
         elif keycod == wx.WXK_HOME:
             self.SetGridCursor(row, 0)
             self.MakeCellVisible(row, 0)
-            self.PostSelect()
+            self.doPostSelect()
         elif keycod == wx.WXK_END:
             maxcol = self.GetTable().GetNumberCols()
             if maxcol > 0:
                 self.SetGridCursor(row, maxcol-1)
                 self.MakeCellVisible(row, maxcol-1)
-            self.PostSelect()
+            self.doPostSelect()
         elif keycod == wx.WXK_TAB:
             self.DisableCellEditControl()
             event.Skip()

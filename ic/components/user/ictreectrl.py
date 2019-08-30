@@ -178,7 +178,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelectChanged)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnItemActivated)
         # self.Bind(wx.EVT_TREE_KEY_DOWN, self.OnTreeListKeyDown)
-        # self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelected)
+        # self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onSelected)
         # self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnActivated)
         # self.Bind(wx.EVT_TREE_ITEM_EXPANDED, self.OnExpand)
         # self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.OnRightClick)

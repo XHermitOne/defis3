@@ -73,7 +73,7 @@ ic_class_spc = {'type': 'FlatMenuTool',
                                    icDefInf.EDT_USER_PROPERTY: ['pic1', 'pic2',],
                                    },
 
-                '__events__': {'onSelected': ('wx.lib.agw.flatmenu.EVT_FLAT_MENU_SELECTED', 'OnSelected', False),
+                '__events__': {'onSelected': ('wx.lib.agw.flatmenu.EVT_FLAT_MENU_SELECTED', 'onSelected', False),
                                },
                     
                 '__parent__': SPC_IC_FLATMENUTOOL_WRP,

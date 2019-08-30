@@ -15,8 +15,8 @@
     - B{wx.ALIGN_CENTRE}: Выравнивает текст по центру.
     - B{wx.ST_NO_AUTORESIZE}: Отключает автоматический подбор размер компонента.
 
-@type SPC_IC_HEAD: C{Dictionary}
-@var SPC_IC_HEAD: Спецификация на описание сложной шапки. Описание ключей:
+@type SPC_IC_HEADER: C{Dictionary}
+@var SPC_IC_HEADER: Спецификация на описание сложной шапки. Описание ключей:
 
     - B{name='Head'}: Имя объекта.
     - B{type='Head'}: Тип объекта.
@@ -42,19 +42,23 @@ except ImportError:
 from ic.log import log
 from ic.PropertyEditor import icDefInf
 
-SPC_IC_HEAD = {'type': 'Head',
-               'name': 'Head',
-               'child': [],
+#   Описание стилей компонента
+ic_class_styles = {'DEFAULT': 0}
 
-               'position': (-1, -1),
-               'size': (-1, -1),
-               'backgroundColor': None,
-               'foregroundColor': None,
-               'font': {},
-               'alignment': ('left', 'middle'),
+SPC_IC_HEADER = {'type': 'Header',
+                 'name': 'default',
+                 'child': [],
 
-               '__parent__': icwidget.SPC_IC_WIDGET,
-               }
+                 'position': (-1, -1),
+                 'size': (-1, -1),
+                 'backgroundColor': None,
+                 'foregroundColor': None,
+                 'font': {},
+                 'alignment': ('left', 'middle'),
+
+                 '__styles__': ic_class_styles,
+                 '__parent__': icwidget.SPC_IC_WIDGET,
+                 }
 
 # -------------------------------------------
 #   Общий интерфэйс модуля
@@ -67,12 +71,8 @@ ic_class_type = icDefInf._icComboType
 #   Имя пользовательского класса
 ic_class_name = 'icHeader'
 
-#   Описание стилей компонента
-ic_class_styles = {'DEFAULT': 0}
-
 #   Спецификация на ресурсное описание пользовательского класса
-ic_class_spc = SPC_IC_HEAD
-ic_class_spc['__styles__'] = ic_class_styles
+ic_class_spc = SPC_IC_HEADER
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
@@ -90,7 +90,7 @@ ic_can_contain = None
 ic_can_not_contain = ['Dialog', 'Frame', 'ToolBar', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 3)
+__version__ = (1, 1, 1, 4)
 
 
 def sortCell(cell):
@@ -121,7 +121,7 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
         @type evalSpace: C{dictionary}
         """
-        util.icSpcDefStruct(SPC_IC_HEAD, component)
+        util.icSpcDefStruct(SPC_IC_HEADER, component)
         icwidget.icBase.__init__(self, parent, id, component, logType, evalSpace)
         pos = component['position']
         size = component['size']
@@ -482,11 +482,12 @@ def test(par=0):
     Тестируем класс icHeadCell.
     """
     from ic.components.ictestapp import TestApp
+    import wx.grid
     app = TestApp(par)
     
-    frame = wx.Frame(None, -1, 'icCell Test', size=(600,350))
+    frame = wx.Frame(None, -1, 'icCell Test', size=(600, 350))
     panel = wx.Panel(frame, -1)
-    panel.SetBackgroundColour((100,180,200))
+    panel.SetBackgroundColour((100, 180, 200))
     
     hx = 480
     bsz = wx.GridBagSizer(1,1)
@@ -494,83 +495,89 @@ def test(par=0):
     panel.SetSizer(bsz)
    
     header = icHeader(panel, 0, {'position': (10, 10), 'size': (hx, 120),
-                                 'backgroundColor': (200, 0, 0),
+                                 # 'backgroundColor': (200, 0, 0),
                                  'foregroundColor': (255, 0, 0)})
 
     sz_cell = (70, 20)
 
     cell = icheadcell.icHeadCell(header, 1,
-                                 {'label': 'row- 1:0', 'size': (-1,-1),
+                                 {'label': 'row- 1:0', 'size': (-1, -1),
                                   'position': (1, 0), 'span': (1, 2),
-                                  'backgroundColor': (120, 170, 220),
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, 2,
                                  {'label': 'row- 2:0', 'size': sz_cell,
-                                  'position': (2, 0), 'isSort': True,
-                                  'backgroundColor': (120, 170, 220),
+                                  'position': (2, 0), 'isSort': False,
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, 3,
                                  {'label': 'row- 2:1', 'size': sz_cell,
-                                  'position': (2, 1), 'isSort': True,
-                                  'backgroundColor': (120, 170, 220),
+                                  'position': (2, 1), 'isSort': False,
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, 4,
                                  {'label': 'row- 2:2', 'size': sz_cell,
-                                  'position': (2, 2), 'isSort': True,
-                                  'backgroundColor': (120, 170, 220),
+                                  'position': (2, 2), 'isSort': False,
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, 5,
                                  {'label': 'row- 2:3', 'size': sz_cell,
-                                  'position': (2, 3), 'isSort': True,
-                                  'backgroundColor': (120, 170, 220),
+                                  'position': (2, 3), 'isSort': False,
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 2:4', 'size': sz_cell,
                                   'position': (2, 4),
-                                  'backgroundColor': (120, 170, 220),
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 1:5', 'size': (-1, -1),
                                   'position': (1, 5),
-                                  'backgroundColor': (120, 170, 220),
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 2:5', 'size': (70, 20),
                                   'position': (2, 5),
-                                  'backgroundColor': (120, 170, 220),
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 1:2', 'size': (-1, 20),
                                   'position': (1, 2), 'span': (1, 3),
-                                  'backgroundColor': (120, 170, 220),
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 0:0', 'size': (-1, 20),
                                   'position': (0, 0),
                                   'span': (1, 6),
-                                  'backgroundColor': (120, 170, 220),
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 1,
                                   'borderTopColor': (100, 100, 100)})
     header.addCell(cell)
     cell = icheadcell.icHeadCell(header, -1,
                                  {'label': 'row- 0:6\ntest', 'size': (70, 120),
                                   'position': (0, 6), 'span': (3, 1),
-                                  'isSort': True,
-                                  'backgroundColor': (120, 170, 220),
+                                  'isSort': False,
+                                  # 'backgroundColor': (120, 170, 220),
                                   'backgroundType': 3,
                                   'borderStep': 2})
     header.addCell(cell)
     bsz.Add(header, (0, 0), (1, 1), 0, wx.EXPAND)
-    
+
+    grid = wx.grid.Grid(panel)
+    grid.CreateGrid(3, 7)
+    bsz.Add(grid, (1, 0), (1, 1), 0, wx.EXPAND)
+
+    header.connectGrid(grid)
+
     log.info(u'header.GetSize() = %s\t%s' % (header.GetSize(), header.size))
     frame.Show(True)
 

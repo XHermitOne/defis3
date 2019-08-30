@@ -37,8 +37,8 @@ class icInputMsgAttrClass(icobjectinterface.icObjectInterface):
         """
         header = self.GetNameObj('Head')
         # Привязываем шапку к гриду
-        obj.SetHeader(header, False, True)
-        obj.ReconstructHeader()
+        obj.setHeader(header, False, True)
+        obj.doReconstructHeader()
 
 
 def test(par=0):

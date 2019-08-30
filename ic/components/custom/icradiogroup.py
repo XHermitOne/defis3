@@ -48,7 +48,7 @@ SPC_IC_RADIOGROUP = {'type': 'RadioGroup',
                      'foregroundColor': (0, 0, 0),
                      'backgroundColor': (255, 255, 255),
 
-                     '__events__': {'onSelected': ('wx.EVT_RADIOBOX', 'OnSelected', False),
+                     '__events__': {'onSelected': ('wx.EVT_RADIOBOX', 'onSelected', False),
                                     },
                      '__attr_types__': {icDefInf.EDT_NUMBER: ['selected', 'max_value'],
                                         icDefInf.EDT_TEXTLIST: ['items'],

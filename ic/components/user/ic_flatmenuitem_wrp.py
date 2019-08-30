@@ -76,7 +76,7 @@ ic_class_spc = {'type': 'FlatMenuItem',
                                    icDefInf.EDT_USER_PROPERTY: ['pic1', 'pic2', ],
                                    icDefInf.EDT_CHECK_BOX: ['activate'],
                                    },
-                '__events__': {'onSelected': ('wx.lib.agw.flatmenu.EVT_FLAT_MENU_SELECTED', 'OnSelected', False),
+                '__events__': {'onSelected': ('wx.lib.agw.flatmenu.EVT_FLAT_MENU_SELECTED', 'onSelected', False),
                                },
 
                 '__parent__': SPC_IC_FLATMENUITEM_WRP,
@@ -211,7 +211,7 @@ class icFlatMenuItem(icwidget.icWidget, icflatmenuitem.icFlatMenuItemPrototype):
         else:
             menu = self.GetMenu()
             menu.GetParent().Bind(flatmenu.EVT_FLAT_MENU_SELECTED, self.OnSelected, id=id)
-            # menu.Bind(flatmenu.EVT_FLAT_MENU_SELECTED, self.OnSelected, id=id)
+            # menu.Bind(flatmenu.EVT_FLAT_MENU_SELECTED, self.onSelected, id=id)
 
     def appendIntoParent(self, Parent_):
         """

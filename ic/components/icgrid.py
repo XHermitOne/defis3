@@ -104,10 +104,9 @@
         для таблиц с большим количетвом записей и сложной алгоритмикой вычисления полей.
 """
 import wx
-import types
 import copy
 from wx import grid
-import wx.lib.mixins.gridlabelrenderer as glr
+from wx.lib.mixins import gridlabelrenderer
 
 from ic.utils import util
 from . import icwidget
@@ -123,8 +122,8 @@ SPC_IC_CELLATTR = {'type': 'cell_attr',
                    'name': 'default',
                    '_uuid': None,
 
-                   'backgroundColor': (255, 255, 255),
-                   'foregroundColor': (0, 0, 0),
+                   'backgroundColor': None,
+                   'foregroundColor': None,
                    'font': {},
                    'alignment': ('left', 'top'),
 
@@ -152,7 +151,7 @@ SPC_IC_LABELATTR = {'type': 'label_attr',
                     '_uuid': None,
 
                     'backgroundColor': None,
-                    'foregroundColor': (0, 0, 0),
+                    'foregroundColor': None,
                     'font': {},
                     'alignment': ('centre', 'centre'),
 
@@ -189,7 +188,7 @@ SPC_IC_GRID = {'type': 'Grid',         # тип ресурса
                'position': (-1, -1),   # расположение на родительском окне
                'size': (-1, -1),       # размер
                'style': 0,
-               'line_color': (200, 200, 200),  # цвет линий гида
+               'line_color': None,  # цвет линий гида
                'fixColSize': 0,
                'fixRowSize': 0,
                'selection_mode': 'cells',
@@ -217,7 +216,7 @@ SPC_IC_GRID = {'type': 'Grid',         # тип ресурса
                'docstr': 'ic.components.icgrid.html',
 
                '__styles__': {'DEFAULT': 0},
-               '__events__': {'onSize': ('wx.EVT_SIZE', 'OnSizeGrid', False),
+               '__events__': {'onSize': ('wx.EVT_SIZE', 'onSizeGrid', False),
                               'dclickEditor': ('wx.EVT_LEFT_DCLICK', 'OnDClickEditor', False),
                               },
                '__lists__': {'selection_mode': list(GRID_SELECTION_MODES.keys()),
@@ -345,7 +344,8 @@ def getIdAlignment(horiz, vert):
     return iHoriz, iVert
 
 
-class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
+class icGrid(icwidget.icWidget, grid.Grid,
+             gridlabelrenderer.GridWithLabelRenderersMixin):
     """
     Класс создает грид по ресурсному описанию.
     """
@@ -448,36 +448,36 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
             col['show'] = bShow
 
         grid.Grid.__init__(self, parent, id, self.pos, self.size, name=self.name, style=component['style'])
-        glr.GridWithLabelRenderersMixin.__init__(self)
+        gridlabelrenderer.GridWithLabelRenderersMixin.__init__(self)
         
         self.SetDefaultRowSize(component['row_height'])
 
         # Указатель на сложную шапку
         self.header = None
         #   Обработчики событий
-        self.Bind(grid.EVT_GRID_COL_SIZE, self.OnColSize)
-        self.Bind(grid.EVT_GRID_SELECT_CELL, self.OnSelected)
-        self.Bind(wx.EVT_SCROLLWIN_LINEUP, self.OnScrollLineUp)
-        self.Bind(wx.EVT_SCROLLWIN_LINEDOWN, self.OnScrollLineDown)
-        self.Bind(wx.EVT_SCROLLWIN_PAGEUP, self.OnScrollPageUp)
-        self.Bind(wx.EVT_SCROLLWIN_PAGEDOWN, self.OnScrollPageDown)
-        self.Bind(wx.EVT_SCROLLWIN_THUMBTRACK, self.OnScrollTrack)
-        self.Bind(wx.EVT_SIZE, self.OnSizeGrid)
+        self.Bind(grid.EVT_GRID_COL_SIZE, self.onColSize)
+        self.Bind(grid.EVT_GRID_SELECT_CELL, self.onSelected)
+        self.Bind(wx.EVT_SCROLLWIN_LINEUP, self.onScrollLineUp)
+        self.Bind(wx.EVT_SCROLLWIN_LINEDOWN, self.onScrollLineDown)
+        self.Bind(wx.EVT_SCROLLWIN_PAGEUP, self.onScrollPageUp)
+        self.Bind(wx.EVT_SCROLLWIN_PAGEDOWN, self.onScrollPageDown)
+        self.Bind(wx.EVT_SCROLLWIN_THUMBTRACK, self.onScrollTrack)
+        self.Bind(wx.EVT_SIZE, self.onSizeGrid)
         #   Переменные где хранятся значения ряда и колонки, котрые выбираются
-        #   после вызова функции PostSelect().
+        #   после вызова функции doPostSelect().
         self._selEventRow = -1
         self._selEventCol = -1
         
-    def GetIndxFieldResource(self, indx):
+    def getIndxFieldResource(self, indx):
         """
         Возвращает ресурсное описание поля по индиксу.
         """
         try:
             return self.resource['cols'][indx]
         except:
-            log.fatal(u'Ошибка в функции GetIndxFieldResource')
+            log.fatal(u'Ошибка в функции getIndxFieldResource')
     
-    def GetWidthGrid(self):
+    def getWidthGrid(self):
         """
         Возвращает общий размер шапки.
         """
@@ -488,31 +488,31 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
 
         return self.labelsize
 
-    def OnSizeGrid(self, event):
+    def onSizeGrid(self, event):
         """
         Обрабатывает изменение размера грида.
         """
-        self.ReconstructHeader()
+        self.doReconstructHeader()
         #   Для некоторых ситуаций необходимо
-        self.PostSelect()
+        self.doPostSelect()
         #   Обработчик на изменения размеров грида
         self.evalSpace['event'] = event
         self.evalSpace['evt'] = event
         self.eval_attr('onSize')
         event.Skip()
 
-    def OnSelected(self, event):
+    def onSelected(self, event):
         """
         Выбор ячейки грида.
         """
         vx, vy = self.GetViewStart()
         dx, dy = self.GetScrollPixelsPerUnit()
         if self.header and self.header.scroll_pos[0] != vx*dx:
-            self.ReconstructHeader()
+            self.doReconstructHeader()
             
         event.Skip()
         
-    def OnColSize(self, event):
+    def onColSize(self, event):
         """
         Изменение размера колонки.
         """
@@ -530,9 +530,9 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         event.Skip()
         vx, vy = self.GetViewStart()
         dx, dy = self.GetScrollPixelsPerUnit()
-        self.ReconstructHeader()
+        self.doReconstructHeader()
         
-    def OnScrollLineUp(self, event):
+    def onScrollLineUp(self, event):
         """
         """
         if event.GetOrientation() == wx.HORIZONTAL:
@@ -542,22 +542,22 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
                 self.header.setViewStart(vx * dx - dx, 0)
         event.Skip()
 
-    def OnScrollLineDown(self, event):
+    def onScrollLineDown(self, event):
         """
         """
         if event.GetOrientation() == wx.HORIZONTAL:
             vx, vy = self.GetViewStart()
             dx, dy = self.GetScrollPixelsPerUnit()
-            w = self.GetWidthGrid()
+            w = self.getWidthGrid()
             sx, sy = self.GetSize()
             if self.header and vx*dx+dx <= w - sx+dx:
                 self.header.setViewStart(vx * dx + dx, 0)
             else:
-                self.PostSelect()
+                self.doPostSelect()
 
         event.Skip()
 
-    def OnScrollPageUp(self, event):
+    def onScrollPageUp(self, event):
         """
         """
         if event.GetOrientation() == wx.HORIZONTAL:
@@ -571,30 +571,30 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
                     self.header.setViewStart(0, 0)
         event.Skip()
         
-    def OnScrollPageDown(self, event):
+    def onScrollPageDown(self, event):
         """
         """
         if event.GetOrientation() == wx.HORIZONTAL:
-            self.PostSelect()
+            self.doPostSelect()
             
         event.Skip()
         
-    def OnScrollTrack(self, event):
+    def onScrollTrack(self, event):
         """
         """
         if event.GetOrientation() == wx.HORIZONTAL:
             vx = event.GetPosition()
             dx, dy = self.GetScrollPixelsPerUnit()
-            w = self.GetWidthGrid()
+            w = self.getWidthGrid()
             sx, sy = self.GetSize()
             if self.header and vx*dx <= w - sx + dx:
                 self.header.setViewStart(vx * dx, 0)
             else:
-                self.PostSelect()
+                self.doPostSelect()
                 
         event.Skip()
 
-    def PostSelect(self, row=-1, col=-1):
+    def doPostSelect(self, row=-1, col=-1):
         """
         Посылает в очередь сообщение EVT_GRID_SELECT_CELL для выбора
         нужной ячейки.
@@ -610,7 +610,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         select_event = grid.GridEvent(wx.NewId(), grid.wxEVT_GRID_SELECT_CELL, self, row, col)
         self.GetEventHandler().AddPendingEvent(select_event)
         
-    def ReconstructHeader(self):
+    def doReconstructHeader(self):
         """
         Функция перепривязывает шапку к гриду.
         """
@@ -634,7 +634,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
                 
         self.header.reconstruct()
 
-    def SetHeader(self, header, bAuto=False, bHideOldHead=False):
+    def setHeader(self, header, bAuto=False, bHideOldHead=False):
         """
         Связывает шапку с гридом.
         @type bAuto: C{bool}
@@ -646,7 +646,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         try:
             header.connectGrid(self, bAuto, bHideOldHead)
         except:
-            log.fatal(u'Can\'t connectGrid() in icGrid.SetHeader')
+            log.fatal(u'Can\'t connectGrid() in icGrid.setHeader')
         
     def getSelectionModeAttr(self):
         """
@@ -676,7 +676,7 @@ class icGrid(icwidget.icWidget, grid.Grid, glr.GridWithLabelRenderersMixin):
         return self.MoveCursorUp(False)
 
 
-class MyColLabelRenderer(glr.GridLabelRenderer):
+class icColLabelRenderer(gridlabelrenderer.GridLabelRenderer):
     def __init__(self, bgcolor):
         self._bgcolor = bgcolor
         
@@ -706,7 +706,7 @@ def test(par=0):
     grid.CreateGrid(30, 7)
     grid.SetCellEditor(0, 0, icEdt.icGridCellDateEditor())
     grid.SetMargins(2,2)
-    grid.SetColLabelRenderer(0, MyColLabelRenderer('#e0ffe0'))    
+    grid.SetColLabelRenderer(0, icColLabelRenderer('#e0ffe0'))
     
     frame.Show(True)
     app.MainLoop()

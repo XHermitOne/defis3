@@ -72,7 +72,7 @@ ic_class_spc = {'type': 'SpravTreeList',
                 'wcols': [],
 
                 '__styles__': ic_class_styles,
-                '__events__': {'selected': ('wx.EVT_TREE_SEL_CHANGED', 'OnSelected', False),
+                '__events__': {'selected': ('wx.EVT_TREE_SEL_CHANGED', 'onSelected', False),
                                'activated': ('wx.EVT_TREE_ITEM_ACTIVATED', 'OnActivated', False),
                                'keyDown': ('wx.EVT_KEY_DOWN', 'OnKeyDWN', False),
                                },

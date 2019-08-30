@@ -96,7 +96,8 @@ SPC_IC_HEADCELL = {'type': 'HeadCell',
                                       icDefInf.EDT_COMBINE: ['flag'],
                                       icDefInf.EDT_TEXTLIST: ['roundConer'],
                                       icDefInf.EDT_NUMBER: ['backgroundType', 'borderStep',
-                                                            'borderWidth', 'isSort'],
+                                                            'borderWidth'],
+                                      icDefInf.EDT_CHECK_BOX: ['isSort'],
                                       icDefInf.EDT_COLOR: ['backgroundColor', 'borderLeftColor', 'borderTopColor',
                                                            'borderRightColor', 'borderBottomColor',
                                                            'cursorColor', 'backgroundColor2'],
@@ -543,7 +544,8 @@ class icHeadCell(icwidget.icWidget, wx.Control):
                 dc.Blit(n*self.bgrImage.GetWidth(), 0, self.bgrImage.GetWidth(),
                         height, memDC, 0, 0, wx.COPY, True)
         elif self.backgroundType in [graphicUtils.BGR_GRAD_TOP,
-                                     graphicUtils.BGR_GRAD_BOTTOM, graphicUtils.BGR_GRAD_LEFT,
+                                     graphicUtils.BGR_GRAD_BOTTOM,
+                                     graphicUtils.BGR_GRAD_LEFT,
                                      graphicUtils.BGR_GRAD_RIGHT]:
             if self._buttonPress and self.backgroundType == graphicUtils.BGR_GRAD_TOP:
                 graphicUtils.drawLineGradient(dc, 0, 0, width, height, clr, clr2, gradType=graphicUtils.BGR_GRAD_BOTTOM)
