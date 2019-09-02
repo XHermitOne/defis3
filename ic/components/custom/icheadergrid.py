@@ -83,14 +83,14 @@ ic_class_pic2 = '@common.imgEdtHeader'
 ic_class_doc = 'ic/doc/ic.components.custom.icheadergrid.icHeader-class.html'
                     
 #   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = None
+ic_can_contain = ['HeadCell']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен
 #   список ic_can_contain
-ic_can_not_contain = ['Dialog', 'Frame', 'ToolBar', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
+ic_can_not_contain = None   # ['Dialog', 'Frame', 'ToolBar', 'ToolBarTool', 'DatasetNavigator', 'GridCell']
 
 #   Версия компонента
-__version__ = (1, 1, 1, 4)
+__version__ = (1, 1, 2, 1)
 
 
 def sortCell(cell):
@@ -490,7 +490,7 @@ def test(par=0):
     panel.SetBackgroundColour((100, 180, 200))
     
     hx = 480
-    bsz = wx.GridBagSizer(1,1)
+    bsz = wx.GridBagSizer(1, 1)
 
     panel.SetSizer(bsz)
    

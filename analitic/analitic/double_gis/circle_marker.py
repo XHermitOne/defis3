@@ -16,7 +16,7 @@ DG.circleMarker({{ location }}).setRadius({{ radius }}).setStyle({{ options }}){
 '''
 
 
-class CircleMarker(object):
+class ic2GISCircleMarker(object):
     """
     Маркер-окружность.
     """
@@ -81,3 +81,7 @@ class CircleMarker(object):
         except:
             log.fatal(u'Ошибка добавления кругового маркера на карту')
         return False
+
+
+# Для поддержки рендеринга имена классов необходимо переопределить
+CircleMarker = ic2GISCircleMarker

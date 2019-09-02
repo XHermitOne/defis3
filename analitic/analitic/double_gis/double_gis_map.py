@@ -46,7 +46,7 @@ MAP_TEMPLATE = '''
 '''
 
 
-class Map(object):
+class ic2GISMap(object):
     """
     Класс управления картой 2GIS.
     """
@@ -152,3 +152,7 @@ class Map(object):
                                           height=self.height)
 
         return extfunc.save_file_text(html_filename, html)
+
+
+# Для поддержки рендеринга имена классов необходимо переопределить
+Map = ic2GISMap

@@ -15,7 +15,7 @@ DG.marker({{ location }}).addTo(map);
 '''
 
 
-class Marker(object):
+class ic2GISMarker(object):
     """
     Маркер-указатель.
     """
@@ -63,3 +63,7 @@ class Marker(object):
         except:
             log.fatal(u'Ошибка добавления маркера-указателя на карту')
         return False
+
+
+# Для поддержки рендеринга имена классов необходимо переопределить
+Marker = ic2GISMarker
