@@ -432,19 +432,73 @@ def recode_text(txt, src_codepage='cp1251', dst_codepage='utf-8'):
     return None
 
 
-def txt_find_words(txt, *words):
+def is_words_in_txt(txt, words, case_sensitivity=True):
     """
     Поиск слов в тексте.
     Поиск ведется до первого нахождения одного из указанных слов.
     @param txt: Анализируемый текст.
     @param words: Искомые слова.
+    @param case_sensitivity: Проверять с учетом регистра?
     @return: True (есть такие слова в тексте)/False (слова не найдены).
     """
     if not isinstance(txt, str):
         txt = toUnicode(txt)
     find = False
     for word in words:
-        find = word in txt
+        if case_sensitivity:
+            # Проверка с учетом регистра
+            find = word in txt
+        else:
+            # без учета
+            find = word.lower() in txt.lower()
+        if find:
+            break
+    return find
+
+
+def startswith_words_txt(txt, words, case_sensitivity=True):
+    """
+    Поиск слов в начале текста.
+    Поиск ведется до первого нахождения одного из указанных слов.
+    @param txt: Анализируемый текст.
+    @param words: Искомые слова.
+    @param case_sensitivity: Проверять с учетом регистра?
+    @return: True (есть такие слова в начале тексте)/False (слова не найдены).
+    """
+    if not isinstance(txt, str):
+        txt = toUnicode(txt)
+    find = False
+    for word in words:
+        if case_sensitivity:
+            # Проверка с учетом регистра
+            find = txt.startswith(word)
+        else:
+            # без учета
+            find = txt.lower().startswith(word.lower())
+        if find:
+            break
+    return find
+
+
+def endswith_words_txt(txt, words, case_sensitivity=True):
+    """
+    Поиск слов в конце текста.
+    Поиск ведется до первого нахождения одного из указанных слов.
+    @param txt: Анализируемый текст.
+    @param words: Искомые слова.
+    @param case_sensitivity: Проверять с учетом регистра?
+    @return: True (есть такие слова в конце тексте)/False (слова не найдены).
+    """
+    if not isinstance(txt, str):
+        txt = toUnicode(txt)
+    find = False
+    for word in words:
+        if case_sensitivity:
+            # Проверка с учетом регистра
+            find = txt.endswith(word)
+        else:
+            # без учета
+            find = txt.lower().endswith(word.lower())
         if find:
             break
     return find
