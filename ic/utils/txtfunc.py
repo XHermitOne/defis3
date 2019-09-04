@@ -32,6 +32,11 @@ __version__ = (0, 1, 1, 1)
 
 DEFAULT_ENCODING = 'utf-8'
 
+DEFAULT_REPLACEMENTS = {u'"': u'\''}
+
+DEFAULT_CSV_DELITEMER = u','
+ALTER_CSV_DELITEMER = u';'
+
 
 def createTxtFile(filename, txt=None):
     """
@@ -59,7 +64,8 @@ def createTxtFile(filename, txt=None):
 
 
 def save_file_csv(csv_filename, records=(),
-                  delim=u',', encoding=DEFAULT_ENCODING):
+                  delim=DEFAULT_CSV_DELITEMER, encoding=DEFAULT_ENCODING,
+                  replacements=None):
     """
     Запись в CSV файл списка записей.
     @param csv_filename: Имя CSV файла.
@@ -67,9 +73,16 @@ def save_file_csv(csv_filename, records=(),
         Каждая запись представляет собой список значений полей.
     @param delim: Разделитель.
     @param encoding: Кодировка результирующего файла.
+    @param replacements: Словарь автоматических замен значений полей.
     @return: True/False
     """
-    txt = u'\n'.join([delim.join([strfunc.toUnicode(field, encoding) for field in record]) for record in records])
+    global DEFAULT_REPLACEMENTS
+    if replacements is None:
+        replacements = DEFAULT_REPLACEMENTS
+        if delim not in replacements:
+            replacements[delim] = ALTER_CSV_DELITEMER if delim == DEFAULT_CSV_DELITEMER else (DEFAULT_CSV_DELITEMER if delim == ALTER_CSV_DELITEMER else DEFAULT_CSV_DELITEMER)
+    prepare_records = [[strfunc.replace_in_text(strfunc.toUnicode(field, encoding), replacements) for field in record] for record in records]
+    txt = u'\n'.join([delim.join(record) for record in prepare_records])
     return save_file_text(csv_filename, txt)
 
 

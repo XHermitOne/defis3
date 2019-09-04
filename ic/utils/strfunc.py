@@ -8,7 +8,7 @@
 import random
 import string
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # Список русских букв
 RUS_LETTERS_LOWER = u'абвгдеёжзийклмнопрстуфхцчшщьыъэюя'
@@ -647,6 +647,49 @@ def get_str_digit_as_int(txt):
     if num_txt:
         return int(num_txt)
     return 0
+
+
+def replace_in_text(text, replacements):
+    """
+    Произвести ряд замен в тексте.
+    @param text: Текст.
+    @param replacements: Замены.
+        Может задаваться как словарь или список кортежей.
+        В случае словаря:
+            {
+            'что заменить': 'на что заменить', ...
+            }
+        В случае списка списков (используется когда важен порядок замен):
+            [
+            ('что заменить', 'на что заменить'), ...
+            ]
+    @return: Текст со всеми произведенными заменами либо исходный текст в случае ошибки.
+    """
+    result_text = text
+    try:
+        if isinstance(replacements, dict):
+            for src_txt, dst_txt in replacements.items():
+                result_text = result_text.replace(src_txt, dst_txt)
+        elif isinstance(replacements, list) or isinstance(replacements, tuple):
+            for src_txt, dst_txt in replacements:
+                result_text = result_text.replace(src_txt, dst_txt)
+        else:
+            # Не корректный тип замен в тексте
+            return text
+        return result_text
+    except:
+        return text
+
+
+def delete_in_text(text, delete_txt_list):
+    """
+    Удалить строки из текста.
+    @param text: Текст.
+    @param delete_txt_list: Список удаляемых строк из текста.
+    @return: Текст со всеми произведенными заменами либо исходный текст в случае ошибки.
+    """
+    replacements = [(str(delete_txt, u'')) for delete_txt in delete_txt_list]
+    return replace_in_text(text, replacements=replacements)
 
 
 DEFIS_LOGO_TXT = u'''

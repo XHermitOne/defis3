@@ -16,6 +16,8 @@ import getpass
 import shutil
 import traceback
 import struct
+import subprocess
+import locale
 
 try:
     from ic.utils import strfunc
@@ -28,7 +30,7 @@ except:
     print(u'Import error ic_str module')
     log = None
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 DEFAULT_ENCODING = 'utf-8'
@@ -261,15 +263,20 @@ def create_pth_file(pth_filename, path):
     return False
 
 
-def unzip_to_dir(zip_filename, dst_dir, bOverwrite=True, bConsole=False):
+def unzip_to_dir(zip_filename, dst_dir=None, bOverwrite=True, bConsole=True):
     """
     Распаковать *.zip архив в папку.
     @param zip_filename: Полное имя *.zip архива.
     @param dst_dir: Указание папки, в которую будет архив разворачиваться.
+        Если не указывается, то происходит разархивирование в туже папку
+        где находиться архив.
     @param bOverwrite: Перезаписать существующие файлы без запроса?
     @param bConsole: Вывод в консоль?
     @return: Возвращает результат выполнения операции True/False.
     """
+    if dst_dir is None:
+        dst_dir = os.path.dirname(zip_filename)
+
     try:
         overwrite = ''
         if bOverwrite:
@@ -279,14 +286,18 @@ def unzip_to_dir(zip_filename, dst_dir, bOverwrite=True, bConsole=False):
             os.system(unzip_cmd)
             return None
         else:
-            return os.popen3(unzip_cmd)
+            process = subprocess.Popen(unzip_cmd, stdout=subprocess.PIPE)
+            b_lines = process.stdout.readlines()
+            console_encoding = locale.getpreferredencoding()
+            lines = [line.decode(console_encoding).strip() for line in b_lines]
+            return lines
     except:
         print('Unzip Error', unzip_cmd)
         raise
     return None
 
 
-def targz_extract_to_dir(tar_filename, dst_dir, bConsole=False):
+def targz_extract_to_dir(tar_filename, dst_dir, bConsole=True):
     """
     Распаковать *.tar архив в папку.
     @param tar_filename: Полное имя *.tar архива.
@@ -302,7 +313,11 @@ def targz_extract_to_dir(tar_filename, dst_dir, bConsole=False):
             os.system(tar_extract_cmd)
             return None
         else:
-            return os.popen3(tar_extract_cmd)
+            process = subprocess.Popen(tar_extract_cmd, stdout=subprocess.PIPE)
+            b_lines = process.stdout.readlines()
+            console_encoding = locale.getpreferredencoding()
+            lines = [line.decode(console_encoding).strip() for line in b_lines]
+            return lines
     except:
         print('Tar Extract Error', tar_extract_cmd)
         raise
