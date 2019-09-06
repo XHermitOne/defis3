@@ -8,7 +8,7 @@
 import random
 import string
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 3, 1)
 
 # Список русских букв
 RUS_LETTERS_LOWER = u'абвгдеёжзийклмнопрстуфхцчшщьыъэюя'
@@ -504,6 +504,18 @@ def endswith_words_txt(txt, words, case_sensitivity=True):
     return find
 
 
+def is_digits_in_text(text):
+    """
+    Проверка присутствия цифр в тексте.
+    @param text: Проверяемый текст.
+    @return: True - в тексте присутствуют цифры / False - цифры отсутствуют.
+    """
+    for symbol in text:
+        if symbol.isdigit():
+            return True
+    return False
+
+
 def is_serial_symbol(txt, symbol):
     """
     Проверка на то что текст представляет из себя
@@ -688,8 +700,18 @@ def delete_in_text(text, delete_txt_list):
     @param delete_txt_list: Список удаляемых строк из текста.
     @return: Текст со всеми произведенными заменами либо исходный текст в случае ошибки.
     """
-    replacements = [(str(delete_txt, u'')) for delete_txt in delete_txt_list]
+    replacements = [(str(delete_txt), u'') for delete_txt in delete_txt_list]
     return replace_in_text(text, replacements=replacements)
+
+
+def delete_symbol_in_text(text, symbol=u' '):
+    """
+    Удалить символа из текста.
+    @param text: Текст.
+    @param symbol: Удаляемый символ.
+    @return: Текст с удаленным символом либо исходный текст в случае ошибки.
+    """
+    return delete_in_text(text, (symbol, ))
 
 
 DEFIS_LOGO_TXT = u'''
