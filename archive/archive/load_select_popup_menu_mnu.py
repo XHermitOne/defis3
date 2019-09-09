@@ -101,13 +101,18 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         elif dbf_filename.startswith('Z'):
             schet = dbf_filename[2:5]
             label += u'Затраты. ' + (u'' if schet == '000' or not schet.isdigit() else u'Счет %02d-%02d. ' % (int(schet[:2]), int(schet[-1:])))
+            prefix = self.getMonthLabel(dbf_filename)
+            log.debug(u'Затраты <%s>' % dbf_filename)
         elif dbf_filename.startswith('M'):
             warehouse = dbf_filename[2:5]
             label += u'Материалы. ' + (u'' if warehouse == '000' or not warehouse.isdigit() else u'Склад %d. ' % int(warehouse))
+            prefix = self.getMonthLabel(dbf_filename)
         elif dbf_filename.startswith('O'):
             label += u'Основные средства. '
+            prefix = self.getOSNLabel(dbf_filename)
         elif dbf_filename.startswith('U'):
             label += u'Аренда. '
+            prefix = self.getQuartalLabel(dbf_filename)
         else:
             label += u'Не определенный участок. '
 
@@ -115,13 +120,13 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         log.debug(u'Тип файла %s' % file_ext)
         # Участок материалы
         if dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            label += u'Продажа. СФ.'
+            label += u'Продажа. СФ '
         elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            label += u'Покупка. СФ.'
+            label += u'Покупка. СФ '
         elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
-            label += u'Продажа. ТОРГ12.'
+            label += u'Продажа. ТОРГ12 '
         elif dbf_filename.startswith('M') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
-            label += u'Покупка. ТОРГ12.'
+            label += u'Покупка. ТОРГ12 '
         # Участок ЗАТРАТЫ
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
             return None
@@ -131,10 +136,16 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             return None
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
             return None
+        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'T' and file_ext == 'APX':
+            return None
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
-            label += u'Продажа. Документы.'
+            # label += u'Продажа. Документы '
+            return None
         elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
-            label += u'Покупка. Документы.'
+            # label += u'Покупка. Документы '
+            return None
+        elif dbf_filename.startswith('Z') and dbf_filename[1:2].upper() == 'O' and file_ext == 'ARH':
+            label += u'Документы '
         # Участок АРЕНДА
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
             return None
@@ -145,9 +156,9 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
             return None
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
-            label += u'Продажа. Документы.'
+            label += u'Продажа. Документы '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
-            label += u'Покупка. Документы.'
+            label += u'Покупка. Документы '
         # Участок ОСНОВНЫЕ СРЕДСТВА
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
             return None
@@ -160,50 +171,56 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         elif dbf_filename.startswith('O') and file_ext == 'ATG':
             return None
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
-            label += u'Продажа. Документы.'
+            label += u'Продажа. Документы '
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
-            label += u'Покупка. Документы.'
+            label += u'Покупка. Документы '
         else:
-            label += u'Документы'
-
-        prefix = u' '
-        try:
-            if not dbf_filename[2:5].isdigit() and not dbf_filename.startswith('0'):
-                # Это основные средства. Акты
-                if dbf_filename[2:5].upper() == 'OC1':
-                    prefix += 'Акты приема-передачи '
-                elif dbf_filename[2:5].upper() == 'OC3':
-                    prefix += 'Акты модернизации '
-                elif dbf_filename[2:5].upper() == 'OC4':
-                    prefix += 'Акты списания '
-                elif dbf_filename[2:5].upper() == 'OCA':
-                    prefix += 'Акты списания автотранспорта '
-                quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
-                if quartal:
-                    prefix += u'за %d квартал' % quartal
-
-            elif int(dbf_filename[2:5]) and not dbf_filename.startswith('U'):
-                # Если цифры склада определены, то считаем что
-                # следующие 2 цифры это месяц ...
-                month = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
-                str_month = datefunc.MONTHS[month - 1] if 1 <= month <= 12 else u''
-                prefix += u'за ' + str_month
-            elif int(dbf_filename[2:5]) == 0:
-                # ... иначе это квартал
-                quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
-                if quartal:
-                    prefix += u'за %d квартал' % quartal
-            else:
-                log.warning(u'Ошибка определения префикса по имени файла <%s>' % dbf_filename)
-        except:
-            log.fatal(u'Ошибка определения префикса. Файл <%s>' % dbf_filename)
-
+            label += u'Документы '
 
         try:
             arch_year = os.path.splitext(dbf_filename)[0][-4:]
         except:
             arch_year = u'0000'
         label += u'%s %s год' % (prefix, arch_year)
+        return label
+
+    def getQuartalLabel(self, dbf_filename):
+        """
+        """
+        label = u''
+        if int(dbf_filename[2:5]) == 0:
+            # ... иначе это квартал
+            quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
+            if quartal:
+                label = u'за %d квартал' % quartal
+        return label
+
+    def getMonthLabel(self, dbf_filename):
+        """
+        """
+        # последние 2 цифры это месяц ...
+        month = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
+        str_month = datefunc.MONTHS[month - 1] if 1 <= month <= 12 else u''
+        label = u'за ' + str_month
+        return label
+
+    def getOSNLabel(self, dbf_filename):
+        """
+        """
+        label = u''
+        if not dbf_filename[2:5].isdigit() and dbf_filename.startswith('O'):
+            # Это основные средства. Акты
+            if dbf_filename[2:5].upper() == 'OC1':
+                label += 'Акты приема-передачи '
+            elif dbf_filename[2:5].upper() == 'OC3':
+                label += 'Акты модернизации '
+            elif dbf_filename[2:5].upper() == 'OC4':
+                label += 'Акты списания '
+            elif dbf_filename[2:5].upper() == 'OCA':
+                label += 'Акты списания автотранспорта '
+        quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
+        if quartal:
+            label += u'за %d квартал' % quartal
         return label
 
     def getYearMonthDlg(self, bYear=True, bMonth=False):
