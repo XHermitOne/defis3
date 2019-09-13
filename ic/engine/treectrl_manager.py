@@ -805,6 +805,29 @@ class icTreeCtrlManager(object):
                     return found_item
         return None
 
+    def getSelectedTreeItem(self, ctrl):
+        """
+        Выбранный элемент дерева.
+        @param ctrl: Контрол wx.TreeCtrl.
+        @return: Выбранный элемент дерева или None ничего не выбрано.
+        """
+        if ctrl is None:
+            log.warning(u'Не указан контрол wx.TreeCtrl для выбора элемента дерева')
+            return False
+
+        if isinstance(ctrl, wx.TreeCtrl):
+            selected_item = ctrl.GetSelection()
+            return selected_item if selected_item and selected_item.IsOk() else None
+        elif isinstance(ctrl, wx.dataview.TreeListCtrl):
+            selected_item = ctrl.GetSelection()
+            return selected_item if selected_item and selected_item.IsOk() else None
+        elif isinstance(ctrl, wx.gizmos.TreeListCtrl):
+            selected_item = ctrl.GetMainWindow().GetSelection()
+            return selected_item if selected_item and selected_item.IsOk() else None
+        else:
+            log.warning(u'Выбранный элемент дерева. Не обрабатываемый тип контрола дерева <%s>' % ctrl.__class__.__name__)
+        return None
+
     def selectTreeItem(self, ctrl, item=None, select=True):
         """
         Выбор элемента дерева.
