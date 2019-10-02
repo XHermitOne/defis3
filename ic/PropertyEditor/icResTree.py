@@ -2776,7 +2776,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
             self.tree.SelectItem(self.tree._lastTreeId)
 
 
-class ResourseEditorFrame(wx.Frame):
+class icResourseEditorFrame(wx.Frame):
     """
     Фрейм для редактора проекта.
     """
@@ -2879,7 +2879,7 @@ def GetProjectEditor(parent, drFrame=None, ifs=None):
     return nb
 
 
-class ResourseEditorFrame2(wx.Frame):
+class icResourseEditorMainFrame(wx.Frame):
     """
     Фрейм для редактора проекта.
     """
@@ -2913,7 +2913,7 @@ def editor_main(par=0, path=None):
     log.info(u'Запуск редактора проекта <%s>' % path)
     from . import icDesigner
     app = icDesigner.icDesignerApp(par)
-    txt = u'Менеджер проекта'
+    title = u'DEFIS ver %s' % u'.'.join([str(v) for v in ic.__version__])
     # ---------------------------------------------------------------------------
     # Устанавливаем окружение
     # до файлов с документацией
@@ -2932,8 +2932,8 @@ def editor_main(par=0, path=None):
     pos = wx.Point(0, 0)
     dw, dh = wx.DisplaySize()
     size = wx.Size(350, dh)
-    frame = ResourseEditorFrame2(None, -1, u'Менеджер проекта', pos=pos, size=size,
-                                 style=wx.DEFAULT_FRAME_STYLE | wx.CLIP_CHILDREN)
+    frame = icResourseEditorMainFrame(None, -1, title=title, pos=pos, size=size,
+                                      style=wx.DEFAULT_FRAME_STYLE | wx.CLIP_CHILDREN)
     frame.SetIcon(common.icoFormEditor)
 
     app.SetTopWindow(frame)

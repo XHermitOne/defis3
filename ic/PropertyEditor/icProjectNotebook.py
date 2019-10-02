@@ -23,38 +23,56 @@ if dir_name not in sys.path:
     sys.path = impfunc.addImportPath(dir_name)
 
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 _ = wx.GetTranslation
 
 
 class icProjectNB(fnb.FlatNotebook):
-    def __init__(self, parent, pos=wx.DefaultPosition, size=wx.DefaultSize, style=0, *arg, **kwarg):
-        style = fnb.FNB_NODRAG | fnb.FNB_BOTTOM | fnb.FNB_NO_X_BUTTON
-        fnb.FlatNotebook.__init__(self, parent, style=style)
+    """
+    Нотебук главного окна редактора проекта.
+    """
+    def __init__(self, parent, pos=wx.DefaultPosition, size=wx.DefaultSize, *args, **kwargs):
+        """
+        Конструктор.
+        @param parent: Родительское окно.
+        @param pos: Позиция.
+        @param size: Размер.
+        """
+        style = fnb.FNB_NODRAG | fnb.FNB_NO_X_BUTTON | fnb.FNB_VC71 | fnb.FNB_BACKGROUND_GRADIENT
+        fnb.FlatNotebook.__init__(self, parent, *args, **kwargs)
+
+        # Выставляем стили
+        self.SetAGWWindowStyleFlag(style)
+        # Цвет текста заголовка не активной страницы для контраста
+        non_active_label_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
+        self.SetNonActiveTabTextColour(non_active_label_colour)
         
-    def CreatePage(self, caption):
-        p = wx.Panel(self)
-        return p
+    def create_page(self, caption=u''):
+        """
+        Создать новую страницу нотебука.
+        @param caption: Заголовок страницы.
+        @return: Объект wx.Panel новой страницы нотебука.
+        """
+        page = wx.Panel(self)
+        return page
         
-    def add_project_page(self, page=None,
-                         title=u'Проект', *arg, **kwarg):
+    def add_project_page(self, page=None, title=u'Проект', *arg, **kwarg):
         """
         Добавляет страницу проекта, если ее нету.
         """
-        self.AddPage(page or self.CreatePage(title), title)
+        self.AddPage(page or self.create_page(title), title)
     
-    def add_property_page(self, page=None,
-                          title=u'Редактор ресурса', *arg, **kwarg):
+    def add_property_page(self, page=None, title=u'Ресурс', *arg, **kwarg):
         """
         Добавляет страницу редактора ресурса.
         """
-        self.AddPage(page or self.CreatePage(title), title)
+        self.AddPage(page or self.create_page(title), title)
         
-    def SetProjectEditor(self, edt):
+    def setProjectEditor(self, edt):
         self._project_edt = edt
 
-    def SetResourceEditor(self, edt):
+    def setResourceEditor(self, edt):
         self._res_edt = edt
             
     def init_notebook(self, prj_edt, res_edt, ifs):
@@ -70,8 +88,8 @@ class icProjectNB(fnb.FlatNotebook):
     
         # Устанавливаем указатель на редакторы
         prj_edt.setResourceEditor(res_edt)
-        self.SetProjectEditor(prj_edt)
-        self.SetResourceEditor(res_edt)
+        self.setProjectEditor(prj_edt)
+        self.setResourceEditor(res_edt)
         
         # Устанавливаем указатель на IDE
         if ifs is None:
