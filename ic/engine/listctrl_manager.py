@@ -22,7 +22,7 @@ from ic.bitmap import bmpfunc
 from ic import config
 
 
-__version__ = (0, 1, 6, 1)
+__version__ = (0, 1, 7, 1)
 
 # Размер картинок элементов дерева по умолчанию
 DEFAULT_ITEM_IMAGE_WIDTH = 16
@@ -895,6 +895,32 @@ class icListCtrlManager(object):
                 row = [ctrl.GetValue(i_row, col=i_col) for i_col in range(ctrl.GetColumnCount())]
                 rows.append(row)
         return rows
+
+    def getRow_list_ctrl(self, ctrl=None, item=-1):
+        """
+        Получить строку по индексу в виде кортежа.
+        @param ctrl: Объект контрола списка.
+        @param item: Индекс запрашиваемой строки.
+            Если не определен, то возвращается индекс текущей строки.
+        @return: Кортеж строки или None в случае ошибки.
+            Строка представляет собой кортеж:
+            (Значение 1, Значение 2, ..., Значение N)
+        """
+        if ctrl is None:
+            log.warning(u'Не определен контрол для получения списка строк')
+            return None
+        if 0 > item or item is None:
+            item = self.getItemSelectedIdx(obj=ctrl)
+
+        row = None
+        if 0 <= item:
+            if isinstance(ctrl, wx.ListCtrl):
+                row = [ctrl.GetItemText(item, col=i_col) for i_col in range(ctrl.GetColumnCount())]
+            elif isinstance(ctrl, wx.dataview.DataViewListCtrl):
+                row = [ctrl.GetValue(item, col=i_col) for i_col in range(ctrl.GetColumnCount())]
+            else:
+                log.warning(u'Не поддерживаемый тип контрола списка <%s> в функции getRow_list_ctrl' % ctrl.__class__.__name__)
+        return row
 
     def setRowColour_list_ctrl_requirement(self, ctrl=None, rows=(),
                                            fg_colour=None, bg_colour=None, requirement=None):

@@ -9,11 +9,12 @@
 import wx
 
 from ic.imglib import common as imglib
-from ic.editor import icenvironmenteditor
+from ic.editor import environment_edit_dlg
+
 from . import prj_node
 from ic.kernel import icsettings
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 _ = wx.GetTranslation
 
@@ -44,8 +45,9 @@ class icPrjEnv(prj_node.icPrjNode):
         icsettings.setProjectSettingsToEnvironment(prj_name,
                                                    ReDefine_=True)
         
-        self.designer = icenvironmenteditor.icEnvironmentEditDlg(parent=self.getRoot().getPrjTreeCtrl(),
-                                                                 ProjectRoot_=self.getRoot())
+        self.designer = environment_edit_dlg.icEnvironmentEditDlg(parent=self.getRoot().getPrjTreeCtrl(),
+                                                                  project_root=self.getRoot())
+
         self.designer.design()
         self.designer = None
 
