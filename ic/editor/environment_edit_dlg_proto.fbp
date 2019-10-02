@@ -184,7 +184,7 @@
                         <event name="OnSize"></event>
                         <event name="OnUpdateUI"></event>
                         <object class="auinotebookpage" expanded="1">
-                            <property name="bitmap">Load From Art Provider; wxART_TICK_MARK; wxART_BUTTON</property>
+                            <property name="bitmap">Load From Art Provider; gtk-properties; wxART_BUTTON</property>
                             <property name="label">Основные</property>
                             <property name="select">1</property>
                             <object class="wxPanel" expanded="1">
@@ -375,7 +375,7 @@
                             </object>
                         </object>
                         <object class="auinotebookpage" expanded="1">
-                            <property name="bitmap">Load From Art Provider; wxART_ADD_BOOKMARK; wxART_BUTTON</property>
+                            <property name="bitmap">Load From Art Provider; gtk-preferences; wxART_BUTTON</property>
                             <property name="label">Дополнительные</property>
                             <property name="select">0</property>
                             <object class="wxPanel" expanded="1">

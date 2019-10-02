@@ -35,7 +35,7 @@ class icEditEnvironmentDlgProto ( wx.Dialog ):
 		self.base_panel.SetSizer( bSizer3 )
 		self.base_panel.Layout()
 		bSizer3.Fit( self.base_panel )
-		self.env_auinotebook.AddPage( self.base_panel, u"Основные", True, wx.ArtProvider.GetBitmap( wx.ART_TICK_MARK, wx.ART_BUTTON ) )
+		self.env_auinotebook.AddPage( self.base_panel, u"Основные", True, wx.ArtProvider.GetBitmap( u"gtk-properties", wx.ART_BUTTON ) )
 		self.ext_panel = wx.Panel( self.env_auinotebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer4 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -59,7 +59,7 @@ class icEditEnvironmentDlgProto ( wx.Dialog ):
 		self.ext_panel.SetSizer( bSizer4 )
 		self.ext_panel.Layout()
 		bSizer4.Fit( self.ext_panel )
-		self.env_auinotebook.AddPage( self.ext_panel, u"Дополнительные", False, wx.ArtProvider.GetBitmap( wx.ART_ADD_BOOKMARK, wx.ART_BUTTON ) )
+		self.env_auinotebook.AddPage( self.ext_panel, u"Дополнительные", False, wx.ArtProvider.GetBitmap( u"gtk-preferences", wx.ART_BUTTON ) )
 		
 		bSizer1.Add( self.env_auinotebook, 1, wx.EXPAND |wx.ALL, 5 )
 		
