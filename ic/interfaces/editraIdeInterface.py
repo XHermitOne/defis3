@@ -21,19 +21,6 @@ _ = wx.GetTranslation
 
 DEFIS_PANE = 'DefisPanel'
 
-# Шаблоны
-interfaceTemplate = '''
-    def %s(self, event):
-        return None
-'''
-
-resmoduleTemplate = '''
-def %s(obj, event):
-    return None
-'''
-
-DEFAULT_ENCODING = 'utf-8'
-
 
 class EditraDocumentInterface(object):
     """
@@ -492,7 +479,7 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
         """
         Кодировка по умолчанию.
         """
-        return DEFAULT_ENCODING
+        return icideinterface.DEFAULT_ENCODING
 
     def openFile(self, filename, bOpenInNewTab=True,
                  bEditRecentFiles=True, encoding='<Default Encoding>', bReadonly=False):
@@ -567,11 +554,11 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
                     indx = txt.find('def __init__')
                     
                 if indx >= 0:
-                    funcTxt = interfaceTemplate % func_name
+                    funcTxt = icideinterface.METHOD_TEMPLATE % func_name
                     txt = txt[:indx]+funcTxt + '    ' + txt[indx:]
                 # В противном случа добавляем в конец модуля.
                 else:
-                    funcTxt = resmoduleTemplate % func_name
+                    funcTxt = icideinterface.FUNCTION_TEMPLATE % func_name
                     txt = txt + '\n' + funcTxt
                     
                 self.setDocumentText(filename, txt)
@@ -681,16 +668,16 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
         if doc:
             return doc.getModify()
         
-    def goToFunc(self, func_name, fileName=None):
+    def goToFunc(self, func_name, filename=None):
         """
         Переход на нужную функцию.
         @param func_name: Имя функции.
-        @param fileName: Имя файла.
+        @param filename: Имя файла.
         """
-        if not fileName:
+        if not filename:
             doc = self.getDocument()
         else:
-            doc = self.getDocumentObj(fileName)
+            doc = self.getDocumentObj(filename)
         try:
             txt = doc.GetText()
             for pos, r in enumerate(txt.split('\n')):
@@ -700,6 +687,7 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
                     return pos
         except:
             log.fatal(u'Invalid document type: doc.GetText() - failed')
+        return None
 
     def getMainPanel(self):
         """

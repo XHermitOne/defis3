@@ -8,9 +8,27 @@
 # Подключение библиотек
 import wx
 
-__version__ = (0, 1, 1, 1)
+from ic.utils import txtfunc
+from ic.log import log
+
+__version__ = (0, 1, 2, 1)
 
 DEFAULT_ENCODINT_STR = '<Default Encoding>'
+
+# Шаблоны
+# Шаблон метода класса
+METHOD_TEMPLATE = '''
+    def %s(self, event):
+        return None
+'''
+
+# Шаблон функции - обработчика
+FUNCTION_TEMPLATE = '''
+def %s(obj, event):
+    return None
+'''
+
+DEFAULT_ENCODING = 'utf-8'
 
 
 class icIDEInterface(object):
@@ -95,16 +113,39 @@ class icIDEInterface(object):
     def insertEvtFuncToInterface(self, filename, func_name, function_body=None):
         """
         Вставляет в тело интерфейсного модуля заготовку функции с заданным именем.
-        
+        По умолчанию вставка производится в текстовый файл
+        в секцию обработчиков событий.
         @type filename: C{string}
         @param filename: Имя файла.
         @type func_name: C{string}
         @param func_name: Имя функции.
         @type function_body: C{string}
         @param function_body: Тело функции.
+        @return: True/False.
         """
-        pass
-        
+        if self.goToFunc(func_name, filename=filename):
+            return True
+        else:
+            txt = self.getDocumentText(filename)
+            #   Ищем секцию для обработчиков событий
+            indx = txt.find('###END EVENT')
+
+            #   Если специальная секция не найдена, то вставляем функцию
+            #   перед конструктором
+            if indx < 0:
+                indx = txt.find('def __init__')
+
+            if indx >= 0:
+                funcTxt = METHOD_TEMPLATE % func_name
+                txt = txt[:indx] + funcTxt + '    ' + txt[indx:]
+            else:
+                funcTxt = FUNCTION_TEMPLATE % func_name
+                # В противном случае добавляем в конец модуля.
+                txt = txt + '\n' + funcTxt
+
+            self.setDocumentText(filename, txt)
+        return self.goToFunc(func_name=func_name, filename=filename)
+
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
@@ -184,7 +225,7 @@ class icIDEInterface(object):
         @type filename: C{string}
         @param filename: Имя файла.
         """
-        pass
+        return txtfunc.load_file_text(filename=filename)
                 
     def getSourceBrowser(self):
         """
@@ -206,11 +247,38 @@ class icIDEInterface(object):
         """
         pass
         
-    def goToFunc(self, func_name):
+    def goToFunc(self, func_name, filename=None):
         """
         Переход на нужную функцию.
+        @param func_name: Имя функции.
+        @param filename: Имя файла.
+        @return: True - есть такая функция и переход успешно произошел/
+            False - такой функции нет и переход не возможен.
+            None - Ошибка.
         """
-        pass
+        if filename is None:
+            # Имя файла не определено, то переход не возможен
+            log.warning(u'Не определено имя файла модуля для перехода на функцию <%s>' % func_name)
+            return False
+
+        try:
+            txt = self.getDocumentText(filename=filename)
+            for n_line, line in enumerate(txt.split('\n')):
+                if line.find('def ' + func_name) >= 0:
+                    return self.goToLine(filename=filename, n_line=n_line)
+            return False
+        except:
+            log.fatal(u'Ошибка перехода на функцию <%s> в модуле <%s>' % (func_name, filename))
+        return None
+
+    def goToLine(self, filename, n_line=0):
+        """
+        Выпонить переход на линию модуля.
+        @param filename: Имя файла модуля.
+        @param n_line: Номер линии для перехода.
+        @return: True - выполнен переход / False - переход не выполнен.
+        """
+        return False
 
     def getMainPanel(self):
         """
@@ -251,7 +319,7 @@ class icIDEInterface(object):
         """
         Изменяет текст документа.
         """
-        pass
+        return txtfunc.save_file_text(filename=filename, txt=txt)
         
     def showToolNotebook(self):
         """

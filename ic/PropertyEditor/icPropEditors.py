@@ -967,13 +967,14 @@ class icEditPropPyScript(icEditPropTButton):
         
     def OnEditScript(self, event):
         """
+        Обработчик редактирования скрипта.
         """
         #   Определяем смещение видимой части окна
-        wOffset, hOffset = self.nameValue.main.GetViewStart()
+        w_offset, h_offset = self.nameValue.main.GetViewStart()
         puw, puh = self.nameValue.main.GetScrollPixelsPerUnit()
         
         pos_cl = self.nameValue.main.panel2.ClientToScreenXY(70, 0)
-        pos = (pos_cl[0]+2, pos_cl[1]+(hOffset*puh)-2)
+        pos = (pos_cl[0]+2, pos_cl[1]+(h_offset*puh)-2)
         
         sz = [-1, -1]
         sz[0] = self.nameValue.main.panel2.GetSize()[0] - 70 + 20
@@ -984,7 +985,7 @@ class icEditPropPyScript(icEditPropTButton):
             if split.type == 'ResEditor':
                 sz[1] += split.tree.GetSize()[1] + 5
         except:
-            LogLastError('OnEditScript')
+            log.fatal(u'Ошибка в обработчике')
             
         self.dlg = ic_pyed.icPyEditorDlg(self.nameValue.main, self.nameValue.value, pos, sz)
 

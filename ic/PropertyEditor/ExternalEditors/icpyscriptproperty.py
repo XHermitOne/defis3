@@ -78,14 +78,15 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
             eventId = event.GetId()
 
             if eventId == buttons.GetButtonId(0):
-                # Do something when the first button is pressed
-                wx.LogDebug('First button pressed')
+                # Обработка первой кнопки
+                # wx.LogDebug('First button pressed')
                 return False  # Return false since value did not change
             if eventId == buttons.GetButtonId(1):
-                # Do something when the second button is pressed
+                # Обработка второй кнопки
                 value = prop.GetValue()
                 result = False
-                if not value or value in ('None', ):
+                if not value or value in (u'None', u''):
+                    # log.debug(u'Редактируемое значение <%s : %s>' % (value, type(value)))
                     # Если значение не определено, то сгенерировать его
                     result = self.create_on_event(prop, prop.GetName())
                 else:
@@ -127,27 +128,20 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
             if ext != '.py':
                 py_filename = res_editor.get_res_module_name(py_filename)
 
-            bSel = ide and ide.selectFile(py_filename)
+            # log.debug(u'Открыть файл <%s> функция <%s>' % (py_filename, func_name))
+            # По расширению файла ресурса определяем способ вызова:
+            # '.py' - вызываем метод интерфейса, в противном случае
+            # функцию модуля ресусра
+            if ext == '.py':
+                ptFunc = '@GetWrapper(self).%s(event)' % func_name
+            else:
+                ptFunc = '@GetManager(self).%s(event)' % func_name
 
-            # Если файл не открыт пытаемся его открыть
-            if not bSel:
-                res_editor.open_ide_py_module()
-                bSel = ide and ide.selectFile(py_filename)
+            property.SetValue(ptFunc)
 
-            if bSel:
-                # По расширению файла ресурса определяем способ вызова:
-                # '.py' - вызываем метод интерфейса, в противном случае
-                # функцию модуля ресусра
-                if ext == '.py':
-                    ptFunc = 'GetWrapper().%s(event)' % func_name
-                else:
-                    ptFunc = 'GetManager().%s(event)' % func_name
-
-                property.SetValue(ptFunc)
-
-                #   Если функции нет, то добавляем заготовку в
-                #   текст модуля
-                ide.insertEvtFuncToInterface(py_filename, func_name)
+            #   Если функции нет, то добавляем заготовку в
+            #   текст модуля
+            ide.insertEvtFuncToInterface(py_filename, func_name)
 
         return True
 
@@ -156,7 +150,7 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
         Найти и перейти к функции...
         @return: True - Перешли, False - функция не найдена.
         """
-        signature = '%s().' % signature
+        # signature = '%s(self).' % signature
         len_signature = len(signature)
 
         n1 = property_value.find(signature)
@@ -167,13 +161,8 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
             py_filename = res_editor.file if ext == '.py' else path_filename+'_'+ext[1:]+'.py'
             # log.debug(u'Поиск функции <%s> в модуле <%s>' % (func_name, py_filename))
             if tree and ide:
-                bSel = ide.selectFile(py_filename)
-                if bSel:
-                    # log.debug(u'Переход к функции')
-                    ide.goToFunc(func_name)
-                    return True
-                else:
-                    log.warning(u'Модуль Python <%s> не выбран в IDE' % py_filename)
+                ide.goToFunc(func_name, filename=py_filename)
+                return True
             else:
                 log.warning(u'Не определена IDE')
         return False
@@ -200,8 +189,8 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
         ide = res_editor.GetIDEInterface()
 
         # Пытаемся найти обработчик в коде
-        result = self._find_and_goto_func(tree, ide, res_editor, property_value, signature='GetManager')
+        result = self._find_and_goto_func(tree, ide, res_editor, property_value, signature='@GetManager(self).')
         if not result:
-            result = self._find_and_goto_func(tree, ide, res_editor, property_value, signature='GetWrapper')
+            result = self._find_and_goto_func(tree, ide, res_editor, property_value, signature='GetWrapper().')
 
         return result
