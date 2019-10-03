@@ -190,6 +190,14 @@ ATOM_EXT_PYTHON_EDITOR_FMT = 'atom %s%s &'
 class icAtomPythonEditor(icideinterface.icIDEInterface):
     """
     Atom (https://atom.io/) как внешний редактор модулей Python.
+
+    Для использования Atom как редактора Python устанавливаются
+    следующие плагины:
+        1. atom-i18n (для руссификации)
+        2. linter (для PEP8)
+        3. atom-autocomplete-python (поддержка автозаполнения Python)
+        4. minimap (миникарта кода)
+        5. symbols-tree-view (простой браузер кода)
     """
 
     def __init__(self, *args, **kwargs):
