@@ -10,6 +10,8 @@ import math
 import numpy
 import pandas
 
+__version__ = (0, 1, 1, 1)
+
 
 def validate_location(location):
     """

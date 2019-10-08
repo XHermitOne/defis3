@@ -2913,7 +2913,7 @@ def editor_main(par=0, path=None):
     log.info(u'Запуск редактора проекта <%s>' % path)
     from . import icDesigner
     app = icDesigner.icDesignerApp(par)
-    title = u'DEFIS ver %s' % u'.'.join([str(v) for v in ic.__version__])
+    title = u'DEFIS %s' % u'.'.join([str(v) for v in ic.__version__])
     # ---------------------------------------------------------------------------
     # Устанавливаем окружение
     # до файлов с документацией

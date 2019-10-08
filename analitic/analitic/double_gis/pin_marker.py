@@ -10,6 +10,8 @@ from . import double_gis_util
 
 from ic.log import log
 
+__version__ = (0, 1, 1, 1)
+
 MARKER_TEMPLATE = '''
 DG.marker({{ location }}).addTo(map);
 '''

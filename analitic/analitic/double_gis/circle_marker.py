@@ -11,6 +11,8 @@ from . import double_gis_util
 
 from ic.log import log
 
+__version__ = (0, 1, 1, 1)
+
 MARKER_TEMPLATE = '''
 DG.circleMarker({{ location }}).setRadius({{ radius }}).setStyle({{ options }}){% if popup %}.bindPopup('{{ popup }}'){% endif %}{% if tooltip %}.bindLabel('{{ tooltip }}'){% endif %}.addTo(map);
 '''

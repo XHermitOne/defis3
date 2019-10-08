@@ -11,6 +11,8 @@ from . import double_gis_util
 
 from ic.utils import extfunc
 
+__version__ = (0, 1, 1, 1)
+
 # Шаблон результирующего HTML документа
 HTML_TEMPLATE = '''
 <!DOCTYPE html>

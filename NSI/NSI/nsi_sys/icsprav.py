@@ -866,7 +866,7 @@ class icSpravPrototype(icSpravInterface):
                                      coderror.IC_CTRL_FAILED_LOCK):
                 # Контроль не прошел
                 log.warning(u'Не прошел контроль добавления записи в справочник [%s]. Код ошибки: <%d>' %
-                                   (self.getName(), add_ctrl_result))
+                            (self.getName(), add_ctrl_result))
 
         return False
 

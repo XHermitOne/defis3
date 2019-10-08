@@ -36,8 +36,11 @@ DEFAULT_ZOOM = 14
 GEO_LOCATOR_DEFAULT = True
 
 # Ключ для геолокации Яндекса
-GEO_LOCATOR_KEY = 'AHqsEk4BAAAAekkFTAMA9DGkZfo_WT9ci8K8X286J9ILWjIAAAAAAAAAAABhqxW74U1xylQQhCYKzVIxsQBPTQ=='
-GEO_LACATOR_URL_FMT = 'http://geocode-maps.yandex.ru/1.x/?geocode=%s&key=%s&format=json'
+YANDEX_GEO_LOCATOR_API_KEY = 'AHqsEk4BAAAAekkFTAMA9DGkZfo_WT9ci8K8X286J9ILWjIAAAAAAAAAAABhqxW74U1xylQQhCYKzVIxsQBPTQ=='
+YANDEX_GEO_LACATOR_URL_FMT = 'http://geocode-maps.yandex.ru/1.x/?geocode=%s&key=%s&format=json'
+
+DOUBLEGIS_GEO_LOCATOR_API_KEY = ''
+DOUBLEGIS_GEO_LACATOR_URL_FMT = 'https://catalog.api.2gis.ru/geo/search?q=%s&format=json&limit=1&version=2.0&key=%s'
 
 
 def get_default_geolocations(address_query, geo_key=None):
@@ -46,15 +49,15 @@ def get_default_geolocations(address_query, geo_key=None):
     @param address_query: Запрашиваемый адрес.
         Например:
             Москва, улица Гагарина, дом 10.
-    @param geo_key: Ключ геолокатора.
+    @param geo_key: Ключ API геолокатора.
     @return: Список [(широта, долгота),...] данных геолокации или пустой список в случае ошибки.
     """
     if geo_key is None:
-        geo_key = GEO_LOCATOR_KEY
+        geo_key = YANDEX_GEO_LOCATOR_API_KEY
 
     try:
         address = urllib.parse.quote(address_query)
-        url = GEO_LACATOR_URL_FMT % (address, geo_key)
+        url = YANDEX_GEO_LACATOR_URL_FMT % (address, geo_key)
         response = urllib.request.urlopen(url)
         data = response.read()
         geo_location_data = json.loads(data)
@@ -79,7 +82,7 @@ def get_default_geolocation(address_query, geo_key=None, item=0):
     @param address_query: Запрашиваемый адрес.
         Например:
             Москва, улица Гагарина, дом 10.
-    @param geo_key: Ключ геолокатора.
+    @param geo_key: Ключ API геолокатора.
     @param item: Индекс выбираемого элемента.
     @return: (широта, долгота) данных геолокации или (None, None) в случае ошибки.
     """
@@ -89,7 +92,7 @@ def get_default_geolocation(address_query, geo_key=None, item=0):
     return None, None
 
 
-def get_yandex_geolocation(address_query):
+def get_yandexmaps_geolocation(address_query):
     """
     Получить данные геолокации по запрашиваемому адресу.
     Используется библиотека https://github.com/begyy/Yandexmaps:
@@ -100,6 +103,9 @@ def get_yandex_geolocation(address_query):
     @return: (широта, долгота) данных геолокации или [None, None] в случае ошибки.
     """
     try:
+        if not yandex_maps:
+            log.warning(u'Не установлена библиотека Yandexmaps. Установить: pip3 install Yandexmaps')
+            return None, None
         yandex = yandex_maps.Yandexmaps()
         geo_location = yandex.address(address=address_query)
         # ВНИМАНИЕ! В API Yandex Maps сначала стоит долгота, а затем широта,
@@ -372,7 +378,7 @@ class icMapIndicatorManagerProto(icMapIndicator):
             либо (None, None) в случае ошибки.
         """
         if yandex_maps and not GEO_LOCATOR_DEFAULT:
-            geo_locations = [get_yandex_geolocation(address_query)]
+            geo_locations = [get_yandexmaps_geolocation(address_query)]
         else:
             geo_locations = get_default_geolocations(address_query)
         return geo_locations
@@ -387,7 +393,7 @@ class icMapIndicatorManagerProto(icMapIndicator):
             либо (None, None) в случае ошибки.
         """
         if yandex_maps and not GEO_LOCATOR_DEFAULT:
-            geo_location = get_yandex_geolocation(address_query)
+            geo_location = get_yandexmaps_geolocation(address_query)
         else:
             geo_location = get_default_geolocation(address_query, item=item)
         return geo_location
