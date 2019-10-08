@@ -45,7 +45,7 @@ class icProjectNB(fnb.FlatNotebook):
         # Выставляем стили
         self.SetAGWWindowStyleFlag(style)
         # Цвет текста заголовка не активной страницы для контраста
-        non_active_label_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
+        non_active_label_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT)
         self.SetNonActiveTabTextColour(non_active_label_colour)
         
     def create_page(self, caption=u''):
