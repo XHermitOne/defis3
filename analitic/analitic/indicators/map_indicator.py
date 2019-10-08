@@ -16,6 +16,7 @@ import uuid
 from ic.log import log
 from ic.utils import filefunc
 from ic.utils import wxfunc
+from ic.utils import txtfunc
 
 try:
     import yandex_maps
@@ -36,10 +37,12 @@ DEFAULT_ZOOM = 14
 GEO_LOCATOR_DEFAULT = True
 
 # Ключ для геолокации Яндекса
-YANDEX_GEO_LOCATOR_API_KEY = 'AHqsEk4BAAAAekkFTAMA9DGkZfo_WT9ci8K8X286J9ILWjIAAAAAAAAAAABhqxW74U1xylQQhCYKzVIxsQBPTQ=='
+API_KEY_YANDEX_FILENAME = os.path.join(os.path.dirname(__file__), 'api_key_yandexmaps.txt')
+YANDEX_GEO_LOCATOR_API_KEY = txtfunc.load_file_text(API_KEY_YANDEX_FILENAME).strip()
 YANDEX_GEO_LACATOR_URL_FMT = 'http://geocode-maps.yandex.ru/1.x/?geocode=%s&key=%s&format=json'
 
-DOUBLEGIS_GEO_LOCATOR_API_KEY = ''
+API_KEY_2GIS_FILENAME = os.path.join(os.path.dirname(__file__), 'api_key_2gis.txt')
+DOUBLEGIS_GEO_LOCATOR_API_KEY = txtfunc.load_file_text(API_KEY_2GIS_FILENAME).strip()
 DOUBLEGIS_GEO_LACATOR_URL_FMT = 'https://catalog.api.2gis.ru/geo/search?q=%s&format=json&limit=1&version=2.0&key=%s'
 
 
