@@ -36,10 +36,14 @@ DEFAULT_ZOOM = 14
 # --- Функции определения геолокации по адресу ---
 GEO_LOCATOR_DEFAULT = True
 
+# Кеш геолокатора
+# В кеше сохраняется соответствие адрес->(широта, долгота)
+GEO_LOCATOR_CACHE = None
+
 # Ключ для геолокации Яндекса
 API_KEY_YANDEX_FILENAME = os.path.join(os.path.dirname(__file__), 'api_key_yandexmaps.txt')
 YANDEX_GEO_LOCATOR_API_KEY = txtfunc.load_file_text(API_KEY_YANDEX_FILENAME).strip()
-YANDEX_GEO_LACATOR_URL_FMT = 'http://geocode-maps.yandex.ru/1.x/?geocode=%s&key=%s&format=json'
+YANDEX_GEO_LACATOR_URL_FMT = 'http://geocode-maps.yandex.ru/1.x/?geocode=%s&apikey=%s&format=json'
 
 API_KEY_2GIS_FILENAME = os.path.join(os.path.dirname(__file__), 'api_key_2gis.txt')
 DOUBLEGIS_GEO_LOCATOR_API_KEY = txtfunc.load_file_text(API_KEY_2GIS_FILENAME).strip()
@@ -61,6 +65,7 @@ def get_default_geolocations(address_query, geo_key=None):
     try:
         address = urllib.parse.quote(address_query)
         url = YANDEX_GEO_LACATOR_URL_FMT % (address, geo_key)
+        log.debug(u'URL получения геоданных <%s>' % url)
         response = urllib.request.urlopen(url)
         data = response.read()
         geo_location_data = json.loads(data)
@@ -79,7 +84,7 @@ def get_default_geolocations(address_query, geo_key=None):
     return list()
 
 
-def get_default_geolocation(address_query, geo_key=None, item=0):
+def get_default_geolocation(address_query, geo_key=None, item=0, bCache=True):
     """
     Получить все данные геолокации по запрашиваемому адресу.
     @param address_query: Запрашиваемый адрес.
@@ -87,24 +92,46 @@ def get_default_geolocation(address_query, geo_key=None, item=0):
             Москва, улица Гагарина, дом 10.
     @param geo_key: Ключ API геолокатора.
     @param item: Индекс выбираемого элемента.
+    @param bCache: Использовать внутренний кеш?
     @return: (широта, долгота) данных геолокации или (None, None) в случае ошибки.
     """
+    if bCache:
+        global GEO_LOCATOR_CACHE
+        if GEO_LOCATOR_CACHE is None:
+            GEO_LOCATOR_CACHE = dict()
+        if address_query in GEO_LOCATOR_CACHE:
+            # Если такой адрес есть в кеше, то берем из кеша
+            return GEO_LOCATOR_CACHE[address_query]
+
     geo_locations = get_default_geolocations(address_query, geo_key=geo_key)
     if geo_locations and item < len(geo_locations):
+        if bCache:
+            # Сохраняем в кеше
+            GEO_LOCATOR_CACHE[address_query] = geo_locations[item]
         return geo_locations[item]
     return None, None
 
 
-def get_yandexmaps_geolocation(address_query):
+def get_yandexmaps_geolocation(address_query, geo_key=None, bCache=True):
     """
     Получить данные геолокации по запрашиваемому адресу.
-    Используется библиотека https://github.com/begyy/Yandexmaps:
-    pip3 install Yandexmaps.
+    Используется библиотека https://github.com/begyy/Yandexmaps.
+    Установка: pip3 install Yandexmaps.
     @param address_query: Запрашиваемый адрес.
         Например:
             Москва, улица Гагарина, дом 10.
+    @param geo_key: Ключ API геолокатора.
+    @param bCache: Использовать внутренний кеш?
     @return: (широта, долгота) данных геолокации или [None, None] в случае ошибки.
     """
+    if bCache:
+        global GEO_LOCATOR_CACHE
+        if GEO_LOCATOR_CACHE is None:
+            GEO_LOCATOR_CACHE = dict()
+        if address_query in GEO_LOCATOR_CACHE:
+            # Если такой адрес есть в кеше, то берем из кеша
+            return GEO_LOCATOR_CACHE[address_query]
+
     try:
         if not yandex_maps:
             log.warning(u'Не установлена библиотека Yandexmaps. Установить: pip3 install Yandexmaps')
@@ -114,22 +141,35 @@ def get_yandexmaps_geolocation(address_query):
         # ВНИМАНИЕ! В API Yandex Maps сначала стоит долгота, а затем широта,
         # а правильно для использования наоборот
         # --------------V
-        return tuple(reversed(geo_location))
+        geo_location_tuple = tuple(reversed(geo_location))
+        if bCache:
+            # Сохраняем в кеше
+            GEO_LOCATOR_CACHE[address_query] = geo_location_tuple
+        return geo_location
     except Exception as e:
         log.fatal(u'Yandexmaps. Ошибка получения данных геолокации по адресу <%s>' % address_query)
     return None, None
 
 
-def get_2gis_geolocations(address_query, geo_key=None):
+def get_2gis_geolocations(address_query, geo_key=None, bCache=True):
     """
     Получить все данные геолокации по запрашиваемому адресу.
-    ВНИМАНИЕ! Функция не отлажена
+    ВНИМАНИЕ! Функция не отлажена!!!!!
     @param address_query: Запрашиваемый адрес.
         Например:
             Москва, улица Гагарина, дом 10.
     @param geo_key: Ключ API геолокатора.
+    @param bCache: Использовать внутренний кеш?
     @return: Список [(широта, долгота),...] данных геолокации или пустой список в случае ошибки.
     """
+    if bCache:
+        global GEO_LOCATOR_CACHE
+        if GEO_LOCATOR_CACHE is None:
+            GEO_LOCATOR_CACHE = dict()
+        if address_query in GEO_LOCATOR_CACHE:
+            # Если такой адрес есть в кеше, то берем из кеша
+            return GEO_LOCATOR_CACHE[address_query]
+
     if geo_key is None:
         geo_key = DOUBLEGIS_GEO_LOCATOR_API_KEY
 
@@ -465,7 +505,7 @@ class icMapIndicatorManagerProto(icMapIndicator):
         @param bAutoSave: Автоматически сохранить файл?
         @return: Объект карты или None в случае ошибки.
         """
-        if geo_latitude is None or geo_longitude is None:
+        if geo_latitude in (None, 0) or geo_longitude in (None, 0):
             log.warning(u'Не полное определение геолокации <%s : %s>' % (geo_latitude, geo_longitude))
             return None
 

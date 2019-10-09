@@ -201,7 +201,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 sync_ok = self.syncDB()
                 if sync_ok:
                     dlgfunc.openWarningBox(u'ВНИМАНИЕ',
-                                        u'Различие структур таблицы <%s> в описании и БД. В БД создана копия таблицы <%s>. Старая таблица удалена.' % (self.dataclass.name, self.dataclass.name))
+                                           u'Различие структур таблицы <%s> в описании и БД. В БД создана копия таблицы <%s>. Старая таблица удалена.' % (self.dataclass.name, self.dataclass.name))
 
         # Маппер
         self._mapper_class = None
@@ -279,7 +279,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     if len(metadata.tables[tab_name].columns) != fields_with_id_count:
                         log.warning(u'Ошибка создания таблицы <%s>!' % tab_name)
                         dlgfunc.openWarningBox(u'ВНИМАНИЕ',
-                                            u'В системе существует таблица <%s> с другой структурой!' % tab_name)
+                                               u'В системе существует таблица <%s> с другой структурой!' % tab_name)
                         assert None, u'Изменена структура таблицы <%s>' % tab_name
                         return None
                     return metadata.tables[tab_name]

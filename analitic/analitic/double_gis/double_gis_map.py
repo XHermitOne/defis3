@@ -14,8 +14,7 @@ from ic.utils import extfunc
 __version__ = (0, 1, 1, 1)
 
 # Шаблон результирующего HTML документа
-HTML_TEMPLATE = '''
-<!DOCTYPE html>
+HTML_TEMPLATE = '''<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -24,7 +23,7 @@ HTML_TEMPLATE = '''
         {{ map }}
     </head>
     <body>
-        <div record_id="map" style="width:{{ width[0] }}{{ width[1] }}; height:{{ height[0] }}{{ height[1] }}"></div>
+        <div id="map" style="width:{{ width[0] }}{{ width[1] }}; height:{{ height[0] }}{{ height[1] }}"></div>
     </body>
 </html>
 '''
