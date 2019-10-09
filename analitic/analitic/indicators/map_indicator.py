@@ -75,7 +75,7 @@ def get_default_geolocations(address_query, geo_key=None):
         geo_locations = [tuple([float(pos) for pos in reversed(location.split(' '))]) if location is not None else (None, None) for location in str_geo_locations]
         return geo_locations
     except Exception as e:
-        log.fatal(u'Ошибка получения данных геолокации по адресу')
+        log.fatal(u'Yandex default. Ошибка получения данных геолокации по адресу <%s>' % address_query)
     return list()
 
 
@@ -116,8 +116,42 @@ def get_yandexmaps_geolocation(address_query):
         # --------------V
         return tuple(reversed(geo_location))
     except Exception as e:
-        log.fatal(u'Ошибка получения данных геолокации по адресу')
+        log.fatal(u'Yandexmaps. Ошибка получения данных геолокации по адресу <%s>' % address_query)
     return None, None
+
+
+def get_2gis_geolocations(address_query, geo_key=None):
+    """
+    Получить все данные геолокации по запрашиваемому адресу.
+    ВНИМАНИЕ! Функция не отлажена
+    @param address_query: Запрашиваемый адрес.
+        Например:
+            Москва, улица Гагарина, дом 10.
+    @param geo_key: Ключ API геолокатора.
+    @return: Список [(широта, долгота),...] данных геолокации или пустой список в случае ошибки.
+    """
+    if geo_key is None:
+        geo_key = DOUBLEGIS_GEO_LOCATOR_API_KEY
+
+    try:
+        address = urllib.parse.quote(address_query)
+        url = DOUBLEGIS_GEO_LACATOR_URL_FMT % (address, geo_key)
+        response = urllib.request.urlopen(url)
+        data = response.read()
+        geo_location_data = json.loads(data)
+
+        find_geo = geo_location_data.get('response',
+                                         dict()).get('GeoObjectCollection',
+                                                     dict()).get('featureMember',
+                                                                 list())
+        str_geo_locations = [item.get('GeoObject', dict()).get('Point', dict()).get('pos', None) for item in find_geo]
+        # ВНИМАНИЕ! В API Yandex Maps сначала стоит долгота, а затем широта,
+        # а правильно для использования наоборот---------V
+        geo_locations = [tuple([float(pos) for pos in reversed(location.split(' '))]) if location is not None else (None, None) for location in str_geo_locations]
+        return geo_locations
+    except Exception as e:
+        log.fatal(u'2GIS. Ошибка получения данных геолокации по адресу <%s>' % address_query)
+    return list()
 
 
 class icMapIndicator(object):

@@ -235,7 +235,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
     security.declareProtected('sprav_edit', 'edit')
 
     def Edit(self, *args, **kwargs):
-        return parentModule.icSpravPrototype.edit(self, *args, **kwargs)
+        return parentModule.icSpravPrototype.Edit(self, *args, **kwargs)
 
     def childCreator(self, bCounter, progressDlg):
         """
