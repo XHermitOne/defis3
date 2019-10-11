@@ -10,19 +10,19 @@
 
 # Подключение библиотек
 import copy
+import jinja2
 from . import icsqlalchemydataset
 
 from ic.utils import toolfunc
 from ic.utils import resource
 from ic.log import log
-from ic.utils import txtgen
 from ic.engine import glob_functions
 from ic.utils import util
 
 
 import ic.interfaces.icdataclassinterface as icdataclassinterface
 
-__version__ = (0, 1, 4, 1)
+__version__ = (0, 1, 5, 1)
 
 # Спецификации
 # Результат запроса (словарно-списковое представление)
@@ -191,13 +191,19 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         @param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
         """
-        # Необходимо заменить перевод кареток
-        sql_txt = self._sql_txt.replace('\\n', UNIX_CR)
+        result_sql_txt = u''
 
-        # Сгенерировать запрос для последующего использования
-        sql_txt = txtgen.gen(sql_txt, kwargs)
+        try:
+            # Необходимо заменить перевод кареток
+            sql_txt = self._sql_txt.replace('\\n', UNIX_CR)
 
-        return sql_txt
+            # Сгенерировать запрос для последующего использования
+            template = template = jinja2.Template(sql_txt)
+            result_sql_txt = template.render(**kwargs)
+        except:
+            log.fatal(u'Ошибка генерации текста SQL запроса <%s>\nПараметры SQL запроса %s' % (sql_txt, str(kwargs)))
+
+        return result_sql_txt
 
     def setSQLTxt(self, sql_text):
         """
@@ -298,8 +304,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
                               }
         """
         if query_result is None:
-            sql_params = dict([(name, u'') for name in txtgen.get_raplace_names(self._sql_txt)])
-            return self.queryAll(**sql_params)
+            return self.queryAll()
         try:
             # if data and to_dict:
             #    new_data = [dict([(fields[idx][0], val) for idx, val in enumerate(rec)]) for rec in data]
@@ -569,7 +574,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
                 return self._saveDataTransact(table=table, dataset=dataset, bClear=bClear)
             return self._saveData(table=table, dataset=dataset, bClear=bClear)
         except:
-            log.fatal(u'Ошибка сохранения данных запроса <%s> в таблице <%s>' % (self.getName(), table_name))
+            log.fatal(u'Ошибка сохранения данных запроса <%s> в таблице <%s>' % (self.getName(), table.getName()))
         return False
 
     def _saveData(self, table=None, dataset=(), bClear=False):
