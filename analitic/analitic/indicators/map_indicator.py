@@ -678,7 +678,7 @@ class icMapIndicatorManagerProto(icMapIndicator):
                 # Приведение цветов к текстовому формату
                 color = wxfunc.wxColour2StrRGB(color) if color else None
 
-                marker_icon = None
+                # marker_icon = None
                 # if icon and color:
                 #     marker_icon = folium.Icon(color=color, icon=icon)
                 # elif icon and color:
@@ -687,9 +687,9 @@ class icMapIndicatorManagerProto(icMapIndicator):
                 marker = self._rendering.Marker(location=[geo_latitude, geo_longitude],
                                                 popup=popup_text if popup_text else None,
                                                 tooltip=tooltip_text if tooltip_text else None,
-                                                icon=marker_icon)
+                                                icon=icon)
                 marker.add_to(self._geo_map)
-                log.debug(u'Добавлен маркер-указатель. Локация [%s x %s]' % (geo_latitude, geo_longitude))
+                # log.debug(u'Добавлен маркер-указатель. Локация [%s x %s]' % (geo_latitude, geo_longitude))
                 return True
             except:
                 log.fatal(u'Ошибка добавления на карту маркера-указателя')
