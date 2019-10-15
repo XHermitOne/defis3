@@ -16,8 +16,11 @@ from ic.components import icwidget
 
 from ic.log import log
 from ic.utils import system_cache
+from ic.engine import glob_functions
 
 from . import icsprav
+from ..nsi_dlg import icspraveditdlg
+from ..nsi_dlg import icspravchoicetreedlg
 
 # Версия
 __version__ = (0, 1, 1, 1)
@@ -52,3 +55,19 @@ class icRefObjectProto(icsprav.icSpravInterface):
         # Кэш
         self._cache = system_cache.icCache()
 
+    def Edit(self, parent_code=(None,), parent=None):
+        """
+        Запуск окна редактирования объекта-ссылки/справочника.
+        @param parent_code: Код более верхнего уровня.
+        @param parent: Родительская форма.
+            Если не определена, то берется главная форма.
+        @return: Возвращает результат выполнения опереции True/False.
+        """
+        if parent is None:
+            parent = glob_functions.getMainWin()
+
+        try:
+            return icspraveditdlg.edit_sprav_dlg(parent=parent, nsi_sprav=self)
+        except:
+            log.fatal(u'ОБЪЕКТ-ССЫЛКА/СПРАВОЧНИК [%s] Ошибка редактирования' % self.name)
+            return False

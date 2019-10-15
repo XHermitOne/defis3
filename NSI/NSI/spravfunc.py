@@ -33,6 +33,7 @@ NSI_STD_EDIT_FORM = 'FrmStdSprav'
 NSI_STD_EDIT_FORM_T = 'FrmStdSpravT'
 NSI_STD_HLP_FORM = 'FrmHlpSprav'
 
+
 # ---- Функции определяют имена классов данных используемых в справочной системе
 def GetRecordCount(rs):
     """
@@ -401,6 +402,7 @@ def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True
 
     return (result, res_val)
 
+
 def NsiEdtFormName(typSprav, level_num=1):
     """
     Определяет название формы редактирования справочника.
@@ -454,6 +456,7 @@ def NsiEdtFormName(typSprav, level_num=1):
         
     return result
 
+
 def NsiHlpFormName(typSprav, level_num=1):
     """
     Определяет название формы для выбора из справочника структур кодов (NsiLevel).
@@ -505,6 +508,7 @@ def NsiHlpFormName(typSprav, level_num=1):
     cnLevel.commit()
         
     return result
+
 
 def HlpSprav(typSprav,ParentCode=(None,),field=None,datatime=None,form=None,rec=None,parentForm=None):
     """

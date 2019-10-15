@@ -35,7 +35,8 @@ class icRefTablePersistent(object):
         Конструктор.
         @param parent: Родительский объект.
         """
-        pass
+        # Закешированное имя таблицы
+        self.table_name = None
 
     def genTableRes(self, table_name=None):
         """
@@ -48,7 +49,7 @@ class icRefTablePersistent(object):
         prj_res_ctrl.openPrj()
 
         # Проверка на добавление нового ресурса
-        table_name = self._genTableName()
+        table_name = self.getTableName()
         # Если имя таблицы определено нет ресурса таблицы с таким именем, то запустить
         # создание ресурса таблицы
         if table_name and not prj_res_ctrl.isRes(table_name, 'tab'):
@@ -87,6 +88,14 @@ class icRefTablePersistent(object):
         level_idx = level_names.index(name)
         return level_idx
 
+    def getTableName(self):
+        """
+        Получить имя таблицы уровня.
+        """
+        if self.table_name is None:
+            self.table_name = self._genTableName()
+        return self.table_name
+
     def _genTableName(self):
         """
         Генерация имени таблицы уровня.
@@ -105,7 +114,7 @@ class icRefTablePersistent(object):
         @return: True - ресурс успешно создан / False - ошибка.
         """
         if table_name is None:
-            table_name = self._genTableName()
+            table_name = self.getTableName()
 
         tab_res = self._createTabSpc(table_name)
         # Перебрать дочерние компоненты
@@ -128,7 +137,7 @@ class icRefTablePersistent(object):
         tab_spc = util.icSpcDefStruct(util.DeepCopy(ic_tab_wrp.ic_class_spc), None)
         # Установить свойства таблицы
         if table_name is None:
-            table_name = self._genTableName()
+            table_name = self.getTableName()
         tab_spc['name'] = table_name
         tab_spc['description'] = strfunc.str2unicode(self.getDescription())
         tab_spc['table'] = table_name.lower()
@@ -139,8 +148,11 @@ class icRefTablePersistent(object):
         # Поле кода-идентификатора объекта
         field_spc = self._createCodeFieldSpc()
         tab_spc['child'].append(field_spc)
-        # Поле кода вкл/выкл объекта
+        # Поле вкл/выкл объекта
         field_spc = self._createStatusFieldSpc()
+        tab_spc['child'].append(field_spc)
+        # Поле наименования объекта
+        field_spc = self._createNameFieldSpc()
         tab_spc['child'].append(field_spc)
 
         # Если у объекта есть родитель, то в таблице
@@ -161,39 +173,46 @@ class icRefTablePersistent(object):
 
         return tab_spc
 
+    def _createFieldSpc(self, **field_attrs):
+        """
+        Создать спецификацию поля кода-идентификатора объекта-ссылки.
+        @param field_attrs: Атрибуты поля.
+        @param field_name: Имя поля кода-идентификатора объекта-ссылки.
+        """
+        field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
+
+        field_name = field_attrs.get('name', 'default')
+        field_spc['name'] = field_name
+        field_spc['description'] = field_attrs.get('description', '')
+        field_spc['field'] = field_attrs.get('field', field_name.lower())
+        field_spc['type_val'] = field_attrs.get('type_val', 'T')
+        field_spc['len'] = field_attrs.get('len', None)
+        field_spc['attr'] = field_attrs.get('attr', 0)
+        field_spc['default'] = field_attrs.get('default', None)
+
+        return field_spc
+
     def _createCodeFieldSpc(self, field_name='code'):
         """
         Создать спецификацию поля кода-идентификатора объекта-ссылки.
         @param field_name: Имя поля кода-идентификатора объекта-ссылки.
         """
-        field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
-
-        field_spc['name'] = field_name
-        field_spc['description'] = u'Код'
-        field_spc['field'] = field_name.lower()
-        field_spc['type_val'] = 'T'
-        field_spc['len'] = None
-        field_spc['attr'] = 0
-        field_spc['default'] = None
-
-        return field_spc
+        return self._createFieldSpc(name=field_name, description=u'Код')
 
     def _createStatusFieldSpc(self, field_name='status'):
         """
         Создать спецификацию поля вкл/выкл объекта-ссылки.
         @param field_name: Имя поля вкл/выкл объекта-ссылки.
         """
-        field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
+        return self._createFieldSpc(name=field_name, description=u'Вкл/Выкл объект',
+                                    type_val='Boolean', default=True)
 
-        field_spc['name'] = field_name
-        field_spc['description'] = u'Вкл/Выкл объект'
-        field_spc['field'] = field_name.lower()
-        field_spc['type_val'] = 'Boolean'
-        field_spc['len'] = None
-        field_spc['attr'] = 0
-        field_spc['default'] = True
-
-        return field_spc
+    def _createNameFieldSpc(self, field_name='name'):
+        """
+        Создать спецификацию поля наименования объекта-ссылки.
+        @param field_name: Имя поля кода-идентификатора объекта-ссылки.
+        """
+        return self._createFieldSpc(name=field_name, description=u'Наименование')
 
     def _createLinkSpc(self, table_name):
         """

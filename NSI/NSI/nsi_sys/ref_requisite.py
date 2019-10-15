@@ -8,6 +8,8 @@
 поле хранения атрибута и т.п.
 """
 
+import copy
+
 from ic.components import icwidget
 
 from . import ref_persistent
@@ -89,6 +91,12 @@ class icRefRequisiteInterface(object):
         """
         # Родительский объект
         self.parent = parent
+
+    def init_data(self):
+        """
+        Инициализация данных объекта.
+        """
+        pass
 
 
 class icRefRequisiteProto(icRefRequisiteInterface,
@@ -181,3 +189,10 @@ class icRefNSIRequisiteProto(icRefRequisiteInterface,
         Объект справочника.
         """
         return self.sprav
+
+    def init_data(self):
+        """
+        Инициализация данных объекта.
+        """
+        # Устаонвить значение по умолчанию
+        self.value = copy.deepcopy(self.getDefault())

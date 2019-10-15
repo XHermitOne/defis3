@@ -26,8 +26,8 @@ import NSI.nsi_sys.ref_object as parentModule
 from ic.kernel import icpermission
 from ic.kernel.icaccesscontrol import ClassSecurityInfo
 
-prm = icpermission.icPermission(id='sprav_edit', title='SpravEdit',
-                                description=u'Редактирование справочников',
+prm = icpermission.icPermission(id='refobj_edit', title='RefObjectEdit',
+                                description=u'Редактирование объектов-ссылок/справочников',
                                 component_type='NSI')
 icpermission.registerPermission(prm)
 
@@ -195,10 +195,13 @@ class icRefObject(icwidget.icSimple, parentModule.icRefObjectProto):
             self.childCreator(bCounter, progressDlg)
 
     # Установка ограничения редактирования справочника
-    security.declareProtected('sprav_edit', 'edit')
+    security.declareProtected('refobj_edit', 'edit')
 
     def Edit(self, *args, **kwargs):
         return parentModule.icRefObjectProto.Edit(self, *args, **kwargs)
+
+    # Другое наименование метода
+    edit = Edit
 
     def childCreator(self, bCounter, progressDlg):
         """
@@ -246,14 +249,12 @@ class icRefObject(icwidget.icSimple, parentModule.icRefObjectProto):
     def getTableName(self):
         """
         Имя объекта хранения/Таблицы.
+        Это имя таблицы первого уровня.
         """
-        tab_psp = self.getICAttr('table')
-        if tab_psp:
-            return tab_psp[0][1]
-        else:
-            log.warning(u'Не определена таблица хранения справочника <%s>' % self.name)
+        levels = self.getLevels()
         # По умолчанию имя таблицы хранения справочника такое же как у справочника
-        return self.getName()
+        tab_name = levels[0].getTableName() if levels else self.getName()
+        return tab_name
 
     def getTabResSubSysName(self):
         """
@@ -285,5 +286,5 @@ class icRefObject(icwidget.icSimple, parentModule.icRefObjectProto):
         @return: True - Зарегистрированный в программе пользователь может редактировать справочник,
             False - не может
         """
-        return self.security.is_permission('sprav_edit',
+        return self.security.is_permission('refobj_edit',
                                            self.GetKernel().GetAuthUser().getPermissions())

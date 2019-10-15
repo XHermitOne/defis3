@@ -144,7 +144,6 @@ class icRequisite(parentModule.icRequisiteProto, icwidget.icSimple):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id, component, logType=0, evalSpace=None,
@@ -181,7 +180,7 @@ class icRequisite(parentModule.icRequisiteProto, icwidget.icSimple):
         for key in lst_keys:
             setattr(self, key, component[key])
 
-        # Устаонвить значение по умолчанию
+        # Установить значение по умолчанию
         self.init_data()
         
     def childCreator(self, bCounter, progressDlg):
