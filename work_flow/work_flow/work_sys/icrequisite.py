@@ -392,7 +392,7 @@ class icRequisiteProto(icworkbase.icRequisiteBase):
         """
         Создание объекта контрола надписи реквизита.
         """
-        spc=self._genStdLabelRes()
+        spc = self._genStdLabelRes()
         return self.GetKernel().createObjBySpc(parent, spc)
         
     def createEditorCtrl(self, parent=None):
