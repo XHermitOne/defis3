@@ -10,6 +10,7 @@ from ic.components import icwidget
 from ic.log import log
 
 from . import icspravlevel
+from . import ref_persistent
 
 # Версия
 __version__ = (0, 1, 1, 1)
@@ -32,7 +33,8 @@ SPC_IC_REFLEVEL = {'type': 'RefLevel',
                    }
 
 
-class icRefLevelProto(icspravlevel.icSpravLevelInterface):
+class icRefLevelProto(icspravlevel.icSpravLevelInterface,
+                      ref_persistent.icRefTablePersistent):
     """
     Класс уровня объекта-ссылки/справочника.
     """
@@ -44,3 +46,4 @@ class icRefLevelProto(icspravlevel.icSpravLevelInterface):
         @param index: Индекс уровня в справочнике-родителе.
         """
         icspravlevel.icSpravLevelInterface.__init__(self, parent, index)
+        ref_persistent.icRefTablePersistent.__init__(self, parent=parent)

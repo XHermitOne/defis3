@@ -10,7 +10,7 @@
 
 from ic.components import icwidget
 
-from ic.log import log
+from . import ref_persistent
 
 # Версия
 __version__ = (0, 1, 1, 1)
@@ -91,7 +91,8 @@ class icRefRequisiteInterface(object):
         self.parent = parent
 
 
-class icRefRequisiteProto(icRefRequisiteInterface):
+class icRefRequisiteProto(icRefRequisiteInterface,
+                          ref_persistent.icRefFieldPersistent):
     """
     Реквизит.
     """
@@ -102,6 +103,7 @@ class icRefRequisiteProto(icRefRequisiteInterface):
         @param parent: Родительский объект.
         """
         icRefRequisiteInterface.__init__(self, parent)
+        ref_persistent.icRefFieldPersistent.__init__(self, parent=parent)
 
         # Имя реквизита
         self.name = None
@@ -114,6 +116,8 @@ class icRefRequisiteProto(icRefRequisiteInterface):
         self.type_val = 'T'
         # Длина поля
         self.len = None
+        # Значение по умолчанию
+        self.default = None
 
     def getTypeValue(self):
         """
@@ -127,8 +131,33 @@ class icRefRequisiteProto(icRefRequisiteInterface):
         """
         return u''
 
+    def getFieldName(self):
+        """
+        Имя поля хранения значения реквизита.
+        """
+        return self.field
 
-class icRefNSIRequisiteProto(icRefRequisiteInterface):
+    def getDefault(self):
+        """
+        Значение по умолчанию.
+        """
+        return self.default
+
+    def getDescription(self):
+        """
+        Описание реквизита.
+        """
+        return self.description
+
+    def getFieldLen(self):
+        """
+        Длина значения поля.
+        """
+        return self.len
+
+
+class icRefNSIRequisiteProto(icRefRequisiteInterface,
+                             ref_persistent.icRefFieldPersistent):
     """
     Реквизит связи со справочником системы NSI.
     """
@@ -139,6 +168,7 @@ class icRefNSIRequisiteProto(icRefRequisiteInterface):
         @param parent: Родительский объект.
         """
         icRefRequisiteInterface.__init__(self, parent)
+        ref_persistent.icRefFieldPersistent.__init__(self, parent=parent)
 
         # Текущее значение реквизита - код справочника
         self.value = None

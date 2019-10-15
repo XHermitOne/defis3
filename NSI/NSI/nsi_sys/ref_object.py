@@ -3,6 +3,13 @@
 
 """
 Класс объекта-ссылки/справочника.
+
+Объект-ссылка отличается от справочника тем что
+организует свое хранение в виде каскада таблиц уровней.
+
+На каждом уровне таблица содержит поля code и status.
+code - код объекта-ссылки/справочника.
+status - вкл./выкл. объекта.
 """
 
 from ic.components import icwidget
@@ -44,3 +51,4 @@ class icRefObjectProto(icsprav.icSpravInterface):
 
         # Кэш
         self._cache = system_cache.icCache()
+
