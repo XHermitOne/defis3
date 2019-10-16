@@ -179,8 +179,6 @@ class icRefNSIRequisite(parentModule.icRefNSIRequisiteProto, icwidget.icSimple):
         @param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
-        if component['fields'] is None:
-            component['fields'] = {component['name']: 'cod'}
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
         parentModule.icRefNSIRequisiteProto.__init__(self, parent)
@@ -196,11 +194,12 @@ class icRefNSIRequisite(parentModule.icRefNSIRequisiteProto, icwidget.icSimple):
         for key in lst_keys:
             setattr(self, key, component[key])
 
-    def getField(self):
+    def getFieldName(self):
         """
         Имя поля реквизита таблицы.
         """
-        return self.getICAttr('field')
+        field_name = self.getICAttr('field')
+        return field_name if field_name else self.getName()
 
     def getNSIPsp(self):
         """

@@ -143,11 +143,12 @@ class icRefRequisite(parentModule.icRefRequisiteProto, icwidget.icSimple):
         prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
                              bCounter=bCounter, progressDlg=progressDlg)
 
-    def getField(self):
+    def getFieldName(self):
         """
         Имя поля реквизита таблицы, в которой храниться документ.
         """
-        return self.getICAttr('field')
+        field_name = self.getICAttr('field')
+        return field_name if field_name else self.getName()
 
     def getTypeValue(self):
         """

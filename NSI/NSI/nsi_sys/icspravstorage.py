@@ -31,7 +31,7 @@ class icSpravStorageInterface(object):
     Класс абстрактного хранилища справочников. Реализует только интерфейс.
     """
 
-    def __init__(self, parent_sprav, source_name=None, object_name=None):
+    def __init__(self, parent_sprav=None, source_name=None, object_name=None):
         """
         Конструктор.
         @param parent_sprav: Объект справочника, к которому прикреплено

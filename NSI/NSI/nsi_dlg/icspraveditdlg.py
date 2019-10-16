@@ -23,10 +23,11 @@ from . import iceditcodeproperty
 from ic.engine import form_manager
 
 # Version
-__version__ = (0, 1, 1, 3)
+__version__ = (0, 1, 2, 1)
 
 # Не редактируемые поля таблицы справочника
-NOT_EDITABLE_FIELDS = ('type', 'count', 'access')
+NOT_EDITABLE_FIELDS = ('type', 'count', 'access',   # Относится к Справочнику (icSprav)
+                       'dt_edit', 'computer', 'username')   # Относится к объекту-ссылке/справочнику (icRefObject)
 
 # Текст фиктивного элемента дерева
 TREE_ITEM_LABEL = u'...'

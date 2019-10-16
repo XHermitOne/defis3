@@ -21,6 +21,7 @@ from ic.utils import coderror
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 
 import NSI.nsi_sys.ref_object as parentModule
+from NSI.nsi_sys import ref_storage
 
 # Регистрация прав использования
 from ic.kernel import icpermission
@@ -260,11 +261,6 @@ class icRefObject(icwidget.icSimple, parentModule.icRefObjectProto):
         """
         Имя подсистемы ресурса таблицы.
         """
-        tab_psp = self.getICAttr('table')
-        if tab_psp:
-            return tab_psp[0][-1]
-        else:
-            log.warning(u'Не определена таблица хранения справочника <%s>' % self.name)
         # Считаем что текущий проект и есть нужная подсистема по умолчанию
         return glob_functions.getPrjName()
 
@@ -288,3 +284,9 @@ class icRefObject(icwidget.icSimple, parentModule.icRefObjectProto):
         """
         return self.security.is_permission('refobj_edit',
                                            self.GetKernel().GetAuthUser().getPermissions())
+
+    def getStorage(self):
+        """
+        Хранилище.
+        """
+        return ref_storage.getRefSQLStorageByPsp(db_psp=self.getDBPsp(), ref_object=self)

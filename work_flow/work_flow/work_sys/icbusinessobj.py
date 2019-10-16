@@ -119,7 +119,8 @@ SPC_IC_BUSINESSOBJ = {'type': 'BusinessObj',
                       }
 
 
-class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, form_generator.icObjFormGenerator, icdatasetinterface.icDatasetInterface):
+class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, form_generator.icObjFormGenerator,
+                             icdatasetinterface.icDatasetInterface):
     """
     Интерфейс абстрактного бизнес-объекта.
     """

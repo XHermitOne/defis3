@@ -11,6 +11,7 @@
 from ic.log import log
 from ic.utils import util
 from ic.utils import strfunc
+from ic.utils import lockfunc
 from ic.engine import glob_functions
 
 # Для спецификаций таблиц, полей, связей
@@ -37,7 +38,88 @@ class icRefTablePersistent(object):
         """
         # Закешированное имя таблицы
         self.table_name = None
+        # Объект таблицы хранения
+        self._table = None
 
+        # Система блокировки
+        self._lockSystem = None
+        self.read_only = True
+
+        # Инициализировать систему блокировки
+        self._initLockSystem()
+
+    # Методы поддержни блокировок
+    def _initLockSystem(self):
+        """
+        Функции поддержки блокировок.
+        Инициализация системы блокировок.
+        """
+        # Система блокировки
+        lock_dir = glob_functions.getVar('LOCK_DIR')
+        self._lockSystem = lockfunc.icLockSystem(lock_dir)
+
+    def lock(self, code=None):
+        """
+        Функции поддержки блокировок.
+        Заблокировать текущий. Блокировка ведется по UUID.
+        @param code: Код блокируемого объекта.
+        """
+        if code:
+            if self._lockSystem:
+                lock_name = self.getSprav().getName() + self.getName() + code
+                return self._lockSystem.lockFileRes(lock_name)
+        return None
+
+    def unLock(self, code=None):
+        """
+        Функции поддержки блокировок.
+        Разблокировать.
+        @param code: Код блокируемого объекта.
+        """
+        if code:
+            if self._lockSystem:
+                lock_name = self.getSprav().getName() + self.getName() + code
+                return self._lockSystem.unLockFileRes(lock_name)
+        return None
+
+    def isLock(self, code=None):
+        """
+        Функции поддержки блокировок.
+        Заблокирован?
+        @param code: Код блокируемого объекта.
+        """
+        if code:
+            if self._lockSystem:
+                lock_name = self.getSprav().getName() + self.getName() + code
+                return self._lockSystem.isLockFileRes(lock_name)
+        return False
+
+    def ownerLock(self, code=None):
+        """
+        Функции поддержки блокировок.
+        Владелец блокировки.
+        @param code: Код блокируемого объекта.
+        """
+        if code:
+            if self._lockSystem:
+                lock_name = self.getSprav().getName() + self.getName() + code
+                lock_rec = self._lockSystem.getLockRec(lock_name)
+                return lock_rec['computer']
+        return None
+
+    def isMyLock(self, code=None):
+        """
+        Функции поддержки блокировок.
+        Моя блокировка?
+        @param code: Код блокируемого объекта.
+        @return: True/False.
+        """
+        if code:
+            lock_name = self.getSprav().getName() + self.getName() + code
+            return self.ownerLock(lock_name) == lockfunc.ComputerName()
+        return False
+
+    # Методы генерации ресурса таблицы
     def genTableRes(self, table_name=None):
         """
         Генерация ресурса таблицы уровня.
@@ -49,7 +131,8 @@ class icRefTablePersistent(object):
         prj_res_ctrl.openPrj()
 
         # Проверка на добавление нового ресурса
-        table_name = self.getTableName()
+        if table_name is None:
+            table_name = self.getTableName()
         # Если имя таблицы определено нет ресурса таблицы с таким именем, то запустить
         # создание ресурса таблицы
         if table_name and not prj_res_ctrl.isRes(table_name, 'tab'):
@@ -76,6 +159,7 @@ class icRefTablePersistent(object):
         """
         Паспорт БД.
         """
+        log.warning(u'Не определен метод получения паспорта БД в <%s>' % self.__class__.__name__)
         return u''
 
     def getLevelIdx(self):
@@ -125,7 +209,8 @@ class icRefTablePersistent(object):
                 fields_spc = child_requisite._createFieldSpc()
                 if fields_spc is None:
                     log.warning(u'Не определена спецификация поля при создании таблицы хранимого объекта')
-                tab_res['child'].append(fields_spc)
+                else:
+                    tab_res['child'].append(fields_spc)
 
         return tab_res
 
@@ -145,24 +230,13 @@ class icRefTablePersistent(object):
 
         tab_spc['children'] = []  # Список имен подчиненных таблиц
 
-        # Поле кода-идентификатора объекта
-        field_spc = self._createCodeFieldSpc()
-        tab_spc['child'].append(field_spc)
-        # Поле вкл/выкл объекта
-        field_spc = self._createStatusFieldSpc()
-        tab_spc['child'].append(field_spc)
-        # Поле наименования объекта
-        field_spc = self._createNameFieldSpc()
-        tab_spc['child'].append(field_spc)
-
         # Если у объекта есть родитель, то в таблице
         # должна отражатся информация о родителе
         level_idx = self.getLevelIdx()
         if level_idx:
-            sprav = self.getSprav()
-            level_names = [level.getName() for level in sprav.getLevels()]
-            parent_level_name = level_names[level_idx - 1]
-            link_spc = self._createLinkSpc(parent_level_name)
+            levels = self.getSprav().getLevels()
+            parent_level = levels[level_idx - 1]
+            link_spc = self._createLinkSpc(parent_level.getTableName())
             tab_spc['child'].append(link_spc)
 
         # Перебрать все стандартные реквизиты и добавить их в виде полей в
@@ -192,28 +266,6 @@ class icRefTablePersistent(object):
 
         return field_spc
 
-    def _createCodeFieldSpc(self, field_name='code'):
-        """
-        Создать спецификацию поля кода-идентификатора объекта-ссылки.
-        @param field_name: Имя поля кода-идентификатора объекта-ссылки.
-        """
-        return self._createFieldSpc(name=field_name, description=u'Код')
-
-    def _createStatusFieldSpc(self, field_name='status'):
-        """
-        Создать спецификацию поля вкл/выкл объекта-ссылки.
-        @param field_name: Имя поля вкл/выкл объекта-ссылки.
-        """
-        return self._createFieldSpc(name=field_name, description=u'Вкл/Выкл объект',
-                                    type_val='Boolean', default=True)
-
-    def _createNameFieldSpc(self, field_name='name'):
-        """
-        Создать спецификацию поля наименования объекта-ссылки.
-        @param field_name: Имя поля кода-идентификатора объекта-ссылки.
-        """
-        return self._createFieldSpc(name=field_name, description=u'Наименование')
-
     def _createLinkSpc(self, table_name):
         """
         Создать спецификацию связи c таблицей.
@@ -227,6 +279,15 @@ class icRefTablePersistent(object):
         link_spc['table'] = (('Table', table_name, None, None, None),)
         link_spc['del_lnk'] = True
         return link_spc
+
+    def getTable(self):
+        """
+        Таблица хранения.
+        """
+        if self._table is None:
+            tab_res = self._createTableRes()
+            self._table = self.GetKernel().createObjBySpc(parent=None, res=tab_res)
+        return self._table
 
 
 class icRefFieldPersistent(object):

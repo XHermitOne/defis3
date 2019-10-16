@@ -6,6 +6,7 @@
 Класс пользовательского компонента УРОВНЯ ИЕРАРХИИ ОБЪЕКТА-ССЫЛКА/СПРАВОЧНИКА.
 """
 
+import copy
 import wx
 from ic.components import icwidget
 from ic.utils import util
@@ -14,6 +15,7 @@ from ic.bitmap import bmpfunc
 from ic.PropertyEditor import icDefInf
 
 import NSI.nsi_sys.ref_level as parentModule
+from . import refrequisite
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -24,15 +26,65 @@ ic_class_name = 'icRefLevel'
 #   Описание стилей компонента
 ic_class_styles = None
 
+# ВНИМАНИЕ! При создании уровня автоматически создаются системные реквизиты.
+# Имена реквизитов изменять нельзя!
+
+# Спецификация реквизита кода объекта
+ic_code_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
+ic_code_requisite_spc['name'] = 'code'
+ic_code_requisite_spc['description'] = u'Код'
+ic_code_requisite_spc['label'] = u'Код'
+
+# Спецификация реквизита наименования объекта
+ic_name_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
+ic_name_requisite_spc['name'] = 'name'
+ic_name_requisite_spc['description'] = u'Наименование'
+ic_name_requisite_spc['label'] = u'Наименование'
+
+# Спецификация реквизита вкл/выкл объекта
+ic_activate_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
+ic_activate_requisite_spc['name'] = 'activate'
+ic_activate_requisite_spc['type_val'] = 'Boolean'
+ic_activate_requisite_spc['description'] = u'Вкл/Выкл'
+ic_activate_requisite_spc['label'] = u'Вкл/Выкл'
+ic_activate_requisite_spc['default'] = True
+
+# Спецификация реквизита даты даты последнего редактирования
+ic_dt_edit_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
+ic_dt_edit_requisite_spc['name'] = 'dt_edit'
+ic_dt_edit_requisite_spc['type_val'] = 'DateTime'
+ic_dt_edit_requisite_spc['description'] = u'Дата-время последнего редактирования'
+ic_dt_edit_requisite_spc['label'] = u'Дата-время последнего редактирования'
+ic_dt_edit_requisite_spc['default'] = u'@datetime.datetime.now()'
+
+# Спецификация реквизита имени компьютера
+ic_comp_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
+ic_comp_requisite_spc['name'] = 'computer'
+ic_comp_requisite_spc['description'] = u'Компьютер'
+ic_comp_requisite_spc['label'] = u'Компьютер'
+ic_comp_requisite_spc['default'] = u'@ic.utils.system.getComputerName()'
+
+# Спецификация реквизита имени пользователя
+ic_user_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
+ic_user_requisite_spc['name'] = 'username'
+ic_user_requisite_spc['description'] = u'Пользователь'
+ic_user_requisite_spc['label'] = u'Пользователь'
+ic_user_requisite_spc['default'] = u'@ic.engine.glob_functions.getCurUserName()'
+
 # --- Спецификация на ресурсное описание класса ---
 ic_class_spc = {'type': 'RefLevel',
                 'name': 'default',
-                'child': [],
                 'activate': True,
                 'init_expr': None,
                 '_uuid': None,
                 'description': '',  # Описание
                 '__brief_attrs__': ['name', 'description'],
+                'child': [ic_code_requisite_spc,
+                          ic_name_requisite_spc,
+                          ic_activate_requisite_spc,
+                          ic_dt_edit_requisite_spc,
+                          ic_comp_requisite_spc,
+                          ic_user_requisite_spc],
 
                 'len': 2,  # Длина кода уровня
                 'pic': None,  # Картинка-образ
@@ -121,17 +173,29 @@ class icRefLevel(icwidget.icSimple, parentModule.icRefLevelProto):
         prs.icResourceParser(self, self.resource['child'], None, evalSpace=self.evalSpace,
                              bCounter=bCounter, progressDlg=progressDlg)
 
+    def getStorage(self):
+        """
+        Хранилище.
+        """
+        return self.getSprav().getStorage()
+
+    def getDBPsp(self):
+        """
+        Паспорт БД.
+        """
+        return self.getSprav().getDBPsp()
+
+    def getChildrenRequisites(self):
+        """
+        Все реквизиты объекта в виде списка.
+        """
+        return self.GetComponentsList()
+
     def getCodLen(self):
         """
         Длина кода уровня.
         """
         return self.len
-
-    def getNoticeDict(self):
-        """
-        Словарь замен имен полей-реквизитов справочника.
-        """
-        return self.getICAttr('notice')
 
     def getPic(self):
         """

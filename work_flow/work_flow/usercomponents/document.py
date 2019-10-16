@@ -579,7 +579,7 @@ class icDocument(icwidget.icSimple, parentModule.icDocumentProto):
         new_psp = list(psp[0])
         if new_psp[-2] is None:
             new_psp[-2] = new_psp[1] + '.mtd'
-        return (tuple(new_psp),)
+        return (tuple(new_psp), )
 
     def doInit(self, *args, **kwargs):
         """

@@ -33,8 +33,8 @@ SPC_IC_REFLEVEL = {'type': 'RefLevel',
                    }
 
 
-class icRefLevelProto(icspravlevel.icSpravLevelInterface,
-                      ref_persistent.icRefTablePersistent):
+class icRefLevelProto(ref_persistent.icRefTablePersistent,
+                      icspravlevel.icSpravLevelInterface):
     """
     Класс уровня объекта-ссылки/справочника.
     """
@@ -45,5 +45,5 @@ class icRefLevelProto(icspravlevel.icSpravLevelInterface,
         @param parent: Справочник-родитель.
         @param index: Индекс уровня в справочнике-родителе.
         """
-        icspravlevel.icSpravLevelInterface.__init__(self, parent, index)
         ref_persistent.icRefTablePersistent.__init__(self, parent=parent)
+        icspravlevel.icSpravLevelInterface.__init__(self, parent, index)
