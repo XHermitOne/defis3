@@ -239,12 +239,6 @@ class icRefTablePersistent(object):
             link_spc = self._createLinkSpc(parent_level.getTableName())
             tab_spc['child'].append(link_spc)
 
-        # Перебрать все стандартные реквизиты и добавить их в виде полей в
-        # ресурс таблицы
-        for child_requisite in self.getChildrenRequisites():
-            field_spc = child_requisite._createFieldSpc()
-            tab_spc['child'].append(field_spc)
-
         return tab_spc
 
     def _createFieldSpc(self, **field_attrs):
