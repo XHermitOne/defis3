@@ -49,24 +49,28 @@ class icSpravLevelInterface(object):
         """
         Форма для редактирования данных текущего уровня.
         """
+        log.warning(u'Не определен метод getEditFormName в <%s>' % self.__class__.__name__)
         return None
 
     def getHelpFormName(self):
         """
         Форма для выбора данных текущего уровня.
         """
+        log.warning(u'Не определен метод getHelpFormName в <%s>' % self.__class__.__name__)
         return None
 
     def getCodLen(self):
         """
         Длина кода уровня.
         """
+        log.warning(u'Не определен метод getCodLen в <%s>' % self.__class__.__name__)
         return None
 
     def getNoticeDict(self):
         """
         Словарь замен имен полей-реквизитов справочника.
         """
+        log.warning(u'Не определен метод getNoticeDict в <%s>' % self.__class__.__name__)
         return {}
 
     def labelsNotice(self, labels=None):
@@ -74,6 +78,7 @@ class icSpravLevelInterface(object):
         Список замененных имен полей-реквизитов справочника.
         @param labels: Список имен полей-реквизитов, которые необходимо заменить.
         """
+        log.warning(u'Не определен метод labelsNotice в <%s>' % self.__class__.__name__)
         return None
 
     def getIndex(self):
@@ -86,12 +91,14 @@ class icSpravLevelInterface(object):
         """
         Есть ли следующий уровень в справочнике.
         """
+        log.warning(u'Не определен метод isNext в <%s>' % self.__class__.__name__)
         return False
 
     def getNext(self):
         """
         Следующий уровеньв справочнике.
         """
+        log.warning(u'Не определен метод getNext в <%s>' % self.__class__.__name__)
         return None
 
     def getSprav(self):
@@ -104,36 +111,42 @@ class icSpravLevelInterface(object):
         """
         Получить ссылку на справочник.
         """
+        log.warning(u'Не определен метод getRefSprav в <%s>' % self.__class__.__name__)
         return None
 
     def getRefLevel(self):
         """
         Получить ссылку на номер уровня связанного справочника, на который ссылается уровень.
         """
+        log.warning(u'Не определен метод getRefLevel в <%s>' % self.__class__.__name__)
         return None
 
     def isAlienCod(self):
         """
         Признак наличия внедренного кода.
         """
-        pass
+        log.warning(u'Не определен метод isAlienCod в <%s>' % self.__class__.__name__)
+        return False
 
     def getAddCtrl(self, *args, **kwargs):
         """
         Функция дополнительного контроля на добавление записи в справочник.
         """
+        log.warning(u'Не определен метод getAddCtrl в <%s>' % self.__class__.__name__)
         return None
         
     def getUpdateCtrl(self, *args, **kwargs):
         """
         Функция дополнительного контроля на обновление/изменение записи в справочник.
         """
+        log.warning(u'Не определен метод getUpdateCtrl в <%s>' % self.__class__.__name__)
         return None
 
     def getDelCtrl(self, *args, **kwargs):
         """
         Функция дополнительного контроля на удаление записи из справочника.
         """
+        log.warning(u'Не определен метод getDelCtrl в <%s>' % self.__class__.__name__)
         return None
 
 

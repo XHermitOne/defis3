@@ -72,7 +72,7 @@ ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = ['DBConstants', 'DBEnum', 'Sprav', 'DBCalendar']
+ic_can_contain = ['DBConstants', 'DBEnum', 'Sprav', 'DBCalendar', 'RefObject']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен 
 #   список ic_can_contain

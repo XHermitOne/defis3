@@ -31,7 +31,7 @@ ic_class_styles = None
 
 # Спецификация реквизита кода объекта
 ic_code_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)
-ic_code_requisite_spc['name'] = 'code'
+ic_code_requisite_spc['name'] = 'cod'
 ic_code_requisite_spc['description'] = u'Код'
 ic_code_requisite_spc['label'] = u'Код'
 
@@ -47,7 +47,7 @@ ic_activate_requisite_spc['name'] = 'activate'
 ic_activate_requisite_spc['type_val'] = 'Boolean'
 ic_activate_requisite_spc['description'] = u'Вкл/Выкл'
 ic_activate_requisite_spc['label'] = u'Вкл/Выкл'
-ic_activate_requisite_spc['default'] = True
+ic_activate_requisite_spc['default'] = u'@True'
 
 # Спецификация реквизита даты даты последнего редактирования
 ic_dt_edit_requisite_spc = copy.deepcopy(refrequisite.ic_class_spc)

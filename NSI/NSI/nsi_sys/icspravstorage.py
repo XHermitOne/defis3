@@ -55,6 +55,15 @@ class icSpravStorageInterface(object):
         """
         return ['cod', 'name', 's1', 's2', 's3', 'n1', 'n2', 'n3', 'f1', 'f2', 'f3', 'access']
 
+    def _getSpravFieldDict(self, field_values):
+        """
+        Получить запись таблицы данных справочника в виде словаря.
+        @param field_values: Список значений записи таблицы значений уровня.
+        @return: запись таблицы данных справочника в виде словаря.
+        """
+        log.warning(u'Не определен метод _getSpravFieldDict в <%s>' % self.__class__.__name__)
+        return dict()
+
     def _str(self, value):
         return str(value)
 
@@ -203,6 +212,7 @@ class icSpravStorageInterface(object):
             соответствующий данным запрашиваемого уровня.
         @return: Возвращает результат выполнения операции True/False.
         """
+        log.warning(u'Не определен метод setLevelTree в <%s>' % self.__class__.__name__)
         return False
 
     def getLevelTable(self, level_cod=None, dt=None):
@@ -217,6 +227,7 @@ class icSpravStorageInterface(object):
             getSpravFieldNames().
             Или None в случае ошибки.
         """
+        log.warning(u'Не определен метод getLevelTable в <%s>' % self.__class__.__name__)
         return None
 
     def setLevelTable(self, level_cod, table):
@@ -230,6 +241,7 @@ class icSpravStorageInterface(object):
             getSpravFieldNames().
         @return: Возвращает результат выполнения операции True/False.
         """
+        log.warning(u'Не определен метод setLevelTable в <%s>' % self.__class__.__name__)
         return False
 
     def getRecByCod(self, cod, dt=None):
@@ -238,6 +250,7 @@ class icSpravStorageInterface(object):
         @param cod: Код.
         @param dt: Период актуальности.
         """
+        log.warning(u'Не определен метод getRecByCod в <%s>' % self.__class__.__name__)
         return None
 
     def updateRecByCod(self, cod, record_dict, dt=None):
@@ -247,6 +260,7 @@ class icSpravStorageInterface(object):
         @param record_dict: Словарь изменений.
         @param dt: Период актуальности.
         """
+        log.warning(u'Не определен метод updateRecByCod в <%s>' % self.__class__.__name__)
         return None
 
     def delRecByCod(self, cod, dt=None):
@@ -255,19 +269,20 @@ class icSpravStorageInterface(object):
         @param cod: Код.
         @param dt: Период актуальности.
         """
-        assert None, 'Abstract method delRecByCod in class %s!' % self.__class__.__name__
+        assert None, u'Не определен метод delRecByCod в <%s>' % self.__class__.__name__
 
     def clear(self):
         """
         Очистить справочник от данных.
         """
-        pass
+        assert None, u'Не определен метод clear в <%s>' % self.__class__.__name__
 
     def is_empty(self):
         """
         Проверка на пустой справочник.
         @return: True - справочник пустой, False - Есть данные.
         """
+        log.warning(u'Не определен метод is_empty в <%s>' % self.__class__.__name__)
         return False
 
     def isCod(self, cod):
@@ -275,7 +290,7 @@ class icSpravStorageInterface(object):
         Есть такой код в справочнике?
         @param cod: Код.
         """
-        assert None, 'Abstract method isCod in class %s!' % self.__class__.__name__
+        assert None, u'Не определен метод isCod в <%s>' % self.__class__.__name__
 
     def search(self, search_value, search_fieldname='name'):
         """
@@ -284,6 +299,7 @@ class icSpravStorageInterface(object):
         @param search_fieldname: Имя поля, по которому производим поиск.
         @return: Список найденных кодов соответствующих искомому значению.
         """
+        log.warning(u'Не определен метод search в <%s>' % self.__class__.__name__)
         return list()
 
     def getTableName(self):
@@ -338,7 +354,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
             db = icdb.icSQLAlchemyDB(db_res)
         
         # Таблица данных
-        # self._tab = icsqlalchemy.icSQLAlchemyTabClass(table_name, db_resource=db, SubSys_=table_subsys)
+        # self._tab = icsqlalchemy.icSQLAlchemyTabClass(table_name, db_resource=db, sub_system_name=table_subsys)
         self._tab = None
         self._tab = self.getTable()
         # Таблица данных, изменненных во времени
@@ -346,7 +362,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         
         self._tab_time = None
         if tab_time_name:
-            self._tab_time = icsqlalchemy.icSQLAlchemyTabClass(tab_time_name, DB_=db, SubSys_=table_subsys)
+            self._tab_time = icsqlalchemy.icSQLAlchemyTabClass(tab_time_name, DB_=db, sub_system_name=table_subsys)
 
     def isTabTime(self):
         """
@@ -904,9 +920,10 @@ class icSpravSQLStorage(icSpravStorageInterface,
         """
         Получить запись таблицы данных справочника в виде словаря.
         @param field_values: Список значений записи таблицы значений уровня.
+        @return: запись таблицы данных справочника в виде словаря.
         """
         fld_names = self.getSpravFieldNames()
-        fld_dict = {}
+        fld_dict = dict()
         for i_fld, fld_name in enumerate(fld_names):
             value = None
             try:

@@ -256,6 +256,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         
         if self.sprav.isEmpty():
             # Справочник пустой. Заполнять не надо
+            log.warning(u'Справочник <%s> пустой' % self.sprav.getName())
             return
 
         if sort_column is None:
@@ -287,6 +288,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
 
         if self.sprav.isEmpty():
             # Справочник пустой. Заполнять не надо
+            log.warning(u'Справочник <%s> пустой' % self.sprav.getName())
             return
 
         if sort_column is None:
@@ -306,6 +308,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         @param parent_item: Элемент дерева, в который происходит добавление.
         @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
         @param sort_column: Наименования колонки сортировки.
+        @param is_progress: Признак отображения прогреса загрузки.
         """
         # Добавить первый уровень дерева справочника
         sprav_storage = self.sprav.getStorage()
@@ -319,6 +322,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             log.warning(u'Нет данных справочника')
             return
 
+        log.debug(u'Данные уровня справочника %s' % str(level_data))
         sprav_res = self.sprav.getResource()
         sprav_title = sprav_res['description'] if sprav_res['description'] else sprav_res['name']
         label = u'Открытие справочника <%s>' % sprav_title
@@ -473,6 +477,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
                 field_names = self.sprav.getStorage().getSpravFieldNames()
                 new_field_sequence_idx = [field_names.index(self.sprav_field_names[i]) for i in field_sequence_idx]
                 is_reverse = self.is_reverse_sort(sort_column)
+                # log.debug(u'Сортировка:\n\t%s\n\t%s' % (str(recordset), str(new_field_sequence_idx)))
                 # log.debug(u'Sort columns: %s\tis reverse: %s' % (new_field_sequence_idx, is_reverse))
                 new_recordset = sorted(recordset,
                                        key=operator.itemgetter(*new_field_sequence_idx),
@@ -505,7 +510,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
                 value = u''
             elif not isinstance(value, str):
                 value = str(value)
-            self.sprav_treeListCtrl.SetItemText(item, value, i+1)            
+            log.debug(u'Значение <%s>. Индекс %s' % (value, i))
+            self.sprav_treeListCtrl.SetItemText(item, value, i + 1)
         
         if self.sprav.isSubCodes(code):
             # Есть подкоды. Для отображения + в контроле дерева

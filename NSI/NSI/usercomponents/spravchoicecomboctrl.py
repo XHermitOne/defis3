@@ -123,9 +123,9 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt
-            if not ret[0][0] in ('Sprav',):
+            if not ret[0][0] in ('Sprav', 'RefObject'):
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является Справочником.', parent)
+                                   u'Выбранный объект не является Справочником.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):

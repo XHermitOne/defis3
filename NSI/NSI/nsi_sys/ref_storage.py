@@ -6,12 +6,12 @@
 """
 
 # --- Подключение библиотек ---
-import ic
-import sqlalchemy
-import sqlalchemy.sql
+import datetime
 
 from ic.db import icsqlalchemy
 from ic.log import log
+from ic.utils import extfunc
+from ic.engine import glob_functions
 
 from . import ref_persistent
 from . import icspravstorage
@@ -53,10 +53,11 @@ class icRefStorageInterface(icspravstorage.icSpravStorageInterface):
         @param parent: Родительский объект.
         @param db_psp: Паспорт БД.
         """
-        icspravstorage.icSpravStorageInterface.__init__(self, *args, **kwargs)
-
         self._parent = parent
         self._db_psp = db_psp
+
+        icspravstorage.icSpravStorageInterface.__init__(self, parent_sprav=self._parent,
+                                                        *args, **kwargs)
 
     def getParent(self):
         """
@@ -69,7 +70,7 @@ class icRefStorageInterface(icspravstorage.icSpravStorageInterface):
         Сохранить объект в хранилище.
         @param obj: Сохраняемый объект.
         """
-        pass
+        log.warning(u'Не определен метод saveObject в <%s>' % self.__class__.__name__)
 
     def loadObject(self, obj, obj_id):
         """
@@ -77,7 +78,7 @@ class icRefStorageInterface(icspravstorage.icSpravStorageInterface):
         @param obj: Объект.
         @param obj_id: Идентификатор объекта.
         """
-        pass
+        log.warning(u'Не определен метод loadObject в <%s>' % self.__class__.__name__)
 
 
 class icRefSQLStorageContainer(object):
@@ -208,10 +209,15 @@ class icRefSQLStorage(icRefStorageInterface):
         """
         # Определяем индекс уровня по коду
         level_idx = self._get_level_index_by_code(level_cod=level_cod)
+        log.debug(u'Код уровня <%s> -> Индекс уровня [%d]' % (str(level_cod), level_idx))
         if level_idx is not None:
             level = self.getParent().getLevels()[level_idx]
             level_table = level.getTable()
-            recordset = level_table.get_where(level_table.c.code == level_cod)
+            if level_cod is None:
+                # Если код не определен, то берем все значения
+                recordset = level_table.select()
+            else:
+                recordset = level_table.get_where(level_table.c.cod == level_cod)
             return [tuple(record) for record in recordset]
         return None
 
@@ -226,10 +232,49 @@ class icRefSQLStorage(icRefStorageInterface):
         if 0 <= index < self.getParent().getLevelCount():
             level = self.getParent().getLevels()[index]
             level_table = level.getTable()
-            return level_table.getFieldNames()
+            # ВНИМАНИЕ! В данном копоненте используются идентификаторы для связи таблиц
+            # поэтому оставляем идентификаторы при преобразовании
+            #                                       V
+            return level_table.getFieldNames(bIsID=True)
         else:
             log.warning(u'Не корректный индекс [%d] уровня объекта-ссылки/справочника <%s>' % (index, self.getParent().getName()))
         return list()
+
+    def is_empty(self):
+        """
+        Проверка на пустой справочник.
+        @return: True - справочник пустой, False - Есть данные.
+        """
+        sprav_table = self.getSpravParent().getTable()
+        return sprav_table.is_empty()
+
+    def _getSpravFieldDict(self, field_values):
+        """
+        Получить запись таблицы данных справочника в виде словаря.
+        @param field_values: Список значений записи таблицы значений уровня.
+        @return: запись таблицы данных справочника в виде словаря.
+        """
+        fld_names = self.getSpravFieldNames()
+        fld_dict = dict()
+        for i_fld, fld_name in enumerate(fld_names):
+            value = None
+            try:
+                value = field_values[i_fld]
+                fld_dict[fld_name] = value
+            except IndexError:
+                # Не все поля есть в гриде
+                if self._tab:
+                    if self._tab.isFieldDefault(fld_name):
+                        value = self._tab.getFieldDefault(fld_name)
+                        fld_dict[fld_name] = value
+
+            if fld_name == 'dt_edit' and not value:
+                fld_dict[fld_name] = datetime.datetime.now()
+            if fld_name == 'computer' and not value:
+                fld_dict[fld_name] = extfunc.getComputerName()
+            if fld_name == 'username' and not value:
+                fld_dict[fld_name] = glob_functions.getCurUserName()
+        return fld_dict
 
 
 if __name__ == '__main__':

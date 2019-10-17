@@ -52,7 +52,7 @@ from ic.components import icwidget
 
 from . import icdb
 
-__version__ = (1, 1, 3, 2)
+__version__ = (1, 1, 4, 1)
 
 # Типы таблиц
 TABLE_TYPE = 'Table'
@@ -161,16 +161,16 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     """
     _regDB = {}     # Зарегистрированные БД
 
-    def __init__(self, Tab_, TabResName_=None, ReCreate_=False, Refresh_=False, DB_=None):
+    def __init__(self, table_resource, tab_res_name=None, bReCreate=False, bRefresh=False, DB_=None):
         """
         Конструктор.
-        @param Tab_: Ресурсное описание класса данных/таблицы.
-        @param TabResName_: Указание ресурса описаний классов данных.
-        @param ReCreate_: Флаг пересоздания класса таблицы.
+        @param table_resource: Ресурсное описание класса данных/таблицы.
+        @param tab_res_name: Указание ресурса описаний классов данных.
+        @param bReCreate: Флаг пересоздания класса таблицы.
             По умолчанию не пересоздавать.
-        @param Refresh_: Признак обовления ресурсного описания.
+        @param bRefresh: Признак обовления ресурсного описания.
         """
-        icdataclassinterface.icDataClassInterface.__init__(self, Tab_)
+        icdataclassinterface.icDataClassInterface.__init__(self, table_resource)
 
         # Родительские таблицы
         self._parent_tables = {}
@@ -181,8 +181,8 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         # БД
         self.db = DB_
         if self.db is None:
-            if Tab_['source'] and isinstance(Tab_['source'], tuple):
-                self.db = self._createDB(Tab_['source'][0][1], Tab_['source'])
+            if table_resource['source'] and isinstance(table_resource['source'], tuple):
+                self.db = self._createDB(table_resource['source'][0][1], table_resource['source'])
             else:
                 # Вдруг определен родитель и тогда можно взять БД у него
                 if hasattr(self, 'parent') and self.parent and issubclass(self.parent.__class__, icSQLAlchemyDataClass):
@@ -193,7 +193,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             # Зарегистрировать БД
             self._registerDB(self.db.getName(), self.db)
 
-        self.dataclass = self._createDataClass(Tab_)
+        self.dataclass = self._createDataClass(table_resource)
         if self.dataclass is not None:
             if not modefunc.isRuntimeMode():
                 # Если в режиме редактирования, то сразу провести
@@ -209,6 +209,14 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         # Последние добавленные идентификаторы
         self._last_inserted_ids = list()
 
+    def getName(self):
+        """
+        Наименование таблицы.
+        """
+        if self.dataclass:
+            return self.dataclass.name
+        return self.__class__.__name__
+
     def _get_to_unicode(self):
         """
         Признак перекодирования в Юникод.
@@ -217,65 +225,65 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.db.to_unicode
         return False
 
-    def _registerDB(self, DBName_, DB_):
+    def _registerDB(self, db_name, db):
         """
         Зарегистрировать БД.
         """
-        if issubclass(DB_.__class__, icdb.icSQLAlchemyDB):
-            if DB_.getMetaData():
-                self._regDB = DB_._changeDialect(self._regDB, DB_.getMetaData().bind.dialect)
-            self._regDB[DBName_] = DB_
+        if issubclass(db.__class__, icdb.icSQLAlchemyDB):
+            if db.getMetaData():
+                self._regDB = db._changeDialect(self._regDB, db.getMetaData().bind.dialect)
+            self._regDB[db_name] = db
         else:
-            log.error(u'Ошибка типа БД <%s> при регистрации' % DBName_)
+            log.error(u'Ошибка типа БД <%s> при регистрации' % db_name)
 
-    def _createDB(self, DBName_, DBPsp_):
+    def _createDB(self, db_name, db_psp):
         """
         Создание БД.
         """
-        if DBName_ in self._regDB:
-            db=self._regDB[DBName_]
+        if db_name in self._regDB:
+            db = self._regDB[db_name]
             return db
 
         db = None
         try:
             # Создание БД через ядро
-            db = self.GetKernel().Create(DBPsp_)
+            db = self.GetKernel().Create(db_psp)
         except AttributeError:
             # Если не получилось, то по старому
-            db_res = resource.icGetRes(DBName_, 'src', nameRes=DBName_)
+            db_res = resource.icGetRes(db_name, 'src', nameRes=db_name)
             db = icdb.icSQLAlchemyDB(db_res, False)
 
         # Зарегистрировать БД
-        self._registerDB(DBName_, db)
+        self._registerDB(db_name, db)
         return db
 
-    def _createDataClass(self, TabRes_, AutoCreate_=True, ReCreate_=False):
+    def _createDataClass(self, table_resource, bAutoCreate=True, bReCreate=False):
         """
         Создание объекта таблицы.
-        @param TabRes_: Ресурс таблицы.
-        @param AutoCreate_: Автоматически создать в БД?
-        @param ReCreate_: Признак пересоздания таблицы.
+        @param table_resource: Ресурс таблицы.
+        @param bAutoCreate: Автоматически создать в БД?
+        @param bReCreate: Признак пересоздания таблицы.
         @return: Созданный объект sqlalchemy.Table.
         """
-        tab_name = TabRes_['name']
+        tab_name = table_resource['name']
         log.info(u'Создание объекта таблицы <%s>' % tab_name)
 
         # Зарегистрировать таблицу в БД
         if self.db:
             self.db._tables[tab_name] = self
 
-        if TabRes_['table']:
+        if table_resource['table']:
             tab_name = self.getAliasTableName()
 
         tab = None
         if self.db:
             metadata = self.db.getMetaData()
             try:
-                if tab_name in metadata.tables and not ReCreate_:
+                if tab_name in metadata.tables and not bReCreate:
                     log.debug(u'Получение таблицы <%s> из буфера' % tab_name)
                     # Проверить таблицу на изменение структуры
                     # Если структура изменена, тогда сигнализировать ошибку
-                    fields_with_id_count = len([fld for fld in TabRes_['child'] if fld.get('activate', True)])+1
+                    fields_with_id_count = len([fld for fld in table_resource['child'] if fld.get('activate', True)]) + 1
                     if len(metadata.tables[tab_name].columns) != fields_with_id_count:
                         log.warning(u'Ошибка создания таблицы <%s>!' % tab_name)
                         dlgfunc.openWarningBox(u'ВНИМАНИЕ',
@@ -284,13 +292,13 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                         return None
                     return metadata.tables[tab_name]
 
-                if AutoCreate_:
+                if bAutoCreate:
                     tab = sqlalchemy.Table(tab_name, metadata)
                     if not tab.exists():
                         # Таблицы нет и нужно ее создать
                         if tab_name in metadata.tables:
                             metadata.remove(metadata.tables[tab_name])
-                        tab = self._create(TabRes_)
+                        tab = self._create(table_resource)
                         try:
                             tab.create()
                         except:
@@ -298,10 +306,10 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     else:
                         # Перегрузить таблицу с описанием колонок
                         metadata.remove(metadata.tables[tab_name])
-                        tab = self._create(TabRes_)
+                        tab = self._create(table_resource)
                 else:
                     # Таблицы нет и нужно ее создать
-                    tab = self._create(TabRes_)
+                    tab = self._create(table_resource)
 
                 log.info(u'Создана таблица <%s>' % tab_name)
             except:
@@ -310,13 +318,13 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
 
         return tab
 
-    def _create(self, TabRes_):
+    def _create(self, table_resource):
         """
         Создать таблицу в БД.
-        @param TabRes_: Ресурс таблицы.
+        @param table_resource: Ресурс таблицы.
         """
-        tab_name = TabRes_['name']
-        if TabRes_['table']:
+        tab_name = table_resource['name']
+        if table_resource['table']:
             tab_name = self.getAliasTableName()
         log.info(u'Создание таблицы <%s> в БД' % tab_name)
 
@@ -325,7 +333,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         # поэтому заменил на BigInteger---------------------------V
         columns = [sqlalchemy.Column(self.getIdName(), sqlalchemy.BigInteger, primary_key=True)]
         # Создание колонок
-        for fld in TabRes_['child']:
+        for fld in table_resource['child']:
             if fld['type'] == 'Field':
                 field = self._createField(fld)
             elif fld['type'] == 'Link':
@@ -353,26 +361,26 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                                    BOOLEAN_FIELD_TYPE: sqlalchemy_field_type_Boolean,
                                    }
 
-    def _createField(self, FieldRes_):
+    def _createField(self, field_resource):
         """
         Создать объект поля таблицы.
-        @param FieldRes_: Ресурс поля.
+        @param field_resource: Ресурс поля.
         """
-        name = FieldRes_['field']
+        name = field_resource['field']
         if name is None:
-            name = FieldRes_['name'].lower()
+            name = field_resource['name'].lower()
         # log.info(u'Создание поля <%s>' % name)
         # Проверка на корректность создания поля
-        if 'activate' in FieldRes_:
-            if FieldRes_['activate'] in (0, False, 'false', 'FALSE', '0'):
-                FieldRes_['activate'] = 0
+        if 'activate' in field_resource:
+            if field_resource['activate'] in (0, False, 'false', 'FALSE', '0'):
+                field_resource['activate'] = 0
             else:
-                FieldRes_['activate'] = 1
-            if not FieldRes_['activate']:
+                field_resource['activate'] = 1
+            if not field_resource['activate']:
                 return None
 
-        typ = self._FieldTypes2SQLAlchemyTypes.setdefault(FieldRes_['type_val'], sqlalchemy_field_type_Text)
-        len = FieldRes_['len']
+        typ = self._FieldTypes2SQLAlchemyTypes.setdefault(field_resource['type_val'], sqlalchemy_field_type_Text)
+        len = field_resource['len']
         if typ == sqlalchemy_field_type_Text:
             if len is not None and len > 0:
                 typ = sqlalchemy_field_type_String(len)
@@ -382,16 +390,16 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             typ = sqlalchemy_field_type_PickleType(0)
 
         # Уникальность
-        unique = FieldRes_.get('unique', False)
+        unique = field_resource.get('unique', False)
         # В поле может быть значение NULL?
-        nullable = FieldRes_.get('nullable', True)
+        nullable = field_resource.get('nullable', True)
         # Значение по умолчанию
-        default = FieldRes_.get('default', None)
+        default = field_resource.get('default', None)
 
         # Значение по умолчанию, выполняемое на стороне сервера
         server_default = None
-        if not default and FieldRes_.get('server_default', None):
-            server_default = sqlalchemy.text(FieldRes_['server_default'])
+        if not default and field_resource.get('server_default', None):
+            server_default = sqlalchemy.text(field_resource['server_default'])
 
         # Подготовка аргументов конструктора колонки
         kwargs = {'unique': unique,
@@ -402,29 +410,29 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
 
         return sqlalchemy.Column(name, typ, **kwargs)
 
-    def _createLink(self, LinkRes_):
+    def _createLink(self, link_resource):
         """
         Создать связь с таблицей.
-        @param LinkRes_: Ресурс связи.
+        @param link_resource: Ресурс связи.
         """
         name = None
-        if 'field' in LinkRes_:
-            name = LinkRes_['field']
+        if 'field' in link_resource:
+            name = link_resource['field']
         if name is None:
-            name = LinkRes_['name'].lower()
+            name = link_resource['name'].lower()
         log.info(u'Создание связи с таблицей <%s>' % name)
 
         # Проверка на корректность создания поля
-        if 'activate' in LinkRes_:
-            if LinkRes_['activate'] in (0, False, 'false', 'FALSE', '0'):
-                LinkRes_['activate'] = 0
+        if 'activate' in link_resource:
+            if link_resource['activate'] in (0, False, 'false', 'FALSE', '0'):
+                link_resource['activate'] = 0
             else:
-                LinkRes_['activate'] = 1
+                link_resource['activate'] = 1
 
-            if not LinkRes_['activate']:
+            if not link_resource['activate']:
                 return None
 
-        link_tab_psp = LinkRes_['table']
+        link_tab_psp = link_resource['table']
         if link_tab_psp:
             link_tab = link_tab_psp[0][1]
             # Прописать таблицу в родительской
@@ -441,7 +449,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     self.db._tables[link_tab]._children_tables[self.getResource()['name']] = self
 
             # Поддержка жестких и логических связей
-            if 'lnk_type' in LinkRes_ and LinkRes_['lnk_type'] == 'logical':
+            if 'lnk_type' in link_resource and link_resource['lnk_type'] == 'logical':
                 return sqlalchemy.Column(name, sqlalchemy_field_type_Integer)
             else:
                 return sqlalchemy.Column(name, sqlalchemy_field_type_Integer,
@@ -470,58 +478,58 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     # Перенаправление вызова свойства self.c на self.dataclass.c
     c = property(getDataClassC)
 
-    def getFieldNames(self, IsID_=False):
+    def getFieldNames(self, bIsID=False):
         """
         Список имен полей таблицы.
-        @param IsID_: С идентификационным полем?
+        @param bIsID: С идентификационным полем?
         """
         if self.dataclass is not None:
-            if IsID_:
+            if bIsID:
                 result = [column.name for column in self.dataclass.columns]
             else:
                 result = [column.name for column in self.dataclass.columns if column.name != u'id']
         else:
             res = self.getResource()
-            if IsID_:
+            if bIsID:
                 result = ['id']+[field['field'] for field in res['child']]
             else:
                 result = [field['field'] for field in res['child']]
         return result
 
-    def getFieldIdx(self, FieldName_):
+    def getFieldIdx(self, field_name):
         """
         Индекс поля таблицы.
-        @param FieldName_: Имя поля таблицы.
+        @param field_name: Имя поля таблицы.
         """
         fld_names = self.getFieldNames(True)
         try:
-            return fld_names.index(FieldName_)
+            return fld_names.index(field_name)
         except ValueError:
             # Нет такого поля в этой таблице
-            log.error(u'Поле <%s> не определено в таблице <%s>' % (FieldName_, self.getDBTableName()))
+            log.error(u'Поле <%s> не определено в таблице <%s>' % (field_name, self.getDBTableName()))
             return -1
         
-    def getFieldType(self, FieldName_):
+    def getFieldType(self, field_name):
         """
         Тип поля по его имени.
-        @param FieldName_: Имя поля таблицы.
+        @param field_name: Имя поля таблицы.
         """
         if self.dataclass is not None:
             try:
-                field = [field for field in self.getResource()['child'] if field['name'] == FieldName_][0]
+                field = [field for field in self.getResource()['child'] if field['name'] == field_name][0]
             except IndexError:
                 return None
             return field['type_val']
         return None
 
-    def getFieldLength(self, FieldName_):
+    def getFieldLength(self, field_name):
         """
         Длина поля по его имени.
-        @param FieldName_: Имя поля таблицы.
+        @param field_name: Имя поля таблицы.
         """
         if self.dataclass is not None:
             try:
-                field = [field for field in self.getResource()['child'] if field['name'] == FieldName_][0]
+                field = [field for field in self.getResource()['child'] if field['name'] == field_name][0]
             except IndexError:
                 return None
             return field['len']
@@ -644,59 +652,59 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             log.warning(u'Не определен объект транзакии в функции добавления записи')
         return False
 
-    def _str(self, Value_):
-        if Value_ is None:
-            return Value_
+    def _str(self, value):
+        if value is None:
+            return value
 
         if self._get_to_unicode():
-            if not isinstance(Value_, str):
-                return str(Value_)
+            if not isinstance(value, str):
+                return str(value)
             else:
-                return Value_
+                return value
         else:
-            if isinstance(Value_, bytes):
-                return Value_.decode(DEFAULT_DB_ENCODING)
+            if isinstance(value, bytes):
+                return value.decode(DEFAULT_DB_ENCODING)
         try:
-            return str(Value_)
+            return str(value)
         except TypeError:
-            return Value_
+            return value
 
-    def _int(self, Value_):
-        if not Value_:
+    def _int(self, value):
+        if not value:
             return 0
         try:
-            return int(float(Value_))
+            return int(float(value))
         except TypeError:
-            return Value_
+            return value
 
-    def _float(self, Value_):
-        if not Value_:
+    def _float(self, value):
+        if not value:
             return 0.0
         try:
-            return float(Value_)
+            return float(value)
         except TypeError:
-            return Value_
+            return value
 
-    def _datetime(self, Value_):
-        if not Value_:
+    def _datetime(self, value):
+        if not value:
             return None
-        return Value_
+        return value
 
-    def _bin(self, Value_):
-        if not Value_:
+    def _bin(self, value):
+        if not value:
             return None
-        return Value_
+        return value
 
-    def _pickle(self, Value_):
-        if not Value_:
+    def _pickle(self, value):
+        if not value:
             return None
-        return Value_
+        return value
 
-    def _bool(self, Value_):
+    def _bool(self, value):
         try:
-            return bool(Value_)
+            return bool(value)
         except TypeError:
-            return Value_
+            return value
 
     _fieldTypeConvert = {TEXT_FIELD_TYPE: _str,
                          FLOAT_FIELD_TYPE: _float,
@@ -709,30 +717,30 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                          BOOLEAN_FIELD_TYPE: _bool,
                          }
 
-    def _prepareRecData(self, RecData_):
+    def _prepareRecData(self, record_data):
         """
         Приведение данных записи к типу.
-        @param RecData_: Словарь или список записи.
+        @param record_data: Словарь или список записи.
         """
         try:
-            if isinstance(RecData_, dict):
+            if isinstance(record_data, dict):
                 # Строка задана словарем
                 fields = [fld for fld in self.getResource()['child'] if fld['type'] == 'Field']
                 for field in fields:
-                    if field['name'] in RecData_:
+                    if field['name'] in record_data:
                         try:
                             # Пробуем привести типы
-                            RecData_[field['name']] = self._fieldTypeConvert[field['type_val']](self, RecData_[field['name']])
+                            record_data[field['name']] = self._fieldTypeConvert[field['type_val']](self, record_data[field['name']])
                         except:
                             # Не получилось ну и ладно
                             log.error(u'''Ошибка приведения типа.
                             Поле <%s> Тип <%s> Значение <%s> Тип значения <%s>''' % (field['name'],
                                                                                      field['type_val'],
-                                                                                     RecData_[field['name']],
-                                                                                     type(RecData_[field['name']])))
-            elif isinstance(RecData_, tuple):
+                                                                                     record_data[field['name']],
+                                                                                     type(record_data[field['name']])))
+            elif isinstance(record_data, tuple):
                 # Строка задана кортежем
-                rec_data = list(RecData_)
+                rec_data = list(record_data)
                 len_rec_data = len(rec_data)
                 for i, field in enumerate(self.getResource()['child']):
                     if i < len_rec_data:
@@ -749,10 +757,10 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                             pass
                     else:
                         break
-                RecData_ = tuple(rec_data)
-            elif isinstance(RecData_, list):
+                record_data = tuple(rec_data)
+            elif isinstance(record_data, list):
                 # Строка задана списком
-                rec_data = RecData_
+                rec_data = record_data
                 len_rec_data = len(rec_data)
                 for i, field in enumerate(self.getResource()['child']):
                     if i < len_rec_data:
@@ -769,29 +777,29 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                             pass
                     else:
                         break
-                RecData_ = rec_data
+                record_data = rec_data
         except:
             log.fatal(u'Ошибка приведения типов записи')
 
-        return RecData_
+        return record_data
 
-    def _record_norm(self, RecData_):
+    def _record_norm(self, record_data):
         """
         Правильно представить запись для использования ее в функции добавления/обновления.
         """
-        for item in RecData_.items():
+        for item in record_data.items():
             if isinstance(item[0], str):
                 new_item = item[0]
-                del RecData_[item[0]]
-                RecData_[new_item] = item[1]
-        return RecData_
+                del record_data[item[0]]
+                record_data[new_item] = item[1]
+        return record_data
 
     def add(self, *args, **kwargs):
         """
         Добавить объект.
         @return: Возвращает объект управления добавленной записью.
         Получить идентификатор добавленной записи, как
-        InsertObject.last_inserted_ids()[-1].
+        InsertObject.inserted_primary_key[0].
         """
         if self.dataclass is not None:
             fields = None
@@ -814,6 +822,16 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             except:
                 log.fatal(u'Ошибка добавления записи. Fields: <%s>' % fields)
         return None
+
+    def add_and_get_id(self, *args, **kwargs):
+        """
+        Добавить объект и получить идентификатор добавленной записи.
+        @return: Возвращает идентификатор добавленной записи.
+            Или None в случае ошибки.
+        """
+        new_record = self.add(*args, **kwargs)
+        new_record_id = new_record.inserted_primary_key[0] if new_record else None
+        return new_record_id
 
     def add_rec_transact(self, rec=None, transaction=None):
         """
@@ -921,7 +939,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     row = self.dataclass.update(where).values(**_kwargs).execute()
                 return row
             except:
-                log.fatal(u'Ошибка изменения записи.')
+                log.fatal(u'Ошибка изменения записи')
         return None
 
     def get(self, id):
@@ -932,7 +950,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             try:
                 return self.dataclass.select(self.dataclass.c.id == id).execute()
             except:
-                log.fatal(u'Ошибка получения записи.')
+                log.fatal(u'Ошибка получения записи')
         return None
 
     def get_where(self, *args, **kwargs):
@@ -986,6 +1004,17 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.dataclass.select(*args, **kwargs).execute().rowcount
         return -1
 
+    def is_empty(self):
+        """
+        Проверка на пустую таблицу.
+        @return: True - таблица пустая / False - нет / None - ошибка.
+        """
+        count = self.count()
+        if count == -1:
+            log.warning(u'Таблица <%s> не инициализирована' % self.getName())
+            return None
+        return count == 0
+
     def is_links(self, link_field, link_value):
         """
         Проверка наличия связей для проверки целостности данных таблицы.
@@ -1016,108 +1045,108 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.dataclass.select(*args, **kwargs).execute()
         return None
 
-    def _decodeUnicode(self, Struct_):
+    def _decodeUnicode(self, structure):
         """
         Обратное преобразование из юникода в строку.
         """
-        if isinstance(Struct_, list):
+        if isinstance(structure, list):
             # Список
-            for i, value in enumerate(Struct_):
+            for i, value in enumerate(structure):
                 value = self._decodeUnicode(value)
-                Struct_[i] = value
+                structure[i] = value
 
-        elif isinstance(Struct_, tuple):
+        elif isinstance(structure, tuple):
             # Кортеж
-            Struct_ = tuple(self._decodeUnicode(list(Struct_)))
+            structure = tuple(self._decodeUnicode(list(structure)))
 
-        elif isinstance(Struct_, dict):
+        elif isinstance(structure, dict):
             # Словарь
-            for key, value in Struct_.items():
+            for key, value in structure.items():
                 key_new = self._decodeUnicode(key)
                 value_new = self._decodeUnicode(value)
-                del Struct_[key]
-                Struct_[key_new] = value_new
+                del structure[key]
+                structure[key_new] = value_new
 
-        elif isinstance(Struct_, bytes):
+        elif isinstance(structure, bytes):
             # Строка юникод
-            return Struct_.decode(DEFAULT_DB_ENCODING)
+            return structure.decode(DEFAULT_DB_ENCODING)
 
         else:
             # Оставить без изменений все другие типы
-            return Struct_
-        return Struct_
+            return structure
+        return structure
 
-    def _encodeUnicode(self, Struct_):
+    def _encodeUnicode(self, structure):
         """
         Преобразование из строки в юникод.
         """
-        if isinstance(Struct_, list):
+        if isinstance(structure, list):
             # Список
-            for i, value in enumerate(Struct_):
+            for i, value in enumerate(structure):
                 value = self._encodeUnicode(value)
-                Struct_[i] = value
+                structure[i] = value
 
-        elif isinstance(Struct_, tuple):
+        elif isinstance(structure, tuple):
             # Кортеж
-            Struct_ = tuple(self._encodeUnicode(list(Struct_)))
+            structure = tuple(self._encodeUnicode(list(structure)))
 
-        elif isinstance(Struct_, dict):
+        elif isinstance(structure, dict):
             # Словарь
-            for key, value in Struct_.items():
+            for key, value in structure.items():
                 key_new = self._encodeUnicode(key)
                 value_new = self._encodeUnicode(value)
-                del Struct_[key]
-                Struct_[key_new] = value_new
+                del structure[key]
+                structure[key_new] = value_new
 
-        elif isinstance(Struct_, str):
+        elif isinstance(structure, str):
             # Строка юникод
-            return Struct_
+            return structure
         else:
             # Оставить без изменений все другие типы
-            return Struct_
-        return Struct_
+            return structure
+        return structure
 
-    def listRecs(self, SQLResult_):
+    def listRecs(self, sql_result):
         """
         Приведение результата запроса к списку кортежей.
         """
         try:
-            recs = [tuple(rec) for rec in list(SQLResult_)]
+            recs = [tuple(rec) for rec in list(sql_result)]
             if self._get_to_unicode():
                 recs = self._decodeUnicode(recs)
             return recs
         except:
-            log.fatal(u'Ошибка приведения результата запроса <%s> к списку кортежей' % str(SQLResult_))
-            return None
+            log.fatal(u'Ошибка приведения результата запроса <%s> к списку кортежей' % str(sql_result))
+        return None
 
-    def listRecsUnicode(self, SQLResult_):
+    def listRecsUnicode(self, sql_result):
         """
         Приведение результата запроса к списку кортежей где строки в виде Unicode.
         """
         try:
-            recs = [tuple(rec) for rec in list(SQLResult_)]
+            recs = [tuple(rec) for rec in list(sql_result)]
             return self._encodeUnicode(recs)
         except:
-            log.fatal(u'Ошибка приведения результата запроса <%s> к списку кортежей c Unicode-строками' % str(SQLResult_))
+            log.fatal(u'Ошибка приведения результата запроса <%s> к списку кортежей c Unicode-строками' % str(sql_result))
             return None
 
-    def _encodeTextSQL(self, SQL_):
+    def _encodeTextSQL(self, sql):
         """
         Приведение к юникоду строки запроса.
         """
         try:
             if self._get_to_unicode():
-                SQL_ = self._encodeUnicode(SQL_)
-            return SQL_
+                sql = self._encodeUnicode(sql)
+            return sql
         except:
-            log.fatal(u'Ошибка приведения текста запроса <%s> к юникоду' % SQL_)
-            return SQL_
+            log.fatal(u'Ошибка приведения текста запроса <%s> к юникоду' % sql)
+            return sql
 
-    def _str2SQL(self, Value_):
+    def _str2SQL(self, value):
         """
         Преобразавание значени по типу поля в текст значения в SQL запросе.
         """
-        return '\''+self._str(Value_)+'\''
+        return '\'' + self._str(value) + '\''
 
     _fieldType2SQLTxt = {TEXT_FIELD_TYPE: _str2SQL,
                          FLOAT_FIELD_TYPE: _float,
@@ -1127,23 +1156,23 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                          BOOLEAN_FIELD_TYPE: _int,
                          }
 
-    def _structFilter2SQLTxt(self, Filter_=None, SQLWhereJoin_='AND'):
+    def _structFilter2SQLTxt(self, struct_filter=None, sql_where_join='AND'):
         """
         Перевод структурного фильтра в SQL представление.
         """
-        if Filter_ is None:
+        if struct_filter is None:
             # Если фильтр не указывается то имеется ввиду что
             # нужно выбрать все записи
             return 'SELECT * FROM %s' % self.getDBTableName()
-        elif isinstance(Filter_, dict):
+        elif isinstance(struct_filter, dict):
             sql_txt = 'SELECT * FROM %s ' % self.getDBTableName()
-            sql_where_join = ' '+SQLWhereJoin_+' '
-            where_txt = sql_where_join.join(['%s=%s' % (fld_name, self._fieldType2SQLTxt[self.getFieldType(fld_name)](self, fld_value)) for fld_name, fld_value in Filter_.items()])
+            sql_where_join = ' ' + sql_where_join + ' '
+            where_txt = sql_where_join.join(['%s=%s' % (fld_name, self._fieldType2SQLTxt[self.getFieldType(fld_name)](self, fld_value)) for fld_name, fld_value in struct_filter.items()])
             sql_txt += 'WHERE '+where_txt
-            log.debug(u'Конвертация структурного фильтра <%s> в SQL: \'%s\'' % (Filter_, sql_txt))
+            log.debug(u'Конвертация структурного фильтра <%s> в SQL: \'%s\'' % (struct_filter, sql_txt))
             return sql_txt
         else:
-            log.warning(u'Ошибка преобразования фильтра %s' % Filter_)
+            log.warning(u'Ошибка преобразования фильтра %s' % struct_filter)
         return None
 
     def queryAll(self, *args, **kwargs):
@@ -1177,43 +1206,43 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             log.warning(u'Не определена БД  в таблице <%s>' % self.getResource()['name'])
         return None
 
-    def queryRecs(self, SQLQuery_):
+    def queryRecs(self, sql_text):
         """
         Выполнить запрос класса данных.
-        @param SQLQuery_: Строка запроса.
+        @param sql_text: Строка запроса.
         @return: Возвражает список объектов icSQLRecord.
         """
         if self.db:
             # Выполнить запрос
-            return self.db.executeSQL(SQLQuery_)
+            return self.db.executeSQL(sql_text)
         return None
 
-    def executeSQL(self, SQLQuery_):
+    def executeSQL(self, sql_text):
         """
         Выполнить строку запроса.
-        @param SQLQuery_: Строка запроса.
+        @param sql_text: Строка запроса.
         @return: Возвражает список объектов icSQLRecord.
         """
-        return self.queryRecs(SQLQuery_)
+        return self.queryRecs(sql_text)
 
-    def convQueryToSQL(self, SQLText_):
+    def convQueryToSQL(self, sql_text):
         """
         Конвертация запроса в терминах класса в SQL запрос.
-        @param SQLText_: Текст SQL запроса.
+        @param sql_text: Текст SQL запроса.
         """
         tab_class_name = self.getClassName()
         tab_real_name = self.getDBTableName()
-        sql_txt = SQLText_.replace(tab_class_name, tab_real_name)
+        sql_txt = sql_text.replace(tab_class_name, tab_real_name)
         return sql_txt
 
-    def _get_drop_sql_txt(self, Cascade_):
+    def _get_drop_sql_txt(self, bCascade):
         """
         Текст запроса удаления таблицы из БД.
-        @param Cascade_: Признак удаления дочерних таблиц.
+        @param bCascade: Признак удаления дочерних таблиц.
         @return: Возвращает строку запроса на удаление таблицы из БД.
         """
         drop_sql = ''
-        if Cascade_:
+        if bCascade:
             children = self.getChildrenDataclass()
             if children:
                 for child in children:
@@ -1221,24 +1250,24 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         drop_sql += 'DROP TABLE %s;' % self.getDBTableName()
         return drop_sql
 
-    def drop(self, Cascade_=False):
+    def drop(self, bCascade=False):
         """
         Удалить таблицу из БД.
-        @param Cascade_: Признак удаления дочерних таблиц.
+        @param bCascade: Признак удаления дочерних таблиц.
         @return: Возвращает результат выполнения операции True/False.
         """
         try:
             if self.dataclass is not None:
-                if Cascade_:
+                if bCascade:
                     for child_tab in self._children_tables.values():
-                        child_tab.drop(Cascade_)
+                        child_tab.drop(bCascade)
                 self.dataclass.drop()
 
             return True
         except:
             # Вывести сообщение об ошибке в лог
             log.fatal(u'Ошибка удаления таблицы <%s> из БД.' % self.dataclass.name)
-            return False
+        return False
 
     def syncDB(self):
         """
@@ -1263,28 +1292,28 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                         log.info(u'Удаление таблицы <%s>' % self.getDBTableName())
                         self.drop()
                         # Заново создать таблицу
-                        self.dataclass = self._createDataClass(self.getResource(), ReCreate_=True)
+                        self.dataclass = self._createDataClass(self.getResource(), bReCreate=True)
             return result
         except:
             log.fatal(u'Ошибка синхронизации таблицы <%s> в БД.' % self.dataclass.name)
-            return False
+        return False
 
-    def makeBackup(self, BAKTableName_=None):
+    def makeBackup(self, bak_table_name=None):
         """
         Сделать бекап таблицы в БД.
-        @param BAKTableName_: Имя таблицы бекапа. Если None, тогда имя генерируется.
+        @param bak_table_name: Имя таблицы бекапа. Если None, тогда имя генерируется.
         @return: Возвращает True/False.
         """
-        if BAKTableName_ is None:
+        if bak_table_name is None:
             from ic.utils import datetimefunc
             time_name = str(datetimefunc.genUnicalTimeName())
-            BAKTableName_ = self.dataclass.name+'_'+time_name
-        return self.copy_to(BAKTableName_)
+            bak_table_name = self.dataclass.name + '_' + time_name
+        return self.copy_to(bak_table_name)
 
-    def copy_to(self, NewTableName_):
+    def copy_to(self, new_table_name):
         """
         Копирвание содержимого таблицы в новую таблицу.
-        @param NewTableName_: Новое имя таблицы.
+        @param new_table_name: Новое имя таблицы.
         @return: Возвращает True/False.
         """
         try:
@@ -1292,7 +1321,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 # Сначала создать таблицу такойже структуры
                 fields = [column.copy() for column in self.dataclass.columns] + \
                          [constraint.copy() for constraint in self.dataclass.constraints]
-                new_table = sqlalchemy.Table(NewTableName_, self.dataclass.metadata, *tuple(fields))
+                new_table = sqlalchemy.Table(new_table_name, self.dataclass.metadata, *tuple(fields))
                 new_table.create()
 
                 # Затем перенести данные
@@ -1303,7 +1332,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 self._last_inserted_ids = result.inserted_primary_key
                 return True
         except:
-            log.fatal(u'Ошибка копирования таблицы %s в таблицу %s' % (self.dataclass.name, NewTableName_))
+            log.fatal(u'Ошибка копирования таблицы %s в таблицу %s' % (self.dataclass.name, new_table_name))
         return False
 
     # Функции блокировок
@@ -1323,12 +1352,12 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.db.unLockTable(self.getClassName())
         return None
 
-    def LockObject(self, id, str=None):
+    def LockObject(self, id, lock_record=None):
         """
         Блокировка изменения объекта.
         """
         if self.db:
-            return self.db.LockRec(self.getClassName(), id, str)
+            return self.db.LockRec(self.getClassName(), id, lock_record)
         return False
 
     def unLockObject(self, id):
@@ -1355,12 +1384,13 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return self.db.IsLockRec(self.getClassName(), id)
         return None
 
-    def releaseConnection(self, conn):
+    def releaseConnection(self, connection):
         """
         Освобождает соединение.
+        @param connection: Объект соединения.
         """
         if self.dataclass is not None:
-            self.db.releaseConnection(conn)
+            self.db.releaseConnection(connection)
 
     def clear(self, transaction=None):
         """
@@ -1386,13 +1416,13 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return True
         return None
 
-    def getFieldDefault(self, FieldName_):
+    def getFieldDefault(self, field_name):
         """
         Значение по умолчанию поля.
         """
         if self.dataclass is not None:
             for field in self.getResource()['child']:
-                if field['name'] == FieldName_:
+                if field['name'] == field_name:
                     value = None
                     if field['type'] == 'Field':
                         value = field['default']
@@ -1403,14 +1433,14 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     return value
         return None
 
-    def isFieldDefault(self, FieldName_):
+    def isFieldDefault(self, field_name):
         """
         Есть значение по умолчанию поля?
         """
         result = False
         if self.dataclass is not None:
             for field in self.getResource()['child']:
-                if field['name'] == FieldName_:
+                if field['name'] == field_name:
                     if field['type'] == 'Field':
                         if field['default']:
                             result = True
@@ -1456,13 +1486,13 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                         rec[fld_name] = 0
         return rec
 
-    def getCascadeDict(self, Id_):
+    def getCascadeDict(self, id_record):
         """
         Получить данные каскада в виде словаря по идентификатору.
-        @param Id_: Идентификатор головной записи.
+        @param id_record: Идентификатор головной записи.
         """
         try:
-            return self._getCascadeDict(Id_)
+            return self._getCascadeDict(id_record)
         except:
             log.fatal(u'Ошибка определения данных каскада в виде словаря таблицы <%s>.' % self.getClassName())
             return None
@@ -1535,13 +1565,13 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             log.warning(u'Не поддерживаемый тип <%s> аргумента в функции getLinkIdFieldName' % parent_table.__class__.__name__)
         return None
 
-    def _getCascadeDict(self, Id_=0):
+    def _getCascadeDict(self, id_record=0):
         """
         Получить данные каскада в виде словаря по идентификатору.
-        @param Id_: Идентификатор записи.
+        @param id_record: Идентификатор записи.
         """
         cascade_dict = dict()
-        root_rec = self.get(Id_)
+        root_rec = self.get(id_record)
         if root_rec.rowcount:
             record = root_rec.first()
             res = self.getResource()
@@ -1557,7 +1587,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 if child_tab:
                     # Определить список дочерних идентификаторов
                     try:
-                        where = sqlalchemy.and_(getattr(child_tab.c, child_tab.getLinkIdFieldName(self)) == Id_)
+                        where = sqlalchemy.and_(getattr(child_tab.c, child_tab.getLinkIdFieldName(self)) == id_record)
                     except AttributeError:
                         log.error(u'Ошибка обработки дочерней таблицы <%s>' % child_tabname)
                         raise
@@ -1570,15 +1600,15 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         return cascade_dict
 
     # Поддержка sqlalchemy мапперов
-    def _getMapperCascadeStr(self, CascadeParam_):
+    def _getMapperCascadeStr(self, cascade_param):
         """
         Параметры связи в каскаде.
         """
-        if 'del_cascade' in CascadeParam_ and CascadeParam_['del_cascade']:
+        if 'del_cascade' in cascade_param and cascade_param['del_cascade']:
             return 'all, delete-orphan'
         return None
 
-    def _genMapperClass(self, Children_=None, CascadeParams_=None, AutoMapper_=False):
+    def _genMapperClass(self, children=None, cascade_params=None, bAutoMapper=False):
         """
         Генерация класса-ассоциации (маппера) текущей таблицы.
         """
@@ -1595,12 +1625,12 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                 _init_ = self._gen_mapper_init_(field_names)
                 # Установить конструктор
                 self._mapper_class.__init__ = types.MethodType(_init_, self._mapper_class)
-                if AutoMapper_:
+                if bAutoMapper:
                     _properties_ = None
-                    if Children_:
+                    if children:
                         _properties_ = dict([(child.dataclass.name,
                                             sqlalchemy.orm.relation(child._mapper_class,
-                                             cascade=self._getMapperCascadeStr(CascadeParams_[child.dataclass.name]))) for child in Children_])
+                                                                    cascade=self._getMapperCascadeStr(cascade_params[child.dataclass.name]))) for child in children])
                     # Создание маппера
                     sqlalchemy.orm.mapper(self._mapper_class, self.dataclass, _properties_)
                 # Обработка связей
@@ -1625,19 +1655,19 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
                     cascade_params = dict([(child.dataclass.name, child._getCascadeParams(tab)) for child in tab._children_tables.values()])
 
                     # Продолжить мапинг
-                    tab._genMapperClass(tab._children_tables.values(), cascade_params, AutoMapper_)
+                    tab._genMapperClass(tab._children_tables.values(), cascade_params, bAutoMapper)
         except:
             log.fatal(u'Ошибка генерации маппера таблицы.')
 
         return self._mapper_class
 
-    def _getCascadeParams(self, ParentTable_):
+    def _getCascadeParams(self, parent_table):
         """
         Параметры каскада.
         """
-        link_cascade = [field for field in self.getResource()['child'] \
-                        if field['type'] == LINK_TYPE and field['table'] and \
-                        field['table'][0][1] == ParentTable_.getResource()['name']]
+        link_cascade = [field for field in self.getResource()['child']
+                        if field['type'] == LINK_TYPE and field['table'] and
+                        field['table'][0][1] == parent_table.getResource()['name']]
 
         if link_cascade:
             result = {'del_cascade': False}
@@ -1646,27 +1676,27 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
             return result
         return {}
 
-    def _getFieldDefaultStr(self, FieldName_):
+    def _getFieldDefaultStr(self, field_name):
         """
         Значение поля по умолчанию в строковом представлении.
         """
-        if self.isFieldDefault(FieldName_):
-            field_default = self.getFieldDefault(FieldName_)
+        if self.isFieldDefault(field_name):
+            field_default = self.getFieldDefault(field_name)
             if isinstance(field_default, str):
                 return '\''+str(field_default)+'\''
             return str(field_default)
         return None
 
-    def _gen_mapper_init_(self, FieldNames_):
+    def _gen_mapper_init_(self, field_names):
         """
         Функция генерации копструктора маппера таблицы.
         """
         init_func_txt = ''
         try:
-            fields = ['%s=%s' % (fld_name, self._getFieldDefaultStr(fld_name)) for fld_name in FieldNames_]
+            fields = ['%s=%s' % (fld_name, self._getFieldDefaultStr(fld_name)) for fld_name in field_names]
             init_func_txt = 'def __init__(self,%s):\n' % (','.join(fields))
-            if FieldNames_:
-                for field_name in FieldNames_:
+            if field_names:
+                for field_name in field_names:
                     init_func_txt += '\tself.%s=%s\n' % (field_name, field_name)
             else:
                 init_func_txt += '\tpass\n'
@@ -1676,19 +1706,19 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         except:
             log.fatal(u'Ошибка генерации конструктора маппера табицы.')
 
-    def getMapperClass(self, AutoMapper_=True):
+    def getMapperClass(self, bAutoMapper=True):
         """
         Класс-ассоциация (маппера) текущей таблицы.
         """
         if self._mapper_class:
             return self._mapper_class
-        return self._genMapperClass(AutoMapper_=AutoMapper_)
+        return self._genMapperClass(bAutoMapper=bAutoMapper)
 
-    def setMapperClass(self, MapperClass_):
+    def setMapperClass(self, mapper_class):
         """
         Класс-ассоциация (маппера) текущей таблицы.
         """
-        self._mapper_class = MapperClass_
+        self._mapper_class = mapper_class
 
     def get_normalized(self, query_result=None):
         """
@@ -1727,19 +1757,19 @@ class icSQLAlchemyTabClass(icSQLAlchemyDataClass):
     """
     Таблица.
     """
-    def __init__(self, TabName_, ReCreate_=False, Refresh_=False, SubSys_=None, **kwargs):
+    def __init__(self, table_name, bReCreate=False, bRefresh=False, sub_system_name=None, **kwargs):
         """
         Конструктор.
-        @param TabName_: Ресурсное описание класса данных/таблицы.
-        @param ReCreate_: Флаг пересоздания класса таблицы.
+        @param table_name: Ресурсное описание класса данных/таблицы.
+        @param bReCreate: Флаг пересоздания класса таблицы.
             По умолчанию не пересоздавать.
-        @param Refresh_: Признак обовления ресурсного описания.
-        @param SubSys_: Имя подсистемы, из которой берется ресурс таблицы.
+        @param bRefresh: Признак обовления ресурсного описания.
+        @param sub_system_name: Имя подсистемы, из которой берется ресурс таблицы.
         """
         pathRes = None
-        if SubSys_:
-            pathRes = resource.getSubsysPath(SubSys_)
+        if sub_system_name:
+            pathRes = resource.getSubsysPath(sub_system_name)
             
         icSQLAlchemyDataClass.__init__(self,
-                                       resource.icGetRes(TabName_, 'tab', pathRes=pathRes, nameRes=TabName_),
-                                       TabName_, ReCreate_, Refresh_, **kwargs)
+                                       resource.icGetRes(table_name, 'tab', pathRes=pathRes, nameRes=table_name),
+                                       table_name, bReCreate, bRefresh, **kwargs)

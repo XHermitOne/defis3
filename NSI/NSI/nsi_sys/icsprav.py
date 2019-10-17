@@ -138,6 +138,7 @@ class icSpravInterface(object):
         """
         Возвращает имя класса, описывающего структуру стандартного справочников.
         """
+        log.warning(u'Не определен метод getNsiStdClassName в <%s>' % self.__class__.__name__)
         return None
 
     def getNsiStdTClassName(self, name=None):
@@ -148,6 +149,7 @@ class icSpravInterface(object):
         @type name: C{string}
         @param name: Имя класса данных, для хранения справочников.
         """
+        log.warning(u'Не определен метод getNsiStdTClassName в <%s>' % self.__class__.__name__)
         return None
 
     def getStorage(self):
@@ -169,7 +171,7 @@ class icSpravInterface(object):
             try:
                 return storage.getSpravTabClass()
             except:
-                log.warning(u'Не определена таблица для справочника <%s>' % self.getName())
+                log.fatal(u'Не определена таблица для справочника <%s>' % self.getName())
         return None
 
     def createStorage(self, ShowMsg_=True):
@@ -226,78 +228,91 @@ class icSpravInterface(object):
         """
         Имя БД.
         """
+        log.warning(u'Не определен метод getDBName в <%s>' % self.__class__.__name__)
         return None
 
     def getDBResSubSysName(self):
         """
         Имя подсистемы ресурса БД.
         """
+        log.warning(u'Не определен метод getDBResSubSysName в <%s>' % self.__class__.__name__)
         return None
     
     def getTableName(self):
         """
         Имя объекта хранения/Таблицы.
         """
+        log.warning(u'Не определен метод getTableName в <%s>' % self.__class__.__name__)
         return None
 
     def getTabResSubSysName(self):
         """
         Имя подсистемы ресурса таблицы.
         """
+        log.warning(u'Не определен метод getTabResSubSysName в <%s>' % self.__class__.__name__)
         return None
 
     def getDBPsp(self):
         """
         Паспорт БД.
         """
+        log.warning(u'Не определен метод getDBPsp в <%s>' % self.__class__.__name__)
         return None
 
     def getTablePsp(self):
         """
         Паспорт объекта хранения/Таблицы.
         """
+        log.warning(u'Не определен метод getTablePsp в <%s>' % self.__class__.__name__)
         return None
 
     def getDateTableName(self):
         """
         Имя объекта хранения/Таблицы временных значений.
         """
+        log.warning(u'Не определен метод getDateTableName в <%s>' % self.__class__.__name__)
         return None
 
     def getAutoCache(self):
         """
         Признак автоматического кэширования.
         """
+        log.warning(u'Не определен метод getAutoCache в <%s>' % self.__class__.__name__)
         return None
 
     def getAutoCacheFrm(self):
         """
         Признак автоматического кэширования форм.
         """
+        log.warning(u'Не определен метод getAutoCacheFrm в <%s>' % self.__class__.__name__)
         return None
 
     def getChoiceFormName(self):
         """
         Форма для выбора данных справочника.
         """
+        log.warning(u'Не определен метод getChoiceFormName в <%s>' % self.__class__.__name__)
         return None
 
     def getEditFormName(self):
         """
         Форма для редактирования данных справочника.
         """
+        log.warning(u'Не определен метод getEditFormName в <%s>' % self.__class__.__name__)
         return None
 
     def getChoiceFormPsp(self):
         """
         Форма для выбора данных справочника.
         """
+        log.warning(u'Не определен метод getChoiceFormPsp в <%s>' % self.__class__.__name__)
         return None
 
     def getEditFormPsp(self):
         """
         Форма для редактирования данных справочника.
         """
+        log.warning(u'Не определен метод getEditFormPsp в <%s>' % self.__class__.__name__)
         return None
 
     def Clear(self, bAsk=False):
@@ -324,6 +339,7 @@ class icSpravInterface(object):
         if storage:
             return storage.is_empty()
         # Хранилище не определено
+        log.warning(u'Не определено хранилище у справочника <%s>' % self.getName())
         # Считаем что справочник пустой
         return True
 
@@ -331,6 +347,7 @@ class icSpravInterface(object):
         """
         Есть у справочника таблица временных параметров?.
         """
+        log.warning(u'Не определен метод isTabTime в <%s>' % self.__class__.__name__)
         return True
 
     def isCod(self, cod):
@@ -339,6 +356,17 @@ class icSpravInterface(object):
         @param cod: Код.
         """
         return self.getStorage().isCod(cod)
+
+    def isSubCodes(self, cod):
+        """
+        Есть ли у указанного кода подкоды подуровней?
+        @param cod: Код справочника.
+        """
+        storage = self.getStorage()
+        if storage:
+            recs = storage.getLevelTable(cod)
+            return bool(recs)
+        return False
 
     def delRec(self, cod, dt=None):
         """
@@ -371,6 +399,35 @@ class icSpravInterface(object):
             или None  в случае ошибки.
         """
         return self.getStorage().getLevelTree()
+
+    def getFields(self, fields=None, cod=None):
+        """
+        Заполнение полей для возврата функцией Hlp/Choice.
+        @param fields: Задает поле или группу полей, которые надо вернуть.
+            Поля могут задаваться как имя одного поля в виде строки,
+            так и как группы полей как словарь соответствий полей ключам
+            или список имен полей.
+        @param cod: Код записи таблицы данных.
+        @return: Значение поля по коду или словарь заполненных
+            полей.
+        """
+        res_val = None
+        storage = self.getStorage()
+        rec = storage.getRecByCod(cod)
+
+        # Формируем словарь значений, которые необходимо вернуть
+        if rec:
+            if isinstance(fields, dict):
+                res_val = dict()
+                for key in fields.keys():
+                    fld_sprav = fields[key]
+                    res_val[key] = rec[fld_sprav]
+            elif isinstance(fields, str):
+                res_val = rec[fields]
+            elif isinstance(fields, tuple) or isinstance(fields, list):
+                res_val = dict([(field_name, rec[field_name]) for field_name in fields])
+
+        return res_val
 
 
 class icSpravPrototype(icSpravInterface):
@@ -555,35 +612,6 @@ class icSpravPrototype(icSpravInterface):
         if record and isinstance(record, dict):
             return record.get('cod', None)
         return None
-
-    def getFields(self, fields=None, cod=None):
-        """
-        Заполнение полей для возврата функцией Hlp().
-        @param fields: Задает поле или группу полей, которые надо вернуть.
-            Поля могут задаваться как имя одного поля в виде строки,
-            так и как группы полей как словарь соответствий полей ключам
-            или список имен полей.
-        @param cod: Код записи таблицы данных.
-        @return: Значение поля по коду или словарь заполненных
-            полей.
-        """
-        res_val = None
-        storage = self.getStorage()
-        rec = storage.getRecByCod(cod)
-
-        #   Формируем словарь значений, которые необходимо вернуть
-        if rec:
-            if isinstance(fields, dict):
-                res_val = dict()
-                for key in fields.keys():
-                    fld_sprav = fields[key]
-                    res_val[key] = rec[fld_sprav]
-            elif isinstance(fields, str):
-                res_val = rec[fields]
-            elif isinstance(fields, tuple) or isinstance(fields, list):
-                res_val = dict([(field_name, rec[field_name]) for field_name in fields])
-
-        return res_val
 
     def getLevelByCod(self, cod):
         """
@@ -968,16 +996,16 @@ class icSpravPrototype(icSpravInterface):
         """
         return ''.join([cod for cod in list(list_code) if cod is not None])
 
-    def isSubCodes(self, cod):
-        """
-        Есть ли у указанного кода подкоды подуровней?
-        @param cod: Код справочника.
-        """
-        storage = self.getStorage()
-        if storage:
-            recs = storage._getLevelTab(cod)
-            return bool(recs)
-        return False
+    # def isSubCodes(self, cod):
+    #     """
+    #     Есть ли у указанного кода подкоды подуровней?
+    #     @param cod: Код справочника.
+    #     """
+    #     storage = self.getStorage()
+    #     if storage:
+    #         recs = storage._getLevelTab(cod)
+    #         return bool(recs)
+    #     return False
 
     def _get_refspr_parent_cod(self, parent_cod):
         """

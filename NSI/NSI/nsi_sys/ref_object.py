@@ -17,6 +17,8 @@ from ic.components import icwidget
 from ic.log import log
 from ic.utils import system_cache
 from ic.engine import glob_functions
+from ic.dlg import dlgfunc
+from ic.utils import coderror
 
 from . import icsprav
 from ..nsi_dlg import icspraveditdlg
@@ -130,3 +132,68 @@ class icRefObjectProto(icsprav.icSpravInterface):
             except IndexError:
                 log.fatal(u'Ошибка получения таблицы объекта-ссылки/справочника <%s>' % self.getName())
         return None
+
+    def Hlp(self, parent_code=(None,), field=None, form=None, parent=None, dt=None,
+            default_selected_code=None, view_fields=None, search_fields=None):
+        """
+        Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
+            или группы полей из отмеченной строки указанного объекта-ссылки/справочника.
+        @type parent_code: C{...}
+        @param parent_code: Код более верхнего уровня.
+        @param field: Задает поле или группу полей, которые надо вернуть.
+            Полу задается строкой. Поля задаются словарем.
+        @param form: имя формы визуального интерфейса работы со справочником.
+        @param parent: Родительская форма.
+        @type dt: C{string}
+        @param dt: Время актуальности кода.
+        @param default_selected_code: Выбранный код по умолчанию.
+            Если None, то ничего не выбирается.
+        @param view_fields: Список имен полей для просмотра.
+            Если не определено то отображаются <Код> и <Наименование>.
+        @param search_fields: Список имен полей для поиска.
+            Если не определено то поиск только по <Код> и <Наименование>.
+        @return: Код ошибки, Результат выбора
+        """
+        result = coderror.IC_HLP_OK
+        res_val = None
+
+        try:
+            if parent_code is None:
+                parent_code = (None,)
+
+            # Для обработки необходимо преобразовать в список
+            parent_code = list(parent_code)
+            # Запрашиваемый уровень
+            x_level = parent_code.index(None)
+
+            # Если запрашиваемый уровень больше общего количества уровней, то выйти
+            # Нет такого уровня в справочнике
+            if self.getLevelCount() <= x_level:
+                log.warning(u'Не корректный номер уровня %d' % x_level)
+                return coderror.IC_HLP_FAILED_LEVEL, res_val
+
+            # определить длину кода уровня
+            level_len = self.getLevels()[x_level].getCodLen()
+
+            if level_len is None:
+                dlgfunc.openMsgBox(u'ОШИБКА', u'Не определена длина кода уровня!')
+                return coderror.IC_HLP_FAILED_LEVEL, res_val
+
+            # Обработка штатной функцией
+            code = icspravchoicetreedlg.choice_sprav_dlg(parent=parent,
+                                                         nsi_sprav=self,
+                                                         fields=view_fields,
+                                                         default_selected_code=default_selected_code,
+                                                         search_fields=search_fields)
+            if code:
+                return coderror.IC_HLP_OK, code, self.getFields(field, code)
+            return coderror.IC_HLP_FAILED_IGNORE, code, None
+        except:
+            log.fatal(u'ОБЪЕКТ-ССЫЛКА/СПРАВОЧНИК [%s] Ошибка в методе Hlp/Choice' % self._name)
+            result = coderror.IC_HLP_FAILED_TYPE_SPRAV
+
+        return result, res_val, self.getFields(field, res_val)
+
+    # Другое название метода (я считаю что более правильное)
+    Choice = Hlp
+
