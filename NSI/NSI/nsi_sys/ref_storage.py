@@ -7,6 +7,7 @@
 
 # --- Подключение библиотек ---
 import datetime
+import sqlalchemy
 
 from ic.db import icsqlalchemy
 from ic.log import log
@@ -174,15 +175,29 @@ class icRefSQLStorage(icRefStorageInterface):
             except KeyError:
                 return None
 
+    def clear(self):
+        """
+        Очистить справочник.
+        """
+        levels = self.getParent().getLevels()
+        # В каскаде необходимо удалять данные сначала
+        # из таблиц самого нижнего уровня,
+        # поэтому перебор уровней производим в обратном проядке
+        levels.reverse()
+        for level in levels:
+            level_table = level.getTable()
+            level_table.clear()
+
     def _get_level_index_by_code(self, level_cod=None):
         """
         Определить индекс уровня по коду.
         @param level_cod: Код, запрашиваемого уровня.
             Если None, то считается что это самый верхний уровень.
-        @return: Индекс уровня или None в случае ошибки.
+        @return: Индекс уровня или None в случае ошибки или
+            если код не принадлежит ни одному уровню.
         """
         if level_cod is None:
-            return 0
+            return None
         level_cod_length = len(level_cod)
         levels = self.getParent().getLevels()
         level_cod_len_list = [level.getCodLen() for level in levels]
@@ -207,37 +222,55 @@ class icRefSQLStorage(icRefStorageInterface):
             getSpravFieldNames().
             Или None в случае ошибки.
         """
-        # Определяем индекс уровня по коду
-        level_idx = self._get_level_index_by_code(level_cod=level_cod)
-        log.debug(u'Код уровня <%s> -> Индекс уровня [%d]' % (str(level_cod), level_idx))
-        if level_idx is not None:
-            level = self.getParent().getLevels()[level_idx]
-            level_table = level.getTable()
+        try:
+            levels = self.getParent().getLevels()
             if level_cod is None:
-                # Если код не определен, то берем все значения
+                level_idx = 0
+                level_table = levels[level_idx].getTable()
+                # Если запрашивается самый верхний уровень, то берем все значения
                 recordset = level_table.select()
             else:
+                # Определяем индекс уровня по коду
+                level_idx = self._get_level_index_by_code(level_cod=level_cod)
+                log.debug(u'Код уровня <%s> -> Индекс уровня [%d]' % (str(level_cod), level_idx))
+
+                level_table = levels[level_idx].getTable()
                 recordset = level_table.get_where(level_table.c.cod == level_cod)
+                parent_id = recordset.fetchone()['id']
+                if parent_id is None:
+                    log.error(u'Не определен идентификатор родительской записи при получении таблицы уровня по коду <%s>' % level_cod)
+                    return list()
+
+                parent_table_name = level_table.getName()
+                # Берем следующий уровень за тем, которому принадлежит код
+                #                          V
+                level = levels[level_idx + 1]
+                link_name = level._gen_parent_link_name(parent_table_name)
+                level_table = level.getTable()
+                recordset = level_table.get_where(getattr(level_table.c, link_name) == parent_id)
+                log.debug(u'Получение таблицы уровня <%s> по коду <%s : %d>' % (level_table.getName(), level_cod, parent_id))
             return [tuple(record) for record in recordset]
+        except:
+            log.fatal(u'Ошибка определения таблицы данных уровня по коду <%s> объекта-ссылки/справочника <%s>' % (level_cod, self.getSpravParent().getName()))
         return None
 
-    def getSpravFieldNames(self, index=0):
+    def getSpravFieldNames(self, level_idx=0):
         """
         Список имен полей таблицы данных объекта-ссылки/справочника.
-        @param index: Индекс уровня объекта-ссылки/справочника.
+        @param level_idx: Индекс уровня объекта-ссылки/справочника.
             Если не определен, то считаем что это таблица самого верхнего уровня.
         @return: Список имен полей таблицы данных объекта-ссылки/справочника.
             Либо пустой список в случае ошибки.
         """
-        if 0 <= index < self.getParent().getLevelCount():
-            level = self.getParent().getLevels()[index]
+        if 0 <= level_idx < self.getParent().getLevelCount():
+            level = self.getParent().getLevels()[level_idx]
             level_table = level.getTable()
             # ВНИМАНИЕ! В данном копоненте используются идентификаторы для связи таблиц
             # поэтому оставляем идентификаторы при преобразовании
             #                                       V
             return level_table.getFieldNames(bIsID=True)
         else:
-            log.warning(u'Не корректный индекс [%d] уровня объекта-ссылки/справочника <%s>' % (index, self.getParent().getName()))
+            log.warning(u'Не корректный индекс [%d] уровня объекта-ссылки/справочника <%s>' % (level_idx, self.getParent().getName()))
         return list()
 
     def is_empty(self):
@@ -248,13 +281,15 @@ class icRefSQLStorage(icRefStorageInterface):
         sprav_table = self.getSpravParent().getTable()
         return sprav_table.is_empty()
 
-    def _getSpravFieldDict(self, field_values):
+    def _getSpravFieldDict(self, field_values, level_idx=0):
         """
         Получить запись таблицы данных справочника в виде словаря.
         @param field_values: Список значений записи таблицы значений уровня.
+        @param level_idx: Индекс уровня объекта-ссылки/справочника.
+            Если не определен, то индекс определяется как индекс самого верхнего уровня.
         @return: запись таблицы данных справочника в виде словаря.
         """
-        fld_names = self.getSpravFieldNames()
+        fld_names = self.getSpravFieldNames(level_idx=level_idx)
         fld_dict = dict()
         for i_fld, fld_name in enumerate(fld_names):
             value = None

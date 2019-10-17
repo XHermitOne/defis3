@@ -49,16 +49,22 @@ class icSpravStorageInterface(object):
         """
         return self._sprav_parent
 
-    def getSpravFieldNames(self):
+    def getSpravFieldNames(self, level_idx=0):
         """
         Список имен полей таблицы данных справочника.
+        @param level_idx: Индекс уровня объекта-ссылки/справочника.
+            Если не определен, то индекс определяется как индекс самого верхнего уровня.
+        @return: Список имен полей таблицы данных объекта-ссылки/справочника.
+            Либо пустой список в случае ошибки.
         """
         return ['cod', 'name', 's1', 's2', 's3', 'n1', 'n2', 'n3', 'f1', 'f2', 'f3', 'access']
 
-    def _getSpravFieldDict(self, field_values):
+    def _getSpravFieldDict(self, field_values, level_idx=0):
         """
         Получить запись таблицы данных справочника в виде словаря.
         @param field_values: Список значений записи таблицы значений уровня.
+        @param level_idx: Индекс уровня объекта-ссылки/справочника.
+            Если не определен, то индекс определяется как индекс самого верхнего уровня.
         @return: запись таблицы данных справочника в виде словаря.
         """
         log.warning(u'Не определен метод _getSpravFieldDict в <%s>' % self.__class__.__name__)
@@ -916,10 +922,12 @@ class icSpravSQLStorage(icSpravStorageInterface,
                     icSpravStorageInterface.float, icSpravStorageInterface.float,
                     icSpravStorageInterface.float, icSpravStorageInterface.str]
 
-    def _getSpravFieldDict(self, field_values):
+    def _getSpravFieldDict(self, field_values, level_idx=0):
         """
         Получить запись таблицы данных справочника в виде словаря.
         @param field_values: Список значений записи таблицы значений уровня.
+        @param level_idx: Индекс уровня объекта-ссылки/справочника.
+            Если не определен, то индекс определяется как индекс самого верхнего уровня.
         @return: запись таблицы данных справочника в виде словаря.
         """
         fld_names = self.getSpravFieldNames()

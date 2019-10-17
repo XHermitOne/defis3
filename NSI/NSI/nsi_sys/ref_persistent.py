@@ -268,11 +268,19 @@ class icRefTablePersistent(object):
         # Инициализировать спецификацию связи
         link_spc = util.icSpcDefStruct(util.DeepCopy(ic_link_wrp.ic_class_spc), None)
         # Установить свойства связи с таблицей
-        link_spc['name'] = 'id_' + table_name.lower()
+        link_spc['name'] = self._gen_parent_link_name(table_name)
         link_spc['description'] = strfunc.str2unicode('Связь с таблицей ' + table_name)
         link_spc['table'] = (('Table', table_name, None, None, None),)
         link_spc['del_lnk'] = True
         return link_spc
+
+    def _gen_parent_link_name(self, parent_table_name):
+        """
+        Генерация имени связи с родительской таблицей по имени родительской таблицы.
+        @param parent_table_name: Имя родительской таблицы.
+        @return: Имя связи с родительской таблицей.
+        """
+        return 'id_' + parent_table_name.lower()
 
     def getTable(self):
         """
