@@ -184,23 +184,26 @@ class icSpravMultipleChoiceComboCtrlProto(wx.ComboCtrl):
         if self._selected_codes is None:
             self._selected_codes = list()
 
-        if self._sprav is not None:
-            result = self._sprav.Hlp(field='name', parent=self,
-                                     view_fields=self._view_fieldnames,
-                                     search_fields=self._search_fieldnames)
-            if result[0] in (0, coderror.IC_HLP_OK):
-                code = result[1]
-                name = result[2]
-                if code not in self._selected_codes:
-                    self._selected_codes.append(code)
+        try:
+            if self._sprav is not None:
+                result = self._sprav.Hlp(field='name', parent=self,
+                                         view_fields=self._view_fieldnames,
+                                         search_fields=self._search_fieldnames)
+                if result[0] in (0, coderror.IC_HLP_OK):
+                    code = result[1]
+                    name = result[2]
+                    if code not in self._selected_codes:
+                        self._selected_codes.append(code)
 
-                    label = self.GetValue() + DEFAULT_LABEL_DELIMETER + name if self.GetValue() else name
-                    self.SetValue(label)
-                    return code
+                        label = self.GetValue() + DEFAULT_LABEL_DELIMETER + name if self.GetValue() else name
+                        self.SetValue(label)
+                        return code
+                    else:
+                        log.warning(u'Код [%s] уже присутствует в выбранных' % code)
                 else:
-                    log.warning(u'Код [%s] уже присутствует в выбранных' % code)
-            else:
-                log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self._sprav.name, result))
+                    log.error(u'Ошибка выбора справочника <%s>. Результат %s' % (self._sprav.name, result))
+        except:
+            log.fatal(u'Ошибка выбора нескольких кодов из справочника')
         return None
 
     def onMouseLeftDown(self, event):

@@ -255,6 +255,7 @@ class icSpravStorageInterface(object):
         Получить запись по коду.
         @param cod: Код.
         @param dt: Период актуальности.
+        @return: Возвращает словарь записи или None в случае ошибки.
         """
         log.warning(u'Не определен метод getRecByCod в <%s>' % self.__class__.__name__)
         return None
@@ -1053,17 +1054,20 @@ class icSpravSQLStorage(icSpravStorageInterface,
             return recs
         except:
             log.fatal(u'Ошибка определения словаря записи по значению %s поля %s' % (field_value, field_name))
-            log.debug('SQL: <%s>' % sql)
-            return None
+            log.error('SQL: <%s>' % sql)
+        return None
 
     def getRecByCod(self, cod, dt=None):
         """
         Получить запись по коду.
         @param cod: Код.
         @param dt: Период актуальности.
+        @return: Возвращает словарь записи или None в случае ошибки.
         """
         if cod:
             return self.getRecByFieldValue('cod', cod, dt)
+        else:
+            log.warning(u'Не определен код для получения словаря записи справочника <%s>' % self.getName())
         return None
 
     def delRecByCod(self, cod, dt=None, bIsCascade=True):

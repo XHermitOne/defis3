@@ -232,23 +232,26 @@ class icRefSQLStorage(icRefStorageInterface):
             else:
                 # Определяем индекс уровня по коду
                 level_idx = self._get_level_index_by_code(level_cod=level_cod)
-                log.debug(u'Код уровня <%s> -> Индекс уровня [%d]' % (str(level_cod), level_idx))
+                # log.debug(u'Код уровня <%s> -> Индекс уровня [%d]' % (str(level_cod), level_idx))
 
-                level_table = levels[level_idx].getTable()
-                recordset = level_table.get_where(level_table.c.cod == level_cod)
-                parent_id = recordset.fetchone()['id']
-                if parent_id is None:
-                    log.error(u'Не определен идентификатор родительской записи при получении таблицы уровня по коду <%s>' % level_cod)
-                    return list()
+                if level_idx < len(levels) - 1:
+                    level_table = levels[level_idx].getTable()
+                    recordset = level_table.get_where(level_table.c.cod == level_cod)
+                    parent_id = recordset.fetchone()['id']
+                    if parent_id is None:
+                        log.error(u'Не определен идентификатор родительской записи при получении таблицы уровня по коду <%s>' % level_cod)
+                        return list()
 
-                parent_table_name = level_table.getName()
-                # Берем следующий уровень за тем, которому принадлежит код
-                #                          V
-                level = levels[level_idx + 1]
-                link_name = level._gen_parent_link_name(parent_table_name)
-                level_table = level.getTable()
-                recordset = level_table.get_where(getattr(level_table.c, link_name) == parent_id)
-                log.debug(u'Получение таблицы уровня <%s> по коду <%s : %d>' % (level_table.getName(), level_cod, parent_id))
+                    parent_table_name = level_table.getName()
+                    # Берем следующий уровень за тем, которому принадлежит код
+                    #                          V
+                    level = levels[level_idx + 1]
+                    link_name = level._gen_parent_link_name(parent_table_name)
+                    level_table = level.getTable()
+                    recordset = level_table.get_where(getattr(level_table.c, link_name) == parent_id)
+                    log.debug(u'Получение таблицы уровня <%s> по коду <%s : %d>' % (level_table.getName(), level_cod, parent_id))
+                else:
+                    recordset = list()
             return [tuple(record) for record in recordset]
         except:
             log.fatal(u'Ошибка определения таблицы данных уровня по коду <%s> объекта-ссылки/справочника <%s>' % (level_cod, self.getSpravParent().getName()))
@@ -310,6 +313,26 @@ class icRefSQLStorage(icRefStorageInterface):
             if fld_name == 'username' and not value:
                 fld_dict[fld_name] = glob_functions.getCurUserName()
         return fld_dict
+
+    def getRecByCod(self, cod, dt=None):
+        """
+        Получить запись по коду.
+        @param cod: Код.
+        @param dt: Период актуальности.
+        @return: Возвращает словарь записи или None в случае ошибки.
+        """
+        if cod:
+            try:
+                levels = self.getParent().getLevels()
+                level_idx = self._get_level_index_by_code(level_cod=cod)
+                level = levels[level_idx]
+                level_table = level.getTable()
+                recordset = level_table.get_where(level_table.c.cod == cod)
+                record = recordset.fetchone()
+                return dict(record)
+            except:
+                log.fatal(u'Ошибка определения записи по коду <%s>' % cod)
+        return None
 
 
 if __name__ == '__main__':
