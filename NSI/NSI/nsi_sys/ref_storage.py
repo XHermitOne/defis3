@@ -13,6 +13,8 @@ from ic.db import icsqlalchemy
 from ic.log import log
 from ic.utils import extfunc
 from ic.engine import glob_functions
+from ic.utils import uuidfunc
+from ic.utils import datetimefunc
 
 from . import ref_persistent
 from . import icspravstorage
@@ -80,6 +82,44 @@ class icRefStorageInterface(icspravstorage.icSpravStorageInterface):
         @param obj_id: Идентификатор объекта.
         """
         log.warning(u'Не определен метод loadObject в <%s>' % self.__class__.__name__)
+
+    def _normRecDict(self, record_dict):
+        """
+        Нормализация словаря записи.
+        @param record_dict: Словарь данных записи.
+        """
+        cod = record_dict.get('cod', None)
+        if cod is None:
+            log.warning(u'Ошибка нормализации словаря записи. Не определен код записи для определения уровня в <%s>' % self.__class__.__name__)
+            return record_dict
+
+        level = self.getSpravParent().getLevelByCod(cod)
+        level_table = level.getTable()
+        fld_names = self.getSpravFieldNames(level_idx=level.getIndex())
+        fld_dict = dict()
+        for fld_name in fld_names:
+            value = None
+            try:
+                value = record_dict[fld_name]
+                fld_dict[fld_name] = value
+            except KeyError:
+                # Не все поля есть
+                if fld_name == 'uuid':
+                    # Если uuid не определен, то сгенерировать его
+                    value = uuidfunc.get_uuid()
+                    fld_dict[fld_name] = value
+                else:
+                    if level_table.isFieldDefault(fld_name):
+                        value = level_table.getFieldDefault(fld_name)
+                        fld_dict[fld_name] = value
+            if fld_name == 'dt_edit' and not value:
+                fld_dict[fld_name] = datetime.datetime.now()
+            if fld_name == 'computer' and not value:
+                fld_dict[fld_name] = extfunc.getComputerName()
+            if fld_name == 'username' and not value:
+                fld_dict[fld_name] - glob_functions.getCurUserName()
+
+        return fld_dict
 
 
 class icRefSQLStorageContainer(object):
@@ -329,12 +369,145 @@ class icRefSQLStorage(icRefStorageInterface):
                 level_table = level.getTable()
                 recordset = level_table.get_where(level_table.c.cod == cod)
                 record = recordset.fetchone()
-                return dict(record)
+                if record:
+                    return dict(record)
+                else:
+                    log.warning(u'Не найдено записи, соответствующей коду <%s> в объекте-ссылке/справочнике <%s>' % (cod, self.getSpravParent().getName()))
             except:
                 log.fatal(u'Ошибка определения записи по коду <%s>' % cod)
         return None
 
+    def addRecDictDataTab(self, record_dict):
+        """
+        Добавить запись в таблице данных.
+        @param record_dict: Словарь данных записи.
+        """
+        try:
+            field_data = self._normRecDict(record_dict)
 
-if __name__ == '__main__':
-    storage = icRefSQLStorage(None, 'work_db_psgress')
-    storage.test()
+            cod = record_dict.get('cod', None)
+            if cod is None:
+                log.warning(u'Ошибка нормализации словаря записи. Не определен код записи для определения уровня в <%s>' % self.__class__.__name__)
+                return None
+            level = self.getSpravParent().getLevelByCod(cod)
+            level_idx = level.getIndex()
+            if level_idx:
+                # Если это не самый верхний уровень, то необходимо проинициализировать
+                # связь с родительской таблицей
+                pass
+            level_table = level.getTable()
+            log.debug(u'Добавление записи в объект-ссылку/справочник <%d. %s> %s' % (level_idx,
+                                                                                     level_table.getName(),
+                                                                                     str(field_data)))
+            return level_table.add(**field_data)
+        except:
+            log.fatal(u'Ошибка добавления записи в таблицу данных справочника [%s].' % self.getSpravParent().getName())
+        return None
+
+    def updateRecByCod(self, cod, record_dict, dt=None):
+        """
+        Изменить запись по коду.
+        @param cod: Код.
+        @param record_dict: Словарь изменений.
+        @param dt: Период актуальности.
+        @return: Возвращает результат выполнения операции True/False.
+        """
+        level = self.getSpravParent().getLevelByCod(cod)
+        level_table = level.getTable()
+        try:
+            if level_table:
+                recordset = level_table.get_where(level_table.c.cod == cod)
+                records = level_table.listRecs(recordset)
+                if len(records):
+                    if 'id' in record_dict:
+                        del record_dict['id']
+                    if 'dt_edit' in record_dict and not record_dict['dt_edit']:
+                        record_dict['dt_edit'] = datetime.datetime.now()
+                    if 'computer' in record_dict and not record_dict['computer']:
+                        record_dict['computer'] = extfunc.getComputerName()
+                    if 'username' in record_dict and not record_dict['username']:
+                        record_dict['username'] = glob_functions.getCurUserName()
+
+                    level_table.update(id=records[0][0], **record_dict)
+                else:
+                    # Нет записи с таким кодом
+                    return False
+            return True
+        except:
+            log.fatal(u'Ошибка обновления записи по коду в <%s>' % self.getSpravParent().getName())
+        return False
+
+    def search(self, search_value, search_fieldname='name',
+               order_by=None, is_desc=False):
+        """
+        Поиск по полю.
+        @param search_value: Искомое значение.
+        @param search_fieldname: Имя поля, по которому производим поиск.
+        @param order_by: Порядок сортировки.
+            Список полей порядка сортировки.
+            Если сортировку надо производить по одному полю, то можно указать
+            его имя в строковом виде.
+        @param is_desc: Произвести обратную сортировку?
+        @return: Список найденных кодов соответствующих искомому значению.
+        """
+        result = list()
+        levels = self.getSpravParent().getLevels()
+        for level in levels:
+            level_table = level.getTable()
+            try:
+                field_type = level_table.getFieldType(search_fieldname)
+                field = getattr(level_table.c, search_fieldname)
+                sql = None
+                if field_type in ('T', 'D'):
+                    # Если поле текстовое, то ищем вхождение строки
+                    search_like = '%%%s%%' % search_value
+                    sql = level_table.dataclass.select(field.ilike(search_like))
+                elif field_type in ('I', 'F'):
+                    # Если это числовое поле, то ищем точное значение
+                    num_value = int(search_value) if field_type == 'I' else float(search_value)
+                    sql = level_table.dataclass.select(field == num_value)
+                elif field_type == 'DateTime':
+                    # Если это дата-время, то ищем точное совпадение, но необходимо
+                    # сначала преобразовать строку в дату-время
+                    dt_value = datetimefunc.strDateFmt2DateTime(search_value)
+                    sql = level_table.dataclass.select(field == dt_value)
+                else:
+                    log.warning(u'Поиск по полю типа <%s> не поддерживается системой' % field_type)
+
+                if sql is not None and order_by:
+                    if type(order_by) in (list, tuple):
+                        if len(order_by) == 1:
+                            # Одно поле сортировки
+                            sql = sql.order_by(getattr(level_table.c, order_by[0]) if not is_desc else icsqlalchemy.desc(getattr(level_table.c, order_by[0])))
+                        else:
+                            # Несколько полей сортировки
+                            sql = sql.order_by(*[getattr(level_table.c, field_name) if not is_desc else getattr(level_table.c, field_name).desc() for field_name in order_by])
+                    elif isinstance(order_by, str):
+                        # Одно поле сортировки
+                        sql = sql.order_by(getattr(level_table.c, order_by) if not is_desc else icsqlalchemy.desc(getattr(level_table.c, order_by)))
+                    else:
+                        log.warning(u'Ошибка типа параметра сортировки ORDER BY в функции поиска по полю <%s>' % type(order_by))
+
+                search_result = None
+                if sql is not None:
+                    search_result = sql.execute()
+
+                if search_result:
+                    result = [rec.cod for rec in search_result]
+            except:
+                log.warning(u'''При возникновении ошибки типа:
+----------------------------------------------------------------------------------
+DatabaseError: (psycopg2.DatabaseError) server closed the connection unexpectedly
+This probably means the server terminated abnormally
+before or while processing the request.
+----------------------------------------------------------------------------------
+Проблема скорее всего в локали БД. ILIKE не может корректно преобразовать 
+русские буквы в другой регистр. Связь с БД рушится.
+Для правильной работы ILIKE БД должна быть создана с такими параметрами:
+ENCODING = 'UTF8'               (Кодировка)
+LC_COLLATE = 'ru_RU.UTF-8'      (Сопоставление)
+LC_CTYPE = 'ru_RU.UTF-8'        (Тип символа)''')
+                log.fatal(u'Ошибка поиска в справочнике <%s> по полю <%s>' % (self.getSpravParent().getName(),
+                                                                              search_fieldname))
+        return result
+

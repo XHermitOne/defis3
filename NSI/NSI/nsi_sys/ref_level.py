@@ -47,3 +47,10 @@ class icRefLevelProto(ref_persistent.icRefTablePersistent,
         """
         ref_persistent.icRefTablePersistent.__init__(self, parent=parent)
         icspravlevel.icSpravLevelInterface.__init__(self, parent, index)
+
+    def getAddCtrl(self, *args, **kwargs):
+        """
+        Функция дополнительного контроля на добавление записи в справочник.
+        """
+        # Отключаем дополнительный контроль при добавлении записи
+        return None

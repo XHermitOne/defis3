@@ -54,9 +54,6 @@ class icRefObjectProto(icsprav.icSpravInterface):
         """
         icsprav.icSpravInterface.__init__(self, sprav_manager, name)
 
-        # Кэш
-        self._cache = system_cache.icCache()
-
     def Edit(self, parent_code=(None,), parent=None):
         """
         Запуск окна редактирования объекта-ссылки/справочника.
@@ -197,3 +194,54 @@ class icRefObjectProto(icsprav.icSpravInterface):
     # Другое название метода (я считаю что более правильное)
     Choice = Hlp
 
+    def addRec(self, cod, record_dict, dt=None, bClearCache=False):
+        """
+        Добавить запись в справочник по коду.
+        @param cod: Код.
+        @param record_dict: Словарь изменений.
+        @param dt: Период актуальности.
+        @param bClearCache: Обновить кеш?
+        @return: Возвращает результат выполнения операции True/False.
+        """
+        level = self.getLevelByCod(cod)
+        if level:
+            # Контроль на уровне
+            add_ctrl_result = level.getAddCtrl(locals())
+            if add_ctrl_result is None:
+                # Контроля производить не надо
+                return self._addRec(cod, record_dict, dt, bClearCache)
+            elif add_ctrl_result == coderror.IC_CTRL_OK:
+                # Контроль успешный
+                return self._addRec(cod, record_dict, dt, bClearCache)
+            elif add_ctrl_result in (coderror.IC_CTRL_FAILED,
+                                     coderror.IC_CTRL_FAILED_IGNORE,
+                                     coderror.IC_CTRL_FAILED_TYPE_SPRAV,
+                                     coderror.IC_CTRL_FAILED_LOCK):
+                # Контроль не прошел
+                log.warning(u'Не прошел контроль добавления записи в объекте-ссылке/справочник [%s]. Код ошибки: <%d>' %
+                            (self.getName(), add_ctrl_result))
+
+        return False
+
+    def _addRec(self, cod, record_dict, dt=None, bClearCache=False):
+        """
+        Добавить запись в справочник по коду.
+        @param cod: Код.
+        @param record_dict: Словарь изменений.
+        @param dt: Период актуальности.
+        @param bClearCache: Обновить кеш?
+        @return: Возвращает результат выполнения операции True/False.
+        """
+        storage = self.getStorage()
+        if storage:
+            if storage.isCod(cod):
+                result = storage.updateRecByCod(cod, record_dict, dt)
+            else:
+                record_dict['cod'] = cod
+                result = storage.addRecDictDataTab(record_dict)
+            # Если запись прошла удачно, то сбросить кэш
+            if bClearCache:
+                self.clearInCache()
+            return result
+
+        return False

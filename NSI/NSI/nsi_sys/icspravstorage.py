@@ -278,6 +278,14 @@ class icSpravStorageInterface(object):
         """
         assert None, u'Не определен метод delRecByCod в <%s>' % self.__class__.__name__
 
+    def addRecDictDataTab(self, record_dict):
+        """
+        Добавить запись в таблице данных.
+        @param record_dict: Словарь данных записи.
+        """
+        log.warning(u'Не определен метод addRecDictDataTab в <%s>' % self.__class__.__name__)
+        return None
+
     def clear(self):
         """
         Очистить справочник от данных.
@@ -296,14 +304,21 @@ class icSpravStorageInterface(object):
         """
         Есть такой код в справочнике?
         @param cod: Код.
+        @return: True - Такой код присутствует в справочнике / False - нет.
         """
-        assert None, u'Не определен метод isCod в <%s>' % self.__class__.__name__
+        return bool(self.getRecByCod(cod))
 
-    def search(self, search_value, search_fieldname='name'):
+    def search(self, search_value, search_fieldname='name',
+               order_by=None, is_desc=False):
         """
         Поиск по полю.
         @param search_value: Искомое значение.
         @param search_fieldname: Имя поля, по которому производим поиск.
+        @param order_by: Порядок сортировки.
+            Список полей порядка сортировки.
+            Если сортировку надо производить по одному полю, то можно указать
+            его имя в строковом виде.
+        @param is_desc: Произвести обратную сортировку?
         @return: Список найденных кодов соответствующих искомому значению.
         """
         log.warning(u'Не определен метод search в <%s>' % self.__class__.__name__)
@@ -1101,20 +1116,13 @@ class icSpravSQLStorage(icSpravStorageInterface,
                 return False
         return None
 
-    def isCod(self, cod):
-        """
-        Есть такой код в справочнике?
-        @param cod: Код.
-        """
-        return bool(self.getRecByCod(cod))
-
     def updateRecByCod(self, cod, record_dict, dt=None):
         """
         Изменить запись по коду.
         @param cod: Код.
         @param record_dict: Словарь изменений.
         @param dt: Период актуальности.
-        @return: Возвращает результат выполнения операции.
+        @return: Возвращает результат выполнения операции True/False.
         """
         try:
             if dt is None:
@@ -1162,8 +1170,8 @@ class icSpravSQLStorage(icSpravStorageInterface,
                         return False
             return True
         except:
-            log.fatal('Error in updateRecByCod in sprav parent: <%s>' % self.getSpravParent().getType())
-            return False
+            log.fatal(u'Ошибка обновления записи по коду в <%s>' % self.getSpravParent().getType())
+        return False
 
     def addRecDictDataTab(self, record_dict):
         """
@@ -1176,7 +1184,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
             return self._tab.add(type=sprav_type, count=0, **field_data)
         except:
             log.fatal(u'Ошибка добавления записи в таблицу данных справочника [%s].' % self.getSpravParent().getName())
-            return None
+        return None
 
     def _normRecDict(self, record_dict):
         """

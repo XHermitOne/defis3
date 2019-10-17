@@ -574,7 +574,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         # Поиск в дочерних элементах
         find_result = None
         child_item, cookie = self.sprav_treeListCtrl.GetFirstChild(parent_item)
-        while child_item.IsOk():
+        while child_item and child_item.IsOk():
             record = self.getItemData_tree(ctrl=self.sprav_treeListCtrl, item=child_item)
             if record:
                 if sprav_code == record['cod']:
@@ -586,7 +586,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         # необходимо спуститься на уровень ниже
         if not find_result:
             child_item, cookie = self.sprav_treeListCtrl.GetFirstChild(parent_item)
-            while child_item.IsOk():
+            while child_item and child_item.IsOk():
                 self.init_level_tree(child_item)
                 find_result = self.find_sprav_tree_item(child_item, sprav_code)
                 if find_result:
@@ -708,7 +708,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         @param search_txt: Текст поиска.
         @param search_fieldname: Поле поиска. 
             Поле по которому производим поиск.
-        @return: Список кодов справочника соответствующих параметрам поиска.
+        @return: Список кодов справочника соответствующих параметрам поиска
+            или пустой список в случае ошибки.
         """
         # Запуск поиска по справочнику
         if search_fieldname is None:
@@ -723,8 +724,13 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             order_by = [sort_field] + [fld for fld in self.sprav_field_names if fld not in ('cod', sort_field)]
         # ----------------------------------------
 
-        search_codes = self.sprav.getStorage().search(search_txt, search_fieldname,
-                                                      order_by=order_by, is_desc=is_desc)
+        try:
+            search_codes = self.sprav.getStorage().search(search_txt, search_fieldname,
+                                                          order_by=order_by, is_desc=is_desc)
+        except:
+            log.fatal(u'Ошибка поиска кодов в справочнике по тексту')
+            search_codes = list()
+
         # log.debug(u'Search codes: %s Order by: %s Is desc: %s' % (search_codes, order_by, is_desc))
         if search_codes:
             # Запомнить найденные коды в буфере

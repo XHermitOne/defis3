@@ -78,6 +78,36 @@ class icSpravInterface(object):
         # Предыдущий выбранный код
         self._prev_code = None
 
+        # Кэш
+        self._cache = system_cache.icCache()
+
+    def getCache(self):
+        """
+        Кэш.
+        """
+        return self._cache
+
+    def clearInCache(self):
+        """
+        Убрать справочник из кеша.
+        """
+        if self.getAutoCache():
+            self.getCache().clear(self.getName())
+
+    def getCachedRec(self, code):
+        """
+        Получить закешированную запись по коду.
+        @param code: Код справочника.
+        @return: Словарь записи.
+        """
+        if self._cache.hasObject(self.getName(), id=code):
+            record = self._cache.get(classObj=self.getName(), id=code)
+        else:
+            storage = self.getStorage()
+            record = storage.getRecByCod(code)
+            self._cache.add(classObj=self.getName(), id=code, obj=record)
+        return record
+
     def setCurCode(self, code):
         """
         Выбрать код.
@@ -368,6 +398,18 @@ class icSpravInterface(object):
             return bool(recs)
         return False
 
+    def addRec(self, cod, record_dict, dt=None, bClearCache=False):
+        """
+        Добавить запись в справочник по коду.
+        @param cod: Код.
+        @param record_dict: Словарь изменений.
+        @param dt: Период актуальности.
+        @param bClearCache: Обновить кеш?
+        @return: Возвращает результат выполнения операции True/False.
+        """
+        log.warning(u'Не определен метод addRec в <%s>' % self.getName())
+        return False
+
     def delRec(self, cod, dt=None):
         """
         Удалить запись по коду.
@@ -429,6 +471,34 @@ class icSpravInterface(object):
 
         return res_val
 
+    def getLevelByIdx(self, index=-1):
+        """
+        Определить уровень по индексу.
+        @param index: Индекс уровня.
+        @return: Возвращает объект уровня или None в случае ошибки.
+        """
+        try:
+            return self.getLevels()[index]
+        except:
+            log.fatal(u'СПРАВОЧНИК [%s] Ошибка определения уровня справочника по индексу' % self.name)
+        return None
+
+    def getLevelByCod(self, cod):
+        """
+        Определить уровень по коду.
+        @param cod: Код в строковом представлении.
+        @return: Объект уровня, соответствующего коду или None в случае ошибки.
+        """
+        if cod is None:
+            log.warning(u'Не определен код для определения объекта уровня')
+            return None
+        levels = self.getLevels()
+        for level in levels:
+            cod = cod[level.getCodLen():]
+            if not cod.strip():
+                return level
+        return None
+
 
 class icSpravPrototype(icSpravInterface):
     """
@@ -443,40 +513,11 @@ class icSpravPrototype(icSpravInterface):
         """
         icSpravInterface.__init__(self, sprav_manager, name)
 
-        # Кэш
-        self._cache = system_cache.icCache()
         # Параметры вызова функции hlp - нужно для формы
         self._hlp_param = None
 
     def get_hlp_param(self):
         return self._hlp_param
-
-    def getCache(self):
-        """
-        Кэш.
-        """
-        return self._cache
-
-    def clearInCache(self):
-        """
-        Убрать справочник из кеша.
-        """
-        if self.getAutoCache():
-            self.getCache().clear(self.getName())
-
-    def getCachedRec(self, code):
-        """
-        Получить закешированную запись по коду.
-        @param code: Код справочника.
-        @return: Словарь записи.
-        """
-        if self._cache.hasObject(self.getName(), id=code):
-            record = self._cache.get(classObj=self.getName(), id=code)
-        else:
-            storage = self.getStorage()
-            record = storage.getRecByCod(code)
-            self._cache.add(classObj=self.getName(), id=code, obj=record)
-        return record
 
     def Hlp(self, parent_code=(None,), field=None, form=None, parent=None, dt=None,
             default_selected_code=None, view_fields=None, search_fields=None):
@@ -612,32 +653,6 @@ class icSpravPrototype(icSpravInterface):
         if record and isinstance(record, dict):
             return record.get('cod', None)
         return None
-
-    def getLevelByCod(self, cod):
-        """
-        Определить уровень по коду.
-        @param cod: Код в строковом представлении.
-        """
-        if cod is None:
-            return None
-        levels = self.getLevels()
-        for level in levels:
-            cod = cod[level.getCodLen():]
-            if not cod.strip():
-                return level
-        return None
-
-    def getLevelByIdx(self, index=-1):
-        """
-        Определить уровень по индексу.
-        @param index: Индекс уровня.
-        @return: Возвращает объект уровня или None в случае ошибки.
-        """
-        try:
-            return self.getLevels()[index]
-        except:
-            log.fatal(u'СПРАВОЧНИК [%s] Ошибка определения уровня справочника по индексу' % self.name)
-            return None
 
     def Edit(self, parent_code=(None,), parent=None):
         """
@@ -876,7 +891,7 @@ class icSpravPrototype(icSpravInterface):
         @param record_dict: Словарь изменений.
         @param dt: Период актуальности.
         @param bClearCache: Обновить кеш?
-        @return: Возвращает результат выполнения операции.
+        @return: Возвращает результат выполнения операции True/False.
         """
         level = self.getLevelByCod(cod)
         if level:
@@ -905,7 +920,7 @@ class icSpravPrototype(icSpravInterface):
         @param record_dict: Словарь изменений.
         @param dt: Период актуальности.
         @param bClearCache: Обновить кеш?
-        @return: Возвращает результат выполнения операции.
+        @return: Возвращает результат выполнения операции True/False.
         """
         storage = self.getStorage()
         if storage:
