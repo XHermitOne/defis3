@@ -37,7 +37,7 @@ from ic.components.user import ic_field_wrp
 __version__ = (0, 1, 1, 2)
 
 # --- Specifications ---
-SPC_IC_REF_REQUISITE = {'type': 'REFRequisite',
+SPC_IC_OBJ_REQUISITE = {'type': 'OBJRequisite',
                         'name': 'default',
                         'description': '',  # Описание
 
@@ -99,7 +99,7 @@ SPC_IC_REF_REQUISITE = {'type': 'REFRequisite',
                         }
 
 
-class icREFRequisiteProto(icworkbase.icRequisiteBase):
+class icOBJRequisiteProto(icworkbase.icRequisiteBase):
     """
     Реквизит-ссылка на бизнес объект/документ.
     """
@@ -179,7 +179,7 @@ class icREFRequisiteProto(icworkbase.icRequisiteBase):
         """
         return self.getDefaults()
 
-    def _getREFFieldsSpc(self, ref_obj_resource, ref_obj_name, field_names):
+    def _getOBJFieldsSpc(self, ref_obj_resource, ref_obj_name, field_names):
         """
         Взять спецификацию поля связи с бизнес объектом/документом.
         @param ref_obj_resource: Имя ресурсного файла связи с бизнес объектом/документом.
@@ -213,7 +213,7 @@ class icREFRequisiteProto(icworkbase.icRequisiteBase):
         Создать спецификацию полей реквизита связи с бизнес объектом/документом.
         """
         field_names = self.getFields().values()
-        fields_spc = self._getREFFieldsSpc(self.getRefObjRes(),
+        fields_spc = self._getOBJFieldsSpc(self.getRefObjRes(),
                                            self.getRefObjName(), field_names)
         if fields_spc is None:
             # Произошла какаято ошибка при определении спецификации поля

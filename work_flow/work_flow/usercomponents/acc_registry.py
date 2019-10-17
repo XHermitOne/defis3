@@ -105,7 +105,7 @@ ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = ['Requisite', 'NSIRequisite', 'REFRequisite']
+ic_can_contain = ['Requisite', 'NSIRequisite', 'OBJRequisite']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен 
 #   список ic_can_contain

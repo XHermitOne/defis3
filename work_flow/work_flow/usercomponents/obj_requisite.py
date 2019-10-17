@@ -28,21 +28,20 @@ from ic.utils import coderror
 from ic.PropertyEditor import icDefInf
 
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
-#from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportListUserEdt as pspListEdt
 
-import work_flow.work_sys.icrefrequisite as parentModule
+import work_flow.work_sys.icobjrequisite as parentModule
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
 
 #   Имя класса
-ic_class_name = 'icREFRequisite'
+ic_class_name = 'icOBJRequisite'
 
 #   Описание стилей компонента
 ic_class_styles = {'DEFAULT': 0}
 
 # --- Спецификация на ресурсное описание класса ---
-ic_class_spc = dict({'type': 'REFRequisite',
+ic_class_spc = dict({'type': 'OBJRequisite',
                      'name': 'default',
                      'child': [],
                      'activate': 1,
@@ -102,7 +101,7 @@ ic_class_spc = dict({'type': 'REFRequisite',
                                     'set_value': (None, None, False),
                                     'get_value': (None, None, False),
                                     },
-                     '__parent__': parentModule.SPC_IC_REF_REQUISITE,
+                     '__parent__': parentModule.SPC_IC_OBJ_REQUISITE,
                      '__attr_hlp__': {'grp_title': u'Заголовок страницы',
                                       'label': u'Надпись реквизита',
                                       'is_init': u'Реквизит является инициализируемым пользователем',
@@ -181,7 +180,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icREFRequisite(parentModule.icREFRequisiteProto, icwidget.icSimple):
+class icOBJRequisite(parentModule.icOBJRequisiteProto, icwidget.icSimple):
     """
     Реквизит-ссылка на бизнес объект/документ.
 
@@ -220,7 +219,7 @@ class icREFRequisite(parentModule.icREFRequisiteProto, icwidget.icSimple):
             component['fields'] = {component['name']: 'uuid'}
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icREFRequisiteProto.__init__(self, parent)
+        parentModule.icOBJRequisiteProto.__init__(self, parent)
         
         # --- Свойства компонента ---
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)

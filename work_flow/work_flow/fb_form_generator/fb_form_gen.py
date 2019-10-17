@@ -24,7 +24,7 @@ __version__ = (0, 1, 1, 1)
 
 
 PARSED_TYPES = ('BusinesObj', 'StateObj', 'Document')
-REQUISITE_TYPES = ('Requisite', 'NSIRequisite', 'REFRequisite', 'TABRequisite')
+REQUISITE_TYPES = ('Requisite', 'NSIRequisite', 'OBJRequisite', 'TABRequisite')
 
 
 class icWxFBPrjGenerator(object):
@@ -296,7 +296,7 @@ class icWxFBPrjGenerator(object):
         elif requisite_res['type'] == 'NSIRequisite':
             # Реквизит справочника
             txt = self.genNSIRequisiteEditBlock(requisite_res)
-        elif requisite_res['type'] == 'REFRequisite':
+        elif requisite_res['type'] == 'OBJRequisite':
             # Реквизит связи с бизнес объектом/документом.
             log.warning(u'Генерация не реализована для реквизита типа <%s>' % requisite_res['type'])
         elif requisite_res['type'] == 'TABRequisite':
@@ -632,7 +632,7 @@ class icWxFBPrjGenerator(object):
         elif requisite_res['type'] == 'NSIRequisite':
             # Реквизит справочника
             txt = self.genNSIRequisiteEditSearchBlock(requisite_res)
-        elif requisite_res['type'] == 'REFRequisite':
+        elif requisite_res['type'] == 'OBJRequisite':
             # Реквизит связи с бизнес объектом/документом.
             log.warning(u'Генерация не реализована для реквизита типа <%s>' % requisite_res['type'])
         elif requisite_res['type'] == 'TABRequisite':
