@@ -363,7 +363,7 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
     sp_ok = ' '*3+'[+] '
     sp_f = ' '*3+'[-] '
     for pathRes in paths:
-        log.debug(u'Путь <%s>. Имя ресурса <%s>. Расширение <%s>' % (pathRes, nameRes, ext))
+        # log.debug(u'Путь <%s>. Имя ресурса <%s>. Расширение <%s>' % (pathRes, nameRes, ext))
         fileRes = os.path.join(pathRes, nameRes+'.'+ext)    # .replace('\\', '/').replace('//', '/')
         if os.path.isfile(fileRes):
             #   Читаем ресурсное описание

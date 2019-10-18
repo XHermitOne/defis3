@@ -151,6 +151,7 @@ def printVarStorage():
     except:
         log.fatal(u'Ошибка glob_functions.printVarStorage <%s>' % getKernel().GetContext().__class__)
 
+
 printEnvironmentTable = printVarStorage
 
 # ФУНКЦИИ ДВИЖКА

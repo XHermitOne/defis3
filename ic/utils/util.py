@@ -200,7 +200,7 @@ def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
     try:
         #   Проверяем есть ли в буфферном файле такой объект, если есть, то его и возвращаем
         if not bRefresh and filename in Buff_readAndEvalFile:
-            log.info(u' '*3+u'[b] ' + (u'Файл <%s> из буфера' % filename))
+            # log.info(u' '*3+u'[b] ' + (u'Файл <%s> из буфера' % filename))
             return Buff_readAndEvalFile[filename]
 
         nm = os.path.basename(filename)

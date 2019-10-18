@@ -857,7 +857,8 @@ class icSimple(icobject.icObject):
                 log.warning(u'Не определен класс менеджера компонента <%s> модуль: <%s>' % (self.__class__.__name__,
                                                                                             res_module))
         else:
-            log.warning(u'Не определен модуль ресурса объекта <%s>' % self.getName())
+            # log.warning(u'Не определен модуль ресурса объекта <%s>' % self.getName())
+            pass
 
     def get_manager(self):
         """
@@ -891,7 +892,8 @@ class icSimple(icobject.icObject):
                               res['res_module'])
 
             if not os.path.isfile(fn):
-                return log.warning(u'\t(!) Resource module: <%s> is not found' % fn)
+                # log.warning(u'\t(!) Не найден модуль ресурса <%s>' % fn)
+                return
 
             try:
                 mod = None
@@ -903,13 +905,13 @@ class icSimple(icobject.icObject):
                 # Загружаем модуль, если не загружен
                 if not mod:
                     mod = ic.utils.impfunc.loadSource(res['res_module'].replace('.', '_'), fn)
-                    log.info(u'\t(+) Load resource module: <%s>' % fn)
+                    log.info(u'\t(+) Загружен модуль ресурса <%s>' % fn)
 
                 if not self.GetContext().get('res_module', False):
                     self.GetContext()['res_module'] = mod
                     self.__file_res_mod = mod
             except:
-                log.fatal(u'\t(-) Not load resource module: <%s>' % fn)
+                log.fatal(u'\t(-) Не загружен модуль ресурса <%s>' % fn)
 
     def init_obj_module(self):
         """

@@ -289,4 +289,6 @@ class icRefObject(icwidget.icSimple, parentModule.icRefObjectProto):
         """
         Хранилище.
         """
-        return ref_storage.getRefSQLStorageByPsp(db_psp=self.getDBPsp(), ref_object=self)
+        if self._storage is None:
+            self._storage = ref_storage.icRefSQLStorage(parent=self, db_psp=self.getDBPsp())
+        return self._storage

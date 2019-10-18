@@ -3,6 +3,8 @@
 
 """
 Диалог редактирования справочника.
+
+Поддерживает icSprav и icRefObject.
 """
 
 import sys
@@ -358,8 +360,10 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         @param parent_item: Родительский элемент дерева.
         @param record: Запись справочника, ассоциируемая с элементом.
         """
+        # Определяем индекс уровня для поддержки icRefObject
+        item_level = self.getItemLevel(tree_ctrl=self.sprav_treeCtrl, item=parent_item)
         # Запись в виде словаря
-        rec_dict = self.sprav.getStorage()._getSpravFieldDict(record)
+        rec_dict = self.sprav.getStorage()._getSpravFieldDict(record, level_idx=item_level)
         name = strfunc.toUnicode(rec_dict['name'])
         # В случае многострочных наименования выделять только первую строку
         name = [line.strip() for line in name.split(u'\n')][0]
@@ -427,10 +431,10 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
             value = [line.strip() for line in value.split(u'\n')][0]
 
             if i == 0:
-                list_item = self.recs_listCtrl.InsertStringItem(sys.maxsize, value, i)
+                list_item = self.recs_listCtrl.InsertItem(sys.maxsize, value, i)
                 self._list_ctrl_dataset.append(record)
             else:
-                self.recs_listCtrl.SetStringItem(list_item, i, value)                    
+                self.recs_listCtrl.SetItem(list_item, i, value)
         
         if is_col_autosize:
             # Переразмерить колонки

@@ -115,7 +115,7 @@ class icMetaDataDotUse(icMetaDotUsePrototype):
         prj = icPrjDotUse(object.__getattribute__(self, '_cur_passport_list'))
 
         if AttrName_ == object.__getattribute__(self, 'THIS_PRJ'):
-            glob_functions.printVarStorage()
+            # glob_functions.printVarStorage()
             prj._cur_passport_list[-1] = glob_functions.getVar('PrjName')
         else:
             prj._cur_passport_list[-1] = AttrName_

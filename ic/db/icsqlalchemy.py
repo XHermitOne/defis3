@@ -484,10 +484,10 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         @param bIsID: С идентификационным полем?
         """
         if self.dataclass is not None:
-            if bIsID:
-                result = [column.name for column in self.dataclass.columns]
-            else:
-                result = [column.name for column in self.dataclass.columns if column.name != u'id']
+            id_column = [column for column in self.dataclass.columns if column.name == u'id'] if bIsID else list()
+            column_without_id = [column for column in self.dataclass.columns if column.name != u'id']
+            columns = id_column + column_without_id
+            result = [column.name for column in columns]
         else:
             res = self.getResource()
             if bIsID:

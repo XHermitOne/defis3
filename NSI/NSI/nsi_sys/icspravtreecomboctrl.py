@@ -3,6 +3,8 @@
 
 """
 Контрол выбора элемента справочника в виде выпадающего дерева справочника.
+
+Поддерживает icSprav и icRefObject.
 """
 
 # --- Imports ---
@@ -461,6 +463,7 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
         """
         Паспорт справочника-источника данных.
         """
+        log.warning(u'Не определен метод getSpravPsp в компоненте <%s>' % self.__class__.__name__)
         return None
 
     def setViewAll(self, view_all=True):
@@ -502,6 +505,8 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
         if sprav_psp:
             self._data_source = icspravtreedatasource.icSpravTreeDataSource(sprav_psp, self.root_code)
             self._combo_popup.root_name = self._data_source.getSpravDescription()
+        else:
+            log.warning(u'Не определен паспорт справочника при инициализации компонента <%s>' % self.__class__.__name__)
 
         if self._data_source:
             self._combo_popup.tree.DeleteAllItems()
@@ -515,6 +520,8 @@ class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
             # Если определено распахивание, то рутовый уровень распахнуть
             if self._expand:
                 self._combo_popup.tree.Expand(self._combo_popup.tree.GetRootItem())
+        else:
+            log.warning(u'Не определен источник данных при инициализации компонента <%s>' % self.__class__.__name__)
 
     def clear(self):
         """

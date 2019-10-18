@@ -8,8 +8,10 @@
 import ic
 from ic.interfaces import ictreedatasourceinterface
 
+from ic.log import log
+
 # Version
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 def _str2unicode(text):
@@ -79,7 +81,14 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
         """
         Описание данных, прикрепленных к элементу.
         """
-        return self._data[1]
+        root = self.getRoot()
+        sprav = root.getSprav()
+        if sprav:
+            storage = sprav.getStorage()
+            level_idx = sprav.getLevelByCod(self.getCode()).getIndex()
+            rec = storage._getSpravFieldDict(self._data, level_idx=level_idx)
+            return rec['name']
+        return u'Не определено'
     
     def getLabel(self, label_func=None):
         """
@@ -117,8 +126,11 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
             if bAutoSort:
                 tab_data.sort()
             for rec in tab_data:
-                code = rec[0]
-                item = icSpravItemDataSource(self, code)
+                level_idx = sprav.getLevelByCod(code).getIndex() + 1 if code else 0
+                rec_dict = storage._getSpravFieldDict(rec, level_idx=level_idx)
+                child_code = rec_dict['cod']
+                # log.debug(u'1. Уровень %d: <%s : %s> %s' % (level_idx, code, child_code, str(rec_dict)))
+                item = icSpravItemDataSource(self, child_code)
                 item.setData(rec)
                 
                 children.append(item)
@@ -139,7 +151,9 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
         """
         sprav = self.getRoot().getSprav()
         if sprav:
-            level = sprav.getLevelByCod(self.getCode())
+            code = self.getCode()
+            # log.debug(u'Код <%s : %s>' % (str(code), type(code)))
+            level = sprav.getLevelByCod(code)
             if level:
                 return level.getIndex()
         return -1
@@ -209,8 +223,11 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
             storage = self._sprav.getStorage()
             tab_data = storage.getLevelTable(code)
             for rec in tab_data or []:
-                code = rec[0]
-                item = icSpravItemDataSource(self, code)
+                level_idx = self._sprav.getLevelByCod(code).getIndex() + 1 if code else 0
+                rec_dict = storage._getSpravFieldDict(rec, level_idx=level_idx)
+                child_code = rec_dict['cod']
+                # log.debug(u'2. Уровень %d: <%s : %s> %s' % (level_idx, code, child_code, str(rec_dict)))
+                item = icSpravItemDataSource(self, child_code)
                 item.setData(rec)
                 children.append(item)
         

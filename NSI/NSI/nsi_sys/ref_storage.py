@@ -20,7 +20,7 @@ from . import ref_persistent
 from . import icspravstorage
 
 # Версия
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # --- Функции ---
 _REF_SQL_STORAGE = dict()
@@ -271,28 +271,29 @@ class icRefSQLStorage(icRefStorageInterface):
                 recordset = level_table.select()
             else:
                 # Определяем индекс уровня по коду
-                level_idx = self._get_level_index_by_code(level_cod=level_cod)
+                parent_level_idx = self._get_level_index_by_code(level_cod=level_cod)
+                level_idx = parent_level_idx + 1
                 # log.debug(u'Код уровня <%s> -> Индекс уровня [%d]' % (str(level_cod), level_idx))
 
-                if level_idx < len(levels) - 1:
-                    level_table = levels[level_idx].getTable()
-                    recordset = level_table.get_where(level_table.c.cod == level_cod)
+                if level_idx < len(levels):
+                    # Получаем родительский идентификатор
+                    parent_level = levels[parent_level_idx]
+                    parent_table = parent_level.getTable()
+                    recordset = parent_table.get_where(parent_table.c.cod == level_cod)
                     parent_id = recordset.fetchone()['id']
-                    if parent_id is None:
-                        log.error(u'Не определен идентификатор родительской записи при получении таблицы уровня по коду <%s>' % level_cod)
-                        return list()
 
-                    parent_table_name = level_table.getName()
-                    # Берем следующий уровень за тем, которому принадлежит код
-                    #                          V
-                    level = levels[level_idx + 1]
-                    link_name = level._gen_parent_link_name(parent_table_name)
+                    # Получаем таблицу уровня по родительскому идентификатору
+                    level = levels[level_idx]
                     level_table = level.getTable()
+                    link_name = level._gen_parent_link_name(parent_table.getName())
                     recordset = level_table.get_where(getattr(level_table.c, link_name) == parent_id)
-                    log.debug(u'Получение таблицы уровня <%s> по коду <%s : %d>' % (level_table.getName(), level_cod, parent_id))
+                    # log.debug(u'Получение таблицы уровня <%s> по коду <%s : %d>' % (level_table.getName(), level_cod, parent_id))
                 else:
                     recordset = list()
-            return [tuple(record) for record in recordset]
+            # ВНИМАНИЕ! Выводить в строгом соответствии со списком полей
+            # log.debug(u'Заполнение таблицы уровня %d. Код уровня <%s>' % (level_idx, level_cod))
+            field_names = self.getSpravFieldNames(level_idx=level_idx)
+            return [tuple([dict(record)[field_name] for field_name in field_names]) for record in recordset]
         except:
             log.fatal(u'Ошибка определения таблицы данных уровня по коду <%s> объекта-ссылки/справочника <%s>' % (level_cod, self.getSpravParent().getName()))
         return None
@@ -333,6 +334,7 @@ class icRefSQLStorage(icRefStorageInterface):
         @return: запись таблицы данных справочника в виде словаря.
         """
         fld_names = self.getSpravFieldNames(level_idx=level_idx)
+        # log.debug(u'%d. Список полей %s. Значения %s' % (level_idx, fld_names, str(field_values)))
         fld_dict = dict()
         for i_fld, fld_name in enumerate(fld_names):
             value = None
@@ -389,12 +391,18 @@ class icRefSQLStorage(icRefStorageInterface):
             if cod is None:
                 log.warning(u'Ошибка нормализации словаря записи. Не определен код записи для определения уровня в <%s>' % self.__class__.__name__)
                 return None
-            level = self.getSpravParent().getLevelByCod(cod)
+            sprav = self.getSpravParent()
+            level = sprav.getLevelByCod(cod)
             level_idx = level.getIndex()
             if level_idx:
                 # Если это не самый верхний уровень, то необходимо проинициализировать
                 # связь с родительской таблицей
-                pass
+                parent_cod = cod[:-level.getCodLen()]
+                parent_record = self.getRecByCod(parent_cod)
+                parent_level = self.getSpravParent().getLevelByIdx(level_idx-1)
+                parent_table_name = parent_level.getTable().getName()
+                field_data[level._gen_parent_link_name(parent_table_name)] = parent_record['id']
+
             level_table = level.getTable()
             log.debug(u'Добавление записи в объект-ссылку/справочник <%d. %s> %s' % (level_idx,
                                                                                      level_table.getName(),
