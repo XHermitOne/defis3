@@ -18,10 +18,13 @@ Resource module <C:/defis/NSI/NSI/nsi_menu.mnu>.
 ### ---- Import external modules -----
 ### RESOURCE_MODULE_IMPORTS
 
-#   Version
-__version__ = (0,0,0,1)
-
 import ic
+
+from ic.log import log
+
+#   Version
+__version__ = (0, 1, 1, 1)
+
 
 def show_hlp_sprav(*arg, **kwarg):
 #    frm = ic.metadata.NSI.frm.test_nsi_form.create()
@@ -58,7 +61,7 @@ def admin_sprav_sys(*arg, **kwarg):
     print('********* admin')
     sprav_manager = ic.metadata.NSI.mtd.nsi_sprav.create()
     sprav_manager.admin()
-   
+
 
 def edit_sprav_menuitem():
     """
@@ -89,5 +92,12 @@ def set_default_sprav_menuitem():
     print('Start>>>')
     tab = ic.metadata.THIS.tab.nsi_data.create()
     tab.GetManager().set_default_data()
-    
-    
+
+
+def test_control_sprav_menuitem(*args, **kwargs):
+    """
+    Тестирование контролов НСИ.
+    """
+    log.debug(u'Тестирование контролов НСИ')
+    from NSI.test_form import test_nsi_ctrl_panel
+    test_nsi_ctrl_panel.show_test_nsi_ctrl_panel(title=u'Тестирование контролов НСИ')

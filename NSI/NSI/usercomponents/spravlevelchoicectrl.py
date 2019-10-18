@@ -60,8 +60,8 @@ ic_class_spc = {'type': 'SpravLevelChoiceCtrl',
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = bmpfunc.createLibraryBitmap('picture.png')  # nsi_images.style_sprav_combo
-ic_class_pic2 = bmpfunc.createLibraryBitmap('picture.png') # nsi_images.style_sprav_combo
+ic_class_pic = bmpfunc.createLibraryBitmap('ic_nsi_combo_ctrl.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('ic_nsi_combo_ctrl.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
