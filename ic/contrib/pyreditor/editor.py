@@ -73,7 +73,7 @@ class Editor(wx.stc.StyledTextCtrl):
         
     def enh_popup(self, insertitems=None, tempitems=None, on=True, path=None):
         """Turns the enhanced popup menu on/off."""
-        if on == True:
+        if on:
             self._popup = EditInsertMenu(None, self, path, hasedit=True,
                                          insertitems=insertitems, tempitems=tempitems)
         else:
@@ -89,7 +89,7 @@ class Editor(wx.stc.StyledTextCtrl):
         self._braces_patt2 = re.compile(r'%s\\*' % patt)
         
     def autoindent(self, on=False):
-        self._autoindent = (on == True)
+        self._autoindent = on is True
         
     def set_tokens(self, tokens):
         """Set the auto-completion tokens - a dictionary with tokens and their

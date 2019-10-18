@@ -340,10 +340,10 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         if codf in IGNORED_CODF:
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
-        elif is_input == True and codf in (u'СФ', u'С6'):
+        elif is_input and codf in (u'СФ', u'С6'):
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
-        elif is_input == False and codf in (u'АС', u'А6'):
+        elif not is_input and codf in (u'АС', u'А6'):
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
         if codf in (u'КП', u'К6'):
@@ -440,10 +440,10 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         if codf in IGNORED_CODF:
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
-        elif is_input == True and codf in (u'СФ', u'С6'):
+        elif is_input and codf in (u'СФ', u'С6'):
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
-        elif is_input == False and codf in (u'АС', u'А6'):
+        elif not is_input and codf in (u'АС', u'А6'):
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
         elif codf in (u'КП', u'К6'):
@@ -536,10 +536,10 @@ class icZatratyImportManager(import_manager.icBalansImportManager):
         if codf in IGNORED_CODF:
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
-        elif is_input == True and codf in (u'СФ', u'С6'):
+        elif is_input and codf in (u'СФ', u'С6'):
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
-        elif is_input == False and codf in (u'АС', u'А6'):
+        elif not is_input and codf in (u'АС', u'А6'):
             log.service(u'Не обрабатываемый код документа <%s>' % codf)
             return None
         elif codf in (u'КП', u'К6'):

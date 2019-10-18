@@ -420,9 +420,9 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         codf = unicode(record['CODF'], DBF_DEFAULT_ENCODE)
         if codf in IGNORED_CODF:
             return None
-        elif is_input == True and codf in (u'СФ', u'СТ'):
+        elif is_input and codf in (u'СФ', u'СТ'):
             return None
-        elif is_input == False and codf in (u'ПФ', u'КП'):
+        elif not is_input and codf in (u'ПФ', u'КП'):
             return None
 
         # Проверка на наличие проводок по счету 91-84
@@ -514,9 +514,9 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         codf = unicode(record['CODF'], DBF_DEFAULT_ENCODE)
         if codf in IGNORED_CODF:
             return None
-        elif is_input == True and codf in (u'СФ', ):
+        elif is_input and codf in (u'СФ', ):
             return None
-        elif is_input == False and codf in (u'ПФ', ):
+        elif not is_input and codf in (u'ПФ', ):
             return None
         
         n_warehouse = int(record['PODR'])        
@@ -608,9 +608,9 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         codf = unicode(record['CODF'], DBF_DEFAULT_ENCODE)
         if codf in IGNORED_CODF:
             return None
-        elif is_input == True and codf in (u'СФ', ):
+        elif is_input and codf in (u'СФ', ):
             return None
-        elif is_input == False and codf in (u'ПФ', ):
+        elif not is_input and codf in (u'ПФ', ):
             return None
         
         n_warehouse = int(record['PODR'])        

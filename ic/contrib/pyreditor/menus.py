@@ -37,7 +37,7 @@ class EditInsertMenu(wx.Menu):
         
         self._stc = stc             # The parent (RE editor)
         self._path = setpath(path)  # main app's path
-        self._hasedit = hasedit == True
+        self._hasedit = hasedit is True
         self._hasinsert = insertitems != None
         self._hastemp = tempitems != None
         self._insertitems = insertitems
