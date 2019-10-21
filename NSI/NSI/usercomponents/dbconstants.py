@@ -141,7 +141,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsPrototype):
+class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsProto):
     """
     Описание пользовательского компонента КОНСТАНТЫ.
 
@@ -179,7 +179,7 @@ class icDBConstants(icwidget.icSimple, parentModule.icDBConstantsPrototype):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icDBConstantsPrototype.__init__(self, parent, component['name'])
+        parentModule.icDBConstantsProto.__init__(self, parent, component['name'])
         
         # --- Свойства компонента ---
         # Описание перечисления

@@ -107,7 +107,7 @@ class icSpravManagerInterface(object):
         pass
 
 
-class icSpravManagerPrototype(icSpravManagerInterface):
+class icSpravManagerProto(icSpravManagerInterface):
     """
     Менеджер справочной системы.
     """
@@ -219,7 +219,7 @@ def test():
     """
     Тестовая функция.
     """
-    sprav_manager = icSpravManagerPrototype()
+    sprav_manager = icSpravManagerProto()
     sprav_manager.Months.Hlp()
 
 

@@ -143,7 +143,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icDBEnum(icwidget.icSimple, parentModule.icDBEnumPrototype):
+class icDBEnum(icwidget.icSimple, parentModule.icDBEnumProto):
     """
     Описание пользовательского компонента ПЕРЕЧИСЛЕНИЕ.
 
@@ -181,7 +181,7 @@ class icDBEnum(icwidget.icSimple, parentModule.icDBEnumPrototype):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icDBEnumPrototype.__init__(self, parent, component['name'])
+        parentModule.icDBEnumProto.__init__(self, parent, component['name'])
         
         # --- Свойства компонента ---
         # Описание перечисления

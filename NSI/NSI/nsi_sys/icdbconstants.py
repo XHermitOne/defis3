@@ -18,7 +18,7 @@ SPC_IC_DBCONSTANTS = {'type': 'DBConstants',
                       }
 
 
-class icDBConstantsPrototype(icsprav.icSpravPrototype):
+class icDBConstantsProto(icsprav.icSpravProto):
     """
     Класс констант.
     """
@@ -28,4 +28,4 @@ class icDBConstantsPrototype(icsprav.icSpravPrototype):
         @param sprav_manager: Объект менеджера справочника.
         @param name: Имя в списке менеджера справочников.
         """
-        icsprav.icSpravPrototype.__init__(self, sprav_manager, name)
+        icsprav.icSpravProto.__init__(self, sprav_manager, name)

@@ -26,7 +26,7 @@ SPC_IC_DBCALENDAR = {'type': 'DBCalendar',
                      }
 
 
-class icDBCalendarPrototype(icsprav.icSpravPrototype):
+class icDBCalendarProto(icsprav.icSpravProto):
     """
     Класс календаря/календарного графика.
     """
@@ -36,7 +36,7 @@ class icDBCalendarPrototype(icsprav.icSpravPrototype):
         @param sprav_manager: Объект менеджера справочника.
         @param name: Имя в списке менеджера справочников.
         """
-        icsprav.icSpravPrototype.__init__(self, sprav_manager, name)
+        icsprav.icSpravProto.__init__(self, sprav_manager, name)
     
     def getMonthNameByNum(self, n_month):
         """

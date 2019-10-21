@@ -82,7 +82,7 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerPrototype):
+class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerProto):
     """
     Описание пользовательского компонента.
 
@@ -121,7 +121,7 @@ class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerPrototype):
         """
         # Сначала надо вызывать конструктор нашего класса, т.к. он работет
         # с __getattr__, __setattr__
-        parentModule.icSpravManagerPrototype.__init__(self)
+        parentModule.icSpravManagerProto.__init__(self)
 
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
@@ -134,7 +134,7 @@ class icSpravManager(icwidget.icSimple, parentModule.icSpravManagerPrototype):
     security.declareProtected('sprav_admin', 'admin')
 
     def admin(self, *args, **kwargs):
-        return parentModule.icSpravManagerPrototype.admin(self, *args, **kwargs)
+        return parentModule.icSpravManagerProto.admin(self, *args, **kwargs)
     
     def childCreator(self, bCounter, progressDlg):
         """

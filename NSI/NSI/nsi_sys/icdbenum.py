@@ -20,7 +20,7 @@ SPC_IC_DBENUM = {'type': 'DBEnum',
                  }
 
 
-class icDBEnumPrototype(icsprav.icSpravPrototype):
+class icDBEnumProto(icsprav.icSpravProto):
     """
     Класс перечислений.
     """
@@ -30,4 +30,4 @@ class icDBEnumPrototype(icsprav.icSpravPrototype):
         @param sprav_manager: Объект менеджера справочника.
         @param name: Имя в списке менеджера справочников.
         """
-        icsprav.icSpravPrototype.__init__(self, sprav_manager, name)
+        icsprav.icSpravProto.__init__(self, sprav_manager, name)

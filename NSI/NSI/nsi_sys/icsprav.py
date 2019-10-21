@@ -499,8 +499,128 @@ class icSpravInterface(object):
                 return level
         return None
 
+    def Hlp(self, parent_code=(None,), field=None, form=None, parent=None, dt=None,
+            default_selected_code=None, view_fields=None, search_fields=None):
+        """
+        Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
+            или группы полей из отмеченной строки указанного справочника.
+        @type parent_code: C{...}
+        @param parent_code: Код более верхнего уровня.
+        @param field: Задает поле или группу полей, которые надо вернуть.
+            Полу задается строкой. Поля задаются словарем.
+        @param form: имя формы визуального интерфейса работы со справочником.
+        @param parent: Родительская форма.
+        @type dt: C{string}
+        @param dt: Время актуальности кода.
+        @param default_selected_code: Выбранный код по умолчанию.
+            Если None, то ничего не выбирается.
+        @param view_fields: Список имен полей для просмотра.
+            Если не определено то отображаются <Код> и <Наименование>.
+        @param search_fields: Список имен полей для поиска.
+            Если не определено то поиск только по <Код> и <Наименование>.
+        @return: Код ошибки, Результат выбора
+        """
+        log.warning(u'Не определен метод Hlp в <%s>' % self.__class__.__name__)
+        return None, None
 
-class icSpravPrototype(icSpravInterface):
+    # Другое название метода
+    Choice = Hlp
+
+    def Edit(self, parent_code=(None,), parent=None):
+        """
+        Запуск окна редактирования справочника/перечисления.
+        @param parent_code: Код более верхнего уровня.
+        @param parent: Родительская форма.
+            Если не определена, то берется главная форма.
+        @return: Возвращает результат выполнения опереции True/False.
+        """
+        log.warning(u'Не определен метод Edit в <%s>' % self.__class__.__name__)
+        return False
+
+    def Ctrl(self, val, old=None, field='name', flds=None, bCount=True, cod='', dt=None):
+        """
+        Функция контроля наличия в справочнике значения поля с указанным значением.
+        @type cod: C{string}
+        @param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
+        @type val: C{...}
+        @param val: Проверяемое значение. Если тип картеж, то это означает, что проверяем структурное
+            значение (например иерархический код справочника).
+        @type old: C{...}
+        @param old: Старое значение.
+        @type field: C{string}
+        @param filed: Поле, по которому проверяется значение.
+        @type flds: C{dictionary}
+        @param flds: Словарь соответствий между полями определенного класса данных и
+            полями справочника. Если контроль значения пройдет успешно, то
+            соответствующие значения из справочника будут перенесены в поля класса
+            данных. Пример: {'summa':'f1', 'summa2':'f2'}
+        @type dt: C{string}
+        @param dt: Время актуальности кода.
+        @type bCount: C{string}
+        @param bCount: признак того, что необходимо вести количество ссылок.
+        @rtype: C{int}
+        @return: Код возврата функции контроля.
+        """
+        log.warning(u'Не определен метод Ctrl в <%s>' % self.__class__.__name__)
+        return None
+
+    def Find(self, cod, field='name', dt=None):
+        """
+        Поиск по коду.
+
+        @type cod: C{...}
+        @param cod: Код строки справочника.
+        @type field: C{string | list }
+        @param field: Имя поля или список полей.
+        @type dt: C{string}
+        @param dt: Время актуальности кода.
+        @rtype: C{dictionary}
+        @return: Значение либо словарь значений (если поле field задает список полей).
+            None, если строка с заданным кодом не найдена.
+        """
+        log.warning(u'Не определен метод Find в <%s>' % self.__class__.__name__)
+        return None
+
+    def getParentLevelCod(self, cod):
+        """
+        Код родительского уровня.
+        @param cod: Код.
+        """
+        return ''.join([subcode for subcode in self.StrCode2ListCode(cod) if bool(subcode)][:-1])
+
+    def StrCode2ListCode(self, str_code):
+        """
+        Преобразовать строковый код в списковый код по уровням.
+        @param str_code: Строковое представление кода.
+        @param cod_encode: Однобайтовая кодировка кода.
+        """
+        if not str_code:
+            return []
+
+        levels = self.getLevels()
+        list_cod = []
+        for level in levels:
+            subcod = str_code[:level.getCodLen()]
+            list_cod.append(subcod)
+            str_code = str_code[level.getCodLen():]
+        return list_cod
+
+    def ListCode2StrCode(self, list_code):
+        """
+        Преобразовать списковый код по уровням в строковый код.
+        @param list_code: Списковое/кортежное представление кода.
+        """
+        return ''.join([cod for cod in list(list_code) if cod is not None])
+
+    def getLevels(self):
+        """
+        Список уровней справочника.
+        """
+        log.warning(u'Не определен метод getLevels в <%s>' % self.__class__.__name__)
+        return list()
+
+
+class icSpravProto(icSpravInterface):
     """
     Класс справочника.
     """
@@ -617,9 +737,6 @@ class icSpravPrototype(icSpravInterface):
             result = IC_HLP_FAILED_TYPE_SPRAV
 
         return result, res_val, self.getFields(field, res_val)
-
-    # Другое название метода (я считаю что более правильное)
-    Choice = Hlp
 
     def choice_record(self, parent=None, *args, **kwargs):
         """
@@ -827,15 +944,6 @@ class icSpravPrototype(icSpravInterface):
 
         return ret
 
-    def getParentLevelCod(self, cod):
-        """
-        Код родительского уровня.
-        @param cod: Код.
-        """
-        # return ''.join(filter(lambda subcod: bool(subcod),
-        #               self.StrCode2ListCode(cod))[:-1])
-        return ''.join([subcode for subcode in self.StrCode2ListCode(cod) if bool(subcode)][:-1])
-
     def updateRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Обновить запись в справочнике по коду.
@@ -986,41 +1094,6 @@ class icSpravPrototype(icSpravInterface):
                 sprav_manager = self.getSpravManager()
                 return sprav_manager.getSpravByName(ref_sprav_name)
         return None
-
-    def StrCode2ListCode(self, str_code):
-        """
-        Преобразовать строковый код в списковый код по уровням.
-        @param str_code: Строковое представление кода.
-        @param cod_encode: Однобайтовая кодировка кода.
-        """
-        if not str_code:
-            return []
-
-        levels = self.getLevels()
-        list_cod = []
-        for level in levels:
-            subcod = str_code[:level.getCodLen()]
-            list_cod.append(subcod)
-            str_code = str_code[level.getCodLen():]
-        return list_cod
-
-    def ListCode2StrCode(self, list_code):
-        """
-        Преобразовать списковый код по уровням в строковый код.
-        @param list_code: Списковое/кортежное представление кода.
-        """
-        return ''.join([cod for cod in list(list_code) if cod is not None])
-
-    # def isSubCodes(self, cod):
-    #     """
-    #     Есть ли у указанного кода подкоды подуровней?
-    #     @param cod: Код справочника.
-    #     """
-    #     storage = self.getStorage()
-    #     if storage:
-    #         recs = storage._getLevelTab(cod)
-    #         return bool(recs)
-    #     return False
 
     def _get_refspr_parent_cod(self, parent_cod):
         """

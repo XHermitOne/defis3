@@ -402,7 +402,7 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
 TREE_CHOICE_LIST_POPUP = 1
 
 
-class icSpravTreeComboCtrlPrototype(wx.ComboCtrl):
+class icSpravTreeComboCtrlProto(wx.ComboCtrl):
     """
     Контрол выбора элемента справочника в виде выпадающего дерева справочника.
 
@@ -839,7 +839,7 @@ def test_ctrl():
     app = wx.PySimpleApp()
     frame = wx.Frame(None)
     sprav_psp = (('Sprav', 'Regions', None, 'nsi_sprav.mtd', 'NSI'),)
-    tree_combo_ctrl = icSpravTreeComboCtrlPrototype(sprav_psp, None, parent=frame, size=wx.Size(200, -1))
+    tree_combo_ctrl = icSpravTreeComboCtrlProto(sprav_psp, None, parent=frame, size=wx.Size(200, -1))
     button = wx.Button(frame, pos=wx.Point(10, 100))
     frame.Show()
     app.MainLoop()
@@ -857,7 +857,7 @@ def test():
 
         frame = wx.Frame(None)
 
-        tree_combo_ctrl = icSpravTreeComboCtrlPrototype(sprav_psp, None, True,
+        tree_combo_ctrl = icSpravTreeComboCtrlProto(sprav_psp, None, True,
                                                         parent=frame, size=wx.Size(200, -1),
                                                         level_enable=1, popup_type=1)
         tree_combo_ctrl.set_label_func(tree_combo_ctrl.getLabel_s1)
@@ -878,7 +878,7 @@ def over_test():
         sprav_psp = (('Sprav', 'OrganPrinyat', None, 'nsi_sprav.mtd', 'NSI'),)
         frame = wx.Frame(None)
 
-        tree_combo_ctrl = icSpravTreeComboCtrlPrototype(sprav_psp, None, True,
+        tree_combo_ctrl = icSpravTreeComboCtrlProto(sprav_psp, None, True,
                                                         parent=frame, size=wx.Size(200, -1))
         button = wx.Button(frame, pos=wx.Point(10, 100))
         print('SELECTED CODE:', tree_combo_ctrl.getSelectedCode())

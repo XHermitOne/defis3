@@ -47,7 +47,7 @@ SPC_IC_EXTSPRAVTREECHOICE = {'sprav': None,      # Паспорт справоч
                              }
 
 
-class icExtSpravTreeChoicePrototype(ext_sprav_tree_choice_panel_proto.icExtSpravTreeChoicePanelProto):
+class icExtSpravTreeChoiceProto(ext_sprav_tree_choice_panel_proto.icExtSpravTreeChoicePanelProto):
     """
     Расширенный контрол выбора элемента справочника в виде выпадающего дерева справочника.
     """
@@ -114,7 +114,7 @@ def test_ctrl():
     app = wx.PySimpleApp()
     frame = wx.Frame(None)
     # sprav_psp = (('Sprav', 'Regions', None, 'nsi_sprav.mtd', 'NSI'),)
-    tree_combo_ctrl = icExtSpravTreeChoicePrototype(parent=frame)
+    tree_combo_ctrl = icExtSpravTreeChoiceProto(parent=frame)
     button = wx.Button(frame, pos=wx.Point(10, 100))
     frame.Show()
     app.MainLoop()

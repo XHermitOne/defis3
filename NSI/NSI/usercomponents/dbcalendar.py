@@ -142,7 +142,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarPrototype):
+class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarProto):
     """
     Описание пользовательского компонента КАЛЕНДАРЬ/КАЛЕНДАРНЫЙ ГРАФИК.
 
@@ -180,7 +180,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarPrototype):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icDBCalendarPrototype.__init__(self, parent, component['name'])
+        parentModule.icDBCalendarProto.__init__(self, parent, component['name'])
         
         # --- Свойства компонента ---
         # Описание перечисления

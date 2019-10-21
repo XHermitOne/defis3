@@ -22,7 +22,7 @@ class icExtSpravTreeChoicePanelProto ( wx.Panel ):
 		
 		bSizer1 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.sprav_tree_choice =  icspravtreecomboctrl.icSpravTreeComboCtrlPrototype(parent=self)
+		self.sprav_tree_choice =  icspravtreecomboctrl.icSpravTreeComboCtrlProto(parent=self)
 		bSizer1.Add( self.sprav_tree_choice, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_VERTICAL, 0 )
 		
 		self.clear_button = wx.BitmapButton( self, wx.ID_ANY, wx.ArtProvider.GetBitmap( u"gtk-clear", wx.ART_MENU ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )

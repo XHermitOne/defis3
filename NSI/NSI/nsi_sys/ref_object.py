@@ -191,9 +191,6 @@ class icRefObjectProto(icsprav.icSpravInterface):
 
         return result, res_val, self.getFields(field, res_val)
 
-    # Другое название метода (я считаю что более правильное)
-    Choice = Hlp
-
     def addRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Добавить запись в справочник по коду.
@@ -245,3 +242,96 @@ class icRefObjectProto(icsprav.icSpravInterface):
             return result
 
         return False
+
+    def Find(self, cod, field='name', dt=None):
+        """
+        Поиск по коду.
+
+        @type cod: C{...}
+        @param cod: Код строки справочника.
+        @type field: C{string | list }
+        @param field: Имя поля или список полей.
+        @type dt: C{string}
+        @param dt: Время актуальности кода.
+        @rtype: C{dictionary}
+        @return: Значение либо словарь значений (если поле field задает список полей).
+            None, если строка с заданным кодом не найдена.
+        """
+        if isinstance(field, str):
+            fields = [field]
+            is_return_dict = False
+        else:
+            fields = [x for x in field]
+            is_return_dict = True
+
+        # Формируем словарь соотношений для функции контроля
+        field_dict = dict([(field_name, field_name) for field_name in fields])
+
+        # Используем функцию для контроля. Она возвращает словарь значений.
+        level_cod = self.getParentLevelCod(cod)
+        ctrl_cod, ctrl_dict = self.Ctrl(cod, None, 'cod', field_dict, cod=level_cod, dt=dt)
+
+        if ctrl_cod != coderror.IC_CTRL_OK:
+            result = None
+        elif is_return_dict:
+            result = ctrl_dict
+        else:
+            result = ctrl_dict[field]
+
+        return result
+
+    def Ctrl(self, val, old=None, field='name', flds=None, bCount=True, cod='', dt=None):
+        """
+        Функция контроля наличия в справочнике значения поля с указанным значением.
+        @type cod: C{string}
+        @param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
+        @type val: C{...}
+        @param val: Проверяемое значение. Если тип картеж, то это означает, что проверяем структурное
+            значение (например иерархический код справочника).
+        @type old: C{...}
+        @param old: Старое значение.
+        @type field: C{string}
+        @param field: Поле, по которому проверяется значение.
+        @type flds: C{dictionary}
+        @param flds: Словарь соответствий между полями определенного класса данных и
+            полями справочника. Если контроль значения пройдет успешно, то
+            соответствующие значения из справочника будут перенесены в поля класса
+            данных. Пример: {'summa':'f1', 'summa2':'f2'}
+        @type dt: C{string}
+        @param dt: Время актуальности кода.
+        @type bCount: C{string}
+        @param bCount: признак того, что необходимо вести количество ссылок.
+        @rtype: C{int}
+        @return: Код возврата функции контроля.
+        """
+        result = coderror.IC_CTRL_OK
+        res_val = None
+
+        try:
+            storage = self.getStorage()
+            level_tab = storage.getLevelTable(cod, dt)
+            # Список имен полей
+            level = self.getLevelByCod(cod)
+            field_names = storage.getSpravFieldNames(level_idx=level.getIndex())
+            # Словарь индексов
+            field_indexes = dict([(item[1], item[0]) for item in enumerate(field_names)])
+            field_idx = field_indexes[field]
+
+            # Перебор строк
+            for rec in level_tab:
+                if rec[field_idx] == val:
+                    # Перебор полей
+                    if flds and isinstance(flds, dict):
+                        res_val = dict([(item[0], rec[field_indexes[item[1]]]) for item in flds.items()])
+                    else:
+                        res_val = None
+                    # Нашли запись и заполнили выходной словарь
+                    return result, res_val
+            # Не найдено
+            result = coderror.IC_CTRL_FAILED
+            log.warning(u'Не найден код <%s> в объекте-ссылке/справочнике <%s>' % (val, self.getName()))
+        except:
+            log.fatal(u'ОБЪЕКТ-ССЫЛКА/СПРАВОЧНИК [%s] Ошибка контроля' % self.getName())
+            result = coderror.IC_CTRL_FAILED_TYPE_SPRAV
+
+        return result, res_val

@@ -162,7 +162,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
+class icSprav(icwidget.icSimple, parentModule.icSpravProto):
     """
     Описание пользовательского компонента.
 
@@ -219,7 +219,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
 
-        parentModule.icSpravPrototype.__init__(self, parent, component['name'])
+        parentModule.icSpravProto.__init__(self, parent, component['name'])
 
         # Свойства компонента
         # Описание перечисления
@@ -235,7 +235,7 @@ class icSprav(icwidget.icSimple, parentModule.icSpravPrototype):
     security.declareProtected('sprav_edit', 'edit')
 
     def Edit(self, *args, **kwargs):
-        return parentModule.icSpravPrototype.Edit(self, *args, **kwargs)
+        return parentModule.icSpravProto.Edit(self, *args, **kwargs)
 
     def childCreator(self, bCounter, progressDlg):
         """
