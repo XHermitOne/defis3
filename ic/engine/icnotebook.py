@@ -8,19 +8,19 @@
 # --- Подключение библиотек ---
 import wx
 
-import ic.utils.execfunc
+from ic.utils import execfunc
 from ic.bitmap import bmpfunc
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 # --- Основные константы ---
 OPEN_CODE_IDX = 0
 CLOSE_CODE_IDX = 1
 CAN_CLOSE_IDX = 2
 
-ORG_PAGE_IMG_DX = 16
-ORG_PAGE_IMG_DY = 16
+ORG_PAGE_IMG_WIDTH = 16
+ORG_PAGE_IMG_HEIGHT = 16
 
 
 class icMainNotebook(wx.Notebook):
@@ -28,27 +28,27 @@ class icMainNotebook(wx.Notebook):
     Класс главного менеджера панелей главного окна системы (органайзер).
     """
 
-    def __init__(self, Parent_):
+    def __init__(self, parent):
         """
         Конструктор.
-        @param Parent_: Окно, куда будет помещен менеджер (главное окно).
+        @param parent: Окно, куда будет помещен менеджер (главное окно).
         """
         try:
             # У органайзера заголовки страниц(ярлычки) находятся снизу
-            wx.Notebook.__init__(self, Parent_, wx.NewId(), style=wx.NB_BOTTOM)
+            wx.Notebook.__init__(self, parent, wx.NewId(), style=wx.NB_BOTTOM)
 
-            self.SetClientSize(Parent_.GetClientSize())
+            self.SetClientSize(parent.GetClientSize())
 
             # Создаем контейнер для картинок на закладках
             self._img_name = {}
-            self._img_list = wx.ImageList(ORG_PAGE_IMG_DX, ORG_PAGE_IMG_DY)
+            self._img_list = wx.ImageList(ORG_PAGE_IMG_WIDTH, ORG_PAGE_IMG_HEIGHT)
             self.SetImageList(self._img_list)
 
             # Установка обработчика
-            self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.OnPageChanged, id=self.GetId())
+            self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onPageChanged, id=self.GetId())
 
             # Стандартное всплывающее меню для страниц
-            self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightClick)
+            self.Bind(wx.EVT_RIGHT_DOWN, self.onRightClick)
 
             # Списки скриптов
             self._page_attr = []
@@ -57,32 +57,30 @@ class icMainNotebook(wx.Notebook):
         except:
             log.fatal(u'Ошибка создания объекта главного органайзера')
 
-    def addPage(self, Page_, Title_, OpenExists_=False, Image_=None,
-                CanClose_=True, OpenScript_=None, CloseScript_=None, DefaultPage_=-1):
+    def addPage(self, page, title, bOpenExists=False, image=None,
+                bCanClose=True, open_script=None, close_script=None, default_page=-1):
         """
         Добавить страницу в органайзер.
-        @param Page_: Страница. Ею м.б. любой наследник wx.Window.
-        @param Title_: Заголовок. Строка.
-        @param OpenExists_: Если страница уже есть,  то открыть ее.
-        @param Image_: Образ страницы. Если это строка, тогда файл.
+        @param page: Страница. Ею м.б. любой наследник wx.Window.
+        @param title: Заголовок. Строка.
+        @param bOpenExists: Если страница уже есть,  то открыть ее.
+        @param image: Образ страницы. Если это строка, тогда файл.
             Или объект wx.Bitmap.
-        @param OpenScript_: Строка-скрипт, выполняемый при открытии страницы.
-        @param CloseScript_: Строка-скрипт, выполняемый при закрытии страницы.
-        @param DefaultPage_: Индекс страницы,  открываемой по умолчанию.
+        @param open_script: Строка-скрипт, выполняемый при открытии страницы.
+        @param close_script: Строка-скрипт, выполняемый при закрытии страницы.
+        @param default_page: Индекс страницы,  открываемой по умолчанию.
             Если -1, то открывается текущая добавляемая страница.
         """
         try:
-            if OpenExists_:
+            if bOpenExists:
                 # Открыть страницу по указанному заголовку
-                idx = self.OpenPageByTitle(Title_)
+                idx = self.openPageByTitle(title)
                 if idx is not None:
                     return self.GetPage(idx)
 
-            if isinstance(Page_, str):
+            if isinstance(page, str):
                 import ic.components.icResourceParser
-                page = ic.components.icResourceParser.CreateForm(Page_, parent=self)
-            else:
-                page = Page_
+                page = ic.components.icResourceParser.CreateForm(page, parent=self)
 
             log.info(u'Новая страница главного органайзера: %s' % page)
             # Проверка корректности типа страницы
@@ -90,22 +88,24 @@ class icMainNotebook(wx.Notebook):
                 log.error(u'Ошибка типа страницы, помещаемой в органайзер. %s' % str(page))
                 return None
                 
-            self._page_attr.append([OpenScript_, CloseScript_, CanClose_])
-            if Image_ not in self._img_name:
-                if not Image_:
-                    img = wx.ArtProvider.GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER, (16, 16))
+            self._page_attr.append([open_script, close_script, bCanClose])
+            log.debug(u'Образ страницы <%s>' % str(image))
+            if image not in self._img_name:
+                if not image:
+                    img = wx.ArtProvider.GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER,
+                                                   (ORG_PAGE_IMG_WIDTH, ORG_PAGE_IMG_HEIGHT))
                 else:
                     # Создание образа
-                    img = bmpfunc.icCreateBitmap(Image_, False)
+                    img = bmpfunc.createBitmap(image, False)
                     if img is None:
                         img = wx.ArtProvider.GetBitmap(wx.ART_EXECUTABLE_FILE, wx.ART_OTHER, (16, 16))
 
                 # Добавление образа
                 img_idx = self._img_list.Add(img)
                 # Запомнить индекс
-                self._img_name[Image_] = img_idx
+                self._img_name[image] = img_idx
             else:
-                img_idx = self._img_name[Image_]
+                img_idx = self._img_name[image]
 
             # У объекта страницы поменять хозяина
             # Чтобы органайзер синхронно переразмеривался с главным окном
@@ -117,26 +117,25 @@ class icMainNotebook(wx.Notebook):
             # Если количество страниц - 0,
             # тогда считается что ораганайзер только открылся
             if self.GetPageCount() <= 0 and self.getMainWin()._OnOrgOpen:
-                ic.utils.execfunc.execute_method(self.getMainWin()._OnOrgOpen, self)
+                execfunc.execute_method(self.getMainWin()._OnOrgOpen, self)
 
-            if DefaultPage_ != -1:
+            if default_page != -1:
                 # Добавление страницы
-                ret = self.addPage(page, Title_, False, img_idx)
+                ret = self.AddPage(page, title, False, img_idx)
                 # Сразу сделать активной страницу по умолчанию
-                self.SetSelection(DefaultPage_)
+                self.SetSelection(default_page)
             else:
                 # Добавление страницы
-                ret = self.addPage(page, Title_, True, img_idx)
-
+                ret = self.AddPage(page, title, True, img_idx)
             return ret
         except:
-            log.fatal(u'Ошибка добавления страницы в органайзер.')
+            log.fatal(u'Ошибка добавления страницы в органайзер')
         return None
 
-    def deletePage(self, Index_):
+    def deletePage(self, idx):
         """
         Удалить страницу из органайзера.
-        @param Index_: Номер страницы.
+        @param idx: Номер страницы.
         """
         try:
             # Удалить картинку прикрепленную к этой странице ОБЯЗАТЕЛЬНО!!!
@@ -144,12 +143,12 @@ class icMainNotebook(wx.Notebook):
             # Обязательно поменять выделенную страницу!!!
             self.AdvanceSelection()
             # Очистить окно страницы
-            page = self.GetPage(Index_)
+            page = self.GetPage(idx)
             page.destroyWin()
             # Удалить страницу
-            result = self.DeletePage(Index_)
+            result = self.DeletePage(idx)
             # Изменить привязку картинок к страницам
-            for i in range(Index_, self.GetPageCount()):
+            for i in range(idx, self.GetPageCount()):
                 self.SetPageImage(i, i)
             # Если страниц в органайзере больше не осталось, то ...
             if self.GetPageCount() <= 0:
@@ -157,17 +156,17 @@ class icMainNotebook(wx.Notebook):
                 self.Show(False)
                 # Если количество страниц - 0,
                 # тогда считается что ораганайзер только закрылся
-                ic.utils.execfunc.execute_method(self.getMainWin()._OnOrgClose, self)
+                execfunc.execute_method(self.getMainWin()._OnOrgClose, self)
 
             # При удалении страницы меняется и текущая выбранная страница
             self._cur_selected_page = self.GetSelection()
             # Удалить атрибуты соответствующие этой странице
-            del self._page_attr[Index_]
+            del self._page_attr[idx]
             # Обновить объект
             self.Refresh()
             return result
         except:
-            log.fatal(u'deletePage')
+            log.fatal(u'Ошибка удаления страницы из органайзера')
         return None
     
     def deleteAllPages(self):
@@ -178,7 +177,7 @@ class icMainNotebook(wx.Notebook):
         # Очистить окно страницы
         for i in range(self.GetPageCount()):
             page = self.GetPage(i)
-            page.destroyWin()
+            page.Destroy()
         # Удалить картинки ОБЯЗАТЕЛЬНО!!!
         self._img_list.RemoveAll()
         result = wx.Notebook.DeleteAllPages(self)
@@ -186,23 +185,23 @@ class icMainNotebook(wx.Notebook):
         self.Show(False)
         # Если количество страниц - 0,
         # тогда считается что ораганайзер только закрылся
-        ic.utils.execfunc.execute_method(self.getMainWin()._OnOrgClose, self)
+        execfunc.execute_method(self.getMainWin()._OnOrgClose, self)
         return result
 
-    def OpenPageByTitle(self, Title_):
+    def openPageByTitle(self, title):
         """
         Открыть страницу по указанному заголовку.
-        @param Title_: Заголовок страницы.
+        @param title: Заголовок страницы.
         """
         idx = None
-        filter_page = [i for i in range(self.GetPageCount()) if Title_ == self.GetPageText(i)]
+        filter_page = [i for i in range(self.GetPageCount()) if title == self.GetPageText(i)]
         if filter_page:
             idx = filter_page[0]
             self.SetSelection(idx)
         return idx
 
     # --- Обработчики событий ---
-    def OnPageChanged(self, event):
+    def onPageChanged(self, event):
         """
         Обработчик смены страницы.
         """
@@ -216,17 +215,17 @@ class icMainNotebook(wx.Notebook):
                 # Сначала выполняем скрипт на закрытие
                 if i_old_page >= 0:
                     if self._page_attr[i_old_page][CLOSE_CODE_IDX] is not None:
-                        ic.utils.execfunc.execute_method(self._page_attr[i_old_page][CLOSE_CODE_IDX], self)
+                        execfunc.execute_method(self._page_attr[i_old_page][CLOSE_CODE_IDX], self)
                 # Потом выполняем скрипт на открытие
                 if i_new_page >= 0:
                     if self._page_attr[i_new_page][OPEN_CODE_IDX] is not None:
-                        ic.utils.execfunc.execute_method(self._page_attr[i_new_page][OPEN_CODE_IDX], self)
+                        execfunc.execute_method(self._page_attr[i_new_page][OPEN_CODE_IDX], self)
         except:
             log.fatal(u'Ошибка функции изменения страницы.')
         # ЗДЕСЬ ОБЯЗАТЕЛЬНО ДОЛЖЕН БЫТЬ Skip() ИНАЧЕ ОБЪЕКТ ГЛЮЧИТ!!!
         event.Skip()
 
-    def OnRightClick(self, event):
+    def onRightClick(self, event):
         """
         Обработчик нажатия правой кнопки мыши.
         """
@@ -238,14 +237,14 @@ class icMainNotebook(wx.Notebook):
             item = wx.MenuItem(std_popup_menu, id_, u'Предыдущая страница')
             item.SetBitmap(bmp)
             std_popup_menu.AppendItem(item)
-            self.Bind(wx.EVT_MENU, self.OnPrevPage, id=id_)
+            self.Bind(wx.EVT_MENU, self.onPrevPage, id=id_)
 
             id_ = wx.NewId()
             bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_MENU, (16, 16))
             item = wx.MenuItem(std_popup_menu, id_, u'Следующая страница')
             item.SetBitmap(bmp)
             std_popup_menu.AppendItem(item)
-            self.Bind(wx.EVT_MENU, self.OnNextPage, id=id_)
+            self.Bind(wx.EVT_MENU, self.onNextPage, id=id_)
             # Разделитель
             std_popup_menu.AppendSeparator()
             # Закрытие страницы
@@ -254,7 +253,7 @@ class icMainNotebook(wx.Notebook):
             item = wx.MenuItem(std_popup_menu, id_, u'Закрыть')
             item.SetBitmap(bmp)
             std_popup_menu.AppendItem(item)
-            self.Bind(wx.EVT_MENU, self.OnClosePage, id=id_)
+            self.Bind(wx.EVT_MENU, self.onClosePage, id=id_)
             #
             if 0 <= self._cur_selected_page < self.GetPageCount():
                 # Проверка разрешено закрытие страницы ч/з стандартное меню
@@ -269,7 +268,7 @@ class icMainNotebook(wx.Notebook):
             log.fatal(u'Ошибка вывода стандартного меню страницы')
             event.Skip()
     
-    def OnClosePage(self, event):
+    def onClosePage(self, event):
         """
         Обработчик закрытия страницы.
         """
@@ -286,7 +285,7 @@ class icMainNotebook(wx.Notebook):
             log.fatal(u'Ошибка закрытия страницы')
             event.Skip()
 
-    def OnPrevPage(self, event):
+    def onPrevPage(self, event):
         """
         Обработчик переключения на предыдущую страницу.
         """
@@ -296,7 +295,7 @@ class icMainNotebook(wx.Notebook):
             log.fatal(u'Ошибка переключения страницы')
             event.Skip()
 
-    def OnNextPage(self, event):
+    def onNextPage(self, event):
         """
         Обработчик переключения на следующую страницу.
         """
@@ -307,7 +306,7 @@ class icMainNotebook(wx.Notebook):
             event.Skip()
 
     # --- Свойства ---
-    def icGetCurPage(self):
+    def getCurPage(self):
         """
         Определеить объект текущей страницы.
         """
@@ -318,37 +317,38 @@ class icMainNotebook(wx.Notebook):
             log.fatal(u'Ошибка определения объекта текущей страницы')
         return None
 
-    def SetPageImg(self, Image_, NPage_):
+    def setPageImg(self, image, n_page):
         """
         Установить картинку у страницы главного органайзера.
-        @param Image_: Имя файла образа.
-        @param NPage_: Номер страницы.
+        @param image: Имя файла образа.
+        @param n_page: Номер страницы.
         """
         try:
-            if Image_ not in self._img_name:
+            if image not in self._img_name:
                 # Создание образа
-                img = bmpfunc.createBitmap(Image_, False)
+                img = bmpfunc.createBitmap(image, False)
                 if img is None:
-                    img = wx.ArtProvider_GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER, (16, 16))
+                    img = wx.ArtProvider.GetBitmap(wx.ART_NORMAL_FILE, wx.ART_OTHER,
+                                                   (ORG_PAGE_IMG_WIDTH, ORG_PAGE_IMG_HEIGHT))
                 # Добавление образа
                 img_idx = self._img_list.Add(img)
                 # Запомнить индекс
-                self._img_name[Image_] = img_idx
+                self._img_name[image] = img_idx
             else:
-                img_idx = self._img_name[Image_]
-            return self.SetPageImage(NPage_, img_idx)
+                img_idx = self._img_name[image]
+            return self.SetPageImage(n_page, img_idx)
         except:
             log.fatal(u'Ошибка установки картинки страницы')
 
-    def getMainWin(self, CurObj_=None):
+    def getMainWin(self, cur_object=None):
         """
         Главное окно.
         """
-        if CurObj_ is None:
-            CurObj_ = self.GetParent()
-        if CurObj_ is not None:
-            if issubclass(CurObj_.__class__, wx.Frame):
-                return CurObj_
+        if cur_object is None:
+            cur_object = self.GetParent()
+        if cur_object is not None:
+            if issubclass(cur_object.__class__, wx.Frame):
+                return cur_object
             else:
-                return self.getMainWin(CurObj_.GetParent())
+                return self.getMainWin(cur_object.GetParent())
         return None

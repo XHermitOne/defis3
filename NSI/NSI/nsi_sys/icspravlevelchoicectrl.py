@@ -97,7 +97,14 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
                 description = level.description if level.description else u''
                 label = wx.StaticText(self.scrolled_win, wx.ID_ANY, description,
                                       wx.DefaultPosition, wx.DefaultSize, 0)
-                level_choices = [] if i else [(rec[0], rec[1]) for rec in self._sprav.getStorage().getLevelTable()]
+
+                level_choices = list()
+                if not i:
+                    for rec in self._sprav.getStorage().getLevelTable():
+                        rec_dict = self._sprav.getStorage().getSpravFieldDict(rec, level_idx=i)
+                        level_choice = (rec_dict['cod'], rec_dict['name'])
+                        level_choices.append(level_choice)
+
                 choice_id = wx.NewId()
                 choice = wx.Choice(self.scrolled_win, choice_id,
                                    wx.DefaultPosition, wx.DefaultSize)
@@ -209,7 +216,7 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         Очистить выбор контролов.
         """
         for choice_ctrl in self._choice_ctrl_list:
-            choice_ctrl.setSelection(wx.NOT_FOUND)
+            choice_ctrl.SetSelection(wx.NOT_FOUND)
         return True
 
     def initLevelChoice(self, level_index, auto_select=True):
@@ -233,8 +240,20 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         # Получить контрол выбора кода уровня
         choice_ctrl = self._choice_ctrl_list[level_index]
         if choice_ctrl:
-            str_code = ''.join(self._selected_code[:level_index])
-            level_choices = [(rec[0][len(str_code):], rec[1]) for rec in self._sprav.getStorage().getLevelTable(str_code)]
+            code_list = self._selected_code[:level_index]
+            if not code_list:
+                log.warning(u'Не найдены подкоды <%s : %d>' % (str(self._selected_code), level_index))
+                return False
+
+            str_code = ''.join(code_list)
+
+            level_choices = list()
+            for rec in self._sprav.getStorage().getLevelTable(str_code):
+                rec_dict = self._sprav.getStorage().getSpravFieldDict(rec, level_idx=level_index)
+                # log.debug(u'Словарь записи %s' % str(rec_dict))
+                level_choice = (rec_dict['cod'][len(str_code):], rec_dict['name'])
+                level_choices.append(level_choice)
+
             for code, name in level_choices:
                 item = choice_ctrl.Append(name)
                 choice_ctrl.SetClientData(item, code)
@@ -254,7 +273,7 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
         if level_index >= len(self._selected_code):
             return False
         choice_ctrl = self._choice_ctrl_list[level_index]
-        choice_ctrl.setSelection(item)
+        choice_ctrl.SetSelection(item)
         # Заполнить код уровня
         item_code = self.getChoiceSelectedCode(choice_ctrl, item)
         # print 'DBG. Item code:', item, item_code

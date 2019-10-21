@@ -99,7 +99,7 @@ ic_class_spc = {'type': 'FlatNotebook',
                 'page_selection': -1,
 
                 '__styles__': ic_class_styles,
-                '__events__': {'onPageChanged': ('fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED', 'OnPageChanged', False),
+                '__events__': {'onPageChanged': ('fnb.EVT_FLATNOTEBOOK_PAGE_CHANGED', 'onPageChanged', False),
                                'onPageChanging': ('fnb.EVT_FLATNOTEBOOK_PAGE_CHANGING', 'OnPageChanging', False),
                                'onPageClosing': ('fnb.EVT_FLATNOTEBOOK_PAGE_CLOSING', 'OnPageClosing', False),
                                },

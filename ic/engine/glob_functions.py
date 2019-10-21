@@ -22,7 +22,10 @@ from ic.kernel import icexceptions
 from . import glob_variables
 from ic.utils import filefunc
 
-__version__ = (0, 1, 1, 2)
+# Для возможности импортировать из этого модуля
+from ic.utils.system import *
+
+__version__ = (0, 1, 1, 3)
 
 
 def getKernel():
@@ -678,3 +681,4 @@ def getScanManager():
     """
     from ic import scanner
     return scanner.SCANNER_MANAGER
+

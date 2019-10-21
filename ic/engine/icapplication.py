@@ -242,7 +242,7 @@ class icApp(icwxapplication.icWXApp):
                 self._MainWindow.setMenuBar(self._MainMenu)
             
         # --- Показать окно ---
-        self._MainWindow.OpenWin()
+        self._MainWindow.openWin()
         self.SetTopWindow(self._MainWindow)
         return True
 

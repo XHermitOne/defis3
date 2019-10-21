@@ -107,7 +107,7 @@ ic_can_not_contain = None
 __version__ = (0, 1, 1, 1)
 
 
-class icSpravLevel(icwidget.icSimple, parentModule.icSpravLevelPrototype):
+class icSpravLevel(icwidget.icSimple, parentModule.icSpravLevelProto):
     """
     Описание пользовательского компонента.
 
@@ -141,7 +141,7 @@ class icSpravLevel(icwidget.icSimple, parentModule.icSpravLevelPrototype):
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        parentModule.icSpravLevelPrototype.__init__(self, parent, parent.getLevelCount())
+        parentModule.icSpravLevelProto.__init__(self, parent, parent.getLevelCount())
         self.ref_sprav = self.getICAttr('ref_sprav')
         self.ref_level = component['ref_level']
         self.len = self.getICAttr('len')

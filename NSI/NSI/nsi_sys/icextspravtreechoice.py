@@ -51,11 +51,12 @@ class icExtSpravTreeChoicePrototype(ext_sprav_tree_choice_panel_proto.icExtSprav
     """
     Расширенный контрол выбора элемента справочника в виде выпадающего дерева справочника.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, parent, id=None, size=wx.DefaultSize, pos=wx.DefaultPosition,
+                 style=0, popup_type=0):
         """
         Конструктор.
         """
-        ext_sprav_tree_choice_panel_proto.icExtSpravTreeChoicePanelProto.__init__(self, *args, **kwargs)
+        ext_sprav_tree_choice_panel_proto.icExtSpravTreeChoicePanelProto.__init__(self, parent=parent)
 
         # Всплывающее окно помощи
         self.help_popup_win = None

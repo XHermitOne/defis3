@@ -500,7 +500,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         # Запись в виде словаря
         item_level = self.getItemLevel(tree_ctrl=self.sprav_treeListCtrl, item=parent_item)
         # log.debug(u'Уровень элемента %d' % item_level)
-        rec_dict = self.sprav.getStorage()._getSpravFieldDict(record, level_idx=item_level)
+        rec_dict = self.sprav.getStorage().getSpravFieldDict(record, level_idx=item_level)
         code = rec_dict['cod']
         item = self.sprav_treeListCtrl.AppendItem(parent_item, code)
         self.setItemData_TreeCtrl(ctrl=self.sprav_treeListCtrl, item=item, data=rec_dict)

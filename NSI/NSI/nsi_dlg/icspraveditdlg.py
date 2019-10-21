@@ -363,7 +363,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
         # Определяем индекс уровня для поддержки icRefObject
         item_level = self.getItemLevel(tree_ctrl=self.sprav_treeCtrl, item=parent_item)
         # Запись в виде словаря
-        rec_dict = self.sprav.getStorage()._getSpravFieldDict(record, level_idx=item_level)
+        rec_dict = self.sprav.getStorage().getSpravFieldDict(record, level_idx=item_level)
         name = strfunc.toUnicode(rec_dict['name'])
         # В случае многострочных наименования выделять только первую строку
         name = [line.strip() for line in name.split(u'\n')][0]

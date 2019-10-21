@@ -212,7 +212,7 @@ class icExtSpravTreeChoice(parentModule.icExtSpravTreeChoicePrototype,
             self.childCreator(bCounter, progressDlg)
 
         # Регистрация обработчиков
-        self.Bind(wx.EVT_TEXT, self.onTextChange, id=self.sprav_tree_ctrl.GetId())
+        self.Bind(wx.EVT_TEXT, self.onTextChange, id=self.sprav_tree_choice.GetId())
         self.BindICEvt()
 
     def childCreator(self, bCounter, progressDlg):

@@ -59,7 +59,7 @@ class icSpravStorageInterface(object):
         """
         return ['cod', 'name', 's1', 's2', 's3', 'n1', 'n2', 'n3', 'f1', 'f2', 'f3', 'access']
 
-    def _getSpravFieldDict(self, field_values, level_idx=0):
+    def getSpravFieldDict(self, field_values, level_idx=0):
         """
         Получить запись таблицы данных справочника в виде словаря.
         @param field_values: Список значений записи таблицы значений уровня.
@@ -67,7 +67,7 @@ class icSpravStorageInterface(object):
             Если не определен, то индекс определяется как индекс самого верхнего уровня.
         @return: запись таблицы данных справочника в виде словаря.
         """
-        log.warning(u'Не определен метод _getSpravFieldDict в <%s>' % self.__class__.__name__)
+        log.warning(u'Не определен метод getSpravFieldDict в <%s>' % self.__class__.__name__)
         return dict()
 
     def _str(self, value):
@@ -578,7 +578,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         """
         try:
             sprav_type = self.getSpravParent().getName()
-            field_data = self._getSpravFieldDict(record_data)
+            field_data = self.getSpravFieldDict(record_data)
             return self._tab.update(id=record[0], type=sprav_type, count=0, **field_data)
         except:
             log.fatal(u'Ошибка обновления записи в таблице данных справочника [%s].' % self.getSpravParent().getName())
@@ -606,7 +606,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         """
         try:
             sprav_type = self.getSpravParent().getName()
-            field_data = self._getSpravFieldDict(record_data)
+            field_data = self.getSpravFieldDict(record_data)
             
             if ('uuid' not in field_data) or (not field_data['uuid']):
                 # Если уникальный идентификатор записи не определен,
@@ -628,7 +628,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         """
         try:
             sprav_type = self.getSpravParent().getName()
-            field_data = self._getSpravFieldDict(record_data)
+            field_data = self.getSpravFieldDict(record_data)
             return table.add(type=sprav_type, id_nsi_data=record_id,
                              time_start=str(dt), time_end='', **field_data)
         except:
@@ -880,9 +880,13 @@ class icSpravSQLStorage(icSpravStorageInterface,
             log.fatal(u'Ошибка удаления таблицы данных уровня справочника %s.' % self.getSpravParent().getName())
             return False
 
-    def getSpravFieldNames(self):
+    def getSpravFieldNames(self, level_idx=0):
         """
         Список имен полей таблицы данных справочника.
+        @param level_idx: Индекс уровня объекта-ссылки/справочника.
+            Если не определен, то индекс определяется как индекс самого верхнего уровня.
+            Для справочников это параметр не нужен.
+            Он введен для совместимости интерфейсов с объектом-ссылкой.
         """
         if self._tab:
             field_names = [fld_name for fld_name in self._tab.getFieldNames() if fld_name not in RESERVER_FIELD_NAMES]
@@ -938,7 +942,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
                     icSpravStorageInterface.float, icSpravStorageInterface.float,
                     icSpravStorageInterface.float, icSpravStorageInterface.str]
 
-    def _getSpravFieldDict(self, field_values, level_idx=0):
+    def getSpravFieldDict(self, field_values, level_idx=0):
         """
         Получить запись таблицы данных справочника в виде словаря.
         @param field_values: Список значений записи таблицы значений уровня.
@@ -1082,7 +1086,7 @@ class icSpravSQLStorage(icSpravStorageInterface,
         if cod:
             return self.getRecByFieldValue('cod', cod, dt)
         else:
-            log.warning(u'Не определен код для получения словаря записи справочника <%s>' % self.getName())
+            log.warning(u'Не определен код для получения словаря записи справочника <%s>' % self.getSpravParent().getName())
         return None
 
     def delRecByCod(self, cod, dt=None, bIsCascade=True):

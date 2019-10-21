@@ -349,6 +349,10 @@ def get_absolute_path(path, cur_dir=None):
             log.error(u'Не определен путь для приведения к абсолютному виду')
             return None
 
+        if not isinstance(path, str):
+            log.warning(u'Не корректный тип пути <%s : %s>' % (str(path), type(path)))
+            return path
+
         # Нормализация текущего пути
         cur_dir = getCurDirPrj(cur_dir)
 
@@ -357,7 +361,7 @@ def get_absolute_path(path, cur_dir=None):
         return path
     except:
         log.fatal(u'Ошибка определения абсолютног пути <%s>. Текущая директория <%s>' % (path, cur_dir))
-        return path
+    return path
 
 
 def getPathFile(path, filename):

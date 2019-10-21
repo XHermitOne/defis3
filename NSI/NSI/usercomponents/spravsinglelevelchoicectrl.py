@@ -189,7 +189,7 @@ class icSpravSingleLevelChoiceCtrl(parentModule.icSpravSingleLevelChoiceCtrlProt
 
     def onSelectCode(self):
         """
-        Код, который выполняется когда заполняеться код справочника.
+        Код, который выполняется когда заполняется код справочника.
         """
         context = self.GetContext()
         context['SELECTED_CODE'] = self._selected_code

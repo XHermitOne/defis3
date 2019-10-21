@@ -325,7 +325,7 @@ class icRefSQLStorage(icRefStorageInterface):
         sprav_table = self.getSpravParent().getTable()
         return sprav_table.is_empty()
 
-    def _getSpravFieldDict(self, field_values, level_idx=0):
+    def getSpravFieldDict(self, field_values, level_idx=0):
         """
         Получить запись таблицы данных справочника в виде словаря.
         @param field_values: Список значений записи таблицы значений уровня.

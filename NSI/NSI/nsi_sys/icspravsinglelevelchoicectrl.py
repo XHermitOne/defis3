@@ -5,6 +5,8 @@
 Контрол выбора кода элемента справочника одного уровня.
 """
 
+import sqlalchemy.sql.functions
+import sqlalchemy.sql.expression
 import wx
 
 from ic.components import icwidget
@@ -95,7 +97,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
                     self.SetLabel(label)
             # Контрол уровня
             self._selected_code = None    # * self._sprav.getLevelCount()
-            # self._choice_ctrl_list = []
+
             sprav_levels = self._sprav.getLevels()
             n_level = self.getNLevel()
             if 0 <= n_level < self._sprav.getLevelCount():
@@ -103,11 +105,28 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
                 description = level.description if level.description else u''
                 label = wx.StaticText(self.scrolled_win, wx.ID_ANY, description,
                                       wx.DefaultPosition, wx.DefaultSize, 0)
-                level_choices = [(rec[0], rec[1]) for rec in self._sprav.getStorage().getLevelTable()]
+
+                # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+                # Блок получения списка выбора
+                level_choices = list()
+                level_table = level.getTable()
+                cod_length = sum([cur_level.getCodLen() for cur_level in sprav_levels[:n_level + 1]])
+                field_names = self._sprav.getStorage().getSpravFieldNames(level_idx=n_level)
+                level_table_columns = [getattr(level_table.c, field_name) for field_name in field_names]
+                recordset = sqlalchemy.sql.expression.select(level_table_columns).where(sqlalchemy.sql.functions.char_length(level_table.c.cod) == cod_length).execute()
+                all_records = [tuple(record) for record in recordset]
+                for rec in all_records:
+                    rec_dict = self._sprav.getStorage().getSpravFieldDict(rec, level_idx=n_level)
+                    log.debug(u'Запись в виде словаря %s' % str(rec_dict))
+                    level_choice = (rec_dict['cod'], rec_dict['name'])
+                    level_choices.append(level_choice)
+                # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
                 choice_id = wx.NewId()
                 self._choice = wx.Choice(self.scrolled_win, choice_id,
                                          wx.DefaultPosition, wx.DefaultSize)
                 for code, name in level_choices:
+                    log.debug(u'Элемент списка выбора <%s : %s>' % (str(code), str(name)))
                     item = self._choice.Append(name)
                     self._choice.SetClientData(item, code)
 
@@ -183,7 +202,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
             # в функции selectLevelChoice. Поэтому
             # здесь инициализировать его не надо.
             selected_code = self._sprav.StrCode2ListCode(code)
-            # for idx, subcode in enumerate(selected_code):
+
             item = self.findItemIdxByCode(selected_code)
             if item >= 0:
                 self.selectLevelChoice(item)
@@ -224,7 +243,6 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
         for i in range(min_index, max_index+1):
             # Очистить коды этих уровней
             self._selected_code[i] = None
-            # if self._choice_ctrl_list[idx]:
             # Очистить списки контролов выбора
             self._choice.Clear()
         return True
@@ -233,7 +251,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
         """
         Очистить выбор контролов.
         """
-        self._choice.setSelection(wx.NOT_FOUND)
+        self._choice.SetSelection(wx.NOT_FOUND)
         return True
 
     def initLevelChoice(self):
@@ -250,13 +268,31 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
         # Получить контрол выбора кода уровня
         choice_ctrl = self._choice
         if choice_ctrl:
-            str_code = ''.join(self._selected_code)
-            level_choices = [(rec[0][len(str_code):], rec[1]) for rec in self._sprav.getStorage().getLevelTable(str_code)]
+            sprav_levels = self._sprav.getLevels()
+            n_level = self.getNLevel()
+            level_choices = list()
+            if 0 <= n_level < self._sprav.getLevelCount():
+                level = sprav_levels[n_level]
+
+                # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+                # Блок получения списка выбора
+                level_table = level.getTable()
+                cod_length = sum([cur_level.getCodLen() for cur_level in sprav_levels[:n_level + 1]])
+                field_names = self._sprav.getStorage().getSpravFieldNames(level_idx=n_level)
+                level_table_columns = [getattr(level_table.c, field_name) for field_name in field_names]
+                recordset = sqlalchemy.sql.expression.select(level_table_columns).where(
+                    sqlalchemy.sql.functions.char_length(level_table.c.cod) == cod_length).execute()
+                all_records = [tuple(record) for record in recordset]
+                for rec in all_records:
+                    rec_dict = self._sprav.getStorage().getSpravFieldDict(rec, level_idx=n_level)
+                    log.debug(u'Запись в виде словаря %s' % str(rec_dict))
+                    level_choice = (rec_dict['cod'], rec_dict['name'])
+                    level_choices.append(level_choice)
+                # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
             for code, name in level_choices:
                 item = choice_ctrl.Append(name)
                 choice_ctrl.SetClientData(item, code)
-            # if auto_select:
-            #     self.selectLevelChoice()
         return True
 
     def selectLevelChoice(self, item=0):
@@ -266,22 +302,13 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
         @return: True/False.
         """
         choice_ctrl = self._choice
-        choice_ctrl.setSelection(item)
+        choice_ctrl.SetSelection(item)
         # Заполнить код уровня
         item_code = self.getChoiceSelectedCode(choice_ctrl, item)
-        # print 'DBG. Item code:', item, item_code
         self._selected_code = item_code
-        # print 'DBG. Selected code', self._selected_code
 
         # Заполнили код и надо выполнить код
         self.onSelectCode()
-
-        i = choice_ctrl.level_index+1
-        # Очистить нижестоящие уровни
-        self.clearLevelChoice(i)
-        # После заполнения кода надо определить список следующего уровня
-        if i < len(self._selected_code):
-            self.initLevelChoice()
 
     def getNLevel(self):
         """

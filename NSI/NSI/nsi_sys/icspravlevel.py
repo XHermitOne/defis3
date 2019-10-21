@@ -149,8 +149,15 @@ class icSpravLevelInterface(object):
         log.warning(u'Не определен метод getDelCtrl в <%s>' % self.__class__.__name__)
         return None
 
+    def getTable(self):
+        """
+        Таблица хранения данных уровня.
+        """
+        log.warning(u'Не определен метод getTable в <%s>' % self.__class__.__name__)
+        return None
 
-class icSpravLevelPrototype(icSpravLevelInterface):
+
+class icSpravLevelProto(icSpravLevelInterface):
     """
     Класс уровня справочника.
     """
@@ -193,7 +200,7 @@ class icSpravLevelPrototype(icSpravLevelInterface):
         """
         Есть ли следующий уровень в справочнике.
         """
-        return bool((self._sprav.getLevelCount()-1) > self._index)
+        return bool((self._sprav.getLevelCount() - 1) > self._index)
 
     def getNext(self):
         """
@@ -206,11 +213,18 @@ class icSpravLevelPrototype(icSpravLevelInterface):
             return next_level
         except:
             log.fatal(u'УРОВЕНЬ СПРАВОЧНИКА <%s> Ошибка определения следующего уровня справочника' % self.name)
-            return None
+        return None
 
     def getPrev(self):
         """
-        Предыдущий уровеньв справочнике.
+        Предыдущий уровень в справочнике.
         """
         if self._index > 0:
             return self._sprav.getLevelByIdx(self._index - 1)
+        return None
+
+    def getTable(self):
+        """
+        Таблица хранения данных уровня.
+        """
+        return self.getSprav().getTable()

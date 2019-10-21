@@ -281,7 +281,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
                 res_ext = '.frm'
 
             # Создание объекта страницы
-            main_notebook = self.GetMainNotebook()
+            main_notebook = self.getMainNotebook()
             page_parent = main_notebook if main_notebook else self
             page = icResourceParser.icCreateObject(res_name, res_ext[1:],
                                                    parent=page_parent)

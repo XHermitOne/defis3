@@ -486,6 +486,7 @@ class icMainWindow(wx.Frame):
         self.central_panel = None
 
         # --- Объект-содержание главного окна ---
+        self.content_obj = None
         content_psp = win_struct.get('content', None)
         if content_psp:
             self.content_obj = ickernel.getKernel().Create(content_psp, parent=self)
@@ -572,7 +573,7 @@ class icMainWindow(wx.Frame):
         Обработчик отрисовки фона главного окна.
         """
         try:
-            self.RefreshTitle()
+            self.refreshTitle()
 
             if self._PaintFunc:
                 # Если главный органайзер не отображается в данный момент,
@@ -705,7 +706,7 @@ class icMainWindow(wx.Frame):
         ext_prg.run_external_programm()
         event.Skip()
 
-    def SetICTitle(self, title=''):
+    def setTitle(self, title=''):
         """
         Установить заголовок.
         """
@@ -718,14 +719,14 @@ class icMainWindow(wx.Frame):
                 if new_title != '' and new_title is not None:
                     self.SetTitle(new_title)
 
-    def SetTitleFunc(self, title_func):
+    def setTitleFunc(self, title_func):
         """
         Установить метод заполнения заголовка.
         @param title_func: Словарь функции метода заполнения заголовка.
         """
         self._TitleFunc = title_func
 
-    def RefreshTitle(self):
+    def refreshTitle(self):
         """
         Обновить заголовок.
         """
@@ -737,26 +738,26 @@ class icMainWindow(wx.Frame):
         except:
             log.fatal(u'Ошибка выполнения функции обновления заголовка главного окна.')
 
-    def SetTitleReadOnly(self, bTitleReadOnly):
+    def setTitleReadOnly(self, bTitleReadOnly):
         """
         Установить Флаг разрешения/запрещения изменения заголовка окна.
         """
         self._TitleReadOnly = bTitleReadOnly
 
-    def GetMainNotebook(self):
+    def getMainNotebook(self):
         """
         Определить главный органайзер.
         """
         return self._MainNotebook
 
-    def OpenWin(self):
+    def openWin(self):
         """
         Открыть окно.
         """
-        self.SetICTitle()
+        self.setTitle()
         self.Show(True)
 
-    def CloseWin(self):
+    def closeWin(self):
         """
         Закрыть окно.
         """
@@ -800,7 +801,7 @@ class icMainWindow(wx.Frame):
                                               close_script, default_page)
         except:
             log.fatal(u'Ошибка добавления страницы в главное окно.')
-            return None
+        return None
 
     # Можно использовать и другое наименование метода
     addPage = addOrgPage
