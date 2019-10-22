@@ -8,7 +8,7 @@
 ###########################################################################
 
 import wx
-import wx.xrc
+import wx.adv
 from wx.lib import masked
 
 ###########################################################################
@@ -34,7 +34,7 @@ class icLogBrowserPanelProto ( wx.Panel ):
 		self.start_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Вкл.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		dtSizer.Add( self.start_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.start_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.start_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		self.start_datePicker.Enable( False )
 		
 		dtSizer.Add( self.start_datePicker, 1, wx.ALL|wx.EXPAND, 5 )
@@ -56,7 +56,7 @@ class icLogBrowserPanelProto ( wx.Panel ):
 		self.stop_checkBox = wx.CheckBox( self, wx.ID_ANY, u"Вкл.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		dtSizer.Add( self.stop_checkBox, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.stop_datePicker = wx.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.DP_DEFAULT )
+		self.stop_datePicker = wx.adv.DatePickerCtrl( self, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
 		self.stop_datePicker.Enable( False )
 		
 		dtSizer.Add( self.stop_datePicker, 1, wx.ALL|wx.EXPAND, 5 )
@@ -179,7 +179,7 @@ class icLogBrowserDialogProto ( wx.Dialog ):
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Список сообщений программы", pos = wx.DefaultPosition, size = wx.Size( 1220,475 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
-		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		
 		bSizer6 = wx.BoxSizer( wx.VERTICAL )
 		

@@ -22,7 +22,7 @@ from ic.utils import util
 
 import ic.interfaces.icdataclassinterface as icdataclassinterface
 
-__version__ = (0, 1, 5, 1)
+__version__ = (0, 1, 5, 2)
 
 # Спецификации
 # Результат запроса (словарно-списковое представление)
@@ -351,7 +351,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         prj_res_manager = self._get_prj_res_manager()
         return prj_res_manager.isRes(tab_resname, 'tab')
 
-    def to_table(self, table=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True):
+    def to_table(self, table=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True, **kwargs):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -363,20 +363,22 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         @param bData: Заполнить таблицу данными автоматически?
         @param bClear: Произвести предварительную очистку данных при заполнении?
         @param bTransact: Сделать сохранение данных одной транзакцией?
+        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+            SQL запроса.
         @return: True/False.
         """
         if isinstance(table, str) or table is None:
             return self._to_table_by_name(table, bReCreateRes=bReCreateRes, bData=bData,
-                                          bClear=bClear, bTransact=bTransact)
+                                          bClear=bClear, bTransact=bTransact, **kwargs)
         elif toolfunc.is_pasport(table):
             kernel = glob_functions.getKernel()
             tab = kernel.Create(passport=table)
             return self._to_table(tab, bReCreateRes=bReCreateRes, bData=bData,
-                                  bClear=bClear, bTransact=bTransact)
+                                  bClear=bClear, bTransact=bTransact, **kwargs)
         return self._to_table(table, bReCreateRes=bReCreateRes, bData=bData,
-                              bClear=bClear, bTransact=bTransact)
+                              bClear=bClear, bTransact=bTransact, **kwargs)
 
-    def _to_table(self, table, bReCreateRes=False, bData=True, bClear=False, bTransact=True):
+    def _to_table(self, table, bReCreateRes=False, bData=True, bClear=False, bTransact=True, **kwargs):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -386,6 +388,8 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         @param bData: Заполнить таблицу данными автоматически?
         @param bClear: Произвести предварительную очистку данных при заполнении?
         @param bTransact: Сделать сохранение данных одной транзакцией?
+        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+            SQL запроса.
         @return: True/False.
         """
         if table is None:
@@ -411,13 +415,13 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
                 return False
 
         if bData:
-            data = self.execute()
+            data = self.fetchAllRecs(**kwargs)
             # Заполнить таблицу данными
             result = self.saveData(table, dataset=data, bClear=bClear, bTransact=bTransact)
 
         return result
 
-    def _to_table_by_name(self, table_name=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True):
+    def _to_table_by_name(self, table_name=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True, **kwargs):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -428,6 +432,8 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         @param bData: Заполнить таблицу данными автоматически?
         @param bClear: Произвести предварительную очистку данных при заполнении?
         @param bTransact: Сделать сохранение данных одной транзакцией?
+        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+            SQL запроса.
         @return: True/False.
         """
         if table_name is None:
@@ -451,7 +457,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
             return False
 
         if bData:
-            data = self.execute()
+            data = self.fetchAllRecs(**kwargs)
             # Заполнить таблицу данными
             result = self.saveData(table_name, dataset=data, bClear=bClear, bTransact=bTransact)
 
