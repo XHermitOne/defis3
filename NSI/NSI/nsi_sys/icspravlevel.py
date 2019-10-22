@@ -87,20 +87,6 @@ class icSpravLevelInterface(object):
         """
         return self._index
 
-    def isNext(self):
-        """
-        Есть ли следующий уровень в справочнике.
-        """
-        log.warning(u'Не определен метод isNext в <%s>' % self.__class__.__name__)
-        return False
-
-    def getNext(self):
-        """
-        Следующий уровеньв справочнике.
-        """
-        log.warning(u'Не определен метод getNext в <%s>' % self.__class__.__name__)
-        return None
-
     def getSprav(self):
         """
         Справочник-родитель.
@@ -149,12 +135,38 @@ class icSpravLevelInterface(object):
         log.warning(u'Не определен метод getDelCtrl в <%s>' % self.__class__.__name__)
         return None
 
+    def isNext(self):
+        """
+        Есть ли следующий уровень в справочнике.
+        """
+        return bool((self.getSprav().getLevelCount() - 1) > self.getIndex())
+
+    def getNext(self):
+        """
+        Следующий уровеньв справочнике.
+        """
+        try:
+            if not self.isNext():
+                return None
+            next_level = self.getSprav().getLevelByIdx(self.getIndex() + 1)
+            return next_level
+        except:
+            log.fatal(u'УРОВЕНЬ СПРАВОЧНИКА <%s> Ошибка определения следующего уровня справочника' % self.name)
+        return None
+
+    def getPrev(self):
+        """
+        Предыдущий уровень в справочнике.
+        """
+        if self._index > 0:
+            return self.getSprav().getLevelByIdx(self.getIndex() - 1)
+        return None
+
     def getTable(self):
         """
         Таблица хранения данных уровня.
         """
-        log.warning(u'Не определен метод getTable в <%s>' % self.__class__.__name__)
-        return None
+        return self.getSprav().getTable()
 
 
 class icSpravLevelProto(icSpravLevelInterface):
@@ -195,36 +207,3 @@ class icSpravLevelProto(icSpravLevelInterface):
         except:
             log.fatal(u'Ошибка определения списка замен имен реквизитов')
         return labels
-
-    def isNext(self):
-        """
-        Есть ли следующий уровень в справочнике.
-        """
-        return bool((self._sprav.getLevelCount() - 1) > self._index)
-
-    def getNext(self):
-        """
-        Следующий уровеньв справочнике.
-        """
-        try:
-            if not self.isNext():
-                return None
-            next_level = self._sprav.getLevelByIdx(self._index + 1)
-            return next_level
-        except:
-            log.fatal(u'УРОВЕНЬ СПРАВОЧНИКА <%s> Ошибка определения следующего уровня справочника' % self.name)
-        return None
-
-    def getPrev(self):
-        """
-        Предыдущий уровень в справочнике.
-        """
-        if self._index > 0:
-            return self._sprav.getLevelByIdx(self._index - 1)
-        return None
-
-    def getTable(self):
-        """
-        Таблица хранения данных уровня.
-        """
-        return self.getSprav().getTable()

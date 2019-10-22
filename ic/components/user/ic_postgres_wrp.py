@@ -31,6 +31,7 @@ from ic.PropertyEditor import icDefInf
 from ic.utils import toolfunc
 
 from ic.db import icdb
+from ic.db import icPostgreSQL as postgresql_func
 
 #   Тип компонента
 ic_class_type = icDefInf._icDatasetType
@@ -143,3 +144,15 @@ class icPostgreSQL(icwidget.icSimple, icdb.icSQLAlchemyDB):
         """
         db_url = self.getDBUrl()
         return icPostgreSQL.countActiveConnections(db_url)
+
+    def _adaptFieldDescription(self, *field_description):
+        """
+        Преобразовать описания полей во внутренний вариан описаний.
+        @param field_description: Список описаний полей DBAPI2.
+        @return: Список описаний полей во внутреннем формате:
+            [
+            ('Имя поля', 'Тип поля (T, I, F, DateTime, Boolean и т.п)', Длина поля),
+            ...
+            ]
+        """
+        return postgresql_func.psycopg2_field_description2fields(*field_description)

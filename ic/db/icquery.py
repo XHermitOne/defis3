@@ -198,8 +198,9 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
             sql_txt = self._sql_txt.replace('\\n', UNIX_CR)
 
             # Сгенерировать запрос для последующего использования
-            template = template = jinja2.Template(sql_txt)
+            template = jinja2.Template(sql_txt)
             result_sql_txt = template.render(**kwargs)
+            log.debug(u'Сгенерированный текст SQL (Параметры %s):\n%s' % (str(kwargs), result_sql_txt))
         except:
             log.fatal(u'Ошибка генерации текста SQL запроса <%s>\nПараметры SQL запроса %s' % (sql_txt, str(kwargs)))
 
@@ -290,7 +291,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
             try:
                 result = data_src.executeSQLOne(sql_txt)
             except:
-                log.fatal(u'QUERY: Ошибка выполнения запроса: %s' % sql_txt)
+                log.fatal(u'QUERY: Ошибка выполнения запроса для получения одной записи: %s' % sql_txt)
         return result
 
     def get_normalized(self, query_result=None):
@@ -325,6 +326,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         """
         Имя объекта.
         """
+        log.warning(u'Не определен метод получения наименования компонента <%s>' % self.__class__.__name__)
         return u'query'
 
     def _get_prj_res_manager(self, bOpenPrj=True):
@@ -351,7 +353,8 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         prj_res_manager = self._get_prj_res_manager()
         return prj_res_manager.isRes(tab_resname, 'tab')
 
-    def to_table(self, table=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True, **kwargs):
+    def to_table(self, table=None, bReCreateRes=False, bData=True, bClear=False, \
+                 bTransact=True, **kwargs):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -378,7 +381,8 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         return self._to_table(table, bReCreateRes=bReCreateRes, bData=bData,
                               bClear=bClear, bTransact=bTransact, **kwargs)
 
-    def _to_table(self, table, bReCreateRes=False, bData=True, bClear=False, bTransact=True, **kwargs):
+    def _to_table(self, table, bReCreateRes=False, bData=True, bClear=False,
+                  bTransact=True, **kwargs):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -405,7 +409,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
             prj_res_manager.delRes(table_name, 'tab')
 
             # Создаем ресурс заново
-            result = self.createTableResource(table_name=table_name)
+            result = self.createTableResource(table_name=table_name, **kwargs)
 
             # Проверяем есть ли ресурс таблицы для выгрузки
             # Если его нет то выгрузка не возможна
@@ -421,7 +425,8 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
 
         return result
 
-    def _to_table_by_name(self, table_name=None, bReCreateRes=False, bData=True, bClear=False, bTransact=True, **kwargs):
+    def _to_table_by_name(self, table_name=None, bReCreateRes=False, bData=True,
+                          bClear=False, bTransact=True, **kwargs):
         """
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
@@ -447,7 +452,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
             prj_res_manager.delRes(table_name, 'tab')
 
             # Создаем ресурс заново
-            result = self.createTableResource(table_name=table_name)
+            result = self.createTableResource(table_name=table_name, **kwargs)
 
         # Проверяем есть ли ресурс таблицы для выгрузки
         # Если его нет то выгрузка не возможна
@@ -463,9 +468,14 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
 
         return result
 
-    def createTableResource(self, table_name=None):
+    def createTableResource(self, table_name=None, **kwargs):
         """
         Построить ресурсное описание по этому компоненту.
+        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+            SQL запроса.
+            Необходимо для получения полноценного запроса и получения первой
+            результирующей записи.
+            По первой записи и определяются описяния полей.
         @return: True - ресурс таблицы создан / False - ресур таблицы не создан.
         """
         if table_name is None:
@@ -475,7 +485,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
             log.warning(u'ВНИМАНИЕ! Создается ресурс таблицы <%s>' % table_name)
             tab_res = self._createTabSpc()
 
-            children_fld = self._getFields()
+            children_fld = self._getFields(**kwargs)
             for child_fld in children_fld:
                 fld_spc = self._createFieldSpc(**child_fld)
                 tab_res['child'].append(fld_spc)
@@ -498,13 +508,19 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         self._prj_res_manager = None
         return True
 
-    def _getFields(self):
+    def _getFields(self, **kwargs):
         """
         Описание дочерних полей.
+        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+            SQL запроса.
+            Необходимо для получения полноценного запроса и получения первой
+            результирующей записи.
+            По первой записи и определяются описяния полей.
         """
-        query_result = self.fetchOneRec()
+        query_result = self.fetchOneRec(**kwargs)
         # rec_dict = self.get_normalized(record)
 
+        log.debug(u'Описания полей %s' % str(query_result['__fields__']))
         return [dict(name=field[0], type_val=field[1], length=field[2]) for field in query_result['__fields__']]
 
     def _createTabSpc(self, table_name=None):

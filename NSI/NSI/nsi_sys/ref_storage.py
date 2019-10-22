@@ -236,7 +236,8 @@ class icRefSQLStorage(icRefStorageInterface):
         @return: Индекс уровня или None в случае ошибки или
             если код не принадлежит ни одному уровню.
         """
-        if level_cod is None:
+        if not level_cod:
+            log.warning(u'Не определен код для получения индекса уровня')
             return None
         level_cod_length = len(level_cod)
         levels = self.getParent().getLevels()
@@ -264,7 +265,9 @@ class icRefSQLStorage(icRefStorageInterface):
         """
         try:
             levels = self.getParent().getLevels()
-            if level_cod is None:
+            if not level_cod:
+                # Если не определен код уровня, то считаем что запрашивается
+                # таблица самого верхнего уровня
                 level_idx = 0
                 level_table = levels[level_idx].getTable()
                 # Если запрашивается самый верхний уровень, то берем все значения

@@ -34,11 +34,14 @@ SELECT * FROM pg_stat_activity;
 *******************************************************************
 """
 
+import psycopg2.extensions
 import sqlalchemy
 
 from ic.components import icwidget
 
 from ic.log import log
+
+from . import field_types
 
 __version__ = (0, 1, 2, 1)
 
@@ -99,3 +102,32 @@ def countActiveConnectionsPostgreSQL(db_url=None):
         return -1
     return len(records)
 
+
+_PSYCOPG2_COLUMN_TYPES2FIELD_TYPE = {'STRING': field_types.TEXT_FIELD_TYPE,
+                                     'INTEGER': field_types.INT_FIELD_TYPE,
+                                     'FLOAT': field_types.FLOAT_FIELD_TYPE,
+                                     'DATE': field_types.DATE_FIELD_TYPE,
+                                     'DATETIME': field_types.DATETIME_FIELD_TYPE,
+                                     'BOOLEAN': field_types.BOOLEAN_FIELD_TYPE,
+                                     'LONGINTEGER': field_types.BIGINT_FIELD_TYPE,
+                                     'BINARYARRAY': field_types.BINARY_FIELD_TYPE}
+
+
+def psycopg2_field_description2fields(*field_description):
+    """
+    Преобразовать описания полей во внутренний вариан описаний.
+    @param field_description: Список описаний полей DBAPI2.
+        Описания полей ожидаются как описания колонок psycopg2.
+    @return: Список описаний полей во внутреннем формате:
+        [
+        ('Имя поля', 'Тип поля (T, I, F, DateTime, Boolean и т.п)', Длина поля),
+        ...
+        ]
+    """
+    new_fields = [(column.name,
+                   _PSYCOPG2_COLUMN_TYPES2FIELD_TYPE.get(psycopg2.extensions.string_types.get(column.type_code, None),
+                                                         'T'),
+                   column.internal_size,
+                   column.precission) if isinstance(column,
+                                                    psycopg2.extensions.Column) else tuple(column) for column in field_description]
+    return new_fields

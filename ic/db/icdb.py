@@ -56,6 +56,8 @@ def createDBUrl(res):
     Функция создает URL БД по ее спецификации/ресурсному описанию.
     @param res: Ресурс БД.
     @return: Строка URL БД.
+        Например:
+            postgresql://username:password@host:port/dbname
     """
     db_type = res.get('type', POSTGRES_DB_TYPE)
     db_driver = DB_TYPE_URL_DRIVER.get(db_type, DEFAULT_DB_URL_DRIVER)
@@ -579,6 +581,20 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
 
         return result
 
+    def _adaptFieldDescription(self, *field_description):
+        """
+        Преобразовать описания полей во внутренний вариан описаний.
+        Метод абстрактный и переопределяется для каждой БД отдельно.
+        @param field_description: Список описаний полей DBAPI2.
+        @return: Список описаний полей во внутреннем формате:
+            [
+            ('Имя поля', 'Тип поля (T, I, F, DateTime, Boolean и т.п)', Длина поля),
+            ...
+            ]
+        """
+        log.warning(u'Не определен метод _adaptFieldDescription для БД <%s>' % self.__class__.__name__)
+        return field_description
+
     def executeSQLOne(self, sql_query, to_dict=False):
         """
         Выполнить строку запроса и вернуть только одну запись.
@@ -595,8 +611,8 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
             cursor = connection.cursor()
             cursor.execute(sql_query)
             if self._isSQLReturnResult(sql_query):
-                fields = cursor.description
-                # log.debug(u'SQL: %s RESULT FIELDS: %s' % (ic_str.toUnicode(sql_query), fields))
+                fields = self._adaptFieldDescription(cursor.description)
+                # log.debug(u'Результирующие поля: %s' % str([str(field) for field in fields]))
                 data = cursor.fetchone()
                 if data and to_dict:
                     new_data = [dict([(fields[i][0], val) for i, val in enumerate(rec)]) for rec in data]
@@ -604,10 +620,9 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
                 result = copy.deepcopy({'__fields__': fields, '__data__': data})
             cursor.close()
         except:
-            err_txt = u'Ошибка выполнения запроса <%s>' % str(sql_query)
+            err_txt = u'DBAPI2. Ошибка выполнения запроса для получения одной записи <%s>' % str(sql_query)
             log.fatal(err_txt)
             dlgfunc.openErrBox(u'ОШИБКА', err_txt)
-
             return None
 
         return result

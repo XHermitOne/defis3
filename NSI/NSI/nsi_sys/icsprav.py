@@ -585,6 +585,7 @@ class icSpravInterface(object):
         """
         Код родительского уровня.
         @param cod: Код.
+        @return: Код родительского уровня.
         """
         return ''.join([subcode for subcode in self.StrCode2ListCode(cod) if bool(subcode)][:-1])
 
@@ -881,7 +882,7 @@ class icSpravProto(icSpravInterface):
             # Список имен полей
             field_names = storage.getSpravFieldNames()
             # Словарь индексов
-            field_indexes = dict([(item[1], item[0]) for item in enumerate(field_names)])
+            field_indexes = dict([(field_name, i) for i, field_name in enumerate(field_names)])
             field_idx = field_indexes[field]
 
             # Перебор строк
@@ -932,8 +933,7 @@ class icSpravProto(icSpravInterface):
 
         #   Используем функцию для контроля. Она возвращает словарь значений.
         level_cod = self.getParentLevelCod(cod)
-        ctrlCod, dict = self.Ctrl(cod, None, 'cod', fldDict,
-                                  cod=level_cod, dt=dt)
+        ctrlCod, dict = self.Ctrl(cod, None, 'cod', fldDict, cod=level_cod, dt=dt)
 
         if ctrlCod != IC_CTRL_OK:
             ret = None

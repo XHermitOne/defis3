@@ -101,7 +101,7 @@ ic_can_contain = ['Field']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # --- Функции редактирования ---
@@ -143,7 +143,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspEdt.str_to_val_user_property(text, propEdt)
 
 
-class icQuery(icwidget.icSimple, icquery.icQueryProto):
+class icQuery(icquery.icQueryProto, icwidget.icSimple):
     """
     Запрос к источнику данных в табличном представлении.
     """
@@ -213,3 +213,9 @@ class icQuery(icwidget.icSimple, icquery.icQueryProto):
                 self.data_source = self.GetKernel().getObjectByPsp(self._data_src)
 
         return self.data_source
+
+    def getName(self):
+        """
+        Имя объекта.
+        """
+        return icwidget.icSimple.getName(self)

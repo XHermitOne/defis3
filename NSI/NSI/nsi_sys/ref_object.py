@@ -269,6 +269,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
 
         # Используем функцию для контроля. Она возвращает словарь значений.
         level_cod = self.getParentLevelCod(cod)
+        log.debug(u'Код родительского уровня <%s>' % level_cod)
         ctrl_cod, ctrl_dict = self.Ctrl(cod, None, 'cod', field_dict, cod=level_cod, dt=dt)
 
         if ctrl_cod != coderror.IC_CTRL_OK:
@@ -310,12 +311,14 @@ class icRefObjectProto(icsprav.icSpravInterface):
         try:
             storage = self.getStorage()
             level_tab = storage.getLevelTable(cod, dt)
+            # Получаем следующий уровень за уровнем родительского кода
+            level = self.getLevelByCod(cod).getNext() if cod else self.getLevels()[0]
             # Список имен полей
-            level = self.getLevelByCod(cod)
             field_names = storage.getSpravFieldNames(level_idx=level.getIndex())
             # Словарь индексов
-            field_indexes = dict([(item[1], item[0]) for item in enumerate(field_names)])
+            field_indexes = dict([(field_name, i) for i, field_name in enumerate(field_names)])
             field_idx = field_indexes[field]
+            log.debug(u'Уровень %d %s %s' % (level.getIndex(), str(field_names), str(field_indexes)))
 
             # Перебор строк
             for rec in level_tab:
