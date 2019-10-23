@@ -105,9 +105,11 @@ def countActiveConnectionsPostgreSQL(db_url=None):
 
 _PSYCOPG2_COLUMN_TYPES2FIELD_TYPE = {'STRING': field_types.TEXT_FIELD_TYPE,
                                      'INTEGER': field_types.INT_FIELD_TYPE,
+                                     'DECIMAL': field_types.INT_FIELD_TYPE,
                                      'FLOAT': field_types.FLOAT_FIELD_TYPE,
                                      'DATE': field_types.DATE_FIELD_TYPE,
                                      'DATETIME': field_types.DATETIME_FIELD_TYPE,
+                                     'DATETIMETZ': field_types.DATETIME_FIELD_TYPE,
                                      'BOOLEAN': field_types.BOOLEAN_FIELD_TYPE,
                                      'LONGINTEGER': field_types.BIGINT_FIELD_TYPE,
                                      'BINARYARRAY': field_types.BINARY_FIELD_TYPE}
@@ -115,7 +117,7 @@ _PSYCOPG2_COLUMN_TYPES2FIELD_TYPE = {'STRING': field_types.TEXT_FIELD_TYPE,
 
 def psycopg2_field_description2fields(*field_description):
     """
-    Преобразовать описания полей во внутренний вариан описаний.
+    Преобразовать описания полей DBAPI2 psycopg2 во внутренний вариан описаний.
     @param field_description: Список описаний полей DBAPI2.
         Описания полей ожидаются как описания колонок psycopg2.
     @return: Список описаний полей во внутреннем формате:
@@ -124,10 +126,34 @@ def psycopg2_field_description2fields(*field_description):
         ...
         ]
     """
-    new_fields = [(column.name,
-                   _PSYCOPG2_COLUMN_TYPES2FIELD_TYPE.get(psycopg2.extensions.string_types.get(column.type_code, None),
-                                                         'T'),
-                   column.internal_size,
-                   column.precission) if isinstance(column,
-                                                    psycopg2.extensions.Column) else tuple(column) for column in field_description]
+    new_fields = list()
+    if field_description and isinstance(field_description[0], psycopg2.extensions.Column):
+        # Простой случай
+        try:
+            new_fields = [(column.name,
+                           _PSYCOPG2_COLUMN_TYPES2FIELD_TYPE[psycopg2.extensions.string_types[column.type_code].name if column.type_code in psycopg2.extensions.string_types else 'STRING'],
+                           column.internal_size,
+                           column.precision) for column in field_description]
+        except:
+            log.fatal(u'Ошибка преобразования описания полей из psycopg2')
+            log.error(u'Исходное описание:')
+            for column in field_description:
+                column_type = psycopg2.extensions.string_types.get(column.type_code, None)
+                log.error(u'\t%s\tТип: %s' % (str(column), column_type.name if column_type else str(column_type)))
+    elif field_description and len(field_description) == 1 and isinstance(field_description[0], tuple):
+        try:
+            # В некоторых сложных запросах результат получения описания полей может быть сложным
+            new_fields = [(column.name,
+                           _PSYCOPG2_COLUMN_TYPES2FIELD_TYPE[psycopg2.extensions.string_types[column.type_code].name if column.type_code in psycopg2.extensions.string_types else 'STRING'],
+                           column.internal_size,
+                           column.precision) for column in field_description[0]]
+        except:
+            log.fatal(u'Ошибка преобразования описания полей из psycopg2')
+            log.error(u'Исходное описание:')
+            for column in field_description[0]:
+                column_type = psycopg2.extensions.string_types.get(column.type_code, None)
+                log.error(u'\t%s\tТип: %s' % (str(column),  column_type.name if column_type else str(column_type)))
+    else:
+        log.warning(u'Не обрабатываемый случай преобразования описания полей из psycopg2\n\t%s' % str(field_description))
+
     return new_fields
