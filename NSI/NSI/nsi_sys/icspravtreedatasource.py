@@ -11,7 +11,7 @@ from ic.interfaces import ictreedatasourceinterface
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 3)
+__version__ = (0, 1, 1, 4)
 
 
 def _str2unicode(text):
@@ -121,12 +121,18 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
         root = self.getRoot()
         sprav = root.getSprav()
         if sprav:
+            level_idx = sprav.getLevelByCod(code).getIndex() + 1 if code else 0
             storage = sprav.getStorage()
             tab_data = storage.getLevelTable(code)
             if bAutoSort:
-                tab_data.sort()
+                try:
+                    # Произвести сортировку данных таблицы по полю кода
+                    # tab_data.sort()
+                    i_cod = storage.getSpravFieldNames(level_idx=level_idx).index('cod')
+                    tab_data = sorted(tab_data, key=lambda rec: rec[i_cod])
+                except ValueError:
+                    log.fatal(u'Ошибка сортировки данных таблицы по полю кода. Уровень [%d]' % level_idx)
             for rec in tab_data:
-                level_idx = sprav.getLevelByCod(code).getIndex() + 1 if code else 0
                 rec_dict = storage.getSpravFieldDict(rec, level_idx=level_idx)
                 child_code = rec_dict['cod']
                 # log.debug(u'1. Уровень %d: <%s : %s> %s' % (level_idx, code, child_code, str(rec_dict)))
