@@ -522,3 +522,49 @@ LC_CTYPE = 'ru_RU.UTF-8'        (Тип символа)''')
                                                                               search_fieldname))
         return result
 
+    def find_code(self, **field_values):
+        """
+        Поиск кода по нескольким полям.
+        @param field_values: Словарь значений полей.
+            Например:
+                {
+                    'name': u'ОАО "Рога и копыта"',
+                    'inn': '1234567890',
+                    ...
+                }
+            Поиск производиться на точное сравнение по <И>.
+        @return: Список найденных кодов соответствующих искомому значению.
+        """
+        codes = list()
+        # Все таблицы уровней
+        level_tables = [level.getTable() for level in self.getSpravParent().getLevels()]
+        for i_level, table in enumerate(level_tables):
+            if table:
+                find_list = [getattr(table.c, fieldname) == value for fieldname, value in field_values.items()]
+                where = icsqlalchemy.and_(*find_list)
+                codes.append(self.find_code_where(table, where))
+            else:
+                log.warning(u'Не определена таблица уровня [%d] справочника <%s>' % (i_level,
+                                                                                     self.getSpravParent().getName()))
+        return codes
+
+    def find_code_where(self, table, where):
+        """
+        Поиск кода по нескольким условиям выборке SQLAlchemy.
+        @param table: Объект таблицы, в которой производится поиск.
+        @param where: Условия выборки SQLAlchemy.
+        @return: Список найденных кодов соответствующих искомому значению.
+        """
+        result = list()
+        if table:
+            try:
+                sql = table.dataclass.select(where)
+                find_result = sql.execute()
+
+                if find_result:
+                    result = [rec.cod for rec in find_result]
+            except:
+                log.fatal(u'Ошибка поиска в справочнике <%s>' % self.getSpravParent().getName())
+        else:
+            log.warning(u'Не определена таблица справочника <%s>' % self.getSpravParent().getName())
+        return result

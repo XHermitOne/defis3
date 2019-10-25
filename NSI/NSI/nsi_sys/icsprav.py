@@ -620,6 +620,27 @@ class icSpravInterface(object):
         log.warning(u'Не определен метод getLevels в <%s>' % self.__class__.__name__)
         return list()
 
+    def findCodes(self, **field_values):
+        """
+        Поиск кода по нескольким полям.
+        @param field_values: Словарь значений полей.
+            Например:
+                {
+                    'name': u'ОАО "Рога и копыта"',
+                    'inn': '1234567890',
+                    ...
+                }
+            Поиск производиться на точное сравнение по <И>.
+        @return: Список найденных кодов соответствующих искомому значению.
+            Или None в случае ошибки.
+        """
+        storage = self.getStorage()
+        if storage is not None:
+            return storage.find_code(**field_values)
+        else:
+            log.warning(u'Не определено хранилище в справочнике <%s>' % self.getName())
+        return None
+
 
 class icSpravProto(icSpravInterface):
     """
@@ -1157,25 +1178,4 @@ class icSpravProto(icSpravInterface):
         if storage:
             return storage.getUUIDByCod(cod)
         log.warning(u'У объекта справочника [%s] не определено хранилище.' % self.getName())
-        return None
-
-    def findCodes(self, **field_values):
-        """
-        Поиск кода по нескольким полям.
-        @param field_values: Словарь значений полей.
-            Например:
-                {
-                    'name': u'ОАО "Рога и копыта"',
-                    'inn': '1234567890',
-                    ...
-                }
-            Поиск производиться на точное сравнение по <И>.
-        @return: Список найденных кодов соответствующих искомому значению.
-            Или None в случае ошибки.
-        """
-        storage = self.getStorage()
-        if storage is not None:
-            return storage.find_code(**field_values)
-        else:
-            log.warning(u'Не определено хранилище в справочнике <%s>' % self.getName())
         return None

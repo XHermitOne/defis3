@@ -345,6 +345,23 @@ class icSpravStorageInterface(object):
         sprav = self.getSpravParent()
         return sprav.getDescription() if sprav else u''
 
+    def find_code(self, **field_values):
+        """
+        Поиск кода по нескольким полям.
+        @param field_values: Словарь значений полей.
+            Например:
+                {
+                    'name': u'ОАО "Рога и копыта"',
+                    'inn': '1234567890',
+                    ...
+                }
+            Поиск производиться на точное сравнение по <И>.
+        @return: Список найденных кодов соответствующих искомому значению.
+            Или пустой список в случае ошибки.
+        """
+        log.warning(u'Не определен метод find_code в <%s>' % self.__class__.__name__)
+        return list()
+
 
 class icSpravSQLStorage(icSpravStorageInterface,
                         gen_nsi_table_res.icSpravTableResGenerator):
