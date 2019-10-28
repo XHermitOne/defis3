@@ -13,7 +13,7 @@ from ic.components import icwidget
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_CODE_DELIMETER = u' '
 DEFAULT_ENCODING = 'utf-8'
@@ -67,9 +67,9 @@ class icSpravChoiceComboCtrlProto(wx.ComboCtrl):
         wx.ComboCtrl.Enable(self, *args, **kwargs)
 
         if not self.IsEnabled():
-            self.SetBackgroundColour(wx.Colour(236, 234, 233))
+            self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVECAPTION))
         else:
-            self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT))
+            self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
 
     def makeCustomButton(self):
         """

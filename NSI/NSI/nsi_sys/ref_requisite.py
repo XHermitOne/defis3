@@ -178,6 +178,14 @@ class icRefNSIRequisiteProto(icRefRequisiteInterface,
         icRefRequisiteInterface.__init__(self, parent)
         ref_persistent.icRefFieldPersistent.__init__(self, parent=parent)
 
+        # Имя реквизита
+        self.name = None
+
+        # Имя поля
+        self.field = None
+        # Описание
+        self.description = ''
+
         # Текущее значение реквизита - код справочника
         self.value = None
 
@@ -196,3 +204,39 @@ class icRefNSIRequisiteProto(icRefRequisiteInterface,
         """
         # Устаонвить значение по умолчанию
         self.value = copy.deepcopy(self.getDefault())
+
+    def getTypeValue(self):
+        """
+        Тип поля хранения реквизита.
+        """
+        return 'T'
+
+    def getLabel(self):
+        """
+        Надпись реквизита.
+        """
+        return u''
+
+    def getFieldName(self):
+        """
+        Имя поля хранения значения реквизита.
+        """
+        return self.name
+
+    def getDefault(self):
+        """
+        Значение по умолчанию.
+        """
+        return ''
+
+    def getDescription(self):
+        """
+        Описание реквизита.
+        """
+        return self.description
+
+    def getFieldLen(self):
+        """
+        Длина значения поля.
+        """
+        return None
