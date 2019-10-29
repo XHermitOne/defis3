@@ -29,27 +29,27 @@ def validate_location(location):
             or (pandas is not None and isinstance(location, pandas.DataFrame)):
         location = numpy.squeeze(location).tolist()
     if not hasattr(location, '__len__'):
-        raise TypeError('Location should be a sized variable, '
-                        'for example a list or a tuple, instead got '
-                        '{!r} of type {}.'.format(location, type(location)))
+        raise TypeError(u'Расположение должно быть переменной размера, '
+                        u'например список или кортеж, вместо этого получено '
+                        '{!r} типа {}.'.format(location, type(location)))
     if len(location) != 2:
-        raise ValueError('Expected two (lat, lon) values for location, '
-                         'instead got: {!r}.'.format(location))
+        raise ValueError(u'Ожидаемые два (широта, долгота) значения для местоположения, '
+                         u'вместо этого получено: {!r}.'.format(location))
     try:
         coords = (location[0], location[1])
     except (TypeError, KeyError):
-        raise TypeError('Location should support indexing, like a list or '
-                        'a tuple does, instead got {!r} of type {}.'
+        raise TypeError(u'Местоположение должно поддерживать индексацию, например, список или '
+                        u'кортеж, вместо этого получено {!r} тип {}.'
                         .format(location, type(location)))
     for coord in coords:
         try:
             float(coord)
         except (TypeError, ValueError):
-            raise ValueError('Location should consist of two numerical values, '
-                             'but {!r} of type {} is not convertible to float.'
+            raise ValueError(u'Местоположение должно состоять из двух числовых значений, '
+                             u'но {!r} тип {} не конвертируется в float.'
                              .format(coord, type(coord)))
         if math.isnan(float(coord)):
-            raise ValueError('Location values cannot contain NaNs.')
+            raise ValueError(u'Значения местоположения не могут содержать NaN. Координаты <%s>' % str(coords))
     return [float(x) for x in coords]
 
 
@@ -62,12 +62,12 @@ def validate_locations(locations):
     try:
         iter(locations)
     except TypeError:
-        raise TypeError('Locations should be an iterable with coordinate pairs,'
-                        ' but instead got {!r}.'.format(locations))
+        raise TypeError(u'Местоположения должны быть итерируемыми с парами координат,'
+                        u' но вместо этого получено {!r}.'.format(locations))
     try:
         next(iter(locations))
     except StopIteration:
-        raise ValueError('Locations is empty.')
+        raise ValueError(u'Пустая локация')
     try:
         float(next(iter(next(iter(next(iter(locations)))))))
     except (TypeError, StopIteration):

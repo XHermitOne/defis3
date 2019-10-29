@@ -452,6 +452,12 @@ class icMapIndicatorManagerProto(icMapIndicator):
         """
         return self._html_filename
 
+    def setHTMLFilename(self, html_filename):
+        """
+        Текущий HTML файл браузера просмотра карт.
+        """
+        self.setMapBrowserFile(html_filename=html_filename)
+
     def findGeoLocations(self, address_query):
         """
         Получить геграфические данные широты и долготы по запросу адреса.

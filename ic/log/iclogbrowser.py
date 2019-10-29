@@ -29,7 +29,7 @@ from . import log
 from ic.utils import datetimefunc
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 TIME_FMT = '%H:%M:%S'
 
@@ -295,9 +295,9 @@ class icLogBrowserPanelManager:
         self.filter_panel.msg_listCtrl.DeleteAllItems()
         self.records = self.get_records()
         for i, record in enumerate(self.records):
-            item_idx = self.filter_panel.msg_listCtrl.InsertStringItem(i, record['dt'].strftime(log_file.DATETIME_LOG_FMT))
-            self.filter_panel.msg_listCtrl.SetStringItem(i, 1, record.get('type', u''))
-            self.filter_panel.msg_listCtrl.SetStringItem(i, 2, record.get('short', u''))
+            item_idx = self.filter_panel.msg_listCtrl.InsertItem(i, record['dt'].strftime(log_file.DATETIME_LOG_FMT))
+            self.filter_panel.msg_listCtrl.SetItem(i, 1, record.get('type', u''))
+            self.filter_panel.msg_listCtrl.SetItem(i, 2, record.get('short', u''))
 
             self.filter_panel.msg_listCtrl.SetItemTextColour(i, LOG_TYPE_COLOURS.get(record['type'], wx.BLACK))
 
