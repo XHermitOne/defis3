@@ -47,6 +47,14 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		
 		self.archive_tool = self.ctrl_toolBar.AddTool( wx.ID_ANY, u"tool", wx.ArtProvider.GetBitmap( wx.ART_GO_TO_PARENT, wx.ART_MENU ), wx.NullBitmap, wx.ITEM_NORMAL, u"Переместить в архив", u"Переместить в архив", None ) 
 		
+		self.ctrl_toolBar.AddSeparator()
+		
+		self.date_filter_checkBox = wx.CheckBox( self.ctrl_toolBar, wx.ID_ANY, u"За дату", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.ctrl_toolBar.AddControl( self.date_filter_checkBox )
+		self.filter_datePicker = wx.adv.DatePickerCtrl( self.ctrl_toolBar, wx.ID_ANY, wx.DefaultDateTime, wx.DefaultPosition, wx.DefaultSize, wx.adv.DP_DEFAULT )
+		self.filter_datePicker.Enable( False )
+		
+		self.ctrl_toolBar.AddControl( self.filter_datePicker )
 		self.ctrl_toolBar.Realize() 
 		
 		bSizer12.Add( self.ctrl_toolBar, 0, wx.EXPAND, 5 )
@@ -100,6 +108,8 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		self.Bind( wx.EVT_TOOL, self.onQuickToolClicked, id = self.quick_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onScanToolClicked, id = self.scan_tool.GetId() )
 		self.Bind( wx.EVT_TOOL, self.onArchiveToolClicked, id = self.archive_tool.GetId() )
+		self.date_filter_checkBox.Bind( wx.EVT_CHECKBOX, self.onFilterDateCheckBox )
+		self.filter_datePicker.Bind( wx.adv.EVT_DATE_CHANGED, self.onFilterDateChanged )
 	
 	def __del__( self ):
 		pass
@@ -131,6 +141,12 @@ class icPackScanDocPanelProto ( wx.Panel ):
 		event.Skip()
 	
 	def onArchiveToolClicked( self, event ):
+		event.Skip()
+	
+	def onFilterDateCheckBox( self, event ):
+		event.Skip()
+	
+	def onFilterDateChanged( self, event ):
 		event.Skip()
 	
 

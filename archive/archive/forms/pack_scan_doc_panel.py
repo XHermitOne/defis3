@@ -18,6 +18,7 @@ from ic.dlg import std_dlg
 from ic.dlg import dlgfunc
 from ic.dlg import quick_entry_panel
 from ic.engine import glob_functions
+from ic.utils import datetimefunc
 
 from . import group_manipulation_dlg
 from . import new_doc_panel
@@ -25,6 +26,8 @@ from . import new_doc_panel
 # Для управления взаимодействия с контролами wxPython
 # используется менеджер форм <form_manager.icFormManager>
 from ic.engine import form_manager
+
+from STD.queries import filter_generate
 
 __version__ = (0, 1, 1, 2)
 
@@ -446,14 +449,24 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
         self.doc_navigator.refreshDocListCtrlRow(index=item_idx)
 
-    def refreshDocList(self, bAutoUpdate=False):
+    def refreshDocList(self, bAutoUpdate=False, filter_date=None):
         """
         Обновление списка документов.
         @param bAutoUpdate: Произвести обновление датасета из БД?
+        @param filter_date: Указание даты для дополнительного фильтра.
+            Если не определено, то берется из контролов.
         """
         log.info(u'Обновление списка документов...')
-        if bAutoUpdate:
-            self.doc_navigator.updateDocDataset()
+        if filter_date is None:
+            if self.date_filter_checkBox.GetValue():
+                filter_date = datetimefunc.wxdate2pydate(self.filter_datePicker.GetValue())
+
+        doc_filter = None
+        if filter_date:
+            doc_filter = filter_generate.create_filter_group_AND(filter_generate.create_filter_compare_requisite('doc_date', '==', filter_date))
+        self.doc_navigator.setDocDatasetFilter(doc_filter=doc_filter, bAutoUpdate=bAutoUpdate)
+        # if bAutoUpdate:
+        #     self.doc_navigator.updateDocDataset()
 
         self.doc_navigator.refreshSortDocListCtrlRows(sort_fields=('nn', ))
 
@@ -466,6 +479,22 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                 self.setRowForegroundColour_list_ctrl(self.docs_listCtrl,
                                                       i, wx.Colour('DARKGOLDENROD'))
         log.info(u'...ok')
+
+    def onFilterDateCheckBox(self, event):
+        """
+        Обработчик вкл/выкл фильтра по дате.
+        """
+        check = event.IsChecked()
+        self.filter_datePicker.Enable(check)
+        self.refreshDocList(bAutoUpdate=True)
+        event.Skip()
+
+    def onFilterDateChanged(self, event):
+        """
+        Обработчик изменения даты фильтра.
+        """
+        self.refreshDocList(bAutoUpdate=True)
+        event.Skip()
 
 
 def show_pack_scan_doc_panel(title=u''):
