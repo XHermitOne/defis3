@@ -97,7 +97,9 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         """
         label = u''
         if dbf_filename.startswith('R'):
-            label += u'Реализация. '
+            warehouse = dbf_filename[2:5]
+            label += u'Реализация. ' + (u'' if warehouse == '000' or not warehouse.isdigit() else u'Склад %d. ' % int(warehouse))
+            prefix = self.getMonthLabel(dbf_filename)
         elif dbf_filename.startswith('Z'):
             schet = dbf_filename[2:5]
             label += u'Затраты. ' + (u'' if schet == '000' or not schet.isdigit() else u'Счет %02d-%02d. ' % (int(schet[:2]), int(schet[-1:])))
@@ -174,6 +176,19 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Продажа. Документы '
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
             label += u'Покупка. Документы '
+        # Участок РЕАЛИЗАЦИЯ
+        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'U' and file_ext == 'ASF':
+            label += u'Ремонт. СФ '
+        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
+            label += u'Продажа. СФ '
+        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
+            label += u'Покупка. СФ '
+        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'T' and file_ext == 'ATT':
+            label += u'Продажа. ТТН '
+        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ATG':
+            label += u'Продажа. ТОРГ12 '
+        elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ATG':
+            label += u'Покупка. ТОРГ12 '
         else:
             label += u'Документы '
 
@@ -274,12 +289,14 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         """
         log.debug(u'Выбор пункта меню загрузки документов <Реализация>.')
 
-        if not self.downloadArchiveDBF():
+        arch_year, arch_month = self.getYearMonthDlg(bYear=False, bMonth=True)
+        if not arch_year:
             if event:
                 event.Skip()
             return
 
-        filename = self.choiceLoadFileName('R')
+        self.downloadArchiveDBF(arch_year, arch_month)
+        filename = self.choiceLoadFileName('R', arch_year, arch_month)
 
         if filename:
             manager = load_manager.icDBFDocLoadManager(self.pack_scan_panel)

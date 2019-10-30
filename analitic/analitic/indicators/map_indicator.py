@@ -75,7 +75,9 @@ def get_default_geolocations(address_query, geo_key=None):
         log.debug(u'URL получения геоданных <%s>' % url)
         response = urllib.request.urlopen(url)
         data = response.read()
-        geo_location_data = json.loads(data)
+        # Иначе вылетает ошибка: JSON object must be str not bytes
+        #                                      V
+        geo_location_data = json.loads(data.decode('utf-8'))
 
         find_geo = geo_location_data.get('response',
                                          dict()).get('GeoObjectCollection',
