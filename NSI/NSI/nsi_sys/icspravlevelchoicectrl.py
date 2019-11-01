@@ -11,7 +11,7 @@ from ic.components import icwidget
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 DEFAULT_CODE_DELIMETER = u' '
 DEFAULT_ENCODING = 'utf-8'
@@ -102,8 +102,9 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
                 if not i:
                     for rec in self._sprav.getStorage().getLevelTable():
                         rec_dict = self._sprav.getStorage().getSpravFieldDict(rec, level_idx=i)
-                        level_choice = (rec_dict['cod'], rec_dict['name'])
-                        level_choices.append(level_choice)
+                        if self._sprav.isActive(rec_dict['cod']):
+                            level_choice = (rec_dict['cod'], rec_dict['name'])
+                            level_choices.append(level_choice)
 
                 choice_id = wx.NewId()
                 choice = wx.Choice(self.scrolled_win, choice_id,
@@ -250,9 +251,10 @@ class icSpravLevelChoiceCtrlProto(wx.StaticBox):
             level_choices = list()
             for rec in self._sprav.getStorage().getLevelTable(str_code):
                 rec_dict = self._sprav.getStorage().getSpravFieldDict(rec, level_idx=level_index)
-                # log.debug(u'Словарь записи %s' % str(rec_dict))
-                level_choice = (rec_dict['cod'][len(str_code):], rec_dict['name'])
-                level_choices.append(level_choice)
+                if self._sprav and self._sprav.isActive(rec_dict['cod']):
+                    # log.debug(u'Словарь записи %s' % str(rec_dict))
+                    level_choice = (rec_dict['cod'][len(str_code):], rec_dict['name'])
+                    level_choices.append(level_choice)
 
             for code, name in level_choices:
                 item = choice_ctrl.Append(name)

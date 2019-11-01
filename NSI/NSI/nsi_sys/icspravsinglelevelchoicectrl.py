@@ -13,7 +13,7 @@ from ic.components import icwidget
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_CODE_DELIMETER = u' '
 DEFAULT_ENCODING = 'utf-8'
@@ -117,9 +117,10 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
                 all_records = [tuple(record) for record in recordset]
                 for rec in all_records:
                     rec_dict = self._sprav.getStorage().getSpravFieldDict(rec, level_idx=n_level)
-                    log.debug(u'Запись в виде словаря %s' % str(rec_dict))
-                    level_choice = (rec_dict['cod'], rec_dict['name'])
-                    level_choices.append(level_choice)
+                    if self._sprav.isActive(rec_dict['cod']):
+                        log.debug(u'Запись в виде словаря %s' % str(rec_dict))
+                        level_choice = (rec_dict['cod'], rec_dict['name'])
+                        level_choices.append(level_choice)
                 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
                 choice_id = wx.NewId()

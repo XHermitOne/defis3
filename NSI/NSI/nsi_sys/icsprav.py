@@ -25,7 +25,7 @@ from NSI.nsi_dlg import icspraveditdlg
 from NSI.nsi_dlg import icspravchoicetreedlg
 
 # Версия
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 4, 1)
 
 # Спецификация
 SPC_IC_SPRAV = {'type': 'SpravDefault',
@@ -386,6 +386,24 @@ class icSpravInterface(object):
         @param cod: Код.
         """
         return self.getStorage().isCod(cod)
+
+    def isActive(self, cod):
+        """
+        Проверка активности кода в справочнике?
+        Если справочник не поддерживает признак активности,
+        то считается что он всегда включен.
+        @param cod: Код.
+        @return: True - код активен / False - код выключен.
+        """
+        record = self.getStorage().getRecByCod(cod)
+        if not record:
+            # Если нет записи, то выключено
+            return False
+        # Проверяем значение поля активации
+        # Если справочник не поддерживает признак активации, то считаем
+        # что код всегда включен-------+
+        #                    V         V
+        return record.get('activate', True)
 
     def isSubCodes(self, cod):
         """

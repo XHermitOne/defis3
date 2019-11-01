@@ -11,7 +11,7 @@ from ic.interfaces import ictreedatasourceinterface
 from ic.log import log
 
 # Version
-__version__ = (0, 1, 1, 4)
+__version__ = (0, 1, 1, 5)
 
 
 def _str2unicode(text):
@@ -135,11 +135,12 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
             for rec in tab_data:
                 rec_dict = storage.getSpravFieldDict(rec, level_idx=level_idx)
                 child_code = rec_dict['cod']
-                # log.debug(u'1. Уровень %d: <%s : %s> %s' % (level_idx, code, child_code, str(rec_dict)))
-                item = icSpravItemDataSource(self, child_code)
-                item.setData(rec)
+                if sprav.isActive(child_code):
+                    # log.debug(u'1. Уровень %d: <%s : %s> %s' % (level_idx, code, child_code, str(rec_dict)))
+                    item = icSpravItemDataSource(self, child_code)
+                    item.setData(rec)
                 
-                children.append(item)
+                    children.append(item)
         
         return children
 

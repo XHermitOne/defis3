@@ -502,23 +502,25 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         # log.debug(u'Уровень элемента %d' % item_level)
         rec_dict = self.sprav.getStorage().getSpravFieldDict(record, level_idx=item_level)
         code = rec_dict['cod']
-        item = self.sprav_treeListCtrl.AppendItem(parent_item, code)
-        self.setItemData_TreeCtrl(ctrl=self.sprav_treeListCtrl, item=item, data=rec_dict)
-        # Заполнение колонок
-        for i, field_name in enumerate(self.sprav_field_names[1:]):
-            value = rec_dict.get(field_name, u'')
-            # Проверка типов
-            if value is None:
-                value = u''
-            elif not isinstance(value, str):
-                value = str(value)
-            log.debug(u'Значение <%s>. Индекс %s' % (value, i))
-            self.sprav_treeListCtrl.SetItemText(item, value, i + 1)
+        # Проверка на активность кода
+        if self.sprav and self.sprav.isActive(code):
+            item = self.sprav_treeListCtrl.AppendItem(parent_item, code)
+            self.setItemData_TreeCtrl(ctrl=self.sprav_treeListCtrl, item=item, data=rec_dict)
+            # Заполнение колонок
+            for i, field_name in enumerate(self.sprav_field_names[1:]):
+                value = rec_dict.get(field_name, u'')
+                # Проверка типов
+                if value is None:
+                    value = u''
+                elif not isinstance(value, str):
+                    value = str(value)
+                log.debug(u'Значение <%s>. Индекс %s' % (value, i))
+                self.sprav_treeListCtrl.SetItemText(item, value, i + 1)
         
-        if self.sprav.isSubCodes(code):
-            # Есть подкоды. Для отображения + в контроле дерева
-            # необходиом добавить фиктивный элемент
-            self.sprav_treeListCtrl.AppendItem(item, TREE_ITEM_LABEL)
+            if self.sprav.isSubCodes(code):
+                # Есть подкоды. Для отображения + в контроле дерева
+                # необходиом добавить фиктивный элемент
+                self.sprav_treeListCtrl.AppendItem(item, TREE_ITEM_LABEL)
 
         # !!! ВАЛИТЬСЯ! Не испльзовать этот код !!!!
         # Если текущий код находится в списке найденных, то подсветить его

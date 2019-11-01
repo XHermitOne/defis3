@@ -636,19 +636,20 @@ class icSpravTreeComboCtrlProto(wx.ComboCtrl):
             get_label_func = self.getLabelFunc(child)
             label = child.getLabel(get_label_func)
             code = child.getCode()
+            sprav = self.getSprav()
+            if sprav and sprav.getActive(code):
+                # Т.к. корневой элемент скрыт, то родитель у всех объектов
+                # выставляется None
+                item = self._combo_popup.AddItem(label, parent=parent_item, data=child)
+                if self._isDisabledItem(self.view_code, self.getLevelEnable(), child):
+                    self._combo_popup.tree.SetItemTextColour(item, DEFAULT_DISABLE_ITEM_COLOUR)
+                else:
+                    self._combo_popup.tree.SetItemTextColour(item, DEFAULT_ENABLE_ITEM_COLOUR)
 
-            # Т.к. корневой элемент скрыт, то родитель у всех объектов
-            # выставляется None
-            item = self._combo_popup.AddItem(label, parent=parent_item, data=child)
-            if self._isDisabledItem(self.view_code, self.getLevelEnable(), child):
-                self._combo_popup.tree.SetItemTextColour(item, DEFAULT_DISABLE_ITEM_COLOUR)
-            else:
-                self._combo_popup.tree.SetItemTextColour(item, DEFAULT_ENABLE_ITEM_COLOUR)
-
-            if child.hasChildren():
-                # Если есть дочерние элементы у текущего элемента,
-                # то сделать фиктивный элемент.
-                self._combo_popup.AddItem(TREE_HIDDEN_ITEM_LABEL, parent=item)
+                if child.hasChildren():
+                    # Если есть дочерние элементы у текущего элемента,
+                    # то сделать фиктивный элемент.
+                    self._combo_popup.AddItem(TREE_HIDDEN_ITEM_LABEL, parent=item)
 
         self._cur_data_item = None
 
@@ -665,19 +666,20 @@ class icSpravTreeComboCtrlProto(wx.ComboCtrl):
             get_label_func = self.getLabelFunc(child)
             label = child.getLabel(get_label_func)
             code = child.getCode()
+            sprav = self.getSprav()
+            if sprav and sprav.isActive(code):
+                # Т.к. корневой элемент скрыт, то родитель у всех объектов
+                # выставляется None
+                item = self._combo_popup.AddItem(label, parent=parent_item, data=child)
+                if self._isDisabledItem(self.view_code, self.getLevelEnable(), child):
+                    self._combo_popup.tree.SetItemTextColour(item, DEFAULT_DISABLE_ITEM_COLOUR)
+                else:
+                    self._combo_popup.tree.SetItemTextColour(item, DEFAULT_ENABLE_ITEM_COLOUR)
 
-            # Т.к. корневой элемент скрыт, то родитель у всех объектов
-            # выставляется None
-            item = self._combo_popup.AddItem(label, parent=parent_item, data=child)
-            if self._isDisabledItem(self.view_code, self.getLevelEnable(), child):
-                self._combo_popup.tree.SetItemTextColour(item, DEFAULT_DISABLE_ITEM_COLOUR)
-            else:
-                self._combo_popup.tree.SetItemTextColour(item, DEFAULT_ENABLE_ITEM_COLOUR)
-
-            if child.hasChildren():
-                # Если есть дочерние элементы у текущего элемента,
-                # то сделать фиктивный элемент.
-                self._addTree(child, parent_item=item)
+                if child.hasChildren():
+                    # Если есть дочерние элементы у текущего элемента,
+                    # то сделать фиктивный элемент.
+                    self._addTree(child, parent_item=item)
 
         self._cur_data_item = None
 

@@ -203,8 +203,7 @@ class icMenuItem(wx.MenuItem):
 
             # ВНИМАНИЕ:
             #    Без добавления, пункты не будут отображаться в меню.
-
-            self._ParentMenu.AppendItem(self)
+            self._ParentMenu.Append(self)
             if self._Window:
                 self._Window.Bind(wx.EVT_MENU, self.OnActionItem, id=self.GetID())
                 self._Window.Bind(wx.EVT_MENU_HIGHLIGHT, self.OnHighlight, id=self.GetID())
