@@ -82,7 +82,7 @@ def smb_download_sprvent(download_urls=None, local_filename=None):
             download_filename = url.path + ('/#' + url.fragment if url.fragment else '')
             download_file = os.path.join(*download_filename.split(os.path.sep)[2:])
 
-            log.info(u'Загрузка файла <%s : %s>' % (download_url, download_file))
+            log.info(u'Загрузка файла <%s : %s> из SMB ресурса' % (download_url, download_file))
 
             if os.path.exists(local_filename):
                 log.info(u'Удаление файла <%s>' % local_filename)
@@ -94,7 +94,7 @@ def smb_download_sprvent(download_urls=None, local_filename=None):
             # а сразу пытаемся его загрузить.
             try:
                 smb.download(download_file, local_filename)
-                log.info(u'Файл <%s> загружен' % download_file)
+                log.info(u'Файл <%s> загружен из SMB ресурса' % download_file)
                 result = True
             except:
                 log.warning(u'''При возникновении ошибки в smbclient'e
@@ -127,8 +127,11 @@ def import_sprvent():
     # Сначала загрузить справочник из бекапа
     result = smb_download_sprvent(FIND_SMB_URLS, LOCAL_SPRVENT_FILENAME) and smb_download_sprvent(PERSON_FIND_SMB_URLS, LOCAL_PERSON_FILENAME)
     if result:
+        # Успешно загрузили
+        is_load = any([not filefunc.is_same_file_length(local_filename,
+                       os.path.splitext(local_filename)[0] + '.DBF') for local_filename in LOCAL_FILENAMES])
+
         for local_filename in LOCAL_FILENAMES:
-            # Успешно загрузили
             vnt_filename = local_filename
             dbf_filename = os.path.splitext(local_filename)[0] + '.DBF'
             if not filefunc.is_same_file_length(vnt_filename, dbf_filename):
@@ -139,8 +142,6 @@ def import_sprvent():
             else:
                 log.debug(u'Справочник <%s> уже загружен' % local_filename)
 
-        is_load = any([not filefunc.is_same_file_length(local_filename,
-                        os.path.splitext(local_filename)[0] + '.DBF') for local_filename in LOCAL_FILENAMES])
         if is_load:
             # Это другой файл
             tab = ic.metadata.THIS.tab.nsi_c_agent.create()
@@ -151,6 +152,7 @@ def import_sprvent():
             spravmanager = ic.metadata.THIS.mtd.nsi_archive.create()
             sprav = spravmanager.getSpravByName('nsi_c_agent')
             sprav.clearInCache()
+        log.info(u'...окончание импорта справочника контрагентов')
     else:
         log.warning(u'Ошибка связи с SMB ресурсом бекапа')
 
