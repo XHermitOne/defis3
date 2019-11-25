@@ -1622,10 +1622,11 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         self._mapper_class = mapper_class
 
-    def get_normalized(self, query_result=None):
+    def get_normalized(self, query_result=None, **kwargs):
         """
         Произвести нормализацию результата запроса.
         @param query_result: Абстрактный результат запроса.
+        @param kwargs: Дополнительные параметры.
         @return: Функция возвращает результат запроса
         представляется в словарно-списковом представлении:
         QUERY_TABLE_RESULT = {'__fields__': (), - Описание полей - кортеж кортежей

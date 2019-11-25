@@ -217,9 +217,9 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
         popup_menu = ic.metadata.archive.mnu.load_select_popup_menu.create()
 
         # Включить все пункты меню для администратора
-        is_admin = glob_functions.isAdministratorCurUser()
-        log.info(u'Включение всех пунктов меню импорта для АДМИНИСТРАТОРА [%s]' % is_admin)
-        popup_menu.findMenuItemByName('load_rlz_menuitem').Enable(is_admin)
+        # is_admin = glob_functions.isAdministratorCurUser()
+        # log.info(u'Включение всех пунктов меню импорта для АДМИНИСТРАТОРА [%s]' % is_admin)
+        popup_menu.findMenuItemByName('load_rlz_menuitem').Enable(True)
         popup_menu.findMenuItemByName('load_ztr_menuitem').Enable(True)
         popup_menu.findMenuItemByName('load_mt_menuitem').Enable(True)
         popup_menu.findMenuItemByName('load_os_menuitem').Enable(True)

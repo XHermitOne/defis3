@@ -294,10 +294,12 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
                 log.fatal(u'QUERY: Ошибка выполнения запроса для получения одной записи: %s' % sql_txt)
         return result
 
-    def get_normalized(self, query_result=None):
+    def get_normalized(self, query_result=None, **kwargs):
         """
         Произвести нормализацию результата запроса.
         @param query_result: Абстрактный результат запроса.
+        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+            SQL запроса.
         @return: Функция возвращает результат запроса
         представляется в словарно-списковом представлении:
         QUERY_TABLE_RESULT = {'__fields__': (), - Описание полей - кортеж кортежей
@@ -305,7 +307,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
                               }
         """
         if query_result is None:
-            return self.queryAll()
+            return self.queryAll(**kwargs)
         try:
             # if data and to_dict:
             #    new_data = [dict([(fields[idx][0], val) for idx, val in enumerate(rec)]) for rec in data]

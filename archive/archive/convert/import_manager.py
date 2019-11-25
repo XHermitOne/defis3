@@ -181,6 +181,8 @@ class icBalansImportManager(icImportManagerInterface):
             return u'СФ'
         elif typ_doc.upper() == u'ТОРГ12':
             return u'ТОРГ12'
+        elif typ_doc.upper() in (u'ТТН', u'ТОВАРО-ТРАНСПОРТНАЯ НАКЛАДНАЯ'):
+            return u'ТТН'
         elif typ_doc.upper() == u'АКТ':
             return u'АКТ'
         elif typ_doc.upper() in (u'ОС1', u'ОС3', u'ОС4', u'ОС4А', u'ОС4Б'):

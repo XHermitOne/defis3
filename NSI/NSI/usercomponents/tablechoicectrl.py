@@ -100,7 +100,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 2, 1)
 
 
 # Функции редактирования
@@ -197,14 +197,30 @@ class icTableChoiceCtrl(parentModule.icTableChoiceCtrlProto, icwidget.icWidget):
         """
         return self.getICAttr('table')
 
-    def createTableSrcData(self, table_psp):
+    def createTableSrcData(self, table_psp=None, **kwargs):
         """
         Создать табличный объект-источник данных по его паспорту.
         @param table_psp: Паспорт табличного объекта-источника данных.
-        @return: табличный объект-источник данных.
+            Если не определен паспорт, то берется из ресурсного описания.
+        @param kwargs: Дополнительные параметры.
+            Дополноительные параметры для генерации исполняемого текста
+            SQL запроса например.
+        @return: Tабличный объект-источник данных.
         """
+        if table_psp is None:
+            table_psp = self.getTablePsp()
         table = self.GetKernel().Create(table_psp) if table_psp else None
-        self.setTableSrcData(table)
+        self.setTableSrcData(table, **kwargs)
+        return table
+
+    def refresh_choices(self, **kwargs):
+        """
+        Обновить список выбора.
+        @param kwargs: Дополнительные параметры.
+            Дополноительные параметры для генерации исполняемого текста
+            SQL запроса например.
+        """
+        self.createTableSrcData(**kwargs)
 
     def getCodeField(self):
         """

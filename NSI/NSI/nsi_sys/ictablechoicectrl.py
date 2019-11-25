@@ -91,27 +91,33 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     getValue = getCode
     setValue = setCode
 
-    def setTableSrcData(self, tab_src_data):
+    def setTableSrcData(self, tab_src_data, **kwargs):
         """
         Установить табличный источник данных.
         @param tab_src_data: Объект табличного источника данных.
+        @param kwargs: Дополнительные параметры.
+            Дополноительные параметры для генерации исполняемого текста
+            SQL запроса например.
         @return: True/False.
         """
         self._src_data = tab_src_data
-        tab_data = self.refreshTableData(self._src_data)
+        tab_data = self.refreshTableData(self._src_data, **kwargs)
         self.set_choices(tab_data, is_empty=self.getCanEmpty())
         return tab_data is not None
 
-    def refreshTableData(self, tab_src_data=None):
+    def refreshTableData(self, tab_src_data=None, **kwargs):
         """
         Обновить табличные данные.
         @param tab_src_data: Объект табличного источника данных.
+        @param kwargs: Дополнительные параметры.
+            Дополноительные параметры для генерации исполняемого текста
+            SQL запроса например.
         @return: Обновленные табличные данные.
         """
         if tab_src_data is None:
             tab_src_data = self._src_data
         if tab_src_data is not None:
-            self._table_data = tab_src_data.get_normalized()
+            self._table_data = tab_src_data.get_normalized(**kwargs)
             self._table_data = self.setFilter(self._table_data)
             return self._table_data
         else:

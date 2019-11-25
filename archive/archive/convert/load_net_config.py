@@ -6,9 +6,9 @@
 """
 
 # Маски загружаемых файлов
-DOWNLOAD_FILE_PATTERNS = ('*.apx', '*.APX', '*.atg', '*.ATG', '*.asf', '*.ASF', '*.arh', '*.ARH')
+DOWNLOAD_FILE_PATTERNS = ('*.apx', '*.APX', '*.atg', '*.ATG', '*.asf', '*.ASF', '*.arh', '*.ARH', '*.att', '*.ATT')
 
-DOWNLOAD_FILE_EXT_UPPER = ('APX', 'ATG', 'ASF', 'ARH')
+DOWNLOAD_FILE_EXT_UPPER = ('APX', 'ATG', 'ASF', 'ARH', 'ATT')
 
 SMB_SRC_BACKUP_URLS = ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/#MTS/',
                        'smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/#RLZ/')
@@ -33,4 +33,4 @@ DEST_PATH = '/mnt/defis/defis3/archive/db'
 # Расширение результирующего файла, после загрузки
 DEST_FILE_EXT = '.DBF'
 
-__version__ = (0, 1, 3, 1)
+__version__ = (0, 1, 3, 2)

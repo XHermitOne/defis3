@@ -167,10 +167,12 @@ class icDataClassInterface:
         """
         pass
 
-    def get_normalized(self, query_result=None):
+    def get_normalized(self, query_result=None, **kwargs):
         """
         Произвести нормализацию результата запроса.
         @param query_result: Абстрактный результат запроса.
+        @param kwargs: Дополноительные параметры для генерации исполняемого текста
+            SQL запроса например.
         @return: Функция возвращает результат запроса
         представляется в словарно-списковом представлении:
             {'__fields__': (), - Описание полей - кортеж кортежей

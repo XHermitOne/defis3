@@ -35,6 +35,7 @@ sudo apt install --assume-yes libsdl1.2debian
 # wxPython
 
 # Необходимо для сборки wxPython
+sudo apt install --assume-yes libsdl2-2.0-0
 sudo apt install --assume-yes build-essential libgtk-3-dev
 # Поддержка web в wxPython
 # sudo apt install --assume-yes libwebkitgtk-3.0-0

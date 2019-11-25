@@ -110,7 +110,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Материалы. ' + (u'' if warehouse == '000' or not warehouse.isdigit() else u'Склад %d. ' % int(warehouse))
             prefix = self.getMonthLabel(dbf_filename)
         elif dbf_filename.startswith('O'):
-            label += u'Основные средства. '
+            # label += u'Основные средства. '
             prefix = self.getOSNLabel(dbf_filename)
         elif dbf_filename.startswith('U'):
             label += u'Аренда. '
@@ -173,9 +173,11 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         elif dbf_filename.startswith('O') and file_ext == 'ATG':
             return None
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
-            label += u'Продажа. Документы '
+            # label += u'Продажа. Документы '
+            pass
         elif dbf_filename.startswith('O') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
-            label += u'Покупка. Документы '
+            # label += u'Покупка. Документы '
+            pass
         # Участок РЕАЛИЗАЦИЯ
         elif dbf_filename.startswith('R') and dbf_filename[1:2].upper() == 'U' and file_ext == 'ASF':
             label += u'Ремонт. СФ '
@@ -235,7 +237,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
                 label += 'Акты списания автотранспорта '
         quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
         if quartal:
-            label += u'за %d квартал' % quartal
+            label += u'Документы за %d квартал' % quartal
         return label
 
     def getYearMonthDlg(self, bYear=True, bMonth=False):
