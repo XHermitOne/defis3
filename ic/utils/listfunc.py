@@ -6,8 +6,9 @@
 """
 
 import operator
+import functools
 
-__version__ = (0, 0, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def sort_multi_key(items, keys):
@@ -28,19 +29,23 @@ def sort_multi_key(items, keys):
     def comparer(left, right):
         """
         Функция сравнения.
-        @param left:
+        @param left: Левое значение для сравнения
         @param right:
         @return:
         """
         for fn, mult in comparers:
-            result = cmp(fn(left), fn(right))
+            fn_left = fn(left)
+            fn_right = fn(right)
+            # Это выражение для замены функции cmp из Python2
+            #                        V
+            result = (fn_left > fn_right) - (fn_left < fn_right)
 
             if result:
                 return mult * result
         else:
             return 0
 
-    return sorted(items, cmp=comparer)
+    return sorted(items, key=functools.cmp_to_key(comparer))
 
 
 AND_COMPARE_SIGNATURE = 'AND'
