@@ -306,7 +306,7 @@ class icPrjTree(wx.TreeCtrl):
         else:
             # ВНИМАНИЕ! Когда поставил этот print
             # прекратилась ошибка <Segmentation Fault>
-            # log.info(u'Append item %s.<%s>' % (root, txt))
+            log.debug(u'Добавление элемента <%s : %s>' % (root, txt))
             root = self.AppendItem(root, txt)
             self.SetItemImage(root, img_idx, wx.TreeItemIcon_Normal)
             if img_extended_idx >= 0:

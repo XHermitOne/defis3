@@ -12,6 +12,8 @@ import wx
 from ic.imglib import common as imglib
 from ic.utils import resfunc
 
+from ic.log import log
+
 __version__ = (0, 1, 2, 1)
 
 
@@ -207,17 +209,17 @@ class icPrjNode(object):
         
     def copy(self):
         """
-        Копирвать в клипбоард.
+        Копировать в клипбоард.
         @return: Возвращает указатель узел.
         """
-        new_node = self.__class__(self._Parent)
+        new_node = self.__class__(parent=self._Parent)
         new_node.name = self.name + resfunc.getNewID()
         new_node.description = self.description
         return new_node
 
     def paste(self, node):
         """
-        Вставить.
+        Вставить узел.
         @param node: Вставляемый узел.
         """
         if node:
@@ -227,10 +229,13 @@ class icPrjNode(object):
         
     def clone(self):
         """
-        Клонировать с указанным именем.
+        Клонировать с новым именем.
         """
+        # log.debug(u'Начало клонирования')
         new_node_clone = self.copy()
+        # log.debug(u'Скопировано в клипбоард с именем <%s>' % new_node_clone.name)
         ok = self.paste(new_node_clone)
+        # log.debug(u'Вставлено из клипбоарда. Результат <%s>' % ok)
         if ok:
             return new_node_clone
         return None
