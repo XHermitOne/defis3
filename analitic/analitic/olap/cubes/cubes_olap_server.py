@@ -41,7 +41,7 @@ from ic.components import icwidget
 from ic.utils import filefunc
 from ic.log import log
 from ic.utils import inifunc
-from ic.utils import system
+from ic.utils import sysfunc
 from ic.utils import strfunc
 
 from STD.json import json_manager
@@ -176,7 +176,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         exec_filename = self.getExec()
         log.info(u'Проверка запущенного OLAP сервера по <%s>' % exec_filename)
-        return system.isActiveProcess(exec_filename)
+        return sysfunc.isActiveProcess(exec_filename)
 
     def getRequestURL(self, request=None):
         """

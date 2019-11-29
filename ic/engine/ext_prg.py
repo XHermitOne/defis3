@@ -21,7 +21,7 @@ import os.path
 import wx
 
 from ic.log import log
-from ic.utils import system
+from ic.utils import sysfunc
 
 __version__ = (0, 1, 2, 1)
 
@@ -68,7 +68,7 @@ def run_external_programm(programm_name=None, run_cmd=None):
         # Команда запуска не определена, но указано имя программы
         prg = EXTERNAL_PROGRAMS_CFG.get(programm_name, None)
         if prg:
-            run_cmd = prg.get('linux_cmd', None) if system.isLinuxPlatform() else prg.get('windows_cmd', None)
+            run_cmd = prg.get('linux_cmd', None) if sysfunc.isLinuxPlatform() else prg.get('windows_cmd', None)
             return run_command(run_cmd)
     else:
         # Ничего не определено. Необходимо выбрать программу для запуска
@@ -90,7 +90,7 @@ def run_external_programm(programm_name=None, run_cmd=None):
                 log.debug(u'Выбор <%s> - <%s>' % (selected_description, prg_name))
                 prg = EXTERNAL_PROGRAMS_CFG.get(prg_name, None)
                 if prg:
-                    run_cmd = prg.get('linux_cmd', None) if system.isLinuxPlatform() else prg.get('windows_cmd', None)
+                    run_cmd = prg.get('linux_cmd', None) if sysfunc.isLinuxPlatform() else prg.get('windows_cmd', None)
                     return run_command(run_cmd)
 
             dlg.Destroy()

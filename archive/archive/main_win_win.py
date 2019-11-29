@@ -9,7 +9,7 @@ Description     <Resource module>
 
 import ic
 from ic.dlg import dlgfunc
-from ic.utils import system
+from ic.utils import sysfunc
 from ic.interfaces import icmanagerinterface
 from archive.forms import print_doc_form
 
@@ -53,7 +53,7 @@ class icMainWinManager(icmanagerinterface.icWidgetManager):
         Функция инициализации приложения/главного окна.
         """
         # Проверка наличия уже запущенной копии программы
-        if system.getActiveProcessCount('archivarius') > 1:
+        if sysfunc.getActiveProcessCount('archivarius') > 1:
             dlgfunc.openWarningBox(u'ВНИМАНИЕ', u'Уже запущена одна копия программы')
             ic.closeAppForce()
             return

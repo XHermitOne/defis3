@@ -23,7 +23,7 @@ from . import glob_variables
 from ic.utils import filefunc
 
 # Для возможности импортировать из этого модуля
-from ic.utils.system import *
+from ic.utils.sysfunc import *
 
 __version__ = (0, 1, 1, 3)
 
