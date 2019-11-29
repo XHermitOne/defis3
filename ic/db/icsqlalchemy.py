@@ -699,6 +699,9 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def add(self, *args, **kwargs):
         """
         Добавить объект.
+        Использование:
+            tab.add(field1=value1, field2=value2) или
+            tab.add(value1, value2)
         @return: Возвращает объект управления добавленной записью.
         Получить идентификатор добавленной записи, как
         InsertObject.inserted_primary_key[0].
