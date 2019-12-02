@@ -714,6 +714,24 @@ def delete_symbol_in_text(text, symbol=u' '):
     return delete_in_text(text, (symbol, ))
 
 
+def txt_find_words(txt, *words):
+    """
+    Поиск слов в тексте.
+    Поиск ведется до первого нахождения одного из указанных слов.
+    @param txt: Анализируемый текст.
+    @param words: Искомые слова.
+    @return: True (есть такие слова в тексте)/False (слова не найдены).
+    """
+    if not isinstance(txt, str):
+        txt = toUnicode(txt)
+    find = False
+    for word in words:
+        find = word in txt
+        if find:
+            break
+    return find
+
+
 DEFIS_LOGO_TXT = u'''
     +------+       ____        __ _       
     |\      \     |  _ \  ___ / _(_)___  
