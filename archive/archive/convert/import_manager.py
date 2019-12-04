@@ -144,6 +144,8 @@ class icBalansImportManager(icImportManagerInterface):
     def find_doc_type_code(self, typ_doc, in_out):
         """
         Поиск кода типа документа.
+        @param type_doc: Наименование типа документа.
+        @param in_out: Признак приходного/расходного документа.
         """
         typ = None
         log.debug(u'Приход/Расход <%d>' % in_out)
@@ -153,6 +155,8 @@ class icBalansImportManager(icImportManagerInterface):
             typ = '2002000000000' if in_out else '1002000000000'
         elif typ_doc.upper() == u'АКТ':
             typ = '2005000000000' if in_out else '1005000000000'
+        elif typ_doc.upper() in (u'ТТН', u'ТОВАРО-ТРАНСПОРТНАЯ НАКЛАДНАЯ'):
+            typ = '2004000000000' if in_out else '1004000000000'
         # Акты участка ОСНОВНЫЕ СРЕДСТВА
         elif typ_doc.upper() == u'ОС1':
             # Акт приема-передачи
@@ -176,6 +180,8 @@ class icBalansImportManager(icImportManagerInterface):
     def get_doc_type_subcode(self, typ_doc, in_out):
         """
         Поиск кода типа документа.
+        @param type_doc: Наименование типа документа.
+        @param in_out: Признак приходного/расходного документа.
         """
         if typ_doc.upper() == u'СЧЕТ-ФАКТУРА':
             return u'СФ'

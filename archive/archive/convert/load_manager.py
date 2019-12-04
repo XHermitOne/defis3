@@ -143,9 +143,12 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
             record = dbf_tab.getRecDict()
             while not dbf_tab.EOF():
                 n_doc = None
-                # ВНИМАНИЕ! В DBF файле не корректно указывается признак прихода/расхода
-                # поэтому определяем этот признак по имени файла
-                in_out = os.path.basename(doc_dbf_filename)[1].upper() == 'R'
+                if os.path.basename(doc_dbf_filename)[1].upper() in ('R', 'P'):
+                    # ВНИМАНИЕ! В DBF файле не корректно указывается признак прихода/расхода
+                    # поэтому определяем этот признак по имени файла
+                    in_out = os.path.basename(doc_dbf_filename)[1].upper() == 'R'
+                else:
+                    in_out = None
                 log.debug(u'Файл: %s. Приход/Расход: %s' % (os.path.basename(doc_dbf_filename), in_out))
                 new_rec = self._create_doc(record, transaction, doc, sFileType, in_out=in_out)
                 if new_rec:
