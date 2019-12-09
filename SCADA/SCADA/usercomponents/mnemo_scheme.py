@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-Панель оперативных данных SCADA системы.
+Мнемосхема SCADA системы.
 """
 
 import wx
-from ic.components import icwxpanel
 # Расширенные редакторы
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportListUserEdt as pspListEdt
@@ -19,30 +18,18 @@ from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.utils import util
 
-from SCADA.scada_proto import scada_form_manager
+from ic.components import icwxpanel
+from SCADA.mnemonic import mnemoscheme
 
 # --- Спецификация ---
-SPC_IC_SCADA_PANEL = {'engines': list(),
-                      'scan_class': None,
-                      'auto_run': False,
-
-                      '__parent__': icwxpanel.SPC_IC_PANEL,
-
-                      '__attr_hlp__': {'engines': u'Список движков SCADA системы',
-                                       'scan_class': u'Класс сканирования',
-                                       'auto_run': u'Признак автозапуска и автоостанова всех движков при создании/закрытии окна',
-                                       },
-                      }
-
-
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
 
 #   Имя класса
-ic_class_name = 'icSCADAPanel'
+ic_class_name = 'icMnemoScheme'
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = {'type': 'SCADAPanel',
+ic_class_spc = {'type': 'MnemoScheme',
                 'name': 'default',
                 'child': [],
                 'activate': True,
@@ -54,24 +41,24 @@ ic_class_spc = {'type': 'SCADAPanel',
                                    icDefInf.EDT_CHECK_BOX: ['auto_run'],
                                    icDefInf.EDT_USER_PROPERTY: ['engines', 'scan_class'],
                                    },
-                '__parent__': SPC_IC_SCADA_PANEL,
+                '__parent__': mnemoscheme.SPC_IC_MNEMOSCHEME,
                 }
 
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
-ic_class_pic = bmpfunc.createLibraryBitmap('control_panel.png')
-ic_class_pic2 = bmpfunc.createLibraryBitmap('control_panel.png')
+ic_class_pic = bmpfunc.createLibraryBitmap('chart_organisation.png')
+ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_organisation.png')
 
 #   Путь до файла документации
 ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = -1
+ic_can_contain = ['MemoAnchor', 'StaticText', 'Image', 'Button']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен
 #   список ic_can_contain
-ic_can_not_contain = ['Dialog', 'Frame', 'ToolBarTool', 'Separator', 'GridCell']
+ic_can_not_contain = []
 
 #   Версия компонента
 __version__ = (0, 1, 1, 1)
@@ -130,9 +117,9 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
         return pspListEdt.str_to_val_user_property(text, propEdt)
 
 
-class icSCADAPanel(icwxpanel.icWXPanel, scada_form_manager.icSCADAFormManager):
+class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     """
-    Панель оперативных данных SCADA системы.
+    Мнемосхема SCADA системы.
 
     @type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
@@ -167,7 +154,7 @@ class icSCADAPanel(icwxpanel.icWXPanel, scada_form_manager.icSCADAFormManager):
         """
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwxpanel.icWXPanel.__init__(self, parent, id, component, logType, evalSpace)
-        scada_form_manager.icSCADAFormManager.__init__(self)
+        mnemoscheme.icMnemoSchemeProto.__init__(self)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
         lst_keys = [x for x in component.keys() if not x.startswith('__')]
