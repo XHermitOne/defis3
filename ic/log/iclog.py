@@ -108,6 +108,7 @@ def _to_unicode(String_, DefaultCP_='utf-8'):
 def LogLastError(beg_msg, logType = 0, msg_encoding='utf-8'):
     """
     Записывает сообщение о последней ошибке в лог.
+
     :type beg_msg: C{string}
     :param beg_msg: Заголовок сообщения об ошибке.
     :type logType: C{int}
@@ -127,6 +128,7 @@ def LogLastError(beg_msg, logType = 0, msg_encoding='utf-8'):
 def toLog(msg, logType = 0):
     """
     Вывод на устройство регистрации специальных сообщений.
+
     :type msg: C{string}
     :param msg: Сообщение об ошибке.
     :type logType: C{int}

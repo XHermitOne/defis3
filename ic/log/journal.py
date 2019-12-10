@@ -24,6 +24,7 @@ def init(sLogFileName, bDateTime=True, bPrint=False,
          sEncoding=log.DEFAULT_ENCODING):
     """
     Инициализация файла журнала.
+
     :param sLogFileName: Полное имя файла журнала.
     :param bDateTime: Добавить автоматическое добавление времени регистрации к сообщению?
     :param bPrint: Дублировать сообщение в консоли?
@@ -40,6 +41,7 @@ def init(sLogFileName, bDateTime=True, bPrint=False,
 def write_msg(sMessage):
     """
     Записать сообщение в журнал.
+
     :param sMessage: Текст сообщения.
     :return: True/False.
     """

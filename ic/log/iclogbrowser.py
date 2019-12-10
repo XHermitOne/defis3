@@ -68,10 +68,10 @@ class icLogBrowserPanelManager:
     """
     Менеджер работы с панелью браузера.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
+
         :param args:
         :param kwargs:
         """
@@ -108,6 +108,7 @@ class icLogBrowserPanelManager:
     def get_selected_log_types(self):
         """
         Список выбранных типов сообщений.
+
         :return:
         """
         result = list()
@@ -130,6 +131,7 @@ class icLogBrowserPanelManager:
     def get_selected_start_dt(self):
         """
         Выбранное начальное время.
+
         :return:
         """
         result = None
@@ -145,6 +147,7 @@ class icLogBrowserPanelManager:
     def get_selected_stop_dt(self):
         """
         Выбранное конечное время.
+
         :return:
         """
         result = None
@@ -160,6 +163,7 @@ class icLogBrowserPanelManager:
     def get_selected_filters(self):
         """
         Выбранные дополнительные фильтры.
+
         :return:
         """
         check_idx = [i for i in range(self.filter_panel.filter_checkList.GetCount()) if self.filter_panel.filter_checkList.IsChecked(i)]
@@ -169,6 +173,7 @@ class icLogBrowserPanelManager:
     def set_filters(self, filter_logic=log_file.AND_FILTER_LOGIC, *ext_filters):
         """
         Установить дополнительные фильтры.
+
         :param filter_logic: Логика обработки фильтров.
         :param ext_filters: Список дополнительных фильтров:
             ((u'Наименование фильтра на русском', Функция/lambda дополнительного фильтра),...)
@@ -191,6 +196,7 @@ class icLogBrowserPanelManager:
     def set_log_filename(self, sLogFileName=None):
         """
         Установить файл журнала для просмотра.
+
         :param sLogFileName: Файл журнала.
         :return:
         """
@@ -200,6 +206,7 @@ class icLogBrowserPanelManager:
     def set_datetime_filter_range(self, dtStartFilter=None, dtStopFilter=None):
         """
         Установить фильтр по диапазону времени.
+
         :param dtStartFilter:
         :param dtStopFilter:
         """
@@ -225,6 +232,7 @@ class icLogBrowserPanelManager:
     def set_log_types_filter(self, *log_types):
         """
         Установить фильтр по типам сообщений
+
         :param log_types: Список типов сообщений.
         """
         if log_types:
@@ -247,6 +255,7 @@ class icLogBrowserPanelManager:
                     tFilters=None, sFilterLogic=None):
         """
         Получить список сообщений, соответствующих выставленным фильтрам.
+
         :param sLogFileName: Полное имя log файла.
         :param tLogTypes: Кортеж/список типов сообщений.
         :param dtStartFilter: Начальная дата/время фильтра по времени.
@@ -290,6 +299,7 @@ class icLogBrowserPanelManager:
     def refresh(self):
         """
         Обновить список сообщений, соответствующих выставленным фильтрам.
+
         :return: True/False
         """
         self.filter_panel.msg_listCtrl.DeleteAllItems()
@@ -360,6 +370,7 @@ class icLogBrowserPanel(icLogBrowserPanelManager,
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
+
         :param args:
         :param kwargs:
         """
@@ -376,6 +387,7 @@ class icLogBrowserDlg(icLogBrowserPanelManager,
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
+
         :param args:
         :param kwargs:
         """
@@ -407,6 +419,7 @@ def get_log_browser_panel(parent=None, sLogFileName=None, tLogTypes=None,
                           tFilters=None, sFilterLogic=None):
     """
     Функция получения объекта панели просмотра журнала сообщений программы.
+
     :param parent: Родительское окно.
         Если не указано, то берется главное окно.
     :param sLogFileName: Полное имя log файла.
@@ -444,6 +457,7 @@ def show_log_browser_dlg(parent=None, sLogFileName=None, tLogTypes=None,
                          tFilters=None, sFilterLogic=None):
     """
     Вызвать диалоговое окно
+
     :param parent: Родительское окно.
         Если не указано, то берется главное окно.
     :param sLogFileName: Полное имя log файла.

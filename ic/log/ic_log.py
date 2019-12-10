@@ -10,6 +10,8 @@ import sys
 from . import iclog
 import ic.utils.toolfunc
 
+__version__ = (0, 1, 1, 1)
+
 # Константы и переменные
 # Кодовая страница консоли
 CONSOLE_ENCODING = None
@@ -47,6 +49,7 @@ def icLogErr(msg=u''):
 def icToLog(msg):
     """
     Выдает сообщение в регистратор (на консоль).
+
     :param msg: Текст сообщения.
     """
     return iclog.toLog(msg)

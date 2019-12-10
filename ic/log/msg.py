@@ -5,7 +5,6 @@
 Создание и ведение лога системы.
 """
 
-# --- Подключение библиотек ---
 import sys
 import traceback
 
@@ -14,13 +13,14 @@ try:
 except:
     pass
 
-# --- Функции ---
+__version__ = (0, 1, 1, 1)
 
 
 def msgErr(msg=''):
     """
     Выдает сообщение о последней ошибке в MessageBox.
     Эту функцию можно использовать только в блоке exception.
+
     :param msg: Текст сообщения.
     """
     trace = traceback.extract_tb(sys.exc_traceback)
@@ -38,6 +38,7 @@ def msgErr(msg=''):
 def toMsg(msg):
     """
     Выдает сообщение в MessageBox.
+
     :param msg: Текст сообщения.
     """
     return win32api.MessageBox(0, msg)

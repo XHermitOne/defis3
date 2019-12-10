@@ -59,6 +59,7 @@ def get_records_log_file(sLogFileName, tLogTypes=LOG_TYPES,
                          encoding=DEFAULT_ENCODING):
     """
     Прочитать из файла журнала сообщений программы сообщения указанных типов.
+
     :param sLogFileName: Полное имя log файла.
     :param tLogTypes: Кортеж/список типов сообщений.
     :param dtStartFilter: Начальная дата/время фильтра по времени.
@@ -116,7 +117,9 @@ def get_records_log_file(sLogFileName, tLogTypes=LOG_TYPES,
 
 def is_new_msg(line):
     """
-    Определяем является ли текущая линия началом нового сообщения или продолжением предыдущего
+    Определяем является ли текущая линия началом нового сообщения или
+    продолжением предыдущего
+
     :param line: Текущая обрабатываемая линия файла журнала сообщений программы.
     :return: True - Новое сообщение / False - продолжение предыдущего сообщения.
     """
@@ -132,6 +135,7 @@ def is_new_msg(line):
 def get_msg_log_type(line):
     """
     Определить тип лога сообщения.
+
     :param line:
     :return:
     """
@@ -144,6 +148,7 @@ def get_msg_log_type(line):
 def parse_msg_record(line, encoding=DEFAULT_ENCODING):
     """
     Распарсить строку файла журнала сообщений программы.
+
     :param line: Текущая обрабатываемая линия файла журнала сообщений программы.
     :return: {'dt': Время регистрации в datetime.datetime,
               'type': Тип сообщения INFO, WARNING и т.п.,
@@ -175,6 +180,7 @@ def check_filter_record(record, tLogTypes=LOG_TYPES,
                         tFilters=(), sFilterLogic=AND_FILTER_LOGIC):
     """
     Проверка соответствия записи фильтрам.
+
     :param record: Текущая проверяемая запись.
     :param tLogTypes: Кортеж/список типов сообщений.
     :param dtStartFilter: Начальная дата/время фильтра по времени.
