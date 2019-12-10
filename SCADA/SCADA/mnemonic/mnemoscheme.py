@@ -15,10 +15,13 @@
 """
 
 import wx
+import os
 import os.path
 
 from ic.log import log
 from ..scada_proto import scada_form_manager
+from ic.utils import filefunc
+from ic.bitmap import bmpfunc
 
 from ic.components import icwxpanel
 
@@ -40,6 +43,9 @@ SPC_IC_MNEMOSCHEME = {'engines': list(),
                                        },
                       }
 
+# Формат комманды запуска конвертации SVG -> PNG
+SVG2PNG_CONVERT_CMD_FMT = 'convert -background none -resize %dx%d -extent %dx%d -gravity center %s %s'
+
 
 class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
     """
@@ -53,12 +59,15 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
 
         # Фон мнемосхемы
         self._svg_background = None
+        # Контрол картинки для отображения фона
+        self.background_static_bitmap = None
 
-    def setSVGBackground(self, svg_filename):
+    def setSVGBackground(self, svg_filename, bAutoDraw=True):
         """
         Установить фон мнемосхемы.
 
         :param svg_filename: Полное имя SVG файла фона мнемосхемы.
+        :param bAutoDraw: Автоматически отрисовать на контексте мнемосхемы?
         :return: True - фон успешно установлен.
         """
         if not svg_filename:
@@ -70,6 +79,9 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
             return False
 
         self._svg_background = svg_filename
+        if bAutoDraw:
+            self.drawBackground()
+
         return True
 
     def getAnchors(self):
@@ -93,4 +105,36 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
         :return: True/False.
         """
         log.warning(u'Не определен метод расстановки и образмеривания контролов мнемосхемы')
+        return False
+
+    def drawBackground(self, bAutoRewrite=False):
+        """
+        Отрисовать фон мнемосхемы на контексте устройства.
+        ВНИМАНИЕ! Для извлечения изображения из SVG файла
+        используется внешняя утилита конвертации SVG -> PNG.
+        А PNG уже отображается на контексте устройства.
+
+        :param bAutoRewrite: Автоматически перезаписать промежуточный PNG файл.
+        :return: True/False.
+        """
+        try:
+            # Размер панели мнемосхемы
+            width, height = self.GetSize()
+
+            png_filename = os.path.join(filefunc.getPrjProfilePath(),
+                                        '%s_background_%dx%d.png' % (self.getName(), width, height))
+            if not os.path.exists(png_filename) or bAutoRewrite:
+                # Запустить конвертацию файла
+                cmd = SVG2PNG_CONVERT_CMD_FMT % (width, height, width, height, self._svg_background, png_filename)
+                os.system(cmd)
+                if not os.path.exists(png_filename):
+                    log.warning(u'Ошибка конвертации SVG -> PNG (<%s> -> <%s>)' % (self._svg_background, png_filename))
+                    return False
+
+            bmp = bmpfunc.createBitmap(png_filename)
+            if self.background_static_bitmap:
+                self.background_static_bitmap.SetBitmap(bmp)
+            return True
+        except:
+            log.fatal(u'Ошибка отрисовки фона мнемосхемы')
         return False

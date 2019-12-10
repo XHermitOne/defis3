@@ -123,6 +123,7 @@ class icWXPanel(icWidget, wx.Panel):
                  bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icWXPanel.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -313,6 +314,7 @@ class icWXPanel(icWidget, wx.Panel):
     def setRoundBoundMode(self, bound_colour=None, step=0):
         """
         Устанавливает режим скругленных границ.
+
         :type bound_colour: C{wx.Colour}
         :param bound_colour: Цвет границы.
         :type step: C{int}
@@ -331,6 +333,7 @@ class icWXPanel(icWidget, wx.Panel):
     def setBorderMode(self, bound_colour=None, step=0):
         """
         Устанавливает режим скругленных границ.
+
         :type bound_colour: C{wx.Colour}
         :param bound_colour: Цвет границы.
         :type step: C{int}

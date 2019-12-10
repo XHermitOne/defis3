@@ -156,6 +156,10 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwxpanel.icWXPanel.__init__(self, parent, id, component, logType, evalSpace)
         mnemoscheme.icMnemoSchemeProto.__init__(self)
+        # Контрол картинки для отображения фона
+        size = self.GetSize()
+        self.background_static_bitmap = wx.StaticBitmap(self, -1, wx.EmptyBitmap(width=size.GetWidth(),
+                                                                                 height=size.GetHeight()), (0, 0))
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
         lst_keys = [x for x in component.keys() if not x.startswith('__')]
@@ -163,12 +167,21 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
         for key in lst_keys:
             setattr(self, key, component[key])
 
+        self.setSVGBackground(self.svg_background, bAutoDraw=False)
+
         self.Bind(wx.EVT_CLOSE, self.onClose)
 
         # Объект класса сканирования данных SCADA.
         self._scan_class = None
 
         self.init()
+
+    def onPanelSize(self, event):
+        """
+        Переопределение обработчика переразмеривания панели мнемосхемы.
+        """
+        self.drawBackground()
+        icwxpanel.icWXPanel.onPanelSize(self, event)
 
     def getScanClassPsp(self):
         """
