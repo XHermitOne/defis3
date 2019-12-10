@@ -40,6 +40,7 @@ ic_class_spc = {'type': 'MnemoScheme',
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid'],
                                    icDefInf.EDT_CHECK_BOX: ['auto_run'],
                                    icDefInf.EDT_USER_PROPERTY: ['engines', 'scan_class'],
+                                   icDefInf.EDT_FILE: ['svg_background'],
                                    },
                 '__parent__': mnemoscheme.SPC_IC_MNEMOSCHEME,
                 }

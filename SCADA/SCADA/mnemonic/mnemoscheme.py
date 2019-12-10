@@ -29,12 +29,14 @@ __version__ = (0, 1, 1, 1)
 SPC_IC_MNEMOSCHEME = {'engines': list(),
                       'scan_class': None,
                       'auto_run': False,
+                      'svg_background': None,
 
                       '__parent__': icwxpanel.SPC_IC_PANEL,
 
                       '__attr_hlp__': {'engines': u'Список движков SCADA системы',
                                        'scan_class': u'Класс сканирования',
                                        'auto_run': u'Признак автозапуска и автоостанова всех движков при создании/закрытии окна',
+                                       'svg_background': u'SVG файл фона мнемосхемы'
                                        },
                       }
 
