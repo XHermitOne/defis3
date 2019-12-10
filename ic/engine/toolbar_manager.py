@@ -28,6 +28,7 @@ class icToolBarManager(object):
     def enableTools_toolbar(self, toolbar, **kwargs):
         """
         Установить вкл./выкл. инструментов панели инструментов wx.ToolBar.
+
         :param toolbar: Объект контрола wx.ToolBar.
         :param kwargs: Словарь формата:
             {
@@ -57,7 +58,9 @@ class icToolBarManager(object):
 
     def setLibImages_ToolBar(self, tool_bar=None, **tools):
         """
-        Установить библиотечне картинки в качестве картинок инструментов в wxToolBar.
+        Установить библиотечне картинки в качестве картинок
+        инструментов в wxToolBar.
+
         :param tool_bar: Объект wx.ToolBar.
         :param tools: Словарь соответствий имен инструментов с именами файлов образов библиотеки.
             Например:
@@ -97,6 +100,7 @@ class icToolBarManager(object):
         """
         Определить точку левого-нижнего края кнопки.
         Используется для вызова всплывающих меню.
+
         :param button: Объект кнопки wx.Button.
         """
         if button is None:
@@ -111,6 +115,7 @@ class icToolBarManager(object):
         """
         Определить точку левого-нижнего края кнопки.
         Используется для вызова всплывающих меню.
+
         :param toolbar: Объект панели инструментов wx.ToolBar.
         :param tool: Объект инструмента панели инструментов wx.ToolBarToolBase.
         """

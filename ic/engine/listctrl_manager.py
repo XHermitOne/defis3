@@ -45,6 +45,7 @@ class icListCtrlManager(object):
     def _get_wxDataViewListCtrl_data(self, ctrl):
         """
         Получить данные из контрола wxDataViewListCtrl.
+
         :param ctrl: Объект контрола.
         :return: Список словарей - строк контрола.
         """
@@ -73,6 +74,7 @@ class icListCtrlManager(object):
     def _set_wxDataViewListCtrl_data(self, ctrl, records):
         """
         Установить данные в контрол wxDataViewListCtrl.
+
         :param ctrl: Объект контрола.
         :param records: Список словарей - записей.
             Имя колонки в записи может задаваться как именем,
@@ -112,6 +114,7 @@ class icListCtrlManager(object):
     def refresh_DataViewListCtrl(self, ctrl, data_list=None, columns=None):
         """
         Обновить список строк контрола типа wx.dataview.DataViewListCtrl
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param columns: Список/кортеж колонок в случае если строки списка
@@ -131,6 +134,7 @@ class icListCtrlManager(object):
     def refresh_ListCtrl(self, ctrl, data_list=None, columns=None):
         """
         Обновить список строк контрола типа wx.ListCtrl
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param columns: Список/кортеж колонок в случае если строки списка
@@ -147,6 +151,7 @@ class icListCtrlManager(object):
     def refresh_list_ctrl(self, ctrl=None, data_list=None, columns=None):
         """
         Обновить список строк контрола.
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param columns: Список/кортеж колонок в случае если строки списка
@@ -167,6 +172,7 @@ class icListCtrlManager(object):
                                    columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку выше в контроле типа wx.dataview.DataViewListCtrl
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param idx: Индекс перемещаемой строки.
@@ -207,6 +213,7 @@ class icListCtrlManager(object):
                            columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку выше в контроле типа wx.ListCtrl
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param idx: Индекс перемещаемой строки.
@@ -247,6 +254,7 @@ class icListCtrlManager(object):
                             columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку выше в контроле.
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param idx: Индекс перемещаемой строки.
@@ -277,6 +285,7 @@ class icListCtrlManager(object):
                                      columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку ниже в контроле типа wx.dataview.DataViewListCtrl
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param idx: Индекс перемещаемой строки.
@@ -317,6 +326,7 @@ class icListCtrlManager(object):
                              columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку ниже в контроле типа wx.ListCtrl
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param idx: Индекс перемещаемой строки.
@@ -357,6 +367,7 @@ class icListCtrlManager(object):
                               columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку ниже в контроле.
+
         :param ctrl: Объект контрола.
         :param data_list: Данные списка.
         :param idx: Индекс перемещаемой строки.
@@ -388,6 +399,7 @@ class icListCtrlManager(object):
         Добавить колонку в wx.ListCtrl.
         ВНИМАНИЕ! На старых ОС (...-16.04) wx.LIST_AUTOSIZE_USEHEADER не работает!!!
             Поэтому для автоширины используем везде wx.LIST_AUTOSIZE.
+
         :param ctrl: Объект контрола wx.ListCtrl.
         :param label: Надпись колонки.
         :param width: Ширина колонки.
@@ -417,6 +429,7 @@ class icListCtrlManager(object):
     def appendColumn_list_ctrl(self, ctrl=None, label=u'', width=-1, align='LEFT'):
         """
         Добавить колонку в контрол списка.
+
         :param ctrl: Объект контрола.
         :param label: Надпись колонки.
         :param width: Ширина колонки.
@@ -440,6 +453,7 @@ class icListCtrlManager(object):
     def setColumns_list_ctrl(self, ctrl=None, cols=()):
         """
         Установить колонки в контрол списка.
+
         :param ctrl: Объект контрола.
         :param cols: Список описаний колонок.
             колонка может описываться как списком
@@ -529,6 +543,7 @@ class icListCtrlManager(object):
         Установить авторазмер колонок контрола списка.
         ВНИМАНИЕ! На старых ОС (...-16.04) wx.LIST_AUTOSIZE_USEHEADER не работает!!!
             Поэтому для автоширины используем везде wx.LIST_AUTOSIZE.
+
         :param ctrl: Объект контрола.
         :return: True - все прошло нормально / False - какая-то ошибка.
         """
@@ -548,6 +563,7 @@ class icListCtrlManager(object):
     def setColumnLabel(self, ctrl=None, n_column=0, label=u''):
         """
         Установить надпись колонки.
+
         :param ctrl: Объект контрола списка (wx.ListCtrl и т.п.).
         :param n_column: Идекс колонки.
         :param label: Надпись колонки.
@@ -574,6 +590,7 @@ class icListCtrlManager(object):
                            auto_select=False):
         """
         Добавить строку в контрол wx.ListCtrl.
+
         :param ctrl: Объект контрола wx.ListCtrl.
         :param row: Список строки по полям.
         :param evenBackgroundColour: Цвет фона четных строк.
@@ -632,6 +649,7 @@ class icListCtrlManager(object):
                                 auto_select=False):
         """
         Добавить строку в контрол wx.ListCtrl.
+
         :param ctrl: Объект контрола wx.ListCtrl.
         :param row: Список строки по полям.
         :param evenBackgroundColour: Цвет фона четных строк.
@@ -668,6 +686,7 @@ class icListCtrlManager(object):
                             auto_select=False):
         """
         Добавить строку в контрол списка.
+
         :param ctrl: Объект контрола.
         :param row: Список строки по полям.
         :param evenBackgroundColour: Цвет фона четных строк.
@@ -715,6 +734,7 @@ class icListCtrlManager(object):
     def removeRow_list_ctrl(self, ctrl=None, item=-1):
         """
         Удалить строку из контрола списка.
+
         :param ctrl: Объект контрола.
         :param item: Индекс удаляемой строки.
         :return: True - все прошло нормально / False - какая-то ошибка.
@@ -738,6 +758,7 @@ class icListCtrlManager(object):
                          doSavePos=False):
         """
         Установить строку контрола списка.
+
         :param ctrl: Объект контрола.
         :param row_idx: Индекс строки. Если -1, то строка не устанавливается.
         :param row: Cтрока.
@@ -793,6 +814,7 @@ class icListCtrlManager(object):
                           doSavePos=False):
         """
         Установить строки в контрол списка.
+
         :param ctrl: Объект контрола.
         :param rows: Список строк.
             Строка представляет собой список:
@@ -874,6 +896,7 @@ class icListCtrlManager(object):
     def getRows_list_ctrl(self, ctrl=None):
         """
         Получить список строк в виде списка кортежей.
+
         :param ctrl: Объект контрола списка.
         :return: Список строк.
             Строка представляет собой список:
@@ -899,6 +922,7 @@ class icListCtrlManager(object):
     def getRow_list_ctrl(self, ctrl=None, item=-1):
         """
         Получить строку по индексу в виде кортежа.
+
         :param ctrl: Объект контрола списка.
         :param item: Индекс запрашиваемой строки.
             Если не определен, то возвращается индекс текущей строки.
@@ -926,6 +950,7 @@ class icListCtrlManager(object):
                                            fg_colour=None, bg_colour=None, requirement=None):
         """
         Установить цвет строки в контроле списка по определенному условию.
+
         :param ctrl: Объект контрола.
         :param rows: Список строк.
         :param fg_colour: Цвет текста, если условие выполненно.
@@ -958,6 +983,7 @@ class icListCtrlManager(object):
     def setRowForegroundColour_list_ctrl(self, ctrl=None, i_row=0, colour=None):
         """
         Установить цвет текста строки в контроле списка.
+
         :param ctrl: Объект контрола.
         :param i_row: Индекс строки.
         :param colour: Цвет текста строки.
@@ -988,6 +1014,7 @@ class icListCtrlManager(object):
     def setRowBackgroundColour_list_ctrl(self, ctrl=None, i_row=0, colour=None):
         """
         Установить цвет фона строки в контроле списка.
+
         :param ctrl: Объект контрола.
         :param i_row: Индекс строки.
         :param colour: Цвет фона строки.
@@ -1019,6 +1046,7 @@ class icListCtrlManager(object):
         типов (контролы и события) то:
         Эта функция нужна чтобы не заботиться о названии функции
         для каждого контрола/события.
+
         :param obj: Объект контрола или события.
         :return: Индекс выбранного элемента или -1 если ничего не выбрано.
         """
@@ -1045,6 +1073,7 @@ class icListCtrlManager(object):
                              is_focus=True, deselect_prev=False):
         """
         Выбрать элемент контрола списка по индексу.
+
         :param ctrl: Объект контрола.
         :param is_focus: Автоматически переместить фокус на элемент?
         :param deselect_prev: Произвести отмену выбора предыдущего выбранного элемента?
@@ -1090,6 +1119,7 @@ class icListCtrlManager(object):
         типов, то:
         Эта функция нужна чтобы не заботиться о названии функции
         для каждого контрола.
+
         :param obj: Объект контрола списка элементов.
         :return: Количество элементов контрола списка.
         """
@@ -1107,6 +1137,7 @@ class icListCtrlManager(object):
     def getLastItemIdx(self, obj):
         """
         Индекс последнего элемента списка.
+
         :param obj: Объект контрола списка элементов.
         :return: Индекс последнего элемента контрола списка или -1 если
             в списке нет элементов.
@@ -1117,6 +1148,7 @@ class icListCtrlManager(object):
     def checkAllItems_list_ctrl(self, ctrl, check=True):
         """
         Установить галки всех элементов контрола списка.
+
         :param check: Вкл./выкл.
         :return: True/False.
         """
@@ -1125,6 +1157,7 @@ class icListCtrlManager(object):
     def checkItems_list_ctrl(self, ctrl, check=True, n_begin=-1, n_end=-1):
         """
         Установить галки элементов контрола списка.
+
         :param ctrl: Объект контрола.
         :param check: Вкл./выкл.
         :param n_begin: Номер первого обрабатываемого элемента.
@@ -1155,6 +1188,7 @@ class icListCtrlManager(object):
     def checkItem_list_ctrl(self, ctrl, check=True, i_row=-1):
         """
         Установить галки элементов контрола списка.
+
         :param ctrl: Объект контрола.
         :param check: Вкл./выкл.
         :param i_row: Индекс обрабатываемого элемента.
@@ -1179,6 +1213,7 @@ class icListCtrlManager(object):
                                bSet=False):
         """
         Наити и пометить строку списка по определенному условию.
+
         :param ctrl: Объект контрола.
         :param rows: Список строк.
         :param requirement: lambda выражение, формата:
@@ -1210,6 +1245,7 @@ class icListCtrlManager(object):
     def getCheckedItems_list_ctrl(self, ctrl, check_selected=False):
         """
         Получить список индексов помеченных/отмеченных элементов контрола списка.
+
         :param ctrl: Объект контрола списка элементов.
         :param check_selected: Считать выделенный элемент списка как помеченный?
             Если да, то выделенный элемент считается помеченным только когда
@@ -1239,6 +1275,7 @@ class icListCtrlManager(object):
     def getCheckedItemRecords_list_ctrl(self, ctrl, records, check_selected=False):
         """
         Получить список помеченных/отмеченных записей элементов контрола списка.
+
         :param ctrl: Объект контрола списка элементов.
         :param records: Список записей.
         :param check_selected: Считать выделенный элемент списка как помеченный?
@@ -1283,6 +1320,7 @@ class icListCtrlManager(object):
                                 oddBackgroundColour=wxfunc.DEFAULT_COLOUR):
         """
         Просто раскрасить фон четных и не четных строк.
+
         :param ctrl: Объект контрола wx.ListCtrl.
         :param evenBackgroundColour: Цвет фона четных строк.
         :param oddBackgroundColour: Цвет фона нечетных строк.
@@ -1307,6 +1345,7 @@ class icListCtrlManager(object):
     def findRowIdx_requirement(self, ctrl=None, rows=(), requirement=None, auto_select=False):
         """
         Наити индекс строки списка по определенному условию.
+
         :param ctrl: Объект контрола.
         :param rows: Список строк.
         :param requirement: lambda выражение, формата:
@@ -1335,6 +1374,7 @@ class icListCtrlManager(object):
     def selectRow_requirement(self, ctrl=None, rows=(), requirement=None):
         """
         Наити и выделить индекс строки списка по определенному условию.
+
         :param ctrl: Объект контрола.
         :param rows: Список строк.
         :param requirement: lambda выражение, формата:
@@ -1350,6 +1390,7 @@ class icListCtrlManager(object):
                              image_height=DEFAULT_ITEM_IMAGE_HEIGHT):
         """
         Получить список картинок элементов контрола дерева wx.ListCtrl.
+
         :param ctrl: Объект контрола wx.ListCtrl.
         :param image_width: Ширина картинки.
         :param image_height: Высота картинки.
@@ -1371,6 +1412,7 @@ class icListCtrlManager(object):
     def getListCtrlImageListCache(self, ctrl=None):
         """
         Кеш списка образов.
+
         :param ctrl: Объект контрола wx.ListCtrl.
         """
         if ctrl is None:
@@ -1384,6 +1426,7 @@ class icListCtrlManager(object):
     def setItemImage_list_ctrl(self, ctrl=None, item=None, image=None):
         """
         Установить картинку элемента списка.
+
         :param ctrl: Объект контрола wx.ListCtrl.
         :param item: Элемент списка.
             Элемент списка может задаваться как индексом так и объектом wx.ListItem.
@@ -1422,6 +1465,7 @@ class icListCtrlManager(object):
     def getImageIndex_list_ctrl(self, ctrl=None, image=None, auto_add=True):
         """
         Поиск образа в списке образов wx.ListCtrl.
+
         :param ctrl: Объект контрола списка.
         :param image: Объект образа.
         :param auto_add: Автоматически добавить в список, если отсутствует?
@@ -1456,6 +1500,7 @@ class icListCtrlManager(object):
     def clear_list_ctrl(self, ctrl=None):
         """
         Очистка контрола списка.
+
         :param ctrl: Объект контрола списка.
         :return: True/False.
         """

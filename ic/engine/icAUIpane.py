@@ -64,6 +64,7 @@ class icAUIPanePrototype:
     def __init__(self, parent, component):
         """
         Конструктор.
+
         :param: parent: Родительское окно.
         :param component: Ресурс объекта.
         """
@@ -154,6 +155,7 @@ class icAUIPanePrototype:
     def createControl(self, name, res_filename, subsys=None):
         """
         Создание прикрепленного объекта.
+
         :param name: Имя объекта.
         :param res_filename: Имя файла ресурса объекта.
         """
@@ -178,6 +180,7 @@ class icAUIPanePrototype:
     def openControl(self, name, res_filename):
         """
         Отобразить/показать контрол и при необходимости создать.
+
         :param name: Имя объекта.
         :param res_filename: Имя файла ресурса объекта.
         """

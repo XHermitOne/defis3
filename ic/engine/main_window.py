@@ -142,6 +142,7 @@ def createMainWindowByRes(name, res_filename=DEFAULT_WIN_RES_FILE,
                           parent=None, engine=None):
     """
     Функция создает из ресурса окно по его имени.
+
     :param name: Имя-идентификатор окна прописанный в файле ресурса.
     :param res_filename: Имя ресурсного файла.
     :param parent: Родительское окно (если нет, то None).
@@ -167,6 +168,7 @@ def createMainWin(name, res_filename=DEFAULT_WIN_RES_FILE,
                   parent=None, engine=None):
     """
     Функция создает из ресурса окно по его имени.
+
     :param name: Имя-идентификатор окна прописанный в файле ресурса.
     :param res_filename: Имя ресурсного файла.
     :param parent: Родительское окно (если нет, то None).
@@ -192,6 +194,7 @@ def createMainWin(name, res_filename=DEFAULT_WIN_RES_FILE,
 def openWinResFile(res_filename):
     """
     Загрузить информацию из файла ресурсов в память.
+
     :param res_filename: Имя ресурсного файла.
     :return: Возвращает словарь, который определен в файле.
     """
@@ -215,6 +218,7 @@ def closeWinResFile():
 def loadWinStruct(name, res_filename=DEFAULT_WIN_RES_FILE):
     """
     Загрузить атрибуты компонента из файла ресурсов.
+
     :param name: Имя-идентификатор окна.
     :param res_filename: Имя ресурсного файла.
     :return: Возвращает словарь, описывающий окно
@@ -238,6 +242,7 @@ class icStatusBar(wx.StatusBar):
     def __init__(self, parent):
         """
         Конструктор.
+
         :param parent: Родительское главное окно.
         """
         wx.StatusBar.__init__(self, parent, wx.NewId(),
@@ -265,6 +270,7 @@ class icStatusBar(wx.StatusBar):
     def openProgressBar(self, label='', min_value=0, max_value=100):
         """
         Открыть прогресс бар статусной строки.
+
         :param label: Надпись статусной строки.
         :param min_value: Минимальное значение.
         :param max_value: Максимальное занчение.
@@ -281,6 +287,7 @@ class icStatusBar(wx.StatusBar):
     def closeProgressBar(self, label=''):
         """
         Закрыть прогресс бар.
+
         :param label: Надпись статусной строки.
         """
         self.SetStatusText(label, sbfLabel)
@@ -295,6 +302,7 @@ class icStatusBar(wx.StatusBar):
     def updateProgressBar(self, label='', value=-1):
         """
         Обновить прогресс бар.
+
         :param label: Надпись статусной строки.
         :param value: Значение.
         """
@@ -327,6 +335,7 @@ class icMainWindow(wx.Frame):
                  parent=None, engine=None):
         """
         Конструктор.
+
         :param name: Имя окна.
         :param win_struct: Словарь, описывающий окно.
         :param res_filename: Имя ресурсного файла.
@@ -533,6 +542,7 @@ class icMainWindow(wx.Frame):
     def getIconFilename(self):
         """
         Полное имя файла иконки.
+
         :return: Полное имя файла иконки.
             None если иконка не определена.
         """
@@ -546,6 +556,7 @@ class icMainWindow(wx.Frame):
     def setIcon(self, icon):
         """
         Установить иконку.
+
         :param icon: Или имя файла *.ico или объект wx.Icon.
         """
         if isinstance(icon, str):
@@ -722,6 +733,7 @@ class icMainWindow(wx.Frame):
     def setTitleFunc(self, title_func):
         """
         Установить метод заполнения заголовка.
+
         :param title_func: Словарь функции метода заполнения заголовка.
         """
         self._TitleFunc = title_func
@@ -769,6 +781,7 @@ class icMainWindow(wx.Frame):
                    default_page=-1):
         """
         Добавить страницу.
+
         :param page: Страница-объект наследник wx.Window.
         :param title: Заголовок страницы.
         :param open_exists: Если страница уже создана-открыть ее.
@@ -809,6 +822,7 @@ class icMainWindow(wx.Frame):
     def delOrgPage(self, page_index):
         """
         Удалить страницу.
+
         :param page_index: Индекс страницы.
         """
         if self.content_obj is not None:
@@ -830,6 +844,7 @@ class icMainWindow(wx.Frame):
     def delOrg(self):
         """
         Удалить органайзер(Объект главного менеджера системных панелей).
+
         :return: Возвращает результат выполнения операции True/False.
         """
         if self.content_obj is not None:
@@ -851,7 +866,9 @@ class icMainWindow(wx.Frame):
 
     def closeOrgPages(self):
         """
-        Закрыть все страницы органайзера(Объект главного менеджера системных панелей).
+        Закрыть все страницы органайзера (Объект главного
+        менеджера системных панелей).
+
         :return: Возвращает результат выполнения операции True/False.
         """
         if self.content_obj is not None:
@@ -870,6 +887,7 @@ class icMainWindow(wx.Frame):
     def _createAreaSplitter(self):
         """
         Создать разделитель областей.
+
         :return: Объект главного вертикального разделителя или
             None в случае ошибки.
         """
@@ -921,6 +939,7 @@ class icMainWindow(wx.Frame):
     def _insPanel(self, splitter, index, panel):
         """
         Установить панель.
+
         :param splitter: Сплиттер, в который будет устанавливаться панель.
         :param index: Индекс в сплиттере.
         :param panel: Объект панели. Наследник от wx.Window.
@@ -953,6 +972,7 @@ class icMainWindow(wx.Frame):
     def _delPanel(self, splitter, index):
         """
         Удалить из области панель с указанным индексом.
+
         :param splitter: Сплиттер, в который устанавленна панель.
         :param index: Индекс в сплиттере.
         :return: Возвращает True/False.

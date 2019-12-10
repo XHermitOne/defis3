@@ -49,6 +49,7 @@ class icValidateManager(object):
              'ctrl': Объект проверяемого контрола,
             }
         Все проверки организуются в список и проверяются последовательно.
+
         :param name: Наименование проверки.
         :param validation_func: Функция проверки правильного значения:
             Объект функции принимающий в качестве аргумента проверяемое значение.
@@ -80,6 +81,7 @@ class icValidateManager(object):
     def _validate_values_dict(self, **values):
         """
         Запустить проверку значений.
+
         :param values: Словарь проверяемых значений:
             { 'Имя проверки': Проверяемое значение,
               ...
@@ -114,6 +116,7 @@ class icValidateManager(object):
     def validate_values_dict(self, **values):
         """
         Запустить проверку значений.
+
         :param values: Словарь проверяемых значений:
             { 'Имя проверки': Проверяемое значение,
               ...
@@ -133,6 +136,7 @@ class icValidateManager(object):
     def _validate_ctrl_dict(self, *names):
         """
         Запустить проверку значений.
+
         :param names: Список имен проверок.
         :return: Словарь проверок:
             { 'Имя проверки': Текст ошибки, если проверка не прошла или None в случае удачной проверки,
@@ -170,6 +174,7 @@ class icValidateManager(object):
     def validate_ctrl_dict(self, *names):
         """
         Запустить проверку значений контролов.
+
         :param names: Список имен проверок.
         :return: Словарь проверок:
             { 'Имя проверки': Текст ошибки, если проверка не прошла или None в случае удачной проверки,
@@ -186,6 +191,7 @@ class icValidateManager(object):
     def get_ctrl_value(self, ctrl):
         """
         Получить значение контрола не зависимо от типа.
+
         :param ctrl: Объект контрола.
         :return: Значение контрола.
         """

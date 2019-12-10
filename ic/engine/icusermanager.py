@@ -182,6 +182,7 @@ class icUserManager(object):
     def _edit(self, parent=None, user_res=None):
         """
         Открыть окно редактирования пользователей.
+
         :param parent: Родительское окно.
         :param user_res: Структура, описывающая ползователей.
         """
@@ -222,6 +223,7 @@ class icUserManager(object):
     def readRoles(self, prj_dir=None, bSort=False):
         """
         Чтение ролей из папки проекта.
+
         :param prj_dir: Папка проекта.
         :param bSort: Сортировать роли по имени?
         """
@@ -244,7 +246,9 @@ class icUserManager(object):
 
     def unregisterUser(self, cur_prj_dir=None):
         """
-        Сброс блокирующих записей пользователей при некорректном завершении программы.
+        Сброс блокирующих записей пользователей при
+        некорректном завершении программы.
+
         :param cur_prj_dir: Текущая папка проекта.
         """
         try:

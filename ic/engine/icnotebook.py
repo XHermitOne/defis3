@@ -31,6 +31,7 @@ class icMainNotebook(wx.Notebook):
     def __init__(self, parent):
         """
         Конструктор.
+
         :param parent: Окно, куда будет помещен менеджер (главное окно).
         """
         try:
@@ -61,6 +62,7 @@ class icMainNotebook(wx.Notebook):
                 bCanClose=True, open_script=None, close_script=None, default_page=-1):
         """
         Добавить страницу в органайзер.
+
         :param page: Страница. Ею м.б. любой наследник wx.Window.
         :param title: Заголовок. Строка.
         :param bOpenExists: Если страница уже есть,  то открыть ее.
@@ -135,6 +137,7 @@ class icMainNotebook(wx.Notebook):
     def deletePage(self, idx):
         """
         Удалить страницу из органайзера.
+
         :param idx: Номер страницы.
         """
         try:
@@ -191,6 +194,7 @@ class icMainNotebook(wx.Notebook):
     def openPageByTitle(self, title):
         """
         Открыть страницу по указанному заголовку.
+
         :param title: Заголовок страницы.
         """
         idx = None
@@ -320,6 +324,7 @@ class icMainNotebook(wx.Notebook):
     def setPageImg(self, image, n_page):
         """
         Установить картинку у страницы главного органайзера.
+
         :param image: Имя файла образа.
         :param n_page: Номер страницы.
         """

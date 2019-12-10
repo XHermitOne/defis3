@@ -60,6 +60,7 @@ def letVar(name, data, security='*rw'):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Функция добавляет переменную/объект в хранилище.
+
     :param name: Имя переменной/объекта.
     :param data: Непосредственно данные.
     :param security: Строка защиты.
@@ -74,6 +75,7 @@ def refVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Получить ссыылку на объект по его имени.
+
     :param name: Имя объекта.
     :return: Возвращает ссылку на объект или None, если нет такого объекта.
     """
@@ -87,6 +89,7 @@ def getVar(name, lock_key=None):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Получить копию объекта.
+
     :param name: Имя объекта.
     :param lock_key: Ключ блокировки.
     :return: Возвращает копию объекта не связанную с оригиналом
@@ -107,6 +110,7 @@ def putVar(name, data, lock_key=None):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Сохранить объект.
+
     :param name: Имя объекта.
     :param data: Данные.
     :param lock_key: Ключ блокировки.
@@ -122,6 +126,7 @@ def delVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Удалить объект.
+
     :param name: Имя объекта.
     :return: Возвращает удаленный из хранилища объект.
     """
@@ -135,6 +140,7 @@ def isVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Функция проверяет усть ли объект в хранилище.
+
     :param name: Имя объекта.
     :return: Результат поиска (0/1).
     """
@@ -193,6 +199,7 @@ def refreshImports():
 def initEnv(prj_dirname, **environ):
     """
     Инициализация окружения по папке проекта.
+
     :param prj_dirname: Папка проекта.
     """
     try:
@@ -297,6 +304,7 @@ def closeMainWinForce():
     ВНИМАНИЕ! Использовать только в начале обработчика
         инициализации главного окна.
         Иначе последствия могут быть не предсказуемыми.
+
     :return: True/False.
     """
     log.info(u'Принудительное закрытие главного окна программы')
@@ -319,6 +327,7 @@ def closeAppForce():
     ВНИМАНИЕ! Использовать только в начале обработчика
         инициализации главного окна.
         Иначе последствия могут быть не предсказуемыми.
+
     :return: True/False.
     """
     log.info(u'Принудительное закрытие приложения')
@@ -411,6 +420,7 @@ def addMainNotebookPage(page, title, bOpenExists=False, image=None, bCanClose=Tr
                         open_script=None, close_script=None, default_page=-1):
     """
     Добавить в органайзер страницу.
+
     :param page: Страница (Наследник wxScrolledWindow).
     :param title: Строка-заголовок страницы.
     :param bOpenExists: Если такая страница уже существует, тогда открыть ее.
@@ -430,6 +440,7 @@ addMainOrgPage = addMainNotebookPage
 def delMainOrgPage(page_index):
     """
     Удалить из органайзера страницу.
+
     :param page_index: Индекс стриницы.
     """
     try:
@@ -441,6 +452,7 @@ def delMainOrgPage(page_index):
 def startDRPythonIDE(param=None):
     """
     Запуск drPython отдельной задачей.
+
     :param param: Параметры командной строки.
     """
     # Очистить параметры командной строки
@@ -490,6 +502,7 @@ ADMINISTRATOR_ROLE_NAMES = ('admins', 'administrators', 'Admins', 'Administrator
 def isAdministrator(user=None, admin_role_names=ADMINISTRATOR_ROLE_NAMES):
     """
     Проверка является ли пользователь администратором.
+
     :param user: Проверяемый пользователь. Если None, то берется текущий пользователь.
     :param admin_role_names: Список имен ролей администраторов.
     :return: True/False. None - в случае ошибки.
@@ -507,6 +520,7 @@ def isAdministrator(user=None, admin_role_names=ADMINISTRATOR_ROLE_NAMES):
 def isAdministratorCurUser(admin_role_names=ADMINISTRATOR_ROLE_NAMES):
     """
     Проверка является ли текущий пользователь администратором системы.
+
     :param admin_role_names: Список имен ролей администраторов.
     :return: True/False.
     """
@@ -563,6 +577,7 @@ def getPrjName():
 def getObjManager(obj):
     """
     Менеджер объекта.
+
     :param obj: Объект.
     :return: Объект менеджера.
     """
@@ -572,6 +587,7 @@ def getObjManager(obj):
 def getPrjDir():
     """
     Папка проекта. Берем из окружения.
+
     :return:  Путь до папки проекта.
     """
     return getVar('PRJ_DIR')
@@ -581,6 +597,7 @@ def getPrjPackage():
     """
     Так как папка проекта является пакетом Python,
     то можно получить объект пакета.
+
     :return: Объект пакета прикладного проекта.
     """
     prj_dir = getPrjDir()
@@ -608,6 +625,7 @@ def getPrjPackage():
 def saveOperateYear(year=None):
     """
     Сохранить значение операционного года в INI файле.
+
     :param year: Год.
     """
     if year is None:
@@ -623,6 +641,7 @@ def saveOperateYear(year=None):
 def setOperateYear(year=None):
     """
     Установить операционный год.
+
     :param year: Год.
         Если год не указан, то производится попытка
         прочитать его в INI файле проекта.
@@ -668,6 +687,7 @@ def setSysYearAsOperate():
 def getReportManager():
     """
     Объект менеджера системы отчетов.
+
     :return: Объект менеджера системы отчетов.
     """
     from ic import report
@@ -677,6 +697,7 @@ def getReportManager():
 def getScanManager():
     """
     Объект менеджера системы сканирования.
+
     :return: Объект менеджера системы сканирования.
     """
     from ic import scanner

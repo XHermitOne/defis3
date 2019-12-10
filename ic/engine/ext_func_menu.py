@@ -24,6 +24,7 @@ __version__ = (0, 1, 2, 1)
 def createMenuBarByRes(parent, name, menubar_res):
     """
     Функция создает из ресурса горизонтальное меню и окно по его имени.
+
     :param parent: окно,  к которому привязано горизонтальное меню.
     :param name: имя объекта горизонтального меню в файле ресурсов.
     :param menubar_res: Данные о горизонтальном меню.
@@ -39,6 +40,7 @@ def createMenuBarByRes(parent, name, menubar_res):
 def appendMenuBarByRes(parent, name, menubar_res, menubar=None):
     """
     Функция дополняет из ресурса горизонтальное меню.
+
     :param parent: окно,  к которому привязано горизонтальное меню.
     :param name: имя объекта горизонтального меню в файле ресурсов.
     :param menubar_res: Данные о горизонтальном меню.
@@ -84,6 +86,7 @@ def appendMenuBarByRes(parent, name, menubar_res, menubar=None):
 def appendMenuBar(parent, name, menubar_res, menubar=None, engine_res=None):
     """
     Функция дополняет из ресурса горизонтальное меню.
+
     :param parent: окно,  к которому привязано горизонтальное меню.
     :param name: имя объекта горизонтального меню в файле ресурсов.
     :param menubar_res: Данные о горизонтальном меню.

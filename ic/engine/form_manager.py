@@ -52,6 +52,7 @@ class icFormManager(formdatamanager.icFormDataManager,
         в локальную папку профиля.
         При открытии окна с помощью метода <load_dlg>
         происходит восстановление сохраненных параметров.
+
         :return: True/False.
         """
         # Определить имя файла для хранения данных
@@ -67,6 +68,7 @@ class icFormManager(formdatamanager.icFormDataManager,
     def load_dlg(self):
         """
         Загрузить позиции и размеры динамических контролов окна.
+
         :return: True/False.
         """
         res_filename = os.path.join(config.PROFILE_DIRNAME,

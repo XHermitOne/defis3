@@ -25,6 +25,7 @@ class icStoredCtrlManager(object):
     def save_ext_data(self, name, **kwargs):
         """
         Запись дополнительных данных окна.
+
         :param name: Наименование файла для записи.
         :param kwargs: Словарь данных для записи.
         :return: True/False.
@@ -37,6 +38,7 @@ class icStoredCtrlManager(object):
     def load_ext_data(self, name):
         """
         Загрузка дополнительных данных окна.
+
         :param name: Наименование файла хранения данных.
         :return: Загруженные данные в виде словаря или
             пустой словарь если данных нет.
@@ -51,6 +53,7 @@ class icStoredCtrlManager(object):
     def save_data_file(self, save_filename, save_data=None):
         """
         Сохранить данные в конкретном файле.
+
         :param save_filename: Полное имя файла сохранения.
         :param save_data: Сохраняемые данные.
         :return: True/False.
@@ -66,6 +69,7 @@ class icStoredCtrlManager(object):
     def load_data_file(self, save_filename):
         """
         Прочитать данные из файла.
+
         :param save_filename: Полное имя файла сохранения.
         :return: Данные файла или None в случае ошибки.
         """

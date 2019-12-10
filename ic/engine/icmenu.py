@@ -113,7 +113,8 @@ class icMenu(wx.Menu):
 
     def DoMenu(self, MenuItems_):
         """
-        Создать меню .
+        Создать меню.
+
         :param MenuItems_: список ресурсов пунктов меню.
         :return: Возвращает ссылку на созданное горизонтальное меню или
             None в случае ошибки.
@@ -138,6 +139,7 @@ class icMenu(wx.Menu):
     def AppendMenuByStruct(self, MenuName_, MenuStruct_):
         """
         Добавить меню по его структуре.
+
         :param MenuName_: имя меню.
         :param MenuStruct_: структура меню.
         :return: Возвращает ссылку на меню или None.
@@ -153,6 +155,7 @@ class icMenu(wx.Menu):
     def AppendItemByStruct(self, ItemName_, ItemStruct_):
         """
         Добавить пункт меню по его структуре.
+
         :param ItemName_: имя пункта.
         :param ItemStruct_: структура пункта.
         :return: Возвращает ссылку на пункт меню или None.
@@ -202,6 +205,7 @@ class icMenu(wx.Menu):
     def FindMenuItemByAlias(self, Name_):
         """
         Найти объект-пункт/меню по его имени.
+
         :param Name_: имя пункта/подменю.
         :return: Возвращает ссылку на объект-пункт/меню или None.
         """
@@ -212,6 +216,7 @@ class icMenu(wx.Menu):
     def FindMenuItemByID(self, ID_):
         """
         Найти объект-пункт/меню по его ID.
+
         :param ID_: ID пункта/подменю.
         :return: Возвращает ссылку на объект-пункт/меню или None.
         """
@@ -222,6 +227,7 @@ class icMenu(wx.Menu):
     def FindItemByAlias(self, Name_):
         """
         Найти пункт меню в самом меню или во всех дочерних меню.
+
         :param Name_: имя пункта.
         :return: Возвращает ссылку на пункт меню или None.
         """
@@ -245,6 +251,7 @@ class icMenu(wx.Menu):
     def FindItemByID(self, ID_):
         """
         Найти пункт меню в самом меню или во всех дочерних меню.
+
         :param ID_: ID пункта/подменю.
         :return: Возвращает ссылку на пункт меню или None.
         """
@@ -268,6 +275,7 @@ class icMenu(wx.Menu):
     def Register(self, Item_):
         """
         Прописать в реестре.
+
         :param Item_: объект пункта меню.
         """
         if Item_.__class__.__name__ != 'icMenu':

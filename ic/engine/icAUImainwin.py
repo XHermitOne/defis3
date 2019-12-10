@@ -77,6 +77,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     def __init__(self, component=None):
         """
         Конструктор.
+
         :param: component: Ресурсное представление объекта.
         """
         component = util.icSpcDefStruct(SPC_IC_AUIMAINWIN, component)
@@ -135,6 +136,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     def getPage(self, page_idx):
         """
         Получить объект страницы по ее индексу.
+
         :param page_idx: Индекс страницы в главном нотебуке.
         :return: Объект страницы или None  в случае ошибки.
         """
@@ -229,6 +231,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
                             bNotDuplicate=True):
         """
         Добавить страницу.
+
         :param page: Страница-объект наследник wx.Window.
         :param title: Заголовок страницы.
         :param bAutoSelect: Выбирается по умолчанию эта страница?
@@ -259,6 +262,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
                    bNotDuplicate=True):
         """
         Добавить страницу.
+
         :param page: Страница-объект наследник wx.Window.
         :param title: Заголовок страницы.
         :param open_exists: Если страница уже создана-открыть ее.
@@ -293,6 +297,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     def delOrgPage(self, page_index):
         """
         Удалить страницу.
+
         :param page_index: Индекс страницы.
         """
         try:
@@ -308,6 +313,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     def delPageByTitle(self, page_title):
         """
         Удалить страницу по заголовку страницы.
+
         :param page_title: Заголовок страницы.
         """
         try:
@@ -328,6 +334,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     def delOrg(self):
         """
         Удалить органайзер(Объект главного менеджера системных панелей).
+
         :return: Возвращает результат выполнения операции True/False.
         """
         try:
@@ -341,6 +348,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     def closeOrgPages(self):
         """
         Закрыть все страницы органайзера(Объект главного менеджера системных панелей).
+
         :return: Возвращает результат выполнения операции True/False.
         """
         try:
@@ -361,7 +369,6 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
         """
         Обрабатывает закрытие окна.
         """
-        
         #   Посылаем всем уведомление о разрущении родительского окна.
         try:
             for key in self.evalSpace['_dict_obj']:
@@ -375,6 +382,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     def openChildPane(self, page, pane_name):
         """
         Открыть дочернее окно как AUI панель.
+
         :param page: Имя ресурсного файла окна.
         :param pane_name: Имя дочерней AUI панели.
         """
@@ -393,6 +401,7 @@ class icAUIMainWinPrototype(main_window.icMainWindow):
     def setChildPane(self, page, pane_name):
         """
         Установить дочернее окно как AUI панель.
+
         :param page: Объект окна/панели.
         :param pane_name: Имя дочерней AUI панели.
         """

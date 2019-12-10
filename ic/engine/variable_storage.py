@@ -62,6 +62,7 @@ class icVarStorage:
     def __init__(self, res_filename='', bLog=True):
         """
         Конструктор класса.
+
         :param res_filename: Ресурсный файл глобальных переменных.
         :param bLog: Разрешение включения регистратора.
         """
@@ -83,6 +84,7 @@ class icVarStorage:
     def Add(self, name, data, security='*rw'):
         """
         Записать в хранилище объект.
+
         :param name: Имя-идентификатор объекта .
         :param data: Тело объекта.
         :param security: Строка прав доступа к переменной.
@@ -97,6 +99,7 @@ class icVarStorage:
     def addToPath(self, path, data, security='*rw', storage=None):
         """
         Записать в хранилище объект (в качестве пути передается список имен).
+
         :param path: в качестве пути передается список имен.
         :param data: Тело объекта.
         :param security: Строка прав доступа к переменной.
@@ -148,6 +151,7 @@ class icVarStorage:
     def Del(self, name):
         """
         Получить объект из хранилища с удалением.
+
         :param name: Имя-идентификатор объекта.
         :return: Возвращает ссылку на объект или None.
         """
@@ -161,6 +165,7 @@ class icVarStorage:
     def delToPath(self, path, storage=None):
         """
         Получить объект из хранилища с удалением.
+
         :param path: в качестве пути передается список имен.
         :return: Возвращает ссылку на объект или None.
         """
@@ -209,6 +214,7 @@ class icVarStorage:
         """
         Получить копию объекта в хранилище, для редактирования.
         Если lock_key==None, то доступ к объекту не блокируется
+
         :param name: Имя-идентификатор объекта.
         :param lock_key: Ключ блокировки доступа
             Если lock_key==None, то доступ к объекту не блокируется.
@@ -244,6 +250,7 @@ class icVarStorage:
         """
         Положить отредактированную копию объекта.
         Если lock_key==None, то доступ к объекту не блокируется.
+
         :param name: Имя-идентификатор объекта.
         :param data: Тело объекта.
         :param lock_key: Ключ блокировки доступа.
@@ -278,6 +285,7 @@ class icVarStorage:
         """
         Получить ссылку на объект в хранилище, для чтения.
         Если lock_key==None, то доступ к объекту не блокируется.
+
         :param name: Имя-идентификатор объекта.
         :param lock_key: Ключ блокировки доступа.
         :return: Ссылку на объект.
@@ -312,6 +320,7 @@ class icVarStorage:
     def _getNode(self, path, storage=None):
         """
         Получить узел объекта из хранилища по пути.
+
         :param path: в качестве пути передается список имен.
         """
         node = ''
@@ -340,6 +349,7 @@ class icVarStorage:
     def _save(self, res_filename=''):
         """
         Сохранить хранилище в ресурсном файле.
+
         :param res_filename: Имя ресурсного файла.
         """
         try:
@@ -355,6 +365,7 @@ class icVarStorage:
     def _load(self, res_filename=''):
         """
         Загрузить хранилище из ресурсного файла.
+
         :param res_filename: Имя ресурсного файла.
         """
         try:
@@ -369,6 +380,7 @@ class icVarStorage:
     def Is(self, name):
         """
         Проверка существует ли такой объект.
+
         :param name: Имя объекта.
         """
         try:
@@ -384,6 +396,7 @@ class icVarStorage:
     def canRead(self, name, lock_key=None):
         """
         Проверка возможности чтения объекта из хранилища.
+
         :param name: Имя объекта.
         :param lock_key: Ключ блокировки доступа.
         """
@@ -402,6 +415,7 @@ class icVarStorage:
     def canWrite(self, name, lock_key=None):
         """
         Проверка возможности изменения объекта из хранилища.
+
         :param name: Имя объекта.
         :param lock_key: Ключ блокировки доступа.
         """
@@ -420,6 +434,7 @@ class icVarStorage:
     def canRef(self, name, lock_key=None):
         """
         Проверка возможности получения ссылки на объект
+
         :param name: Имя объекта.
         :param lock_key: Ключ блокировки доступа.
         """
@@ -460,6 +475,7 @@ class icVarStorage:
         Функция выводит в виде текста все имена объектов ХРАНИЛИЩА.
         Функция применяется при отладке.
         Используется рекурсивный вызов.
+
         :param storage: Текущий уровень(папка) ХРАНИЛИЩА.
         :param path: Путь до объекта.
         """
@@ -483,6 +499,7 @@ class icVarStorage:
     def _log(self, message):
         """
         Регистрация сообщения/ошибки.
+
         :param message: Текст сообщения.
         """
         if self._can_log:

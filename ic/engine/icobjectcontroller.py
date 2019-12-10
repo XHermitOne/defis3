@@ -15,6 +15,7 @@ class icObjectController():
     def __init__(self, resource=None):
         """
         Конструктор.
+
         :param resource: Ресурсное описание.
         """
         pass

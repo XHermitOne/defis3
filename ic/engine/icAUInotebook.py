@@ -22,6 +22,7 @@ class icAUINotebook(aui.AuiNotebook):
     def __init__(self, parent):
         """
         Конструктор.
+
         :param: parent: Родительское окно.
         """
         aui.AuiNotebook.__init__(self, parent)
@@ -31,6 +32,7 @@ class icAUINotebook(aui.AuiNotebook):
     def addPage(self, page, title, bAutoSelect=False, image=None, bNotDuplicate=True):
         """
         Добавить страницу.
+
         :param page: Страница-объект наследник wx.Window.
         :param title: Заголовок страницы.
         :param bAutoSelect: Выбирается по умолчанию эта страница?
@@ -64,6 +66,7 @@ class icAUINotebook(aui.AuiNotebook):
     def getPages(self):
         """
         Список страниц.
+
         :return: Список в формате:
             [
             {'title': Заголовок страницы, 'page': Объект страницы}, ...
@@ -103,6 +106,7 @@ class icAUIMainNotebook(icAUINotebook):
     def __init__(self, parent):
         """
         Конструктор.
+
         :param: parent: Родительское окно.
         """
         icAUINotebook.__init__(self, parent)

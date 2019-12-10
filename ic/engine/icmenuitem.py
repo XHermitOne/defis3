@@ -240,6 +240,7 @@ class icMenuItem(wx.MenuItem):
     def SetImage(self, Image_):
         """
         Функция установки образов пункта меню.
+
         :param Image_: имя файла образа (BMP).
         """
         try:
@@ -271,6 +272,7 @@ class icMenuItem(wx.MenuItem):
     def setBitmap(self, BmpPsp_):
         """
         Функция установки картинки пункта меню.
+
         :param BmpPsp_: Паспорт картинки.
         """
         try:
@@ -331,6 +333,7 @@ class icMenuItem(wx.MenuItem):
     def ToggleOffRadio(self):
         """
         Переключить радио пункт.
+
         :return: Возвращает True в случае удачного выполнения операции или
             иначе False.
         """
@@ -403,6 +406,7 @@ class icMenuItem(wx.MenuItem):
     def LinkTool(self, Toolbar_, ToolID_):
         """
         Связать пункт меню с инструментом.
+
         :param Toolbar_: объект панели инструментов.
         :param ToolID_: идентификатор инструмента.
         """
@@ -414,6 +418,7 @@ class icMenuItem(wx.MenuItem):
     def ToggleTool(self, Toggle_):
         """
         Переключить инструмент,  связанный с пунктом меню.
+
         :param Toggle_: включить-True/выключить-False.
         """
         if self._Toolbar is not None:
@@ -422,6 +427,7 @@ class icMenuItem(wx.MenuItem):
     def ExecuteItem(self):
         """
         Выполнить действие,  привязанное к пункту меню.
+
         :param item: объект пункта меню.
         """
         try:
@@ -507,6 +513,7 @@ class icMenuItem(wx.MenuItem):
     def Enable(self, enable=True):
         """
         Включить/выключить пункт меню.
+
         :param enable: Флаг включения/выключения.
         """
         # Если вообще нельзя использовать этот пункт, то ничего и не делать

@@ -32,6 +32,7 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
     def appendItem(self, flat_menuitem):
         """
         Добавить пункт меню.
+
         :param flat_menuitem: Объект пункта меню.
         """
         if flat_menuitem is None:
@@ -53,6 +54,7 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
     def appendMenu(self, flat_menu):
         """
         Добавить меню.
+
         :param flat_menu: Объект меню.
         """
         if flat_menu is None:
@@ -94,6 +96,7 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
     def popupByButton(self, button, parent=None):
         """
         Вызвать всплывающее меню по кнопке.
+
         :param button: Объект кнопки wx.Button.
         :param parent: Родительское окно.
         """
@@ -111,6 +114,7 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
         """
         Определить точку левого-нижнего края кнопки.
         Используется для вызова всплывающих меню.
+
         :param toolbar: Объект панели инструментов wx.ToolBar.
         :param tool: Объект инструмента панели инструментов wx.ToolBarToolBase.
         """
@@ -133,6 +137,7 @@ class icFlatMenuPrototype(flatmenu.FlatMenu):
     def popupByTool(self, tool, toolbar=None):
         """
         Вызвать всплывающее меню по инструменту панели инструментов.
+
         :param tool: Объект инструмента панели инструментов wx.ToolBarToolBase.
         :param toolbar: Объект панели инструментов wx.ToolBar.
         """

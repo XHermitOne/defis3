@@ -60,6 +60,7 @@ class icFlatMenuBarPrototype(flatmenu.FlatMenuBar):
     def appendTool(self, flat_menutool):
         """
         Добавить инструмент на панель инструментов горизонтального меню.
+
         :param flat_menutool: ОБъект инструмента горизонтального меню.
         """
         if flat_menutool is None:

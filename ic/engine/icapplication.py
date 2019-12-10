@@ -42,6 +42,7 @@ def getPrjSubSysDirs(prj_dirname):
     """
     Получить список директорий подсистем вместе с проектом.
     Заполнение списка происходит по файлу *.pro.
+
     :param prj_dirname: Папка проекта.
     """
     root_prj_dir = os.path.dirname(prj_dirname)
@@ -57,6 +58,7 @@ def getSubSysDirs(prj_dirname):
     """
     Получить список директорий подсистем.
         Заполнение списка происходит по файлу *.pro.
+
     :param prj_dirname: Папка проекта.
     """
     root_prj_dir = os.path.dirname(prj_dirname)
@@ -140,6 +142,7 @@ class icApp(icwxapplication.icWXApp):
     def Login(self, username=None, password=None, db_mode='-s'):
         """
         Регистрация пользователя в системе.
+
         :param username: Имя пользователя.
         :param password: Пароль.
         :param db_mode: Режим использования БД.
@@ -161,6 +164,7 @@ class icApp(icwxapplication.icWXApp):
     def _login_loop(self, username=None, password=None, db_mode='-s'):
         """
         Цикл входа в систему.
+
         :param username: Имя пользователя.
         :param password: Пароль.
         :param db_mode: Режим использования БД.
@@ -196,6 +200,7 @@ class icApp(icwxapplication.icWXApp):
     def run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
+
         :param mainwin_psp: Паспорт главного окна.
         :param menubars_psp: Список паспортов горизонтальных меню.
         :return: Возвращает True, если все OK иначе - False.
@@ -209,6 +214,7 @@ class icApp(icwxapplication.icWXApp):
     def _run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
+
         :param mainwin_psp: Паспорт главного окна.
         :param menubars_psp: Список паспортов горизонтальных меню.
         :return: Возвращает True, если все OK иначе - False.
@@ -249,6 +255,7 @@ class icApp(icwxapplication.icWXApp):
     def _createMainMenu(self, menubars_psp):
         """
         Создание/Сборка главного горизонтального меню.
+
         :param menubars_psp: Список паспортов линеек горизонтальных меню для сборки.
         """
         # Сборка полного ресурса линейки горизонтального меню
@@ -272,7 +279,9 @@ class icApp(icwxapplication.icWXApp):
 
     def loadPopupMenu(self, name, owner):
         """
-        Загрузка всплывающих меню в системе должна производится ч/з эту функцию для последующего доступа объектов к этим менюхам.
+        Загрузка всплывающих меню в системе должна производится ч/з эту
+        функцию для последующего доступа объектов к этим менюхам.
+
         :param name: имя всплывающего меню.
         :param owner: объект-хозяин, к которому прикрепляется меню.
         :return: Возвращает ссылку на объект всплывающего меню.

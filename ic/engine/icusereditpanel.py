@@ -61,6 +61,7 @@ class icUserEditPanel(icobjectinterface.icObjectInterface):
     def setManager(self, manager):
         """
         Установить менеджер управления файлами ресурса пользователя.
+
         :param manager: Объект менеджера пользователей.
         """
         self._manager = manager
@@ -254,6 +255,7 @@ def test(par=0):
 
     frame.Show(True)
     app.MainLoop()
+
 
 if __name__ == '__main__':
     test()

@@ -51,6 +51,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def set_ctrl_value(self, ctrl, value):
         """
         Установить значение контрола не зависимо от типа.
+
         :param ctrl: Объект контрола.
         :param value: Значение контрола.
         :return: True/False.
@@ -93,6 +94,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def get_panel_data(self, panel, data_dict=None, *ctrl_names):
         """
         Получить выставленные значения в контролах объекта панели.
+
         :param data_dict: Словарь для заполнения.
             Если не определен то создается новый словарь.
         :param ctrl_names: Взять только контролы с именами...
@@ -127,6 +129,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def set_panel_data(self, panel, data_dict=None, *ctrl_names):
         """
         Установить значения в контролах.
+
         :param panel: Объект панели.
         :param data_dict: Словарь для заполнения.
         :param ctrl_names: Взять только контролы с именами...
@@ -155,6 +158,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Получить данные контролов для сохранения.
         Не все данные могут сохраняться.
+
         :return: Словарь с данными для записи.
         """
         ctrl_data = dict()
@@ -175,6 +179,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def _setCtrlData(self, ctrl_data):
         """
         Установить данные контролов после загрузки.
+
         :param ctrl_data: Данные контролов.
         :return: True/False.
         """
@@ -200,6 +205,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Установить словарь соответствий значений
         контролов и имен прикладного кода.
+
         :param accord: Cловарь соответствий значений
         контролов и имен прикладного кода.
             Формат:
@@ -211,6 +217,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Добавить словарь соответствий значений
         контролов и имен прикладного кода.
+
         :param accord: Cловарь соответствий значений
         контролов и имен прикладного кода.
             Формат:
@@ -223,6 +230,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Получить словарь соответствий значений
         контролов и имен прикладного кода.
+
         :return: Cловарь соответствий значений
         контролов и имен прикладного кода.
             Формат:
@@ -233,6 +241,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def get_accord_ctrl_data(self):
         """
         Получить согласованные данные.
+
         :return: Словарь значений из контролов
             в формате соответствий.
             Формат:
@@ -245,6 +254,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def set_accord_ctrl_data(self, **data):
         """
         Установить согласованные данные.
+
         :param data: Словарь значений в формате соответствий.
             Контролы заполняются в согласно соответствиям.
             Формат:
@@ -257,6 +267,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Найти на панели контролы ввода на панели и определить
         их как словарь соответствий.
+
         :param panel: Объект панели.
         :return: Словарь соответствий контролов ввода.
         """
@@ -270,6 +281,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Найти на панели контролы ввода на панели и определить
         их как словарь соответствий.
+
         :param panel: Объект панели.
         :return: Словарь соответствий контролов ввода.
         """
@@ -303,6 +315,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def setAcceleratorTable_win(self, win=None, **key_combine_connections):
         """
         Установить акселераторную таблицу для окна.
+
         :param win: Объект окна для которого устанавливается акселераторная
             таблица. Если не определен, то берется self.
         :param key_combine_connections: Словарь связей комбинаций клавиш
@@ -333,6 +346,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def getAcceleratorTable_win(self, win=None):
         """
         Получить акселераторную таблицу окна.
+
         :param win: Объект окна для которого устанавливается акселераторная
             таблица. Если не определен, то берется self.
         :return: Объект акселераторной таблицы если он есть или None если его нет.
@@ -349,6 +363,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def setNotebookPage_image(self, notebook_ctrl, n_page=-1, img=None):
         """
         Установить картинку-иконку на странице wx.Notebook.
+
         :param notebook_ctrl: Объект wx.Notebook.
         :param n_page: Индекс страницы. Если < 0, то берется текущая выбранная.
         :param img: Объект образа. Если None, то картинка убирается.
@@ -392,6 +407,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def clear_panel_data(self, panel):
         """
         Очистить значения в контролах.
+
         :param panel: Объект панели.
         """
         try:
@@ -402,6 +418,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def _clear_panel_data(self, panel):
         """
         Очистить значения в контролах.
+
         :param panel: Объект панели.
         """
         if not issubclass(panel.__class__, wx.Panel):
@@ -422,6 +439,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def clear_ctrl_value(self, ctrl):
         """
         Очистить значение контрола не зависимо от типа.
+
         :param ctrl: Объект контрола.
         :return: True/False.
         """
@@ -465,6 +483,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
                               resize_panel=0, redraw=True):
         """
         Cвертывание панели сплиттера.
+
         :param splitter: Объект сплиттера wx.SplitterWindow.
         :param toolbar: Панель инструментов.
             Для включения и выключения инструментов.
@@ -514,6 +533,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
                             resize_panel=0, redraw=True):
         """
         Развертывание панели сплиттера.
+
         :param splitter: Объект сплиттера wx.SplitterWindow.
         :param toolbar: Панель инструментов.
             Для включения и выключения инструментов.
@@ -563,6 +583,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def get_ctrl_data(self, data_dict=None, *ctrl_names):
         """
         Получить выставленные значения в контролах.
+
         :param data_dict: Словарь для заполнения.
             Если не определен то создается новый словарь.
         :param ctrl_names: Взять только контролы с именами...
@@ -575,6 +596,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def set_ctrl_data(self, data_dict=None, *ctrl_names):
         """
         Установить значения в контролах.
+
         :param data_dict: Словарь для заполнения.
         :param ctrl_names: Взять только контролы с именами...
             Если имена контролов не определены,
@@ -587,6 +609,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Проверка является ли системная тема ОС темной.
         Эта функция необходима для определения цвета текста контролов.
+
         :return: True - темная тема / False - светлая
         """
         if not hasattr(self, '__is_dark_sys_theme'):
@@ -597,6 +620,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def reCreateGrid(self, grid, row_count=5, col_count=5):
         """
         Пересоздать грид с навым количеством строки X колонки.
+
         :param grid: Объект wx.Grid.
         :param row_count: Количество строк.
         :param col_count: Количество колонок.

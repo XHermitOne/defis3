@@ -53,6 +53,7 @@ SPC_IC_TOOL = {'description': '',
 def CreateICToolBar(Win_, MenuBar_, Name_, ToolbarData_):
     """
     Функция создает из ресурса панель инструментов.
+
     :param Win_  : окно,  в котором располагается панель инструментов.
     :param MenuBar_: объект горизонтального меню,  к которому прекрепляется
                 панель инструментов.
@@ -74,6 +75,7 @@ def CreateICToolBar(Win_, MenuBar_, Name_, ToolbarData_):
 def CreateICToolBars(Win_, MenuBar_, Names_, ToolbarData_):
     """
     Функция создает список панелей инструментов по списку имен.
+
     :param Win_  : окно,  в котором располагается панель инструментов.
     :param MenuBar_: объект горизонтального меню,  к которому прекрепляется
                 панель инструментов.
@@ -176,6 +178,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     def DoToolBar(self, ToolBarStruct_):
         """
         Создать инструменты в панели инструментов.
+
         :param ToolBarStruct_: Словарно-списковая структура, описывающия
             панель инструментов (см формат файла ресурсов движка).
         :return: Возвращает указатель на объект панели инструментов
@@ -209,6 +212,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     def AddToLoadToolBar(self, ToolItem_):
         """
         Догрузить панель инструментов.
+
         :param ToolItem_: Ресурс инструмента.
         :return: Возвращает указатель на объект панели инструментов
             или None в случае ошибки.
@@ -238,7 +242,9 @@ class icToolBar(wx.ToolBar, icobject.icObject):
 
     def AddToLinkToolBar(self, ToolItem_):
         """
-        Создать инструменты в панели инструментов и связать их с существующими пунктами главного меню.
+        Создать инструменты в панели инструментов и
+        связать их с существующими пунктами главного меню.
+
         :param ToolItem_: Ресурс инструмента.
         :return: Возвращает ссылку на панель инструментов
             или None в случае ошибки.
@@ -279,6 +285,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     def FindToolByAlias(self, Name_):
         """
         Найти объект по его имени.
+
         :param Name_: Имя-идентификатор инструмента.
         :return: Возвращает найденный объект или None в случае неудачного поиска.
         """
@@ -289,6 +296,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     def FindToolByID(self, ID_):
         """
         Найти объект по его ID.
+
         :param ID_: Номер-идентификатор инструмента.
         :return: Возвращает найденный объект или None в случае неудачного поиска.
         """
@@ -299,6 +307,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     def Register(self, Tool_, ID_, Name_=''):
         """
         Прописать в реестре.
+
         :param Tool_: Объект инструмента.
         :param ID_: Номер-идентификатор инструмента.
         :param Name_: Имя-идентификатор инструмента.
@@ -319,6 +328,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     def AppendTool(self, ToolName_, ToolStruct_):
         """
         Добавить инструмент.
+
         :param ToolName_: Имя-идентификатор инструмента.
         :param ToolStruct_: Словарь, описывающий инструмент
             (см формат файла ресурса движка).
@@ -405,6 +415,7 @@ class icToolBar(wx.ToolBar, icobject.icObject):
     def AppendToolByItem(self, ItemName_, Item_):
         """
         Создать инструмент по пункту меню.
+
         :param ItemName_: Имя-идентификатор пункта меню.
         :param Item_: Объект пункта меню.
         :return: Возвращает указатель на инструмент или None в случае ошибки.
