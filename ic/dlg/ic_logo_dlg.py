@@ -60,6 +60,7 @@ def loadProjectProccess(parent, message,
                         frames=None, bAutoIncr=False):
     """
     Окно ожидания.
+
     :param parent: Ссылка на окно.
     :param message: Текст диалога.
     :param function: Функция, которую необходимо подождать.
@@ -207,6 +208,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
     def drawFrame(self, n_frame):
         """
         Отрисовка кадра.
+
         :param n_frame: Номер кадра.
         """
         frame_bmp = self._ani[n_frame]
@@ -266,6 +268,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
     def drawPic(self, n_frame, dc, bClear=False):
         """
         Отрисовка кадра.
+
         :param n_frame: Номер кадра.
         """
         if self._ani:

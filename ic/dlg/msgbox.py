@@ -8,9 +8,11 @@
 
 import wx
 
-def MsgBox (parent, mess, title = 'MsgBox', style = wx.OK | wx.ICON_INFORMATION ):
+
+def MsgBox (parent, mess, title='MsgBox', style=wx.OK | wx.ICON_INFORMATION ):
     """
     Окно сообщения.
+
     :type parent: C{wxWindow}
     :param parent: Родительское окно.
     :type mess: C{String}
@@ -54,11 +56,13 @@ def MsgBox (parent, mess, title = 'MsgBox', style = wx.OK | wx.ICON_INFORMATION 
 
     return ret
 
+
 def Ask(parent, question, title=''):
     d = wx.MessageDialog(parent, question, title, wx.YES_NO | wx.ICON_QUESTION)
     answer = d.ShowModal()
     d.Destroy()
-    return (answer == wx.ID_YES)
+    return answer == wx.ID_YES
+
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()

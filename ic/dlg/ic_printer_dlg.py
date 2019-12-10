@@ -124,6 +124,7 @@ class icChoicePrinterDlg(printer_dlg_proto.icChoicePrinterDlgProto):
 def choice_printer_dlg(parent=None):
     """
     Выбрать установленный в системе принтер с помощью диалогового окна.
+
     :param parent: Родительское окно.
     :return: Информация о выбранном принтере в виде словаря формата:
             {

@@ -50,6 +50,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
     def __init__(self, parent, quick_entry_panel_class, *args, **kwargs):
         """
         Конструктор.
+
         :param parent: Родительское окно.
         :param quick_entry_panel_class: Класс панели быстрго ввода.
         """
@@ -153,6 +154,7 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         """
         Вкл./Выкл инструментов управления.
         Вместе с инструментами откл./вкл. комбинации клавиш.
+
         :param prev_tool: Вкл./выкл. инструмент перехода на предыдущий элемент.
         :param next_tool: Вкл./выкл. инструмент перехода на следующий элемент.
         :param add_tool: Вкл./выкл. инструмент добавления нового элемента.
@@ -201,6 +203,7 @@ class icQuickEntryPanelDialog(wx.Dialog, form_manager.icFormManager):
     def __init__(self, parent, title, pos, size, quick_entry_panel_class, *args, **kwargs):
         """
         Конструктор.
+
         :param parent: Родительское окно.
         :param title: Заголовок окна.
         :param pos: Позиция отображения панели быстрого ввода.
@@ -244,6 +247,7 @@ class icQuickEntryPanelDialog(wx.Dialog, form_manager.icFormManager):
     def set_defaults(self, defaults=None):
         """
         Установить значения по умолчанию.
+
         :param defaults: Словарь значений по умолчанию.
             Если не определен, то берется ранее 
         :return: True/False.
@@ -272,6 +276,7 @@ def quick_entry_ctrl(parent, title=u'', pos=None, size=None,
                      *args, **kwargs):
     """
     Вызов и отображение панели быстрого ввода.
+
     :param parent: Родительское окно.
     :param title: Заголовок окна.
     :param pos: Позиция отображения панели быстрого ввода.
@@ -314,6 +319,7 @@ def quick_entry_edit_dlg(parent, title=u'', pos=None, size=None,
                          quick_entry_panel_class=None, defaults=None, *args, **kwargs):
     """
     Вызов и отображение диалога быстрого ввода в режиме редактирования.
+
     :param parent: Родительское окно.
     :param title: Заголовок окна.
     :param pos: Позиция отображения панели быстрого ввода.

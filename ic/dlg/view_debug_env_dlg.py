@@ -57,6 +57,7 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def set_locals(self, env_locals=None, bRefresh=True):
         """
         Установить словарь локального пространства имен.
+
         :param env_locals: Словарь локального пространства имен.
         :param bRefresh: Автоматически обновить дерево локального пространства имен.
         :param: True/False
@@ -78,6 +79,7 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def set_globals(self, env_globals=None, bRefresh=True):
         """
         Установить словарь глобального пространства имен.
+
         :param env_globals: Словарь глобального пространства имен.
         :param bRefresh: Автоматически обновить дерево глобального пространства имен.
         :param: True/False
@@ -99,6 +101,7 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def refresh_env(self, tree_ctrl=None, env=None, bHideProtected=True):
         """
         Обновить контрол древовидного представления пространства имен.
+
         :param tree_ctrl: Контрол древовидного представления пространства имен.
         :param env: Словарь пространства имен.
         :param bHideProtected: Скрыть имена, начинающиеся на '__' т.е.
@@ -124,6 +127,7 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def build_item_children(self, tree_ctrl=None, parent_item=None, children_dict=None, bHideProtected=True):
         """
         Достроить дочерние элементы.
+
         :param tree_ctrl: Контрол древовидного представления пространства имен.
         :param parent_item: Элемент дерева
         :param children_dict: Словарь дочерних элементов.
@@ -153,6 +157,7 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def refresh_locals(self, env_locals=None):
         """
         Обновить контрол древовидного представления ЛОКАЛЬНОГО пространства имен.
+
         :param env_locals: Словарь ЛОКАЛЬНОГО пространства имен.
         :return: True/False.
         """
@@ -164,6 +169,7 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def refresh_globals(self, env_globals=None):
         """
         Обновить контрол древовидного представления ГЛОБАЛЬНОГО пространства имен.
+
         :param env_globals: Словарь ГЛОБАЛЬНОГО пространства имен.
         :return: True/False.
         """
@@ -209,6 +215,7 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
 def view_debug_namespace_dialog(parent=None, env_locals=None, env_globals=None):
     """
     Отобразить пространство имен (локальное и глобальное) для просмотра.
+
     :param parent: Родительское окно.
         Если не определено, то берется главное.
     :param env_locals: Словарь локального пространства имен (locals).
@@ -247,6 +254,7 @@ def view_debug_namespace_dialog(parent=None, env_locals=None, env_globals=None):
 def test():
     """
     Функция тестирования.
+
     :return:
     """
     app = wx.PySimpleApp()

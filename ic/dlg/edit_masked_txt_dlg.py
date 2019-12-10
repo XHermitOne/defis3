@@ -45,6 +45,7 @@ class icEditMaskedTextDlg(edit_masked_txt_dlg_proto.icEditMaskedTextDlgProto):
              default_txt=u'', mask=u'', reg_exp=r''):
         """
         Инициализация диалогового окна.
+
         :param title: Заголовок диалогового окна.
         :param label: Текст сообщения.
         :param default_txt: Строка заполняемая по умолчанию.
@@ -79,6 +80,7 @@ def edit_masked_text_dlg(parent=None, title=u'', label=u'',
                          *args, **kwargs):
     """
     Функция вызова диалогового окна.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param label: Текст сообщения.

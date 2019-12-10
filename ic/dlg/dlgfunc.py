@@ -24,6 +24,7 @@ __version__ = (1, 1, 2, 1)
 def getFileDlg(parent=None, title='', wildcard_filter='', default_path=''):
     """
     Открыть диалог выбора файла для открытия/записи.
+
     :param parent: Ссылка на окно.
     :param title: Заголовок диалогового окна.
     :param wildcard_filter: Фильтр файлов.
@@ -64,6 +65,7 @@ def getFileDlg(parent=None, title='', wildcard_filter='', default_path=''):
 def getDirDlg(parent=None, title='', default_path=''):
     """
     Диалог выбора каталога.
+
     :param parent: Ссылка на окно.
     :param title: Заголовок диалогового окна.
     :param default_path: Путь по умолчанию.
@@ -103,6 +105,7 @@ def getDirDlg(parent=None, title='', default_path=''):
 def getImageDlg(parent=None, default_img_path=None):
     """
     Диалог выбора графических файлов.
+
     :param parent: Ссылка на родительское окно.
     :param default_img_path: Указание папки образа.
     :return: Возвращает полное имя выбранного файла.
@@ -140,6 +143,7 @@ def getImageDlg(parent=None, default_img_path=None):
 def getColorDlg(parent=None, title='', default_colour=wx.BLACK):
     """
     Диалог выбора цвета
+
     :param parent: Ссылка на родительское окно.
     :param title: Заголовок диалогового окна.
     :param default_colour: Значение по умолчанию.
@@ -173,6 +177,7 @@ def getColorDlg(parent=None, title='', default_colour=wx.BLACK):
 def getTextEntryDlg(parent=None, title='', prompt_text='', default_value=''):
     """
     Диалог ввода строки.
+
     :param parent: Ссылка на окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -206,6 +211,7 @@ def getTextEntryDlg(parent=None, title='', prompt_text='', default_value=''):
 def getAskDlg(title='', prompt_text='', style=wx.YES_NO | wx.ICON_QUESTION):
     """
     Диалог вопроса.
+
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
     :param style: Стиль диалога.
@@ -227,6 +233,7 @@ def openAskBox(*args, **kwargs):
 def openMsgBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -241,6 +248,7 @@ def openMsgBox(title='', prompt_text='', **kwargs):
 def openErrBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об ошибке.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -255,6 +263,7 @@ def openErrBox(title='', prompt_text='', **kwargs):
 def openFatalBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об ошибке вместе с Traceback.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -268,6 +277,7 @@ def openFatalBox(title='', prompt_text='', **kwargs):
 def openWarningBox(title='', prompt_text='', **kwargs):
     """
     Вывод сообщения об предупреждении.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -283,6 +293,7 @@ def getSingleChoiceDlg(parent=None, title='', prompt_text='', choices=[],
                        default_idx=-1):
     """
     Диалог выбора из списка.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -318,6 +329,7 @@ def getSingleChoiceIdxDlg(parent=None, title='', prompt_text='', choices=[],
                           default_idx=-1):
     """
     Диалог выбора.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -353,6 +365,7 @@ def getSingleChoiceIdxDlg(parent=None, title='', prompt_text='', choices=[],
 def getMultiChoiceDlg(parent=None, title='', prompt_text='', choices=()):
     """
     Диалог множественного выбора.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -394,6 +407,7 @@ class icProgressDlg(wx.ProgressDialog):
                  min_value=0, max_value=100, style=wx.PD_CAN_ABORT):
         """
         Конструктор. Создает и открывает прогресс бар.
+
         :param parent: Ссылка на окно.
         :param title: Заголовок диалогового окна.
         :param prompt_text: Текст диалога.
@@ -438,6 +452,7 @@ class icProgressDlg(wx.ProgressDialog):
     def UpdateDlg(self, value=-1, new_prompt_text=''):
         """
         Обновить данные програсс бара.
+
         :param value: Значение.
         :param new_prompt_text: Текст диалога.
         """
@@ -451,6 +466,7 @@ class icProgressDlg(wx.ProgressDialog):
     def StepDlg(self, step_value=1, new_prompt_text=u''):
         """
         Обновить данные програсс бара с приращением.
+
         :param step_value: Значение приращения.
         :param new_prompt_text: Текст диалога.
         """
@@ -483,6 +499,7 @@ def openProgressDlg(parent=None, title='', prompt_text='',
     """
     Диалоговые функции прогресс бара.
     Создает и открывает прогресс бар.
+
     :param parent: Ссылка на окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -504,6 +521,7 @@ def updateProgressDlg(value=-1, new_prompt_text=''):
     """
     Диалоговые функции прогресс бара.
     Обновить данные програсс бара.
+
     :param value: Значение.
     :param new_prompt_text: Текст диалога.
     :return: Возвращает результат выполнения операции True/False.
@@ -523,6 +541,7 @@ def stepProgressDlg(step_value=1, new_prompt_text=u''):
     """
     Диалоговые функции прогресс бара с приращением.
     Обновить данные програсс бара.
+
     :param step_value: Значение приращения.
     :param new_prompt_text: Текст диалога.
     :return: Возвращает результат выполнения операции True/False.
@@ -560,6 +579,7 @@ def closeProgressDlg():
 def getStrComboBoxDlg(parent=None, title='', prompt_text='', choices=None, Default_=''):
     """
     Диалог выбора/редактирования строки.
+
     :param parent: Ссылка на окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст диалога.
@@ -597,6 +617,7 @@ class icStrComboBoxDialog(wx.Dialog):
                  choices=None, default_value=''):
         """
         Конструктор.
+
         :param parent: Окно.
         :param title: Заголовок диалогового окна.
         :param prompt_text: Текст диалога.
@@ -651,6 +672,7 @@ class icStrComboBoxDialog(wx.Dialog):
 def openAboutDlg(parent=None, title='', prompt_text='', logo_bitmap=None):
     """
     О программе...
+
     :param parent: Ссылка на окно.
     :param title: Заголовок диалогового окна.
     :param prompt_text: Текст.
@@ -681,6 +703,7 @@ class icAboutDialog(wx.Dialog):
     def __init__(self, parent, title='', prompt_text='', logo_bitmap=None):
         """
         Конструктор.
+
         :param parent: Окно.
         :param title: Заголовок диалогового окна.
         :param prompt_text: Текст.
@@ -731,6 +754,7 @@ LOGIN_PASSWORD_MD5_IDX = 2
 def getLoginDlg(parent=None, title='', default_username='', reg_users=None):
     """
     Ввод пароля и имени пользователя.
+
     :param parent: Ссылка на окно.
     :param title: Заголовок диалогового окна.
     :param default_username: Имя пользователя заполняемое по умолчанию.
@@ -773,6 +797,7 @@ class icLoginDialog(wx.Dialog):
     def __init__(self, parent_, title='', default_username='', reg_users=None):
         """
         Конструктор.
+
         :param parent_: Окно.
         :param title: Заголовок диалогового окна.
         """
@@ -890,6 +915,7 @@ _BUSY_INFO = None
 def startBusy(prompt_text=''):
     """
     Занято/Ожидание.
+
     :param prompt_text: Текст диалога.
     """
     wx.BeginBusyCursor()    # Курсор
@@ -917,6 +943,7 @@ def waitFunc(parent, prompt_text,
              img_frames=None):
     """
     Окно ожидания.
+
     :param parent: Ссылка на окно.
     :param prompt_text: Текст диалога.
     :param function: Функция, которую необходимо подождать.
@@ -1031,6 +1058,7 @@ class icWaitBox(wx.Dialog):
     def drawFrame(self, n_frame):
         """
         Отрисовка кадра.
+
         :param n_frame: Номер кадра.
         """
         frame_bmp = self._ani[n_frame]

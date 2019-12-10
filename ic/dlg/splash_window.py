@@ -29,6 +29,7 @@ DEFAULT_TEXT_FONT = 'Courier New'
 def setStampedText(parent, prompt_text, font_name=DEFAULT_TEXT_FONT):
     """
     Функция выводит на фоне окна тесненный текст.
+
     :param parent: Окно.
     :param prompt_text: Строка текста.
     :param font_name: Шрифт.
@@ -84,6 +85,7 @@ def setStampedText(parent, prompt_text, font_name=DEFAULT_TEXT_FONT):
 def showSplash(img_filename=''):
     """
     Функция выводит на экран всплывающее окошко системы.
+
     :param img_filename: Имя графического файла (BMP).
     """
     try:
@@ -111,6 +113,7 @@ class icSplashScreen(wx.adv.SplashScreen):
     def __init__(self, img_filename=''):
         """
         Конструктор.
+
         :param img_filename: Имя графического файла,
             отображаемого в окне.
         """
@@ -140,6 +143,7 @@ def showMsgWin(title=''):
 def closeMsgWin(msg_window):
     """
     Функция закрывает окно для сообщений системы.
+
     :param msg_window: Ссылка на объект окно сообщений.
     """
     if msg_window is not None:
@@ -149,6 +153,7 @@ def closeMsgWin(msg_window):
 def setMsgText(msg_window, msg_text):
     """
     Вывести сообщение в окне.
+
     :param msg_window: Ссылка на объект окно сообщений.
     :param msg_text: Текст сообщения.
     """
@@ -179,6 +184,7 @@ class icMsgWin(wx.Frame):
     def setMsgText(self, msg_text):
         """
         Вывести сообщение в окне.
+
         :param msg_text: Текст сообщения.
         """
         self.msg_label.SetLabel(msg_text)

@@ -36,6 +36,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def init(self, env_locals=None, env_globals=None):
         """
         Инициализация диалогового окна.
+
         :param env_locals: Словарь локального пространства имен (locals).
         :param env_globals: Словарь глобального пространства имен (globals).
         """
@@ -69,6 +70,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def setMessage(self, message_text):
         """
         Установить сообщение.
+
         :param message_text: Текст сообщения.
         """
         if not isinstance(message_text, str):
@@ -79,6 +81,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def setErrorMessage(self, message_text):
         """
         Установить сообщение об ОШИБКЕ.
+
         :param message_text: Текст сообщения.
         """
         self.setErrorIcon()
@@ -89,6 +92,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def setWarningMessage(self, message_text):
         """
         Установить ПРЕДУПРЕЖДАЮЩЕЕ сообщение.
+
         :param message_text: Текст сообщения.
         """
         self.setWarningIcon()
@@ -99,6 +103,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def setInfoMessage(self, message_text):
         """
         Установить ИНФОРМАЦИОННОЕ сообщение.
+
         :param message_text: Текст сообщения.
         """
         self.setInfoIcon()
@@ -126,6 +131,7 @@ def view_debug_error_dlg(parent=None, message_text=u'',
                          env_locals=None, env_globals=None):
     """
     Показать сообшение об ОШИБКЕ в диалоге для отладки.
+
     :param parent: Родительское окно.
         Если не определено, то берется главное окно программы.
     :param message_text: Текст сообщения.
@@ -156,6 +162,7 @@ def view_debug_warning_dlg(parent=None, message_text=u'',
                            env_locals=None, env_globals=None):
     """
     Показать ПРЕДУПРЕЖДАЮЩЕЕ сообшение в диалоге для отладки.
+
     :param parent: Родительское окно.
         Если не определено, то берется главное окно программы.
     :param message_text: Текст сообщения.
@@ -186,6 +193,7 @@ def view_debug_info_dlg(parent=None, message_text=u'',
                         env_locals=None, env_globals=None):
     """
     Показать ИНФОРМАЦИОННОГО сообшения в диалоге для отладки.
+
     :param parent: Родительское окно.
         Если не определено, то берется главное окно программы.
     :param message_text: Текст сообщения.
@@ -216,6 +224,7 @@ def view_debug_exception_dlg(parent=None, exception_msg_fmt=None,
                              env_locals=None, env_globals=None):
     """
     Показать сообшение об КРИТИЧЕСКОЙ ОШИБКЕ (EXCEPTION) в диалоге для отладки.
+
     :param parent: Родительское окно.
         Если не определено, то берется главное окно программы.
     :param exception_msg_fmt: Формат для дополнения сообщения критической ошибки.

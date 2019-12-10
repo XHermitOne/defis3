@@ -276,6 +276,7 @@ class icThreadedProgressMenager:
     def __init__(self, Title_='', Label_=''):
         """
         Конструткор.
+
         :param Title_: Заголовок диалогового окна.
         :param Label_: Надпись по умолчанию.
         """
@@ -292,6 +293,7 @@ class icThreadedProgressMenager:
     def openDlg(self, Title_='', Label_=''):
         """
         Открыть диалоговое окно.
+
         :param Title_: Заголовок диалогового окна.
         :param Label_: Надпись по умолчанию.
         """
@@ -311,6 +313,7 @@ class icThreadedProgressMenager:
     def setLabel(self, Label_):
         """
         Установить надпись в диалоговом окне.
+
         :param Label_: Надпись.
         """
         if self.dlg:
@@ -338,6 +341,7 @@ class icThreadedProgressMenager:
     def step(self, DeltaStep_=1.0):
         """
         Сделать шег приращения.
+
         :param DeltaStep_: Шаг на, который необходимо сделать перестановку
         """
         self.cur += DeltaStep_
@@ -360,6 +364,7 @@ THREADED_PROGRESS_MENAGER = None
 def icOpenThreadedProgressDlg(Title_='', Label_='', Min_=0, Max_=100):
     """
     Открыть прогресс диалог.
+
     :param Label_: Надпись.
     :param Min_: Минимальное значение.
     :param Max_: Максимальное занчение.
@@ -391,6 +396,7 @@ def icCloseThreadedProgressDlg():
 def icStepThreadedProgressDlg(Label_=None, Step_=1.0):
     """
     Обновить прогресс диалог.
+
     :param Label_: Надпись.
     :param Step_: Шаг.
     """
@@ -404,6 +410,7 @@ def icStepThreadedProgressDlg(Label_=None, Step_=1.0):
 def icPosThreadedProgressDlg(Label_=None, pos=1.0):
     """
     Обновить прогресс диалог.
+
     :param Label_: Надпись.
     :param pos: Позиция.
     """

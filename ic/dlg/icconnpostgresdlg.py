@@ -24,6 +24,7 @@ __version__ = (1, 0, 1, 2)
 def editConnectionPostgreSQL(parent, db_res_name):
     """
     Отредактировать ресурс описывающи связь с БД POstgreSQL.
+
     :param parent: Родительское окно диалога.
     :param db_res_name: Имя ресурса БД.
     """
@@ -36,6 +37,7 @@ def editConnectionPostgreSQL(parent, db_res_name):
 def getConnectionPostgresDlg(parent, title, db_resource):
     """
     Функция вызова диалога для редактирования коннекшн стринга PostgreSQL.
+
     :param parent: Родительское окно диалога.
     :param title: Заголовок диалогового окна.
     :param db_resource: Ресурс БД.
@@ -74,6 +76,7 @@ class icConnectionPostgresDialog:
     def __init__(self, parent):
         """
         Конструктор.
+
         :param parent: Родительское окно.
         """
         self.evalSpace = icwidget.icResObjContext()
@@ -101,6 +104,7 @@ class icConnectionPostgresDialog:
     def editConnectionString(self, DBRes_=None):
         """
         Редактирование ресурса БД PostgreSQL.
+
         :param DBRes_: Ресурс БД.
         """
         self.db_res = DBRes_
@@ -138,6 +142,7 @@ def test(par=0):
         
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
     test()

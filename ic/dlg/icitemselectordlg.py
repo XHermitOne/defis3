@@ -50,6 +50,7 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
     def init_record_list_ctrl(self, records=(), columns=(), record_sort=None):
         """
         Инициализировать список записей.
+
         :param records: Список записей. Каждая запись - словарь.
         :param columns: Список отображаемых колонок. Каждая колонка - словарь:
             {'label': Заголовок колонки,
@@ -82,6 +83,7 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
     def init_items_check_list(self, on_items=(), off_items=(), label=u'', item_sort=None):
         """
         Инициализировать списки выбора элементов.
+
         :param on_items: Список словарей записей включенных элементов.
         :param off_items: Список словарей записей отключенных элементов.
         :param label: Поле словаря элемента для надписи отображения в списке элементов.
@@ -118,6 +120,7 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
              record_sort=None, item_sort=None):
         """
         Инициализация диалоговой формы и всех ее объектов.
+
         :param title: Заголовок диалогового окна.
         :param records: Список записей. Каждая запись - словарь.
         :param columns: Список отображаемых колонок. Каждая колонка - словарь:
@@ -189,6 +192,7 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
     def get_records(self):
         """
         Получить измененные записи.
+
         :return: Список измененных записей.
         """
         return self.records
@@ -196,6 +200,7 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
     def refreshItems(self, record_idx, record, item_sort=None):
         """
         Обновить списки выбранных элементов для записи.
+
         :param record_idx: Индекс записи.
         :param record: Словарь записи.
         :param item_sort: Функция сортировки элементов выбора. Если не указана, то берется ранее установленная.
@@ -306,6 +311,7 @@ def get_item_selector_dlg(parent=None, title=u'', records=(), columns=(), items=
                           record_sort=None, item_sort=None):
     """
     Вызов диалоговой формы выбора элементов связанных со списком записей.
+
     :param parent: Родительское окно.
     :param title: Заголовок диалогового окна.
     :param records: Список записей. Каждая запись - словарь.

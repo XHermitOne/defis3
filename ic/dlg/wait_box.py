@@ -26,6 +26,7 @@ def wait_func(parent, message,
               art_frames=None):
     """
     Окно ожидания.
+
     :param parent: Ссылка на окно.
     :param message: Текст диалога.
     :param function: Функция, которую необходимо подождать.

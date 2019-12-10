@@ -115,6 +115,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
     def setPrintOptions(self, args, bShow=True):
         """
         Установить параметры печати из списка аргументов.
+
         :param args: Список аргументов.
         :param bShow: Обновить в диалоговом окне контролы?
         """
@@ -184,6 +185,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
     def loadPrintOptions(self, filename=None):
         """
         Загрузить параметры печати из конфигурационного файла.
+
         :param filename: Имя файла параметров печати.
         """
         if filename is None:
@@ -209,6 +211,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
     def savePrintOptions(self, filename=None):
         """
         Записать параметры печати в конфигурационный файл.
+
         :param filename: Имя файла параметров печати.
         """
         if filename is None:
@@ -427,6 +430,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
     def initComboBoxPrinters(self, select_printer=None):
         """
         Инициализация комбобокса списка принтеров системы.
+
         :param select_printer: Какой принтер выбрать после
         инициализации комбобокса, если None то выбирается принтер по умолчанию.
         """
@@ -456,6 +460,7 @@ class icPrintDlg(uprint_dlg.icUPrintDlgProto):
 def get_print_option_dlg(parent=None):
     """
     Вызвать диалоговое окно параметров печати.
+
     :param parent: Родительское окно.
     :return:
     """

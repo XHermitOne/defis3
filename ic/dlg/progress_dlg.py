@@ -17,6 +17,7 @@ class icProgressDlg(wx.ProgressDialog):
     def __init__(self, Win_=None, Title_='', Msg_='', Min_=0, Max_=100, Style_=wx.PD_CAN_ABORT):
         """
         Конструктор. Создает и открывает прогресс бар.
+
         :param Win_: Ссылка на окно.
         :param Title_: Заголовок диалогового окна.
         :param Msg_: Текст диалога.
@@ -54,6 +55,7 @@ class icProgressDlg(wx.ProgressDialog):
     def UpdateDlg(self, Value_=-1, NewMsg_=u''):
         """
         Обновить данные програсс бара.
+
         :param Value_: Значение.
         :param NewMsg_: Текст диалога.
         """
@@ -71,6 +73,7 @@ class icProgressDlg(wx.ProgressDialog):
     def IncDlg(self, NewMsg_=u''):
         """
         Увеличить значение прогресс бара на 1.
+
         :param NewMsg_: Текст диалога.
         """
         return self.UpdateDlg(self.cur_value+1, NewMsg_)
@@ -78,6 +81,7 @@ class icProgressDlg(wx.ProgressDialog):
     def DecDlg(self, NewMsg_=u''):
         """
         Уменьшить значение прогресс бара на 1.
+
         :param NewMsg_: Текст диалога.
         """
         return self.UpdateDlg(self.cur_value-1, NewMsg_)
@@ -88,6 +92,7 @@ class icProgressDlg(wx.ProgressDialog):
         """
         self.Close()
 
+
 # --- Функции пользователя для прогресс бара (без знаний класса) ---
 _PROGRESS_DLG = None    # Сам диалог прогресс бара
 
@@ -96,6 +101,7 @@ def openProgressDlg(Title_='', Msg_='', Min_=0, Max_=100,
                     Style_=wx.PD_AUTO_HIDE, Win_=None):
     """
     Создает и открывает прогресс бар.
+
     :param Title_: Заголовок диалогового окна.
     :param Msg_: Текст диалога.
     :param Min_: Минимальное значение.
@@ -118,6 +124,7 @@ def openProgressDlg(Title_='', Msg_='', Min_=0, Max_=100,
 def updateProgressDlg(Value_=-1, NewMsg_=u''):
     """
     Обновить данные програсс бара.
+
     :param Value_: Значение.
     :param NewMsg_: Текст диалога.
     :return: Возвращает результат выполнения операции True/False.
@@ -136,6 +143,7 @@ def updateProgressDlg(Value_=-1, NewMsg_=u''):
 def incProgressDlg(NewMsg_=u''):
     """
     Увеличить данные програсс бара на 1.
+
     :param NewMsg_: Текст диалога.
     :return: Возвращает результат выполнения операции True/False.
     """
@@ -153,6 +161,7 @@ def incProgressDlg(NewMsg_=u''):
 def decProgressDlg(NewMsg_=u''):
     """
     Уменьшить данные програсс бара на 1.
+
     :param NewMsg_: Текст диалога.
     :return: Возвращает результат выполнения операции True/False.
     """

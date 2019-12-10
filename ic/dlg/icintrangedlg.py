@@ -35,6 +35,7 @@ class icIntRangeDialog(std_dialogs_proto.intRangeDialogProto):
     def init(self, title=None, label_begin=None, label_end=None, min_value=1, max_value=1000):
         """
         Инициализация диалогового окна.
+
         :param title: Заголовок окна.
         :param label_begin: Текст приглашения ввода первого номера диапазона.
         :param label_end: Текст приглашения ввода последнего номера диапазона.

@@ -18,6 +18,7 @@ __version__ = (0, 0, 1, 2)
 def icOpenProgressBar(Label_='', Min_=0, Max_=100):
     """
     Открыть прогресс бар статусной строки.
+
     :param Label_: Надпись статусной строки.
     :param Min_: Минимальное значение.
     :param Max_: Максимальное занчение.
@@ -30,6 +31,7 @@ def icOpenProgressBar(Label_='', Min_=0, Max_=100):
 def icCloseProgressBar(Label_=''):
     """
     Закрыть прогресс бар.
+
     :param Label_: Надпись статусной строки.
     """
     main_win = glob_functions.getMainWin()
@@ -40,6 +42,7 @@ def icCloseProgressBar(Label_=''):
 def icUpdateProgressBar(Label_='', Value_=-1):
     """
     Обновить прогресс бар.
+
     :param Label_: Надпись статусной строки.
     :param Value_: Значение.
     """
