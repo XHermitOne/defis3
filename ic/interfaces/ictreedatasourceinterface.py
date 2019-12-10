@@ -5,11 +5,9 @@
 Интерфейс источника данных для абстрактного контрола дерева.
 """
 
-# --- Imports ---
-# --- Constants ---
+__version__ = (0, 1, 1, 1)
 
 
-# --- Classes ---
 class icTreeItemDataSourceInterface(object):
     """
     Интерфейс источника данных для элемента дерева.

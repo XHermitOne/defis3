@@ -28,7 +28,8 @@ class icInstallPackageWizPage:
         """
         """
         return self.object
-        
+
+
 def test(par=0):
     """
     Тестируем класс icInstallPackageWizPage.
@@ -45,6 +46,7 @@ def test(par=0):
         
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
     test()

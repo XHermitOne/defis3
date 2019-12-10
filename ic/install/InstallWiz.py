@@ -32,6 +32,7 @@ class PrjInstallMaker:
     def __init__(self, PrjDir_):
         """
         Конструктор.
+
         :param PrjDir_: Папка проекта.
         """
         self._prj_dir = None
@@ -43,6 +44,7 @@ class PrjInstallMaker:
     def setPrj(self, PrjDir_):
         """
         Определить проект для создания инсталяционного пакета.
+
         :param PrjDir_: Папка проекта.
         """
         self._prj_dir = PrjDir_
@@ -55,21 +57,21 @@ class PrjInstallMaker:
         Имя проекта/имя папки проекта.
         """
         return inifunc.loadParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_name')
+                                    'INSTALL', 'prj_name')
 
     def setPrjName(self, PrjName_):
         """
         Имя проекта/имя папки проекта.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_name', PrjName_)
+                                    'INSTALL', 'prj_name', PrjName_)
 
     def readPrjVersion(self):
         """
         Версия проекта.
         """
         return inifunc.loadParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'version')
+                                    'INSTALL', 'version')
         
     def getPrjVersion(self):
         """
@@ -87,14 +89,14 @@ class PrjInstallMaker:
         Версия проекта.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'version', Version_)
+                                    'INSTALL', 'version', Version_)
 
     def getPrjIcon(self):
         """
         Иконка.
         """
         ico_file = inifunc.loadParamINI(self._prj_ini_file_name,
-                                    'INSTALL', 'prj_icon')
+                                        'INSTALL', 'prj_icon')
         if ico_file:
             return filefunc.normPathWin(ico_file)
         return ico_file
@@ -104,56 +106,56 @@ class PrjInstallMaker:
         Иконка.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_icon', ICOFileName_)
+                                    'INSTALL', 'prj_icon', ICOFileName_)
 
     def getPrjTitle(self):
         """
         Заголовок проекта в инсталяторе.
         """
         return inifunc.loadParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_title')
+                                    'INSTALL', 'prj_title')
 
     def setPrjTitle(self, PrjTitle_):
         """
         Заголовок проекта в инсталяторе.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_title', PrjTitle_)
+                                    'INSTALL', 'prj_title', PrjTitle_)
 
     def getPrjAuthor(self):
         """
         Автор.
         """
         return inifunc.loadParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_author')
+                                    'INSTALL', 'prj_author')
 
     def setPrjAuthor(self, PrjAuthor_):
         """
         Автор.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_author', PrjAuthor_)
+                                    'INSTALL', 'prj_author', PrjAuthor_)
 
     def getPrjCopyright(self):
         """
         Права.
         """
         return inifunc.loadParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_copyright')
+                                    'INSTALL', 'prj_copyright')
 
     def setPrjCopyright(self, PrjCopyright_):
         """
         Права.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'prj_copyright', PrjCopyright_)
+                                    'INSTALL', 'prj_copyright', PrjCopyright_)
 
     def getOpenSource(self):
         """
         Признак добавления в инсталяционный пакет исходников.
         """
         open_src_txt = inifunc.loadParamINI(self._prj_ini_file_name,
-                                        'INSTALL', 'open_src')
+                                            'INSTALL', 'open_src')
         if open_src_txt:
             return eval(open_src_txt)
         return True
@@ -163,14 +165,14 @@ class PrjInstallMaker:
         Признак добавления в инсталяционный пакет исходников.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'open_src', str(MakeOpenSource_))
+                                    'INSTALL', 'open_src', str(MakeOpenSource_))
 
     def getAutoVer(self):
         """
         Признак автоматического изменения версий.
         """
         auto_ver = inifunc.loadParamINI(self._prj_ini_file_name,
-                                    'INSTALL', 'auto_ver')
+                                        'INSTALL', 'auto_ver')
         if auto_ver:
             return eval(auto_ver)
         return False
@@ -180,14 +182,14 @@ class PrjInstallMaker:
         Признак автоматического изменения версий.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'auto_ver', str(MakeAutoVer_))
+                                    'INSTALL', 'auto_ver', str(MakeAutoVer_))
             
     def getPackages(self):
         """
         Список добавляемых пакетов.
         """
         packages = inifunc.loadParamINI(self._prj_ini_file_name,
-                                    'INSTALL', 'packages')
+                                        'INSTALL', 'packages')
         if packages:
             return eval(packages)
         return []
@@ -197,14 +199,14 @@ class PrjInstallMaker:
         Признак добавления в инсталяционный пакет исходников.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'packages', str(Packages_))
+                                    'INSTALL', 'packages', str(Packages_))
 
     def getInstallMaker(self):
         """
         Программа компиляции скрипта инсталяционного пакета.
         """
         install_maker = inifunc.loadParamINI(self._prj_ini_file_name,
-                                         'INSTALL', 'install_maker')
+                                            'INSTALL', 'install_maker')
         if install_maker:
             return filefunc.normPathWin(install_maker)
         return install_maker
@@ -214,7 +216,7 @@ class PrjInstallMaker:
         Программа компиляции скрипта инсталяционного пакета.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'install_maker', InstallMaker_)
+                                    'INSTALL', 'install_maker', InstallMaker_)
 
     def installScript(self):
         """
@@ -318,6 +320,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
     def __init__(self, PrjDir_):
         """
         Конструктор.
+
         :param PrjDir_: Папка проекта.
         """
         PrjInstallMaker.__init__(self, PrjDir_)
@@ -325,6 +328,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
     def _copyDLL(self, InstallDir_):
         """
         Копирование необходимых DLL в инсталяционный пакет.
+
         :param InstallDir_: Инсталяционная папка.
         """
         python_dir = filefunc.getPythonDir()
@@ -338,6 +342,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
     def _makeNSISSection(self, PackageName_):
         """
         Создание секции скрипта инсталязионного пакета.
+
         :param PackageName_: Имя файла инсталируемого пакета.
         """
         package_name_split = PackageName_.split('.')
@@ -379,14 +384,14 @@ class NullsoftInstallSystem(PrjInstallMaker):
         Создание инсталяционного пакета.
         """
         install_dir = dlgfunc.getDirDlg(None,
-                                      u'Выберите инсталяционную папку',
+                                        u'Выберите инсталяционную папку',
                                         os.getcwd())
         if os.path.isdir(install_dir):
             try:
                 packages = self.getPackages()
                 dlgfunc.openProgressDlg(None,
-                                         u'Создание инсталяционного пакета проекта',
-                                         u'Создание инсталяционного пакета проекта',
+                                        u'Создание инсталяционного пакета проекта',
+                                        u'Создание инсталяционного пакета проекта',
                                         0, len(packages) + 5)
                 i = 0
                 # Создать папку пакетов
@@ -480,7 +485,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
             log.info(u'INSTALL WIZARD COPY %s PACKAGE %s' % (prj_name, prj_dir))
             usr_tmp_dir = os.path.join(temp_dir, os.path.basename(prj_dir))
             shutil.copytree(prj_dir,
-                                os.path.join(temp_dir, os.path.basename(prj_dir)))
+                            os.path.join(temp_dir, os.path.basename(prj_dir)))
 
             # Все откомпелироавать нехрен
             compileall.compile_dir(temp_dir)
@@ -523,6 +528,7 @@ class py2exeInstallSystem(PrjInstallMaker):
     def __init__(self, PrjDir_):
         """
         Конструктор.
+
         :param PrjDir_: Папка проекта.
         """
         PrjInstallMaker.__init__(self, PrjDir_)
@@ -532,7 +538,7 @@ class py2exeInstallSystem(PrjInstallMaker):
         Создание инсталяционного пакета.
         """
         install_dir = dlgfunc.getDirDlg(None,
-                                      u'Выберите инсталяционную папку',
+                                        u'Выберите инсталяционную папку',
                                         os.getcwd())
         if os.path.isdir(install_dir):
             try:
@@ -563,20 +569,21 @@ class py2exeInstallSystem(PrjInstallMaker):
         Признак поддержки консоли.
         """
         return bool(inifunc.loadParamINI(self._prj_ini_file_name,
-                                     'INSTALL', 'console'))
+                                         'INSTALL', 'console'))
 
     def setConsole(self, MakeConsole_):
         """
         Признак поддержки консоли.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'open_src', str(MakeConsole_))
+                                    'INSTALL', 'open_src', str(MakeConsole_))
             
 
 # --- Визард создания инсталяционного пакета ---
 def runInstallWizard(Parent_, PrjResFileName_):
     """
     Запуск визарда создания инсталяционного пакета.
+
     :param Parent_: Родительское окно.
     :param PrjResFileName_: Имя ресурса проекта.
     """
@@ -773,21 +780,21 @@ class zipPublicSystem(PrjInstallMaker):
         Архиватор.
         """
         return inifunc.loadParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'archivator')
+                                    'INSTALL', 'archivator')
 
     def setArchivator(self, Archivator_):
         """
         Архиватор.
         """
         return inifunc.saveParamINI(self._prj_ini_file_name,
-                                'INSTALL', 'archivator', Archivator_)
+                                    'INSTALL', 'archivator', Archivator_)
             
     def makeInstallPackage(self):
         """
         Создание инсталяционного пакета.
         """
         install_dir = dlgfunc.getDirDlg(None,
-                                      u'Выберите инсталяционную папку',
+                                        u'Выберите инсталяционную папку',
                                         os.getcwd())
         if os.path.isdir(install_dir):
             arch_file_name = self._makePrjInstall()
@@ -877,6 +884,7 @@ class zipPublicSystem(PrjInstallMaker):
 def runPublicWizard(Parent_, PrjResFileName_):
     """
     Запуск визарда создания пакета публикации.
+
     :param Parent_: Родительское окно.
     :param PrjResFileName_: Имя ресурса проекта.
     """

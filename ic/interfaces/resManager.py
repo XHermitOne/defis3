@@ -8,12 +8,10 @@
 __version__ = (0, 1, 1, 1)
 
 
-# === Описание классов ===
 class icResourceManagerInterface(object):
     """
     Интерфейс для менеджеров ресурсных файлов.
     """
-
     def __init__(self):
         """
         Конструктор.
@@ -35,6 +33,7 @@ class icResourceManagerInterface(object):
     def saveAs(self, res_filename):
         """
         Сохранить как...
+
         :param res_filename: Имя ресурсного файла.
         """
         pass
@@ -42,6 +41,7 @@ class icResourceManagerInterface(object):
     def load(self, res_filename):
         """
         Загрузить ресурс из файла.
+
         :param res_filename: Имя ресурсного файла.
         """
         pass

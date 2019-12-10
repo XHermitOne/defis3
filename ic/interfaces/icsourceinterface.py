@@ -5,15 +5,17 @@
 Интерфейс описания источника данных.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 class icSourceInterface:
     """
     Интерфейс классов данных системы.
     """
-
     def __init__(self, DBRes_=None):
         """
         Конструктор.
+
         :param DBRes_: Ресурс описания БД.
         """
         pass
@@ -21,6 +23,7 @@ class icSourceInterface:
     def CreateDBConnection(self, DB_):
         """
         Создать коннекшн по описанию БД.
+
         :param DB_: Описание БД.
         :return: Возвращает объект коннекшн.
         """

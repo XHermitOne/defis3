@@ -26,7 +26,7 @@ SPC_IC_TEMPLATE = {'name': 'default',
                                     },
                    }
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 def init_component_interface(modSpace, **replDct):
@@ -254,6 +254,7 @@ class icTemplateInterface(icwidget.icBase):
     def _findres(self, res, nameObj, typeObj):
         """
         Ищет ресурс нужного объекта по дереву ресурса.
+
         :type res: C{dictionary}
         :param res: Ресурсное описание.
         :type nameObj: C{string}
@@ -282,6 +283,7 @@ class icTemplateInterface(icwidget.icBase):
     def GetObjectResource(self, nameObj, typeObj=None, resource=None):
         """
         Возвращает ресурс нужного объекта.
+
         :type nameObj: C{string}
         :param nameObj: Имя объекта.
         :type typeObj: C{string}

@@ -4,6 +4,8 @@
 Базовый класс управления ресурсом в редакторе.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 class IEditorResourceManager(object):
     """

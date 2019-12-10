@@ -8,15 +8,17 @@
 # Подключение библиотек
 import wx
 
+__version__ = (0, 1, 1, 1)
+
 
 class icDesigner:
     """
     Интерфейс наших панелей для редактирования в drPython.
     """
-
     def __init__(self, Parent_=None, Node_=None, Resource_=None):
         """
         Конструтор.
+
         :param Parent_: Кодительское окно.
         :param Node_: Узел проекта, к которому прикреплен дизайнер.
         :param Resource_: Указание ресурса редактирования/Менеджера ресурса.
@@ -36,10 +38,10 @@ class icDesignDlg(wx.Dialog):
     """
     Интерфейс наших диалоговых окон для редактирования в drPython.
     """
-
     def __init__(self,Parent_=None, Node_=None, Resource_=None):
         """
         Конструтор.
+
         :param Parent_: Родительское окно.
         :param Node_: Узел проекта, к которому прикреплен дизайнер.
         :param Resource_: Указание ресурса редактирования/Менеджера ресурса.

@@ -35,10 +35,10 @@ class icIDEInterface(object):
     """
     Интерфейс взаимодействия с IDE.
     """
-
     def __init__(self, IDEFrame=None):
         """
         Конструктор.
+
         :param IDEFrame: Указатель на главное окно IDE.
         """
         self._ide = IDEFrame
@@ -60,6 +60,7 @@ class icIDEInterface(object):
     def addToolPanel(self, panel):
         """
         Добавить панель в нотебук инструментов/палитры инструментов.
+
         :param panel: Наследник wx.Panel.
         :return: Возвращает указатель на страницу нотебука(наследник drSidePanel),
             которая соответствует этой панели.
@@ -115,6 +116,7 @@ class icIDEInterface(object):
         Вставляет в тело интерфейсного модуля заготовку функции с заданным именем.
         По умолчанию вставка производится в текстовый файл
         в секцию обработчиков событий.
+
         :type filename: C{string}
         :param filename: Имя файла.
         :type func_name: C{string}
@@ -149,6 +151,7 @@ class icIDEInterface(object):
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
+
         :type filename: C{string}
         :param filename: Имя файла.
         """
@@ -165,6 +168,7 @@ class icIDEInterface(object):
     def _getOpenedFileIdx(self, filename):
         """
         Индекс открытого файла.
+
         :type filename: C{string}
         :param filename: Имя файла.
         :return: Индекс открытого файла или
@@ -250,6 +254,7 @@ class icIDEInterface(object):
     def goToFunc(self, func_name, filename=None):
         """
         Переход на нужную функцию.
+
         :param func_name: Имя функции.
         :param filename: Имя файла.
         :return: True - есть такая функция и переход успешно произошел/
@@ -274,6 +279,7 @@ class icIDEInterface(object):
     def goToLine(self, filename, n_line=0):
         """
         Выпонить переход на линию модуля.
+
         :param filename: Имя файла модуля.
         :param n_line: Номер линии для перехода.
         :return: True - выполнен переход / False - переход не выполнен.
@@ -335,6 +341,7 @@ class icIDEInterface(object):
     def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
+
         :param res: Ресурсное описание.
         :param res_editor: Указатель на редактор ресурсов.
         """

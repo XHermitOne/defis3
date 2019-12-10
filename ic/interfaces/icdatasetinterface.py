@@ -5,12 +5,13 @@
 Интерфейс dataset (Набора данных).
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 class icDatasetInterface(object):
     """
     Интерфефес объектов данных для работы с объектами GridDatase/ListDataset.
     """
-
     def __init__(self, *arg, **kwarg):
         """
         Конструктор.

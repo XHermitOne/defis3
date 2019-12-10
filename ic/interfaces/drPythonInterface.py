@@ -61,6 +61,7 @@ class drPythonInterface(icideinterface.icIDEInterface):
     def addToolPanel(self, panel):
         """
         Добавить панель в нотебук инструментов/палитры инструментов.
+
         :param panel: Наследник wx.Panel.
         :return: Возвращает указатель на страницу нотебука(наследник drSidePanel),
             которая соответствует этой панели.
@@ -160,6 +161,7 @@ class drPythonInterface(icideinterface.icIDEInterface):
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
+
         :type filename: C{string}
         :param filename: Имя файла.
         """
@@ -178,6 +180,7 @@ class drPythonInterface(icideinterface.icIDEInterface):
     def _getOpenedFileIdx(self, filename):
         """
         Индекс открытого файла.
+
         :type filename: C{string}
         :param filename: Имя файла.
         :return: Индекс открытого файла или

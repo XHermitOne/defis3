@@ -35,6 +35,7 @@ class icPersistentInterface:
     def Add(self, Name_=None, Type_=None):
         """
         Добавить дочерний метакомпонент.
+
         :param Name_: Имя добавляемого объекта,
             если None, то имя генерируется.
         :param Type_: Имя компонента, объект которого
@@ -83,6 +84,7 @@ class icPersistentInterface:
     def Save(self, Persistent_=None):
         """
         Сохранить в хранилище Persistent_.
+
         :param Persistent_: ОБъект, который необходимо сохранить.
         """
         pass
@@ -90,6 +92,7 @@ class icPersistentInterface:
     def Load(self, Persistant_=None):
         """
         Загрузить из хранилище значение объекта.
+
         :param Persistant_: Объект, который необходимо загрузить.
         """
         pass        
@@ -97,6 +100,7 @@ class icPersistentInterface:
     def SaveAllChildren(self, ParentMetaObject_=None):
         """
         Сохранить себя и все дочерние узлы.
+
         :param ParentMetaObject_: Сохраняемый метаобъект.
         """
         pass
@@ -110,6 +114,7 @@ class icPersistentInterface:
     def Clone(self, CloneName_=None, doCopyChildren_=True):
         """
         Создать клон метаобъекта.
+
         :param CloneName_: Имя клона, если None,то имя генерируется.
         :param doCopyChildren_: Признак копирования дочерних узлов.
         :return: Возвращает объект клона или None в случае неудачи.

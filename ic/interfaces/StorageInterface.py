@@ -5,17 +5,13 @@
 Интерфейс элемента хранилища типовых объектов.
 """
 
-# --- Подключение библиотек ---
-
 __version__ = (0, 1, 1, 1)
 
 
-# --- Описание интерфейсов ---
 class icElementStorageInterface:
     """
     Интерфейс элемента хранилища типовых объектов.
     """
-
     def __init__(self):
         """
         Конструктор.
@@ -47,6 +43,7 @@ class icElementStorageInterface:
     def setParentNode(self, ParentNode_, Name_):
         """
         Установить родительский узел.
+
         :param ParentNode_: Родительский узел.
         :param Name_: Имя данного узла.
         """
@@ -74,6 +71,7 @@ class icElementStorageInterface:
     def _getPathList(self, CurPath_=None):
         """
         Определить полный путь текущего элемента хранилища.
+
         :param CurPath_: Путь текущего элемента хранилища.
         """
         if CurPath_ is None:
@@ -87,6 +85,7 @@ class icElementStorageInterface:
     def setProperty(self, NewProperty_):
         """
         Установить свойства узла.
+
         :param NewProperty_: Словарь свойств.
         """
         pass
@@ -100,6 +99,7 @@ class icElementStorageInterface:
     def Clone(self, CloneName_):
         """
         Клонировать узел.
+
         :param CloneName_: Имя клона.
         """
         pass
@@ -118,6 +118,7 @@ class icElementStorageInterface:
     def lock(self, Name_=None):
         """
         Заблокировать.
+
         :param Name_: Имя блокируемого объекта.
         :return: Возвращает результат успешной блокировки True/False.
         """
@@ -130,6 +131,7 @@ class icElementStorageInterface:
     def unLock(self, Name_=None):
         """
         Разблокировать.
+
         :param Name_: Имя блокируемого объекта.
         :return: Возвращает результат успешной разблокировки True/False.
         """
@@ -157,6 +159,7 @@ class icElementStorageInterface:
     def ownerLock(self, Name_=None):
         """
         Владелец блокировки.
+
         :return: Имя компьютера-владельца блокировки. Если None, то блокирвки нет.
         """
         if Name_ is None:
@@ -210,7 +213,6 @@ class icObjectStorageSourceInterface:
     Тип хранилища типовых объектов.
     Стандартизует интерфейс к виду хранения объектов.
     """
-
     def __init__(self, Resource_=None):
         """
         Конструктор.
@@ -269,6 +271,7 @@ class icObjectStorageSourceInterface:
     def lock(self, Name_):
         """
         Заблокировать.
+
         :param Name_: Имя блокируемого объекта.
         :return: Возвращает результат успешной блокировки True/False.
         """
@@ -277,6 +280,7 @@ class icObjectStorageSourceInterface:
     def unLock(self, Name_):
         """
         Разблокировать.
+
         :param Name_: Имя блокируемого объекта.
         :return: Возвращает результат успешной разблокировки True/False.
         """
@@ -311,6 +315,7 @@ class icObjectStorageInterface:
     def __init__(self, Resource_=None):
         """
         Конструктор.
+
         :param Resource_: Ресурс описания объекта.
         """
         # Ресурс

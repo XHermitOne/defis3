@@ -11,7 +11,7 @@ import ic.components.icResourceParser as prs
 from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
 
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 1)
 
 
 class icObjectInterface:
@@ -23,6 +23,7 @@ class icObjectInterface:
                  bIndicator=False, moduleRes=None, **par):
         """
         Конструктор интерфейса.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно, если оно есть. В противном случае None.
         :type resource: C{dictionary}
@@ -97,6 +98,7 @@ class icObjectInterface:
     def _findres(self, res, nameObj, typeObj):
         """
         Ищет ресурс нужного объекта по дереву ресурса.
+
         :type res: C{dictionary}
         :param res: Ресурсное описание.
         :type nameObj: C{string}
@@ -129,6 +131,7 @@ class icObjectInterface:
     def GetObjectResource(self, nameObj, typeObj=None, resource=None):
         """
         Возвращает ресурс нужного объекта.
+
         :type nameObj: C{string}
         :param nameObj: Имя объекта.
         :type typeObj: C{string}

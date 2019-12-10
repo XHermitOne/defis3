@@ -17,6 +17,7 @@ __version__ = (1, 0, 1, 3)
 #   Имя класса
 ic_class_name = 'icPublicPrjAttrWizPage'
 
+
 class icPublicPrjAttrWizPage:
     def __init__(self, parent):
         self.evalSpace = util.InitEvalSpace()
@@ -28,7 +29,8 @@ class icPublicPrjAttrWizPage:
         """
         """
         return self.object
-        
+
+
 def test(par=0):
     """
     Тестируем класс icInstallPrjAttrWizPage.
@@ -45,7 +47,7 @@ def test(par=0):
         
     frame.Show(True)
     app.MainLoop()
-    
+
+
 if __name__ == '__main__':
     test()
-    

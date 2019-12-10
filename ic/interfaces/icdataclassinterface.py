@@ -18,6 +18,7 @@ class icDataClassInterface:
     def __init__(self, TabRes_=None):
         """
         Конструктор.
+
         :param TabRes_: Ресурс таблицы.
         """
         self.res = TabRes_
@@ -88,6 +89,7 @@ class icDataClassInterface:
     def select(self, *args, **kwargs):
         """
         Выбрать список объектов из класса данных.
+
         :return: Возвражает объект SelectResults.
         """
         pass
@@ -95,6 +97,7 @@ class icDataClassInterface:
     def queryAll(self, *args, **kwargs):
         """
         Выполнить запрос класса данных.
+
         :return: Возвращает список кортежей.
         """
         pass
@@ -102,6 +105,7 @@ class icDataClassInterface:
     def queryRecs(self, SQLQuery_):
         """
         Выполнить запрос класса данных.
+
         :param SQLQuery_: Строка запроса.
         :return: Возвражает список объектов icSQLRecord.
         """
@@ -170,6 +174,7 @@ class icDataClassInterface:
     def get_normalized(self, query_result=None, **kwargs):
         """
         Произвести нормализацию результата запроса.
+
         :param query_result: Абстрактный результат запроса.
         :param kwargs: Дополноительные параметры для генерации исполняемого текста
             SQL запроса например.
@@ -184,6 +189,7 @@ class icDataClassInterface:
     def find_record(self, normal_data=None, field_name=None, value=None):
         """
         Поиск записи в нормализованных данных по значению поля
+
         :param normal_data: Нормализованные данные
             в словарно-списковом представлении:
             {'__fields__': (), - Описание полей - кортеж кортежей
@@ -217,6 +223,7 @@ class icDataClassInterface:
     def get_record_dict(self, normal_data=None, record=None):
         """
         Преобразовать строковую запись в запись в виде словаря.
+
         :param normal_data: Нормализованные данные
             в словарно-списковом представлении:
             {'__fields__': (), - Описание полей - кортеж кортежей
@@ -235,6 +242,7 @@ class icDataClassInterface:
     def get_recordset_dict(self, normal_data=None):
         """
         Преобразовать табличные данные в список словарей.
+
         :param normal_data: Нормализованные данные
             в словарно-списковом представлении:
             {'__fields__': (), - Описание полей - кортеж кортежей
@@ -260,6 +268,7 @@ class icDataClassInterface:
         """
         И обратная операция
         Преобразовать список словарей в табличные данные.
+
         :param normal_data: Нормализованные данные
             в словарно-списковом представлении:
             {'__fields__': (), - Описание полей - кортеж кортежей

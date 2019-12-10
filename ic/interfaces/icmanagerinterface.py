@@ -17,7 +17,6 @@ class icManagerInterface(object):
     """
     Класс управления компонентом.
     """
-
     def __init__(self):
         """
         Конструктор. Без параметров.
@@ -86,6 +85,5 @@ class icWidgetManager(icManagerInterface):
     """
     Класс управления компонентами.
     """
-
     def __init__(self):
         icManagerInterface.__init__(self)

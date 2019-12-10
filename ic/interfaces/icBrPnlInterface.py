@@ -5,6 +5,8 @@
 Интерфейс для правой панели браузера.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 class icBrowsPanelInterface:
     """

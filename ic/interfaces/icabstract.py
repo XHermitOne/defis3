@@ -5,6 +5,8 @@
 Функции для абстрактных классов.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 def abstract():
     import inspect

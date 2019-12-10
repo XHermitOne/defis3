@@ -305,6 +305,7 @@ def init_img(bInitAllImageHandlers=False):
     других форматов недокументированной функцией wx.InitAllImageHandlers.
     В последних версиях wxPython этого делать не надо.
     Поэтому вызов отключен по умолчанию.
+
     :param bInitAllImageHandlers: Произвести инициализацию всех доступных обработчиков изображений WX?
     """
     global IS_INIT_IMG

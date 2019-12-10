@@ -5,6 +5,8 @@
 Интерфейс для наших панелей редактирования в drPython.
 """
 
+__version__ = (0, 1, 1, 1)
+
 
 class DRWin:
     """
@@ -14,6 +16,7 @@ class DRWin:
     def __init__(self, Parent_=None, DrFrame_=None, Position_=1, Index_=1):
         """
         Конструтор.
+
         :param Parent_: Родительское окно.
         :param DrFrame_: Главное окно drPython.
         """
