@@ -27,7 +27,6 @@ class BaseContext(context_dict):
     """
     Базовый контекст.
     """
-
     def __init__(self, kernel=None, *arg):
         """
         Конструктор контекста.
@@ -59,7 +58,9 @@ class BaseContext(context_dict):
 
     def add_context_func(self, func, fn=None):
         """
-        Добавляет функцию в контекст. Её желательно предварительно откомпилировать.
+        Добавляет функцию в контекст.
+        Её желательно предварительно откомпилировать.
+
         :param func: Откомпилированное тело функции.
         :param fn: Имя функции.
         """
@@ -244,7 +245,6 @@ class Context(BaseContext):
     """
     Контекст объектов системы.
     """
-
     def init_serv_context(self):
         """
         Инициализация сервесных ключей.

@@ -43,6 +43,7 @@ def OctHexString(String_, Code_):
     """
     Закодировать строку в восьмеричном/шестнадцатеричном виде.
     Символы с кодом < 128 не кодируются.
+
     :param String_:
     :param Code_: Кодировка 'OCT'-восьмеричное представление.
                             'HEX'-шестнадцатеричное представление.
@@ -104,6 +105,7 @@ IC_CONSOLE_CODEPAGE = getConsoleEncoding()
 def outDevice(msg, Device_=IC_CONSOLE):
     """
     Вывод на устройство регистрации специальных сообщений.
+
     :type msg: C{string}
     :param msg: Сообщение об ошибке.
     :type Device_: C{int}
@@ -161,6 +163,7 @@ def outDevice(msg, Device_=IC_CONSOLE):
 def outLog(msg, TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=IC_CONSOLE_INFO):
     """
     Выдает сообщение в регистратор (на консоль).
+
     :param msg: Текст сообщения.
     :param TxtCP_: Кодовая страница текста сообщения.
     :param DevCP_: Кодовая страница вывода на устройство.
@@ -180,6 +183,7 @@ def outLog(msg, TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=IC_C
 def outWarning(msg, TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=IC_CONSOLE_WARN):
     """
     Выдает сообщение в регистратор (на консоль).
+
     :param msg: Текст сообщения.
     :param TxtCP_: Кодовая страница текста сообщения.
     :param DevCP_: Кодовая страница вывода на устройство.
@@ -192,6 +196,7 @@ def outErr(msg=u'', TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=
     """
     Выдает сообщение о последней ошибке в регистратор (эту функцию можно
     использовать только в блоке exception).
+
     :param msg: Текст сообщения.
     :param TxtCP_: Кодовая страница текста сообщения.
     :param DevCP_: Кодовая страница вывода на устройство.
@@ -214,6 +219,7 @@ def outErr(msg=u'', TxtCP_=IC_TXT_CODEPAGE, DevCP_=IC_CONSOLE_CODEPAGE, Device_=
 def outLastErr(msg, Device_=IC_CONSOLE_ERR):
     """
     Записывает сообщение о последней ошибке в устройство вывода.
+
     :type msg: C{string}
     :param msg: Заголовок сообщения об ошибке.
     :type Device_: C{int}
@@ -243,4 +249,3 @@ def _to_unicode(String_, DefaultCP_='utf-8'):
             # Linux
             u_str = str(String_)    # 'koi8-r'
     return u_str
-

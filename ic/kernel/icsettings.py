@@ -23,6 +23,7 @@ __version__ = (0, 1, 1, 1)
 def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
     """
     Добавить все переменные из *.ini файла в окружение системы.
+
     :param ProjectName_: Имя проекта. Если None, то берется
     текущий проект.
     :param ReDefine_: Переопределять переменные в окружении?
@@ -63,10 +64,10 @@ class icSettingsDotUsePrototype(object):
     """
     Класс поддержки доступа к настройкам проекта.
     """
-
     def __init__(self, DefaultSettingsList_=None):
         """
         Консруктор.
+
         :param DefaultSettingsList_: Передающийся по точке список указания 
         параметра настройки. Список состоит из 3-х элементов:
         где,
@@ -101,6 +102,7 @@ class icSettingsDotUsePrototype(object):
     def set(self, value):
         """
         Функция сохранения значения.
+
         :param value: Сохраняемое значение.
         """
         return None
@@ -141,7 +143,6 @@ class icPrjDotUse(icSettingsDotUsePrototype):
     """
     Класс проекта. Для доступа к настройки проекта через точку.
     """
-    
     def __init__(self, DefaultSettingsList_=None):
         """
         Конструктор.
@@ -171,6 +172,7 @@ class icPrjDotUse(icSettingsDotUsePrototype):
     def set(self, value):
         """
         Функция сохранения значения.
+
         :param value: Сохраняемое значение.
         """
         if isinstance(value, dict):
@@ -226,6 +228,7 @@ class icSectionDotUse(icSettingsDotUsePrototype):
     def set(self, value):
         """
         Функция сохранения значения.
+
         :param value: Сохраняемое значение.
         """
         if isinstance(value, dict):
@@ -261,6 +264,7 @@ class icParamDotUse(icSettingsDotUsePrototype):
     def set(self, value):
         """
         Функция сохранения значения.
+
         :param value: Сохраняемое значение.
         """
         ini_file_name = self._get_ini_file_name()

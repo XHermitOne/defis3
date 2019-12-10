@@ -110,7 +110,7 @@ def unLockRecord(table, record):
     :type table: C{int/string}
     :param table: Имя таблицы.
     :type record: C{int/string}
-    @parma record: Номер записи.
+    :param record: Номер записи.
     """
     global ERROR_CODE
     ERROR_CODE = 0
@@ -156,7 +156,7 @@ def readMessage(table, record):
     :type table: C{int/string}
     :param table: Имя таблицы.
     :type record: C{int/string}
-    @parma record: Номер записи.
+    :param record: Номер записи.
     """
     ret = None
     f = None
@@ -187,7 +187,7 @@ def isLockRecord(table, record):
     :type table: C{int/string}
     :param table: Имя таблицы.
     :type record: C{int/string}
-    @parma record: Номер записи.
+    :param record: Номер записи.
     """
     ret = None
     global ERROR_CODE

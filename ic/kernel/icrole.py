@@ -22,7 +22,7 @@ class icRole(object):
         """
         Конструктор.
         :param title: Краткое описание.
-        @parma description: Описание роли.
+        :param description: Описание роли.
         """
         self.title = title
         self.description = description

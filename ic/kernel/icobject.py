@@ -44,7 +44,6 @@ class icBasePassport(ic_list):
     """
     Базовый класс паспорта.
     """
-    
     def __init__(self, *arg):
         """
         Конструктор.
@@ -120,6 +119,7 @@ class icObjectPassport(icBasePassport):
     def getDescrId(self):
         """
         Возвращает идентификатор описания.
+
         :rtype: C{tuple}
         :return: Картеж заает идентификатор описания объекта - тип объекта,
             имя объекта, модуль, подсистема.
@@ -189,6 +189,7 @@ def getResPSP(resName, subsys=None, comp_interface=None):
 def deco_func(func, pre=None, post=None):
     """
     Функция обкладки.
+
     :type func: C{types.FunctionType}
     :param func: Исходная функция.
     :type pre: C{types.FunctionType}
@@ -229,6 +230,7 @@ class icObject(object):
                  cmpInterface=None, typ=None, *arg, **kwarg):
         """
         Конструктор.
+
         :type name: C{string}
         :param name: Имя объекта.
         :type id: C{int}
@@ -423,6 +425,7 @@ class icObject(object):
     def _generate_post_func_signal(self, result, name):
         """
         Генерация сигнала при выходе из функции.
+
         :param result: Результат функции.
         :param name: Имя функции.
         """
@@ -434,6 +437,7 @@ class icObject(object):
     def _post_func(self, func):
         """
         Функция обкладки.
+
         :type func: C{types.FunctionType}
         :param func: Исходная функция.
         """
@@ -513,6 +517,7 @@ class icObject(object):
     def isSamePassport(self, passport):
         """
         Проверка на тот же паспорт что и у объекта.
+
         :param passport: Проверяемый паспорт.
         :return: True - паспорт соответствует паспорту объекта / False - нет.
         """
@@ -521,6 +526,7 @@ class icObject(object):
     def isPassport(self, passport):
         """
         Проверка является ли проверяемый паспорт паспортом в действительности.
+
         :param passport: Проверяемый паспорт.
         :return: True - это паспорт. False - нет.
         """
@@ -555,6 +561,7 @@ class icObject(object):
     def send_signal(self, signal, con):
         """
         Посылаем сигнал.
+
         :type signal: C{icSignal}
         :param signal: Возбужденный сигнал.
         :type con: C{icConnection}

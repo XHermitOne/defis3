@@ -179,7 +179,7 @@ class icBackground(object):
         """
         Конвертирует из координат на родительском окне в координаты подложки.
         :type pos: C{wx.Point}
-        @parma pos: Координаты на родительском окне.
+        :param pos: Координаты на родительском окне.
         """
         if not obj:
             obj = self.selectedObj
@@ -355,7 +355,7 @@ class icBackground(object):
         """
         Захватывает выбранный объект для перетаскивания.
         :type pos: C{wx.Point}
-        @parma pos: Позиция захвата относительно родительского окна.
+        :param pos: Позиция захвата относительно родительского окна.
         """
         self.bDrag = True
         self.selectedObj.setShapeType()

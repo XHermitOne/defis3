@@ -104,10 +104,10 @@ class icKernel(icBaseKernel):
     """
     Класс ядра для работы с ресурсными объектами.
     """
-
     def __init__(self, context=None, *arg, **kwarg):
         """
         Конструктор.
+
         :param context: Контекст ядра.
         """
         # Текущий пользователь
@@ -137,6 +137,7 @@ class icKernel(icBaseKernel):
     def getResByPsp(self, passport):
         """
         Возвращает ресурс объекта по его паспорту.
+
         :type passport: C{icObjectPassport}
         :param passport: идентификатор описания (паспорт) объекта.
         """
@@ -185,6 +186,7 @@ class icKernel(icBaseKernel):
                        context=None, **kwarg):
         """
         Создает объект по ресурсу. Depricated.
+
         :type resName: C{string}
         :param resName: Имя ресурса, по которому создается объект.
         :type className: C{string}
@@ -272,6 +274,7 @@ class icKernel(icBaseKernel):
         2) объекты, создаваемые на основе Python класса.
         Если расширение файла ресурса 'py', то объект относится ко второму типу;
         все файлы с другими расширениями описывают объекты первого типа.
+
         :type passport: C{icObjectPassport}
         :param passport: идентификатор описания (паспорт) объекта.
         :type parent: C{wx.Window}
@@ -323,6 +326,7 @@ class icKernel(icBaseKernel):
         """
         Возвращает списки соединение, в которых объект выступает в качестве
         источнока, в качестве приемника.
+
         :type obj: C{icObject}
         :param obj: Объект.
         :rtype: C{tuple}
@@ -389,6 +393,7 @@ class icKernel(icBaseKernel):
     def init_new_context(self, prnt_context=None):
         """
         Создает новый контекст объекта.
+
         :type prnt_context: C{icContext.Context}
         :param prnt_context: Родитнльский контекст.
         """
@@ -416,6 +421,7 @@ class icKernel(icBaseKernel):
     def _login_loop(self, username=None, password=None, db_mode='-s'):
         """
         Цикл входа в систему.
+
         :param username: Имя пользователя.
         :param password: Пароль.
         :param db_mode: Режим использования БД.
@@ -486,6 +492,7 @@ class icKernel(icBaseKernel):
     def load_source(self, name, path):
         """
         Возвращает загруженный модуль.
+
         :type name: C{string}
         :param name: Имя модуля.
         :type path: C{string}
@@ -556,6 +563,7 @@ class icKernel(icBaseKernel):
     def run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
+
         :param mainwin_psp: Паспорт главного окна.
         :param menubars_psp: Список паспортов горизонтальных меню.
         :return: Возвращает True, если все OK иначе - False.
@@ -629,6 +637,7 @@ class icKernel(icBaseKernel):
     def setBehaviour(self, behaviour_res_filename):
         """
         Установить поведение системы.
+
         :param behaviour_res_filename: Имя файла ресурса со связями.
         """
         pass
@@ -636,6 +645,7 @@ class icKernel(icBaseKernel):
     def getObjectByPsp(self, psp):
         """
         Получить зарегистрированный объект по паспорту.
+
         :param psp: Паспорт объекта.
         :return: Искомый объект или None, если не найден.
         """

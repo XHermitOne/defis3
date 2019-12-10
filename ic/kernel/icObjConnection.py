@@ -12,7 +12,6 @@ class icConnection:
     """
     Базовый класс описания соединений между объектами.
     """
-
     def __init__(self, src, slotLst, func_trans=None, *arg, **kwarg):
         """
         Конструктор.

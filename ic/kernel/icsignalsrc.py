@@ -14,7 +14,6 @@ class icSignalSrc:
     """
     Базовый класс описания источников сигналов.
     """
-
     def __init__(self, passport, *arg, **kwarg):
         """
         Конструктор.
@@ -153,7 +152,6 @@ class icPostFuncSrc(icSignalSrc):
     """
     Генератор сигнала на выход из определенной функции объекта.
     """
-
     def __init__(self, passport, func_name, *arg, **kwarg):
         """
         Конструктор.

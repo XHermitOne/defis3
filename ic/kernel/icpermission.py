@@ -16,13 +16,16 @@ __system_permissions = {}
 
 
 class icPermission(object):
-
+    """
+    Разрешение на использование ресурса.
+    """
     def __init__(self, id, title='', description='', component_type=None, defaultState=False):
         """
         Конструктор.
+
         :param id: Идентификатор разрешения.
         :param title: Краткое описание.
-        @parma description: Описание.
+        :param description: Описание.
         :param component_type: Тип объекта, породившего "разрешение". Используется для 
             группировки разрешений.
         :param defaultState: Состояние по умолчанию.

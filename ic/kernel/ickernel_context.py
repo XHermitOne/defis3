@@ -28,7 +28,6 @@ class icKernelContext(icContext.BaseContext):
     """
     Контекст ЯДРА объектов системы.
     """
-
     def init_context(self, *arg, **kwarg):
         """
         Инициализируем контекст.
@@ -43,6 +42,7 @@ class icKernelContext(icContext.BaseContext):
     def Get(self, name):
         """
         Получить копию объекта.
+
         :param name: Имя объекта.
         :return: Возвращает копию объекта не связанную с оригиналом
             или None, если нет такого объекта.
@@ -52,6 +52,7 @@ class icKernelContext(icContext.BaseContext):
     def Set(self, name, data):
         """
         Сохранить объект.
+
         :param name: Имя объекта.
         :param data: Данные.
         :return: Возвращает результат выполнения операции (False или True).
@@ -61,6 +62,7 @@ class icKernelContext(icContext.BaseContext):
     def Del(self, name):
         """
         Удалить объект.
+
         :param name: Имя объекта.
         :return: Возвращает удаленный из хранилища объект.
         """
@@ -75,6 +77,7 @@ class icKernelContext(icContext.BaseContext):
     def Is(self, Name_):
         """
         Функция проверяет усть ли объект в хранилище.
+
         :param Name_: Имя объекта.
         :return: Результат поиска (0/1).
         """
@@ -125,6 +128,7 @@ class icKernelContext(icContext.BaseContext):
     def initEnv(self, prj_dir, **environ):
         """
         Инициализация окружения по папке проекта.
+
         :param prj_dir: Папке проекта.
         """
         if isinstance(prj_dir, str):
@@ -199,6 +203,7 @@ class icKernelContext(icContext.BaseContext):
     def _isSubSysDir(self, dir_path):
         """
         Проверить, является ли папка папкой подсистемы.
+
         :param dir_path: Исследуемая папка.
         """
         is_dir = os.path.isdir(dir_path)
