@@ -56,10 +56,10 @@ class icNumerator(object):
                  check_unique=False):
         """
         Конструктор.
-        @param db_url: Параметры подключения к БД.
-        @param numerator_table_name: Имя таблицы нумератора.
-        @param num_code_format: Формат номер-кода нумератра.
-        @param check_unique: Производить проверку уникальности
+        :param db_url: Параметры подключения к БД.
+        :param numerator_table_name: Имя таблицы нумератора.
+        :param num_code_format: Формат номер-кода нумератра.
+        :param check_unique: Производить проверку уникальности
             генерируемого номер-кода?
         """
         self._db_url = db_url
@@ -94,15 +94,15 @@ class icNumerator(object):
     def is_connected(self):
         """
         Установлена связь с БД?
-        @return: True/False
+        :return: True/False
         """
         return self._connection is not None
 
     def connect(self, db_url=None):
         """
         Установить связь с БД.
-        @param db_url: URL связи с БД.
-        @return: Объект связи с БД.
+        :param db_url: URL связи с БД.
+        :return: Объект связи с БД.
         """
         if db_url is None:
             db_url = self._db_url
@@ -117,7 +117,7 @@ class icNumerator(object):
     def disconnect(self):
         """
         Разорвать связь с БД.
-        @return: True/False.
+        :return: True/False.
         """
         if self._connection:
             self._connection.dispose()
@@ -127,7 +127,7 @@ class icNumerator(object):
     def get_connection(self, auto_connect=True):
         """
         Объект связи с БД.
-        @param auto_connect: Если не установлена связь,
+        :param auto_connect: Если не установлена связь,
             произвести автоматический коннект?
         """
         if self._connection is None and auto_connect:
@@ -148,9 +148,9 @@ class icNumerator(object):
     def gen_column(self, requisite_name, requisite_type):
         """
         Генерация объекта колонки по описанию реквизита.
-        @param requisite_name: Имя реквизита.
-        @param requisite_type: Тип реквизита.
-        @return: Объект колонки sqlalchemy или None в
+        :param requisite_name: Имя реквизита.
+        :param requisite_type: Тип реквизита.
+        :return: Объект колонки sqlalchemy или None в
             случае ошибки.
         """
         # Привести все имена к нижнему регистру
@@ -172,9 +172,9 @@ class icNumerator(object):
     def gen_table(self, table_name, requisites):
         """
         Генерация объекта таблицы по описанию реквизитов.
-        @param table_name: Имя таблицы.
-        @param requisites: Список описаний реквизитов.
-        @return: Объект таблицы sqlalchemy или None
+        :param table_name: Имя таблицы.
+        :param requisites: Список описаний реквизитов.
+        :return: Объект таблицы sqlalchemy или None
             в случае ошибки.
         """
         metadata = sqlalchemy.MetaData(self._connection)
@@ -185,7 +185,7 @@ class icNumerator(object):
     def _get_numerator_requisites(self):
         """
         Список реквизитов-полей таблицы нумератора.
-        @return: Список словарей описания полей:
+        :return: Список словарей описания полей:
             [{'requisite_name': <Имя поля>,
             'requisite_type': <Тип поля>}, ...]
         """
@@ -210,8 +210,8 @@ class icNumerator(object):
             1. Выданный нумератором номер-код (number_code)
             2. Дата-время выдачи номера (dt_num)
             3. Счетчик выдачи номера (cur_count)
-        @param numerator_table_name: Имя таблицы нумератора.
-        @return: Объект таблицы нумератора или None в случае ошибки.
+        :param numerator_table_name: Имя таблицы нумератора.
+        :return: Объект таблицы нумератора или None в случае ошибки.
         """
         if numerator_table_name is None:
             numerator_table_name = self._numerator_table_name
@@ -224,11 +224,11 @@ class icNumerator(object):
     def _gen_new_num_code(self, fmt=None, n_count=0, *args):
         """
         Сгенерировать новый номер-код.
-        @param fmt: Формат кода.
-        @param n_count: Дополнительнвй идентификатор генерирумой
+        :param fmt: Формат кода.
+        :param n_count: Дополнительнвй идентификатор генерирумой
             строки таблицы нумератора.
-        @param args: Дополнительные параметры кода.
-        @return: Сгененрированный номер-код.
+        :param args: Дополнительные параметры кода.
+        :return: Сгененрированный номер-код.
         """
         if fmt is None:
             fmt = self._num_code_format
@@ -268,7 +268,7 @@ class icNumerator(object):
         """
         Актуальнй год для определения максимального счетчика.
         Но метод можно переопределить.
-        @return: Значение года системы.
+        :return: Значение года системы.
         """
         return datetime.date.today().year
 
@@ -277,11 +277,11 @@ class icNumerator(object):
         Определить максимальное значение счетчика нумератора.
         Максимальное значение счетчика необходимо производить
         с учетом текущего программного года.
-        @param session: Сессия обработки SQLAlchemy.
-        @param numerator_table: Таблица нумератора.
-        @param cur_year: Текущий год.
+        :param session: Сессия обработки SQLAlchemy.
+        :param numerator_table: Таблица нумератора.
+        :param cur_year: Текущий год.
             Если не определяется, то берется системный год.
-        @return: Максимальное значение счетчика нумератора.
+        :return: Максимальное значение счетчика нумератора.
         """
         if cur_year is None:
             cur_year = self.get_actual_year()
@@ -298,9 +298,9 @@ class icNumerator(object):
         Кроме того что генерируется номер-код,
         он регистрируется(записывается) в таблице нумератора
         и указывается время выдачи номер-кода.
-        @param check_unique: Произвести контроль уникальности кода?
-        @param args: Дополнительные параметры кода.
-        @return: Сгененрированный номер-код или None
+        :param check_unique: Произвести контроль уникальности кода?
+        :param args: Дополнительные параметры кода.
+        :return: Сгененрированный номер-код или None
             в случае ошибки.
         """
         if check_unique is None:
@@ -360,7 +360,7 @@ class icNumerator(object):
         """
         Отменить генерацию последнего номер-кода.
         Запись с номер-кодом удаляется из таблицы нумератора.
-        @return: True/False.
+        :return: True/False.
         """
         # Сначала создать таблицы (вдруг их нет)
         numerator_table = self.create_numerator_table()
@@ -393,9 +393,9 @@ class icNumerator(object):
         """
         Удаление старых(не актуальных) номеров
         для уменьшения размера таблицы нумератора.
-        @param dt_actual: Дата-время, с которой данные считаются
+        :param dt_actual: Дата-время, с которой данные считаются
             актуальными. Если None, то берется сегодняшняя дата.
-        @return: True/False.
+        :return: True/False.
         """
         if dt_actual is None:
             dt_actual = datetime.date.today()
@@ -421,7 +421,7 @@ class icNumerator(object):
     def do_gen(self, *args, **kwargs):
         """
         Сгенерировать новый номер-код.
-        @return: Сгененрированный номер-код или None
+        :return: Сгененрированный номер-код или None
             в случае ошибки.
         """
         self.connect()
@@ -435,7 +435,7 @@ class icNumerator(object):
     def undo_gen(self):
         """
         Отменить генерацию нового номер-кода.
-        @return: True/False.
+        :return: True/False.
         """
         self.connect()
         result = self.undo_gen_num_code()

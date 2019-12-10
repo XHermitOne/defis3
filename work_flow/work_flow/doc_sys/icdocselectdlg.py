@@ -60,7 +60,7 @@ class icDocumentSelectDlg(select_document_dlg_proto.icDocumentSelectDlgProto):
     def init(self, doc=None):
         """
         Инициализация диалогового окна.
-        @param doc: Объект документа.
+        :param doc: Объект документа.
         """
         if doc is None:
             log.warning(u'Не обределен объект документа для выбора')
@@ -77,7 +77,7 @@ class icDocumentSelectDlg(select_document_dlg_proto.icDocumentSelectDlgProto):
     def _initDocList(self, doc):
         """
         Инициализация списка документов.
-        @param doc: Объект документа.
+        :param doc: Объект документа.
         """
         # Установить колонки списка документов
         # Колонки создаются только из описывающих объект реквизитов
@@ -99,7 +99,7 @@ class icDocumentSelectDlg(select_document_dlg_proto.icDocumentSelectDlgProto):
     def _initFilterCtrl(self, doc):
         """
         Инициализация контрола фильтров документа.
-        @param doc: Объект документа.
+        :param doc: Объект документа.
         """
         env = doc.getFilterEnv()
         self.doc_select_panel.doc_filter_ctrl.setEnvironment(env)
@@ -113,9 +113,9 @@ class icDocumentSelectDlg(select_document_dlg_proto.icDocumentSelectDlgProto):
 def select_document_dlg(parent=None, doc=None):
     """
     Выбрать документ через диалоговое окно выбора документа.
-    @param parent: Родительское окно.
-    @param doc: Объект документа.
-    @return: UUID выбранного документа.
+    :param parent: Родительское окно.
+    :param doc: Объект документа.
+    :return: UUID выбранного документа.
     """
     if parent is None:
         app = wx.GetApp()

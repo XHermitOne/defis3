@@ -86,8 +86,8 @@ class icCatalogerProto(object):
     def addPhysicCatalogLevel(self, catalog_level):
         """
         Добавить в каталогизатор уровень физического каталога.
-        @param catalog_level: Объект уровня каталога.
-        @return: True/False
+        :param catalog_level: Объект уровня каталога.
+        :return: True/False
         """
         if not issubclass(catalog_level.__class__, level_proto.icCatalogLevelProto):
             # Если объект не является объектом уровня каталога, то ошибка
@@ -101,9 +101,9 @@ class icCatalogerProto(object):
     def addLogicCatalogSeries(self, logic_catalog_name, *index_series):
         """
         Добавить пос
-        @param logic_catalog_name: Имя логического каталога.
-        @param index_series: Последовательность индексов уровней физического каталога.
-        @return: True/False
+        :param logic_catalog_name: Имя логического каталога.
+        :param index_series: Последовательность индексов уровней физического каталога.
+        :return: True/False
         """
         # Проверка типов входных данных
         check_arg = min([isinstance(idx, int) for idx in index_series])
@@ -124,9 +124,9 @@ class icCatalogerProto(object):
         Разместить объект в каталоге.
         Размещение производиться по признакам объекта
         по уровням физического каталога.
-        @param obj: Размещаемый объект.
-        @param do_remove: Произвести перенос объекта?
-        @return: True/False.
+        :param obj: Размещаемый объект.
+        :param do_remove: Произвести перенос объекта?
+        :return: True/False.
         """
         phys_path = list()
         for level in self.physic_catalog:
@@ -138,9 +138,9 @@ class icCatalogerProto(object):
     def logic2physic_path(self, logic_path, logic_catalog_name):
         """
         Преобразовать логический путь в физический.
-        @param logic_path: Логический путь.
-        @param logic_catalog_name: Имя логического каталога
-        @return: Список имен папко физического пути.
+        :param logic_path: Логический путь.
+        :param logic_catalog_name: Имя логического каталога
+        :return: Список имен папко физического пути.
             Либо None в случае ошибки.
         """
         logic_series = self.logic_catalogs.get(logic_catalog_name, None)
@@ -159,15 +159,15 @@ class icCatalogerProto(object):
     def put_obj_path(self, obj, path, logic_catalog_name=None, do_remove=False):
         """
         Размещение объекта в каталоге по пути.
-        @param obj: Размещаемый объект.
-        @param path: Путь каталога для размещения.
+        :param obj: Размещаемый объект.
+        :param path: Путь каталога для размещения.
             Путь каталога - список имен папок.
-        @param logic_catalog_name: Имя логического каталога,
+        :param logic_catalog_name: Имя логического каталога,
             если размещение производится по логическому каталогу.
             Если None, то считаем что размещение производиться
             по физическому каталогу.
-        @param do_remove: Произвести перенос объекта?
-        @return: True/False.
+        :param do_remove: Произвести перенос объекта?
+        :return: True/False.
         """
         phys_path = path
         if logic_catalog_name:
@@ -180,11 +180,11 @@ class icCatalogerProto(object):
     def put_obj_physic_path(self, obj, physic_path, do_remove=False):
         """
         Размещение объекта в физическом каталоге по физическому пути.
-        @param obj: Размещаемый объект
-        @param physic_path: Физический путь в физическом каталоге.
+        :param obj: Размещаемый объект
+        :param physic_path: Физический путь в физическом каталоге.
             Путь каталога - список имен папок.
-        @param do_remove: Произвести перенос объекта?
-        @return: True/False.
+        :param do_remove: Произвести перенос объекта?
+        :return: True/False.
         """
         self.last_catalog_objpath = None
 
@@ -240,12 +240,12 @@ class icCatalogerProto(object):
     def get_object(self, path, logic_catalog_name=None):
         """
         Получить объект по пути.
-        @param path: Путь до объекта.
-        @param logic_catalog_name: Имя логического каталога,
+        :param path: Путь до объекта.
+        :param logic_catalog_name: Имя логического каталога,
             если размещение производится по логическому каталогу.
             Если None, то считаем что размещение производиться
             по физическому каталогу.
-        @return: Объект/Имя файла, размещенного в физическом каталоге.
+        :return: Объект/Имя файла, размещенного в физическом каталоге.
         """
         if logic_catalog_name:
             path = self.logic2physic_path(path, logic_catalog_name)
@@ -254,7 +254,7 @@ class icCatalogerProto(object):
     def get_obj_physic_path(self, physic_path):
         """
         Получение объекта по пути в физическом каталоге.
-        @return: Объект/Имя файла, размещенного в физическом каталоге.
+        :return: Объект/Имя файла, размещенного в физическом каталоге.
         """
         if self._get_physic_func:
             # Если определена внешняя функция, то

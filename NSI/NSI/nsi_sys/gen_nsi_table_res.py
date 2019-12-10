@@ -44,7 +44,7 @@ class icSpravTableResGenerator(object):
     def _createTabRes(self, table_name=None):
         """
         Создать ресурс таблицы хранения справочника.
-        @param table_name: Имя таблицы.
+        :param table_name: Имя таблицы.
         """
         if table_name is None:
             table_name = self.getTableName()
@@ -93,7 +93,7 @@ class icSpravTableResGenerator(object):
     def _createTabSpc(self, table_name=None):
         """
         Создать спецификацию таблицы.
-        @param table_name: Имя таблицы.
+        :param table_name: Имя таблицы.
         """
         tab_spc = util.icSpcDefStruct(util.DeepCopy(ic_tab_wrp.ic_class_spc), None)
         # Установить свойства таблицы
@@ -115,11 +115,11 @@ class icSpravTableResGenerator(object):
         Создать спецификацию поля.
         Функция необходима для вспомогательных и 
         служебных полей.
-        @param field_name: Имя поля.
-        @param field_type: Указание типа поля.
-        @param field_len: Длина поля. В случае строковых полей.
-        @param field_default: Значение по умолчанию для поля.
-        @param field_description: Строковое описание поля.
+        :param field_name: Имя поля.
+        :param field_type: Указание типа поля.
+        :param field_len: Длина поля. В случае строковых полей.
+        :param field_default: Значение по умолчанию для поля.
+        :param field_description: Строковое описание поля.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
 
@@ -137,7 +137,7 @@ class icSpravTableResGenerator(object):
         """
         Создание по описанию объекта ресурса таблицы, в
             которой хранятся данные объекта.
-        @param table_name: Имя таблицы.
+        :param table_name: Имя таблицы.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()

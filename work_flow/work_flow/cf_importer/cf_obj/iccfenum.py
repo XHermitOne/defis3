@@ -118,7 +118,7 @@ class icCFEnum(iccfobject.icCFObject):
     def gen_resource(self):
         """
         Генерация ресурса, соответстствующего объеку 1С.
-        @return: True/False.
+        :return: True/False.
         """
         # Открыть проект
         prj_res_ctrl = ic.getKernel().getProjectResController()
@@ -142,7 +142,7 @@ class icCFEnum(iccfobject.icCFObject):
     def _add_values(self, prj_res_ctrl=None):
         """
         Добавить в таблицу значения перечислений.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
         """
         tab_name = self._get_enum_tabname(prj_res_ctrl)
         if prj_res_ctrl.isRes(tab_name, 'tab'):
@@ -167,7 +167,7 @@ class icCFEnum(iccfobject.icCFObject):
     def _get_enum_tabname(self, prj_res_ctrl=None):
         """
         Имя таблицы хранения перечислений 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
         """
         return DEFAULT_ENUM_RES
 
@@ -175,7 +175,7 @@ class icCFEnum(iccfobject.icCFObject):
                             field_default=None, field_description=u''):
         """
         Генерация ресурса поля.
-        @return: Сгенерированный ресурс поля.
+        :return: Сгенерированный ресурс поля.
         """
         from ic.components.user import ic_field_wrp
 
@@ -195,7 +195,7 @@ class icCFEnum(iccfobject.icCFObject):
     def _gen_enum_tab_res(self, prj_res_ctrl=None, table_name=None):
         """
         Создать ресурс таблицы хранения перечислений 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
         """
         from ic.components.user import ic_tab_wrp
 
@@ -233,8 +233,8 @@ class icCFEnum(iccfobject.icCFObject):
     def _gen_enum_tab(self, prj_res_ctrl=None):
         """
         Генерация ресурса таблицы хранения перечислений 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: True/False
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: True/False
         """
         if prj_res_ctrl is None:
             log.warning(u'Не определен контроллер управления ресурсом проекта. Генерация ресурса таблицы хранения перечислений 1С не взможна.')
@@ -255,8 +255,8 @@ class icCFEnum(iccfobject.icCFObject):
     def _gen_enum_spravmanager_res(self, prj_res_ctrl=None, res_name=None):
         """
         Генерация ресурса справочников перечислений 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: Ресурс справочников перечислений 1С.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: Ресурс справочников перечислений 1С.
         """
         from NSI.usercomponents import spravmanager
 
@@ -271,8 +271,8 @@ class icCFEnum(iccfobject.icCFObject):
     def _gen_enum_spravmanager(self, prj_res_ctrl=None):
         """
         Генерация ресурса справочников перечислений 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: True/False.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: True/False.
         """
         if prj_res_ctrl is None:
             log.warning(u'Не определен контроллер управления ресурсом проекта. Генерация ресурса таблицы хранения перечислений 1С не взможна.')
@@ -297,11 +297,11 @@ class icCFEnum(iccfobject.icCFObject):
                             uuid=iccfobject.NONE_UID):
         """
         Генерация ресурса справочника перечисления 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @param name: Наименование объекта ресурса.
-        @param description: Описание объекта ресурса.
-        @param uuid: Уникальный идентификатор объекта ресурса.
-        @return: Ресурс справочника перечисления 1С.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param name: Наименование объекта ресурса.
+        :param description: Описание объекта ресурса.
+        :param uuid: Уникальный идентификатор объекта ресурса.
+        :return: Ресурс справочника перечисления 1С.
         """
         from NSI.usercomponents import sprav
         from NSI.usercomponents import spravlevel
@@ -330,8 +330,8 @@ class icCFEnum(iccfobject.icCFObject):
     def _gen_enum_sprav(self, prj_res_ctrl=None):
         """
         Генерация ресурса справочника перечисления 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: True/False.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: True/False.
         """
         if prj_res_ctrl is None:
             log.warning(u'Не определен контроллер управления ресурсом проекта. Генерация ресурса таблицы хранения перечислений 1С не взможна.')

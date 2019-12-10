@@ -25,13 +25,13 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
                      bProgress=True):
     """
     Загрузить все файлы данных в виде DBF.
-    @param urls: Список URL с которых необходимо произвести загрузку.
-    @param file_patterns: Шаблоны загружаемых данных.
-    @param dst_path: Результирующая локальная папка для загрузки.
-    @param dst_file_ext: Поменять расширение файлов на указанное.
+    :param urls: Список URL с которых необходимо произвести загрузку.
+    :param file_patterns: Шаблоны загружаемых данных.
+    :param dst_path: Результирующая локальная папка для загрузки.
+    :param dst_file_ext: Поменять расширение файлов на указанное.
         Если None, то расширение меняться не будет.
-    @param bProgress: Открыть прогрессбар загрузки.
-    @return: True - Загрузка файлов прошла успешно.
+    :param bProgress: Открыть прогрессбар загрузки.
+    :return: True - Загрузка файлов прошла успешно.
         False - ошибка.
     """
     log.info(u'Запуск загрузки файлов')
@@ -92,9 +92,9 @@ def download_all_dbf(urls=load_net_config.SMB_SRC_URLS,
 def download_archive_files(archive_year=None, archive_month=None):
     """
     Загрузить архивные файлы за год.
-    @param archive_year: Год загрузки. Если не указан, то берется текущий системный.
-    @param archive_month: Месяц загрузки. Если не указан, то берется текущий системный.
-    @return: True/False
+    :param archive_year: Год загрузки. Если не указан, то берется текущий системный.
+    :param archive_month: Месяц загрузки. Если не указан, то берется текущий системный.
+    :return: True/False
     """
     if archive_year is None:
         archive_year = datetime.date.today().year

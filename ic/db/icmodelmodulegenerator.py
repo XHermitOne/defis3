@@ -68,10 +68,10 @@ class icModelModuleGenerator(object):
     def genModelModuleByTabRes(self, tab_res=None, dst_module_filename=None):
         """
         Генерация модуля модели по ресурсу таблицы.
-        @param tab_res: Ресурс таблицы.
-        @param dst_module_filename: Полное имя результирующего файла модуля модели.
+        :param tab_res: Ресурс таблицы.
+        :param dst_module_filename: Полное имя результирующего файла модуля модели.
             Если не определено, то генерируется.
-        @return: True/False.
+        :return: True/False.
         """
         if not tab_res:
             log.warning(u'Не определен ресурс таблицы для генерации модуля модели')
@@ -149,10 +149,10 @@ class icModelModuleGenerator(object):
     def genModelManagerModuleByTabRes(self, tab_res=None, dst_module_filename=None):
         """
         Генерация модуля менеджера модели по ресурсу таблицы.
-        @param tab_res: Ресурс таблицы.
-        @param dst_module_filename: Полное имя результирующего файла модуля модели.
+        :param tab_res: Ресурс таблицы.
+        :param dst_module_filename: Полное имя результирующего файла модуля модели.
             Если не определено, то генерируется.
-        @return: True/False.
+        :return: True/False.
         """
         if not tab_res:
             log.warning(u'Не определен ресурс таблицы для генерации модуля менеджера модели')
@@ -180,10 +180,10 @@ class icModelModuleGenerator(object):
     def genModelModuleByTabResFilename(self, tab_res_filename=None, dst_module_filename=None):
         """
         Генерация модуля модели по ресурсу таблицы.
-        @param tab_res_filename: Полное имя файла ресурса таблицы.
-        @param dst_module_filename: Полное имя результирующего файла модуля модели.
+        :param tab_res_filename: Полное имя файла ресурса таблицы.
+        :param dst_module_filename: Полное имя результирующего файла модуля модели.
             Если не определено, то генерируется.
-        @return: True/False.
+        :return: True/False.
         """
         tab_res = resfunc.loadResource(tab_res_filename)
         return self.genModelModuleByTabRes(tab_res, dst_module_filename=dst_module_filename)
@@ -191,10 +191,10 @@ class icModelModuleGenerator(object):
     def genModelManagerModuleByTabResFilename(self, tab_res_filename=None, dst_module_filename=None):
         """
         Генерация модуля менеджера модели по ресурсу таблицы.
-        @param tab_res_filename: Полное имя файла ресурса таблицы.
-        @param dst_module_filename: Полное имя результирующего файла модуля модели.
+        :param tab_res_filename: Полное имя файла ресурса таблицы.
+        :param dst_module_filename: Полное имя результирующего файла модуля модели.
             Если не определено, то генерируется.
-        @return: True/False.
+        :return: True/False.
         """
         tab_res = resfunc.loadResource(tab_res_filename)
         return self.genModelManagerModuleByTabRes(tab_res, dst_module_filename=dst_module_filename)

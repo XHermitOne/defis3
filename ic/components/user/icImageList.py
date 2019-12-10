@@ -31,7 +31,7 @@ __version__ = (1, 0, 0, 3)
 class CImageList(wx.ImageList, parentClass):
     """
     User component class.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
         - B{type='defaultType'}:
         - B{name='default'}:

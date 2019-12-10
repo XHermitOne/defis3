@@ -87,9 +87,9 @@ def Login(user, passw, path, runtime_mode=False):
     1. Исключение LoginErrorException возбуждается если пользователь с таким именем
     уже вошел в систему.
     2. LoginInvalidException возбуждается если неверен логин либо пароль.
-    @param user: Имя пользователя.
-    @param passw: Пароль пользователя.
-    @param path: Путь до папки проекта (c:/defis/tutorial/tutorial/)."""
+    :param user: Имя пользователя.
+    :param passw: Пароль пользователя.
+    :param path: Путь до папки проекта (c:/defis/tutorial/tutorial/)."""
     modefunc.setRuntimeMode(runtime_mode)
     set_ini_file(path)
     if not runtime_mode:

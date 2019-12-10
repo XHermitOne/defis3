@@ -42,8 +42,8 @@ def GetRecordCount(rs):
     в версии 0.5 для определяния количества записей используется len(rs), в версии >= 0.6
     rs.count()
 
-    @type rs: C{SQLObject.SelectResults}
-    @param rs: Набор отобранных записей.
+    :type rs: C{SQLObject.SelectResults}
+    :param rs: Набор отобранных записей.
     """
     #   ver 0.6
     try:
@@ -94,8 +94,8 @@ def getNsiStdTClassName(name=None):
     Возвращает имя класса, описывающего структуру справочника изменяемых во
         времени параметров. Это имя генерируется по имени класса справочника.
         
-    @type name: C{string}
-    @param name: Имя класса данных, для хранения справочников.
+    :type name: C{string}
+    :param name: Имя класса данных, для хранения справочников.
     """
     if name:
         return name + 'T'
@@ -117,16 +117,16 @@ def FSprav(typSprav, cod, field='name', datatime=None):
     """
     Поиск по коду.
     
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type cod: C{...}
-    @param cod: Код строки справочника.
-    @type field: C{string | list }
-    @param field: Имя поля или список полей.
-    @type datatime: C{string}
-    @param datatime: Время актуальности справочной информации.
-    @rtype: C{dictionary}
-    @return: Значение либо словарь значений (если поле field задает список полей).
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type cod: C{...}
+    :param cod: Код строки справочника.
+    :type field: C{string | list }
+    :param field: Имя поля или список полей.
+    :type datatime: C{string}
+    :param datatime: Время актуальности справочной информации.
+    :rtype: C{dictionary}
+    :return: Значение либо словарь значений (если поле field задает список полей).
         None, если строка с заданным кодом не найдена.
     """
     # print('FSPRAV ENTER')
@@ -160,16 +160,16 @@ def FSpravId(typSprav, id, field='name', datatime=None, tab=None):
     """
     Поиск значения справочника по идентификатору.
     
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type id: C{int}
-    @param id: Идентификатор строки справочника.
-    @type field: C{string | list }
-    @param field: Имя поля или список полей.
-    @type datatime: C{string}
-    @param datatime: Время актуальности справочной информации.
-    @rtype: C{... | dictionary}
-    @return: Значение или словарь значений (ключи - имена полей). Если None, то
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type id: C{int}
+    :param id: Идентификатор строки справочника.
+    :type field: C{string | list }
+    :param field: Имя поля или список полей.
+    :type datatime: C{string}
+    :param datatime: Время актуальности справочной информации.
+    :rtype: C{... | dictionary}
+    :return: Значение или словарь значений (ключи - имена полей). Если None, то
         необходимые значения не найдены.
     """
     # print('FSPRAV_ID ENTER, id=', id)
@@ -201,28 +201,28 @@ def FSpravId(typSprav, id, field='name', datatime=None, tab=None):
 
 def CtrlSprav(typSprav, val, old=None, field='name', flds=None, datatime=None, bCount=True, cod=''):
     """
-    @type typSprav: C{string}
-    @param typSprav: Тип справочника.
-    @type cod: C{string}
-    @param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
-    @type val: C{...}
-    @param val: Проверяемое значение. Если тип картеж, то это означает, что проверяем структурное
+    :type typSprav: C{string}
+    :param typSprav: Тип справочника.
+    :type cod: C{string}
+    :param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
+    :type val: C{...}
+    :param val: Проверяемое значение. Если тип картеж, то это означает, что проверяем структурное
         значение (например иерархический код справочника).
-    @type old: C{...}
-    @param old: Старое значение.
-    @type field: C{string}
-    @param filed: Поле, по которому проверяется значение.
-    @type flds: C{dictionary}
-    @param flds: Словарь соответствий между полями определенного класса данных и
+    :type old: C{...}
+    :param old: Старое значение.
+    :type field: C{string}
+    :param filed: Поле, по которому проверяется значение.
+    :type flds: C{dictionary}
+    :param flds: Словарь соответствий между полями определенного класса данных и
         полями справочника. Если контроль значения пройдет успешно, то
         соответствующие значения из справочника будут перенесены в поля класса
         данных. Пример: {'summa':'f1', 'summa2':'f2'}
-    @type datatime: C{string}
-    @param datatime: Время актуальности кода.
-    @type bCount: C{string}
-    @param bCount: признак того, что необходимо вести количество ссылок.
-    @rtype: C{int}
-    @return: Код возврата функции контроля.
+    :type datatime: C{string}
+    :param datatime: Время актуальности кода.
+    :type bCount: C{string}
+    :param bCount: признак того, что необходимо вести количество ссылок.
+    :rtype: C{int}
+    :return: Код возврата функции контроля.
     """
     result = IC_CTRL_OK
     res_val = {}
@@ -318,30 +318,30 @@ def CtrlSprav(typSprav, val, old=None, field='name', flds=None, datatime=None, b
 
 def CtrlSpravId(typSprav, value, old=None, flds=None, datatime=None, bCount=True, tab=None):
     """
-    @type typSprav: C{string}
-    @param typSprav: Тип справочника.
-    @type cod: C{string}
-    @param cod: Код справочника.
-    @type value: C{...}
-    @param value: Проверяемое значение идентификатора.
-    @type old: C{...}
-    @param old: Старое значение.
-    @type field: C{string}
-    @param filed: Поле, по которому проверяется значение.
-    @type flds: C{dictionary}
-    @param flds: Словарь соответствий между полями определенного класса данных и
+    :type typSprav: C{string}
+    :param typSprav: Тип справочника.
+    :type cod: C{string}
+    :param cod: Код справочника.
+    :type value: C{...}
+    :param value: Проверяемое значение идентификатора.
+    :type old: C{...}
+    :param old: Старое значение.
+    :type field: C{string}
+    :param filed: Поле, по которому проверяется значение.
+    :type flds: C{dictionary}
+    :param flds: Словарь соответствий между полями определенного класса данных и
         полями справочника. Если контроль значения пройдет успешно, то
         соответствующие значения из справочника будут перенесены в поля класса
         данных. Пример: {'summa':'f1', 'summa2':'f2'}
-    @type datatime: C{string}
-    @param datatime: Время актуальности кода.
-    @type bCount: C{string}
-    @param bCount: признак того, что необходимо вести количество ссылок.
-    @type tab: C{string}
-    @param tab: Имя класса данных справочника, если оно не указано, то функция определит
+    :type datatime: C{string}
+    :param datatime: Время актуальности кода.
+    :type bCount: C{string}
+    :param bCount: признак того, что необходимо вести количество ссылок.
+    :type tab: C{string}
+    :param tab: Имя класса данных справочника, если оно не указано, то функция определит
         имя класса данных справочника по таблице типов справочников.
-    @rtype: C{int}
-    @return: Код возврата функции контроля.
+    :rtype: C{int}
+    :return: Код возврата функции контроля.
     """
 
     result = IC_CTRL_OK
@@ -407,12 +407,12 @@ def NsiEdtFormName(typSprav, level_num=1):
     """
     Определяет название формы редактирования справочника.
     
-    @type typSprav: C{string}
-    @param typSprav: Тип справочника.
-    @type level_num: C{int}
-    @param level_num: Номер уровня кода справочника.
-    @rtype: C{string}
-    @return: Возвращает имя формы для редактирования справочника. None - в случае
+    :type typSprav: C{string}
+    :param typSprav: Тип справочника.
+    :type level_num: C{int}
+    :param level_num: Номер уровня кода справочника.
+    :rtype: C{string}
+    :return: Возвращает имя формы для редактирования справочника. None - в случае
         если тип справочника не определен.
     """
     
@@ -461,12 +461,12 @@ def NsiHlpFormName(typSprav, level_num=1):
     """
     Определяет название формы для выбора из справочника структур кодов (NsiLevel).
     
-    @type typSprav: C{string}
-    @param typSprav: Тип справочника.
-    @type level_num: C{int}
-    @param level_num: Номер уровня кода справочника.
-    @rtype: C{string}
-    @return: Возвращает имя формы выбора. None - в случае если тип справочника не определен.
+    :type typSprav: C{string}
+    :param typSprav: Тип справочника.
+    :type level_num: C{int}
+    :param level_num: Номер уровня кода справочника.
+    :rtype: C{string}
+    :return: Возвращает имя формы выбора. None - в случае если тип справочника не определен.
     """
     
     #   Создаем класс данных типов справочников
@@ -514,16 +514,16 @@ def HlpSprav(typSprav,ParentCode=(None,),field=None,datatime=None,form=None,rec=
     """
     Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
         или группы полей из отмеченной строки указанного справочника.
-    @type typSprav: C{string}
-    @param typSprav: Код типа (номер) справочника.
-    @type ParentCode: C{...}
-    @param ParentCode: Код более верхнего уровня.
-    @param field: Задает поле или группу полей, которые надо вернуть.
-    @type datatime: C{string}
-    @param datatime: Время актуальности кода.
-    @param form: имя формы визуального интерфейса работы со справочником.
-    @param rec: Текущая запись справочника.
-    @param parentForm: Родительская форма.
+    :type typSprav: C{string}
+    :param typSprav: Код типа (номер) справочника.
+    :type ParentCode: C{...}
+    :param ParentCode: Код более верхнего уровня.
+    :param field: Задает поле или группу полей, которые надо вернуть.
+    :type datatime: C{string}
+    :param datatime: Время актуальности кода.
+    :param form: имя формы визуального интерфейса работы со справочником.
+    :param rec: Текущая запись справочника.
+    :param parentForm: Родительская форма.
     """
     result = IC_HLP_OK
     res_val = None
@@ -643,12 +643,12 @@ _SpravIdBuffer={}
 def getSpravDict(typSprav,CurCode_=None,CurLevel_=1):
     """
     Получить справочник заданного типа в виде словаря в представлении дерева.
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type CurCode_: C{...}
-    @param CurCode_: Код строки справочника.
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type CurCode_: C{...}
+    :param CurCode_: Код строки справочника.
         Для конвертации начиная с корня указывать не надо.
-    @return: Возвращает словарь следующей структуры:
+    :return: Возвращает словарь следующей структуры:
         {
         'COD1':{'COD1':{...},'cod':'COD1','name':'name1','s1':'',...},
         .
@@ -679,9 +679,9 @@ def getSpravDict(typSprav,CurCode_=None,CurLevel_=1):
 def getSpravDictSimple(typSprav):
     """
     Получить справочник заданного типа в виде словаря.
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @return: Возвращает словарь следующей структуры:
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :return: Возвращает словарь следующей структуры:
         {
         'COD1':{'cod':'COD1','name':'name1','s1':'',...},
         .
@@ -727,10 +727,10 @@ def getSpravDictSimple(typSprav):
 def getSpravRecDict(typSprav,cod):
     """
     Подучить словарь записи, соответствующий записи справочника.
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type cod: C{...}
-    @param cod: Код строки справочника.
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type cod: C{...}
+    :param cod: Код строки справочника.
     """
     #определить длину кода уровня
     _NsiStd=tabclass.CreateTabClass(getNsiStdClassName())
@@ -747,10 +747,10 @@ def getSpravRecDict(typSprav,cod):
 def getSpravIdRecDict(typSprav,id):
     """
     Подучить словарь записи, соответствующий записи справочника.
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type id: C{int}
-    @param id: Идентификатор строки справочника.
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type id: C{int}
+    :param id: Идентификатор строки справочника.
     """
     #определить длину кода уровня
     _NsiStd=tabclass.CreateTabClass(getNsiStdClassName())
@@ -768,16 +768,16 @@ def FSpravBuff(typSprav,cod,field='name',datatime=None,tab=None):
     """
     Поиск по коду с возможным буферизированием.
     
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type cod: C{...}
-    @param cod: Код строки справочника.
-    @type field: C{string | list }
-    @param field: Имя поля или список полей.
-    @type datatime: C{string}
-    @param datatime: Время актуальности справочной информации.
-    @rtype: C{dictionary}
-    @return: Значение либо словарь значений (если поле field задает список полей).
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type cod: C{...}
+    :param cod: Код строки справочника.
+    :type field: C{string | list }
+    :param field: Имя поля или список полей.
+    :type datatime: C{string}
+    :param datatime: Время актуальности справочной информации.
+    :rtype: C{dictionary}
+    :return: Значение либо словарь значений (если поле field задает список полей).
         None, если строка с заданным кодом не найдена.
     """
     #Проверка наличия в буффере такого справочника
@@ -810,16 +810,16 @@ def FSpravIdBuff(typSprav,id,field='name',datatime=None,tab=None):
     """
     Поиск по идентификатору с возможным буферизированием.
     
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type id: C{int}
-    @param id: Идентификатор строки справочника.
-    @type field: C{string | list }
-    @param field: Имя поля или список полей.
-    @type datatime: C{string}
-    @param datatime: Время актуальности справочной информации.
-    @rtype: C{dictionary}
-    @return: Значение либо словарь значений (если поле field задает список полей).
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type id: C{int}
+    :param id: Идентификатор строки справочника.
+    :type field: C{string | list }
+    :param field: Имя поля или список полей.
+    :type datatime: C{string}
+    :param datatime: Время актуальности справочной информации.
+    :rtype: C{dictionary}
+    :return: Значение либо словарь значений (если поле field задает список полей).
         None, если строка с заданным кодом не найдена.
     """
     #Проверка наличия в буффере такого справочника
@@ -861,13 +861,13 @@ def FSpravBuffRepl(typSprav,cod,field='name'):
     """
     Поиск по коду значения по одному полю с возможным буферизированием.
     
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type cod: C{...}
-    @param cod: Код строки справочника.
-    @type field: C{string | list }
-    @param field: Имя поля или список полей.
-    @return: Значение. None, если строка с заданным кодом не найдена.
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type cod: C{...}
+    :param cod: Код строки справочника.
+    :type field: C{string | list }
+    :param field: Имя поля или список полей.
+    :return: Значение. None, если строка с заданным кодом не найдена.
     """
     #Проверка наличия в буффере такого справочника
     global _SpravBufferRepl
@@ -888,10 +888,10 @@ def FSpravBuffRepl(typSprav,cod,field='name'):
 def refreshSpravBuffRepl(typSprav,field='name'):
     """
     Обновить буффур справочника.
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type field: C{string | list }
-    @param field: Имя поля или список полей.
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type field: C{string | list }
+    :param field: Имя поля или список полей.
     """
     global _SpravBufferRepl
     _SpravBufferRepl[typSprav]=getReplDict(typSprav,'cod',field)
@@ -900,8 +900,8 @@ def refreshSpravBuffRepl(typSprav,field='name'):
 def get_fields(field=None,rec=None):
     """
     Заполнение полей для возврата функцией HlpSprav().
-    @param field: Задает поле или группу полей, которые надо вернуть.
-    @param rec: Объект записи из которой беруться значения.
+    :param field: Задает поле или группу полей, которые надо вернуть.
+    :param rec: Объект записи из которой беруться значения.
     """
     res_val=None
     #   Формируем словарь значений, которые необходимо вернуть
@@ -920,10 +920,10 @@ def get_fields(field=None,rec=None):
 def get_hlp_code_str(typSprav,Code):
     """
     Определить строковое представление кода.
-    @type typSprav: C{string}
-    @param typSprav: Код типа (номер) справочника.
-    @type Code: C{...}
-    @param Code: Код.
+    :type typSprav: C{string}
+    :param typSprav: Код типа (номер) справочника.
+    :type Code: C{...}
+    :param Code: Код.
     """
     try:
         code=''
@@ -967,12 +967,12 @@ def get_hlp_code_str(typSprav,Code):
 def get_hlp_code(typSprav,ParentCode=(None,), CurCodeStr=''):
     """
     Определить текущий код справочника.
-    @type typSprav: C{string}
-    @param typSprav: Код типа (номер) справочника.
-    @type ParentCode: C{...}
-    @param ParentCode: Код более верхнего уровня.
-    @type CurCodeStr: C{string}
-    @param CurCodeStr: Текущий строковый код справочника.
+    :type typSprav: C{string}
+    :param typSprav: Код типа (номер) справочника.
+    :type ParentCode: C{...}
+    :param ParentCode: Код более верхнего уровня.
+    :type CurCodeStr: C{string}
+    :param CurCodeStr: Текущий строковый код справочника.
     """
     try:
         parent_code=list(ParentCode)
@@ -1055,10 +1055,10 @@ def getFieldNotice(typSprav, field):
     """
     Функция возвращает описание поля, которое храниться в таблице NsiNotice.
 
-    @type typSprav: C{string}
-    @param typSprav: Код типа (номер) справочника.
-    @type field: C{string}
-    @param field: Имя поля для которого необходимо получить описание.
+    :type typSprav: C{string}
+    :param typSprav: Код типа (номер) справочника.
+    :type field: C{string}
+    :param field: Имя поля для которого необходимо получить описание.
     """
     #
     _NsiLevel = tabclass.CreateTabClass(getNsiLevelClassName())
@@ -1083,14 +1083,14 @@ def MaxVal(cls, typSpr, field):
     """
     Возвращает максимальное значение поля.
 
-    @type cls: C{SQLObject}
-    @param cls: Класс данных.
-    @type typSpr: C{string}
-    @param typSpr: Тип справочника.
-    @type field: C{string}
-    @param field: Имя поля.
-    @rtype: C{int | float}
-    @return: Максимальное значение поля.
+    :type cls: C{SQLObject}
+    :param cls: Класс данных.
+    :type typSpr: C{string}
+    :param typSpr: Тип справочника.
+    :type field: C{string}
+    :param field: Имя поля.
+    :rtype: C{int | float}
+    :return: Максимальное значение поля.
     """
     sql = "Select max_value(%s) from %s where type='%s'" % (field, cls._table, typSpr)
     print('SCRIPT MaxVal SQL=', sql)
@@ -1104,8 +1104,8 @@ def MaxVal(cls, typSpr, field):
 def getSpravId(typSprav):
     """
     Получить идентификатор справочника по его типу.
-    @type typSprav: C{string}
-    @param typSprav: Код типа (номер) справочника.
+    :type typSprav: C{string}
+    :param typSprav: Код типа (номер) справочника.
     """
     #определить длину кода уровня
     _NsiList=tabclass.CreateTabClass(getNsiListClassName())
@@ -1121,10 +1121,10 @@ def getSpravId(typSprav):
 def getSpravCodeId(typSprav,codSprav):
     """
     Получить идентификатор записи справочника по его типу и коду.
-    @type typSprav: C{string}
-    @param typSprav: Код типа (номер) справочника.
-    @type codSprav: C{string}
-    @param codSprav: Код записи.
+    :type typSprav: C{string}
+    :param typSprav: Код типа (номер) справочника.
+    :type codSprav: C{string}
+    :param codSprav: Код записи.
     """
     #определить длину кода уровня
     _NsiStd=tabclass.CreateTabClass(getNsiStdClassName())
@@ -1141,8 +1141,8 @@ def getSpravCodeId(typSprav,codSprav):
 def DelSprav(typSprav,Code):
     """
     Удалить справочник.
-    @param typSprav: Тип удаляемого справочника.
-    @param Code: Структурный код удаляемого справочника.
+    :param typSprav: Тип удаляемого справочника.
+    :param Code: Структурный код удаляемого справочника.
     """
     if type(Code)==type(''):
         str_code=Code
@@ -1166,8 +1166,8 @@ def isLevel(typSprav,Level):
     """
     Функция определяет может ли являтся запрашиваемый уровень уровнем
         данного справочника.
-    @param typSprav: Тип справочника.
-    @param Level: Уровень.
+    :param typSprav: Тип справочника.
+    :param Level: Уровень.
     """
     _NsiList=tabclass.CreateTabClass(getNsiListClassName())
     try:
@@ -1183,16 +1183,16 @@ def getReplDict(typSprav, fieldKey, fieldVal, exprSelect=None):
     """
     Функция формируем словарь соответствий по справочнику.
 
-    @type typSpr: C{string}
-    @param typSpr: Тип справочника.
-    @type fieldKey: C{string}
-    @param fieldKey: Поле, которое будет выступать в качестве ключа.
-    @type fieldVal: C{string}
-    @param filedVal: Поле, которое будет выступать в качестве значения.
-    @type exprSelect: C{<function>}
-    @param exprSelect: Выражения фильтации.
-    @rtype: C{dictionary}
-    @return: Cловарь соответствий между полями справочника.
+    :type typSpr: C{string}
+    :param typSpr: Тип справочника.
+    :type fieldKey: C{string}
+    :param fieldKey: Поле, которое будет выступать в качестве ключа.
+    :type fieldVal: C{string}
+    :param filedVal: Поле, которое будет выступать в качестве значения.
+    :type exprSelect: C{<function>}
+    :param exprSelect: Выражения фильтации.
+    :rtype: C{dictionary}
+    :return: Cловарь соответствий между полями справочника.
     """
     dict = {}
 
@@ -1276,8 +1276,8 @@ def getLevelCodLen(typeSprav,Level=1):
 def getSpravLevel(Type_,Level_=1):
     """
     Получить записи справочника определенного уровня.
-    @param Type_: Тип справочника.
-    @param Level_: Запрашиваемый уровень.
+    :param Type_: Тип справочника.
+    :param Level_: Запрашиваемый уровень.
     """
     try:
         #Получить информацию о справочнике

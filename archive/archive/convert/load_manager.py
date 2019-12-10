@@ -32,20 +32,20 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
     def __init__(self, pack_scan_panel=None):
         """
         Конструктор.
-        @param pack_scan_panel: Панель отображения списка документов в пакетной обработке.
+        :param pack_scan_panel: Панель отображения списка документов в пакетной обработке.
         """
         import_manager.icBalansImportManager.__init__(self, pack_scan_panel)
 
     def _create_doc(self, dbf_record, transaction, doc, sType, in_out=None):
         """
         Создание нового документа.
-        @param dbf_record: Словарь записи DBF файла.
-        @param transaction: Объект транзакции.
-        @param doc: Объект документа для пакетной обработки.
-        @param sType:
-        @param in_out: Признак приходного/расходного документа.
+        :param dbf_record: Словарь записи DBF файла.
+        :param transaction: Объект транзакции.
+        :param doc: Объект документа для пакетной обработки.
+        :param sType:
+        :param in_out: Признак приходного/расходного документа.
             Если не определен, то берется из записи DBF файла.
-        @return: Словарь новой записи документа.
+        :return: Словарь новой записи документа.
         """
         if doc is None:
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
@@ -120,8 +120,8 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
     def _load_doc(self, doc_dbf_filename, sFileType):
         """
         Загрузить документы из DBF файла.
-        @param doc_dbf_filename: Полное имя загружаемого файла.
-        @param sFileType: Тип загружаемого файла.
+        :param doc_dbf_filename: Полное имя загружаемого файла.
+        :param sFileType: Тип загружаемого файла.
         """
         doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.pack_scan_document.create()
         tab = doc.getTable()
@@ -184,9 +184,9 @@ class icDBFDocLoadManager(import_manager.icBalansImportManager):
     def load_doc(self, doc_dbf_filename, sFileType, bAutoRemove=False):
         """
         Загрузить документы из DBF файла.
-        @param doc_dbf_filename: Полное имя загружаемого файла.
-        @param sFileType: Тип загружаемого файла.
-        @param bAutoRemove: Автоматически удалить файл после загрузки?
+        :param doc_dbf_filename: Полное имя загружаемого файла.
+        :param sFileType: Тип загружаемого файла.
+        :param bAutoRemove: Автоматически удалить файл после загрузки?
         """
         self._load_doc(doc_dbf_filename, sFileType)
 

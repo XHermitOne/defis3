@@ -50,7 +50,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
     def create(self, new_name=None):
         """ 
         Функция создания.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         self.create_project()
         return True
@@ -128,7 +128,7 @@ class icPrjWXFormBuilderProject(prj_node.icPrjNode,
     def paste(self, node):
         """
         Вставить.
-        @param node: Вставляемый узел.
+        :param node: Вставляемый узел.
         """
         # Можно вставлять толко модули или другие пакеты
         if issubclass(node.__class__, prj_module.icPrjModule) or \

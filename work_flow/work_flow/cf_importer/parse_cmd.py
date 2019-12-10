@@ -25,7 +25,7 @@ CUR_CF_DIR = None
 def gen_cf_dir(cf_filename):
     """
     Генерация директории, в которую будет происходить парсинг.
-    @param cf_filename: Полное имя CF файла конфигурации 1c.
+    :param cf_filename: Полное имя CF файла конфигурации 1c.
     """
     return os.path.join(os.path.dirname(cf_filename), os.path.basename(cf_filename).replace('.', '_'))
 
@@ -34,11 +34,11 @@ def gen_cf_dir(cf_filename):
 def run_parser(v8unpack_filename, cf_filename, cf_dirname, txt_ctrl=None):
     """
     Запуск парсера на исполнение.
-    @param v8unpack_filename: Полное имя файла парсера.
-    @param cf_filename: Файл CF конфигурации.
-    @param cf_dirname: Папка в которую будет производиться вывод метаобъектов.
-    @param txt_ctrl: Контрол wxTextCtrl для вывода сообщений утилиты парсера.
-    @return:  True/False.
+    :param v8unpack_filename: Полное имя файла парсера.
+    :param cf_filename: Файл CF конфигурации.
+    :param cf_dirname: Папка в которую будет производиться вывод метаобъектов.
+    :param txt_ctrl: Контрол wxTextCtrl для вывода сообщений утилиты парсера.
+    :return:  True/False.
     """
     if not os.path.exists(v8unpack_filename):
         log.warning(u'Файл парсера конфигурации 1С <%s> не найден' % v8unpack_filename)
@@ -64,9 +64,9 @@ def run_parser(v8unpack_filename, cf_filename, cf_dirname, txt_ctrl=None):
 def parse_cf_file(cf_filename, cf_dirname=None, txt_ctrl=None):
     """
     Парсинг файла конфигурации 1с.
-    @param cf_filename: Полное имя CF файла конфигурации 1c.
-    @param cf_dirname: Директория, в которую будет происходить парсинг.
-    @param txt_ctrl: Объект wxTxtCtrl для вывода результатов выполнения команды парсинга.
+    :param cf_filename: Полное имя CF файла конфигурации 1c.
+    :param cf_dirname: Директория, в которую будет происходить парсинг.
+    :param txt_ctrl: Объект wxTxtCtrl для вывода результатов выполнения команды парсинга.
     """
     try:
         if not os.path.exists(cf_filename):

@@ -36,11 +36,11 @@ class icSequenceListDlg(sequence_list_dlg_proto.icSequenceListDlgProto):
 def sequence_list_dlg(parent=None, sequence_data=None, label_column=0):
     """
     Вызов диалогового окна для редактирования последовательностью записей.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется лавное окно программы.
-    @param sequence_data: Список-последовательность записей.
-    @param label_column: Имя колонки - наименования записи.
-    @return: Отредактированный список-пследовательность или
+    :param sequence_data: Список-последовательность записей.
+    :param label_column: Имя колонки - наименования записи.
+    :return: Отредактированный список-пследовательность или
         None в случае ошибки/нажата <Отмена>.
     """
     if parent is None:

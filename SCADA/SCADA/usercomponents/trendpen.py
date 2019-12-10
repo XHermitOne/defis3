@@ -153,7 +153,7 @@ class icTrendPenProto(object):
     def getLineData(self):
         """
         Получить данные линий.
-        @return: Список точек.
+        :return: Список точек.
         """
         data = get_test_data()
         return data
@@ -163,7 +163,7 @@ class icTrendPen(icwidget.icSimple, icTrendPenProto):
     """
     Компонент пера временного графика. Перо тренда.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -180,22 +180,22 @@ class icTrendPen(icwidget.icSimple, icTrendPenProto):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
@@ -239,7 +239,7 @@ class icTrendPen(icwidget.icSimple, icTrendPenProto):
     def getHistory(self):
         """
         Объект исторических данных - источника данных.
-        @return: Объект или None в случае ошибки.
+        :return: Объект или None в случае ошибки.
         """
         psp = self.getHistoryPsp()
         if psp and psp in self.history_registry:
@@ -251,8 +251,8 @@ class icTrendPen(icwidget.icSimple, icTrendPenProto):
     def setHistory(self, history):
         """
         Установить объект исторических данных - источника данных.
-        @param history: Объект исторических данных - источника данных.
-        @return: True/False.
+        :param history: Объект исторических данных - источника данных.
+        :return: True/False.
         """
         if history is None:
             log.warning(u'Не определен объект исторических данных')
@@ -279,7 +279,7 @@ class icTrendPen(icwidget.icSimple, icTrendPenProto):
     def getLineData(self):
         """
         Получить данные линий.
-        @return: Список точек.
+        :return: Список точек.
         """
         history_obj = self.getHistory()
         data = list

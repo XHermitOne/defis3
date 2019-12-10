@@ -20,8 +20,8 @@ __version__ = (0, 1, 1, 1)
 def calcKoeffPlan1(Type_,BasisSumm_=None):
     """
     Метод1. Расчет планов в соответствии с весовыми коэффициентами.
-    @param Type_: Тип параметра наблюдения. Код справочника.
-    @param BasisSumm_: Значение основной расчетной суммы.
+    :param Type_: Тип параметра наблюдения. Код справочника.
+    :param BasisSumm_: Значение основной расчетной суммы.
         Если она None, то эта сумма расчитывается
         стандартной функцией.
     """
@@ -69,8 +69,8 @@ def getDayPlanValue(date, metaObj, **kwarg):
     """
     Вычисляет дневной план.
     
-    @type date: C{string}
-    @param date: Дата планового значения в виде гггг.мм.чч.
+    :type date: C{string}
+    :param date: Дата планового значения в виде гггг.мм.чч.
     """
     year, month, day = map(lambda x: int(x), date.split('.'))
     codYear = date[:4]
@@ -101,8 +101,8 @@ def getDayPlanKol(date, metaObj, **kwarg):
     """
     Вычисляет дневной план по количеству.
     
-    @type date: C{string}
-    @param date: Дата планового значения в виде гггг.мм.чч.
+    :type date: C{string}
+    :param date: Дата планового значения в виде гггг.мм.чч.
     """
     year, month, day = map(lambda x: int(x), date.split('.'))
     codYear = date[:4]

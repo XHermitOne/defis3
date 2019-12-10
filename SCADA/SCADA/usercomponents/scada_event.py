@@ -126,7 +126,7 @@ class icSCADAEvent(icwidget.icSimple):
     """
     Компонент события SCADA системы.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -141,22 +141,22 @@ class icSCADAEvent(icwidget.icSimple):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
@@ -181,7 +181,7 @@ class icSCADAEvent(icwidget.icSimple):
     def doExpression(self):
         """
         Выполнить и проверить выполнение условия возникновения события.
-        @return: True/False.
+        :return: True/False.
         """
         context = self.GetContext()
         context['SCADA_ENGINE'] = self.parent
@@ -200,14 +200,14 @@ class icSCADAEvent(icwidget.icSimple):
     def Enable(self, enable=True):
         """
         Вкл./ Выкл. обработки события.
-        @param enable: Признак Вкл./ Выкл. обработки события.
+        :param enable: Признак Вкл./ Выкл. обработки события.
         """
         self.enable = enable
 
     def do(self):
         """
         Проверить и обработать событие.
-        @return: True/False.
+        :return: True/False.
         """
         if not self.enable:
             # Обработка события выключена.
@@ -224,16 +224,16 @@ class icSCADAEvent(icwidget.icSimple):
     def getScanClassPsp(self):
         """
         Паспорт класса сканирования данных SCADA.
-        @return: Паспорт или None в случае ошибки.
+        :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('scan_class')
 
     def getScanClass(self, scan_class_psp=None):
         """
         Объект класса сканирования данных SCADA.
-        @param scan_class_psp: Паспорт класса сканирования данных SCADA.
+        :param scan_class_psp: Паспорт класса сканирования данных SCADA.
             Если не определено, то задается функцией self.getScanClassPsp.
-        @return: Объект класса сканирования данных SCADA или
+        :return: Объект класса сканирования данных SCADA или
             None в случае ошибки.
         """
         if scan_class_psp is None and self._scan_class is not None:

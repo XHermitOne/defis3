@@ -44,8 +44,8 @@ EMPTY_NODE_RECORD = {'__filter__': None, '__indicator__': None, 'label': u''}
 def empty_item(label=DEFAULT_NODE_LABEL):
     """
     Пустой узел.
-    @param label: Надпись узла.
-    @return: Структура пустого узла.
+    :param label: Надпись узла.
+    :return: Структура пустого узла.
     """
     item_filter = copy.deepcopy(EMPTY_NODE_RECORD)
     item_filter['label'] = label
@@ -55,10 +55,10 @@ def empty_item(label=DEFAULT_NODE_LABEL):
 def add_child_item_filter(filter_tree_data, child_item_filter=None):
     """
     Добавить узел как дочерний.
-    @param filter_tree_data: Данные узла.
-    @param child_item_filter: Данные дочернего узла.
+    :param filter_tree_data: Данные узла.
+    :param child_item_filter: Данные дочернего узла.
         Если не определены, то создаются пустой узел.
-    @return: Измененные данные узла.
+    :return: Измененные данные узла.
     """
     if child_item_filter is None:
         child_item_filter = empty_item()
@@ -72,9 +72,9 @@ def add_child_item_filter(filter_tree_data, child_item_filter=None):
 def new_item_filter(filter_tree_data, label=DEFAULT_NODE_LABEL):
     """
     Добавить новый фильтр к уже существующему узлу.
-    @param filter_tree_data: Данные узла.
-    @param label: Надпись узла.
-    @return: Измененные данные узла.
+    :param filter_tree_data: Данные узла.
+    :param label: Надпись узла.
+    :return: Измененные данные узла.
     """
     if '__children__' not in filter_tree_data or filter_tree_data['__children__'] is None:
         filter_tree_data['__children__'] = list()
@@ -86,9 +86,9 @@ def new_item_filter(filter_tree_data, label=DEFAULT_NODE_LABEL):
 def set_filter(filter_tree_data, item_filter=None):
     """
     Установить существующий фильтр узла.
-    @param filter_tree_data: Данные узла.
-    @param item_filter: Данные фильтра.
-    @return: Измененные данные узла.
+    :param filter_tree_data: Данные узла.
+    :param item_filter: Данные фильтра.
+    :return: Измененные данные узла.
     """
     filter_tree_data['__filter__'] = item_filter
     return filter_tree_data
@@ -97,9 +97,9 @@ def set_filter(filter_tree_data, item_filter=None):
 def set_indicator(filter_tree_data, item_indicator=None):
     """
     Установить существующий индикатор узла.
-    @param filter_tree_data: Данные узла.
-    @param item_indicator: Данные индикатора.
-    @return: Измененные данные узла.
+    :param filter_tree_data: Данные узла.
+    :param item_indicator: Данные индикатора.
+    :return: Измененные данные узла.
     """
     filter_tree_data['__indicator__'] = item_indicator
     return filter_tree_data
@@ -108,8 +108,8 @@ def set_indicator(filter_tree_data, item_indicator=None):
 def get_filter(filter_tree_data):
     """
     Получить фильтр узла.
-    @param filter_tree_data: Данные узла.
-    @return: Структура фильтра узла.
+    :param filter_tree_data: Данные узла.
+    :return: Структура фильтра узла.
     """
     return filter_tree_data['__filter__']
 
@@ -117,8 +117,8 @@ def get_filter(filter_tree_data):
 def get_indicator(filter_tree_data):
     """
     Получить индикатор узла.
-    @param filter_tree_data: Данные узла.
-    @return: Структура индикатора узла.
+    :param filter_tree_data: Данные узла.
+    :return: Структура индикатора узла.
     """
     return filter_tree_data['__indicator__']
 
@@ -126,9 +126,9 @@ def get_indicator(filter_tree_data):
 def set_label(filter_tree_data, label=u''):
     """
     Установить надпись узла.
-    @param filter_tree_data: Данные узла.
-    @param label: Надпись.
-    @return: Измененные данные узла.
+    :param filter_tree_data: Данные узла.
+    :param label: Надпись.
+    :return: Измененные данные узла.
     """
     filter_tree_data['label'] = label
     return filter_tree_data
@@ -137,9 +137,9 @@ def set_label(filter_tree_data, label=u''):
 def find_label(filter_tree_data, label=u''):
     """
     Поиск узла по его надписи
-    @param filter_tree_data: Данные узла.
-    @param label: Надпись.
-    @return: Данные искомого узла или None, если узел не найден.
+    :param filter_tree_data: Данные узла.
+    :param label: Надпись.
+    :return: Данные искомого узла или None, если узел не найден.
     """
     if filter_tree_data.get('label', None) == label:
         return filter_tree_data
@@ -223,14 +223,14 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def _genUUID(self):
         """
         Генерация UUID.
-        @return: UUID.
+        :return: UUID.
         """
         return str(uuid.uuid4())
 
     def setSaveFilename(self, filename):
         """
         Установить полное имя файла хранения фильтров.
-        @param filename: Имя файла.
+        :param filename: Имя файла.
         """
         self._save_filename = filename
 
@@ -249,7 +249,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def setLimit(self, limit=0):
         """
         Установить ограничение количества строк фильтруемого объекта.
-        @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
+        :param limit: Ограничение по строкам. Если не определено, то ограничения нет.
         """
         self._limit = limit
 
@@ -266,9 +266,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def getItemFilter(self, item=None):
         """
         Фильтр, прикрепленный к элементу.
-        @param item: Текущий обрабатываемый элемент.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: Структура фильтра или None если фильтр не определен.
+        :return: Структура фильтра или None если фильтр не определен.
         """
         if item is None:
             item = self.GetRootItem()
@@ -279,9 +279,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def getItemIndicator(self, item=None):
         """
         Индикатор, прикрепленный к элементу.
-        @param item: Текущий обрабатываемый элемент.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: Структура индикатора или None если индикатор не определен.
+        :return: Структура индикатора или None если индикатор не определен.
         """
         if item is None:
             item = self.GetRootItem()
@@ -302,9 +302,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def editRootFilter(self, root_item=None):
         """
         Редактирование фильтра корневого элемента.
-        @param root_item: Корневой элемент.
+        :param root_item: Корневой элемент.
             Если не определен, то берется автоматически.
-        @return: True/False.
+        :return: True/False.
         """
         if root_item is None:
             root_item = self.GetRootItem()
@@ -360,8 +360,8 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def _build_filters(self, cur_filters):
         """
         Внутренняя функция построения структуры фильтров.
-        @param cur_filters: Текущий обрабатываемый список фильтров.
-        @return: Собранная структура фильтра.
+        :param cur_filters: Текущий обрабатываемый список фильтров.
+        :return: Собранная структура фильтра.
         """
         # Отфильтровать не включенные фильтры
         filters = [copy.deepcopy(cur_filter) for cur_filter in cur_filters if cur_filter.get('check', True)]
@@ -384,9 +384,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def buildItemFilter(self, item=None):
         """
         Построение полного фильтра, соответствующего указанному элементу дерева.
-        @param item: Элемент дерева.
+        :param item: Элемент дерева.
             Если не определен, то берется текущий выбранный элемент.
-        @return: Собранная структура фильтра, соответствующего указанному элементу дерева.
+        :return: Собранная структура фильтра, соответствующего указанному элементу дерева.
         """
         if item is None:
             item = self.GetSelection()
@@ -406,7 +406,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def createPopupMenu(self):
         """
         Создать всплывающее меню управления деревом фильтров.
-        @return: Объект wx.Menu управления деревом фильтров.
+        :return: Объект wx.Menu управления деревом фильтров.
         """
         try:
             cur_item = self.GetSelection()
@@ -494,7 +494,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def renameItem(self, cur_item=None):
         """
         Переименовать узел.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -528,7 +528,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def moveUpItem(self, cur_item=None):
         """
         Переместить узел выше по списку.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -550,7 +550,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def moveDownItem(self, cur_item=None):
         """
         Переместить узел ниже по списку.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -572,7 +572,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def addFilterItem(self, cur_item=None):
         """
         Добавить фильтр.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -606,7 +606,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def delFilterItem(self, cur_item=None):
         """
         Удалить фильтр.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -627,7 +627,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def editFilterItem(self, cur_item=None):
         """
         Редактировать фильтр.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -647,7 +647,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def refreshRootItemTitle(self):
         """
         Обновить надпись корневого элемента в соответствии с выбранным фильтром.
-        @return: True/False.
+        :return: True/False.
         """
         item = self.GetRootItem()
         item_data = self.getItemData_tree(ctrl=self, item=item)
@@ -679,7 +679,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def editIndicatorItem(self, cur_item=None):
         """
         Редактировать индикатор.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -704,7 +704,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def getCurRecords(self, item_filter=None):
         """
         Код получения набора записей, соответствующих фильтру для индикаторов.
-        @param item_filter: Описание фильтра элемента.
+        :param item_filter: Описание фильтра элемента.
             Если None, то фильтрация не производится.
         """
         log.error(u'Не определена функция <getCurRecords> в компоненте <%s>' % self.__class__.__name__)
@@ -712,9 +712,9 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def saveFilters(self, save_filename=None):
         """
         Сохранить сведения об фильтрах в файле.
-        @param save_filename: Имя файла хранения фильтров.
+        :param save_filename: Имя файла хранения фильтров.
             Если не определен, то генерируется по UUID.
-        @return:
+        :return:
         """
         if save_filename is None:
             save_filename = self._save_filename
@@ -732,7 +732,7 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def loadFilters(self, save_filename=None):
         """
         Загрузить фильтры.
-        @param save_filename: Имя файла хранения фильтров.
+        :param save_filename: Имя файла хранения фильтров.
             Если не определен, то генерируется по UUID.
         """
         if save_filename is None:
@@ -767,13 +767,13 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def refreshIndicators(self, bVisibleItems=True, item=None, bRestoreDataset=True, bProgress=False):
         """
         Обновить индикаторы элементов дерева.
-        @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
+        :param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
             Если нет, то обновляются индикаторы всех элементов.
-        @param item: Текущий обрабатываемый элемент.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @param bRestoreDataset: Восстановить датасет выбранного элемента?
-        @param bProgress: Отображать прогресс диалог при обновлении?
-        @return: True/False.
+        :param bRestoreDataset: Восстановить датасет выбранного элемента?
+        :param bProgress: Отображать прогресс диалог при обновлении?
+        :return: True/False.
         """
         # log.debug(u'--- Обновление индикаторов ---')
         result = False
@@ -806,12 +806,12 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def _refreshIndicators(self, bVisibleItems=True, item=None, bProgress=False):
         """
         Обновить индикаторы элементов дерева.
-        @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
+        :param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
             Если нет, то обновляются индикаторы всех элементов.
-        @param item: Текущий обрабатываемый элемент.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @param bProgress: Отображать прогресс диалог при обновлении?
-        @return: True/False.
+        :param bProgress: Отображать прогресс диалог при обновлении?
+        :return: True/False.
         """
         if item is None:
             item = self.GetRootItem()
@@ -844,10 +844,10 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def refreshIndicator(self, indicator, item=None):
         """
         Обновить индикатор элемента дерева.
-        @param indicator: Структура описания индикатора.
-        @param item: Текущий обрабатываемый элемент.
+        :param indicator: Структура описания индикатора.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             # log.debug(u'Обновление индикатора %s' % str(indicator))
@@ -859,10 +859,10 @@ class icFilterTreeCtrlProto(wx.TreeCtrl,
     def _refreshIndicator(self, indicator, item=None):
         """
         Обновить индикатор элемента дерева.
-        @param indicator: Структура описания индикатора.
-        @param item: Текущий обрабатываемый элемент.
+        :param indicator: Структура описания индикатора.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: True/False.
+        :return: True/False.
         """
         if not indicator:
             # Индикатор не определен. Обновлять не надо

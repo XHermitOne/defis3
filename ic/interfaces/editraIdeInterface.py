@@ -30,7 +30,7 @@ class EditraDocumentInterface(object):
     def __init__(self, filename, *arg, **kwarg):
         """
         Конструктор.
-        @param filename: Имя файла документа.
+        :param filename: Имя файла документа.
         """
         self._finfo = dict(filename=filename, encoding='utf-8', hasbom=False, modtime=0)
         self._cursor = 0
@@ -243,8 +243,8 @@ class FormEditorDoc(icPanelEditor.icBackgroundDocumentFrame, EditraDocumentInter
     def __init__(self, filename, component, parent, *arg, **kwarg):
         """
         Конструктор.
-        @param filename: Имя файла документа.
-        @param component: Ресурсное описание компонента.
+        :param filename: Имя файла документа.
+        :param component: Ресурсное описание компонента.
         """
         icPanelEditor.icBackgroundDocumentFrame.__init__(self, parent, -1, component)
         self.designer = self
@@ -282,8 +282,8 @@ class DesignerDoc(wx.Panel, EditraDocumentInterface, AbsDesignerInterface):
     def __init__(self, filename, component, parent, *arg, **kwarg):
         """
         Конструктор.
-        @param filename: Имя файла документа.
-        @param component: Ресурсное описание компонента.
+        :param filename: Имя файла документа.
+        :param component: Ресурсное описание компонента.
         """
         from ic.PropertyEditor import icstylepanel
         self.default_panel_tool_cls = icstylepanel.icStyleToolPanel
@@ -371,7 +371,7 @@ class DesignerDoc(wx.Panel, EditraDocumentInterface, AbsDesignerInterface):
     def GetTabImage(self):
         """
         Get the Bitmap to use for the tab
-        @return: wx.Bitmap (16x16)
+        :return: wx.Bitmap (16x16)
         """
         return common.imgDesigner
 
@@ -385,7 +385,7 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def __init__(self, IDEFrame=None):
         """
         Конструктор.
-        @param IDEFrame: Указатель на главное окно IDE.
+        :param IDEFrame: Указатель на главное окно IDE.
         """
         self._ide = IDEFrame
         self._ide.Bind(wx.EVT_CLOSE, self.onPostClose)
@@ -423,8 +423,8 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
-        @param res: Ресурсное описание.
-        @param res_editor: Указатель на редактор ресурсов.
+        :param res: Ресурсное описание.
+        :param res_editor: Указатель на редактор ресурсов.
         """
         nb = self.getDocumentNotebook()
         res_name = ''
@@ -469,8 +469,8 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def addToolPanel(self, panel):
         """
         Добавить панель в нотебук инструментов/палитры инструментов.
-        @param panel: Наследник wx.Panel.
-        @return: Возвращает указатель на страницу нотебука(наследник drSidePanel),
+        :param panel: Наследник wx.Panel.
+        :return: Возвращает указатель на страницу нотебука(наследник drSidePanel),
             которая соответствует этой панели.
         """
         pass
@@ -485,19 +485,19 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
                  bEditRecentFiles=True, encoding='<Default Encoding>', bReadonly=False):
         """
         Загружает нужный файл в IDE.
-        @type filename: C{string}
-        @param filename: Имя загружаемого файла.
-        @type bOpenInNewTab: C{bool}
-        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
-        @type bEditRecentFiles: C{bool}
-        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
+        :type filename: C{string}
+        :param filename: Имя загружаемого файла.
+        :type bOpenInNewTab: C{bool}
+        :param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        :type bEditRecentFiles: C{bool}
+        :param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
-        @type encoding: C{string}
-        @param encoding: Кодировка файла.
-        @type bReadonly: C{bool}
-        @param bReadonly: Указание, что файл откроется только для чтения.
-        @rtype: C{bool}
-        @return: Признак успешной загрузки.
+        :type encoding: C{string}
+        :param encoding: Кодировка файла.
+        :type bReadonly: C{bool}
+        :param bReadonly: Указание, что файл откроется только для чтения.
+        :rtype: C{bool}
+        :return: Признак успешной загрузки.
         """
         if isinstance(filename, str):
             filename = str(filename)    # self.getDefaultEncoding())
@@ -506,10 +506,10 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def closeFile(self, filename):
         """
         Выгружает файл.
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @rtype: C{bool}
-        @return: Признак успешной выгрузки.
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :rtype: C{bool}
+        :return: Признак успешной выгрузки.
         """
         ipg = self._getOpenedFileIdx(filename)
         if ipg >= 0:
@@ -533,12 +533,12 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def insertEvtFuncToInterface(self, filename, func_name, function_body=None):
         """
         Вставляет в тело интерфейсного модуля заготовку функции с заданным именем.
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @type func_name: C{string}
-        @param func_name: Имя функции.
-        @type function_body: C{string}
-        @param function_body: Тело функции.
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :type func_name: C{string}
+        :param func_name: Имя функции.
+        :type function_body: C{string}
+        :param function_body: Тело функции.
         """
         if self.selectFile(filename):
             if self.goToFunc(func_name):
@@ -567,8 +567,8 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
-        @type filename: C{string}
-        @param filename: Имя файла.
+        :type filename: C{string}
+        :param filename: Имя файла.
         """
         return self.getDocumentNotebook().HasFileOpen(filename)
         
@@ -583,9 +583,9 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def _getOpenedFileIdx(self, filename):
         """
         Индекс открытого файла.
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @return: Индекс открытого файла или
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :return: Индекс открытого файла или
             -1, если файл не открыт.
         """
         nb = self.getDocumentNotebook()
@@ -600,10 +600,10 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def selectFile(self, filename):
         """
         Устанавливает нужный файл в качестве текущего.
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @rtype: C{bool}
-        @return: Признак успешного выбора.
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :rtype: C{bool}
+        :return: Признак успешного выбора.
         """
         filename = filename.replace('\\', '/')
         nb = self.getDocumentNotebook()
@@ -631,8 +631,8 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def getDocumentObj(self, filegame):
         """
         Возвращает объект документа.
-        @type filegame: C{string}
-        @param filegame: Имя файла.
+        :type filegame: C{string}
+        :param filegame: Имя файла.
         """
         docs = self.getDocumentNotebook().GetTextControls()
         for doc in docs:
@@ -642,8 +642,8 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def getDocumentText(self, filename):
         """
         Возвращает текст документа.
-        @type filename: C{string}
-        @param filename: Имя файла.
+        :type filename: C{string}
+        :param filename: Имя файла.
         """
         return self.getDocument().GetText()
                 
@@ -661,8 +661,8 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def getModify(self, filename):
         """
         Возвращает признак измененного документа.
-        @type filename: C{string}
-        @param filename: Имя файла.
+        :type filename: C{string}
+        :param filename: Имя файла.
         """
         doc = self.getDocumentObj(filename)
         if doc:
@@ -671,8 +671,8 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def goToFunc(self, func_name, filename=None):
         """
         Переход на нужную функцию.
-        @param func_name: Имя функции.
-        @param filename: Имя файла.
+        :param func_name: Имя функции.
+        :param filename: Имя файла.
         """
         if not filename:
             doc = self.getDocument()
@@ -716,10 +716,10 @@ class EditraIDEInterface(icideinterface.icIDEInterface):
     def reloadFile(self, filename):
         """
         Перегружает нужный файл в IDE.
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @rtype: C{bool}
-        @return: Признак успешной перезагрузки.
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :rtype: C{bool}
+        :return: Признак успешной перезагрузки.
         """
         pass
             

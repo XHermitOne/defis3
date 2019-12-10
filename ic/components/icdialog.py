@@ -5,8 +5,8 @@
 Создает диалоговое окно.
 Содержит описание класса icDialog, который по ресурсному описанию создает диалоговое окно.
 
-@type SPC_IC_DIALOG: C{dictionary}
-@var SPC_IC_DIALOG: Спецификация на ресурсное описание диалогового окна. Описание ключей SPC_IC_DIALOG:
+:type SPC_IC_DIALOG: C{dictionary}
+:var SPC_IC_DIALOG: Спецификация на ресурсное описание диалогового окна. Описание ключей SPC_IC_DIALOG:
 
     - B{name = 'default'}: Имя окна.
     - B{type='Dialog'}: Тип объекта.
@@ -24,8 +24,8 @@
         который распологается на диалоговом окне.
     - B{child=[]}: Cписок дочерних элементов.
 
-@type ICDialogStyle: C{dictionary}
-@var ICDialogStyle: Словарь специальных стилей компонента. Описание ключей ICDialogStyle:
+:type ICDialogStyle: C{dictionary}
+:var ICDialogStyle: Словарь специальных стилей компонента. Описание ключей ICDialogStyle:
 
     - C{wx.CAPTION} - Поле для перетаскивания окна.
     - C{MINIMIZE_BOX} - Выводит кнопку для минимизации.
@@ -163,16 +163,16 @@ class icDialog(icWidget, wx.Dialog):
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icDialog.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         #   Атрибуты сайзера
         self.sizer = None
@@ -326,8 +326,8 @@ class icDialog(icWidget, wx.Dialog):
     def EndModal(self, ret):
         """
         Завершает диалог.
-        @type ret: C{int}
-        @param ret: Код возврата.
+        :type ret: C{int}
+        :param ret: Код возврата.
         """
         self.OnClose(None)
         wx.Dialog.EndModal(self, ret)

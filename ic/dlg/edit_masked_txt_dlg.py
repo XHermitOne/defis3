@@ -45,11 +45,11 @@ class icEditMaskedTextDlg(edit_masked_txt_dlg_proto.icEditMaskedTextDlgProto):
              default_txt=u'', mask=u'', reg_exp=r''):
         """
         Инициализация диалогового окна.
-        @param title: Заголовок диалогового окна.
-        @param label: Текст сообщения.
-        @param default_txt: Строка заполняемая по умолчанию.
-        @param mask: Маска.
-        @param reg_exp: Регулярное выражение.
+        :param title: Заголовок диалогового окна.
+        :param label: Текст сообщения.
+        :param default_txt: Строка заполняемая по умолчанию.
+        :param mask: Маска.
+        :param reg_exp: Регулярное выражение.
         """
         # Проверка входных параметров
         if default_txt is None:
@@ -79,13 +79,13 @@ def edit_masked_text_dlg(parent=None, title=u'', label=u'',
                          *args, **kwargs):
     """
     Функция вызова диалогового окна.
-    @param parent: Родительское окно.
-    @param title: Заголовок диалогового окна.
-    @param label: Текст сообщения.
-    @param default_txt: Строка заполняемая по умолчанию.
-    @param mask: Маска.
-    @param reg_exp: Регулярное выражение.
-    @return: Отредатированное значение или None,
+    :param parent: Родительское окно.
+    :param title: Заголовок диалогового окна.
+    :param label: Текст сообщения.
+    :param default_txt: Строка заполняемая по умолчанию.
+    :param mask: Маска.
+    :param reg_exp: Регулярное выражение.
+    :return: Отредатированное значение или None,
         если нажата кнопка <Отмена>.
     """
     if parent is None:

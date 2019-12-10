@@ -9,35 +9,35 @@ _stdToolbarResModuleFmt = '''
     def onAddTool(context):
         \"\"\"
         Обработчик добавления объекта.
-        @param context: Контекст выполнения формы.
+        :param context: Контекст выполнения формы.
         \"\"\"
         pass
         
     def onDelTool(context):
         \"\"\"
         Обработчик удаления объекта.
-        @param context: Контекст выполнения формы.
+        :param context: Контекст выполнения формы.
         \"\"\"
         pass
 
     def onEditTool(context):
         \"\"\"
         Обработчик редактирования объекта.
-        @param context: Контекст выполнения формы.
+        :param context: Контекст выполнения формы.
         \"\"\"
         pass
         
     def onModeTool(context):
         \"\"\"
         Обработчик изменения режима работы с объектом.
-        @param context: Контекст выполнения формы.
+        :param context: Контекст выполнения формы.
         \"\"\"
         pass
         
     def onFindTool(context):
         \"\"\"
         Обработчик поиска объекта.
-        @param context: Контекст выполнения формы.
+        :param context: Контекст выполнения формы.
         \"\"\"
         pass
         
@@ -47,7 +47,7 @@ _stdTreeBrwsResModuleFmt = '''
     def onInitTreeBrws(context):
         \"\"\"
         Обработчик инициализации дерева просмотра объекта.
-        @param context: Контекст выполнения формы.
+        :param context: Контекст выполнения формы.
         \"\"\"
         try:
             obj = context['OBJ']

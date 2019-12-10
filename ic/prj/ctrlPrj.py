@@ -42,8 +42,8 @@ class icProjectResManager(object):
     def __init__(self, prj_name=None, prj_res_filename=None):
         """
         Конструктор.
-        @param prj_name: Имя проекта.
-        @param prj_res_filename: Имя файла ресурса проекта.
+        :param prj_name: Имя проекта.
+        :param prj_res_filename: Имя файла ресурса проекта.
         """
         self.setPrj(prj_name, prj_res_filename)
         # Объект управления ресурсом проекта
@@ -52,9 +52,9 @@ class icProjectResManager(object):
     def saveRes(self, res_name, res_type, res_data):
         """
         Записать ресурс в проект.
-        @param res_name: Имя ресурса.
-        @param res_type: Тип ресурса.
-        @param res_data: Сам, записываемый ресурс.
+        :param res_name: Имя ресурса.
+        :param res_type: Тип ресурса.
+        :param res_data: Сам, записываемый ресурс.
         """
         self.makeFolderOther()
         if self._PrjRes:
@@ -70,9 +70,9 @@ class icProjectResManager(object):
     def loadRes(self, res_name, res_type=None):
         """
         Прочитать ресурс из проекта.
-        @param res_name: Имя загружаемого ресурса.
-        @param res_type: Тип ресурса.
-        @return: Содержимое ресурса или None в случае ошибки.
+        :param res_name: Имя загружаемого ресурса.
+        :param res_type: Тип ресурса.
+        :return: Содержимое ресурса или None в случае ошибки.
         """
         self.makeFolderOther()
         if self._PrjRes:
@@ -87,9 +87,9 @@ class icProjectResManager(object):
     def loadResClone(self, res_name, res_type=None):
         """
         Прочитать ресурс из проекта для его последующего клонирования.
-        @param res_name: Имя загружаемого ресурса.
-        @param res_type: Тип ресурса.
-        @return: Содержимое ресурса или None в случае ошибки.
+        :param res_name: Имя загружаемого ресурса.
+        :param res_type: Тип ресурса.
+        :return: Содержимое ресурса или None в случае ошибки.
         """
         if self._PrjRes:
             res_ref = self._PrjRes.getResRef(res_name, res_type)
@@ -99,7 +99,7 @@ class icProjectResManager(object):
     def _loadResFile(self, res_name, res_type):
         """
         Открыть и загрузить файл ресурса.
-        @return: Содержимое ресурса или None в случае ошибки.
+        :return: Содержимое ресурса или None в случае ошибки.
         """
         res_file_name = os.path.join(self._PrjResDir, '%s.%s' % (res_name, res_type))
         if os.path.isfile(res_file_name):
@@ -111,8 +111,8 @@ class icProjectResManager(object):
     def delRes(self, res_name, res_type):
         """
         Удалить ресурс из проекта.
-        @param res_name: Имя ресурса.
-        @param res_type: Тип ресурса.
+        :param res_name: Имя ресурса.
+        :param res_type: Тип ресурса.
         """
         self.makeFolderOther()
         if self._PrjRes:
@@ -128,8 +128,8 @@ class icProjectResManager(object):
     def isRes(self, res_name, res_type=None):
         """
         Проверка соществования ресурса с именем и типом в проекте.
-        @param res_name: Имя ресурса.
-        @param res_type: Тип ресурса.
+        :param res_name: Имя ресурса.
+        :param res_type: Тип ресурса.
         """
         if self._PrjRes:
             return self._PrjRes.isResByNameANDType(res_name, res_type)
@@ -138,8 +138,8 @@ class icProjectResManager(object):
     def getResourcesByType(self, res_type=None):
         """
         Получить список ресурсов по типу.
-        @param res_type: Тип ресурса.
-        @return: Список ресурсов указанного типа. В случае ошибки возвращается пустой список.
+        :param res_type: Тип ресурса.
+        :return: Список ресурсов указанного типа. В случае ошибки возвращается пустой список.
         """
         result = list()
         if res_type is None:
@@ -169,8 +169,8 @@ class icProjectResManager(object):
     def openPrj(self, prj_name=None, prj_res_filename=None):
         """
         Открыть проект.
-        @param prj_name: Имя проекта.
-        @param prj_res_filename: Имя файла ресурса проекта.
+        :param prj_name: Имя проекта.
+        :param prj_res_filename: Имя файла ресурса проекта.
         """
         self.setPrj(prj_name, prj_res_filename)
         if self._PrjRes:
@@ -179,8 +179,8 @@ class icProjectResManager(object):
     def savePrj(self, prj_name=None, prj_res_filename=None):
         """
         Сохранить проект.
-        @param prj_name: Имя проекта.
-        @param prj_res_filename: Имя файла ресурса проекта.
+        :param prj_name: Имя проекта.
+        :param prj_res_filename: Имя файла ресурса проекта.
         """
         self.setPrj(prj_name, prj_res_filename)
         if self._PrjRes:

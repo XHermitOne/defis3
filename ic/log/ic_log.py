@@ -47,7 +47,7 @@ def icLogErr(msg=u''):
 def icToLog(msg):
     """
     Выдает сообщение в регистратор (на консоль).
-    @param msg: Текст сообщения.
+    :param msg: Текст сообщения.
     """
     return iclog.toLog(msg)
 

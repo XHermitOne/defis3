@@ -51,7 +51,7 @@ class ImportSubSysInterface:
     def initialize(self, AppRunTime_=None):
         """
         Инициализация подсистемы в режиме выполнения.
-        @param AppRunTime_: Указание приложения/движка,  
+        :param AppRunTime_: Указание приложения/движка,  
             под которым запущена подсистема.
         """
         self.app_parent = AppRunTime_
@@ -68,7 +68,7 @@ class ImportSubSysInterface:
     def deinitialize(self, AppRunTime_=None):
         """
         Деинициализация подсистемы в режиме выполнения.
-        @param AppRunTime_: Указание приложения/движка,  
+        :param AppRunTime_: Указание приложения/движка,  
             под которым запущена подсистема.
         """
         if AppRunTime_: 
@@ -88,7 +88,7 @@ class ImportSubSysInterface:
         Функция вызываема при инсталляции подсистемы в редакторе.
         Дополнительное определение подсистемы и ее компонентов 
         во внутренних регистрационных реестрах и таблицах.
-        @param RootPrjTree_: Корневой узел дерева проектов.
+        :param RootPrjTree_: Корневой узел дерева проектов.
         """
         package = self._import_package()
 
@@ -107,7 +107,7 @@ class ImportSubSysInterface:
     def deinstall(self, RootPrjTree_=None):
         """
         Функция,  вызываемая при деинсталяции подсистемы из редактора.
-        @param RootPrjTree_: Корневой узел дерева проектов.
+        :param RootPrjTree_: Корневой узел дерева проектов.
         """
         package = self._import_package()
         if package:

@@ -94,7 +94,7 @@ class DefisProjectPlugin(plugin.Plugin):
     def OnShow(self, event):
         """
         Show the pane
-        @param event: wx.MenuEvent
+        :param event: wx.MenuEvent
         """
         if event.GetId() == ID_DEFIS_TOOL:
             mgr = self.main_win.GetFrameManager()
@@ -109,7 +109,7 @@ class DefisProjectPlugin(plugin.Plugin):
         """
         UpdateUI handler for the panels menu item, to update the check
         mark.
-        @param event: wx.UpdateUIEvent
+        :param event: wx.UpdateUIEvent
         """
         pane = self.main_win.GetFrameManager().GetPane(PANE_NAME)
         event.Check(pane.IsShown())
@@ -125,8 +125,8 @@ class DefisProjectPlugin(plugin.Plugin):
     def OnUpdate(self, msg=None, force=False):
         """
         Update the ctrl when an action message is sent
-        @param msg: Message Object.
-        @param force: Force update.
+        :param msg: Message Object.
+        :param force: Force update.
         """
         if not force:
             context = None
@@ -146,7 +146,7 @@ class DefisProjectPlugin(plugin.Plugin):
     def _ShouldUpdate(self):
         """
         Check whether the tree should do an update or not
-        @return: bool
+        :return: bool
         """
         pane = self.main_win.GetFrameManager().GetPane(PANE_NAME)
         if self.main_win.IsExiting() or not pane.IsShown():

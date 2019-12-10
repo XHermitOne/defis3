@@ -33,16 +33,16 @@ class icPersistant:
     def __init__(self, uniq_name, res_type='var', res_path=None, subsys='', przBuff=True):
         """
         Конструктор базового класса.
-        @type uniq_name: C{string}
-        @param uniq_name: Уникальное имя объекта.
-        @type res_type: C{string}
-        @param res_type: Тип хранилища - задает расширения файла.
-        @type res_path: C{string}
-        @param res_path: Путь до папки с хранилищем <res_path/resource.var>.
-        @type subsys: C{string}
-        @param subsys: Имя подсистемы.
-        @type przBuff: C{bool}
-        @param przBuff: Признак работы с буфером.
+        :type uniq_name: C{string}
+        :param uniq_name: Уникальное имя объекта.
+        :type res_type: C{string}
+        :param res_type: Тип хранилища - задает расширения файла.
+        :type res_path: C{string}
+        :param res_path: Путь до папки с хранилищем <res_path/resource.var>.
+        :type subsys: C{string}
+        :param subsys: Имя подсистемы.
+        :type przBuff: C{bool}
+        :param przBuff: Признак работы с буфером.
         """
         self.name = uniq_name
         self.res_path = res_path
@@ -69,8 +69,8 @@ class icPersistant:
     def LoadPersistent(self, przBuff=None):
         """
         Читает объект.
-        @rtype: C{...}
-        @return: Возвращает сохраненный объект.
+        :rtype: C{...}
+        :return: Возвращает сохраненный объект.
         """
         if przBuff is None:
             przBuff = self.przBuff
@@ -85,10 +85,10 @@ class icPersistant:
     def getRes(self, res_path, res_name, res_type='var'):
         """
         Получить ресурс.
-        @param res_path: путь к ресурсным файлам (d:/aaa/fff).
-        @param res_name: имя ресурса.
-        @param res_type: тип ресурса.
-        @return: Возвращает ресурс или None в случае ошибки.
+        :param res_path: путь к ресурсным файлам (d:/aaa/fff).
+        :param res_name: имя ресурса.
+        :param res_type: тип ресурса.
+        :return: Возвращает ресурс или None в случае ошибки.
         """
         local_dir = filefunc.getPrjProfilePath() if res_path is None else res_path
         full_file_name = os.path.join(local_dir, res_name.replace(':', '_')+'.'+res_type)
@@ -100,10 +100,10 @@ class icPersistant:
     def SavePersistent(self, przBuff=None):
         """
         Сохраняет объект в хранилище.
-        @type obj: C{стандартные питоновские типы, которые серилизует cPickle}
-        @param obj: Метамодель объекта в представлении питоновских типов.
-        @rtype: C{bool}
-        @return: Признак успешного завершения операции.
+        :type obj: C{стандартные питоновские типы, которые серилизует cPickle}
+        :param obj: Метамодель объекта в представлении питоновских типов.
+        :rtype: C{bool}
+        :return: Признак успешного завершения операции.
         """
         if przBuff is None:
             przBuff = self.przBuff
@@ -115,11 +115,11 @@ class icPersistant:
     def setRes(self, res, res_path, res_name, res_type='var'):
         """
         Установить ресурс.
-        @param res: Сам ресурс.
-        @param res_path: путь к ресурсным файлам (d:/aaa/fff).
-        @param res_name: имя ресурса.
-        @param res_type: тип ресурса.
-        @return: Возвращает True или False в случае ошибки.
+        :param res: Сам ресурс.
+        :param res_path: путь к ресурсным файлам (d:/aaa/fff).
+        :param res_name: имя ресурса.
+        :param res_type: тип ресурса.
+        :return: Возвращает True или False в случае ошибки.
         """
         try:
             local_dir = filefunc.getPrjProfilePath() if res_path is None else res_path

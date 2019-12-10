@@ -33,9 +33,9 @@ SPC_IC_POPUPMENU = {'description': '',
 def CreateICPopupMenu(Win_, Name_, PopupData_):
     """
     Функция создает всплывающее меню по его имени.
-    @param Win_: окно-хозяин меню, к которому привязано меню.
-    @param Name_: имя всплывающего меню.
-    @param PopupData_: Данные о всплывающем меню.
+    :param Win_: окно-хозяин меню, к которому привязано меню.
+    :param Name_: имя всплывающего меню.
+    :param PopupData_: Данные о всплывающем меню.
         Если PopupData_ - строка, то это имя *.mnu файла,
         где нанаходятся данные о меню.
         Если PopupData_ - словарь, то это словарь данных всплывающего меню
@@ -61,7 +61,7 @@ def CreateICPopupMenu(Win_, Name_, PopupData_):
                                    items:[список имен пунктов подменю],
                                   }
                    }.
-    @return: Возвращает ссылку на объект всплывающего меню
+    :return: Возвращает ссылку на объект всплывающего меню
         или None в случае ошибки.
     """
     try:
@@ -133,8 +133,8 @@ class icPopupMenu(icmenu.icMenu):
     def DoMenu(self, MenuItems_):
         """
         Создать меню .
-        @param MenuItems_: список имен пунктов меню.
-        @return: Возвращает ссылку на объект меню или None в случае ошибки.
+        :param MenuItems_: список имен пунктов меню.
+        :return: Возвращает ссылку на объект меню или None в случае ошибки.
         """
         try:
             # Проверка аргументов
@@ -152,8 +152,8 @@ class icPopupMenu(icmenu.icMenu):
     def AddToLoadMenu(self, MenuItems_):
         """
         Догрузить меню.
-        @param MenuItems_: список имен пунктов меню.
-        @return: Возвращает ссылку на объект меню или None в случае ошибки.
+        :param MenuItems_: список имен пунктов меню.
+        :return: Возвращает ссылку на объект меню или None в случае ошибки.
         """
         try:
             # Обработка всех пунктов по порядку
@@ -176,9 +176,9 @@ class icPopupMenu(icmenu.icMenu):
     def AppendMenuItem(self, Menu_, ItemName_, ItemStruct_):
         """
         Добавить пункт.
-        @param Menu_: меню-владелец пункта меню.
-        @param ItemName_: имя пункта .
-        @param ItemStruct_: структура пункта.
+        :param Menu_: меню-владелец пункта меню.
+        :param ItemName_: имя пункта .
+        :param ItemStruct_: структура пункта.
         """
         # Если надпись у объекта не определена, то не обрабатывать его
         if 'label' in ItemStruct_ and ItemStruct_['label'] is not None:
@@ -264,9 +264,9 @@ class icPopupMenu(icmenu.icMenu):
     def DoOpen(self, Win_, X_=0, Y_=0):
         """
         Открыть всплывающее меню.
-        @param Win_: объект-наследник wx.Window,  к которому прикреплена меню.
-        @param X_: координаты вывода.
-        @param Y_: координаты вывода.
+        :param Win_: объект-наследник wx.Window,  к которому прикреплена меню.
+        :param X_: координаты вывода.
+        :param Y_: координаты вывода.
         """
         try:
             # Перед открытием выполнить метод открытия
@@ -304,7 +304,7 @@ class icPopupMenu(icmenu.icMenu):
     def SetICTitle(self, Title_=''):
         """
         Установить заголовок.
-        @param Title_: Заголовок.
+        :param Title_: Заголовок.
         """
         if Title_ != '':
             if not self._TitleReadOnly:

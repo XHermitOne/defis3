@@ -89,7 +89,7 @@ class icDBFFilePrototype:
     def __init__(self, dbf_filename=None):
         """
         Конструктор.
-        @param dbf_filename: Имя DBF файла, с которым работает класс.
+        :param dbf_filename: Имя DBF файла, с которым работает класс.
         """
         self._dbf_file_name = dbf_filename
 
@@ -105,14 +105,14 @@ class icDBFFilePrototype:
     def Create(self, dbf_struct=[], dbf_filename=None, bReCreate=True):
         """
         Создать DBF файл по описанию его структуры.
-        @param dbf_struct: Описание структуры DBF файла в формате:
+        :param dbf_struct: Описание структуры DBF файла в формате:
             [{'name':имя поля1,
                 'type':тип поля1('C', 'N' и т.п.), 
                 'len':длина поля1,
                 'decimal':указание десятичной точки поля1}, 
              ...].
-        @param dbf_filename: Имя DBF файла.
-        @param bReCreate: Указание того, что если файл существует,
+        :param dbf_filename: Имя DBF файла.
+        :param bReCreate: Указание того, что если файл существует,
             то пересоздать его.
         """
         assert 0, u'Метод не определен'
@@ -120,7 +120,7 @@ class icDBFFilePrototype:
     def Open(self, dbf_filename=None):
         """
         Открыть DBF файл.
-        @param dbf_filename: Имя DBF файла.
+        :param dbf_filename: Имя DBF файла.
         """
         assert 0, u'Метод не определен'
 
@@ -139,40 +139,40 @@ class icDBFFilePrototype:
     def getFieldByNum(self, n_field):
         """
         Получить значение поля по его индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         assert 0, u'Метод не определен'
 
     def getFieldByName(self, field_name):
         """
         Получить значение поля по его имени.
-        @param field_name: Имя поля.
+        :param field_name: Имя поля.
         """
         assert 0, u'Метод не определен'
 
     def setFieldByNum(self, n_field, field_value, align=None):
         """
         Установить значение поля по индексу.
-        @param n_field: Номер/индекс поля.
-        @param field_value: Значение поля.
-        @param align: Выравнивание.
+        :param n_field: Номер/индекс поля.
+        :param field_value: Значение поля.
+        :param align: Выравнивание.
         """
         assert 0, u'Метод не определен'
 
     def setFieldByName(self, field_name, field_value, align=None):
         """
         Установить значение поля по имени.
-        @param field_name: Имя поля.
-        @param field_value: Значение поля.
-        @param align: Выравнивание.
+        :param field_name: Имя поля.
+        :param field_value: Значение поля.
+        :param align: Выравнивание.
         """
         assert 0, u'Метод не определен'
 
     def setDateFieldByNum(self, n_field, datetime_tuple):
         """
         Установить значение поля даты по номеру/индексу.
-        @param n_field: Номер/индекс поля.
-        @param datetime_tuple: Значение поля даты в формате
+        :param n_field: Номер/индекс поля.
+        :param datetime_tuple: Значение поля даты в формате
             кортежа дата+время(см. описание библиотечного модуля time).
         """
         assert 0, u'Метод не определен'
@@ -180,8 +180,8 @@ class icDBFFilePrototype:
     def setDateFieldByName(self, field_name, datetime_tuple):
         """
         Установить значение поля даты по имени.
-        @param field_name: Имя поля.
-        @param datetime_tuple: Значение поля даты в формате
+        :param field_name: Имя поля.
+        :param datetime_tuple: Значение поля даты в формате
             кортежа дата+время(см. описание библиотечного модуля time).
         """
         assert 0, u'Метод не определен'
@@ -189,43 +189,43 @@ class icDBFFilePrototype:
     def setDateFieldFmtByNum(self, n_field, datetime_value, datetime_fmt='%d/%m/%Y'):
         """
         Установить значение поля даты указанного формата по номеру/индексу.
-        @param n_field: Номер/индекс поля.
-        @param datetime_value: Значение поля даты(строка)
+        :param n_field: Номер/индекс поля.
+        :param datetime_value: Значение поля даты(строка)
             в формате datetime_fmt.
-        @param datetime_fmt: Строковый формат даты.
+        :param datetime_fmt: Строковый формат даты.
         """
         assert 0, u'Метод не определен'
         
     def setDateFieldFmtByName(self, field_name, datetime_value, datetime_fmt='%d/%m/%Y'):
         """
         Установить значение поля даты указанного формата по имени.
-        @param field_name: Имя поля.
-        @param datetime_value: Значение поля даты(строка)
+        :param field_name: Имя поля.
+        :param datetime_value: Значение поля даты(строка)
             в формате datetime_fmt.
-        @param datetime_fmt: Строковый формат даты.
+        :param datetime_fmt: Строковый формат даты.
         """
         assert 0, u'Метод не определен'
 
     def getDateFieldFmtByNum(self, n_field, datetime_fmt='%d/%m/%Y'):
         """
         Получить значение поля даты в определенном формате по номеру/индексу поля.
-        @param n_field: Номер/индекс поля.
-        @param datetime_fmt: Строковый формат даты.
+        :param n_field: Номер/индекс поля.
+        :param datetime_fmt: Строковый формат даты.
         """
         assert 0, u'Метод не определен'
         
     def getDateFieldFmtByName(self, field_name, datetime_fmt='%d/%m/%Y'):
         """
         Получить значение поля даты в определенном формате по имени поля.
-        @param field_name: Имя поля.
-        @param datetime_fmt: Строковый формат даты.
+        :param field_name: Имя поля.
+        :param datetime_fmt: Строковый формат даты.
         """
         assert 0, u'Метод не определен'
             
     def Skip(self, step=1):
         """
         Движение по таблице.
-        @param step: Шаг, если <0 то к началу,
+        :param step: Шаг, если <0 то к началу,
             если >0 то к концу таблицы.
         """
         assert 0, u'Метод не определен'
@@ -245,7 +245,7 @@ class icDBFFilePrototype:
     def Goto(self, rec_no=0):
         """
         Перейти на запись.
-        @param rec_no: Номер записи.
+        :param rec_no: Номер записи.
         """
         assert 0, u'Метод не определен'
 
@@ -294,7 +294,7 @@ class icDBFFilePrototype:
     def Del(self, del_flag):
         """
         Управление удалением записи.
-        @param del_flag: Флаг управления.
+        :param del_flag: Флаг управления.
         """
         assert 0, u'Метод не определен'
 
@@ -307,8 +307,8 @@ class icDBFFilePrototype:
     def AppendRec(self, *rec_num, **rec_name):
         """
         Добавление пустой записи в конец таблицы.
-        @param rec_num: Запись по номерам.
-        @param rec_name: Запись по именам.
+        :param rec_num: Запись по номерам.
+        :param rec_name: Запись по именам.
         """
         assert 0, u'Метод не определен'
 
@@ -333,15 +333,15 @@ class icDBFFilePrototype:
     def getFieldNum(self, field_name):
         """
         Получить индекс поля по его имени.
-        @param field_name: Имя поля.
+        :param field_name: Имя поля.
         """
         assert 0, u'Метод не определен'
 
     def FindSort(self, field_name, find_text):
         """
         Поиск текста в поле.
-        @param field_name: Имя поля.
-        @param find_text: Искомый текст.
+        :param field_name: Имя поля.
+        :param find_text: Искомый текст.
         """
         assert 0, u'Метод не определен'
 
@@ -352,9 +352,9 @@ class icDBFFilePrototype:
             Затем пробегается по записям.
             Выбирает нужные.
             В конце закрывает DBF файл.
-        @param field_name: Имя поля.
-        @param value: Значение поля.
-        @return: Возвращает список отфильтрованных записей-строк в виде словарей.
+        :param field_name: Имя поля.
+        :param value: Значение поля.
+        :return: Возвращает список отфильтрованных записей-строк в виде словарей.
         """
         assert 0, u'Метод не определен'
 
@@ -385,35 +385,35 @@ class icDBFFilePrototype:
     def getFieldName(self, n_field):
         """
         Получить имя поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         assert 0, u'Метод не определен'
 
     def getFieldType(self, n_field):
         """
         Получить тип поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         assert 0, u'Метод не определен'
 
     def getFieldLen(self, n_field):
         """
         Получить длину поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         assert 0, u'Метод не определен'
 
     def getFieldDecimal(self, n_field):
         """
         Получить указание десятичной точки поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         assert 0, u'Метод не определен'
 
     def _del_last_eof_char(self, dbf_filename):
         """
         Удалить последний символ,  если он символ EOF.
-        @param dbf_filename: Имя *.DBF файла.
+        :param dbf_filename: Имя *.DBF файла.
         """
         if os.path.isfile(dbf_filename):
             try:
@@ -438,10 +438,10 @@ class icDBFFilePrototype:
         """
         Выравнивание по краю.
             По умолчаниу выравнивается по правому краю
-        @param field_name: Имя поля.
-        @param field_value: Значение поля.
-        @param align: Указание выравнивания.
-        @return: Возвращает строку, выравненную по полю.
+        :param field_name: Имя поля.
+        :param field_value: Значение поля.
+        :param align: Указание выравнивания.
+        :return: Возвращает строку, выравненную по полю.
         """
         if field_value is None:
             field_value = ''
@@ -460,10 +460,10 @@ class icDBFFilePrototype:
         """
         Выравнивание по краю.
             По умолчаниу выравнивается по правому краю
-        @param n_field: Индекс/номер поля.
-        @param field_value: Значение поля.
-        @param align: Указание выравнивания.
-        @return: Возвращает строку, выравненную по полю.
+        :param n_field: Индекс/номер поля.
+        :param field_value: Значение поля.
+        :param align: Указание выравнивания.
+        :return: Возвращает строку, выравненную по полю.
         """
         if field_value is None:
             field_value = ''
@@ -487,7 +487,7 @@ class icDBFFilePYD(icDBFFilePrototype):
     def __init__(self, dbf_filename=None):
         """
         Конструктор.
-        @param dbf_filename: Имя DBF файла, с которым работает класс.
+        :param dbf_filename: Имя DBF файла, с которым работает класс.
         """
         icDBFFilePrototype.__init__(self, dbf_filename)
         # Автовыравнивание значений полей
@@ -496,14 +496,14 @@ class icDBFFilePYD(icDBFFilePrototype):
     def Create(self, dbf_struct=[], dbf_filename=None, bReCreate=True):
         """
         Создать DBF файл по описанию его структуры.
-        @param dbf_struct: Описание структуры DBF файла в формате:
+        :param dbf_struct: Описание структуры DBF файла в формате:
             [{'name':имя поля1,
                 'type':тип поля1('C', 'N' и т.п.), 
                 'len':длина поля1,
                 'decimal':указание десятичной точки поля1}, 
              ...].
-        @param dbf_filename: Имя DBF файла.
-        @param bReCreate: Указание того, что если файл существует,
+        :param dbf_filename: Имя DBF файла.
+        :param bReCreate: Указание того, что если файл существует,
             то пересоздать его.
         """
         if dbf_filename:
@@ -534,7 +534,7 @@ class icDBFFilePYD(icDBFFilePrototype):
     def Open(self, dbf_filename=None):
         """
         Открыть DBF файл.
-        @param dbf_filename: Имя DBF файла.
+        :param dbf_filename: Имя DBF файла.
         """
         if dbf_filename:
             self._dbf_file_name = dbf_filename
@@ -558,23 +558,23 @@ class icDBFFilePYD(icDBFFilePrototype):
     def getFieldByNum(self, n_field):
         """
         Получить значение поля по его индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         return pyDBF.GetFieldByNum(n_field)
 
     def getFieldByName(self, field_name):
         """
         Получить значение поля по его имени.
-        @param field_name: Имя поля.
+        :param field_name: Имя поля.
         """
         return pyDBF.GetFieldByName(str(field_name).upper())
 
     def setFieldByNum(self, n_field, field_value, align=None):
         """
         Установить значение поля по индексу.
-        @param n_field: Номер/индекс поля.
-        @param field_value: Значение поля.
-        @param align: Выравнивание.
+        :param n_field: Номер/индекс поля.
+        :param field_value: Значение поля.
+        :param align: Выравнивание.
         """
         return pyDBF.SetFieldByNum(int(n_field),
                                    self._alignValueByNum(n_field, field_value, self.AutoAlign))
@@ -582,9 +582,9 @@ class icDBFFilePYD(icDBFFilePrototype):
     def setFieldByName(self, field_name, field_value, align=None):
         """
         Установить значение поля по имени.
-        @param field_name: Имя поля.
-        @param field_value: Значение поля.
-        @param align: Выравнивание.
+        :param field_name: Имя поля.
+        :param field_value: Значение поля.
+        :param align: Выравнивание.
         """
         if align is None:
             align = self.AutoAlign
@@ -595,8 +595,8 @@ class icDBFFilePYD(icDBFFilePrototype):
     def setDateFieldByNum(self, n_field, datetime_tuple):
         """
         Установить значение поля даты по номеру/индексу.
-        @param n_field: Номер/индекс поля.
-        @param datetime_tuple: Значение поля даты в формате
+        :param n_field: Номер/индекс поля.
+        :param datetime_tuple: Значение поля даты в формате
             кортежа дата+время(см. описание библиотечного модуля time).
         """
         return self.setFieldByNum(n_field, time.strftime('%Y%m%d', datetime_tuple))
@@ -604,8 +604,8 @@ class icDBFFilePYD(icDBFFilePrototype):
     def setDateFieldByName(self, field_name, datetime_tuple):
         """
         Установить значение поля даты по имени.
-        @param field_name: Имя поля.
-        @param datetime_tuple: Значение поля даты в формате
+        :param field_name: Имя поля.
+        :param datetime_tuple: Значение поля даты в формате
             кортежа дата+время(см. описание библиотечного модуля time).
         """
         return self.setFieldByName(str(field_name).upper(), time.strftime('%Y%m%d', datetime_tuple))
@@ -613,43 +613,43 @@ class icDBFFilePYD(icDBFFilePrototype):
     def setDateFieldFmtByNum(self, n_field, datetime_value, datetime_fmt='%d/%m/%Y'):
         """
         Установить значение поля даты указанного формата по номеру/индексу.
-        @param n_field: Номер/индекс поля.
-        @param datetime_value: Значение поля даты(строка)
+        :param n_field: Номер/индекс поля.
+        :param datetime_value: Значение поля даты(строка)
             в формате datetime_fmt.
-        @param datetime_fmt: Строковый формат даты.
+        :param datetime_fmt: Строковый формат даты.
         """
         return self.setDateFieldByNum(n_field, time.strptime(datetime_value, datetime_fmt))
         
     def setDateFieldFmtByName(self, field_name, datetime_value, datetime_fmt='%d/%m/%Y'):
         """
         Установить значение поля даты указанного формата по имени.
-        @param field_name: Имя поля.
-        @param datetime_value: Значение поля даты(строка)
+        :param field_name: Имя поля.
+        :param datetime_value: Значение поля даты(строка)
             в формате datetime_fmt.
-        @param datetime_fmt: Строковый формат даты.
+        :param datetime_fmt: Строковый формат даты.
         """
         return self.setDateFieldByName(str(field_name).upper(), time.strptime(datetime_value, datetime_fmt))
 
     def getDateFieldFmtByNum(self, n_field, datetime_fmt='%d/%m/%Y'):
         """
         Получить значение поля даты в определенном формате по номеру/индексу поля.
-        @param n_field: Номер/индекс поля.
-        @param datetime_fmt: Строковый формат даты.
+        :param n_field: Номер/индекс поля.
+        :param datetime_fmt: Строковый формат даты.
         """
         return time.strftime(datetime_fmt, time.strptime(self.getFieldByNum(n_field), '%Y%m%d'))
         
     def getDateFieldFmtByName(self, field_name, datetime_fmt='%d/%m/%Y'):
         """
         Получить значение поля даты в определенном формате по имени поля.
-        @param field_name: Имя поля.
-        @param datetime_fmt: Строковый формат даты.
+        :param field_name: Имя поля.
+        :param datetime_fmt: Строковый формат даты.
         """
         return time.strftime(datetime_fmt, time.strptime(self.getFieldByName(str(field_name).upper()), '%Y%m%d'))
             
     def Skip(self, step=1):
         """
         Движение по таблице.
-        @param step: Шаг, если <0 то к началу,
+        :param step: Шаг, если <0 то к началу,
             если >0 то к концу таблицы.
         """
         return pyDBF.Skip(step)
@@ -669,7 +669,7 @@ class icDBFFilePYD(icDBFFilePrototype):
     def Goto(self, rec_no=0):
         """
         Перейти на запись.
-        @param rec_no: Номер записи.
+        :param rec_no: Номер записи.
         """
         return pyDBF.Goto(rec_no)
 
@@ -718,7 +718,7 @@ class icDBFFilePYD(icDBFFilePrototype):
     def Del(self, del_flag):
         """
         Управление удалением записи.
-        @param del_flag: Флаг управления.
+        :param del_flag: Флаг управления.
         """
         return pyDBF.Delete(del_flag)
 
@@ -731,8 +731,8 @@ class icDBFFilePYD(icDBFFilePrototype):
     def AppendRec(self, *rec_num, **rec_name):
         """
         Добавление пустой записи в конец таблицы.
-        @param rec_num: Запись по номерам.
-        @param rec_name: Запись по именам.
+        :param rec_num: Запись по номерам.
+        :param rec_name: Запись по именам.
         """
         ok = pyDBF.Append()
         if rec_num:
@@ -768,15 +768,15 @@ class icDBFFilePYD(icDBFFilePrototype):
     def getFieldNum(self, field_name):
         """
         Получить индекс поля по его имени.
-        @param field_name: Имя поля.
+        :param field_name: Имя поля.
         """
         return pyDBF.GetFieldNum(str(field_name).upper())
 
     def FindSort(self, field_name, find_text):
         """
         Поиск текста в поле.
-        @param field_name: Имя поля.
-        @param find_text: Искомый текст.
+        :param field_name: Имя поля.
+        :param find_text: Искомый текст.
         """
         return pyDBF.FindSort(str(field_name).upper(), find_text)
 
@@ -807,28 +807,28 @@ class icDBFFilePYD(icDBFFilePrototype):
     def getFieldName(self, n_field):
         """
         Получить имя поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         return str(pyDBF.GetFieldName(n_field)).upper()
 
     def getFieldType(self, n_field):
         """
         Получить тип поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         return pyDBF.GetFieldType(n_field)
 
     def getFieldLen(self, n_field):
         """
         Получить длину поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         return pyDBF.GetFieldLength(n_field)
 
     def getFieldDecimal(self, n_field):
         """
         Получить указание десятичной точки поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         return pyDBF.GetFieldDecimal(n_field)
 
@@ -841,7 +841,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def __init__(self, dbf_filename=None):
         """
         Конструктор.
-        @param dbf_filename: Имя DBF файла, с которым работает класс.
+        :param dbf_filename: Имя DBF файла, с которым работает класс.
         """
         icDBFFilePrototype.__init__(self, dbf_filename)
         # Автовыравнивание значений полей
@@ -854,16 +854,16 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def Create(self, dbf_struct=[], dbf_filename=None, bReCreate=True):
         """
         Создать DBF файл по описанию его структуры.
-        @param dbf_struct: Описание структуры DBF файла в формате:
+        :param dbf_struct: Описание структуры DBF файла в формате:
             [{'name':имя поля1,
                 'type':тип поля1('C', 'N' и т.п.), 
                 'len':длина поля1,
                 'decimal':указание десятичной точки поля1}, 
              ...].
-        @param dbf_filename: Имя DBF файла.
-        @param bReCreate: Указание того, что если файл существует,
+        :param dbf_filename: Имя DBF файла.
+        :param bReCreate: Указание того, что если файл существует,
             то пересоздать его.
-        @return: True/False.
+        :return: True/False.
         """
         if dbf_filename:
             self._dbf_file_name = dbf_filename
@@ -888,7 +888,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def Open(self, dbf_filename=None):
         """
         Открыть DBF файл.
-        @param dbf_filename: Имя DBF файла.
+        :param dbf_filename: Имя DBF файла.
         """
         if dbf_filename:
             self._dbf_file_name = dbf_filename
@@ -924,7 +924,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def getFieldByNum(self, n_field):
         """
         Получить значение поля по его индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         if self._dbf:
             cur_record = self._get_current_record()
@@ -934,7 +934,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def getFieldByName(self, field_name):
         """
         Получить значение поля по его имени.
-        @param field_name: Имя поля.
+        :param field_name: Имя поля.
         """
         if self._dbf:
             cur_record = self._get_current_record()
@@ -944,9 +944,9 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def setFieldByNum(self, n_field, field_value, align=None):
         """
         Установить значение поля по индексу.
-        @param n_field: Номер/индекс поля.
-        @param field_value: Значение поля.
-        @param align: Выравнивание.
+        :param n_field: Номер/индекс поля.
+        :param field_value: Значение поля.
+        :param align: Выравнивание.
         """
         field_name=self.getFieldName(n_field)
         return self.setFieldByName(field_name, field_value, align)
@@ -954,9 +954,9 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def setFieldByName(self, field_name, field_value, align=None):
         """
         Установить значение поля по имени.
-        @param field_name: Имя поля.
-        @param field_value: Значение поля.
-        @param align: Выравнивание.
+        :param field_name: Имя поля.
+        :param field_value: Значение поля.
+        :param align: Выравнивание.
         """
         if align is None:
             align = self.AutoAlign
@@ -972,8 +972,8 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def setDateFieldByNum(self, n_field, datetime_tuple):
         """
         Установить значение поля даты по номеру/индексу.
-        @param n_field: Номер/индекс поля.
-        @param datetime_tuple: Значение поля даты в формате
+        :param n_field: Номер/индекс поля.
+        :param datetime_tuple: Значение поля даты в формате
             кортежа дата+время(см. описание библиотечного модуля time).
         """
         pass
@@ -981,8 +981,8 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def setDateFieldByName(self, field_name, datetime_tuple):
         """
         Установить значение поля даты по имени.
-        @param field_name: Имя поля.
-        @param datetime_tuple: Значение поля даты в формате
+        :param field_name: Имя поля.
+        :param datetime_tuple: Значение поля даты в формате
             кортежа дата+время(см. описание библиотечного модуля time).
         """
         pass
@@ -990,43 +990,43 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def setDateFieldFmtByNum(self, n_field, datetime_value, datetime_fmt='%d/%m/%Y'):
         """
         Установить значение поля даты указанного формата по номеру/индексу.
-        @param n_field: Номер/индекс поля.
-        @param datetime_value: Значение поля даты(строка)
+        :param n_field: Номер/индекс поля.
+        :param datetime_value: Значение поля даты(строка)
             в формате datetime_fmt.
-        @param datetime_fmt: Строковый формат даты.
+        :param datetime_fmt: Строковый формат даты.
         """
         pass
         
     def setDateFieldFmtByName(self, field_name, datetime_value, datetime_fmt='%d/%m/%Y'):
         """
         Установить значение поля даты указанного формата по имени.
-        @param field_name: Имя поля.
-        @param datetime_value: Значение поля даты(строка)
+        :param field_name: Имя поля.
+        :param datetime_value: Значение поля даты(строка)
             в формате datetime_fmt.
-        @param datetime_fmt: Строковый формат даты.
+        :param datetime_fmt: Строковый формат даты.
         """
         pass
 
     def getDateFieldFmtByNum(self, n_field, datetime_fmt='%d/%m/%Y'):
         """
         Получить значение поля даты в определенном формате по номеру/индексу поля.
-        @param n_field: Номер/индекс поля.
-        @param datetime_fmt: Строковый формат даты.
+        :param n_field: Номер/индекс поля.
+        :param datetime_fmt: Строковый формат даты.
         """
         pass
         
     def getDateFieldFmtByName(self, field_name, datetime_fmt='%d/%m/%Y'):
         """
         Получить значение поля даты в определенном формате по имени поля.
-        @param field_name: Имя поля.
-        @param datetime_fmt: Строковый формат даты.
+        :param field_name: Имя поля.
+        :param datetime_fmt: Строковый формат даты.
         """
         pass
             
     def Skip(self, step=1):
         """
         Движение по таблице.
-        @param step: Шаг, если <0 то к началу,
+        :param step: Шаг, если <0 то к началу,
             если >0 то к концу таблицы.
         """
         self._cur_rec_no += step
@@ -1049,7 +1049,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def Goto(self, rec_no=0):
         """
         Перейти на запись.
-        @param rec_no: Номер записи.
+        :param rec_no: Номер записи.
         """
         self._cur_rec_no = rec_no
         self._cur_rec_no = max(0, self._cur_rec_no)
@@ -1121,7 +1121,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def Del(self, del_flag):
         """
         Управление удалением записи.
-        @param del_flag: Флаг управления.
+        :param del_flag: Флаг управления.
         """
         pass
 
@@ -1134,8 +1134,8 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def AppendRec(self, *rec_num, **rec_name):
         """
         Добавление пустой записи в конец таблицы.
-        @param rec_num: Запись по номерам.
-        @param rec_name: Запись по именам.
+        :param rec_num: Запись по номерам.
+        :param rec_name: Запись по именам.
         """
         ok = False
         if self._dbf:
@@ -1186,7 +1186,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def getFieldNum(self, field_name):
         """
         Получить индекс поля по его имени.
-        @param field_name: Имя поля.
+        :param field_name: Имя поля.
         """
         if self._dbf:
             return self._dbf.indexOfFieldName(str(field_name).upper())
@@ -1195,8 +1195,8 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def FindSort(self, field_name, find_text):
         """
         Поиск текста в поле.
-        @param field_name: Имя поля.
-        @param find_text: Искомый текст.
+        :param field_name: Имя поля.
+        :param find_text: Искомый текст.
         """
         pass
 
@@ -1207,9 +1207,9 @@ class icDBFFileDBFPY(icDBFFilePrototype):
             Затем пробегается по записям.
             Выбирает нужные.
             В конце закрывает DBF файл.
-        @param field_name: Имя поля.
-        @param value: Значение поля.
-        @return: Возвращает список отфильтрованных записей-строк в виде словарей
+        :param field_name: Имя поля.
+        :param value: Значение поля.
+        :return: Возвращает список отфильтрованных записей-строк в виде словарей
             или пустой список в случае ошибки.
         """
         try:
@@ -1265,7 +1265,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def getFieldName(self, n_field):
         """
         Получить имя поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         if self._dbf:
             field_name = self._dbf.fieldNames[int(n_field)]
@@ -1275,7 +1275,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def getFieldType(self, n_field):
         """
         Получить тип поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         if self._dbf:
             field = self._dbf.fieldDefs[int(n_field)]
@@ -1285,7 +1285,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def getFieldLen(self, n_field):
         """
         Получить длину поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         if self._dbf:
             field = self._dbf.fieldDefs[int(n_field)]
@@ -1295,7 +1295,7 @@ class icDBFFileDBFPY(icDBFFilePrototype):
     def getFieldDecimal(self, n_field):
         """
         Получить указание десятичной точки поля по номеру/индексу.
-        @param n_field: Номер/индекс поля.
+        :param n_field: Номер/индекс поля.
         """
         if self._dbf:
             field = self._dbf.fieldDefs[int(n_field)]
@@ -1315,8 +1315,8 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def __init__(self, dbf_filename=None, encoding=DEFAULT_DBF_ENCODING):
             """
             Конструктор.
-            @param dbf_filename: Имя DBF файла, с которым работает класс.
-            @param encoding: Кодировка DBF файла.
+            :param dbf_filename: Имя DBF файла, с которым работает класс.
+            :param encoding: Кодировка DBF файла.
             """
             icDBFFilePrototype.__init__(self, dbf_filename)
 
@@ -1329,7 +1329,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def Open(self, dbf_filename=None, encoding=DEFAULT_DBF_ENCODING):
             """
             Открыть DBF файл.
-            @param dbf_filename: Имя DBF файла.
+            :param dbf_filename: Имя DBF файла.
             """
             if dbf_filename:
                 self._dbf_file_name = dbf_filename
@@ -1369,7 +1369,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getFieldByNum(self, n_field):
             """
             Получить значение поля по его индексу.
-            @param n_field: Номер/индекс поля.
+            :param n_field: Номер/индекс поля.
             """
             if self._dbf:
                 cur_record = self._get_current_record()
@@ -1379,7 +1379,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getFieldByName(self, field_name):
             """
             Получить значение поля по его имени.
-            @param field_name: Имя поля.
+            :param field_name: Имя поля.
             """
             if self._dbf:
                 cur_record = self._get_current_record()
@@ -1389,8 +1389,8 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getDateFieldFmtByNum(self, n_field, datetime_fmt='%d/%m/%Y'):
             """
             Получить значение поля даты в определенном формате по номеру/индексу поля.
-            @param n_field: Номер/индекс поля.
-            @param datetime_fmt: Строковый формат даты.
+            :param n_field: Номер/индекс поля.
+            :param datetime_fmt: Строковый формат даты.
             """
             dt_value = self.getFieldByNum(n_field)
             if dt_value:
@@ -1400,8 +1400,8 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getDateFieldFmtByName(self, field_name, datetime_fmt='%d/%m/%Y'):
             """
             Получить значение поля даты в определенном формате по имени поля.
-            @param field_name: Имя поля.
-            @param datetime_fmt: Строковый формат даты.
+            :param field_name: Имя поля.
+            :param datetime_fmt: Строковый формат даты.
             """
             dt_value = self.getFieldByName(field_name)
             if dt_value:
@@ -1411,7 +1411,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def Skip(self, step=1):
             """
             Движение по таблице.
-            @param step: Шаг, если <0 то к началу,
+            :param step: Шаг, если <0 то к началу,
                 если >0 то к концу таблицы.
             """
             self._cur_rec_no += step
@@ -1434,7 +1434,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def Goto(self, rec_no=0):
             """
             Перейти на запись.
-            @param rec_no: Номер записи.
+            :param rec_no: Номер записи.
             """
             self._cur_rec_no = rec_no
             self._cur_rec_no = max(0, self._cur_rec_no)
@@ -1520,7 +1520,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getFieldNum(self, field_name):
             """
             Получить индекс поля по его имени.
-            @param field_name: Имя поля.
+            :param field_name: Имя поля.
             """
             if self._dbf:
                 field_names = [field.name for field in self._dbf.fields]
@@ -1530,8 +1530,8 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def FindSort(self, field_name, find_text):
             """
             Поиск текста в поле.
-            @param field_name: Имя поля.
-            @param find_text: Искомый текст.
+            :param field_name: Имя поля.
+            :param find_text: Искомый текст.
             """
             pass
 
@@ -1542,9 +1542,9 @@ class icDBFFileReadOnly(icDBFFilePrototype):
                 Затем пробегается по записям.
                 Выбирает нужные.
                 В конце закрывает DBF файл.                
-            @param field_name: Имя поля.
-            @param value: Значение поля.
-            @return: Возвращает список отфильтрованных записей-строк в виде словарей
+            :param field_name: Имя поля.
+            :param value: Значение поля.
+            :return: Возвращает список отфильтрованных записей-строк в виде словарей
                 или пустой список в случае ошибки.
             """
             try:
@@ -1582,8 +1582,8 @@ class icDBFFileReadOnly(icDBFFilePrototype):
                 Затем пробегается по записям.
                 Выбирает нужные.
                 В конце закрывает DBF файл.                
-            @param sFieldName: Имя поля.
-            @return: Словарь:
+            :param sFieldName: Имя поля.
+            :return: Словарь:
                 {
                     Значение 1 поля :
                         список отфильтрованных записей-строк в виде словарей
@@ -1635,7 +1635,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getFieldName(self, n_field):
             """
             Получить имя поля по номеру/индексу.
-            @param n_field: Номер/индекс поля.
+            :param n_field: Номер/индекс поля.
             """
             if self._dbf:
                 field_names = [field.name for field in self._dbf.fields]
@@ -1645,7 +1645,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getFieldType(self, n_field):
             """
             Получить тип поля по номеру/индексу.
-            @param n_field: Номер/индекс поля.
+            :param n_field: Номер/индекс поля.
             """
             if self._dbf:
                 field_types = [field.type for field in self._dbf.fields]
@@ -1655,7 +1655,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getFieldLen(self, n_field):
             """
             Получить длину поля по номеру/индексу.
-            @param n_field: Номер/индекс поля.
+            :param n_field: Номер/индекс поля.
             """
             if self._dbf:
                 field_lengths = [field.length for field in self._dbf.fields]
@@ -1665,7 +1665,7 @@ class icDBFFileReadOnly(icDBFFilePrototype):
         def getFieldDecimal(self, n_field):
             """
             Получить указание десятичной точки поля по номеру/индексу.
-            @param n_field: Номер/индекс поля.
+            :param n_field: Номер/индекс поля.
             """
             if self._dbf:
                 field_decimals = [field.decimal_count for field in self._dbf.fields]

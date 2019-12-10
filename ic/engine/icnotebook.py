@@ -31,7 +31,7 @@ class icMainNotebook(wx.Notebook):
     def __init__(self, parent):
         """
         Конструктор.
-        @param parent: Окно, куда будет помещен менеджер (главное окно).
+        :param parent: Окно, куда будет помещен менеджер (главное окно).
         """
         try:
             # У органайзера заголовки страниц(ярлычки) находятся снизу
@@ -61,14 +61,14 @@ class icMainNotebook(wx.Notebook):
                 bCanClose=True, open_script=None, close_script=None, default_page=-1):
         """
         Добавить страницу в органайзер.
-        @param page: Страница. Ею м.б. любой наследник wx.Window.
-        @param title: Заголовок. Строка.
-        @param bOpenExists: Если страница уже есть,  то открыть ее.
-        @param image: Образ страницы. Если это строка, тогда файл.
+        :param page: Страница. Ею м.б. любой наследник wx.Window.
+        :param title: Заголовок. Строка.
+        :param bOpenExists: Если страница уже есть,  то открыть ее.
+        :param image: Образ страницы. Если это строка, тогда файл.
             Или объект wx.Bitmap.
-        @param open_script: Строка-скрипт, выполняемый при открытии страницы.
-        @param close_script: Строка-скрипт, выполняемый при закрытии страницы.
-        @param default_page: Индекс страницы,  открываемой по умолчанию.
+        :param open_script: Строка-скрипт, выполняемый при открытии страницы.
+        :param close_script: Строка-скрипт, выполняемый при закрытии страницы.
+        :param default_page: Индекс страницы,  открываемой по умолчанию.
             Если -1, то открывается текущая добавляемая страница.
         """
         try:
@@ -135,7 +135,7 @@ class icMainNotebook(wx.Notebook):
     def deletePage(self, idx):
         """
         Удалить страницу из органайзера.
-        @param idx: Номер страницы.
+        :param idx: Номер страницы.
         """
         try:
             # Удалить картинку прикрепленную к этой странице ОБЯЗАТЕЛЬНО!!!
@@ -191,7 +191,7 @@ class icMainNotebook(wx.Notebook):
     def openPageByTitle(self, title):
         """
         Открыть страницу по указанному заголовку.
-        @param title: Заголовок страницы.
+        :param title: Заголовок страницы.
         """
         idx = None
         filter_page = [i for i in range(self.GetPageCount()) if title == self.GetPageText(i)]
@@ -320,8 +320,8 @@ class icMainNotebook(wx.Notebook):
     def setPageImg(self, image, n_page):
         """
         Установить картинку у страницы главного органайзера.
-        @param image: Имя файла образа.
-        @param n_page: Номер страницы.
+        :param image: Имя файла образа.
+        :param n_page: Номер страницы.
         """
         try:
             if image not in self._img_name:

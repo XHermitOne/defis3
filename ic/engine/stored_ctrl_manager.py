@@ -25,9 +25,9 @@ class icStoredCtrlManager(object):
     def save_ext_data(self, name, **kwargs):
         """
         Запись дополнительных данных окна.
-        @param name: Наименование файла для записи.
-        @param kwargs: Словарь данных для записи.
-        @return: True/False.
+        :param name: Наименование файла для записи.
+        :param kwargs: Словарь данных для записи.
+        :return: True/False.
         """
         # Определить имя файла для хранения данных
         res_filename = os.path.join(filefunc.getPrjProfilePath(),
@@ -37,8 +37,8 @@ class icStoredCtrlManager(object):
     def load_ext_data(self, name):
         """
         Загрузка дополнительных данных окна.
-        @param name: Наименование файла хранения данных.
-        @return: Загруженные данные в виде словаря или
+        :param name: Наименование файла хранения данных.
+        :return: Загруженные данные в виде словаря или
             пустой словарь если данных нет.
         """
         res_filename = os.path.join(filefunc.getPrjProfilePath(),
@@ -51,9 +51,9 @@ class icStoredCtrlManager(object):
     def save_data_file(self, save_filename, save_data=None):
         """
         Сохранить данные в конкретном файле.
-        @param save_filename: Полное имя файла сохранения.
-        @param save_data: Сохраняемые данные.
-        @return: True/False.
+        :param save_filename: Полное имя файла сохранения.
+        :param save_data: Сохраняемые данные.
+        :return: True/False.
         """
         if save_filename:
             # Просто записать в файл
@@ -66,8 +66,8 @@ class icStoredCtrlManager(object):
     def load_data_file(self, save_filename):
         """
         Прочитать данные из файла.
-        @param save_filename: Полное имя файла сохранения.
-        @return: Данные файла или None в случае ошибки.
+        :param save_filename: Полное имя файла сохранения.
+        :return: Данные файла или None в случае ошибки.
         """
         if save_filename:
             # Просто записать в файл

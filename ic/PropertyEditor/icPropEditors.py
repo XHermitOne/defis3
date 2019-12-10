@@ -125,14 +125,14 @@ class icEditPropText(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         
         self.nameValue = nameValue
@@ -148,14 +148,14 @@ class icEditPropNumber(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         
         self.nameValue = nameValue
@@ -187,14 +187,14 @@ class icEditPropTextList(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         self.nameValue = nameValue
         icEditPropCtrl.__init__(self, nameValue)
@@ -224,14 +224,14 @@ class icEditPropTextDict(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         self.nameValue = nameValue
         icEditPropCtrl.__init__(self, nameValue)
@@ -261,14 +261,14 @@ class icEditPropPoint(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         self.nameValue = nameValue
         icEditPropCtrl.__init__(self, nameValue)
@@ -298,14 +298,14 @@ class icEditPropSize(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция расположения редактора.
-        @type size: C{wx.Size}
-        @param size: Размеры редактора.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция расположения редактора.
+        :type size: C{wx.Size}
+        :param size: Размеры редактора.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         self.nameValue = nameValue
         icEditPropCtrl.__init__(self, nameValue)
@@ -335,14 +335,14 @@ class icEditPropCombine(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         self.nameValue = nameValue
         icEditPropCtrl.__init__(self, nameValue)
@@ -414,14 +414,14 @@ class icEditPropDict(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         self.nameValue = nameValue
         icEditPropCtrl.__init__(self, nameValue)
@@ -509,14 +509,14 @@ class icEditImportNames(icEditPropDict):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         icEditPropDict.__init__(self, nameValue, pos, size, style)
         
@@ -579,14 +579,14 @@ class icEditPropChoice(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=0):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         icEditPropCtrl.__init__(self, nameValue)
         indx = -1
@@ -624,14 +624,14 @@ class icEditPropCheckBox(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=0):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента.
         """
         if int(nameValue.value) <= 0:
             label = 'False'
@@ -673,14 +673,14 @@ class icEditPropTButton(icEditPropCtrl):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER, label='...'):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента.
         """
         icEditPropCtrl.__init__(self, nameValue)
         x, y = pos
@@ -736,14 +736,14 @@ class icEditColor(icEditPropTButton):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента.
         """
         nameValue.dict['OnButton'] = self.OnSelectColor
         icEditPropTButton.__init__(self, nameValue, pos, size, style)
@@ -796,14 +796,14 @@ class icEditFont(icEditPropTButton):
     """
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента.
         """
         self.nameValue = nameValue
         nameValue.dict['OnButton'] = self.OnSelectFont
@@ -911,14 +911,14 @@ class icEditPropPyScript(icEditPropTButton):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента. По умолчанию wx.SIMPLE_BORDER.
         """
         self.nameValue = nameValue
         nameValue.dict['OnButton'] = self.OnEditScript
@@ -1079,14 +1079,14 @@ class icEditNewProperty(icEditPropTButton):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента.
         """
         nameValue.dict['OnButton'] = self.OnAddProperty
         icEditPropTButton.__init__(self, nameValue, pos, size, style, '+')
@@ -1128,14 +1128,14 @@ class icEditAddProperty(icEditPropPyScript):
     
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
-        @type nameValue: C{NameValue}
-        @param nameValue: Указатель на объект свойства NameValue.
-        @type pos: C{wx.Point}
-        @param pos: Позиция компонента.
-        @type size: C{wx.Size}
-        @param size: Размеры компонента.
-        @type style: C{long}
-        @param style: Стиль компонента.
+        :type nameValue: C{NameValue}
+        :param nameValue: Указатель на объект свойства NameValue.
+        :type pos: C{wx.Point}
+        :param pos: Позиция компонента.
+        :type size: C{wx.Size}
+        :param size: Размеры компонента.
+        :type style: C{long}
+        :param style: Стиль компонента.
         """
         icEditPropPyScript.__init__(self, nameValue, pos, size, style)
         

@@ -80,20 +80,20 @@ def _sum_func_agr(rs, parTime, par, parPlan=None, t1=None, t2=None,
     """
     Функция суммирования параметра.
     
-    @type rs: C{SQLObject.main.SelectResult}
-    @param rs: Набор отобранных записей.
-    @type par: C{string}
-    @param par: Имя накапливаемого параметра.
-    @type parPlan: C{string}
-    @param parPlan: Имя накапливаемого параметра плана.
-    @type t1: C{string}
-    @param t1: Начало периода агрегации ('2005.10.10').
-    @type t2: C{string}
-    @param t2: Конец периода агрегации ('2005.12.31').
-    @type cod: C{string}
-    @param cod: Код наблюдаемого параметра.
-    @type funcPlan: C{function}
-    @param funcPlan: Функция, вычисляющая плановые значения за день.
+    :type rs: C{SQLObject.main.SelectResult}
+    :param rs: Набор отобранных записей.
+    :type par: C{string}
+    :param par: Имя накапливаемого параметра.
+    :type parPlan: C{string}
+    :param parPlan: Имя накапливаемого параметра плана.
+    :type t1: C{string}
+    :param t1: Начало периода агрегации ('2005.10.10').
+    :type t2: C{string}
+    :param t2: Конец периода агрегации ('2005.12.31').
+    :type cod: C{string}
+    :param cod: Код наблюдаемого параметра.
+    :type funcPlan: C{function}
+    :param funcPlan: Функция, вычисляющая плановые значения за день.
     """
     sum = 0.0
     plan = 0.0
@@ -137,20 +137,20 @@ def _min_func_agr(rs, parTime, par, parPlan=None, t1=None, t2=None,
     """
     Функция находим минимальное значение параметра.
     
-    @type rs: C{SQLObject.main.SelectResult}
-    @param rs: Набор отобранных записей.
-    @type par: C{string}
-    @param par: Имя накапливаемого параметра.
-    @type parPlan: C{string}
-    @param parPlan: Имя накапливаемого параметра плана.
-    @type t1: C{string}
-    @param t1: Начало периода агрегации ('2005.10.10').
-    @type t2: C{string}
-    @param t2: Конец периода агрегации ('2005.12.31').
-    @type cod: C{string}
-    @param cod: Код наблюдаемого параметра.
-    @type funcPlan: C{function}
-    @param funcPlan: Функция, вычисляющая плановые значения за день.
+    :type rs: C{SQLObject.main.SelectResult}
+    :param rs: Набор отобранных записей.
+    :type par: C{string}
+    :param par: Имя накапливаемого параметра.
+    :type parPlan: C{string}
+    :param parPlan: Имя накапливаемого параметра плана.
+    :type t1: C{string}
+    :param t1: Начало периода агрегации ('2005.10.10').
+    :type t2: C{string}
+    :param t2: Конец периода агрегации ('2005.12.31').
+    :type cod: C{string}
+    :param cod: Код наблюдаемого параметра.
+    :type funcPlan: C{function}
+    :param funcPlan: Функция, вычисляющая плановые значения за день.
     """
     min = None
     plan = None
@@ -182,20 +182,20 @@ def _max_func_agr(rs, parTime, par, parPlan=None, t1=None, t2=None,
     """
     Функция находим максимальнове значение параметра.
     
-    @type rs: C{SQLObject.main.SelectResult}
-    @param rs: Набор отобранных записей.
-    @type par: C{string}
-    @param par: Имя накапливаемого параметра.
-    @type parPlan: C{string}
-    @param parPlan: Имя накапливаемого параметра плана.
-    @type t1: C{string}
-    @param t1: Начало периода агрегации ('2005.10.10').
-    @type t2: C{string}
-    @param t2: Конец периода агрегации ('2005.12.31').
-    @type cod: C{string}
-    @param cod: Код наблюдаемого параметра.
-    @type funcPlan: C{function}
-    @param funcPlan: Функция, вычисляющая плановые значения за день.
+    :type rs: C{SQLObject.main.SelectResult}
+    :param rs: Набор отобранных записей.
+    :type par: C{string}
+    :param par: Имя накапливаемого параметра.
+    :type parPlan: C{string}
+    :param parPlan: Имя накапливаемого параметра плана.
+    :type t1: C{string}
+    :param t1: Начало периода агрегации ('2005.10.10').
+    :type t2: C{string}
+    :param t2: Конец периода агрегации ('2005.12.31').
+    :type cod: C{string}
+    :param cod: Код наблюдаемого параметра.
+    :type funcPlan: C{function}
+    :param funcPlan: Функция, вычисляющая плановые значения за день.
     """
     max = None
     plan = None
@@ -227,20 +227,20 @@ def _avrg_func_agr(rs, parTime, par, parPlan=None, t1=None, t2=None,
     """
     Функция находим среднее значение параметра.
     
-    @type rs: C{SQLObject.main.SelectResult}
-    @param rs: Набор отобранных записей.
-    @type par: C{string}
-    @param par: Имя накапливаемого параметра.
-    @type parPlan: C{string}
-    @param parPlan: Имя накапливаемого параметра плана.
-    @type t1: C{string}
-    @param t1: Начало периода агрегации ('2005.10.10').
-    @type t2: C{string}
-    @param t2: Конец периода агрегации ('2005.12.31').
-    @type cod: C{string}
-    @param cod: Код наблюдаемого параметра.
-    @type funcPlan: C{function}
-    @param funcPlan: Функция, вычисляющая плановые значения за день.
+    :type rs: C{SQLObject.main.SelectResult}
+    :param rs: Набор отобранных записей.
+    :type par: C{string}
+    :param par: Имя накапливаемого параметра.
+    :type parPlan: C{string}
+    :param parPlan: Имя накапливаемого параметра плана.
+    :type t1: C{string}
+    :param t1: Начало периода агрегации ('2005.10.10').
+    :type t2: C{string}
+    :param t2: Конец периода агрегации ('2005.12.31').
+    :type cod: C{string}
+    :param cod: Код наблюдаемого параметра.
+    :type funcPlan: C{function}
+    :param funcPlan: Функция, вычисляющая плановые значения за день.
     """
     sum = 0
     plan = 0
@@ -283,20 +283,20 @@ def _disp_func_agr(rs, parTime, par, parPlan=None, t1=None, t2=None,
     """
     Функция находит дисперсию значение параметра.
     
-    @type rs: C{SQLObject.main.SelectResult}
-    @param rs: Набор отобранных записей.
-    @type par: C{string}
-    @param par: Имя накапливаемого параметра.
-    @type parPlan: C{string}
-    @param parPlan: Имя накапливаемого параметра плана.
-    @type t1: C{string}
-    @param t1: Начало периода агрегации ('2005.10.10').
-    @type t2: C{string}
-    @param t2: Конец периода агрегации ('2005.12.31').
-    @type cod: C{string}
-    @param cod: Код наблюдаемого параметра.
-    @type funcPlan: C{function}
-    @param funcPlan: Функция, вычисляющая плановые значения за день.
+    :type rs: C{SQLObject.main.SelectResult}
+    :param rs: Набор отобранных записей.
+    :type par: C{string}
+    :param par: Имя накапливаемого параметра.
+    :type parPlan: C{string}
+    :param parPlan: Имя накапливаемого параметра плана.
+    :type t1: C{string}
+    :param t1: Начало периода агрегации ('2005.10.10').
+    :type t2: C{string}
+    :param t2: Конец периода агрегации ('2005.12.31').
+    :type cod: C{string}
+    :param cod: Код наблюдаемого параметра.
+    :type funcPlan: C{function}
+    :param funcPlan: Функция, вычисляющая плановые значения за день.
     """
     sum = 0
     n = rs.count()

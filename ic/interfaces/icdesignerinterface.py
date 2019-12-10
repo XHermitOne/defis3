@@ -43,23 +43,23 @@ class icExtFormDesignerInterface(object):
     def open_project(self, prj_filename):
         """
         Открыть файл проекта.
-        @param prj_filename: Полное имя файла проекта.
-        @return: True/False
+        :param prj_filename: Полное имя файла проекта.
+        :return: True/False
         """
         return False
 
     def create_project(self, default_prj_filename=None):
         """
         Создание нового файла проекта.
-        @param default_prj_filename: Имя файла проекта по умолчанию.
-        @return: True/False.
+        :param default_prj_filename: Имя файла проекта по умолчанию.
+        :return: True/False.
         """
         return False
 
     def generate(self, prj_filename, *args, **kwargs):
         """
         Дополнительная генерация проекта.
-        @param prj_filename: Полное имя файла проекта.
-        @return: True/False.
+        :param prj_filename: Полное имя файла проекта.
+        :return: True/False.
         """
         return False

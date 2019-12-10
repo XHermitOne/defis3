@@ -79,13 +79,13 @@ class IEditPanel(icobjectinterface.icObjectInterface):
         """
         Сохраняет данные дочерних элементов, если они были изменены.
         
-        @type data: C{list}
-        @param data: Данные грида.
-        @type bRefresh: C{bool}
-        @param bRefresh: Признак полного обновления ветки дерева. Иногда нужно
+        :type data: C{list}
+        :param data: Данные грида.
+        :type bRefresh: C{bool}
+        :param bRefresh: Признак полного обновления ветки дерева. Иногда нужно
             принудительно обновить.
-        @rtype: C{bool}
-        @return: Признак того, что данные были изменены пользователем.
+        :rtype: C{bool}
+        :return: Признак того, что данные были изменены пользователем.
         """
         for r in data:
             name = r[0]

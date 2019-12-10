@@ -34,7 +34,7 @@ class icEditCubesPivotTabRequestDialog(edit_cubes_olap_srv_request_dlg_proto.icE
     def setOLAPServer(self, olap_server):
         """
         Установить тестируемый OLAP сервер.
-        @param olap_server: OLAP сервер
+        :param olap_server: OLAP сервер
         """
         self._OLAP_server = olap_server
 
@@ -50,7 +50,7 @@ class icEditCubesPivotTabRequestDialog(edit_cubes_olap_srv_request_dlg_proto.icE
     def setRequest(self, request=None):
         """
         Отредактированная структура запроса. Установить.
-        @param request: Отредактированная структура запроса в виде словаря.
+        :param request: Отредактированная структура запроса в виде словаря.
         """
         self._request = request
 
@@ -87,11 +87,11 @@ def edit_cubes_pivot_tab_request_dlg(parent=None, olap_srv=None,
                                      olap_srv_request=None):
     """
     Редактирование запроса сводной таблицы к OLAP серверу Cubes.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется самое главное окно.
-    @param olap_srv: Объект OLAP сервера.
-    @param olap_srv_request: Структура запроса к OLAP серверу Cubes.
-    @return: Отредактированная структура запроса к OLAP серверу Cubes
+    :param olap_srv: Объект OLAP сервера.
+    :param olap_srv_request: Структура запроса к OLAP серверу Cubes.
+    :return: Отредактированная структура запроса к OLAP серверу Cubes
         или None, если нажата <Отмена>.
     """
     if olap_srv is None:

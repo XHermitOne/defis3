@@ -108,7 +108,7 @@ class icKernel(icBaseKernel):
     def __init__(self, context=None, *arg, **kwarg):
         """
         Конструктор.
-        @param context: Контекст ядра.
+        :param context: Контекст ядра.
         """
         # Текущий пользователь
         self._User = None
@@ -137,16 +137,16 @@ class icKernel(icBaseKernel):
     def getResByPsp(self, passport):
         """
         Возвращает ресурс объекта по его паспорту.
-        @type passport: C{icObjectPassport}
-        @param passport: идентификатор описания (паспорт) объекта.
+        :type passport: C{icObjectPassport}
+        :param passport: идентификатор описания (паспорт) объекта.
         """
         return resource.getResByPsp(tuple(passport))
 
     # def getResByPsp_depricated(self, passport):
     #     """
     #     Возвращает ресурса объекта по его паспорту.
-    #     @type passport: C{icObjectPassport}
-    #     @param passport: идентификатор описания (паспорт) объекта.
+    #     :type passport: C{icObjectPassport}
+    #     :param passport: идентификатор описания (паспорт) объекта.
     #     """
     #     objType = passport.getDescrType()
     #     className = passport.getDescrName()
@@ -185,15 +185,15 @@ class icKernel(icBaseKernel):
                        context=None, **kwarg):
         """
         Создает объект по ресурсу. Depricated.
-        @type resName: C{string}
-        @param resName: Имя ресурса, по которому создается объект.
-        @type className: C{string}
-        @param className: Имя объекта.
-        @type extName: C{string}
-        @param extName: Расширения ресурсного файла для данного ресурса.
-        @param parent: Родитель объекта (если необходим).
-        @param context: Контекст.
-        @return: Возвращает объект или None в случае ошибки.
+        :type resName: C{string}
+        :param resName: Имя ресурса, по которому создается объект.
+        :type className: C{string}
+        :param className: Имя объекта.
+        :type extName: C{string}
+        :param extName: Расширения ресурсного файла для данного ресурса.
+        :param parent: Родитель объекта (если необходим).
+        :param context: Контекст.
+        :return: Возвращает объект или None в случае ошибки.
         """
         if context is None:
             context = self.init_new_context()
@@ -248,15 +248,15 @@ class icKernel(icBaseKernel):
         Если расширение файла ресурса 'py', то объект относится ко второму типу;
         все файлы с другими расширениями описывают объекты первого типа. Depricated.
 
-        @type resName: C{string}
-        @param resName: Имя файла ресурса.
-        @type className: C{string}
-        @param className: Имя ресурса(класса).
-        @type extName: C{string}
-        @param extName: Расширение файла ресурса (frm, tab, acc, mtd, py).
+        :type resName: C{string}
+        :param resName: Имя файла ресурса.
+        :type className: C{string}
+        :param className: Имя ресурса(класса).
+        :type extName: C{string}
+        :param extName: Расширение файла ресурса (frm, tab, acc, mtd, py).
             Расширение задает тип ресурса.
-        @rtype: C{icObject}
-        @return: Возвращает созданный объект.
+        :rtype: C{icObject}
+        :return: Возвращает созданный объект.
         """
         if extName == 'py':
             return self.createObjByClass(resName, className, extName, parent, subsys, context=context, **kwarg)
@@ -272,13 +272,13 @@ class icKernel(icBaseKernel):
         2) объекты, создаваемые на основе Python класса.
         Если расширение файла ресурса 'py', то объект относится ко второму типу;
         все файлы с другими расширениями описывают объекты первого типа.
-        @type passport: C{icObjectPassport}
-        @param passport: идентификатор описания (паспорт) объекта.
-        @type parent: C{wx.Window}
-        @param parent: Родительское окно.
+        :type passport: C{icObjectPassport}
+        :param passport: идентификатор описания (паспорт) объекта.
+        :type parent: C{wx.Window}
+        :param parent: Родительское окно.
             Расширение задает тип ресурса.
-        @rtype: C{icObject}
-        @return: Возвращает созданный объект.
+        :rtype: C{icObject}
+        :return: Возвращает созданный объект.
         """
         objType = passport.getDescrType()
         className = passport.getDescrName()
@@ -323,10 +323,10 @@ class icKernel(icBaseKernel):
         """
         Возвращает списки соединение, в которых объект выступает в качестве
         источнока, в качестве приемника.
-        @type obj: C{icObject}
-        @param obj: Объект.
-        @rtype: C{tuple}
-        @return: (srcLst, slotLst). srcLst - список соединений где объект прописан
+        :type obj: C{icObject}
+        :param obj: Объект.
+        :rtype: C{tuple}
+        :return: (srcLst, slotLst). srcLst - список соединений где объект прописан
         как источник; slotLst - список соединений где объект прописан как приемник.
         """
         srcConLst = []
@@ -389,8 +389,8 @@ class icKernel(icBaseKernel):
     def init_new_context(self, prnt_context=None):
         """
         Создает новый контекст объекта.
-        @type prnt_context: C{icContext.Context}
-        @param prnt_context: Родитнльский контекст.
+        :type prnt_context: C{icContext.Context}
+        :param prnt_context: Родитнльский контекст.
         """
         context = icContext.Context(self)
         if prnt_context:
@@ -416,9 +416,9 @@ class icKernel(icBaseKernel):
     def _login_loop(self, username=None, password=None, db_mode='-s'):
         """
         Цикл входа в систему.
-        @param username: Имя пользователя.
-        @param password: Пароль.
-        @param db_mode: Режим использования БД.
+        :param username: Имя пользователя.
+        :param password: Пароль.
+        :param db_mode: Режим использования БД.
         """
         from ic.dlg import dlgfunc
         from ic.engine import user_manager
@@ -486,10 +486,10 @@ class icKernel(icBaseKernel):
     def load_source(self, name, path):
         """
         Возвращает загруженный модуль.
-        @type name: C{string}
-        @param name: Имя модуля.
-        @type path: C{string}
-        @param path: Полный путь до модуля.
+        :type name: C{string}
+        :param name: Имя модуля.
+        :type path: C{string}
+        :param path: Полный путь до модуля.
         """
         return ic.utils.impfunc.loadSource(name=name, path=path)
 
@@ -556,9 +556,9 @@ class icKernel(icBaseKernel):
     def run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
-        @param mainwin_psp: Паспорт главного окна.
-        @param menubars_psp: Список паспортов горизонтальных меню.
-        @return: Возвращает True, если все OK иначе - False.
+        :param mainwin_psp: Паспорт главного окна.
+        :param menubars_psp: Список паспортов горизонтальных меню.
+        :return: Возвращает True, если все OK иначе - False.
         """
         pass
 
@@ -629,15 +629,15 @@ class icKernel(icBaseKernel):
     def setBehaviour(self, behaviour_res_filename):
         """
         Установить поведение системы.
-        @param behaviour_res_filename: Имя файла ресурса со связями.
+        :param behaviour_res_filename: Имя файла ресурса со связями.
         """
         pass
 
     def getObjectByPsp(self, psp):
         """
         Получить зарегистрированный объект по паспорту.
-        @param psp: Паспорт объекта.
-        @return: Искомый объект или None, если не найден.
+        :param psp: Паспорт объекта.
+        :return: Искомый объект или None, если не найден.
         """
         name = psp[0][1]
         obj = self.getObject(name)

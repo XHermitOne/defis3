@@ -96,9 +96,9 @@ class icObjRegistry(object):
                  obj_table_name=DEFAULT_OBJ_TABLE):
         """
         Конструктор.
-        @param db_url: Параметры подключения к БД.
-        @param operation_table_name: Имя таблицы движений.
-        @param obj_table_name: Имя таблицы объектов.
+        :param db_url: Параметры подключения к БД.
+        :param operation_table_name: Имя таблицы движений.
+        :param obj_table_name: Имя таблицы объектов.
         """
         self._db_url = DEFAULT_DB_URL if db_url is None else db_url
         self._connection = None
@@ -130,8 +130,8 @@ class icObjRegistry(object):
     def connect(self, db_url=None):
         """
         Установить связь с БД.
-        @param db_url: URL связи с БД.
-        @return: Объект связи с БД.
+        :param db_url: URL связи с БД.
+        :return: Объект связи с БД.
         """
         if db_url is None:
             db_url = self._db_url
@@ -146,7 +146,7 @@ class icObjRegistry(object):
     def disconnect(self):
         """
         Разорвать связь с БД.
-        @return: True/False.
+        :return: True/False.
         """
         if self._connection:
             self._connection.dispose()
@@ -156,7 +156,7 @@ class icObjRegistry(object):
     def get_connection(self, auto_connect=True):
         """
         Объект связи с БД.
-        @param auto_connect: Если не установлена связь,
+        :param auto_connect: Если не установлена связь,
             произвести автоматический коннект?
         """
         if self._connection is None and auto_connect:
@@ -177,8 +177,8 @@ class icObjRegistry(object):
                 на прикладном - номер объекта
             4. поле предыдущего состояния объекта
             5. поле последующего сосотояния объекта
-        @param operation_table_name: Имя таблицы движений.
-        @return: Объект таблицы движений или None в случае ошибки.
+        :param operation_table_name: Имя таблицы движений.
+        :return: Объект таблицы движений или None в случае ошибки.
         """
         if operation_table_name is None:
             operation_table_name = self._operation_table_name
@@ -205,8 +205,8 @@ class icObjRegistry(object):
     def create_obj_table(self, obj_table_name=None):
         """
         Создание таблицы объектов.
-        @param obj_table_name: Имя таблицы объектов.
-        @return: Объект таблицы объектов или None в случае ошибки.
+        :param obj_table_name: Имя таблицы объектов.
+        :return: Объект таблицы объектов или None в случае ошибки.
         """
         if obj_table_name is None:
             obj_table_name = self._obj_table_name
@@ -234,9 +234,9 @@ class icObjRegistry(object):
     def gen_column(self, requisite_name, requisite_type):
         """
         Генерация объекта колонки по описанию реквизита.
-        @param requisite_name: Имя реквизита.
-        @param requisite_type: Тип реквизита.
-        @return: Объект колонки sqlalchemy или None в
+        :param requisite_name: Имя реквизита.
+        :param requisite_type: Тип реквизита.
+        :return: Объект колонки sqlalchemy или None в
             случае ошибки.
         """
         # Привести все имена к нижнему регистру
@@ -258,9 +258,9 @@ class icObjRegistry(object):
     def gen_table(self, table_name, requisites):
         """
         Генерация объекта таблицы по описанию реквизитов.
-        @param table_name: Имя таблицы.
-        @param requisites: Список описаний реквизитов.
-        @return: Объект таблицы sqlalchemy или None
+        :param table_name: Имя таблицы.
+        :param requisites: Список описаний реквизитов.
+        :return: Объект таблицы sqlalchemy или None
             в случае ошибки.
         """
         metadata = sqlalchemy.MetaData(self._connection)
@@ -272,7 +272,7 @@ class icObjRegistry(object):
     def get_obj_requisite_names(self):
         """
         Имена реквизитов объекта.
-        @return: Список имен реквизитов.
+        :return: Список имен реквизитов.
         """
         names = [requisite.get('requisite_name', None) for requisite in self._obj_requisites]
         return names
@@ -280,8 +280,8 @@ class icObjRegistry(object):
     def append_obj_requisite(self, requisite_name, requisite_type):
         """
         Добавление реквизита объекта.
-        @param requisite_name: Имя реквизита.
-        @param requisite_type: Тип реквизита.
+        :param requisite_name: Имя реквизита.
+        :param requisite_type: Тип реквизита.
             Тип реквизита реквизита
             м.б. целый ('int'), вещественный ('float'),
             дата-время('datetime') или текстовый ('text').
@@ -294,8 +294,8 @@ class icObjRegistry(object):
         """
         Отфильтровать только небходимые значения реквизитов
         для таблицы операций движения.
-        @param requisite_values: Значения реквизитов.
-        @return: Список реквизитов используемых в регистре.
+        :param requisite_values: Значения реквизитов.
+        :return: Список реквизитов используемых в регистре.
         """
         used_requisite_names = [UUID_OBJ_OPERATION_FIELD,
                                 OBJ_OPERATION_FIELD,
@@ -307,8 +307,8 @@ class icObjRegistry(object):
     def do_state(self, **requisite_values):
         """
         Установить новое состояние объекта.
-        @param requisite_values: Значения реквизитов.
-        @return: True - операция прошла успешно.
+        :param requisite_values: Значения реквизитов.
+        :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
             Транзакция откатила выполнение операции.
         """
@@ -408,8 +408,8 @@ class icObjRegistry(object):
     def undo_state(self, **requisite_values):
         """
         Восстановить предыдущее состояние объекта.
-        @param requisite_values: Значения реквизитов.
-        @return: True - операция прошла успешно.
+        :param requisite_values: Значения реквизитов.
+        :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
             Транзакция откатила выполнение операции.
         """
@@ -483,7 +483,7 @@ class icObjRegistry(object):
         """
         ВНИМАНИЕ! Функция удаляет все данные из регистра!!!
             Пользоваться только с очень большой осторожностью.
-        @return: True/False.
+        :return: True/False.
         """
         # Сначала создать таблицы (вдруг их нет)
         operation_table = self.create_operation_table()
@@ -513,12 +513,12 @@ class icObjRegistry(object):
         """
         Получить запись операции движения по переводу объекта
             в состояние state.
-        @param uuid_obj: UUID объекта. Если не указан, то
+        :param uuid_obj: UUID объекта. Если не указан, то
             документ определяется по n_obj.
-        @param n_obj: Номер-идентификатор объекта.
+        :param n_obj: Номер-идентификатор объекта.
             Если не указан, то документ определяется по UUID.
-        @param state: Состояние объекта.
-        @return: Словарь записи операции движения
+        :param state: Состояние объекта.
+        :return: Словарь записи операции движения
             соответствующего (проверка по POST_OPERATION_FILED)
             состоянию state.
             Если такое состояние такого объекта не найдено,
@@ -552,9 +552,9 @@ class icObjRegistry(object):
         Удаление старых(не актуальных) операций
         для уменьшения размера таблицы операций движения.
         Бывают задачи, в которых старые движения не нужны.
-        @param dt_actual: Дата, с которой данные считаются
+        :param dt_actual: Дата, с которой данные считаются
             актуальными. Если None, то берется сегодняшняя дата.
-        @return: True/False.
+        :return: True/False.
         """
         if dt_actual is None:
             dt_actual = datetime.date.today()

@@ -30,7 +30,7 @@ class icFormDataManager(object):
     def __init__(self, form=None):
         """
         Конструктор.
-        @param form: Форма с контролами, отражающими данные.
+        :param form: Форма с контролами, отражающими данные.
             Если None то считается что форма наследуется от
             icFormDataManager и в данном случае берется self.
         """
@@ -45,8 +45,8 @@ class icFormDataManager(object):
     def findControlByName(self, name):
         """
         Определить контрол по его имени.
-        @param name: Имя контрола.
-        @return: Объект контрола формы или None в случае
+        :param name: Имя контрола.
+        :return: Объект контрола формы или None в случае
             когда контрол не найден.
         """
         if self.__form is None:
@@ -69,9 +69,9 @@ class icFormDataManager(object):
     def setControlValue(self, ctrl, value):
         """
         Установить значение в найденный контрол.
-        @param ctrl: Контрол.
-        @param value: Значение кoнтрола.
-        @return: True/False.
+        :param ctrl: Контрол.
+        :param value: Значение кoнтрола.
+        :return: True/False.
         """
         result = False
         if hasattr(ctrl, 'setData'):
@@ -124,8 +124,8 @@ class icFormDataManager(object):
     def setData(self, data):
         """
         Установить данные в форму.
-        @param data: Словарь данных формы.
-        @return: True/False.
+        :param data: Словарь данных формы.
+        :return: True/False.
         """
         if data is None:
             log.warning(u'Не определен словарь данных формы')
@@ -145,8 +145,8 @@ class icFormDataManager(object):
     def getAllChildren(self, form=None):
         """
         Получить список всех контролов формы.
-        @param form: Форма. Если не определен, то берется self.__form
-        @return: Словарь контролов. { 'имя контрола': объект контрола}.
+        :param form: Форма. Если не определен, то берется self.__form
+        :return: Словарь контролов. { 'имя контрола': объект контрола}.
         """
         if form is None:
             form = self.__form
@@ -162,8 +162,8 @@ class icFormDataManager(object):
     def getControlValue(self, ctrl):
         """
         Прочитать значение контрола.
-        @param ctrl: Контрол.
-        @return: Значение в любом виде.
+        :param ctrl: Контрол.
+        :return: Значение в любом виде.
         """
         value = None
 
@@ -211,10 +211,10 @@ class icFormDataManager(object):
     def getData(self, *name_filter):
         """
         Прочитать данные из формы.
-        @param name_filter: Список имен контролов,
+        :param name_filter: Список имен контролов,
             значения которых надо прочитать.
             Если не определен, то берется весь список имен формы.
-        @return: Словарь данных формы {'имя контрола': значение}.
+        :return: Словарь данных формы {'имя контрола': значение}.
             Или None в случае ошибки.
         """
         data = dict()

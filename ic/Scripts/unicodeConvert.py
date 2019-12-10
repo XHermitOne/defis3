@@ -19,10 +19,10 @@ def LogLastError(beg_msg, logType=0, msg_encoding='utf-8'):
     """
     Записывает сообщение о последней ошибке в лог.
 
-    @type beg_msg: C{string}
-    @param beg_msg: Заголовок сообщения об ошибке.
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1 - файл, 2 - окно лога, 3 - окно сообщений)
+    :type beg_msg: C{string}
+    :param beg_msg: Заголовок сообщения об ошибке.
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1 - файл, 2 - окно лога, 3 - окно сообщений)
     """
     trace = traceback.extract_tb(sys.exc_traceback)
     ltype = sys.exc_type

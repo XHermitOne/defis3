@@ -12,12 +12,12 @@ def getStyleDict(style, allstyles):
     """
     Возвращает стиль компонента в виде словаря.
     
-    @type style: C{long}
-    @param style: Стиль компонента.
-    @type allstyles: C{dictionary}
-    @param allstyles: Словарь всех стилей компонента.
-    @rtype: C{dictionary}
-    @return: Стиль компонента.
+    :type style: C{long}
+    :param style: Стиль компонента.
+    :type allstyles: C{dictionary}
+    :param allstyles: Словарь всех стилей компонента.
+    :rtype: C{dictionary}
+    :return: Стиль компонента.
         - B{Пример}:C{'wx.DEFAULT':1, 'wx.APP':0, ...}
     """
     if not allstyles:

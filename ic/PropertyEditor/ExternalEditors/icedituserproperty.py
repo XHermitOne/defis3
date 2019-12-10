@@ -40,20 +40,20 @@ class icEditUserPropertyEditor(wx.propgrid.PGTextCtrlAndButtonEditor):
                       style=0, propEdt=None, *arg, **kwarg):
         """
         Диалог редактирования свойства/атрибута.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение.
-        @type pos: C{wx.Point}
-        @param pos: Позиция окна.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
-        @param propEdt: Указатель на редактор свойств.
-        @return: Возвращает отредактированное значение.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :param propEdt: Указатель на редактор свойств.
+        :return: Возвращает отредактированное значение.
         """
         if propEdt is None:
             propEdt = self.property_edit_manager
@@ -76,10 +76,10 @@ class icEditUserPropertyEditor(wx.propgrid.PGTextCtrlAndButtonEditor):
     # def OnEvent(self, propgrid, primaryEditor, event):
     #    """
     #    Обработчик событий редактора свойства.
-    #    @param propgrid:
-    #    @param primaryEditor:
-    #    @param event:
-    #    @return:
+    #    :param propgrid:
+    #    :param primaryEditor:
+    #    :param event:
+    #    :return:
     #    """
     #    if event.GetEventType() == wx.wxEVT_COMMAND_BUTTON_CLICKED:
     #        value = self._get_edit_dlg(self.GetName(), self.GetValue(),

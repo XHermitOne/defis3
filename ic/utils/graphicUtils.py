@@ -3,19 +3,19 @@
 
 """ 
 Функции для работы с графикой.
-@type BGR_SOLID: C{int}
-@param BGR_SOLID: Идентификатор сплошной одноцветной заливки.
-@type BGR_GRAD_TOP: C{int}
-@param BGR_GRAD_TOP: Идентификатор градиентной заливки в вертикальном направлении
+:type BGR_SOLID: C{int}
+:param BGR_SOLID: Идентификатор сплошной одноцветной заливки.
+:type BGR_GRAD_TOP: C{int}
+:param BGR_GRAD_TOP: Идентификатор градиентной заливки в вертикальном направлении
     от светлого к темному.
-@type BGR_GRAD_BOTTOM: C{int}
-@param BGR_GRAD_BOTTOM: Идентификатор градиентной заливки в вертикальном направлении
+:type BGR_GRAD_BOTTOM: C{int}
+:param BGR_GRAD_BOTTOM: Идентификатор градиентной заливки в вертикальном направлении
     от темного к светлому.
-@type BGR_GRAD_LEFT: C{int}
-@param BGR_GRAD_LEFT: Идентификатор градиентной заливки в горизонтальном направлении
+:type BGR_GRAD_LEFT: C{int}
+:param BGR_GRAD_LEFT: Идентификатор градиентной заливки в горизонтальном направлении
     от светлого к темному.
-@type BGR_GRAD_RIGHT: C{int}
-@param BGR_GRAD_RIGHT: Идентификатор градиентной заливки в горизотнальном направлении
+:type BGR_GRAD_RIGHT: C{int}
+:param BGR_GRAD_RIGHT: Идентификатор градиентной заливки в горизотнальном направлении
     от темного к светлому.
 """
 
@@ -35,10 +35,10 @@ BGR_GRAD_RIGHT = 4
 def getMidColour(clr1, clr2, part=0.5):
     """ 
     Функция возвращает промежуточный цвет между двумя.
-    @type clr1: C{wx.Colour}
-    @param clr1: Первый цвет.
-    @type clr2: C{wx.Colour}
-    @param clr2: Второй цвет.
+    :type clr1: C{wx.Colour}
+    :param clr1: Первый цвет.
+    :type clr2: C{wx.Colour}
+    :param clr2: Второй цвет.
     """
     r1, g1, b1 = clr1.Red(), clr1.Green(), clr1.Blue()
     r2, g2, b2 = clr2.Red(), clr2.Green(), clr2.Blue()
@@ -223,26 +223,26 @@ def drawRoundCornersRect(dc, pos, size, fgr, bgr, bgr_prnt,
                          st=0, clrLst=None, corners=(1, 1, 1, 1), backgroundType=0):
     """ 
     Рисует скругленные углы (радиус=4).
-    @type dc: C{wx.DC}
-    @param dc: Контекст устройства.
-    @type pos: C{tuple/list}
-    @param pos: Начальная позиция прямоугольника.
-    @type size: C{tuple/list}
-    @param size: Размеры прямоугольника, у которого рисуем скругленные углы.
-    @type fgr: C{wx.Colour}
-    @param fgr: Цвет надписей.
-    @type bgr: C{wx.Colour}
-    @param bgr: Цвет фона.
-    @type bgr_prnt: C{C{wx.Colour}}
-    @param bgr_prnt: Цвет фона родительского компонента.
-    @type st: C{int}
-    @param st: Отступ от границы.
-    @type clrLst: C{tuple}
-    @param clrLst: Список цветов границ (T, R, B, L).
-    @type corners: C{tuple}
-    @param corners: Признаки углов (LT, RT, RB, LB).
-    @type backgroundType: C{int}
-    @param backgroundType: Идентификаторы типа заливки (см. выше описание
+    :type dc: C{wx.DC}
+    :param dc: Контекст устройства.
+    :type pos: C{tuple/list}
+    :param pos: Начальная позиция прямоугольника.
+    :type size: C{tuple/list}
+    :param size: Размеры прямоугольника, у которого рисуем скругленные углы.
+    :type fgr: C{wx.Colour}
+    :param fgr: Цвет надписей.
+    :type bgr: C{wx.Colour}
+    :param bgr: Цвет фона.
+    :type bgr_prnt: C{C{wx.Colour}}
+    :param bgr_prnt: Цвет фона родительского компонента.
+    :type st: C{int}
+    :param st: Отступ от границы.
+    :type clrLst: C{tuple}
+    :param clrLst: Список цветов границ (T, R, B, L).
+    :type corners: C{tuple}
+    :param corners: Признаки углов (LT, RT, RB, LB).
+    :type backgroundType: C{int}
+    :param backgroundType: Идентификаторы типа заливки (см. выше описание
         идентификаторов).
     """
     r = 4
@@ -323,10 +323,10 @@ def getAdjustColour(color, percent, alpha=wx.ALPHA_OPAQUE):
     """ 
     Brighten/Darken input colour by percent and adjust alpha
     channel if needed. Returns the modified color.
-    @param color: color object to adjust
-    @type color: wx.Colour
-    @param percent: percent to adjust +(brighten) or -(darken)
-    @type percent: int
+    :param color: color object to adjust
+    :type color: wx.Colour
+    :param percent: percent to adjust +(brighten) or -(darken)
+    :type percent: int
     @keyword alpha: amount to adjust alpha channel
     """ 
     end_color = wx.WHITE
@@ -350,10 +350,10 @@ def getAdjustColour2(color, shift, alpha=wx.ALPHA_OPAQUE):
     """ 
     Brighten/Darken input colour by percent and adjust alpha
     channel if needed. Returns the modified color.
-    @param color: color object to adjust
-    @type color: wx.Colour
-    @param percent: percent to adjust +(brighten) or -(darken)
-    @type percent: int
+    :param color: color object to adjust
+    :type color: wx.Colour
+    :param percent: percent to adjust +(brighten) or -(darken)
+    :type percent: int
     @keyword alpha: amount to adjust alpha channel
     """ 
     I = float(color.Red() + color.Green() + color.Blue())/(3.0*255)

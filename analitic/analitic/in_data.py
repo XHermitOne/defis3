@@ -49,7 +49,7 @@ def getInputDataDir():
 def setInputDataDir(InputDataDir_):
     """
     Сохранить в настроечном файле папку входных данных.
-    @param InputDataDir_: Папка в которой лежат дбфники.
+    :param InputDataDir_: Папка в которой лежат дбфники.
     """
     # Заносить только проверенные значния
     if InputDataDir_ and os.path.isdir(InputDataDir_):
@@ -61,7 +61,7 @@ def setInputDataDir(InputDataDir_):
 def loadInputData(InputDataDir_=None):
     """
     Загрузить входные данные в БД.
-    @param InputDataDir_: Папка в которой лежат дбфники.
+    :param InputDataDir_: Папка в которой лежат дбфники.
     """
     if InputDataDir_ is None:
         InputDataDir_ = getInputDataDir()
@@ -226,9 +226,9 @@ def refreshAllTabView():
 def _syncSprav(Type_, Cod_, Name_):
     """
     Синхронизация данных справочника.
-    @param Type: Тип справочника.
-    @param Cod_: Код.
-    @param Name_: Название.
+    :param Type: Тип справочника.
+    :param Cod_: Код.
+    :param Name_: Название.
     """
     name_ = Name_.strip()
     s_name = nsi.FSprav(Type_, Cod_)

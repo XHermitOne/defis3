@@ -21,7 +21,7 @@ class icRole(object):
     def __init__(self, title='', description='', *arg, **kwarg):
         """
         Конструктор.
-        @param title: Краткое описание.
+        :param title: Краткое описание.
         @parma description: Описание роли.
         """
         self.title = title

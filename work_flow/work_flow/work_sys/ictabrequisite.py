@@ -7,8 +7,8 @@
 Табличный реквизит включает в себя другие реквизиты.
 Описывает подчиненную таблицу объекта. 
 
-@type SPC_IC_TAB_REQUISITE: C{dictionary}
-@var SPC_IC_TAB_REQUISITE: Спецификация на ресурсное описание табличного реквизита.
+:type SPC_IC_TAB_REQUISITE: C{dictionary}
+:var SPC_IC_TAB_REQUISITE: Спецификация на ресурсное описание табличного реквизита.
 Описание ключей SPC_IC_TAB_REQUISITE:
 
     - B{name = 'default'}: Имя.
@@ -76,7 +76,7 @@ class icTABRequisiteProto(icworkbase.icTabRequisiteBase):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icworkbase.icTabRequisiteBase.__init__(self, parent)
         
@@ -84,8 +84,8 @@ class icTABRequisiteProto(icworkbase.icTabRequisiteBase):
         """
         Найти реквизит по имени.
         Поиск ведется рекурсивно.
-        @param requisite_name: Имя искомого реквизита.
-        @return: Возвращает объект реквизита или None,
+        :param requisite_name: Имя искомого реквизита.
+        :return: Возвращает объект реквизита или None,
             если реквизит с таким именем не найден.
         """
         for requisite in self.getChildrenRequisites():
@@ -112,7 +112,7 @@ class icTABRequisiteProto(icworkbase.icTabRequisiteBase):
     def getStrData(self):
         """
         Данные реквизита в строковом представлении.
-        @return: Список строк реквизита.
+        :return: Список строк реквизита.
         """
         str_data = list()
         data = self.getData()
@@ -124,9 +124,9 @@ class icTABRequisiteProto(icworkbase.icTabRequisiteBase):
     def del_children(self, UUID=None):
         """
         Удалить из таблицы реквизита все записи текущего родительского объекта.
-        @param UUID: Идентификатор родительского объекта.
+        :param UUID: Идентификатор родительского объекта.
         Если None, то берется uuid родительского объекта.
-        @return: Возвращает результат выполнения операции True/False.
+        :return: Возвращает результат выполнения операции True/False.
         """
         if UUID is None:
             # Если uuid не указан явно, то взять текущий объекта

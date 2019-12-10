@@ -4,8 +4,8 @@
 """
 Модуль описания компонента пункта выпадающего меню.
 
-@type SPC_IC_MENUITEM: C{dictionary}
-@var SPC_IC_MENUITEM: Спецификация на ресурсное описание компонента icMenuItem.
+:type SPC_IC_MENUITEM: C{dictionary}
+:var SPC_IC_MENUITEM: Спецификация на ресурсное описание компонента icMenuItem.
 Описание ключей SPC_IC_MENUITEM:
     - B{name = 'description'}: Описание.
     - B{name = 'caption'}: Надпись.
@@ -240,7 +240,7 @@ class icMenuItem(wx.MenuItem):
     def SetImage(self, Image_):
         """
         Функция установки образов пункта меню.
-        @param Image_: имя файла образа (BMP).
+        :param Image_: имя файла образа (BMP).
         """
         try:
             item_kind = self.GetKind()
@@ -271,7 +271,7 @@ class icMenuItem(wx.MenuItem):
     def setBitmap(self, BmpPsp_):
         """
         Функция установки картинки пункта меню.
-        @param BmpPsp_: Паспорт картинки.
+        :param BmpPsp_: Паспорт картинки.
         """
         try:
             item_kind = self.GetKind()
@@ -331,7 +331,7 @@ class icMenuItem(wx.MenuItem):
     def ToggleOffRadio(self):
         """
         Переключить радио пункт.
-        @return: Возвращает True в случае удачного выполнения операции или
+        :return: Возвращает True в случае удачного выполнения операции или
             иначе False.
         """
         if self.GetKind() == wx.ITEM_RADIO and self._radio_checked:
@@ -403,8 +403,8 @@ class icMenuItem(wx.MenuItem):
     def LinkTool(self, Toolbar_, ToolID_):
         """
         Связать пункт меню с инструментом.
-        @param Toolbar_: объект панели инструментов.
-        @param ToolID_: идентификатор инструмента.
+        :param Toolbar_: объект панели инструментов.
+        :param ToolID_: идентификатор инструмента.
         """
         if Toolbar_ is None:
             return
@@ -414,7 +414,7 @@ class icMenuItem(wx.MenuItem):
     def ToggleTool(self, Toggle_):
         """
         Переключить инструмент,  связанный с пунктом меню.
-        @param Toggle_: включить-True/выключить-False.
+        :param Toggle_: включить-True/выключить-False.
         """
         if self._Toolbar is not None:
             self._Toolbar.ToggleTool(self._ToolID, Toggle_)
@@ -422,7 +422,7 @@ class icMenuItem(wx.MenuItem):
     def ExecuteItem(self):
         """
         Выполнить действие,  привязанное к пункту меню.
-        @param item: объект пункта меню.
+        :param item: объект пункта меню.
         """
         try:
             item_kind = self.GetKind()
@@ -507,7 +507,7 @@ class icMenuItem(wx.MenuItem):
     def Enable(self, enable=True):
         """
         Включить/выключить пункт меню.
-        @param enable: Флаг включения/выключения.
+        :param enable: Флаг включения/выключения.
         """
         # Если вообще нельзя использовать этот пункт, то ничего и не делать
         if user_manager.canAuthent(user_manager.ACCESS_USE, self._Name, user_manager.ACC_MENUITEM, False):

@@ -96,7 +96,7 @@ class icConvertQueryPrototype:
     def _isTableRes(self, table_res_name=None):
         """
         Проверить есть ли ресурсное описание результирующей таблицы.
-        @param table_res_name: Имя ресурсного описание результирующей таблицы.
+        :param table_res_name: Имя ресурсного описание результирующей таблицы.
         Если None, тогда имя берется из ресурсного описания этого компонента.
         """
         if table_res_name is None:
@@ -140,7 +140,7 @@ class icConvertQueryPrototype:
     def _createTabSpc(self, table_name=None):
         """
         Создать спецификацию результирующей таблицы.
-        @param table_name: Имя результирующей таблицы.
+        :param table_name: Имя результирующей таблицы.
         """
         tab_spc = util.icSpcDefStruct(util.DeepCopy(ic_tab_wrp.ic_class_spc), None)
         # Установить свойства таблицы

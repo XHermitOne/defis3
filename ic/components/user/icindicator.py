@@ -5,16 +5,16 @@
 Индикатор состояний.
 Класс пользовательского визуального компонента.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -105,7 +105,7 @@ __version__ = (0, 1, 1, 1)
 class IndicatorState(parentModule.icHeadCell):
     """
     Описание пользовательского компонента.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{name='default'}:
         - B{states=[]}:
@@ -121,22 +121,22 @@ class IndicatorState(parentModule.icHeadCell):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
 
@@ -196,10 +196,10 @@ class IndicatorState(parentModule.icHeadCell):
     def SetState(self, state):
         """
         Устанавливает нужное состояние компонента.
-        @type state: C{int}
-        @param state: Нужное состояние.
-        @rtype: C{bool}
-        @return: Признак успешного завершения.
+        :type state: C{int}
+        :param state: Нужное состояние.
+        :rtype: C{bool}
+        :return: Признак успешного завершения.
         """
         if state in self.statesDict.keys():
             img, val = self.statesDict[state]
@@ -239,8 +239,8 @@ class IndicatorState(parentModule.icHeadCell):
     def SetNextState(self):
         """
         Устанавливает следующее состояние.
-        @rtype: C{bool}
-        @return: Признак успешного завершения.
+        :rtype: C{bool}
+        :return: Признак успешного завершения.
         """
         st = self.GetState()
         
@@ -252,10 +252,10 @@ class IndicatorState(parentModule.icHeadCell):
     def SetStateValue(self, value):
         """
         Устанавливавет состояние по значению.
-        @type value: C{float}
-        @param value: Значение по которому определяется состояние.
-        @rtype: C{bool}
-        @return: Признак успешного завершения.
+        :type value: C{float}
+        :param value: Значение по которому определяется состояние.
+        :rtype: C{bool}
+        :return: Признак успешного завершения.
         """
         for key in self.statesDict.keys():
             st = self.statesDict[key][1]
@@ -295,8 +295,8 @@ def test(par=0):
     """
     Тестируем пользовательский класс.
     
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     
     import ic.components.ictestapp as ictestapp

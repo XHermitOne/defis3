@@ -5,8 +5,8 @@
 Многоколоночный список для просмотра табличных данных.
 Содержит класс для создания многоколоночного списка табличных данных.
 
-@type SPC_IC_LIST_DATASET: C{Dictionary}
-@var SPC_IC_LIST_DATASET: Спецификация на ресурсное описание аттрибутов ячеек данных.
+:type SPC_IC_LIST_DATASET: C{Dictionary}
+:var SPC_IC_LIST_DATASET: Спецификация на ресурсное описание аттрибутов ячеек данных.
 Описание ключей SPC_IC_LIST_DATASET:
 
     - B{type='ListDataset'}: Тип компонента.
@@ -34,8 +34,8 @@
             - Если контроль проходит запись в базу вычисленного значения (по атрибуту 'setvalue')
             - обновление представления поля (по атрибуту 'getvalue')
 
-@type ICListStyle: C{dictionary}
-@var ICListStyle: Словарь специальных стилей компонента. Описание ключей ICListStyle:
+:type ICListStyle: C{dictionary}
+:var ICListStyle: Словарь специальных стилей компонента. Описание ключей ICListStyle:
 
     - C{wx.LC_LIST}:  Могоколоночный список, с обычными иконками. Ширина колонок вычисляются
         автоматически если не указан стиль wx.LC_REPORT.
@@ -217,18 +217,18 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
         """
         Конструктор для создания icListDataset - многоколоночный список для
         просмотра табличных данных.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонент.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type dataset: C{icDataset}
-        @param dataset Объект данных.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонент.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type dataset: C{icDataset}
+        :param dataset Объект данных.
         """
         #   Дополняем до спецификации
         component = util.icSpcDefStruct(SPC_IC_LIST_DATASET, component)
@@ -385,12 +385,12 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def getNameValue(self, col_name, row=None):
         """
         Функция возвращает значение ячейки по номеру строки и имени поля.
-        @param col_name: Имя колонки.
-        @type col_name: C{int}
-        @param row: Номер стоки. Если номер строки не задан, то значение берется 
+        :param col_name: Имя колонки.
+        :type col_name: C{int}
+        :param row: Номер стоки. Если номер строки не задан, то значение берется
             из текущей строки.
-        @type row: C{int}
-        @return: Возвращает значение ячейки.
+        :type row: C{int}
+        :return: Возвращает значение ячейки.
         """
         if row is None:
             row = self.currentItem
@@ -409,12 +409,12 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def OnGetItemText(self, item, col):
         """
         Определяет текст определенной ячейки.
-        @type item: C{int}
-        @param item: Номер строки.
-        @type col:  C{int}
-        @param col: Номер колонки.
-        @rtype: C{string}
-        @return: Текст нужной ячейки.
+        :type item: C{int}
+        :param item: Номер строки.
+        :type col:  C{int}
+        :param col: Номер колонки.
+        :rtype: C{string}
+        :return: Текст нужной ячейки.
         """
         templ = None
         try:
@@ -464,10 +464,10 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def SetCursor(self, row, col=-1):
         """
         Устанавливает курсор в нужную позицию.
-        @type row: C{int}
-        @param row: Номер записи.
-        @type col: C{int}
-        @param col: Номер колонки. Параметр введен для совместимости с 
+        :type row: C{int}
+        :param row: Номер записи.
+        :type col: C{int}
+        :param col: Номер колонки. Параметр введен для совместимости с
             аналогичной функции грида.
         """
         if self.currentItem >= 0:
@@ -497,12 +497,12 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def SetFilter(self, clsName, flt=None, isUpdSelf=False):
         """
         Устанавливаем фильтр на нужный объект данных.
-        @type clsName: C{string}
-        @param clsName: Имя класса данных на который устанавливается фильтр.
-        @type flt: C{string | dictionary}
-        @param flt: Фильтр, накладываемый на класс данных.
-        @type isUpdSelf: C{bool}
-        @param isUpdSelf: Признак того, что необходимо обновлять и состояние
+        :type clsName: C{string}
+        :param clsName: Имя класса данных на который устанавливается фильтр.
+        :type flt: C{string | dictionary}
+        :param flt: Фильтр, накладываемый на класс данных.
+        :type isUpdSelf: C{bool}
+        :param isUpdSelf: Признак того, что необходимо обновлять и состояние
             текущего объекта.
         """
         try:
@@ -536,12 +536,12 @@ class icListDataset(icwidget.icWidget, wx.ListCtrl):
     def SetFilterField(self, clsName, fieldName, row):
         """
         Устанавливаем фильтр на объект группы (связь один ко многим).
-        @type clsName: C{string}
-        @param clsName:  Имя класса данных, который фильтруется
-        @type fieldName: C{string}
-        @param fieldName: Поле в классе данных, по которому фильтруем.
-        @type row: C{int}
-        @param row: Текущий номер строки в списке. Будут отобраны те строки класса данных, значения полей <fieldName> которых,
+        :type clsName: C{string}
+        :param clsName:  Имя класса данных, который фильтруется
+        :type fieldName: C{string}
+        :param fieldName: Поле в классе данных, по которому фильтруем.
+        :type row: C{int}
+        :param row: Текущий номер строки в списке. Будут отобраны те строки класса данных, значения полей <fieldName> которых,
             будут соответствовать идентификатору текущей записи.
         """
         try:

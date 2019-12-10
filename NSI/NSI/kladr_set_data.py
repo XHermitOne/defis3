@@ -32,10 +32,10 @@ DEFAULT_DBF_ENCODE = 'cp866'
 def addKLADRSpravRecord(sprav, code, name, socr):
     """
     Добавить запись в справочник населенных пунктов
-    @param sprav: Объект справочника.
-    @param code: Структурный код.
-    @param name: Наименование.
-    @param socr: Сокращение.
+    :param sprav: Объект справочника.
+    :param code: Структурный код.
+    :param name: Наименование.
+    :param socr: Сокращение.
     """
     rec = dict()
     cod = ''.join(code)
@@ -64,7 +64,7 @@ def addKLADRSpravRecord(sprav, code, name, socr):
 def setKLADRData(sprav_manager, is_progress=False):
     """
     Основная функция заполнения.
-    @param sprav_manager: Менеджер справочников.
+    :param sprav_manager: Менеджер справочников.
     """
     log.debug('Set default data. Sprav manager <%s>' % sprav_manager)
     log.debug('KLADR dbf file name <%s>' % DEFAULT_KLADR_DBF_FILENAME)

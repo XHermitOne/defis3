@@ -40,11 +40,11 @@ class icMnemoAnchorProto(object):
                  min_size=None, max_size=None):
         """
         Конструктор.
-        @param pos: Опорная позиция якоря.
-        @param size: Размер ячейки якоря.
-        @param direction: Указание направления смещения якоря.
-        @param min_size: Указание ограничения размера по минимуму.
-        @param max_size: Указание ограничения размера по максимуму.
+        :param pos: Опорная позиция якоря.
+        :param size: Размер ячейки якоря.
+        :param direction: Указание направления смещения якоря.
+        :param min_size: Указание ограничения размера по минимуму.
+        :param max_size: Указание ограничения размера по максимуму.
         """
         self._position = pos
         self._size = size
@@ -55,7 +55,7 @@ class icMnemoAnchorProto(object):
     def setControlPosition(self, ctrl=None):
         """
         Установить позицию и размер контрола в ссответствии с данным якорем.
-        @param ctrl: Объект контрола.
-        @return: True/False.
+        :param ctrl: Объект контрола.
+        :return: True/False.
         """
         return False

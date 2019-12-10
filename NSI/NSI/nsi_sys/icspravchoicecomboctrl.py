@@ -133,8 +133,8 @@ class icSpravChoiceComboCtrlProto(wx.ComboCtrl):
     def setCode(self, code):
         """
         Установить код справочника как выбранный.
-        @param code: Код справочника.
-        @return: True/False.
+        :param code: Код справочника.
+        :return: True/False.
         """
         if code is None:
             # Да пустое значение тоже можно
@@ -161,7 +161,7 @@ class icSpravChoiceComboCtrlProto(wx.ComboCtrl):
     def choiceSprav(self):
         """
         Вызов выбора из справочника.
-        @return: Выбранный код.
+        :return: Выбранный код.
         """
         if self._sprav is not None:
             result = self._sprav.Hlp(field='name', parent=self,

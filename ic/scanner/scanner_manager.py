@@ -25,7 +25,7 @@ class icScannerManager(object):
     def __init__(self, scanner_exec_filename=None):
         """
         Конструктор.
-        @param scanner_exec_filename: Полный путь до исполняемого файла <icscanner.py>.
+        :param scanner_exec_filename: Полный путь до исполняемого файла <icscanner.py>.
             Если не определен, то берется из конфигурационного файла.
         """
         self._scanner_exec_filename = config.get_glob_var('DEFAULT_SCANNER_EXEC_FILENAME') if scanner_exec_filename is None else scanner_exec_filename
@@ -39,7 +39,7 @@ class icScannerManager(object):
     def do_scan(self):
         """
         Запуск сканирования документа.
-        @return: True/False.
+        :return: True/False.
         """
         if os.path.exists(self._scanner_exec_filename):
             cmd = '%s %s' % (sys.executable, self._scanner_exec_filename)
@@ -56,7 +56,7 @@ class icScannerManager(object):
     def do_scan_preview(self):
         """
         Запуск сканирования документа с просмотром результата сканирования.
-        @return: True/False.
+        :return: True/False.
         """
         if os.path.exists(self._scanner_exec_filename):
             cmd = '%s %s --preview' % (sys.executable, self._scanner_exec_filename)
@@ -74,8 +74,8 @@ class icScannerManager(object):
         """
         Запуск сканирования документа с
         сохранением в определенном файле.
-        @param scan_filename: Имя файла скана документа.
-        @return: True/False.
+        :param scan_filename: Имя файла скана документа.
+        :return: True/False.
         """
         if os.path.exists(self._scanner_exec_filename):
             scan_dir = os.path.dirname(scan_filename)
@@ -97,12 +97,12 @@ class icScannerManager(object):
     def do_scan_pack(self, *scan_filenames):
         """
         Запуск сканирования пакета документов.
-        @param scan_filenames: Список имен файлов документов сканирования 
+        :param scan_filenames: Список имен файлов документов сканирования 
             с указанием количества страниц каждого документа (не обязательно)  
             и признаком 2-стороннего сканирования (не обязательно).
             Например:
             ('/tmp/scan001.pdf', 2, True), ('/tmp/scan002.pdf', ), ('/tmp/scan003.pdf', 1), ...
-        @return: True/False.
+        :return: True/False.
         """
         # Проверка корректности входных данных
         if not scan_filenames:
@@ -145,7 +145,7 @@ class icScannerManager(object):
     def deleteScanFiles(self, *scan_filenames):
         """
         Удалить файлы сканировани.
-        @param scan_filenames: Список имен файлов документов сканирования.
+        :param scan_filenames: Список имен файлов документов сканирования.
         """
         for scan_filename in scan_filenames:
             if os.path.exists(scan_filename):

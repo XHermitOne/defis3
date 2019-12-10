@@ -84,15 +84,15 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
     def setParentNode(self, ParentNode_, Name_):
         """
         Установить родительский узел.
-        @param ParentNode_: Родительский узел.
-        @param Name_: Имя данного узла.
+        :param ParentNode_: Родительский узел.
+        :param Name_: Имя данного узла.
         """
         return storage_interface.icElementStorageInterface.setParentNode(self, ParentNode_, Name_)
       
     def setName(self, NewName_):
         """
         Установить имя узла.
-        @param NewName_: НОвое имя.
+        :param NewName_: НОвое имя.
         """
         if NewName_ == self.getName():
             return
@@ -155,7 +155,7 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
     def setProperty(self, NewProperty_):
         """
         Установить свойства узла.
-        @param NewProperty_: Словарь свойств.
+        :param NewProperty_: Словарь свойств.
         """
         return self.__setitem__('property', NewProperty_)
         
@@ -277,8 +277,8 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
         """
         Заблокировать.
         ВНИМАНИЕ!!! Блокировать необходимо весь файл целиком.
-        @param Name_: Имя блокируемого объекта.
-        @return: Возвращает результат успешной блокировки True/False.
+        :param Name_: Имя блокируемого объекта.
+        :return: Возвращает результат успешной блокировки True/False.
         """
         if self._ParentNode:
             return self._ParentNode.lock()
@@ -287,8 +287,8 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
     def unLock(self, Name_=None):
         """
         Разблокировать.
-        @param Name_: Имя блокируемого объекта.
-        @return: Возвращает результат успешной разблокировки True/False.
+        :param Name_: Имя блокируемого объекта.
+        :return: Возвращает результат успешной разблокировки True/False.
         """
         if self._ParentNode:
             return self._ParentNode.unLock()
@@ -396,9 +396,9 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     def setParentNode(self, ParentNode_, Name_):
         """
         Привязать узел к родительскому.
-        @param ParentNode_: Узел, в котором находится папка.
+        :param ParentNode_: Узел, в котором находится папка.
             Родительский узел.
-        @param Name_: Имя узла.
+        :param Name_: Имя узла.
         """
         storage_interface.icElementStorageInterface.setParentNode(self, ParentNode_, Name_)
         self.setFileName(Name_)
@@ -484,7 +484,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     def _readyData(self, Data_=None):
         """
         Подготовка данных для записи.
-        @param Data_: Данные (дерево узлов), которые надо записать.
+        :param Data_: Данные (дерево узлов), которые надо записать.
         """
         # Если данные не определены, то получить их
         if Data_ is None:
@@ -527,7 +527,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     def setProperty(self, NewProperty_):
         """
         Установить свойства узла.
-        @param NewProperty_: Словарь свойств.
+        :param NewProperty_: Словарь свойств.
         """
         return self.__setitem__('property', NewProperty_)
         
@@ -553,7 +553,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     def Clone(self, CloneName_):
         """
         Клонировать узел.
-        @param CloneName_: Имя клона.
+        :param CloneName_: Имя клона.
         """
         new_file_name = os.path.join(os.path.dirname(self._FileName),
                                      CloneName_+FILE_STORAGE_EXT)
@@ -844,7 +844,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def renameNodeDir(self, NewNodeDir_):
         """
         Переименовать папку.
-        @param NewNodeDir_: Новая папка узла.
+        :param NewNodeDir_: Новая папка узла.
         """
         try:
             if not filefunc.isSamePathWin(NewNodeDir_, self._NodeDir):
@@ -859,7 +859,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def copyNodeDir(self, NewNodeDir_):
         """
         Скопировать папку.
-        @param NewNodeDir_: Новая папка узла.
+        :param NewNodeDir_: Новая папка узла.
         """
         try:
             if not filefunc.isSamePathWin(NewNodeDir_, self._NodeDir):
@@ -909,7 +909,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def setNodeDir(self, Name_):
         """
         Установить папку узла.
-        @param Name_: Имя узла.
+        :param Name_: Имя узла.
         """
         if self._ParentNode is not None:
             self._NodeDir = os.path.join(self._ParentNode.getNodeDir(), Name_)
@@ -921,9 +921,9 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def setParentNode(self, ParentNode_, Name_):
         """
         Привязать узел к родительскому.
-        @param ParentNode_: Узел, в котором находится папка.
+        :param ParentNode_: Узел, в котором находится папка.
             Родительский узел.
-        @param Name_: Имя узла.
+        :param Name_: Имя узла.
         """
         storage_interface.icElementStorageInterface.setParentNode(self, ParentNode_, Name_)
 
@@ -957,7 +957,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def setProperty(self, NewProperty_):
         """
         Установить свойства узла.
-        @param NewProperty_: Словарь свойств.
+        :param NewProperty_: Словарь свойств.
         """
         self.property = icFileStorage()
         self.property.setParentNode(self, DIR_STORAGE_PROPERTY_NAME)
@@ -991,7 +991,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def Clone(self, CloneName_):
         """
         Клонировать узел.
-        @param CloneName_: Имя клона.
+        :param CloneName_: Имя клона.
         """
         new_dir_name = os.path.join(os.path.dirname(self._NodeDir), CloneName_)
         # Клонировать только если такого директория нет
@@ -1210,7 +1210,7 @@ class icTreeDirStorage(icDirStorage):
     def lock(self, Name_=None):
         """
         Заблокировать ресурс папочного хранилища.
-        @param Name_: Имя блокируемого объекта.
+        :param Name_: Имя блокируемого объекта.
         """
         if Name_ is None:
             Name_ = self.nameLock()
@@ -1221,7 +1221,7 @@ class icTreeDirStorage(icDirStorage):
     def unLock(self, Name_=None):
         """
         Разблокировать ресурс папочного хранилища.
-        @param Name_: Имя блокируемого объекта.
+        :param Name_: Имя блокируемого объекта.
         """
         if Name_ is None:
             Name_ = self.nameLock()
@@ -1242,7 +1242,7 @@ class icTreeDirStorage(icDirStorage):
     def ownerLock(self, Name_=None):
         """
         Владелец блокировки.
-        @return: Имя компьютера-владельца блокировки. Если None, то блокирвки нет.
+        :return: Имя компьютера-владельца блокировки. Если None, то блокирвки нет.
         """
         if Name_ is None:
             Name_ = self.nameLock()

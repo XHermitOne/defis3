@@ -54,7 +54,7 @@ class icSequenceListBox(sequence_list_box_ctrl.icSequenceListBox,
                         parentModule.icWidget):
     """
     Контрол организации последовательности списка.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,

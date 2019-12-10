@@ -43,22 +43,22 @@ class icTreeCtrlManager(object):
                               ext_func=None, do_expand_all=False):
         """
         Установить данные в контрол wx.TreeListCtrl.
-        @param treelist_ctrl: Контрол wx.TreeListCtrl.
-        @param tree_data: Данные дерева:
+        :param treelist_ctrl: Контрол wx.TreeListCtrl.
+        :param tree_data: Данные дерева:
             Каждый узел дерева - словарь.
             Дочерние элементы находяться в ключе '__children__' в виде списка.
             Если корневой узел данных является списком,
             то в контроле присутствует несколько корневых узлов.
-        @param columns: Кортеж колонок:
+        :param columns: Кортеж колонок:
             ('ключ словаря данных 1', ...)
             Первый ключ будет являться главным.
-        @param ext_func: Дополнительная функция обработки:
+        :param ext_func: Дополнительная функция обработки:
             В качестве аргументов длжна принимать:
             treelist_ctrl - Контрол wx.TreeListCtrl.
             item - Текущий обрабатываемый элемент контрола.
             node - Данные узла, соответствующие элементу контрола.
-        @param do_expand_all: Произвести автоматическое распахивание дерева?
-        @return: True/False.
+        :param do_expand_all: Произвести автоматическое распахивание дерева?
+        :return: True/False.
         """
         if treelist_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeListCtrl для заполнения данными')
@@ -80,22 +80,22 @@ class icTreeCtrlManager(object):
                              ext_func=None, do_expand_all=False):
         """
         Установить данные в контрол wx.TreeListCtrl.
-        @param treelist_ctrl: Контрол wx.TreeListCtrl.
-        @param tree_data: Данные дерева:
+        :param treelist_ctrl: Контрол wx.TreeListCtrl.
+        :param tree_data: Данные дерева:
             Каждый узел дерева - словарь.
             Дочерние элементы находяться в ключе '__children__' в виде списка.
             Если корневой узел данных является списком,
             то в контроле присутствует несколько корневых узлов.
-        @param columns: Кортеж колонок:
+        :param columns: Кортеж колонок:
             ('ключ словаря данных 1', ...)
             Первый ключ будет являться главным.
-        @param ext_func: Дополнительная функция обработки:
+        :param ext_func: Дополнительная функция обработки:
             В качестве аргументов длжна принимать:
             treelist_ctrl - Контрол wx.TreeListCtrl.
             item - Текущий обрабатываемый элемент контрола.
             node - Данные узла, соответствующие элементу контрола.
-        @param do_expand_all: Произвести автоматическое распахивание дерева?
-        @return: True/False.
+        :param do_expand_all: Произвести автоматическое распахивание дерева?
+        :return: True/False.
         """
         try:
             return self._setTree_TreeListCtrl(treelist_ctrl, tree_data, columns,
@@ -107,7 +107,7 @@ class icTreeCtrlManager(object):
         """
         Внутренняя функция.
         Добавление корневого элемента.
-        @return:
+        :return:
         """
         # Добавление корневого элемента
         label = strfunc.toUnicode(node.get(columns[0], UNKNOWN))
@@ -147,21 +147,21 @@ class icTreeCtrlManager(object):
                                    ext_func=None):
         """
         Добавить ветку в узел дерева контрола wx.TreeListCtrl.
-        @param treelist_ctrl: Контрол wx.TreeListCtrl.
-        @param parent_item: Родительский элемент, в который происходит добавление.
+        :param treelist_ctrl: Контрол wx.TreeListCtrl.
+        :param parent_item: Родительский элемент, в который происходит добавление.
             Если не указан, то создается корневой элемент.
-        @param node: Данные узла.
+        :param node: Данные узла.
             Если словарь, то добавляется 1 узел.
             Если список, то считается что необходимо добавить несколько узлов.
-        @param columns: Кортеж колонок:
+        :param columns: Кортеж колонок:
             ('ключ словаря данных 1', ...)
             Первый ключ будет являться главным.
-        @param ext_func: Дополнительная функция обработки:
+        :param ext_func: Дополнительная функция обработки:
             В качестве аргументов длжна принимать:
             treelist_ctrl - Контрол wx.TreeListCtrl.
             item - Текущий обрабатываемый элемент контрола.
             node - Данные узла, соответствующие элементу контрола.
-        @return: True/False.
+        :return: True/False.
         """
         if treelist_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeListCtrl для заполнения данными')
@@ -223,21 +223,21 @@ class icTreeCtrlManager(object):
                                   ext_func=None):
         """
         Добавить ветку в узел дерева контрола wx.TreeListCtrl.
-        @param treelist_ctrl: Контрол wx.TreeListCtrl.
-        @param parent_item: Родительский элемент, в который происходит добавление.
+        :param treelist_ctrl: Контрол wx.TreeListCtrl.
+        :param parent_item: Родительский элемент, в который происходит добавление.
             Если не указан, то создается корневой элемент.
-        @param node: Данные узла.
+        :param node: Данные узла.
             Если словарь, то добавляется 1 узел.
             Если список, то считается что необходимо добавить несколько узлов.
-        @param columns: Кортеж колонок:
+        :param columns: Кортеж колонок:
             ('ключ словаря данных 1', ...)
             Первый ключ будет являться главным.
-        @param ext_func: Дополнительная функция обработки:
+        :param ext_func: Дополнительная функция обработки:
             В качестве аргументов длжна принимать:
             treelist_ctrl - Контрол wx.TreeListCtrl.
             item - Текущий обрабатываемый элемент контрола.
             node - Данные узла, соответствующие элементу контрола.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             return self._appendBranch_TreeListCtrl(treelist_ctrl, parent_item,
@@ -249,10 +249,10 @@ class icTreeCtrlManager(object):
     def getItemData_tree(self, ctrl=None, item=None):
         """
         Получить прикрепленные данные к элементу дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева.
             Если None, то берется корневой элемент дерева.
-        @return: Прикрепленные данные к элементу дерева или None в случае ошибки.
+        :return: Прикрепленные данные к элементу дерева или None в случае ошибки.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для определения прикрепленных данных к элементу')
@@ -282,8 +282,8 @@ class icTreeCtrlManager(object):
     def getSelectedItemData_tree(self, ctrl=None):
         """
         Данные выбранного элемента дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @return: Данные выбранного элемента дерева или None в случае ошибки.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :return: Данные выбранного элемента дерева или None в случае ошибки.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для определения прикрепленных данных к элементу')
@@ -301,10 +301,10 @@ class icTreeCtrlManager(object):
     def setItemData_tree(self, ctrl=None, item=None, data=None):
         """
         Прикрепить данные к элементу дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева. Если None, то берется корневой элемент дерева.
-        @param data: Прикрепляемые данные.
-        @return: True/False.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева. Если None, то берется корневой элемент дерева.
+        :param data: Прикрепляемые данные.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для прикрепления данных к элементу')
@@ -327,9 +327,9 @@ class icTreeCtrlManager(object):
     def setSelectedItemData_tree(self, ctrl=None, data=None):
         """
         Установить данные выбранного элемента дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param data: Устанавливаемые данные.
-        @return: Данные выбранного элемента дерева или None в случае ошибки.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param data: Устанавливаемые данные.
+        :return: Данные выбранного элемента дерева или None в случае ошибки.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для установки прикрепленных данных к элементу')
@@ -347,9 +347,9 @@ class icTreeCtrlManager(object):
     def getItemChildren(self, ctrl=None, item=None):
         """
         Список дочерних элементов узла дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param item: Узел/элемент дерева. Если None, то корневой элемент.
-        @return: Список дочерних элементов узла дерева 
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param item: Узел/элемент дерева. Если None, то корневой элемент.
+        :return: Список дочерних элементов узла дерева 
             или None в случае ошибки.
         """
         if ctrl is None:
@@ -381,9 +381,9 @@ class icTreeCtrlManager(object):
     def getItemChildrenCount(self, ctrl=None, item=None):
         """
         Количество дочерних элементов узла дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param item: Узел/элемент дерева. Если None, то корневой элемент.
-        @return: Количество дочерних элементов или -1 в случае ошибки.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param item: Узел/элемент дерева. Если None, то корневой элемент.
+        :return: Количество дочерних элементов или -1 в случае ошибки.
         """
         try:
             # Определить узел
@@ -397,16 +397,16 @@ class icTreeCtrlManager(object):
     def setItemColour_requirement(self, ctrl=None, fg_colour=None, bg_colour=None, requirement=None, item=None):
         """
         Установить цвет элементов дерева в контроле по определенному условию.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param fg_colour: Цвет текста, если условие выполненно.
-        @param bg_colour: Цвет фона, если условие выполненно.
-        @param requirement: lambda выражение, формата:
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param fg_colour: Цвет текста, если условие выполненно.
+        :param bg_colour: Цвет фона, если условие выполненно.
+        :param requirement: lambda выражение, формата:
             lambda item: ...
             Которое возвращает True/False.
             Если True, то установка цвета будет сделана.
             False - строка не расцвечивается.
-        @param item: Текущий обрабатываемый элемент дерева.
-        @return: True/False.
+        :param item: Текущий обрабатываемый элемент дерева.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для установки цвета')
@@ -439,10 +439,10 @@ class icTreeCtrlManager(object):
     def setItemForegroundColour(self, ctrl, item, colour):
         """
         Установить цвет текста элемента дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева.
-        @param colour: Цвет.
-        @return: True/False.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева.
+        :param colour: Цвет.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для установки цвета')
@@ -457,10 +457,10 @@ class icTreeCtrlManager(object):
     def setItemBackgroundColour(self, ctrl, item, colour):
         """
         Установить цвет фона элемента дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева.
-        @param colour: Цвет.
-        @return: True/False.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева.
+        :param colour: Цвет.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для установки цвета')
@@ -476,20 +476,20 @@ class icTreeCtrlManager(object):
                           ext_func=None, do_expand_all=False):
         """
         Установить данные в контрол wx.TreeCtrl.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param tree_data: Данные дерева:
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param tree_data: Данные дерева:
             Каждый узел дерева - словарь.
             Дочерние элементы находяться в ключе '__children__' в виде списка.
             Если корневой узел данных является списком,
             то в контроле присутствует несколько корневых узлов.
-        @param label: Ключ для определения надписи элемента дерева.
-        @param ext_func: Дополнительная функция обработки:
+        :param label: Ключ для определения надписи элемента дерева.
+        :param ext_func: Дополнительная функция обработки:
             В качестве аргументов длжна принимать:
             tree_ctrl - Контрол wx.TreeCtrl.
             item - Текущий обрабатываемый элемент контрола.
             node - Данные узла, соответствующие элементу контрола.
-        @param do_expand_all: Произвести автоматическое распахивание дерева?
-        @return: True/False.
+        :param do_expand_all: Произвести автоматическое распахивание дерева?
+        :return: True/False.
         """
         if tree_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для заполнения данными')
@@ -510,20 +510,20 @@ class icTreeCtrlManager(object):
                          ext_func=None, do_expand_all=False):
         """
         Установить данные в контрол wx.TreeCtrl.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param tree_data: Данные дерева:
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param tree_data: Данные дерева:
             Каждый узел дерева - словарь.
             Дочерние элементы находяться в ключе '__children__' в виде списка.
             Если корневой узел данных является списком,
             то в контроле присутствует несколько корневых узлов.
-        @param label: Ключ для определения надписи элемента дерева.
-        @param ext_func: Дополнительная функция обработки:
+        :param label: Ключ для определения надписи элемента дерева.
+        :param ext_func: Дополнительная функция обработки:
             В качестве аргументов длжна принимать:
             tree_ctrl - Контрол wx.TreeCtrl.
             item - Текущий обрабатываемый элемент контрола.
             node - Данные узла, соответствующие элементу контрола.
-        @param do_expand_all: Произвести автоматическое распахивание дерева?
-        @return: True/False.
+        :param do_expand_all: Произвести автоматическое распахивание дерева?
+        :return: True/False.
         """
         try:
             return self._setTree_TreeCtrl(tree_ctrl, tree_data, label,
@@ -536,19 +536,19 @@ class icTreeCtrlManager(object):
                                label=None, ext_func=None):
         """
         Добавить ветку в узел дерева контрола wx.TreeCtrl.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param parent_item: Родительский элемент, в который происходит добавление.
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param parent_item: Родительский элемент, в который происходит добавление.
             Если не указан, то создается корневой элемент.
-        @param node: Данные узла.
+        :param node: Данные узла.
             Если словарь, то добавляется 1 узел.
             Если список, то считается что необходимо добавить несколько узлов.
-        @param label: Ключ для определения надписи элемента дерева.
-        @param ext_func: Дополнительная функция обработки:
+        :param label: Ключ для определения надписи элемента дерева.
+        :param ext_func: Дополнительная функция обработки:
             В качестве аргументов длжна принимать:
             tree_ctrl - Контрол wx.TreeCtrl.
             item - Текущий обрабатываемый элемент контрола.
             node - Данные узла, соответствующие элементу контрола.
-        @return: True/False.
+        :return: True/False.
         """
         if tree_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для заполнения данными')
@@ -598,19 +598,19 @@ class icTreeCtrlManager(object):
                               ext_func=None):
         """
         Добавить ветку в узел дерева контрола wx.TreeCtrl.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param parent_item: Родительский элемент, в который происходит добавление.
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param parent_item: Родительский элемент, в который происходит добавление.
             Если не указан, то создается корневой элемент.
-        @param node: Данные узла.
+        :param node: Данные узла.
             Если словарь, то добавляется 1 узел.
             Если список, то считается что необходимо добавить несколько узлов.
-        @param label: Ключ для определения надписи элемента дерева.
-        @param ext_func: Дополнительная функция обработки:
+        :param label: Ключ для определения надписи элемента дерева.
+        :param ext_func: Дополнительная функция обработки:
             В качестве аргументов длжна принимать:
             tree_ctrl - Контрол wx.TreeCtrl.
             item - Текущий обрабатываемый элемент контрола.
             node - Данные узла, соответствующие элементу контрола.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             return self._appendBranch_TreeCtrl(tree_ctrl, parent_item,
@@ -622,9 +622,9 @@ class icTreeCtrlManager(object):
     def setRootTitle(self, tree_ctrl, title):
         """
         Поменять надпись корневого элемента.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param title: Надпись.
-        @return: True/False.
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param title: Надпись.
+        :return: True/False.
         """
         if tree_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для установки надписи корневого элемента')
@@ -642,10 +642,10 @@ class icTreeCtrlManager(object):
     def expandChildren(self, tree_ctrl=None, item=None, all_children=False):
         """
         Распахнуть дочерние элементы.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева. Если None, то берется корневой элемент.
-        @param all_children: Распахнуть все дочерние элементы?
-        @return: True/False.
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева. Если None, то берется корневой элемент.
+        :param all_children: Распахнуть все дочерние элементы?
+        :return: True/False.
         """
         if tree_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для распахивания дочерних элементов')
@@ -671,10 +671,10 @@ class icTreeCtrlManager(object):
     def collapseChildren(self, tree_ctrl=None, item=None, all_children=False):
         """
         Свернуть дочерние элементы.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева. Если None, то берется корневой элемент.
-        @param all_children: Свернуть все дочерние элементы?
-        @return: True/False.
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева. Если None, то берется корневой элемент.
+        :param all_children: Свернуть все дочерние элементы?
+        :return: True/False.
         """
         if tree_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для сворачивания дочерних элементов')
@@ -696,10 +696,10 @@ class icTreeCtrlManager(object):
     def getItemPathLabel(self, tree_ctrl=None, item=None, lPath=None):
         """
         Путь до элемента. Путь - список имен элементов.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева. Если None, то берется корневой элемент.
-        @param lPath: Текущий заполненный путь.
-        @return: Список пути до элемента или None в случае ошибки.
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева. Если None, то берется корневой элемент.
+        :param lPath: Текущий заполненный путь.
+        :return: Список пути до элемента или None в случае ошибки.
         """
         if tree_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для сворачивания дочерних элементов')
@@ -730,9 +730,9 @@ class icTreeCtrlManager(object):
         """
         Определить уровень дерева элемента.
         Например у корневого элемента уровень 0.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева. Если None, то берется корневой элемент.
-        @return: Номер уровня или None в случае ошибки.
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева. Если None, то берется корневой элемент.
+        :return: Номер уровня или None в случае ошибки.
         """
         label_path = self.getItemPathLabel(tree_ctrl=tree_ctrl, item=item)
         # log.debug(u'Путь до элемента <%s> %s' % (item, str(label_path)))
@@ -741,10 +741,10 @@ class icTreeCtrlManager(object):
     def getItemPathData(self, tree_ctrl=None, item=None, lPath=None):
         """
         Путь до элемента. Путь - список данных элементов.
-        @param tree_ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева. Если None, то берется корневой элемент.
-        @param lPath: Текущий заполненный путь.
-        @return: Список пути данных до элемента или None в случае ошибки.
+        :param tree_ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева. Если None, то берется корневой элемент.
+        :param lPath: Текущий заполненный путь.
+        :return: Список пути данных до элемента или None в случае ошибки.
         """
         if tree_ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для сворачивания дочерних элементов')
@@ -776,14 +776,14 @@ class icTreeCtrlManager(object):
     def findItem_requirement(self, ctrl=None, requirement=None, item=None):
         """
         Поиск элемента дерева по требованию.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param requirement: lambda выражение, формата:
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param requirement: lambda выражение, формата:
             lambda item: ...
             Которое возвращает True/False.
             Если True, то элемент удовлетворяет критерию поиска.
             False - строка не удовлетворяет.
-        @param item: Текущий обрабатываемый элемент дерева.
-        @return: Найденный элемент или None если не найден элемент.
+        :param item: Текущий обрабатываемый элемент дерева.
+        :return: Найденный элемент или None если не найден элемент.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для поиска элемента дерева')
@@ -808,8 +808,8 @@ class icTreeCtrlManager(object):
     def getSelectedTreeItem(self, ctrl):
         """
         Выбранный элемент дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @return: Выбранный элемент дерева или None ничего не выбрано.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :return: Выбранный элемент дерева или None ничего не выбрано.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для выбора элемента дерева')
@@ -831,10 +831,10 @@ class icTreeCtrlManager(object):
     def selectTreeItem(self, ctrl, item=None, select=True):
         """
         Выбор элемента дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param item: Элемент дерева. Если item - None, то берется корневой элемент.
-        @param select: True - выбрать элемент. False - наоборот снять выбор.
-        @return: True/False.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param item: Элемент дерева. Если item - None, то берется корневой элемент.
+        :param select: True - выбрать элемент. False - наоборот снять выбор.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол wx.TreeCtrl для выбора элемента дерева')
@@ -849,24 +849,24 @@ class icTreeCtrlManager(object):
     def selectTreeRoot(self, ctrl, select=True):
         """
         Выбор корневого элемента дерева.
-        @param ctrl: Контрол wx.TreeCtrl.
-        @param select: True - выбрать элемент. False - наоборот снять выбор.
-        @return: True/False.
+        :param ctrl: Контрол wx.TreeCtrl.
+        :param select: True - выбрать элемент. False - наоборот снять выбор.
+        :return: True/False.
         """
         return self.selectTreeItem(ctrl, select=select)
 
     def setColumns_tree_list_ctrl(self, ctrl=None, cols=()):
         """
         Установить колонки в контрол TreeListCtrl.
-        @param ctrl: Объект контрола.
-        @param cols: Список описаний колонок.
+        :param ctrl: Объект контрола.
+        :param cols: Список описаний колонок.
             колонка может описываться как списком
             ('Заголовок колонки', Ширина колонки, Выравнивание)
             так и словарем:
             {'label': Заголовок колонки,
             'width': Ширина колонки,
             'align': Выравнивание}
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол TreeListCtrl для добавления колонок')
@@ -896,11 +896,11 @@ class icTreeCtrlManager(object):
     def appendColumn_TreeListCtrl(self, ctrl, label=u'', width=-1, align='LEFT'):
         """
         Добавить колонку в wx.TreeListCtrl.
-        @param ctrl: Объект контрола wx.TreeListCtrl.
-        @param label: Надпись колонки.
-        @param width: Ширина колонки.
-        @param align: Выравнивание: LEFT/RIGHT.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола wx.TreeListCtrl.
+        :param label: Надпись колонки.
+        :param width: Ширина колонки.
+        :param align: Выравнивание: LEFT/RIGHT.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         try:
             if width <= 0:
@@ -925,10 +925,10 @@ class icTreeCtrlManager(object):
                              image_height=DEFAULT_ITEM_IMAGE_HEIGHT):
         """
         Получить список картинок элементов контрола дерева wx.TreeCtrl/wx.TreeListCtrl.
-        @param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
-        @param image_width: Ширина картинки.
-        @param image_height: Высота картинки.
-        @return: Объект списка образов.
+        :param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
+        :param image_width: Ширина картинки.
+        :param image_height: Высота картинки.
+        :return: Объект списка образов.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -946,7 +946,7 @@ class icTreeCtrlManager(object):
     def getTreeCtrlImageListCache(self, ctrl=None):
         """
         Кеш списка образов.
-        @param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
+        :param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -959,10 +959,10 @@ class icTreeCtrlManager(object):
     def setItemImage_tree_ctrl(self, ctrl=None, item=None, image=None):
         """
         Установить картинку элемента дерева.
-        @param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
-        @param item: Элемент дерева. Если None, то имеется ввиду корневой элемент.
-        @param image: Объект картинки wx.Bitmap. Если не определен, то картинка удаляется.
-        @return: True/False.
+        :param ctrl: Объект контрола wx.TreeListCtrl / wx.TreeCtrl.
+        :param item: Элемент дерева. Если None, то имеется ввиду корневой элемент.
+        :param image: Объект картинки wx.Bitmap. Если не определен, то картинка удаляется.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -981,10 +981,10 @@ class icTreeCtrlManager(object):
     def getImageIndex_tree_ctrl(self, ctrl=None, image=None, auto_add=True):
         """
         Поиск образа в списке образов wx.TreeCtrl.
-        @param ctrl: Объект контрола дерева.
-        @param image: Объект образа.
-        @param auto_add: Автоматически добавить в список, если отсутствует?
-        @return: Индекс образа или -1 если образ не найден.
+        :param ctrl: Объект контрола дерева.
+        :param image: Объект образа.
+        :param auto_add: Автоматически добавить в список, если отсутствует?
+        :return: Индекс образа или -1 если образ не найден.
         """
         if image is None:
             return -1
@@ -1016,14 +1016,14 @@ class icTreeCtrlManager(object):
                                   label=u'', image=None, data=None, select=True):
         """
         Добавить дочерний элемент дерева.
-        @param ctrl: Объект контрола дерева.
-        @param parent_item: Родительский элемент дерева.
+        :param ctrl: Объект контрола дерева.
+        :param parent_item: Родительский элемент дерева.
             Если не определен, то считается что это корневой элемент.
-        @param label: Надпись нового элемента.
-        @param image: Образ нового элемента.
-        @param data: Данные, автоматически прикрепляемые к новому элементу.
-        @param select: Автоматически выбрать новый элемент?
-        @return: Новый элемент дерева или None в случае ошибки.
+        :param label: Надпись нового элемента.
+        :param image: Образ нового элемента.
+        :param data: Данные, автоматически прикрепляемые к новому элементу.
+        :param select: Автоматически выбрать новый элемент?
+        :return: Новый элемент дерева или None в случае ошибки.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -1049,12 +1049,12 @@ class icTreeCtrlManager(object):
     def deleteItem_tree_ctrl(self, ctrl=None,item=None, ask=False, select=True):
         """
         Удалить элемент дерева.
-        @param ctrl: Объект контрола дерева.
-        @param item: Удаляемый элемент дерева.
+        :param ctrl: Объект контрола дерева.
+        :param item: Удаляемый элемент дерева.
             Если не определен, то считается что это текущий выбранный элемент.
-        @param ask: Спросить о подтверждении удаления?
-        @param select: Автоматически выбрать новый элемент?
-        @return: True/False.
+        :param ask: Спросить о подтверждении удаления?
+        :param select: Автоматически выбрать новый элемент?
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -1083,10 +1083,10 @@ class icTreeCtrlManager(object):
     def _getTreeData(self, ctrl=None, item=None):
         """
         Получить данные дерева.
-        @param ctrl: Объект контрола дерева.
-        @param item: Текущий обрабатываемый элемент дерева.
+        :param ctrl: Объект контрола дерева.
+        :param item: Текущий обрабатываемый элемент дерева.
             Если не определен, тоберется корневой элемент.
-        @return: Словарно-списковая структура дерева или None в случае ошибки.
+        :return: Словарно-списковая структура дерева или None в случае ошибки.
         """
         if item is None:
             item = ctrl.GetRootItem()
@@ -1106,8 +1106,8 @@ class icTreeCtrlManager(object):
     def getTreeData(self, ctrl=None, *args, **kwargs):
         """
         Получить данные дерева.
-        @param ctrl: Объект контрола дерева.
-        @return: Словарно-списковая структура дерева или None в случае ошибки.
+        :param ctrl: Объект контрола дерева.
+        :return: Словарно-списковая структура дерева или None в случае ошибки.
             Каждый узел дерева - словарь.
             Дочерние элементы находяться в ключе '__children__' в виде списка.
             Если корневой узел данных является списком,
@@ -1132,14 +1132,14 @@ class icTreeCtrlManager(object):
     def setTreeData(self, ctrl=None, tree_data=None, bRootExpand=True, *args, **kwargs):
         """
         Установить данные дерева.
-        @param ctrl: Объект контрола дерева.
-        @param tree_data: Данные дерева.
+        :param ctrl: Объект контрола дерева.
+        :param tree_data: Данные дерева.
             Каждый узел дерева - словарь.
             Дочерние элементы находяться в ключе '__children__' в виде списка.
             Если корневой узел данных является списком,
             то в контроле присутствует несколько корневых узлов.
-        @param bRootExpand: Распахнуть корневой элемент?
-        @return: True/False.
+        :param bRootExpand: Распахнуть корневой элемент?
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -1169,9 +1169,9 @@ class icTreeCtrlManager(object):
     def isRootTreeItem(self, ctrl=None, item=None):
         """
         Проверить является ли элемент дерева корневым.
-        @param ctrl: Объект контрола дерева.
-        @param item: Элемент дерева.
-        @return: True - корневой элемент / False - нет.
+        :param ctrl: Объект контрола дерева.
+        :param item: Элемент дерева.
+        :return: True - корневой элемент / False - нет.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -1183,10 +1183,10 @@ class icTreeCtrlManager(object):
     def isFirstTreeItem(self, ctrl=None, item=None):
         """
         Проверка является ли элемент первым на текущем уровне?
-        @param ctrl: Объект контрола дерева.
-        @param item: Элемент дерева.
+        :param ctrl: Объект контрола дерева.
+        :param item: Элемент дерева.
             Если не определен, то считается что это корневой элемент.
-        @return: True - первый элемент / False - нет.
+        :return: True - первый элемент / False - нет.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -1211,10 +1211,10 @@ class icTreeCtrlManager(object):
     def isLastTreeItem(self, ctrl=None, item=None):
         """
         Проверка является ли элемент последним на текущем уровне?
-        @param ctrl: Объект контрола дерева.
-        @param item: Элемент дерева.
+        :param ctrl: Объект контрола дерева.
+        :param item: Элемент дерева.
             Если не определен, то считается что это корневой элемент.
-        @return: True - первый элемент / False - нет.
+        :return: True - первый элемент / False - нет.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -1239,10 +1239,10 @@ class icTreeCtrlManager(object):
     def getParentTreeItem(self, ctrl=None, item=None):
         """
         Получить родительский элемент дерева.
-        @param ctrl: Объект контрола дерева.
-        @param item: Элемент дерева.
+        :param ctrl: Объект контрола дерева.
+        :param item: Элемент дерева.
             Если не определен, то считается что это корневой элемент.
-        @return: Родительский элемент или None если его нет.
+        :return: Родительский элемент или None если его нет.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -1254,11 +1254,11 @@ class icTreeCtrlManager(object):
     def moveUpTreeItem(self, ctrl=None, item=None, auto_select=True):
         """
         Передвинуть элемент дерева выше в текущем списке.
-        @param ctrl: Объект контрола дерева.
-        @param item: Элемент дерева.
+        :param ctrl: Объект контрола дерева.
+        :param item: Элемент дерева.
             Если не определен, то считается что это корневой элемент.
-        @param auto_select: Автоматически выбрать перемещаемый элемент?
-        @return: True/False.
+        :param auto_select: Автоматически выбрать перемещаемый элемент?
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')
@@ -1286,11 +1286,11 @@ class icTreeCtrlManager(object):
     def moveDownTreeItem(self, ctrl=None, item=None, auto_select=True):
         """
         Передвинуть элемент дерева ниже в текущем списке.
-        @param ctrl: Объект контрола дерева.
-        @param item: Элемент дерева.
+        :param ctrl: Объект контрола дерева.
+        :param item: Элемент дерева.
             Если не определен, то считается что это корневой элемент.
-        @param auto_select: Автоматически выбрать перемещаемый элемент?
-        @return: True/False.
+        :param auto_select: Автоматически выбрать перемещаемый элемент?
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.TreeCtrl/wx.TreeListCtrl')

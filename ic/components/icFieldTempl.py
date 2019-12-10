@@ -80,10 +80,10 @@ def isStringTypeCell(templ):
     """
     Признак строкового типа вывода. К таким типам относятся шаблоны состоящие
     из любых строк кроме '999*', '*9.9*', 'N:*', 'N'
-    @param templ: Шаблон вывода
-    @type templ: C{string}
-    @return: Признак строкового типа вывода.
-    @rtype: C{bool}
+    :param templ: Шаблон вывода
+    :type templ: C{string}
+    :return: Признак строкового типа вывода.
+    :rtype: C{bool}
     """
     if templ.find(u'X') >= 0 or templ.find(u'S') >= 0 or templ.find(u'CH') >= 0:
         return 1
@@ -98,14 +98,14 @@ def defPicType(pic, valid):
     """
     Функция по атрибуту шаблона 'pic' определяет тип шаблона и тип ячейки
     грида.
-    @return: Возвращет тип шаблона
-    @param pic: Шаблон вывода
-    @type pic: C{string}
-    @param valid: Строка, определяющая возможные значения ячейки. Информация 
+    :return: Возвращет тип шаблона
+    :param pic: Шаблон вывода
+    :type pic: C{string}
+    :param valid: Строка, определяющая возможные значения ячейки. Информация 
         используется wxPython для задания форматов ячеек. Например, 
         wxGRID_VALUE_NUMBER + ':1,10' задает минимальное и максимальное 
         значение вводимого целого числа.
-    @type valid: C{string}
+    :type valid: C{string}
     """
     try:
         prz = pic[0]
@@ -212,16 +212,16 @@ def defPicType(pic, valid):
 def isEqTemplate(typ, templ, oldText, key_cod, ins_pos, event=None):
     """
     Функция определяет удолетворяет ли вводимый символ шаблону.
-    @param typ: Тип шаблона.
-    @type typ: C{int}
-    @param templ: Шаблон ввода/вывода.
-    @type templ: C{string}
-    @param oldText: Текст поля.
-    @type oldText: C{string}
-    @param ins_pos: Положение курсора в редакторе поля ввода.
-    @type ins_pos: C{int}
-    @param key_cod: Код нажатой клавиши.
-    @type key_cod: C{int}
+    :param typ: Тип шаблона.
+    :type typ: C{int}
+    :param templ: Шаблон ввода/вывода.
+    :type templ: C{string}
+    :param oldText: Текст поля.
+    :type oldText: C{string}
+    :param ins_pos: Положение курсора в редакторе поля ввода.
+    :type ins_pos: C{int}
+    :param key_cod: Код нажатой клавиши.
+    :type key_cod: C{int}
     """
     txt = None
     try:
@@ -340,14 +340,14 @@ def delTempl(pic, txt, list_div=ListDIV):
     Удаляет из текста символы форматирования.
     B{Пример:}
     C{__delTempl('123-AS') -> '123AS'}
-    @return: Возвращает текст без символов форматирования.
-    @rtype:  C{string}
-    @param pic: Шаблон вывода (например, 'XX-XX')
-    @type pic: C{string}
-    @param txt: Текст, который необходимо преобразовать
-    @type txt: C{string}
-    @param list_div: Список разделителей, используемых в шаблонах
-    @type list_div: C{List}
+    :return: Возвращает текст без символов форматирования.
+    :rtype:  C{string}
+    :param pic: Шаблон вывода (например, 'XX-XX')
+    :type pic: C{string}
+    :param txt: Текст, который необходимо преобразовать
+    :type txt: C{string}
+    :param list_div: Список разделителей, используемых в шаблонах
+    :type list_div: C{List}
     """
     #   Если в шаблоне находим признаки не форматируемых полей (F, S, N), то
     #   выходим из процедуры
@@ -370,16 +370,16 @@ def setTempl(pic, txt, ins_pos, list_div=ListDIV):
     B{Пример:}
     C{__setTempl('XX-XXX, '1234', 2) -> '12-34'}
     C{__setTempl('XX-XXX, '1234', 1) -> '1-234'}
-    @return: Возвращает отформатированный текст
-    @rtype: C{string}
-    @param pic: Шаблон вывода (например, 'XX-XX')
-    @type pic: C{unicode}
-    @param txt: Текст, который необходимо преобразовать
-    @type txt: C{unicode}
-    @param ins_pos: Позиция, куда будет вставляться символ. Если =-1, то в текст ничего вставляться не будет.
-    @type ins_pos: C{int}
-    @param list_div: Список разделителей, используемых в шаблонах
-    @type list_div: C{List}
+    :return: Возвращает отформатированный текст
+    :rtype: C{string}
+    :param pic: Шаблон вывода (например, 'XX-XX')
+    :type pic: C{unicode}
+    :param txt: Текст, который необходимо преобразовать
+    :type txt: C{unicode}
+    :param ins_pos: Позиция, куда будет вставляться символ. Если =-1, то в текст ничего вставляться не будет.
+    :type ins_pos: C{int}
+    :param list_div: Список разделителей, используемых в шаблонах
+    :type list_div: C{List}
     """
     if isinstance(txt, str):
         value = txt
@@ -504,16 +504,16 @@ def setTempl(pic, txt, ins_pos, list_div=ListDIV):
 def isSimbEqTemplate(keycod, ins_pos, text, templ):
     """
     Проверяет соответствует ли шаблону вводимый символ
-    @return: Возвращает признак соответствия вводимого символа шаблону
-    @rtype: C{true | false}
-    @param keycod: Код (wxPython) нажатой клавиши.
-    @type keycod: C{int}
-    @param ins_pos: Позиция курсора
-    @type ins_pos: C{int}
-    @param text: Текст
-    @type text: C{string}
-    @param templ: Шаблон вывода
-    @type templ: C{string}
+    :return: Возвращает признак соответствия вводимого символа шаблону
+    :rtype: C{true | false}
+    :param keycod: Код (wxPython) нажатой клавиши.
+    :type keycod: C{int}
+    :param ins_pos: Позиция курсора
+    :type ins_pos: C{int}
+    :param text: Текст
+    :type text: C{string}
+    :param templ: Шаблон вывода
+    :type templ: C{string}
     """
     ret = 0
     oldTxt = text
@@ -565,8 +565,8 @@ def GetTextByTemplate(typ, templ, text, kcod, oldPoint):
 def PrepareTextByTempl(editor, typ, templ, text, kcod):
     """
     Подстраивает текст под шаблон.
-    @rtype: C{bool}
-    @return: Признак разрешающий редактору ввести текущий символ.
+    :rtype: C{bool}
+    :return: Признак разрешающий редактору ввести текущий символ.
     """
     oldPoint = editor.GetInsertionPoint()
     #   Выделенный текст удаляем

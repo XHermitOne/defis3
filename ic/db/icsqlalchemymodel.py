@@ -17,6 +17,6 @@ class icSQLAlchemyModelProto(object):
     def __init__(self, resource=None):
         """
         Конструктор.
-        @param resource: Ресурсное описание.
+        :param resource: Ресурсное описание.
         """
         pass

@@ -5,16 +5,16 @@
 Стрелочный индикатор.
 Класс пользовательского визуального компонента.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -314,8 +314,8 @@ class icClassicSkin(icIndicatorSkin):
         """
         Функция рисует индикатор.
 
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
         """
         dc.BeginDrawing()
 
@@ -561,14 +561,14 @@ def GetValColor(value, min, max, clrReg, planFactor=1):
     """
     Возвращает цвет зоны значения индикатора.
 
-    @type value: C{float}
-    @param value: Значение индикатора.
-    @type min: C{float}
-    @param min: Минимальное значение шкалы индикатора.
-    @type max: C{float}
-    @param max: Максимальное значение шкалы индикатора.
-    @type clrReg: C{list}
-    @param clrReg: Описание цветовых зон. Первый элемент списка - значение
+    :type value: C{float}
+    :param value: Значение индикатора.
+    :type min: C{float}
+    :param min: Минимальное значение шкалы индикатора.
+    :type max: C{float}
+    :param max: Максимальное значение шкалы индикатора.
+    :type clrReg: C{list}
+    :param clrReg: Описание цветовых зон. Первый элемент списка - значение
         правой границы зоны, второй элемент описание цвета зоны. Описание
         зоны должно быть в виде кортежа (rr, gg, bb) название цвета, принятое
         в библиотеке wx.
@@ -596,14 +596,14 @@ def GetStateIndx(value, min, max, clrReg, planFactor=1):
     """
     Возвращает индекс зоны, соответствующей значению.
 
-    @type value: C{float}
-    @param value: Значение индикатора.
-    @type min: C{float}
-    @param min: Минимальное значение шкалы индикатора.
-    @type max: C{float}
-    @param max: Максимальное значение шкалы индикатора.
-    @type clrReg: C{list}
-    @param clrReg: Описание цветовых зон. Первый элемент списка - значение
+    :type value: C{float}
+    :param value: Значение индикатора.
+    :type min: C{float}
+    :param min: Минимальное значение шкалы индикатора.
+    :type max: C{float}
+    :param max: Максимальное значение шкалы индикатора.
+    :type clrReg: C{list}
+    :param clrReg: Описание цветовых зон. Первый элемент списка - значение
         правой границы зоны, второй элемент описание цвета зоны. Описание
         зоны должно быть в виде кортежа (rr, gg, bb) название цвета, принятое
         в библиотеке wx.
@@ -642,7 +642,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
     шкалы (это сделано для того, чтобы не пересчитывать цветовые зоны индикатора,
     которые задаются в %).
     
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{type='ArrowIndicator'}:
         - B{name='default'}:
@@ -709,22 +709,22 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(icArrowIndicator.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -855,12 +855,12 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         Функция накопления значений параметра за период.
         
-        @type rs: C{SQLObject.Recordset}
-        @param rs: Набор отобранных записей.
-        @type t1: C{string}
-        @param t1: Имя накапливаемого параметра.
-        @type t2: C{string}
-        @param t2: Имя накапливаемого параметра плана.
+        :type rs: C{SQLObject.Recordset}
+        :param rs: Набор отобранных записей.
+        :type t1: C{string}
+        :param t1: Имя накапливаемого параметра.
+        :type t2: C{string}
+        :param t2: Имя накапливаемого параметра плана.
         """
         agr_func = self.GetAggregationFunc()
         log.debug(u'\tself.attrVal = <%s>' % self.attrVal)
@@ -911,8 +911,8 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         Функция рисует индикатор.
 
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
         """
         if self._blockEvtPoint:
             return
@@ -1225,8 +1225,8 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         Возвращает набор записей отобранных из класса данных по заданному периоду.
         
-        @rtype: C{SQLObject.main.SelectResults}
-        @return: Возвращаем список отобранных записей.
+        :rtype: C{SQLObject.main.SelectResults}
+        :return: Возвращаем список отобранных записей.
         """
         cls = self.GetIDataclass()
         
@@ -1496,19 +1496,19 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         Изменяет параметры шкалы индикатора.
         
-        @type min: C{float}
-        @param min: Минимальное значение шкалы индикатора.
-        @type max: C{float}
-        @param max: Максимальное значение шкалы индикатора.
-        @type majorStep: C{float}
-        @param majorStep: Шаг мажорной сетки шкалы индикатора.
-        @type minorStep: C{float}
-        @param minorStep: Шаг минорной сетки шкалы индикатора.
-        @type factor: C{float}
-        @param factor: Коэфициент умножения (отношение между реальным отображаемым
+        :type min: C{float}
+        :param min: Минимальное значение шкалы индикатора.
+        :type max: C{float}
+        :param max: Максимальное значение шкалы индикатора.
+        :type majorStep: C{float}
+        :param majorStep: Шаг мажорной сетки шкалы индикатора.
+        :type minorStep: C{float}
+        :param minorStep: Шаг минорной сетки шкалы индикатора.
+        :type factor: C{float}
+        :param factor: Коэфициент умножения (отношение между реальным отображаемым
             значением и значением показываемым идикатором).
-        @type bChangeTitle: C{bool}
-        @param bChangeTitle: Признак изменения подписей маждорной сетки.
+        :type bChangeTitle: C{bool}
+        :param bChangeTitle: Признак изменения подписей маждорной сетки.
         """
         if self.majorValues:
             if min is None:
@@ -1597,21 +1597,21 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         """
         Функция устанавливает состояние индикатора относительного планового значения.
         
-        @type value: C{float}
-        @param value: Значвение индикатора.
-        @type plan: C{float}
-        @param plan: Плановое значвение индикатора (примерно соответствует середине).
-        @type min: C{float}
-        @param min: Минимальное значение шкалы индикатора.
-        @type majorStep: C{float}
-        @param majorStep: Шаг мажорной сетки шкалы индикатора.
-        @type minorStep: C{float}
-        @param minorStep: Шаг минорной сетки шкалы индикатора.
-        @type factor: C{float}
-        @param factor: Коэфициент умножения (отношение между реальным отображаемым
+        :type value: C{float}
+        :param value: Значвение индикатора.
+        :type plan: C{float}
+        :param plan: Плановое значвение индикатора (примерно соответствует середине).
+        :type min: C{float}
+        :param min: Минимальное значение шкалы индикатора.
+        :type majorStep: C{float}
+        :param majorStep: Шаг мажорной сетки шкалы индикатора.
+        :type minorStep: C{float}
+        :param minorStep: Шаг минорной сетки шкалы индикатора.
+        :type factor: C{float}
+        :param factor: Коэфициент умножения (отношение между реальным отображаемым
             значением и значением показываемым идикатором).
-        @type bChangeTitle: C{bool}
-        @param bChangeTitle: Признак изменения подписей маждорной сетки.
+        :type bChangeTitle: C{bool}
+        :param bChangeTitle: Признак изменения подписей маждорной сетки.
         """
         if plan is not None:
             if factor is None:
@@ -1725,13 +1725,13 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
         Обновляет представление индикатора (если компонент привязан к объекту
         icGridDataset).
         
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
-        @type bFromBuff: C{bool}
-        @param bFromBuff: Признак, который указывает, что значения можно брать из
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
+        :type bFromBuff: C{bool}
+        :param bFromBuff: Признак, который указывает, что значения можно брать из
             буфера измененных значений.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного обновления.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного обновления.
         """
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:
@@ -1749,8 +1749,8 @@ def test(par=0):
     """
     Тестируем пользовательский класс.
     
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     
     import ic.components.ictestapp as ictestapp

@@ -25,9 +25,9 @@ def icMultiCheckTreeDlg(Parent_, Title_, TreeData_):
     """
     Функция вызова диалога для множественного выбора элементов 
     из дерева данных.
-    @param Parent_: Родительское окно диалога.
-    @param Title_: Заголовок диалогового окна.
-    @param TreeData_: Данные древовидной структуры.
+    :param Parent_: Родительское окно диалога.
+    :param Title_: Заголовок диалогового окна.
+    :param TreeData_: Данные древовидной структуры.
     """
     try:
         win_clear = False
@@ -65,7 +65,7 @@ class icMultiCheckTreeDialog:
     def __init__(self, parent):
         """
         Конструктор.
-        @param parent: Родительское окно.
+        :param parent: Родительское окно.
         """
         self.evalSpace = icwidget.icResObjContext()
         self.evalSpace['WrapperObj'] = self

@@ -37,11 +37,11 @@ REPLACE_NAME_END = u'}}'
 def gen(sTxt, dContext=None):
     """
     Генерация текста.
-    @param sTxt: Tекст шаблона.
-    @param dContext. Контекст.
+    :param sTxt: Tекст шаблона.
+    :param dContext. Контекст.
         В качестве контекста может выступать любая словарная структура.
         По умолчанию контекст - локальное пространство имен модуля config.
-    @return: Сгенерированный текст.
+    :return: Сгенерированный текст.
     """
     if dContext is None:
         dContext = {}
@@ -66,8 +66,8 @@ def _getVarName(sPlace):
 def get_raplace_names(sTxt):
     """
     Определить имена автозамен.
-    @param sTxt: Редактируемый текст.
-    @return: Список имен замен.
+    :param sTxt: Редактируемый текст.
+    :return: Список имен замен.
     """
     if sTxt is None:
         log.warning(u'Не определен текст для автозамен')
@@ -79,9 +79,9 @@ def get_raplace_names(sTxt):
 def auto_replace(sTxt, dReplaces=None):
     """
     Запуск автозамен из контекста.
-    @param sTxt: Редактируемый текст.
-    @param dReplaces: Словарь замен, если None, то берется locals().
-    @return: Возвращается отредактированный текст или None в 
+    :param sTxt: Редактируемый текст.
+    :param dReplaces: Словарь замен, если None, то берется locals().
+    :return: Возвращается отредактированный текст или None в 
         случае возникновения ошибки.
     """
     if dReplaces is None:
@@ -116,8 +116,8 @@ def is_genered(txt):
     """
     Проверка является ли текст генерируемым.
         Т.е. есть ли в нем необходимые замены.
-    @param txt: Тест.
-    @return: True - есть замены, False - замен нет.
+    :param txt: Тест.
+    :return: True - есть замены, False - замен нет.
     """
     if not isinstance(txt, str):
         return False
@@ -131,14 +131,14 @@ def is_genered(txt):
 def gen_txt_file(sTxtTemplateFilename, sTxtOutputFilename, dContext=None, output_encoding=None):
     """
     Генерация текстового файла по шаблону.
-    @param sTxtTemplateFilename: Шаблон - текстовый файл.
-    @param sTxtOutputFilename: Наименование выходного текстового файла.
-    @param dContext. Контекст.
+    :param sTxtTemplateFilename: Шаблон - текстовый файл.
+    :param sTxtOutputFilename: Наименование выходного текстового файла.
+    :param dContext. Контекст.
         В качестве контекста может выступать любая словарная структура.
         По умолчанию контекст - локальное пространство имен модуля config.
-    @param output_encoding: Кодовая страница результирующего файла.
+    :param output_encoding: Кодовая страница результирующего файла.
         Если не определена, то кодовая страница остается такая же как и у шаблона.
-    @return: True - генерация прошла успешно,
+    :return: True - генерация прошла успешно,
         False - ошибка генерации.
     """
     template_file = None

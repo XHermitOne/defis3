@@ -237,9 +237,9 @@ def open_user_property_dlg(parent, default_res, user_manager=None):
     """
     Функция вызова диалогового окна редактирования
     свойств пользователя.
-    @param parent: Родительское окно.
-    @param default_res: Структура для редактирования по умолчанию.
-    @param user_manager: Менеджер пользователей.
+    :param parent: Родительское окно.
+    :param default_res: Структура для редактирования по умолчанию.
+    :param user_manager: Менеджер пользователей.
     """
     dlg = None
     result = None

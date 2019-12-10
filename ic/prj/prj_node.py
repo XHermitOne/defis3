@@ -132,15 +132,15 @@ class icPrjNode(object):
     def rename(self, old_name, new_name):
         """
         Метод переименования узла.
-        @param old_name: Старое имя.
-        @param new_name: Новое имя.
+        :param old_name: Старое имя.
+        :param new_name: Новое имя.
         """
         pass
 
     def create(self, new_name=None):
         """
         Функция создания ресурса.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         return True
 
@@ -187,14 +187,14 @@ class icPrjNode(object):
         """
         Установить флаг запрета редактирования
         у всех дочерних узлов.
-        @param bReadOnly: Флаг запрета редактирования.
+        :param bReadOnly: Флаг запрета редактирования.
         """
         self.readonly = bReadOnly
 
     def cut(self):
         """
         Вырезать узел.
-        @return: Возвращает указхатель на удаленный узел.
+        :return: Возвращает указхатель на удаленный узел.
         """
         # Удалить сначала в дереве узлов
         self._Parent.delChild(self)
@@ -210,7 +210,7 @@ class icPrjNode(object):
     def copy(self):
         """
         Копировать в клипбоард.
-        @return: Возвращает указатель узел.
+        :return: Возвращает указатель узел.
         """
         new_node = self.__class__(parent=self._Parent)
         new_node.name = self.name + resfunc.getNewID()
@@ -220,7 +220,7 @@ class icPrjNode(object):
     def paste(self, node):
         """
         Вставить узел.
-        @param node: Вставляемый узел.
+        :param node: Вставляемый узел.
         """
         if node:
             self._Parent.addChild(node)
@@ -302,8 +302,8 @@ class icPrjFolder(icPrjNode):
     def getChild(self, child_name):
         """
         Получить дочерний узел по имени.
-        @param child_name: Имя дочернего узла.
-        @return: Возвращает объект узла или None,
+        :param child_name: Имя дочернего узла.
+        :return: Возвращает объект узла или None,
             если узел с таким именем не найден.
         """
         find = [child for child in self.children if child.name == child_name]
@@ -314,8 +314,8 @@ class icPrjFolder(icPrjNode):
     def isChild(self, child_name):
         """
         Проверить есть ли дочерний узел с таким именем.
-        @param child_name: Имя дочернего узла.
-        @return: Возвращает True/False.
+        :param child_name: Имя дочернего узла.
+        :return: Возвращает True/False.
         """
         return bool(self.getChild(child_name))
         
@@ -345,7 +345,7 @@ class icPrjFolder(icPrjNode):
     def delChildByName(self, node_name=None):
         """
         Удалить дочерний узел по его имени.
-        @param node_name: Имя узла.
+        :param node_name: Имя узла.
         """
         if node_name:
             children_names = [child.name for child in self.children]
@@ -360,7 +360,7 @@ class icPrjFolder(icPrjNode):
         """
         Установить флаг запрета редактирования
         у всех дочерних узлов.
-        @param bReadOnly: Флаг запрета редактирования.
+        :param bReadOnly: Флаг запрета редактирования.
         """
         icPrjNode.readonlyChildren(self, bReadOnly)
         for child in self.children:
@@ -369,6 +369,6 @@ class icPrjFolder(icPrjNode):
     def importChild(self, res_filename=None):
         """
         Импортировать ресурс, как дочерний узел.
-        @param res_filename: Имя импортируемого ресурсного файла.
+        :param res_filename: Имя импортируемого ресурсного файла.
         """
         pass

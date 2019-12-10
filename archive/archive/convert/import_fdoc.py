@@ -48,9 +48,9 @@ KEG_WAREHOUSES = (8, )
 def smb_download_dbf(download_urls=None, dbf_filename=None, dst_path=None):
     """
     Найти и загрузить DBF файл.
-    @param download_urls: Список путей поиска DBF файла.
-    @param dbf_filename: Имя DBF файла.
-    @return: True - Произошла загрузка, False - ничего не загружено.
+    :param download_urls: Список путей поиска DBF файла.
+    :param dbf_filename: Имя DBF файла.
+    :return: True - Произошла загрузка, False - ничего не загружено.
     """
     if download_urls is None:
         download_urls = FIND_SMB_URLS
@@ -62,11 +62,11 @@ def smb_download_dbf(download_urls=None, dbf_filename=None, dst_path=None):
 def get_src_dbf_filename(src_year, src_month, n_warehouse, is_input=False):
     """
     Получить имя DBF файла исходных данных документа.
-    @param src_year: Год.
-    @param src_month: Месяц.
-    @param n_warehouse: Номер склада.
-    @param is_input: Признак приходного документа.
-    @return: Имя DBF файла исходных данных документа БАЛАНС+.
+    :param src_year: Год.
+    :param src_month: Месяц.
+    :param n_warehouse: Номер склада.
+    :param is_input: Признак приходного документа.
+    :return: Имя DBF файла исходных данных документа БАЛАНС+.
     """
     str_month = '%X' % src_month
     if n_warehouse in TARE_WAREHOUSES:
@@ -88,11 +88,11 @@ def import_docs(dt_begin, dt_end, n_warehouse, is_input=False):
     Импорт документов реализации из БАЛАНСа.
         Выборка документов производиться по диапазону дат документов 
         по определенному складу.
-    @param dt_begin: Дата начала выборки документов.
-    @param dt_end: Дата конца выборки документов.
-    @param n_warehouse: Номер склада.
-    @param is_input: Признак приходного документа.
-    @return: True/False.
+    :param dt_begin: Дата начала выборки документов.
+    :param dt_end: Дата конца выборки документов.
+    :param n_warehouse: Номер склада.
+    :param is_input: Признак приходного документа.
+    :return: True/False.
     """
     log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ РЕАЛИЗАЦИИ ---')
     
@@ -121,11 +121,11 @@ def import_ttn_docs(cur_year, cur_month, n_warehouse, min_dt, max_dt,
     Импорт документов ТТН из БАЛАНСа.
         Выборка документов производиться по диапазону дат документов 
         по определенному складу.
-    @param cur_year: Обрабатываемый год.
-    @param cur_month: Обрабатываемый месяц.
-    @param n_warehouse: Номер склада.
-    @param is_input: Признак приходного документа.
-    @param pack_doc: Объект документа пакетной обработки.
+    :param cur_year: Обрабатываемый год.
+    :param cur_month: Обрабатываемый месяц.
+    :param n_warehouse: Номер склада.
+    :param is_input: Признак приходного документа.
+    :param pack_doc: Объект документа пакетной обработки.
     """
     if pack_doc is None:
         log.warning(u'Не определен объект документа пакетной обработки')
@@ -173,11 +173,11 @@ def import_rlz_docs(cur_year, cur_month, n_warehouse, min_dt, max_dt,
     Импорт документов реализации из БАЛАНСа.
         Выборка документов производиться по диапазону дат документов 
         по определенному складу.
-    @param cur_year: Обрабатываемый год.
-    @param cur_month: Обрабатываемый месяц.
-    @param n_warehouse: Номер склада.
-    @param is_input: Признак приходного документа.
-    @param pack_doc: Объект документа пакетной обработки.
+    :param cur_year: Обрабатываемый год.
+    :param cur_month: Обрабатываемый месяц.
+    :param n_warehouse: Номер склада.
+    :param is_input: Признак приходного документа.
+    :param pack_doc: Объект документа пакетной обработки.
     """
     if pack_doc is None:
         log.warning(u'Не определен объект документа пакетной обработки')
@@ -214,11 +214,11 @@ def import_doc_book(dt_begin, dt_end, n_warehouses=(), is_input=False):
     Импорт документов из БАЛАНСа в виде книги покупок / продаж.
         Выборка документов производиться по диапазону дат документов 
         по определенным складам.
-    @param dt_begin: Дата начала выборки документов.
-    @param dt_end: Дата конца выборки документов.
-    @param n_warehouses: Список номеров складов.
-    @param is_input: Признак приходного документа.
-    @return: True/False.
+    :param dt_begin: Дата начала выборки документов.
+    :param dt_end: Дата конца выборки документов.
+    :param n_warehouses: Список номеров складов.
+    :param is_input: Признак приходного документа.
+    :return: True/False.
     """
     if not n_warehouses:
         log.warning(u'Не определены склады книги покупок / продаж.')
@@ -234,9 +234,9 @@ def import_zatraty_docs(cur_year, is_input=False):
     """
     Импорт документов затрат на производство из БАЛАНСа.
         Выборка документов производиться за год.
-    @param cur_year: Год выборки документов.
-    @param is_input: Признак приходного документа.
-    @return: True/False.
+    :param cur_year: Год выборки документов.
+    :param is_input: Признак приходного документа.
+    :return: True/False.
     """
     log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ ЗАТРАТ НА ПРОИЗВОДСТВО ---')
 
@@ -253,10 +253,10 @@ def import_ztr_docs(cur_year, is_input=None, pack_doc=None,
     """
     Импорт документов затрат на производство из БАЛАНСа.
         Выборка документов производиться за год.
-    @param cur_year: Обрабатываемый год.
-    @param is_input: Признак приходного документа.
-    @param pack_doc: Объект документа пакетной обработки.
-    @param base_filename: Базовое имя файла источника данных.
+    :param cur_year: Обрабатываемый год.
+    :param is_input: Признак приходного документа.
+    :param pack_doc: Объект документа пакетной обработки.
+    :param base_filename: Базовое имя файла источника данных.
     """
     if pack_doc is None:
         log.warning(u'Не определен объект документа пакетной обработки')
@@ -293,9 +293,9 @@ def import_ztr7601_docs(cur_year, is_input=False, pack_doc=None):
     """
     Импорт документов затрат на производство по 7601 счету из БАЛАНСа.
         Выборка документов производиться за год.
-    @param cur_year: Обрабатываемый год.
-    @param is_input: Признак приходного документа.
-    @param pack_doc: Объект документа пакетной обработки.
+    :param cur_year: Обрабатываемый год.
+    :param is_input: Признак приходного документа.
+    :param pack_doc: Объект документа пакетной обработки.
     """
     return import_ztr_docs(cur_year, is_input, pack_doc, 
                            base_filename='BS0Z76.DBS')
@@ -305,9 +305,9 @@ def import_ztr7606_docs(cur_year, is_input=False, pack_doc=None):
     """
     Импорт документов затрат на производство по 7606 счету из БАЛАНСа.
         Выборка документов производиться за год.
-    @param cur_year: Обрабатываемый год.
-    @param is_input: Признак приходного документа.
-    @param pack_doc: Объект документа пакетной обработки.
+    :param cur_year: Обрабатываемый год.
+    :param is_input: Признак приходного документа.
+    :param pack_doc: Объект документа пакетной обработки.
     """
     return import_ztr_docs(cur_year, is_input, pack_doc, 
                            base_filename='BS7606.DBS')
@@ -317,10 +317,10 @@ def import_mt_docs(cur_year, n_warehouse, is_input=True, pack_doc=None):
     """
     Импорт документов учета материалов из БАЛАНСа.
         Выборка документов производиться за год.
-    @param cur_year: Обрабатываемый год.
-    @param n_warehouse: Номер склада.
-    @param is_input: Признак приходного документа.
-    @param pack_doc: Объект документа пакетной обработки.
+    :param cur_year: Обрабатываемый год.
+    :param n_warehouse: Номер склада.
+    :param is_input: Признак приходного документа.
+    :param pack_doc: Объект документа пакетной обработки.
     """
     if n_warehouse is None:
         log.warning(u'Не определен номер склада при импорте документов <Материалы>')
@@ -362,10 +362,10 @@ def import_material_docs(cur_year, n_warehouse, is_input=False):
     """
     Импорт документов из БАЛАНСа <Материалы>.
         Выборка документов производиться за год.
-    @param cur_year: Год выборки документов.
-    @param is_input: Признак приходного документа.
-    @param n_warehouse: Номер склада.
-    @return: True/False.
+    :param cur_year: Год выборки документов.
+    :param is_input: Признак приходного документа.
+    :param n_warehouse: Номер склада.
+    :return: True/False.
     """
     log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ <МАТЕРИАЛЫ> ---')
 

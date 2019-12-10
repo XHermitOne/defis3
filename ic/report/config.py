@@ -20,8 +20,8 @@ DEFAULT_REPORT_DIRNAME = 'reports'
 def get_glob_var(name):
     """
     Прочитать значение глобальной переменной.
-    @type name: C{string}
-    @param name: Имя переменной.
+    :type name: C{string}
+    :param name: Имя переменной.
     """
     return globals()[name]
 
@@ -29,9 +29,9 @@ def get_glob_var(name):
 def set_glob_var(name, value):
     """
     Установить значение глобальной переменной.
-    @type name: C{string}
-    @param name: Имя переменной.
-    @param value: Значение переменной.
+    :type name: C{string}
+    :param name: Имя переменной.
+    :param value: Значение переменной.
     """
     globals()[name] = value
     return value

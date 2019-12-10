@@ -35,14 +35,14 @@ class icResourceManagerInterface(object):
     def saveAs(self, res_filename):
         """
         Сохранить как...
-        @param res_filename: Имя ресурсного файла.
+        :param res_filename: Имя ресурсного файла.
         """
         pass
 
     def load(self, res_filename):
         """
         Загрузить ресурс из файла.
-        @param res_filename: Имя ресурсного файла.
+        :param res_filename: Имя ресурсного файла.
         """
         pass
 

@@ -39,10 +39,10 @@ class icPivotDataFrameManager(object):
     def create_dataframe(self, rows, column_names):
         """
         Создать простую таблицу.
-        @param rows: Список строк.
+        :param rows: Список строк.
             Список строк - список списков в соответствии со списком имен колонок.
-        @param column_names: Имена колонок.
-        @return: Созданный объект pandas.DataFrame.
+        :param column_names: Имена колонок.
+        :return: Созданный объект pandas.DataFrame.
         """
         self._cur_pivot_dataframe = None
 
@@ -60,11 +60,11 @@ class icPivotDataFrameManager(object):
     def set_pivot_dimensions(self, row_dimension, col_dimension):
         """
         Установить измерения строк и колонок в сводной таблице.
-        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        :param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
             Задается списком имен колонок.
-        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        :param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
             Задается списком имен колонок.
-        @return: Текущий объект pandas.DataFrame.
+        :return: Текущий объект pandas.DataFrame.
         """
         if not row_dimension:
             row_dimension = list()
@@ -83,8 +83,8 @@ class icPivotDataFrameManager(object):
         """
         Заменить не определенные значения NaN в сводной таблице
         на указанное значение.
-        @param value: Значение для замены.
-        @return: Текущий объект pandas.DataFrame.
+        :param value: Значение для замены.
+        :return: Текущий объект pandas.DataFrame.
         """
         self._cur_pivot_dataframe = self._cur_pivot_dataframe.fillna(value=value)
         return self._cur_pivot_dataframe
@@ -92,9 +92,9 @@ class icPivotDataFrameManager(object):
     def groupby_dimensions(self, row_dimension):
         """
         Группировка строк по измерениям.
-        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        :param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
             Задается списком имен колонок.
-        @return: Текущий объект pandas.DataFrame.
+        :return: Текущий объект pandas.DataFrame.
         """
         if (isinstance(row_dimension, tuple) or isinstance(row_dimension, list)) and len(row_dimension) == 1:
             row_dimension = row_dimension[0]
@@ -105,8 +105,8 @@ class icPivotDataFrameManager(object):
     def aggregate_dimensions(self, aggregate_function_name='sum'):
         """
         Выполнить агрегирование по группам.
-        @param aggregate_function_name: Имя аггрегирующей функции.
-        @return: Текущий объект pandas.DataFrame.
+        :param aggregate_function_name: Имя аггрегирующей функции.
+        :return: Текущий объект pandas.DataFrame.
         """
         if aggregate_function_name == 'sum':
             self._cur_pivot_dataframe = self._cur_pivot_dataframe.aggregate(numpy.sum)
@@ -121,9 +121,9 @@ class icPivotDataFrameManager(object):
     def get_pivot_shape(self, dataframe=None):
         """
         Размер данных сводной таблицы.
-        @param dataframe: Объект сводной таблицы.
+        :param dataframe: Объект сводной таблицы.
             Если не определена, то берется внутренняя.
-        @return: Количество строк, количество колонок.
+        :return: Количество строк, количество колонок.
         """
         if dataframe is None:
             dataframe = self._cur_pivot_dataframe
@@ -132,9 +132,9 @@ class icPivotDataFrameManager(object):
     def get_pivot_tab_size(self, dataframe=None):
         """
         Размер сводной таблицы.
-        @param dataframe: Объект сводной таблицы.
+        :param dataframe: Объект сводной таблицы.
             Если не определена, то берется внутренняя.
-        @return: Количество строк, количество колонок.
+        :return: Количество строк, количество колонок.
         """
         if dataframe is None:
             dataframe = self._cur_pivot_dataframe
@@ -150,8 +150,8 @@ class icPivotDataFrameManager(object):
     def total_pivot_table(self, dataframe):
         """
         Расчет общих итогов сводной таблицы по строкам.
-        @param dataframe: Объект pandas.DataFrame сводной таблицы.
-        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        :param dataframe: Объект pandas.DataFrame сводной таблицы.
+        :return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         total = dataframe.agg(numpy.sum)
 
@@ -169,8 +169,8 @@ class icPivotDataFrameManager(object):
     def total_group_pivot_table(self, dataframe):
         """
         Расчет итогов по группам сводной таблицы по строкам.
-        @param dataframe: Объект pandas.DataFrame сводной таблицы.
-        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        :param dataframe: Объект pandas.DataFrame сводной таблицы.
+        :return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         try:
             levels = dataframe.index.names

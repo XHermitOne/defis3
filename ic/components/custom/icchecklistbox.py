@@ -4,8 +4,8 @@
 """
 Обкладка для компонента wx.CheckListBox.
 
-@type SPC_IC_CHECK_LIST_BOX: C{dictionary}
-@var SPC_IC_CHECK_LIST_BOX: Спецификация на ресурсное описание CheckListBox.
+:type SPC_IC_CHECK_LIST_BOX: C{dictionary}
+:var SPC_IC_CHECK_LIST_BOX: Спецификация на ресурсное описание CheckListBox.
 Описание ключей SPC_IC_CHECK_LIST_BOX:
 
     - B{type='CheckListBox'}: Тип компонента.
@@ -97,16 +97,16 @@ class icCheckListBox(icWidget, wx.CheckListBox):
         """
         Конструктор для создания icList
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
 
         util.icSpcDefStruct(SPC_IC_CHECK_LIST_BOX, component)
@@ -176,8 +176,8 @@ class icCheckListBox(icWidget, wx.CheckListBox):
     def SetChoiceDict(self, dict):
         """
         Устанавливает новый список с признаками выбора.
-        @type dict: C{dictionary}
-        @param dict: Словарь, определяющий список с признаками выбора.
+        :type dict: C{dictionary}
+        :param dict: Словарь, определяющий список с признаками выбора.
         """
         self._dictRepl = dict
         #   Чистим список выбора

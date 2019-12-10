@@ -131,7 +131,7 @@ class icSpravManagerProto(icSpravManagerInterface):
     def getSpravByName(self, sprav_name):
         """
         Получить справочник по имени.
-        @param sprav_name: Имя справочника.
+        :param sprav_name: Имя справочника.
         """
         return self._container.getSpravByName(sprav_name)
 
@@ -160,7 +160,7 @@ class icSpravManagerProto(icSpravManagerInterface):
               prompt_text=u'Выберите справочник для редактирования:'):
         """
         Администрирование справочной системы, описываемой данным менеджером.
-        @param parent: Родительское окно для формы редактирования справочника.
+        :param parent: Родительское окно для формы редактирования справочника.
         """
         if parent is None:
             parent = glob_functions.getMainWin()
@@ -178,8 +178,8 @@ class icSpravManagerProto(icSpravManagerInterface):
     def editSprav(self, sprav_name, parent=None):
         """
         Вызов редактирования справочника по имени.
-        @param sprav_name: Имя справочника.
-        @param parent: Родительское окно для формы редактирования справочника.
+        :param sprav_name: Имя справочника.
+        :param parent: Родительское окно для формы редактирования справочника.
         """
         if parent is None:
             parent = glob_functions.getMainWin()
@@ -194,11 +194,11 @@ class icSpravManagerProto(icSpravManagerInterface):
     def choiceSprav(self, sprav_name, parent=None, default_selected_code=None):
         """
         Вызов выбора значения справочника по имени.
-        @param sprav_name: Имя справочника.
-        @param parent: Родительское окно для формы редактирования справочника.
-        @param default_selected_code: Выбранный код по умолчанию.
+        :param sprav_name: Имя справочника.
+        :param parent: Родительское окно для формы редактирования справочника.
+        :param default_selected_code: Выбранный код по умолчанию.
             Если None, то ничего не выбирается.
-        @return: Функция возвращает выбранный код справочника
+        :return: Функция возвращает выбранный код справочника
             или None в случае ошибки или если нажата кнопка <Отмена>.
         """
         if parent is None:

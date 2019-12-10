@@ -38,14 +38,14 @@ def connect(mConfig=None, db_url=None,
             db_user=None, db_password=None):
     """
     Создание связи с БД.
-    @param mConfig: Модуль конфигурации.
-    @param db_url: URL БД. Соединение может задаваться URL,
+    :param mConfig: Модуль конфигурации.
+    :param db_url: URL БД. Соединение может задаваться URL,
         а может задаваться параметрами соединения.
-    @param db_host: Параметр соединения с БД. Сервер БД.
-    @param db_port: Параметр соединения с БД. Порт БД.
-    @param db_name: Параметр соединения с БД. Имя БД.
-    @param db_user: Параметр соединения с БД. Имя пользователя БД.
-    @param db_password: Параметр соединения с БД. Пароль пользователя БД.
+    :param db_host: Параметр соединения с БД. Сервер БД.
+    :param db_port: Параметр соединения с БД. Порт БД.
+    :param db_name: Параметр соединения с БД. Имя БД.
+    :param db_user: Параметр соединения с БД. Имя пользователя БД.
+    :param db_password: Параметр соединения с БД. Пароль пользователя БД.
     """
     global CONFIG
 
@@ -80,7 +80,7 @@ def connect(mConfig=None, db_url=None,
 def disconnect(connection):
     """
     Разорвать соединение с БД.
-    @param connection: Объект связи с БД.
+    :param connection: Объект связи с БД.
     """
     if connection:
         connection.dispose()
@@ -90,8 +90,8 @@ def disconnect(connection):
 def create_alarm_table(connection):
     """
     Функция создания объекта таблицы тревог.
-    @param connection: Объект связи с БД.
-    @return: Объект таблицы реггистрации тревог.
+    :param connection: Объект связи с БД.
+    :return: Объект таблицы реггистрации тревог.
     """
     global CONFIG
     table_name = CONFIG.ALARM_TABLENAME if hasattr(CONFIG, 'ALARM_TABLENAME') else None
@@ -111,12 +111,12 @@ def create_alarm_table(connection):
 def delete_not_actual(connection=None, table=None, actual_dt=None):
     """
     Удаление неактуальных данных тревог.
-    @param connection: Объект связи с БД.
-    @param table: Объект таблицы .
-    @param actual_dt: Указание даты актуальности.
+    :param connection: Объект связи с БД.
+    :param table: Объект таблицы .
+    :param actual_dt: Указание даты актуальности.
         Все записи произведенные ранее считаются не актуальными.
         Если не определено, то считается начало сегодняшнего дня.
-    @return: True/False.
+    :return: True/False.
     """
     global CONFIG
 
@@ -151,7 +151,7 @@ def delete_not_actual(connection=None, table=None, actual_dt=None):
 def init(mConfig=None):
     """
     Инициализация файла лога.
-    @param mConfig: Модуль конфигурации.
+    :param mConfig: Модуль конфигурации.
     """
     global CONFIG
     CONFIG = mConfig
@@ -169,12 +169,12 @@ def init(mConfig=None):
 def alarm(sMsg, source=None, alarm_type=None, alarm_dt=None):
     """
     Зарегистрировать тревогу.
-    @param sMsg: Текстовое сообщение.
-    @param source: Указания источника тревоги.
+    :param sMsg: Текстовое сообщение.
+    :param source: Указания источника тревоги.
         Если не указано, то определяется как <Общий уровень>.
-    @param alarm_type: Вид тревоги.
+    :param alarm_type: Вид тревоги.
         Если не указано, то имеется ввиду ИНФОРМАЦИОННЫЙ вид.
-    @param alarm_dt: Дата/Время регистрации.
+    :param alarm_dt: Дата/Время регистрации.
         Если не указывается то берется системное.
     """
     global CONFIG
@@ -214,8 +214,8 @@ def alarm(sMsg, source=None, alarm_type=None, alarm_dt=None):
 def debug(sMsg, source=None):
     """
     Вывести ОТЛАДОЧНУЮ информацию.
-    @param sMsg: Текстовое сообщение.
-    @param source: Указания источника тревоги.
+    :param sMsg: Текстовое сообщение.
+    :param source: Указания источника тревоги.
         Если не указано, то определяется как <Общий уровень>.
     """
     if source is None:
@@ -226,8 +226,8 @@ def debug(sMsg, source=None):
 def info(sMsg, source=None):
     """
     Вывести ОБЩУЮ информацию.
-    @param sMsg: Текстовое сообщение.
-    @param source: Указания источника тревоги.
+    :param sMsg: Текстовое сообщение.
+    :param source: Указания источника тревоги.
         Если не указано, то определяется как <Общий уровень>.
     """
     if source is None:
@@ -238,8 +238,8 @@ def info(sMsg, source=None):
 def warning(sMsg, source=None):
     """
     Вывести информацию ОБ ПРЕДУПРЕЖДЕНИИ.
-    @param sMsg: Текстовое сообщение.
-    @param source: Указания источника тревоги.
+    :param sMsg: Текстовое сообщение.
+    :param source: Указания источника тревоги.
         Если не указано, то определяется как <Общий уровень>.
     """
     if source is None:
@@ -250,8 +250,8 @@ def warning(sMsg, source=None):
 def fatal(sMsg, source=None):
     """
     Вывести информацию ОБ ОШИБКЕ.
-    @param sMsg: Текстовое сообщение.
-    @param source: Указания источника тревоги.
+    :param sMsg: Текстовое сообщение.
+    :param source: Указания источника тревоги.
         Если не указано, то определяется как <Общий уровень>.
     """
     global CONFIG

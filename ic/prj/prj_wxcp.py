@@ -52,7 +52,7 @@ class icPrjWXCrafterProject(prj_node.icPrjNode,
     def create(self, new_name=None):
         """ 
         Функция создания.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         self.create_project()
         return True

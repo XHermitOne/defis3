@@ -34,7 +34,7 @@ QUERY_TABLE_RESULT = {'__fields__': (),     # Описание полей - ко
 def getQueryTableFields(query):
     """
     Получить описания полей таблицы запроса.
-    @param query: Имя запроса/dataset объект.
+    :param query: Имя запроса/dataset объект.
     """
     try:
         if isinstance(query, str):
@@ -64,11 +64,11 @@ _fieldType = {'T': 6,   # Код текстового поля
 def getQueryTable(query, post_filter=None):
     """
     Получить таблицу запроса.
-    @param query: Имя запроса/dataset объект.
-    @param post_filter: Дополнительный фильтр для дополнительной фильтрации
+    :param query: Имя запроса/dataset объект.
+    :param post_filter: Дополнительный фильтр для дополнительной фильтрации
         данных таблицы запроса. Структура такая же как у структурного 
         фильтра Dataset'а.
-    @return: Функция возвращает словарь -
+    :return: Функция возвращает словарь -
             ТАБЛИЦА ЗАПРОСА ПРЕДСТАВЛЯЕТСЯ В ВИДЕ СЛОВАРЯ 
             {'__fields__':описания полей таблицы,'__data__':данные таблицы}
     """
@@ -159,7 +159,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def __init__(self, resource):
         """
         Конструктор.
-        @param resource: Ресурсное описание запроса.
+        :param resource: Ресурсное описание запроса.
         """
         icdataclassinterface.icDataClassInterface.__init__(self, resource)
         
@@ -181,14 +181,14 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def checkOnlineConnect(self):
         """
         Проверка связи с источником данных.
-        @return: True - связь установлена / False - связь разорвана по какой либо причине.
+        :return: True - связь установлена / False - связь разорвана по какой либо причине.
         """
         return self.data_source.checkOnline() if self.data_source else False
 
     def getSQLTxt(self, **kwargs):
         """
         Текст SQL запроса.
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
         """
         result_sql_txt = u''
@@ -215,7 +215,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def queryAll(self, **kwargs):
         """
         Выполнить SQL запрос и вернуть результат в виде QUERY_TABLE_RESULT.
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
         """
         data_src = self.getDataSource()
@@ -233,7 +233,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def execSQL(self, **kwargs):
         """
         Выполнить SQL запрос.
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
         """
         result = None
@@ -258,9 +258,9 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def fetchAllRecs(self, **kwargs):
         """
         Получить все записи результата запроса.
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
-        @return: Возвращает список словарей записей.
+        :return: Возвращает список словарей записей.
         """
         dataset = tuple()
         data_src = self.getDataSource()
@@ -280,9 +280,9 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def fetchOneRec(self, **kwargs):
         """
         Получить одну запись результата запроса.
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
-        @return: Возвращает структуру таблицы результата запроса.
+        :return: Возвращает структуру таблицы результата запроса.
         """
         result = None
         data_src = self.getDataSource()
@@ -297,10 +297,10 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def get_normalized(self, query_result=None, **kwargs):
         """
         Произвести нормализацию результата запроса.
-        @param query_result: Абстрактный результат запроса.
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param query_result: Абстрактный результат запроса.
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
-        @return: Функция возвращает результат запроса
+        :return: Функция возвращает результат запроса
         представляется в словарно-списковом представлении:
         QUERY_TABLE_RESULT = {'__fields__': (), - Описание полей - кортеж кортежей
                               '__data__': [],   - Данные - список кортежей
@@ -334,7 +334,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def _get_prj_res_manager(self, bOpenPrj=True):
         """
         Менеджер управления ресурсами проекта.
-        @param bOpenPrj: Автоматически открыть текущий проект?
+        :param bOpenPrj: Автоматически открыть текущий проект?
         """
         if self._prj_res_manager is None:
             self._prj_res_manager = glob_functions.getKernel().getProjectResManager()
@@ -345,9 +345,9 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def _isTableRes(self, tab_resname=None):
         """
         Проверить есть ли ресурсное описание результирующей таблицы.
-        @param tab_resname: Имя ресурсного описание результирующей таблицы.
+        :param tab_resname: Имя ресурсного описание результирующей таблицы.
             Если None, тогда имя берется из ресурсного описания этого компонента.
-        @return: True - такой ресурс есть / False - ресурса таблицы с таким именем нет.
+        :return: True - такой ресурс есть / False - ресурса таблицы с таким именем нет.
         """
         if tab_resname is None:
             tab_resname = self.getName()
@@ -361,16 +361,16 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
         если он не существует.
-        @param table: Таблица.
+        :param table: Таблица.
             Таблица может задаваться именем, паспортом или передаваться в виде объекта.
             Если None, то таблица создается с таким же именем как и запрос.
-        @param bReCreateRes: Пересоздать ресурс если он уже существует?
-        @param bData: Заполнить таблицу данными автоматически?
-        @param bClear: Произвести предварительную очистку данных при заполнении?
-        @param bTransact: Сделать сохранение данных одной транзакцией?
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param bReCreateRes: Пересоздать ресурс если он уже существует?
+        :param bData: Заполнить таблицу данными автоматически?
+        :param bClear: Произвести предварительную очистку данных при заполнении?
+        :param bTransact: Сделать сохранение данных одной транзакцией?
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
-        @return: True/False.
+        :return: True/False.
         """
         if isinstance(table, str) or table is None:
             return self._to_table_by_name(table, bReCreateRes=bReCreateRes, bData=bData,
@@ -389,14 +389,14 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
         если он не существует.
-        @param table: Таблица.
-        @param bReCreateRes: Пересоздать ресурс если он уже существует?
-        @param bData: Заполнить таблицу данными автоматически?
-        @param bClear: Произвести предварительную очистку данных при заполнении?
-        @param bTransact: Сделать сохранение данных одной транзакцией?
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param table: Таблица.
+        :param bReCreateRes: Пересоздать ресурс если он уже существует?
+        :param bData: Заполнить таблицу данными автоматически?
+        :param bClear: Произвести предварительную очистку данных при заполнении?
+        :param bTransact: Сделать сохранение данных одной транзакцией?
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
-        @return: True/False.
+        :return: True/False.
         """
         if table is None:
             log.warning(u'Не определен объект таблицы для заполнения результатом выполнения запроса <%s>' % self.getName())
@@ -433,15 +433,15 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         Преобразовать результат запроса в таблицу.
         В результате работы функции создается ресурс таблицы,
         если он не существует.
-        @param table_name: Имя таблицы.
+        :param table_name: Имя таблицы.
             Если None, то таблица создается с таким же именем как и запрос.
-        @param bReCreateRes: Пересоздать ресурс если он уже существует?
-        @param bData: Заполнить таблицу данными автоматически?
-        @param bClear: Произвести предварительную очистку данных при заполнении?
-        @param bTransact: Сделать сохранение данных одной транзакцией?
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param bReCreateRes: Пересоздать ресурс если он уже существует?
+        :param bData: Заполнить таблицу данными автоматически?
+        :param bClear: Произвести предварительную очистку данных при заполнении?
+        :param bTransact: Сделать сохранение данных одной транзакцией?
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
-        @return: True/False.
+        :return: True/False.
         """
         if table_name is None:
             table_name = self.getName()
@@ -473,12 +473,12 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def createTableResource(self, table_name=None, **kwargs):
         """
         Построить ресурсное описание по этому компоненту.
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
             Необходимо для получения полноценного запроса и получения первой
             результирующей записи.
             По первой записи и определяются описяния полей.
-        @return: True - ресурс таблицы создан / False - ресур таблицы не создан.
+        :return: True - ресурс таблицы создан / False - ресур таблицы не создан.
         """
         if table_name is None:
             table_name = self.getName()
@@ -498,8 +498,8 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def _saveTabRes(self, tab_res):
         """
         Сохранить ресурс результирующей таблицы.
-        @param tab_res: Сгенерированный ресурс таблицы.
-        @return: True/False.
+        :param tab_res: Сгенерированный ресурс таблицы.
+        :return: True/False.
         """
         table_name = tab_res['name']
         # Сохранить ресурс
@@ -513,7 +513,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def _getFields(self, **kwargs):
         """
         Описание дочерних полей.
-        @param kwargs: Параметры SQL запроса для генерации исполняемого текста
+        :param kwargs: Параметры SQL запроса для генерации исполняемого текста
             SQL запроса.
             Необходимо для получения полноценного запроса и получения первой
             результирующей записи.
@@ -528,7 +528,7 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def _createTabSpc(self, table_name=None):
         """
         Создать спецификацию результирующей таблицы.
-        @param table_name: Имя результирующей таблицы.
+        :param table_name: Имя результирующей таблицы.
         """
         from ic.components.user import ic_tab_wrp
         tab_spc = util.icSpcDefStruct(util.DeepCopy(ic_tab_wrp.ic_class_spc), None)
@@ -546,10 +546,10 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def _createFieldSpc(self, name, type_val='T', length=0, default=None):
         """
         Создать спецификацию поля результирующей таблицы из поля конвертации.
-        @param name: Имя поля.
-        @param type_val: Тип значения поля.
-        @param length: Длина поля.
-        @param default: Значение по умолчанию.
+        :param name: Имя поля.
+        :param type_val: Тип значения поля.
+        :param length: Длина поля.
+        :param default: Значение по умолчанию.
         """
         from ic.components.user import ic_field_wrp
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
@@ -566,13 +566,13 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def saveData(self, table=None, dataset=(), bClear=False, bTransact=True):
         """
         Сохранить результат запроса в таблице.
-        @param table: Таблица.
+        :param table: Таблица.
             Таблица может задаваться именем, паспортом или передаваться в виде объекта.
-        @param dataset: Набор записей-результата запроса.
+        :param dataset: Набор записей-результата запроса.
             Список словарей.
-        @param bClear: Произвести предварительную очистку данных при заполнении?
-        @param bTransact: Сделать сохранение данных одной транзакцией?
-        @return: True/False.
+        :param bClear: Произвести предварительную очистку данных при заполнении?
+        :param bTransact: Сделать сохранение данных одной транзакцией?
+        :return: True/False.
         """
         if table is None:
             table = self.getName()
@@ -604,11 +604,11 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
     def _saveData(self, table=None, dataset=(), bClear=False):
         """
         Сохранить результат запроса в таблице.
-        @param table: Таблица.
-        @param dataset: Набор записей-результата запроса.
+        :param table: Таблица.
+        :param dataset: Набор записей-результата запроса.
             Список словарей.
-        @param bClear: Произвести предварительную очистку данных при заполнении?
-        @return: True/False.
+        :param bClear: Произвести предварительную очистку данных при заполнении?
+        :return: True/False.
         """
         # Очистить данные таблицы
         if bClear:
@@ -625,11 +625,11 @@ class icQueryProto(icdataclassinterface.icDataClassInterface):
         """
         Сохранить результат запроса в таблице.
         ВНИМАНИЕ! Сохранение производим одной транзакцией.
-        @param table: Таблица.
-        @param dataset: Набор записей-результата запроса.
+        :param table: Таблица.
+        :param dataset: Набор записей-результата запроса.
             Список словарей.
-        @param bClear: Произвести предварительную очистку данных при заполнении?
-        @return: True/False.
+        :param bClear: Произвести предварительную очистку данных при заполнении?
+        :return: True/False.
         """
         transaction = table.db.session(autoflush=False, autocommit=False)
         try:
@@ -662,6 +662,6 @@ class icNamedQueryProto(icQueryProto):
     def __init__(self, QueryName_):
         """
         Конструктор.
-        @param QueryName_: Имя запроса.
+        :param QueryName_: Имя запроса.
         """
         icQueryProto.__init__(self, resource.icGetRes(QueryName_, 'mtd', nameRes=QueryName_))

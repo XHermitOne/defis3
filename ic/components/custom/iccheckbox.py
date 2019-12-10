@@ -4,8 +4,8 @@
 """
 Обкладка для класса wx.CheckBox.
 
-@type SPC_IC_CHECKBOX: C{dictionary}
-@var SPC_IC_CHECKBOX: Спецификация на ресурсное описание компонента icCheckBox.
+:type SPC_IC_CHECKBOX: C{dictionary}
+:var SPC_IC_CHECKBOX: Спецификация на ресурсное описание компонента icCheckBox.
 Описание ключей SPC_IC_CHECKBOX:
 
     - B{name = 'DefaultName'}: Имя объекта.
@@ -131,16 +131,16 @@ class icCheckBox(icWidget, wx.CheckBox):
         """
         Конструктор для создания icCheckBox.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         self.bChanged = 0
         component = util.icSpcDefStruct(SPC_IC_CHECKBOX, component)
@@ -261,13 +261,13 @@ class icCheckBox(icWidget, wx.CheckBox):
         """
         Обновляем данные в базе данных.
         
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
-        @type bRestore: C{bool}
-        @param bRestore: Признак обновления представления. Если True, то при
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
+        :type bRestore: C{bool}
+        :param bRestore: Признак обновления представления. Если True, то при
             неудачной попытки записи программа востановит значение поля по базе
-        @rtype: C{int}
-        @return: Возвращает код контроля на запись.
+        :rtype: C{int}
+        :return: Возвращает код контроля на запись.
         """
         #   Если класс данных не задан, то считаем, что данные необходимо обновить
         if db_name is None:
@@ -289,8 +289,8 @@ class icCheckBox(icWidget, wx.CheckBox):
         """
         Обновляет данные в текстовом поле после изменения курсора в источнике данных.
         
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
         """
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:

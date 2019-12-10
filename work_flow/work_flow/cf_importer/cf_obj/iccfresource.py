@@ -35,7 +35,7 @@ class icCFResource:
     def __init__(self, cf_res_filename=None):
         """
         Конструктор.
-        @param cf_res_filename: Полное имя ресурса объекта конфигурации.
+        :param cf_res_filename: Полное имя ресурса объекта конфигурации.
         """
         self.cf_res_filename = None
         if cf_res_filename:
@@ -47,7 +47,7 @@ class icCFResource:
     def loadData(self, cf_res_filename=None):
         """
         Загрузить данные из ресурсного файла.
-        @param cf_res_filename: Полное имя ресурса объекта конфигурации.
+        :param cf_res_filename: Полное имя ресурса объекта конфигурации.
         """
         if cf_res_filename:
             self.cf_res_filename = os.path.abspath(cf_res_filename)
@@ -197,7 +197,7 @@ class icCFResource:
     def saveData(self, cf_res_filename=None):
         """
         Записать данные в ресурсный файл.
-        @param cf_res_filename: Полное имя ресурса объекта конфигурации.
+        :param cf_res_filename: Полное имя ресурса объекта конфигурации.
         """
         if cf_res_filename:
             self.cf_res_filename = os.path.abspath(cf_res_filename)

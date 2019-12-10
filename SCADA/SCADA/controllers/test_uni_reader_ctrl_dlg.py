@@ -33,7 +33,7 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
     def set_tags(self, tags=None):
         """
         Установить проверяемые теги.
-        @param tags: Словарь тегов в формате:
+        :param tags: Словарь тегов в формате:
             {'имя тега': 'адрес тега', ... }
         """
         if isinstance(tags, dict):
@@ -45,7 +45,7 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
     def set_controller(self, controller=None):
         """
         Установить контроллер.
-        @param controller: Объект контроллера.
+        :param controller: Объект контроллера.
         """
         self.controller = controller
         if self.controller:
@@ -84,9 +84,9 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
     def update_tags(self, **tags):
         """
         Установить теги.
-        @param tags: Словарь тегов в формате:
+        :param tags: Словарь тегов в формате:
             {'имя тега': 'адрес тега', ... }
-        @return: True/False.
+        :return: True/False.
         """
         if tags:
             tag_names = tags.keys()
@@ -105,9 +105,9 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
     def read_tags(self, **tags):
         """
         Прочитать теги из контроллера.
-        @param tags: Словарь тегов в формате:
+        :param tags: Словарь тегов в формате:
             {'имя тега': 'адрес тега', ... }
-        @return: Словарь прочитанных значений:
+        :return: Словарь прочитанных значений:
             {'имя тега': 'значение тега', ... }
             Либо None в случае ошибки.
         """
@@ -172,8 +172,8 @@ class icTestUniReaderCtrlDlg(test_uni_reader_ctrl_dlg_proto.icTestUniReaderContr
 def view_test_uni_reader_ctrl_dlg(parent=None, controller=None):
     """
     Функция отображения диалогового окна тестирования контроллера Uni Reader.
-    @param parent: Родительское окно.
-    @param controller: Объект контроллера.
+    :param parent: Родительское окно.
+    :param controller: Объект контроллера.
     """
     if parent is None:
         app = wx.GetApp()

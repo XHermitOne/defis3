@@ -87,7 +87,7 @@ class icRefRequisiteInterface(object):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         # Родительский объект
         self.parent = parent
@@ -108,7 +108,7 @@ class icRefRequisiteProto(icRefRequisiteInterface,
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icRefRequisiteInterface.__init__(self, parent)
         ref_persistent.icRefFieldPersistent.__init__(self, parent=parent)
@@ -173,7 +173,7 @@ class icRefNSIRequisiteProto(icRefRequisiteInterface,
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icRefRequisiteInterface.__init__(self, parent)
         ref_persistent.icRefFieldPersistent.__init__(self, parent=parent)

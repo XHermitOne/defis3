@@ -142,8 +142,8 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
     def addTool(self, tool):
         """
         Добавлят инструмент в с надор инструментов.
-        @type tool: C{ictoggleimagebutton.icToggleImageButton}
-        @param tool: Инструмент палитры.
+        :type tool: C{ictoggleimagebutton.icToggleImageButton}
+        :param tool: Инструмент палитры.
         """
         self._toolList.append(tool)
         tool.Bind(wx.EVT_BUTTON, self.onMouseClick, id=tool.GetId())
@@ -213,8 +213,8 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         """
         Устанавливает для отображенмя в панели инструментов стиль расположения компонента
         в сайзере.
-        @type flag: C{int}
-        @param flag: Стиль расположения компонента в сайзере.
+        :type flag: C{int}
+        :param flag: Стиль расположения компонента в сайзере.
         """
         for key, obj in self.flagCompDict.items():
             if key not in ['proportion', 'left', 'grow']:
@@ -231,8 +231,8 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
     def setProportionStyle(self, prop):
         """
         Устанавливает признак пропорциональности при размещении компонента в сайзере.
-        @type prop: C{bool}
-        @param prop: Признак пропорциональность при размещении компонента в сайзере.
+        :type prop: C{bool}
+        :param prop: Признак пропорциональность при размещении компонента в сайзере.
         """
         self.flagCompDict['proportion'].SetToggle(prop)
     

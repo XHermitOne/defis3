@@ -62,7 +62,7 @@ def onTreeRootTitle(Context_):
 def onTreeBrwsInit(Context_):
     """
     Обработчик инициализации браузера дерева справочника.
-    @param Context_: Контекст выполнения формы.
+    :param Context_: Контекст выполнения формы.
     """
     try:
         #Вытащить глобальные переменные из пространства имен, 
@@ -85,7 +85,7 @@ def onTreeBrwsInit(Context_):
 def onBrwsModeTool(Context_):
     """
     Переключение в режим браузера.
-    @param Context_: Контекст выполнения формы.
+    :param Context_: Контекст выполнения формы.
     """
     try:
         #Вытащить глобальные переменные из пространства имен, 
@@ -101,7 +101,7 @@ def onBrwsModeTool(Context_):
 def onCancelButtonMouseClick(Context_):
     """
     Нажание на кнопке ОТМЕНА.
-    @param Context_: Контекст выполнения формы.
+    :param Context_: Контекст выполнения формы.
     """
     try:
         #main_dlg=context.GetObject('std_ref_book_choice_dlg')
@@ -114,7 +114,7 @@ def onCancelButtonMouseClick(Context_):
 def onOkButtonMouseClick(Context_):
     """
     Нажание на кнопке OK.
-    @param Context_: Контекст выполнения формы.
+    :param Context_: Контекст выполнения формы.
     """
     try:
         #main_dlg=context.GetObject('std_ref_book_choice_dlg')
@@ -158,7 +158,7 @@ def onDataGridInit(Context_):
 def onObjCodeChanged(Context_):
     """
     Изменение выбранного кода.
-    @param Context_: Контекст выполнения формы.
+    :param Context_: Контекст выполнения формы.
     """
     try:
         #Вытащить глобальные переменные из пространства имен, 
@@ -181,7 +181,7 @@ def onObjCodeChanged(Context_):
 def onDelObjTool(Context_):
     """
     Удаление выбранного объекта.
-    @param Context_: Контекст выполнения формы.
+    :param Context_: Контекст выполнения формы.
     """
     try:
         #Вытащить глобальные переменные из пространства имен, 
@@ -210,7 +210,7 @@ def onDelObjTool(Context_):
 def onCodeObjControl(Context_):
     """
     Контроль кода объекта.
-    @param Context_: Контекст выполнения формы.
+    :param Context_: Контекст выполнения формы.
     """
     try:
         #Вытащить глобальные переменные из пространства имен, 

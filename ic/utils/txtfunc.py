@@ -41,9 +41,9 @@ ALTER_CSV_DELITEMER = u';'
 def createTxtFile(filename, txt=None):
     """
     Создать текстовый файл.
-    @param filename: Имя создаваемого файла.
-    @param txt: Текст по умолчанию записываемый в файл.
-    @return: True/False.
+    :param filename: Имя создаваемого файла.
+    :param txt: Текст по умолчанию записываемый в файл.
+    :return: True/False.
     """
     txt = util.encodeText(txt)
     f = None
@@ -68,13 +68,13 @@ def save_file_csv(csv_filename, records=(),
                   replacements=None):
     """
     Запись в CSV файл списка записей.
-    @param csv_filename: Имя CSV файла.
-    @param records: Список записей.
+    :param csv_filename: Имя CSV файла.
+    :param records: Список записей.
         Каждая запись представляет собой список значений полей.
-    @param delim: Разделитель.
-    @param encoding: Кодировка результирующего файла.
-    @param replacements: Словарь автоматических замен значений полей.
-    @return: True/False
+    :param delim: Разделитель.
+    :param encoding: Кодировка результирующего файла.
+    :param replacements: Словарь автоматических замен значений полей.
+    :return: True/False
     """
     global DEFAULT_REPLACEMENTS
     if replacements is None:
@@ -90,12 +90,12 @@ def load_file_csv(csv_filename, delim=u',',
                   encoding=DEFAULT_ENCODING, to_unicode=True):
     """
     Чтение csv файла в виде списка записей.
-    @param csv_filename; Имя CSV файла.
-    @param delim: Разделитель.
-    @param encoding: Кодовая страница файла
+    :param csv_filename; Имя CSV файла.
+    :param delim: Разделитель.
+    :param encoding: Кодовая страница файла
         (для преобразования в Unicode).
     @paran to_unicode: Преобразовать сразу в Unicode?
-    @return: Список записей.
+    :return: Список записей.
         Каждая запись представляет собой список значений полей.
         Либо None в слечае ошибки.
     """

@@ -288,16 +288,16 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
                     sort_date=None, sort_inv=None):
         """
         Отсортировать список документов.
-        @param documents: Список документов.
-        @param sort_n_doc: Сортировать по номеру документа?
+        :param documents: Список документов.
+        :param sort_n_doc: Сортировать по номеру документа?
             Если не определено (None), то берется из контрола сортировки.
-        @param sort_contragent: Сортировать по имени контрагента?
+        :param sort_contragent: Сортировать по имени контрагента?
             Если не определено (None), то берется из контрола сортировки.
-        @param sort_date: Сортировать по дате документа.
+        :param sort_date: Сортировать по дате документа.
             Если не определено (None), то берется из контрола сортировки.
-        @param sort_inv: Сортировать по инвентарному номеру (Основные средства).
+        :param sort_inv: Сортировать по инвентарному номеру (Основные средства).
             Если не определено (None), то берется из контрола сортировки.
-        @return: Отсортированный список документов.
+        :return: Отсортированный список документов.
         """
         ctrl_sort = bool(sort_n_doc) or bool(sort_contragent) or bool(sort_date) or bool(sort_inv)
         if not ctrl_sort:
@@ -370,12 +370,12 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
     def groupDocList(self, documents, group_n_doc=None, group_contragent=None):
         """
         Группировать список документов.
-        @param documents: Список документов.
-        @param group_n_doc: Группировать по номеру документа?
+        :param documents: Список документов.
+        :param group_n_doc: Группировать по номеру документа?
             Если не определено (None), то берется из контрола группировки.
-        @param group_contragent: Группировать по имени контрагента?
+        :param group_contragent: Группировать по имени контрагента?
             Если не определено (None), то берется из контрола группировки.
-        @return: Сгруппированный список документов.
+        :return: Сгруппированный список документов.
         """
         if group_n_doc is None and group_contragent is None:
             group_selection = self.group_radioBox.GetSelection()
@@ -577,11 +577,11 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
                                   n_scan_pages=1, is_duplex=False):
         """
         Установить количество сканированных страниц и признак дуплекса в документе.
-        @param item_idx: Индекс текущего элемента списка, соответствующего документу.
-        @param doc: Объект документа.
-        @param doc_uuid: UUID документа.
-        @param n_scan_pages: Количество сканируемых страниц.
-        @param is_duplex: Признак дуплекса.
+        :param item_idx: Индекс текущего элемента списка, соответствующего документу.
+        :param doc: Объект документа.
+        :param doc_uuid: UUID документа.
+        :param n_scan_pages: Количество сканируемых страниц.
+        :param is_duplex: Признак дуплекса.
         """
         if doc is None:
             doc = ic.metadata.THIS.mtd.scan_document_pack.create()
@@ -617,7 +617,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
     def _show_quick_entry_dlg(self, item_idx):
         """
         Отобразить окно быстрого ввода.
-        @param item_idx: Индекс выбранного элемента.
+        :param item_idx: Индекс выбранного элемента.
         """
         # Получить текущую запись
         doc_rec = self.documents[item_idx]
@@ -810,7 +810,7 @@ class icPackScanDocPanel(edit_doc_form_proto.icPackScanDocPanelProto,
 def open_pack_scan_doc_page(main_win=None):
     """
     Открыть страницу пакетной обработки и сканирования документов.
-    @param main_win: Главное окно приложения.
+    :param main_win: Главное окно приложения.
     """
     if main_win is None:
         main_win = ic.getMainWin()

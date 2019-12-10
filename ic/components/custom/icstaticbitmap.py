@@ -4,8 +4,8 @@
 """
 Обкладка для класса wx.StaicBitmap. Генерирут объект по ресурсному описанию.
 
-@type SPC_IC_BITMAP: C{Dictionary}
-@var SPC_IC_BITMAP: Спецификация на ресурсное описание компонента. Описание ключей:
+:type SPC_IC_BITMAP: C{Dictionary}
+:var SPC_IC_BITMAP: Спецификация на ресурсное описание компонента. Описание ключей:
 
     - B{name = 'DefaultName'}: Имя объекта.
     - B{field_name=None}: Имя поля базы данных, которое отображает компонент.
@@ -120,16 +120,16 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
         """
         Конструктор для создания icStaticBitmap.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         self.editor = None
         
@@ -239,10 +239,10 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
     def SetValue(self, new_file):
         """
         Устанавливает новое значение картинки.
-        @type new_file: C{string}
-        @param new_file: Новое имя файла картинки.
-        @rtype: C{bool}
-        @return: Признак успешного выполнения - если файл найден и картинка создана.
+        :type new_file: C{string}
+        :param new_file: Новое имя файла картинки.
+        :rtype: C{bool}
+        :return: Признак успешного выполнения - если файл найден и картинка создана.
         """
         self.file = new_file
         bmptype = bmpfunc.getBitmapType(new_file)
@@ -265,13 +265,13 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
         """
         Обновляем данные в базе данных.
         
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
-        @type bRestore: C{bool}
-        @param bRestore: Признак обновления представления. Если True, то при
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
+        :type bRestore: C{bool}
+        :param bRestore: Признак обновления представления. Если True, то при
             неудачной попытки записи программа востановит значение поля по базе
-        @rtype: C{int}
-        @return: Возвращает код контроля на запись.
+        :rtype: C{int}
+        :return: Возвращает код контроля на запись.
         """
         #   Если класс данных не задан, то считаем, что данные необходимо обновить
         if db_name is None:
@@ -292,8 +292,8 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
     def UpdateViewFromDB(self, db_name=None):
         """
         Обновляет данные в текстовом поле после изменения курсора в источнике данных.
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
         """
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:

@@ -83,11 +83,11 @@ def overlayPseudoGraph(symb1=u' ', symb2=u' ', default_symb=None):
     Построение символа псевдографики по двум методом наложения.
     Например:
         '│' + '─' = '┼'
-    @param symb1: Символ псевдографики 1. 
-    @param symb2: Символ псевдографики 2.
-    @param default_symb: Символ по умолчанию, если комбинация символов не обрабатывается.
+    :param symb1: Символ псевдографики 1. 
+    :param symb2: Символ псевдографики 2.
+    :param default_symb: Символ по умолчанию, если комбинация символов не обрабатывается.
         Если символ по умолчанию не определен, то берется по умолчанию первый символ.
-    @return: Новый сгененрированный символ 
+    :return: Новый сгененрированный символ
     """
     if default_symb is None:
         default_symb = symb1
@@ -218,9 +218,9 @@ def cmpLowerU(str1, str2):
 def str2unicode(text, code_page='utf-8'):
     """
     Перекодировка строки в юникод с проверкой типа входного аргумента.
-    @param text: Строка.
-    @param code_page: Кодовая страница строки.
-    @return: Строка в юникоде.
+    :param text: Строка.
+    :param code_page: Кодовая страница строки.
+    :return: Строка в юникоде.
     """
     if isinstance(text, str):
         return text
@@ -246,8 +246,8 @@ def isLAT_DigitText(text):
     Проверка того что текст состоит из латинских букв, цифр и знака подчеркивания.
     Эта функция используется для определения может ли текст являться наименованием
     например переменной/реквизита и т.п.
-    @param text: Текст в виде строки или unicode.
-    @return: True - текст состоит из латинских букв, цифр и знака подчеркивания.
+    :param text: Текст в виде строки или unicode.
+    :return: True - текст состоит из латинских букв, цифр и знака подчеркивания.
         False - во всех других случаях.
     """
     if isinstance(text, str):
@@ -407,8 +407,8 @@ def get_codepage(text=None):
 def toUnicode(value, code_page='utf-8'):
     """
     Преобразовать любое значение в юникод.
-    @param value: Значение.
-    @param code_page: Кодовая страница для строк.
+    :param value: Значение.
+    :param code_page: Кодовая страница для строк.
     """
     if isinstance(value, str):
         return value
@@ -420,10 +420,10 @@ def toUnicode(value, code_page='utf-8'):
 def recode_text(txt, src_codepage='cp1251', dst_codepage='utf-8'):
     """
     Перекодировать текст из одной кодировки в другую.
-    @param txt: Сам текст.
-    @param src_codepage: Кодовая страница исходного текста.
-    @param dst_codepage: Кодовая страница результирующего текста.
-    @return: Перекодированный текст в новой кодировке.
+    :param txt: Сам текст.
+    :param src_codepage: Кодовая страница исходного текста.
+    :param dst_codepage: Кодовая страница результирующего текста.
+    :return: Перекодированный текст в новой кодировке.
     """
     unicode_txt = toUnicode(txt, src_codepage)
     if isinstance(unicode_txt, str):
@@ -436,10 +436,10 @@ def is_words_in_txt(txt, words, case_sensitivity=True):
     """
     Поиск слов в тексте.
     Поиск ведется до первого нахождения одного из указанных слов.
-    @param txt: Анализируемый текст.
-    @param words: Искомые слова.
-    @param case_sensitivity: Проверять с учетом регистра?
-    @return: True (есть такие слова в тексте)/False (слова не найдены).
+    :param txt: Анализируемый текст.
+    :param words: Искомые слова.
+    :param case_sensitivity: Проверять с учетом регистра?
+    :return: True (есть такие слова в тексте)/False (слова не найдены).
     """
     if not isinstance(txt, str):
         txt = toUnicode(txt)
@@ -460,10 +460,10 @@ def startswith_words_txt(txt, words, case_sensitivity=True):
     """
     Поиск слов в начале текста.
     Поиск ведется до первого нахождения одного из указанных слов.
-    @param txt: Анализируемый текст.
-    @param words: Искомые слова.
-    @param case_sensitivity: Проверять с учетом регистра?
-    @return: True (есть такие слова в начале тексте)/False (слова не найдены).
+    :param txt: Анализируемый текст.
+    :param words: Искомые слова.
+    :param case_sensitivity: Проверять с учетом регистра?
+    :return: True (есть такие слова в начале тексте)/False (слова не найдены).
     """
     if not isinstance(txt, str):
         txt = toUnicode(txt)
@@ -484,10 +484,10 @@ def endswith_words_txt(txt, words, case_sensitivity=True):
     """
     Поиск слов в конце текста.
     Поиск ведется до первого нахождения одного из указанных слов.
-    @param txt: Анализируемый текст.
-    @param words: Искомые слова.
-    @param case_sensitivity: Проверять с учетом регистра?
-    @return: True (есть такие слова в конце тексте)/False (слова не найдены).
+    :param txt: Анализируемый текст.
+    :param words: Искомые слова.
+    :param case_sensitivity: Проверять с учетом регистра?
+    :return: True (есть такие слова в конце тексте)/False (слова не найдены).
     """
     if not isinstance(txt, str):
         txt = toUnicode(txt)
@@ -507,8 +507,8 @@ def endswith_words_txt(txt, words, case_sensitivity=True):
 def is_digits_in_text(text):
     """
     Проверка присутствия цифр в тексте.
-    @param text: Проверяемый текст.
-    @return: True - в тексте присутствуют цифры / False - цифры отсутствуют.
+    :param text: Проверяемый текст.
+    :return: True - в тексте присутствуют цифры / False - цифры отсутствуют.
     """
     for symbol in text:
         if symbol.isdigit():
@@ -520,9 +520,9 @@ def is_serial_symbol(txt, symbol):
     """
     Проверка на то что текст представляет из себя
     последовательность из одного конкретного символа.
-    @param txt: Текст.
-    @param symbol: Символ.
-    @return: True/False.
+    :param txt: Текст.
+    :param symbol: Символ.
+    :return: True/False.
     """
     if not txt:
         # Если это пустая строка то это
@@ -539,8 +539,8 @@ def is_serial(txt):
     """
     Проверка на то что текст представляет из себя
     последовательность из одного символа.
-    @param txt: Текст.
-    @return: True/False.
+    :param txt: Текст.
+    :return: True/False.
     """
     return is_serial_symbol(txt, txt[0])
 
@@ -549,8 +549,8 @@ def is_serial_zero(txt):
     """
     Проверка на то что текст представляет из себя
     последовательность из одного символа '0'.
-    @param txt: Текст.
-    @return: True/False.
+    :param txt: Текст.
+    :return: True/False.
     """
     return is_serial_symbol(txt, '0')
 
@@ -565,10 +565,10 @@ def limit_len_text(txt, length,  filler=u' '):
         Если текст больше, то обрезаются последние символы.
         Если текст меньше, то в конец текста добавляются символы
         наполнения до указанной длины.
-    @param txt: Редактируемый текст.
-    @param length: Длина результирующего текста.
-    @param filler: Символ-наполнитель.
-    @return: Отредактированный текст определенной длины.
+    :param txt: Редактируемый текст.
+    :param length: Длина результирующего текста.
+    :param filler: Символ-наполнитель.
+    :return: Отредактированный текст определенной длины.
     """
     if not isinstance(txt, str):
         txt = str(txt)
@@ -590,10 +590,10 @@ def getNumEnding(number, endings):
     Функция возвращает окончание для множественного числа слова на основании числа и
     массива окончаний.
     Функция взята с https://habrahabr.ru/post/105428/.
-    @param number: Число на основе которого нужно сформировать окончание
-    @param endings: Массив слов или окончаний для чисел(1, 4, 5),
+    :param number: Число на основе которого нужно сформировать окончание
+    :param endings: Массив слов или окончаний для чисел(1, 4, 5),
         например ['яблоко', 'яблока', 'яблок']
-    @return: Строку.
+    :return: Строку.
     """
     number %= 100
     if 11 <= number <= 19:
@@ -612,8 +612,8 @@ def getNumEnding(number, endings):
 def isMultiLineTxt(txt=u''):
     """
     Проверка на то что текст является много строчным.
-    @param txt: Текст.
-    @return: True - Текст многостроный, False - текст - одна строка, None - ошибка.
+    :param txt: Текст.
+    :return: True - Текст многостроный, False - текст - одна строка, None - ошибка.
     """
     if not isinstance(txt, str):
         # Если тип не соответствует тексту, то ошибка
@@ -625,8 +625,8 @@ def isMultiLineTxt(txt=u''):
 def upper_symbols2_lower(txt):
     """
     Замена больших букв в строке на маленькое с подчеркиванием кроме первого символа.
-    @param txt: Строка текста в виде AbcdEfghIklmn.
-    @return: Изменненная строка в виде abcd_efgh_iklmn.
+    :param txt: Строка текста в виде AbcdEfghIklmn.
+    :return: Изменненная строка в виде abcd_efgh_iklmn.
     """
     return ''.join([('_'+symb.lower() if symb.isupper() and i else symb.lower()) for i, symb in enumerate(list(txt))])
 
@@ -634,8 +634,8 @@ def upper_symbols2_lower(txt):
 def lower_symbols2_upper(txt):
     """
     Замена маленьких букв с подчеркиванием кроме первого символа в строке на большое.
-    @param txt: Строка текста в виде abcd_efgh_iklmn.
-    @return: Изменненная строка в виде AbcdEfghIklmn.
+    :param txt: Строка текста в виде abcd_efgh_iklmn.
+    :return: Изменненная строка в виде AbcdEfghIklmn.
     """
     return ''.join([(symb.upper() if not i or (i and symb.islower() and txt[i-1] == '_') else symb.lower()) for i, symb in enumerate(list(txt)) if symb != '_'])
 
@@ -643,8 +643,8 @@ def lower_symbols2_upper(txt):
 def get_str_digit(txt):
     """
     Получить из строки текста все цифры в виде строки.
-    @param txt: Текст. Например '12ASD321'.
-    @return: Текст с цифрами. Например '12321'
+    :param txt: Текст. Например '12ASD321'.
+    :return: Текст с цифрами. Например '12321'
     """
     return u''.join([symb for symb in txt if symb.isdigit()])
 
@@ -652,8 +652,8 @@ def get_str_digit(txt):
 def get_str_digit_as_int(txt):
     """
     Получить из строки текста все цифры в виде целого числа.
-    @param txt: Текст. Например '12ASD321'.
-    @return: Целое число. Например 12321. Если цифр нет, то возвращается 0.
+    :param txt: Текст. Например '12ASD321'.
+    :return: Целое число. Например 12321. Если цифр нет, то возвращается 0.
     """
     num_txt = get_str_digit(txt)
     if num_txt:
@@ -664,8 +664,8 @@ def get_str_digit_as_int(txt):
 def replace_in_text(text, replacements):
     """
     Произвести ряд замен в тексте.
-    @param text: Текст.
-    @param replacements: Замены.
+    :param text: Текст.
+    :param replacements: Замены.
         Может задаваться как словарь или список кортежей.
         В случае словаря:
             {
@@ -675,7 +675,7 @@ def replace_in_text(text, replacements):
             [
             ('что заменить', 'на что заменить'), ...
             ]
-    @return: Текст со всеми произведенными заменами либо исходный текст в случае ошибки.
+    :return: Текст со всеми произведенными заменами либо исходный текст в случае ошибки.
     """
     result_text = text
     try:
@@ -696,9 +696,9 @@ def replace_in_text(text, replacements):
 def delete_in_text(text, delete_txt_list):
     """
     Удалить строки из текста.
-    @param text: Текст.
-    @param delete_txt_list: Список удаляемых строк из текста.
-    @return: Текст со всеми произведенными заменами либо исходный текст в случае ошибки.
+    :param text: Текст.
+    :param delete_txt_list: Список удаляемых строк из текста.
+    :return: Текст со всеми произведенными заменами либо исходный текст в случае ошибки.
     """
     replacements = [(str(delete_txt), u'') for delete_txt in delete_txt_list]
     return replace_in_text(text, replacements=replacements)
@@ -707,9 +707,9 @@ def delete_in_text(text, delete_txt_list):
 def delete_symbol_in_text(text, symbol=u' '):
     """
     Удалить символа из текста.
-    @param text: Текст.
-    @param symbol: Удаляемый символ.
-    @return: Текст с удаленным символом либо исходный текст в случае ошибки.
+    :param text: Текст.
+    :param symbol: Удаляемый символ.
+    :return: Текст с удаленным символом либо исходный текст в случае ошибки.
     """
     return delete_in_text(text, (symbol, ))
 
@@ -718,9 +718,9 @@ def txt_find_words(txt, *words):
     """
     Поиск слов в тексте.
     Поиск ведется до первого нахождения одного из указанных слов.
-    @param txt: Анализируемый текст.
-    @param words: Искомые слова.
-    @return: True (есть такие слова в тексте)/False (слова не найдены).
+    :param txt: Анализируемый текст.
+    :param words: Искомые слова.
+    :return: True (есть такие слова в тексте)/False (слова не найдены).
     """
     if not isinstance(txt, str):
         txt = toUnicode(txt)

@@ -5,8 +5,8 @@
 Описание класса многоколоночного списока.
 Содержит описание класса icMultiColumnList для создания многоколоночноко списка.
 
-@type SPC_IC_MCLIST: C{dictionary}
-@var SPC_IC_MCLIST: Спецификация на ресурсное описание панели инструментов. Описание ключей SPC_IC_MCLIST:
+:type SPC_IC_MCLIST: C{dictionary}
+:var SPC_IC_MCLIST: Спецификация на ресурсное описание панели инструментов. Описание ключей SPC_IC_MCLIST:
 
     - B{type='MultiColumnList'}: Тип компонента.
     - B{name='default'}: Имя компонента.
@@ -111,16 +111,16 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
                  bCounter=False, progressDlg=None):
         """
         Конструктор для создания MultiColumnList.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_MCLIST, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -165,8 +165,8 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def appendStringRec(self, *StringRec_):
         """
         Добавить запись строк.
-        @param StringRec_: Запись из строк.
-        @return: Возвращает индекс добавленной записи.
+        :param StringRec_: Запись из строк.
+        :return: Возвращает индекс добавленной записи.
         """
         index = 0
         for i_string in range(len(StringRec_)):
@@ -180,8 +180,8 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def getStringsByCol(self, *Columns_):
         """
         Получить список строк по коолнкам.
-        @param Columns_: Номера колонок.
-        @return: Список кортежей строк, если задано несколько колонок.
+        :param Columns_: Номера колонок.
+        :return: Список кортежей строк, если задано несколько колонок.
             Список строк,  если задана одна колонка.
             None в случае ошибки.
         """
@@ -206,11 +206,11 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def moveStringRec(self, Index_=-1, Step_=1):
         """
         Передвинуть запись в списке.
-        @param Index_: Номер записи. Если -1, то имеется в виду текущая.
-        @param Step_: На сколько позиций передвинуть. 
+        :param Index_: Номер записи. Если -1, то имеется в виду текущая.
+        :param Step_: На сколько позиций передвинуть. 
             Если <0, то движение к началу.
             Если >0, то движение к концу.
-        @return: True - если движение произошло.
+        :return: True - если движение произошло.
             False - если движение не произошло.
             None в случае ошибки.
         """
@@ -247,7 +247,7 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def focusRec(self, Index_):
         """
         Переместить фокус/выделение строки/записи.
-        @param Index_: Номер записи.
+        :param Index_: Номер записи.
         """
         Index_ = min(self.GetItemCount()-1, max(0, Index_))
         self.currentItem = Index_
@@ -260,8 +260,8 @@ class icMultiColumnList(icWidget, wx.ListCtrl):
     def selectRec(self, Index_, SelectOn_=True):
         """
         Выделить строку/запись с индексом.
-        @param Index_: Номер записи.
-        @param SelectOn_: Вкл/Выкл выделение.
+        :param Index_: Номер записи.
+        :param SelectOn_: Вкл/Выкл выделение.
         """
         Index_ = min(self.GetItemCount()-1, max(0, Index_))
         return self.Select(Index_, int(SelectOn_))

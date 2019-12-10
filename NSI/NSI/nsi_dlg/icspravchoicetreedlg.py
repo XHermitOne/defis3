@@ -40,8 +40,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
                  *args, **kwargs):
         """
         Конструктор.
-        @param nsi_sprav: Объект справочника.
-        @param default_selected_code: Выбираемый по умолчанию код.
+        :param nsi_sprav: Объект справочника.
+        :param default_selected_code: Выбираемый по умолчанию код.
         """
         nsi_dialogs_proto.icSpravChoiceTreeDlgProto.__init__(self, *args, **kwargs)
 
@@ -115,11 +115,11 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def init(self, fields, search_fields):
         """
         Функция инициализации диалогового окна.
-        @param fields: Список имен полей справочника, которые
+        :param fields: Список имен полей справочника, которые
             необходимо отобразить в контроле дерева.
             Если поля не указываются, то отображаются только
             <Код> и <Наименование>.
-        @param search_fields: Поля по которым производиться поиск.
+        :param search_fields: Поля по которым производиться поиск.
         """
         self.init_images()
 
@@ -168,8 +168,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def get_field_label(self, field):
         """
         Определить надпись соответствующую полю по его описанию.
-        @param field: Описание поля.
-        @return: Строка надписи в юникоде.
+        :param field: Описание поля.
+        :return: Строка надписи в юникоде.
         """
         if field is None:
             return TREE_ITEM_LABEL
@@ -180,7 +180,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def init_columns(self, *fields):
         """
         Инициализация колонок контрола дерева справочника.
-        @param fields: Список имен полей справочника, которые
+        :param fields: Список имен полей справочника, которые
             необходимо отобразить в контроле дерева.
             Если поля не указываются, то отображаются только 
             <Код> и <Наименование>.
@@ -212,7 +212,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def init_search(self, *search_fields):
         """
         Инициализация контролов выбора поиска по полям справочника.
-        @param search_fields: Поля по которым производиться поиск.
+        :param search_fields: Поля по которым производиться поиск.
         """
         # По умолчанию делаем поиск по наименованию
         field_names = ['name', 'cod']
@@ -243,8 +243,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def set_sprav_tree(self, is_progress=True, sort_column=None):
         """
         Установить данные дерева справочника.
-        @param is_progress: Вывести прогрессбар построения дерева справочника?
-        @param sort_column: Наименования колонки сортировки.
+        :param is_progress: Вывести прогрессбар построения дерева справочника?
+        :param sort_column: Наименования колонки сортировки.
         """
         # Добавить корневой элемент дерева справочника
         sprav_res = self.sprav.getResource()
@@ -269,8 +269,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def refresh_sprav_tree(self, is_progress=True, sort_column=None):
         """
         Обновить данные дерева справочника.
-        @param is_progress: Вывести прогрессбар построения дерева справочника?
-        @param sort_column: Наименования колонки сортировки.
+        :param is_progress: Вывести прогрессбар построения дерева справочника?
+        :param sort_column: Наименования колонки сортировки.
         """
         # Запомнить выделенный элемент дерева
         selected_code = self.getSelectedCode()
@@ -305,10 +305,10 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
                              is_progress=True, sort_column=None):
         """
         Добавить уровень дерева справочника.
-        @param parent_item: Элемент дерева, в который происходит добавление.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
-        @param sort_column: Наименования колонки сортировки.
-        @param is_progress: Признак отображения прогреса загрузки.
+        :param parent_item: Элемент дерева, в который происходит добавление.
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :param sort_column: Наименования колонки сортировки.
+        :param is_progress: Признак отображения прогреса загрузки.
         """
         # Добавить первый уровень дерева справочника
         sprav_storage = self.sprav.getStorage()
@@ -350,8 +350,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         """
         Определить имя поля сортировки по указанию имени/индексу 
         колонки сортировки.
-        @param sort_column: Указание имени/индекса колонки сортировки.
-        @return: Имя поля сортировки.
+        :param sort_column: Указание имени/индекса колонки сортировки.
+        :return: Имя поля сортировки.
             Или None в случае ошибки.
         """
         sort_field = None
@@ -377,8 +377,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         """
         Определить индекс поля сортировки по указанию имени/индексу 
         колонки сортировки.
-        @param sort_column: Указание имени/индекса колонки сортировки.
-        @return: Индекс поля сортировки.
+        :param sort_column: Указание имени/индекса колонки сортировки.
+        :return: Индекс поля сортировки.
             Или None в случае ошибки.
         """
         sort_field_idx = None
@@ -404,8 +404,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def is_reverse_sort(self, sort_column='name'):
         """
         Проверка на обратную сортировку.
-        @param sort_column: Указание имени/индекса колонки сортировки.
-        @return: True - Обратная сортировка / False - Обычная сортировка по возрастанию. 
+        :param sort_column: Указание имени/индекса колонки сортировки.
+        :return: True - Обратная сортировка / False - Обычная сортировка по возрастанию. 
         """
         if isinstance(sort_column, int):
             return sort_column < 0
@@ -417,8 +417,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def sort_sprav_recordset(self, recordset, sort_column='name'):
         """
         Отсортировать список записей по колонке.
-        @param recordset: Список записей.
-        @param sort_column: Поле сортировки.
+        :param recordset: Список записей.
+        :param sort_column: Поле сортировки.
             Поле может задаваться по имени или по индексу.
             Если перед именем стоит <-> или индекс отрицательный, 
             то считается что сортировка в обратном порядке.
@@ -430,7 +430,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
             Соответственно если запись задается словарем, 
             то в качестве поля указываем имя поля.
             Если запись задается списком, то поле указываем индексом.
-        @return: Отсортированный список записей.
+        :return: Отсортированный список записей.
         """
         if not isinstance(recordset, list):
             # Не списки мы не можем отсортировать
@@ -494,8 +494,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def set_sprav_tree_item(self, parent_item, record):
         """
         Установить элемент дерева справочника.
-        @param parent_item: Родительский элемент дерева.
-        @param record: Запись справочника, ассоциируемая с элементом.
+        :param parent_item: Родительский элемент дерева.
+        :param record: Запись справочника, ассоциируемая с элементом.
         """
         # Запись в виде словаря
         item_level = self.getItemLevel(tree_ctrl=self.sprav_treeListCtrl, item=parent_item)
@@ -531,7 +531,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def find_tree_child_item(self, item_text, cur_item=None):
         """
         Поиск дочернего элемента дерева по тексту.
-        @param item_text: Текст элемента дерева.
+        :param item_text: Текст элемента дерева.
         """
         if cur_item is None:
             cur_item = self.root
@@ -548,7 +548,7 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def init_level_tree(self, item):
         """
         Проинициализировать ветку элемента дерева.
-        @param item: Элемент дерева.
+        :param item: Элемент дерева.
         """
         find_item = self.find_tree_child_item(TREE_ITEM_LABEL, item)
         if find_item:
@@ -563,9 +563,9 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def find_sprav_tree_item(self, parent_item, sprav_code=None):
         """
         Поиск элемента дерева справочника по коду справочника.
-        @param parent_item: Родительский элемент дерева.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
-        @return: Найденный элемент дерева или None, если элемент не найден. 
+        :param parent_item: Родительский элемент дерева.
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :return: Найденный элемент дерева или None, если элемент не найден. 
         """
         # Поискать код в текущем элементе
         record = self.getItemData_tree(ctrl=self.sprav_treeListCtrl, item=parent_item)
@@ -604,8 +604,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def select_sprav_tree_item(self, sprav_code, parent_item=None):
         """
         Найти и выбрать элемент дерева справочника по коду справочника.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
-        @return: Найденный элемент дерева или None, если элемент не найден. 
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :return: Найденный элемент дерева или None, если элемент не найден. 
         """
         if parent_item is None:
             parent_item = self.root
@@ -707,10 +707,10 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def getSearchCodes(self, search_txt, search_fieldname=None):
         """
         Обновить найденные коды соответствующие параметрам поиска.
-        @param search_txt: Текст поиска.
-        @param search_fieldname: Поле поиска. 
+        :param search_txt: Текст поиска.
+        :param search_fieldname: Поле поиска.
             Поле по которому производим поиск.
-        @return: Список кодов справочника соответствующих параметрам поиска
+        :return: Список кодов справочника соответствующих параметрам поиска
             или пустой список в случае ошибки.
         """
         # Запуск поиска по справочнику
@@ -796,8 +796,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def calcPopupInfoPos(self, item=None):
         """
         Расчет позиции всплывающего окна по выделенному элементу дерева.
-        @param item: Элемент дерева, к которому относиться отображаемй текст.
-        @return: x, y - Расчетные значения позиции. 
+        :param item: Элемент дерева, к которому относиться отображаемй текст.
+        :return: x, y - Расчетные значения позиции. 
         """
         if item is None:
             # Если пункт не определен, то всплывающее окно не привязано к нему
@@ -822,10 +822,10 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
         Отображение много-строкового текста для возможности просмотра 
             сложного наименования. Используется например для отображения простых
             схем.  
-        @param item: Элемент дерева, к которому относиться отображаемй текст.
-        @param txt: Многостроковый текст.
-        @param position: Координаты отображения всплываемого окна.
-        @return: True/False.
+        :param item: Элемент дерева, к которому относиться отображаемй текст.
+        :param txt: Многостроковый текст.
+        :param position: Координаты отображения всплываемого окна.
+        :return: True/False.
         """
         if position is None:
             x, y = self.calcPopupInfoPos(item)
@@ -865,8 +865,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def getSelectedColIdx(self, mouse_x):
         """
         Определить индекс выбранной колонки.
-        @param mouse_x: Координата мыши в заголовке списка справочника.
-        @return: Индекс колонки, на которой кликнули мышкой.
+        :param mouse_x: Координата мыши в заголовке списка справочника.
+        :return: Индекс колонки, на которой кликнули мышкой.
             Если колонка не найдена, то возвращает -1.
         """
         i = 0
@@ -882,8 +882,8 @@ class icSpravChoiceTreeDlg(nsi_dialogs_proto.icSpravChoiceTreeDlgProto,
     def refreshSortColumn(self, sort_column=None):
         """
         Обновить отсортированную колонку контрола списка справочника.
-        @param sort_column: Колонка сортировки
-        @return: True/False. 
+        :param sort_column: Колонка сортировки
+        :return: True/False. 
         """
         if sort_column is None:
             sort_column = self.sort_column
@@ -963,15 +963,15 @@ def choice_sprav_dlg(parent=None, nsi_sprav=None, fields=None,
     Функция вызова диалогового окна выбора кода справочника.
     ВНИМАНИЕ! Диалоговые окна кешируются в словаре кеша CHOICE_DLG_CACHE.
         Диалоги создаются только первый раз затем происходит только их вызов.
-    @param parent: Родительское окно.
-    @param nsi_sprav: Объект справочника.
-    @param fields: Список имен полей справочника, которые
+    :param parent: Родительское окно.
+    :param nsi_sprav: Объект справочника.
+    :param fields: Список имен полей справочника, которые
         необходимо отобразить в контроле дерева.
         Если поля не указываются, то отображаются только 
         <Код> и <Наименование>.
-    @param default_selected_code: Выбранный код по умолчанию.
+    :param default_selected_code: Выбранный код по умолчанию.
         Если None, то ничего не выбирается.
-    @param search_fields: Поля по которым производиться поиск.
+    :param search_fields: Поля по которым производиться поиск.
         Если не указаны, то берутся отображаемые поля.
     """
     if nsi_sprav is None:
@@ -1021,8 +1021,8 @@ def choice_sprav_dlg(parent=None, nsi_sprav=None, fields=None,
 def del_cached_choice_sprav_dlg(nsi_sprav=None):
     """
     Удалить из кеша диалоговую форму выбора из справочника.
-    @param nsi_sprav: Объект справочника.
-    @return: True - форма удалена из кеша/False - форма не удалена из кеша по какойто причине.
+    :param nsi_sprav: Объект справочника.
+    :return: True - форма удалена из кеша/False - форма не удалена из кеша по какойто причине.
     """
     if nsi_sprav is None:
         log.warning(u'Не определен справочник для удаления диалогового окна выбора из кеша')

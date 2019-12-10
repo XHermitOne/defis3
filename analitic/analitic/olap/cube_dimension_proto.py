@@ -80,8 +80,8 @@ class icCubeDimensionProto(object):
     def findHierarchy(self, hierarchy_name):
         """
         Наити объект иерархии по имени.
-        @param hierarchy_name: Имя объекта иерархии.
-        @return: Объект иерархии или None, если не найден.
+        :param hierarchy_name: Имя объекта иерархии.
+        :return: Объект иерархии или None, если не найден.
         """
         finds = [obj for obj in self.getHierarchies() if obj.getName() == hierarchy_name]
         if finds:
@@ -93,8 +93,8 @@ class icCubeDimensionProto(object):
     def findLevel(self, level_name):
         """
         Поиск объекта уровня измерения по его имени.
-        @param level_name: Имя уровня.
-        @return: Объект уровня измерения или None, если объект с таким именем не найден.
+        :param level_name: Имя уровня.
+        :return: Объект уровня измерения или None, если объект с таким именем не найден.
         """
         finds = [obj for obj in self.getLevels() if obj.getName() == level_name]
         if finds:

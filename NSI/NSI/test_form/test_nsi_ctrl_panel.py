@@ -52,9 +52,9 @@ class icTestNSICtrlPanel(test_nsi_form_proto.icTestNSICtrlPanelProto, form_manag
 
 def show_test_nsi_ctrl_panel(parent=None, title=u''):
     """
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно.
-    @param title: Заголовок страницы нотебука главного окна.
+    :param title: Заголовок страницы нотебука главного окна.
     """
     try:
         main_win = ic.getMainWin()

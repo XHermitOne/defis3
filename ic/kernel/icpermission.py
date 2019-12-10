@@ -20,12 +20,12 @@ class icPermission(object):
     def __init__(self, id, title='', description='', component_type=None, defaultState=False):
         """
         Конструктор.
-        @param id: Идентификатор разрешения.
-        @param title: Краткое описание.
+        :param id: Идентификатор разрешения.
+        :param title: Краткое описание.
         @parma description: Описание.
-        @param component_type: Тип объекта, породившего "разрешение". Используется для 
+        :param component_type: Тип объекта, породившего "разрешение". Используется для 
             группировки разрешений.
-        @param defaultState: Состояние по умолчанию.
+        :param defaultState: Состояние по умолчанию.
         """
         self.id = id
         self.title = title

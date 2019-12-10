@@ -28,15 +28,15 @@ class icToolBarManager(object):
     def enableTools_toolbar(self, toolbar, **kwargs):
         """
         Установить вкл./выкл. инструментов панели инструментов wx.ToolBar.
-        @param toolbar: Объект контрола wx.ToolBar.
-        @param kwargs: Словарь формата:
+        :param toolbar: Объект контрола wx.ToolBar.
+        :param kwargs: Словарь формата:
             {
                 Имя инструмента1: True/False,
                 ...
             }
             Имя инструмента - имя контрола в проекте wx.FormBuilder.
             Объект инструмента ищется среди атрибутов формы по типу wx.ToolBarToolBase.
-        @return: True - все ок, False - какая то ошибка
+        :return: True - все ок, False - какая то ошибка
         """
         result = True
 
@@ -58,11 +58,11 @@ class icToolBarManager(object):
     def setLibImages_ToolBar(self, tool_bar=None, **tools):
         """
         Установить библиотечне картинки в качестве картинок инструментов в wxToolBar.
-        @param tool_bar: Объект wx.ToolBar.
-        @param tools: Словарь соответствий имен инструментов с именами файлов образов библиотеки.
+        :param tool_bar: Объект wx.ToolBar.
+        :param tools: Словарь соответствий имен инструментов с именами файлов образов библиотеки.
             Например:
                 edit_tool = 'document--pencil.png'
-        @return: True/False.
+        :return: True/False.
         """
         if not tools:
             # Если словарь соответствий пуст, то ничего не делаем
@@ -97,7 +97,7 @@ class icToolBarManager(object):
         """
         Определить точку левого-нижнего края кнопки.
         Используется для вызова всплывающих меню.
-        @param button: Объект кнопки wx.Button.
+        :param button: Объект кнопки wx.Button.
         """
         if button is None:
             # Если кнопка не определена, то функция бессмыслена
@@ -111,8 +111,8 @@ class icToolBarManager(object):
         """
         Определить точку левого-нижнего края кнопки.
         Используется для вызова всплывающих меню.
-        @param toolbar: Объект панели инструментов wx.ToolBar.
-        @param tool: Объект инструмента панели инструментов wx.ToolBarToolBase.
+        :param toolbar: Объект панели инструментов wx.ToolBar.
+        :param tool: Объект инструмента панели инструментов wx.ToolBarToolBase.
         """
         if tool is None:
             # Если инструмент не определен, то функция бессмыслена

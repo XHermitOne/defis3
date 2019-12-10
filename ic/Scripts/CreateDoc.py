@@ -11,8 +11,8 @@ def GetPackageModuleList(package_name, ignore_lst,  moduleList=None):
     """
     Функция возвращает список модулей пакета со всеми вложениями.
 
-    @type package_name: C{string}
-    @param package_name: Полный путь до питоновского пакета.
+    :type package_name: C{string}
+    :param package_name: Полный путь до питоновского пакета.
     """
     if not moduleList:
         moduleList = []

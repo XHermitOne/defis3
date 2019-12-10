@@ -19,9 +19,9 @@ def sort_multi_key(items, keys):
     Примеры использования:
         result = sort_multi_key(undecorated, ['key1', 'key2', 'key3'])
         result = sort_multi_key(undecorated, ['-key1', '-key2', '-key3'])
-    @param items: Список словарей.
-    @param keys: Порядок сортировки по ключам.
-    @return: ОТсортированный список.
+    :param items: Список словарей.
+    :param keys: Порядок сортировки по ключам.
+    :return: ОТсортированный список.
     """
     comparers = [((operator.itemgetter(key[1:].strip()), -1) if key.startswith('-') else (operator.itemgetter(key.strip()), 1)) for key in
                  keys]
@@ -29,9 +29,9 @@ def sort_multi_key(items, keys):
     def comparer(left, right):
         """
         Функция сравнения.
-        @param left: Левое значение для сравнения
-        @param right:
-        @return:
+        :param left: Левое значение для сравнения
+        :param right:
+        :return:
         """
         for fn, mult in comparers:
             fn_left = fn(left)
@@ -55,10 +55,10 @@ OR_COMPARE_SIGNATURE = 'OR'
 def filter_multi_key(items, finds, compare=AND_COMPARE_SIGNATURE):
     """
     Фильтрация списка словарей по значениям нескольких ключей.
-    @param items: Список словарей.
-    @param finds: Словарь значений ключей.
-    @param compare: Метод сравнения И/AND или ИЛИ/OR.
-    @return: Список отфильтрованных словарей.
+    :param items: Список словарей.
+    :param finds: Словарь значений ключей.
+    :param compare: Метод сравнения И/AND или ИЛИ/OR.
+    :return: Список отфильтрованных словарей.
     """
     result = list()
     if compare == AND_COMPARE_SIGNATURE:
@@ -73,10 +73,10 @@ def filter_multi_key(items, finds, compare=AND_COMPARE_SIGNATURE):
 def find_multi_key(items, find_keys, compare=AND_COMPARE_SIGNATURE):
     """
     Поиск в списке словарей по значениям нескольких ключей.
-    @param items: Список словарей.
-    @param find_keys: Словарь значений ключей.
-    @param compare: Метод сравнения И/AND или ИЛИ/OR.
-    @return: Найденный словарь или None если ничего не найдено.
+    :param items: Список словарей.
+    :param find_keys: Словарь значений ключей.
+    :param compare: Метод сравнения И/AND или ИЛИ/OR.
+    :return: Найденный словарь или None если ничего не найдено.
     """
     filter_items = filter_multi_key(items, find_keys, compare)
     return filter_items[0] if filter_items else None

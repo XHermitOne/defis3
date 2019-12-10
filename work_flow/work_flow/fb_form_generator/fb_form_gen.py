@@ -47,7 +47,7 @@ class icWxFBPrjGenerator(object):
     def setGenFilename(self, filename, is_rewrite=True):
         """
         Установить файл проекта для генерации.
-        @param is_rewrite: Перезаписать если уже существует?
+        :param is_rewrite: Перезаписать если уже существует?
         """
         if os.path.exists(filename) and is_rewrite:
             os.remove(filename)
@@ -57,8 +57,8 @@ class icWxFBPrjGenerator(object):
     def isParsed(self, resource):
         """
         Проверка на поддерживаемый тип ресурса.
-        @param resource: Ресурс генерации.
-        @return: True - генератор сможет обработать этот вид ресурса.
+        :param resource: Ресурс генерации.
+        :return: True - генератор сможет обработать этот вид ресурса.
             False - генератор не поддерживает этот тип ресурса.
         """
         if not resource:
@@ -72,7 +72,7 @@ class icWxFBPrjGenerator(object):
     def setResource(self, resource):
         """
         Установить ресурс объекта, по которому производиться генерация.
-        @param resource: Ресурс генерации.
+        :param resource: Ресурс генерации.
         """
         if self.isParsed(resource):
             self.resource = resource
@@ -82,7 +82,7 @@ class icWxFBPrjGenerator(object):
     def genPrjName(self):
         """
         Генерация имени проекта.
-        @return: Имя проекта.
+        :return: Имя проекта.
         """
         name = os.path.basename(list(self.resource.keys())[0])
         prj_name = name.lower() + '_frm_proto'
@@ -91,9 +91,9 @@ class icWxFBPrjGenerator(object):
     def savePrj(self, txt=None, prj_filename=None):
         """
         Сохранить текст проекта в файл.
-        @param txt:
-        @param prj_filename:
-        @return: True/False.
+        :param txt:
+        :param prj_filename:
+        :return: True/False.
         """
         if txt is None:
             txt = self.fbp_txt
@@ -106,8 +106,8 @@ class icWxFBPrjGenerator(object):
     def genPrj(self, resource=None):
         """
         Генерация проекта.
-        @param resource: Ресурс генерации.
-        @return: Текст сгенерированного проекта файла *.fbp.
+        :param resource: Ресурс генерации.
+        :return: Текст сгенерированного проекта файла *.fbp.
             Либо None в случае какой либо ошибки.
         """
         if resource:
@@ -138,24 +138,24 @@ class icWxFBPrjGenerator(object):
     def genBoxSizerName(self):
         """
         Генерация имени wx.BoxSizer.
-        @return: Имя wx.BoxSizer.
+        :return: Имя wx.BoxSizer.
         """
         return u'boxSizer%d' % wx.NewId()
 
     def genStaticTextName(self, res, prefix=u''):
         """
         Генерация имени компонента wx.StaticText.
-        @param res: Ресурс генерации.
-        @param prefix: Префикс имени.
-        @return: Имя компонента wx.StaticText.
+        :param res: Ресурс генерации.
+        :param prefix: Префикс имени.
+        :return: Имя компонента wx.StaticText.
         """
         return prefix + res['name'].lower() + '_staticText'
 
     def genStaticTextLabel(self, res):
         """
         Генерация надписи компонента wx.StaticText.
-        @param res: Ресурс генерации.
-        @return: Строка надписи компонента wx.StaticText.
+        :param res: Ресурс генерации.
+        :return: Строка надписи компонента wx.StaticText.
         """
         label = res.get('label', u'')
         description = res.get('description', u'')
@@ -167,25 +167,25 @@ class icWxFBPrjGenerator(object):
         Компонент является редактируемым компонентом,
         поэтому его имя привязывается напрямую к имени
         редактируемого объекта.
-        @param res: Ресурс генерации.
-        @return: Имя компонента wx.TextCtrl.
+        :param res: Ресурс генерации.
+        :return: Имя компонента wx.TextCtrl.
         """
         return res['name']
 
     def genRadioBoxName(self, res):
         """
         Генерация имени компонента wx.RadioBox.
-        @param res: Ресурс генерации.
-        @return: Имя компонента wx.TextCtrl.
+        :param res: Ресурс генерации.
+        :return: Имя компонента wx.TextCtrl.
         """
         return res['name'] + '_radioBox'
 
     def genCheckBoxName(self, res, prefix=u''):
         """
         Генерация имени компонента wx.RadioBox.
-        @param res: Ресурс генерации.
-        @param prefix: Префикс имени.
-        @return: Имя компонента wx.TextCtrl.
+        :param res: Ресурс генерации.
+        :param prefix: Префикс имени.
+        :return: Имя компонента wx.TextCtrl.
         """
         return prefix + res['name'] + '_checkBox'
 
@@ -195,9 +195,9 @@ class icWxFBPrjGenerator(object):
         Компонент является редактируемым компонентом,
         поэтому его имя привязывается напрямую к имени
         редактируемого объекта.
-        @param res: Ресурс генерации.
-        @param prefix: Префикс имени.
-        @return: Имя компонента wx.SpinCtrl.
+        :param res: Ресурс генерации.
+        :param prefix: Префикс имени.
+        :return: Имя компонента wx.SpinCtrl.
         """
         return prefix + res['name']
 
@@ -207,18 +207,18 @@ class icWxFBPrjGenerator(object):
         Компонент является редактируемым компонентом,
         поэтому его имя привязывается напрямую к имени
         редактируемого объекта.
-        @param res: Ресурс генерации.
-        @param prefix: Префикс имени.
-        @return: Имя компонента wx.DatePickerCtrl.
+        :param res: Ресурс генерации.
+        :param prefix: Префикс имени.
+        :return: Имя компонента wx.DatePickerCtrl.
         """
         return prefix + res['name']
 
     def genRequisiteEditBlock(self, requisite_res, is_editable=True):
         """
         Генерировать блок компонентов для редактирования реквизита.
-        @param requisite_res: Ресурс реквизита.
-        @param is_editable: Вкл. редактирование?
-        @return: Текст блока.
+        :param requisite_res: Ресурс реквизита.
+        :param is_editable: Вкл. редактирование?
+        :return: Текст блока.
         """
         txt = u''
         if requisite_res['type_val'] == 'T':
@@ -255,8 +255,8 @@ class icWxFBPrjGenerator(object):
     def genNSICtrlConstructionTxt(self, requisite_res):
         """
         Генерация текста атрибута <construction> контрола справочника.
-        @param requisite_res: Ресурс реквизита.
-        @return: Текст <construction>.
+        :param requisite_res: Ресурс реквизита.
+        :return: Текст <construction>.
         """
         psp_txt = str(requisite_res['nsi_psp'])
         psp_txt = psp_txt.replace('\'',  '& apos;')
@@ -267,8 +267,8 @@ class icWxFBPrjGenerator(object):
     def genNSIRequisiteEditBlock(self, requisite_res):
         """
         Генерировать блок компонентов для редактирования реквизита справочника.
-        @param requisite_res: Ресурс реквизита.
-        @return: Текст блока.
+        :param requisite_res: Ресурс реквизита.
+        :return: Текст блока.
         """
         check_name = self.genCheckBoxName(requisite_res)
         label = self.genStaticTextLabel(requisite_res)
@@ -284,9 +284,9 @@ class icWxFBPrjGenerator(object):
     def genRequisiteBlock(self, requisite_res, is_editable=True):
         """
         Генерировать блок компонентов реквизита.
-        @param requisite_res: Ресурс реквизита.
-        @param is_editable: Вкл. редактирование?
-        @return: Текст блока.
+        :param requisite_res: Ресурс реквизита.
+        :param is_editable: Вкл. редактирование?
+        :return: Текст блока.
         """
         txt = u''
         if requisite_res['type'] == 'Requisite':
@@ -310,7 +310,7 @@ class icWxFBPrjGenerator(object):
     def genInitPanelName(self, obj_res):
         """
         Инициализация имени панели инициализации.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -319,16 +319,16 @@ class icWxFBPrjGenerator(object):
     def isResRequisite(self, requisite_res):
         """
         Проверка является ли ресурс ресурсом реквизита.
-        @param requisite_res: Ресурс генерации
-        @return: True/False.
+        :param requisite_res: Ресурс генерации
+        :return: True/False.
         """
         return requisite_res['type'] in REQUISITE_TYPES
 
     def genInitPanel(self, obj_res):
         """
         Генерация панели инициализации объекта.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         txt = u''
         for requisite in obj_res['child']:
@@ -347,7 +347,7 @@ class icWxFBPrjGenerator(object):
     def genEditPanelName(self, obj_res):
         """
         Инициализация имени панели редактирования.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -356,8 +356,8 @@ class icWxFBPrjGenerator(object):
     def genEditPanel(self, obj_res):
         """
         Генерация панели редактирования объекта.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         txt = u''
         for requisite in obj_res['child']:
@@ -376,7 +376,7 @@ class icWxFBPrjGenerator(object):
     def genViewPanelName(self, obj_res):
         """
         Инициализация имени панели просмотра.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -385,8 +385,8 @@ class icWxFBPrjGenerator(object):
     def genViewPanel(self, obj_res):
         """
         Генерация панели просмотра объекта.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         txt = u''
         for requisite in obj_res['child']:
@@ -405,8 +405,8 @@ class icWxFBPrjGenerator(object):
     def genInitDlgName(self, obj_res):
         """
         Генерация имени диалогового окна инициализации.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Имя диалогового окна.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Имя диалогового окна.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -415,14 +415,14 @@ class icWxFBPrjGenerator(object):
     def genInitDlgTitle(self, obj_res):
         """
         Генерация текста заголовка диалогового окна инициализации.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['description']
 
     def genInitPanelObjName(self, obj_res):
         """
         Генерация имени объекта панели инициализации в диалоговом окне.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['name'].lower() + u'_panel'
 
@@ -430,7 +430,7 @@ class icWxFBPrjGenerator(object):
         """
         Генерация текста атрибута <construction> панели инициализации
         в диалоговом окне.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         panel_name = self.genInitPanelObjName(obj_res)
         panel_class_name = self.genInitPanelName(obj_res)
@@ -439,8 +439,8 @@ class icWxFBPrjGenerator(object):
     def genInitDlg(self, obj_res):
         """
         Генерация диалогового окна инициализации объекта.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         name = self.genInitDlgName(obj_res)
         title = self.genInitDlgTitle(obj_res)
@@ -455,8 +455,8 @@ class icWxFBPrjGenerator(object):
     def genEditDlgName(self, obj_res):
         """
         Генерация имени диалогового окна редактирования.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Имя диалогового окна.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Имя диалогового окна.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -465,14 +465,14 @@ class icWxFBPrjGenerator(object):
     def genEditDlgTitle(self, obj_res):
         """
         Генерация текста заголовка диалогового окна редактирования.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['description']
 
     def genEditPanelObjName(self, obj_res):
         """
         Генерация имени объекта панели редактирования в диалоговом окне.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['name'].lower() + u'_panel'
 
@@ -480,7 +480,7 @@ class icWxFBPrjGenerator(object):
         """
         Генерация текста атрибута <construction> панели редактирования
         в диалоговом окне.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         panel_name = self.genEditPanelObjName(obj_res)
         panel_class_name = self.genEditPanelName(obj_res)
@@ -489,8 +489,8 @@ class icWxFBPrjGenerator(object):
     def genEditDlg(self, obj_res):
         """
         Генерация диалогового окна редактирования объекта.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         name = self.genEditDlgName(obj_res)
         title = self.genEditDlgTitle(obj_res)
@@ -505,8 +505,8 @@ class icWxFBPrjGenerator(object):
     def genViewDlgName(self, obj_res):
         """
         Генерация имени диалогового окна просмотра.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Имя диалогового окна.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Имя диалогового окна.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -515,14 +515,14 @@ class icWxFBPrjGenerator(object):
     def genViewDlgTitle(self, obj_res):
         """
         Генерация текста заголовка диалогового окна просмотра.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['description']
 
     def genViewPanelObjName(self, obj_res):
         """
         Генерация имени объекта панели просмотра в диалоговом окне.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['name'].lower() + u'_panel'
 
@@ -530,7 +530,7 @@ class icWxFBPrjGenerator(object):
         """
         Генерация текста атрибута <construction> панели просмотра
         в диалоговом окне.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         panel_name = self.genViewPanelObjName(obj_res)
         panel_class_name = self.genViewPanelName(obj_res)
@@ -539,8 +539,8 @@ class icWxFBPrjGenerator(object):
     def genViewDlg(self, obj_res):
         """
         Генерация диалогового окна просмотра объекта.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         name = self.genViewDlgName(obj_res)
         title = self.genViewDlgTitle(obj_res)
@@ -555,9 +555,9 @@ class icWxFBPrjGenerator(object):
     def genRequisiteEditSearchBlock(self, requisite_res, is_editable=True):
         """
         Генерировать блок компонентов для редактирования реквизита для поиска.
-        @param requisite_res: Ресурс реквизита.
-        @param is_editable: Вкл. редактирование?
-        @return: Текст блока.
+        :param requisite_res: Ресурс реквизита.
+        :param is_editable: Вкл. редактирование?
+        :return: Текст блока.
         """
         txt = u''
         if requisite_res['type_val'] == 'T':
@@ -612,17 +612,17 @@ class icWxFBPrjGenerator(object):
     def genNSIRequisiteEditSearchBlock(self, requisite_res):
         """
         Генерировать блок компонентов для редактирования реквизита справочника для поиска.
-        @param requisite_res: Ресурс реквизита.
-        @return: Текст блока.
+        :param requisite_res: Ресурс реквизита.
+        :return: Текст блока.
         """
         return self.genNSIRequisiteEditBlock(requisite_res)
 
     def genRequisiteSearchBlock(self, requisite_res, is_editable=True):
         """
         Генерировать блок компонентов реквизита для поиска.
-        @param requisite_res: Ресурс реквизита.
-        @param is_editable: Вкл. редактирование?
-        @return: Текст блока.
+        :param requisite_res: Ресурс реквизита.
+        :param is_editable: Вкл. редактирование?
+        :return: Текст блока.
         """
         txt = u''
         if requisite_res['type'] == 'Requisite':
@@ -646,7 +646,7 @@ class icWxFBPrjGenerator(object):
     def genChoicePanelName(self, obj_res):
         """
         Инициализация имени панели поиска/выбора.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -655,8 +655,8 @@ class icWxFBPrjGenerator(object):
     def genChoicePanel(self, obj_res):
         """
         Генерация панели поиска и выбора объекта.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         txt = u''
         for requisite in obj_res['child']:
@@ -675,8 +675,8 @@ class icWxFBPrjGenerator(object):
     def genChoiceDlgName(self, obj_res):
         """
         Генерация имени диалогового окна поиска/выбора.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Имя диалогового окна.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Имя диалогового окна.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -685,14 +685,14 @@ class icWxFBPrjGenerator(object):
     def genChoiceDlgTitle(self, obj_res):
         """
         Генерация текста заголовка диалогового окна поиска/выбора.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return u'Выбор. ' + obj_res['description']
 
     def genChoicePanelObjName(self, obj_res):
         """
         Генерация имени объекта панели поиска/выбора в диалоговом окне.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['name'].lower() + u'_panel'
 
@@ -700,7 +700,7 @@ class icWxFBPrjGenerator(object):
         """
         Генерация текста атрибута <construction> панели поиска/выбора
         в диалоговом окне.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         panel_name = self.genChoicePanelObjName(obj_res)
         panel_class_name = self.genChoicePanelName(obj_res)
@@ -709,8 +709,8 @@ class icWxFBPrjGenerator(object):
     def genChoiceDlg(self, obj_res):
         """
         Генерация диалогового окна поиска и выбора объекта.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         name = self.genChoiceDlgName(obj_res)
         title = self.genChoiceDlgTitle(obj_res)
@@ -725,7 +725,7 @@ class icWxFBPrjGenerator(object):
     def genBrowsePanelName(self, obj_res):
         """
         Генерация имени панели просмотра/фильтрации/управления списком объектов.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         name = obj_res['name']
         name_txt = u''.join([word.capitalize() for word in name.split(u'_')])
@@ -734,14 +734,14 @@ class icWxFBPrjGenerator(object):
     def genFilterCtrlName(self, obj_res):
         """
         Генерация имени контрола фильтра объектов.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['name'] + '_filter_ctrl'
 
     def genFilterCtrlConstructionTxt(self, obj_res):
         """
         Генерация атрибута <construction> контрола фильтра объектов.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         name = self.genFilterCtrlName(obj_res)
         return u'self.%s = icfilterchoicectrl.icFilterChoiceCtrl(parent=self)' % name
@@ -749,14 +749,14 @@ class icWxFBPrjGenerator(object):
     def genObjListCtrlName(self, obj_res):
         """
         Генерация имени контрола списка объектов.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         return obj_res['name'] + '_list'
 
     def genObjListCtrlConstructionTxt(self, obj_res):
         """
         Генерация атрибута <construction> контрола списка объектов.
-        @param obj_res: Ресурс объекта генерации.
+        :param obj_res: Ресурс объекта генерации.
         """
         name = self.genObjListCtrlName(obj_res)
         return u'self.%s = icsimplegrplistview.icSimpleGroupListView(parent=self)' % name
@@ -764,8 +764,8 @@ class icWxFBPrjGenerator(object):
     def genBrowsePanel(self, obj_res):
         """
         Генерация панели просмотра/фильтрации/управления списком объектов.
-        @param obj_res: Ресурс объекта генерации.
-        @return: Сгенерированный текст.
+        :param obj_res: Ресурс объекта генерации.
+        :return: Сгенерированный текст.
         """
         panel_name = self.genBrowsePanelName(obj_res)
         filter_name = self.genFilterCtrlName(obj_res)
@@ -782,10 +782,10 @@ class icWxFBPrjGenerator(object):
 def gen_wxfb_prj(parent=None, resource=None, fbp_filename=None):
     """
     Функция запуска генерации форм wxFormBuilder бизнес объекта/документа.
-    @param parent: Родительское окно.
-    @param resource: Ресурс, по которому происходит генерация
-    @param fbp_filename: Файл проекта wxFormBuilder для сохранения.
-    @return: True - генерация прошла успешно.
+    :param parent: Родительское окно.
+    :param resource: Ресурс, по которому происходит генерация
+    :param fbp_filename: Файл проекта wxFormBuilder для сохранения.
+    :return: True - генерация прошла успешно.
         False - Возникла какая-то ошибка.
     """
     if parent is None:

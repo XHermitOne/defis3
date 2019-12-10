@@ -145,7 +145,7 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
     """
     Описание пользовательского компонента.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -159,22 +159,22 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -222,7 +222,7 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         Получить надписи колонок.
         Контрол в любом случае имеет одну колонку для отображения метадерева.
         Переопределяемый метод.
-        @return: Список надписай колонок.
+        :return: Список надписай колонок.
         """
         return [column.get('label', u'') for column in self.resource['child']]
 
@@ -231,7 +231,7 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         Получить ширины колонок.
         Контрол в любом случае имеет одну колонку для отображения метадерева.
         Переопределяемый метод.
-        @return: Список ширин колонок.
+        :return: Список ширин колонок.
         """
         return [column.get('width', wx.DefaultSize.GetWidth()) for column in self.resource['child']]
 

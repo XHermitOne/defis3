@@ -44,10 +44,10 @@ def getWeekList():
 def icTimeInRange(Range_, Time_):
     """
     Проверка попадает ли указанное время в указанный временной диапазон.
-    @param Range_: Временной диапазон в формате кортежа 
+    :param Range_: Временной диапазон в формате кортежа 
         (нач-час,нач-мин,окон-час,окон-мин).
-    @param Time_: Время в формате кортежа (час,мин).
-    @return: Возвращает True, если время в диапазоне.
+    :param Time_: Время в формате кортежа (час,мин).
+    :return: Возвращает True, если время в диапазоне.
     """
     try:
         if Range_[0] < Time_[0] < Range_[2]:
@@ -63,7 +63,7 @@ def icTimeInRange(Range_, Time_):
 def DateTime2StdFmt(DateTime_=None):
     """
     Представление времени в стандартном строковом формате.
-    @param DateTime_: Время и дата, если None,  то текущие.
+    :param DateTime_: Время и дата, если None,  то текущие.
     """
     if DateTime_ is None:
         DateTime_ = time.time()
@@ -73,8 +73,8 @@ def DateTime2StdFmt(DateTime_=None):
 def TodayFmt(Fmt_=DEFAULT_DATETIME_FMT):
     """
     Сегодняшнее число в формате.
-    @param Fmt_: Задание формата.
-    @return: Возвращает строку или None в случае ошибки.
+    :param Fmt_: Задание формата.
+    :return: Возвращает строку или None в случае ошибки.
     """
     try:
         return datetime.date(2005, 1, 1).today().strftime(Fmt_)
@@ -86,7 +86,7 @@ def TodayFmt(Fmt_=DEFAULT_DATETIME_FMT):
 def Today():
     """
     Сегодняшнее число в формате date.
-    @return: Объект date или None в случае ошибки.
+    :return: Объект date или None в случае ошибки.
     """
     try:
         return datetime.date(2005, 1, 1).today()
@@ -98,7 +98,7 @@ def Today():
 def Now():
     """
     Сегодняшнее число/время.
-    @return: <datetime>
+    :return: <datetime>
     """
     return datetime.datetime.now()
 
@@ -106,8 +106,8 @@ def Now():
 def NowFmt(Fmt_='%d.%m.%Y %H:%M:%S'):
     """
     Сегодняшнее число/время в формате.
-    @param Fmt_: Задание формата.
-    @return: Возвращает строку или None в случае ошибки.
+    :param Fmt_: Задание формата.
+    :return: Возвращает строку или None в случае ошибки.
     """
     try:
         return time.strftime(Fmt_, time.localtime(time.time()))
@@ -119,8 +119,8 @@ def NowFmt(Fmt_='%d.%m.%Y %H:%M:%S'):
 def MaxDayFmt(Fmt_=DEFAULT_DATETIME_FMT):
     """
     Максимально возможная дата в формате.
-    @param Fmt_: Задание формата.
-    @return: Возвращает строку или None в случае ошибки.
+    :param Fmt_: Задание формата.
+    :return: Возвращает строку или None в случае ошибки.
     """
     try:
         return datetime.date(datetime.MAXYEAR, 12, 31).strftime(Fmt_)
@@ -132,8 +132,8 @@ def MaxDayFmt(Fmt_=DEFAULT_DATETIME_FMT):
 def MinDayFmt(Fmt_=DEFAULT_DATETIME_FMT):
     """
     Минимально возможная дата в формате.
-    @param Fmt_: Задание формата.
-    @return: Возвращает строку или None в случае ошибки.
+    :param Fmt_: Задание формата.
+    :return: Возвращает строку или None в случае ошибки.
     """
     try:
         return datetime.date(datetime.MINYEAR, 1, 1).strftime(Fmt_)
@@ -145,9 +145,9 @@ def MinDayFmt(Fmt_=DEFAULT_DATETIME_FMT):
 def DateTimeTuple(DateTimeStr_='01.01.2005', Fmt_=DEFAULT_DATETIME_FMT):
     """
     Представление даты_времени в виде кортежа.
-    @param DateTimeStr_: Число в строковом формате.
-    @param Fmt_: Формат представления строковы данных.
-    @return: Представление даты_времени в виде кортежа.
+    :param DateTimeStr_: Число в строковом формате.
+    :param Fmt_: Формат представления строковы данных.
+    :return: Представление даты_времени в виде кортежа.
     """
     try:
         return time.strptime(DateTimeStr_, Fmt_)
@@ -159,9 +159,9 @@ def DateTimeTuple(DateTimeStr_='01.01.2005', Fmt_=DEFAULT_DATETIME_FMT):
 def MonthDT(DateTimeStr_='01.01.2005', Fmt_=DEFAULT_DATETIME_FMT):
     """
     Месяц в формате datetime.
-    @param DateTimeStr_: Число в строковом формате.
-    @param Fmt_: Формат представления строковы данных.
-    @return: Возвращает укзанный в строке месяц в формате datetime.
+    :param DateTimeStr_: Число в строковом формате.
+    :param Fmt_: Формат представления строковы данных.
+    :return: Возвращает укзанный в строке месяц в формате datetime.
     """
     try:
         dt_tuple = DateTimeTuple(DateTimeStr_, Fmt_)
@@ -196,10 +196,10 @@ def setDayDT(DateTime_, Day_=1):
 def convertDateTimeFmt(DateTimeStr_, OldFmt_=DEFAULT_DATETIME_FMT, NewFmt_=DEFAULT_DATETIME_FMT):
     """
     Преобразовать строковое представления даты-времени в другой формат.
-    @param DateTimeStr_: Число в строковом формате.
-    @param OldFmt_: Старый формат представления строковы данных.
-    @param NewFmt_: Старый формат представления строковы данных.
-    @return: Возвращает строку даты-времени в новом формате.
+    :param DateTimeStr_: Число в строковом формате.
+    :param OldFmt_: Старый формат представления строковы данных.
+    :param NewFmt_: Старый формат представления строковы данных.
+    :return: Возвращает строку даты-времени в новом формате.
     """
     try:
         date_time_tuple = DateTimeTuple(DateTimeStr_, OldFmt_)
@@ -213,7 +213,7 @@ def strDateFmt2DateTime(DateStr_, Fmt_=DEFAULT_DATETIME_FMT):
     """
     Преобразование строкового представления даты в указанном формате
     в формат datetime.
-    @return: Возвращает объект datetime или None в случае ошибки.
+    :return: Возвращает объект datetime или None в случае ошибки.
     """
     try:
         date_time_tuple = DateTimeTuple(DateStr_, Fmt_)
@@ -230,7 +230,7 @@ def strDateTimeFmt2DateTime(DateTimeStr_, Fmt_=DEFAULT_DATETIME_FMT):
     """
     Преобразование строкового представления даты/времени в указанном формате
     в формат datetime.
-    @return: Возвращает объект datetime или None в случае ошибки.
+    :return: Возвращает объект datetime или None в случае ошибки.
     """
     try:
         date_time_tuple = DateTimeTuple(DateTimeStr_, Fmt_)
@@ -256,8 +256,8 @@ def getNowYear():
 def getMonthDaysCount(Month_, Year_=None):
     """
     Определить сколько дней в месяце по номеру месяца.
-    @param Month_: Номер месяца 1..12.
-    @param Year_: Год. Если None, то текущий год.
+    :param Month_: Номер месяца 1..12.
+    :param Year_: Год. Если None, то текущий год.
     """
     if Year_ is None:
         Year_ = getNowYear()
@@ -273,9 +273,9 @@ def getMonthDaysCount(Month_, Year_=None):
 def getWeekDay(Day_, Month_, Year_=None):
     """
     Номер дня недели 1..7.
-    @param Day_: День.
-    @param Month_: Номер месяца 1..12.
-    @param Year_: Год. Если None, то текущий год.
+    :param Day_: День.
+    :param Month_: Номер месяца 1..12.
+    :param Year_: Год. Если None, то текущий год.
     """
     if Year_ is None:
         Year_ = getNowYear()
@@ -285,7 +285,7 @@ def getWeekDay(Day_, Month_, Year_=None):
 def getWeekPeriod(nweek, year=None):
     """
     Возвращает период дат нужной недели.
-    @return: Возващает картеж периода дат нужной недели. 
+    :return: Возващает картеж периода дат нужной недели.
     """
     if not year:
         year = getNowYear()
@@ -311,8 +311,8 @@ def genUnicalTimeName():
 def pydate2wxdate(date):
     """
     Преобразовать <datetime> тип в <wx.DateTime>.
-    @param date: Дата <datetime>.
-    @return: Дата <wx.DateTime>.
+    :param date: Дата <datetime>.
+    :return: Дата <wx.DateTime>.
     """
     if date is None:
         return None
@@ -326,8 +326,8 @@ def pydate2wxdate(date):
 def wxdate2pydate(date):
     """
     Преобразовать <wx.DateTime> тип в <datetime>.
-    @param date: Дата <wx.DateTime>.
-    @return: Дата <datetime>.
+    :param date: Дата <wx.DateTime>.
+    :return: Дата <datetime>.
     """
     if date is None:
         return None
@@ -342,8 +342,8 @@ def wxdate2pydate(date):
 def pydatetime2wxdatetime(dt):
     """
     Преобразовать <datetime> тип в <wx.DateTime>.
-    @param dt: Дата-время <datetime>.
-    @return: Дата-время <wx.DateTime>.
+    :param dt: Дата-время <datetime>.
+    :return: Дата-время <wx.DateTime>.
     """
     if dt is None:
         return None
@@ -362,8 +362,8 @@ def pydatetime2wxdatetime(dt):
 def wxdatetime2pydatetime(dt):
     """
     Преобразовать <wx.DateTime> тип в <datetime>.
-    @param dt: Дата-время <wx.DateTime>.
-    @return: Дата-время <datetime>.
+    :param dt: Дата-время <wx.DateTime>.
+    :return: Дата-время <datetime>.
     """
     if dt is None:
         return None
@@ -381,8 +381,8 @@ def wxdatetime2pydatetime(dt):
 def date2datetime(d):
     """
     Перевод datetime.date в datetime.datetime.
-    @param d: Дата datetime.date
-    @return: Дата datetime.datetime.
+    :param d: Дата datetime.date
+    :return: Дата datetime.datetime.
     """
     if isinstance(d, datetime.datetime):
         return d
@@ -396,8 +396,8 @@ def date2datetime(d):
 def datetime2date(dt):
     """
     Перевод datetime.datetime в datetime.date.
-    @param dt: Дата datetime.datetime.
-    @return: Дата datetime.date.
+    :param dt: Дата datetime.datetime.
+    :return: Дата datetime.date.
     """
     if isinstance(dt, datetime.datetime):
         return dt.date()

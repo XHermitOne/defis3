@@ -18,9 +18,9 @@ def get_uuid(*args):
 def get_uuid_attr(uuid_str, *attrs):
     """
     Переобразовать UUID в уникальное имя атрибута.
-    @param uuid_str: UUID в строковом представлении.
-    @param attrs: Список дополнительных атрибутов.
-    @return: Сгенерированная строка.
+    :param uuid_str: UUID в строковом представлении.
+    :param attrs: Список дополнительных атрибутов.
+    :return: Сгенерированная строка.
     """
     uuid_str = uuid_str.replace('-', '_')
     for attr in attrs:
@@ -31,10 +31,10 @@ def get_uuid_attr(uuid_str, *attrs):
 def get_passport_check_sum(passport, asUUID=True):
     """
     Получить контрольную сумму паспорта.
-    @param passport: Паспорт.
-    @param asUUID: Преобразовать к UUID
+    :param passport: Паспорт.
+    :param asUUID: Преобразовать к UUID
         (XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX) виду?
-    @return: Строка контрольной суммы.
+    :return: Строка контрольной суммы.
     """
     data = str(passport)
     encode_data = data.encode()
@@ -47,7 +47,7 @@ def get_passport_check_sum(passport, asUUID=True):
 def valid_uuid(UUID):
     """
     Проверка корректного значения UUID.
-    @return: True/False.
+    :return: True/False.
     """
     if not isinstance(UUID, str):
         UUID = str(UUID)

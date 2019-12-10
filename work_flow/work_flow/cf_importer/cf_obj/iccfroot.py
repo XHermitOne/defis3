@@ -77,8 +77,8 @@ class icCFRoot(iccfobject.icCFObject):
     def _get_db_psp(self, prj_res_ctrl=None):
         """
         Определить паспорт БД проекта.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return:
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return:
         """
         if prj_res_ctrl:
             db_resources = prj_res_ctrl.getResourcesByType('src')

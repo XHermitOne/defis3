@@ -55,7 +55,7 @@ __version__ = (0, 0, 0, 3)
 class icCatalogLevel(icwidget.icSimple, parentModule.icCatalogLevelProto):
     """
     Компонент уровня каталога.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
 
@@ -85,7 +85,7 @@ class icCatalogLevel(icwidget.icSimple, parentModule.icCatalogLevelProto):
     def isGetFolderNameFunc(self):
         """
         Определена функция получения имени папки расположения объекта?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('get_folder_name')
 
@@ -93,8 +93,8 @@ class icCatalogLevel(icwidget.icSimple, parentModule.icCatalogLevelProto):
         """
         Функция получения имени папки расположения объекта по
         самому объекту.
-        @param obj: Каталогизируемый (размещаемый в каталоге) объект.
-        @return: Строковое имя папки.
+        :param obj: Каталогизируемый (размещаемый в каталоге) объект.
+        :return: Строковое имя папки.
         """
         context = self.GetContext()
         context['OBJ'] = obj

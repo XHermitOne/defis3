@@ -4,8 +4,8 @@
 """
 Компонент, обладающий только размерами. Используется в сайзерах.
 
-@type SPC_IC_SIZER_SPACE: C{dictionary}
-@var SPC_IC_SIZER_SPACE: Спецификация на ресурсное описание spacer - пустой компонент, обладующий только размерами.
+:type SPC_IC_SIZER_SPACE: C{dictionary}
+:var SPC_IC_SIZER_SPACE: Спецификация на ресурсное описание spacer - пустой компонент, обладующий только размерами.
 Описание ключей SPC_IC_SIZER_SPACE:
     - C{name='DefaultName'}: Имя.
     - C{type='SizerSpace'}: Тип.
@@ -75,16 +75,16 @@ class icSpaceSizer(icwidget.icBase):
         """
         Конструктор для создания объекта icSpaceSizer.
 
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         icSpcDefStruct(SPC_IC_SIZER_SPACE, component)
         icwidget.icBase.__init__(self, parent, id, component, logType, evalSpace)

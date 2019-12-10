@@ -4,8 +4,8 @@
 """
 Обкладка для класса wx.Font. Генерирут шрифт по ресурсному описанию.
 
-@type SPC_IC_FONT: C{Dictionary}
-@var SPC_IC_FONT: Спецификация на ресурсное описание шрифта. Описание ключей:
+:type SPC_IC_FONT: C{Dictionary}
+:var SPC_IC_FONT: Спецификация на ресурсное описание шрифта. Описание ключей:
 
     - B{type = 'Font'}: Тип ресурса.
     - B{name = 'defaultFont'}: Имя компонента.
@@ -15,10 +15,10 @@
     - B{style = None}: Стиль шрифта. Значение из ['regular', 'bold', 'italic', 'boldItalic']
     - B{underline = 0}: Признак подчеркнутого шрифта.
     
-@type ICFontFamily: C{List}
-@var ICFontFamily: Список названий групп шрифтов ['default', 'serif', 'sansSerif', 'monospace'].
-@type ICFontStyle: C{List}
-@var ICFontStyle: Список названий стилей шрифтов ['regular', 'bold', 'italic', 'boldItalic'].
+:type ICFontFamily: C{List}
+:var ICFontFamily: Список названий групп шрифтов ['default', 'serif', 'sansSerif', 'monospace'].
+:type ICFontStyle: C{List}
+:var ICFontStyle: Список названий стилей шрифтов ['regular', 'bold', 'italic', 'boldItalic'].
 """
 
 import wx
@@ -45,10 +45,10 @@ ICFontStyle = ['regular', 'bold', 'italic', 'boldItalic']
 def getICFamily(font):
     """
     Функция возвращает название группы шрифта.
-    @type font: C{wx.Font}
-    @param font: Указатель на нужный объект.
-    @rtype: C{String}
-    @return: Название группы шрифта из ['default', 'serif', 'sansSerif', 'monospace'].
+    :type font: C{wx.Font}
+    :param font: Указатель на нужный объект.
+    :rtype: C{String}
+    :return: Название группы шрифта из ['default', 'serif', 'sansSerif', 'monospace'].
     """
     wxf = font.GetFamily()
     if wxf == wx.FONTFAMILY_ROMAN:
@@ -66,10 +66,10 @@ def getICFamily(font):
 def getICFontStyle(font):
     """
     Функция возвращает название стиля шрифта.
-    @type font: C{wx.Font}
-    @param font: Указатель на нужный объект.
-    @rtype: C{String}
-    @return: Название стиля шрифта из ['regular', 'bold', 'italic', 'boldItalic'].
+    :type font: C{wx.Font}
+    :param font: Указатель на нужный объект.
+    :rtype: C{String}
+    :return: Название стиля шрифта из ['regular', 'bold', 'italic', 'boldItalic'].
     """
     style = font.GetStyle()
     weight = font.GetWeight()
@@ -100,10 +100,10 @@ class icFont(wx.Font):
     def _familyId(self, name):
         """
         По названию определяет тип шрифта
-        @param name: Имя типа шрифта из ресурса.
-        @type name: C{string}
-        @return: Определяет wxPython идентификатор типа шрифта ('wx.DEFAULT', 'wx.DECORATIVE', 'wx.ROMAN', 'wx.SCRIPT', 'wx.SWISS', 'wx.MODERN')
-        @rtype: C{int}
+        :param name: Имя типа шрифта из ресурса.
+        :type name: C{string}
+        :return: Определяет wxPython идентификатор типа шрифта ('wx.DEFAULT', 'wx.DECORATIVE', 'wx.ROMAN', 'wx.SCRIPT', 'wx.SWISS', 'wx.MODERN')
+        :rtype: C{int}
         """
         if name in ('serif', 'Serif'):
             return wx.FONTFAMILY_ROMAN
@@ -116,10 +116,10 @@ class icFont(wx.Font):
 
     def _styleId(self, name):
         """ По названию определяет стиль шрифта
-        @param name: Имя стиля из ресурса.
-        @type name: C{string}
-        @return: Определяет стиль и толщину шрифта
-        @rtype: C{tuple}
+        :param name: Имя стиля из ресурса.
+        :type name: C{string}
+        :return: Определяет стиль и толщину шрифта
+        :rtype: C{tuple}
         """
         if name in ('italic', 'Italic'):
             style = wx.FONTSTYLE_ITALIC
@@ -139,8 +139,8 @@ class icFont(wx.Font):
     def bool_underline(self, underline):
         """
         Преобразование подчеркивания в логическую переменную.
-        @param underline:
-        @return:
+        :param underline:
+        :return:
         """
         if isinstance(underline, str):
             return underline == 'Underlined'

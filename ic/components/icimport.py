@@ -5,8 +5,8 @@
 Модуль содержит описпние класс icImport. Используется для импорта модулей и визуальных
 объектов в форму.
 
-@type SPC_IC_IMPORT: C{dictionary}
-@var SPC_IC_IMPORT: Спецификация на ресурсное описание класси icImport.
+:type SPC_IC_IMPORT: C{dictionary}
+:var SPC_IC_IMPORT: Спецификация на ресурсное описание класси icImport.
     
     Описание ключей SPC_IC_IMPORT:
     - B{type='Import'}: Тип компонента.
@@ -76,16 +76,16 @@ class icImport(icwidget.icBase):
                  bCounter=False, progressDlg=None, isDebug=False):
         """
         Конструктор для создания объекта icImport.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_IMPORT, component)
         self.object = component['object']

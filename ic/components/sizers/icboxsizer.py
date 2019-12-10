@@ -6,8 +6,8 @@
 объект является контейнером для других визуальных компонентов. Он позволяет выстраивать эти объекты в
 определенном линейном порядке.
 
-@type SPC_IC_BOXSIZER: C{Dictionary}
-@var SPC_IC_BOXSIZER: Спецификация на ресурсное описание компонента. Описание ключей:
+:type SPC_IC_BOXSIZER: C{Dictionary}
+:var SPC_IC_BOXSIZER: Спецификация на ресурсное описание компонента. Описание ключей:
 
     - B{name = 'DefaultName'}: Имя объекта.
     - B{type = 'BoxSizer'}: Тип объекта.
@@ -26,8 +26,8 @@
     - B{border=0}: Наличие бордюры.
     - B{child=[]}: Описание добавляемых элементов в сайзер.
 
-@type SPC_IC_SIZER_SPACE: C{dictionary}
-@var SPC_IC_SIZER_SPACE: Спецификация на ресурсное описание spacer - пустой компонент, обладующий только размерами.
+:type SPC_IC_SIZER_SPACE: C{dictionary}
+:var SPC_IC_SIZER_SPACE: Спецификация на ресурсное описание spacer - пустой компонент, обладующий только размерами.
 Описание ключей SPC_IC_SIZER_SPACE:
 
     - C{name='DefaultName'}: Имя.
@@ -35,8 +35,8 @@
     - C{position=(-1,-1)}: Расположение в сайзере (GridBagSizer).
     - C{size=(0,0)}: Размер.
 
-@type ICSizerFlag: C{dictionary}
-@var ICSizerFlag: Словарь специальных стилей компонента. Описание ключей ICSizerFlag:
+:type ICSizerFlag: C{dictionary}
+:var ICSizerFlag: Словарь специальных стилей компонента. Описание ключей ICSizerFlag:
 
     - C{wxTOP}:
     - C{wxBOTTOM}:
@@ -156,16 +156,16 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
                  bCounter=False, progressDlg=None, sizer=None):
         """
         Конструктор для создания объекта icBoxSizer.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         icSpcDefStruct(SPC_IC_BOXSIZER, component)
         icwidget.icSizer.__init__(self, parent, id, component, logType, evalSpace, sizer=sizer)
@@ -264,11 +264,11 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
         а определенной в icSizer, то при закрытии формы возникает
         исключение <Segmentation fault>.
         Выявлена проблема только методом исключения.
-        @param obj: Окно, которое будет добавлено в sizer.
+        :param obj: Окно, которое будет добавлено в sizer.
             Его первоначальный размер (либо явно заданный пользователем,
             либо вычисляемый внутри себя при использовании wxDefaultSize)
             интерпретируется как минимальный, а во многих случаях и начальный размер.
-        @param proportion: Хотя значение этого параметра не определено в wxSizer,
+        :param proportion: Хотя значение этого параметра не определено в wxSizer,
             оно используется в wxBoxSizer, чтобы указать, может ли дочерний элемент
             изменять свой размер в основной ориентации wxBoxSizer,
             где 0 означает, что оно не изменяется, а значение больше нуля равно
@@ -278,9 +278,9 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
             два из которых должны изменить свой размер с помощью sizer.
             Затем два растяжимых окна получат значение 1 каждый, чтобы заставить
             их расти и сжиматься одинаково с горизонтальным размером sizer.
-        @param flag: OR-сочетание флагов, влияющих на поведение sizer.
+        :param flag: OR-сочетание флагов, влияющих на поведение sizer.
             Подробнее см. Список флагов wxSizer.
-        @param border: Определяет ширину границы, если параметр флага установлен
+        :param border: Определяет ширину границы, если параметр флага установлен
             для включения любого флага границы.
         """
         if isinstance(obj, icspacesizer.icSpaceSizer):
@@ -291,14 +291,14 @@ class icBoxSizer(icwidget.icSizer, wx.BoxSizer):
     def isVertical(self):
         """
         Вертикальная ориентация?
-        @return: True/False.
+        :return: True/False.
         """
         return self.GetOrientation() == wx.VERTICAL
 
     def isHorizontal(self):
         """
         Горизонтальная ориентация?
-        @return: True/False.
+        :return: True/False.
         """
         return self.GetOrientation() == wx.HORIZONTAL
 

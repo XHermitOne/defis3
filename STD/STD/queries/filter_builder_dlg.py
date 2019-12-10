@@ -20,10 +20,10 @@ __version__ = (0, 1, 1, 1)
 def doFilterBuilder(parent, environment, default=None):
     """
     Запустить редактор критериев выборки/фильтров.
-    @param parent: Родительское окно редактора.
-    @param environment: Структура окружения редактора.
-    @param default: Структура по умолчанию.
-    @return: Возвращает результат редактирования.    
+    :param parent: Родительское окно редактора.
+    :param environment: Структура окружения редактора.
+    :param default: Структура по умолчанию.
+    :return: Возвращает результат редактирования.
     """
     try:
         dlg = icFilterBuilderDialog(parent, -1, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
@@ -98,7 +98,7 @@ class icFilterBuilderDialog(wx.Dialog):
     def setEnvironment(self, env=None):
         """
         Установить окружение для работы редактора.
-        @param env: Окружение, словарно-списковая структура формата
+        :param env: Окружение, словарно-списковая структура формата
         filter_builder_env.FILTER_ENVIRONMENT.
         """
         self.environment = env
@@ -265,7 +265,7 @@ class icFilterBuilderDialog(wx.Dialog):
     def _addRequisiteResult(self, requisite_idx):
         """
         Добавить в результат выбранный реквизит.
-        @param requisite_idx: Индекс выбранного реквизита.
+        :param requisite_idx: Индекс выбранного реквизита.
         """
         self.result.append([])
         control = self.edit_controls[-1][1]
@@ -306,7 +306,7 @@ class icFilterBuilderDialog(wx.Dialog):
     def _getFuncChoiceFromEnv(self, idx):
         """
         Получить список выбора функций из окружения.
-        @param idx: Индекс строки редактирования.
+        :param idx: Индекс строки редактирования.
         """
         result = []
         requisite = self.result[idx][0]
@@ -325,7 +325,7 @@ class icFilterBuilderDialog(wx.Dialog):
     def _getFunctions(self, idx):
         """
         Получить список выбора функций из окружения для указанной строки редактирования.
-        @param idx: Индекс строки редактирования.
+        :param idx: Индекс строки редактирования.
         """
         result = []
         requisite = self.result[idx][0]
@@ -344,7 +344,7 @@ class icFilterBuilderDialog(wx.Dialog):
     def delFuncChoice(self, idx):
         """
         Удалить из редактора контрол выбора функции.
-        @param idx: Индекс строки редактирования.
+        :param idx: Индекс строки редактирования.
         """
         # Убрать контролы из сайзеров
         for control in self.edit_controls[idx][2:]:
@@ -359,7 +359,7 @@ class icFilterBuilderDialog(wx.Dialog):
     def addFuncChoice(self, idx):
         """
         Добавить в редактор контрол выбора функции.
-        @param idx: Индекс строки редактирования.
+        :param idx: Индекс строки редактирования.
         """
         # Перед добавлением удалить все ненужное
         self.delFuncChoice(idx)
@@ -408,8 +408,8 @@ class icFilterBuilderDialog(wx.Dialog):
     def _addArgEdit(self, idx, arg):
         """
         Добавить в редактор контрол редактирования аргумента функции.
-        @param idx: Индекс строки редактирования.
-        @param arg: Структура описания аргумента. Формат filter_builder_env.FILTER_ARG.
+        :param idx: Индекс строки редактирования.
+        :param arg: Структура описания аргумента. Формат filter_builder_env.FILTER_ARG.
         """
         # Добавить подпись
         new_arg_label = wx.StaticText(self.builder_panel, -1, label=arg['description'] + u':')
@@ -435,7 +435,7 @@ class icFilterBuilderDialog(wx.Dialog):
     def addArgsEdit(self, idx):
         """
         Добавить в редактор контролы редактирования аргументов функции.
-        @param idx: Индекс строки редактирования.
+        :param idx: Индекс строки редактирования.
         """
         args = self._getArgsFromEnv(idx)
         for arg in args:
@@ -455,7 +455,7 @@ class icFilterBuilderDialog(wx.Dialog):
     def _addLogicChoice(self, idx):
         """
         Добавить выпадающий список логической связки строк - AND/OR/NOT.
-        @param idx: Индекс строки редактирования.
+        :param idx: Индекс строки редактирования.
         """
         new_logic_choice = wx.Choice(self.builder_panel, -1,
                                      choices=self._logicTranslate.keys())
@@ -466,8 +466,8 @@ class icFilterBuilderDialog(wx.Dialog):
     def _addLogicResult(self, logic, idx):
         """
         Добавить в результат логическую связку.
-        @param logic: AND/OR/NOT.
-        @param idx: Индекс строки редактирования.
+        :param logic: AND/OR/NOT.
+        :param idx: Индекс строки редактирования.
         """
         if self.result[idx][-1] not in self._logicTranslate.values():
             self.result[idx].append(logic)
@@ -494,8 +494,8 @@ class icFilterBuilderDialog(wx.Dialog):
     def _getArgResult(self, arg_idx, idx):
         """
         Получить аргумент из результат по индексу.
-        @param arg_idx: Индекс аргумента.
-        @param idx: Индекс строки редактирования.
+        :param arg_idx: Индекс аргумента.
+        :param idx: Индекс строки редактирования.
         """
         cur_arg_idx = 2 + arg_idx
         if cur_arg_idx < len(self.result[idx]):
@@ -509,9 +509,9 @@ class icFilterBuilderDialog(wx.Dialog):
     def _addArgResult(self, str_arg, arg_idx, idx):
         """
         Добавить в результат значение аргумента функции.
-        @param str_arg: Строка аргумента.
-        @param arg_idx: Индекс аргумента.
-        @param idx: Индекс строки редактирования.
+        :param str_arg: Строка аргумента.
+        :param arg_idx: Индекс аргумента.
+        :param idx: Индекс строки редактирования.
         """
         cur_arg_idx = 2 + arg_idx
         # Сначала выяснить добавлен ли аргумент в результат уже
@@ -556,8 +556,8 @@ class icFilterBuilderDialog(wx.Dialog):
     def delFilterEdit(self, idx=-1):
         """
         Удалить строку фильтрации.
-        @param idx: Индекс удаляемой строки редактирования.
-        @return: True-строка удалена,False-строка не удалена.
+        :param idx: Индекс удаляемой строки редактирования.
+        :return: True-строка удалена,False-строка не удалена.
         """
         # Если удаляемая строка не последняя
         # Последнюю строку удалить нельзя

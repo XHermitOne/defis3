@@ -130,7 +130,7 @@ class icDateTimeSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     """
     Компонент временного тега SCADA системы.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -145,22 +145,22 @@ class icDateTimeSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
@@ -170,16 +170,16 @@ class icDateTimeSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def getNodePsp(self):
         """
         Паспорт узла-источника данных SCADA.
-        @return: Паспорт или None в случае ошибки.
+        :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('node')
 
     def getNode(self, node_psp=None):
         """
         Объект узла-источника данных SCADA.
-        @param node_psp: Паспорт узла-источника данных SCADA.
+        :param node_psp: Паспорт узла-источника данных SCADA.
             Если не определено, то задается функцией self.getNodePsp.
-        @return: Объект узла-источника данных SCADA или
+        :return: Объект узла-источника данных SCADA или
             None в случае ошибки.
         """
         if node_psp is None and self._node is not None:
@@ -198,16 +198,16 @@ class icDateTimeSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def getScanClassPsp(self):
         """
         Паспорт класса сканирования данных SCADA.
-        @return: Паспорт или None в случае ошибки.
+        :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('scan_class')
 
     def getScanClass(self, scan_class_psp=None):
         """
         Объект класса сканирования данных SCADA.
-        @param scan_class_psp: Паспорт класса сканирования данных SCADA.
+        :param scan_class_psp: Паспорт класса сканирования данных SCADA.
             Если не определено, то задается функцией self.getScanClassPsp.
-        @return: Объект класса сканирования данных SCADA или
+        :return: Объект класса сканирования данных SCADA или
             None в случае ошибки.
         """
         if scan_class_psp is None and self._scan_class is not None:
@@ -247,8 +247,8 @@ class icDateTimeSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def normValueInto(self, value):
         """
         Преобразование типа значения для установки внутреннего значения.
-        @param value: Текущее значение тега.
-        @return: Преобразованное значение.
+        :param value: Текущее значение тега.
+        :return: Преобразованное значение.
         """
         if isinstance(value, datetime.datetime):
             return value
@@ -257,7 +257,7 @@ class icDateTimeSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     def normValueOut(self, value):
         """
         Преобразование типа значения для получения из внутреннего значения.
-        @param value: Текущее значение тега.
-        @return: Преобразованное значение.
+        :param value: Текущее значение тега.
+        :return: Преобразованное значение.
         """
         return value

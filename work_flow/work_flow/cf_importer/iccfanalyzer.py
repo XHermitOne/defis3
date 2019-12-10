@@ -20,7 +20,7 @@ class icCFAnalyzer:
     def __init__(self, cf_dirname=None):
         """
         Конструктор.
-        @param cf_dirname: Имя папки конфигурации 1с.
+        :param cf_dirname: Имя папки конфигурации 1с.
         """
         self.cf_dir_manager = iccfdirmanager.icCFDirManager(cf_dirname)
 
@@ -30,7 +30,7 @@ class icCFAnalyzer:
     def createCFList(self, cf_dirname=None):
         """
         Создать список объектов конфигурации 1с.
-        @param cf_dirname: Имя папки конфигурации 1с.
+        :param cf_dirname: Имя папки конфигурации 1с.
         """
         if cf_dirname:
             self.cf_dir_manager.buildMetaObjects(cf_dirname)

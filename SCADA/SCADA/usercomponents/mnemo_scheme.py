@@ -122,7 +122,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     """
     Мнемосхема SCADA системы.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -136,22 +136,22 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwxpanel.icWXPanel.__init__(self, parent, id, component, logType, evalSpace)
@@ -173,16 +173,16 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def getScanClassPsp(self):
         """
         Паспорт класса сканирования данных SCADA.
-        @return: Паспорт или None в случае ошибки.
+        :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('scan_class')
 
     def getScanClass(self, scan_class_psp=None):
         """
         Объект класса сканирования данных SCADA.
-        @param scan_class_psp: Паспорт класса сканирования данных SCADA.
+        :param scan_class_psp: Паспорт класса сканирования данных SCADA.
             Если не определено, то задается функцией self.getScanClassPsp.
-        @return: Объект класса сканирования данных SCADA или
+        :return: Объект класса сканирования данных SCADA или
             None в случае ошибки.
         """
         if scan_class_psp is None and self._scan_class is not None:
@@ -201,7 +201,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def initScanTick(self):
         """
         Инициализация периода сканирования по классу сканирования.
-        @return: Период сканирования или None в случае ошибки.
+        :return: Период сканирования или None в случае ошибки.
         """
         scan_class = self.getScanClass()
         if scan_class:
@@ -211,7 +211,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def createEngines(self):
         """
         Создать список движков.
-        @return: Список движков.
+        :return: Список движков.
         """
         kernel = self.GetKernel()
         self.scada_engines = [kernel.getObjectByPsp(engine_psp) for engine_psp in self.engines]
@@ -220,7 +220,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def init(self):
         """
         Полная инициализация объекта.
-        @return: True/False.
+        :return: True/False.
         """
         # Создать список движков
         self.createEngines()

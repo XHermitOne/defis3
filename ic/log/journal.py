@@ -24,12 +24,12 @@ def init(sLogFileName, bDateTime=True, bPrint=False,
          sEncoding=log.DEFAULT_ENCODING):
     """
     Инициализация файла журнала.
-    @param sLogFileName: Полное имя файла журнала.
-    @param bDateTime: Добавить автоматическое добавление времени регистрации к сообщению?
-    @param bPrint: Дублировать сообщение в консоли?
+    :param sLogFileName: Полное имя файла журнала.
+    :param bDateTime: Добавить автоматическое добавление времени регистрации к сообщению?
+    :param bPrint: Дублировать сообщение в консоли?
         Все сообщения в таком случае отображаются с цветом purple.
-    @param sEncoding: Кодовая страница журнала.
-    @return: True/False.
+    :param sEncoding: Кодовая страница журнала.
+    :return: True/False.
     """
     globals()['LOG_FILENAME'] = sLogFileName
     globals()['IS_DATETIME'] = bDateTime
@@ -40,8 +40,8 @@ def init(sLogFileName, bDateTime=True, bPrint=False,
 def write_msg(sMessage):
     """
     Записать сообщение в журнал.
-    @param sMessage: Текст сообщения.
-    @return: True/False.
+    :param sMessage: Текст сообщения.
+    :return: True/False.
     """
     log_filename = globals()['LOG_FILENAME']
     is_datetime = globals()['IS_DATETIME']

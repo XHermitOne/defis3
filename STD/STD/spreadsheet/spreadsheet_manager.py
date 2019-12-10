@@ -83,15 +83,15 @@ class icSpreadSheetManager(icexcel.icVExcel):
     def setSpreadSheetData(self, spreadsheet_data):
         """
         Установить данные.
-        @param spreadsheet_data: Данные структуры SpreadSheet.
+        :param spreadsheet_data: Данные структуры SpreadSheet.
         """
         self.setData(spreadsheet_data, bBuid=True)
 
     def createDefaultColumn(self, table):
         """
         Создание колонки по умолчанию.
-        @param table: Таблица.
-        @return: True/False
+        :param table: Таблица.
+        :return: True/False
         """
         if table is None:
             log.warning(u'Не определена таблица для создания колонки по умолчанию')
@@ -105,9 +105,9 @@ class icSpreadSheetManager(icexcel.icVExcel):
     def createDefaultColumns(self, table, count=1):
         """
         Создание колонок по умолчанию.
-        @param table: Таблица.
-        @param count: Количество создаваемых колонок.
-        @return: True/False
+        :param table: Таблица.
+        :param count: Количество создаваемых колонок.
+        :return: True/False
         """
         results = [self.createDefaultColumn(table) for i in range(count)]
         return all(results)
@@ -115,8 +115,8 @@ class icSpreadSheetManager(icexcel.icVExcel):
     def createDefaultRow(self, table):
         """
         Создание строки по умолчанию.
-        @param table: Таблица.
-        @return: True/False
+        :param table: Таблица.
+        :return: True/False
         """
         if table is None:
             log.warning(u'Не определена таблица для создания строки по умолчанию')
@@ -130,9 +130,9 @@ class icSpreadSheetManager(icexcel.icVExcel):
     def createDefaultRows(self, table, count=1):
         """
         Создание строк по умолчанию.
-        @param table: Таблица.
-        @param count: Количество создаваемых строк.
-        @return: True/False
+        :param table: Таблица.
+        :param count: Количество создаваемых строк.
+        :return: True/False
         """
         results = [self.createDefaultRow(table) for i in range(count)]
         return all(results)

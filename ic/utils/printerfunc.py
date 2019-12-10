@@ -29,10 +29,10 @@ NO_DEFAULT_PRINTER_MSG = 'no system default destination'
 def _get_exec_cmd_stdout_lines(cmd):
     """
     Выполнить команду ОС и верноть список строк выходного потока.
-    @param cmd: Комманда. М.б. в строковом виде или в виде списка.
+    :param cmd: Комманда. М.б. в строковом виде или в виде списка.
         Напрмер:
         'lpstat -d' или ('lpstat', '-d')
-    @return: Список строк - результат выполнения команды в stdout.
+    :return: Список строк - результат выполнения команды в stdout.
         В случае ошибки возвращается пустой список.
     """
     if isinstance(cmd, str):
@@ -55,9 +55,9 @@ def _get_exec_cmd_stdout_lines(cmd):
 def noDefaultPrinter(sLPStatResult=None):
     """
     Проверка на установленный по умолчанию принтер в системе.
-    @param sLPStatResult: Результат команды lpstat -d. Если None,
+    :param sLPStatResult: Результат команды lpstat -d. Если None,
                 то функция сама вызовет команду lpstat -d.
-    @return: True-нет принтера по умалчанию, False - есть принтер по умолчанию.
+    :return: True-нет принтера по умалчанию, False - есть принтер по умолчанию.
     """
     if sLPStatResult is None:
         cmd = ('lpstat', '-d')
@@ -73,7 +73,7 @@ def noDefaultPrinter(sLPStatResult=None):
 def getDefaultPrinter():
     """
     Имя принтера по умолчанию.
-    @return: Имя принтера по умолчанию или None, если не установлен.
+    :return: Имя принтера по умолчанию или None, если не установлен.
     """
     cmd = ('lpstat', '-d')
     lines = _get_exec_cmd_stdout_lines(cmd)
@@ -89,7 +89,7 @@ def getPrinterDevices():
     """
     Получить список устройств принтеров.
     Функция работает через утилиту lpstat.
-    @return: Список [(имя принтера, адрес подключения),...].
+    :return: Список [(имя принтера, адрес подключения),...].
     """
     cmd = ('lpstat', '-v')
     lines = _get_exec_cmd_stdout_lines(cmd)
@@ -104,7 +104,7 @@ def getPrinterDevices():
 def getNetworkPrinters():
     """
     Список имен сетевых принтеров.
-    @return: Список строк имен принтеров у которых сетевой адрес.
+    :return: Список строк имен принтеров у которых сетевой адрес.
     """
     printer_devices = getPrinterDevices()
     return [device[0] for device in printer_devices if device[1].startswith('ipp://') or device[1].startswith('socket://')]
@@ -114,7 +114,7 @@ def getPrinters():
     """
     Получить список инсталированных принтеров.
     Функция работает через утилиту lpstat.
-    @return: Список строк (имен принтеров).
+    :return: Список строк (имен принтеров).
     """
     cmd = ('lpstat', '-a')
     lines = _get_exec_cmd_stdout_lines(cmd)
@@ -128,7 +128,7 @@ def getPrinters():
 def getPrintersInfo():
     """
     Получить информацию о принтерах.
-    @return: Список кортежей
+    :return: Список кортежей
         [(По умолчанию?, Название принтера, Сетевой принтер?),...].
     """
     printers = getPrinters()
@@ -144,13 +144,13 @@ def getPrintersInfo():
 def printPDF(sPDFFileName, sPrinter=None, iCopies=1):
     """
     Отправить на печать PDF файл.
-    @type sPDFFileName: C{string}
-    @param sPDFFileName: Имя PDF файла для печати.
-    @type sPrinter: C{string}
-    @param sPrinter: Имя принтера для печати. Если не указан,то
+    :type sPDFFileName: C{string}
+    :param sPDFFileName: Имя PDF файла для печати.
+    :type sPrinter: C{string}
+    :param sPrinter: Имя принтера для печати. Если не указан,то
          на печать принтера по умолчанию.
-    @param iCopies: Количество копий.
-    @return: True - файл отправлен на печать, False - нет.
+    :param iCopies: Количество копий.
+    :return: True - файл отправлен на печать, False - нет.
     """
     if not os.path.exists(sPDFFileName):
         log.warning('PDF file %s not exists' % sPDFFileName)
@@ -177,11 +177,11 @@ def print_file(filename, printer_name=None, copies=1):
     PDF файлы печатаются функцией printPDF.
     Графические файлы сначала конвертируем в PDF
     а затем печатаем как обычный PDF.
-    @param filename: Полное имя печатаемого файла.
-    @param printer_name: Имя принтера для печати. Если не указан,то
+    :param filename: Полное имя печатаемого файла.
+    :param printer_name: Имя принтера для печати. Если не указан,то
          на печать принтера по умолчанию.
-    @param copies: Количество копий.
-    @return: True - файл отправлен на печать, False - нет.
+    :param copies: Количество копий.
+    :return: True - файл отправлен на печать, False - нет.
     """
     filename_ext = os.path.splitext(filename)[1].lower()
     if filename_ext == '.pdf':

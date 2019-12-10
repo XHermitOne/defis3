@@ -23,7 +23,7 @@ class INSIInterface(icobjectinterface.icObjectInterface):
     def __init__(self, MetaTree_=None):
         """
         Конструктор интерфейса.
-        @param MetaTree_: Метадерево описания справочной подсистемы.
+        :param MetaTree_: Метадерево описания справочной подсистемы.
         """
         self.meta_tree=MetaTree_
 
@@ -31,15 +31,15 @@ class INSIInterface(icobjectinterface.icObjectInterface):
         """
         Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
             или группы полей из отмеченной строки указанного справочника.
-        @type typSprav: C{string}
-        @param typSprav: Код типа (номер) справочника.
-        @type ParentCode: C{...}
-        @param ParentCode: Код более верхнего уровня.
-        @param field: Задает поле или группу полей, которые надо вернуть.
-        @type datatime: C{string}
-        @param datatime: Время актуальности кода.
-        @param rec: Текущая запись справочника.
-        @param parentForm: Родительская форма.
+        :type typSprav: C{string}
+        :param typSprav: Код типа (номер) справочника.
+        :type ParentCode: C{...}
+        :param ParentCode: Код более верхнего уровня.
+        :param field: Задает поле или группу полей, которые надо вернуть.
+        :type datatime: C{string}
+        :param datatime: Время актуальности кода.
+        :param rec: Текущая запись справочника.
+        :param parentForm: Родительская форма.
         """
         pass
         
@@ -47,16 +47,16 @@ class INSIInterface(icobjectinterface.icObjectInterface):
         """
         Поиск по коду.
     
-        @type typeSprav: C{...}
-        @param typeSprav: Тип справочника.
-        @type cod: C{...}
-        @param cod: Код строки справочника.
-        @type field: C{string | list }
-        @param field: Имя поля или список полей.
-        @type datatime: C{string}
-        @param datatime: Время актуальности справочной информации.
-        @rtype: C{dictionary}
-        @return: Значение либо словарь значений (если поле field задает список полей).
+        :type typeSprav: C{...}
+        :param typeSprav: Тип справочника.
+        :type cod: C{...}
+        :param cod: Код строки справочника.
+        :type field: C{string | list }
+        :param field: Имя поля или список полей.
+        :type datatime: C{string}
+        :param datatime: Время актуальности справочной информации.
+        :rtype: C{dictionary}
+        :return: Значение либо словарь значений (если поле field задает список полей).
             None, если строка с заданным кодом не найдена.
         """
         pass

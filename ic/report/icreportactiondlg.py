@@ -32,8 +32,8 @@ class icReportActionDialog(report_dlg_proto.icReportActionDialogProto):
     def setReportNameTitle(self, report_name):
         """
         Установить наименование отчета в заголовке диалогового окна.
-        @param report_name: Имя отчета
-        @return: True/False.
+        :param report_name: Имя отчета
+        :return: True/False.
         """
         title = u'Отчет: %s' % report_name
         self.SetLabel(title)
@@ -42,28 +42,28 @@ class icReportActionDialog(report_dlg_proto.icReportActionDialogProto):
     def getSelectedAction(self):
         """
         Выбранное действие.
-        @return: Строка-идентификатор выбранного действия.
+        :return: Строка-идентификатор выбранного действия.
         """
         return self._selected_action
 
     def isSelectedPrintAction(self):
         """
         Выбрано действие ПЕЧАТЬ?
-        @return: True/False.
+        :return: True/False.
         """
         return self._selected_action == PRINT_ACTION_ID
 
     def isSelectedPreviewAction(self):
         """
         Выбрано действие ПРЕДВАРИТЕЛЬНЫЙ ПРОСМОТР?
-        @return: True/False.
+        :return: True/False.
         """
         return self._selected_action == PREVIEW_ACTION_ID
 
     def isSelectedExportAction(self):
         """
         Выбрано действие ЭКСПОРТ В ОФИС ПО?
-        @return: True/False.
+        :return: True/False.
         """
         return self._selected_action == EXPORT_ACTION_ID
 
@@ -103,8 +103,8 @@ class icReportActionDialog(report_dlg_proto.icReportActionDialogProto):
 def getReportActionDlg(parent=None, title=''):
     """
     Запустить диалоговое окно выбора действия над отчетом.
-    @param parent: Родительское wxWindow окно.
-    @param title: Заголовок диалогового окна. Обычно это имя отчета.
+    :param parent: Родительское wxWindow окно.
+    :param title: Заголовок диалогового окна. Обычно это имя отчета.
     """
     result = None
     if parent is None:

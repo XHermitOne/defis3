@@ -4,8 +4,8 @@
 """
 Модуль содержит класс icNotebook, который по ресурсному описанию создает окно с закладками.
 
-@type SPC_IC_PAGES_BOOK: C{dictionary}
-@var SPC_IC_PAGES_BOOK: Спецификация на ресурсное описание компонента. Описание ключей:
+:type SPC_IC_PAGES_BOOK: C{dictionary}
+:var SPC_IC_PAGES_BOOK: Спецификация на ресурсное описание компонента. Описание ключей:
 
     - B{name = 'DefaultName'}: Имя объекта.
     - B{type = 'SplitterWindow'}: Тип объекта.
@@ -28,8 +28,8 @@
         который распологается на окне.
     - B{select=None}: Выражение вычисляющее номер активной страницы.
     
-@type ICPagesBookStyle: C{dictionary}
-@var ICPagesBookStyle: Словарь специальных стилей компонента. Описание ключей ICPagesBookStyle:
+:type ICPagesBookStyle: C{dictionary}
+:var ICPagesBookStyle: Словарь специальных стилей компонента. Описание ключей ICPagesBookStyle:
 
     - C{NB_LEFT}  - закладки располагаются на левой стороне.
     - C{NB_RIGHT}  - закладки располагаются на правой стороне.
@@ -123,16 +123,16 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         """
         Конструктор для создания объекта icNotebook.
 
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_PAGES_BOOK, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -274,12 +274,12 @@ class icNotebook(icwidget.icWidget, wx.Notebook):
         вливаться в False. Для компонента 'icNotebook' эта функция переопределена
         т. к. только на активной странице компоненты видимы.
         
-        @type bVisual: C{bool}
-        @param bVisual: Признак обновления представления объекта данных.
-        @type lst: C{list}
-        @param lst: Список видимых объектов.
-        @rtype: C{list}
-        @return: Список видимых объектов.
+        :type bVisual: C{bool}
+        :param bVisual: Признак обновления представления объекта данных.
+        :type lst: C{list}
+        :param lst: Список видимых объектов.
+        :rtype: C{list}
+        :return: Список видимых объектов.
         """
         self.bStatusVisible = bVisible
         

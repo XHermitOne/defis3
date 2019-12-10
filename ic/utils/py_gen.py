@@ -78,9 +78,9 @@ class %s(%s.%s, form_manager.icFormManager):
 SHOW_PANEL_FUNC_BODY_FMT = u'''
 def %s(parent=None, title=u''):
     \"\"\"
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно.
-    @param title: Заголовок страницы нотебука главного окна.
+    :param title: Заголовок страницы нотебука главного окна.
     \"\"\"
     try:
         main_win = ic.getMainWin()
@@ -98,9 +98,9 @@ def %s(parent=None, title=u''):
 SHOW_DIALOG_FUNC_BODY_FMT = u'''
 def %s(parent=None):
     \"\"\"
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно.
-    @return: True/False.
+    :return: True/False.
     \"\"\"
     try:
         if parent is None:
@@ -121,19 +121,19 @@ def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
                             src_class_name=None, parent=None, re_write=False):
     """
     Генерация модуля формы по модулю формы, сгенерированного wxFormBuilder. 
-    @param wxFB_module_filename: Полное наименование файла модуля Python,
+    :param wxFB_module_filename: Полное наименование файла модуля Python,
         сгенерированного wxFormBuilder.
-    @param output_filename: Имя результирующего файла.
+    :param output_filename: Имя результирующего файла.
         Новый файл генерируется в той же папке, что и исходный, 
         если не указано полное наименование выходного файла.
-    @param src_class_name: Имя класса формы-источника дя генерации. 
+    :param src_class_name: Имя класса формы-источника дя генерации. 
         Если не указано, то функция предлагает выбрать из существующих.
-    @param parent: Родительское окно для диалоговых окон.
-    @param re_write: Произвести перезапись результирующего файла-модуля, 
+    :param parent: Родительское окно для диалоговых окон.
+    :param re_write: Произвести перезапись результирующего файла-модуля, 
         если он уже существует? 
         ВНИМАНИЕ! Перезапись необходимо производить только в крайних случаях, т.к.
         можно затереть изменения в файлах.
-    @return: Имя результирующего файла или None, если произошла ошибка генерации.  
+    :return: Имя результирующего файла или None, если произошла ошибка генерации.
     """
     log.debug(u'Запуск генерации Python модуля <%s> по <%s>' % (output_filename, wxFB_module_filename))
     if not os.path.exists(wxFB_module_filename):

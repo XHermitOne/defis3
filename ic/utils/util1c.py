@@ -45,8 +45,8 @@ def findValueIndexPath(cur_list, value, idx=None):
 def get_idx_paths(data_list, parent_idx=None):
     """
     Список всех элементов в сложном списке списков с указанием индексов пути.
-    @param data_list: Сложная списковая структура.
-    @return: Список формата:
+    :param data_list: Сложная списковая структура.
+    :return: Список формата:
         [ (Значение, Кортеж индексного пути),
         ]
     """
@@ -66,7 +66,7 @@ def get_idx_paths(data_list, parent_idx=None):
 def print_idx_paths(data_list):
     """
     Распечатать список всех элементов в сложном списке списков с указанием индексов пути.
-    @param data_list: Сложная списковая структура.
+    :param data_list: Сложная списковая структура.
     """
     list_paths = get_idx_paths(data_list)
     for idx_path in list_paths:
@@ -76,7 +76,7 @@ def print_idx_paths(data_list):
 def getModuleDoc(module_filename):
     """
     Определить текст документации модуля.
-    @param module_filename: Полное имя файла модуля.
+    :param module_filename: Полное имя файла модуля.
     """
     module_name = None
     try:
@@ -108,10 +108,10 @@ def genUID():
 def encodeText(text, src_codepage=None, dst_codepage='utf-8'):
     """
     Перекодировать текст из одной кодировки в другую.
-    @param text: Сам текст.
-    @param src_codepage: Кодировка исходного текста.
-    @param dst_codepage: Кодировка результата.
-    @return: Текст в нужной кодировке.
+    :param text: Сам текст.
+    :param src_codepage: Кодировка исходного текста.
+    :param dst_codepage: Кодировка результата.
+    :return: Текст в нужной кодировке.
     """
     if (dst_codepage is None) or (dst_codepage.lower() == 'unicode'):
         if isinstance(text, str):

@@ -160,7 +160,7 @@ class icSpravTreeComboPopup(wx.ComboPopup):
     def hasHiddenItem(self, parentItem):
         """
         Есть ли у элемента скрытые дочерние элементы?
-        @return: True/False.
+        :return: True/False.
         """
         return self.FindItem(parentItem, TREE_HIDDEN_ITEM_LABEL).IsOk()
 
@@ -198,7 +198,7 @@ class icSpravTreeComboPopup(wx.ComboPopup):
     def get_selected_sprav_code(self, AltCodeField_=None):
         """
         Получить выбранный код справочника.
-        @param AltCodeField_: Поле хранения альтернативного кода.
+        :param AltCodeField_: Поле хранения альтернативного кода.
         """
         item = self.curitem
         if item:
@@ -217,8 +217,8 @@ class icSpravTreeComboPopup(wx.ComboPopup):
     def set_selected_sprav_code(self, src, Code_, AltCodeField_=None):
         """
         Установить выбранный код справочника.
-        @param Code_: Код справочника.
-        @param AltCodeField_: Поле хранения альтернативного кода.
+        :param Code_: Код справочника.
+        :param AltCodeField_: Поле хранения альтернативного кода.
         """
         pref = Code_
         value = None
@@ -237,10 +237,10 @@ class icSpravTreeComboPopup(wx.ComboPopup):
     def find_tree_item(self, code, item=None):
         """
         Найти элемент дерева по коду справочника.
-        @param code: Код справочника.
-        @param item: Начальный элемент дерева,
+        :param code: Код справочника.
+        :param item: Начальный элемент дерева,
             если None, то начинается поиск с корневого элемента.
-        @return: Идентификатор элемента дерева,
+        :return: Идентификатор элемента дерева,
             или None если не найдено.
         """
         if item is None:
@@ -373,7 +373,7 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
     def get_selected_sprav_code(self, *arg, **kwarg):
         """
         Получить выбранный код справочника.
-        @param AltCodeField_: Поле хранения альтернативного кода.
+        :param AltCodeField_: Поле хранения альтернативного кода.
         """
         lst = [self.tree.GetItemData(item).getCode() for item in self.check_items]
         return u','.join(lst)
@@ -381,8 +381,8 @@ class icSpravTreeChoiceListComboPopup(icSpravTreeComboPopup):
     def set_selected_sprav_code(self, src, Code_, AltCodeField_=None):
         """
         Установить выбранный код справочника.
-        @param Code_: Код справочника.
-        @param AltCodeField_: Поле хранения альтернативного кода.
+        :param Code_: Код справочника.
+        :param AltCodeField_: Поле хранения альтернативного кода.
         """
         self.check_items = []
         value = u''
@@ -450,7 +450,7 @@ class icSpravTreeComboCtrlProto(wx.ComboCtrl):
     def setSpravByPsp(self, sprav_psp):
         """
         Установить дерево справочника по его паспорту.
-        @param sprav_psp: Паспорт справочника.
+        :param sprav_psp: Паспорт справочника.
         """
         if not toolfunc.is_pasport(sprav_psp):
             log.warning(u'Не корректное значение паспорта <%s>' % sprav_psp)
@@ -493,10 +493,10 @@ class icSpravTreeComboCtrlProto(wx.ComboCtrl):
         Инициализация выпадающего дерева справочника.
         ВНИМАНИЕ! После создания объекта надо обязательно вызвать
         init метод для построения дерева справочника.
-        @param sprav_psp: Паспорт справочника-источника данных.
-        @param root_code: Корневой элемент разрешенной ветки выбора.
-        @param bViewAll: Показывать все элементы справочника?
-        @param complex_load: Комплесная загрузка всех данных справочника.
+        :param sprav_psp: Паспорт справочника-источника данных.
+        :param root_code: Корневой элемент разрешенной ветки выбора.
+        :param bViewAll: Показывать все элементы справочника?
+        :param complex_load: Комплесная загрузка всех данных справочника.
         """
         self.view_code = root_code
         self.view_all = bViewAll
@@ -704,9 +704,9 @@ class icSpravTreeComboCtrlProto(wx.ComboCtrl):
     def findItem(self, find_text, bRunFindItemFunc=True, *args, **kwargs):
         """
         Найти элемент по строке поиска.
-        @param find_text: Строка поиска.
-        @param bRunFindItemFunc: Запустить альтернативную функцию поиска?
-        @return: Возвращает элемент дерева источника данных.
+        :param find_text: Строка поиска.
+        :param bRunFindItemFunc: Запустить альтернативную функцию поиска?
+        :return: Возвращает элемент дерева источника данных.
         """
         if bRunFindItemFunc:
             kwargs['find_text'] = find_text
@@ -746,8 +746,8 @@ class icSpravTreeComboCtrlProto(wx.ComboCtrl):
     def getSelectedCode(self, celected_code_func=None, value=None):
         """
         Получить выбранный код.
-        @param celected_code_func: Альтернативная функция полчения кода.
-        @return: Возвращает выбранный код в виде строки или None,
+        :param celected_code_func: Альтернативная функция полчения кода.
+        :return: Возвращает выбранный код в виде строки или None,
             если код не выбран.
         """
         if celected_code_func:
@@ -758,15 +758,15 @@ class icSpravTreeComboCtrlProto(wx.ComboCtrl):
     def get_selected_sprav_code(self, alt_code_field=None):
         """
         Получить выбранный код справочника.
-        @param alt_code_field: Поле хранения альтернативного кода.
+        :param alt_code_field: Поле хранения альтернативного кода.
         """
         return self._combo_popup.get_selected_sprav_code(alt_code_field)
 
     def set_selected_sprav_code(self, code, alt_code_field=None):
         """
         Установить выбранный код справочника.
-        @param code: Код справочника.
-        @param alt_code_field: Поле хранения альтернативного кода.
+        :param code: Код справочника.
+        :param alt_code_field: Поле хранения альтернативного кода.
         """
         self._oldCode = code
         value, pref = self._combo_popup.set_selected_sprav_code(self._data_source, code, alt_code_field)
@@ -779,9 +779,9 @@ class icSpravTreeComboCtrlProto(wx.ComboCtrl):
     def setSelectedCode(self, value=None, bRunSelectedCodeFunc=True, *args, **kwargs):
         """
         Установить выбранный код.
-        @param value: Значение установливаемого кода.
-        @param bRunSelectedCodeFunc: Запустить альтернативную функцию установки кода.
-        @return: Возвращает выбранный код в виде строки или None,
+        :param value: Значение установливаемого кода.
+        :param bRunSelectedCodeFunc: Запустить альтернативную функцию установки кода.
+        :return: Возвращает выбранный код в виде строки или None,
             если код не выбран.
         """
         if bRunSelectedCodeFunc:

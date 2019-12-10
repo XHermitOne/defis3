@@ -102,8 +102,8 @@ def _get_requisite_field(requisite):
 def num_equal(requisite, value):
     """
     Функция сравнения значения числового реквизита со значением.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '=', value
@@ -112,8 +112,8 @@ def num_equal(requisite, value):
 def str_equal(requisite, value):
     """
     Функция сравнения значения строкового реквизита со значением.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '=', u'\''+value+u'\''
@@ -122,8 +122,8 @@ def str_equal(requisite, value):
 def datetime_equal(requisite, value):
     """
     Функция сравнения значения datetime реквизита со значением.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '=', '\'%s\'' % value.strftime(DEFAULT_DATETIME_FORMAT)
@@ -132,8 +132,8 @@ def datetime_equal(requisite, value):
 def equal(requisite, value):
     """
     Функция сравнения значения реквизита с указанным значением.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -151,8 +151,8 @@ def equal(requisite, value):
 def num_not_equal(requisite, value):
     """
     Функция сравнения значения числового реквизина с указанным значением на неравенство.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<>', value
@@ -161,8 +161,8 @@ def num_not_equal(requisite, value):
 def str_not_equal(requisite, value):
     """
     Функция сравнения значения строкового реквизита с указанным значением на неравенство.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<>', u'\''+value+u'\''
@@ -171,8 +171,8 @@ def str_not_equal(requisite, value):
 def datetime_not_equal(requisite, value):
     """
     Функция сравнения значения datetime реквизита с указанным значением на неравенство.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<>', '\'%s\'' % value.strftime(DEFAULT_DATETIME_FORMAT)
@@ -181,8 +181,8 @@ def datetime_not_equal(requisite, value):
 def not_equal(requisite, value):
     """
     Функция сравнения значения реквизита с указанным значением на неравенство.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -200,8 +200,8 @@ def not_equal(requisite, value):
 def num_great(requisite, value):
     """
     Функция сравнения числового значения реквизита на > (больше).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '>', value
@@ -210,8 +210,8 @@ def num_great(requisite, value):
 def str_great(requisite, value):
     """
     Функция сравнения строкового значения реквизита на > (больше).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '>', u'\''+value+u'\''
@@ -220,8 +220,8 @@ def str_great(requisite, value):
 def datetime_great(requisite, value):
     """
     Функция сравнения строкового значения реквизита на > (больше).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '>', '\'%s\'' % value.strftime(DEFAULT_DATETIME_FORMAT)
@@ -230,8 +230,8 @@ def datetime_great(requisite, value):
 def great(requisite, value):
     """
     Функция сравнения значения реквизита на > (больше).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -249,8 +249,8 @@ def great(requisite, value):
 def num_great_or_equal(requisite, value):
     """
     Функция сравнения числового значения реквизита на >= (больше или равно).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '>=', value
@@ -259,8 +259,8 @@ def num_great_or_equal(requisite, value):
 def str_great_or_equal(requisite, value):
     """
     Функция сравнения строкового значения реквизита на >= (больше или равно).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '>=', u'\''+value+u'\''
@@ -269,8 +269,8 @@ def str_great_or_equal(requisite, value):
 def datetime_great_or_equal(requisite, value):
     """
     Функция сравнения datetime значения реквизита на >= (больше или равно).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '>=', '\'%s\'' % value.strftime(DEFAULT_DATETIME_FORMAT)
@@ -279,8 +279,8 @@ def datetime_great_or_equal(requisite, value):
 def great_or_equal(requisite, value):
     """
     Функция сравнения значения реквизита на >= (больше или равно).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -298,8 +298,8 @@ def great_or_equal(requisite, value):
 def num_lesser(requisite, value):
     """
     Функция сравнения числового значения реквизита на < (меньше).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<', value
@@ -308,8 +308,8 @@ def num_lesser(requisite, value):
 def str_lesser(requisite, value):
     """
     Функция сравнения строкового значения реквизита на < (меньше).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<', u'\''+value+u'\''
@@ -318,8 +318,8 @@ def str_lesser(requisite, value):
 def datetime_lesser(requisite, value):
     """
     Функция сравнения строкового значения реквизита на < (меньше).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<', '\'%s\'' % value.strftime(DEFAULT_DATETIME_FORMAT)
@@ -328,8 +328,8 @@ def datetime_lesser(requisite, value):
 def lesser(requisite, value):
     """
     Функция сравнения значения реквизита на < (меньше).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -347,8 +347,8 @@ def lesser(requisite, value):
 def num_lesser_or_equal(requisite, value):
     """
     Функция сравнения числового значения реквизита на <= (меньше или равно).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<=', value
@@ -357,8 +357,8 @@ def num_lesser_or_equal(requisite, value):
 def str_lesser_or_equal(requisite, value):
     """
     Функция сравнения строкового значения реквизита на <= (меньше или равно).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<=', u'\''+value+u'\''
@@ -367,8 +367,8 @@ def str_lesser_or_equal(requisite, value):
 def datetime_lesser_or_equal(requisite, value):
     """
     Функция сравнения datetime значения реквизита на <= (меньше или равно).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, '<=', '\'%s\'' % value.strftime(DEFAULT_DATETIME_FORMAT)
@@ -377,8 +377,8 @@ def datetime_lesser_or_equal(requisite, value):
 def lesser_or_equal(requisite, value):
     """
     Функция сравнения значения реквизита на <= (меньше или равно).
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -396,9 +396,9 @@ def lesser_or_equal(requisite, value):
 def num_between(requisite, minimum, maximum):
     """
     Функция сравнения числового значения реквизита на между.
-    @param requisite: Описание реквизита из окружения.
-    @param minimum: Минимальное значение диапазона.
-    @param maximum: Максимальное значение диапазона.
+    :param requisite: Описание реквизита из окружения.
+    :param minimum: Минимальное значение диапазона.
+    :param maximum: Максимальное значение диапазона.
     """
     field = _get_requisite_field(requisite)
     return field, 'BETWEEN ', minimum, ' AND ', maximum
@@ -407,9 +407,9 @@ def num_between(requisite, minimum, maximum):
 def str_between(requisite, minimum, maximum):
     """
     Функция сравнения строкового значения реквизита на между.
-    @param requisite: Описание реквизита из окружения.
-    @param minimum: Минимальное значение диапазона.
-    @param maximum: Максимальное значение диапазона.
+    :param requisite: Описание реквизита из окружения.
+    :param minimum: Минимальное значение диапазона.
+    :param maximum: Максимальное значение диапазона.
     """
     field = _get_requisite_field(requisite)
     return field, 'BETWEEN ', u'\''+minimum+u'\'', ' AND ', u'\''+maximum+u'\''
@@ -418,9 +418,9 @@ def str_between(requisite, minimum, maximum):
 def datetime_between(requisite, minimum, maximum):
     """
     Функция сравнения datetime значения реквизита на между.
-    @param requisite: Описание реквизита из окружения.
-    @param minimum: Минимальное значение диапазона.
-    @param maximum: Максимальное значение диапазона.
+    :param requisite: Описание реквизита из окружения.
+    :param minimum: Минимальное значение диапазона.
+    :param maximum: Максимальное значение диапазона.
     """
     field = _get_requisite_field(requisite)
     return field, 'BETWEEN ', \
@@ -431,9 +431,9 @@ def datetime_between(requisite, minimum, maximum):
 def between(requisite, minimum, maximum):
     """
     Функция сравнения значения реквизита на между.
-    @param requisite: Описание реквизита из окружения.
-    @param minimum: Минимальное значение диапазона.
-    @param maximum: Максимальное значение диапазона.
+    :param requisite: Описание реквизита из окружения.
+    :param minimum: Минимальное значение диапазона.
+    :param maximum: Максимальное значение диапазона.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -451,9 +451,9 @@ def between(requisite, minimum, maximum):
 def num_not_between(requisite, minimum, maximum):
     """
     Функция сравнения числового значения реквизита на не между.
-    @param requisite: Описание реквизита из окружения.
-    @param minimum: Минимальное значение диапазона.
-    @param maximum: Максимальное значение диапазона.
+    :param requisite: Описание реквизита из окружения.
+    :param minimum: Минимальное значение диапазона.
+    :param maximum: Максимальное значение диапазона.
     """
     field = _get_requisite_field(requisite)
     return 'NOT (', field, 'BETWEEN ', minimum, ' AND ', maximum, ')'
@@ -462,9 +462,9 @@ def num_not_between(requisite, minimum, maximum):
 def str_not_between(requisite, minimum, maximum):
     """
     Функция сравнения строкового значения реквизита на не между.
-    @param requisite: Описание реквизита из окружения.
-    @param minimum: Минимальное значение диапазона.
-    @param maximum: Максимальное значение диапазона.
+    :param requisite: Описание реквизита из окружения.
+    :param minimum: Минимальное значение диапазона.
+    :param maximum: Максимальное значение диапазона.
     """
     field = _get_requisite_field(requisite)
     return 'NOT (', field, 'BETWEEN ', u'\''+minimum+u'\'', ' AND ', u'\''+maximum+u'\'', ')'
@@ -473,9 +473,9 @@ def str_not_between(requisite, minimum, maximum):
 def datetime_not_between(requisite, minimum, maximum):
     """
     Функция сравнения datetime значения реквизита на не между.
-    @param requisite: Описание реквизита из окружения.
-    @param minimum: Минимальное значение диапазона.
-    @param maximum: Максимальное значение диапазона.
+    :param requisite: Описание реквизита из окружения.
+    :param minimum: Минимальное значение диапазона.
+    :param maximum: Максимальное значение диапазона.
     """
     field = _get_requisite_field(requisite)
     return 'NOT (', field, 'BETWEEN ', \
@@ -486,9 +486,9 @@ def datetime_not_between(requisite, minimum, maximum):
 def not_between(requisite, minimum, maximum):
     """
     Функция сравнения значения реквизита на не между.
-    @param requisite: Описание реквизита из окружения.
-    @param minimum: Минимальное значение диапазона.
-    @param maximum: Максимальное значение диапазона.
+    :param requisite: Описание реквизита из окружения.
+    :param minimum: Минимальное значение диапазона.
+    :param maximum: Максимальное значение диапазона.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -506,8 +506,8 @@ def not_between(requisite, minimum, maximum):
 def str_contain(requisite, value):
     """
     Функция сравнения строкового значения реквизита на содержание в нем подстроки.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, 'ILIKE(', '\'%'+value+'%\'', ')'
@@ -516,8 +516,8 @@ def str_contain(requisite, value):
 def contain(requisite, value):
     """
     Функция сравнения значения реквизита на содержание в нем подстроки.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -533,8 +533,8 @@ def contain(requisite, value):
 def str_not_contain(requisite, value):
     """ 
     Функция сравнения строкового значения реквизита на отсутствие в нем подстроки.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return 'NOT (', field, 'ILIKE(', '\'%'+value+'%\'', '))'
@@ -543,8 +543,8 @@ def str_not_contain(requisite, value):
 def not_contain(requisite, value):
     """ 
     Функция сравнения значения реквизита на отсутствие в нем подстроки.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -560,8 +560,8 @@ def not_contain(requisite, value):
 def str_left_equal(requisite, value):
     """ 
     Функция сравнения строкового значения реквизита на начало с подстроки.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, 'ILIKE(', '\''+value+'%\'', ')'
@@ -570,8 +570,8 @@ def str_left_equal(requisite, value):
 def left_equal(requisite, value):
     """ 
     Функция сравнения значения реквизита на начало с подстроки.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -587,8 +587,8 @@ def left_equal(requisite, value):
 def str_right_equal(requisite, value):
     """ 
     Функция сравнения строкового значения реквизита на окончание подстрокой.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, 'ILIKE(', '\'%'+value+'\'', ')'
@@ -597,8 +597,8 @@ def str_right_equal(requisite, value):
 def right_equal(requisite, value):
     """
     Функция сравнения значения реквизита на окончание подстрокой.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -614,8 +614,8 @@ def right_equal(requisite, value):
 def str_mask(requisite, value):
     """
     Функция сравнения строкового значения реквизита на соответствие маске.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return field, 'ILIKE(', '\''+value+'\'', ')'
@@ -624,8 +624,8 @@ def str_mask(requisite, value):
 def mask(requisite, value):
     """
     Функция сравнения значения реквизита на соответствие маске.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -641,8 +641,8 @@ def mask(requisite, value):
 def str_not_mask(requisite, value):
     """
     Функция сравнения строкового значения реквизита на не соответствие маске.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     field = _get_requisite_field(requisite)
     return 'NOT (', field, 'ILIKE(', '\''+value+'\'', '))'
@@ -651,8 +651,8 @@ def str_not_mask(requisite, value):
 def not_mask(requisite, value):
     """
     Функция сравнения значения реквизита на не соответствие маске.
-    @param requisite: Описание реквизита из окружения.
-    @param value: Сравневаемое значение.
+    :param requisite: Описание реквизита из окружения.
+    :param value: Сравневаемое значение.
     """
     if 'type' in requisite and requisite['type']:
         # Если тип значения реквизита определен, то сравнить по типу
@@ -668,7 +668,7 @@ def not_mask(requisite, value):
 def is_null(requisite):
     """
     Функция сравнения значения реквизита на пустое значение.
-    @param requisite: Описание реквизита из окружения.
+    :param requisite: Описание реквизита из окружения.
     """
     field = _get_requisite_field(requisite)
     return field, ' IS NULL'
@@ -677,7 +677,7 @@ def is_null(requisite):
 def is_not_null(requisite):
     """
     Функция сравнения значения реквизита на не пустое значение.
-    @param requisite: Описание реквизита из окружения.
+    :param requisite: Описание реквизита из окружения.
     """
     field = _get_requisite_field(requisite)
     return field, ' IS NOT NULL'
@@ -686,8 +686,8 @@ def is_not_null(requisite):
 def into(requisite, values):
     """
     Функция сравнения значения реквизита на принадлежность набору.
-    @param requisite: Описание реквизита из окружения.
-    @param values: Список значений.
+    :param requisite: Описание реквизита из окружения.
+    :param values: Список значений.
     """
     field = _get_requisite_field(requisite)
     return field, ' IN ', tuple(values)
@@ -696,8 +696,8 @@ def into(requisite, values):
 def not_into(requisite, values):
     """
     Функция сравнения значения реквизита на не принадлежность набору.
-    @param requisite: Описание реквизита из окружения.
-    @param values: Список значений.
+    :param requisite: Описание реквизита из окружения.
+    :param values: Список значений.
     """
     field = _get_requisite_field(requisite)
     return 'NOT (', field, ' IN ', tuple(values), ')'

@@ -94,8 +94,8 @@ class icRefObjChoiceComboCtrlProto(wx.ComboCtrl):
     def setUUID(self, uuid):
         """
         Установить UUID бизнес объекта/документа как выбранный.
-        @param uuid: UUID бизнес объекта/документа.
-        @return: True/False.
+        :param uuid: UUID бизнес объекта/документа.
+        :return: True/False.
         """
         if uuid is None:
             # Да пустое значение тоже можно

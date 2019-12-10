@@ -59,7 +59,7 @@ class icStateObjProto(icbusinessobj.icBusinessObjProto):
         """
         Функция обработчика смены состояния.
         Абстрактный метод. Переопределяется в классе компонента.
-        @return: True/False.
+        :return: True/False.
         """
         return True
 
@@ -76,10 +76,10 @@ class icStateObjProto(icbusinessobj.icBusinessObjProto):
         Функция изменения состояния.
         ВНИМАНИЕ! Для документов эта функция может вызываться только
         в обработчике выполнения операции документа!
-        @param new_state: Код нового состояния.
-        @param state_requisite_name: Имя реквизита состояния.
-        @param auto_save: Сохранять данные объекта автоматически?
-        @return: True/False.
+        :param new_state: Код нового состояния.
+        :param state_requisite_name: Имя реквизита состояния.
+        :param auto_save: Сохранять данные объекта автоматически?
+        :return: True/False.
         """
         # ВНИМАНИЕ! При смене состояния любого документа/объекта запоминаем
         # компьютер и пользователя которым были сделаны изменения
@@ -143,9 +143,9 @@ class icStateObjProto(icbusinessobj.icBusinessObjProto):
         Добавить новый объект состояния в указанном состоянии.
         ВНИМАНИЕ! Для документов эта функция может вызываться только
         в обработчике выполнения операции документа!
-        @param new_state: Код нового состояния.
-        @param state_requisite_name: Имя реквизита состояния.
-        @return: True/False.
+        :param new_state: Код нового состояния.
+        :param state_requisite_name: Имя реквизита состояния.
+        :return: True/False.
         """
         # ВНИМАНИЕ! При смене состояния любого документа/объекта запоминаем
         # компьютер и пользователя которым были сделаны изменения

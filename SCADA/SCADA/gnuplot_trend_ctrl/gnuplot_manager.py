@@ -59,7 +59,7 @@ class icGnuplotManager(object):
     def clearCommands(self):
         """
         Очистить список команд.
-        @return: True/False.
+        :return: True/False.
         """
         self.commands = list()
         return True
@@ -67,8 +67,8 @@ class icGnuplotManager(object):
     def _findCommand(self, command_word):
         """
         Поиск команды в списке команд по ключевому слову.
-        @param command_word: Ключевое слово.
-        @return: Индекс в списке команд или -1 если такая команда не найдена.
+        :param command_word: Ключевое слово.
+        :return: Индекс в списке команд или -1 если такая команда не найдена.
         """
         for i, command in enumerate(self.commands):
             if command_word in command:
@@ -80,10 +80,10 @@ class icGnuplotManager(object):
         Произвести добавление команды в список команд.
         Если в списке найдена команда по ключевому слову, то она заменяется.
         Если не найдена, то просто команда добавляется в список.
-        @param command: Комманда.
-        @param command_word: Ключевое слово.
+        :param command: Комманда.
+        :param command_word: Ключевое слово.
             Если None, то просто происходит добавление команды в список.
-        @return: True/False.
+        :return: True/False.
         """
         if command_word is None:
             # Просто добавить команду в список
@@ -104,9 +104,9 @@ class icGnuplotManager(object):
         """
         Произвести удаление команды из списка команд.
         Если в списке найдена команда по ключевому слову, то она удаляется.
-        @param command_word: Ключевое слово.
+        :param command_word: Ключевое слово.
             Если None, то просто происходит добавление команды в список.
-        @return: True/False.
+        :return: True/False.
         """
         if command_word is None:
             return False
@@ -123,9 +123,9 @@ class icGnuplotManager(object):
     def _enableCommand(self, command, enable=True):
         """
         Включить/Исключить команду из списка команд.
-        @param command: Комманда gnuplot.
-        @param enable: True - включить команду/False - исключить команду.
-        @return: True/False.
+        :param command: Комманда gnuplot.
+        :param enable: True - включить команду/False - исключить команду.
+        :return: True/False.
         """
         if enable:
             if command not in self.commands:
@@ -138,8 +138,8 @@ class icGnuplotManager(object):
     def enableXTime(self, enable=True):
         """
         Вкл./Выкл. оси X как временной.
-        @param enable: True - включить/False - выключить.
-        @return: True/False.
+        :param enable: True - включить/False - выключить.
+        :return: True/False.
         """
         cmd = 'set xdata time'
         return self._enableCommand(cmd, enable)
@@ -147,9 +147,9 @@ class icGnuplotManager(object):
     def setTimeFormat(self, dt_format=None):
         """
         Установить формат даты-времени.
-        @param dt_format: Формат даты-времени.
+        :param dt_format: Формат даты-времени.
             Если None, то установка формата исключается из списка команд.
-        @return: True/False.
+        :return: True/False.
         """
         global DATETIME_GRAPH_DATA_FMT
         if dt_format is None:
@@ -164,9 +164,9 @@ class icGnuplotManager(object):
     def setXFormat(self, x_format=None):
         """
         Установить формат оси X.
-        @param x_format: Формат оси X.
+        :param x_format: Формат оси X.
             Если None, то установка формата исключается из списка команд.
-        @return: True/False.
+        :return: True/False.
         """
         cmd_sign = 'set format x'
         cmd = 'set format x \'%s\'' % x_format
@@ -178,9 +178,9 @@ class icGnuplotManager(object):
     def setXRange(self, x_start, x_stop):
         """
         Установить диапазон значений оси X.
-        @param x_start: Начальное значение диапазона.
-        @param x_stop: Конечное значение диапазона.
-        @return: True/False.
+        :param x_start: Начальное значение диапазона.
+        :param x_stop: Конечное значение диапазона.
+        :return: True/False.
         """
         cmd_sign = 'set xrange'
         cmd = 'set xrange[\'%s\':\'%s\']' % (x_start, x_stop)
@@ -189,9 +189,9 @@ class icGnuplotManager(object):
     def setYRange(self, y_start, y_stop):
         """
         Установить диапазон значений оси Y.
-        @param y_start: Начальное значение диапазона.
-        @param y_stop: Конечное значение диапазона.
-        @return: True/False.
+        :param y_start: Начальное значение диапазона.
+        :param y_stop: Конечное значение диапазона.
+        :return: True/False.
         """
         cmd_sign = 'set yrange'
         cmd = 'set yrange[%f:%f]' % (float(y_start), float(y_stop))
@@ -200,8 +200,8 @@ class icGnuplotManager(object):
     def enableXTextVertical(self, enable=True):
         """
         Вкл./Выкл. вывода текста оси X вертикально.
-        @param enable: True - включить/False - выключить.
-        @return: True/False.
+        :param enable: True - включить/False - выключить.
+        :return: True/False.
         """
         cmd = 'set xtics rotate'
         return self._enableCommand(cmd, enable)
@@ -209,8 +209,8 @@ class icGnuplotManager(object):
     def setOutputPNG(self, background_color=None):
         """
         Вкл./Выкл. вывода графика в формате PNG.
-        @param background_color: Цвет фона PNG.
-        @return: True/False.
+        :param background_color: Цвет фона PNG.
+        :return: True/False.
         """
         self._deleteCommand('set terminal pdf')
         cmd_sign = 'set terminal png'
@@ -222,9 +222,9 @@ class icGnuplotManager(object):
     def setOutputPDF(self, background_color=None):
         """
         Вкл./Выкл. вывода графика в формате PDF.
-        @param background_color: Цвет фона PDF.
+        :param background_color: Цвет фона PDF.
             По умолчанию белый.
-        @return: True/False.
+        :return: True/False.
         """
         self._deleteCommand('set terminal png')
         cmd_sign = 'set terminal pdf'
@@ -236,9 +236,9 @@ class icGnuplotManager(object):
     def setOutputSizePNG(self, width, height):
         """
         Установить размер результирующей картинки PNG.
-        @param width: Ширина.
-        @param height: Высота.
-        @return: True/False.
+        :param width: Ширина.
+        :param height: Высота.
+        :return: True/False.
         """
         self._deleteCommand('set term pdf monochrome size')
         cmd_sign = 'set term png size'
@@ -248,9 +248,9 @@ class icGnuplotManager(object):
     def setOutputSizePDF(self, width, height):
         """
         Установить размер результирующей картинки PDF.
-        @param width: Ширина.
-        @param height: Высота.
-        @return: True/False.
+        :param width: Ширина.
+        :param height: Высота.
+        :return: True/False.
         """
         self._deleteCommand('set term png size')
         cmd_sign = 'set term pdf monochrome size'
@@ -260,8 +260,8 @@ class icGnuplotManager(object):
     def setOutputFilename(self, out_filename):
         """
         Установить имя результирующего файла.
-        @param out_filename: Полное имя результирующего файла.
-        @return: True/False.
+        :param out_filename: Полное имя результирующего файла.
+        :return: True/False.
         """
         cmd_sign = 'set output'
         cmd = 'set output \'%s\'' % out_filename
@@ -270,8 +270,8 @@ class icGnuplotManager(object):
     def enableGrid(self, enable=True):
         """
         Вкл./Выкл. сетки.
-        @param enable: True - включить сетку/False - выключить.
-        @return: True/False.
+        :param enable: True - включить сетку/False - выключить.
+        :return: True/False.
         """
         cmd = 'set grid'
         return self._enableCommand(cmd, enable)
@@ -279,8 +279,8 @@ class icGnuplotManager(object):
     def enableLegend(self, enable=True):
         """
         Вкл./Выкл. легенды.
-        @param enable: True - включить легенду/False - выключить.
-        @return: True/False.
+        :param enable: True - включить легенду/False - выключить.
+        :return: True/False.
         """
         cmd = 'set nokey'
         return self._enableCommand(cmd, not enable)
@@ -288,12 +288,12 @@ class icGnuplotManager(object):
     def setLineStyle(self, n_line=1, line_type=1, line_width=1, point_type=3, line_color='red'):
         """
         Установить стиль линии.
-        @param n_line: Номер линии.
-        @param line_type: Тип линии.
-        @param line_width: Толщина линии.
-        @param point_type: Тип точки.
-        @param line_color: Цвет линии
-        @return: True/False.
+        :param n_line: Номер линии.
+        :param line_type: Тип линии.
+        :param line_width: Толщина линии.
+        :param point_type: Тип точки.
+        :param line_color: Цвет линии
+        :return: True/False.
         """
         cmd_sign = 'set style line %d' % int(n_line)
         cmd = 'set style line %d linetype %d linewidth %d pointtype %d linecolor rgb \'%s\'' % (int(n_line),
@@ -306,9 +306,9 @@ class icGnuplotManager(object):
     def setPlot(self, graph_filename, count=1):
         """
         Установить отрисовку графиков.
-        @param graph_filename: Полное имя файла данных графиков.
-        @param count: Количество графиков.
-        @return: True/False.
+        :param graph_filename: Полное имя файла данных графиков.
+        :param count: Количество графиков.
+        :return: True/False.
         """
         global DATETIME_GRAPH_DATA_FMT
         cmd_sign = 'plot '
@@ -341,8 +341,8 @@ class icGnuplotManager(object):
         Записать данные графиков в файл данных.
         ВНИМАНИЕ! По умолчанию временные данные в файл
             записываются в формате DATETIME_GRAPH_DATA_FMT.
-        @param graph_filename: Полное имя файла данных графиков.
-        @param graph_data: Список словарей данных графиков.
+        :param graph_filename: Полное имя файла данных графиков.
+        :param graph_data: Список словарей данных графиков.
             [
                 {
                     'x': Значение координаты X,
@@ -352,9 +352,9 @@ class icGnuplotManager(object):
                     'Имя графика N': Значение координаты Y графика N,
                 }, ...
             ]
-        @param fields: Порядок следования графиков в файле данных.
+        :param fields: Порядок следования графиков в файле данных.
             ['Имя графика 1', 'Имя графика 2', ... 'Имя графика N']
-        @return: True/False.
+        :return: True/False.
         """
         global DATETIME_GRAPH_DATA_FMT
 
@@ -371,7 +371,7 @@ class icGnuplotManager(object):
     def getRunCommand(self):
         """
         Получить результирующую команду для запуска генерации.
-        @return: Результирующая команда для генерации файла графика.
+        :return: Результирующая команда для генерации файла графика.
         """
         commands = COMMAND_DELIMETER.join(self.commands)
         return GNUPLOT_COMMAND_FMT % commands
@@ -380,7 +380,7 @@ class icGnuplotManager(object):
         """
         Запуск генерации.
         Другое наименование метода - gen
-        @return: True/False.
+        :return: True/False.
         """
         cmd = self.getRunCommand()
         log.info(u'Выполнение команды <%s>' % cmd)
@@ -393,8 +393,8 @@ class icGnuplotManager(object):
     def setBorderColour(self, line_color):
         """
         Установить цвет обрамления графика.
-        @param line_color: Цвет линии.
-        @return: True/False.
+        :param line_color: Цвет линии.
+        :return: True/False.
         """
         cmd_sign = 'set border linecolor'
         cmd = 'set border linecolor rgb \'%s\'' % line_color
@@ -403,8 +403,8 @@ class icGnuplotManager(object):
     def setGridColour(self, line_color):
         """
         Установить цвет сетки графика.
-        @param line_color: Цвет линии.
-        @return: True/False.
+        :param line_color: Цвет линии.
+        :return: True/False.
         """
         cmd_sign = 'set grid linecolor'
         cmd = 'set grid linecolor rgb \'%s\'' % line_color
@@ -413,8 +413,8 @@ class icGnuplotManager(object):
     def setXTextColour(self, text_color):
         """
         Установить цвет надписей шкалы X графика.
-        @param text_color: Цвет надписей.
-        @return: True/False.
+        :param text_color: Цвет надписей.
+        :return: True/False.
         """
         cmd_sign = 'set xtics textcolor'
         cmd = 'set xtics textcolor rgb \'%s\'' % text_color
@@ -423,8 +423,8 @@ class icGnuplotManager(object):
     def setYTextColour(self, text_color):
         """
         Установить цвет надписей шкалы Y графика.
-        @param text_color: Цвет надписей.
-        @return: True/False.
+        :param text_color: Цвет надписей.
+        :return: True/False.
         """
         cmd_sign = 'set ytics textcolor'
         cmd = 'set ytics textcolor rgb \'%s\'' % text_color

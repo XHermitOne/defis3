@@ -49,18 +49,18 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def __init__(self, sprav_manager=None, name=None):
         """
         Конструктор.
-        @param sprav_manager: Объект менеджера справочника.
-        @param name: Имя справочника в списке менеджера справочников.
+        :param sprav_manager: Объект менеджера справочника.
+        :param name: Имя справочника в списке менеджера справочников.
         """
         icsprav.icSpravInterface.__init__(self, sprav_manager, name)
 
     def Edit(self, parent_code=(None,), parent=None):
         """
         Запуск окна редактирования объекта-ссылки/справочника.
-        @param parent_code: Код более верхнего уровня.
-        @param parent: Родительская форма.
+        :param parent_code: Код более верхнего уровня.
+        :param parent: Родительская форма.
             Если не определена, то берется главная форма.
-        @return: Возвращает результат выполнения опереции True/False.
+        :return: Возвращает результат выполнения опереции True/False.
         """
         # Перед редактированием необходмо создать
         # все ресурсы таблиц хранения объекта, если
@@ -86,9 +86,9 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def getLevel(self, level_id=0):
         """
         Получить уровень объекта-ссылки/справочника.
-        @param level_id: Идентификатор уровня.
+        :param level_id: Идентификатор уровня.
             Может быть как индексом так и наменованием уровня.
-        @return: Объект уровня или None если уровень не найден.
+        :return: Объект уровня или None если уровень не найден.
         """
         levels = self.getLevels()
         if isinstance(level_id, int):
@@ -106,7 +106,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def createLevelTabRes(self):
         """
         Создать все ресурсы таблиц всех уровней объекта-ссылки/справочника.
-        @return: True/False.
+        :return: True/False.
         """
         levels = self.getLevels()
         if levels:
@@ -119,7 +119,7 @@ class icRefObjectProto(icsprav.icSpravInterface):
         """
         Таблица объекта-ссылки.
         Считаем что это таблица уровня.
-        @param index: Индекс уровня объекта-ссылки.
+        :param index: Индекс уровня объекта-ссылки.
             Если не определен, то берется первый уровень.
         """
         levels = self.getLevels()
@@ -135,21 +135,21 @@ class icRefObjectProto(icsprav.icSpravInterface):
         """
         Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
             или группы полей из отмеченной строки указанного объекта-ссылки/справочника.
-        @type parent_code: C{...}
-        @param parent_code: Код более верхнего уровня.
-        @param field: Задает поле или группу полей, которые надо вернуть.
+        :type parent_code: C{...}
+        :param parent_code: Код более верхнего уровня.
+        :param field: Задает поле или группу полей, которые надо вернуть.
             Полу задается строкой. Поля задаются словарем.
-        @param form: имя формы визуального интерфейса работы со справочником.
-        @param parent: Родительская форма.
-        @type dt: C{string}
-        @param dt: Время актуальности кода.
-        @param default_selected_code: Выбранный код по умолчанию.
+        :param form: имя формы визуального интерфейса работы со справочником.
+        :param parent: Родительская форма.
+        :type dt: C{string}
+        :param dt: Время актуальности кода.
+        :param default_selected_code: Выбранный код по умолчанию.
             Если None, то ничего не выбирается.
-        @param view_fields: Список имен полей для просмотра.
+        :param view_fields: Список имен полей для просмотра.
             Если не определено то отображаются <Код> и <Наименование>.
-        @param search_fields: Список имен полей для поиска.
+        :param search_fields: Список имен полей для поиска.
             Если не определено то поиск только по <Код> и <Наименование>.
-        @return: Код ошибки, Результат выбора
+        :return: Код ошибки, Результат выбора
         """
         result = coderror.IC_HLP_OK
         res_val = None
@@ -194,11 +194,11 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def addRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Добавить запись в справочник по коду.
-        @param cod: Код.
-        @param record_dict: Словарь изменений.
-        @param dt: Период актуальности.
-        @param bClearCache: Обновить кеш?
-        @return: Возвращает результат выполнения операции True/False.
+        :param cod: Код.
+        :param record_dict: Словарь изменений.
+        :param dt: Период актуальности.
+        :param bClearCache: Обновить кеш?
+        :return: Возвращает результат выполнения операции True/False.
         """
         level = self.getLevelByCod(cod)
         if level:
@@ -223,11 +223,11 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def _addRec(self, cod, record_dict, dt=None, bClearCache=False):
         """
         Добавить запись в справочник по коду.
-        @param cod: Код.
-        @param record_dict: Словарь изменений.
-        @param dt: Период актуальности.
-        @param bClearCache: Обновить кеш?
-        @return: Возвращает результат выполнения операции True/False.
+        :param cod: Код.
+        :param record_dict: Словарь изменений.
+        :param dt: Период актуальности.
+        :param bClearCache: Обновить кеш?
+        :return: Возвращает результат выполнения операции True/False.
         """
         storage = self.getStorage()
         if storage:
@@ -247,14 +247,14 @@ class icRefObjectProto(icsprav.icSpravInterface):
         """
         Поиск по коду.
 
-        @type cod: C{...}
-        @param cod: Код строки справочника.
-        @type field: C{string | list }
-        @param field: Имя поля или список полей.
-        @type dt: C{string}
-        @param dt: Время актуальности кода.
-        @rtype: C{dictionary}
-        @return: Значение либо словарь значений (если поле field задает список полей).
+        :type cod: C{...}
+        :param cod: Код строки справочника.
+        :type field: C{string | list }
+        :param field: Имя поля или список полей.
+        :type dt: C{string}
+        :param dt: Время актуальности кода.
+        :rtype: C{dictionary}
+        :return: Значение либо словарь значений (если поле field задает список полей).
             None, если строка с заданным кодом не найдена.
         """
         if isinstance(field, str):
@@ -284,26 +284,26 @@ class icRefObjectProto(icsprav.icSpravInterface):
     def Ctrl(self, val, old=None, field='name', flds=None, bCount=True, cod='', dt=None):
         """
         Функция контроля наличия в справочнике значения поля с указанным значением.
-        @type cod: C{string}
-        @param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
-        @type val: C{...}
-        @param val: Проверяемое значение. Если тип картеж, то это означает, что проверяем структурное
+        :type cod: C{string}
+        :param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
+        :type val: C{...}
+        :param val: Проверяемое значение. Если тип картеж, то это означает, что проверяем структурное
             значение (например иерархический код справочника).
-        @type old: C{...}
-        @param old: Старое значение.
-        @type field: C{string}
-        @param field: Поле, по которому проверяется значение.
-        @type flds: C{dictionary}
-        @param flds: Словарь соответствий между полями определенного класса данных и
+        :type old: C{...}
+        :param old: Старое значение.
+        :type field: C{string}
+        :param field: Поле, по которому проверяется значение.
+        :type flds: C{dictionary}
+        :param flds: Словарь соответствий между полями определенного класса данных и
             полями справочника. Если контроль значения пройдет успешно, то
             соответствующие значения из справочника будут перенесены в поля класса
             данных. Пример: {'summa':'f1', 'summa2':'f2'}
-        @type dt: C{string}
-        @param dt: Время актуальности кода.
-        @type bCount: C{string}
-        @param bCount: признак того, что необходимо вести количество ссылок.
-        @rtype: C{int}
-        @return: Код возврата функции контроля.
+        :type dt: C{string}
+        :param dt: Время актуальности кода.
+        :type bCount: C{string}
+        :param bCount: признак того, что необходимо вести количество ссылок.
+        :rtype: C{int}
+        :return: Код возврата функции контроля.
         """
         result = coderror.IC_CTRL_OK
         res_val = None

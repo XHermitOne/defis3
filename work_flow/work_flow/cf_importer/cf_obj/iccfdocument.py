@@ -61,7 +61,7 @@ class icCFDocRequisite(iccfobject.icCFObject):
     def _gen_field_type_res(self):
         """
         Генерация типа поля по типу значения 1С.
-        @return:
+        :return:
         """
         if self.type_value is None:
             return 'T'
@@ -192,7 +192,7 @@ class icCFDocTabRequisite(iccfobject.icCFObject):
     def _gen_field_type_res(self):
         """
         Генерация типа поля по типу значения 1С.
-        @return:
+        :return:
         """
         if self.type_value is None:
             return 'T'
@@ -290,8 +290,8 @@ class icCFDocument(iccfobject.icCFObject):
     def createModule(self, txt=None):
         """
         Создать модуль.
-        @param txt: Добавляемый текст.
-        @return: True - добавление прошло успешно, False - добавления не произошло.
+        :param txt: Добавляемый текст.
+        :return: True - добавление прошло успешно, False - добавления не произошло.
         """
         module_dir = os.path.join(self.getCFDir(), self.uid+'.0')
         module_info = os.path.join(module_dir, 'info')
@@ -308,8 +308,8 @@ class icCFDocument(iccfobject.icCFObject):
     def addInModule(self, txt):
         """
         Добавить в модуль объекта текст.
-        @param txt: Добавляемый текст.
-        @return: True - добавление прошло успешно, False - добавления не произошло.
+        :param txt: Добавляемый текст.
+        :return: True - добавление прошло успешно, False - добавления не произошло.
         """
         txt = util1c.encodeText(txt)
         
@@ -344,8 +344,8 @@ class icCFDocument(iccfobject.icCFObject):
     def delInModule(self, txt):
         """
         Удалить из модуля объекта текст.
-        @param txt: Удаляемый текст.
-        @return: True - удаление прошло успешно, False - удаления не произошло.
+        :param txt: Удаляемый текст.
+        :return: True - удаление прошло успешно, False - удаления не произошло.
         """
         txt = util1c.encodeText(txt)
         
@@ -369,9 +369,9 @@ class icCFDocument(iccfobject.icCFObject):
     def replaceInModule(self, srctxt, dsttxt):
         """
         Заменить текст в модуле объекта.
-        @param srctxt: Заменяемый текст.
-        @param dsttxt: Заменяющий текст.
-        @return: True - замена прошла успешно, False - замена не произошла.
+        :param srctxt: Заменяемый текст.
+        :param dsttxt: Заменяющий текст.
+        :return: True - замена прошла успешно, False - замена не произошла.
         """
         if self.delInModule(srctxt):
             return self.addInModule(dsttxt)
@@ -380,7 +380,7 @@ class icCFDocument(iccfobject.icCFObject):
     def gen_resource(self):
         """
         Генерация ресурса, соответстствующего объеку 1С.
-        @return: True/False.
+        :return: True/False.
         """
         # Открыть проект
         prj_res_ctrl = ic.getKernel().getProjectResController()
@@ -400,11 +400,11 @@ class icCFDocument(iccfobject.icCFObject):
                      uuid=iccfobject.NONE_UID):
         """
         Генерация ресурса дакумента 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @param name: Наименование объекта ресурса.
-        @param description: Описание объекта ресурса.
-        @param uuid: Уникальный идентификатор объекта ресурса.
-        @return: Ресурс справочника перечисления 1С.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param name: Наименование объекта ресурса.
+        :param description: Описание объекта ресурса.
+        :param uuid: Уникальный идентификатор объекта ресурса.
+        :return: Ресурс справочника перечисления 1С.
         """
         from work_flow.usercomponents import document
         from work_flow.usercomponents import requisite
@@ -442,8 +442,8 @@ class icCFDocument(iccfobject.icCFObject):
     def _gen_doc(self, prj_res_ctrl=None):
         """
         Генерация ресурса документа 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: True/False.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: True/False.
         """
         if prj_res_ctrl is None:
             log.warning(u'Не определен контроллер управления ресурсом проекта. Генерация ресурса 1С не взможна.')

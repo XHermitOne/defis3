@@ -7,16 +7,16 @@
 состоять из нескольких рядов ячеек (в том числе и объедененных). Шапка
 сделана на основе контейнера wx.GridBagSizer.
 
-@type ICHeadCellStyle: C{Dictionary}
-@var ICHeadCellStyle: Описание стилей компонента (значения атрибута <style>):
+:type ICHeadCellStyle: C{Dictionary}
+:var ICHeadCellStyle: Описание стилей компонента (значения атрибута <style>):
 
     - B{wx.ALIGN_LEFT}: Выравнивает текст по левому краю.
     - B{wx.ALIGN_RIGHT}: Выравнивае текст по правому краю.
     - B{wx.ALIGN_CENTRE}: Выравнивает текст по центру.
     - B{wx.ST_NO_AUTORESIZE}: Отключает автоматический подбор размер компонента.
 
-@type SPC_IC_HEADER: C{Dictionary}
-@var SPC_IC_HEADER: Спецификация на описание сложной шапки. Описание ключей:
+:type SPC_IC_HEADER: C{Dictionary}
+:var SPC_IC_HEADER: Спецификация на описание сложной шапки. Описание ключей:
 
     - B{name='Head'}: Имя объекта.
     - B{type='Head'}: Тип объекта.
@@ -110,16 +110,16 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         """
         Конструктор для создания объекта icBoxSizer.
 
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_HEADER, component)
         icwidget.icBase.__init__(self, parent, id, component, logType, evalSpace)
@@ -185,12 +185,12 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         """
         Присоединяет грид к шапке.
 
-        @type grid: C{icGrid}
-        @param grid: Указатель на грид.
-        @type bAuto: C{bool}
-        @param bAuto: Признак автоматического создания стандартной шапки грида.
-        @type bHideOldHead: C{bool}
-        @param bHideOldHead: Признак скрытия старой шапки.
+        :type grid: C{icGrid}
+        :param grid: Указатель на грид.
+        :type bAuto: C{bool}
+        :param bAuto: Признак автоматического создания стандартной шапки грида.
+        :type bHideOldHead: C{bool}
+        :param bHideOldHead: Признак скрытия старой шапки.
         """
         if not grid:
             return False
@@ -226,10 +226,10 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         """
         Подстраивает шапку под грид при наличии горизонтальной и вертикальной прокрутки.
 
-        @type x: C{int}
-        @param x: X координата, с которой начинается видимая область грида.
-        @type y: C{int}
-        @param y: Y координата, с которой начинается видимая область грида.
+        :type x: C{int}
+        :param x: X координата, с которой начинается видимая область грида.
+        :type y: C{int}
+        :param y: Y координата, с которой начинается видимая область грида.
         """
         oldx, oldy = self.scroll_pos
 
@@ -243,8 +243,8 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         """
         Функция добавляет ячейку заголовока.
 
-        @type cell: C{string}
-        @param cell: Компонент ячейки.
+        :type cell: C{string}
+        :param cell: Компонент ячейки.
         """
 
         if cell.position == (-1, -1):
@@ -290,10 +290,10 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         """
         Возвращает по заданным координатам объект, который в ней находится.
 
-        @type row: C{int}
-        @param row: Номер ряда.
-        @type col: C{int}
-        @param col: Номер колонки.
+        :type row: C{int}
+        :param row: Номер ряда.
+        :type col: C{int}
+        :param col: Номер колонки.
         """
         for obj in self.parAddList:
             _row, _col = obj.position
@@ -378,10 +378,10 @@ class icHeader(icwidget.icBase, wx.ScrolledWindow):
         """
         Рисует разделитель.
 
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
-        @type clr: C{wx.Colour}
-        @param clr: Цвет разделителя.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
+        :type clr: C{wx.Colour}
+        :param clr: Цвет разделителя.
         """
         width, height = self.GetClientSize()
         pen = wx.Pen(clr)

@@ -20,7 +20,7 @@ class icAUIManager(aui.AuiManager):
     def __init__(self, managed_window):
         """
         Конструктор.
-        @param: managed_window: Окно, управляемое AUI менеджером.
+        :param: managed_window: Окно, управляемое AUI менеджером.
         """
         aui.AuiManager.__init__(self)
         

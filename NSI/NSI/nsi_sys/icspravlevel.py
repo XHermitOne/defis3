@@ -39,8 +39,8 @@ class icSpravLevelInterface(object):
     def __init__(self, parent_sprav, index=-1):
         """
         Конструктор.
-        @param parent_sprav: Справочник-родитель.
-        @param index: Индекс уровня в справочнике-родителе.
+        :param parent_sprav: Справочник-родитель.
+        :param index: Индекс уровня в справочнике-родителе.
         """
         self._sprav = parent_sprav
         self._index = index
@@ -76,7 +76,7 @@ class icSpravLevelInterface(object):
     def labelsNotice(self, labels=None):
         """
         Список замененных имен полей-реквизитов справочника.
-        @param labels: Список имен полей-реквизитов, которые необходимо заменить.
+        :param labels: Список имен полей-реквизитов, которые необходимо заменить.
         """
         log.warning(u'Не определен метод labelsNotice в <%s>' % self.__class__.__name__)
         return None
@@ -177,8 +177,8 @@ class icSpravLevelProto(icSpravLevelInterface):
     def __init__(self, parent_sprav, index=-1):
         """
         Конструктор.
-        @param parent_sprav: Справочник-родитель.
-        @param index: Индекс уровня в справочнике-родителе.
+        :param parent_sprav: Справочник-родитель.
+        :param index: Индекс уровня в справочнике-родителе.
         """
         icSpravLevelInterface.__init__(self, parent_sprav, index)
         # Форма для редактирования данных текущего уровня.
@@ -191,7 +191,7 @@ class icSpravLevelProto(icSpravLevelInterface):
     def labelsNotice(self, labels=None):
         """
         Список замененных имен полей-реквизитов справочника.
-        @param labels: Список имен полей-реквизитов, которые необходимо заменить.
+        :param labels: Список имен полей-реквизитов, которые необходимо заменить.
         """
         try:
             if labels is None:

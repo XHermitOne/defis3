@@ -14,16 +14,16 @@
 ...                
 }
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -117,7 +117,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     """
     Описание пользовательского компонента.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{type='TreeList'}:
         - B{name='default'}:
@@ -133,22 +133,22 @@ class icTreeListCtrlSimple(icwidget.icWidget,
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -199,7 +199,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getTitleRoot(self):
         """
         Имя самого главного узла.
-        @return: Возвращает всегда строку.
+        :return: Возвращает всегда строку.
         """
         return str(self.getICAttr('titleRoot'))
         
@@ -274,8 +274,8 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def _isChildrenRes(self, Res_):
         """
         Есть ли в описании ресурса описание дочерних элементов?
-        @param Res_: Ресурс.
-        @return: Возвращает True/False.
+        :param Res_: Ресурс.
+        :return: Возвращает True/False.
         """
         if self.isList(Res_):
             return bool(Res_)
@@ -288,8 +288,8 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def _getPicturesId(self, Res_):
         """
         Определение картинок для изобращения узла по ресурсу этого узла.
-        @param Res_: Ресурс узла.
-        @return: Кортеж из 2-х элементов - идентификаторов картинок.
+        :param Res_: Ресурс узла.
+        :return: Кортеж из 2-х элементов - идентификаторов картинок.
         """
         # Если нет дочерних элементов в описании, тогда картинки-файлы
         if not self._isChildrenRes(Res_):
@@ -299,8 +299,8 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def setItemRecord(self, Item_, Record_):
         """
         Установить список записи на узле.
-        @param Item_: ID узла у которого устанавливается запись.
-        @param Record_: Запись узла. Список.
+        :param Item_: ID узла у которого устанавливается запись.
+        :param Record_: Запись узла. Список.
         """
         if Record_ and self.isList(Record_):
             for idx, value in enumerate(Record_[1:]):
@@ -310,8 +310,8 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getItemRecord(self, Item_):
         """
         Список записи на узле.
-        @param Item_: ID узла у которого устанавливается запись.
-        @return: Возвращает список строк записи узла. 
+        :param Item_: ID узла у которого устанавливается запись.
+        :return: Возвращает список строк записи узла.
             Или None в случае ошибки.
         """
         try:
@@ -327,7 +327,7 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getSelectionRecord(self):
         """
         Список записи выбранного узла.
-        @return: Возвращает список строк записи узла. 
+        :return: Возвращает список строк записи узла.
             Или None в случае ошибки.
         """
         selection_item = self.GetSelection()
@@ -336,8 +336,8 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def setLabelCols(self, LabelCols_):
         """
         Установить надписи колонок.
-        @param LabelCols_: Надписи колонок. Список строк.
-        @return: Возвращает результат выполнения функции True/False.
+        :param LabelCols_: Надписи колонок. Список строк.
+        :return: Возвращает результат выполнения функции True/False.
         """
         try:
             col_count = self.GetColumnCount()
@@ -384,12 +384,12 @@ class icTreeListCtrlSimple(icwidget.icWidget,
         """
         Заполняем дерево.
         
-        @type treeDict: C{dictionary}
-        @param treeDict: Словарно-списковая структура, отображаемая в дереве.
-        @type AutoSelect_: C{bool}
-        @param AutoSelect_: Автоматически выбрать последний элемент.
-        @type AutoExpand_: C{bool}
-        @param AutoExpand_: Автоматически развернуть корневой элемент.
+        :type treeDict: C{dictionary}
+        :param treeDict: Словарно-списковая структура, отображаемая в дереве.
+        :type AutoSelect_: C{bool}
+        :param AutoSelect_: Автоматически выбрать последний элемент.
+        :type AutoExpand_: C{bool}
+        :param AutoExpand_: Автоматически развернуть корневой элемент.
         """
         if treeDict is None:
             treeDict = self.treeDict
@@ -418,8 +418,8 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def selectItemPath(self, ItemPath_, CurItem_=None):
         """
         Выбрать элемент по пути.
-        @param ItemPath_: Путь до элемента.
-        @param CurItem_: Текущий элемент поиска. 
+        :param ItemPath_: Путь до элемента.
+        :param CurItem_: Текущий элемент поиска. 
             Если None, то поиск начиниется с корня.
         """
         if CurItem_ is None:
@@ -435,8 +435,8 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getItemPathLabel(self, Item_, Path_=None):
         """
         Путь до элемента. Путь - список имен элементов.
-        @param Item_: Элемент дерева.
-        @param Path_: Текущий заполненный путь.
+        :param Item_: Элемент дерева.
+        :param Path_: Текущий заполненный путь.
         """
         parent = self.GetItemParent(Item_)
         # Если есть родительский элемент, то вызвать рекурсивно
@@ -457,8 +457,8 @@ class icTreeListCtrlSimple(icwidget.icWidget,
     def getItemChildren(self, Item_=None):
         """
         Список дочерних элементов узла дерева.
-        @param Item_: Узел/элемент дерева. Если None, то корневой элемент.
-        @return: Список дочерних элементов узла дерева 
+        :param Item_: Узел/элемент дерева. Если None, то корневой элемент.
+        :return: Список дочерних элементов узла дерева
             или None в случае ошибки.
         """
         try:
@@ -486,16 +486,16 @@ class icTreeListCtrlSimple(icwidget.icWidget,
         """
         Функция ищет подстроку в массиве данных. 
     
-        @type string: C{string}
-        @param string: Строка поиска
-        @type curItem: C{int}
-        @param curItem: Элемент дерева, с которого начинается поиск.
-        @type columns: C{list}
-        @param columns: Список колонок записи каждого элемента, по которым ведется поиск.
-        @type bILike: C{bool}
-        @param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
+        :type string: C{string}
+        :param string: Строка поиска
+        :type curItem: C{int}
+        :param curItem: Элемент дерева, с которого начинается поиск.
+        :type columns: C{list}
+        :param columns: Список колонок записи каждого элемента, по которым ведется поиск.
+        :type bILike: C{bool}
+        :param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
             на точное соответствие.
-        @return: Возвращает номер элемента дерева, где найдена искомая строка.
+        :return: Возвращает номер элемента дерева, где найдена искомая строка.
         """
         try:
             # Без учета регистра?
@@ -624,8 +624,8 @@ def test(par=0):
     """
     Тестируем пользовательский класс.
     
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     res0 = {'d1': {'__record__': [1, 2, 3, 4]},
             'd2': {'cc1': 'a1', 'cc2': 'a2', '__record__': [1, 2, 3, 4]},

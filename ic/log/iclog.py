@@ -24,10 +24,10 @@ def MsgLastError(parent, beg_msg):
     """
     Выводит сообщение о последней ошибке в диалоговое окно.
 
-    @type parent: C{wxWindow}
-    @param parent: Родительское окно.
-    @type beg_msg: C{string}
-    @param beg_msg: Заголовок сообщения об ошибке.
+    :type parent: C{wxWindow}
+    :param parent: Родительское окно.
+    :type beg_msg: C{string}
+    :param beg_msg: Заголовок сообщения об ошибке.
     """
     trace = traceback.extract_tb(sys.exc_traceback)
     last = len(trace) - 1
@@ -108,10 +108,10 @@ def _to_unicode(String_, DefaultCP_='utf-8'):
 def LogLastError(beg_msg, logType = 0, msg_encoding='utf-8'):
     """
     Записывает сообщение о последней ошибке в лог.
-    @type beg_msg: C{string}
-    @param beg_msg: Заголовок сообщения об ошибке.
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1 - файл, 2 - окно лога, 3 - окно сообщений)
+    :type beg_msg: C{string}
+    :param beg_msg: Заголовок сообщения об ошибке.
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1 - файл, 2 - окно лога, 3 - окно сообщений)
     """
     trace = traceback.extract_tb(sys.exc_traceback)
     last = len(trace) - 1
@@ -127,10 +127,10 @@ def LogLastError(beg_msg, logType = 0, msg_encoding='utf-8'):
 def toLog(msg, logType = 0):
     """
     Вывод на устройство регистрации специальных сообщений.
-    @type msg: C{string}
-    @param msg: Сообщение об ошибке.
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1 - файл, 2 - окно лога, 3 - окно сообщений)
+    :type msg: C{string}
+    :param msg: Сообщение об ошибке.
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1 - файл, 2 - окно лога, 3 - окно сообщений)
     """
     if logType == IC_FILE_LOGTYPE:
         pass

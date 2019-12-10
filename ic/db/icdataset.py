@@ -5,15 +5,15 @@
 Базовый класс для работы с табличными данными.
 Модуль содержит описание класса ссылки и функций для поиска по дереву ресурса.
 
-@var icTextFieldType: Идентификатор текстового типа поля.
-@var icNumberFieldType: Идентификатор целого типа поля.
-@var icDoubleFieldType: Идентификатор вещественного типа поля.
-@var icDateTimeFieldType: Идентификатор дата-время типа.
-@var icNormalFieldType: Идентификатор поля базы данных.
-@var icVirtualFieldType: Идентификатор вычислимого поля.
+:var icTextFieldType: Идентификатор текстового типа поля.
+:var icNumberFieldType: Идентификатор целого типа поля.
+:var icDoubleFieldType: Идентификатор вещественного типа поля.
+:var icDateTimeFieldType: Идентификатор дата-время типа.
+:var icNormalFieldType: Идентификатор поля базы данных.
+:var icVirtualFieldType: Идентификатор вычислимого поля.
 
-@type SPC_IC_DATALINK: C{Dictionary}
-@var SPC_IC_DATALINK: Спецификация на ресурсное описание ссылки на объект. Созданный по ссылке объект
+:type SPC_IC_DATALINK: C{Dictionary}
+:var SPC_IC_DATALINK: Спецификация на ресурсное описание ссылки на объект. Созданный по ссылке объект
 в пространстве имен формы будет иметь имя ссылки. Описание ключей:
 
     - B{name = 'Link'}: Имя объекта источника данных. В форме используется как алиас источника данных
@@ -177,17 +177,17 @@ def findResPath(res, path, i=0):
     Любое ресурсное описание в обезательном порядке имеет ключ 'name', по этому имени и ведется поиск нужного
     описания. Наследование задается через список, с ключом 'child'.
         
-    @type res: C{dictionary}
-    @param res: Ресурсное описание, в котором ищется описание нужного компонента.
-    @type path: C{list}
-    @param path: Путь до нужного описания.
+    :type res: C{dictionary}
+    :param res: Ресурсное описание, в котором ищется описание нужного компонента.
+    :type path: C{list}
+    :param path: Путь до нужного описания.
 
         - B{Пример:} C{['Frame1','Split1','Win1','button5']}
 
-    @type i: C{int}
-    @param i: Номер имени в списке, описывающем путь до ремурсного описания.
-    @rtype: C{dictionary}
-    @return: Возвращает нужное ресурсное описание если находит и C{None}, если не находит.
+    :type i: C{int}
+    :param i: Номер имени в списке, описывающем путь до ремурсного описания.
+    :rtype: C{dictionary}
+    :return: Возвращает нужное ресурсное описание если находит и C{None}, если не находит.
     """
     
     if i >= len(path):
@@ -261,12 +261,12 @@ def findResName(res, name):
     Наследование задается через список, с ключом 'child' и аттрибуты с ключами 'Win1' и 'Win2', которые
     используются при описании компонента icSplitter.
     
-    @type res: C{dictionary}
-    @param res: Ресурсное описание, в котором ищется описание нужного компонента.
-    @type name: C{string}
-    @param name: Имя объекта описание, которого ищет функция.
-    @rtype: C{dictionary}
-    @return: Возвращает нужное ресурсное описание, если находит и C{None}, если не находит.
+    :type res: C{dictionary}
+    :param res: Ресурсное описание, в котором ищется описание нужного компонента.
+    :type name: C{string}
+    :param name: Имя объекта описание, которого ищет функция.
+    :rtype: C{dictionary}
+    :return: Возвращает нужное ресурсное описание, если находит и C{None}, если не находит.
     """
 
     if res['name'] == name:
@@ -307,10 +307,10 @@ def findResQuery(res, xpath):
     """
     Функция по запросу находит нужное ресурсное описание.
     
-    @type res: C{dictionary}
-    @param res: Ресурсное описание, в котором ищется описание нужного компонента.
-    @type xpath: C{string}
-    @param xpath: Запрос на нужный компонент. '/' указывает на путь наследование; '//' указывает на рекурсивный
+    :type res: C{dictionary}
+    :param res: Ресурсное описание, в котором ищется описание нужного компонента.
+    :type xpath: C{string}
+    :param xpath: Запрос на нужный компонент. '/' указывает на путь наследование; '//' указывает на рекурсивный
         поиск нужного описания. Примеры:
         
             - C{'Frame1/panel1/split1/Win1/sizer1/button1'} - запрос с указанием полного пути до описания 'button1'.
@@ -318,8 +318,8 @@ def findResQuery(res, xpath):
             - C{'Frame1/panel1/split1//button1'} - запрос на поиск с указанием пути до компонента split1 и именем
                 нужного описания.
 
-    @rtype: C{dictionary}
-    @return: Возвращает нужное ресурсное описание если находит и C{None}, если не находит.
+    :rtype: C{dictionary}
+    :return: Возвращает нужное ресурсное описание если находит и C{None}, если не находит.
     """
     lxpath = xpath.split('//')
     
@@ -348,12 +348,12 @@ def findResTypeLst(res, typRes, lst=None):
     Функция возвращет список ресурсов заданного типа. Поиск ведется рекурсивно
     по ресурсу.
     
-    @type res: C{dictionary}
-    @param res: Ресурсное описание, где происходить поиск.
-    @type typRes: C{string}
-    @param typRes: Тип ресурса, который ищется.
-    @rtype: C{list}
-    @return: Возвращет список ресурсов заданного типа.
+    :type res: C{dictionary}
+    :param res: Ресурсное описание, где происходить поиск.
+    :type typRes: C{string}
+    :param typRes: Тип ресурса, который ищется.
+    :rtype: C{list}
+    :return: Возвращет список ресурсов заданного типа.
     """
     if not res or not isinstance(res, dict):
         return lst
@@ -386,22 +386,22 @@ def setResAttr(res, typRes, name, attr, value, uuidLink=None, prntRes=None):
     заданного атрибута. При этом генерируется новый UUID ресурса - половинка старого UUID
     складывается с половинкой ссылки.
     
-    @type res: C{dictionary}
-    @param res: Ресурсное описание, где происходить поиск.
-    @type typRes: C{string}
-    @param typRes: Тип ресурса, который ищется.
-    @type name: C{string}
-    @param name: Имя ресурного описаия компонента.
-    @type attr: C{string}
-    @param attr: Имя атрибута.
-    @type value: C{...}
-    @param value: Новое значение атрибута.
-    @type uuidLink: C{string}
-    @param uuidLink: Универсальный идентификатор ссылки.
-    @type prntRes: C{dictionary}
-    @param prntRes: Ресурсное описание родительского компонента-контейнера.
-    @rtype: C{bool}
-    @return: Признак того, что нужный атрибут найден и установлен. None означает,
+    :type res: C{dictionary}
+    :param res: Ресурсное описание, где происходить поиск.
+    :type typRes: C{string}
+    :param typRes: Тип ресурса, который ищется.
+    :type name: C{string}
+    :param name: Имя ресурного описаия компонента.
+    :type attr: C{string}
+    :param attr: Имя атрибута.
+    :type value: C{...}
+    :param value: Новое значение атрибута.
+    :type uuidLink: C{string}
+    :param uuidLink: Универсальный идентификатор ссылки.
+    :type prntRes: C{dictionary}
+    :param prntRes: Ресурсное описание родительского компонента-контейнера.
+    :rtype: C{bool}
+    :return: Признак того, что нужный атрибут найден и установлен. None означает,
         что компонет не имеет нужного атрибута.
     """
     if not isinstance(res, dict) or not res:
@@ -457,14 +457,14 @@ def getRes(res, typRes, name):
     """
     Функция ищет в ресурсе ресурс заданного типа и имени и возвращает его.
     
-    @type res: C{dictionary}
-    @param res: Ресурсное описание, где происходить поиск.
-    @type typRes: C{string}
-    @param typRes: Тип ресурса, который ищется.
-    @type name: C{string}
-    @param name: Имя ресурного описаия компонента.
-    @rtype: C{tuple}
-    @return: Возвращает найденный ресурс
+    :type res: C{dictionary}
+    :param res: Ресурсное описание, где происходить поиск.
+    :type typRes: C{string}
+    :param typRes: Тип ресурса, который ищется.
+    :type name: C{string}
+    :param name: Имя ресурного описаия компонента.
+    :rtype: C{tuple}
+    :return: Возвращает найденный ресурс
     """
     if isinstance(res, dict) or not res:
         return False
@@ -515,17 +515,17 @@ class icDataLink(icwidget.icSimple):
         """
         Конструктор для создания ссылки.
 
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bDefSearch: C{bool}
-        @param bDefSearch: Используется если в пространстве имен нужный объект не обнаружен. Признак определяет искать ли нужное
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bDefSearch: C{bool}
+        :param bDefSearch: Используется если в пространстве имен нужный объект не обнаружен. Признак определяет искать ли нужное
             ресурсное описание в ресурсных файлах по умолчанию (./res/resource.tab).
-        @type fltDict: C{dictionary}
-        @param fltDict: Словарь заменяемых фильтров у источников данных.
+        :type fltDict: C{dictionary}
+        :param fltDict: Словарь заменяемых фильтров у источников данных.
         """
         icwidget.icSimple.__init__(self, parent=None, component=component,
                                    logType=logType, evalSpace=evalSpace)
@@ -554,10 +554,10 @@ class icDataLink(icwidget.icSimple):
         """
         По атрибуту <source> определяется имя и расширение файла ресурса.
 
-        @type source: C{string}
-        @param source: Значение атрибута источника.
-        @rtype: C{tuple}
-        @return: Возвращает картеж первый элемент - путь, второй - имя, третий -
+        :type source: C{string}
+        :param source: Значение атрибута источника.
+        :rtype: C{tuple}
+        :return: Возвращает картеж первый элемент - путь, второй - имя, третий -
             расширение файла ресурса.
         """
 
@@ -607,8 +607,8 @@ class icDataLink(icwidget.icSimple):
         """
         Собирает ресурсное описание по ссылке.
 
-        @type component: C{dictionary}
-        @param component: Словарь описания ссылки.
+        :type component: C{dictionary}
+        :param component: Словарь описания ссылки.
         """
         if 'psp_link' in component and component['psp_link']:
             return self.getResourceByPspLink(component)
@@ -621,7 +621,7 @@ class icDataLink(icwidget.icSimple):
         Определить ресурс по выражению.
         Если не определен ресурс и определено выражение, которое возвращает
         ресурс.
-        @return:
+        :return:
         """
         res = None
         link_expr = component['link_expr']
@@ -638,9 +638,9 @@ class icDataLink(icwidget.icSimple):
         """
         Произвести замены в ресурсе.
         Замены производяться с помощью метода <ReloadAttr>.
-        @param res: Ресурс.
-        @param component: Описание компонента DataLink.
-        @return: Ресурс с произведенными заменами.
+        :param res: Ресурс.
+        :param component: Описание компонента DataLink.
+        :return: Ресурс с произведенными заменами.
         """
         contKeys = [x for x in res.keys() if x in contAttr]
 
@@ -678,8 +678,8 @@ class icDataLink(icwidget.icSimple):
         """
         Собирает ресурсное описание по ссылке.
         Ресурсное описание собирается по паспорту объекта.
-        @type component: C{dictionary}
-        @param component: Словарь описания ссылки.
+        :type component: C{dictionary}
+        :param component: Словарь описания ссылки.
         """
         res = None
         res_query = util.getSpcAttr(component, 'res_query', self.evalSpace).strip()
@@ -726,8 +726,8 @@ class icDataLink(icwidget.icSimple):
         """
         Собирает ресурсное описание по ссылке.
         Ресурсное описание собирается по ссылке на файл ресурса.
-        @type component: C{dictionary}
-        @param component: Словарь описания ссылки.
+        :type component: C{dictionary}
+        :param component: Словарь описания ссылки.
         """
         res = None
         name = component['name']
@@ -812,10 +812,10 @@ class icDataLink(icwidget.icSimple):
         """
         Перегружает нужные атрибуты ресурсного описания.
 
-        @type res: C{dictionary}
-        @param res: Ресурсное описание, в котором заменяются атрибуты.
-        @type component: C{dictionary}
-        @param component: Ресурсное описание ссылки.
+        :type res: C{dictionary}
+        :param res: Ресурсное описание, в котором заменяются атрибуты.
+        :type component: C{dictionary}
+        :param component: Ресурсное описание ссылки.
         """
         attrs = getAddProperyLst(SPC_IC_DATALINK, list(component.keys()),
                                  icDefInf.icUnSpecAttr)
@@ -865,12 +865,12 @@ def getAddProperyLst(spc, attrs, unSpecAttr):
     """
     Определяет список атрибутов, которые не определяются спецификацией.
     
-    @type spc: C{dictionary}
-    @param spc: Спецификация на описание компонента.
-    @type attrs: C{list}
-    @param attrs: Список атрибутов компонента.
-    @rtype: C{list}
-    @return: Список атрибутов, которые не определяются спецификацией.
+    :type spc: C{dictionary}
+    :param spc: Спецификация на описание компонента.
+    :type attrs: C{list}
+    :param attrs: Список атрибутов компонента.
+    :rtype: C{list}
+    :return: Список атрибутов, которые не определяются спецификацией.
     """
     lst_add_prop = []
     

@@ -6,24 +6,24 @@
 Данный модуль содержит только описание класса icGrid. Привязка к данным
 реализуется в классе icGridDataset.
 
-@type SPC_IC_CELLATTR: C{Dictionary}
-@var SPC_IC_CELLATTR: Спецификация на ресурсное описание аттрибутов ячеек данных. Описание ключей:
+:type SPC_IC_CELLATTR: C{Dictionary}
+:var SPC_IC_CELLATTR: Спецификация на ресурсное описание аттрибутов ячеек данных. Описание ключей:
 
     - B{backgroundColor=wx.Colour(255, 255, 255)}: Цвет подложки.
     - B{foregroundColor=wx.Colour(0, 0, 0)}: Цвет текста.
     - B{font=None}: Шрифт (см. описание icFont).
     - B{alignment=('left','middle')}: Способ выравниввания ('centred','left', 'right', 'middle', 'top', 'bottom').
 
-@type SPC_IC_LABELATTR: C{Dictionary}
-@var SPC_IC_LABELATTR: Спецификация на ресурсное описание аттрибутов ячеек шапки. Описание ключей:
+:type SPC_IC_LABELATTR: C{Dictionary}
+:var SPC_IC_LABELATTR: Спецификация на ресурсное описание аттрибутов ячеек шапки. Описание ключей:
 
     - B{backgroundColor=wx.Colour(100, 100, 100)}: Цвет подложки.
     - B{foregroundColor=wx.Colour(255, 255, 255)}: Цвет текста.
     - B{font=None}: Шрифт (см. описание icFont).
     - B{alignment=('left','middle')}: Способ выравниввания ('centred','left', 'right', 'middle', 'top', 'bottom').
 
-@type SPC_IC_GRID: C{Dictionary}
-@var SPC_IC_GRID: Спецификация на ресурсное описание грида. Описание ключей:
+:type SPC_IC_GRID: C{Dictionary}
+:var SPC_IC_GRID: Спецификация на ресурсное описание грида. Описание ключей:
 
     - B{name='default'}: Имя компонента.
     - B{label='Grid'}: Заголовок грида (не используется).
@@ -72,8 +72,8 @@
             - отрабатывает контроль значения поля(по атрибуту 'ctrl')
             - Если контроль проходит запись в базу вычисленного значения (по атрибуту 'setvalue')
     
-@type SPC_IC_CELL: C{Dictionary}
-@var SPC_IC_CELL: Спецификация на ресурсное описание колонок грида.
+:type SPC_IC_CELL: C{Dictionary}
+:var SPC_IC_CELL: Спецификация на ресурсное описание колонок грида.
 
     - B{name=default}: Идентификатор столбца.
     - B{label='col'}: Имя колонки. Имя колонки может быть многострочным. Символы
@@ -312,12 +312,12 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 def getIdAlignment(horiz, vert):
     """
     Функция определяет идентификатор выравнивания по имени.
-    @param horiz: Название горизонтального выравнивания ('left', 'right', 'centre').
-    @type horiz: C{string}
-    @param vert: Название вертикального выравнивания ('top', 'bottom', 'centre')
-    @type vert: C{string}
-    @return: Возвращает кортеж, состоящий из идентификаторов. Пример ('left', 'top')
-    @rtype: C{tuple}
+    :param horiz: Название горизонтального выравнивания ('left', 'right', 'centre').
+    :type horiz: C{string}
+    :param vert: Название вертикального выравнивания ('top', 'bottom', 'centre')
+    :type vert: C{string}
+    :return: Возвращает кортеж, состоящий из идентификаторов. Пример ('left', 'top')
+    :rtype: C{tuple}
     """
     if isinstance(horiz, str):
         if horiz == u'left':
@@ -353,16 +353,16 @@ class icGrid(icwidget.icWidget, grid.Grid,
                  evalSpace=None, bCounter=False, progressDlg=None):
         """
         Конструктор для создания icGrid.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         component = util.icSpcDefStruct(SPC_IC_GRID, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -637,10 +637,10 @@ class icGrid(icwidget.icWidget, grid.Grid,
     def setHeader(self, header, bAuto=False, bHideOldHead=False):
         """
         Связывает шапку с гридом.
-        @type bAuto: C{bool}
-        @param bAuto: Признак автоматического создания стандартной шапки грида.
-        @type bHideOldHead: C{bool}
-        @param bHideOldHead: Признак скрытия старой шапки.
+        :type bAuto: C{bool}
+        :param bAuto: Признак автоматического создания стандартной шапки грида.
+        :type bHideOldHead: C{bool}
+        :param bHideOldHead: Признак скрытия старой шапки.
         """
         self.header = header
         try:

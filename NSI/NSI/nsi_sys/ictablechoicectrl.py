@@ -94,11 +94,11 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     def setTableSrcData(self, tab_src_data, **kwargs):
         """
         Установить табличный источник данных.
-        @param tab_src_data: Объект табличного источника данных.
-        @param kwargs: Дополнительные параметры.
+        :param tab_src_data: Объект табличного источника данных.
+        :param kwargs: Дополнительные параметры.
             Дополноительные параметры для генерации исполняемого текста
             SQL запроса например.
-        @return: True/False.
+        :return: True/False.
         """
         self._src_data = tab_src_data
         tab_data = self.refreshTableData(self._src_data, **kwargs)
@@ -108,11 +108,11 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     def refreshTableData(self, tab_src_data=None, **kwargs):
         """
         Обновить табличные данные.
-        @param tab_src_data: Объект табличного источника данных.
-        @param kwargs: Дополнительные параметры.
+        :param tab_src_data: Объект табличного источника данных.
+        :param kwargs: Дополнительные параметры.
             Дополноительные параметры для генерации исполняемого текста
             SQL запроса например.
-        @return: Обновленные табличные данные.
+        :return: Обновленные табличные данные.
         """
         if tab_src_data is None:
             tab_src_data = self._src_data
@@ -127,8 +127,8 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     def setFilter(self, table_data=None):
         """
         Дополнительно отфильтровать записи табличных даных.
-        @param table_data: Табличные данные.
-        @return: Отфильтрованные табличные данные.
+        :param table_data: Табличные данные.
+        :return: Отфильтрованные табличные данные.
         """
         try:
             table_data = self._setFilter(table_data)
@@ -139,8 +139,8 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     def _setFilter(self, table_data=None):
         """
         Дополнительно отфильтровать записи табличных даных.
-        @param table_data: Табличные данные.
-        @return: Отфильтрованные табличные данные.
+        :param table_data: Табличные данные.
+        :return: Отфильтрованные табличные данные.
         """
         if table_data is None:
             table_data = self.getTableData()
@@ -186,14 +186,14 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     def isLabelFunc(self):
         """
         Определена функция получения надписи элемента списка?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def isFilterFunc(self):
         """
         Определена функция дополнительной фильтрации табличных данных?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
@@ -207,9 +207,9 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     def get_label(self, record, table_data=None):
         """
         Функция полчения надписи элемента
-        @param record: Текущая обрабатываемая запись.
-        @param table_data: Табличные данные.
-        @return: Текст элемента выбора.
+        :param record: Текущая обрабатываемая запись.
+        :param table_data: Табличные данные.
+        :return: Текст элемента выбора.
         """
         if table_data is None:
             table_data = self.getTableData()
@@ -240,9 +240,9 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     def set_choices(self, table_data=None, is_empty=True):
         """
         Установка списка выбора.
-        @param table_data: Табличные данные.
-        @param is_empty: Присутствует в списке пустая строка?
-        @return: True/False.
+        :param table_data: Табличные данные.
+        :param is_empty: Присутствует в списке пустая строка?
+        :return: True/False.
         """
         if table_data is None:
             table_data = self.getTableData()
@@ -271,9 +271,9 @@ class icTableChoiceCtrlProto(wx.ComboBox):
     def get_selected_record(self, table_data=None, selected_idx=-1):
         """
         Получить выбранную запись по индексу выбранного элемента.
-        @param table_data: Табличные данные.
-        @param selected_idx: Индекс выбранного элемента.
-        @return: Словарь выбранной записи или None в случае ошибки.
+        :param table_data: Табличные данные.
+        :param selected_idx: Индекс выбранного элемента.
+        :return: Словарь выбранной записи или None в случае ошибки.
         """
         if selected_idx < 0:
             # Ничего не выбранно

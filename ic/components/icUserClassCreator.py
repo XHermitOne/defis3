@@ -49,16 +49,16 @@ closeTag = '$'
 def ReplaceTag(templ, pos, tag, text):
     """
     Заменяет в шаблоне тэг на нужный текст.
-    @type templ: C{string}
-    @param templ: Шаблона.
-    @type pos: C{int}
-    @param pos: Позиция, откуда ищется тэг.
-    @type tag: C{string}
-    @param tag: Имя тэга.
-    @type text: C{string}
-    @param text: Текст, который вставляется.
-    @rtype: C{int}
-    @return: Возвращает позицию, в которой найден открывающий тэг
+    :type templ: C{string}
+    :param templ: Шаблона.
+    :type pos: C{int}
+    :param pos: Позиция, откуда ищется тэг.
+    :type tag: C{string}
+    :param tag: Имя тэга.
+    :type text: C{string}
+    :param text: Текст, который вставляется.
+    :rtype: C{int}
+    :return: Возвращает позицию, в которой найден открывающий тэг
     """
     beg = templ.find(openTag+tag, pos)
     if beg < 0:
@@ -92,10 +92,10 @@ def findOpenTag(templ, pos):
 def CreatUserClass(discr, file_templ=None):
     """
     По описанию генерируется модуль с пользовательским классом.
-    @type discr: C{dictionary}
-    @param discr: Структура описания класса пользователя.
-    @type file_templ: C{string}
-    @param file_templ: Имя файла шаблона.
+    :type discr: C{dictionary}
+    :param discr: Структура описания класса пользователя.
+    :type file_templ: C{string}
+    :param file_templ: Имя файла шаблона.
     """
     if not file_templ:
         file_templ = os.path.join(resource.icGetICPath(), 'components',
@@ -509,8 +509,8 @@ def RunWizard(parent):
 def test(par=0):
     """
     Тестируем пользовательский класс.
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     import ic.components.ictestapp as ictestapp
     app = ictestapp.TestApp(par)

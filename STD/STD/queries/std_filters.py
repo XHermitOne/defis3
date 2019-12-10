@@ -12,10 +12,10 @@ __version__ = (0, 1, 1, 1)
 def get_date_between_filter(requisite_name, min_date, max_date):
     """
     Фильтр диапазона дат.
-    @param requisite_name: Имя реквизита даты.
-    @param min_date: Минимальная дата.
-    @param max_date: Максимальная дата.
-    @return: Заполненный фильтр.
+    :param requisite_name: Имя реквизита даты.
+    :param min_date: Минимальная дата.
+    :param max_date: Максимальная дата.
+    :return: Заполненный фильтр.
     """
     filter_dict = dict()
     filter_dict['requisite'] = requisite_name

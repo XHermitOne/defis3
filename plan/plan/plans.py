@@ -61,9 +61,9 @@ def getPlanTabName():
 def getPlanByDate(Date_, Param_, Type_):
     """
     План по параметру на определенную дату.
-    @param Date_: Указание даты в строковом формате.
-    @param Param_: Имя параметра.
-    @param Type_: Тип плана.
+    :param Date_: Указание даты в строковом формате.
+    :param Param_: Имя параметра.
+    :param Type_: Тип плана.
     """
     return None
 
@@ -77,14 +77,14 @@ def countPlanTableWeight(month=None, year=None, table='analitic',
     справочнике видов продукции и в последствии используются для генерации планов
     по общим месячным планам.
 
-    @type month: C{int}
-    @param month: Номер месяца, по которому вычисляются параметры.
-    @type year: C{string}
-    @param year: Номер года.
-    @type table: C{string}
-    @param table: Имя таблицы, по которой вычисляются долевые параметры.
-    @type view: C{string}
-    @param view: Имя таблицы из которой берется общая сумма.
+    :type month: C{int}
+    :param month: Номер месяца, по которому вычисляются параметры.
+    :type year: C{string}
+    :param year: Номер года.
+    :type table: C{string}
+    :param table: Имя таблицы, по которой вычисляются долевые параметры.
+    :type view: C{string}
+    :param view: Имя таблицы из которой берется общая сумма.
     """
     tm = wx.DefaultDateTime
     if not month:
@@ -161,14 +161,14 @@ def countSumMonthPlan(cod, month=None, year=None, view='realize_sum'):
     """
     Генерируется месячный план по виду продукции в денежном эквиваленте.
 
-    @type cod: C{string}
-    @param cod: Код вида продукции.
-    @type month: C{int}
-    @param month: Номер месяца, по которому вычисляются параметры.
-    @type year: C{string}
-    @param year: Номер года.
-    @type view: C{string}
-    @param view: Имя таблицы из которой берется общая сумма.
+    :type cod: C{string}
+    :param cod: Код вида продукции.
+    :type month: C{int}
+    :param month: Номер месяца, по которому вычисляются параметры.
+    :type year: C{string}
+    :param year: Номер года.
+    :type view: C{string}
+    :param view: Имя таблицы из которой берется общая сумма.
     """
     tm = wx.DefaultDateTime
     
@@ -233,14 +233,14 @@ def countKolMonthPlan(cod, month=None, year=None, view='realize_sum'):
     """
     Вычисляется месячный план по виду продукции в натуральном выражении (в кг.).
 
-    @type cod: C{string}
-    @param cod: Код вида продукции.
-    @type month: C{int}
-    @param month: Номер месяца, по которому вычисляются параметры.
-    @type year: C{string}
-    @param year: Номер года.
-    @type view: C{string}
-    @param view: Имя таблицы из которой берется общая сумма.
+    :type cod: C{string}
+    :param cod: Код вида продукции.
+    :type month: C{int}
+    :param month: Номер месяца, по которому вычисляются параметры.
+    :type year: C{string}
+    :param year: Номер года.
+    :type view: C{string}
+    :param view: Имя таблицы из которой берется общая сумма.
     """
     tm = wx.DefaultDateTime
     
@@ -304,16 +304,16 @@ def countSumDayPlan(cod, day=None, month=None, year=None, view='realize_sum'):
     """
     Вычисляется суточный план по виду продукции в натуральном выражении (в кг.).
 
-    @type cod: C{string}
-    @param cod: Код вида продукции.
-    @type day: C{int}
-    @param day: День месяца.
-    @type month: C{int}
-    @param month: Номер месяца, по которому вычисляются параметры.
-    @type year: C{string}
-    @param year: Номер года.
-    @type view: C{string}
-    @param view: Имя таблицы из которой берется общая сумма.
+    :type cod: C{string}
+    :param cod: Код вида продукции.
+    :type day: C{int}
+    :param day: День месяца.
+    :type month: C{int}
+    :param month: Номер месяца, по которому вычисляются параметры.
+    :type year: C{string}
+    :param year: Номер года.
+    :type view: C{string}
+    :param view: Имя таблицы из которой берется общая сумма.
     """
     #   Планируется, что можно посмотреть дневной план, но только кто его будет
     #   заполнять, поэтому эта возможность пока не реализована
@@ -339,16 +339,16 @@ def countKolDayPlan(cod, day=None, month=None, year=None, view='realize_sum'):
     """
     Вычисляется суточный план по виду продукции в натуральном выражении (в кг.).
 
-    @type cod: C{string}
-    @param cod: Код вида продукции.
-    @type day: C{int}
-    @param day: День месяца.
-    @type month: C{int}
-    @param month: Номер месяца, по которому вычисляются параметры.
-    @type year: C{string}
-    @param year: Номер года.
-    @type view: C{string}
-    @param view: Имя таблицы из которой берется общая сумма.
+    :type cod: C{string}
+    :param cod: Код вида продукции.
+    :type day: C{int}
+    :param day: День месяца.
+    :type month: C{int}
+    :param month: Номер месяца, по которому вычисляются параметры.
+    :type year: C{string}
+    :param year: Номер года.
+    :type view: C{string}
+    :param view: Имя таблицы из которой берется общая сумма.
     """
     #   Планируется, что можно посмотреть дневной план, но только кто его будет
     #   заполнять, поэтому эта возможность пока не реализована

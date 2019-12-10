@@ -5,8 +5,8 @@
 Обкладка для компонента wx.ImageButton.
 Содержит описание класса icImageButton, который по ресурсному описанию создает кнопку с картинкой.
 
-@type SPC_IC_TOGGLE_IMGBUTTON: C{dictionary}
-@var SPC_IC_TOGGLE_IMGBUTTON: Спецификация на ресурсное описание окна. Описание ключей SPC_IC_IMGBUTTON:
+:type SPC_IC_TOGGLE_IMGBUTTON: C{dictionary}
+:var SPC_IC_TOGGLE_IMGBUTTON: Спецификация на ресурсное описание окна. Описание ключей SPC_IC_IMGBUTTON:
 
     - B{name = 'default'}: Имя окна.
     - B{type = 'ImageButton'}: Тип объекта.
@@ -32,8 +32,8 @@
     - B{mouseContextDown=None}: Выражение, выполняемое после нажатия правой кнопки мыши.
     - B{shortHelpString=''}: Текст всплывающей подсказки.
 
-@type ICToggleImageButtonStyle: C{dictionary}
-@var ICToggleImageButtonStyle: Словарь специальных стилей компонента. Описание ключей:
+:type ICToggleImageButtonStyle: C{dictionary}
+:var ICToggleImageButtonStyle: Словарь специальных стилей компонента. Описание ключей:
 
     - C{wx.BU_LEFT}: Выравнивает текст подписи по левому краю кнопки (Win32).
     - C{wx.BU_TOP}: Выравнивает текст подписи по верхней границе кнопки (Win32).
@@ -107,16 +107,16 @@ class icToggleImageButton(icWidget, buttons.ThemedGenBitmapTextToggleButton):
         """
         Конструктор для создания icImageButton
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_TOGGLE_IMGBUTTON, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)

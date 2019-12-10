@@ -23,10 +23,10 @@ __version__ = (0, 1, 1, 1)
 def setProjectSettingsToEnvironment(ProjectName_=None, ReDefine_=False):
     """
     Добавить все переменные из *.ini файла в окружение системы.
-    @param ProjectName_: Имя проекта. Если None, то берется
+    :param ProjectName_: Имя проекта. Если None, то берется
     текущий проект.
-    @param ReDefine_: Переопределять переменные в окружении?
-    @return: True/False.
+    :param ReDefine_: Переопределять переменные в окружении?
+    :return: True/False.
     """
     prj_settings = None
     if glob_functions.getSettings() is None:
@@ -67,7 +67,7 @@ class icSettingsDotUsePrototype(object):
     def __init__(self, DefaultSettingsList_=None):
         """
         Консруктор.
-        @param DefaultSettingsList_: Передающийся по точке список указания 
+        :param DefaultSettingsList_: Передающийся по точке список указания 
         параметра настройки. Список состоит из 3-х элементов:
         где,
         0 - имя проекта.
@@ -101,7 +101,7 @@ class icSettingsDotUsePrototype(object):
     def set(self, value):
         """
         Функция сохранения значения.
-        @param value: Сохраняемое значение.
+        :param value: Сохраняемое значение.
         """
         return None
 
@@ -171,7 +171,7 @@ class icPrjDotUse(icSettingsDotUsePrototype):
     def set(self, value):
         """
         Функция сохранения значения.
-        @param value: Сохраняемое значение.
+        :param value: Сохраняемое значение.
         """
         if isinstance(value, dict):
             ini_file_name = self._get_ini_file_name()
@@ -226,7 +226,7 @@ class icSectionDotUse(icSettingsDotUsePrototype):
     def set(self, value):
         """
         Функция сохранения значения.
-        @param value: Сохраняемое значение.
+        :param value: Сохраняемое значение.
         """
         if isinstance(value, dict):
             ini_file_name = self._get_ini_file_name()
@@ -261,7 +261,7 @@ class icParamDotUse(icSettingsDotUsePrototype):
     def set(self, value):
         """
         Функция сохранения значения.
-        @param value: Сохраняемое значение.
+        :param value: Сохраняемое значение.
         """
         ini_file_name = self._get_ini_file_name()
         return inifunc.saveParamINI(ini_file_name, self._cur_settings_list[1], self._cur_settings_list[2], value)

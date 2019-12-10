@@ -339,8 +339,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
     def _viewDoc(self, document):
         """
         Просмотр документа.
-        @param document: Объект документа.
-        @return:
+        :param document: Объект документа.
+        :return:
         """
         doc_filename = document.getRequisiteValue('file_name')
         if doc_filename and os.path.exists(doc_filename):
@@ -381,7 +381,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
     def _show_quick_entry_dlg(self, item_idx):
         """
         Отобразить окно быстрого ввода.
-        @param item_idx: Индекс выбранного элемента.
+        :param item_idx: Индекс выбранного элемента.
         """
         dataset = self.doc_navigator.getDocDataset()
         # Получить текущую запись
@@ -425,11 +425,11 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
                                   n_scan_pages=1, is_duplex=False):
         """
         Установить количество сканированных страниц и признак дуплекса в документе.
-        @param item_idx: Индекс текущего элемента списка, соответствующего документу.
-        @param doc: Объект документа.
-        @param doc_uuid: UUID документа.
-        @param n_scan_pages: Количество сканируемых страниц.
-        @param is_duplex: Признак дуплекса.
+        :param item_idx: Индекс текущего элемента списка, соответствующего документу.
+        :param doc: Объект документа.
+        :param doc_uuid: UUID документа.
+        :param n_scan_pages: Количество сканируемых страниц.
+        :param is_duplex: Признак дуплекса.
         """
         if doc is None:
             doc = self.doc_navigator.getSlaveDocument()
@@ -452,8 +452,8 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
     def refreshDocList(self, bAutoUpdate=False, filter_date=None):
         """
         Обновление списка документов.
-        @param bAutoUpdate: Произвести обновление датасета из БД?
-        @param filter_date: Указание даты для дополнительного фильтра.
+        :param bAutoUpdate: Произвести обновление датасета из БД?
+        :param filter_date: Указание даты для дополнительного фильтра.
             Если не определено, то берется из контролов.
         """
         log.info(u'Обновление списка документов...')
@@ -499,7 +499,7 @@ class icPackScanDocPanel(pack_scan_doc_panel_proto.icPackScanDocPanelProto,
 
 def show_pack_scan_doc_panel(title=u''):
     """
-    @param title: Заголовок страницы нотебука главного окна.
+    :param title: Заголовок страницы нотебука главного окна.
     """
     try:
         main_win = ic.getMainWin()
@@ -514,7 +514,7 @@ def show_pack_scan_doc_panel(title=u''):
 def open_pack_scan_doc_page(main_win=None, title=u'Пакетная обработка документов'):
     """
     Открыть страницу пакетной обработки и сканирования документов.
-    @param main_win: Главное окно приложения.
+    :param main_win: Главное окно приложения.
     """
     try:
         if main_win is None:

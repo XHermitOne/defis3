@@ -38,7 +38,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def __init__(self, Resource_):
         """
         Конструктор.
-        @param Resource_: Ресурс описания дерева метакомпонентов.
+        :param Resource_: Ресурс описания дерева метакомпонентов.
         """
         metaitem.icMetaItemEngine.__init__(self, None, Resource_)
         # Определить хранилище данных
@@ -57,7 +57,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def setStorage(self, ObjectStorage_):
         """
         Установка хранилища данных.
-        @param ObjectStorage_: Объект хранилища данных.
+        :param ObjectStorage_: Объект хранилища данных.
             Может передаваться по имени, в виде паспорта и в виде готового объекта.
         """
         if isinstance(ObjectStorage_, str):
@@ -117,7 +117,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def getContainerMetaItem(self, MetaComponentName_):
         """
         Взять метакомпонент, который может быть узлом дерева по имени.
-        @param MetaComponentName_: Имя мета компонента-типа.
+        :param MetaComponentName_: Имя мета компонента-типа.
         """
         if self.name == MetaComponentName_:
             return self
@@ -131,7 +131,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def Save(self, MetaObject_=None):
         """
         Сохранить данные метакомпонента.
-        @param MetaObject_: Сохраняемый метакомпонент.
+        :param MetaObject_: Сохраняемый метакомпонент.
             Если None, то значит надо сохранить себя.
         """
         if MetaObject_ is None:
@@ -148,7 +148,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def Load(self, MetaObject_=None):
         """
         Загрузить данные компонента.
-        @param MetaObject_: Загружаемый метакомпонент.
+        :param MetaObject_: Загружаемый метакомпонент.
             Если None, то значит надо загрузить себя.
         """
         if MetaObject_ is None:
@@ -159,9 +159,9 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def setPath(self, Path_, CurStoreLevel_, **MetaObjects_):
         """
         Установить данные метаобъектов по указанной ветке/пути в хранилище.
-        @param Path_: Список имен метаобъектов/ветки.
-        @param CurStoreLevel_: Текущий уровень хранилища. Если None, то корень.
-        @param MetaObjects_: Сохраняемые метаобъекты.
+        :param Path_: Список имен метаобъектов/ветки.
+        :param CurStoreLevel_: Текущий уровень хранилища. Если None, то корень.
+        :param MetaObjects_: Сохраняемые метаобъекты.
         """
         if CurStoreLevel_ is None:
             CurStoreLevel_ = self.getStorage()
@@ -184,8 +184,8 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def LoadPath(self, Path_, MetaObject_, CurStoreLevel_=None):
         """
         Загрузить данные метаобъекта по указанной ветке/пути.
-        @param Path_: Список имен метаобъектов/ветки.
-        @param MetaObject_: Сохраняемый метаобъект
+        :param Path_: Список имен метаобъектов/ветки.
+        :param MetaObject_: Сохраняемый метаобъект
         """
         if CurStoreLevel_ is None:
             CurStoreLevel_ = self.getStorage()
@@ -201,7 +201,7 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def getStoreNodeLevel(self, Path_=None, CurStoreLevel_=None):
         """
         Получить узел хранилища по пути.
-        @param Path_: Путь.
+        :param Path_: Путь.
         """
         if Path_ is None:
             Path_ = self.getPath()
@@ -223,8 +223,8 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def isStoreNodeLevel(self, Path_=None, CurStoreLevel_=None):
         """
         Проверить существует ли узел хранилища с таким путем.
-        @param Path_: Путь.
-        @return: True/False.
+        :param Path_: Путь.
+        :return: True/False.
         """
         if Path_ is None:
             Path_ = self.getPath()
@@ -241,8 +241,8 @@ class icMetaTreeEngine(metaitem.icMetaItemEngine):
     def saveStoreNodeLevel(self, Path_=None, MetaObject_=None, CurStoreLevel_=None):
         """
         Сохранить узел хранилища по пути.
-        @param Path_: Путь.
-        @param MetaObject_: Сохраняемый метаобъект.
+        :param Path_: Путь.
+        :param MetaObject_: Сохраняемый метаобъект.
         """
         if MetaObject_ is None:
             MetaObject_ = self

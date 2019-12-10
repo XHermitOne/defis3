@@ -19,11 +19,11 @@ class icHistoryProto(object):
     def get(self, start_dt, stop_dt):
         """
         Получить исторические данные указанного диапазона.
-        @type start_dt: datetime.datetime.
-        @param start_dt: Начальное дата-время диапазона кеширования.
-        @type stop_dt: datetime.datetime.
-        @param stop_dt: Конечная дата-время диапазона кеширования.
-        @return: Список записей широкого формата указанного диапазона.
+        :type start_dt: datetime.datetime.
+        :param start_dt: Начальное дата-время диапазона кеширования.
+        :type stop_dt: datetime.datetime.
+        :param stop_dt: Конечная дата-время диапазона кеширования.
+        :return: Список записей широкого формата указанного диапазона.
             Или None в случае ошибки.
         """
         return None
@@ -31,12 +31,12 @@ class icHistoryProto(object):
     def get_tag_data(self, tag_name, start_dt, stop_dt):
         """
         Получить исторические данные указанного диапазона по определенному тегу.
-        @param tag_name: Имя тега.
-        @type start_dt: datetime.datetime.
-        @param start_dt: Начальное дата-время диапазона кеширования.
-        @type stop_dt: datetime.datetime.
-        @param stop_dt: Конечная дата-время диапазона кеширования.
-        @return: Список записей {'dt': дата-время из указанного диапазона,
+        :param tag_name: Имя тега.
+        :type start_dt: datetime.datetime.
+        :param start_dt: Начальное дата-время диапазона кеширования.
+        :type stop_dt: datetime.datetime.
+        :param stop_dt: Конечная дата-время диапазона кеширования.
+        :return: Список записей {'dt': дата-время из указанного диапазона,
                                  'data': значение тега}.
             Или None в случае ошибки.
         """

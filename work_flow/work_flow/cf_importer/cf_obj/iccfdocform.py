@@ -91,8 +91,8 @@ class icCFDocForm(iccfobject.icCFObject):
     def addInFormModule(self, txt):
         """
         Добавить в модуль формы текст.
-        @param txt: Добавляемый текст.
-        @return: True - добавление прошло успешно, False - добавления не произошло.
+        :param txt: Добавляемый текст.
+        :return: True - добавление прошло успешно, False - добавления не произошло.
         """
         res_filename_requisite = os.path.join(self.getCFDir(), self.uid+'.0')
         if os.path.exists(res_filename_requisite) and os.path.isfile(res_filename_requisite):
@@ -107,9 +107,9 @@ class icCFDocForm(iccfobject.icCFObject):
     def _addInFormModuleStd(self, mod_filename_requisite,txt):
         """
         Добавить в модуль формы текст. Обычная форма.
-        @param mod_filename_requisite: Имя файла модуля формы.
-        @param txt: Добавляемый текст.
-        @return: True - добавление прошло успешно, False - добавления не произошло.
+        :param mod_filename_requisite: Имя файла модуля формы.
+        :param txt: Добавляемый текст.
+        :return: True - добавление прошло успешно, False - добавления не произошло.
         """
         prg_txt = util1c.encodeText(txt, 'unicode', 'utf-8')
         
@@ -140,9 +140,9 @@ class icCFDocForm(iccfobject.icCFObject):
     def _addInFormModuleCtrl(self, res_filename_requisite, txt):
         """
         Добавить в модуль формы текст. Управляемая форма.
-        @param res_filename_requisite: Имя файла ресурса формы.
-        @param txt: Добавляемый текст.
-        @return: True - добавление прошло успешно, False - добавления не произошло.
+        :param res_filename_requisite: Имя файла ресурса формы.
+        :param txt: Добавляемый текст.
+        :return: True - добавление прошло успешно, False - добавления не произошло.
         """
         res = iccfresource.icCFResource(res_filename_requisite)
         res.loadData()
@@ -157,25 +157,25 @@ class icCFDocForm(iccfobject.icCFObject):
     def delInFormModule(self, txt):
         """
         Удалить из модуля формы текст.
-        @param txt: Удаляемый текст.
-        @return: True - удаление прошло успешно, False - удаления не произошло.
+        :param txt: Удаляемый текст.
+        :return: True - удаление прошло успешно, False - удаления не произошло.
         """
         pass
     
     def replaceInFormModule(self, srctxt, dsttxt):
         """
         Заменить текст в модуле формы.
-        @param srctxt: Заменяемый текст.
-        @param dsttxt: Заменяющий текст.
-        @return: True - замена прошла успешно, False - замена не произошла.
+        :param srctxt: Заменяемый текст.
+        :param dsttxt: Заменяющий текст.
+        :return: True - замена прошла успешно, False - замена не произошла.
         """
         pass
     
     def updateInFormModule(self, txt, *args, **kwargs):
         """
         Заменить текст всех процедур и функций.
-        @param txt: Заменяемый текст.
-        @return: True - замена прошла успешно, False - замена не произошла.
+        :param txt: Заменяемый текст.
+        :return: True - замена прошла успешно, False - замена не произошла.
         """
         res_filename_requisite = os.path.join(self.getCFDir(), self.uid+'.0')
         if os.path.exists(res_filename_requisite) and os.path.isfile(res_filename_requisite):
@@ -190,7 +190,7 @@ class icCFDocForm(iccfobject.icCFObject):
     def _splitModuleProcBlock(self, txt):
         """
         Разбить текст модуля на блоки процедур и функций.
-        @param txt: Текст модуля.
+        :param txt: Текст модуля.
         """
         txt_lines = txt.split('\n')
         
@@ -227,9 +227,9 @@ class icCFDocForm(iccfobject.icCFObject):
     def _appendInModuleBlocks(self, module_blocks, prg_block):
         """
         Добавить блок процедуры/функции в блоки модуля.
-        @param module_blocks:Список блоков модуля.
-        @param prg_block: Добавляемый блок.
-        @return: Обновленный module_blocks
+        :param module_blocks:Список блоков модуля.
+        :param prg_block: Добавляемый блок.
+        :return: Обновленный module_blocks
         """
         max_i = 0
         for i, block in enumerate(module_blocks):
@@ -241,9 +241,9 @@ class icCFDocForm(iccfobject.icCFObject):
     def _updateInFormModuleStd(self, mod_filename_requisite, txt, *args, **kwargs):
         """
         Заменить текст всех процедур и функций.
-        @param mod_filename_requisite: Имя файла модуля формы.
-        @param txt: Заменяемый текст.
-        @return: True - замена прошла успешно, False - замена не произошла.
+        :param mod_filename_requisite: Имя файла модуля формы.
+        :param txt: Заменяемый текст.
+        :return: True - замена прошла успешно, False - замена не произошла.
         """
         txt = util1c.encodeText(txt, 'unicode', 'utf-8')
         
@@ -294,8 +294,8 @@ class icCFDocForm(iccfobject.icCFObject):
     def addFormRequisite(self, name_requisite, type_requisite, *args, **kwargs):
         """
         Добавить реквизит формы. Обычная форма.
-        @param name_requisite: Имя реквизита формы.
-        @param type_requisite: Тип реквизита формы.
+        :param name_requisite: Имя реквизита формы.
+        :param type_requisite: Тип реквизита формы.
         """
         res_filename_requisite = os.path.join(self.getCFDir(), self.uid+'.0')
         if os.path.exists(res_filename_requisite) and os.path.isfile(res_filename_requisite):
@@ -310,9 +310,9 @@ class icCFDocForm(iccfobject.icCFObject):
     def _addFormRequisiteStd(self, res_filename_requisite, name_requisite, type_requisite, *args, **kwargs):
         """
         Добавить реквизит формы. Обычная форма.
-        @param res_filename_requisite: Имя файла ресурса формы.
-        @param name_requisite: Имя реквизита формы.
-        @param type_requisite: Тип реквизита формы.
+        :param res_filename_requisite: Имя файла ресурса формы.
+        :param name_requisite: Имя реквизита формы.
+        :param type_requisite: Тип реквизита формы.
         """
         res = iccfresource.icCFResource(res_filename_requisite)
         res.loadData()
@@ -336,9 +336,9 @@ class icCFDocForm(iccfobject.icCFObject):
     def _addFormRequisiteCtrl(self, res_filename_requisite, name_requisite, type_requisite, *args, **kwargs):
         """
         Добавить реквизит формы. Управляемая форма.
-        @param res_filename_requisite: Имя файла ресурса формы.
-        @param name_requisite: Имя реквизита формы.
-        @param type_requisite: Тип реквизита формы.
+        :param res_filename_requisite: Имя файла ресурса формы.
+        :param name_requisite: Имя реквизита формы.
+        :param type_requisite: Тип реквизита формы.
         """
         res = iccfresource.icCFResource(res_filename_requisite)
         res.loadData()
@@ -362,7 +362,7 @@ class icCFDocForm(iccfobject.icCFObject):
     def delFormRequisite(self, name_requisite):
         """
         Удалить реквизит формы по имени.
-        @param name_requisite: Имя реквизита формы.
+        :param name_requisite: Имя реквизита формы.
         """
         pass
 
@@ -378,9 +378,9 @@ class icCFDocForm(iccfobject.icCFObject):
     def addFormObjEvent(self, name_requisite, value, *args, **kwargs):
         """
         Добавить событие в объект формы.
-        @param name_requisite: Имя объекта формы и события в формате
+        :param name_requisite: Имя объекта формы и события в формате
             <Имя объекта>.<Имя события>
-        @param value: Значение которое необходимо прописать в событии.
+        :param value: Значение которое необходимо прописать в событии.
         """
         res_filename_requisite = os.path.join(self.getCFDir(), self.uid+'.0')
         if os.path.exists(res_filename_requisite) and os.path.isfile(res_filename_requisite):
@@ -395,10 +395,10 @@ class icCFDocForm(iccfobject.icCFObject):
     def _addFormObjEventCtrl(self, res_filename_requisite, name_requisite, value):
         """
         Добавить событие в объект формы. Управляемая форма.
-        @param res_filename_requisite: Имя файла ресурса формы.
-        @param name_requisite: Имя объекта формы и события в формате
+        :param res_filename_requisite: Имя файла ресурса формы.
+        :param name_requisite: Имя объекта формы и события в формате
         <Имя объекта>.<Имя события>
-        @param value: Значение которое необходимо прописать в событии.
+        :param value: Значение которое необходимо прописать в событии.
         """
         res = iccfresource.icCFResource(res_filename_requisite)
         res.loadData()
@@ -451,10 +451,10 @@ class icCFDocForm(iccfobject.icCFObject):
     def _addFormObjEventStd(self, res_filename_requisite, name_requisite, value):
         """
         Добавить событие в объект формы. Обычная форма.
-        @param res_filename_requisite: Имя файла ресурса формы.
-        @param name_requisite: Имя объекта формы и события в формате
+        :param res_filename_requisite: Имя файла ресурса формы.
+        :param name_requisite: Имя объекта формы и события в формате
         <Имя объекта>.<Имя события>
-        @param value: Значение которое необходимо прописать в событии.
+        :param value: Значение которое необходимо прописать в событии.
         """
         res = iccfresource.icCFResource(res_filename_requisite)
         res.loadData()
@@ -500,7 +500,7 @@ class icCFDocForm(iccfobject.icCFObject):
     def delFormObjEvent(self, name_requisite):
         """
         Удалить событие из объекта формы.
-        @param name_requisite: Имя объекта формы и события в формате
+        :param name_requisite: Имя объекта формы и события в формате
         <Имя объекта>.<Имя события>
         """
         pass

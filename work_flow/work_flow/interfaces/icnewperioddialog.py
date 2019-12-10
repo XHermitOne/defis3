@@ -24,8 +24,8 @@ def icNewPeriodDlg(ParentWin_=None,OBJ_=None):
     """
     Функция вызова диалогового окна создания нового 
     периода истории изменения состояния объекта.
-    @param ParentWin_: Родительское окно диалогового окна.
-    @param OBJ_: Редактируемый объект предметной области.
+    :param ParentWin_: Родительское окно диалогового окна.
+    :param OBJ_: Редактируемый объект предметной области.
     """
     try:
         dlg_interface=icNewPeriodDialog(ParentWin_,OBJ_)
@@ -40,8 +40,8 @@ class icNewPeriodDialog(icobjectinterface.icObjectInterface):
     def __init__(self, parent=None,OBJ=None):
         """
         Constructor.
-        @param parent: Рродительское окно.
-        @param OBJ: Объект редактирования.
+        :param parent: Рродительское окно.
+        :param OBJ: Объект редактирования.
         """
         #
         try:
@@ -89,7 +89,7 @@ class icNewPeriodDialog(icobjectinterface.icObjectInterface):
     def _validEditResult(self,Result_):
         """
         Проверка/контроль на правильность заполнения результатов редактирования.
-        @return: True-все ок, False-данные не корректны, None - ошибка.
+        :return: True-все ок, False-данные не корректны, None - ошибка.
         """
         try:
             if not Result_['subj_cod']:

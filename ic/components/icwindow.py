@@ -5,8 +5,8 @@
 Обкладка для класса wxWindow. Генерирут объект по ресурсному описанию.
 Содержит описание класса icWindow, который по ресурсному описанию создает простейшее окно.
 
-@type SPC_IC_WINDOW: C{dictionary}
-@var SPC_IC_WINDOW: Спецификация на ресурсное описание окна. Описание ключей SPC_IC_WINDOW:
+:type SPC_IC_WINDOW: C{dictionary}
+:var SPC_IC_WINDOW: Спецификация на ресурсное описание окна. Описание ключей SPC_IC_WINDOW:
 
     - B{name = 'default'}: Имя окна.
     - B{type = 'Window'}: Тип объекта.
@@ -20,8 +20,8 @@
         который распологается на окне.
     - B{child=[]}:Cписок дочерних элементов.
         
-@type ICWindowStyle: C{List}
-@var ICWindowStyle: Словарь всех стилей окна.
+:type ICWindowStyle: C{List}
+:var ICWindowStyle: Словарь всех стилей окна.
 """
 
 import wx
@@ -128,16 +128,16 @@ class icWindow(icWidget, wx.Window):
         """
         Конструктор для создания icWindow
 
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         #   Атрибуты сайзера
         self.sizer = None

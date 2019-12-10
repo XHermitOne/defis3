@@ -33,12 +33,12 @@ __version__ = (0, 1, 2, 1)
 def defineSpcStruct(spc, struct):
     """
     Дополняет структуру описания объекта до требований спецификации.
-    @type spc: C{dictionary}.
-    @param spc: Словарь описания спецификации.
-    @type struct: C{dictionary}.
-    @param struct: Словарь описания структуры.
-    @rtype: C{dictionary}.
-    @return: Дополненная структура.
+    :type spc: C{dictionary}.
+    :param spc: Словарь описания спецификации.
+    :type struct: C{dictionary}.
+    :param struct: Словарь описания структуры.
+    :rtype: C{dictionary}.
+    :return: Дополненная структура.
     """
     try:
         def_struct = util.icSpcDefStruct(spc, struct)
@@ -60,8 +60,8 @@ def defineSpcStruct(spc, struct):
 def getAttrValue(attr_name, spc):
     """
     Получить нормированное значение свойства из спецификации.
-    @param attr_name: Имя атрибута.
-    @param spc: Спецификация.
+    :param attr_name: Имя атрибута.
+    :param spc: Спецификация.
     """
     try:
         # Нормализация по типам
@@ -98,8 +98,8 @@ PADDING = '    '
 def StructToTxt(struct, level=0):
     """
     Перевод словарно-списковой структуры в форматированный текст.
-    @param struct : словарно-списковая структура.
-    @param level: уровень вложенности (д.б. 0).
+    :param struct : словарно-списковая структура.
+    :param level: уровень вложенности (д.б. 0).
     """
     txt = ''
     try:
@@ -147,8 +147,8 @@ def StructToTxt(struct, level=0):
 def delKeyInDictTree(struct, key):
     """
     Функция удаляет из словаря рекурсивно все указанные ключи.
-    @param struct: Непосредственно словарь или список.
-    @param key: Ключ, который необходимо удалить.
+    :param struct: Непосредственно словарь или список.
+    :param key: Ключ, который необходимо удалить.
     """
     # Если это у нас словарь, то ...
     if isinstance(struct, dict):
@@ -172,9 +172,9 @@ def delKeyInDictTree(struct, key):
 def setKeyInDictTree(struct, key, value):
     """
     Функция устанавливает значенеи ключа в словаре рекурсивно.
-    @param struct: Непосредственно словарь или список.
-    @param key: Ключ, который необходимо установить.
-    @param value: Значение ключа.
+    :param struct: Непосредственно словарь или список.
+    :param key: Ключ, который необходимо установить.
+    :param value: Значение ключа.
     """
     # Если это у нас словарь, то ...
     if isinstance(struct, dict):
@@ -202,14 +202,14 @@ def doEval(code_block, log_type=-1,
     использование стандартной, функции eval(...), а также обрабатывает исключения. 
     В качестве локального пространства имен используется словарь LocalSpace. 
     В качестве глобального пространства имен берется словарь GlobalSpace.
-    @type code_block: C{string}
-    @param code_block: Вычисляемое выражение.
-    @type log_type: C{int}
-    @param log_type: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-    @param local_namespace: Пространство имен, необходимых для вычисления выражения
-    @type local_namespace: C{dictionary}
-    @param global_namespace: Глобальное пространство имен.
-    @type global_namespace: C{dictionary}
+    :type code_block: C{string}
+    :param code_block: Вычисляемое выражение.
+    :type log_type: C{int}
+    :param log_type: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+    :param local_namespace: Пространство имен, необходимых для вычисления выражения
+    :type local_namespace: C{dictionary}
+    :param global_namespace: Глобальное пространство имен.
+    :type global_namespace: C{dictionary}
     """
     if local_namespace is None:
         local_namespace = {}
@@ -224,7 +224,7 @@ def doEval(code_block, log_type=-1,
 def setFilesToGlob(*args):
     """
     Поместить структуры, хранящиеся в файлах в глобальное пространство имен.
-    @param args: Имена файлов и имена структур в глобальном пространстве состояний
+    :param args: Имена файлов и имена структур в глобальном пространстве состояний
         передаются в формате:
             (ИмяСтруктуры1, ИмяФайла1), (ИмяСтруктуры2, ИмяФайла2),...
     """
@@ -244,10 +244,10 @@ def setFilesToGlob(*args):
 def recodeText(text, old_codepage, new_codepage):
     """
     Перекодировать из одной кодировки в другую.
-    @param text: Строка.
-    @param old_codepage: Кодовая страница строки.
-    @param new_codepage: Новая кодовая страница строки.
-    @return: Перекодированная строка.
+    :param text: Строка.
+    :param old_codepage: Кодовая страница строки.
+    :param new_codepage: Новая кодовая страница строки.
+    :return: Перекодированная строка.
     """
     if new_codepage.upper() == 'UNICODE':
         # Кодировка в юникоде.
@@ -271,10 +271,10 @@ def toOctHexString(text, to_code):
     """
     Закодировать строку в восьмеричном/шестнадцатеричном виде.
     Символы с кодом < 128 не кодируются.
-    @param text:
-    @param to_code: Кодировка 'OCT'-восьмеричное представление.
+    :param text:
+    :param to_code: Кодировка 'OCT'-восьмеричное представление.
                             'HEX'-шестнадцатеричное представление.
-    @return: Возвращает закодированную строку.
+    :return: Возвращает закодированную строку.
     """
     try:
         if to_code.upper() == 'OCT':
@@ -304,10 +304,10 @@ def recodeListStr(list_data, old_codepage, new_codepage):
     """
     Перекодировать все строки в списке рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param list_data: Сам список.
-    @param old_codepage: Кодовая страница строки.
-    @param new_codepage: Новая кодовая страница строки.
-    @return: Возвращает преобразованный список.
+    :param list_data: Сам список.
+    :param old_codepage: Кодовая страница строки.
+    :param new_codepage: Новая кодовая страница строки.
+    :return: Возвращает преобразованный список.
     """
     lst = []
     # Перебор всех элементов списка
@@ -333,10 +333,10 @@ def recodeDictStr(dict_data, old_codepage, new_codepage):
     """
     Перекодировать все строки в словаре рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param dict_data: Сам словарь.
-    @param old_codepage: Кодовая страница строки.
-    @param new_codepage: Новая кодовая страница строки.
-    @return: Возвращает преобразованный словарь.
+    :param dict_data: Сам словарь.
+    :param old_codepage: Кодовая страница строки.
+    :param new_codepage: Новая кодовая страница строки.
+    :return: Возвращает преобразованный словарь.
     """
     keys_ = dict_data.keys()
     # Перебор всех ключей словаря
@@ -368,10 +368,10 @@ def recodeTupleStr(Tuple_, StringCP_, NewCP_):
     """
     Перекодировать все строки в кортеже рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
-    @param Tuple_: Сам кортеж.
-    @param StringCP_: Кодовая страница строки.
-    @param NewCP_: Новая кодовая страница строки.
-    @return: Возвращает преобразованный кортеж.
+    :param Tuple_: Сам кортеж.
+    :param StringCP_: Кодовая страница строки.
+    :param NewCP_: Новая кодовая страница строки.
+    :return: Возвращает преобразованный кортеж.
     """
     # Перевести кортеж в список
     lst = list(Tuple_)
@@ -384,10 +384,10 @@ def recodeTupleStr(Tuple_, StringCP_, NewCP_):
 def recodeStructStr(struct, old_codepage, new_codepage):
     """
     Перекодировать все строки в структуре рекурсивно в другую кодировку.
-    @param struct: Сруктура (список, словарь, кортеж).
-    @param old_codepage: Кодовая страница строки.
-    @param new_codepage: Новая кодовая страница строки.
-    @return: Возвращает преобразованную структру.
+    :param struct: Сруктура (список, словарь, кортеж).
+    :param old_codepage: Кодовая страница строки.
+    :param new_codepage: Новая кодовая страница строки.
+    :return: Возвращает преобразованную структру.
     """
     if isinstance(struct, list):
         # Список
@@ -410,8 +410,8 @@ def recodeStructStr(struct, old_codepage, new_codepage):
 def getRegValue(reg_key, reg_value=None):
     """
     Взять информацию из реестра относительно данного проекта.
-    @param reg_key: Ключ реестра.
-    @param reg_value: Имя значения из реестра.
+    :param reg_key: Ключ реестра.
+    :param reg_value: Имя значения из реестра.
     """
     hkey = None
     try:
@@ -431,9 +431,9 @@ def getRegValue(reg_key, reg_value=None):
 def findChildResByName(children_res, child_name):
     """
     Поиск ресурсного описания дочернего объекта по имени.
-    @param children_res: Список ресурсов-описаний дечерних объектов.
-    @return child_name: Имя искомого дочернего объекта.
-    @return: Индекс ресурсного описания в списке, если 
+    :param children_res: Список ресурсов-описаний дечерних объектов.
+    :return child_name: Имя искомого дочернего объекта.
+    :return: Индекс ресурсного описания в списке, если 
         описания с таким именем не найдено, то возвращается -1.
     """
     try:
@@ -445,9 +445,9 @@ def findChildResByName(children_res, child_name):
 def getFuncListInModule(module_obj=None):
     """
     Получить список имен функций в модуле.
-    @param module_obj: Объект модуля.
+    :param module_obj: Объект модуля.
         Для использования модуль д.б. импортирован.
-    @return: Возвращает список кортежей:
+    :return: Возвращает список кортежей:
         [(имя функции, описание функции, объект функции),...]
     """
     if module_obj:
@@ -458,7 +458,7 @@ def getFuncListInModule(module_obj=None):
 def isOSWindowsPlatform():
     """
     Функция определения ОС.
-    @return: True-если ОС-Windows и False во всех остальных случаях.
+    :return: True-если ОС-Windows и False во всех остальных случаях.
     """
     return bool(sys.platform[:3].lower() == 'win')
 
@@ -490,8 +490,8 @@ def encode_unicode_struct(struct, code_page='utf-8'):
 def get_check_summ(value):
     """
     Посчитать контрольную сумму переменной.
-    @param value: Переменная, которая м.б. представлена в виде строки.
-    @return: Возвращает md5 контрольную сумму или None в случае ошибки.
+    :param value: Переменная, которая м.б. представлена в виде строки.
+    :return: Возвращает md5 контрольную сумму или None в случае ошибки.
     """
     check_summ = None
     try:
@@ -505,8 +505,8 @@ def get_check_summ(value):
 def is_pasport(passport):
     """
     Проверка является ли структура паспортом.
-    @param passport: Проверяемая структура.
-    @return: True/False.
+    :param passport: Проверяемая структура.
+    :return: True/False.
     """
     if (isinstance(passport, tuple) or isinstance(passport, list)) and len(passport):
         return len(passport[0]) == 5
@@ -519,8 +519,8 @@ def is_pasport(passport):
 def get_tree_lst_length(tree_data):
     """
     Подсчет всех элементов дерева.
-    @param tree_data: Данные дерева. Дерево представлено как список списков.
-    @return: Количество элементов дерева.
+    :param tree_data: Данные дерева. Дерево представлено как список списков.
+    :return: Количество элементов дерева.
     """
     result = 0
     for tree_element in tree_data:
@@ -536,9 +536,9 @@ def get_tree_length(tree_data, children_key='children'):
     """
     Подсчет всех элементов дерева. Элементы дерева - словари.
     Дочерние элементы находятся по ключу <children_key>.
-    @param tree_data: Данные дерева. Дерево представлено как список списков.
-    @param children_key: Ключ дочерних элементов.
-    @return: Количество элементов дерева.
+    :param tree_data: Данные дерева. Дерево представлено как список списков.
+    :param children_key: Ключ дочерних элементов.
+    :return: Количество элементов дерева.
     """
     result = 0
     for tree_element in tree_data:

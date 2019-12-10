@@ -64,8 +64,8 @@ class icAUIPanePrototype:
     def __init__(self, parent, component):
         """
         Конструктор.
-        @param: parent: Родительское окно.
-        @param component: Ресурс объекта.
+        :param: parent: Родительское окно.
+        :param component: Ресурс объекта.
         """
         self._Parent = parent
         
@@ -154,8 +154,8 @@ class icAUIPanePrototype:
     def createControl(self, name, res_filename, subsys=None):
         """
         Создание прикрепленного объекта.
-        @param name: Имя объекта.
-        @param res_filename: Имя файла ресурса объекта.
+        :param name: Имя объекта.
+        :param res_filename: Имя файла ресурса объекта.
         """
         control = None
         try:
@@ -178,8 +178,8 @@ class icAUIPanePrototype:
     def openControl(self, name, res_filename):
         """
         Отобразить/показать контрол и при необходимости создать.
-        @param name: Имя объекта.
-        @param res_filename: Имя файла ресурса объекта.
+        :param name: Имя объекта.
+        :param res_filename: Имя файла ресурса объекта.
         """
         if self.control and self.control.name != name:
             self.control = self.createControl(name, res_filename)

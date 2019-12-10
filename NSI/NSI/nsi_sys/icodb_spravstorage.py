@@ -21,10 +21,10 @@ class icSpravODBStorage(icodb_spravobject.icODBNsiInterface, icspravstorage.icSp
     def __init__(self, sprav, db_name, table_name):
         """
         Конструктор.
-        @param sprav: Объект справочника, к которому прикреплено
+        :param sprav: Объект справочника, к которому прикреплено
             хранилище справочников.
-        @param db_name: Имя источника.
-        @param table_name: Имя таблицы данных справочника.
+        :param db_name: Имя источника.
+        :param table_name: Имя таблицы данных справочника.
         """
         icodb_spravobject.icODBNsiInterface.__init__(self, None, sprav, db_name, table_name)
         icspravstorage.icSpravStorageInterface.__init__(self, sprav, db_name, table_name)
@@ -41,11 +41,11 @@ class icSpravODBStorage(icodb_spravobject.icODBNsiInterface, icspravstorage.icSp
     def getLevelTable(self, level_cod=None, dt=None):
         """
         Таблица данных уровня.
-        @param level_cod: Код, запрашиваемого уровня.
+        :param level_cod: Код, запрашиваемого уровня.
             Если None, то возвращаются данные самого верхнего уровня.
-        @type dt: C{string}
-        @param dt: Время актуальности данных.
-        @return: Список кортежей, соответствующий данным запрашиваемого уровня.
+        :type dt: C{string}
+        :param dt: Время актуальности данных.
+        :return: Список кортежей, соответствующий данным запрашиваемого уровня.
             Или None в случае ошибки.
         """
         lst = []
@@ -92,11 +92,11 @@ class icSpravODBStorage(icodb_spravobject.icODBNsiInterface, icspravstorage.icSp
     def setLevelTable(self, level_cod, table):
         """
         Сохранить таблицу данных уровня.
-        @param level_cod: Код, запрашиваемого уровня.
+        :param level_cod: Код, запрашиваемого уровня.
             Если None, то данные самого верхнего уровня.
-        @param table: Таблица данных уровня - список кортежей,
+        :param table: Таблица данных уровня - список кортежей,
             соответствующий данным запрашиваемого уровня.
-        @return: Возвращает результат выполнения операции True/False.
+        :return: Возвращает результат выполнения операции True/False.
         """
         if not self.metaSprav:
             return False

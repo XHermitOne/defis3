@@ -84,7 +84,7 @@ CONFIG = None
 def init(mConfig=None, sLogFileName=None):
     """
     Инициализация файла лога.
-    @param mConfig: Модуль конфигурации.
+    :param mConfig: Модуль конфигурации.
     """
     global CONFIG
     CONFIG = mConfig
@@ -120,9 +120,9 @@ def init(mConfig=None, sLogFileName=None):
 def debug(sMsg=u'', bForcePrint=False, bForceLog=False):
     """
     Вывести ОТЛАДОЧНУЮ информацию.
-    @param sMsg: Текстовое сообщение.
-    @param bForcePrint: Принудительно вывести на экран.
-    @param bForceLog: Принудительно записать в журнале.
+    :param sMsg: Текстовое сообщение.
+    :param bForcePrint: Принудительно вывести на экран.
+    :param bForceLog: Принудительно записать в журнале.
     """
     global CONFIG
     
@@ -139,9 +139,9 @@ def debug(sMsg=u'', bForcePrint=False, bForceLog=False):
 def info(sMsg=u'', bForcePrint=False, bForceLog=False):
     """
     Вывести ТЕКСТОВУЮ информацию.
-    @param sMsg: Текстовое сообщение.
-    @param bForcePrint: Принудительно вывести на экран.
-    @param bForceLog: Принудительно записать в журнале.
+    :param sMsg: Текстовое сообщение.
+    :param bForcePrint: Принудительно вывести на экран.
+    :param bForceLog: Принудительно записать в журнале.
     """
     global CONFIG
     
@@ -158,9 +158,9 @@ def info(sMsg=u'', bForcePrint=False, bForceLog=False):
 def error(sMsg=u'', bForcePrint=False, bForceLog=False):
     """
     Вывести ОБЩУЮ информацию.
-    @param sMsg: Текстовое сообщение.
-    @param bForcePrint: Принудительно вывести на экран.
-    @param bForceLog: Принудительно записать в журнале.
+    :param sMsg: Текстовое сообщение.
+    :param bForcePrint: Принудительно вывести на экран.
+    :param bForceLog: Принудительно записать в журнале.
     """
     global CONFIG
     
@@ -177,9 +177,9 @@ def error(sMsg=u'', bForcePrint=False, bForceLog=False):
 def warning(sMsg=u'', bForcePrint=False, bForceLog=False):
     """
     Вывести информацию ОБ ПРЕДУПРЕЖДЕНИИ.
-    @param sMsg: Текстовое сообщение.
-    @param bForcePrint: Принудительно вывести на экран.
-    @param bForceLog: Принудительно записать в журнале.
+    :param sMsg: Текстовое сообщение.
+    :param bForcePrint: Принудительно вывести на экран.
+    :param bForceLog: Принудительно записать в журнале.
     """
     global CONFIG
     
@@ -196,9 +196,9 @@ def warning(sMsg=u'', bForcePrint=False, bForceLog=False):
 def fatal(sMsg=u'', bForcePrint=False, bForceLog=False):
     """
     Вывести информацию ОБ ОШИБКЕ.
-    @param sMsg: Текстовое сообщение.
-    @param bForcePrint: Принудительно вывести на экран.
-    @param bForceLog: Принудительно записать в журнале.
+    :param sMsg: Текстовое сообщение.
+    :param bForcePrint: Принудительно вывести на экран.
+    :param bForceLog: Принудительно записать в журнале.
     """
     global CONFIG
 

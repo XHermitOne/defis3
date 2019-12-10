@@ -21,7 +21,7 @@ _ = wx.GetTranslation
 class icBaseEdt:
     """
     Базовый класс внешних редакторов.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = -1
@@ -36,17 +36,17 @@ class icBaseEdt:
                size=wx.DefaultSize, style=0, *arg, **kwarg):
         """
         Функция запускает внешний редактор.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно (грид).
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @param value: Текущее значение.
-        @type pos: C{wx.Point}
-        @param pos: Расположение диалога на гриде.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалогового окна.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно (грид).
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :param value: Текущее значение.
+        :type pos: C{wx.Point}
+        :param pos: Расположение диалога на гриде.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалогового окна.
         """
         return coderror.IC_HLP_OK, value
 
@@ -54,7 +54,7 @@ class icBaseEdt:
     def Ctrl(value, *arg, **kwarg):
         """
         Функция контроля значения.
-        @param value: Контролируемое значение.
+        :param value: Контролируемое значение.
         """
         # Текст
         if isinstance(value, str):
@@ -66,10 +66,10 @@ class icBaseEdt:
     def Clear(dc, rect, bgr, *arg, **kwarg):
         """
         Чистим ячейку.
-        @type rect: C{wx.Rect}
-        @param rect: Координаты и размеры ячейки в гриде.
-        @type bgr: C{wx.Colour}
-        @param bgr: Цвет заливки.
+        :type rect: C{wx.Rect}
+        :param rect: Координаты и размеры ячейки в гриде.
+        :type bgr: C{wx.Colour}
+        :param bgr: Цвет заливки.
         """
         dc.SetBackgroundMode(wx.SOLID)
         dc.SetBrush(wx.Brush(bgr, wx.SOLID))
@@ -80,22 +80,22 @@ class icBaseEdt:
     def Draw(renderer, grid, cell_attr, dc, rect, row, col, isSelected, *arg, **kwarg):
         """
         Функция отрисовки значения данного типа в режиме просмотра в гриде.
-        @type renderer: C{PropValueRenderer}
-        @param renderer: Объект отрисовки ячейки грида.
-        @type grid: C{wx.Grid}
-        @param grid: Указатель на грид.
-        @type cell_attr: C{wx.GridCellAttr}
-        @param cell_attr: Атрибут текущей ячейки.
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
-        @type rect: C{wx.Rect}
-        @param rect: Координаты и размеры ячейки в гриде.
-        @type row: C{int}
-        @param row: Номер строки.
-        @type col: C{int}
-        @param col: Номер колонки.
-        @type isSelected: C{bool}
-        @param isSelected: Признак выбранной ячейки.
+        :type renderer: C{PropValueRenderer}
+        :param renderer: Объект отрисовки ячейки грида.
+        :type grid: C{wx.Grid}
+        :param grid: Указатель на грид.
+        :type cell_attr: C{wx.GridCellAttr}
+        :param cell_attr: Атрибут текущей ячейки.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
+        :type rect: C{wx.Rect}
+        :param rect: Координаты и размеры ячейки в гриде.
+        :type row: C{int}
+        :param row: Номер строки.
+        :type col: C{int}
+        :param col: Номер колонки.
+        :type isSelected: C{bool}
+        :param isSelected: Признак выбранной ячейки.
         """
         text = renderer.table.GetValue(row, col)
         bgr = renderer.backgroundColor
@@ -106,16 +106,16 @@ class icBaseEdt:
     def DrawText(renderer, grid, text, dc, rect, *arg, **kwarg):
         """
         Отрисовывает значение текстового атрибута.
-        @type renderer: C{PropValueRenderer}
-        @param renderer: Объект отрисовки ячейки грида.
-        @type grid: C{wx.Grid}
-        @param grid: Указатель на грид.
-        @type text: C{string}
-        @param text: Текст.
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
-        @type rect: C{wx.Rect}
-        @param rect: Координаты и размеры ячейки в гриде.
+        :type renderer: C{PropValueRenderer}
+        :param renderer: Объект отрисовки ячейки грида.
+        :type grid: C{wx.Grid}
+        :param grid: Указатель на грид.
+        :type text: C{string}
+        :param text: Текст.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
+        :type rect: C{wx.Rect}
+        :param rect: Координаты и размеры ячейки в гриде.
         """
         dc.SetBrush(renderer.normalBrush)
         dc.SetTextBackground(renderer.backgroundColor)
@@ -152,7 +152,7 @@ class icBaseEdt:
 class icTextEdt(icBaseEdt):
     """
     Редактор текстового значения.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 0
@@ -169,7 +169,7 @@ class icTextEdt(icBaseEdt):
 class icROTextEdt(icBaseEdt):
     """
     Текстовое значения, которое предназначено только для чтения.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 17
@@ -185,7 +185,7 @@ class icROTextEdt(icBaseEdt):
     def Ctrl(value, *arg, **kwarg):
         """
         Функция контроля значения.
-        @param value: Контролируемое значение.
+        :param value: Контролируемое значение.
         """
         return coderror.IC_CTRL_FAILED_IGNORE
 
@@ -193,7 +193,7 @@ class icROTextEdt(icBaseEdt):
 class icImageEdt(icBaseEdt):
     """
     Редактор образа.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 18
@@ -229,7 +229,7 @@ class icImageEdt(icBaseEdt):
     def Ctrl(value, *arg, **kwarg):
         """
         Функция контроля значения.
-        @param value: Контролируемое значение.
+        :param value: Контролируемое значение.
         """
         if isinstance(value, str):
             if os.path.exists(value):
@@ -240,7 +240,7 @@ class icImageEdt(icBaseEdt):
 class icFileEdt(icBaseEdt):
     """
     Редактор выбора файла.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 51
@@ -256,7 +256,7 @@ class icFileEdt(icBaseEdt):
     def Ctrl(value, *arg, **kwarg):
         """
         Функция контроля значения.
-        @param value: Контролируемое значение.
+        :param value: Контролируемое значение.
         """
         if isinstance(value, str):
             if os.path.isabs(value):
@@ -267,7 +267,7 @@ class icFileEdt(icBaseEdt):
 class icDirEdt(icBaseEdt):
     """
     Редактор выбора директории.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 52
@@ -283,7 +283,7 @@ class icDirEdt(icBaseEdt):
     def Ctrl(value, *arg, **kwarg):
         """
         Функция контроля значения.
-        @param value: Контролируемое значение.
+        :param value: Контролируемое значение.
         """
         if isinstance(value, str):
             if os.path.isabs(value):
@@ -294,7 +294,7 @@ class icDirEdt(icBaseEdt):
 class icPyScriptEdt(icBaseEdt):
     """
     Редактор Python скриптов.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 12
@@ -325,23 +325,23 @@ class icPyScriptEdt(icBaseEdt):
     def HlpDlg(parent, attr, value, pos=wx.DefaultPosition, size=wx.DefaultSize, style=0, *arg, **par):
         """
         Диалоговое окно для редактирования скриптов.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно (грид).
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение.
-        @type pos: C{wx.Point}
-        @param pos: Расположение диалога на гриде.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалогового окна.
-        @type par: C{dictionary}
-        @param par: Словарь дополнительных именованных параметров. <attr> - имя атрибута,
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно (грид).
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение.
+        :type pos: C{wx.Point}
+        :param pos: Расположение диалога на гриде.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалогового окна.
+        :type par: C{dictionary}
+        :param par: Словарь дополнительных именованных параметров. <attr> - имя атрибута,
             <uuid_attr> - старый UUID атрибута, <bEnable=True> - признак режима редактирования.
-        @rtype: C{tuplpe}
-        @return: Первый элемент признак редактирования, второй текст, третий новый uuid.
+        :rtype: C{tuplpe}
+        :return: Первый элемент признак редактирования, второй текст, третий новый uuid.
         """
         from ic.PropertyEditor import ic_pyed
         text = value
@@ -426,9 +426,9 @@ class ChoiceMenu(wx.Menu):
 class icChoiceEdt(icBaseEdt):
     """
     Редактор значения из списка.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
-    @type AttrListDict: C{dictionary}
+    :type AttrListDict: C{dictionary}
     @cvar AttrListDict: Словарь списков возможных значений для атрибутов данного типа.
     """
     ID_Editor = 1
@@ -444,10 +444,10 @@ class icChoiceEdt(icBaseEdt):
     def SetAttrListDict(attr, lst):
         """
         Устанавливает список возможных значений заданного атрибута.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
-        @type lst: C{list}
-        @param lst: Cписок возможных значений заданного атрибута.
+        :type attr: C{string}
+        :param attr: Имя атрибута.
+        :type lst: C{list}
+        :param lst: Cписок возможных значений заданного атрибута.
         """
         icChoiceEdt.AttrListDict[attr] = lst
 
@@ -455,8 +455,8 @@ class icChoiceEdt(icBaseEdt):
     def GetAttrListDict(attr):
         """
         Возвращает список возможных значений заданного атрибута.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
+        :type attr: C{string}
+        :param attr: Имя атрибута.
         """
         if attr in icChoiceEdt.AttrListDict:
             return icChoiceEdt.AttrListDict[attr]
@@ -475,20 +475,20 @@ class icChoiceEdt(icBaseEdt):
                   style=wx.CHOICEDLG_STYLE, *arg, **kwarg):
         """
         Диалоговое окно для выбора значения из списка.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение.
-        @type pos: C{wx.Point}
-        @param pos: Позиция окна.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
-        @rtype: C{string}
-        @return: Возвращает выбранное значение.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :rtype: C{string}
+        :return: Возвращает выбранное значение.
         """
         lst = icChoiceEdt.GetAttrListDict(attr)
         if not lst:
@@ -519,20 +519,20 @@ class icChoiceEdt(icBaseEdt):
                style=wx.CHOICEDLG_STYLE, *arg, **kwarg):
         """
         Диалоговое окно для выбора значения из списка.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение.
-        @type pos: C{wx.Point}
-        @param pos: Позиция окна.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
-        @rtype: C{string}
-        @return: Возвращает выбранное значение.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :rtype: C{string}
+        :return: Возвращает выбранное значение.
         """
         lst = icChoiceEdt.GetAttrListDict(attr)
         if not lst:
@@ -551,7 +551,7 @@ class icChoiceEdt(icBaseEdt):
     def Ctrl(value, *arg, **kwarg):
         """
         Функция контроля значения.
-        @param value: Контролируемое значение.
+        :param value: Контролируемое значение.
         """
         # Текст
         if isinstance(value, str):
@@ -563,7 +563,7 @@ class icChoiceEdt(icBaseEdt):
 class icTextListEdt(icBaseEdt):
     """
     Редактор списка в текстовом виде.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 20
@@ -601,23 +601,23 @@ class icTextListEdt(icBaseEdt):
                style=0, *arg, **par):
         """
         Диалоговое окно для редактирования списка в текстовом редакторе.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно (грид).
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение.
-        @type pos: C{wx.Point}
-        @param pos: Расположение диалога на гриде.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалогового окна.
-        @type par: C{dictionary}
-        @param par: Словарь дополнительных именованных параметров. <attr> - имя атрибута,
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно (грид).
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение.
+        :type pos: C{wx.Point}
+        :param pos: Расположение диалога на гриде.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалогового окна.
+        :type par: C{dictionary}
+        :param par: Словарь дополнительных именованных параметров. <attr> - имя атрибута,
             <uuid_attr> - старый UUID атрибута, <bEnable=True> - признак режима редактирования.
-        @rtype: C{tuplpe}
-        @return: Первый элемент признак редактирования, второй текст, третий новый uuid.
+        :rtype: C{tuplpe}
+        :return: Первый элемент признак редактирования, второй текст, третий новый uuid.
         """
         from ic.PropertyEditor import ic_pyed
         text = value
@@ -662,7 +662,7 @@ class icTextListEdt(icBaseEdt):
 class icTextDictEdt(icBaseEdt):
     """
     Редактор словаря в питоновском синтаксисе.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 30
@@ -687,23 +687,23 @@ class icTextDictEdt(icBaseEdt):
                style=0, *arg, **par):
         """
         Диалоговое окно для редактирования словаря в текстовом редакторе.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно (грид).
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение.
-        @type pos: C{wx.Point}
-        @param pos: Расположение диалога на гриде.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалогового окна.
-        @type par: C{dictionary}
-        @param par: Словарь дополнительных именованных параметров. <attr> - имя атрибута,
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно (грид).
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение.
+        :type pos: C{wx.Point}
+        :param pos: Расположение диалога на гриде.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалогового окна.
+        :type par: C{dictionary}
+        :param par: Словарь дополнительных именованных параметров. <attr> - имя атрибута,
             <uuid_attr> - старый UUID атрибута, <bEnable=True> - признак режима редактирования.
-        @rtype: C{tuplpe}
-        @return: Первый элемент признак редактирования, второй текст, третий новый uuid.
+        :rtype: C{tuplpe}
+        :return: Первый элемент признак редактирования, второй текст, третий новый uuid.
         """
         from ic.PropertyEditor import ic_pyed
         text = value
@@ -749,7 +749,7 @@ class icTextDictEdt(icBaseEdt):
 class icDictEdt(icBaseEdt):
     """
     Редактор словаря.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 35
@@ -773,7 +773,7 @@ class icDictEdt(icBaseEdt):
 class icFontEdt(icBaseEdt):
     """
     Редактор шрифта.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 9
@@ -798,18 +798,18 @@ class icFontEdt(icBaseEdt):
                style=0, *arg, **kwarg):
         """
         Диалоговое окно для определения шрифта.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение шрифта в виде словаря.
-        @type pos: C{wx.Point}
-        @param pos: Позиция диалога.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение шрифта в виде словаря.
+        :type pos: C{wx.Point}
+        :param pos: Позиция диалога.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
         """
         from ic.components import icfont
         data = wx.FontData()
@@ -839,7 +839,7 @@ class icFontEdt(icBaseEdt):
 class icNumberEdt(icBaseEdt):
     """
     Редактор числовых значений.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 40
@@ -876,7 +876,7 @@ class icNumberEdt(icBaseEdt):
 class icCheckBoxEdt(icBaseEdt):
     """
     Редактор логических значений.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 2
@@ -916,22 +916,22 @@ class icCheckBoxEdt(icBaseEdt):
     def Draw(renderer, grid, cell_attr, dc, rect, row, col, isSelected):
         """
         Функция отрисовки значения данного типа в режиме просмотра в гриде.
-        @type renderer: C{PropValueRenderer}
-        @param renderer: Объект отрисовки ячейки грида.
-        @type grid: C{wx.Grid}
-        @param grid: Указатель на грид.
-        @type cell_attr: C{wx.GridCellAttr}
-        @param cell_attr: Атрибут текущей ячейки.
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
-        @type rect: C{wx.Rect}
-        @param rect: Координаты и размеры ячейки в гриде.
-        @type row: C{int}
-        @param row: Номер строки.
-        @type col: C{int}
-        @param col: Номер колонки.
-        @type isSelected: C{bool}
-        @param isSelected: Признак выбранной ячейки.
+        :type renderer: C{PropValueRenderer}
+        :param renderer: Объект отрисовки ячейки грида.
+        :type grid: C{wx.Grid}
+        :param grid: Указатель на грид.
+        :type cell_attr: C{wx.GridCellAttr}
+        :param cell_attr: Атрибут текущей ячейки.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
+        :type rect: C{wx.Rect}
+        :param rect: Координаты и размеры ячейки в гриде.
+        :type row: C{int}
+        :param row: Номер строки.
+        :type col: C{int}
+        :param col: Номер колонки.
+        :type isSelected: C{bool}
+        :param isSelected: Признак выбранной ячейки.
         """
         text = renderer.table.GetValue(row, col)
         value = icCheckBoxEdt.strToVal(text)
@@ -948,9 +948,9 @@ class icCheckBoxEdt(icBaseEdt):
 class icCombineEdt(icBaseEdt):
     """
     Редактор комбинированных значений.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
-    @type AttrCombDict: C{dictionary}
+    :type AttrCombDict: C{dictionary}
     @cvar AttrCombDict: Словарь словарей комбинированных свойств.
     """
 
@@ -961,10 +961,10 @@ class icCombineEdt(icBaseEdt):
     def SetAttrCombDict(attr, dict):
         """
         Устанавливает словарь комбинированных свойств заданного атрибута.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
-        @type dict: C{dictionary}
-        @param dict: Словарь комбинированных свойств.
+        :type attr: C{string}
+        :param attr: Имя атрибута.
+        :type dict: C{dictionary}
+        :param dict: Словарь комбинированных свойств.
         """
         icCombineEdt.AttrCombDict[attr] = dict
 
@@ -972,8 +972,8 @@ class icCombineEdt(icBaseEdt):
     def GetAttrCombDict(attr):
         """
         Возвращает словарь комбинированных свойств заданного атрибута.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
+        :type attr: C{string}
+        :param attr: Имя атрибута.
         """
         if attr in icCombineEdt.AttrCombDict:
             return icCombineEdt.AttrCombDict[attr]
@@ -1025,20 +1025,20 @@ class icCombineEdt(icBaseEdt):
                style=0, *arg, **kwarg):
         """
         Диалоговое окно для определяения комбинировнного стиля.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{int}
-        @param value: Стиль компонента в виде числа. Пример: wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB.
-        @type pos: C{wx.Point}
-        @param pos: Позиция диалога.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
-        @rtype: C{string}
-        @return: Возвращает значение выбранного стиля в текстовом виде.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{int}
+        :param value: Стиль компонента в виде числа. Пример: wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB.
+        :type pos: C{wx.Point}
+        :param pos: Позиция диалога.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :rtype: C{string}
+        :return: Возвращает значение выбранного стиля в текстовом виде.
         """
         styles = icCombineEdt.GetAttrCombDict(attr)
         ist = int(value)
@@ -1076,7 +1076,7 @@ class icCombineEdt(icBaseEdt):
 class icColorEdt(icBaseEdt):
     """
     Редактор значений цветов.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 8
@@ -1112,19 +1112,19 @@ class icColorEdt(icBaseEdt):
                style=0, *arg, **kwarg):
         """
         Диалог выбора цвета.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
-        @type pos: C{wx.Point}
-        @param pos: Позиция окна.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
-        @return: Возвращет выбранный цвет в виде строки 'wx.Colour(r,g,b)'.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :return: Возвращет выбранный цвет в виде строки 'wx.Colour(r,g,b)'.
         """
         clrd = wx.ColourData()
         clrd.SetChooseFull(True)
@@ -1173,7 +1173,7 @@ class icColorEdt(icBaseEdt):
 class icPointEdt(icBaseEdt):
     """
     Редактор значений wx.Point.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 10
@@ -1197,7 +1197,7 @@ class icPointEdt(icBaseEdt):
 class icSizeEdt(icBaseEdt):
     """
     Редактор значений wx.Size.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 11
@@ -1221,7 +1221,7 @@ class icSizeEdt(icBaseEdt):
 class icUserEdt(icBaseEdt):
     """
     Редактор текстового значения.
-    @type ID_Edtitor: C{int}
+    :type ID_Edtitor: C{int}
     @cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 16
@@ -1246,9 +1246,9 @@ class icUserEdt(icBaseEdt):
     def Ctrl(value, attr=None, propEdt=None, *arg, **kwarg):
         """
         Ф-ия контроля значения.
-        @param value: Проверяемое значение.
-        @type propEdt: C{ic.components.user.objects.PropNotebookEdt}
-        @param propEdt: Указатель на редактор свойств.
+        :param value: Проверяемое значение.
+        :type propEdt: C{ic.components.user.objects.PropNotebookEdt}
+        :param propEdt: Указатель на редактор свойств.
         """
         if propEdt and propEdt.getResTree():
             typRes = propEdt.getResource()['type']
@@ -1266,21 +1266,21 @@ class icUserEdt(icBaseEdt):
                style=0, propEdt=None, *arg, **kwarg):
         """
         Диалог выбора цвета.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
-        @type pos: C{wx.Point}
-        @param pos: Позиция окна.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
-        @type propEdt: C{ic.components.user.objects.PropNotebookEdt}
-        @param propEdt: Указатель на редактор свойств.
-        @return: Возвращет выбранный цвет в виде строки 'wx.Colour(r,g,b)'.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :type propEdt: C{ic.components.user.objects.PropNotebookEdt}
+        :param propEdt: Указатель на редактор свойств.
+        :return: Возвращет выбранный цвет в виде строки 'wx.Colour(r,g,b)'.
         """
         if propEdt and propEdt.getResTree():
             typRes = propEdt.getResource()['type']
@@ -1296,8 +1296,8 @@ class icUserEdt(icBaseEdt):
     def strToVal(text, propEdt=None, *arg, **kwarg):
         """
         Функция преобразования строки в значение ресурса.
-        @type propEdt: C{ic.components.user.objects.PropNotebookEdt}
-        @param propEdt: Указатель на редактор свойств.
+        :type propEdt: C{ic.components.user.objects.PropNotebookEdt}
+        :param propEdt: Указатель на редактор свойств.
         """
         value = text
         if propEdt and propEdt.getResTree():

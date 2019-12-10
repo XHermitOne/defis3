@@ -42,8 +42,8 @@ class icRefLevelProto(ref_persistent.icRefTablePersistent,
     def __init__(self, parent, index=-1):
         """
         Конструктор.
-        @param parent: Справочник-родитель.
-        @param index: Индекс уровня в справочнике-родителе.
+        :param parent: Справочник-родитель.
+        :param index: Индекс уровня в справочнике-родителе.
         """
         ref_persistent.icRefTablePersistent.__init__(self, parent=parent)
         icspravlevel.icSpravLevelInterface.__init__(self, parent, index)

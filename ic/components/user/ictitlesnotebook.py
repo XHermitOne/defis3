@@ -10,16 +10,16 @@
 к нескольким закладкам. При выборе определенной закладки выполняется выражение атрибута
 <onSelectTitle>.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -136,14 +136,14 @@ class icTitle:
     def __init__(self, title, size, st, img=None, descr=''):
         """
         Конструктор.
-        @type title: C{string}
-        @param title: Заголовок закладки.
-        @type size: C{wx.Size}
-        @param size: Размер закладки.
-        @type st: C{int}
-        @param st: Отступ текста от края закладки.
-        @type img: C{wx.StaticBitmap}
-        @param img: Картинка на закладке.
+        :type title: C{string}
+        :param title: Заголовок закладки.
+        :type size: C{wx.Size}
+        :param size: Размер закладки.
+        :type st: C{int}
+        :param st: Отступ текста от края закладки.
+        :type img: C{wx.StaticBitmap}
+        :param img: Картинка на закладке.
         """
         self.title = title
         self.size = size
@@ -159,10 +159,10 @@ class icTitle:
     def Show(self, bShow=True, activeTitle=None):
         """
         Показывает или скрывает компоненты привязанные к закладке.
-        @type bShow: C{bool}
-        @param bShow: Призка, который определяет скрывать или показывать компоненты.
-        @type activeTitle: C{icTitle}
-        @param activeTitle: Указывает на активную страницу. Это необходимо для того, чтобы
+        :type bShow: C{bool}
+        :param bShow: Призка, который определяет скрывать или показывать компоненты.
+        :type activeTitle: C{icTitle}
+        :param activeTitle: Указывает на активную страницу. Это необходимо для того, чтобы
             не скрыть компонент активной страницы, в случае если компонент одновременно
             привязан к нескольким страницам.
         """
@@ -238,7 +238,7 @@ class icTitle:
 class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     """
     Описание пользовательского компонента.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{name='default'}:
         - B{icDelButton=0}: Признак наличия кнопки 'удалить закладку'.
@@ -258,22 +258,22 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
                  bCounter=False, progressDlg=None):
         """
         Конструктор базового класса пользовательских компонентов.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -401,8 +401,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def RemoveTitleObjects(self, indx=-1):
         """
         Удаляет все объекты с закладки.
-        @type indx: C{int}
-        @param indx: Индекс закладки. Если -1, то компоненты удаляются из текущей
+        :type indx: C{int}
+        :param indx: Индекс закладки. Если -1, то компоненты удаляются из текущей
             закладки.
         """
         if indx < 0:
@@ -419,8 +419,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def ConnectObjToTitle(self, indx, obj):
         """
         Привязывает объект к нужной странице.
-        @type indx: C{int}
-        @param indx: Индекс закладки.
+        :type indx: C{int}
+        :param indx: Индекс закладки.
         """
         try:
             titleObj = self.GetTitlesList()[indx]
@@ -445,8 +445,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def IsVisible(self, indx):
         """
         Возвращет признак видимости нужной закладки.
-        @type indx: C{int}
-        @param indx: Индекс закладки.
+        :type indx: C{int}
+        :param indx: Индекс закладки.
         """
         return self.GetFirstVisible() <= indx <= self.GetLastVisible()
             
@@ -478,12 +478,12 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def AddTitle(self, title, descr='', img=None):
         """
         Добавления закладки в панель.
-        @type title: C{string}
-        @param title: Заголовок закладки.
-        @type descr: C{string}
-        @param descr: Короткое описание закладки.
-        @type img: C{wx.Bitmap}
-        @param img: Иконка, которая будет распологаться на закладке.
+        :type title: C{string}
+        :param title: Заголовок закладки.
+        :type descr: C{string}
+        :param descr: Короткое описание закладки.
+        :type img: C{wx.Bitmap}
+        :param img: Иконка, которая будет распологаться на закладке.
         """
         sx, sy = wx.Window.GetTextExtent(self, title)
         if img:
@@ -513,8 +513,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def GetTitle(self, indx):
         """
         Возвращет ссылку на нужную закладку.
-        @type indx: C{int}
-        @param indx: Индекс закладки.
+        :type indx: C{int}
+        :param indx: Индекс закладки.
         """
         try:
             return self.GetTitlesList()[indx]
@@ -531,8 +531,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def SelectTitle(self, indx=-1):
         """
         Выбирает нужную закладку в качестве текущей.
-        @type indx: C{int}
-        @param indx: Индекс закладки.
+        :type indx: C{int}
+        :param indx: Индекс закладки.
         """
         if indx < 0:
             indx = self.GetSelected()
@@ -686,8 +686,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def DrawActiveTitle(self, dc, obj, w, typeTitle=0):
         """
         Рисует активную закладку.
-        @type typeTitle: C{int}
-        @param typeTitle: Тип закладки: 0 - стандартная, 1 - квадратная,
+        :type typeTitle: C{int}
+        :param typeTitle: Тип закладки: 0 - стандартная, 1 - квадратная,
             2 - квадратная с градиентной заливкой.
         """
         sx, sy = self.GetSize()
@@ -750,8 +750,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     def Draw(self, dc):
         """
         Функция рисует ячейку.
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
         """
         dc.BeginDrawing()
 
@@ -864,12 +864,12 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
         для всех объектов неактивной страницы органайзера этот признак будет устана-
         вливаться в False. Для компонента 'icNotebook' эта функция переопределена
         т. к. только на активной странице компоненты видимы.
-        @type bVisual: C{bool}
-        @param bVisual: Признак обновления представления объекта данных.
-        @type lst: C{list}
-        @param lst: Список видимых объектов.
-        @rtype: C{list}
-        @return: Список видимых объектов.
+        :type bVisual: C{bool}
+        :param bVisual: Признак обновления представления объекта данных.
+        :type lst: C{list}
+        :param lst: Список видимых объектов.
+        :rtype: C{list}
+        :return: Список видимых объектов.
         """
         self.bStatusVisible = bVisible
         if lst is None:
@@ -903,8 +903,8 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
 def test(par=0):
     """
     Тестируем пользовательский класс.
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     import ic.components.ictestapp as ictestapp
     app = ictestapp.TestApp(par)

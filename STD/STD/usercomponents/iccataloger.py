@@ -68,7 +68,7 @@ __version__ = (0, 0, 0, 3)
 class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
     """
     Компонент каталогизатора.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
 
@@ -128,23 +128,23 @@ class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
     def isPutPhysicFunc(self):
         """
         Определена функция расположения в каталогизаторе?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('put_physic_func')
 
     def isGetPhysicFunc(self):
         """
         Определена функция получения объекта из каталогизатора?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('get_physic_func')
 
     def putPhysicFunc(self, obj, physic_path):
         """
         Функция помещения объекта в физический каталог.
-        @param obj: Размещаемый в физическом каталоге объект.
-        @param physic_path: Путь размещения объекта в физическом каталоге.
-        @return: True/False.
+        :param obj: Размещаемый в физическом каталоге объект.
+        :param physic_path: Путь размещения объекта в физическом каталоге.
+        :return: True/False.
         """
         context = self.GetContext()
         context['OBJ'] = obj
@@ -161,8 +161,8 @@ class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
     def getPhysicFunc(self, physic_path):
         """
         Функция получения объекта из физического каталога.
-        @param physic_path: Путь размещения объекта в физическом каталоге.
-        @return: Объект/Имя файла, размещенного в физическом каталоге.
+        :param physic_path: Путь размещения объекта в физическом каталоге.
+        :return: Объект/Имя файла, размещенного в физическом каталоге.
         """
         context = self.GetContext()
         context['PHYSIC_PATH'] = physic_path

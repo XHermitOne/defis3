@@ -57,8 +57,8 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
     def setSVGBackground(self, svg_filename):
         """
         Установить фон мнемосхемы.
-        @param svg_filename: Полное имя SVG файла фона мнемосхемы.
-        @return: True - фон успешно установлен.
+        :param svg_filename: Полное имя SVG файла фона мнемосхемы.
+        :return: True - фон успешно установлен.
         """
         if not svg_filename:
             log.warning(u'Не определен SVG файл фона мнемосхемы')
@@ -88,7 +88,7 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
     def setControlPositions(self):
         """
         Метод расстановки и образмеривания контролов мнемосхемы согласно якорям.
-        @return: True/False.
+        :return: True/False.
         """
         log.warning(u'Не определен метод расстановки и образмеривания контролов мнемосхемы')
         return False

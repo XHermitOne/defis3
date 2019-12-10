@@ -86,8 +86,8 @@ class icCorrectFilterDlg(new_doc_form_proto.icCorrectFilterDlgProto):
     def genSQL(self, begin_date, end_date):
         """
         Генерация SQL.
-        @param begin_date: Начальная дата.
-        @param end_date: Конечная дата.
+        :param begin_date: Начальная дата.
+        :param end_date: Конечная дата.
         """
         min_date = min(begin_date, end_date)
         max_date = max(begin_date, end_date)        
@@ -128,7 +128,7 @@ class icCorrectFilterDlg(new_doc_form_proto.icCorrectFilterDlgProto):
 def get_sql_correct_filter(parent=None):
     """
     Функция определения SQL выражения с помощью диалога.
-    @param parent: Родительское окно.    
+    :param parent: Родительское окно.    
     """
     if parent is None:
         parent = ic.getMainWin()
@@ -207,7 +207,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
     def setDocUUIDList(self, *doc_uuid_list):
         """
         Установить список обрабатываемых UUID документов.
-        @param doc_uuid_list: Список UUID документов.
+        :param doc_uuid_list: Список UUID документов.
         """
         self.doc_uuid_list = doc_uuid_list
         self.i_doc = 0 if self.doc_uuid_list else -1
@@ -217,7 +217,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
     def getCurrentDocUUID(self, doc_idx=None):
         """
         UUID текущего документа.
-        @param doc_idx: Индекс в списке обрабатываемых документов.
+        :param doc_idx: Индекс в списке обрабатываемых документов.
         """
         if doc_idx is None:
             pass
@@ -250,7 +250,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
     def refreshDocIdx(self, doc_idx=None):
         """
         Обновить карточку текущего документа.
-        @param doc_idx: Индекс в списке обрабатываемых документов.
+        :param doc_idx: Индекс в списке обрабатываемых документов.
         """
         doc = self.getCurrentDoc(doc_idx)
         if doc:
@@ -296,8 +296,8 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
     def _addLinkCtrl(self, doc, link_to):
         """
         Добавить связь в контрол списка.
-        @param doc: Объект документа.
-        @param link_to: UUID документа, на который ссылаемся.
+        :param doc: Объект документа.
+        :param link_to: UUID документа, на который ссылаемся.
         """
         if link_to not in self._link_to_uuids:
             self._link_to_uuids.append(link_to)
@@ -326,8 +326,8 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
     def _addLinksCtrl(self, doc, links_to):
         """
         Добавление нескольких связей в контрол списка связей.
-        @param doc: Объект документа.
-        @param links_to: Список UUID документов, на которые ссылаемся.
+        :param doc: Объект документа.
+        :param links_to: Список UUID документов, на которые ссылаемся.
         """
         for link_to in links_to:
             self._addLinkCtrl(doc, link_to['link_to'] if 'link_to' in link_to else link_to)
@@ -573,7 +573,7 @@ class icCorrectScanDocPanel(new_doc_form_proto.icCorrectScanDocPanelProto,
 def open_correct_doc_panel(parent=None):
     """
     Открыть панель коррекции отсканированных документов.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
     """
     if parent is None:
         parent = ic.getMainWin()        

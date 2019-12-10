@@ -4,8 +4,8 @@
 """
 Обкладка для класса wx.StaticText (Статический текст).
 
-@type SPC_IC_STATICTEXT: C{dictionary}
-@var SPC_IC_STATICTEXT: Спецификация на ресурсное описание компонента icStaticText.
+:type SPC_IC_STATICTEXT: C{dictionary}
+:var SPC_IC_STATICTEXT: Спецификация на ресурсное описание компонента icStaticText.
 Описание ключей SPC_IC_STATICTEXT:
 
     - B{name = 'DefaultName'}: Имя объекта.
@@ -20,8 +20,8 @@
     - B{backgroundColor=None}: Цвет фона.
     - B{source=None}: Описание или ссылка на источник данных.
 
-@type ICStaticTextStyle: C{dictionary}
-@var ICStaticTextStyle: Словарь специальных стилей компонента. Описание ключей ICStaticTextStyle:
+:type ICStaticTextStyle: C{dictionary}
+:var ICStaticTextStyle: Словарь специальных стилей компонента. Описание ключей ICStaticTextStyle:
 
     - C{wx.ALIGN_LEFT}: Выравнивание по левому краю.
     - C{wx.ALIGN_RIGHT}: Выравнивание по правому краю.
@@ -102,16 +102,16 @@ class icStaticText(icWidget, wx.StaticText):
         """
         Конструктор для создания icStaticText
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         icSpcDefStruct(SPC_IC_STATICTEXT, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)

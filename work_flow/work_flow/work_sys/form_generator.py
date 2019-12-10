@@ -42,7 +42,7 @@ class icObjFormGenerator:
     def __init__(self, Parent_=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        :param Parent_: Родительский объект.
         """
         pass
 
@@ -111,13 +111,13 @@ class icObjFormGenerator:
                           isViewTool_=False, isEditTool_=False):
         """
         Генерация стандартной панели инструментов для работы с объектами.
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @param isAddTool_: Можно вызывать добавление объекта из панели инструментов?
-        @param isDelTool_: Можно вызывать удаление объекта из панели инструментов?
-        @param isViewTool_: Можно вызывать просмотр объекта из панели инструментов?
-        @param isEditTool_: Можно вызывать редактирование объекта из панели инструментов?
-        @return: Возвращает ресурс сгенерированной панели инструментов.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :param isAddTool_: Можно вызывать добавление объекта из панели инструментов?
+        :param isDelTool_: Можно вызывать удаление объекта из панели инструментов?
+        :param isViewTool_: Можно вызывать просмотр объекта из панели инструментов?
+        :param isEditTool_: Можно вызывать редактирование объекта из панели инструментов?
+        :return: Возвращает ресурс сгенерированной панели инструментов.
         """
         from ic.components.custom import ictoolbar
 
@@ -170,9 +170,9 @@ class icObjFormGenerator:
     def _genStdTreeBrwsRes(self, FormName_, ResModuleFileName_):
         """
         Генерация стандартного просмотрщика деревянного представления объекта.
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from ic.components.user import icsimpletreelistctrl
         
@@ -191,8 +191,8 @@ class icObjFormGenerator:
     def _genResModule(self, ResModuleFileName_, Txt_):
         """
         Генерация модуля формы объекта по описанию объекта.
-        @param ResModuleFileName_: Имя файла модуля генерируемой формы.
-        @return: Возвращает True/False.
+        :param ResModuleFileName_: Имя файла модуля генерируемой формы.
+        :return: Возвращает True/False.
         """
         res_module = None
         try:
@@ -211,8 +211,8 @@ class icObjFormGenerator:
         """
         Форма выбора объекта.
         Генерация панели выбора объекта по описанию объекта.
-        @param name: Имя генерируемого ресурса.
-        @return: Возвращает сгенерированный ресурс.
+        :param name: Имя генерируемого ресурса.
+        :return: Возвращает сгенерированный ресурс.
         """
         from ic.components import icwxpanel
         from ic.components.sizers import icboxsizer
@@ -255,7 +255,7 @@ class icObjFormGenerator:
         filter_choice['name'] = 'filter_choice'
         filter_choice['flag'] = wx.GROW | wx.EXPAND
         filter_choice['save_filename'] = icfilterchoicectrl.DEFAULT_FILTER_SAVE_FILENAME
-        filter_choice['get_env'] = '@return OBJ.getFilterEnv()'
+        filter_choice['get_env'] = ':return OBJ.getFilterEnv()'
         box_sizer_spc['child'].append(filter_choice)
         # Грид просмотра отфильтрованных объектов
         view_grid_spc = self._genStdViewGridRes(name)
@@ -270,8 +270,8 @@ class icObjFormGenerator:
         """
         Форма выбора объекта.
         Генерация формы выбора объекта по описанию объекта.
-        @param name: Имя генерируемой формы.
-        @return: Возвращает ресурс сгенерированной формы.
+        :param name: Имя генерируемой формы.
+        :return: Возвращает ресурс сгенерированной формы.
         """
         from ic.components import icdialog
         from ic.components.custom import icbutton
@@ -354,7 +354,7 @@ class icObjFormGenerator:
     def createChoiceFormRes(self):
         """
         Создание, по описанию объекта, ресурса формы выбора.
-        @return: Возвращает паспорт сгенерированной формы.
+        :return: Возвращает паспорт сгенерированной формы.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()
@@ -375,7 +375,7 @@ class icObjFormGenerator:
     def createChoicePanelRes(self):
         """
         Создание, по описанию объекта, ресурса панели выбора.
-        @return: Возвращает паспорт сгенерированной панели.
+        :return: Возвращает паспорт сгенерированной панели.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()
@@ -397,7 +397,7 @@ class icObjFormGenerator:
     def createInitFormRes(self):
         """
         Создание, по описанию объекта, ресурса формы инициализации.
-        @return: Возвращает паспорт сгенерированной формы.
+        :return: Возвращает паспорт сгенерированной формы.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()
@@ -418,7 +418,7 @@ class icObjFormGenerator:
     def createSearchFormRes(self):
         """
         Создание, по описанию объекта, ресурса формы поиска объекта.
-        @return: Возвращает паспорт сгенерированной формы.
+        :return: Возвращает паспорт сгенерированной формы.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()
@@ -483,8 +483,8 @@ class icObjFormGenerator:
     def _genInitDialogRes(self, FormName_=None):
         """
         Генерация ресурса формы инициализации/создания.
-        @param FormName_: Имя генерируемой формы.
-        @return: Возвращает ресурс сгенерированной формы.
+        :param FormName_: Имя генерируемой формы.
+        :return: Возвращает ресурс сгенерированной формы.
         """
         from ic.components import icdialog
         from ic.components.custom import icbutton
@@ -549,9 +549,9 @@ class icObjFormGenerator:
     def _genStdInitPanelRes(self, FormName_, ResModuleFileName_=None):
         """
         Функция генерации ресурса стандартной панели инициализации. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         if self.isPageGroupInit():
             return self._genStdInitNotebookRes(FormName_, ResModuleFileName_)
@@ -562,9 +562,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного нотебука инициализации
         с группировкой реквизитов по страницам. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components.custom import icnotebook
         from ic.components.sizers import icgridbagsizer
@@ -627,9 +627,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного скроллируемого окна 
         инициализации без группировки реквизитов. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
@@ -679,8 +679,8 @@ class icObjFormGenerator:
     def _genSearchDialogRes(self, FormName_=None):
         """
         Генерация ресурса диалоговой формы поиска объекта
-        @param FormName_: Имя генерируемой формы.
-        @return: Возвращает ресурс сгенерированной формы.
+        :param FormName_: Имя генерируемой формы.
+        :return: Возвращает ресурс сгенерированной формы.
         """
         from ic.components import icdialog
         from ic.components.sizers import icboxsizer
@@ -729,8 +729,8 @@ class icObjFormGenerator:
     def _genSearchPanelRes(self, FormName_=None):
         """
         Генерация ресурса формы/панели поиска.
-        @param FormName_: Имя генерируемой формы.
-        @return: Возвращает ресурс сгенерированной формы.
+        :param FormName_: Имя генерируемой формы.
+        :return: Возвращает ресурс сгенерированной формы.
         """
         from ic.components import icwxpanel
         from ic.components.sizers import icboxsizer
@@ -774,9 +774,9 @@ class icObjFormGenerator:
     def _genStdSearchPanelRes(self, FormName_, ResModuleFileName_=None):
         """
         Функция генерации ресурса стандартной панели инициализации. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components.custom import icsplitter
         
@@ -804,9 +804,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного нотебука
         с группировкой реквизитов по страницам. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components.custom import icnotebook
         from ic.components.sizers import icgridbagsizer
@@ -859,11 +859,11 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса страницы стандартного нотебука
         с группировкой реквизитов по страницам. 
-        @param PageIdx_: Индекс страницы.
-        @param PageTitle_: Надпись/заголовок страницы.
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param PageIdx_: Индекс страницы.
+        :param PageTitle_: Надпись/заголовок страницы.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
@@ -889,9 +889,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного скроллируемого окна 
         поиска без группировки реквизитов. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
@@ -931,9 +931,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного грида 
         предварительного просмотра объекта. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components.user import icsimpleobjlistview
         from ic.components.user import icsimplegrplistview
@@ -964,8 +964,8 @@ class icObjFormGenerator:
         """
         Форма редактирования объекта.
         Генерация ресурса формы редактирвоания.
-        @param FormName_: Имя генерируемой формы.
-        @return: Возвращает ресурс сгенерированной формы.
+        :param FormName_: Имя генерируемой формы.
+        :return: Возвращает ресурс сгенерированной формы.
         """
         from ic.components import icdialog
         from ic.components.sizers import icboxsizer
@@ -1034,8 +1034,8 @@ class icObjFormGenerator:
     def _genEditPanelRes(self, FormName_=None):
         """
         Генерация ресурса панели редактирования.
-        @param FormName_: Имя генерируемой формы.
-        @return: Возвращает ресурс сгенерированной формы.
+        :param FormName_: Имя генерируемой формы.
+        :return: Возвращает ресурс сгенерированной формы.
         """
         from ic.components import icwxpanel
         from ic.components.sizers import icboxsizer
@@ -1098,9 +1098,9 @@ class icObjFormGenerator:
     def _genStdEditPanelRes(self, FormName_, ResModuleFileName_=None):
         """
         Функция генерации ресурса стандартной панели инициализации. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         if self.isPageGroupEdit():
             return self._genStdEditNotebookRes(FormName_, ResModuleFileName_)
@@ -1111,9 +1111,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного нотебука редактирования
         с группировкой реквизитов по страницам. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components.custom import icnotebook
         from ic.components.sizers import icgridbagsizer
@@ -1175,9 +1175,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного скроллируемого окна 
         редактирования без группировки реквизитов. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
@@ -1225,7 +1225,7 @@ class icObjFormGenerator:
     def createEditFormRes(self):
         """
         Создание, по описанию объекта, ресурса формы редактирования.
-        @return: Возвращает паспорт сгенерированной формы.
+        :return: Возвращает паспорт сгенерированной формы.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()
@@ -1252,8 +1252,8 @@ class icObjFormGenerator:
     def _genViewDialogRes(self, FormName_=None):
         """
         Генерация ресурса формы просмотра.
-        @param FormName_: Имя генерируемой формы.
-        @return: Возвращает ресурс сгенерированной формы.
+        :param FormName_: Имя генерируемой формы.
+        :return: Возвращает ресурс сгенерированной формы.
         """
         from ic.components import icdialog
         from ic.components.sizers import icboxsizer
@@ -1302,8 +1302,8 @@ class icObjFormGenerator:
     def _genViewPanelRes(self, FormName_=None):
         """
         Генерация ресурса панели просмотра.
-        @param FormName_: Имя генерируемой формы.
-        @return: Возвращает ресурс сгенерированной формы.
+        :param FormName_: Имя генерируемой формы.
+        :return: Возвращает ресурс сгенерированной формы.
         """
         from ic.components import icwxpanel
         from ic.components.custom import ictoolbar
@@ -1343,9 +1343,9 @@ class icObjFormGenerator:
     def _genStdViewPanelRes(self, FormName_, ResModuleFileName_=None):
         """
         Функция генерации ресурса стандартной панели просмотра. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         if self.isPageGroupView():
             return self._genStdViewNotebookRes(FormName_, ResModuleFileName_)
@@ -1356,9 +1356,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного нотебука просмотр
         с группировкой реквизитов по страницам. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components.custom import icnotebook
         from ic.components.sizers import icgridbagsizer
@@ -1423,9 +1423,9 @@ class icObjFormGenerator:
         """
         Функция генерации ресурса стандартного скроллируемого окна 
         просмотра без группировки реквизитов. 
-        @param FormName_: Имя генерируемой формы.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param FormName_: Имя генерируемой формы.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """ 
         from ic.components import icscrolledpanel
         from ic.components.sizers import icgridbagsizer
@@ -1476,7 +1476,7 @@ class icObjFormGenerator:
     def createViewFormRes(self):
         """
         Создание, по описанию объекта, ресурса формы просмотра.
-        @return: Возвращает паспорт сгенерированной формы.
+        :return: Возвращает паспорт сгенерированной формы.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()
@@ -1586,7 +1586,7 @@ class icAttrFormGenerator:
     def __init__(self, Parent_=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        :param Parent_: Родительский объект.
         """
         pass
 
@@ -1679,8 +1679,8 @@ class icAttrFormGenerator:
     def _genStdEditorRes(self, ResModuleFileName_=None):
         """
         Генерация стандартного редактора реквизита объекта.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         edit_type = self._getEditType()
         editor_spc = None
@@ -1704,9 +1704,9 @@ class icAttrFormGenerator:
     def _genTxtEditorRes(self, EditorName_, ResModuleFileName_=None):
         """
         Создание текстового редакторв реквизита объекта.
-        @param EditorName_: Имя редактора.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param EditorName_: Имя редактора.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from ic.components import ictextfield
         
@@ -1727,9 +1727,9 @@ class icAttrFormGenerator:
     def _genDateEditorRes(self, EditorName_, ResModuleFileName_=None):
         """
         Создание редакторв дат реквизита объекта.
-        @param EditorName_: Имя редактора.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param EditorName_: Имя редактора.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from ic.components.user import icdatepickerctrl
         
@@ -1750,9 +1750,9 @@ class icAttrFormGenerator:
     def _genIntEditorRes(self, EditorName_, ResModuleFileName_=None):
         """
         Создание редакторв целых чисел реквизита объекта.
-        @param EditorName_: Имя редактора.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param EditorName_: Имя редактора.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from ic.components.custom import icspinner
         
@@ -1773,9 +1773,9 @@ class icAttrFormGenerator:
     def _genFloatEditorRes(self, EditorName_, ResModuleFileName_=None):
         """
         Создание редакторв чисел с плавающей точкой реквизита объекта.
-        @param EditorName_: Имя редактора.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param EditorName_: Имя редактора.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from ic.components.custom import icspinner
         
@@ -1796,9 +1796,9 @@ class icAttrFormGenerator:
     def _genNSIEditorRes(self, EditorName_, ResModuleFileName_=None):
         """
         Создание редактора ссылки на справочник реквизита объекта.
-        @param EditorName_: Имя редактора.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param EditorName_: Имя редактора.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from NSI.usercomponents import spravtreecomboctrl
         
@@ -1819,9 +1819,9 @@ class icAttrFormGenerator:
     def _genREFEditorRes(self, EditorName_, ResModuleFileName_=None):
         """
         Создание редактора ссылки на бизнес объект/документ реквизита объекта.
-        @param EditorName_: Имя редактора.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param EditorName_: Имя редактора.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from work_flow.usercomponents import refobjchoicecomboctrl
 
@@ -1842,8 +1842,8 @@ class icAttrFormGenerator:
     def _genStdLabelRes(self, ResModuleFileName_=None):
         """
         Генерация стандартной надписи реквизита объекта.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from ic.components.custom import icstatictext
 
@@ -1876,7 +1876,7 @@ class icGridFormGenerator:
     def __init__(self, Parent_=None):
         """
         Конструктор.
-        @param Parent_: Родительский объект.
+        :param Parent_: Родительский объект.
         """
         pass
 
@@ -1931,8 +1931,8 @@ class icGridFormGenerator:
     def _genStdGridRes(self, ResModuleFileName_=None):
         """
         Генерация стандартного грида табличного реквизита объекта.
-        @param ResModuleFileName_: Имя файла ресурсного модуля.
-        @return: Возвращает ресурс сгенерированного объекта.
+        :param ResModuleFileName_: Имя файла ресурсного модуля.
+        :return: Возвращает ресурс сгенерированного объекта.
         """
         from ic.components.sizers import icstaticboxsizer
         from ic.components import icgriddataset

@@ -120,8 +120,8 @@ class icObjectPassport(icBasePassport):
     def getDescrId(self):
         """
         Возвращает идентификатор описания.
-        @rtype: C{tuple}
-        @return: Картеж заает идентификатор описания объекта - тип объекта,
+        :rtype: C{tuple}
+        :return: Картеж заает идентификатор описания объекта - тип объекта,
             имя объекта, модуль, подсистема.
         """
         return self[0]
@@ -189,13 +189,13 @@ def getResPSP(resName, subsys=None, comp_interface=None):
 def deco_func(func, pre=None, post=None):
     """
     Функция обкладки.
-    @type func: C{types.FunctionType}
-    @param func: Исходная функция.
-    @type pre: C{types.FunctionType}
-    @param pre: Функция обработки параметров функции. Возвращает картеж: 1-й элемент картеж параметров
+    :type func: C{types.FunctionType}
+    :param func: Исходная функция.
+    :type pre: C{types.FunctionType}
+    :param pre: Функция обработки параметров функции. Возвращает картеж: 1-й элемент картеж параметров
         исходной функции, 2-й элемент словарь именованных параметров исходной функции.
-    @type post: C{types.FunctionType}
-    @param post: Функция обработки результатов функции. В качестве параметров использует выход исходной
+    :type post: C{types.FunctionType}
+    :param post: Функция обработки результатов функции. В качестве параметров использует выход исходной
         функции и ее входные параметры.
     """
     def new_func(*arg, **kwarg):
@@ -229,18 +229,18 @@ class icObject(object):
                  cmpInterface=None, typ=None, *arg, **kwarg):
         """
         Конструктор.
-        @type name: C{string}
-        @param name: Имя объекта.
-        @type id: C{int}
-        @param id: Идентификатор объекта.
-        @type context: C{icContext}
-        @param context: Окружение (контекст) объекта.
-        @type bCreate: C{bool}
-        @param bCreate: Признак создания нового окружения объекта. Если = True, то
+        :type name: C{string}
+        :param name: Имя объекта.
+        :type id: C{int}
+        :param id: Идентификатор объекта.
+        :type context: C{icContext}
+        :param context: Окружение (контекст) объекта.
+        :type bCreate: C{bool}
+        :param bCreate: Признак создания нового окружения объекта. Если = True, то
             создается новое окружение и из старого заимствуются объекты родительского
             контекста.
-        @type cmpInterface: C{icObject}
-        @param cmpInterface: Имя интерфеса, которому принадлежит объект (в случае
+        :type cmpInterface: C{icObject}
+        :param cmpInterface: Имя интерфеса, которому принадлежит объект (в случае
             комбинированных компонентов).
         """
         #
@@ -423,8 +423,8 @@ class icObject(object):
     def _generate_post_func_signal(self, result, name):
         """
         Генерация сигнала при выходе из функции.
-        @param result: Результат функции.
-        @param name: Имя функции.
+        :param result: Результат функции.
+        :param name: Имя функции.
         """
         for con in self.srcCntLst:
             if issubclass(con.src.__class__, icsignalsrc.icPostFuncSrc) and con.src.func_name == name:
@@ -434,8 +434,8 @@ class icObject(object):
     def _post_func(self, func):
         """
         Функция обкладки.
-        @type func: C{types.FunctionType}
-        @param func: Исходная функция.
+        :type func: C{types.FunctionType}
+        :param func: Исходная функция.
         """
         def new_func(*arg, **kwarg):
             result = func(*arg, **kwarg)
@@ -513,16 +513,16 @@ class icObject(object):
     def isSamePassport(self, passport):
         """
         Проверка на тот же паспорт что и у объекта.
-        @param passport: Проверяемый паспорт.
-        @return: True - паспорт соответствует паспорту объекта / False - нет.
+        :param passport: Проверяемый паспорт.
+        :return: True - паспорт соответствует паспорту объекта / False - нет.
         """
         return self.__passport == passport
 
     def isPassport(self, passport):
         """
         Проверка является ли проверяемый паспорт паспортом в действительности.
-        @param passport: Проверяемый паспорт.
-        @return: True - это паспорт. False - нет.
+        :param passport: Проверяемый паспорт.
+        :return: True - это паспорт. False - нет.
         """
         from ic.utils import toolfunc
         return toolfunc.is_pasport(passport)
@@ -555,10 +555,10 @@ class icObject(object):
     def send_signal(self, signal, con):
         """
         Посылаем сигнал.
-        @type signal: C{icSignal}
-        @param signal: Возбужденный сигнал.
-        @type con: C{icConnection}
-        @param con: Соединение, по которому передается сигнал.
+        :type signal: C{icSignal}
+        :param signal: Возбужденный сигнал.
+        :type con: C{icConnection}
+        :param con: Соединение, по которому передается сигнал.
         """
         # Проверяем сигнал на соответствие соединению
         if not con.isValidSignal(signal):

@@ -68,7 +68,7 @@ class icAddBoxDialog(truck_constructor_panel_proto.icAddBoxDialogProto):
     def get_data(self):
         """
         Данные выбранные в диалоговой форме.
-        @return: Словарь данных.
+        :return: Словарь данных.
             Формат:
             {
                 'nomenklature': {
@@ -150,9 +150,9 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
              box_layout_scheme=None):
         """
         Инициализация внутренних объектов конструктора по внешним параметрам.
-        @param axle_count: Количество осей тягача.
-        @param tier_count: Количество ярусов погрузки.
-        @param box_layout_scheme: Схема погрузки ящиков/паллет.
+        :param axle_count: Количество осей тягача.
+        :param tier_count: Количество ярусов погрузки.
+        :param box_layout_scheme: Схема погрузки ящиков/паллет.
         Схема задается по позициям.
         """
         if axle_count > 0:
@@ -166,7 +166,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
     def setAxleCount(self, axle_count=2):
         """
         Установить количество осей.
-        @param axle_count: Количество осей.
+        :param axle_count: Количество осей.
         """
         self.axle_count = axle_count
         
@@ -196,7 +196,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
     def addBoxes(self, boxes):
         """
         Добавление ящиков в конструктор.
-        @param boxes: Список описания ящиков/паллет.
+        :param boxes: Список описания ящиков/паллет.
         """
         for box in boxes:
             self.addBox(box)
@@ -208,14 +208,14 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
     def delBoxes(self):
         """
         Удалить все ящики.
-        @return: True/False.
+        :return: True/False.
         """
         return self.truck_constructor.truck_load_constructor.deleteShapes()
 
     def setBoxes(self, boxes):
         """
         Установить ящики в конструктор.
-        @param boxes: Список описания ящиков/паллет.
+        :param boxes: Список описания ящиков/паллет.
         """
         # Сначала удалить все ящики
         self.delBoxes()
@@ -226,7 +226,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
     def getBoxListRecords(self):
         """
         Список описаний ящиков/паллет. 
-        @return: 
+        :return: 
         """
         records = list()
         board = self.truck_constructor.truck_load_constructor.getBoard()
@@ -273,7 +273,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
     def addBox(self, box):
         """
         Добавить ящик для погрузки.
-        @param box: Словарь описания ящика.
+        :param box: Словарь описания ящика.
         ВНИМАНИЕ! Внутренняя информация о ящиках/паллетах в конструкторе храниться в
         формате:
             {
@@ -371,7 +371,7 @@ class icWMSTruckConstructorPanel(truck_constructor_panel_proto.icWMSTruckConstru
     def refreshSelected(self, selected_point, **kwargs):
         """
         Обновить информацию о выбранном ящике.
-        @param selected_point: Точка выбора.
+        :param selected_point: Точка выбора.
         """
         if selected_point:
             selected_cell = self.truck_constructor.truck_load_constructor.find_cell(x=selected_point[0],

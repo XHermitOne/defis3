@@ -66,7 +66,7 @@ class icCFSpravRequisite(iccfobject.icCFObject):
     def _gen_field_type_res(self):
         """
         Генерация типа поля по типу значения 1С.
-        @return:
+        :return:
         """
         if self.type_value is None:
             return 'T'
@@ -87,7 +87,7 @@ class icCFSpravRequisite(iccfobject.icCFObject):
     def _get_field_default_res(self):
         """
         Значение по умолчанию для поля.
-        @return:
+        :return:
         """
         field_type = self._gen_field_type_res()
         if field_type == 'T':
@@ -269,7 +269,7 @@ class icCFSprav(iccfobject.icCFObject):
     def gen_resource(self):
         """
         Генерация ресурса, соответстствующего объеку 1С.
-        @return: True/False.
+        :return: True/False.
         """
         # Открыть проект
         prj_res_ctrl = ic.getKernel().getProjectResController()
@@ -290,7 +290,7 @@ class icCFSprav(iccfobject.icCFObject):
     def _get_sprav_tabname(self, prj_res_ctrl=None):
         """
         Имя таблицы хранения справочника 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
         """
         name_lat = strfunc.rus2lat(self.name)
         return 'nsi_' + name_lat
@@ -299,7 +299,7 @@ class icCFSprav(iccfobject.icCFObject):
                              field_default=None, field_description=u''):
         """
         Генерация ресурса поля.
-        @return: Сгенерированный ресурс поля.
+        :return: Сгенерированный ресурс поля.
         """
         from ic.components.user import ic_field_wrp
 
@@ -319,7 +319,7 @@ class icCFSprav(iccfobject.icCFObject):
     def _gen_sprav_tab_res(self, prj_res_ctrl=None, table_name=None):
         """
         Создать ресурс таблицы хранения справочника 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
         """
         from ic.components.user import ic_tab_wrp
 
@@ -365,8 +365,8 @@ class icCFSprav(iccfobject.icCFObject):
     def _gen_sprav_tab(self, prj_res_ctrl=None):
         """
         Генерация ресурса таблицы хранения справочника 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: True/False
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: True/False
         """
         if prj_res_ctrl is None:
             log.warning(u'Не определен контроллер управления ресурсом проекта. Генерация ресурса таблицы хранения справочника 1С не взможна.')
@@ -387,8 +387,8 @@ class icCFSprav(iccfobject.icCFObject):
     def _gen_sprav_spravmanager_res(self, prj_res_ctrl=None, res_name=None):
         """
         Генерация ресурса менеджера справочников 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: Ресурс справочников перечислений 1С.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: Ресурс справочников перечислений 1С.
         """
         from NSI.usercomponents import spravmanager
 
@@ -403,8 +403,8 @@ class icCFSprav(iccfobject.icCFObject):
     def _gen_sprav_spravmanager(self, prj_res_ctrl=None):
         """
         Генерация ресурса менеджера справочников 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: True/False.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: True/False.
         """
         if prj_res_ctrl is None:
             log.warning(u'Не определен контроллер управления ресурсом проекта. Генерация ресурса 1С не взможна.')
@@ -430,11 +430,11 @@ class icCFSprav(iccfobject.icCFObject):
                        uuid=iccfobject.NONE_UID):
         """
         Генерация ресурса справочника 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @param name: Наименование объекта ресурса.
-        @param description: Описание объекта ресурса.
-        @param uuid: Уникальный идентификатор объекта ресурса.
-        @return: Ресурс справочника перечисления 1С.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param name: Наименование объекта ресурса.
+        :param description: Описание объекта ресурса.
+        :param uuid: Уникальный идентификатор объекта ресурса.
+        :return: Ресурс справочника перечисления 1С.
         """
         from NSI.usercomponents import sprav
         from NSI.usercomponents import spravlevel
@@ -475,8 +475,8 @@ class icCFSprav(iccfobject.icCFObject):
     def _gen_sprav(self, prj_res_ctrl=None):
         """
         Генерация ресурса справочника 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: True/False.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: True/False.
         """
         if prj_res_ctrl is None:
             log.warning(u'Не определен контроллер управления ресурсом проекта. Генерация ресурса 1С не взможна.')

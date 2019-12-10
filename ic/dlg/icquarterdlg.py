@@ -47,9 +47,9 @@ class icQuarterDialog(std_dialogs_proto.quarterDialogProto):
     def get_cur_quarter(self, today=None):
         """
         Определить квартал относительно текущего дня.
-        @param today: Текущий/сегодняшний день.
+        :param today: Текущий/сегодняшний день.
             Если не определен, то берется datetime.date.today()
-        @return: Номер квартала.
+        :return: Номер квартала.
         """
         if today is None:
             today = datetime.date.today()

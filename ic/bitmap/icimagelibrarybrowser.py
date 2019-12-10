@@ -38,9 +38,9 @@ ic_class_name = 'icImageLibraryBrowser'
 def runImageLibraryBrowser(parent, prj_ini_filename=None, img_lib_filename=None):
     """
     Запуск браузера библиотеки образов.
-    @param parent: РОдительское окно.
-    @param prj_ini_filename: Файл настроек проекта.
-    @param img_lib_filename: Имя файла библиотеки образов.
+    :param parent: РОдительское окно.
+    :param prj_ini_filename: Файл настроек проекта.
+    :param img_lib_filename: Имя файла библиотеки образов.
     """
     img_lib_browser = icImageLibraryBrowser(parent)
     if prj_ini_filename:
@@ -174,7 +174,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
     def openImgLib(self, img_lib_filename=None):
         """
         Открыть библиотеку образов.
-        @param img_lib_filename: Имя файла библиотеки образов.
+        :param img_lib_filename: Имя файла библиотеки образов.
         """
         dlg = self.GetNameObj('ImgLibDlg')
         if img_lib_filename is None:
@@ -191,7 +191,7 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
     def refreshImgGrid(self, image_dictionary=None):
         """
         Обновить грид просмотра образов.
-        @param image_dictionary: Словарь образов.
+        :param image_dictionary: Словарь образов.
         """
         if image_dictionary is None:
             image_dictionary = self._img_dict
@@ -211,15 +211,15 @@ class icImageLibraryBrowser(icobjectinterface.icObjectInterface):
     def isEmptyGrid(self, grid):
         """
         Проверить пустой грид или нет.
-        @param grid: Сам грид.
+        :param grid: Сам грид.
         """
         return bool((grid.GetNumberRows() == 1) and (not grid.GetCellValue(0, 1)))
         
     def addImgToGrid(self, image_name, image):
         """
         Добавить образ в грид.
-        @param image_name: Имя образа.
-        @param image: Объект образа wx.Bitmap.
+        :param image_name: Имя образа.
+        :param image: Объект образа wx.Bitmap.
         """
         img_grid = self.GetNameObj('ImgLibGrid')
         if img_grid:

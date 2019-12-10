@@ -50,15 +50,15 @@ class icBaseKernel(icobject.icObject):
     def _reg_object(self, obj, name):
         """
         Регестрирует объект в контексте ядра.
-        @param obj: Объект.
-        @param name: Имя объекта.
+        :param obj: Объект.
+        :param name: Имя объекта.
         """
         self.GetContext().reg_object(obj, name)
 
     def getObject(self, name):
         """
         Получить зарегистрированный объект по имени.
-        @param name: Имя объекта.
-        @return: Искомый объект или None, если не найден.
+        :param name: Имя объекта.
+        :return: Искомый объект или None, если не найден.
         """
         return self.GetContext().get_object(name)

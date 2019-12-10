@@ -21,7 +21,7 @@ def msgErr(msg=''):
     """
     Выдает сообщение о последней ошибке в MessageBox.
     Эту функцию можно использовать только в блоке exception.
-    @param msg: Текст сообщения.
+    :param msg: Текст сообщения.
     """
     trace = traceback.extract_tb(sys.exc_traceback)
     ltype = sys.exc_type
@@ -38,6 +38,6 @@ def msgErr(msg=''):
 def toMsg(msg):
     """
     Выдает сообщение в MessageBox.
-    @param msg: Текст сообщения.
+    :param msg: Текст сообщения.
     """
     return win32api.MessageBox(0, msg)

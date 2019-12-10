@@ -21,7 +21,7 @@ class icSlice:
     def __init__(self,Cod_):
         """
         Конструктор.
-        @param Cod_: Код свертки в справочнике.
+        :param Cod_: Код свертки в справочнике.
         """
         self.sprav_type='Slices'
         #Код свертки в справочнике.
@@ -61,7 +61,7 @@ class icSlice:
     def _curSlice(self,Cod_):
         """
         Запомнить текущий срез/свертку.
-        @param Cod_: Код свертки в справочнике.
+        :param Cod_: Код свертки в справочнике.
         """
         slice_data = NSI.spravfunc.FSprav(self.sprav_type,
                                           Cod_, ['name','s1','s2','s3'])

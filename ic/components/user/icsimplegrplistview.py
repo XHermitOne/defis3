@@ -5,16 +5,16 @@
 ПРОСТОЙ СПИСОК ОБЪЕКТОВ с группировкой по полям.
 Класс пользовательского компонента ПРОСТОЙ СПИСОК ОБЪЕКТОВ с группировкой по полям.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -202,7 +202,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     """
     Простой список объектов.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -215,22 +215,22 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -309,7 +309,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def setColumnsSpc(self, *Columns_):
         """
         Создание колонок грида по описанию.
-        @param Columns_: Описание колонок.
+        :param Columns_: Описание колонок.
         """
         columns = []
         auto_sort_col = None
@@ -346,14 +346,14 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def create_getColGroupKey_function(self, column):
         """
         Создание функции получения ключа колонки.
-        @param column: Структура описания колонки.
+        :param column: Структура описания колонки.
         """
         get_grp_key = column.get('get_grp_key', None)
         if get_grp_key:
             def getColGroupKey(RECORD):
                 """
                 Получить ключ группы колонки.
-                @param RECORD: Словарь записи.
+                :param RECORD: Словарь записи.
                 """
                 result = util.ic_eval(get_grp_key, evalSpace=locals())
                 try:
@@ -368,14 +368,14 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
 
     def create_convertColGroupKey_function(self, column):
         """
-        @param column: Структура описания колонки.
+        :param column: Структура описания колонки.
         """
         get_grp_title = column.get('get_grp_title', None)
         if get_grp_title:
             def convertColGroupKey(GROUP_KEY):
                 """
                 Преобразовать данный ключ группы в строку заголовка группы колонки.
-                @param GROUP_KEY: Ключ группы.
+                :param GROUP_KEY: Ключ группы.
                 """
                 result = util.ic_eval(get_grp_title, evalSpace=locals())
                 try:
@@ -391,10 +391,10 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def getDatasetFromDataSource(self, data_source=None, data_src_filter=None):
         """
         Получить набор данных из источника данных.
-        @param data_source: Указание источника данных.
+        :param data_source: Указание источника данных.
             Может указываться как паспорт или объект.
-        @param data_src_filter: Дополнительный фильтр источника данных.
-        @return: Список данных.
+        :param data_src_filter: Дополнительный фильтр источника данных.
+        :return: Список данных.
         """
         if not self._data_src_obj:
             self._data_src_obj = None
@@ -420,7 +420,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
             дополнительные объекты:
                 DATASET - список записей.
                 RECORD - словарь текущей обрабатываемой записи.
-        @param data_src_filter: Дополнительный фильтр источника данных.
+        :param data_src_filter: Дополнительный фильтр источника данных.
         """
         if DatasetList_ is None:
             if not self.data_src and not self._data_src_obj:
@@ -461,7 +461,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def refreshDataset(self, data_src_filter=None):
         """
         Обновить набор данныхю
-        @param data_src_filter: Дополнительный фильтр источника данных.
+        :param data_src_filter: Дополнительный фильтр источника данных.
         """
         return self.setDataset(data_src_filter=data_src_filter)
 
@@ -519,7 +519,7 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
         Определить UUID выбранного объекта.
         Мнемоническое правило расположения UUID объекта в наборе записей:
         Поле UUIDа находится всегда последней колонкой и не выводится на экран.
-        @return: Возвращает uuid выбранного объекта или None если 
+        :return: Возвращает uuid выбранного объекта или None если 
         объект не выбран.
         """
         selected_rec = self.getSelectedRecord()
@@ -539,8 +539,8 @@ class icSimpleGroupListView(icwidget.icWidget, parentModule.GroupListView):
     def rowFormatterFunction(self, list_item, record):
         """
         Функция раскраски строк списка.
-        @param list_item: Объект wx.ListItem строки списка.
-        @param record: Словарь записи.
+        :param list_item: Объект wx.ListItem строки списка.
+        :param record: Словарь записи.
         """
         self.context['RECORD'] = record
         text_colour = self.getICAttr('row_text_colour')

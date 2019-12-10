@@ -33,18 +33,18 @@ class icFileSet(icDataSet):
         """
         Конструктор для создания таблицы.
         
-        @type id: C{int}
-        @param id: Идентификатор объекта.
-        @type data: C{List}
-        @param data: Данные в виде списка картежей, т.к. большинство драйверов возвращает данные в таком виде.
-        @type description: C{Dictionary}
-        @param description: Описание колонок. В качестве ключа выступает имя поля, в качестве значения
+        :type id: C{int}
+        :param id: Идентификатор объекта.
+        :type data: C{List}
+        :param data: Данные в виде списка картежей, т.к. большинство драйверов возвращает данные в таком виде.
+        :type description: C{Dictionary}
+        :param description: Описание колонок. В качестве ключа выступает имя поля, в качестве значения
             список состоящий из номера соответствующей колонке данных и объекта описания (тип, предствление, и. т. д.).
             B{Пример:}C{\{'field1':(0,{'type':(4,0,0,0), 'expr':'a+b'})\}}
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         self.component = component
         self.evalSpace = evalSpace
@@ -53,10 +53,10 @@ class icFileSet(icDataSet):
         """
         Функция по имени колонки и номеру записи возвращает значение.
         
-        @type rec: C{int}
-        @param rec: Номер ряда.
-        @type fieldName: C{String}
-        @param fieldName: Имя поля.
+        :type rec: C{int}
+        :param rec: Номер ряда.
+        :type fieldName: C{String}
+        :param fieldName: Имя поля.
         """
         ret = None
         buffer = self.zzfile.read()
@@ -73,13 +73,13 @@ class icFileSet(icDataSet):
         то функция пытается выполнить функцию на запись по описанию колонки из ресурсного
         описания по аттрибуту 'setvalue'.
 
-        @param row: Номер записи
-        @type row: C{int}
-        @param fieldName: Имя поля
-        @type fieldName: C{string}
-        @param value: Значение
-        @return: Возвращает признак успешного выполнения
-        @rtype: C{bool}
+        :param row: Номер записи
+        :type row: C{int}
+        :param fieldName: Имя поля
+        :type fieldName: C{string}
+        :param value: Значение
+        :return: Возвращает признак успешного выполнения
+        :rtype: C{bool}
         """
         buffer = self.zzfile.read()
         if isinstance(buffer, dict):
@@ -95,13 +95,13 @@ class icFileSet(icDataSet):
         """
         Функция добавляет новую запись
 
-        @param row: Номер записи в буфере
-        @type row: C{int}
-        @param fieldName: Имя колонки
-        @type fieldName: C{int}
-        @param value: Новое значение
-        @return: Возвращает признак успешного выполнения.
-        @rtype: C{bool}
+        :param row: Номер записи в буфере
+        :type row: C{int}
+        :param fieldName: Имя колонки
+        :type fieldName: C{int}
+        :param value: Новое значение
+        :return: Возвращает признак успешного выполнения.
+        :rtype: C{bool}
         """
         buffer = {}
         buffer[fieldName] = value
@@ -113,10 +113,10 @@ class icFileSet(icDataSet):
         Удаляет запись из источника данных. Функция по номеру строки определяет уникальный
         идентификатор для удаления нужной записи.
 
-        @param rec: Номер записи
-        @type rec:  C{int}
-        @return rec: Признак успешного выполнения
-        @rtype: C{bool}
+        :param rec: Номер записи
+        :type rec:  C{int}
+        :return rec: Признак успешного выполнения
+        :rtype: C{bool}
         """
         self.zzfile.delete()
     

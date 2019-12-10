@@ -69,7 +69,7 @@ class icImgLibResource:
     def __init__(self, img_lib_filename=None):
         """
         Крструктор.
-        @param img_lib_filename: Файл библиотеки образов *.py.
+        :param img_lib_filename: Файл библиотеки образов *.py.
         """
         # Файл библиотеки образов
         self._img_lib_file_name = img_lib_filename
@@ -82,7 +82,7 @@ class icImgLibResource:
     def loadImgLib(self, img_lib_filename=None):
         """
         Загрузить текст библиотеки образов.
-        @param img_lib_filename: Файл библиотеки образов *.py.
+        :param img_lib_filename: Файл библиотеки образов *.py.
         """
         if not img_lib_filename:
             img_lib_filename = self._img_lib_file_name
@@ -118,8 +118,8 @@ class icImgLibResource:
     def createImgBlock(self, img_name, img_data):
         """
         Создать блок образа.
-        @param img_name: Имя добавляемого объекта.
-        @param img_data: Сериализованные данные файла образа.
+        :param img_name: Имя добавляемого объекта.
+        :param img_data: Сериализованные данные файла образа.
         """
         # if isinstance(img_name, str):
         #    img_name = img_name.encode()
@@ -134,14 +134,14 @@ class icImgLibResource:
     def getImgData(self, img_filename):
         """
         Получить данные образа из файла образа.
-        @param img_filename: Имя файла образа.
+        :param img_filename: Имя файла образа.
         """
         return icimg2py.getImgFileData(img_filename)
         
     def addImgBlock(self, img_block):
         """
         Добавить блок образа к библиотеке.
-        @param img_block: Блок образа.
+        :param img_block: Блок образа.
         """
         if not self._img_lib_text:
             self.createNewImgLib()
@@ -151,7 +151,7 @@ class icImgLibResource:
     def addImg(self, img_filename):
         """
         Добавить образ в библиотеку образов из файла.
-        @param img_filename: Имя файла образа.
+        :param img_filename: Имя файла образа.
         """
         img_name = os.path.splitext(os.path.basename(img_filename))[0]
         img_data = self.getImgData(img_filename)
@@ -162,8 +162,8 @@ class icImgLibResource:
     def saveImgLib(self, img_lib_filename=None):
         """
         Сохранить изменения в библиотеку образов.
-        @param img_lib_filename: Файл библиотеки образов *.py.
-        @return: Возвращает результат выполнения операции True/False.
+        :param img_lib_filename: Файл библиотеки образов *.py.
+        :return: Возвращает результат выполнения операции True/False.
         """
         if not img_lib_filename:
             img_lib_filename = self._img_lib_file_name
@@ -188,8 +188,8 @@ class icImgLibResource:
     def findImgBlock(self, img_name):
         """
         Найти блок образа в библиотеке образов.
-        @param img_name: Имя объекта.
-        @return: Возвращает кортеж позиции начала и конца или None, если блок не найден.
+        :param img_name: Имя объекта.
+        :return: Возвращает кортеж позиции начала и конца или None, если блок не найден.
         """
         # if isinstance(img_name, unicode):
         #    ImageName_ = img_name.encode()
@@ -209,8 +209,8 @@ class icImgLibResource:
     def delImgBlock(self, img_name):
         """
         Удалить блок образа по имени.
-        @param img_name: Имя объекта.
-        @return: Возвращает результат выполнения операции True/False.
+        :param img_name: Имя объекта.
+        :return: Возвращает результат выполнения операции True/False.
         """
         # if isinstance(img_name, unicode):
         #    img_name = img_name.encode()
@@ -225,8 +225,8 @@ class icImgLibResource:
     def findImgData(self, img_name):
         """
         Получить из библиотеки образов данные образов по имени образа.
-        @param img_name: Имя объекта.
-        @return: Возвращает строку данных образа или 
+        :param img_name: Имя объекта.
+        :return: Возвращает строку данных образа или
             None, если образ с таким именем не найден.
         """
         # if isinstance(img_name, unicode):
@@ -243,9 +243,9 @@ class icImgLibResource:
     def renameImgBlock(self, img_name, new_img_name):
         """
         Переименовать блок.
-        @param img_name: Имя объекта.
-        @param new_img_name: Новое имя объекта.
-        @return: True/False.
+        :param img_name: Имя объекта.
+        :param new_img_name: Новое имя объекта.
+        :return: True/False.
         """
         # if isinstance(img_name, unicode):
         #    img_name = img_name.encode()
@@ -263,7 +263,7 @@ class icImgLibResource:
     def getImages(self, img_lib_filename=None):
         """
         Получить словарь оборазов из библиотеки образов.
-        @param img_lib_filename: Файл библиотека образов.
+        :param img_lib_filename: Файл библиотека образов.
         """
         # Импорт модуля библиотеки образов
         if img_lib_filename is None:

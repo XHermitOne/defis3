@@ -122,13 +122,13 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
     def refreshPivotTable(self, request_url=None, request=None):
         """
         Обновить сводную таблицу по запросу к OLAP серверу.
-        @param request_url: URL запроса к OLAP серверу.
+        :param request_url: URL запроса к OLAP серверу.
             Если не определен, то берется из текущего выбранного элемента
             дерева запросов.
-        @param request: Структура описания запроса. Словарь.
+        :param request: Структура описания запроса. Словарь.
             Если не определена, то берется из текущего выбранного элемента
             дерева запросов.
-        @return: True/False.
+        :return: True/False.
         """
         if request is None:
             item_data = self.getSelectedItemData_tree(ctrl=self.query_treectrl)
@@ -172,28 +172,28 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
     def isTotalPivotTable(self):
         """
         Включен расчет общих итогов в сводной таблице?
-        @return: True/False
+        :return: True/False
         """
         return self.ctrl_toolBar.GetToolState(self.total_tool.GetId())
 
     def isTotalGroupPivotTable(self):
         """
         Включен расчет итогов по группам в сводной таблице?
-        @return: True/False
+        :return: True/False
         """
         return self.ctrl_toolBar.GetToolState(self.grp_total_tool.GetId())
 
     def isSortPivotTable(self):
         """
         Включена сортировка строк сводной таблице?
-        @return: True/False
+        :return: True/False
         """
         return self.ctrl_toolBar.GetToolState(self.sort_tool.GetId())
 
     def isReversePivotTable(self):
         """
         Включена обратная сортировка строк сводной таблице?
-        @return: True/False
+        :return: True/False
         """
         return self.ctrl_toolBar.GetToolState(self.reverse_tool.GetId())
 
@@ -202,14 +202,14 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
         Вывести сводную таблицу в контрол отображения.
         Дополнительные изменения сводной таблицы могут производиться с помощью
         панели инструментов.
-        @param pivot_dataframe: pandas.DataFrame объект сводной таблицы
+        :param pivot_dataframe: pandas.DataFrame объект сводной таблицы
             для отображения.
             Если не определен , то берется текущая сводная таблица.
-        @param olap_server: Объект OLAP сервера.
+        :param olap_server: Объект OLAP сервера.
             Если не определен, то берется из контрола дерева запросов.
-        @param json_response: Текущие данные полученные из OLAP сервера.
+        :param json_response: Текущие данные полученные из OLAP сервера.
             Если не определены, то берутся внутренние.
-        @return: True/False.
+        :return: True/False.
         """
         if pivot_dataframe is None:
             # ВНИМАНИЕ! Необходимо брать копию чтобы не изменять оригинал
@@ -261,11 +261,11 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
     def _parse_dimension_names(self, dimension_url, request, olap_server=None):
         """
         Список имен измерения.
-        @param dimension_url: Часть элемента запроса.
+        :param dimension_url: Часть элемента запроса.
             Например store_date@ymd:month
-        @param request: Структура описания запроса. Словарь.
-        @param olap_server: OLAP сервер.
-        @return: Список имен элементов измерения.
+        :param request: Структура описания запроса. Словарь.
+        :param olap_server: OLAP сервер.
+        :return: Список имен элементов измерения.
         """
         if olap_server is None:
             olap_server = self.query_treectrl.getOLAPServer()
@@ -304,10 +304,10 @@ class icOLAPQueryBrowserProto(olap_query_browse_panel_proto.icOLAPQueryBrowsePan
 def show_olap_query_browser(parent=None, title=u'Аналитические отчеты', olap_server=None):
     """
     Функция просмотра браузера результатов запросов к OLAP серверу.
-    @param parent: Родительское окно.
-    @param title: Заголовок страницы браузера.
-    @param olap_server: Объект OLAP сервера, отображаемого в браузере.
-    @return: True/False.
+    :param parent: Родительское окно.
+    :param title: Заголовок страницы браузера.
+    :param olap_server: Объект OLAP сервера, отображаемого в браузере.
+    :return: True/False.
     """
     if olap_server is None:
         log.warning(u'Не определен объект OLAP сервера для просмотре результатов запросов')

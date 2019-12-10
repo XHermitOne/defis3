@@ -4,8 +4,8 @@
 """
 Обкладка для класса wx.ComboBox. Генерирует поле ввода с вожмосностью выбора из списка значений.
 
-@type SPC_IC_COMBOBOX: C{Dictionary}
-@var SPC_IC_COMBOBOX: Спецификация на ресурсное описание компонента. Описание ключей:
+:type SPC_IC_COMBOBOX: C{Dictionary}
+:var SPC_IC_COMBOBOX: Спецификация на ресурсное описание компонента. Описание ключей:
 
     - B{name = 'DefaultName'}: Имя объекта.
     - B{type = 'ComboBox'}: Тип объекта.
@@ -24,8 +24,8 @@
     - B{init = None}: Функционал формирующий список выбора.
     - B{items = []}: Список выбора.
 
-@type ICComboBoxStyle: C{dictionary}
-@var ICComboBoxStyle: Словарь специальных стилей компонента. Описание ключей ICComboBoxStyle:
+:type ICComboBoxStyle: C{dictionary}
+:var ICComboBoxStyle: Словарь специальных стилей компонента. Описание ключей ICComboBoxStyle:
 
     - C{wx.CB_SIMPLE}  - Создается combobox с окном в котором выведен весь список значений (только Windows).
     - C{wx.CB_DROPDOWN} - Создается combobox с выпадающим списком.
@@ -109,16 +109,16 @@ class icComboBox(icWidget, wx.ComboBox):
         """
         Конструктор для создания icComboBox.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_COMBOBOX, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)

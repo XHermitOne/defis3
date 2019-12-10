@@ -24,9 +24,9 @@ _ = wx.GetTranslation
 def open_passport_choice_dlg(parent=None, prj=None):
     """
     Выбор паспорта объекта.
-    @param parent: Ссылка на окно.
-    @param prj: Объект проекта.
-    @return: Возвращает список паспорта выбранного объекта или None  в случае ошибки.
+    :param parent: Ссылка на окно.
+    :param prj: Объект проекта.
+    :return: Возвращает список паспорта выбранного объекта или None  в случае ошибки.
     """
     if prj is None:
         from ic.engine import glob_functions
@@ -65,9 +65,9 @@ def open_passport_choice_dlg(parent=None, prj=None):
 def open_passport_list_dlg(parent=None, prj=None, default=None):
     """
     Выбор списка паспортов выбранных объектов.
-    @param parent: Ссылка на окно.
-    @param prj: Объект проекта.
-    @return: Возвращает список паспортов выбранных объектов или None в случае ошибки.
+    :param parent: Ссылка на окно.
+    :param prj: Объект проекта.
+    :return: Возвращает список паспортов выбранных объектов или None в случае ошибки.
     """
     dlg = None
     win_clear = False
@@ -107,8 +107,8 @@ class icPassportChoicePanel(wx.Panel):
     def __init__(self, parent_, prj=None):
         """
         Конструктор.
-        @param parent_: Окно.
-        @param prj: Объект проекта.
+        :param parent_: Окно.
+        :param prj: Объект проекта.
         """
         from ic.prj import icPrjTree
         
@@ -225,8 +225,8 @@ class icPassportChoiceDialog(wx.Dialog):
     def __init__(self, parent_, prj=None):
         """
         Конструктор.
-        @param parent_: Окно.
-        @param prj: Объект проекта.
+        :param parent_: Окно.
+        :param prj: Объект проекта.
         """
         try:
             _title = u'Определение паспорта объекта'
@@ -294,8 +294,8 @@ class icPassportListPanel(wx.Panel):
     def __init__(self, parent_, prj=None):
         """
         Конструктор.
-        @param parent_: Окно.
-        @param prj: Объект проекта.
+        :param parent_: Окно.
+        :param prj: Объект проекта.
         """
         try:
             # Сохранить объект проекта, для последующего использования
@@ -365,7 +365,7 @@ class icPassportListPanel(wx.Panel):
     def setPassportList(self, passport_list=None):
         """
         Установить список паспортов.
-        @param passport_list: Список паспортов.
+        :param passport_list: Список паспортов.
         """
         if passport_list is None:
             passport_list = []
@@ -459,9 +459,9 @@ class icPassportListDialog(wx.Dialog):
     def __init__(self, parent_, prj=None, default=None):
         """
         Конструктор.
-        @param parent_: Родительское окно.
-        @param prj: Объект проекта.
-        @param default: Список паспортов по умолчанию.
+        :param parent_: Родительское окно.
+        :param prj: Объект проекта.
+        :param default: Список паспортов по умолчанию.
         """
         try:
             _title = u'Определение паспортов объектов'

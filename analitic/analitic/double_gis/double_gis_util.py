@@ -23,7 +23,7 @@ def validate_location(location):
      * позволяет индексировать (т.е. имеет порядок)
      * где оба значения являются плавающими (или конвертируемыми в плавающие)
      * и оба значения не являются NaN
-    @return: list[float, float]
+    :return: list[float, float]
     """
     if isinstance(location, numpy.ndarray) \
             or (pandas is not None and isinstance(location, pandas.DataFrame)):
@@ -56,7 +56,7 @@ def validate_location(location):
 def validate_locations(locations):
     """
     Проверьте итерацию с несколькими парами координат широта / долгота.
-    @return: list[list[float, float]] or list[list[list[float, float]]]
+    :return: list[list[float, float]] or list[list[list[float, float]]]
     """
     locations = if_pandas_df_convert_to_numpy(locations)
     try:

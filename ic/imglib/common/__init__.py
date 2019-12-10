@@ -305,7 +305,7 @@ def init_img(bInitAllImageHandlers=False):
     других форматов недокументированной функцией wx.InitAllImageHandlers.
     В последних версиях wxPython этого делать не надо.
     Поэтому вызов отключен по умолчанию.
-    @param bInitAllImageHandlers: Произвести инициализацию всех доступных обработчиков изображений WX?
+    :param bInitAllImageHandlers: Произвести инициализацию всех доступных обработчиков изображений WX?
     """
     global IS_INIT_IMG
     if IS_INIT_IMG:
@@ -812,7 +812,7 @@ def init_img(bInitAllImageHandlers=False):
 def is_init_img():
     """
     Проверка пройденной инициализации образов.
-    @return: True инициализация уже прошла / False - нет.
+    :return: True инициализация уже прошла / False - нет.
     """
     global IS_INIT_IMG
     return IS_INIT_IMG

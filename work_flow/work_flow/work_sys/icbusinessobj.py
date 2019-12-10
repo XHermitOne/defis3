@@ -12,8 +12,8 @@
 его отличен от понятия work flow в классическом понимании.
 Обработкой истории занимается движок исторического процесса бизнес объекта.
 
-@type SPC_IC_BUSINESSOBJ: C{dictionary}
-@var SPC_IC_BUSINESSOBJ: Спецификация на ресурсное описание БИЗНЕСС-ОБЪЕКТА.
+:type SPC_IC_BUSINESSOBJ: C{dictionary}
+:var SPC_IC_BUSINESSOBJ: Спецификация на ресурсное описание БИЗНЕСС-ОБЪЕКТА.
 Описание ключей SPC_IC_BUSINESSOBJ:
 
     - B{name = 'default'}: Имя.
@@ -128,7 +128,7 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icworkbase.icWorkBase.__init__(self, parent)
         
@@ -152,10 +152,10 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
              init_form_psp=None):
         """
         Запуск инициализации/создания.
-        @param parent: Родительская форма.
-        @param context: Контекст.
-        @param auto_add: Признак автодобавления в БД.
-        @param init_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        :param parent: Родительская форма.
+        :param context: Контекст.
+        :param auto_add: Признак автодобавления в БД.
+        :param init_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <Init> in class %s' % self.__class__.__name__
 
@@ -165,11 +165,11 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
              edit_form_psp=None):
         """
         Запуск на редактирование.
-        @param parent: Родительская форма.
-        @param context: Контекст.
-        @param UUID: Уникальный идентификатор редактируемого объекта.
+        :param parent: Родительская форма.
+        :param context: Контекст.
+        :param UUID: Уникальный идентификатор редактируемого объекта.
             Если None, то уникальный идентификатор self.uuid
-        @param edit_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        :param edit_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <edit> in class %s' % self.__class__.__name__
         
@@ -177,9 +177,9 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
              view_form_psp=None):
         """
         Режим просмотра.
-        @param parent: Родительская форма.
-        @param context: Контекст.
-        @param view_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        :param parent: Родительская форма.
+        :param context: Контекст.
+        :param view_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <View> in class %s' % self.__class__.__name__
     
@@ -187,9 +187,9 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
                search_form_psp=None):
         """
         Режим поиска объекта.
-        @param parent: Родительская форма.
-        @param context:Контекст.
-        @param search_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        :param parent: Родительская форма.
+        :param context:Контекст.
+        :param search_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <Search> in class %s' % self.__class__.__name__
     
@@ -197,9 +197,9 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
                choice_form_psp=None):
         """
         Режим выбора объекта с элементом поиска/фильтра.
-        @param parent: Родительская форма.
-        @param context:Контекст.
-        @param choice_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        :param parent: Родительская форма.
+        :param context:Контекст.
+        :param choice_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <Choice> in class %s' % self.__class__.__name__
 
@@ -208,49 +208,49 @@ class icBusinessObjInterface(icworkbase.icWorkBase, persistent.icObjPersistent, 
         """
         Режим выбора объекта с элементом поиска/фильтра.
         В виде страницы главного нотебука.
-        @param parent: Родительская форма.
-        @param context:Контекст.
-        @param choice_from_psp: Паспорт формы для подмены стандартной формы вывода.
+        :param parent: Родительская форма.
+        :param context:Контекст.
+        :param choice_from_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         assert None, 'Abstract method <ChoicePage> in class %s' % self.__class__.__name__
 
     def Print(self, report=None, bPreview=False, eval_space=None):
         """
         Печать.
-        @param report: Указание альтернативного отчета вывода.
+        :param report: Указание альтернативного отчета вывода.
             Если None, то отчет берется из спецификации.
-        @param bPreview: Открыть отчет в режиме предварительного просмотра?
-        @param evalSpace_: Пространство имен.
+        :param bPreview: Открыть отчет в режиме предварительного просмотра?
+        :param evalSpace_: Пространство имен.
         """
         assert None, 'Abstract method <Print> in class %s' % self.__class__.__name__
     
     def Del(self, UUID=None, eval_space=None):
         """
         Удаление.
-        @param UUID: uuid удаляемого объекта.
-        @param evalSpace_: Пространство имен.
+        :param UUID: uuid удаляемого объекта.
+        :param evalSpace_: Пространство имен.
         """
         assert None, 'Abstract method <Del> in class %s' % self.__class__.__name__
         
     def sendTo(self, to_address=None, eval_space=None):
         """
         Отправка.
-        @param to_address: Указание адресата.
-        @param evalSpace_: Пространство имен.
+        :param to_address: Указание адресата.
+        :param evalSpace_: Пространство имен.
         """
         assert None, 'Abstract method <sendTo> in class %s' % self.__class__.__name__
     
     def save_obj(self, UUID=None):
         """
         Сохранить внутренние данные в хранилище.
-        @param UUID: Идентификатор. Если None, то сохранить текущий.
+        :param UUID: Идентификатор. Если None, то сохранить текущий.
         """
         assert None, 'Abstract method <save_obj> in class %s' % self.__class__.__name__
         
     def load_obj(self, UUID=None):
         """
         Загрузить внутренние данные из хранилища.
-        @param UUID: Идентификатор.
+        :param UUID: Идентификатор.
         """
         assert None, 'Abstract method <load_obj> in class %s' % self.__class__.__name__
         
@@ -287,7 +287,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icBusinessObjInterface.__init__(self, parent)
         
@@ -303,42 +303,42 @@ class icBusinessObjProto(icBusinessObjInterface):
     def isDoInit(self):
         """
         Определена функция инициализации?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def isDoEdit(self):
         """
         Определена функция редактирования?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def isDoView(self):
         """
         Определена функция просмотра?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def isDoSearch(self):
         """
         Определена функция поиска?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def isDoChoice(self):
         """
         Определена функция выбора?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def doInit(self, *args, **kwargs):
         """
         Функция инициализации.
-        @return: Объект функции инициализации,
+        :return: Объект функции инициализации,
             или None если не определена.
         """
         return None
@@ -346,7 +346,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def doEdit(self, *args, **kwargs):
         """
         Функция редактирования.
-        @return: Объект функции редактирования,
+        :return: Объект функции редактирования,
             или None если не определена.
         """
         return None
@@ -354,7 +354,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def doView(self, *args, **kwargs):
         """
         Функция просмотра.
-        @return: Объект функции просмотра,
+        :return: Объект функции просмотра,
             или None если не определена.
         """
         return None
@@ -362,7 +362,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def doSearch(self, *args, **kwargs):
         """
         Функция поиска.
-        @return: Объект функции поиска,
+        :return: Объект функции поиска,
             или None если не определена.
         """
         return None
@@ -370,7 +370,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def doChoice(self, *args, **kwargs):
         """
         Функция выбора.
-        @return: Объект функции выбора,
+        :return: Объект функции выбора,
             или None если не определена.
         """
         return None
@@ -378,28 +378,28 @@ class icBusinessObjProto(icBusinessObjInterface):
     def isValidInit(self):
         """
         Определена функция валидации при инициализации?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def isValidEdit(self):
         """
         Определена функция валидации при редактировании?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def isValidDel(self):
         """
         Определена функция валидации при удалении?
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def validInit(self, *args, **kwargs):
         """
         Функция валидации при инициализации.
-        @return: Объект функции инициализации,
+        :return: Объект функции инициализации,
             или None если не определена.
         """
         return None
@@ -407,7 +407,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def validEdit(self, *args, **kwargs):
         """
         Функция валидации при редактировании.
-        @return: Объект функции инициализации,
+        :return: Объект функции инициализации,
             или None если не определена.
         """
         return None
@@ -415,7 +415,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def validDel(self, *args, **kwargs):
         """
         Функция валидации при удалении.
-        @return: Объект функции инициализации,
+        :return: Объект функции инициализации,
             или None если не определена.
         """
         return None
@@ -423,7 +423,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def getObjDescription(self, UUID=None):
         """
         Описание бизнес-объекта  предметной области.
-        @param UUID: Уникальный идентификатор объекта.
+        :param UUID: Уникальный идентификатор объекта.
         """
         if UUID is not None:
             self.loadRequisiteData(UUID)
@@ -446,11 +446,11 @@ class icBusinessObjProto(icBusinessObjInterface):
     def Init(self, parent=None, context=None, auto_add=False, init_form_psp=None):
         """
         Запуск инициализации/создания.
-        @param parent: Родительская форма.
-        @param context: Контекст.
-        @param auto_add: Признак автодобавления в БД.
-        @param init_form_psp: Паспорт формы для подмены стандартной формы вывода.
-        @return: Словарь нового объекта или None в случае ошибки.
+        :param parent: Родительская форма.
+        :param context: Контекст.
+        :param auto_add: Признак автодобавления в БД.
+        :param init_form_psp: Паспорт формы для подмены стандартной формы вывода.
+        :return: Словарь нового объекта или None в случае ошибки.
         """
         # Перед созданием формы необходмо создать
         # все ресурсы таблиц хранения объекта, если
@@ -516,10 +516,10 @@ class icBusinessObjProto(icBusinessObjInterface):
     def Search(self, parent=None, context=None, search_form_psp=None):
         """
         Режим поиска объекта.
-        @param parent: Родительская форма.
-        @param context: Пространство имен.
-        @param search_form_psp: Паспорт формы для подмены стандартной формы вывода.
-        @return: Возвращает UUID выбранного объекта или None,
+        :param parent: Родительская форма.
+        :param context: Пространство имен.
+        :param search_form_psp: Паспорт формы для подмены стандартной формы вывода.
+        :return: Возвращает UUID выбранного объекта или None,
         если объект не выбран.
         """
         # Перед созданием формы необходмо создать
@@ -572,10 +572,10 @@ class icBusinessObjProto(icBusinessObjInterface):
     def Choice(self, parent=None, context=None, choice_form_psp=None):
         """
         Режим выбора объекта сэлементом поиска/фильтра.
-        @param parent: Родительская форма.
-        @param context: Контекст формы.
-        @param choice_form_psp: Паспорт формы для подмены стандартной формы вывода.
-        @return: Возвращает UUID выбранного объекта или None,
+        :param parent: Родительская форма.
+        :param context: Контекст формы.
+        :param choice_form_psp: Паспорт формы для подмены стандартной формы вывода.
+        :return: Возвращает UUID выбранного объекта или None,
         если объект не выбран.
         """
         # Перед созданием формы необходмо создать
@@ -625,9 +625,9 @@ class icBusinessObjProto(icBusinessObjInterface):
         """
         Режим выбора объекта с элементом поиска/фильтра.
         В виде страницы главного нотебука.
-        @param parent: Родительская форма.
-        @param context: Контекст.
-        @param choice_form_psp: Паспорт формы для подмены стандартной формы вывода.
+        :param parent: Родительская форма.
+        :param context: Контекст.
+        :param choice_form_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         # Перед созданием необходмо создать
         # все ресурсы таблиц хранения объекта, если
@@ -659,12 +659,12 @@ class icBusinessObjProto(icBusinessObjInterface):
     def Edit(self, parent=None, context=None, UUID=None, edit_form_psp=None):
         """
         Запуск объекта на редактирование.
-        @param parent: Родительская форма.
-        @param context: Контекст.
-        @param UUID: Уникальный идентификатор редактируемого объекта.
+        :param parent: Родительская форма.
+        :param context: Контекст.
+        :param UUID: Уникальный идентификатор редактируемого объекта.
         Если None, то идентификатор берется из текущего объекта.
-        @param edit_form_psp: Паспорт формы для подмены стандартной формы вывода.
-        @return: True-исменения успешно сохранены, False-нажата <Отмена>.
+        :param edit_form_psp: Паспорт формы для подмены стандартной формы вывода.
+        :return: True-исменения успешно сохранены, False-нажата <Отмена>.
         """
         # Перед созданием формы необходмо создать
         # все ресурсы таблиц хранения объекта, если
@@ -736,10 +736,10 @@ class icBusinessObjProto(icBusinessObjInterface):
     def View(self, parent=None, context=None, UUID=None, view_form_psp=None):
         """
         Режим просмотра объекта.
-        @param parent: Родительская форма.
-        @param context: Контекст.
-        @param UUID: Уникальный идентификатор.
-        @param view_form_psp: Паспорт формы для подмены стандартной формы вывода.
+        :param parent: Родительская форма.
+        :param context: Контекст.
+        :param UUID: Уникальный идентификатор.
+        :param view_form_psp: Паспорт формы для подмены стандартной формы вывода.
         """
         # Перед созданием формы необходмо создать
         # все ресурсы таблиц хранения объекта, если
@@ -792,20 +792,20 @@ class icBusinessObjProto(icBusinessObjInterface):
     def Print(self, report=None, bPreview=False, eval_space=None):
         """
         Печать документа.
-        @param report: Указание альтернативного отчета вывода.
+        :param report: Указание альтернативного отчета вывода.
             Если None, то отчет берется из спецификации.
-        @param bPreview: Открыть отчет в режиме предварительного просмотра?
-        @param evalSpace_: Пространство имен.
+        :param bPreview: Открыть отчет в режиме предварительного просмотра?
+        :param evalSpace_: Пространство имен.
         """
         pass
         
     def Del(self, UUID=None, eval_space=None, ask=True):
         """
         Удаление документа.
-        @param UUID: uuid удаляемого объекта.
-        @param evalSpace_: Пространство имен.
-        @param ask: Спросить об удалении?
-        @return: True - удаление прошло успешно.
+        :param UUID: uuid удаляемого объекта.
+        :param evalSpace_: Пространство имен.
+        :param ask: Спросить об удалении?
+        :return: True - удаление прошло успешно.
             False - удаление отменено по какойто причине
         """
         if UUID is None:
@@ -826,8 +826,8 @@ class icBusinessObjProto(icBusinessObjInterface):
     def sendTo(self, to_address=None, eval_space=None):
         """
         Отправка документа.
-        @param to_address: Указание адресата.
-        @param evalSpace_: Пространство имен.
+        :param to_address: Указание адресата.
+        :param evalSpace_: Пространство имен.
         """
         pass
 
@@ -844,7 +844,7 @@ class icBusinessObjProto(icBusinessObjInterface):
         ВНИМАНИЕ! Метод нельзя называть save, т.к.
         будет происходить переопределение метода save
         в персистент классе.
-        @param UUID: Идентификатор документа.
+        :param UUID: Идентификатор документа.
         Если None, то сохранить текущий документ.
         """
         if UUID is not None:
@@ -865,7 +865,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def load_obj(self, UUID=None):
         """
         Загрузить внутренние данные документа из хранилища.
-        @param UUID: Идентификатор документа.
+        :param UUID: Идентификатор документа.
         """
         if UUID is not None:
             self.uuid = UUID   # Запомнить идентификатор документа
@@ -875,8 +875,8 @@ class icBusinessObjProto(icBusinessObjInterface):
     def update_obj(self, UUID=None, **requisite_values):
         """
         Изменить внутренние данные документа из хранилища.
-        @param UUID: Идентификатор документа.
-        @param requisite_values: Словарь значений изменяемых реквизитов.
+        :param UUID: Идентификатор документа.
+        :param requisite_values: Словарь значений изменяемых реквизитов.
         """
         if UUID is not None:
             self.uuid = UUID   # Запомнить идентификатор документа
@@ -892,8 +892,8 @@ class icBusinessObjProto(icBusinessObjInterface):
     def is_obj(self, UUID=None):
         """
         Проверка на существование данных документа в хранилище.
-        @param UUID: Идентификатор документа.
-        @return: True/False.
+        :param UUID: Идентификатор документа.
+        :return: True/False.
         """
         if UUID is None:
              UUID = self.uuid   # Запомнить идентификатор документа
@@ -903,8 +903,8 @@ class icBusinessObjProto(icBusinessObjInterface):
     def delete_obj(self, UUID=None):
         """
         Удаление данных документа из хранилища.
-        @param UUID: Идентификатор документа.
-        @return: True/False.
+        :param UUID: Идентификатор документа.
+        :return: True/False.
         """
         if UUID is None:
              UUID = self.uuid   # Запомнить идентификатор документа
@@ -915,9 +915,9 @@ class icBusinessObjProto(icBusinessObjInterface):
     def getAllUUID(self, order_sort=None):
         """
         UUIDы всех объектов.
-        @param order_sort: Порядок сортировки.
+        :param order_sort: Порядок сортировки.
             Список имен полей, в котором надо сортировать.
-        @return: Список UUID всех объектов.
+        :return: Список UUID всех объектов.
         """
         storage = self.getWorkStorage()
         return storage.getAllUUID(self, order_sort=order_sort)
@@ -950,7 +950,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def getRequisiteData(self):
         """
         Получить все реквизиты документа/спецификации в виде словаря.
-        @return: Словарь значений реквизитов.
+        :return: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -968,7 +968,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def _getRequisiteData(self, parent_id=None):
         """
         Получить все реквизиты документа/спецификации в виде словаря.
-        @param parent_id: Родительский идентификатор.
+        :param parent_id: Родительский идентификатор.
         """
         # Заполнить данными реквизитов
         data = {}
@@ -992,7 +992,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def getRequisiteDataDefault(self):
         """
         Получить все значения по умолчанию реквизитов объекта в виде словаря.
-        @return: Словарь значений реквизитов.
+        :return: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -1016,7 +1016,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def saveRequisiteData(self, requisite_data=None):
         """
         Сохранить все реквизиты объекта в хранилище. Данные реквизитов в виде словаря.
-        @param requisite_data: Словарь значений реквизитов.
+        :param requisite_data: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -1026,7 +1026,7 @@ class icBusinessObjProto(icBusinessObjInterface):
                 }
             Если словарь значений реквизитов не определен, 
             тогда значения беруться из реквизитов.
-        @return: Возвращает True-сохранение прошло удачно, False-не удачно,None-ошибка.
+        :return: Возвращает True-сохранение прошло удачно, False-не удачно,None-ошибка.
         """
         try:
             if requisite_data is None:
@@ -1053,9 +1053,9 @@ class icBusinessObjProto(icBusinessObjInterface):
                 'имя спецификации документа':[список словарей реквизитов],
                 ...
                 }
-        @param UUID: Уникальный идентификатор объекта, если
+        :param UUID: Уникальный идентификатор объекта, если
             None, то берется текущий uuid объекта.
-        @return: Данные реквизитов в виде словаря или None-ошибка.
+        :return: Данные реквизитов в виде словаря или None-ошибка.
         """
         if UUID is None:
             UUID = self.getUUID()
@@ -1077,7 +1077,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def _setRequisiteData(self, requisite_data):
         """
         Установить значений реквизитов объекта из данных.
-        @param requisite_data: Словарь значений реквизитов.
+        :param requisite_data: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -1085,7 +1085,7 @@ class icBusinessObjProto(icBusinessObjInterface):
                 'имя табличного':[список словарей реквизитов],
                 ...
                 }
-        @return: Возвращает True-установка прошла удачно, 
+        :return: Возвращает True-установка прошла удачно, 
             False-не удачно,None-ошибка.
         """
         requisite_data = self._correctRequisiteData(requisite_data)
@@ -1132,7 +1132,7 @@ class icBusinessObjProto(icBusinessObjInterface):
         ВНИМАНИЕ! Перед установкой необходимо скорректировать данные реквизитов.
         Для того чтобы в реквизиты NSI попадали коды справочников а не их надписи.
         Ключи кодов справочников начинаются с _ и имеют более высокий приоритет.
-        @param requisite_data: Словарь значений реквизитов.
+        :param requisite_data: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -1141,7 +1141,7 @@ class icBusinessObjProto(icBusinessObjInterface):
                 'имя спецификации документа':[список словарей реквизитов],
                 ...
                 }
-        @return: Откорректированный для установки словарь значений реквизитов.
+        :return: Откорректированный для установки словарь значений реквизитов.
         """
         if requisite_data is None:
             requisite_data = dict()
@@ -1164,7 +1164,7 @@ class icBusinessObjProto(icBusinessObjInterface):
         """
         Создать новую запись со всеми реквизиты объекта в хранилище. 
         Данные реквизитов в виде словаря.
-        @param requisite_data: Словарь значений реквизитов.
+        :param requisite_data: Словарь значений реквизитов.
             Словарь реквизитов представлен в виде 
                 {
                 'имя реквизита':значение реквизита,
@@ -1174,7 +1174,7 @@ class icBusinessObjProto(icBusinessObjInterface):
                 }
             Если словарь значений не определен, тогда значения 
             реквизитов заполняются значениями по умолчанию.
-        @return: Возвращает True-сохранение прошло удачно, False-не удачно,None-ошибка.
+        :return: Возвращает True-сохранение прошло удачно, False-не удачно,None-ошибка.
         """
         try:
             self._setRequisiteData(requisite_data)
@@ -1192,7 +1192,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def startEdit(self, UUID=None):
         """
         Запуск на редактирование.
-        @return: True - запуск редактирования, 
+        :return: True - запуск редактирования, 
         False - объект заблокирован.
         """
         if UUID is not None:
@@ -1235,8 +1235,8 @@ class icBusinessObjProto(icBusinessObjInterface):
         """
         Найти реквизит по имени.
         Поиск ведется рекурсивно.
-        @param requisite_name: Имя искомого реквизита.
-        @return: Возвращает объект реквизита или None,
+        :param requisite_name: Имя искомого реквизита.
+        :return: Возвращает объект реквизита или None,
             если реквизит с таким именем не найден.
         """
         for requisite in self.getChildrenRequisites():
@@ -1256,17 +1256,17 @@ class icBusinessObjProto(icBusinessObjInterface):
     def isRequisite(self, requitite_name):
         """
         Проверка есть ли такой реквизит в объекте.
-        @param requitite_name: Имя реквизита.
-        @return: True/False.
+        :param requitite_name: Имя реквизита.
+        :return: True/False.
         """
         return self.findRequisite(requitite_name) is not None
 
     def setRequisiteValue(self, requisite_name, value):
         """
         Установить значение реквизита.
-        @param requisite_name: Имя реквизита.
-        @param value: Значение реквизита.
-        @return: True/False.
+        :param requisite_name: Имя реквизита.
+        :param value: Значение реквизита.
+        :return: True/False.
         """
         requisite = self.getRequisite(requisite_name)
         if requisite:
@@ -1279,8 +1279,8 @@ class icBusinessObjProto(icBusinessObjInterface):
     def getRequisiteValue(self, requisite_name):
         """
         Определить значение реквизита.
-        @param requisite_name: Имя реквизита.
-        @return: Значение реквизита или None в случае ошибки.
+        :param requisite_name: Имя реквизита.
+        :return: Значение реквизита или None в случае ошибки.
         """
         requisite = self.getRequisite(requisite_name)
         if requisite:
@@ -1292,8 +1292,8 @@ class icBusinessObjProto(icBusinessObjInterface):
     def getChildRequisite(self, requisite_name):
         """
         Получить объект реквизита по имени.
-        @param requisite_name: Имя реквизита.
-        @return: Объект реквизита или None если нет такого реквизита.
+        :param requisite_name: Имя реквизита.
+        :return: Объект реквизита или None если нет такого реквизита.
         """
         for requisite in self.getChildrenRequisites():
             if requisite.name == requisite_name:
@@ -1303,7 +1303,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def getChildrenRequisiteData(self):
         """
         Получить данные реквизитов в виде словаря.
-        @return: Заполненный словарь значений реквизитов.
+        :return: Заполненный словарь значений реквизитов.
             Формат:
             {...
                 'Имя реквизита': значение реквизита, ...
@@ -1318,7 +1318,7 @@ class icBusinessObjProto(icBusinessObjInterface):
     def getChildrenRequisiteStrData(self):
         """
         Получить данные реквизитов в виде словаря.
-        @return: Заполненный словарь строковых значений реквизитов.
+        :return: Заполненный словарь строковых значений реквизитов.
             Формат:
             {...
                 'Имя реквизита': строковое значение реквизита, ...
@@ -1335,6 +1335,6 @@ class icBusinessObjProto(icBusinessObjInterface):
         Имена всех реквизитов.
         Эта функция необходима для отфильтровывания
         значений не принадлежащих к БИЗНЕС-ОБЪЕКТУ.
-        @return: Список имен реквизитов.
+        :return: Список имен реквизитов.
         """
         return [requisite.name for requisite in self.getChildrenRequisites()]

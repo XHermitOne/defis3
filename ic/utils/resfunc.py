@@ -4,8 +4,8 @@
 """
 Модуль интерфейсных функций работы с файлом ресурсов.
 
-@var DEFAULT_MENU_RES_FILE: Имя ресурсного файла движка по умолчанию
-@var STRUCT_PADDING: Наполнитель позиций при отображении вложенности пунктов в структуре
+:var DEFAULT_MENU_RES_FILE: Имя ресурсного файла движка по умолчанию
+:var STRUCT_PADDING: Наполнитель позиций при отображении вложенности пунктов в структуре
 """
 
 # Подключение библиотек
@@ -50,8 +50,8 @@ RES_EXT_PRJ = '.pro'
 def ReadAndEvalFile(FileName_, *args, **kwargs):
     """
     Загрузить информацию из файла ресурсов.
-    @param FileName_: имя файла ресурсов.
-    @return: Возвращает структуру Python определенную в виде текста в файле filename
+    :param FileName_: имя файла ресурсов.
+    :return: Возвращает структуру Python определенную в виде текста в файле filename
     """
     return util.readAndEvalFile(FileName_, *args, **kwargs)
 
@@ -59,8 +59,8 @@ def ReadAndEvalFile(FileName_, *args, **kwargs):
 def openResFile(res_filename):
     """
     Загрузить информацию из файла ресурсов в память.
-    @param res_filename: имя файла ресурсов.
-    @return: Возвращает словарь Python из файла res_filename
+    :param res_filename: имя файла ресурсов.
+    :return: Возвращает словарь Python из файла res_filename
     """
     global CUR_MENU_RES_FILE_NAME
     global CUR_MENU_RES_FILE
@@ -82,9 +82,9 @@ def closeResFile():
 def loadObjStruct(Name_, ResFile_=''):
     """
     Загрузить атрибуты компонента из файла ресурсов в виде словаря(структуры).
-    @param Name_:  имя объекта.
-    @param ResFile_: имя ресурсного файла.
-    @return: Возвращает атрибуты компонента в виде словаря
+    :param Name_:  имя объекта.
+    :param ResFile_: имя ресурсного файла.
+    :return: Возвращает атрибуты компонента в виде словаря
         или пустой словарь в случае ошибки.
     """
     from . import resource
@@ -109,7 +109,7 @@ __version__ = (0, 0, 0, 1)
 def createInitFile(Path_):
     """
     Создает файл __init__.py в директории path если его там нет.
-    @return: Возвращает True, если файл был создан или уже есть.
+    :return: Возвращает True, если файл был создан или уже есть.
     """
     if not Path_:
         return False
@@ -161,10 +161,10 @@ __version__ = (0, 0, 0, 1)
 def createPyFile(py_filename, py_file_body=None):
     """
     Создать файл питоновского модуля.
-    @param py_filename: Имя файла *.py.
-    @param py_file_body: Тело файла.
+    :param py_filename: Имя файла *.py.
+    :param py_file_body: Тело файла.
         Если None, то заполняется по умолчанию.
-    @return: Возвращает True, если файл был создан или уже есть.
+    :return: Возвращает True, если файл был создан или уже есть.
     """
     if os.path.isfile(py_filename):
         return True
@@ -192,7 +192,7 @@ def createPyFile(py_filename, py_file_body=None):
 def loadResource(res_filename):
     """
     Получить ресурс в ресурсном файле.
-    @param res_filename: Полное имя ресурсного файла.
+    :param res_filename: Полное имя ресурсного файла.
     """
     res_filename = filefunc.get_absolute_path(res_filename)
     # Сначала предположим что файл в формате Pickle.
@@ -210,7 +210,7 @@ def loadResource(res_filename):
 def loadResourcePickle(res_filename):
     """
     Получить ресурс из ресурсного файла в формате Pickle.
-    @param res_filename: Полное имя ресурсного файла.
+    :param res_filename: Полное имя ресурсного файла.
     """
     res_filename = filefunc.get_absolute_path(res_filename)
     if os.path.isfile(res_filename):
@@ -233,7 +233,7 @@ def loadResourcePickle(res_filename):
 def loadResourceText(res_filename):
     """
     Получить ресурс из ресурсного файла в текстовом формате.
-    @param res_filename: Полное имя ресурсного файла.
+    :param res_filename: Полное имя ресурсного файла.
     """
     res_filename = filefunc.get_absolute_path(res_filename)
     if os.path.isfile(res_filename):
@@ -256,9 +256,9 @@ def loadResourceText(res_filename):
 def saveResourcePickle(res_filename, resource_data):
     """
     Сохранить ресурс в файле в формате Pickle.
-    @param res_filename: Полное имя ресурсного файла.
-    @param resource_data: Словарно-списковая структура спецификации.
-    @return: Возвращает результат выполнения операции True/False.
+    :param res_filename: Полное имя ресурсного файла.
+    :param resource_data: Словарно-списковая структура спецификации.
+    :return: Возвращает результат выполнения операции True/False.
     """
     res_filename = filefunc.get_absolute_path(res_filename)
     f = None
@@ -285,10 +285,10 @@ def saveResourcePickle(res_filename, resource_data):
 def saveResourceText(res_filename, resource_data, bToStruct=False):
     """
     Сохранить ресурс в файле в текстовом формате.
-    @param res_filename: Полное имя ресурсного файла.
-    @param resource_data: Словарно-списковая структура спецификации.
-    @param bToStruct: Сохранить в структурном виде ресурс?
-    @return: Возвращает результат выполнения операции True/False.
+    :param res_filename: Полное имя ресурсного файла.
+    :param resource_data: Словарно-списковая структура спецификации.
+    :param bToStruct: Сохранить в структурном виде ресурс?
+    :return: Возвращает результат выполнения операции True/False.
     """
     res_filename = filefunc.get_absolute_path(res_filename)
     f = None
@@ -319,8 +319,8 @@ def saveResourceText(res_filename, resource_data, bToStruct=False):
 def isPackage(dir_path):
     """
     Проверка является ли директория пакетом.
-    @param dir_path: Указание директории.
-    @return: Возвращает True/False.
+    :param dir_path: Указание директории.
+    :return: Возвращает True/False.
     """
     is_dir = os.path.isdir(dir_path)
     is_init_file = False
@@ -336,11 +336,11 @@ def lockRes(res_name, res_filename, res_file_ext, lock_dir=None):
         как ИмяРесурса_ИмяФайлаРесурса_РасширениеФайлаРесурса.lck.
         В файл блокировки записывается информация о владельце блокировки 
         в виде словаря {'computer':Имя хоста с которого заблокировался ресурс}.
-    @param res_name: Имя ресурса. 
+    :param res_name: Имя ресурса. 
         Если имя ресурса None, то блокируется файл ресурса целиком.
-    @param res_filename: Имя файла ресурса.
-    @param res_file_ext: Расширение файла ресурса/тип ресурса.    
-    @param lock_dir: Папка блокировок.
+    :param res_filename: Имя файла ресурса.
+    :param res_file_ext: Расширение файла ресурса/тип ресурса.    
+    :param lock_dir: Папка блокировок.
     """
     if lock_dir is None:
         lock_dir = lockfunc.getLockDir()
@@ -366,10 +366,10 @@ def lockRes(res_name, res_filename, res_file_ext, lock_dir=None):
 def unlockRes(res_name, res_filename, res_file_ext, lock_dir=None):
     """
     Разблокировать ресурс. Ресурс м.б. разблокирован только с хоста-владельца.
-    @param res_name: Имя ресурса. 
-    @param res_filename: Имя файла ресурса.
-    @param res_file_ext: Расширение файла ресурса/тип ресурса.    
-    @param lock_dir: Папка блокировок.
+    :param res_name: Имя ресурса. 
+    :param res_filename: Имя файла ресурса.
+    :param res_file_ext: Расширение файла ресурса/тип ресурса.    
+    :param lock_dir: Папка блокировок.
     """
     if lock_dir is None:
         lock_dir = lockfunc.getLockDir()
@@ -390,10 +390,10 @@ def unlockRes(res_name, res_filename, res_file_ext, lock_dir=None):
 def isLockRes(res_name, res_filename, res_file_ext, lock_dir=None):
     """
     Проверить заблокирован ли ресурс.
-    @param res_name: Имя ресурса. 
-    @param res_filename: Имя файла ресурса.
-    @param res_file_ext: Расширение файла ресурса/тип ресурса.    
-    @param lock_dir: Папка блокировок.
+    :param res_name: Имя ресурса. 
+    :param res_filename: Имя файла ресурса.
+    :param res_file_ext: Расширение файла ресурса/тип ресурса.    
+    :param lock_dir: Папка блокировок.
     """
     if lock_dir is None:
         lock_dir = lockfunc.getLockDir()
@@ -438,7 +438,7 @@ def isLockRes(res_name, res_filename, res_file_ext, lock_dir=None):
 def delAllLockRes(lock_dir):
     """
     Удалить все файлы блокировок ресурсов данного хоста из папки блокировок.
-    @param lock_dir: Папка блокировок.
+    :param lock_dir: Папка блокировок.
     """
     if lock_dir is None:
         lock_dir = lockfunc.getLockDir()
@@ -491,9 +491,9 @@ def getNewID():
 def findSpcInResource(name, resource_data):
     """
     Найти спецификацию в ресурсе по имени.
-    @param name: Имя спецификации.
-    @param resource_data: Дерево ресурсов.
-    @return: Возвращает искомую спецификацию или None, если
+    :param name: Имя спецификации.
+    :param resource_data: Дерево ресурсов.
+    :return: Возвращает искомую спецификацию или None, если
         спецификация не найдена.
     """
     if isinstance(resource_data, list):

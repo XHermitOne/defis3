@@ -23,8 +23,8 @@ class icCreateComponentWizard(create_component_wizard_proto.icCreateComponentWiz
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
-        @param args:
-        @param kwargs:
+        :param args:
+        :param kwargs:
         """
         create_component_wizard_proto.icCreateComponentWizardProto.__init__(self, *args, **kwargs)
 
@@ -32,8 +32,8 @@ class icCreateComponentWizard(create_component_wizard_proto.icCreateComponentWiz
 def show_create_component_wizard(parent=None):
     """
     Функция отображения мастера создания компонента.
-    @param parent: Родительское окно для визарда.
-    @return:
+    :param parent: Родительское окно для визарда.
+    :return:
     """
     try:
         if parent is None:
@@ -47,7 +47,7 @@ def show_create_component_wizard(parent=None):
 def test():
     """
     Функция тестирования.
-    @return:
+    :return:
     """
     app = wx.PySimpleApp()
     frame = wx.Frame(parent=None)

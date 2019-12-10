@@ -59,16 +59,16 @@ class icBackground(object):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace={}):
         """
         Конструктор для создания объекта icBoxSizer.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         icSpcDefStruct(SPC_IC_BACKGROUND, component)
         # Список всех редактируемых объектов
@@ -110,7 +110,7 @@ class icBackground(object):
     def AddObject(self, obj):
         """
         Добавляет объект в коллекцию редактируемых объектов.
-        @param obj: Объект, который будет редактироваться.
+        :param obj: Объект, который будет редактироваться.
         """
         # Для того, чтобы можно было определить ресурсное описание компонента от
         # которого приходять сообщения в обработчик, генерируем для каждого редактируемого
@@ -142,14 +142,14 @@ class icBackground(object):
         """
         Добавляет объект определенного типа в ресурсное описание в определенное место с
         определенными размерами.
-        @type prnt: C{wx.Window}
-        @param prnt: Компонент ресурса, куда добавляется новый объект.
-        @type toggleType: C{string}
-        @param toggleType: Тип добавляемого объекта.
-        @type pos: C{wx.Point}
-        @param pos: Позиция, где объект будет распологаться.
-        @type size: C{wx.Size}
-        @param size: Размеры объекта.
+        :type prnt: C{wx.Window}
+        :param prnt: Компонент ресурса, куда добавляется новый объект.
+        :type toggleType: C{string}
+        :param toggleType: Тип добавляемого объекта.
+        :type pos: C{wx.Point}
+        :param pos: Позиция, где объект будет распологаться.
+        :type size: C{wx.Size}
+        :param size: Размеры объекта.
         """
         if not prnt:
             prnt = self.GetEditorPanel()
@@ -178,7 +178,7 @@ class icBackground(object):
     def convToBGR(self, obj=None):
         """
         Конвертирует из координат на родительском окне в координаты подложки.
-        @type pos: C{wx.Point}
+        :type pos: C{wx.Point}
         @parma pos: Координаты на родительском окне.
         """
         if not obj:
@@ -199,13 +199,13 @@ class icBackground(object):
     def ChangeObjProperty(self, obj, property, value):
         """
         Изменяет заданное свойство объекта в графическом редакторе.
-        @param obj: Объекта, у которого меняется свойство.
-        @type property: C{string}
-        @param property: Имя свойства.
-        @type value: C{...}
-        @param value: Новое значение свойства.
-        @rtype: C{bool}
-        @return: Признак успешного изменения свойства.
+        :param obj: Объекта, у которого меняется свойство.
+        :type property: C{string}
+        :param property: Имя свойства.
+        :type value: C{...}
+        :param value: Новое значение свойства.
+        :rtype: C{bool}
+        :return: Признак успешного изменения свойства.
         """
         ret = True
         if obj:
@@ -268,14 +268,14 @@ class icBackground(object):
     def ChangeItemProperty(self, iditem, property, value):
         """
         Изменяет заданное свойство объекта в графическом редакторе.
-        @type iditem: C{int}
-        @param iditem: Идентификатор ресусного описания объекта.
-        @type property: C{string}
-        @param property: Имя свойства.
-        @type value: C{...}
-        @param value: Новое значение свойства.
-        @rtype: C{bool}
-        @return: Признак успешного изменения свойства.
+        :type iditem: C{int}
+        :param iditem: Идентификатор ресусного описания объекта.
+        :type property: C{string}
+        :param property: Имя свойства.
+        :type value: C{...}
+        :param value: Новое значение свойства.
+        :rtype: C{bool}
+        :return: Признак успешного изменения свойства.
         """
         # По идентификатору находим объкт, у которого меняется свойство
         for obj in self.container:
@@ -291,12 +291,12 @@ class icBackground(object):
     def ChangeSelItemProperty(self, property, value):
         """
         Изменяет заданное свойство текущего объекта в графическом редакторе.
-        @type property: C{string}
-        @param property: Имя свойства.
-        @type value: C{...}
-        @param value: Новое значение свойства.
-        @rtype: C{bool}
-        @return: Признак успешного изменения свойства.
+        :type property: C{string}
+        :param property: Имя свойства.
+        :type value: C{...}
+        :param value: Новое значение свойства.
+        :rtype: C{bool}
+        :return: Признак успешного изменения свойства.
         """
         # По идентификатору находим объкт, у которого меняется свойство
         ret = False
@@ -312,28 +312,28 @@ class icBackground(object):
     def ChangeResItemProperty(self, iditem, property, value, bRefresh=True):
         """
         Изменяет заданное свойство ресурсного описания объекта.
-        @type iditem: C{int}
-        @param iditem: Идентификатор ресурса, у которого изменяем свойство.
-        @type property: C{string}
-        @param property: Имя свойства.
-        @type value: C{...}
-        @param value: Новое значение свойства.
-        @type bRefresh: C{bool}
-        @param bRefresh: Признак обновления редактора свойств.
+        :type iditem: C{int}
+        :param iditem: Идентификатор ресурса, у которого изменяем свойство.
+        :type property: C{string}
+        :param property: Имя свойства.
+        :type value: C{...}
+        :param value: Новое значение свойства.
+        :type bRefresh: C{bool}
+        :param bRefresh: Признак обновления редактора свойств.
         """
         return self.propertyTree.tree.ChangePropertyId(iditem, property, value, bRefresh)
     
     def ChangeResProperty(self, obj, property, value, bRefresh=True):
         """
         Изменяет заданное свойство ресурсного описания объекта.
-        @type obj: C{icBase}
-        @param obj: Объект, у которого изменяем свойство.
-        @type property: C{string}
-        @param property: Имя свойства.
-        @type value: C{...}
-        @param value: Новое значение свойства.
-        @type bRefresh: C{bool}
-        @param bRefresh: Признак обновления редактора свойств.
+        :type obj: C{icBase}
+        :param obj: Объект, у которого изменяем свойство.
+        :type property: C{string}
+        :param property: Имя свойства.
+        :type value: C{...}
+        :param value: Новое значение свойства.
+        :type bRefresh: C{bool}
+        :param bRefresh: Признак обновления редактора свойств.
         """
         try:
             iditem = obj.resource['__item_id']
@@ -354,7 +354,7 @@ class icBackground(object):
     def DragSelObj(self, pos):
         """
         Захватывает выбранный объект для перетаскивания.
-        @type pos: C{wx.Point}
+        :type pos: C{wx.Point}
         @parma pos: Позиция захвата относительно родительского окна.
         """
         self.bDrag = True
@@ -1108,7 +1108,7 @@ class icBackground(object):
     def ReSizer(self, obj=None):
         """
         Перестраивает сайзер.
-        @param obj: Объект, который изменил свой параметры.
+        :param obj: Объект, который изменил свой параметры.
         """
         if not obj:
             obj = self.selectedObj
@@ -1174,10 +1174,10 @@ class icBackground(object):
         Выбор объкта в качестве текущего по попределенному идентификатору.
         Идентификатор хранится в ресурсном описании каждого объекта под ключом
         '__item_id'
-        @type res: C{dictionary}
-        @param res: Ресурсное описания объекта.
-        @rtype: C{Bool}
-        @return: Признак успешного выбора.
+        :type res: C{dictionary}
+        :param res: Ресурсное описания объекта.
+        :rtype: C{Bool}
+        :return: Признак успешного выбора.
         """
         for obj in self.container:
             try:
@@ -1194,10 +1194,10 @@ class icBackground(object):
         Выбор объкта в качестве текущего по определенному идентификатору.
         Идентификатор хранится в ресурсном описании каждого объекта под ключом
         '__item_id'
-        @type itemid: C{int}
-        @param itemid: Идентификатор описания объекта.
-        @rtype: C{Bool}
-        @return: Признак успешного выбора.
+        :type itemid: C{int}
+        :param itemid: Идентификатор описания объекта.
+        :rtype: C{Bool}
+        :return: Признак успешного выбора.
         """
         for obj in self.container:
             try:
@@ -1220,12 +1220,12 @@ class icBackground(object):
         """
         Функция выбора объкта в качестве текущего. Выбор происходит по
         нажатию левой кнопки мыши на выбираемом объекте.
-        @type obj_event: C{наследник от wx.Window}
-        @param obj_event: Выбираемый объект.
-        @type x: C{int}
-        @param x: Координата x, где произошло событие.
-        @type y: C{int}
-        @param y: Координата y, где произошло событие.
+        :type obj_event: C{наследник от wx.Window}
+        :param obj_event: Выбираемый объект.
+        :type x: C{int}
+        :param x: Координата x, где произошло событие.
+        :type y: C{int}
+        :param y: Координата y, где произошло событие.
         """
         # Отображаем в панели инструментов стили выбранного компонента и типы комопнентов,
         # которые можно добавлять в текущий компонент
@@ -1286,7 +1286,7 @@ class icBackground(object):
 def BindEditorEvent(self, id=None):
     """
     Функция создает все обработчики событий необходимые редактору форм.
-    @param self: Указатель на окно редактора.
+    :param self: Указатель на окно редактора.
     """
     self.Bind(wx.EVT_CLOSE, self.OnClose)
     self.Bind(wx.EVT_UPDATE_UI, self.OnUpdate)
@@ -1307,16 +1307,16 @@ class icBackgroundDialog(icBackground, icdialog.icDialog):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace={}):
         """
         Конструктор для создания объекта icBackgroundFrame.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         icBackground.__init__(self, parent, id, component, logType, evalSpace)
         icdialog.icDialog.__init__(self, parent, id, component, logType, evalSpace)
@@ -1336,16 +1336,16 @@ class icBackgroundPanel(icBackground, wx.Panel):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None):
         """
         Конструктор для создания объекта icBackgroundFDialog.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         icBackground.__init__(self, parent, id, component, logType, evalSpace)
         wx.Panel.__init__(self, parent, id=-1)
@@ -1362,16 +1362,16 @@ class icBackgroundFDialog(icwidget.icSimple, wx.Frame):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace={}):
         """
         Конструктор для создания объекта icBackgroundFDialog.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         component['style'] = wx.DEFAULT_FRAME_STYLE | wx.STAY_ON_TOP
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
@@ -1460,16 +1460,16 @@ class icBackgroundFrame(icBackground, icwidget.icSimple, wx.Frame):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None):
         """
         Конструктор для создания icBackgroundFrame.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         icBackground.__init__(self, parent, id, component, logType, evalSpace)
         component['style'] = wx.DEFAULT_FRAME_STYLE | wx.STAY_ON_TOP
@@ -1517,16 +1517,16 @@ class icBackgroundDocumentFrame(icBackground, icwidget.icBase, wx.ScrolledWindow
     def __init__(self, parent, id=-1, component=None, logType=0, context=None):
         """
         Конструктор для создания icBackgroundFrame.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param context: Контекст ресурса.
-        @type context: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param context: Контекст ресурса.
+        :type context: C{dictionary}
         """
         if component is None:
             res = dict(name='__EditorBackground__', type='Background', child=[])

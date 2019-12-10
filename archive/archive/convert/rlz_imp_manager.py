@@ -65,11 +65,11 @@ class icRealizImportManager(import_manager.icBalansImportManager):
     def _get_src_dbf_filename(self, src_year, src_month, n_warehouse, is_input=False):
         """
         Получить имя DBF файла исходных данных документа.
-        @param src_year: Год.
-        @param src_month: Месяц.
-        @param n_warehouse: Номер склада.
-        @param is_input: Признак приходного документа.
-        @return: Имя DBF файла исходных данных документа БАЛАНС+.
+        :param src_year: Год.
+        :param src_month: Месяц.
+        :param n_warehouse: Номер склада.
+        :param is_input: Признак приходного документа.
+        :return: Имя DBF файла исходных данных документа БАЛАНС+.
         """
         str_month = '%X' % src_month
         if n_warehouse in TARE_WAREHOUSES:
@@ -92,7 +92,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         2. Если поле пустое, то поиск в полях примечания:
             следующее слово после <накл>.
         3. Если в примечаниях не найдено, то используем номер счет фактуры поставщика.
-        @param record: Словарь записи DBF файла.
+        :param record: Словарь записи DBF файла.
         """
         # Получить поля записи
         prim = unicode(record['PRIM'], DBF_DEFAULT_ENCODE)
@@ -180,11 +180,11 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         Импорт документов реализации из БАЛАНСа.
             Выборка документов производиться по диапазону дат документов 
             по определенному складу.
-        @param dt_begin: Дата начала выборки документов.
-        @param dt_end: Дата конца выборки документов.
-        @param n_warehouse: Номер склада.
-        @param is_input: Признак приходного документа.
-        @return: True/False.
+        :param dt_begin: Дата начала выборки документов.
+        :param dt_end: Дата конца выборки документов.
+        :param n_warehouse: Номер склада.
+        :param is_input: Признак приходного документа.
+        :return: True/False.
         """
         log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ РЕАЛИЗАЦИИ ---')
 
@@ -213,11 +213,11 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         Импорт документов реализации из БАЛАНСа.
             Выборка документов производиться по диапазону дат документов 
             по определенному складу.
-        @param cur_year: Обрабатываемый год.
-        @param cur_month: Обрабатываемый месяц.
-        @param n_warehouse: Номер склада.
-        @param is_input: Признак приходного документа.
-        @param pack_doc: Объект документа пакетной обработки.
+        :param cur_year: Обрабатываемый год.
+        :param cur_month: Обрабатываемый месяц.
+        :param n_warehouse: Номер склада.
+        :param is_input: Признак приходного документа.
+        :param pack_doc: Объект документа пакетной обработки.
         """
         if pack_doc is None:
             log.warning(u'Не определен объект документа пакетной обработки')
@@ -253,11 +253,11 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         Импорт документов ТТН из БАЛАНСа.
             Выборка документов производиться по диапазону дат документов 
             по определенному складу.
-        @param cur_year: Обрабатываемый год.
-        @param cur_month: Обрабатываемый месяц.
-        @param n_warehouse: Номер склада.
-        @param is_input: Признак приходного документа.
-        @param pack_doc: Объект документа пакетной обработки.
+        :param cur_year: Обрабатываемый год.
+        :param cur_month: Обрабатываемый месяц.
+        :param n_warehouse: Номер склада.
+        :param is_input: Признак приходного документа.
+        :param pack_doc: Объект документа пакетной обработки.
         """
         if pack_doc is None:
             log.warning(u'Не определен объект документа пакетной обработки')
@@ -302,7 +302,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         """
         Загрузить данные пакета документов реализации (счет-фактур и ТОРГ12) 
             из DBF файла БАЛАНСа.
-        @param is_input: Признак приходного документа.
+        :param is_input: Признак приходного документа.
         """
         if dbf_filename is None or not os.path.exists(dbf_filename):
             log.warning(u'Отсутствует файл <%s> для импорта данных' % dbf_filename)
@@ -383,7 +383,7 @@ class icRealizImportManager(import_manager.icBalansImportManager):
     def _load_ttn_from_dbf(self, dbf_filename=None, begin_dt=None, end_dt=None, is_input=False):
         """
         Загрузить данные пакета документов ТТН из DBF файла БАЛАНСа.
-        @param is_input: Признак приходного документа.
+        :param is_input: Признак приходного документа.
         """
         if dbf_filename is None or not os.path.exists(dbf_filename):
             log.warning(u'Отсутствует файл <%s> для импорта данных' % dbf_filename)
@@ -456,8 +456,8 @@ class icRealizImportManager(import_manager.icBalansImportManager):
     def _is_nds_in_schet_factura(self, is_on, cod_oper):
         """
         Проверка на есть ли в СФ НДС.
-        @param is_on: Признак наличия НДС.
-        @param cod_oper: Код операции БАЛАНС+.
+        :param is_on: Признак наличия НДС.
+        :param cod_oper: Код операции БАЛАНС+.
         """
         return bool(cod_oper) and is_on
 
@@ -466,9 +466,9 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         """
         Создать счет-фактуру по данным документа БАЛАНСа.
         Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
-        @param record: Словарь записи DBF файла.
-        @param is_input: Признак приходного документа.
-        @return: Словарь новой записи документа Счет-фактура.
+        :param record: Словарь записи DBF файла.
+        :param is_input: Признак приходного документа.
+        :return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
@@ -576,9 +576,9 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         """
         Создать ТОРГ12 по данным документа БАЛАНСа.
         Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
-        @param record: Словарь записи DBF файла.
-        @param is_input: Признак приходного документа.
-        @return: Словарь новой записи документа ТОРГ12.
+        :param record: Словарь записи DBF файла.
+        :param is_input: Признак приходного документа.
+        :return: Словарь новой записи документа ТОРГ12.
         """
         if doc is None:
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
@@ -672,9 +672,9 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         """
         Создать алко-справку по данным документа БАЛАНСа.
         Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
-        @param record: Словарь записи DBF файла.
-        @param is_input: Признак приходного документа.
-        @return: Словарь новой записи документа Счет-фактура.
+        :param record: Словарь записи DBF файла.
+        :param is_input: Признак приходного документа.
+        :return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
@@ -764,11 +764,11 @@ class icRealizImportManager(import_manager.icBalansImportManager):
         """
         Создать ТТН по данным документа БАЛАНСа.
         Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
-        @param record: Словарь записи DBF файла.
-        @param is_input: Признак приходного документа.
-        @param spc_idx_records: Словарь индекса файла спецификации по номеру документа.
-        @param n_warehouse: Номер склада.
-        @return: Список словарей новых записей документов ТТН.
+        :param record: Словарь записи DBF файла.
+        :param is_input: Признак приходного документа.
+        :param spc_idx_records: Словарь индекса файла спецификации по номеру документа.
+        :param n_warehouse: Номер склада.
+        :return: Список словарей новых записей документов ТТН.
         """
         if doc is None:
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()

@@ -24,7 +24,7 @@ class icPanelGroupEdt(icobjectinterface.icObjectInterface):
     def __init__(self, parent):
         """
         Конструктор.
-        @param parent: Указатель на родительское окно.
+        :param parent: Указатель на родительское окно.
         """
         #   Указатель на редактор проектов
         self._projectEditor = None
@@ -37,8 +37,8 @@ class icPanelGroupEdt(icobjectinterface.icObjectInterface):
     def init_title(self, obj, label=None):
         """
         Инициализация заголовков.
-        @type obj: C{IndicatorState}
-        @param obj: Заголовок группы. 
+        :type obj: C{IndicatorState}
+        :param obj: Заголовок группы. 
         """
         obj.SetState(1)
         clr1 = grph.getAdjustColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DFACE), -50)

@@ -33,9 +33,9 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
     def __init__(self, parent=None, id=-1, date_time=None, *args, **kwargs):
         """
         Конструктор.
-        @param parent: Родительское окно wx.Window.
-        @param id: wx идентификатор объекта.
-        @param date_time: Дата+время (datetime) для инициализации контрола.
+        :param parent: Родительское окно wx.Window.
+        :param id: wx идентификатор объекта.
+        :param date_time: Дата+время (datetime) для инициализации контрола.
             Если None, то инициализируется пустыми значениями.
         """
         # Текущее отредактированное значение
@@ -66,7 +66,7 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
     def getWXDateTime(self):
         """
         Получить данные в виде wx.DateTime.
-        @return: Данные возвращаются в виде <wx.DateTime>.
+        :return: Данные возвращаются в виде <wx.DateTime>.
         """
         self._wx_dt = self._getCtrlWXDateTime()
         return self._wx_dt
@@ -74,7 +74,7 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
     def _getCtrlWXDateTime(self):
         """
         Получить данные с контролов.
-        @return: Данные возвращаются в виде wx.DateTime.
+        :return: Данные возвращаются в виде wx.DateTime.
         """
         date_valid = self.isDateValid()
         time_valid = self.isTimeValid()
@@ -103,8 +103,8 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
     def isDTNone(self, dt):
         """
         Проверка на не определенной значение.
-        @param dt: Дата время <datetime>ю
-        @return: True/False.
+        :param dt: Дата время <datetime>ю
+        :return: True/False.
         """
         # Если минимальный год, то это явно не определенный дата-время
         return self._dt.year == datetime.MINYEAR
@@ -112,7 +112,7 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
     def getDateTime(self):
         """
         Получить данные в виде datetime.
-        @return: Данные возвращаются в виде Python <datetime>.
+        :return: Данные возвращаются в виде Python <datetime>.
         """
         self._dt = self._getCtrlDateTime()
         if self.isDTNone(self._dt):
@@ -133,9 +133,9 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
     def _setCtrlTime(self, hour=0, minute=0, second=0):
         """
         Установить данные в контролы времени в формате кортежа.
-        @param hour: Час.
-        @param minute: Минуты.
-        @param second: Секунды.
+        :param hour: Час.
+        :param minute: Минуты.
+        :param second: Секунды.
         """
         h_value = min(max(hour, 0), 23)
         self.h_spinBtn.SetValue(h_value)
@@ -150,7 +150,7 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
     def _getCtrlDateTime(self):
         """
         Получить данные с контролов.
-        @return: Данные возвращаются в виде Python <datetime>.
+        :return: Данные возвращаются в виде Python <datetime>.
         """
         dt = None
         date_valid = self.isDateValid()
@@ -176,7 +176,7 @@ class icDateTimeControl(std_controls_proto.icDateTimeCtrlProto):
     def setDateTime(self, dt):
         """
         Установить данные в виде datetime.
-        @return: Данные возвращаются в виде Python <datetime>.
+        :return: Данные возвращаются в виде Python <datetime>.
         """
         if dt is None:
             self._dt = None

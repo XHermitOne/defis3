@@ -51,7 +51,7 @@ class icAnaliticAggregate:
     def createAggregateCtrl(self, MetaTree_):
         """
         Создать по метадереву структуру управления агрегированием.
-        @param MetaTree_: Метадерево.
+        :param MetaTree_: Метадерево.
         """
         data_ctrl = MetaTree_.value.aggregate_ctrl
         return data_ctrl
@@ -110,12 +110,12 @@ class icAnaliticAggregate:
                      CurStorageNode_=None):
         """
         Разнести суммы в хранилище.
-        @param Path_: Путь по которому необходимо разнести.
-        @param Name_: Имя под которым нужно разнести.
-        @param IterateSumm_: Добавочные значения.
-        @param Date_: Дата.
-        @param DateFlags_: Флаги разноса сумм по датам.
-        @param CurStorageNode_: Текущий узел хранилища, в который происходит разнос.
+        :param Path_: Путь по которому необходимо разнести.
+        :param Name_: Имя под которым нужно разнести.
+        :param IterateSumm_: Добавочные значения.
+        :param Date_: Дата.
+        :param DateFlags_: Флаги разноса сумм по датам.
+        :param CurStorageNode_: Текущий узел хранилища, в который происходит разнос.
         """
         if CurStorageNode_ is None:
             CurStorageNode_ = self._odb_storage
@@ -258,12 +258,12 @@ class icAnaliticAggregate:
                   CurStorageNode_=None):
         """
         Обнулить суммы в хранилище.
-        @param Path_: Путь по которому необходимо разнести.
-        @param Name_: Имя под которым нужно разнести.
-        @param Summ_: Сумма.
-        @param Date_: Дата.
-        @param DateFlags_: Флаги разноса сумм по датам.
-        @param CurStorageNode_: Текущий узел хранилища, в который происходит разнос.
+        :param Path_: Путь по которому необходимо разнести.
+        :param Name_: Имя под которым нужно разнести.
+        :param Summ_: Сумма.
+        :param Date_: Дата.
+        :param DateFlags_: Флаги разноса сумм по датам.
+        :param CurStorageNode_: Текущий узел хранилища, в который происходит разнос.
         """
         if CurStorageNode_ is None:
             CurStorageNode_ = self._odb_storage

@@ -32,7 +32,7 @@ class PrjInstallMaker:
     def __init__(self, PrjDir_):
         """
         Конструктор.
-        @param PrjDir_: Папка проекта.
+        :param PrjDir_: Папка проекта.
         """
         self._prj_dir = None
         # Имя файла настроек/параметров проекта
@@ -43,7 +43,7 @@ class PrjInstallMaker:
     def setPrj(self, PrjDir_):
         """
         Определить проект для создания инсталяционного пакета.
-        @param PrjDir_: Папка проекта.
+        :param PrjDir_: Папка проекта.
         """
         self._prj_dir = PrjDir_
         # Имя файла настроек/параметров проекта
@@ -318,14 +318,14 @@ class NullsoftInstallSystem(PrjInstallMaker):
     def __init__(self, PrjDir_):
         """
         Конструктор.
-        @param PrjDir_: Папка проекта.
+        :param PrjDir_: Папка проекта.
         """
         PrjInstallMaker.__init__(self, PrjDir_)
 
     def _copyDLL(self, InstallDir_):
         """
         Копирование необходимых DLL в инсталяционный пакет.
-        @param InstallDir_: Инсталяционная папка.
+        :param InstallDir_: Инсталяционная папка.
         """
         python_dir = filefunc.getPythonDir()
         dll_name = os.path.join(python_dir, 'msvcp71.dll')
@@ -338,7 +338,7 @@ class NullsoftInstallSystem(PrjInstallMaker):
     def _makeNSISSection(self, PackageName_):
         """
         Создание секции скрипта инсталязионного пакета.
-        @param PackageName_: Имя файла инсталируемого пакета.
+        :param PackageName_: Имя файла инсталируемого пакета.
         """
         package_name_split = PackageName_.split('.')
         package_name_title = '.'.join(package_name_split[:-1])
@@ -523,7 +523,7 @@ class py2exeInstallSystem(PrjInstallMaker):
     def __init__(self, PrjDir_):
         """
         Конструктор.
-        @param PrjDir_: Папка проекта.
+        :param PrjDir_: Папка проекта.
         """
         PrjInstallMaker.__init__(self, PrjDir_)
     
@@ -577,8 +577,8 @@ class py2exeInstallSystem(PrjInstallMaker):
 def runInstallWizard(Parent_, PrjResFileName_):
     """
     Запуск визарда создания инсталяционного пакета.
-    @param Parent_: Родительское окно.
-    @param PrjResFileName_: Имя ресурса проекта.
+    :param Parent_: Родительское окно.
+    :param PrjResFileName_: Имя ресурса проекта.
     """
     install_maker = NullsoftInstallSystem(os.path.dirname(PrjResFileName_))
     
@@ -689,8 +689,8 @@ class PackagePage(wx.adv.PyWizardPage):
 def runDemoWizard(Parent_, PrjResFileName_):
     """
     Запуск визарда создания инсталяционного пакета.
-    @param Parent_: Родительское окно.
-    @param PrjResFileName_: Имя ресурса проекта.
+    :param Parent_: Родительское окно.
+    :param PrjResFileName_: Имя ресурса проекта.
     """
     install_maker = py2exeInstallSystem(os.path.dirname(PrjResFileName_))
     
@@ -764,7 +764,7 @@ class zipPublicSystem(PrjInstallMaker):
     def __init__(self, PrjDir_):
         """
         Конструктор.
-        @param PrjDir_: Папка проекта.
+        :param PrjDir_: Папка проекта.
         """
         PrjInstallMaker.__init__(self, PrjDir_)
 
@@ -877,8 +877,8 @@ class zipPublicSystem(PrjInstallMaker):
 def runPublicWizard(Parent_, PrjResFileName_):
     """
     Запуск визарда создания пакета публикации.
-    @param Parent_: Родительское окно.
-    @param PrjResFileName_: Имя ресурса проекта.
+    :param Parent_: Родительское окно.
+    :param PrjResFileName_: Имя ресурса проекта.
     """
     public_maker = zipPublicSystem(os.path.dirname(PrjResFileName_))
     

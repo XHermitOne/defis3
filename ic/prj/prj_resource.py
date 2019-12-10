@@ -76,7 +76,7 @@ class icPrjResources(prj_node.icPrjFolder):
     def create(self, new_name=None):
         """
         Создать папку.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         # Прописать в родительской папке
         self.getParent().addChild(self)
@@ -104,8 +104,8 @@ class icPrjResources(prj_node.icPrjFolder):
     def rename(self, old_name, new_name):
         """
         Переименование папки.
-        @param old_name: Старое имя папки.
-        @param new_name: Новое имя папки.
+        :param old_name: Старое имя папки.
+        :param new_name: Новое имя папки.
         """
         # Переименовать в проекте
         self.getRoot().prj_res_manager.renameRes(old_name, new_name)
@@ -117,8 +117,8 @@ class icPrjResources(prj_node.icPrjFolder):
     def importChild(self, res_filename=None):
         """
         Импортировать ресурс, как дочерний узел.
-        @param res_filename: Имя импортируемого ресурсного файла.
-        @return: Возвращает вновь созданный узел или None.
+        :param res_filename: Имя импортируемого ресурсного файла.
+        :return: Возвращает вновь созданный узел или None.
         """
         new_node = None
         if os.path.exists(res_filename):
@@ -202,9 +202,9 @@ class icPrjResource(prj_node.icPrjNode):
     def _setTemplateSpc(self, spc, new_name):
         """
         Вспомогательная функция установки шаблона заполнения ресурса по спецификации.
-        @param spc: Спецификция компонента.
-        @param new_name: Новое имя ресурса.
-        @return: True/False.
+        :param spc: Спецификция компонента.
+        :param new_name: Новое имя ресурса.
+        :return: True/False.
         """
         if spc:
             self.template = copy.deepcopy(spc)
@@ -222,7 +222,7 @@ class icPrjResource(prj_node.icPrjNode):
     def create(self, new_name=None):
         """
         Функция создания ресурса.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         # Ввести наименование при создании ресурса
         if not new_name:
@@ -336,8 +336,8 @@ class icPrjResource(prj_node.icPrjNode):
     def rename(self, old_name, new_name):
         """
         Переименование ресурса.
-        @param old_name: Старое имя ресурса.
-        @param new_name: Новое имя ресурса.
+        :param old_name: Старое имя ресурса.
+        :param new_name: Новое имя ресурса.
         """
         tree_prj = self.getRoot().getParent()
         res_editor = tree_prj.res_editor
@@ -380,7 +380,7 @@ class icPrjResource(prj_node.icPrjNode):
     def cut(self):
         """
         Вырезать узел.
-        @return: Возвращает указхатель на удаленный узел.
+        :return: Возвращает указхатель на удаленный узел.
         """
         # Переименовать файл ресурса, если он есть
         res_file_name = os.path.join(self.getResPath(),
@@ -429,7 +429,7 @@ class icPrjResource(prj_node.icPrjNode):
     def paste(self, node):
         """
         Вставить.
-        @param node: Вставляемый узел.
+        :param node: Вставляемый узел.
         """
         # Поменять расширение у bak файлов.
         res_file_name = os.path.join(node.getResPath(),
@@ -548,7 +548,7 @@ class icPrjTabRes(icPrjResource):
     def create(self, new_name=None):
         """
         Создание ресурса.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую Таблицу будем создавать а затем создать ее
         global TableTypeChoice
@@ -593,8 +593,8 @@ class icPrjTabRes(icPrjResource):
     def rename(self, old_name, new_name):
         """
         Переименование ресурса.
-        @param old_name: Старое имя ресурса.
-        @param new_name: Новое имя ресурса.
+        :param old_name: Старое имя ресурса.
+        :param new_name: Новое имя ресурса.
         """
         new_name = new_name.lower()
         old_name = old_name.lower()
@@ -665,7 +665,7 @@ class icPrjDBRes(icPrjResource):
     def create(self, new_name=None):
         """
         Создание ресурса.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global DATABASE_TYPE_CHOICE
@@ -830,7 +830,7 @@ class icPrjWinRes(icPrjResource):
     def create(self, new_name=None):
         """
         Создание ресурса.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global WINDOW_TYPE_CHOICE
@@ -896,7 +896,7 @@ class icPrjMenuRes(icPrjResource):
     def create(self, new_name=None):
         """
         Создание ресурса.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую меню будем создавать а затем создать ее
         global MENU_TYPE_CHOICE
@@ -989,7 +989,7 @@ class icPrjMetaDataRes(icPrjResource):
     def _getExtendToolList(self):
         """
         Список дополнительных инструментов узла.
-        @return: Список словарей:
+        :return: Список словарей:
             [{
                 'name': Наименование инструмента,
                 'label': Надпись в диалоговом окне выбора инструмента,
@@ -1064,7 +1064,7 @@ class icPrjMetaDataRes(icPrjResource):
     def create(self, new_name=None):
         """
         Функция создания ресурса.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         default_name = new_name if new_name else self.name
         new_name, res = new_metadata_resource_dlg.new_metadata_resource_dlg(parent=self.getPrjTreeCtrl(),

@@ -50,9 +50,9 @@ __version__ = (0, 1, 2, 1)
 def create_filter_group(logic='AND', *compare_requisites):
     """
     Создать группу фильтра
-    @param logic: Логический операнд группы.
-    @param compare_requisites: Список реквизитов фильтра.
-    @return: Сгенерированные/Заполненный словарь группы.
+    :param logic: Логический операнд группы.
+    :param compare_requisites: Список реквизитов фильтра.
+    :return: Сгенерированные/Заполненный словарь группы.
         {
         'name': Наименование группы. Обычно соответствует логическому операнду.
         'type': Тип группы. Строка <group>.
@@ -69,7 +69,7 @@ def create_filter_group(logic='AND', *compare_requisites):
 def create_filter_group_AND(*compare_requisites):
     """
     Создать группу фильтра с логическим операндом <И>.
-    @param compare_requisites: Список реквизитов фильтра.
+    :param compare_requisites: Список реквизитов фильтра.
     """
     return create_filter_group('AND', *compare_requisites)
 
@@ -77,7 +77,7 @@ def create_filter_group_AND(*compare_requisites):
 def create_filter_group_OR(*compare_requisites):
     """
     Создать группу фильтра с логическим операндом <ИЛИ>.
-    @param compare_requisites: Список реквизитов фильтра.
+    :param compare_requisites: Список реквизитов фильтра.
     """
     return create_filter_group('OR', *compare_requisites)
 
@@ -85,7 +85,7 @@ def create_filter_group_OR(*compare_requisites):
 def create_filter_group_NOT(*compare_requisites):
     """
     Создать группу фильтра с логическим операндом <НЕ>.
-    @param compare_requisites: Список реквизитов фильтра.
+    :param compare_requisites: Список реквизитов фильтра.
     """
     return create_filter_group('NOT', *compare_requisites)
 
@@ -114,11 +114,11 @@ def create_filter_compare_requisite(name, compare_operate=DEFAULT_COMPARE_OPERAT
                                     arg_1=None, arg_2=None):
     """
     Создать реквизит фильтра.
-    @param name: Наименование реквизита. Обычно соответствует имени поля таблицы.
-    @param compare_operate: Операция сравнения.
-    @param arg_1: Значение аргумента 1.
-    @param arg_2: Значение аргумента 2.
-    @return: Реквизит:
+    :param name: Наименование реквизита. Обычно соответствует имени поля таблицы.
+    :param compare_operate: Операция сравнения.
+    :param arg_1: Значение аргумента 1.
+    :param arg_2: Значение аргумента 2.
+    :return: Реквизит:
         {
         'requisite': Наименование реквизита. Обычно соответствует имени поля таблицы.
         'type': Тип. Слово <compare>.
@@ -143,14 +143,14 @@ def create_filter_compare_requisite(name, compare_operate=DEFAULT_COMPARE_OPERAT
 def add_filter_compare_to_group(filter_group, filter_compare, do_clone=False):
     """
     Добавить реквизит фильтра к группе фильтра.
-    @param filter_group: Структура (словарь) группы фильтра.
+    :param filter_group: Структура (словарь) группы фильтра.
         {
         'name': Наименование группы. Обычно соответствует логическому операнду.
         'type': Тип группы. Строка <group>.
         'logic': Логический операнд. AND или OR или NOT.
         'children': Список реквизитов - элементов группы.
         }
-    @param filter_compare: Структура (словарь) реквизита фильтра.
+    :param filter_compare: Структура (словарь) реквизита фильтра.
         {
         'requisite': Наименование реквизита. Обычно соответствует имени поля таблицы.
         'type': Тип. Слово <compare>.
@@ -164,8 +164,8 @@ def add_filter_compare_to_group(filter_group, filter_compare, do_clone=False):
                    Поэтому генерация WHERE секции SQL заключается в правильном
                    соединении нужных строк этого ключа.
         }
-    @param do_clone: Предварительно клонировать группу-источник?
-    @return: Структура группы фильтра с добавленным реквизито фильтра.
+    :param do_clone: Предварительно клонировать группу-источник?
+    :return: Структура группы фильтра с добавленным реквизито фильтра.
         {
         'name': Наименование группы. Обычно соответствует логическому операнду.
         'type': Тип группы. Строка <group>.

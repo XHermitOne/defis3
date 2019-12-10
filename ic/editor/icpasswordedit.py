@@ -22,10 +22,10 @@ _ = wx.GetTranslation
 def open_password_edit_dlg(parent=None, prj=None, default=None):
     """
     Редактор пароля.
-    @param parent: Ссылка на окно.
-    @param prj: Объект проекта.
-    @param default: Пароль по умолчанию.
-    @return: Возвращает введенный пароль или None  в случае ошибки.
+    :param parent: Ссылка на окно.
+    :param prj: Объект проекта.
+    :param default: Пароль по умолчанию.
+    :return: Возвращает введенный пароль или None  в случае ошибки.
     """
     dlg = None
     win_clear = False
@@ -62,8 +62,8 @@ class icPasswordEditPanel(wx.Panel):
     def __init__(self, parent_, prj=None):
         """
         Конструктор.
-        @param parent_: Окно.
-        @param prj: Объект проекта.
+        :param parent_: Окно.
+        :param prj: Объект проекта.
         """
         try:
             # Сохранить объект проекта, для последующего использования
@@ -108,9 +108,9 @@ class icPasswordEditDialog(wx.Dialog):
     def __init__(self, parent_, prj=None, default=None):
         """
         Конструктор.
-        @param parent_: Окно.
-        @param prj: Объект проекта.
-        @param default: Пароль md5 по умолчанию.
+        :param parent_: Окно.
+        :param prj: Объект проекта.
+        :param default: Пароль md5 по умолчанию.
         """
         try:
             _title = u'Определение пароля'

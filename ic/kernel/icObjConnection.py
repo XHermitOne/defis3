@@ -17,12 +17,12 @@ class icConnection:
         """
         Конструктор.
         
-        @type src: C{icSignalSrc}
-        @param src: Источник сигнала.
-        @type slotLst: C{list | tuple}
-        @param slotLst: Список слотов.
-        @type func_trans: C{function}
-        @param func_trans: Функция преобразования сигналов.
+        :type src: C{icSignalSrc}
+        :param src: Источник сигнала.
+        :type slotLst: C{list | tuple}
+        :param slotLst: Список слотов.
+        :type func_trans: C{function}
+        :param func_trans: Функция преобразования сигналов.
         """
         self.src = src
         self.slotLst = slotLst
@@ -51,8 +51,8 @@ class icConnection:
         Возвращает признак того, что объект, обладающий опрделенным набором
         идентификаторов (паспортом) прописан в качестве приемника соединения.
         
-        @type passport: C{icObjectPassport}
-        @param passport: Паспорт объекта.
+        :type passport: C{icObjectPassport}
+        :param passport: Паспорт объекта.
         """
         for sign in self.slotLst:
             if sign.passport == passport:

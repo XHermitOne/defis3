@@ -24,12 +24,12 @@ def init_cell_points(positions, x_offset=DEFAULT_X_OFFSET, y_offset=DEFAULT_Y_OF
     """
     Заполнение списка точек расположения ячеек
     по списку позиций.
-    @param positions: Список позиций.
-    @param x_offset: Точка смещения. Координата X.
-    @param y_offset: Точка смещения. Координата Y.
-    @param cell_width: Размер ячейки в точках. Ширина.
-    @param cell_height: Размер ячейки в точках. Высота.
-    @return: Заполненный список точек.
+    :param positions: Список позиций.
+    :param x_offset: Точка смещения. Координата X.
+    :param y_offset: Точка смещения. Координата Y.
+    :param cell_width: Размер ячейки в точках. Ширина.
+    :param cell_height: Размер ячейки в точках. Высота.
+    :return: Заполненный список точек.
     """
     points = list()
     for i, pos in enumerate(positions):
@@ -48,10 +48,10 @@ def init_cell_points(positions, x_offset=DEFAULT_X_OFFSET, y_offset=DEFAULT_Y_OF
 def _gen_pseudograph_line(line, pseudograph_symb, i):
     """
     Генерация линии. Установка символа псевдографики в строку методом наложения
-    @param line: Обрабатываемая строка.
-    @param pseudograph_symb: Вставляемый в строку символ псевдографики.
-    @param i: Номер символа в строке.
-    @return: Измененная строка.
+    :param line: Обрабатываемая строка.
+    :param pseudograph_symb: Вставляемый в строку символ псевдографики.
+    :param i: Номер символа в строке.
+    :return: Измененная строка.
     """
     prev_symb = line[i]
     result_symb = strfunc.overlayPseudoGraph(pseudograph_symb, prev_symb,
@@ -63,8 +63,8 @@ def _gen_pseudograph_line(line, pseudograph_symb, i):
 def gen_layout_scheme_txt(positions):
     """
     Генерация текста схемы размещения в виде псевдографики.
-    @param positions: Список позиций.
-    @return: Текст схемы размещения.  
+    :param positions: Список позиций.
+    :return: Текст схемы размещения.  
         Например:
            ┌──┐  ┌──┐  ┌──┬──┐  ┌──┐  ┌──┐  ┌──┬──┐
         ┌──┤ 3├──┤ 6├──┤ 9│11├──┤14├──┤17├──┤20│22│

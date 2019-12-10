@@ -23,8 +23,8 @@ class icSCADANodeProto(object):
     def read_value(self, address):
         """
         Чтение значения по адресу.
-        @param address: Адрес значения в узле.
-        @return: Запрашиваемое значение или None в случае ошибки чтения.
+        :param address: Адрес значения в узле.
+        :return: Запрашиваемое значение или None в случае ошибки чтения.
         """
         log.error(u'Функция чтения данных по адресу не реализована в <%s>' % self.__class__.__name__)
         return None
@@ -32,9 +32,9 @@ class icSCADANodeProto(object):
     def write_value(self, address, value):
         """
         Запись значения по адресу.
-        @param address: Адрес значения в узле.
-        @param value: Записываемое значение.
-        @return: True - запись прошла успешно/False - ошибка.
+        :param address: Адрес значения в узле.
+        :param value: Записываемое значение.
+        :return: True - запись прошла успешно/False - ошибка.
         """
         log.error(u'Функция записи данных по адресу не реализована в <%s>' % self.__class__.__name__)
         return None
@@ -42,8 +42,8 @@ class icSCADANodeProto(object):
     def read_values(self, addresses):
         """
         Чтение значений по адресам.
-        @param addresses: Список адресов значений в узле.
-        @return: Список запрашиваемых значений или None в случае ошибки чтения.
+        :param addresses: Список адресов значений в узле.
+        :return: Список запрашиваемых значений или None в случае ошибки чтения.
         """
         log.error(u'Функция чтения списка данных по адресу не реализована в <%s>' % self.__class__.__name__)
         return None
@@ -51,8 +51,8 @@ class icSCADANodeProto(object):
     def readTags(self, *tags):
         """
         Прочитать список тегов.
-        @param tags: Список объектов тегов.
-        @return: True/False.
+        :param tags: Список объектов тегов.
+        :return: True/False.
         """
         log.error(u'Функция чтения списка тегов не реализована в <%s>' % self.__class__.__name__)
         return False
@@ -61,8 +61,8 @@ class icSCADANodeProto(object):
         """
         Добавить дополнительное окружение узла.
         Необходимо для выполнения вычисляемых тегов.
-        @param environment: Словарь дополнительных переменных окружения узла.
-        @return: True/False.
+        :param environment: Словарь дополнительных переменных окружения узла.
+        :return: True/False.
         """
         if not hasattr(self, '_node_environment'):
             self._node_environment = dict()
@@ -73,7 +73,7 @@ class icSCADANodeProto(object):
         """
         Дополнительное окружение узла.
         Необходимо для выполнения вычисляемых тегов.
-        @return: Словарь дополнительных переменных окружения узла.
+        :return: Словарь дополнительных переменных окружения узла.
         """
         if not hasattr(self, '_node_environment'):
             return dict()
@@ -82,7 +82,7 @@ class icSCADANodeProto(object):
     def getSCADAEngine(self):
         """
         Объект SCADA движка. Берется из дополнительного контекста.
-        @return: Объект SCADA движка или None если движок
+        :return: Объект SCADA движка или None если движок
             не был определен в дополнительном контексте объекта.
         """
         environment = self.getEnv()

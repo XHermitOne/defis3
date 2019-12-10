@@ -141,16 +141,16 @@ class icTemplateInterface(icwidget.icBase):
         """
         Конструктор для создания шаблона.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         component = util.icSpcDefStruct(SPC_IC_TEMPLATE, component)
         icwidget.icBase.__init__(self, parent, id, component, logType, evalSpace)
@@ -254,14 +254,14 @@ class icTemplateInterface(icwidget.icBase):
     def _findres(self, res, nameObj, typeObj):
         """
         Ищет ресурс нужного объекта по дереву ресурса.
-        @type res: C{dictionary}
-        @param res: Ресурсное описание.
-        @type nameObj: C{string}
-        @param nameObj: Имя объекта.
-        @type typeObj: C{string}
-        @param typeObj: Тип объекта.
-        @rtype: C{dictionary}
-        @return: Ресурсное описание найденного объекта.
+        :type res: C{dictionary}
+        :param res: Ресурсное описание.
+        :type nameObj: C{string}
+        :param nameObj: Имя объекта.
+        :type typeObj: C{string}
+        :param typeObj: Тип объекта.
+        :rtype: C{dictionary}
+        :return: Ресурсное описание найденного объекта.
         """
         if ((typeObj is None and res['name'] == nameObj) or
            (res['type'] == typeObj and res['name'] == nameObj)):
@@ -282,12 +282,12 @@ class icTemplateInterface(icwidget.icBase):
     def GetObjectResource(self, nameObj, typeObj=None, resource=None):
         """
         Возвращает ресурс нужного объекта.
-        @type nameObj: C{string}
-        @param nameObj: Имя объекта.
-        @type typeObj: C{string}
-        @param typeObj: Тип объекта.
-        @rtype: C{dictionary}
-        @return: Ресурсное описание найденного объекта.
+        :type nameObj: C{string}
+        :param nameObj: Имя объекта.
+        :type typeObj: C{string}
+        :param typeObj: Тип объекта.
+        :rtype: C{dictionary}
+        :return: Ресурсное описание найденного объекта.
         """
         if resource is None:
             return self._findres(self.getResource(), nameObj, typeObj)

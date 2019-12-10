@@ -151,9 +151,9 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
     def setParentCode(self, parent_code=None):
         """
         Установить родительский код уровня.
-        @param parent_code: Родительский код уровня.
+        :param parent_code: Родительский код уровня.
             Пожет задаваться в строковом и списковом варианте.
-        @return: True/False.
+        :return: True/False.
         """
         if isinstance(parent_code, list):
             self._parent_code = parent_code
@@ -177,8 +177,8 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
     def findItemIdxByCode(self, code):
         """
         Найти индекс элемента списка по коду.
-        @param code: Код справочника.
-        @return: Индекс элемента списка или -1 если не найдено.
+        :param code: Код справочника.
+        :return: Индекс элемента списка или -1 если не найдено.
         """
         choice_ctrl = self._choice
         for item in range(choice_ctrl.GetCount()):
@@ -190,8 +190,8 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
     def setCode(self, code=None):
         """
         Установить код справочника как выбранный.
-        @param code: Код справочника.
-        @return: True/False.
+        :param code: Код справочника.
+        :return: True/False.
         """
         if code is None:
             # Если код не определен, то скорее всего мы
@@ -216,10 +216,10 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
     def getChoiceSelectedCode(self, choice_ctrl, item=-1):
         """
         Получить выбранный код из контрола wx.Choice.
-        @param choice_ctrl: Объект контрола.
-        @param item: Индекс пункта, есл не определен, то
+        :param choice_ctrl: Объект контрола.
+        :param item: Индекс пункта, есл не определен, то
             имеется в виду выбранный пункт.
-        @return: Строковый выбранный код.
+        :return: Строковый выбранный код.
         """
         if item < 0:
             item = choice_ctrl.GetSelection()
@@ -232,11 +232,11 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
     def clearLevelChoice(self, min_index=0, max_index=-1):
         """
         Очистить списки выбора.
-        @param min_index: Индекс первого уровня.
+        :param min_index: Индекс первого уровня.
             Если не определен, то берется самый первый уровень.
-        @param max_index: Индекс последнего уровня.
+        :param max_index: Индекс последнего уровня.
             Если не определен, то берется самый последний уровень.
-        @return: True/False.
+        :return: True/False.
         """
         if max_index < 0:
             max_index = len(self._selected_code)-1
@@ -258,7 +258,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
     def initLevelChoice(self):
         """
         Инициализировать список выбора.
-        @return: True/False.
+        :return: True/False.
         """
         if self._sprav.isEmpty():
             # Если справочник пустой, то не можем
@@ -299,8 +299,8 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
     def selectLevelChoice(self, item=0):
         """
         Выбрать код уровня.
-        @param item: Индекс выбирамого пункта.
-        @return: True/False.
+        :param item: Индекс выбирамого пункта.
+        :return: True/False.
         """
         choice_ctrl = self._choice
         choice_ctrl.SetSelection(item)
@@ -315,7 +315,7 @@ class icSpravSingleLevelChoiceCtrlProto(wx.StaticBox):
         """
         Индекс редактируемого уровня справочника.
         Уровни справочника индекисруются от 0.
-        @return: Индекс редактируемого уровня справочника.
+        :return: Индекс редактируемого уровня справочника.
         """
         return 0
 

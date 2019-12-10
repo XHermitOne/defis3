@@ -31,16 +31,16 @@ def _show_about_box(parent, name, version, description,
                     license, icon):
     """
     Отобразить диалоговое окно <О программе...>
-    @param parent: Родительское окно.
-    @param name: Наименование программы.
-    @param version: Версия программы.
-    @param description: Описание программы.
-    @param copyright: Копирайт.
-    @param authors: Авторы программы.
-    @param web_site_url: Адрес веб-сайта программы.
-    @param web_site_label: Надпись ссылкы веб-сайта программы.
-    @param license: Текст лицензии.
-    @param icon: Объект wx.Icon иконки программы.
+    :param parent: Родительское окно.
+    :param name: Наименование программы.
+    :param version: Версия программы.
+    :param description: Описание программы.
+    :param copyright: Копирайт.
+    :param authors: Авторы программы.
+    :param web_site_url: Адрес веб-сайта программы.
+    :param web_site_label: Надпись ссылкы веб-сайта программы.
+    :param license: Текст лицензии.
+    :param icon: Объект wx.Icon иконки программы.
     """
     try:
         info = wx.adv.AboutDialogInfo()
@@ -69,16 +69,16 @@ def showAbout(parent=None, name=None, version=None, description=None,
               license=None, icon_filename=None):
     """
     Отобразить диалоговое окно <О программе...>
-    @param parent: Родительское окно.
-    @param name: Наименование программы.
-    @param version: Версия программы.
-    @param description: Описание программы.
-    @param copyright: Копирайт.
-    @param authors: Авторы программы.
-    @param web_site_url: Адрес веб-сайта программы.
-    @param web_site_label: Надпись ссылкы веб-сайта программы.
-    @param license: Текст лицензии.
-    @param icon_filename: Имя файла иконки программы.
+    :param parent: Родительское окно.
+    :param name: Наименование программы.
+    :param version: Версия программы.
+    :param description: Описание программы.
+    :param copyright: Копирайт.
+    :param authors: Авторы программы.
+    :param web_site_url: Адрес веб-сайта программы.
+    :param web_site_label: Надпись ссылкы веб-сайта программы.
+    :param license: Текст лицензии.
+    :param icon_filename: Имя файла иконки программы.
     """
     if parent is None:
         parent = glob_functions.getMainWin()

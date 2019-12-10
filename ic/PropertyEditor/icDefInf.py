@@ -102,8 +102,8 @@ def RegEditorClasses(cls_lst):
 def GetEditorClass(id):
     """
     Возвращает по идентификатору внешнего редактора класс.
-    @type id: C{int}
-    @param id: Идентификатор внешнего редактора.
+    :type id: C{int}
+    :param id: Идентификатор внешнего редактора.
     """
     global ic_reg_edt_class
     if id in ic_reg_edt_class:
@@ -178,10 +178,10 @@ ICSizerFlag = {'TOP': wx.TOP,
 def strToVal(typ, text):
     """
     Функция преобразует строку в значение в зависимости от типа.
-    @type typ: C{int}
-    @param typ: Тип значения, к котророму необходимо преобразовать.
-    @type text: C{string}
-    @param text: Значение в строковом представлении.
+    :type typ: C{int}
+    :param typ: Тип значения, к котророму необходимо преобразовать.
+    :type text: C{string}
+    :param text: Значение в строковом представлении.
     """
     old_typ = typ
     if isinstance(typ, str) and (typ in id_dict):
@@ -244,11 +244,11 @@ def strToVal(typ, text):
 def ctrlVal(typ, text):
     """
     Функция проверяет соответствие значения определенному типу.
-    @type typ: C{int}
-    @param typ: Тип значения, к котророму необходимо преобразовать.
-    @type text: C{string}
-    @param text: Значение в строковом представлении.
-    @return: Код контроля. None означает синтаксическую ошибку.
+    :type typ: C{int}
+    :param typ: Тип значения, к котророму необходимо преобразовать.
+    :type text: C{string}
+    :param text: Значение в строковом представлении.
+    :return: Код контроля. None означает синтаксическую ошибку.
     """
     if typ in (EDT_TEXTFIELD, EDT_PY_SCRIPT, EDT_CHOICE):
         value = text
@@ -331,10 +331,10 @@ def ClearUserGroup():
 def RegComponentGroup(name):
     """
     Функция регистрации новой группы компонентов.
-    @type name: C{string}
-    @param name: Имя группы.
-    @rtype: C{int}
-    @return: Возвращает идентификатор новой ргуппы.
+    :type name: C{string}
+    :param name: Имя группы.
+    :rtype: C{int}
+    :return: Возвращает идентификатор новой ргуппы.
     """
     global GroupsInfo
     if name not in GroupsInfo.values():
@@ -377,12 +377,12 @@ def getDeactivateColour():
 def getStyleDict(style, allstyles):
     """
     Возвращает стиль компонента в виде словаря.
-    @type style: C{long}
-    @param style: Стиль компонента.
-    @type allstyles: C{dictionary}
-    @param allstyles: Словарь всех стилей компонента.
-    @rtype: C{dictionary}
-    @return: Стиль компонента.
+    :type style: C{long}
+    :param style: Стиль компонента.
+    :type allstyles: C{dictionary}
+    :param allstyles: Словарь всех стилей компонента.
+    :rtype: C{dictionary}
+    :return: Стиль компонента.
         - B{Пример}:C{'wx.DEFAULT':1, 'wx.APP':0, ...}
     """
     return basefuncs.getStyleDict(style, allstyles)

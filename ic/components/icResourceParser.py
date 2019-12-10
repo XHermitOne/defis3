@@ -191,16 +191,16 @@ def clearFormBuffer():
 def setStateFormInBuffer(formName, subsys, parent, flt='', state=False):
     """
     Устанавливает состояние формы (Используется уже или нет) из буфера.
-    @type formName: C{string}
-    @param formName: Имя формы.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы.
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type flt: C{dictionary | string}
-    @param flt: Фильтр на форму.
-    @type state: C{bool}
-    @param state: True - форма взята из буфера и используется. False - форма
+    :type formName: C{string}
+    :param formName: Имя формы.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы.
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type flt: C{dictionary | string}
+    :param flt: Фильтр на форму.
+    :type state: C{bool}
+    :param state: True - форма взята из буфера и используется. False - форма
         свободна для использования.
     """
     from ic.components.icResourceParser import ResultForm_Buff
@@ -215,16 +215,16 @@ def setStateFormInBuffer(formName, subsys, parent, flt='', state=False):
 def getFormKey(formName, subsys, parent, flt):
     """
     Функция генерирует уникальный ключ формы.
-    @type formName: C{string}
-    @param formName: Имя формы.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы.
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type flt: C{dictionary | string}
-    @param flt: Фильтр на форму.
-    @rtype: C{wx.Window}
-    @return: Возвращает форму если находит в буфере, если нет то None.
+    :type formName: C{string}
+    :param formName: Имя формы.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы.
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type flt: C{dictionary | string}
+    :param flt: Фильтр на форму.
+    :rtype: C{wx.Window}
+    :return: Возвращает форму если находит в буфере, если нет то None.
     """
     if not subsys:
         subsys = ''
@@ -264,18 +264,18 @@ def cmpTime(x, y):
 def addFormToBuffer(frm, formName, subsys, parent, flt='', state=False):
     """
     Функция добавляет форму в буфер.
-    @type frm: C{wx.Window}
-    @param frm: Форму, которую надо сохранить в буфере.
-    @type formName: C{string}
-    @param formName: Имя формы.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы.
-    @type parent: C{wx.Window}
-    @param parent: Родительсое окно.
-    @type flt: C{string | dictionary}
-    @param flt: Фильтр, устанавливаемый на форму + дополнительный уникальный ключ.
-    @type state: C{bool}
-    @param state: Состояние окна. True - активное, False - пассивное. Получить
+    :type frm: C{wx.Window}
+    :param frm: Форму, которую надо сохранить в буфере.
+    :type formName: C{string}
+    :param formName: Имя формы.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы.
+    :type parent: C{wx.Window}
+    :param parent: Родительсое окно.
+    :type flt: C{string | dictionary}
+    :param flt: Фильтр, устанавливаемый на форму + дополнительный уникальный ключ.
+    :type state: C{bool}
+    :param state: Состояние окна. True - активное, False - пассивное. Получить
         ссылку на окно можно только, когда окно находится в пассивном состоянии.
     """
     global ResultForm_Buff
@@ -313,14 +313,14 @@ def addFormToBuffer(frm, formName, subsys, parent, flt='', state=False):
 def getFormFromBuffer(formName, subsys, parent, flt=''):
     """
     Функция достает форму из буфера.
-    @type formName: C{string}
-    @param formName: Имя формы.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы.
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type flt: C{dictionary | string}
-    @param flt: Фильтр на форму + дополнительный ключ уникальности.
+    :type formName: C{string}
+    :param formName: Имя формы.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы.
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type flt: C{dictionary | string}
+    :param flt: Фильтр на форму + дополнительный ключ уникальности.
     """
     global ResultForm_Buff
     bff = ResultForm_Buff
@@ -377,30 +377,30 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
                evalSpace=None, parent=None, formRes=None, bIndicator=True):
     """
     Функция создает форму по заданому ресурсному описанию.
-    @type formName: C{string}
-    @param formName: Имя подсистемы и имя формы через '/'. Если имя подсистемы не
+    :type formName: C{string}
+    :param formName: Имя подсистемы и имя формы через '/'. Если имя подсистемы не
          указано, то используется стандартный механизм поиска ресурса.
-    @type fileRes: C{string}
-    @param fileRes: Путь к ресурсному файлу. Если путь указан отностиельный, то
+    :type fileRes: C{string}
+    :param fileRes: Путь к ресурсному файлу. Если путь указан отностиельный, то
         это интерпретируется как имя подсистемы.
-    @type filter: C{dictionary}
-    @param filter: Словарь фильтров на объекты данных. В качестве ключей используются алиасы объектов данных, в качестве занчений
+    :type filter: C{dictionary}
+    :param filter: Словарь фильтров на объекты данных. В качестве ключей используются алиасы объектов данных, в качестве занчений
         либо картеж, либо строковое выражение. Если картеж, то фильтрация производится по значению поля, если строка, то по
         SQL  выражению специального вида.
-    @type bShow: C{int}
-    @param bShow: Признак того, что после создания объекта необходимо выполнить ф-ию Show(True).
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-    @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-    @type evalSpace: C{dictionary}
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type formRes: C{dictionary}
-    @param formRes: Ресурсное описание формы, если оно задано, то форма строится по этому описанию, а параметр fileRes игнорируется.
-    @type bIndicator: C{bool}
-    @param bIndicator: Признак индикатора процесса на создание формы.
-    @rtype: C{wx.Window}
-    @return: Возвращает форму.
+    :type bShow: C{int}
+    :param bShow: Признак того, что после создания объекта необходимо выполнить ф-ию Show(True).
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+    :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+    :type evalSpace: C{dictionary}
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type formRes: C{dictionary}
+    :param formRes: Ресурсное описание формы, если оно задано, то форма строится по этому описанию, а параметр fileRes игнорируется.
+    :type bIndicator: C{bool}
+    :param bIndicator: Признак индикатора процесса на создание формы.
+    :rtype: C{wx.Window}
+    :return: Возвращает форму.
     """
     # log.info(u'Создание формы <%s>' % formName)
     frm = None
@@ -449,25 +449,25 @@ def ModalForm(formName, fileRes=None, filter={}, logType=0,
     это может (если этим пользоваться не аккуратно, например, передать простанство
     имен одной формы другой) приводить к печальным последствиям. Параметры
     формы передаются через **kwargs.
-    @type formName: C{string}
-    @param formName: Имя формы.
-    @type fileRes: C{string}
-    @param fileRes: Путь к ресурсному файлу. Если путь указан отностиельный, то
+    :type formName: C{string}
+    :param formName: Имя формы.
+    :type fileRes: C{string}
+    :param fileRes: Путь к ресурсному файлу. Если путь указан отностиельный, то
         это интерпретируется как имя подсистемы.
-    @type filter: C{dictionary}
-    @param filter: Словарь переопределяемых фильтров. В качестве ключей именна объектов данных (icSQLObjDataSet),
+    :type filter: C{dictionary}
+    :param filter: Словарь переопределяемых фильтров. В качестве ключей именна объектов данных (icSQLObjDataSet),
         в качестве значений фильты.
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type bBuff: C{bool}
-    @param bBuff: Признак буферизации диалоговой формы.
-    @type bIndicator: C{bool}
-    @param bIndicator: Признак индикатора процесса на создание формы.
-    @param kwargs: Дополнительные именованные параметры, которые пропишутся в форме
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type bBuff: C{bool}
+    :param bBuff: Признак буферизации диалоговой формы.
+    :type bIndicator: C{bool}
+    :param bIndicator: Признак индикатора процесса на создание формы.
+    :param kwargs: Дополнительные именованные параметры, которые пропишутся в форме
         по ключу '_form_param'.
-    @return: Возвращает введенные данные. Введенные данные должны быть сохранены
+    :return: Возвращает введенные данные. Введенные данные должны быть сохранены
         формой в пространстве имен с ключем 'result'.
     """
     #   Если родитель не указан, то буферизация работает не стабильно, поэтому
@@ -520,26 +520,26 @@ def ResultForm(formName, fileRes=None, filter={}, logType=0,
                evalSpace=None, parent=None, bBuff=False, bIndicator=True, key=''):
     """
     Функция создает диалоговое окно. И возвращает введенные данные.
-    @type formName: C{string}
-    @param formName: Имя формы.
-    @type fileRes: C{string}
-    @param fileRes: Путь к ресурсному файлу. Если путь указан отностиельный, то
+    :type formName: C{string}
+    :param formName: Имя формы.
+    :type fileRes: C{string}
+    :param fileRes: Путь к ресурсному файлу. Если путь указан отностиельный, то
         это интерпретируется как имя подсистемы.
-    @type filter: C{dictionary}
-    @param filter: Словарь переопределяемых фильтров. В качестве ключей именна объектов данных (icSQLObjDataSet),
+    :type filter: C{dictionary}
+    :param filter: Словарь переопределяемых фильтров. В качестве ключей именна объектов данных (icSQLObjDataSet),
         в качестве значений фильты.
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-    @param evalSpace: Словарь дополнительных параметров.
-    @type evalSpace: C{dictionary}
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type bBuff: C{bool}
-    @param bBuff: Признак буферизации диалоговой формы.
-    @type bIndicator: C{bool}
-    @param bIndicator: Признак индикатора процесса на создание формы.
-    @param key: Дополнительный ключ уникальности формы.
-    @return: Возвращает введенные данные. Введенные данные должны быть сохранены формой в пространстве имен с ключем 'result'.
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+    :param evalSpace: Словарь дополнительных параметров.
+    :type evalSpace: C{dictionary}
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type bBuff: C{bool}
+    :param bBuff: Признак буферизации диалоговой формы.
+    :type bIndicator: C{bool}
+    :param bIndicator: Признак индикатора процесса на создание формы.
+    :param key: Дополнительный ключ уникальности формы.
+    :return: Возвращает введенные данные. Введенные данные должны быть сохранены формой в пространстве имен с ключем 'result'.
     """
     #   Если родитель не указан, то буферизация работает не стабильно, поэтому
     #   она отключается
@@ -602,19 +602,19 @@ def ResultForm(formName, fileRes=None, filter={}, logType=0,
 def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, id=None):
     """
     Функция собирает объект по ресурсному описанию.
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно, на котором располагаются другие компоненты.
-    @type objRes: C{Dictionary}
-    @param objRes: Словарь с описанием компонента.
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-    @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-    @type evalSpace: C{dictionary}
-    @type bIndicator: C{bool}
-    @param bIndicator: Признак отображения в ProgressBar-е. Иногда это не нужно -
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно, на котором располагаются другие компоненты.
+    :type objRes: C{Dictionary}
+    :param objRes: Словарь с описанием компонента.
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+    :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+    :type evalSpace: C{dictionary}
+    :type bIndicator: C{bool}
+    :param bIndicator: Признак отображения в ProgressBar-е. Иногда это не нужно -
         для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
         общего количества объектов.
-    @param id: Идентификатор объекта. Если он не определен, то он генерируется автоматически.
+    :param id: Идентификатор объекта. Если он не определен, то он генерируется автоматически.
     """
     # log.info(u'Сборка объекта <%s>' % objRes['name'])
     #   Подготавливае пространство имен
@@ -756,22 +756,22 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
                 bCounter=False, progressDlg=None, bUserComponent=False, sizer=None):
     """
     Функция вызывает конструктор для создания объекта по ресурсному описанию.
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type id: C{int}
-    @param id: Идентификатор окна.
-    @type component: C{dictionary}
-    @param component: Словарь описания компонента.
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-    @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-    @type evalSpace: C{dictionary}
-    @type bCounter: C{bool}
-    @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type id: C{int}
+    :param id: Идентификатор окна.
+    :type component: C{dictionary}
+    :param component: Словарь описания компонента.
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+    :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+    :type evalSpace: C{dictionary}
+    :type bCounter: C{bool}
+    :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
         для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
         общего количества объектов.
-    @type progressDlg: C{wx.ProgressDialog}
-    @param progressDlg: Указатель на идикатор создания формы.
+    :type progressDlg: C{wx.ProgressDialog}
+    :param progressDlg: Указатель на идикатор создания формы.
     """
     # log.info(u'Вызов конструктора объекта <%s>' % component['name'])
     #   Вызываем конструктор
@@ -843,22 +843,22 @@ def icResourceParser(parent, components, sizer=None, logType=0,
                      evalSpace=None, bCounter=True, progressDlg=None, ids=None, **kwargs):
     """
     Парсер. Функция рекурсивного разбора ресурсного описания.
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно, на котором располагаются другие компоненты.
-    @type components: C{List}
-    @param components: Список компонентов.
-    @type sizer: C{wx.Sizer}
-    @param sizer: Сайзер куда добавляются компоненты.
-    @type logType: C{int}
-    @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-    @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-    @type evalSpace: C{dictionary}
-    @type bCounter: C{bool}
-    @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно, на котором располагаются другие компоненты.
+    :type components: C{List}
+    :param components: Список компонентов.
+    :type sizer: C{wx.Sizer}
+    :param sizer: Сайзер куда добавляются компоненты.
+    :type logType: C{int}
+    :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+    :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+    :type evalSpace: C{dictionary}
+    :type bCounter: C{bool}
+    :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
         для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
         общего количества объектов.
-    @type ids: {list | tuple}
-    @param ids: Список идентификаторов объектов.
+    :type ids: {list | tuple}
+    :param ids: Список идентификаторов объектов.
     """
     # log.info(u'Сборка объектов')
 
@@ -1057,12 +1057,12 @@ def icResourceParser(parent, components, sizer=None, logType=0,
 def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, className=None, **kwargs):
     """
     Функция создает объект по имени и типу ресурса.
-    @type ResName_: C{string}
-    @param ResName_: Имя ресурса, по которому создается объект.
-    @type ResExt_: C{string}
-    @param ResExt_: Расширения ресурсного файла для данного ресурса.
-    @param parent: Родитель объекта (если необходим).
-    @return: Возвращает объект или None в случае ошибки.
+    :type ResName_: C{string}
+    :param ResName_: Имя ресурса, по которому создается объект.
+    :type ResExt_: C{string}
+    :param ResExt_: Расширения ресурсного файла для данного ресурса.
+    :param parent: Родитель объекта (если необходим).
+    :return: Возвращает объект или None в случае ошибки.
     """
     try:
         pathRes = None

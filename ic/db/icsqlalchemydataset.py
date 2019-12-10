@@ -3,8 +3,8 @@
 
 """
 Класс для работы с SQLAlchemy.
-@type SPC_IC_SQLOBJ_DATACLASS: C{Dictionary}
-@var SPC_IC_SQLOBJ_DATACLASS: Спецификация на ресурсное описание класса данных для SQLObject.
+:type SPC_IC_SQLOBJ_DATACLASS: C{Dictionary}
+:var SPC_IC_SQLOBJ_DATACLASS: Спецификация на ресурсное описание класса данных для SQLObject.
 
     Описание ключей SPC_IC_SQLOBJ_DATACLASS:
     - B{name = 'DefaultName'}: Имя объекта.
@@ -29,8 +29,8 @@
     - B{post_del=None}: Выражение, выполняется после удаления записи.
     - B{source=SPC_IC_SQLOBJ_SOURCE}: Словарь, описывающий источник данных.
 
-@type SPC_IC_SQLOBJ_SOURCE: C{Dictionary}
-@var SPC_IC_SQLOBJ_SOURCE: Спецификация на ресурсное описание источника данных.
+:type SPC_IC_SQLOBJ_SOURCE: C{Dictionary}
+:var SPC_IC_SQLOBJ_SOURCE: Спецификация на ресурсное описание источника данных.
     - B{name = 'DefaultName'}: Имя объекта.
     - B{type='SQLObjectSource'}:Тип объекта.
     - B{path=None}: Путь расположения базы данных,
@@ -39,8 +39,8 @@
     - B{user='user'}: Имя пользователя,
     - B{password='pwd'}: Пароль пользователя.
 
-@type SPC_IC_SQLOBJ_FIELD: C{Dictionary}
-@var SPC_IC_SQLOBJ_FIELD: Спецификация на ресурсное описание поля.
+:type SPC_IC_SQLOBJ_FIELD: C{Dictionary}
+:var SPC_IC_SQLOBJ_FIELD: Спецификация на ресурсное описание поля.
 
     Описание ключей SPC_IC_SQLOBJ_FIELD:
     - B{name = 'default'}: Имя объекта.
@@ -163,7 +163,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
     """
     Интерфейс для работы с табличными данными.
     
-    @type _bInspectDB: C{bool}
+    :type _bInspectDB: C{bool}
     @cvar _bInspectDB: Если данный флаг = True, то при каждом обращении к объекту по индексу будет проверятся изменилась ли
            таблица (см. ф-ию isTableChanged).
     """
@@ -226,8 +226,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция вычисления атрибутов.
         
-        @type attr: C{string}
-        @param attr: Имя атрибута.
+        :type attr: C{string}
+        :param attr: Имя атрибута.
         """
         expr = self.resource[attr]
 
@@ -243,16 +243,16 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
                  subsys_path=None, preCreateDataclass=None):
         """
         Конструктор для создания таблицы.
-        @type id: C{int}
-        @param id: Идентификатор объекта.
-        @type component: C{dictionary}
-        @param component: Описание компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type subsys_path: C{string}
-        @param subsys_path: Путь до подсистемы, где расположен ресурс.
+        :type id: C{int}
+        :param id: Идентификатор объекта.
+        :type component: C{dictionary}
+        :param component: Описание компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type subsys_path: C{string}
+        :param subsys_path: Путь до подсистемы, где расположен ресурс.
         """
         if id < 0:
             self._uniqId = icwidget.icNewId()
@@ -452,8 +452,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Устанавливает режим полной буферизации и буферизирует данные.
         
-        @type tm: C{float}
-        @param tm: Время актуальности информации.
+        :type tm: C{float}
+        :param tm: Время актуальности информации.
         """
         #   Устанавливаем время актуальности информации
         self.setTimePageLife(tm)
@@ -495,8 +495,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Устанавливает тип буфера.
         
-        @type typeBuff: C{int}
-        @param typeBuff: Тип буферизации.
+        :type typeBuff: C{int}
+        :param typeBuff: Тип буферизации.
         """
         self.typeBufferPage = typeBuff
     
@@ -504,8 +504,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает признак поддержки буфера страницы.
         
-        @rtype: C{bool}
-        @return: Возвращает признак поддержки буфера страницы.
+        :rtype: C{bool}
+        :return: Возвращает признак поддержки буфера страницы.
         """
         return self.typeBufferPage
         
@@ -513,10 +513,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Чистит буфер страницы.
         
-        @type tm: C{float}
-        @param tm: Время актуальности информации.
-        @type typeBuff: C{int}
-        @param typeBuff: Тип буферизации.
+        :type tm: C{float}
+        :param tm: Время актуальности информации.
+        :type typeBuff: C{int}
+        :param typeBuff: Тип буферизации.
         """
         self.time_page_life = tm or self.time_page_life
         self.typeBufferPage = typeBuff
@@ -526,8 +526,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Создает буфер страницы. Последней записью буфера будет строка с номером rec.
         
-        @type rec: C{int}
-        @param rec: Номер последней записи буфера.
+        :type rec: C{int}
+        :param rec: Номер последней записи буфера.
         """
         #   Вычисляем интервал идентификаторов, которые попали в буферную страницу
         if sz is None or sz <= 0:
@@ -628,8 +628,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Создает буфер страницы. Последней записью буфера будет строка с номером rec.
         Работает медленно, но железно.
         
-        @type rec: C{int}
-        @param rec: Номер последней записи буфера.
+        :type rec: C{int}
+        :param rec: Номер последней записи буфера.
         """
         #   Вычисляем интервал идентификаторов, которые попали в буферную страницу
         if sz is None or sz <= 0:
@@ -703,17 +703,17 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция по имени колонки и номеру записи возвращает значение из буфера.
         
-        @type rec: C{int}
-        @param rec: Номер строки.
-        @type fieldName: C{string}
-        @param fieldName: Имя поля.
-        @type bReal: C{bool}
-        @param bReal: Признак возвращения реального значения из таблицы данных, а не вычисленного значения либо значения по справочнику.
-        @type bFromBuff: C{bool}
-        @param bFromBuff: Признак, который указывает, что значения можно брать из
+        :type rec: C{int}
+        :param rec: Номер строки.
+        :type fieldName: C{string}
+        :param fieldName: Имя поля.
+        :type bReal: C{bool}
+        :param bReal: Признак возвращения реального значения из таблицы данных, а не вычисленного значения либо значения по справочнику.
+        :type bFromBuff: C{bool}
+        :param bFromBuff: Признак, который указывает, что значения можно брать из
             буфера измененных значений.
-        @rtype: C{...}
-        @return: По имени колонки и номеру записи возвращает значение из буфера. Если поле или номер записи
+        :rtype: C{...}
+        :return: По имени колонки и номеру записи возвращает значение из буфера. Если поле или номер записи
             указаны не верно, то функция возвращает C{None}.
         """
         #   Проверка на права доступа к данному методу
@@ -786,10 +786,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Конвертирует значение в вид, в котором будет хранится в базе данных (например для хранения ссылок).
         
-        @type fieldName: C{string}
-        @param fieldName: Название поля.
-        @param value: Конвертируемое значение.
-        @return: Возвращает преобразованное значение.
+        :type fieldName: C{string}
+        :param fieldName: Название поля.
+        :param value: Конвертируемое значение.
+        :return: Возвращает преобразованное значение.
         """
         #   Определяем тип ссылки. 'D' - ссылка по значению, 'R '- по идентификатору.
         info = self.getFieldInfo(fieldName)
@@ -825,17 +825,17 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Функция возвращает код выражения контроля поля и реальное значение, которое
         будет храниться в базе.
         
-        @param fieldName: Имя поля
-        @type fieldName: C{string}
-        @param value: Значение
-        @type value: C{...}
-        @param rec: Номер записи
-        @type rec: C{int}
-        @type bReal: C{bool}
-        @param bReal: Признак сохранения значения без вызова функционала аттрибута 'setvalue'.
-        @type bCtrl: C{bool}
-        @param bCtrl: Признак указывающий на необходимость контроля значения поля.
-        @return: Возвращает картеж из кода контроля и реального значения поля в базе.
+        :param fieldName: Имя поля
+        :type fieldName: C{string}
+        :param value: Значение
+        :type value: C{...}
+        :param rec: Номер записи
+        :type rec: C{int}
+        :type bReal: C{bool}
+        :param bReal: Признак сохранения значения без вызова функционала аттрибута 'setvalue'.
+        :type bCtrl: C{bool}
+        :param bCtrl: Признак указывающий на необходимость контроля значения поля.
+        :return: Возвращает картеж из кода контроля и реального значения поля в базе.
             Коды контроля - 0 или 1 в случае успеха, в противном случае 2 или None.
         """
         info = self.getFieldInfo(fieldName)
@@ -924,16 +924,16 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Устанавливает значение поля. Если имя поля не найдено в источнике данных,
         то функция пытается выполнить функцию на запись по описанию колонки из ресурсного
         описания по аттрибуту 'setvalue'.
-        @param rec: Номер записи
-        @type rec: C{int}
-        @param fieldName: Имя поля
-        @type fieldName: C{string}
-        @param value: Значение
-        @type bReal: C{bool}
-        @param bReal: Признак сохранения значения без вызова функционала аттрибута 'setvalue'.
-        @type bCtrl: C{bool}
-        @param bCtrl: Признак указывающий на необходимость контроля изменяемого значения.
-        @return: Возвращает в случае успеха код контроля (0,1,2), в противном случае None.
+        :param rec: Номер записи
+        :type rec: C{int}
+        :param fieldName: Имя поля
+        :type fieldName: C{string}
+        :param value: Значение
+        :type bReal: C{bool}
+        :param bReal: Признак сохранения значения без вызова функционала аттрибута 'setvalue'.
+        :type bCtrl: C{bool}
+        :param bCtrl: Признак указывающий на необходимость контроля изменяемого значения.
+        :return: Возвращает в случае успеха код контроля (0,1,2), в противном случае None.
         """
         #   Проверка на права доступа к данному методу
         if not icuser.canAuthent('wr', self.name, icuser.ACC_DATA):
@@ -994,15 +994,15 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         на запись по описанию колонки из ресурсного описания по аттрибуту
         'setvalue'. Если словарь обновлений (values) не определен, то
         обновления берутся из буфера изменений строки.
-        @type rec: C{int}
-        @param rec: Номер записи.
-        @type values: C{dictionary}
-        @param values: Словарь значений. В качестве ключей используются имена полей.
-        @type bReal: C{bool}
-        @param bReal: Признак сохранения значения без вызова функционала аттрибута 'setvalue'.
-        @type bCtrl: C{bool}
-        @param bCtrl: Признак указывающий на необходимость контроля изменяемого значения.
-        @return: Возвращает код контроля записи.
+        :type rec: C{int}
+        :param rec: Номер записи.
+        :type values: C{dictionary}
+        :param values: Словарь значений. В качестве ключей используются имена полей.
+        :type bReal: C{bool}
+        :param bReal: Признак сохранения значения без вызова функционала аттрибута 'setvalue'.
+        :type bCtrl: C{bool}
+        :param bCtrl: Признак указывающий на необходимость контроля изменяемого значения.
+        :return: Возвращает код контроля записи.
         """
         ctrl_val = 0
         bCtrlField = True
@@ -1095,11 +1095,11 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция проверяет есль ли в буфере изменений какие-либо изменения.
         
-        @type rec: C{int}
-        @param rec: Номер записи, где проверяются изменения. Если rec = None,
+        :type rec: C{int}
+        :param rec: Номер записи, где проверяются изменения. Если rec = None,
             то проверяется текущая запись.
-        @rtype: C{bool}
-        @return: Если True, то буфер содержит изменения по заданной записи.
+        :rtype: C{bool}
+        :return: Если True, то буфер содержит изменения по заданной записи.
         """
     
         if self.changeRowBuff is None or self.changeRowBuff == {}:
@@ -1117,8 +1117,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция чистит буфер изменений строки.
         
-        @type rec: C{int}
-        @param rec: Номер записи, буфер которой небходимо почистить. Если rec = None,
+        :type rec: C{int}
+        :param rec: Номер записи, буфер которой небходимо почистить. Если rec = None,
             то чистится буфер текущей записи, если rec < 0 то чистится буфер всех
             записей.
         """
@@ -1140,8 +1140,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция возвращает список полей.
         
-        @rtype: C{list}
-        @return: Возвращает список полей.
+        :rtype: C{list}
+        :return: Возвращает список полей.
         """
         return self.listFld
     
@@ -1149,10 +1149,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает описание поля.
  
-        @type fieldName: C{string}
-        @param fieldName: Имя колонки
-        @return: Возвращает описание поля. Если описание не найдено, то возвращает {}. Поле описывается словарем.
-        @rtype: C{dictionary}
+        :type fieldName: C{string}
+        :param fieldName: Имя колонки
+        :return: Возвращает описание поля. Если описание не найдено, то возвращает {}. Поле описывается словарем.
+        :rtype: C{dictionary}
         """
         try:
             indx = self.indexFld[fieldName]
@@ -1176,10 +1176,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает признак индексированного поля.
  
-        @type fieldName: C{string}
-        @param fieldName: Имя колонки
-        @return: Возвращает признак индексированного поля.
-        @rtype: C{dictionary}
+        :type fieldName: C{string}
+        :param fieldName: Имя колонки
+        :return: Возвращает признак индексированного поля.
+        :rtype: C{dictionary}
         """
         fld_info = self.getFieldInfo(fieldName)
         
@@ -1193,8 +1193,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Функция добавляет в наш объект идентификаторы записей , добавленных другими пользователями либо другим
         объектом данных.
         
-        @rtype: C{bool}
-        @return: Количество добавленных записей в объект данных.
+        :rtype: C{bool}
+        :return: Количество добавленных записей в объект данных.
         """
         lenBuff = len(self._add_indexBuff)
         
@@ -1216,20 +1216,20 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция добавляет новую запись.
 
-        @param fieldName: Имя колонки.
-        @type fieldName: C{string}
-        @type values: C{dictionary}
-        @param values: Словарь известных значений. В качестве ключей имена полей,
+        :param fieldName: Имя колонки.
+        :type fieldName: C{string}
+        :type values: C{dictionary}
+        :param values: Словарь известных значений. В качестве ключей имена полей,
             значения полей в качестве значений.
-        @type postAddExpr: C{string}
-        @param postAddExpr: Выражение, выполняемое после добавления объекта. Если
+        :type postAddExpr: C{string}
+        :param postAddExpr: Выражение, выполняемое после добавления объекта. Если
             оно возвращает False, то добавленный объект уничтожается. Если параметр
             не определен, то выполняется выражение определенное в ресурсном описании
             в атрибуте <post_init>.
-        @type uuid_postAddExpr: C{string}
-        @return uuid_postAddExpr: Универсальный идентификатор выражения postAddExpr.
-        @return: Возвращает признак успешного выполнения.
-        @rtype: C{bool}
+        :type uuid_postAddExpr: C{string}
+        :return uuid_postAddExpr: Универсальный идентификатор выражения postAddExpr.
+        :return: Возвращает признак успешного выполнения.
+        :rtype: C{bool}
         """
         #   Проверка на права доступа к данному методу
         if not icuser.canAuthent('a', self.name,  icuser.ACC_DATA,  True):
@@ -1413,10 +1413,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Удаляет запись из источника данных.
 
-        @param rec: Номер записи.
-        @type rec:  C{int}
-        @return: Признак успешного выполнения.
-        @rtype: C{bool}
+        :param rec: Номер записи.
+        :type rec:  C{int}
+        :return: Признак успешного выполнения.
+        :rtype: C{bool}
         """
         #   Проверка на права доступа к данному методу
         if not icuser.canAuthent('d', self.name, icuser.ACC_DATA,  True):
@@ -1480,10 +1480,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Сохранение записи непосредственно в источник данных.
         
-        @param rec: Номер записи. Если rec =-1, то записывается текущая запись.
-        @type rec: C{int}
-        @rtype: C{bool}
-        @return: Признак успешной записи.
+        :param rec: Номер записи. Если rec =-1, то записывается текущая запись.
+        :type rec: C{int}
+        :rtype: C{bool}
+        :return: Признак успешной записи.
         """
         pass
     
@@ -1491,10 +1491,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Обновление буфера записи непосредственно из источника данных.
         
-        @param rec: Номер записи. Если rec =-1, то читается текущая запись.
-        @type rec:  C{int}
-        @rtype: C{bool}
-        @return: Признак успешной записи.
+        :param rec: Номер записи. Если rec =-1, то читается текущая запись.
+        :type rec:  C{int}
+        :rtype: C{bool}
+        :return: Признак успешной записи.
         """
         if self.GetIDataclass() is not None:
             if rec == -1:
@@ -1504,10 +1504,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Открытие источника данных.
         
-        @type filter_tab: C{string | dictionary}
-        @param filter_tab: SQL выражение для фильтрации данных. Пример: C{ds.Open('select id from table where id > 100 and id < 200')}
-        @rtype: C{bool}
-        @return: Признак успешного открытия.
+        :type filter_tab: C{string | dictionary}
+        :param filter_tab: SQL выражение для фильтрации данных. Пример: C{ds.Open('select id from table where id > 100 and id < 200')}
+        :rtype: C{bool}
+        :return: Признак успешного открытия.
         """
         
         self._groupPath = self.name.split('.')
@@ -1566,8 +1566,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Закрытие источника данных.
         
-        @rtype: C{bool}
-        @return: Признак успешного закрытия.
+        :rtype: C{bool}
+        :return: Признак успешного закрытия.
         """
         self.dataclass = None
         self.dataclassInterface = None
@@ -1596,13 +1596,13 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Фильтрация данных. B{Данная функция чистит буфер изменений}, поэтому анализ
         буфера изменений должен проводится (функцией C{isChangeRowBuff()}) перед вызовом этой функции.
         
-        @type filt: C{string}
-        @param filt: Строка запроса на фильтрацию. Пример: 'select id from table1 where id > 10 and id < 1000 order by ...'
-        @type bReplNames: C{bool}
-        @param bReplNames: Признак того, что предварительно необходимо провести
+        :type filt: C{string}
+        :param filt: Строка запроса на фильтрацию. Пример: 'select id from table1 where id > 10 and id < 1000 order by ...'
+        :type bReplNames: C{bool}
+        :param bReplNames: Признак того, что предварительно необходимо провести
             замену имен из SQLObject представления в представление SQL базы.
-        @rtype: C{bool}
-        @return: Признак успешного завершения.
+        :rtype: C{bool}
+        :return: Признак успешного завершения.
         """
         #   Чистим буфер изменений. Анализ буфера изменений должен проводится
         #   перед вызовом этой функции.
@@ -1647,15 +1647,15 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
     def FilterField(self, fldName, val, bReplNames=True):
         """
         Функция отфильторвывает записи, у которых значение определенного поля <fldName> соответствуют выбранному занчению <id>.
-        @type fldName: C{string}
-        @param fldName: Имя поля, по которому фильтруются записи.
-        @type val: C{int}
-        @param val: Значение, по которому фильтруются объекты.
-        @type bReplNames: C{bool}
-        @param bReplNames: Признак того, что предварительно необходимо провести
+        :type fldName: C{string}
+        :param fldName: Имя поля, по которому фильтруются записи.
+        :type val: C{int}
+        :param val: Значение, по которому фильтруются объекты.
+        :type bReplNames: C{bool}
+        :param bReplNames: Признак того, что предварительно необходимо провести
             замену имен из SQLObject представления в представление SQL базы.
-        @rtype:
-        @return:
+        :rtype:
+        :return:
         """
         try:
             fld = self._columnDict[fldName]
@@ -1679,13 +1679,13 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Функция отфильторвывает записи, у которых значение определенного поля
         <fldName> соответствуют выбранному занчению <id>.
         
-        @type filter_tab: C{string | dictionary}
-        @param filter_tab: Фильтр объекта данных.
-        @type bReplNames: C{bool}
-        @param bReplNames: Признак того, что предварительно необходимо провести
+        :type filter_tab: C{string | dictionary}
+        :param filter_tab: Фильтр объекта данных.
+        :type bReplNames: C{bool}
+        :param bReplNames: Признак того, что предварительно необходимо провести
             замену имен из SQLObject представления в представление SQL базы.
-        @rtype: C{bool}
-        @return: Признак успешной фильтрации
+        :rtype: C{bool}
+        :return: Признак успешной фильтрации
         """
         
         #   В случае если фильтр не указан пользуемся старым фильтром
@@ -1744,8 +1744,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает количество записей в источнике данных.
 
-        @rtype: C{int}
-        @return: Количество записей в источнике данных.
+        :rtype: C{int}
+        :return: Количество записей в источнике данных.
         """
         return len(self.indexBuff)
 
@@ -1753,8 +1753,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает количество полей. Вычисляется по словарю описания полей.
 
-        @rtype: C{int}
-        @return: Количество полей.
+        :rtype: C{int}
+        :return: Количество полей.
         """
         return len(self.scheme)
     
@@ -1763,8 +1763,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Признак выхода за конец таблицы. Соответствующий флаг устанавливается при попытке
         сместится за последнюю запись.
         
-        @rtype: C{bool}
-        @return: Признак за конец таблицы.
+        :rtype: C{bool}
+        :return: Признак за конец таблицы.
         """
         return self.bEof
     
@@ -1773,8 +1773,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Соответствующий флаг устанавливается при попытке
         получить запись c номером < 0.
 
-        @rtype: C{bool}
-        @return: Признак попытки C{Skip(-1)} на самой первой записи таблицы.
+        :rtype: C{bool}
+        :return: Признак попытки C{Skip(-1)} на самой первой записи таблицы.
         """
         return self.bBof
     
@@ -1782,10 +1782,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Смещение на определенное количество записей относительно текущей.
         
-        @type offset: C{int}
-        @param offset: Смещение относительно текущей записи. По умолчанию C{offset=1}.
-        @rtype: C{bool}
-        @return: Признак успешного выполнения. При попытке установить значение курсора
+        :type offset: C{int}
+        :param offset: Смещение относительно текущей записи. По умолчанию C{offset=1}.
+        :rtype: C{bool}
+        :return: Признак успешного выполнения. При попытке установить значение курсора
             меньше нуля, положение курсора не изменится и функция вернет C{False}, а
             соответствующий флаг для функции C{IsBOF()} установится в положение C{True}. Если функция
             попытается установить положение курсора больше номера последней записи, то соответствующий
@@ -1817,10 +1817,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Устанавливает курсор в определенную позицию.
         
-        @type rec: C{int}
-        @param rec: Номер записи. По умолчанию C{rec=0}.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного выполнения. При попытке установить значение курсора
+        :type rec: C{int}
+        :param rec: Номер записи. По умолчанию C{rec=0}.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного выполнения. При попытке установить значение курсора
             меньше нуля или больше номера последней записи функция вернет C{False}, в другом случае C{True}.
         """
         if rec == -1:
@@ -1851,8 +1851,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает положение курсора.
 
-        @rtype: C{int}
-        @return: Возвращает положение курсора.
+        :rtype: C{int}
+        :return: Возвращает положение курсора.
         """
         return self.cursor
     
@@ -1860,11 +1860,11 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Блокирует нужную запись для записи.
         
-        @type rec: C{int}
-        @param rec: Номер записи. По умолчанию B{rec=-1}. Если номер записи C{None}, то блокируется
+        :type rec: C{int}
+        :param rec: Номер записи. По умолчанию B{rec=-1}. Если номер записи C{None}, то блокируется
             вся таблица. Если номер записи < 0, то блокируется текущая запись.
-        @rtype: C{bool}
-        @return: Возвращает код ошибки.
+        :rtype: C{bool}
+        :return: Возвращает код ошибки.
         """
         result = 99
         
@@ -1885,11 +1885,11 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Разблокирует нужную запись.
         
-        @type rec: C{int}
-        @param rec: Номер записи. По умолчанию B{rec=-1}.  Если номер записи C{None}, то разблокируется
+        :type rec: C{int}
+        :param rec: Номер записи. По умолчанию B{rec=-1}.  Если номер записи C{None}, то разблокируется
             вся таблица. Если номер записи < 0, то разблокируется текущая запись.
-        @rtype: C{bool}
-        @return: Возвращает код ошибки.
+        :rtype: C{bool}
+        :return: Возвращает код ошибки.
         """
         result = 0
         
@@ -1921,11 +1921,11 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возпращает признак блокированной записи.
         
-        @type rec: C{int}
-        @param rec: Номер записи. По умолчанию B{rec=-1}.  Если номер записи C{None}, то возвращается признак блокировки
+        :type rec: C{int}
+        :param rec: Номер записи. По умолчанию B{rec=-1}.  Если номер записи C{None}, то возвращается признак блокировки
             всей таблицы. Если номер записи < 0, то возвращается признак блокировки текущей записи.
-        @rtype: C{bool}
-        @return: Возвращает признак блокировки.
+        :rtype: C{bool}
+        :return: Возвращает признак блокировки.
         """
         ret = False
         
@@ -1944,8 +1944,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция определяет изменилось ли состояние таблицы.
         
-        @rtype: C{bool}
-        @return: Признак изменения состояния таблицы.
+        :rtype: C{bool}
+        :return: Признак изменения состояния таблицы.
         """
         return False
     
@@ -1953,10 +1953,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция возвращает максимальное значение идентификатора записей.
         
-        @type recount: C{bool}
-        @param recount: Признак того, что значение надо пересчитать.
-        @rtype: C{int}
-        @return: Максимальное значение идентификатора записей. None в случае ошибки.
+        :type recount: C{bool}
+        :param recount: Признак того, что значение надо пересчитать.
+        :rtype: C{int}
+        :return: Максимальное значение идентификатора записей. None в случае ошибки.
         """
         if recount:
             self.oldMaxId = -1
@@ -1970,13 +1970,13 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
     def getObj(self, cursor=-1, bIgnore = True):
         """
         Возвращает объект по положению курсора.
-        @type cursor: C{long}
-        @param cursor: Значение порядкового номера в таблицы данных.
-        @type bIgnore: C{bool}
-        @param bIgnore: Признак игнорирования изменения таблицы. Если он False, то как только таблица кем-либо изменяется,
+        :type cursor: C{long}
+        :param cursor: Значение порядкового номера в таблицы данных.
+        :type bIgnore: C{bool}
+        :param bIgnore: Признак игнорирования изменения таблицы. Если он False, то как только таблица кем-либо изменяется,
             буфер индексов тоже изменяется.
-        @rtype: C{SQLObject}
-        @return:
+        :rtype: C{SQLObject}
+        :return:
         """
         if cursor < 0:
             cursor = self.cursor
@@ -2024,13 +2024,13 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает идентификатор заданной строки.
         
-        @type cursor: C{long}
-        @param cursor: Положение курсора.
-        @type bIgnore: C{bool}
-        @param bIgnore: Признак игнорирования изменения таблицы. Если он False, то как только таблица кем-либо изменяется,
+        :type cursor: C{long}
+        :param cursor: Положение курсора.
+        :type bIgnore: C{bool}
+        :param bIgnore: Признак игнорирования изменения таблицы. Если он False, то как только таблица кем-либо изменяется,
             буфер индексов тоже изменяется.
-        @rtype: C{SQLObject}
-        @return: Возвращает идентификатор заданной строки.
+        :rtype: C{SQLObject}
+        :return: Возвращает идентификатор заданной строки.
         """
         if cursor < 0:
             cursor = self.cursor
@@ -2048,10 +2048,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция определяет удалена ли соответствующая запись из источника данных или нет.
         
-        @type cursor: C{long}
-        @param cursor: Положение курсора.
-        @rtype: C{bool}
-        @return: Возвращает True - в случае если соответствующая запись удалена из источника данных, False в противном
+        :type cursor: C{long}
+        :param cursor: Положение курсора.
+        :rtype: C{bool}
+        :return: Возвращает True - в случае если соответствующая запись удалена из источника данных, False в противном
             случае.
         """
         return cursor in self._del_indexBuff
@@ -2060,8 +2060,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция определяет появились ли в источнике данных новые записи.
         
-        @rtype: C{bool}
-        @return: Возвращает True - в случае если в буфере появились данные о добавленных записях, False в противном
+        :rtype: C{bool}
+        :return: Возвращает True - в случае если в буфере появились данные о добавленных записях, False в противном
             случае.
         """
         return len(self._add_indexBuff)
@@ -2070,10 +2070,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает строку таблицы по положению курсора.
         
-        @type cursor: C{long}
-        @param cursor: Положение курсора.
-        @type bIgnore: C{bool}
-        @param bIgnore: Признак игнорирования изменения таблицы. Если он False, то как только таблица кем-либо изменяется,
+        :type cursor: C{long}
+        :param cursor: Положение курсора.
+        :type bIgnore: C{bool}
+        :param bIgnore: Признак игнорирования изменения таблицы. Если он False, то как только таблица кем-либо изменяется,
             буфер индексов тоже изменяется.
         """
         if not bIgnore and self.isTableChanged():
@@ -2194,17 +2194,17 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Функция ищет подстроку в массиве данных. Это желательная функция для всех объектов данных, используется
         в для поиска в объекте навигации.
     
-        @type string: C{string}
-        @param string: Строка поиска
-        @type cur: C{int}
-        @param cur: Начальное положение курсора.
-        @type fields: C{list}
-        @param fields: Список полей по которым ведется поиск.
-        @type bILike: C{bool}
-        @param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
+        :type string: C{string}
+        :param string: Строка поиска
+        :type cur: C{int}
+        :param cur: Начальное положение курсора.
+        :type fields: C{list}
+        :param fields: Список полей по которым ведется поиск.
+        :type bILike: C{bool}
+        :param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
             на точное соответствие.
-        @rtype: C{tuple}
-        @return: Возвращает номер строку и название поля, где найдена искомая строка.
+        :rtype: C{tuple}
+        :return: Возвращает номер строку и название поля, где найдена искомая строка.
         """
         if cursor < 0:
             cursor = self.cursor
@@ -2236,17 +2236,17 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Ищет подстроку начиная с определенного значения идентификатора. Поиск ведется
         в нижнем регистре.
         
-        @type string: C{string}
-        @param string: Строка поиска.
-        @type fields: C{list}
-        @param fields: Список полей по которым ведется поиск.
-        @type id: C{int}
-        @param id: Идентификатор строки, с которой ведется поиск.
-        @type bILike: C{bool}
-        @param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
+        :type string: C{string}
+        :param string: Строка поиска.
+        :type fields: C{list}
+        :param fields: Список полей по которым ведется поиск.
+        :type id: C{int}
+        :param id: Идентификатор строки, с которой ведется поиск.
+        :type bILike: C{bool}
+        :param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
             на точное соответствие.
-        @rtype: C{dict}
-        @return: Возвращает список идентификаторов строк.
+        :rtype: C{dict}
+        :return: Возвращает список идентификаторов строк.
         """
         ret_list = []
             
@@ -2330,10 +2330,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Функция возвращает тип ссылочного поля.
 
-        @type fld: C{dictionary}
-        @param fld: Словарное описание поля из схемы данных.
-        @rtype: C{bool}
-        @return: Возвращает тип ссылкочного поля (None - поле ссылкой не является, 'D' - ссылка по значению,
+        :type fld: C{dictionary}
+        :param fld: Словарное описание поля из схемы данных.
+        :rtype: C{bool}
+        :return: Возвращает тип ссылкочного поля (None - поле ссылкой не является, 'D' - ссылка по значению,
         'R' - ссылка по идентификатору).
         """
         if not fld['dict'] in ['', None] and not fld['store'] in ['', None]:
@@ -2345,10 +2345,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Возвращает список значений определенного поля.
         
-        @type fieldName: C{string}
-        @param fieldName: Имя поля.
-        @rtype: C{list}
-        @return: Возвращает список значений определенного поля либо если такого поля
+        :type fieldName: C{string}
+        :param fieldName: Имя поля.
+        :rtype: C{list}
+        :return: Возвращает список значений определенного поля либо если такого поля
             в таблице нет, возвращает None.
         """
         s = None
@@ -2382,8 +2382,8 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Функция устанавливает текущие идентификаторы родительских объектов, на
         которые будет ссылаться новый объект класса данных.
         
-        @type prnts: C{dictionary}
-        @param prnts: Словарь идентификаторов на родительские объекты. В качестве
+        :type prnts: C{dictionary}
+        :param prnts: Словарь идентификаторов на родительские объекты. В качестве
             ключа класс в качестве значения уникальный идентификатор.
         """
         self._prnts_id = prnts
@@ -2393,10 +2393,10 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         Функция возвращает идентификатор родительского объекта, на
         который будет ссылаться новый объект класса данных.
         
-        @type className: C{string}
-        @param className: Имя родительского класса данных.
-        @rtype: C{int}
-        @return: Возвращает идентификатор родительского объекта. Если не найден,
+        :type className: C{string}
+        :param className: Имя родительского класса данных.
+        :rtype: C{int}
+        :return: Возвращает идентификатор родительского объекта. Если не найден,
             то None.
         """
         try:
@@ -2408,13 +2408,13 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
         """
         Сортирует данные по заданному полю.
         
-        @type fld: C{dictionary}
-        @param fld: Словарное описание поля из схемы данных.
-        @type direction: C{int}
-        @param direction: Направление сортировки. 1 - по возрастанию, -1 по убыванию.
+        :type fld: C{dictionary}
+        :param fld: Словарное описание поля из схемы данных.
+        :type direction: C{int}
+        :param direction: Направление сортировки. 1 - по возрастанию, -1 по убыванию.
             Если не указано, то сортровка направления чередуются.
-        @rtype: C{bool}
-        @return: Признак успешной сортировки.
+        :rtype: C{bool}
+        :return: Признак успешной сортировки.
         """
         if fld in self.getFieldList():
             self._sortExprList = [fld]
@@ -2440,13 +2440,13 @@ def getDataset(className, subsys=None, logType=0, evalSpace=None):
     """
     Функция создает объект навигации для класса данных.
     
-    @type className: C{string}
-    @param className:  Имя класса данных.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы. Если подсистема не указана, то описание ищется
+    :type className: C{string}
+    :param className:  Имя класса данных.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы. Если подсистема не указана, то описание ищется
         стандартным образом: сначала в текущей, затем в импортированных подсистемах.
-    @rtype: C{icSQLObjDataset}
-    @return: Возвращает объект навигации.
+    :rtype: C{icSQLObjDataset}
+    :return: Возвращает объект навигации.
     """
     dataset = None
     subsys_path = '<subsys>'

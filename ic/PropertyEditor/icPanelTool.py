@@ -247,18 +247,18 @@ class icPanelTool(wx.Panel):
                  style=wx.DEFAULT_FRAME_STYLE, GroupsInfo=None, ObjectsInfo=None, layout='horiz'):
         """
         Конструктор создания панели инструментов.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type pos: C{wx.Point}
-        @param pos: Расположение панели.
-        @type size: C{wx.Size}
-        @param size: Размер панели.
-        @type style: C{int}
-        @param style: Стиль окна панели.
-        @type GroupsInfo: C{dictionary}
-        @param GroupsInfo: Описание групп.
-        @type ObjectsInfo: C{dictionary}
-        @param ObjectssInfo: Описание объектов.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type pos: C{wx.Point}
+        :param pos: Расположение панели.
+        :type size: C{wx.Size}
+        :param size: Размер панели.
+        :type style: C{int}
+        :param style: Стиль окна панели.
+        :type GroupsInfo: C{dictionary}
+        :param GroupsInfo: Описание групп.
+        :type ObjectsInfo: C{dictionary}
+        :param ObjectssInfo: Описание объектов.
         """
         wx.Panel.__init__(self, parent, -1)
         self.SetBackgroundColour(self.PANEL_BGR_COLOR)
@@ -311,8 +311,8 @@ class icPanelTool(wx.Panel):
     def AddTool(self, tool):
         """
         Добавлят инструмент в с надор инструментов.
-        @type tool: C{ictoggleimagebutton.icToggleImageButton}
-        @param tool: Инструмент палитры.
+        :type tool: C{ictoggleimagebutton.icToggleImageButton}
+        :param tool: Инструмент палитры.
         """
         self._toolList.append(tool)
         
@@ -378,8 +378,8 @@ class icPanelTool(wx.Panel):
         """
         Устанавливает для отображенмя в панели инструментов стиль расположения компонента
         в сайзере.
-        @type flag: C{int}
-        @param flag: Стиль расположения компонента в сайзере.
+        :type flag: C{int}
+        :param flag: Стиль расположения компонента в сайзере.
         """
         for key, obj in self.flagCompDict.items():
             if key not in ['proportion', 'left', 'grow']:
@@ -396,8 +396,8 @@ class icPanelTool(wx.Panel):
     def SetProportionStyle(self, prop):
         """
         Устанавливает признак пропорциональности при размещении компонента в сайзере.
-        @type prop: C{bool}
-        @param prop: Признак пропорциональность при размещении компонента в сайзере.
+        :type prop: C{bool}
+        :param prop: Признак пропорциональность при размещении компонента в сайзере.
         """
         self.flagCompDict['proportion'].SetToggle(prop)
     
@@ -427,8 +427,8 @@ class icPanelTool(wx.Panel):
     def SetGraphEditor(self, edt):
         """
         Устанавливает указатель на графический редактор.
-        @type edt: C{icBackground}
-        @param edt: Указатель на графический редактор.
+        :type edt: C{icBackground}
+        :param edt: Указатель на графический редактор.
         """
         self._grapEditor = edt
 
@@ -497,18 +497,18 @@ class icPanelToolFrame(wx.MiniFrame):
                  style=wx.DEFAULT_FRAME_STYLE, GroupsInfo=None, ObjectsInfo=None, layout='horiz'):
         """
         Конструктор создания панели инструментов.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type pos: C{wx.Point}
-        @param pos: Расположение панели.
-        @type size: C{wx.Size}
-        @param size: Размер панели.
-        @type style: C{int}
-        @param style: Стиль окна панели.
-        @type GroupsInfo: C{dictionary}
-        @param GroupsInfo: Описание групп.
-        @type ObjectsInfo: C{dictionary}
-        @param ObjectssInfo: Описание объектов.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type pos: C{wx.Point}
+        :param pos: Расположение панели.
+        :type size: C{wx.Size}
+        :param size: Размер панели.
+        :type style: C{int}
+        :param style: Стиль окна панели.
+        :type GroupsInfo: C{dictionary}
+        :param GroupsInfo: Описание групп.
+        :type ObjectsInfo: C{dictionary}
+        :param ObjectssInfo: Описание объектов.
         """
         wx.MiniFrame.__init__(self, parent, -1, title, pos, size, style | wx.STAY_ON_TOP)
         self._toolpanel = icPanelTool(self, title, pos, size, style, GroupsInfo, ObjectsInfo, layout)

@@ -34,14 +34,14 @@ _ = wx.GetTranslation
 _SubSysFuncs = {'install': '''def install(RootPrjTree_):
     \"\"\"
     Функция, выполняющаяся при подключении импортируемой подсистемы.
-    @param engine: Указатель на основной движок системы.
+    :param engine: Указатель на основной движок системы.
     \"\"\"
     pass
     ''',
                 'deinstall': '''def deinstall(RootPrjTree_):
     \"\"\"
     Функция, выполняющаяся при отключении импортируемой подсистемы.
-    @param engine: Указатель на основной движок системы.
+    :param engine: Указатель на основной движок системы.
     \"\"\"
     pass
     ''',
@@ -171,7 +171,7 @@ class icPrjImportSystems(icPrjImportFolder):
     def buildSubSystemsTree(self, sub_systems):
         """
         Построить дерево подсистемы в дереве проекта.
-        @param sub_systems: Список указаний подсистем (<*.pro>[1:]).
+        :param sub_systems: Список указаний подсистем (<*.pro>[1:]).
         """
         for sub_sys in sub_systems:
             # Создать и инициализировать узел импортируемой системы
@@ -199,8 +199,8 @@ class icPrjImportSystems(icPrjImportFolder):
     def copySubSys(self, subsys_prj_filename):
         """
         Копирование подсистемы в текущий проект.
-        @param subsys_prj_filename: Имя файла проекта подсистемы.
-        @return: Возвращает новую директорию подсистемы или
+        :param subsys_prj_filename: Имя файла проекта подсистемы.
+        :return: Возвращает новую директорию подсистемы или
             None в случае  ошибки.
         """
         sub_sys_dir = os.path.dirname(subsys_prj_filename)
@@ -216,8 +216,8 @@ class icPrjImportSystems(icPrjImportFolder):
     def _copySubSysDir(self, subsys_dir, prj_dir):
         """
         Копирование директории подсистемы в текущий проект.
-        @param subsys_dir: Папка подсистемы.
-        @param prj_dir: Папка проекта.
+        :param subsys_dir: Папка подсистемы.
+        :param prj_dir: Папка проекта.
         """
         if subsys_dir and prj_dir:
             log.info(u'Копирование подсистемы <%s> в <%s>' % (subsys_dir, prj_dir))
@@ -274,7 +274,7 @@ class icPrjImportSystems(icPrjImportFolder):
     def getSubSysPath(self, subsys_name):
         """
         Получить путь к импортируемой подсистеме по ее имени.
-        @param subsys_name: Имя подсистемы.
+        :param subsys_name: Имя подсистемы.
         """
         sub_systems = self.getRoot().prj_res_manager.getImportSystems()
         sub_sys_names = [sub_sys['name'] for sub_sys in sub_systems]
@@ -286,7 +286,7 @@ class icPrjImportSystems(icPrjImportFolder):
     def unLinkSubSys(self, subsys_name):
         """
         Отключить импортированную подсистему.
-        @param subsys_name: Имя подсистемы.
+        :param subsys_name: Имя подсистемы.
         """
         try:
             sub_sys_path = self.getSubSysPath(subsys_name)
@@ -351,8 +351,8 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
     def openPrjFile(self, prj_filename):
         """
         Открыть файл проекта.
-        @param prj_filename: Имя файла проекта.
-        @return: Готовую структуру проекта или None в случае ошибки.
+        :param prj_filename: Имя файла проекта.
+        :return: Готовую структуру проекта или None в случае ошибки.
         """
         if prj_filename.endswith('_pkl.pro'):
             # Определяем тип ресурса по окончанию имени файла
@@ -369,7 +369,7 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
     def getPathInPrj(self):
         """
         Путь импортируемой подсистемы внутри текущего проекта.
-        @return: Полный путь до файла проекта подсистемы.
+        :return: Полный путь до файла проекта подсистемы.
         """
         return os.path.dirname(self.getPrjFileName())
 
@@ -435,7 +435,7 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
     def newImpSys(self):
         """
         Добавить новую подсистему в словарь.
-        @return: Возвращает в случае неудачи None,
+        :return: Возвращает в случае неудачи None,
             в случае успеха сформированный список.
         """
         prj_data = None
@@ -471,9 +471,9 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
     def readPrjName(self, prj_file=None):
         """
         Прочитать имя проекта из файла проекта.
-        @param prj_file: Файл проекта.
+        :param prj_file: Файл проекта.
             М.б. задан, как имя файла или как данные файла.
-        @return: Имя проекта или None в случае ошибки.
+        :return: Имя проекта или None в случае ошибки.
         """
         if prj_file:
             if isinstance(prj_file, str):
@@ -489,9 +489,9 @@ class icPrjNotImportSys(prj_node.icPrjFolder, subsysinterface.ImportSubSysInterf
     def buildSubSysTree(self, subsys_prj_filename=None):
         """
         Построить дерево подсистемы в дереве проекта.
-        @param subsys_prj_filename: Файл проекта импортируемой подсистемы.
+        :param subsys_prj_filename: Файл проекта импортируемой подсистемы.
             Если None, то берется установленный файл.
-        @return: Возвращает результат выполнения операции True/False.
+        :return: Возвращает результат выполнения операции True/False.
         """
         # Если None, то берется установленный файл.
         if subsys_prj_filename is None:

@@ -31,14 +31,14 @@ class icCalendarDialog(icWidget, calendar_dlg_proto.icCalendarDialogProto):
     def __init__(self, parent, day=None, month=None, year=None):
         """
         Конструктор.
-        @type parent: C{wxWindows}
-        @param parent: Родительское окно.
-        @type day: C{integer}
-        @param day: День недели.
-        @type month: C{integer}
-        @param month: Месяц.
-        @type year: C{integer}
-        @param year: Год.
+        :type parent: C{wxWindows}
+        :param parent: Родительское окно.
+        :type day: C{integer}
+        :param day: День недели.
+        :type month: C{integer}
+        :param month: Месяц.
+        :type year: C{integer}
+        :param year: Год.
         """
         #
         icWidget.__init__(self, parent)
@@ -76,14 +76,14 @@ class icCalendarDialog(icWidget, calendar_dlg_proto.icCalendarDialogProto):
     def getStrDate(self, date_format=DEFAULT_DATE_FORMAT):
         """
         Выбранная дата в строковом представлении.
-        @param date_format: Формат даты.
+        :param date_format: Формат даты.
         """
         return self.result.strftime(date_format)
 
     def getDateTime(self):
         """
         Выбранная дата.
-        @return: Дата в формате datetime.datetime.
+        :return: Дата в формате datetime.datetime.
         """
         return datetime.datetime.combine(self.result,
                                          datetime.datetime.min.time())
@@ -91,7 +91,7 @@ class icCalendarDialog(icWidget, calendar_dlg_proto.icCalendarDialogProto):
     def getDate(self):
         """
         Выбранная дата.
-        @return: Дата в формате datetime.date.
+        :return: Дата в формате datetime.date.
         """
         return self.result
 
@@ -101,16 +101,16 @@ def icInputDate(parent, day=None, month=None, year=None):
     Функция позволяет вводить дату. В качестве параметров передается дата, на которую будет установлен
     календарь. Если параметры даты не передаются, то установится текщая дата.
 
-    @type parent: C{wx.Windows}
-    @param parent: Родительское окно.
-    @type day: C{integer}
-    @param day: День недели.
-    @type month: C{integer}
-    @param month: Месяц.
-    @type year: C{integer}
-    @param year: Год.
-    @rtype: C{List}
-    @return: Возвращает выбранную дату либо None.
+    :type parent: C{wx.Windows}
+    :param parent: Родительское окно.
+    :type day: C{integer}
+    :param day: День недели.
+    :type month: C{integer}
+    :param month: Месяц.
+    :type year: C{integer}
+    :param year: Год.
+    :rtype: C{List}
+    :return: Возвращает выбранную дату либо None.
     """
     if parent is None:
         MsgBox(None, u'Для данного отображения календаря необходимо родительское окно !')

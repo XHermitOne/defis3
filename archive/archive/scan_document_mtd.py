@@ -289,7 +289,7 @@ class icScanDocumentManager(icmanagerinterface.icWidgetManager):
     def view_scan_file(self, scan_filename=None):
         """
         Открыть на просмотр файл.
-        @param scan_filename: Имя сканированного файла.
+        :param scan_filename: Имя сканированного файла.
             Если не определено, то пытаемся взять из объекта текущего документа.
         """
         if scan_filename is None:

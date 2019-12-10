@@ -55,7 +55,7 @@ UNKNOWN_STATE_NAME = u'Имя состояния не определено'
 def create_indicator():
     """
     Создание списка индикатора.
-    @return: Пустой список индикатора.
+    :return: Пустой список индикатора.
     """
     return list()
 
@@ -66,13 +66,13 @@ def new_indicator_state(indicator=None,
                         expression=None):
     """
     Добавить новое состояние в сприсок индикатора.
-    @param indicator: Список индикатора.
-    @param name: Наименование состояния.
-    @param img_filename: Файл образа.
-    @param text_color: Кортеж (R, G, B) цвета текста.
-    @param background_color: Кортеж (R, G, B) цвета фона.
-    @param expression: Текст блока кода выражения проверки состояния.
-    @return: Измененный список индикатора.
+    :param indicator: Список индикатора.
+    :param name: Наименование состояния.
+    :param img_filename: Файл образа.
+    :param text_color: Кортеж (R, G, B) цвета текста.
+    :param background_color: Кортеж (R, G, B) цвета фона.
+    :param expression: Текст блока кода выражения проверки состояния.
+    :return: Измененный список индикатора.
     """
     if text_color is None:
         text_color = wxfunc.wxColour2RGB(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
@@ -91,9 +91,9 @@ def new_indicator_state(indicator=None,
 def find_indicator_state(indicator, name):
     """
     Поиск состояния индикатора в списке индикатора по имени.
-    @param indicator: Список индикатора.
-    @param name: Наименование состояния.
-    @return: Структура данных состояния или None если нет состояния с таким именем.
+    :param indicator: Список индикатора.
+    :param name: Наименование состояния.
+    :return: Структура данных состояния или None если нет состояния с таким именем.
     """
     names = [state.get('name', None) for state in indicator]
     find_state = indicator[names.index(name)] if name in names else None
@@ -107,17 +107,17 @@ class icTreeItemIndicator(object):
     def __init__(self, indicator=None):
         """
         Конструктор.
-        @param indicator: Описание текущего индикатора.
+        :param indicator: Описание текущего индикатора.
         """
         self._indicator = indicator
 
     def editIndicator(self, parent=None, indicator=None):
         """
         Редактировать индикатор фильтра.
-        @param parent: Родительское окно.
-        @param indicator: Описание текущего индикатора.
+        :param parent: Родительское окно.
+        :param indicator: Описание текущего индикатора.
             Если не определен, то берется описание внутреннего индикатора.
-        @return: Отредактированный индикатор фильтра.
+        :return: Отредактированный индикатор фильтра.
         """
         if parent is None:
             app = wx.GetApp()
@@ -139,9 +139,9 @@ class icTreeItemIndicator(object):
     def getLabelIndicator(self, indicator=None):
         """
         Представление списка индикатора в виде строки надписи.
-        @param indicator: Описание текущего индикатора.
+        :param indicator: Описание текущего индикатора.
             Если не определен, то берется описание внутреннего индикатора.
-        @return: Строка надписи индикатора.
+        :return: Строка надписи индикатора.
         """
         if indicator is None:
             indicator = self._indicator
@@ -152,11 +152,11 @@ class icTreeItemIndicator(object):
     def getStateIndicator(self, records=None, indicator=None):
         """
         Определить сотояние индикатора по набору записей.
-        @param records: Набор записей.
+        :param records: Набор записей.
             Представляет собой словарей записей.
-        @param indicator: Описание текущего индикатора.
+        :param indicator: Описание текущего индикатора.
             Если не определен, то берется описание внутреннего индикатора.
-        @return: Словарь описания состояния:
+        :return: Словарь описания состояния:
             {
             'name': Наименование состояния,
             'image': Файл образа,
@@ -196,11 +196,11 @@ class icTreeItemIndicator(object):
     def getStateIndicatorObjects(self, records=None, indicator=None):
         """
         Определить объекты сотояния индикатора по набору записей.
-        @param records: Набор записей.
+        :param records: Набор записей.
             Представляет собой словарей записей.
-        @param indicator: Описание текущего индикатора.
+        :param indicator: Описание текущего индикатора.
             Если не определен, то берется описание внутреннего индикатора.
-        @return: Кортеж объектов состояния:
+        :return: Кортеж объектов состояния:
             (
                 Наименование состояния,
                 wx.Bitmap образа состояния,

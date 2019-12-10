@@ -72,8 +72,8 @@ class icEditCodeProperty(wx.propgrid.PyStringProperty):
                     eg: '&|###' means "field 0 = '&', field 1 = '###'", but there's
                     no fixed characters in between.
         =========  ==========================================================
-        @param sprav: Объект справочника.
-        @param code: Код записи справочника.
+        :param sprav: Объект справочника.
+        :param code: Код записи справочника.
         """
         # Получаем структурный код
         struct_code = self.sprav.StrCode2ListCode(code)
@@ -90,8 +90,8 @@ class icEditCodeProperty(wx.propgrid.PyStringProperty):
         Определить регулярное выражение контроля по коду.
         <\W+?> - Добавлено в регулярное выражение для поддержки
         знаков пунктуации в кодах.
-        @param sprav: Объект справочника.
-        @param code: Код записи справочника.
+        :param sprav: Объект справочника.
+        :param code: Код записи справочника.
         """
         # Получаем структурный код
         struct_code = self.sprav.StrCode2ListCode(code)
@@ -107,20 +107,20 @@ class icEditCodeProperty(wx.propgrid.PyStringProperty):
                       propEdt=None, *arg, **kwarg):
         """
         Диалог редактирования свойства/атрибута.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type attr: C{string}
-        @param attr: Имя текущего атрибута.
-        @type value: C{string}
-        @param value: Текущее значение.
-        @type pos: C{wx.Point}
-        @param pos: Позиция окна.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
-        @param propEdt: Указатель на редактор свойств.
-        @return: Возвращает отредактированное значение.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type attr: C{string}
+        :param attr: Имя текущего атрибута.
+        :type value: C{string}
+        :param value: Текущее значение.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :param propEdt: Указатель на редактор свойств.
+        :return: Возвращает отредактированное значение.
         """
         if propEdt:
             mask = self._get_mask(self.sprav, value)
@@ -143,10 +143,10 @@ class icEditCodeProperty(wx.propgrid.PyStringProperty):
     def OnEvent(self, propgrid, primaryEditor, event):
         """
         Обработчик событий редактора свойства.
-        @param propgrid:
-        @param primaryEditor:
-        @param event:
-        @return:
+        :param propgrid:
+        :param primaryEditor:
+        :param event:
+        :return:
         """
         if event.GetEventType() == wx.wxEVT_COMMAND_BUTTON_CLICKED:
             value = self._get_edit_dlg(self.GetName(), self.GetValue(),

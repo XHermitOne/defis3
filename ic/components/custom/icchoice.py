@@ -4,8 +4,8 @@
 """
 Обкладка для компонента wx.Choice.
 
-@type SPC_IC_CHOICE: C{dictionary}
-@var SPC_IC_CHOICE: Спецификация на ресурсное описание текстового поля с выбором из списка:
+:type SPC_IC_CHOICE: C{dictionary}
+:var SPC_IC_CHOICE: Спецификация на ресурсное описание текстового поля с выбором из списка:
 
     - B{type='Choice'}: Тип компонента.
     - B{name='default'}: Имя компонента.
@@ -114,10 +114,10 @@ class icChoice(icWidget, wx.Choice):
     def setDictRepl(self, dictRepl):
         """
         Устанавливает словарь замен значений в списке и значений в объекте данных.
-        @type dictRepl: C{}
-        @param dictRepl: Словарь замен.
-        @rtype: C{bool}
-        @return: Признак успешного выполнения.
+        :type dictRepl: C{}
+        :param dictRepl: Словарь замен.
+        :rtype: C{bool}
+        :return: Признак успешного выполнения.
         """
 
         if not isinstance(dictRepl, dict):
@@ -141,10 +141,10 @@ class icChoice(icWidget, wx.Choice):
         """
         Устанавливает список выбора.
         
-        @type items: C{list | tuple}
-        @param items: Список выбора.
-        @rtype: C{bool}
-        @return: Признак успешного выполнения.
+        :type items: C{list | tuple}
+        :param items: Список выбора.
+        :rtype: C{bool}
+        :return: Признак успешного выполнения.
         """
         if not type(items) in (list, tuple):
             return False
@@ -183,16 +183,16 @@ class icChoice(icWidget, wx.Choice):
         """
         Конструктор для создания icChoice.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         self.bChanged = 0
 
@@ -362,8 +362,8 @@ class icChoice(icWidget, wx.Choice):
         и установит его в качестве текущего. Преобразование производится через словарь
         замен _dictRepl.
 
-        @type value: C{string}
-        @param value: Устанавливаемое значение.
+        :type value: C{string}
+        :param value: Устанавливаемое значение.
         """
         ret = False
         if self._itemsLst:
@@ -388,9 +388,9 @@ class icChoice(icWidget, wx.Choice):
         Устанавливает определенное значение в качестве текущего. Значение сравнивается со списком
         выбора, находится самое подходящее, которое и выбирается в качестве текущего значения.
 
-        @param value: Значение которое надо поставить в качестве текущего
-        @rtype: C{bool}
-        @return: Возвращает признак успешного выполнения
+        :param value: Значение которое надо поставить в качестве текущего
+        :rtype: C{bool}
+        :return: Возвращает признак успешного выполнения
         """
         val = str(value)
 
@@ -407,13 +407,13 @@ class icChoice(icWidget, wx.Choice):
     def UpdateDataDB(self, db_name=None, bRestore=False):
         """
         Обновляем данные в базе данных.
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
-        @type bRestore: C{bool}
-        @param bRestore: Признак обновления представления. Если True, то при
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
+        :type bRestore: C{bool}
+        :param bRestore: Признак обновления представления. Если True, то при
             неудачной попытки записи программа востановит значение поля по базе
-        @rtype: C{int}
-        @return: Возвращает код контроля на запись.
+        :rtype: C{int}
+        :return: Возвращает код контроля на запись.
         """
         #   Если класс данных не задан, то считаем, что данные необходимо обновить
         if db_name is None:
@@ -434,10 +434,10 @@ class icChoice(icWidget, wx.Choice):
     def UpdateViewFromDB(self, db_name=None):
         """
         Обновляет данные в текстовом поле после изменения курсора в источнике данных.
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного обновления.
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного обновления.
         """
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:

@@ -34,7 +34,7 @@ class icRegUserJournal:
     def __init__(self, RegJrnFileName_=DEFAULT_REG_JRN_FILE_NAME):
         """
         Конструктор.
-        @param RegJrnFileName_: Файл журнала регистрации пользователей.
+        :param RegJrnFileName_: Файл журнала регистрации пользователей.
         """
         # Имя файла журнала регистрации
         self._journal_file_name = filefunc.get_absolute_path(RegJrnFileName_)
@@ -81,7 +81,7 @@ class icRegUserJournal:
     def isRegUserName(self, UserName_):
         """
         Пользователь уже зарегистрирован?
-        @param UserName_: Имя пользователя.
+        :param UserName_: Имя пользователя.
         """
         user_list = self.getCurrentUserNames()
         if user_list:
@@ -91,8 +91,8 @@ class icRegUserJournal:
     def register(self, UserName_, *StartParam_):
         """
         Зарегистрировать пользователя в журнале.
-        @param UserName_: Имя пользователя.
-        @param StartParam_: Параметры запуска.
+        :param UserName_: Имя пользователя.
+        :param StartParam_: Параметры запуска.
         """
         try:
             if self.isRegUserName(UserName_):
@@ -180,7 +180,7 @@ class icRegUserJournal:
     def getCurrentUserStartParam(self, UserName_):
         """
         Параметры запуска пользователя.
-        @param UserName_: Имя пользователя.
+        :param UserName_: Имя пользователя.
         """
         try:
             return eval(inifunc.loadParamINI(self._journal_file_name,

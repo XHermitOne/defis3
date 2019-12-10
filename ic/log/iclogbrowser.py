@@ -72,8 +72,8 @@ class icLogBrowserPanelManager:
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
-        @param args:
-        @param kwargs:
+        :param args:
+        :param kwargs:
         """
         self.filter_panel = self
 
@@ -108,7 +108,7 @@ class icLogBrowserPanelManager:
     def get_selected_log_types(self):
         """
         Список выбранных типов сообщений.
-        @return:
+        :return:
         """
         result = list()
 
@@ -130,7 +130,7 @@ class icLogBrowserPanelManager:
     def get_selected_start_dt(self):
         """
         Выбранное начальное время.
-        @return:
+        :return:
         """
         result = None
         if self.filter_panel.start_checkBox.IsChecked():
@@ -145,7 +145,7 @@ class icLogBrowserPanelManager:
     def get_selected_stop_dt(self):
         """
         Выбранное конечное время.
-        @return:
+        :return:
         """
         result = None
         if self.filter_panel.stop_checkBox.IsChecked():
@@ -160,7 +160,7 @@ class icLogBrowserPanelManager:
     def get_selected_filters(self):
         """
         Выбранные дополнительные фильтры.
-        @return:
+        :return:
         """
         check_idx = [i for i in range(self.filter_panel.filter_checkList.GetCount()) if self.filter_panel.filter_checkList.IsChecked(i)]
         result = [self.ext_filters[i][1] for i in check_idx]
@@ -169,12 +169,12 @@ class icLogBrowserPanelManager:
     def set_filters(self, filter_logic=log_file.AND_FILTER_LOGIC, *ext_filters):
         """
         Установить дополнительные фильтры.
-        @param filter_logic: Логика обработки фильтров.
-        @param ext_filters: Список дополнительных фильтров:
+        :param filter_logic: Логика обработки фильтров.
+        :param ext_filters: Список дополнительных фильтров:
             ((u'Наименование фильтра на русском', Функция/lambda дополнительного фильтра),...)
             Функция дополнительного фильтра принимает словарь записи и
             возвращает True/False.
-        @return: True/False
+        :return: True/False
         """
         self.filter_panel.logic_radioBox.SetSelection(0 if filter_logic == log_file.AND_FILTER_LOGIC else 1)
         if ext_filters:
@@ -191,8 +191,8 @@ class icLogBrowserPanelManager:
     def set_log_filename(self, sLogFileName=None):
         """
         Установить файл журнала для просмотра.
-        @param sLogFileName: Файл журнала.
-        @return:
+        :param sLogFileName: Файл журнала.
+        :return:
         """
         if sLogFileName is not None and os.path.exists(sLogFileName):
             self.filter_panel.log_filePicker.SetPath(sLogFileName)
@@ -200,8 +200,8 @@ class icLogBrowserPanelManager:
     def set_datetime_filter_range(self, dtStartFilter=None, dtStopFilter=None):
         """
         Установить фильтр по диапазону времени.
-        @param dtStartFilter:
-        @param dtStopFilter:
+        :param dtStartFilter:
+        :param dtStopFilter:
         """
         self.filter_panel.start_checkBox.SetValue(dtStartFilter is not None)
         self.filter_panel.stop_checkBox.SetValue(dtStopFilter is not None)
@@ -225,7 +225,7 @@ class icLogBrowserPanelManager:
     def set_log_types_filter(self, *log_types):
         """
         Установить фильтр по типам сообщений
-        @param log_types: Список типов сообщений.
+        :param log_types: Список типов сообщений.
         """
         if log_types:
             for log_type in log_types:
@@ -247,19 +247,19 @@ class icLogBrowserPanelManager:
                     tFilters=None, sFilterLogic=None):
         """
         Получить список сообщений, соответствующих выставленным фильтрам.
-        @param sLogFileName: Полное имя log файла.
-        @param tLogTypes: Кортеж/список типов сообщений.
-        @param dtStartFilter: Начальная дата/время фильтра по времени.
+        :param sLogFileName: Полное имя log файла.
+        :param tLogTypes: Кортеж/список типов сообщений.
+        :param dtStartFilter: Начальная дата/время фильтра по времени.
             Если не определено, то выбор происходит с начала файла.
-        @param dtStopFilter: Конечная дата/время фильтра по времени.
+        :param dtStopFilter: Конечная дата/время фильтра по времени.
             Если не определено, то выбор происходит до конца файла.
-        @param tFilters: Кортеж/список дополнительных методов фильтрации.
+        :param tFilters: Кортеж/список дополнительных методов фильтрации.
             Методы фильтрации задаются как lambda или функции, которые принимают
             Словарь записи, а возвращают True-запись попадает в выбор/False - не попадает.
-        @param sFilterLogic: Комманда способа обработки дополнительных фильтров
+        :param sFilterLogic: Комманда способа обработки дополнительных фильтров
             AND - Чтобы запись попала в выбор необходимо положительное выполнение всех фильтров,
             OR - Чтобы запись попала в выбор достаточно положительное выполнение одного фильтра.
-        @return: Список записей сообщений.
+        :return: Список записей сообщений.
         """
         if sLogFileName is None:
             sLogFileName = self.filter_panel.log_filePicker.GetPath()
@@ -290,7 +290,7 @@ class icLogBrowserPanelManager:
     def refresh(self):
         """
         Обновить список сообщений, соответствующих выставленным фильтрам.
-        @return: True/False
+        :return: True/False
         """
         self.filter_panel.msg_listCtrl.DeleteAllItems()
         self.records = self.get_records()
@@ -360,8 +360,8 @@ class icLogBrowserPanel(icLogBrowserPanelManager,
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
-        @param args:
-        @param kwargs:
+        :param args:
+        :param kwargs:
         """
         icLogBrowserPanelManager.__init__(self, filter_panel=self)
         log_browser_proto.icLogBrowserPanelProto.__init__(self, *args, **kwargs)
@@ -376,8 +376,8 @@ class icLogBrowserDlg(icLogBrowserPanelManager,
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
-        @param args:
-        @param kwargs:
+        :param args:
+        :param kwargs:
         """
         log_browser_proto.icLogBrowserDialogProto.__init__(self, *args, **kwargs)
         icLogBrowserPanelManager.__init__(self, filter_panel=self.browser_panel)
@@ -407,21 +407,21 @@ def get_log_browser_panel(parent=None, sLogFileName=None, tLogTypes=None,
                           tFilters=None, sFilterLogic=None):
     """
     Функция получения объекта панели просмотра журнала сообщений программы.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не указано, то берется главное окно.
-    @param sLogFileName: Полное имя log файла.
-    @param tLogTypes: Кортеж/список типов сообщений.
-    @param dtStartFilter: Начальная дата/время фильтра по времени.
+    :param sLogFileName: Полное имя log файла.
+    :param tLogTypes: Кортеж/список типов сообщений.
+    :param dtStartFilter: Начальная дата/время фильтра по времени.
         Если не определено, то выбор происходит с начала файла.
-    @param dtStopFilter: Конечная дата/время фильтра по времени.
+    :param dtStopFilter: Конечная дата/время фильтра по времени.
         Если не определено, то выбор происходит до конца файла.
-    @param tFilters: Кортеж/список дополнительных методов фильтрации.
+    :param tFilters: Кортеж/список дополнительных методов фильтрации.
         Методы фильтрации задаются как lambda или функции, которые принимают
         Словарь записи, а возвращают True-запись попадает в выбор/False - не попадает.
-    @param sFilterLogic: Комманда способа обработки дополнительных фильтров
+    :param sFilterLogic: Комманда способа обработки дополнительных фильтров
         AND - Чтобы запись попала в выбор необходимо положительное выполнение всех фильтров,
         OR - Чтобы запись попала в выбор достаточно положительное выполнение одного фильтра.
-    @return: Объект панели или None в случае ошибки.
+    :return: Объект панели или None в случае ошибки.
     """
     if parent is None:
         parent = wx.GetApp().GetTopWindow()
@@ -444,21 +444,21 @@ def show_log_browser_dlg(parent=None, sLogFileName=None, tLogTypes=None,
                          tFilters=None, sFilterLogic=None):
     """
     Вызвать диалоговое окно
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не указано, то берется главное окно.
-    @param sLogFileName: Полное имя log файла.
-    @param tLogTypes: Кортеж/список типов сообщений.
-    @param dtStartFilter: Начальная дата/время фильтра по времени.
+    :param sLogFileName: Полное имя log файла.
+    :param tLogTypes: Кортеж/список типов сообщений.
+    :param dtStartFilter: Начальная дата/время фильтра по времени.
         Если не определено, то выбор происходит с начала файла.
-    @param dtStopFilter: Конечная дата/время фильтра по времени.
+    :param dtStopFilter: Конечная дата/время фильтра по времени.
         Если не определено, то выбор происходит до конца файла.
-    @param tFilters: Кортеж/список дополнительных методов фильтрации.
+    :param tFilters: Кортеж/список дополнительных методов фильтрации.
         Методы фильтрации задаются как lambda или функции, которые принимают
         Словарь записи, а возвращают True-запись попадает в выбор/False - не попадает.
-    @param sFilterLogic: Комманда способа обработки дополнительных фильтров
+    :param sFilterLogic: Комманда способа обработки дополнительных фильтров
         AND - Чтобы запись попала в выбор необходимо положительное выполнение всех фильтров,
         OR - Чтобы запись попала в выбор достаточно положительное выполнение одного фильтра.
-    @return: True/False.
+    :return: True/False.
     """
     if parent is None:
         parent = wx.GetApp().GetTopWindow()

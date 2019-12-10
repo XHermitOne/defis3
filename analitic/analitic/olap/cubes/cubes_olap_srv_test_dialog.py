@@ -80,7 +80,7 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
     def setOLAPServer(self, olap_server):
         """
         Установить тестируемый OLAP сервер.
-        @param olap_server: OLAP сервер
+        :param olap_server: OLAP сервер
         """
         self._OLAP_server = olap_server
 
@@ -97,9 +97,9 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
     def _parse_dimension_names(self, dimension_url):
         """
         Список имен измерения.
-        @param dimension_url: Часть элемента запроса.
+        :param dimension_url: Часть элемента запроса.
             Например store_date@ymd:month
-        @return: Список имен элементов измерения.
+        :return: Список имен элементов измерения.
         """
         dimension_names = list()
         if '@' in dimension_url:
@@ -178,10 +178,10 @@ class icCubesOLAPSrvTestDialog(cubes_olap_srv_test_dlg.icCubesOLAPSrvTestDialogP
 def show_cubes_olap_srv_test_dlg(parent=None, olap_srv=None):
     """
     Отобразить окно тестирования OLAP сервера Cubes.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется самое главное окно.
-    @param olap_srv: Тестируемый OLAP сервер.
-    @return: True/False.
+    :param olap_srv: Тестируемый OLAP сервер.
+    :return: True/False.
     """
     if olap_srv is None:
         log.warning(u'Не определен объект OLAP сервера для тестирования')

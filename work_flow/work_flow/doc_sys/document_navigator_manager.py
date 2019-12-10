@@ -99,14 +99,14 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setSlaveListCtrl(self, list_ctrl=None):
         """
         Установить ведомый контрол списка для отображения списка документов.
-        @param list_ctrl: Контрол списка для отображения списка документов.
+        :param list_ctrl: Контрол списка для отображения списка документов.
         """
         self.__document_navigator_slave_list_ctrl = list_ctrl
 
     def getSlaveListCtrl(self):
         """
         Установить ведомый контрол списка для отображения списка документов.
-        @return: Контрол списка для отображения списка документов.
+        :return: Контрол списка для отображения списка документов.
         """
         try:
             return self.__document_navigator_slave_list_ctrl
@@ -120,7 +120,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getSlaveListCtrlSelectedIdx(self):
         """
         Взять индекс текущего выбранного документа.
-        @return: Индекс текущего выбранного документа.
+        :return: Индекс текущего выбранного документа.
             Или -1 в случае ошибки.
         """
         list_ctrl = self.getSlaveListCtrl()
@@ -131,7 +131,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setSlaveListCtrlByPsp(self, list_ctrl_psp=None):
         """
         Установить ведомый контрол списка для отображения списка документов по его паспорту.
-        @param list_ctrl_psp: Паспорт контрола списка для отображения списка документов.
+        :param list_ctrl_psp: Паспорт контрола списка для отображения списка документов.
         """
         if not list_ctrl_psp:
             log.warning(u'Не определен паспорт контрола списка для отображения списка документов')
@@ -150,8 +150,8 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setSlaveDocumentByPsp(self, document_psp, bAutoUpdate=False):
         """
         Установить ведомый объект документа для управления им по его паспорту.
-        @param document_psp: Паспорт объекта документа.
-        @param bAutoUpdate: Автоматически обновить датасет по документу.
+        :param document_psp: Паспорт объекта документа.
+        :param bAutoUpdate: Автоматически обновить датасет по документу.
         """
         if not document_psp:
             log.warning(u'Не определен паспорт ведомого документа для менеджера навигации')
@@ -172,8 +172,8 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setSlaveDocument(self, document, bAutoUpdate=False):
         """
         Установить ведомый объект документа для управления им.
-        @param document: Объект документа.
-        @param bAutoUpdate: Автоматически обновить датавет по документу.
+        :param document: Объект документа.
+        :param bAutoUpdate: Автоматически обновить датавет по документу.
         """
         self.__document_navigator_slave_document = document
         if bAutoUpdate:
@@ -182,11 +182,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def _getDocIndex(self, UUID=None, index=None):
         """
         Определить индекс в датасете документа по UUID или по индексу в dataset.
-        @param UUID: UUID документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @return: ИНдекс объект документа.
+        :return: ИНдекс объект документа.
         """
         # Определение индекса документа
         idx = -1
@@ -210,12 +210,12 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Получить ведомый объект документа для управления им.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @param bLoad: Загрузить реквизиты документа из БД?
-        @return: Объект документа.
+        :param bLoad: Загрузить реквизиты документа из БД?
+        :return: Объект документа.
         """
         document = None
         try:
@@ -254,7 +254,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def updateDocDataset(self):
         """
         Обновление списка документов.
-        @return: Полученный список документов.
+        :return: Полученный список документов.
         """
         # Очистить список датасета
         self.__document_navigator_dataset = list()
@@ -268,8 +268,8 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setDocDatasetLimit(self, limit=0):
         """
         Установить ограничение количества записей для датасета документа.
-        @param limit: Ограничение количества записей. Если не определено, то ограничения нет.
-        @return: True/False.
+        :param limit: Ограничение количества записей. Если не определено, то ограничения нет.
+        :return: True/False.
         """
         document = self.getSlaveDocument()
         document.setLimit(limit)
@@ -278,7 +278,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getSelectedSlaveDocumentUUID(self):
         """
         Получить UUID выбранного документа.
-        @return: UUID выбранного документа.
+        :return: UUID выбранного документа.
             Либо None, если ничего не выбрано.
         """
         dataset = self.getDocDataset()
@@ -299,7 +299,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getSelectedSlaveDocument(self):
         """
         Получить выбранный документ.
-        @return: Выбранный документ.
+        :return: Выбранный документ.
             Либо None, если ничего не выбрано.
         """
         doc_uuid = self.getSelectedSlaveDocumentUUID()
@@ -310,7 +310,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getSelectedSlaveDocumentRecord(self):
         """
         Получить выбранный документ в виде словаря записи.
-        @return: Выбранный документ в виде словаря записи.
+        :return: Выбранный документ в виде словаря записи.
             Либо None, если ничего не выбрано.
         """
         selected_doc = self.getSelectedSlaveDocument()
@@ -321,8 +321,8 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getDocDataset(self, bAutoUpdate=False):
         """
         Текущий заполненный список документов.
-        @param bAutoUpdate: Автоматически обновить датасет по документу?
-        @return: Текущий заполненный список документов.
+        :param bAutoUpdate: Автоматически обновить датасет по документу?
+        :return: Текущий заполненный список документов.
         """
         if bAutoUpdate:
             self.updateDocDataset()
@@ -339,7 +339,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setDocDataset(self, dataset):
         """
         Установить текущий заполненный список документов.
-        @return: Текущий заполненный список документов.
+        :return: Текущий заполненный список документов.
         """
         try:
             self.__document_navigator_dataset = dataset
@@ -351,7 +351,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getDocDatasetFilter(self):
         """
         Текущий фильтр списка документов.
-        @return: Текущий заполненный список документов.
+        :return: Текущий заполненный список документов.
         """
         try:
             document = self.getSlaveDocument()
@@ -363,15 +363,15 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setDocDatasetFilter(self, doc_filter=None, bAutoUpdate=False):
         """
         Текущий фильтр списка документов.
-        @param doc_filter: Фильтр документов.
+        :param doc_filter: Фильтр документов.
             Для создания фильтров надо пользоваться
                 функциями из STD.queries.filter_generate.
                 Функции генерации фильтров для вызова
                 из функций прикладного уровня.
             Использование:
                 create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
-        @param bAutoUpdate: Автоматически обновить датавет по документу.
-        @return: Текущий заполненный список документов.
+        :param bAutoUpdate: Автоматически обновить датавет по документу.
+        :return: Текущий заполненный список документов.
         """
         try:
             document = self.getSlaveDocument()
@@ -386,9 +386,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setDocDatasetRecord(self, index, doc_requisites):
         """
         Установить запись в датасете по индексу.
-        @param index: Индекс записи в датасете.
-        @param doc_requisites: Сохраняемый словарь значений реквизитов документа.
-        @return: Обновленный список dataset.
+        :param index: Индекс записи в датасете.
+        :param doc_requisites: Сохраняемый словарь значений реквизитов документа.
+        :return: Обновленный список dataset.
         """
         dataset = self.getDocDataset()
         if index >= len(dataset):
@@ -400,9 +400,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def insertDocDatasetRecord(self, index, doc_requisites):
         """
         Вставить запись в датасете по индексу.
-        @param index: Индекс записи в датасете.
-        @param doc_requisites: Сохраняемый словарь значений реквизитов документа.
-        @return: Обновленный список dataset.
+        :param index: Индекс записи в датасете.
+        :param doc_requisites: Сохраняемый словарь значений реквизитов документа.
+        :return: Обновленный список dataset.
         """
         dataset = self.getDocDataset()
         if index >= len(dataset) or index < 0:
@@ -414,13 +414,13 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setDocListCtrlColumns(self, *columns, bSetColumns=True):
         """
         Определение колонок спискового контрола.
-        @param columns: Список функций получения значений колонок.
+        :param columns: Список функций получения значений колонок.
             Если в качестве колонки передается строка, то считется что это просто
             имя реквизита.
             Если в качестве колонки передается lambda выражение/функция,
             то оно выполняется. В качестве аргумента lambda/функция должна принимать
             словарь текущей записи.
-        @param bSetColumns: Установить колонки в контрол?
+        :param bSetColumns: Установить колонки в контрол?
         """
         self.__document_navigator_slave_list_columns = columns
 
@@ -438,9 +438,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def setDocListCtrlColumnLabel(self, n_column=0, label=u''):
         """
         Установить надпись колонки спискового контрола.
-        @param n_column: Идекс колонки.
-        @param label: Надпись колонки.
-        @return: True/False.
+        :param n_column: Идекс колонки.
+        :param label: Надпись колонки.
+        :return: True/False.
         """
         list_ctrl = self.getSlaveListCtrl()
         return self.setColumnLabel(ctrl=list_ctrl, n_column=n_column, label=label)
@@ -448,7 +448,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getDocListCtrlColumns(self):
         """
         Определение колонок спискового контрола.
-        @return: Список функций получения значений колонок.
+        :return: Список функций получения значений колонок.
             Если в качестве колонки передается строка, то считется что это просто
             имя реквизита.
             Если в качестве колонки передается lambda выражение/функция,
@@ -467,15 +467,15 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def getDocListCtrlRows(self, dataset=None, *columns):
         """
         Получение списка строк спискового контрола для заполнения.
-        @param dataset: Список документов.
+        :param dataset: Список документов.
             Если не определен, то берется текущий заполненный.
-        @param columns: Список функций получения значений колонок.
+        :param columns: Список функций получения значений колонок.
             Если в качестве колонки передается строка, то считется что это просто
             имя реквизита.
             Если в качестве колонки передается lambda выражение/функция,
             то оно выполняется. В качестве аргумента lambda/функция должна принимать
             словарь текущей записи.
-        @return: Список строк спискового контрола.
+        :return: Список строк спискового контрола.
         """
         if dataset is None:
             dataset = self.getDocDataset()
@@ -514,11 +514,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def refreshDocListCtrlRows(self, rows=None, auto_size_columns=False, bAutoUpdate=False):
         """
         Обновление списка строк контрола отображения списка документов.
-        @param rows: Список строк.
+        :param rows: Список строк.
             Если не определен, то заполняется автоматически по датасету.
-        @param auto_size_columns: Установить автообразмеривание колонок.
-        @param bAutoUpdate: Автоматически обновить датасет по документу.
-        @return: True/False.
+        :param auto_size_columns: Установить автообразмеривание колонок.
+        :param bAutoUpdate: Автоматически обновить датасет по документу.
+        :return: True/False.
         """
         if rows is None:
             # При обновление всех строки лучше обновить весь датасет
@@ -547,13 +547,13 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                               bAutoUpdate=False):
         """
         Обновление строки контрола отображения списка документов.
-        @param index: Индекс обновляемой строки.
+        :param index: Индекс обновляемой строки.
             Если не определен, то берется индекс текущего выбранного элемента.
-        @param row: Строка в виде списка.
+        :param row: Строка в виде списка.
             Если не определен, то заполняется автоматически по датасету.
-        @param auto_size_columns: Установить автообразмеривание колонок.
-        @param bAutoUpdate: Автоматически обновить датасет по документу.
-        @return: True/False.
+        :param auto_size_columns: Установить автообразмеривание колонок.
+        :param bAutoUpdate: Автоматически обновить датасет по документу.
+        :return: True/False.
         """
         list_ctrl = self.getSlaveListCtrl()
         if index is None:
@@ -582,14 +582,14 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                                    sort_fields=None, bReverseSort=False, bAutoUpdate=False):
         """
         Обновление списка строк контрола отображения списка документов.
-        @param rows: Список строк.
+        :param rows: Список строк.
             Если не определен, то заполняется автоматически по датасету.
-        @param auto_size_columns: Установить автообразмеривание колонок.
-        @param sort_fields: Сортировка списка документов по полям.
+        :param auto_size_columns: Установить автообразмеривание колонок.
+        :param sort_fields: Сортировка списка документов по полям.
             Если не указано, то сортировка не производиться.
-        @param bReverseSort: Произвести обратную сортировку?
-        @param bAutoUpdate: Автоматически обновить датасет по документу.
-        @return: True/False.
+        :param bReverseSort: Произвести обратную сортировку?
+        :param bAutoUpdate: Автоматически обновить датасет по документу.
+        :return: True/False.
         """
         if sort_fields is None:
             # Не надо производить сортировку просто обновить
@@ -616,11 +616,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Передвинуть фокус к ...
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID редактируемого документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID редактируемого документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @return: Новый индекс.
+        :return: Новый индекс.
         """
         idx = self._getDocIndex(UUID=UUID, index=index)
         if idx > -1:
@@ -648,11 +648,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Передвинуть фокус на предыдущий элемент списка.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID редактируемого документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID редактируемого документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @return: Новый индекс.
+        :return: Новый индекс.
         """
         idx = self._getDocIndex(UUID=UUID, index=index)
         idx -= 1
@@ -663,11 +663,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Передвинуть фокус на следующий элемент списка.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID редактируемого документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID редактируемого документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @return: Новый индекс.
+        :return: Новый индекс.
         """
         idx = self._getDocIndex(UUID=UUID, index=index)
         idx += 1
@@ -678,11 +678,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def moveTo(self, fromUUID=None, fromIndex=None, toIndex=None, bRefresh=True):
         """
         Перемещение документа с индекса fromindex на индекс toIndex в списке документов.
-        @param fromUUID: UUID перемещаемого документа если необходимо.
-        @param fromIndex: Индекс перемещаемого документа в списке документов.
-        @param toIndex: Новый индекс документа.
-        @param bRefresh: Сделать автоматическое обновление.
-        @return: Новый индекс документа.
+        :param fromUUID: UUID перемещаемого документа если необходимо.
+        :param fromIndex: Индекс перемещаемого документа в списке документов.
+        :param toIndex: Новый индекс документа.
+        :param bRefresh: Сделать автоматическое обновление.
+        :return: Новый индекс документа.
         """
         dataset = self.getDocDataset()
         from_idx = self._getDocIndex(UUID=fromUUID, index=fromIndex)
@@ -697,11 +697,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def moveDown(self, fromUUID=None, fromIndex=None, stepIndex=1, bRefresh=True):
         """
         Перемещение документа с индекса fromindex на stepIndex ниже в списке документов.
-        @param fromUUID: UUID перемещаемого документа если необходимо.
-        @param fromIndex: Индекс перемещаемого документа в списке документов.
-        @param stepIndex: Шаг индекса. На сколько сделать перемещение.
-        @param bRefresh: Сделать автоматическое обновление.
-        @return: Новый индекс документа.
+        :param fromUUID: UUID перемещаемого документа если необходимо.
+        :param fromIndex: Индекс перемещаемого документа в списке документов.
+        :param stepIndex: Шаг индекса. На сколько сделать перемещение.
+        :param bRefresh: Сделать автоматическое обновление.
+        :return: Новый индекс документа.
         """
         dataset = self.getDocDataset()
         from_idx = self._getDocIndex(UUID=fromUUID, index=fromIndex)
@@ -717,11 +717,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def moveUp(self, fromUUID=None, fromIndex=None, stepIndex=1, bRefresh=True):
         """
         Перемещение документа с индекса fromindex на stepIndex выше в списке документов.
-        @param fromUUID: UUID перемещаемого документа если необходимо.
-        @param fromIndex: Индекс перемещаемого документа в списке документов.
-        @param stepIndex: Шаг индекса. На сколько сделать перемещение.
-        @param bRefresh: Сделать автоматическое обновление?
-        @return: Новый индекс документа.
+        :param fromUUID: UUID перемещаемого документа если необходимо.
+        :param fromIndex: Индекс перемещаемого документа в списке документов.
+        :param stepIndex: Шаг индекса. На сколько сделать перемещение.
+        :param bRefresh: Сделать автоматическое обновление?
+        :return: Новый индекс документа.
         """
         dataset = self.getDocDataset()
         from_idx = self._getDocIndex(UUID=fromUUID, index=fromIndex)
@@ -737,12 +737,12 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def findDoc(self, requisite=None, value=None, fromUUID=None, fromIndex=None, bSelect=True):
         """
         Поиск документа по значению реквизита начиная с текущего.
-        @param requisite: Имя реквизита по которому надо производить поиск.
-        @param value: Искомое значение.
-        @param fromUUID: UUID текущего документа если необходимо.
-        @param fromIndex: Индекс текущего документа в списке документов.
-        @param bSelect: Автоматически выделить искомый документ в списке?
-        @return: Индекс искомого документа или -1, если не найден документ.
+        :param requisite: Имя реквизита по которому надо производить поиск.
+        :param value: Искомое значение.
+        :param fromUUID: UUID текущего документа если необходимо.
+        :param fromIndex: Индекс текущего документа в списке документов.
+        :param bSelect: Автоматически выделить искомый документ в списке?
+        :return: Индекс искомого документа или -1, если не найден документ.
         """
         from_idx = self._getDocIndex(UUID=fromUUID, index=fromIndex)
         last_idx = self.getItemCount(self.getSlaveListCtrl()) - 1
@@ -769,7 +769,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def filterDocs(self, doc_filter=None, bRefresh=True):
         """
         Отфильтровать список документов.
-        @param doc_filter: Словарь значений реквизитов фильтров.
+        :param doc_filter: Словарь значений реквизитов фильтров.
             Если None, то берется текущий фильтр бизнес объектов.
             Для создания фильтров надо пользоваться
             функциями из STD.queries.filter_generate.
@@ -777,7 +777,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
             из функций прикладного уровня.
             Использование:
                 create_filter_group_AND(create_filter_compare_requisite('field1', '==', 'FFF'))
-        @return: Возвращает список-dataset объектов, соответствующих заданному фильтру.
+        :return: Возвращает список-dataset объектов, соответствующих заданному фильтру.
         """
         self.setDocDatasetFilter(doc_filter, bAutoUpdate=False)
         dataset = self.updateDocDataset()
@@ -788,13 +788,13 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def sortDocs(self, *sort_fields):
         """
         Сортировка списка документов.
-        @param sort_fields: Список порядка сортировки списка документов.
+        :param sort_fields: Список порядка сортировки списка документов.
             В качестве поля сортировки может выступать имя реквизита или
             функция или lambda выражение.
             В случае функции или lambda-выражения они должны принимать
             в качестве аргумента словарь записи документа и возвращать
             значение по которому будет производиться сортитровка.
-        @return: Отсортированный список документов.
+        :return: Отсортированный список документов.
         """
         dataset = self.getDocDataset(bAutoUpdate=False)
 
@@ -817,13 +817,13 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def sortReverseDocs(self, *sort_fields):
         """
         Обратная сортировка списка документов.
-        @param sort_fields: Список порядка сортировки списка документов.
+        :param sort_fields: Список порядка сортировки списка документов.
             В качестве поля сортировки может выступать имя реквизита или
             функция или lambda выражение.
             В случае функции или lambda-выражения они должны принимать
             в качестве аргумента словарь записи документа и возвращать
             значение по которому будет производиться сортитровка.
-        @return: Отсортированный список документов.
+        :return: Отсортированный список документов.
         """
         dataset = self.getDocDataset()
 
@@ -847,11 +847,11 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Копировать документ в клипбоард.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID редактируемого документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID редактируемого документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @return: Скопированный словарь значений реквизитов документа.
+        :return: Скопированный словарь значений реквизитов документа.
         """
         idx = self._getDocIndex(UUID=UUID, index=index)
         doc_requisites = None
@@ -872,10 +872,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def pasteDoc(self, index=None):
         """
         Вставить документ из клипбоарда в датасет.
-        @param index: Индекс документа в dataset.
+        :param index: Индекс документа в dataset.
             Если index не указываются,
             то берется текущий выделенный документ.
-        @return: Скопированный словарь значений реквизитов документа.
+        :return: Скопированный словарь значений реквизитов документа.
         """
         doc_requisites = None
         if not wx.TheClipboard.IsOpened():
@@ -898,9 +898,9 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def cloneDoc(self, UUID=None, index=None):
         """
         Клонироваь документа в списке документов.
-        @param UUID:
-        @param index:
-        @return:
+        :param UUID:
+        :param index:
+        :return:
         """
         if UUID is None and index is None:
             # Если документ не идентифицирован, то берем выбранный в списке
@@ -914,14 +914,14 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Просмотр документа.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID редактируемого документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID редактируемого документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @param view_form_method: Метод вызова формы просмотра документа.
+        :param view_form_method: Метод вызова формы просмотра документа.
             Может задаваться фукнцией.
             Если не определен, то вызывается document.View().
-        @return: True/False
+        :return: True/False
         """
         if UUID is None and index is None:
             # Если документ не идентифицирован, то берем выбранный в списке
@@ -944,15 +944,15 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Редактирование документа.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID редактируемого документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID редактируемого документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @param edit_form_method: Метод вызова формы редактирования документа.
+        :param edit_form_method: Метод вызова формы редактирования документа.
             Может задаваться фукнцией.
             В качестве первого аргумента функция должна принимать объект документа.
             Если не определен, то вызывается document.edit().
-        @return: True/False
+        :return: True/False
         """
         if UUID is None and index is None:
             # Если документ не идентифицирован, то берем выбранный в списке
@@ -988,14 +988,14 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Обновить документ. По умолчанию обновляется из БД.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID редактируемого документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID редактируемого документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @param update_form_method: Метод вызова формы обновления документа.
+        :param update_form_method: Метод вызова формы обновления документа.
             Может задаваться фукнцией.
             Если не определен, то вызывается document.load_obj().
-        @return: True/False
+        :return: True/False
         """
         if UUID is None and index is None:
             # Если документ не идентифицирован, то берем выбранный в списке
@@ -1025,10 +1025,10 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Создать документ.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param create_form_method: Метод вызова формы создания документа.
+        :param create_form_method: Метод вызова формы создания документа.
             Может задаваться фукнцией.
             Если не определен, то вызывается document.Add().
-        @return: True/False.
+        :return: True/False.
         """
         document = self.getSlaveDocument()
         log.debug(u'Создание документа')
@@ -1047,14 +1047,14 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Удалить документ.
         Документ может задаваться по UUID или по индексу в dataset.
-        @param UUID: UUID редактируемого документа.
-        @param index: Индекс документа в dataset.
+        :param UUID: UUID редактируемого документа.
+        :param index: Индекс документа в dataset.
             Если ни UUID ни index не указываются,
             то берется текущий выделенный документ.
-        @param delete_form_method: Метод вызова формы удаления документа.
+        :param delete_form_method: Метод вызова формы удаления документа.
             Может задаваться фукнцией.
             Если не определен, то вызывается document.Del().
-        @return: True/False
+        :return: True/False
         """
         if UUID is None and index is None:
             # Если документ не идентифицирован, то берем выбранный в списке
@@ -1291,8 +1291,8 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def sumDoc(self, doc_requisite):
         """
         Выполнить суммирование по реквизиту всех документов списка.
-        @param doc_requisite: Имя реквизита, по которому производится суммирование.
-        @return: Расчетная сумма.
+        :param doc_requisite: Имя реквизита, по которому производится суммирование.
+        :return: Расчетная сумма.
         """
         dataset = self.getDocDataset()
         result_sum = 0.0
@@ -1307,7 +1307,7 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
     def countDoc(self):
         """
         Выполнить подсчет количества всех документов списка.
-        @return: Расчетное количество.
+        :return: Расчетное количество.
         """
         dataset = self.getDocDataset()
         return len(dataset)
@@ -1341,18 +1341,18 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
         """
         Переместить документ из одной структуры документа в другую.
         Функция является примером архивирования документа.
-        @param UUID: UIID переносимого документа.
+        :param UUID: UIID переносимого документа.
             Переносимый документ может задаваться как номером так и UUID.
-        @param to_document: Объект документа-приемника.
-        @param doc_num: Номер переносимого документа.
+        :param to_document: Объект документа-приемника.
+        :param doc_num: Номер переносимого документа.
             Если номер не определен, то перенос производиться по UUID документа.
-        @param requisite_replace: Словарь замены имен реквизитов.
+        :param requisite_replace: Словарь замены имен реквизитов.
             Формат:
             {'Имя реквизита в документе-приемнике': 'Имя реквизита в документе-источнике'}
-        @param bAskDel: Спрашивать об удалении документа из источника?
-        @param bRefresh: Обновить контрол списка после переноса?
-        @param bUpdate: Обновить список документов?
-        @return: True/False.
+        :param bAskDel: Спрашивать об удалении документа из источника?
+        :param bRefresh: Обновить контрол списка после переноса?
+        :param bUpdate: Обновить список документов?
+        :return: True/False.
         """
         doc = self.getSlaveDocument(UUID=UUID)
         result = doc.remove_to(dst_doc=to_document, doc_uuid=UUID,
@@ -1395,16 +1395,16 @@ class icDocumentNavigatorManagerProto(listctrl_manager.icListCtrlManager):
                                            fg_colour=None, bg_colour=None, requirement=None):
         """
         Установить цвет строки в контроле списка по определенному условию.
-        @param ctrl: Объект контрола.
-        @param rows: Список строк.
-        @param fg_colour: Цвет текста, если условие выполненно.
-        @param bg_colour: Цвет фона, если условие выполненно.
-        @param requirement: lambda выражение, формата:
+        :param ctrl: Объект контрола.
+        :param rows: Список строк.
+        :param fg_colour: Цвет текста, если условие выполненно.
+        :param bg_colour: Цвет фона, если условие выполненно.
+        :param requirement: lambda выражение, формата:
             lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то установка цвета будет сделана.
             False - строка не расцвечивается.
-        @return: True/False.
+        :return: True/False.
         """
         if ctrl is None:
             ctrl = self.getSlaveListCtrl()

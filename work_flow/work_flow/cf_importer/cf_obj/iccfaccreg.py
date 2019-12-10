@@ -59,7 +59,7 @@ class icCFAccRegDimension(iccfobject.icCFObject):
     def _gen_field_type_res(self):
         """
         Генерация типа поля по типу значения 1С.
-        @return:
+        :return:
         """
         if self.type_value is None:
             return 'T'
@@ -115,7 +115,7 @@ class icCFAccRegResource(iccfobject.icCFObject):
     def _gen_field_type_res(self):
         """
         Генерация типа поля по типу значения 1С.
-        @return:
+        :return:
         """
         if self.type_value is None:
             return 'T'
@@ -171,7 +171,7 @@ class icCFAccRegRequisite(iccfobject.icCFObject):
     def _gen_field_type_res(self):
         """
         Генерация типа поля по типу значения 1С.
-        @return:
+        :return:
         """
         if self.type_value is None:
             return 'T'
@@ -281,7 +281,7 @@ class icCFAccRegistry(iccfobject.icCFObject):
     def gen_resource(self):
         """
         Генерация ресурса, соответстствующего объеку 1С.
-        @return: True/False.
+        :return: True/False.
         """
         # Открыть проект
         prj_res_ctrl = ic.getKernel().getProjectResController()
@@ -301,11 +301,11 @@ class icCFAccRegistry(iccfobject.icCFObject):
                           uuid=iccfobject.NONE_UID):
         """
         Генерация ресурса регистра накопления 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @param name: Наименование объекта ресурса.
-        @param description: Описание объекта ресурса.
-        @param uuid: Уникальный идентификатор объекта ресурса.
-        @return: Ресурс справочника перечисления 1С.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :param name: Наименование объекта ресурса.
+        :param description: Описание объекта ресурса.
+        :param uuid: Уникальный идентификатор объекта ресурса.
+        :return: Ресурс справочника перечисления 1С.
         """
         from work_flow.usercomponents import acc_registry
         from work_flow.usercomponents import requisite
@@ -343,8 +343,8 @@ class icCFAccRegistry(iccfobject.icCFObject):
     def _gen_registry(self, prj_res_ctrl=None):
         """
         Генерация ресурса регистра накопления 1С.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return: True/False.
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return: True/False.
         """
         if prj_res_ctrl is None:
             log.warning(u'Не определен контроллер управления ресурсом проекта. Генерация ресурса 1С не взможна.')

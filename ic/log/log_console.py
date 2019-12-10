@@ -22,9 +22,9 @@ __version__ = (0, 1, 1, 1)
 def log_to_file(txt, filename=DEFAULT_LOG_FILENAME, datetime_fmt=DEFAULT_LOG_DATETIME_FMT):
     """
     Записать лог в текстовый файл.
-    @param txt: Текст сообщения.
-    @param filename: Имя текстового файла лога.
-    @param datetime_fmt: Формат вывода даты-времени в сообщении лога.
+    :param txt: Текст сообщения.
+    :param filename: Имя текстового файла лога.
+    :param datetime_fmt: Формат вывода даты-времени в сообщении лога.
     """
     f = None
     try:
@@ -50,8 +50,8 @@ def log_to_file(txt, filename=DEFAULT_LOG_FILENAME, datetime_fmt=DEFAULT_LOG_DAT
 def log_cmd(cmd, txt_ctrl=None):
     """
     Запуск команды ОС с логированием.
-    @param cmd: Текст команды.
-    @param txt_ctrl: Объект wxTextCtrl для логирования.
+    :param cmd: Текст команды.
+    :param txt_ctrl: Объект wxTextCtrl для логирования.
         Если указывается, то вывод лога производим в wxTextControl,
         иначе вывод будет производиться в текстовый файл.
     """
@@ -100,8 +100,8 @@ def cmd2Txt(cmd):
 def log_to_ctrl(txt_ctrl, cmd=None):
     """
     Вывод результата выполнения команды в объект wxTextCtrl.
-    @param txt_ctrl: Объект wxTextCtrl для логирования.
-    @param cmd: Текст команды.
+    :param txt_ctrl: Объект wxTextCtrl для логирования.
+    :param cmd: Текст команды.
     """
     if txt_ctrl is None:
         log.warning(u'Не определен объект для логирования')

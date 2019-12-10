@@ -60,8 +60,8 @@ class BaseContext(context_dict):
     def add_context_func(self, func, fn=None):
         """
         Добавляет функцию в контекст. Её желательно предварительно откомпилировать.
-        @param func: Откомпилированное тело функции.
-        @param fn: Имя функции.
+        :param func: Откомпилированное тело функции.
+        :param fn: Имя функции.
         """
         if fn:
             self['_access_keys'][fn] = CODE_NOBODY
@@ -453,12 +453,12 @@ class Context(BaseContext):
         """
         Функция добавляет объект в пространство имен.
         
-        @param key: Ключ в пространстве имен.
-        @type key: C{string}
-        @param obj: Объект, который надо добавить.
-        @param cod_access: Код доступа на изменение значения ключа.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного добавления.
+        :param key: Ключ в пространстве имен.
+        :type key: C{string}
+        :param obj: Объект, который надо добавить.
+        :param cod_access: Код доступа на изменение значения ключа.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного добавления.
         """
         akey = self['_access_keys']
         try:

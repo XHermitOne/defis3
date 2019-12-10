@@ -17,7 +17,7 @@ class icOLAPServerInterface:
     def run(self):
         """
         Запуск сервера.
-        @return: True/False.
+        :return: True/False.
         """
         log.warning(u'Не определен метод запуска OLAP сервера <%s>' % self.__class__.__name__)
         return False
@@ -25,7 +25,7 @@ class icOLAPServerInterface:
     def stop(self):
         """
         Остановка сервера.
-        @return: True/False.
+        :return: True/False.
         """
         log.warning(u'Не определен метод останова OLAP сервера <%s>' % self.__class__.__name__)
         return False
@@ -33,7 +33,7 @@ class icOLAPServerInterface:
     def is_running(self):
         """
         Проверка того что OLAP сервер запущен.
-        @return: True - сервер запущен, False - нет.
+        :return: True - сервер запущен, False - нет.
         """
         log.warning(u'Не определен метод проверки запущенного OLAP сервера <%s>' % self.__class__.__name__)
         return False
@@ -41,7 +41,7 @@ class icOLAPServerInterface:
     def restart(self):
         """
         Перезапуск OLAP сервера.
-        @return: True/False.
+        :return: True/False.
         """
         self.stop()
         return self.run()
@@ -52,7 +52,7 @@ class icOLAPServerInterface:
         Функция слишком общая.
         Поэтому реализация ее должна обрабатывать различные запросы в
         зависимости от входящих данных.
-        @return: Запрашиваемые данные или None в случае ошибки.
+        :return: Запрашиваемые данные или None в случае ошибки.
         """
         log.warning(u'Не определен метод получения данных от OLAP сервера <%s>' % self.__class__.__name__)
         return None

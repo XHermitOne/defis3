@@ -34,7 +34,7 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
     def __init__(self, parent_item, code):
         """
         Конструктор.
-        @param parent_item: Родительский элемент.
+        :param parent_item: Родительский элемент.
         """
         ictreedatasourceinterface.icTreeItemDataSourceInterface.__init__(self)
         
@@ -114,8 +114,8 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
     def _loadChildren(self, code=None, bAutoSort=True):
         """
         Згрузить данные дочерних элементов.
-        @param bAutoSort: Сортировать записи автоматически по коду?
-        @return: Возвращает список объектов дочерних элементов.
+        :param bAutoSort: Сортировать записи автоматически по коду?
+        :return: Возвращает список объектов дочерних элементов.
         """
         children = []
         root = self.getRoot()
@@ -168,7 +168,7 @@ class icSpravItemDataSource(ictreedatasourceinterface.icTreeItemDataSourceInterf
     def findItemByCode(self, code):
         """
         Найти рекурсивно элемент по коду.        
-        @return: Возвращает объект элемента дерева данных.
+        :return: Возвращает объект элемента дерева данных.
         """
         find_child = None
         for child in self.getChildren():
@@ -189,8 +189,8 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
     def __init__(self, sprav_psp, root_code=None):
         """
         Конструктор.
-        @param sprav_psp: Паспорт справочника - источника данных.
-        @param root_code: Код корневого элемента справочника.
+        :param sprav_psp: Паспорт справочника - источника данных.
+        :param root_code: Код корневого элемента справочника.
         """
         ictreedatasourceinterface.icTreeDataSourceInterface.__init__(self)
         
@@ -223,7 +223,7 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
     def _loadChildren(self, code=None):
         """
         Згрузить данные дочерних элементов.
-        @return: Возвращает список объектов дочерних элементов.
+        :return: Возвращает список объектов дочерних элементов.
         """
         children = []
         if self._sprav:
@@ -249,7 +249,7 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
     def find(self, find_text):
         """
         Поиск элемента по строке.
-        @return: Функция возвращает лейбл найденного элемента и None, если 
+        :return: Функция возвращает лейбл найденного элемента и None, если 
             элемент не найден.
         """
         if self._sprav:
@@ -267,9 +267,9 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
     def find_record(self, find_text, field_name=None):
         """
         Поиск записи по значению поля.
-        @param find_text: Искомое значение.
-        @param field_name: Имя поля, если None, то ищется по коду.
-        @return: Возвращает словарь искомой записи или None если запись не найдена.
+        :param find_text: Искомое значение.
+        :param field_name: Имя поля, если None, то ищется по коду.
+        :return: Возвращает словарь искомой записи или None если запись не найдена.
         """
         if self._sprav:
             if field_name is None:
@@ -282,7 +282,7 @@ class icSpravTreeDataSource(ictreedatasourceinterface.icTreeDataSourceInterface)
     def findItemByCode(self, code):
         """
         Найти рекурсивно элемент по коду.        
-        @return: Возвращает объект элемента дерева данных.
+        :return: Возвращает объект элемента дерева данных.
         """
         for child in self.getChildren():
             if child.getCode() == code:

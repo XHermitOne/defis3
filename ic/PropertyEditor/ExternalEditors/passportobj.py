@@ -27,18 +27,18 @@ class ic_user_property_editor:
         """
         Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
         
-        @type value: C{string}
-        @param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
-        @type pos: C{wx.Point}
-        @param pos: Позиция окна.
-        @type size: C{wx.Size}
-        @param size: Размер диалогового окна.
-        @type style: C{int}
-        @param style: Стиль диалога.
-        @type metaclass: C{tuple}
-        @param metaclass: Паспорт объекта, описывающего метадерево базового плана.
-        @type propEdt: C{ic.components.user.objects.PropNotebookEdt}
-        @param propEdt: Указатель на редактор свойств.
+        :type value: C{string}
+        :param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :type metaclass: C{tuple}
+        :param metaclass: Паспорт объекта, описывающего метадерево базового плана.
+        :type propEdt: C{ic.components.user.objects.PropNotebookEdt}
+        :param propEdt: Указатель на редактор свойств.
         """
         pass
 

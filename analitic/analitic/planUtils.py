@@ -55,8 +55,8 @@ def add_node_plan_sum(x, summa, kol):
 def CountParPlan(metaObj):
     """
     Вычисление весовых коэфициентов плана по агрегированным суммам планов.
-    @type metaObj: C{icMetaItem}
-    @param metaObj: Указатель на метаобъект классификатора мониторов.
+    :type metaObj: C{icMetaItem}
+    :param metaObj: Указатель на метаобъект классификатора мониторов.
     """
     if not metaObj.isRoot():
         # print '>>> Enter To CountParPlan', metaObj.value.metatype, metaObj.value.summa
@@ -80,8 +80,8 @@ def CountParPlan(metaObj):
 def getSpravBuffDict(metaObj, bRefreshBuff=False):
     """
     Возвращает словаь забуферезированных словарей.
-    @type metaObj: C{icMetaItem}
-    @param metaObj: Указатель на метаобъект классификатора планов.
+    :type metaObj: C{icMetaItem}
+    :param metaObj: Указатель на метаобъект классификатора планов.
     """
     global sprav_dict_buff
     
@@ -116,8 +116,8 @@ def getTypFldDict(metaObj):
     """
     Возвращает словарь отношений {<тип элемента>:<имя поля>, ...}
     
-    @type metaObj: C{icMetaItem}
-    @param metaObj: Указатель на метаобъект классификатора планов.
+    :type metaObj: C{icMetaItem}
+    :param metaObj: Указатель на метаобъект классификатора планов.
     """
     lst = metaObj.getContainerMetaItems().values()
     typfldDict = {}
@@ -138,18 +138,18 @@ def genPlanTemplate(metaObj, source, yearTempl, monthTempl=1, year=2005, month=N
     """
     Функция генерит шаблон месячного плана по статистике.
     
-    @type metaObj: C{icMetaItem}
-    @param metaObj: Указатель на метаобъект классификатора мониторов.
-    @type source: C{string}
-    @param source: Имя источника данных.
-    @type yearTempl: C{int}
-    @param yearTempl: Год генерируемого плана.
-    @type monthTempl: C{int}
-    @param monthTempl: Месяц генерируемого плана..
-    @type year: C{int}
-    @param year: За какой год используется статистика.
-    @type month: C{int}
-    @param month: За какой месяц используется статистика.
+    :type metaObj: C{icMetaItem}
+    :param metaObj: Указатель на метаобъект классификатора мониторов.
+    :type source: C{string}
+    :param source: Имя источника данных.
+    :type yearTempl: C{int}
+    :param yearTempl: Год генерируемого плана.
+    :type monthTempl: C{int}
+    :param monthTempl: Месяц генерируемого плана..
+    :type year: C{int}
+    :param year: За какой год используется статистика.
+    :type month: C{int}
+    :param month: За какой месяц используется статистика.
     """
 #    progress.icCloseProgressBar()
 #    progress.icOpenProgressBar("Выборка",0,100)
@@ -297,8 +297,8 @@ def GetOrCreateMetaPlanObj(metaObj, sprBuff, defPlanLst, init_func, **kwarg):
     """
     Функция находит или создает объект по заданному списку ключей.
     
-    @type defPlanLst: C{list}
-    @param defPlanLst: Список, описывающий структуру плана.
+    :type defPlanLst: C{list}
+    :param defPlanLst: Список, описывающий структуру плана.
     """
     typ = metaObj.value.metatype
     if not defPlanLst:
@@ -793,8 +793,8 @@ def planTreeToTable(metaObj, par=None, tableLst=None):
     Преобразует дерево планов в табличное представление. Первый элемент кортеж
     идентификаторов (ключей) узлов, второй элемент картежа картеж суммы и количества.
 
-    @type metaObj: C{icMetaItem}
-    @param metaObj: Узел дерева плана.
+    :type metaObj: C{icMetaItem}
+    :param metaObj: Узел дерева плана.
     """
     if tableLst is None:
         tableLst = []
@@ -850,10 +850,10 @@ def genModifPlan(parent, ibrows, id_modif, year=None, month=None):
     """
     Генерируется модификация плана по базовому плану.
 
-    @type ibrows: C{icobjectinterface.icObjectInterface}
-    @param ibrows: Указатель на интерфейс браузера ведения планов.
-    @type id_modif: C{string}
-    @param id_modif: Идентификатор модификации плана.
+    :type ibrows: C{icobjectinterface.icObjectInterface}
+    :param ibrows: Указатель на интерфейс браузера ведения планов.
+    :type id_modif: C{string}
+    :param id_modif: Идентификатор модификации плана.
     """
     if None in (year, month):
         res = prs.ModalForm('MonthYearDlg', parent=parent)
@@ -931,10 +931,10 @@ def _genModifPlan(parent, ibrows, id_modif, year=None, month=None):
     """
     Генерируется модификация плана по базовому плану.
 
-    @type ibrows: C{icobjectinterface.icObjectInterface}
-    @param ibrows: Указатель на интерфейс браузера ведения планов.
-    @type id_modif: C{string}
-    @param id_modif: Идентификатор модификации плана.
+    :type ibrows: C{icobjectinterface.icObjectInterface}
+    :param ibrows: Указатель на интерфейс браузера ведения планов.
+    :type id_modif: C{string}
+    :param id_modif: Идентификатор модификации плана.
     """
     result = None
     if None in (year, month):
@@ -1079,8 +1079,8 @@ def planTree2Table(metaObj, par=None, tableLst=None):
         Первый элемент кортеж идентификаторов (ключей) узлов,
         второй элемент картежа картеж суммы и количества.
 
-    @type metaObj: C{icMetaItem}
-    @param metaObj: Узел дерева плана.
+    :type metaObj: C{icMetaItem}
+    :param metaObj: Узел дерева плана.
     """
     if tableLst in None:
         tableLst = []
@@ -1103,8 +1103,8 @@ def generateModifPlan(parent, metaclass, id_modif, year=None, month=None):
     """
     Генерируется модификация плана по базовому плану.
 
-    @type id_modif: C{string}
-    @param id_modif: Идентификатор модификации плана.
+    :type id_modif: C{string}
+    :param id_modif: Идентификатор модификации плана.
     """
     if None in (year, month):
         month, year = prs.ModalForm('MonthYearDlg', parent=parent)
@@ -1115,8 +1115,8 @@ def _generateModifPlan(parent, metaclass, id_modif, year=None, month=None):
     """
     Генерируется модификация плана по базовому плану.
 
-    @type id_modif: C{string}
-    @param id_modif: Идентификатор модификации плана.
+    :type id_modif: C{string}
+    :param id_modif: Идентификатор модификации плана.
     """
     result = None
         
@@ -1439,7 +1439,7 @@ def gen_month_date(MonthObj_):
 def loadDataPlanModif(metaclass, year, month):
     """
     Загрузка данных в дерево планов.
-    @param metaclass: Метакласс базового метаплана.
+    :param metaclass: Метакласс базового метаплана.
     """
     # Сначала закачать данные в базовый план
     # result=refreshSumm(metaclass.getObject(),year,month)

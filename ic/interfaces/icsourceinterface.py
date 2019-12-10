@@ -14,15 +14,15 @@ class icSourceInterface:
     def __init__(self, DBRes_=None):
         """
         Конструктор.
-        @param DBRes_: Ресурс описания БД.
+        :param DBRes_: Ресурс описания БД.
         """
         pass
         
     def CreateDBConnection(self, DB_):
         """
         Создать коннекшн по описанию БД.
-        @param DB_: Описание БД.
-        @return: Возвращает объект коннекшн.
+        :param DB_: Описание БД.
+        :return: Возвращает объект коннекшн.
         """
         pass
         

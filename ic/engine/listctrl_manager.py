@@ -45,8 +45,8 @@ class icListCtrlManager(object):
     def _get_wxDataViewListCtrl_data(self, ctrl):
         """
         Получить данные из контрола wxDataViewListCtrl.
-        @param ctrl: Объект контрола.
-        @return: Список словарей - строк контрола.
+        :param ctrl: Объект контрола.
+        :return: Список словарей - строк контрола.
         """
         recordset = list()
         store = ctrl.GetStore()
@@ -73,11 +73,11 @@ class icListCtrlManager(object):
     def _set_wxDataViewListCtrl_data(self, ctrl, records):
         """
         Установить данные в контрол wxDataViewListCtrl.
-        @param ctrl: Объект контрола.
-        @param records: Список словарей - записей.
+        :param ctrl: Объект контрола.
+        :param records: Список словарей - записей.
             Имя колонки в записи может задаваться как именем,
             так и индексом.
-        @return: True/False.
+        :return: True/False.
         """
         # Сначала очистить контрол от записей
         ctrl.DeleteAllItems()
@@ -112,9 +112,9 @@ class icListCtrlManager(object):
     def refresh_DataViewListCtrl(self, ctrl, data_list=None, columns=None):
         """
         Обновить список строк контрола типа wx.dataview.DataViewListCtrl
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
         """
         if data_list is None:
@@ -131,9 +131,9 @@ class icListCtrlManager(object):
     def refresh_ListCtrl(self, ctrl, data_list=None, columns=None):
         """
         Обновить список строк контрола типа wx.ListCtrl
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
         """
         if data_list is None:
@@ -147,9 +147,9 @@ class icListCtrlManager(object):
     def refresh_list_ctrl(self, ctrl=None, data_list=None, columns=None):
         """
         Обновить список строк контрола.
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
         """
         if ctrl is None:
@@ -167,15 +167,15 @@ class icListCtrlManager(object):
                                    columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку выше в контроле типа wx.dataview.DataViewListCtrl
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param idx: Индекс перемещаемой строки.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param idx: Индекс перемещаемой строки.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
-        @param n_col: Наименование/индекс колонки номера строки.
+        :param n_col: Наименование/индекс колонки номера строки.
             Если не определено, то нет такой колонки.
-        @param do_refresh: Произвести полное обновление контрола?
-        @return: True - было сделано перемещение, False - перемещения не было.
+        :param do_refresh: Произвести полное обновление контрола?
+        :return: True - было сделано перемещение, False - перемещения не было.
         """
         if idx != wx.NOT_FOUND and idx > 0:
             # Поменять номер строки если необходимо
@@ -207,15 +207,15 @@ class icListCtrlManager(object):
                            columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку выше в контроле типа wx.ListCtrl
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param idx: Индекс перемещаемой строки.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param idx: Индекс перемещаемой строки.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
-        @param n_col: Наименование/индекс колонки номера строки.
+        :param n_col: Наименование/индекс колонки номера строки.
             Если не определено, то нет такой колонки.
-        @param do_refresh: Произвести полное обновление контрола?
-        @return: True - было сделано перемещение, False - перемещения не было.
+        :param do_refresh: Произвести полное обновление контрола?
+        :return: True - было сделано перемещение, False - перемещения не было.
         """
         if idx != wx.NOT_FOUND and idx > 0:
             # Поменять номер строки если необходимо
@@ -247,15 +247,15 @@ class icListCtrlManager(object):
                             columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку выше в контроле.
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param idx: Индекс перемещаемой строки.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param idx: Индекс перемещаемой строки.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
-        @param n_col: Наименование/индекс колонки номера строки.
+        :param n_col: Наименование/индекс колонки номера строки.
             Если не определено, то нет такой колонки.
-        @param do_refresh: Произвести полное обновление контрола?
-        @return: True - было сделано перемещение, False - перемещения не было.
+        :param do_refresh: Произвести полное обновление контрола?
+        :return: True - было сделано перемещение, False - перемещения не было.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для обновления')
@@ -277,15 +277,15 @@ class icListCtrlManager(object):
                                      columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку ниже в контроле типа wx.dataview.DataViewListCtrl
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param idx: Индекс перемещаемой строки.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param idx: Индекс перемещаемой строки.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
-        @param n_col: Наименование/индекс колонки номера строки.
+        :param n_col: Наименование/индекс колонки номера строки.
             Если не определено, то нет такой колонки.
-        @param do_refresh: Произвести полное обновление контрола?
-        @return: True - было сделано перемещение, False - перемещения не было.
+        :param do_refresh: Произвести полное обновление контрола?
+        :return: True - было сделано перемещение, False - перемещения не было.
         """
         if idx != wx.NOT_FOUND and idx < (len(data_list) - 1):
             # Поменять номер строки если необходимо
@@ -317,15 +317,15 @@ class icListCtrlManager(object):
                              columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку ниже в контроле типа wx.ListCtrl
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param idx: Индекс перемещаемой строки.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param idx: Индекс перемещаемой строки.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
-        @param n_col: Наименование/индекс колонки номера строки.
+        :param n_col: Наименование/индекс колонки номера строки.
             Если не определено, то нет такой колонки.
-        @param do_refresh: Произвести полное обновление контрола?
-        @return: True - было сделано перемещение, False - перемещения не было.
+        :param do_refresh: Произвести полное обновление контрола?
+        :return: True - было сделано перемещение, False - перемещения не было.
         """
         if idx != wx.NOT_FOUND and idx < (len(data_list) - 1):
             # Поменять номер строки если необходимо
@@ -357,15 +357,15 @@ class icListCtrlManager(object):
                               columns=None, n_col=None, do_refresh=False):
         """
         Переместить строку ниже в контроле.
-        @param ctrl: Объект контрола.
-        @param data_list: Данные списка.
-        @param idx: Индекс перемещаемой строки.
-        @param columns: Список/кортеж колонок в случае если строки списка
+        :param ctrl: Объект контрола.
+        :param data_list: Данные списка.
+        :param idx: Индекс перемещаемой строки.
+        :param columns: Список/кортеж колонок в случае если строки списка
             задаются словарями.
-        @param n_col: Наименование/индекс колонки номера строки.
+        :param n_col: Наименование/индекс колонки номера строки.
             Если не определено, то нет такой колонки.
-        @param do_refresh: Произвести полное обновление контрола?
-        @return: True - было сделано перемещение, False - перемещения не было.
+        :param do_refresh: Произвести полное обновление контрола?
+        :return: True - было сделано перемещение, False - перемещения не было.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для обновления')
@@ -388,11 +388,11 @@ class icListCtrlManager(object):
         Добавить колонку в wx.ListCtrl.
         ВНИМАНИЕ! На старых ОС (...-16.04) wx.LIST_AUTOSIZE_USEHEADER не работает!!!
             Поэтому для автоширины используем везде wx.LIST_AUTOSIZE.
-        @param ctrl: Объект контрола wx.ListCtrl.
-        @param label: Надпись колонки.
-        @param width: Ширина колонки.
-        @param align: Выравнивание: LEFT/RIGHT.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола wx.ListCtrl.
+        :param label: Надпись колонки.
+        :param width: Ширина колонки.
+        :param align: Выравнивание: LEFT/RIGHT.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         try:
             i = ctrl.GetColumnCount()
@@ -417,11 +417,11 @@ class icListCtrlManager(object):
     def appendColumn_list_ctrl(self, ctrl=None, label=u'', width=-1, align='LEFT'):
         """
         Добавить колонку в контрол списка.
-        @param ctrl: Объект контрола.
-        @param label: Надпись колонки.
-        @param width: Ширина колонки.
-        @param align: Выравнивание: LEFT/RIGHT.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола.
+        :param label: Надпись колонки.
+        :param width: Ширина колонки.
+        :param align: Выравнивание: LEFT/RIGHT.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для добавления колонки')
@@ -440,8 +440,8 @@ class icListCtrlManager(object):
     def setColumns_list_ctrl(self, ctrl=None, cols=()):
         """
         Установить колонки в контрол списка.
-        @param ctrl: Объект контрола.
-        @param cols: Список описаний колонок.
+        :param ctrl: Объект контрола.
+        :param cols: Список описаний колонок.
             колонка может описываться как списком
             ('Заголовок колонки', Ширина колонки, Выравнивание)
             так и словарем:
@@ -450,7 +450,7 @@ class icListCtrlManager(object):
             'align': Выравнивание}
             ВНИМАНИЕ! На старых ОС (...-16.04) wx.LIST_AUTOSIZE_USEHEADER не работает!!!
                 Поэтому для автоширины используем везде wx.LIST_AUTOSIZE.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для добавления колонки')
@@ -529,8 +529,8 @@ class icListCtrlManager(object):
         Установить авторазмер колонок контрола списка.
         ВНИМАНИЕ! На старых ОС (...-16.04) wx.LIST_AUTOSIZE_USEHEADER не работает!!!
             Поэтому для автоширины используем везде wx.LIST_AUTOSIZE.
-        @param ctrl: Объект контрола.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для установки авторазмеров списка')
@@ -548,10 +548,10 @@ class icListCtrlManager(object):
     def setColumnLabel(self, ctrl=None, n_column=0, label=u''):
         """
         Установить надпись колонки.
-        @param ctrl: Объект контрола списка (wx.ListCtrl и т.п.).
-        @param n_column: Идекс колонки.
-        @param label: Надпись колонки.
-        @return: True/False.
+        :param ctrl: Объект контрола списка (wx.ListCtrl и т.п.).
+        :param n_column: Идекс колонки.
+        :param label: Надпись колонки.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для установки надписи колонки')
@@ -574,12 +574,12 @@ class icListCtrlManager(object):
                            auto_select=False):
         """
         Добавить строку в контрол wx.ListCtrl.
-        @param ctrl: Объект контрола wx.ListCtrl.
-        @param row: Список строки по полям.
-        @param evenBackgroundColour: Цвет фона четных строк.
-        @param oddBackgroundColour: Цвет фона нечетных строк.
-        @param auto_select: Автоматически выбрать добавленную строку?
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола wx.ListCtrl.
+        :param row: Список строки по полям.
+        :param evenBackgroundColour: Цвет фона четных строк.
+        :param oddBackgroundColour: Цвет фона нечетных строк.
+        :param auto_select: Автоматически выбрать добавленную строку?
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if type(row) not in (list, tuple):
             log.warning(u'Не корректный тип списка строки <%s> объекта wx.ListCtrl' % type(row))
@@ -632,12 +632,12 @@ class icListCtrlManager(object):
                                 auto_select=False):
         """
         Добавить строку в контрол wx.ListCtrl.
-        @param ctrl: Объект контрола wx.ListCtrl.
-        @param row: Список строки по полям.
-        @param evenBackgroundColour: Цвет фона четных строк.
-        @param oddBackgroundColour: Цвет фона нечетных строк.
-        @param auto_select: Автоматически выбрать добавленную строку?
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола wx.ListCtrl.
+        :param row: Список строки по полям.
+        :param evenBackgroundColour: Цвет фона четных строк.
+        :param oddBackgroundColour: Цвет фона нечетных строк.
+        :param auto_select: Автоматически выбрать добавленную строку?
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if type(row) not in (list, tuple):
             log.warning(u'Не корректный тип списка строки <%s> объекта GroupListView' % type(row))
@@ -668,12 +668,12 @@ class icListCtrlManager(object):
                             auto_select=False):
         """
         Добавить строку в контрол списка.
-        @param ctrl: Объект контрола.
-        @param row: Список строки по полям.
-        @param evenBackgroundColour: Цвет фона четных строк.
-        @param oddBackgroundColour: Цвет фона нечетных строк.
-        @param auto_select: Автоматически выбрать добавленную строку?
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола.
+        :param row: Список строки по полям.
+        :param evenBackgroundColour: Цвет фона четных строк.
+        :param oddBackgroundColour: Цвет фона нечетных строк.
+        :param auto_select: Автоматически выбрать добавленную строку?
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для добавления строки')
@@ -715,9 +715,9 @@ class icListCtrlManager(object):
     def removeRow_list_ctrl(self, ctrl=None, item=-1):
         """
         Удалить строку из контрола списка.
-        @param ctrl: Объект контрола.
-        @param item: Индекс удаляемой строки.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола.
+        :param item: Индекс удаляемой строки.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для удаления строки')
@@ -738,15 +738,15 @@ class icListCtrlManager(object):
                          doSavePos=False):
         """
         Установить строку контрола списка.
-        @param ctrl: Объект контрола.
-        @param row_idx: Индекс строки. Если -1, то строка не устанавливается.
-        @param row: Cтрока.
+        :param ctrl: Объект контрола.
+        :param row_idx: Индекс строки. Если -1, то строка не устанавливается.
+        :param row: Cтрока.
             Строка представляет собой список/кортеж:
             (Значение 1, Значение 2, ..., Значение N),
-        @param evenBackgroundColour: Цвет фона четных строк.
-        @param oddBackgroundColour: Цвет фона нечетных строк.
-        @param doSavePos: Сохранять позицию курсора?
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param evenBackgroundColour: Цвет фона четных строк.
+        :param oddBackgroundColour: Цвет фона нечетных строк.
+        :param doSavePos: Сохранять позицию курсора?
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для установки строки')
@@ -793,16 +793,16 @@ class icListCtrlManager(object):
                           doSavePos=False):
         """
         Установить строки в контрол списка.
-        @param ctrl: Объект контрола.
-        @param rows: Список строк.
+        :param ctrl: Объект контрола.
+        :param rows: Список строк.
             Строка представляет собой список:
             [
             (Значение 1, Значение 2, ..., Значение N), ...
             ]
-        @param evenBackgroundColour: Цвет фона четных строк.
-        @param oddBackgroundColour: Цвет фона нечетных строк.
-        @param doSavePos: Сохранять позицию курсора?
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param evenBackgroundColour: Цвет фона четных строк.
+        :param oddBackgroundColour: Цвет фона нечетных строк.
+        :param doSavePos: Сохранять позицию курсора?
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для добавления строк')
@@ -874,8 +874,8 @@ class icListCtrlManager(object):
     def getRows_list_ctrl(self, ctrl=None):
         """
         Получить список строк в виде списка кортежей.
-        @param ctrl: Объект контрола списка.
-        @return: Список строк.
+        :param ctrl: Объект контрола списка.
+        :return: Список строк.
             Строка представляет собой список:
             [
             (Значение 1, Значение 2, ..., Значение N), ...
@@ -899,10 +899,10 @@ class icListCtrlManager(object):
     def getRow_list_ctrl(self, ctrl=None, item=-1):
         """
         Получить строку по индексу в виде кортежа.
-        @param ctrl: Объект контрола списка.
-        @param item: Индекс запрашиваемой строки.
+        :param ctrl: Объект контрола списка.
+        :param item: Индекс запрашиваемой строки.
             Если не определен, то возвращается индекс текущей строки.
-        @return: Кортеж строки или None в случае ошибки.
+        :return: Кортеж строки или None в случае ошибки.
             Строка представляет собой кортеж:
             (Значение 1, Значение 2, ..., Значение N)
         """
@@ -926,16 +926,16 @@ class icListCtrlManager(object):
                                            fg_colour=None, bg_colour=None, requirement=None):
         """
         Установить цвет строки в контроле списка по определенному условию.
-        @param ctrl: Объект контрола.
-        @param rows: Список строк.
-        @param fg_colour: Цвет текста, если условие выполненно.
-        @param bg_colour: Цвет фона, если условие выполненно.
-        @param requirement: lambda выражение, формата:
+        :param ctrl: Объект контрола.
+        :param rows: Список строк.
+        :param fg_colour: Цвет текста, если условие выполненно.
+        :param bg_colour: Цвет фона, если условие выполненно.
+        :param requirement: lambda выражение, формата:
             lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то установка цвета будет сделана.
             False - строка не расцвечивается.
-        @return: True/False.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для установления цвета строки')
@@ -958,10 +958,10 @@ class icListCtrlManager(object):
     def setRowForegroundColour_list_ctrl(self, ctrl=None, i_row=0, colour=None):
         """
         Установить цвет текста строки в контроле списка.
-        @param ctrl: Объект контрола.
-        @param i_row: Индекс строки.
-        @param colour: Цвет текста строки.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола.
+        :param i_row: Индекс строки.
+        :param colour: Цвет текста строки.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для установления цвета строки')
@@ -988,10 +988,10 @@ class icListCtrlManager(object):
     def setRowBackgroundColour_list_ctrl(self, ctrl=None, i_row=0, colour=None):
         """
         Установить цвет фона строки в контроле списка.
-        @param ctrl: Объект контрола.
-        @param i_row: Индекс строки.
-        @param colour: Цвет фона строки.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола.
+        :param i_row: Индекс строки.
+        :param colour: Цвет фона строки.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для установления цвета строки')
@@ -1019,8 +1019,8 @@ class icListCtrlManager(object):
         типов (контролы и события) то:
         Эта функция нужна чтобы не заботиться о названии функции
         для каждого контрола/события.
-        @param obj: Объект контрола или события.
-        @return: Индекс выбранного элемента или -1 если ничего не выбрано.
+        :param obj: Объект контрола или события.
+        :return: Индекс выбранного элемента или -1 если ничего не выбрано.
         """
         if isinstance(obj, wx.ListEvent):
             return obj.Index
@@ -1045,10 +1045,10 @@ class icListCtrlManager(object):
                              is_focus=True, deselect_prev=False):
         """
         Выбрать элемент контрола списка по индексу.
-        @param ctrl: Объект контрола.
-        @param is_focus: Автоматически переместить фокус на элемент?
-        @param deselect_prev: Произвести отмену выбора предыдущего выбранного элемента?
-        @return: True - выбор прошел успешно.
+        :param ctrl: Объект контрола.
+        :param is_focus: Автоматически переместить фокус на элемент?
+        :param deselect_prev: Произвести отмену выбора предыдущего выбранного элемента?
+        :return: True - выбор прошел успешно.
         """
         if ctrl is None:
             log.warning(u'Не указан контрол списка для выбора элемента')
@@ -1090,8 +1090,8 @@ class icListCtrlManager(object):
         типов, то:
         Эта функция нужна чтобы не заботиться о названии функции
         для каждого контрола.
-        @param obj: Объект контрола списка элементов.
-        @return: Количество элементов контрола списка.
+        :param obj: Объект контрола списка элементов.
+        :return: Количество элементов контрола списка.
         """
         if isinstance(obj, wx.ListCtrl):
             return obj.GetItemCount()
@@ -1107,8 +1107,8 @@ class icListCtrlManager(object):
     def getLastItemIdx(self, obj):
         """
         Индекс последнего элемента списка.
-        @param obj: Объект контрола списка элементов.
-        @return: Индекс последнего элемента контрола списка или -1 если
+        :param obj: Объект контрола списка элементов.
+        :return: Индекс последнего элемента контрола списка или -1 если
             в списке нет элементов.
         """
         item_count = self.getItemCount(obj)
@@ -1117,20 +1117,20 @@ class icListCtrlManager(object):
     def checkAllItems_list_ctrl(self, ctrl, check=True):
         """
         Установить галки всех элементов контрола списка.
-        @param check: Вкл./выкл.
-        @return: True/False.
+        :param check: Вкл./выкл.
+        :return: True/False.
         """
         return self.checkItems_list_ctrl(ctrl, check=check)
 
     def checkItems_list_ctrl(self, ctrl, check=True, n_begin=-1, n_end=-1):
         """
         Установить галки элементов контрола списка.
-        @param ctrl: Объект контрола.
-        @param check: Вкл./выкл.
-        @param n_begin: Номер первого обрабатываемого элемента.
+        :param ctrl: Объект контрола.
+        :param check: Вкл./выкл.
+        :param n_begin: Номер первого обрабатываемого элемента.
             Если не определен, то берется самый первый элемент.
-        @param n_end: Номер последнего обрабатываемого элемента.
-        @return: True/False.
+        :param n_end: Номер последнего обрабатываемого элемента.
+        :return: True/False.
         """
         if isinstance(ctrl, wx.ListCtrl):
             if n_begin < 0:
@@ -1155,11 +1155,11 @@ class icListCtrlManager(object):
     def checkItem_list_ctrl(self, ctrl, check=True, i_row=-1):
         """
         Установить галки элементов контрола списка.
-        @param ctrl: Объект контрола.
-        @param check: Вкл./выкл.
-        @param i_row: Индекс обрабатываемого элемента.
+        :param ctrl: Объект контрола.
+        :param check: Вкл./выкл.
+        :param i_row: Индекс обрабатываемого элемента.
             Если не определен, то берется текущий выбранный элемент.
-        @return: True/False.
+        :return: True/False.
         """
         if isinstance(ctrl, wx.ListCtrl):
             if i_row < 0:
@@ -1179,16 +1179,16 @@ class icListCtrlManager(object):
                                bSet=False):
         """
         Наити и пометить строку списка по определенному условию.
-        @param ctrl: Объект контрола.
-        @param rows: Список строк.
-        @param requirement: lambda выражение, формата:
+        :param ctrl: Объект контрола.
+        :param rows: Список строк.
+        :param requirement: lambda выражение, формата:
             lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то считаем что строка удовлетворяет условию.
             False - строка не удовлетворяет.
-        @param bSet: Произвести установку меток всех элементов
+        :param bSet: Произвести установку меток всех элементов
             в соответствии с условием.
-        @return: Список индексов помеченных строк.
+        :return: Список индексов помеченных строк.
         """
         check_list = list()
 
@@ -1210,11 +1210,11 @@ class icListCtrlManager(object):
     def getCheckedItems_list_ctrl(self, ctrl, check_selected=False):
         """
         Получить список индексов помеченных/отмеченных элементов контрола списка.
-        @param ctrl: Объект контрола списка элементов.
-        @param check_selected: Считать выделенный элемент списка как помеченный?
+        :param ctrl: Объект контрола списка элементов.
+        :param check_selected: Считать выделенный элемент списка как помеченный?
             Если да, то выделенный элемент считается помеченным только когда
             ни один другой элемент не помечен.
-        @return: Список индексов помеченных элементов контрола списка.
+        :return: Список индексов помеченных элементов контрола списка.
             Либо None в случае ошибки.
         """
         try:
@@ -1239,12 +1239,12 @@ class icListCtrlManager(object):
     def getCheckedItemRecords_list_ctrl(self, ctrl, records, check_selected=False):
         """
         Получить список помеченных/отмеченных записей элементов контрола списка.
-        @param ctrl: Объект контрола списка элементов.
-        @param records: Список записей.
-        @param check_selected: Считать выделенный элемент списка как помеченный?
+        :param ctrl: Объект контрола списка элементов.
+        :param records: Список записей.
+        :param check_selected: Считать выделенный элемент списка как помеченный?
             Если да, то выделенный элемент считается помеченным только когда
             ни один другой элемент не помечен.
-        @return: Список записей помеченных элементов контрола списка.
+        :return: Список записей помеченных элементов контрола списка.
             Либо None в случае ошибки.
         """
         try:
@@ -1283,10 +1283,10 @@ class icListCtrlManager(object):
                                 oddBackgroundColour=wxfunc.DEFAULT_COLOUR):
         """
         Просто раскрасить фон четных и не четных строк.
-        @param ctrl: Объект контрола wx.ListCtrl.
-        @param evenBackgroundColour: Цвет фона четных строк.
-        @param oddBackgroundColour: Цвет фона нечетных строк.
-        @return: True - все прошло нормально / False - какая-то ошибка.
+        :param ctrl: Объект контрола wx.ListCtrl.
+        :param evenBackgroundColour: Цвет фона четных строк.
+        :param oddBackgroundColour: Цвет фона нечетных строк.
+        :return: True - все прошло нормально / False - какая-то ошибка.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для установки цвета')
@@ -1307,15 +1307,15 @@ class icListCtrlManager(object):
     def findRowIdx_requirement(self, ctrl=None, rows=(), requirement=None, auto_select=False):
         """
         Наити индекс строки списка по определенному условию.
-        @param ctrl: Объект контрола.
-        @param rows: Список строк.
-        @param requirement: lambda выражение, формата:
+        :param ctrl: Объект контрола.
+        :param rows: Список строк.
+        :param requirement: lambda выражение, формата:
             lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то считаем что строка удовлетворяет условию.
             False - строка не удовлетворяет.
-        @param auto_select: Произвести автоматическое выделение строки в контроле
-        @return: индекс найденной строки или None если строка не найдена.
+        :param auto_select: Произвести автоматическое выделение строки в контроле
+        :return: индекс найденной строки или None если строка не найдена.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол для поиска строки')
@@ -1335,14 +1335,14 @@ class icListCtrlManager(object):
     def selectRow_requirement(self, ctrl=None, rows=(), requirement=None):
         """
         Наити и выделить индекс строки списка по определенному условию.
-        @param ctrl: Объект контрола.
-        @param rows: Список строк.
-        @param requirement: lambda выражение, формата:
+        :param ctrl: Объект контрола.
+        :param rows: Список строк.
+        :param requirement: lambda выражение, формата:
             lambda idx, row: ...
             Которое возвращает True/False.
             Если True, то считаем что строка удовлетворяет условию.
             False - строка не удовлетворяет.
-        @return: индекс найденной строки или None если строка не найдена.
+        :return: индекс найденной строки или None если строка не найдена.
         """
         return self.findRowIdx_requirement(ctrl=ctrl, rows=rows, requirement=requirement)
 
@@ -1350,10 +1350,10 @@ class icListCtrlManager(object):
                              image_height=DEFAULT_ITEM_IMAGE_HEIGHT):
         """
         Получить список картинок элементов контрола дерева wx.ListCtrl.
-        @param ctrl: Объект контрола wx.ListCtrl.
-        @param image_width: Ширина картинки.
-        @param image_height: Высота картинки.
-        @return: Объект списка образов.
+        :param ctrl: Объект контрола wx.ListCtrl.
+        :param image_width: Ширина картинки.
+        :param image_height: Высота картинки.
+        :return: Объект списка образов.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.ListCtrl')
@@ -1371,7 +1371,7 @@ class icListCtrlManager(object):
     def getListCtrlImageListCache(self, ctrl=None):
         """
         Кеш списка образов.
-        @param ctrl: Объект контрола wx.ListCtrl.
+        :param ctrl: Объект контрола wx.ListCtrl.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.ListCtrl')
@@ -1384,13 +1384,13 @@ class icListCtrlManager(object):
     def setItemImage_list_ctrl(self, ctrl=None, item=None, image=None):
         """
         Установить картинку элемента списка.
-        @param ctrl: Объект контрола wx.ListCtrl.
-        @param item: Элемент списка.
+        :param ctrl: Объект контрола wx.ListCtrl.
+        :param item: Элемент списка.
             Элемент списка может задаваться как индексом так и объектом wx.ListItem.
             Если None, то имеется текущий выбранный элемент.
-        @param image: Объект картинки wx.Bitmap.
+        :param image: Объект картинки wx.Bitmap.
             Если не определен, то картинка удаляется.
-        @return: True/False.
+        :return: True/False.
         """
         if ctrl is None:
             log.warning(u'Не определен контрол wx.ListCtrl')
@@ -1422,10 +1422,10 @@ class icListCtrlManager(object):
     def getImageIndex_list_ctrl(self, ctrl=None, image=None, auto_add=True):
         """
         Поиск образа в списке образов wx.ListCtrl.
-        @param ctrl: Объект контрола списка.
-        @param image: Объект образа.
-        @param auto_add: Автоматически добавить в список, если отсутствует?
-        @return: Индекс образа или -1 если образ не найден.
+        :param ctrl: Объект контрола списка.
+        :param image: Объект образа.
+        :param auto_add: Автоматически добавить в список, если отсутствует?
+        :return: Индекс образа или -1 если образ не найден.
         """
         if image is None:
             return -1
@@ -1456,8 +1456,8 @@ class icListCtrlManager(object):
     def clear_list_ctrl(self, ctrl=None):
         """
         Очистка контрола списка.
-        @param ctrl: Объект контрола списка.
-        @return: True/False.
+        :param ctrl: Объект контрола списка.
+        :return: True/False.
         """
         try:
             if isinstance(ctrl, wx.ListCtrl):

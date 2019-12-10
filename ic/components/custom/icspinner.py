@@ -4,8 +4,8 @@
 """
 Обкладка для компонента wx.SpinCtrl
 
-@type SPC_IC_SPINNER: C{dictionary}
-@var SPC_IC_SPINNER: Спецификация на ресурсное описание панели инструментов.
+:type SPC_IC_SPINNER: C{dictionary}
+:var SPC_IC_SPINNER: Спецификация на ресурсное описание панели инструментов.
 Описание ключей SPC_IC_SPINNER:
 
     - B{type='Spinner'}: Тип компонента.
@@ -37,8 +37,8 @@
             - обновление представления поля (по атрибуту 'getvalue')
     - B{keyDown=None}: Выражение, выполняемое при получении сообщения от клавиатуры.
     
-@type ICSpinnerStyle: C{dictionary}
-@var ICSpinnerStyle: Словарь специальных стилей компонента. Описание ключей ICSpinnerStyle:
+:type ICSpinnerStyle: C{dictionary}
+:var ICSpinnerStyle: Словарь специальных стилей компонента. Описание ключей ICSpinnerStyle:
 
     - C{wx.SP_ARROW_KEYS} - Пользователь может использовать стрелки для изменения значения.
     - C{wx.SP_WRAP} - Значение компонента лежит в заданных пределах (min_value,max_value).
@@ -131,16 +131,16 @@ class icSpinner(icWidget, wx.SpinCtrl):
         """
         Конструктор для создания icSpinner
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         self.bChanged = 0
 
@@ -263,8 +263,8 @@ class icSpinner(icWidget, wx.SpinCtrl):
     def UpdateViewFromDB(self, db_name=None):
         """
         Обновляет данные в текстовом поле после изменения курсора в источнике данных.
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
         """
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:

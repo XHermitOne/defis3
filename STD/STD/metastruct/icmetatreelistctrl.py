@@ -50,7 +50,7 @@ class icMetaTreeListCtrlProto(wx.gizmos.TreeListCtrl,
         Получить надписи колонок.
         Контрол в любом случае имеет одну колонку для отображения метадерева.
         Переопределяемый метод.
-        @return: Список надписай колонок.
+        :return: Список надписай колонок.
         """
         return list()
 
@@ -59,15 +59,15 @@ class icMetaTreeListCtrlProto(wx.gizmos.TreeListCtrl,
         Получить ширины колонок.
         Контрол в любом случае имеет одну колонку для отображения метадерева.
         Переопределяемый метод.
-        @return: Список ширин колонок.
+        :return: Список ширин колонок.
         """
         return list()
 
     def setMetaTree(self, metatree=None, auto_build=True):
         """
         Установить объект описания мета-дерева.
-        @param metatree: Объект описания мета-дерева.
-        @param auto_build: Автоматическое построение дерева?
+        :param metatree: Объект описания мета-дерева.
+        :param auto_build: Автоматическое построение дерева?
         """
         self._metatree = metatree
 
@@ -77,11 +77,11 @@ class icMetaTreeListCtrlProto(wx.gizmos.TreeListCtrl,
     def build(self, metatree=None, column_labels=None, column_widths=None):
         """
         Построение дерева метаобъектов.
-        @param metatree: Объект описания мета-дерева.
+        :param metatree: Объект описания мета-дерева.
             Если не определен, то берется установленный объект.
-        @param column_labels: Список надписей колонок.
-        @param column_widths: Список ширин колонок.
-        @return: True/False.
+        :param column_labels: Список надписей колонок.
+        :param column_widths: Список ширин колонок.
+        :return: True/False.
         """
         if metatree is None:
             metatree = self._metatree
@@ -127,11 +127,11 @@ class icMetaTreeListCtrlProto(wx.gizmos.TreeListCtrl,
     def _build(self, parent_metaitem, meta_data, parent_item=None):
         """
         Построение дерева метаобъектов.
-        @param parent_metaitem: Родительский мета-объект.
-        @param meta_data: Данные метадерева.
-        @param parent_item: Родительский элемент дерева.
+        :param parent_metaitem: Родительский мета-объект.
+        :param meta_data: Данные метадерева.
+        :param parent_item: Родительский элемент дерева.
             Если None, то берется корневой элемент.
-        @return: True/False.
+        :return: True/False.
         """
         if parent_item is None:
             parent_item = self.GetRootItem()

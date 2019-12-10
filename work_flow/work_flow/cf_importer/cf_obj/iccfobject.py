@@ -31,9 +31,9 @@ class icCFObject:
     def __init__(self, parent=None, uid=None, cf_dirname=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
-        @param uid: Униакльный идентификатор объекта.
-        @param cf_dirname: Папка конфигурации 1с.
+        :param parent: Родительский объект.
+        :param uid: Униакльный идентификатор объекта.
+        :param cf_dirname: Папка конфигурации 1с.
         """
         self.parent = parent
         
@@ -115,8 +115,8 @@ class icCFObject:
     def findByUID(self, uid):
         """
         Найти объект по UID.
-        @param uid: Униакльный идентификатор объекта.
-        @return: Возвращает объект в дереве объектов с заданным UID или None,
+        :param uid: Униакльный идентификатор объекта.
+        :return: Возвращает объект в дереве объектов с заданным UID или None,
         если такой объект не найден.
         """
         if self.uid == uid:
@@ -131,8 +131,8 @@ class icCFObject:
     def getChildrenByUID(self, uid):
         """
         Получить все дочерние объекты с указанным UID.
-        @param uid: Униакльный идентификатор объекта.
-        @return: Возвращает список дочерних элементов искомого объекта.
+        :param uid: Униакльный идентификатор объекта.
+        :return: Возвращает список дочерних элементов искомого объекта.
         """
         obj = self.findByUID(uid)
         if obj:
@@ -152,11 +152,11 @@ class icCFObject:
     def getAllChildrenByFilter(self, Filter_, IsMetaobject_=True):
         """
         Получить все дочерние объекты списком по фильтру.
-        @param Filter_: Строка фильтра в формате:
+        :param Filter_: Строка фильтра в формате:
         ...<Регулярное выражение>.Имя узла.Имя подузла
         Например:
         ...<\A(?!иц*)>.Формы.ФормаСписка
-        @param IsMetaobject_: Получить только метаобъекты.
+        :param IsMetaobject_: Получить только метаобъекты.
         """
         # Подготовка фильтра
         re_filters = re.findall(r'(<.*?>)', Filter_)
@@ -181,8 +181,8 @@ class icCFObject:
     def getChildrenByFilter(self, Filter_, SubFilters_=None):
         """
         Получить все дочерние объекты списком по фильтру.
-        @param Filter_: Строка фильтра.
-        @param SubFilters_: Подфильтр дочерних элементов для рекурсивного выбора.
+        :param Filter_: Строка фильтра.
+        :param SubFilters_: Подфильтр дочерних элементов для рекурсивного выбора.
         """
         if not Filter_:
             # Если фильтр не определен, то все дочерние элементы.
@@ -204,40 +204,40 @@ class icCFObject:
     def addInModule(self, Txt_):
         """
         Добавить в модуль объекта текст.
-        @param Txt_: Добавляемый текст.
-        @return: True - добавление прошло успешно, False - добавления не произошло.
+        :param Txt_: Добавляемый текст.
+        :return: True - добавление прошло успешно, False - добавления не произошло.
         """
         return False
 
     def delInModule(self, Txt_):
         """
         Удалить из модуля объекта текст.
-        @param Txt_: Удаляемый текст.
-        @return: True - удаление прошло успешно, False - удаления не произошло.
+        :param Txt_: Удаляемый текст.
+        :return: True - удаление прошло успешно, False - удаления не произошло.
         """
         return False
         
     def replaceInModule(self, SrcTxt_, DstTxt_):
         """
         Заменить текст в модуле объекта.
-        @param SrcTxt_: Заменяемый текст.
-        @param DstTxt_: Заменяющий текст.
-        @return: True - замена прошла успешно, False - замена не произошла.
+        :param SrcTxt_: Заменяемый текст.
+        :param DstTxt_: Заменяющий текст.
+        :return: True - замена прошла успешно, False - замена не произошла.
         """
         return False
 
     def gen_resource(self):
         """
         Генерация ресурса, соответстствующего объеку 1С.
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def _get_db_psp(self, prj_res_ctrl=None):
         """
         Определить паспорт БД проекта.
-        @param prj_res_ctrl: Контроллер управления ресурсом проекта.
-        @return:
+        :param prj_res_ctrl: Контроллер управления ресурсом проекта.
+        :return:
         """
         return self.parent._get_db_psp(prj_res_ctrl) if self.parent else None
 
@@ -250,12 +250,12 @@ class icCFFolder(icCFObject):
                  img_filename='', img_exp_filename=''):
         """
         Конструктор.
-        @param parent: Родительский объект.
-        @param cf_dirname: Папка конфигурации 1с.
-        @param name: Имя папки.
-        @param children: Список дочерних элементов.
-        @param img_filename: Имя файла образа элемента папки.
-        @param img_exp_filename: Имя файла образа элемента раскрытой папки.
+        :param parent: Родительский объект.
+        :param cf_dirname: Папка конфигурации 1с.
+        :param name: Имя папки.
+        :param children: Список дочерних элементов.
+        :param img_filename: Имя файла образа элемента папки.
+        :param img_exp_filename: Имя файла образа элемента раскрытой папки.
         """
         # ВНИМАНИЕ!
         # Для папок UID - NONE_UID
@@ -273,8 +273,8 @@ class icCFFolder(icCFObject):
     def setChildren(self, name=None, children=None):
         """
         Установить дочерние объекты папки.
-        @param name: Наименование папки.
-        @param children: Список дочерних объектов папки.
+        :param name: Наименование папки.
+        :param children: Список дочерних объектов папки.
         """
         if name is not None:
             self.name = name

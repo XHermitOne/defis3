@@ -4,8 +4,8 @@
 """
 Модуль глобальных функций пользователя.
 
-@var VAR_STORAGE: Глобальный объект ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
-@var RUNNER_NAME: Имя ДВИЖКА по умолчанию.
+:var VAR_STORAGE: Глобальный объект ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
+:var RUNNER_NAME: Имя ДВИЖКА по умолчанию.
 """
 
 # Подключение библиотек и модулей
@@ -60,9 +60,9 @@ def letVar(name, data, security='*rw'):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Функция добавляет переменную/объект в хранилище.
-    @param name: Имя переменной/объекта.
-    @param data: Непосредственно данные.
-    @param security: Строка защиты.
+    :param name: Имя переменной/объекта.
+    :param data: Непосредственно данные.
+    :param security: Строка защиты.
     """
     try:
         return getKernel().GetContext().Set(name, data)
@@ -74,8 +74,8 @@ def refVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Получить ссыылку на объект по его имени.
-    @param name: Имя объекта.
-    @return: Возвращает ссылку на объект или None, если нет такого объекта.
+    :param name: Имя объекта.
+    :return: Возвращает ссылку на объект или None, если нет такого объекта.
     """
     try:
         return getKernel().GetContext().Get(name)
@@ -87,9 +87,9 @@ def getVar(name, lock_key=None):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Получить копию объекта.
-    @param name: Имя объекта.
-    @param lock_key: Ключ блокировки.
-    @return: Возвращает копию объекта не связанную с оригиналом
+    :param name: Имя объекта.
+    :param lock_key: Ключ блокировки.
+    :return: Возвращает копию объекта не связанную с оригиналом
         или None, если нет такого объекта.
     """
     try:
@@ -107,10 +107,10 @@ def putVar(name, data, lock_key=None):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Сохранить объект.
-    @param name: Имя объекта.
-    @param data: Данные.
-    @param lock_key: Ключ блокировки.
-    @return: Возвращает результат выполнения операции (False или True).
+    :param name: Имя объекта.
+    :param data: Данные.
+    :param lock_key: Ключ блокировки.
+    :return: Возвращает результат выполнения операции (False или True).
     """
     try:
         return getKernel().GetContext().Set(name, data)
@@ -122,8 +122,8 @@ def delVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Удалить объект.
-    @param name: Имя объекта.
-    @return: Возвращает удаленный из хранилища объект.
+    :param name: Имя объекта.
+    :return: Возвращает удаленный из хранилища объект.
     """
     try:
         return getKernel().GetContext().Del(name)
@@ -135,8 +135,8 @@ def isVar(name):
     """
     ФУНКЦИИ ХРАНИЛИЩА ПЕРЕМЕННЫХ И ОБЪЕКТОВ.
     Функция проверяет усть ли объект в хранилище.
-    @param name: Имя объекта.
-    @return: Результат поиска (0/1).
+    :param name: Имя объекта.
+    :return: Результат поиска (0/1).
     """
     try:
         return getKernel().GetContext().Is(name)
@@ -193,7 +193,7 @@ def refreshImports():
 def initEnv(prj_dirname, **environ):
     """
     Инициализация окружения по папке проекта.
-    @param prj_dirname: Папка проекта.
+    :param prj_dirname: Папка проекта.
     """
     try:
         # Подгрузить дополнительные атрибуты проекта
@@ -297,7 +297,7 @@ def closeMainWinForce():
     ВНИМАНИЕ! Использовать только в начале обработчика
         инициализации главного окна.
         Иначе последствия могут быть не предсказуемыми.
-    @return: True/False.
+    :return: True/False.
     """
     log.info(u'Принудительное закрытие главного окна программы')
     try:
@@ -319,7 +319,7 @@ def closeAppForce():
     ВНИМАНИЕ! Использовать только в начале обработчика
         инициализации главного окна.
         Иначе последствия могут быть не предсказуемыми.
-    @return: True/False.
+    :return: True/False.
     """
     log.info(u'Принудительное закрытие приложения')
     try:
@@ -411,10 +411,10 @@ def addMainNotebookPage(page, title, bOpenExists=False, image=None, bCanClose=Tr
                         open_script=None, close_script=None, default_page=-1):
     """
     Добавить в органайзер страницу.
-    @param page: Страница (Наследник wxScrolledWindow).
-    @param title: Строка-заголовок страницы.
-    @param bOpenExists: Если такая страница уже существует, тогда открыть ее.
-    @param default_page: Индекс страницы,  открываемой по умолчанию. Если -1,
+    :param page: Страница (Наследник wxScrolledWindow).
+    :param title: Строка-заголовок страницы.
+    :param bOpenExists: Если такая страница уже существует, тогда открыть ее.
+    :param default_page: Индекс страницы,  открываемой по умолчанию. Если -1,
         то открывается текущая добавляемая страница.
     """
     try:
@@ -430,7 +430,7 @@ addMainOrgPage = addMainNotebookPage
 def delMainOrgPage(page_index):
     """
     Удалить из органайзера страницу.
-    @param page_index: Индекс стриницы.
+    :param page_index: Индекс стриницы.
     """
     try:
         return getKernel().GetContext().getMainWin().delOrgPage(page_index)
@@ -441,7 +441,7 @@ def delMainOrgPage(page_index):
 def startDRPythonIDE(param=None):
     """
     Запуск drPython отдельной задачей.
-    @param param: Параметры командной строки.
+    :param param: Параметры командной строки.
     """
     # Очистить параметры командной строки
     del sys.argv[1:]
@@ -490,9 +490,9 @@ ADMINISTRATOR_ROLE_NAMES = ('admins', 'administrators', 'Admins', 'Administrator
 def isAdministrator(user=None, admin_role_names=ADMINISTRATOR_ROLE_NAMES):
     """
     Проверка является ли пользователь администратором.
-    @param user: Проверяемый пользователь. Если None, то берется текущий пользователь.
-    @param admin_role_names: Список имен ролей администраторов.
-    @return: True/False. None - в случае ошибки.
+    :param user: Проверяемый пользователь. Если None, то берется текущий пользователь.
+    :param admin_role_names: Список имен ролей администраторов.
+    :return: True/False. None - в случае ошибки.
     """
     if user is None:
         user = getCurUser()
@@ -507,8 +507,8 @@ def isAdministrator(user=None, admin_role_names=ADMINISTRATOR_ROLE_NAMES):
 def isAdministratorCurUser(admin_role_names=ADMINISTRATOR_ROLE_NAMES):
     """
     Проверка является ли текущий пользователь администратором системы.
-    @param admin_role_names: Список имен ролей администраторов.
-    @return: True/False.
+    :param admin_role_names: Список имен ролей администраторов.
+    :return: True/False.
     """
     return isAdministrator(admin_role_names=admin_role_names)
 
@@ -563,8 +563,8 @@ def getPrjName():
 def getObjManager(obj):
     """
     Менеджер объекта.
-    @param obj: Объект.
-    @return: Объект менеджера.
+    :param obj: Объект.
+    :return: Объект менеджера.
     """
     return obj.GetManager()
 
@@ -572,7 +572,7 @@ def getObjManager(obj):
 def getPrjDir():
     """
     Папка проекта. Берем из окружения.
-    @return:  Путь до папки проекта.
+    :return:  Путь до папки проекта.
     """
     return getVar('PRJ_DIR')
 
@@ -581,7 +581,7 @@ def getPrjPackage():
     """
     Так как папка проекта является пакетом Python,
     то можно получить объект пакета.
-    @return: Объект пакета прикладного проекта.
+    :return: Объект пакета прикладного проекта.
     """
     prj_dir = getPrjDir()
     prj_name = getPrjName()
@@ -608,7 +608,7 @@ def getPrjPackage():
 def saveOperateYear(year=None):
     """
     Сохранить значение операционного года в INI файле.
-    @param year: Год.
+    :param year: Год.
     """
     if year is None:
         year = getOperateYear()
@@ -623,7 +623,7 @@ def saveOperateYear(year=None):
 def setOperateYear(year=None):
     """
     Установить операционный год.
-    @param year: Год.
+    :param year: Год.
         Если год не указан, то производится попытка
         прочитать его в INI файле проекта.
         Если в INI файле он не найде, то берется системный.
@@ -668,7 +668,7 @@ def setSysYearAsOperate():
 def getReportManager():
     """
     Объект менеджера системы отчетов.
-    @return: Объект менеджера системы отчетов.
+    :return: Объект менеджера системы отчетов.
     """
     from ic import report
     return report.REPORT_MANAGER
@@ -677,7 +677,7 @@ def getReportManager():
 def getScanManager():
     """
     Объект менеджера системы сканирования.
-    @return: Объект менеджера системы сканирования.
+    :return: Объект менеджера системы сканирования.
     """
     from ic import scanner
     return scanner.SCANNER_MANAGER

@@ -106,12 +106,12 @@ def icGetUserPath():
 def icSetUserVariable(varName, value, subsys='', bClose = False):
     """
     Функция устанавливает переменную пользователя.
-    @type varName: C{string}
-    @param varName: Имя переменной.
-    @type value: C{string}
-    @param value: Значение переменной.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы
+    :type varName: C{string}
+    :param varName: Имя переменной.
+    :type value: C{string}
+    :param value: Значение переменной.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы
     """
     global USER_OBJECT_STORAGE
     res_path = icGetUserPath()
@@ -155,12 +155,12 @@ def icCloseLocalStorage():
 def icGetUserVariable(varName, subsys='', bClose = False):
     """
     Функция устанавливает переменную пользователя.
-    @type varName: C{string}
-    @param varName: Имя переменной.
-    @type value: C{string}
-    @param value: Значение переменной.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы.
+    :type varName: C{string}
+    :param varName: Имя переменной.
+    :type value: C{string}
+    :param value: Значение переменной.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы.
     """
     global USER_OBJECT_STORAGE
     res_path = icGetUserPath()
@@ -231,7 +231,7 @@ def icGetHlpPath():
 def icGetResFileName(Ext_='tab'):
     """
     Ресурсный файл.
-    @return: Функцмя возвращает полное имя ресурсного файла по его расширению.
+    :return: Функцмя возвращает полное имя ресурсного файла по его расширению.
     """
     res_file = os.path.join(icGetResPath(), 'resource.'+Ext_)
     res_file = res_file.replace('\\', '/')
@@ -242,14 +242,14 @@ def icGetResFileName(Ext_='tab'):
 def inherit(prnt_res, resource, lstExcept=[]):
     """
     Наследуем атрибуты родительского описания.
-    @type prnt_res: C{dictionary}
-    @param prnt_res: Родительское описание.
-    @type resource: C{dictionary}
-    @param resource: Описание потомка.
-    @type lstExcept: C{list}
-    @param lstExcept: Список не наследуемых атрибутов.
-    @rtype: C{dictionary}
-    @return: Возвращает наследованное ресурсное описание.
+    :type prnt_res: C{dictionary}
+    :param prnt_res: Родительское описание.
+    :type resource: C{dictionary}
+    :param resource: Описание потомка.
+    :type lstExcept: C{list}
+    :param lstExcept: Список не наследуемых атрибутов.
+    :rtype: C{dictionary}
+    :return: Возвращает наследованное ресурсное описание.
     """
     for key, attr in resource.items():
         if key not in lstExcept and not attr and key in prnt_res:
@@ -261,12 +261,12 @@ def inherit(prnt_res, resource, lstExcept=[]):
 def inheritDataClass(prnt_res, resource):
     """
     Функция наследования ресурсных описаний классов данных.
-    @type prnt_res: C{dictionary}
-    @param prnt_res: Родительское описание.
-    @type resource: C{dictionary}
-    @param resource: Описание потомка.
-    @rtype: C{dictionary}
-    @return: Возвращает наследованное ресурсное описание класса данных.
+    :type prnt_res: C{dictionary}
+    :param prnt_res: Родительское описание.
+    :type resource: C{dictionary}
+    :param resource: Описание потомка.
+    :rtype: C{dictionary}
+    :return: Возвращает наследованное ресурсное описание класса данных.
     """
     #   Наследуем атрибуты родительского класса данных
     inherit(prnt_res, resource, ['parent'])
@@ -292,10 +292,10 @@ def buildDataClassRes(resource, nameRes='resource'):
     """
     Собирает ресурсное описание класса данных с испольозованием механизма
     наследования.
-    @type resource: C{dictionary}
-    @param resource: Ресурсное описание без наследования.
-    @type nameRes: C{string}
-    @param mameRes: Имя ресурсного файла. Если оно не указано, то используется 'resource'. В
+    :type resource: C{dictionary}
+    :param resource: Ресурсное описание без наследования.
+    :type nameRes: C{string}
+    :param mameRes: Имя ресурсного файла. Если оно не указано, то используется 'resource'. В
         старых версиях все ресурсы одного типа хранились в одном файле, поэтому этот параметр не
         использовался.
     """
@@ -332,26 +332,26 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
     Возврвщает ресурсное описание объекта. После того как функция находит
     нужное ресурсное описание в служебном атрибуте ресурса '__file_res' прописывается
     полный путь до файла ресурса, где он был найден.
-    @type className: C{string}
-    @param className: Имя ресурса.
-    @type ext: C{string}
-    @param ext: Расширения ресурсного файла для данного ресурса.
-    @type pathRes: C{string}
-    @param pathRes: Имя ресурсного файла. Если путь не указан, то нужный ресурсный файл
+    :type className: C{string}
+    :param className: Имя ресурса.
+    :type ext: C{string}
+    :param ext: Расширения ресурсного файла для данного ресурса.
+    :type pathRes: C{string}
+    :param pathRes: Имя ресурсного файла. Если путь не указан, то нужный ресурсный файл
         последовательно ищется во всех папках подсистем, начиная с папки текущего проекта.
-    @type bCopy: C{bool}
-    @param bCopy: Признак указывающий, что надо возвращать копию ресурса, в противном
+    :type bCopy: C{bool}
+    :param bCopy: Признак указывающий, что надо возвращать копию ресурса, в противном
         случае возвращается указатель на ресурс. Поскольку он буферезируется то
         с ним необходимо очень акуратно работать.
-    @type bRefresh: C{bool}
-    @param bRefresh: Признак того, что ресурс надо перечитать даже если он
+    :type bRefresh: C{bool}
+    :param bRefresh: Признак того, что ресурс надо перечитать даже если он
         буферезирован.
-    @type nameRes: C{string}
-    @param nameRes: Имя ресурсного файла. Если оно не указано, то используется 'resource'. В
+    :type nameRes: C{string}
+    :param nameRes: Имя ресурсного файла. Если оно не указано, то используется 'resource'. В
         старых версиях все ресурсы одного типа хранились в одном файле, поэтому этот параметр не
         использовался.
-    @rtype: C{dictionary}
-    @return: Ресурсное описание объекта. None если ресурс не найден.
+    :rtype: C{dictionary}
+    :return: Ресурсное описание объекта. None если ресурс не найден.
     """
     if not pathRes:
         paths = icGetSubsysResPaths()
@@ -409,12 +409,12 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
 def getResFilesByType(ext='tab', pathRes=None):
     """
     Получить список файлов по типу.
-    @type ext: C{string}
-    @param ext: Расширения ресурсного файла для данного ресурса.
-    @type pathRes: C{string}
-    @param pathRes: Имя ресурсного файла. Если путь не указан, то нужный ресурсный файл
+    :type ext: C{string}
+    :param ext: Расширения ресурсного файла для данного ресурса.
+    :type pathRes: C{string}
+    :param pathRes: Имя ресурсного файла. Если путь не указан, то нужный ресурсный файл
         последовательно ищется во всех папках подсистем, начиная с папки текущего проекта.
-    @return: Возвращает список полных имен ресурсных файлов с заданным расширением.
+    :return: Возвращает список полных имен ресурсных файлов с заданным расширением.
     """
     result = []
     ext = ext.lower()
@@ -445,15 +445,15 @@ def getResFilesByType(ext='tab', pathRes=None):
 def getResourcesByType(ext='tab', pathRes=None, bRefresh=False):
     """
     Получить список ресурсов по типу.
-    @type ext: C{string}
-    @param ext: Расширения ресурсного файла для данного ресурса.
-    @type pathRes: C{string}
-    @param pathRes: Имя ресурсного файла. Если путь не указан, то нужный ресурсный файл
+    :type ext: C{string}
+    :param ext: Расширения ресурсного файла для данного ресурса.
+    :type pathRes: C{string}
+    :param pathRes: Имя ресурсного файла. Если путь не указан, то нужный ресурсный файл
         последовательно ищется во всех папках подсистем, начиная с папки текущего проекта.
-    @type bRefresh: C{bool}
-    @param bRefresh: Признак того, что ресурс надо перечитать даже если он
+    :type bRefresh: C{bool}
+    :param bRefresh: Признак того, что ресурс надо перечитать даже если он
         буферезирован.
-    @return: Возвращает словарь {имя ресурсного файла:содержимого ресурсного файла} с заданным расширением.
+    :return: Возвращает словарь {имя ресурсного файла:содержимого ресурсного файла} с заданным расширением.
     """
     res_file_names = getResFilesByType(ext, pathRes)
     # Отфильтровать переопределенные ресурсы
@@ -471,12 +471,12 @@ def RefreshResUUID(res, prnt_res, new_uuid):
     """
     Обновляет UUID ресурса. Для некоторых ресурсов (GridCell) обновление надо проводить в
     родительском ресурсе, так как они описывают один состовной объект.
-    @type res: C{dictionary}
-    @param res: Ресурсное описание компонента.
-    @type prnt_res: C{dictionary}
-    @param prnt_res: Ресурсное описание родительского компонента.
-    @type new_uuid: C{string}
-    @param new_uuid: Новый uuid компонента.
+    :type res: C{dictionary}
+    :param res: Ресурсное описание компонента.
+    :type prnt_res: C{dictionary}
+    :param prnt_res: Ресурсное описание родительского компонента.
+    :type new_uuid: C{string}
+    :param new_uuid: Новый uuid компонента.
     """
     if res['type'] == 'GridCell' and prnt_res:
         prnt_res['_uuid'] = new_uuid
@@ -628,10 +628,10 @@ manager_class = %s
 def genObjModuleHead(on, fn, descr=_('Object module'), ver=u'(0, 0, 0, 1)'):
     """
     Генерирует заголовок модуля объекта.
-    @param on: Имя объекта.
-    @param fn: Путь до модуля.
-    @param descr: Описание объекта.
-    @param ver: Версия.
+    :param on: Имя объекта.
+    :param fn: Путь до модуля.
+    :param descr: Описание объекта.
+    :param ver: Версия.
     """
     st = datetime.datetime.fromtimestamp(time.time()).strftime('%d-%m-%Y')
     mod_txt = u'''#!/usr/bin/env python3
@@ -682,12 +682,12 @@ def getICObjectResource(path):
 def saveICObject(path, className, res):
     """
     Генерирует по ресурсу питоновский класс и сохраняет в нужном модуле.
-    @type path: C{string}
-    @param path: Путь до файла.
-    @type className: C{string}
-    @param className: Имя класса.
-    @type res: C{dictionary}
-    @param res: Ресурсное описание.
+    :type path: C{string}
+    :param path: Путь до файла.
+    :type className: C{string}
+    :param className: Имя класса.
+    :type res: C{dictionary}
+    :param res: Ресурсное описание.
     """
     text = genClassFromRes(className, res)
 
@@ -705,12 +705,12 @@ def saveICObject(path, className, res):
 def updateICObject(path, className, res, version=None):
     """
     Обновляет ресурсное описание питоновского класса.
-    @type path: C{string}
-    @param path: Путь до файла.
-    @type className: C{string}
-    @param className: Имя класса.
-    @type res: C{dictionary}
-    @param res: Ресурсное описание.
+    :type path: C{string}
+    :param path: Путь до файла.
+    :type className: C{string}
+    :param className: Имя класса.
+    :type res: C{dictionary}
+    :param res: Ресурсное описание.
     """
     file_obj = None
     try:
@@ -750,8 +750,8 @@ __version__ = %s
 def getSubsysPath(subsys=None):
     """
     Функция по имени подсистемы определяет полный путь до подсистемы.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы.
     """
     sys_path = icGetSubsysResPaths()[0].replace('\\', '/')
     if subsys:
@@ -763,12 +763,12 @@ def getSubsysPath(subsys=None):
 def method(id_meth, subsys, esp=locals(), **params):
     """
     Находит и выполняет метод подсистемы.
-    @type id_meth: C{string}
-    @param id_meth: Идентификатор метода.
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы.
-    @type params: C{dict}
-    @param params: Дополнительные параметры метода.
+    :type id_meth: C{string}
+    :param id_meth: Идентификатор метода.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы.
+    :type params: C{dict}
+    :param params: Дополнительные параметры метода.
     """
     if subsys:
         subsys_path = getSubsysPath(subsys)
@@ -808,21 +808,21 @@ def icSaveRes(className, ext, pathRes=None, nameRes='resource',
               resData=None, ResFmt=PICKLE_RES_FMT):
     """
     Сохранить ресурсное описание объекта.
-    @type className: C{string}
-    @param className: Имя ресурса.
-    @type ext: C{string}
-    @param ext: Расширения ресурсного файла для данного ресурса.
-    @type pathRes: C{string}
-    @param pathRes: Имя ресурсного файла. Если путь не указан, то ресурсный файл
+    :type className: C{string}
+    :param className: Имя ресурса.
+    :type ext: C{string}
+    :param ext: Расширения ресурсного файла для данного ресурса.
+    :type pathRes: C{string}
+    :param pathRes: Имя ресурсного файла. Если путь не указан, то ресурсный файл
         в папке текущего проекта.
-    @type nameRes: C{string}
-    @param nameRes: Имя ресурсного файла. Если оно не указано, то используется
+    :type nameRes: C{string}
+    :param nameRes: Имя ресурсного файла. Если оно не указано, то используется
         'resource'. В старых версиях все ресурсы одного типа хранились в одном
         файле, поэтому этот параметр не использовался.
-    @type ResFmt: C{bool}
-    @param ResFmt: Формат ресурса 0 - pickle, 1 - text.
-    @rtype: C{dictionary}
-    @return: Ресурсное описание объекта. None если ресурс не найден.
+    :type ResFmt: C{bool}
+    :param ResFmt: Формат ресурса 0 - pickle, 1 - text.
+    :rtype: C{dictionary}
+    :return: Ресурсное описание объекта. None если ресурс не найден.
     """
     if not pathRes:
         pathRes = glob_functions.getVar('PRJ_DIR')
@@ -837,8 +837,8 @@ def icSaveRes(className, ext, pathRes=None, nameRes='resource',
 def updateImporsObjModule(fn, imp_path):
     """
     Добавляет строку импорта на модуль объекта в модуль ресурса.
-    @param fn: Имя модуля ресурса.
-    @param imp_path: Имя модуля объекта.
+    :param fn: Имя модуля ресурса.
+    :param imp_path: Имя модуля объекта.
     """
     # Читаем текст модуля
     fn = os.path.normpath(fn)
@@ -891,10 +891,10 @@ def updateImporsObjModule(fn, imp_path):
 def _findres(res, nameObj, typeObj):
     """
     Ищет ресурс нужного объекта по дереву ресурса.
-    @param res: Ресурсное описание.
-    @param nameObj: Имя объекта.
-    @param typeObj: Тип объекта.
-    @return: Ресурсное описание найденного объекта.
+    :param res: Ресурсное описание.
+    :param nameObj: Имя объекта.
+    :param typeObj: Тип объекта.
+    :return: Ресурсное описание найденного объекта.
     """
     if ((typeObj is None and res['name'] == nameObj) or
        (res['type'] == typeObj and res['name'] == nameObj)):
@@ -916,15 +916,15 @@ def _findres(res, nameObj, typeObj):
 def FindResInRes(res, nameObj, typeObj=None):
     """
     Ищет ресурс нужного объекта по дереву ресурса.
-    @type res: C{dictionary}
-    @param res: Ресурсное описание.
-    @param res: Ресурс.
-    @type nameObj: C{string}
-    @param nameObj: Имя объекта.
-    @type typeObj: C{string}
-    @param typeObj: Тип объекта.
-    @rtype: C{dictionary}
-    @return: Ресурсное описание найденного объекта.
+    :type res: C{dictionary}
+    :param res: Ресурсное описание.
+    :param res: Ресурс.
+    :type nameObj: C{string}
+    :param nameObj: Имя объекта.
+    :type typeObj: C{string}
+    :param typeObj: Тип объекта.
+    :rtype: C{dictionary}
+    :return: Ресурсное описание найденного объекта.
     """
     return _findres(res, nameObj, typeObj)
 
@@ -932,9 +932,9 @@ def FindResInRes(res, nameObj, typeObj=None):
 def find_child_resource(name, res):
     """
     Поиск ресурса дочернего объекта рекурсивно по имени.
-    @param name: Имя дочернего объекта.
-    @param res: Ресурс.
-    @return: Словарь ресурса найденного объекта или None
+    :param name: Имя дочернего объекта.
+    :param res: Ресурс.
+    :return: Словарь ресурса найденного объекта или None
         если не найдено.
     """
     if res['name'] == name:
@@ -952,9 +952,9 @@ def find_child_resource(name, res):
 def update_child_resource(child_name, res, child_res):
     """
     Обновить ресурс дочернего объекта.
-    @param child_name: Имя дочернего объекта.
-    @param res: Ресурс.
-    @return: Измененный словарь ресурса объекта или None
+    :param child_name: Имя дочернего объекта.
+    :param res: Ресурс.
+    :return: Измененный словарь ресурса объекта или None
         если такой дочерний объект не найден.
     """
     if res['name'] == child_name:
@@ -972,8 +972,8 @@ def update_child_resource(child_name, res, child_res):
 def getResByPsp(passport):
     """
     Возвращает ресурса объекта по его паспорту.
-    @type passport: C{tuple}
-    @param passport: идентификатор описания (паспорт) объекта.
+    :type passport: C{tuple}
+    :param passport: идентификатор описания (паспорт) объекта.
     """
     res = None
     try:

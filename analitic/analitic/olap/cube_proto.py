@@ -57,7 +57,7 @@ class icCubeProto(object):
     def findDimension(self, dimension_name):
         """
         Поиск объекта измерения по его имени.
-        @return: Объект измерения или None, если объект с таким именем не найден.
+        :return: Объект измерения или None, если объект с таким именем не найден.
         """
         finds = [obj for obj in self.getDimensions() if obj.getName() == dimension_name]
         if finds:
@@ -69,7 +69,7 @@ class icCubeProto(object):
     def findMeasure(self, measure_name):
         """
         Поиск объекта меры/факта по его имени.
-        @return: Объект измерения или None, если объект с таким именем не найден.
+        :return: Объект измерения или None, если объект с таким именем не найден.
         """
         finds = [obj for obj in self.getMeasures() if obj.getName() == measure_name]
         if finds:
@@ -81,7 +81,7 @@ class icCubeProto(object):
     def findAggregate(self, aggregate_name):
         """
         Поиск объекта функции агрегации по его имени.
-        @return: Объект функции агрегации или None, если объект с таким именем не найден.
+        :return: Объект функции агрегации или None, если объект с таким именем не найден.
         """
         finds = [obj for obj in self.getAggregates() if obj.getName() == aggregate_name]
         if finds:
@@ -105,8 +105,8 @@ class icCubeProto(object):
     def findChild(self, child_name):
         """
         Поиск дочернего объекта по имени.
-        @param child_name: Имя дочернего объекта.
-        @return: Дочерний объект или None, если объект не найден.
+        :param child_name: Имя дочернего объекта.
+        :return: Дочерний объект или None, если объект не найден.
         """
         finds = [obj for obj in self.getChildren() if obj.getName() == child_name]
         if finds:

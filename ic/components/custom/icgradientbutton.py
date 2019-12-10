@@ -5,8 +5,8 @@
 Обкладка для компонента wx.Button.
 Содержит описание класса icButton, который по ресурсному описанию создает стандартную кнопку.
 
-@type SPC_IC_GRBUTTON: C{dictionary}
-@var SPC_IC_GRBUTTON: Спецификация на ресурсное описание окна.
+:type SPC_IC_GRBUTTON: C{dictionary}
+:var SPC_IC_GRBUTTON: Спецификация на ресурсное описание окна.
 Описание ключей SPC_IC_GRBUTTON:
     - B{name = 'default'}: Имя окна.
     - B{type = 'Button'}: Тип объекта.
@@ -28,8 +28,8 @@
     - B{mouseUp=None}: Выражение, выполняемое после отпускания левой кнопки мыши.
     - B{mouseContextDown=None}: Выражение, выполняемое после нажатия правой кнопки мыши.
     - B{keyDown=None}: Выражение, выполняемое при получении сообщения от клавиатуры.
-@type ICButtonStyle: C{dictionary}
-@var ICButtonStyle: Словарь специальных стилей компонента.
+:type ICButtonStyle: C{dictionary}
+:var ICButtonStyle: Словарь специальных стилей компонента.
 Описание ключей ICButtonStyle:
     - C{wx.BU_LEFT}: Выравнивает текст подписи по левому краю кнопки (Win32).
     - C{wx.BU_TOP}: Выравнивает текст подписи по верхней границе кнопки (Win32).
@@ -148,16 +148,16 @@ class icGRButton(icwidget.icWidget, GB.GradientButton):
         """
         Конструктор для создания icButton.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         self.parent = parent
     

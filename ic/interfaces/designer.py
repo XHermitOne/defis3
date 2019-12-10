@@ -17,9 +17,9 @@ class icDesigner:
     def __init__(self, Parent_=None, Node_=None, Resource_=None):
         """
         Конструтор.
-        @param Parent_: Кодительское окно.
-        @param Node_: Узел проекта, к которому прикреплен дизайнер.
-        @param Resource_: Указание ресурса редактирования/Менеджера ресурса.
+        :param Parent_: Кодительское окно.
+        :param Node_: Узел проекта, к которому прикреплен дизайнер.
+        :param Resource_: Указание ресурса редактирования/Менеджера ресурса.
         """
         self._node = Node_
         self._parent = Parent_
@@ -40,9 +40,9 @@ class icDesignDlg(wx.Dialog):
     def __init__(self,Parent_=None, Node_=None, Resource_=None):
         """
         Конструтор.
-        @param Parent_: Родительское окно.
-        @param Node_: Узел проекта, к которому прикреплен дизайнер.
-        @param Resource_: Указание ресурса редактирования/Менеджера ресурса.
+        :param Parent_: Родительское окно.
+        :param Node_: Узел проекта, к которому прикреплен дизайнер.
+        :param Resource_: Указание ресурса редактирования/Менеджера ресурса.
         """
         pre = wx.PreDialog()
         pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)

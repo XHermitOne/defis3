@@ -43,8 +43,8 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
     def __init__(self, nsi_sprav=None, record=None, *args, **kwargs):
         """
         Конструктор.
-        @param nsi_sprav: Объект справочника, запись которого редактируется.
-        @param record: Словарь редактируемой записи.
+        :param nsi_sprav: Объект справочника, запись которого редактируется.
+        :param record: Словарь редактируемой записи.
         """
         nsi_dialogs_proto.icSpravRecEditDlgProto.__init__(self, *args, **kwargs)
         # ВНИМАНИЕ! В wxFormBuilder глюк/баг. Поэтому необходимо здесь указывать
@@ -78,8 +78,8 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
     def _createProperty(self, **field):
         """
         Создать объект свойства по описанию поля.
-        @param field:
-        @return: Объект свойства.
+        :param field:
+        :return: Объект свойства.
         """
         label = field['label'] if field['label'] else (field['description'] if field['description'] else field['name'])
         default_value = field['default']
@@ -178,21 +178,21 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
     def validate(self, name, value):
         """
         Контроль значений свойств.
-        @type name: C{string}
-        @param name: Имя атрибута.
-        @type value: C{string}
-        @param value: Проверяемое значение.
-        @rtype: C{int}
-        @return: Возвращает код проверки.
+        :type name: C{string}
+        :param name: Имя атрибута.
+        :type value: C{string}
+        :param value: Проверяемое значение.
+        :rtype: C{int}
+        :return: Возвращает код проверки.
         """
         return coderror.IC_CTRL_OK
 
     def convertPropertyValue(self, name, str_value, property_type):
         """
         Преобразовать значение свойства к типу указанному в спецификации.
-        @param name: Имя свойства/аттрибута.
-        @param str_value: Значение в строковом представлении.
-        @param property_type: Код типа значения. 
+        :param name: Имя свойства/аттрибута.
+        :param str_value: Значение в строковом представлении.
+        :param property_type: Код типа значения.
             Код типа значения поля таблицы справочника.
         """
         value = None
@@ -222,7 +222,7 @@ class icSpravRecEditDlg(nsi_dialogs_proto.icSpravRecEditDlgProto):
     def findSpravTabFieldSpc(self, field_name):
         """
         Получить спецификацию поля таблицы справочника по имени.
-        @param field_name: Имя поля.
+        :param field_name: Имя поля.
         """
         sprav_tab_res = self.getSpravTabResource()
         for field_spc in sprav_tab_res['child']:
@@ -274,7 +274,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def __init__(self, nsi_sprav=None, *args, **kwargs):
         """
         Конструктор.
-        @param nsi_sprav: Объект справочника, запись которого редактируется.
+        :param nsi_sprav: Объект справочника, запись которого редактируется.
         """
         nsi_dialogs_proto.icSpravEditDlgProto.__init__(self, *args, **kwargs)
 
@@ -357,8 +357,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def set_sprav_tree_item(self, parent_item, record):
         """
         Установить элемент дерева справочника.
-        @param parent_item: Родительский элемент дерева.
-        @param record: Запись справочника, ассоциируемая с элементом.
+        :param parent_item: Родительский элемент дерева.
+        :param record: Запись справочника, ассоциируемая с элементом.
         """
         # Определяем индекс уровня для поддержки icRefObject
         item_level = self.getItemLevel(tree_ctrl=self.sprav_treeCtrl, item=parent_item)
@@ -403,8 +403,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def set_sprav_level_tree(self, parent_item, sprav_code=None, do_sort=True):
         """
         Добавить уровень дерева справочника.
-        @param parent_item: Элемент дерева, в который происходит добавление.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :param parent_item: Элемент дерева, в который происходит добавление.
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
         """
         # Добавить первый уровень дерева справочника
         sprav_storage = self.sprav.getStorage()
@@ -419,8 +419,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def add_sprav_list_row(self, record, is_col_autosize=True):
         """
         Добавить новую строку в список справочника.
-        @param record: Запись справочника асоциированая со строкой списка.
-        @param is_col_autosize: Произвести после добавления строки
+        :param record: Запись справочника асоциированая со строкой списка.
+        :param is_col_autosize: Произвести после добавления строки
             автоматическое переразмеривание колонок?
         """
         fields = self.get_tab_editable_fields()
@@ -444,7 +444,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def set_sprav_list(self, tree_item=None):
         """
         Установить данные списка справочника.
-        @param tree_item: Элемент дерева, для которого необходимо
+        :param tree_item: Элемент дерева, для которого необходимо
             отобразить список.
             Если не определен, то считаем что это корневой элемент.
         """
@@ -471,7 +471,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def find_tree_child_item(self, item_text, cur_item=None):
         """
         Поиск дочернего элемента дерева по тексту.
-        @param item_text: Текст элемента дерева.
+        :param item_text: Текст элемента дерева.
         """
         if cur_item is None:
             cur_item = self.root
@@ -488,8 +488,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def is_not_init_level_tree(self, item):
         """
         Проверка. Проинициализирована/Подгружена ветка элемента дерева?
-        @param item: Элемент дерева.
-        @return: True/False.
+        :param item: Элемент дерева.
+        :return: True/False.
         """
         find_item = self.find_tree_child_item(TREE_ITEM_LABEL, item)
         return bool(find_item)
@@ -497,7 +497,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def init_level_tree(self, item):
         """
         Проинициализировать ветку элемента дерева.
-        @param item: Элемент дерева.
+        :param item: Элемент дерева.
         """
         find_item = self.find_tree_child_item(TREE_ITEM_LABEL, item)
         if find_item:
@@ -512,9 +512,9 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def refresh_sprav_tree_item(self, parent_item, sprav_code=None, sprav_record=None):
         """
         Обновить элемент дерева справочника.
-        @param parent_item: Родительский элемент дерева.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
-        @param sprav_record: Запись справочника, ассоциируемая с элементом дерева.
+        :param parent_item: Родительский элемент дерева.
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :param sprav_record: Запись справочника, ассоциируемая с элементом дерева.
         """
         find_item = self.find_sprav_tree_item(parent_item, sprav_code)
         if find_item:
@@ -524,8 +524,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def refresh_sprav_list_item(self, sprav_code=None, sprav_record=None):
         """
         Обновить элемент списка справочника.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
-        @param sprav_record: Запись справочника, ассоциируемая с элементом дерева.
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :param sprav_record: Запись справочника, ассоциируемая с элементом дерева.
         """
         find_idx = self.find_sprav_list_item(sprav_code)
         if find_idx:
@@ -539,8 +539,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def del_sprav_tree_item(self, parent_item, sprav_code=None):
         """
         Удалить элемент дерева справочника.
-        @param parent_item: Родительский элемент дерева.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :param parent_item: Родительский элемент дерева.
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
         """
         find_item = self.find_sprav_tree_item(parent_item, sprav_code)
         if find_item:
@@ -549,7 +549,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def del_sprav_list_item(self, sprav_code=None):
         """
         Удалить элемент списка справочника.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
         """
         find_idx = self.find_sprav_list_item(sprav_code)
         if find_idx:
@@ -559,8 +559,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def add_sprav_tree_item(self, parent_item, new_record):
         """
         Добавить элемент дерева справочника.
-        @param parent_item: Родительский элемент дерева.
-        @param new_record: Новая добавляемая запись.
+        :param parent_item: Родительский элемент дерева.
+        :param new_record: Новая добавляемая запись.
         """
         item = self.sprav_treeCtrl.AppendItem(parent_item, new_record['name'])
         self.setItemData_tree(ctrl=self.sprav_treeCtrl, item=item, data=new_record)
@@ -568,16 +568,16 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def add_sprav_list_item(self, new_record=None):
         """
         Добавить элемент списка справочника.
-        @param new_record: Новая добавляемая запись.
+        :param new_record: Новая добавляемая запись.
         """
         self.add_sprav_list_row(new_record)
 
     def find_sprav_tree_item(self, parent_item, sprav_code=None):
         """
         Поиск элемента дерева справочника по коду справочника.
-        @param parent_item: Родительский элемент дерева.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
-        @return: Найденный элемент дерева или None, если элемент не найден. 
+        :param parent_item: Родительский элемент дерева.
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :return: Найденный элемент дерева или None, если элемент не найден. 
         """
         # Поискать код в текущем элементе
         record = self.getItemData_tree(ctrl=self.sprav_treeCtrl, item=parent_item)
@@ -612,8 +612,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def find_sprav_list_item(self, sprav_code=None):
         """
         Найти элемент списка справочника по коду.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
-        @return: Индекс найденного элемента списка или None, 
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :return: Индекс найденного элемента списка или None, 
             если ничего не найдено.
         """
         find_result = None
@@ -626,8 +626,8 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def select_sprav_tree_item(self, sprav_code, parent_item=None):
         """
         Найти и выбрать элемент дерева справочника по коду справочника.
-        @param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
-        @return: Найденный элемент дерева или None, если элемент не найден. 
+        :param sprav_code: Код справочнка, ассоциируемый с элементом дерева.
+        :return: Найденный элемент дерева или None, если элемент не найден. 
         """
         if parent_item is None:
             parent_item = self.root
@@ -766,12 +766,12 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def find_word_in_records(self, find_word, start_row=None, start_col=None):
         """
         Поиск слова в текущем списке записей справочника.
-        @param find_word: Искомое слово.
-        @param start_row: Начальная строка для начала поиска.
+        :param find_word: Искомое слово.
+        :param start_row: Начальная строка для начала поиска.
             Если не указана, то берется первая.
-        @param start_col: Начальная колонка для начала поиска.
+        :param start_col: Начальная колонка для начала поиска.
             Если не указана, то берется первая.
-        @return: Индекс записи, индекс поля, где найдено слово. 
+        :return: Индекс записи, индекс поля, где найдено слово. 
             Или None если ничего не найдено.
         """
         if start_row is None:
@@ -802,7 +802,7 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
     def findWordInRecordsListCtrl(self, start_row=None):
         """
         Процедура поиска слова в списке текущих записей.
-        @param start_row: Начальная строка поиска. Если не определено,
+        :param start_row: Начальная строка поиска. Если не определено,
             то поиск производится с текущей выбранной строки.
         """
         cur_row = start_row
@@ -855,9 +855,9 @@ class icSpravEditDlg(nsi_dialogs_proto.icSpravEditDlgProto,
 def edit_sprav_dlg(parent=None, nsi_sprav=None):
     """
     Вызов формы редактирования справочника.
-    @param parent: Родительское окно.
-    @param nsi_sprav: Объект редактируемого справочника.
-    @return: True/False.
+    :param parent: Родительское окно.
+    :param nsi_sprav: Объект редактируемого справочника.
+    :return: True/False.
     """
     if parent is None:
         app = wx.GetApp()
@@ -874,10 +874,10 @@ def edit_sprav_dlg(parent=None, nsi_sprav=None):
 def edit_record_sprav_dlg(parent=None, nsi_sprav=None, record=None):
     """
     Вызов формы редактирования записи справочника.
-    @param parent: Родительское окно.
-    @param nsi_sprav: Объект редактируемого справочника.
-    @param record: Словарь редактируемой записи.
-    @return: Отредактированный словарь записи или None в случае ошибки.
+    :param parent: Родительское окно.
+    :param nsi_sprav: Объект редактируемого справочника.
+    :param record: Словарь редактируемой записи.
+    :return: Отредактированный словарь записи или None в случае ошибки.
     """
     if parent is None:
         app = wx.GetApp()

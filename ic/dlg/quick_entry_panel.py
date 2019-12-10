@@ -50,8 +50,8 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
     def __init__(self, parent, quick_entry_panel_class, *args, **kwargs):
         """
         Конструктор.
-        @param parent: Родительское окно.
-        @param quick_entry_panel_class: Класс панели быстрго ввода. 
+        :param parent: Родительское окно.
+        :param quick_entry_panel_class: Класс панели быстрго ввода.
         """
         quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlProto.__init__(self, parent)
 
@@ -153,15 +153,15 @@ class icQuickEntryPanelCtrl(quick_entry_panel_ctrl_proto.icQuickEntryPanelCtrlPr
         """
         Вкл./Выкл инструментов управления.
         Вместе с инструментами откл./вкл. комбинации клавиш.
-        @param prev_tool: Вкл./выкл. инструмент перехода на предыдущий элемент.  
-        @param next_tool: Вкл./выкл. инструмент перехода на следующий элемент.
-        @param add_tool: Вкл./выкл. инструмент добавления нового элемента.
-        @param del_tool: Вкл./выкл. инструмент удаления существующего элемента.
-        @param ok_tool: Вкл./выкл. инструмент подтверждения ввода.
-        @param cancel_tool: Вкл./выкл. инструмент отмены ввода.
-        @param default_tool: Вкл./выкл. инструмент восстановления значений по умолчанию.
-        @param help_tool: Вкл./выкл. инструмент помощи.
-        @return: True/False. 
+        :param prev_tool: Вкл./выкл. инструмент перехода на предыдущий элемент.
+        :param next_tool: Вкл./выкл. инструмент перехода на следующий элемент.
+        :param add_tool: Вкл./выкл. инструмент добавления нового элемента.
+        :param del_tool: Вкл./выкл. инструмент удаления существующего элемента.
+        :param ok_tool: Вкл./выкл. инструмент подтверждения ввода.
+        :param cancel_tool: Вкл./выкл. инструмент отмены ввода.
+        :param default_tool: Вкл./выкл. инструмент восстановления значений по умолчанию.
+        :param help_tool: Вкл./выкл. инструмент помощи.
+        :return: True/False. 
         """
         self.ctrl_toolBar.EnableTool(self.prev_tool.GetId(), prev_tool)
         self.ctrl_toolBar.EnableTool(self.next_tool.GetId(), next_tool)
@@ -201,11 +201,11 @@ class icQuickEntryPanelDialog(wx.Dialog, form_manager.icFormManager):
     def __init__(self, parent, title, pos, size, quick_entry_panel_class, *args, **kwargs):
         """
         Конструктор.
-        @param parent: Родительское окно.
-        @param title: Заголовок окна.
-        @param pos: Позиция отображения панели быстрого ввода.
-        @param size: Размер отображения панели быстрого ввода.
-        @param quick_entry_panel_class: Класс панели быстрго ввода. 
+        :param parent: Родительское окно.
+        :param title: Заголовок окна.
+        :param pos: Позиция отображения панели быстрого ввода.
+        :param size: Размер отображения панели быстрого ввода.
+        :param quick_entry_panel_class: Класс панели быстрго ввода.
         """
         form_manager.icFormManager.__init__(self)
 
@@ -244,9 +244,9 @@ class icQuickEntryPanelDialog(wx.Dialog, form_manager.icFormManager):
     def set_defaults(self, defaults=None):
         """
         Установить значения по умолчанию.
-        @param defaults: Словарь значений по умолчанию.
+        :param defaults: Словарь значений по умолчанию.
             Если не определен, то берется ранее 
-        @return: True/False.
+        :return: True/False.
         """
         if defaults is not None:
             self.defaults = defaults
@@ -272,19 +272,19 @@ def quick_entry_ctrl(parent, title=u'', pos=None, size=None,
                      *args, **kwargs):
     """
     Вызов и отображение панели быстрого ввода.
-    @param parent: Родительское окно.
-    @param title: Заголовок окна.
-    @param pos: Позиция отображения панели быстрого ввода.
+    :param parent: Родительское окно.
+    :param title: Заголовок окна.
+    :param pos: Позиция отображения панели быстрого ввода.
         Если не определена, то берется сохраненная пользовательская позиция. 
-    @param size: Размер отображения панели быстрого ввода.
+    :param size: Размер отображения панели быстрого ввода.
         Если не определен, то берется сохраненный пользовательския размер. 
-    @param quick_entry_panel_class: Класс панели быстрго ввода.
-    @param defaults: Словарь значений по умолчанию.
-    @param tool_disabled: Список отключенных инструментов управления.
+    :param quick_entry_panel_class: Класс панели быстрго ввода.
+    :param defaults: Словарь значений по умолчанию.
+    :param tool_disabled: Список отключенных инструментов управления.
         Если не определен, то все инструменты включены.
         Список определяется например как ('add', 'del').
         Т.е. отключены инструменты добавления и удаления.
-    @return: Кортеж из двух элементов:
+    :return: Кортеж из двух элементов:
         1. True - данные ввода подтверждены. Требуется сохранение введенных данных.
            False - данные не подтверждены. Сохранения данных не требуется 
            None - ошибка выполненния.
@@ -314,15 +314,15 @@ def quick_entry_edit_dlg(parent, title=u'', pos=None, size=None,
                          quick_entry_panel_class=None, defaults=None, *args, **kwargs):
     """
     Вызов и отображение диалога быстрого ввода в режиме редактирования.
-    @param parent: Родительское окно.
-    @param title: Заголовок окна.
-    @param pos: Позиция отображения панели быстрого ввода.
+    :param parent: Родительское окно.
+    :param title: Заголовок окна.
+    :param pos: Позиция отображения панели быстрого ввода.
         Если не определена, то берется сохраненная пользовательская позиция. 
-    @param size: Размер отображения панели быстрого ввода.
+    :param size: Размер отображения панели быстрого ввода.
         Если не определен, то берется сохраненный пользовательския размер. 
-    @param quick_entry_panel_class: Класс панели быстрго ввода.
-    @param defaults: Словарь значений по умолчанию. 
-    @return: Словарь заполненных значений, либо значение -1 или 1 для
+    :param quick_entry_panel_class: Класс панели быстрго ввода.
+    :param defaults: Словарь значений по умолчанию.
+    :return: Словарь заполненных значений, либо значение -1 или 1 для
         перехода на элемент без сохранения, либо None если нажата <Отмена>.
     """
     entry_check, entry_data = quick_entry_ctrl(parent, title=title, pos=pos, size=size,

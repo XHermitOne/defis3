@@ -32,8 +32,8 @@ class icModelManager(object):
     def create_session(self, db_url=None):
         """
         Создать сессию для организации транзакций при работе с БД.
-        @param db_url: URL связи с БД.
-        @return: Объект сессии или None в случае ошибки.
+        :param db_url: URL связи с БД.
+        :return: Объект сессии или None в случае ошибки.
         """
         if db_url is None:
             log.warning(u'Не определен URL БД при создании сессии модели')
@@ -55,8 +55,8 @@ class icModelManager(object):
         иначе сервер PostgreSQL не освобождаем связи и происходит
         превышение лимита открытых связей. После превышения лимита
         PostygreSQL сервер отказывает клиентам в обслуживании.
-        @param session: Объект сессии.
-        @return: True/False.
+        :param session: Объект сессии.
+        :return: True/False.
         """
         if session is None:
             session = self.session
@@ -71,9 +71,9 @@ class icModelManager(object):
     def rollback_session(self, session=None, bAutoClose=False):
         """
         Отмена транзакций.
-        @param session: Объект сессии.
-        @param bAutoClose: Автоматически закрыть сессию?
-        @return: True/False.
+        :param session: Объект сессии.
+        :param bAutoClose: Автоматически закрыть сессию?
+        :return: True/False.
         """
         if session is None:
             session = self.session
@@ -90,9 +90,9 @@ class icModelManager(object):
     def commit_session(self, session=None, bAutoClose=False):
         """
         Подтвердить транзакции.
-        @param session: Объект сессии.
-        @param bAutoClose: Автоматически закрыть сессию?
-        @return: True/False.
+        :param session: Объект сессии.
+        :param bAutoClose: Автоматически закрыть сессию?
+        :return: True/False.
         """
         if session is None:
             session = self.session
@@ -112,9 +112,9 @@ class icModelManager(object):
         Поиск наличия связи проверяется по count(*)
         SQL аналог:
             SELECT COUNT(*) FROM TABLE_NAME WHERE <link_field> = <link_value>
-        @param link_field: Имя поля связи.
-        @param link_value: Значение связи.
-        @return: True - есть ссылки/связи / False - нет / None в случае ошибки.
+        :param link_field: Имя поля связи.
+        :param link_value: Значение связи.
+        :return: True - есть ссылки/связи / False - нет / None в случае ошибки.
         """
         try:
             link_count = self.session.query(self.__class__).filter(getattr(self.__class__, link_field) == link_value).count()

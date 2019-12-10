@@ -11,16 +11,16 @@
 Имена реквизитов изменять нельзя!
 
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других 
     компонентов в данный комопнент. 
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов, 
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой 
     компонент (ic_can_contain = -1).
@@ -316,7 +316,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     """
     Бизнес-объект имеющий состояние.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         
         - B{type='defaultType'}:
@@ -329,12 +329,12 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def TestComponentResource(res, context, parent, *arg, **kwarg):
         """
         Функция тестирования компонента таблицы в режиме редактора ресурса.
-        @param res:
-        @param context:
-        @param parent:
-        @param arg:
-        @param kwarg:
-        @return:
+        :param res:
+        :param context:
+        :param parent:
+        :param arg:
+        :param kwarg:
+        :return:
         """
         import ic.components.user.objects.ictablebrows as brws
 
@@ -355,22 +355,22 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
@@ -551,7 +551,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doInit(self, *args, **kwargs):
         """
         Функция инициализации.
-        @return: Объект функции инициализации,
+        :return: Объект функции инициализации,
             или None если не определена.
         """
         context = self.GetContext()
@@ -568,7 +568,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doEdit(self, *args, **kwargs):
         """
         Функция редактирования.
-        @return: Объект функции редактирования,
+        :return: Объект функции редактирования,
             или None если не определена.
         """
         context = self.GetContext()
@@ -585,7 +585,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doView(self, *args, **kwargs):
         """
         Функция просмотра.
-        @return: Объект функции просмотра,
+        :return: Объект функции просмотра,
             или None если не определена.
         """
         context = self.GetContext()
@@ -602,7 +602,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doSearch(self, *args, **kwargs):
         """
         Функция поиска.
-        @return: Объект функции поиска,
+        :return: Объект функции поиска,
             или None если не определена.
         """
         context = self.GetContext()
@@ -619,7 +619,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doChoice(self, *args, **kwargs):
         """
         Функция выбора.
-        @return: Объект функции выбора,
+        :return: Объект функции выбора,
             или None если не определена.
         """
         context = self.GetContext()
@@ -636,42 +636,42 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isDoInit(self):
         """
         Определена функция инициализации?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('do_init')
 
     def isDoEdit(self):
         """
         Определена функция редактирования?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('do_edit')
 
     def isDoView(self):
         """
         Определена функция просмотра?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('do_view')
 
     def isDoSearch(self):
         """
         Определена функция поиска?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('do_search')
 
     def isDoChoice(self):
         """
         Определена функция выбора?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('do_choice')
 
     def validInit(self, *args, **kwargs):
         """
         Функция валидации при инициализации.
-        @return: True/False.
+        :return: True/False.
         """
         # Если функция валидации не определена,
         # то и валидацию производить не надо
@@ -692,14 +692,14 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isValidInit(self):
         """
         Определена функция валидации при инициализации?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('valid_init')
 
     def validEdit(self, *args, **kwargs):
         """
         Функция валидации при редактировании.
-        @return: True/False.
+        :return: True/False.
         """
         # Если функция валидации не определена,
         # то и валидацию производить не надо
@@ -721,14 +721,14 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isValidEdit(self):
         """
         Определена функция валидации при редактировании?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('valid_edit')
 
     def validDel(self, *args, **kwargs):
         """
         Функция валидации при удалении.
-        @return: True/False.
+        :return: True/False.
         """
         # Если функция валидации не определена,
         # то и валидацию производить не надо
@@ -752,7 +752,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def isValidDel(self):
         """
         Определена функция валидации при удалении?
-        @return: True/False.
+        :return: True/False.
         """
         return self.isICAttrValue('valid_del')
 
@@ -765,7 +765,7 @@ class icStateObj(parentModule.icStateObjProto, icwidget.icSimple):
     def doOnChangeState(self):
         """
         Функция обработчика смены состояния.
-        @return: True/False.
+        :return: True/False.
         """
         context = self.GetContext()
         context['RECORD'] = self.requisites

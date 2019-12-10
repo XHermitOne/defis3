@@ -4,48 +4,48 @@
 """
 Класс пользовательского компонента ПРОСТОЙ ПРОСМОТРЩИК OGL ДИАГРАММ.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
 
 Перья:
-@var BLACK_DASHED_PEN: Черный пунктир
-@var BLACK_PEN: Черный
-@var CYAN_PEN: Голубой
-@var GREY_PEN: Серый
-@var LIGHT_GREY_PEN: Светло-серый
-@var MEDIUM_GREY_PEN: Средне-серый
-@var RED_PEN: Красный
-@var TRANSPARENT_PEN: Прозрачный
-@var WHITE_PEN: Белый
+:var BLACK_DASHED_PEN: Черный пунктир
+:var BLACK_PEN: Черный
+:var CYAN_PEN: Голубой
+:var GREY_PEN: Серый
+:var LIGHT_GREY_PEN: Светло-серый
+:var MEDIUM_GREY_PEN: Средне-серый
+:var RED_PEN: Красный
+:var TRANSPARENT_PEN: Прозрачный
+:var WHITE_PEN: Белый
 
 Заливки:
-@var BLACK_BRUSH: Черная
-@var BLUE_BRUSH: Синяя
-@var CYAN_BRUSH: Голубая
-@var GREY_BRUSH: Серая
-@var LIGHT_GREY_BRUSH: Светло-серая
-@var MEDIUM_GREY_BRUSH: Средне-серая
-@var RED_BRUSH: Красная
-@var TRANSPARENT_BRUSH: Прозрачная
-@var WHITE_BRUSH: Белая
+:var BLACK_BRUSH: Черная
+:var BLUE_BRUSH: Синяя
+:var CYAN_BRUSH: Голубая
+:var GREY_BRUSH: Серая
+:var LIGHT_GREY_BRUSH: Светло-серая
+:var MEDIUM_GREY_BRUSH: Средне-серая
+:var RED_BRUSH: Красная
+:var TRANSPARENT_BRUSH: Прозрачная
+:var WHITE_BRUSH: Белая
 
 Стрелки:
-@var ARROW_HOLLOW_CIRCLE: Пустой круг
-@var ARROW_FILLED_CIRCLE: Заполненный круг
-@var ARROW_ARROW: Простая стрелка
-@var ARROW_SINGLE_OBLIQUE: Одинарная косая
-@var ARROW_DOUBLE_OBLIQUE: Двойная косая
+:var ARROW_HOLLOW_CIRCLE: Пустой круг
+:var ARROW_FILLED_CIRCLE: Заполненный круг
+:var ARROW_ARROW: Простая стрелка
+:var ARROW_SINGLE_OBLIQUE: Одинарная косая
+:var ARROW_DOUBLE_OBLIQUE: Двойная косая
 """
 
 import wx
@@ -318,7 +318,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
     """
     Простой обозреватель OGL диаграмм.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -333,22 +333,22 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         # Сначала инициализировать OGL если надо
         if not self.is_ogl_initialized:
@@ -448,7 +448,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
     def genAutoLayoutPosXY(self, ShapeAttrs_):
         """
         Генерация следующего месторасположения фигуры.
-        @return: Возвращает кортеж координат фигуры на канве.
+        :return: Возвращает кортеж координат фигуры на канве.
         """
         try:
             x = DEFAULT_AUTOLAYOUT_SPACER_X + 50
@@ -726,7 +726,7 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
     def _genLineName(self, Line_):
         """
         Генерация имени линии по ее данным.
-        @param Line_: Данные, описывающие линию.
+        :param Line_: Данные, описывающие линию.
         """
         if 'name' in Line_:
             return Line_['name']
@@ -739,8 +739,8 @@ class icSimpleOGLViewer(icwidget.icWidget, parentModule.ShapeCanvas):
     def addDiagram(self, Diagram_, ReCreate_=False):
         """
         Добавить диаграмму.
-        @param Diagram_: Словарно-списковая структура диаграммы.
-        @param ReCreate_: Пересоздать элементы, если они уже есть?
+        :param Diagram_: Словарно-списковая структура диаграммы.
+        :param ReCreate_: Пересоздать элементы, если они уже есть?
         """
         shapes = list()
         if 'shapes' in Diagram_:

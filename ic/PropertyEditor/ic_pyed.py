@@ -59,7 +59,7 @@ class icPyEditor(stc.StyledTextCtrl):
     def __init__(self, Parent_, id, ModuleText_=None, ModuleName_=None, pos=(-1, -1), size=(-1, -1)):
         """
         Конструктор.
-        @param Parent_: Родительское окно.
+        :param Parent_: Родительское окно.
         @parent ModuleText_: Имя модуля для редактирования.
         """
         stc.StyledTextCtrl.__init__(self, Parent_, id, pos, size, style=wx.NO_FULL_REPAINT_ON_RESIZE | wx.BORDER_NONE)
@@ -548,18 +548,18 @@ class icPyEditorFrame(icframe.icFrame):
         """
         Конструктор для редактора питоновских текстов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type txt: C{string}
-        @param txt: Текст.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type txt: C{string}
+        :param txt: Текст.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
 
         """
         icframe.icFrame.__init__(self, parent, wx.NewId(), component, logType, evalSpace)
@@ -657,10 +657,10 @@ class icPyEditorFrame(icframe.icFrame):
         """
         Сохраняет файл.
         
-        @type path: C{string}
-        @param path: Путь до файла.
-        @rtype: C{bool}
-        @return: Признак успешного выполнения.
+        :type path: C{string}
+        :param path: Путь до файла.
+        :rtype: C{bool}
+        :return: Признак успешного выполнения.
         """
         try:
             if path is None:

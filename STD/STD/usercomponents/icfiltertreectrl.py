@@ -146,7 +146,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
         Это уникальный идентификатор паспорта компонента.
         Не изменяемый в зависимости от редактирования т.к.
         паспорт не меняется.
-        @return: UUID строка контрольной суммы паспорта.
+        :return: UUID строка контрольной суммы паспорта.
         """
         if self._widget_psp_uuid:
             return self._widget_psp_uuid
@@ -166,7 +166,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
     def getCurRecords(self, item_filter=None, **kwargs):
         """
         Код получения набора записей, соответствующих фильтру для индикаторов.
-        @param item_filter: Описание фильтра элемента.
+        :param item_filter: Описание фильтра элемента.
             Если None, то фильтрация не производится.
             ВНИМАНИЕ! При выполнении блока кода <get_records> в пространство имен помещается
             фильтр элемента как переменная FILTER и

@@ -48,11 +48,11 @@ def ColorEdtDlg(parent, value):
     """
     Диалог выбора цвета.
     
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type value: C{string}
-    @param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
-    @return: Возвращет выбранный цвет в виде строки 'wx.Colour(r,g,b)'.
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type value: C{string}
+    :param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
+    :return: Возвращет выбранный цвет в виде строки 'wx.Colour(r,g,b)'.
     """
     dlg = wx.ColourDialog(parent)
     dlg.GetColourData().SetChooseFull(True)
@@ -82,10 +82,10 @@ def FontEdtDlg(parent, value):
     """
     Диалоговое окно для определения шрифта.
 
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type value: C{string}
-    @param value: Текущее значение шрифта в виде словаря.
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type value: C{string}
+    :param value: Текущее значение шрифта в виде словаря.
     """
     data = wx.FontData()
     data.EnableEffects(True)
@@ -120,21 +120,21 @@ def StyleEdtDlg(parent, style, styles,
     """
     Диалоговое окно для определяения комбинировнного стиля.
     
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type style: C{int}
-    @param style: Стиль компонента в виде числа. Пример: wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB.
-    @type styles: C{dictionary}
-    @param styles: Словарь соответствий между названием стиля и идентификатором стиля.
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type style: C{int}
+    :param style: Стиль компонента в виде числа. Пример: wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB.
+    :type styles: C{dictionary}
+    :param styles: Словарь соответствий между названием стиля и идентификатором стиля.
         Пример: ICButtonStyle = {'BU_LEFT':wx.BU_LEFT,'BU_TOP':wx.BU_TOP}
-    @type position: C{wx.Point}
-    @param position: Позиция диалога.
-    @type size: C{wx.Size}
-    @param size: Размер диалогового окна.
-    @type dlgStyle: C{int}
-    @param dlgStyle: Стиль диалога.
-    @rtype: C{string}
-    @return: Возвращает значение выбранного стиля в текстовом виде.
+    :type position: C{wx.Point}
+    :param position: Позиция диалога.
+    :type size: C{wx.Size}
+    :param size: Размер диалогового окна.
+    :type dlgStyle: C{int}
+    :param dlgStyle: Стиль диалога.
+    :rtype: C{string}
+    :return: Возвращает значение выбранного стиля в текстовом виде.
     """
     ist = int(style)
     dict = icDefInf.getStyleDict(ist, styles)
@@ -174,20 +174,20 @@ def ChoiceEdtDlg(parent, value, lst, position=wx.DefaultPosition, size=wx.Defaul
     """
     Диалоговое окно для выбора значения из списка.
     
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type value: C{string}
-    @param value: Текущее значение.
-    @type lst: C{list}
-    @param lst: Список выбора.
-    @type position: C{wx.Point}
-    @param position: Позиция окна.
-    @type size: C{wx.Size}
-    @param size: Размер диалогового окна.
-    @type style: C{int}
-    @param style: Стиль диалога.
-    @rtype: C{string}
-    @return: Возвращает выбранное значение.
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type value: C{string}
+    :param value: Текущее значение.
+    :type lst: C{list}
+    :param lst: Список выбора.
+    :type position: C{wx.Point}
+    :param position: Позиция окна.
+    :type size: C{wx.Size}
+    :param size: Размер диалогового окна.
+    :type style: C{int}
+    :param style: Стиль диалога.
+    :rtype: C{string}
+    :return: Возвращает выбранное значение.
     """
     dlg = wx.SingleChoiceDialog(parent, '', '', lst, style)
 
@@ -215,18 +215,18 @@ def PyScriptEdtDlg(parent, attr, text, pos, size, uuid_attr, bEnable=True):
     """
     Диалоговое окно для редактирования скриптов.
 
-    @type parent: C{wx.Window}
-    @param parent: Указатель на родительское окно.
-    @type attr: C{string}
-    @param attr: Имя атрибута.
-    @type text: C{string}
-    @param text: Текст скрипта.
-    @type pos: C{wx.Point}
-    @param pos: Позиция.
-    @type size: C{wx.Size}
-    @param size: Размер редактора.
-    @rtype: C{tuplpe}
-    @return: Первый элемент признак редактирования, второй текст, третий новый uuid.
+    :type parent: C{wx.Window}
+    :param parent: Указатель на родительское окно.
+    :type attr: C{string}
+    :param attr: Имя атрибута.
+    :type text: C{string}
+    :param text: Текст скрипта.
+    :type pos: C{wx.Point}
+    :param pos: Позиция.
+    :type size: C{wx.Size}
+    :param size: Размер редактора.
+    :rtype: C{tuplpe}
+    :return: Первый элемент признак редактирования, второй текст, третий новый uuid.
     """
     # Определяем смещение видимой части окна
     old = text

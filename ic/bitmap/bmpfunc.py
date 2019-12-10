@@ -46,10 +46,10 @@ def createLibraryBitmap(img_filename, bMask=False):
     """
     Создать объект Bitmap из файла img_filename.
     К имени файла добавляется путь библиотеки образов ic.imglib.common.
-    @param img_filename: Краткое имя файла.
-    @param bMask: Флаг создания маски по изображению.
+    :param img_filename: Краткое имя файла.
+    :param bMask: Флаг создания маски по изображению.
         Фон д.б. DEFAULT_MASK_COLOUR.
-    @return: Возвращает созданный объект или None в случае ошибки.
+    :return: Возвращает созданный объект или None в случае ошибки.
     """
     imglib_dir = getImageLibDir()
     full_img_filename = os.path.normpath(os.path.join(imglib_dir, img_filename))
@@ -63,10 +63,10 @@ def createLibraryBitmap(img_filename, bMask=False):
 def createBitmap(img_filename, bMask=False):
     """
     Создать объект Bitmap из файла img_filename.
-    @param img_filename: Имя файла.
-    @param bMask: Флаг создания маски по изображению.
+    :param img_filename: Имя файла.
+    :param bMask: Флаг создания маски по изображению.
         Фон д.б. DEFAULT_MASK_COLOUR.
-    @return: Возвращает созданный объект или None в случае ошибки.
+    :return: Возвращает созданный объект или None в случае ошибки.
     """
     try:
         # Преобразовать относительные пути в абсолютные
@@ -88,10 +88,10 @@ def createBitmap(img_filename, bMask=False):
 def createEmptyBitmap(width, height, background_colour=None):
     """
     Создать пустой битмап.
-    @param width: Ширина Bitmap.
-    @param height: Высота битмапа.
-    @param background_colour: Цвет фона. По умолчанию используется белый.
-    @return: Пустой Bitmap заданного размера.
+    :param width: Ширина Bitmap.
+    :param height: Высота битмапа.
+    :param background_colour: Цвет фона. По умолчанию используется белый.
+    :return: Пустой Bitmap заданного размера.
     """
     try:
         if background_colour is None:
@@ -117,11 +117,11 @@ def createEmptyBitmap(width, height, background_colour=None):
 def createAni(parent, size, freame_delay, *frame_filenames):
     """
     Создание анимированного объекта.
-    @param parent: Окно-родитель.
-    @param size: Размер.
-    @param freame_delay: Задержка м/у кадрами в секундах.
-    @param frame_filenames: Файлы-кадры.
-    @return: Возвращает созданный объект или None в случае ошибки.
+    :param parent: Окно-родитель.
+    :param size: Размер.
+    :param freame_delay: Задержка м/у кадрами в секундах.
+    :param frame_filenames: Файлы-кадры.
+    :return: Возвращает созданный объект или None в случае ошибки.
     """
     try:
         frames = [createBitmap(frame_file_name) for frame_file_name in frame_filenames]
@@ -144,8 +144,8 @@ def getSysImg(image_name):
 def findBitmap(*img_filenames):
     """
     Поиск и создание объекта Bitmap по списку имен файлов картинок.
-    @param img_filenames: Имена файлов, которые необходимо просмотреть.
-    @return: Возвращает созданный объект Bitmap или
+    :param img_filenames: Имена файлов, которые необходимо просмотреть.
+    :return: Возвращает созданный объект Bitmap или
         None в случае если ни один из предложенных файлов не существует.
     """
     for img_filename in img_filenames:
@@ -195,12 +195,12 @@ def getUserBitmap(img_filename, subsys, dir='images'):
     """
     Функция возвращает объект картинки из пользовательской библиотеки.
 
-    @type subsys: C{string}
-    @param subsys: Имя подсистемы в которой ищется картинка.
-    @type img_filename: C{string}
-    @param img_filename: Имя картинки.
-    @rtype: C{wx.Bitmap}
-    @return: Объект картинки.
+    :type subsys: C{string}
+    :param subsys: Имя подсистемы в которой ищется картинка.
+    :type img_filename: C{string}
+    :param img_filename: Имя картинки.
+    :rtype: C{wx.Bitmap}
+    :return: Объект картинки.
     """
     global USER_BITMAP_CACHE
     key = str(subsys) + os.path.sep + img_filename

@@ -13,8 +13,8 @@
 Объект позволяющий отслеживать изменение состояния
 и реквизитов бизнес объекта.
 
-@type SPC_IC_REGISTER: C{dictionary}
-@var SPC_IC_REGISTER: Спецификация на ресурсное описание регистра.
+:type SPC_IC_REGISTER: C{dictionary}
+:var SPC_IC_REGISTER: Спецификация на ресурсное описание регистра.
 Описание ключей SPC_IC_REGISTER:
 
     - B{name = 'default'}: Имя.

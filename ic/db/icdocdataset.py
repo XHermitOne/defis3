@@ -8,8 +8,8 @@
 содержит данные в виде списка записей. Запись в свою очередь представляется в
 виде списка значений полей. Привязка к имени поля осуществляется через описание.
 
-@type SPC_IC_DOC_DATASET: C{Dictionary}
-@var SPC_IC_DOC_DATASET: Спецификация на ресурсное описание компонента.
+:type SPC_IC_DOC_DATASET: C{Dictionary}
+:var SPC_IC_DOC_DATASET: Спецификация на ресурсное описание компонента.
 
     Описание ключей:
     - B{name = 'DefaultName'}: Имя объекта.
@@ -59,14 +59,14 @@ class icDocDataset(icsimpledataset.icSimpleDataset):
     def __init__(self, id, component, logType = 0, evalSpace = {}):
         """
         Конструктор для создания таблицы.
-        @type id: C{int}
-        @param id: Идентификатор объекта.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type id: C{int}
+        :param id: Идентификатор объекта.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         component = icSpcDefStruct(SPC_IC_DOC_DATASET, component)
         # Ссылка на спецификацию
@@ -100,10 +100,10 @@ class icDocDataset(icsimpledataset.icSimpleDataset):
         """
         Удаляет запись из источника данных.
 
-        @param rec: Номер записи.
-        @type rec:  C{int}
-        @return: Код завершение операции.
-        @rtype: C{int}
+        :param rec: Номер записи.
+        :type rec:  C{int}
+        :return: Код завершение операции.
+        :rtype: C{int}
         """
         if self.GetSpc():
             uuid = self.getRecUUID()

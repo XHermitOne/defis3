@@ -19,9 +19,9 @@ __version__ = (0, 1, 1, 1)
 def load_xml_content(xml_filename, is_change_keys=True):
     """
     Загрузить содержимое XML файла в словарно списковую структуру.
-    @param xml_filename: Полное имя XML файла.
-    @param is_change_keys: Произвести автоматическую замену ключей на короткие.
-    @return: Словарно-списковая структура содержания XML файла.
+    :param xml_filename: Полное имя XML файла.
+    :param is_change_keys: Произвести автоматическую замену ключей на короткие.
+    :return: Словарно-списковая структура содержания XML файла.
         Или None в случае ошибки.
     """
     if not os.path.exists(xml_filename):
@@ -48,8 +48,8 @@ def load_xml_content(xml_filename, is_change_keys=True):
 def change_keys_doc(xml_document):
     """
     Сократить ключи документа.
-    @param xml_document: Содержание XML документа.
-    @return: Содержание документа с короткими ключами.
+    :param xml_document: Содержание XML документа.
+    :return: Содержание документа с короткими ключами.
     """
     result = dict()
     for key in xml_document.keys():
@@ -69,10 +69,10 @@ def change_keys_doc(xml_document):
 def save_xml_content(xml_filename, data, is_rewrite=True):
     """
     Записать словарно списковую структуру в XML файл.
-    @param xml_filename: Полное имя XML файла.
-    @param data: Словарно-списковая структура содержания XML файла.
-    @param is_rewrite: Перезаписать результирующий файл, если необходимо?
-    @return: True/False.
+    :param xml_filename: Полное имя XML файла.
+    :param data: Словарно-списковая структура содержания XML файла.
+    :param is_rewrite: Перезаписать результирующий файл, если необходимо?
+    :return: True/False.
     """
     if os.path.exists(xml_filename) and not is_rewrite:
         log.warning(u'Запрет на перезапись. Файл <%s> уже существует.' % xml_filename)
@@ -109,14 +109,14 @@ def save_simple_xml_content(xml_filename, data, is_rewrite=True, tag_filter=None
     """
     Записать словарно списковую структуру в XML файл.
     Самая простая реализация.
-    @param xml_filename: Полное имя XML файла.
-    @param data: Словарно-списковая структура содержания XML файла.
-    @param is_rewrite: Перезаписать результирующий файл, если необходимо?
-    @param tag_filter: Словарь фильтра тегов,
+    :param xml_filename: Полное имя XML файла.
+    :param data: Словарно-списковая структура содержания XML файла.
+    :param is_rewrite: Перезаписать результирующий файл, если необходимо?
+    :param tag_filter: Словарь фильтра тегов,
         определяющий список и порядок дочерних тегов для
         каждого тега.
         Порядок тегов важен для XML, поэтому введен этот фильтр.
-    @return: True/False.
+    :return: True/False.
     """
     if os.path.exists(xml_filename) and not is_rewrite:
         log.warning(u'Запрет на перезапись. Файл <%s> уже существует.' % xml_filename)

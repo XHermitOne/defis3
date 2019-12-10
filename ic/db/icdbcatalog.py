@@ -30,7 +30,7 @@ class icDBCatalog(iccatalog.icCatalog):
     def __init__(self, src, *arg, **kwarg):
         """ 
         Конструктор.
-        @param src: Паспорт источника данных.
+        :param src: Паспорт источника данных.
         """
         iccatalog.icCatalog.__init__(self)
         self.table = iccatalogtable.CatalogTable(None, src).getObject()
@@ -52,7 +52,7 @@ class icDBCatalog(iccatalog.icCatalog):
     def add_item(self, parent_item, name, item):
         """ 
         Добавление элемента в родительскую папку.
-        @param parent_item: Родительский элемент. Если None, то элемент добавляется
+        :param parent_item: Родительский элемент. Если None, то элемент добавляется
             в корень каталога.
         """
         item = super(icDBCatalog, self).add_item(parent_item, name, item)        
@@ -87,8 +87,8 @@ class icDBCatalog(iccatalog.icCatalog):
         Преобразования паспорта в значение поля. Значение вида:
             (('Document','doc1',None,'doc1.mtd','workflow'), id, uuid) пробразуется к виду
             <Document,doc1,None,doc1.mtd,workflow:[id]:[uuid]>
-        @type psp: C{ic.kernrl.icobject.icObjectPassport}
-        @param psp: Паспорт.
+        :type psp: C{ic.kernrl.icobject.icObjectPassport}
+        :param psp: Паспорт.
         """
         tt = psp[0]
         if len(psp) > 1:
@@ -107,7 +107,7 @@ class icDBCatalog(iccatalog.icCatalog):
     def val_to_psp(self, val):
         """ 
         Преобразования значения поля в паспорт.
-        @param val: Занчение поля.
+        :param val: Занчение поля.
         """
         lst = val.split(':')
         tt = [None, None, None, None, None]

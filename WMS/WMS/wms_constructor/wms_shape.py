@@ -33,12 +33,12 @@ class icWMSShape(object):
                  width=0, height=0, tag=None):
         """
         Конструктор
-        @param bmp: Изображение фигуры.
-        @param pos_x: Позиция X в конструкторе.
-        @param pos_y: Позиция Y в конструкторе.
-        @param width: Ширина в конструкторе.
-        @param height: Высота в конструкторе.
-        @param tag: Дополнительные прикрепляемые данные к фигуре.
+        :param bmp: Изображение фигуры.
+        :param pos_x: Позиция X в конструкторе.
+        :param pos_y: Позиция Y в конструкторе.
+        :param width: Ширина в конструкторе.
+        :param height: Высота в конструкторе.
+        :param tag: Дополнительные прикрепляемые данные к фигуре.
         """
         self.bmp = bmp
         # Размер фигуры
@@ -56,7 +56,7 @@ class icWMSShape(object):
     def setBitmap(self, bmp):
         """
         Установить изображение фигуры.
-        @param bmp: Объект wx.Bitmap
+        :param bmp: Объект wx.Bitmap
         """
         self.bmp = bmp
         if self.bmp:
@@ -65,8 +65,8 @@ class icWMSShape(object):
     def HitTest(self, point):
         """
         Проверка на попадание точки в фигуру.
-        @param point: Проверяемая точка.
-        @return: True/False.
+        :param point: Проверяемая точка.
+        :return: True/False.
         """
         rect = self.GetRect()
         return rect.InsideXY(point.x, point.y)
@@ -74,7 +74,7 @@ class icWMSShape(object):
     def GetRect(self):
         """
         Прямоугольная область фигуры.
-        @return: wx.Rect объект, соответствующий фигуре.
+        :return: wx.Rect объект, соответствующий фигуре.
         """
         return wx.Rect(self.pos[0], self.pos[1],
                        self.bmp.GetWidth(), self.bmp.GetHeight())
@@ -82,8 +82,8 @@ class icWMSShape(object):
     def Draw(self, dc, op=wx.COPY):
         """
         Метод отрисовки.
-        @param dc: Контекст отрисовки.
-        @param op: Параметры отрисовки.
+        :param dc: Контекст отрисовки.
+        :param op: Параметры отрисовки.
         """
         if self.bmp.Ok():
             memDC = wx.MemoryDC()
@@ -106,7 +106,7 @@ class icWMSShape(object):
     def getTagInfo(self):
         """
         Дополнительные данные о фигуре в текстовом виде.
-        @return: Заполненный текст данными
+        :return: Заполненный текст данными
         """
         return u'Бла-Бла-Бла\nБла-Бла-Бла\nБла-Бла-Бла\n'
 
@@ -129,8 +129,8 @@ class icWMSCellShape(icWMSShape):
         """
         Установка фигуры на ячейку.
         ВНИМАНИЕ! Установка на занятую ячейку не возможна.
-        @param cell: Объект ячейки.
-        @return: True/False
+        :param cell: Объект ячейки.
+        :return: True/False
         """
         if cell is None:
             # Если ячейка не определена
@@ -186,7 +186,7 @@ class icWMSBoxShape(icWMSCellShape):
     def getTagInfo(self):
         """
         Дополнительные данные о фигуре в текстовом виде.
-        @return: Заполненный текст данными
+        :return: Заполненный текст данными
         """
         if self.tag:
             if self.tag['nomenklature']['label'] is not None:

@@ -45,8 +45,8 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
     def setIndicator(self, indicator=None, refresh_ctrl=False):
         """
         Установить индикатор для редактирования.
-        @param indicator: Список редактируемого индикатора фильтра.
-        @param refresh_ctrl: Произвести обновление контролов конструктора?
+        :param indicator: Список редактируемого индикатора фильтра.
+        :param refresh_ctrl: Произвести обновление контролов конструктора?
         """
         if indicator is None:
             self._indicator = list()
@@ -65,8 +65,8 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
     def setIndicatorListCtrl(self, indicator=None):
         """
         Установить список состояний индикатора.
-        @param indicator: Список редактируемого индикатора фильтра.
-        @return: True/False
+        :param indicator: Список редактируемого индикатора фильтра.
+        :return: True/False
         """
         if indicator is None:
             indicator = self._indicator
@@ -174,7 +174,7 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
     def getStateCtrlValue(self):
         """
         Получить отредактированное состояние из контролов
-        @return: Словарь отредактированного состояния индикатора.
+        :return: Словарь отредактированного состояния индикатора.
         """
         name = self.name_textCtrl.GetValue()
         if not name.strip():
@@ -199,7 +199,7 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
     def setStateCtrlValue(self, state_indicator=None):
         """
         Установить значения в контролы состояния индикатора.
-        @param state_indicator: Словарь состояния индикатора:
+        :param state_indicator: Словарь состояния индикатора:
             {
                 'name': Наименование состояния,
                 'image': Файл образа,
@@ -207,7 +207,7 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
                 'background_color': Кортеж (R, G, B) цвета фона,
                 'expression': Текст блока кода выражения проверки состояния,
             }
-        @return: True/False.
+        :return: True/False.
         """
         if state_indicator is None:
             state_indicator = dict()
@@ -242,8 +242,8 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
     def refreshStateRow(self, state_idx, state_indicator):
         """
         Обновить строку списка индикатора соответствующему состоянию.
-        @param state_idx: Индекс в списке состояния.
-        @param state_indicator: Словарь описания состояния индикатора.
+        :param state_idx: Индекс в списке состояния.
+        :param state_indicator: Словарь описания состояния индикатора.
             {
                 'name': Наименование состояния,
                 'image': Файл образа,
@@ -251,7 +251,7 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
                 'background_color': Кортеж (R, G, B) цвета фона,
                 'expression': Текст блока кода выражения проверки состояния,
             }
-        @return: True/False
+        :return: True/False
         """
         if state_idx < 0:
             log.warning(u'Не корректный индекс состояния')
@@ -424,8 +424,8 @@ class icIndicatorConstructorDlg(indicator_constructor_dlg_proto.icIndicatorConst
 
 def show_indicator_constructor_dlg(parent=None):
     """
-    @param parent: Родительское окно.
-    @return: True/False.
+    :param parent: Родительское окно.
+    :return: True/False.
     """
     try:
         if parent is None:
@@ -444,9 +444,9 @@ def show_indicator_constructor_dlg(parent=None):
 def edit_indicator_constructor_dlg(parent=None, indicator=None):
     """
     Запустить редактирование индикатора фильтра.
-    @param parent: Родительское окно.
-    @param indicator: Список описания индикатора.
-    @return: Отредактированный список индикатора или None если нажата ОТМЕНА.
+    :param parent: Родительское окно.
+    :param indicator: Список описания индикатора.
+    :return: Отредактированный список индикатора или None если нажата ОТМЕНА.
     """
     try:
         if parent is None:

@@ -90,7 +90,7 @@ class icSCADAEngine(icwidget.icSimple):
     """
     Компонент движка SCADA системы.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -105,22 +105,22 @@ class icSCADAEngine(icwidget.icSimple):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
@@ -195,8 +195,8 @@ class icSCADAEngine(icwidget.icSimple):
     def findObject(self, obj_name):
         """
         Найти объект по имени.
-        @param obj_name: Имя объекта движка SCADA.
-        @return: Объект или None в случае если объект не найден.
+        :param obj_name: Имя объекта движка SCADA.
+        :return: Объект или None в случае если объект не найден.
         """
         obj = self.components.get(obj_name, None)
         if obj is None:
@@ -206,8 +206,8 @@ class icSCADAEngine(icwidget.icSimple):
     def findTag(self, tag_name):
         """
         Найти объект тега по имени.
-        @param tag_name: Имя тега.
-        @return: Объект тега или None в случае ошибки.
+        :param tag_name: Имя тега.
+        :return: Объект тега или None в случае ошибки.
         """
         tags = self.getChildrenTags()
         for tag in tags:
@@ -219,9 +219,9 @@ class icSCADAEngine(icwidget.icSimple):
     def _init_scan_objects(self, obj_list, scan_obj_dict=None):
         """
         Инициализация сканируемых объектов.
-        @param obj_list: Список объектов сканирования.
-        @param scan_obj_dict: Словарь сканирумых объектов.
-        @return: Заполненный словарь сканируемых объектов.
+        :param obj_list: Список объектов сканирования.
+        :param scan_obj_dict: Словарь сканирумых объектов.
+        :return: Заполненный словарь сканируемых объектов.
         """
         if scan_obj_dict is None:
             scan_obj_dict = dict()
@@ -246,7 +246,7 @@ class icSCADAEngine(icwidget.icSimple):
     def init_scan_objects(self):
         """
         Инициализация сканируемых объектов.
-        @return: True/False.
+        :return: True/False.
         """
         self._scan_classes = dict()
 
@@ -281,9 +281,9 @@ class icSCADAEngine(icwidget.icSimple):
     def start(self, update_panels=None):
         """
         Запуск основного цикла обработки тегов.
-        @param update_panels: Принудительно обновить панели.
+        :param update_panels: Принудительно обновить панели.
             Может задаваться как списком так и объектом.
-        @return: True/False.
+        :return: True/False.
         """
         self.init_scan_objects()
 
@@ -308,9 +308,9 @@ class icSCADAEngine(icwidget.icSimple):
     def update_panels(self, update_panels=None):
         """
         Принудительно обновить панели.
-        @param update_panels: Принудительно обновить панели.
+        :param update_panels: Принудительно обновить панели.
             Может задаваться как списком так и объектом.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if update_panels:
@@ -328,9 +328,9 @@ class icSCADAEngine(icwidget.icSimple):
     def stop(self, update_panels=None):
         """
         Остановка основного цикла обработки тегов.
-        @param update_panels: Принудительно обновить панели.
+        :param update_panels: Принудительно обновить панели.
             Может задаваться как списком так и объектом.
-        @return: True/False.
+        :return: True/False.
         """
         self.exit_run = True
         # Обновление пока не реализовано
@@ -339,7 +339,7 @@ class icSCADAEngine(icwidget.icSimple):
     def isRunning(self):
         """
         Признак запущенного цикла обработки.
-        @return: True/False.
+        :return: True/False.
         """
         return self.is_running
 
@@ -374,18 +374,18 @@ class icSCADAEngine(icwidget.icSimple):
     def get_active_scan_classes_psp(self, ctrl_tick):
         """
         Список паспортов классов сканирования, которые необходимо обновить.
-        @param ctrl_tick: Контрольное значение времени,
+        :param ctrl_tick: Контрольное значение времени,
             для определения необходимости обработки.
-        @return: Список паспортов классов сканирования.
+        :return: Список паспортов классов сканирования.
         """
         return [scan_class_psp for scan_class_psp, scan_class in self._scan_classes.items() if scan_class.isOverTick(ctrl_tick)]
 
     def get_refreshable_tags(self, *scan_classes_psp):
         """
         Список всех тегов, которые пора прочитать/обновить значения.
-        @param scan_classes_psp: Список паспортов классов сканирования,
+        :param scan_classes_psp: Список паспортов классов сканирования,
             которые необходимо обновить.
-        @return: Список тегов, которые необходимо обновить/прочитать из источника данных.
+        :return: Список тегов, которые необходимо обновить/прочитать из источника данных.
         """
         read_tags = list()
         for scan_class_psp in scan_classes_psp:
@@ -396,8 +396,8 @@ class icSCADAEngine(icwidget.icSimple):
     def read_tags(self, *tags):
         """
         Запустить процедуру чтение тегов.
-        @param tags: Список читаемх тегов.
-        @return: True/False.
+        :param tags: Список читаемх тегов.
+        :return: True/False.
         """
         if not tags:
             # log.warning(u'Не определен список тегов для чтения')
@@ -432,9 +432,9 @@ class icSCADAEngine(icwidget.icSimple):
     def do_events(self, *scan_classes_psp):
         """
         Обработка событий.
-        @param scan_classes_psp: Список паспортов классов сканирования,
+        :param scan_classes_psp: Список паспортов классов сканирования,
             которые необходимо обновить.
-        @return: True/False.
+        :return: True/False.
         """
         for scan_class_psp in scan_classes_psp:
             events = self._scan_events.get(scan_class_psp, list())
@@ -445,9 +445,9 @@ class icSCADAEngine(icwidget.icSimple):
     def do_alarms(self, *scan_classes_psp):
         """
         Обработка аварий.
-        @param scan_classes_psp: Список паспортов классов сканирования,
+        :param scan_classes_psp: Список паспортов классов сканирования,
             которые необходимо обновить.
-        @return: True/False.
+        :return: True/False.
         """
         # for scan_class_psp in scan_classes_psp:
         #     alarms = self._scan_alarms.get(scan_class_psp, list())
@@ -459,8 +459,8 @@ class icSCADAEngine(icwidget.icSimple):
         """
         Добавить дополнительное окружение движка.
         Необходимо для выполнения вычисляемых тегов.
-        @param environment: Словарь дополнительных переменных окружения движка.
-        @return: True/False.
+        :param environment: Словарь дополнительных переменных окружения движка.
+        :return: True/False.
         """
         if not hasattr(self, '_engine_environment'):
             self._engine_environment = dict()
@@ -471,7 +471,7 @@ class icSCADAEngine(icwidget.icSimple):
         """
         Дополнительное окружение движка.
         Необходимо для выполнения вычисляемых тегов.
-        @return: Словарь дополнительных переменных окружения движка.
+        :return: Словарь дополнительных переменных окружения движка.
         """
         if not hasattr(self, '_engine_environment'):
             return dict()

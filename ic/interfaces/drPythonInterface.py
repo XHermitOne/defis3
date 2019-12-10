@@ -29,7 +29,7 @@ class drPythonInterface(icideinterface.icIDEInterface):
     def __init__(self, drFrame=None):
         """
         Конструктор.
-        @param drFrame: Указатель на главное окно IDE.
+        :param drFrame: Указатель на главное окно IDE.
         """
         icideinterface.icIDEInterface.__init__(self, drFrame)
 
@@ -61,8 +61,8 @@ class drPythonInterface(icideinterface.icIDEInterface):
     def addToolPanel(self, panel):
         """
         Добавить панель в нотебук инструментов/палитры инструментов.
-        @param panel: Наследник wx.Panel.
-        @return: Возвращает указатель на страницу нотебука(наследник drSidePanel),
+        :param panel: Наследник wx.Panel.
+        :return: Возвращает указатель на страницу нотебука(наследник drSidePanel),
             которая соответствует этой панели.
         """
         main_panel = self.getMainPanel()
@@ -80,19 +80,19 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Загружает нужный файл в IDE.
         
-        @type filename: C{string}
-        @param filename: Имя загружаемого файла.
-        @type bOpenInNewTab: C{bool}
-        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
-        @type bEditRecentFiles: C{bool}
-        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
+        :type filename: C{string}
+        :param filename: Имя загружаемого файла.
+        :type bOpenInNewTab: C{bool}
+        :param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        :type bEditRecentFiles: C{bool}
+        :param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
-        @type encoding: C{string}
-        @param encoding: Кодировка файла.
-        @type bReadonly: C{bool}
-        @param bReadonly: Указание, что файл откроется только для чтения.
-        @rtype: C{bool}
-        @return: Признак успешной загрузки.
+        :type encoding: C{string}
+        :param encoding: Кодировка файла.
+        :type bReadonly: C{bool}
+        :param bReadonly: Указание, что файл откроется только для чтения.
+        :rtype: C{bool}
+        :return: Признак успешной загрузки.
         """
         self.getIDEFrame().openFile(filename, bOpenInNewTab, bEditRecentFiles, encoding)
         self.getIDEFrame().txtDocument.SetReadOnly(bReadonly)
@@ -101,10 +101,10 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Выгружает файл.
         
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @rtype: C{bool}
-        @return: Признак успешной выгрузки.
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :rtype: C{bool}
+        :return: Признак успешной выгрузки.
         """
         i = self._getOpenedFileIdx(filename)
         if i >= 0:
@@ -129,12 +129,12 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Вставляет в тело интерфейсного модуля заготовку функции с заданным именем.
         
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @type func_name: C{string}
-        @param func_name: Имя функции.
-        @type function_body: C{string}
-        @param function_body: Тело функции.
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :type func_name: C{string}
+        :param func_name: Имя функции.
+        :type function_body: C{string}
+        :param function_body: Тело функции.
         """
         if self.selectFile(filename):
             if self.goToFunc(func_name):
@@ -160,8 +160,8 @@ class drPythonInterface(icideinterface.icIDEInterface):
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
-        @type filename: C{string}
-        @param filename: Имя файла.
+        :type filename: C{string}
+        :param filename: Имя файла.
         """
         # Сначала нормализовать имя файла к UNIX виду
         filename = filename.replace('\\', '/').replace('//', '/')
@@ -178,9 +178,9 @@ class drPythonInterface(icideinterface.icIDEInterface):
     def _getOpenedFileIdx(self, filename):
         """
         Индекс открытого файла.
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @return: Индекс открытого файла или
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :return: Индекс открытого файла или
             -1, если файл не открыт.
         """
         alreadyopen = self.getAlreadyOpen()
@@ -195,10 +195,10 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Устанавливает нужный файл в качестве текущего.
 
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @rtype: C{bool}
-        @return: Признак успешного выбора.
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :rtype: C{bool}
+        :return: Признак успешного выбора.
         """
         fl = filename.replace('\\', '/')
         alreadyopen = self.getAlreadyOpen()
@@ -228,8 +228,8 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Возвращает объект документа.
 
-        @type filegame: C{string}
-        @param filegame: Имя файла.
+        :type filegame: C{string}
+        :param filegame: Имя файла.
         """
         fl = filegame.replace('\\', '/')
         al = self.getAlreadyOpen()
@@ -242,8 +242,8 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Возвращает текст документа.
 
-        @type filename: C{string}
-        @param filename: Имя файла.
+        :type filename: C{string}
+        :param filename: Имя файла.
         """
         fl = filename.replace('\\', '/')
         al = self.getAlreadyOpen()
@@ -285,8 +285,8 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Возвращает признак измененного документа.
         
-        @type filename: C{string}
-        @param filename: Имя файла.
+        :type filename: C{string}
+        :param filename: Имя файла.
         """
         return self.getDocumentObj(filename).getModify()
         
@@ -351,10 +351,10 @@ class drPythonInterface(icideinterface.icIDEInterface):
         """
         Перегружает нужный файл в IDE.
         
-        @type filename: C{string}
-        @param filename: Имя файла.
-        @rtype: C{bool}
-        @return: Признак успешной перезагрузки.
+        :type filename: C{string}
+        :param filename: Имя файла.
+        :rtype: C{bool}
+        :return: Признак успешной перезагрузки.
         """
         al = self.getAlreadyOpen()
         

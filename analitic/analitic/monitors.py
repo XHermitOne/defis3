@@ -152,7 +152,7 @@ class icMonitorNode:
     def viewLink(self, LinkAlias_):
         """
         Запуск просмотра монитора по ссылке.
-        @param LinkAlias_: Алиас ссылаемого монитора.
+        :param LinkAlias_: Алиас ссылаемого монитора.
         """
         monitor_dict = NSI.spravfunc.FSprav(self.sprav_type, self.cod, ['name', 's4'])
         # print('>>>viewLinkMonitor', monitor_dict)
@@ -167,7 +167,7 @@ class icMonitorNode:
     def wisardLink(self, LinkAlias_):
         """
         Запуск визарда монитора по ссылке.
-        @param LinkAlias_: Алиас ссылаемого монитора.
+        :param LinkAlias_: Алиас ссылаемого монитора.
         """
         monitor_dict = NSI.spravfunc.FSprav(self.sprav_type, self.cod, ['name', 's4'])
         # print('>>> wizardLinkMonitor', monitor_dict)
@@ -198,9 +198,9 @@ class icMonitorNode:
     def saveBody(self, Body_=None):
         """
         Сохранить тело монитора/запроса.
-        @param Body_: Тело монитора.
+        :param Body_: Тело монитора.
             В основном это словарно-списковая структура.
-        @return: Результат выполнения операции True/False.
+        :return: Результат выполнения операции True/False.
         """
         # nsi_std=tabclass.CreateTabClass('NsiStd')
         nsi_std = ic_sqlobjtab.icSQLObjDataClass(resource.icGetRes('NsiStd', nameRes='NsiStd'))
@@ -215,9 +215,9 @@ class icMonitorNode:
     def _genMonitorCode(self, NSIStd_, ParentCode_=''):
         """
         Генерация кода для нового монитора.
-        @param NSIStd_: SQLObject класс данных.
-        @param ParentCode_: Код монитора родительского уровня.
-        @return: Возвращает сгенерированный код.
+        :param NSIStd_: SQLObject класс данных.
+        :param ParentCode_: Код монитора родительского уровня.
+        :return: Возвращает сгенерированный код.
         """
         nsi_std = NSIStd_
         for i_cur_cod in range(100):
@@ -233,10 +233,10 @@ class icMonitorNode:
     def newMonitor(self, ViewForm_=None, WizardForm_=None, Body_=None):
         """
         Создать новый монитор.
-        @param ViewForm_: Форма просмотра монитора.
-        @param WizardForm_: Форма визарда монитора.
-        @param Body_: Тело монитора/запроса.
-        @return: Функция возвращает код справочника нового
+        :param ViewForm_: Форма просмотра монитора.
+        :param WizardForm_: Форма визарда монитора.
+        :param Body_: Тело монитора/запроса.
+        :return: Функция возвращает код справочника нового
             монитора или None в случае ошибки.
         """
         try:

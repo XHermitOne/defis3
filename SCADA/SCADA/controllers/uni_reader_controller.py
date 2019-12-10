@@ -30,10 +30,10 @@ class icUniReaderControllerProto(object):
     def __init__(self, host=None, port=DEFAULT_PORT, server=None, node=None, *args, **kwargs):
         """
         Конструктор.
-        @param host: Компьютер с сервером
-        @param port: Порт сервера. По умолчанию используется 8080.
-        @param server: Имя сервера.
-        @param node: Наименования узла.
+        :param host: Компьютер с сервером
+        :param port: Порт сервера. По умолчанию используется 8080.
+        :param server: Имя сервера.
+        :param node: Наименования узла.
         """
         self.host = host
         self.port = port
@@ -43,12 +43,12 @@ class icUniReaderControllerProto(object):
     def read_tags(self, host=None, port=DEFAULT_PORT, server=None, node=None, **tags):
         """
         Чтение данных из UniReader сервера. С помощью XML RPC.
-        @param host: Компьютер с сервером
-        @param port: Порт сервера. По умолчанию используется 8080.
-        @param server: Имя сервера.
-        @param node: Наименования узла.
-        @param tags: Словарь запрашиваемых тегов.
-        @return: Словарь тегов, заполненных данными.
+        :param host: Компьютер с сервером
+        :param port: Порт сервера. По умолчанию используется 8080.
+        :param server: Имя сервера.
+        :param node: Наименования узла.
+        :param tags: Словарь запрашиваемых тегов.
+        :return: Словарь тегов, заполненных данными.
         """
         if host is None:
             host = self.host
@@ -76,12 +76,12 @@ class icUniReaderControllerProto(object):
     def _read_data_xmlrpc(self, host, port, server, node, **tags):
         """
         Чтение данных из UniReader сервера. С помощью XML RPC.
-        @param host: Компьютер с сервером
-        @param port: Порт сервера. По умолчанию используется 8080.
-        @param opc_server: Имя сервера.
-        @param node: Наименования узла.
-        @param tags: Словарь запрашиваемых тегов.
-        @return: Словарь тегов, заполненных данными.
+        :param host: Компьютер с сервером
+        :param port: Порт сервера. По умолчанию используется 8080.
+        :param opc_server: Имя сервера.
+        :param node: Наименования узла.
+        :param tags: Словарь запрашиваемых тегов.
+        :return: Словарь тегов, заполненных данными.
         """
         tag_items = tags.items()
         addresses = [tag_addr for tag_name, tag_addr in tag_items]

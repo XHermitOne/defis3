@@ -158,11 +158,11 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         """
         Импорт документов из БАЛАНСа <Материалы>.
             Выборка документов производиться за год.
-        @param cur_year: Год выборки документов.
-        @param is_input: Признак приходного документа.
-        @param n_warehouse: Номер склада.
-        @param is_nds: Учет наличия НДС в документе для загрузки.
-        @return: True/False.
+        :param cur_year: Год выборки документов.
+        :param is_input: Признак приходного документа.
+        :param n_warehouse: Номер склада.
+        :param is_nds: Учет наличия НДС в документе для загрузки.
+        :return: True/False.
         """
         log.info(u'--- ЗАПУСК ИМПОРТА ДОКУМЕНТОВ <МАТЕРИАЛЫ> ---')
 
@@ -181,11 +181,11 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         """
         Импорт документов учета материалов из БАЛАНСа.
             Выборка документов производиться за год.
-        @param cur_year: Обрабатываемый год.
-        @param n_warehouse: Номер склада.
-        @param is_input: Признак приходного документа.
-        @param pack_doc: Объект документа пакетной обработки.
-        @param is_nds: Учет наличия НДС в документе для загрузки.
+        :param cur_year: Обрабатываемый год.
+        :param n_warehouse: Номер склада.
+        :param is_input: Признак приходного документа.
+        :param pack_doc: Объект документа пакетной обработки.
+        :param is_nds: Учет наличия НДС в документе для загрузки.
         """
         if n_warehouse is None:
             log.warning(u'Не определен номер склада при импорте документов <Материалы>')
@@ -252,11 +252,11 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         """
         Импорт документов востановления НДС из БАЛАНСа.
             Выборка документов производиться за год.
-        @param cur_year: Обрабатываемый год.
-        @param n_warehouse: Номер склада.
-        @param is_input: Признак приходного документа.
-        @param pack_doc: Объект документа пакетной обработки.
-        @param is_nds: Учет наличия НДС в документе для загрузки.
+        :param cur_year: Обрабатываемый год.
+        :param n_warehouse: Номер склада.
+        :param is_input: Признак приходного документа.
+        :param pack_doc: Объект документа пакетной обработки.
+        :param is_nds: Учет наличия НДС в документе для загрузки.
         """
         if pack_doc is None:
             log.warning(u'Не определен объект документа пакетной обработки')
@@ -294,11 +294,11 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         """
         Загрузить данные пакета документов материалов (счет-фактур и ТОРГ12) 
             из DBF файла БАЛАНСа.
-        @param dbf_filename: Полное имя загружаемого DBF файла.
-        @param cur_year: Загружаемый год. Если None, то грузим текущий год.
-        @param is_input: Признак приходного документа.
-        @param is_nds: Учет наличия НДС в документе для загрузки.
-        @param is_vostanovl_nds: Признак загрузки СФ востановления НДС.
+        :param dbf_filename: Полное имя загружаемого DBF файла.
+        :param cur_year: Загружаемый год. Если None, то грузим текущий год.
+        :param is_input: Признак приходного документа.
+        :param is_nds: Учет наличия НДС в документе для загрузки.
+        :param is_vostanovl_nds: Признак загрузки СФ востановления НДС.
         """
         if dbf_filename is None or not os.path.exists(dbf_filename):
             log.warning(u'Отсутствует файл <%s> для импорта данных' % dbf_filename)
@@ -370,8 +370,8 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
     def _is_nds_in_schet_factura(self, is_on, cod_oper):
         """
         Проверка на есть ли в СФ НДС.
-        @param is_on: Признак наличия НДС.
-        @param cod_oper: Код операции БАЛАНС+.
+        :param is_on: Признак наличия НДС.
+        :param cod_oper: Код операции БАЛАНС+.
         """
         # return (cod_oper == 1 and is_on) or cod_oper in COD_OPER_NDS[1:]
         return bool(cod_oper)
@@ -379,8 +379,8 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
     def _is_9184(self, record):
         """
         Определить является ли указанный документ документом с проводками по счету 91-84.
-        @param record: Словарь записи DBF файла.
-        @return: True-да есть проводка по счету 91-84 / False - нет.
+        :param record: Словарь записи DBF файла.
+        :return: True-да есть проводка по счету 91-84 / False - нет.
         """
         # log.debug(u'91-84: %s' % str(self._9184_ndocs))
         n_doc = strfunc.toUnicode(record['NDOC'], DBF_DEFAULT_ENCODE).strip()
@@ -391,10 +391,10 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         """
         Создать счет-фактуру по данным документа БАЛАНСа <Материалы>.
         Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
-        @param record: Словарь записи DBF файла.
-        @param is_input: Признак приходного документа.
-        @param is_nds: Учет наличия НДС в документе для загрузки.
-        @return: Словарь новой записи документа Счет-фактура.
+        :param record: Словарь записи DBF файла.
+        :param is_input: Признак приходного документа.
+        :param is_nds: Учет наличия НДС в документе для загрузки.
+        :return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
@@ -500,9 +500,9 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         """
         Создать ТОРГ12 по данным документа БАЛАНСа <Материалы>.
         Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
-        @param record: Словарь записи DBF файла.
-        @param is_input: Признак приходного документа.
-        @return: Словарь новой записи документа Счет-фактура.
+        :param record: Словарь записи DBF файла.
+        :param is_input: Признак приходного документа.
+        :return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
@@ -591,9 +591,9 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
         """
         Создать приложение по данным документа БАЛАНСа <Материалы>.
         Все дополнительные признаки-атрибуты фиксируются в тегах карточки документа.
-        @param record: Словарь записи DBF файла.
-        @param is_input: Признак приходного документа.
-        @return: Словарь новой записи документа Счет-фактура.
+        :param record: Словарь записи DBF файла.
+        :param is_input: Признак приходного документа.
+        :return: Словарь новой записи документа Счет-фактура.
         """
         if doc is None:
             doc = self.pack_doc if self.pack_doc else ic.metadata.archive.mtd.scan_document_pack.create()
@@ -689,7 +689,7 @@ class icMaterialImportManager(import_manager.icBalansImportManager):
     def _load_ndocs_spec_from_dbf(self, dbf_filename=None):
         """
         Загрузить номера документов из DBF файла спецификации БАЛАНСа.
-        @param dbf_filename: Полное имя загружаемого DBF файла.
+        :param dbf_filename: Полное имя загружаемого DBF файла.
         """
         if dbf_filename is None or not os.path.exists(dbf_filename):
             log.warning(u'Отсутствует файл <%s> для импорта данных' % dbf_filename)

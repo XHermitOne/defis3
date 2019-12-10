@@ -28,7 +28,7 @@ class icCFWizard(wx.adv.Wizard):
     def __init__(self, cf_filename=None):
         """
         Конструктор.
-        @param cf_filename: Полное имя CF файла конфигурации.
+        :param cf_filename: Полное имя CF файла конфигурации.
         """
         if __file__:
             dir_name = os.path.dirname(__file__)

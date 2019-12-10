@@ -59,7 +59,7 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
     def setOLAPServer(self, olap_server):
         """
         Установить тестируемый OLAP сервер.
-        @param olap_server: OLAP сервер
+        :param olap_server: OLAP сервер
         """
         self._OLAP_server = olap_server
 
@@ -135,9 +135,9 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
     def show_help_popup_win(self, button, info_text):
         """
         Отобразить/скрыть всплывающее окно помощи.
-        @param button: Кнопка вызова окна помощи.
-        @param info_text: Текст помощи.
-        @return:
+        :param button: Кнопка вызова окна помощи.
+        :param info_text: Текст помощи.
+        :return:
         """
         if self._help_popup_win:
             self._help_popup_win.close()
@@ -270,8 +270,8 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
     def setRequest(self, request):
         """
         Установить запрос к серверу OLAP в структурном виде.
-        @param request: Словарь параметров запроса к OLAP серверу.
-        @return: True/False.
+        :param request: Словарь параметров запроса к OLAP серверу.
+        :return: True/False.
         """
         if request is None:
             request = dict()
@@ -348,7 +348,7 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
     def getRequest(self):
         """
         Получить запрос к серверу OLAP в структурном виде.
-        @return: Словарь параметров запроса к OLAP серверу.
+        :return: Словарь параметров запроса к OLAP серверу.
             Словарь заполняется в соответствии с выбранными
             параметрами контролов панели.
         """
@@ -408,7 +408,7 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
     def getRequestURL(self, request=None):
         """
         Получить URL запроса к серверу OLAP по его структурному описанию.
-        @return: Словарь параметров запроса к OLAP серверу.
+        :return: Словарь параметров запроса к OLAP серверу.
             Если не определен, то берется из контролов.
         """
         if request is None:
@@ -425,7 +425,7 @@ class icCubesOLAPSrvRequestPanel(cubes_olap_srv_request_form_proto.icCubesOLAPSr
 
 def show_cubes_olap_srv_request_panel(title=u''):
     """
-    @param title: Заголовок страницы нотебука главного окна.
+    :param title: Заголовок страницы нотебука главного окна.
     """
     try:
         main_win = ic.getMainWin()

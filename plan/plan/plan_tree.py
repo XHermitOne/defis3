@@ -57,7 +57,7 @@ class icPlanRootStorage(icPlanNode, objstore.icObjectStorage):
     def __init__(self, Resource_=None):
         """
         Конструктор.
-        @param Resource_: Ресурс описания объекта.
+        :param Resource_: Ресурс описания объекта.
         """
         icPlanNode.__init__(self)
         objstore.icObjectStorage.__init__(self, Resource_)

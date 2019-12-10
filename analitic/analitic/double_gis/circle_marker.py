@@ -32,14 +32,14 @@ class ic2GISCircleMarker(object):
                  **kwargs):
         """
         Конструктор. Создание маркера.
-        @param location: Геолокация маркера.
-        @param radius: Радиус окружности маркера.
-        @param color: Цвет окружности.
-        @param fill: Произвести заполнение внутренней области окружности?
-        @param fill_color: Цвет заполнения окружности.
-        @param popup: Текст всплывающей посказки маркера.
+        :param location: Геолокация маркера.
+        :param radius: Радиус окружности маркера.
+        :param color: Цвет окружности.
+        :param fill: Произвести заполнение внутренней области окружности?
+        :param fill_color: Цвет заполнения окружности.
+        :param popup: Текст всплывающей посказки маркера.
             Подсказка появляется по клику на маркере.
-        @param tooltip: Текст всплывающей посказки маркера.
+        :param tooltip: Текст всплывающей посказки маркера.
             Подсказка появляется при наведении мышки на маркер.
         """
         if location is None:
@@ -60,7 +60,7 @@ class ic2GISCircleMarker(object):
     def render(self, **kwargs):
         """
         Генерирует HTML-представление элемента.
-        @return: Сгенерированное HTML представление карты.
+        :return: Сгенерированное HTML представление карты.
         """
         options = dict(color=self.color)
         json_options = json.dumps(options)
@@ -74,8 +74,8 @@ class ic2GISCircleMarker(object):
     def add_to(self, geo_map):
         """
         Добавить маркер на карту.
-        @param geo_map: Объект карты.
-        @return: True/False.
+        :param geo_map: Объект карты.
+        :return: True/False.
         """
         try:
             geo_map.add_marker(self)

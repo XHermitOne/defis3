@@ -81,8 +81,8 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
     def print_scan_document(self, doc_filename, printer_name):
         """
         Запустить печать документа.
-        @param doc_filename: Полное имя файла документа.
-        @param printer_name: Наименование принтера,
+        :param doc_filename: Полное имя файла документа.
+        :param printer_name: Наименование принтера,
             на который будет производиться печать.
         """
         if os.path.exists(doc_filename):
@@ -162,7 +162,7 @@ class icPrintDocPanel(search_doc_form.icSearchDocPanelCtrl,
 def open_print_search_doc_page(main_win=None):
     """
     Открыть страницу поиска/печати документа из архива.
-    @param main_win: Главное окно приложения.
+    :param main_win: Главное окно приложения.
     """
     try:
         if main_win is None:

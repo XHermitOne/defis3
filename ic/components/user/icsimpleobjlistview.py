@@ -5,16 +5,16 @@
 ПРОСТОЙ СПИСОК ОБЪЕКТОВ.
 Класс пользовательского компонента ПРОСТОЙ СПИСОК ОБЪЕКТОВ.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -159,7 +159,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
     """
     Простой список объектов.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -172,22 +172,22 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -264,7 +264,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
     def setColumnsSpc(self, *Columns_):
         """
         Создание колонок грида по описанию.
-        @param Columns_: Описание колонок.
+        :param Columns_: Описание колонок.
         """
         columns = []
         auto_sort_col = None
@@ -299,10 +299,10 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
     def getDatasetFromDataSource(self, data_source=None, data_src_filter=None):
         """
         Получить набор данных из источника данных.
-        @param data_source: Указание источника данных.
+        :param data_source: Указание источника данных.
             Может указываться как паспорт или объект.
-        @param data_src_filter: Дополнительный фильтр источника данных.
-        @return: Список данных.
+        :param data_src_filter: Дополнительный фильтр источника данных.
+        :return: Список данных.
         """
         if not self._data_src_obj:
             self._data_src_obj = None
@@ -329,7 +329,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
             дополнительные объекты:
                 DATASET - список записей.
                 RECORD - словарь текущей обрабатываемой записи.
-        @param data_src_filter: Дополнительный фильтр источника данных.
+        :param data_src_filter: Дополнительный фильтр источника данных.
         """
         if DatasetList_ is None:
             if not self.data_src:
@@ -365,7 +365,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
     def refreshDataset(self, data_src_filter=None):
         """
         Обновить набор данныхю
-        @param data_src_filter: Дополнительный фильтр источника данных.
+        :param data_src_filter: Дополнительный фильтр источника данных.
         """
         return self.setDataset(data_src_filter=data_src_filter)
 
@@ -423,7 +423,7 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
         Определить UUID выбранного объекта.
         Мнемоническое правило расположения UUID объекта в наборе записей:
         Поле UUIDа находится всегда последней колонкой и не выводится на экран.
-        @return: Возвращает uuid выбранного объекта или None если 
+        :return: Возвращает uuid выбранного объекта или None если 
         объект не выбран.
         """
         selected_rec = self.getSelectedRecord()
@@ -457,8 +457,8 @@ class icSimpleObjectListView(icwidget.icWidget, parentModule.ObjectListView):
     def rowFormatterFunction(self, list_item, record):
         """
         Функция раскраски строк списка.
-        @param list_item: Объект wx.ListItem строки списка.
-        @param record: Словарь записи.
+        :param list_item: Объект wx.ListItem строки списка.
+        :param record: Словарь записи.
         """
         self.context['RECORD'] = record
         text_colour = self.getRowTextColour()

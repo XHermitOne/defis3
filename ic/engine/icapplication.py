@@ -4,8 +4,8 @@
 """
 Модуль описания класса ПРИЛОЖЕНИЯ.
 
-@type SPC_IC_APP: C{dictionary}
-@var SPC_IC_APP: Спецификация на ресурсное описание компонента icApp.
+:type SPC_IC_APP: C{dictionary}
+:var SPC_IC_APP: Спецификация на ресурсное описание компонента icApp.
 Описание ключей SPC_IC_APP:
     - B{name = 'main_win'}: Паспорт-идентификатор окна.
     - B{name = 'menubar'}: Паспорт-идентификатор главного меню.
@@ -42,7 +42,7 @@ def getPrjSubSysDirs(prj_dirname):
     """
     Получить список директорий подсистем вместе с проектом.
     Заполнение списка происходит по файлу *.pro.
-    @param prj_dirname: Папка проекта.
+    :param prj_dirname: Папка проекта.
     """
     root_prj_dir = os.path.dirname(prj_dirname)
     pro_files = ic.utils.filefunc.getFilenamesByExt(prj_dirname, '.pro')
@@ -57,7 +57,7 @@ def getSubSysDirs(prj_dirname):
     """
     Получить список директорий подсистем.
         Заполнение списка происходит по файлу *.pro.
-    @param prj_dirname: Папка проекта.
+    :param prj_dirname: Папка проекта.
     """
     root_prj_dir = os.path.dirname(prj_dirname)
     pro_files = ic.utils.filefunc.getFilenamesByExt(prj_dirname, '.pro')
@@ -140,9 +140,9 @@ class icApp(icwxapplication.icWXApp):
     def Login(self, username=None, password=None, db_mode='-s'):
         """
         Регистрация пользователя в системе.
-        @param username: Имя пользователя.
-        @param password: Пароль.
-        @param db_mode: Режим использования БД.
+        :param username: Имя пользователя.
+        :param password: Пароль.
+        :param db_mode: Режим использования БД.
         """
         from ic.engine import glob_functions
 
@@ -161,9 +161,9 @@ class icApp(icwxapplication.icWXApp):
     def _login_loop(self, username=None, password=None, db_mode='-s'):
         """
         Цикл входа в систему.
-        @param username: Имя пользователя.
-        @param password: Пароль.
-        @param db_mode: Режим использования БД.
+        :param username: Имя пользователя.
+        :param password: Пароль.
+        :param db_mode: Режим использования БД.
         """
         login_ok = False
         login_manager = user_manager.icLoginManager()
@@ -196,9 +196,9 @@ class icApp(icwxapplication.icWXApp):
     def run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
-        @param mainwin_psp: Паспорт главного окна.
-        @param menubars_psp: Список паспортов горизонтальных меню.
-        @return: Возвращает True, если все OK иначе - False.
+        :param mainwin_psp: Паспорт главного окна.
+        :param menubars_psp: Список паспортов горизонтальных меню.
+        :return: Возвращает True, если все OK иначе - False.
         """
         if mainwin_psp is None:
             mainwin_psp = self._User.getMainWinPsp()
@@ -209,9 +209,9 @@ class icApp(icwxapplication.icWXApp):
     def _run(self, mainwin_psp=None, menubars_psp=None):
         """
         Запуск движка.
-        @param mainwin_psp: Паспорт главного окна.
-        @param menubars_psp: Список паспортов горизонтальных меню.
-        @return: Возвращает True, если все OK иначе - False.
+        :param mainwin_psp: Паспорт главного окна.
+        :param menubars_psp: Список паспортов горизонтальных меню.
+        :return: Возвращает True, если все OK иначе - False.
         """
         # Проинициализировать внутренние данные
         self._MainMenu = None
@@ -249,7 +249,7 @@ class icApp(icwxapplication.icWXApp):
     def _createMainMenu(self, menubars_psp):
         """
         Создание/Сборка главного горизонтального меню.
-        @param menubars_psp: Список паспортов линеек горизонтальных меню для сборки.
+        :param menubars_psp: Список паспортов линеек горизонтальных меню для сборки.
         """
         # Сборка полного ресурса линейки горизонтального меню
         menubar_res = None
@@ -273,9 +273,9 @@ class icApp(icwxapplication.icWXApp):
     def loadPopupMenu(self, name, owner):
         """
         Загрузка всплывающих меню в системе должна производится ч/з эту функцию для последующего доступа объектов к этим менюхам.
-        @param name: имя всплывающего меню.
-        @param owner: объект-хозяин, к которому прикрепляется меню.
-        @return: Возвращает ссылку на объект всплывающего меню.
+        :param name: имя всплывающего меню.
+        :param owner: объект-хозяин, к которому прикрепляется меню.
+        :return: Возвращает ссылку на объект всплывающего меню.
         """
         popup = icpopupmenu.CreateICPopupMenu(owner, name, self._res_filename)
         # Зарегистрировать его

@@ -71,11 +71,11 @@ def run_wxformbuilder(filename=None, do_generate=False, language=None):
     Запуск wxFormBuilder.
         Для более подробного описания параметров запуска wxFormBuilder, запустите:
         wxformbuilder --help
-    @param filename: Файл открываемый в wxFormBuilder.
+    :param filename: Файл открываемый в wxFormBuilder.
         Если не указан, то ничего не открывается.
-    @param do_generate: Произвести генерацию результирующего ресурса/модуля проекта.
-    @param language: Явное указание языка для генерации.
-    @return: True/False
+    :param do_generate: Произвести генерацию результирующего ресурса/модуля проекта.
+    :param language: Явное указание языка для генерации.
+    :return: True/False
     """
     cmd = ''
     cmd_args = filename
@@ -103,8 +103,8 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
     def open_project(self, prj_filename):
         """
         Открыть файл проекта.
-        @param prj_filename: Полное имя файла проекта.
-        @return: True/False
+        :param prj_filename: Полное имя файла проекта.
+        :return: True/False
         """
         try:
             run_wxformbuilder(prj_filename)
@@ -116,8 +116,8 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
     def create_project(self, default_prj_filename=None):
         """
         Создание нового файла проекта.
-        @param default_prj_filename: Имя файла проекта по умолчанию.
-        @return: True/False.
+        :param default_prj_filename: Имя файла проекта по умолчанию.
+        :return: True/False.
         """
         try:
             run_wxformbuilder(default_prj_filename)
@@ -129,8 +129,8 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
     def generate(self, prj_filename, *args, **kwargs):
         """
         Дополнительная генерация проекта.
-        @param prj_filename: Полное имя файла проекта.
-        @return: True/False.
+        :param prj_filename: Полное имя файла проекта.
+        :return: True/False.
         """
         try:
             run_wxformbuilder(prj_filename, do_generate=True, *args, **kwargs)
@@ -142,10 +142,10 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
     def _replace_adaptation(self, line, replacement_src, replacement_dst):
         """
         Произвести замену в линии модуля.
-        @param line: Строка линии модуля.
-        @param replacement_src: Исходная замена.
-        @param replacement_dst: Результирующая замена.
-        @return: Измененная строка модуля.
+        :param line: Строка линии модуля.
+        :param replacement_src: Исходная замена.
+        :param replacement_dst: Результирующая замена.
+        :return: Измененная строка модуля.
         """
         if replacement_dst == COMMENT_COMMAND_SIGNATIRE:
             return COMMENT_COMMAND_SIGNATIRE + line
@@ -157,8 +157,8 @@ class icWXFormBuilderManager(icdesignerinterface.icExtFormDesignerInterface):
         с текущей версией wxPython.
         Движок DEFIS ориентирован и отлажен только с конкретной версией wxPython.
         Поэтому адаптация производится к этой конкретной версии wxPython.
-        @param py_filename: Полное имя сгенерированного модуля формы средствами wxFormBuilder.
-        @return: True - адаптация прошла без ошибок / False - ошибка адаптации модуля.
+        :param py_filename: Полное имя сгенерированного модуля формы средствами wxFormBuilder.
+        :return: True - адаптация прошла без ошибок / False - ошибка адаптации модуля.
         """
         if not os.path.exists(py_filename):
             log.warning(u'Файл <%s> не найден' % py_filename)
@@ -212,8 +212,8 @@ def adapt_wxformbuilder_py(py_filename):
     с текущей версией wxPython.
     Движок DEFIS ориентирован и отлажен только с конкретной версией wxPython.
     Поэтому адаптация производится к этой конкретной версии wxPython.
-    @param py_filename: Полное имя сгенерированного модуля формы средствами wxFormBuilder.
-    @return: True - адаптация прошла без ошибок / False - ошибка адаптации модуля.
+    :param py_filename: Полное имя сгенерированного модуля формы средствами wxFormBuilder.
+    :return: True - адаптация прошла без ошибок / False - ошибка адаптации модуля.
     """
     manager = icWXFormBuilderManager()
     result = manager.adaptation_form_py(py_filename)

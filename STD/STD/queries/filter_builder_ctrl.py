@@ -235,7 +235,7 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
     def appendItems(self, items):
         """
         Добавить список выбора комбобокса.
-        @param items: Список пунктов выбора структуры:
+        :param items: Список пунктов выбора структуры:
         [{
             'name':'Наименование пункта',
             'description':'Описание пункта (появляется в компоненте)',
@@ -274,7 +274,7 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
     def setItems(self, items):
         """
         Установить список выбора комбобокса.
-        @param items: Список пунктов выбора структуры:
+        :param items: Список пунктов выбора структуры:
         [{
             'name':'Наименование пункта',
             'description':'Описание пункта (появляется в компоненте)',
@@ -289,7 +289,7 @@ class icBitmapComboBox(wx.adv.BitmapComboBox):
     def selectByName(self, name):
         """
         Выбрать элемент по его имени.
-        @return: Индекс выбранного элемента.
+        :return: Индекс выбранного элемента.
         """
         item_names = [item['name'] for item in self.items]
         try:
@@ -317,7 +317,7 @@ class icItemComboBox(wx.ComboBox):
     def appendItems(self, items):
         """
         Добавить пункты в выпадающий список.
-        @param items:
+        :param items:
         [{
             'name':'Наименование пункта',
             'description':'Описание пункта (появляется в компоненте)',
@@ -350,7 +350,7 @@ class icItemComboBox(wx.ComboBox):
     def setItems(self, items):
         """
         Установить пункты в выпадающий список.
-        @param items:
+        :param items:
         [{
             'name':'Наименование пункта',
             'description':'Описание пункта (появляется в компоненте)',
@@ -364,7 +364,7 @@ class icItemComboBox(wx.ComboBox):
     def selectByName(self, name):
         """
         Выбрать элемент по его имени.
-        @return: Индекс выбранного элемента.
+        :return: Индекс выбранного элемента.
         """
         item_names = [item['name'] for item in self.items]
         try:
@@ -452,8 +452,8 @@ class icArgEdit(wx.TextCtrl):
     def __init__(self, parent, arg=None):
         """
         Конструктор.
-        @param parent: Родительское окно.
-        @param arg: Структура аргумента.
+        :param parent: Родительское окно.
+        :param arg: Структура аргумента.
         """
         wx.TextCtrl.__init__(self, parent, id=wx.NewId(),
                              size=DEFAULT_EDIT_SIZE)
@@ -494,8 +494,8 @@ class icNumArgEdit(icArgEdit):
     def __init__(self, parent, arg=None):
         """
         Конструктор.
-        @param parent: Родительское окно.
-        @param arg: Структура аргумента.
+        :param parent: Родительское окно.
+        :param arg: Структура аргумента.
         """
         icArgEdit.__init__(self, parent, arg)
 
@@ -508,8 +508,8 @@ class icStrArgEdit(icArgEdit):
     def __init__(self, parent, arg=None):
         """
         Конструктор.
-        @param parent: Родительское окно.
-        @param arg: Структура аргумента.
+        :param parent: Родительское окно.
+        :param arg: Структура аргумента.
         """
         icArgEdit.__init__(self, parent, arg)
 
@@ -522,8 +522,8 @@ class icCustomArgEdit(icCustomComboCtrl):
     def __init__(self, parent, arg=None):
         """
         Конструктор.
-        @param parent: Родительское окно.
-        @param arg: Структура аргумента.
+        :param parent: Родительское окно.
+        :param arg: Структура аргумента.
         """
         icCustomComboCtrl.__init__(self, parent, -1, size=wx.Size(-1, 20))
 
@@ -663,7 +663,7 @@ class icLabelChoice(wx.StaticText):
     def selectByName(self, name):
         """
         Выбрать элемент по его имени.
-        @return: Индекс выбранного элемента.
+        :return: Индекс выбранного элемента.
         """
         item_names = [item['name'] for item in self.items]
         try:

@@ -34,14 +34,14 @@ class MetaTreeBrows(icobjectinterface.icObjectInterface):
         """
         Конструктор.
         
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type metatype: C{string}
-        @param metatype: Имя метатипа.
-        @type bPanelBuff: C{string}
-        @param bPanelBuff: Признак буферизации панелей.
-        @type metaObj: C{MetaItem}
-        @param metaObj: Метоописание дерева объектов. Если данный атрибут определен,
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type metatype: C{string}
+        :param metatype: Имя метатипа.
+        :type bPanelBuff: C{string}
+        :param bPanelBuff: Признак буферизации панелей.
+        :type metaObj: C{MetaItem}
+        :param metaObj: Метоописание дерева объектов. Если данный атрибут определен,
             то параметр <metatype> игнорируется.
         """
         #   Указатель на левую панель
@@ -250,8 +250,8 @@ class MetaTreeBrows(icobjectinterface.icObjectInterface):
         """
         Устанавливает признак разрешающий или запрещающий редактировать дерево.
         
-        @type bEdit: C{bool}
-        @param bEdit: Признак разрешающий или запрещающий редактировать дерево.
+        :type bEdit: C{bool}
+        :param bEdit: Признак разрешающий или запрещающий редактировать дерево.
         """
         self.GetNameObj('plansTreeCtrl').SetEditMode(bEdit)
 

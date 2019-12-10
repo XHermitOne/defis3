@@ -33,7 +33,7 @@ class icEditPlanPanel(edit_plan_panel_proto.icEditPlanPanelProto,
     def init(self):
         """
         Инициализация внутренних контролов.
-        @return: True/False.
+        :return: True/False.
         """
         # Отключить кнопку распахивания, т.к. уже распахнут сплиттер
         self.ctrl_toolBar.EnableTool(self.expand_tool.GetId(), False)
@@ -42,7 +42,7 @@ class icEditPlanPanel(edit_plan_panel_proto.icEditPlanPanelProto,
     def setPlanMetatree(self, plan_metatree=None):
         """
         Установить план для редактирования.
-        @param plan_metatree: Объект метадерева плана.
+        :param plan_metatree: Объект метадерева плана.
         """
         self.plan_browser.setMetaTree(plan_metatree)
 
@@ -66,11 +66,11 @@ class icEditPlanPanel(edit_plan_panel_proto.icEditPlanPanelProto,
 def show_edit_plan_panel(parent=None, plan_metatree=None):
     """
     Открыть панель ведения планирования.
-    @param parent: Родительское окно панели.
+    :param parent: Родительское окно панели.
         Если не определено, то берется главное окно приложения.
-    @param plan_metatree: Объект дерева метадерева плана.
+    :param plan_metatree: Объект дерева метадерева плана.
         Объект может задаваться паспортом или объектом
-    @return: True/False.
+    :return: True/False.
     """
     try:
         if parent is None:

@@ -274,7 +274,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
     def saveINIOpenedPath(self, prj_path):
         """
         Сохранить в INI файле путь открытого проекта.
-        @param prj_path: Путь открытого проекта.
+        :param prj_path: Путь открытого проекта.
         """
         inifunc.saveParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths', prj_path)
         prj_paths = inifunc.loadParamINIValue(PRJ_INI_FILE, 'PRJ', 'OpenedPaths')
@@ -360,8 +360,8 @@ class icMenuRootNode(flatmenu.FlatMenu):
     def editFileIDE(self, filename):
         """
         Редактирование файла в редакторе.
-        @param filename: Полное имя редактируемого файла.
-        @return: True/Falseю
+        :param filename: Полное имя редактируемого файла.
+        :return: True/Falseю
         """
         if not os.path.exists(filename):
             dlgfunc.openMsgBox(u'ПРОЕКТ',

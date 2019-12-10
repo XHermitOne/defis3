@@ -32,9 +32,9 @@ monthFileNameDict = {'m01': u'Январь',
 def getPlanMethodChoice(PlanModule_=None):
     """
     Получение списка выбора методов расчетов планов.
-    @param PlanModule_: Модуль, в котором находятся функции
+    :param PlanModule_: Модуль, в котором находятся функции
         расчета плановых значений.
-    @return: Возвращает список строк в формате
+    :return: Возвращает список строк в формате
         'имя функции-метода  описание'.
     """
     func_list = toolfunc.getFuncListInModule(PlanModule_)

@@ -61,7 +61,7 @@ MONTH_LIST = (u'Январь', u'Февраль', u'Март', u'Апрель',
 class icMonthChoiceCtrl(parentModule.icChoice):
     """
     Компонент выбора месяца.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,

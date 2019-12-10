@@ -8,8 +8,8 @@
 виде таблицы и разрешает изменять размеры определенных колонках и рядах при изменении размеров
 родительского окна.
 
-@type SPC_IC_GRID_BAGSIZER: C{Dictionary}
-@var SPC_IC_GRID_BAGSIZER: Спецификация на ресурсное описание компонента. Описание ключей:
+:type SPC_IC_GRID_BAGSIZER: C{Dictionary}
+:var SPC_IC_GRID_BAGSIZER: Спецификация на ресурсное описание компонента. Описание ключей:
     - B{name = 'DefaultName'}: Имя объекта.
     - B{type = 'BagGridSizer'}: Тип объекта.
     - B{flexCols = []}: Указываются номера колонок, размеры которых могут изменяться.
@@ -94,18 +94,18 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
                  bCounter=False, progressDlg=None, sizer=None):
         """
         Конструктор для создания объекта icGridBagSizer.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type sizer: C{icSizer}
-        @param sizer: Ссылка на родительский сайзер.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type sizer: C{icSizer}
+        :param sizer: Ссылка на родительский сайзер.
         """
         icSpcDefStruct(SPC_IC_GRID_BAGSIZER, component)
         #   Кортеж задающий вид прокутки (bHoriz, bVert)
@@ -270,10 +270,10 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
     def FindCell(self, row, col):
         """
         Возвращает по заданным координатам объект, который в ней находится.
-        @type row: C{int}
-        @param row: Номер ряда.
-        @type col: C{int}
-        @param col: Номер колонки.
+        :type row: C{int}
+        :param row: Номер ряда.
+        :type col: C{int}
+        :param col: Номер колонки.
         """
         for obj in self.objectList:
             _row, _col = obj.position
@@ -342,10 +342,10 @@ class icGridBagSizer(icSizer, wx.GridBagSizer):
         """
         Вычисляет координаты ячеки по позиции на окне, к которму привязан
         GridBagSizer.
-        @type pt: C{wx.Point}
-        @param pt: позиции в окне.
-        @rtype: C{tuple}
-        @return: Возвращает координату ячеки.
+        :type pt: C{wx.Point}
+        :param pt: позиции в окне.
+        :rtype: C{tuple}
+        :return: Возвращает координату ячеки.
         """
         x, y = pt
         col, row = (0, 0)

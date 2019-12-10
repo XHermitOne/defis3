@@ -4,8 +4,8 @@
 """
 Модуль описания компонента линейки горизонтального меню.
 
-@type SPC_IC_MENUBAR: C{dictionary}
-@var SPC_IC_MENUBAR: Спецификация на ресурсное описание компонента icMenuBar.
+:type SPC_IC_MENUBAR: C{dictionary}
+:var SPC_IC_MENUBAR: Спецификация на ресурсное описание компонента icMenuBar.
 Описание ключей SPC_IC_MENUBAR:
     - B{name = 'description'}: Описание.
 """
@@ -73,7 +73,7 @@ class icMenuBar(wx.MenuBar):
     def appendMenuBar(self, MenuBar_=None):
         """
         Добавить к существующему меню выпадающие меню из другого горизонтального меню.
-        @param MenuBar_: Объект добавляемого горизонтального меню.
+        :param MenuBar_: Объект добавляемого горизонтального меню.
         """
         if MenuBar_:
             for i_menu in range(MenuBar_.GetMenuCount()):
@@ -83,8 +83,8 @@ class icMenuBar(wx.MenuBar):
     def DoMenu(self, MenuItems_):
         """
         Создать меню .
-        @param MenuItems_: список ресурсов пунктов меню.
-        @return: Возвращает ссылку на созданное горизонтальное меню или
+        :param MenuItems_: список ресурсов пунктов меню.
+        :return: Возвращает ссылку на созданное горизонтальное меню или
             None в случае ошибки.
         """
         try:
@@ -108,8 +108,8 @@ class icMenuBar(wx.MenuBar):
     def AddToLoadMenu(self, MenuItems_):
         """
         Догрузить меню.
-        @param MenuItems_: список имен пунктов меню.
-        @return: Возвращает ссылку на созданное горизонтальное меню или
+        :param MenuItems_: список имен пунктов меню.
+        :return: Возвращает ссылку на созданное горизонтальное меню или
             None в случае ошибки.
         """
         try:
@@ -135,9 +135,9 @@ class icMenuBar(wx.MenuBar):
     def AppendMenuItem(self, Menu_, ItemName_, ItemStruct_):
         """
         Добавить пункт.
-        @param Menu_: объект меню,  к которому привязывается пункт.
-        @param ItemName_: имя пункта меню.
-        @param ItemStruct_: струтура пункта (его атрибуты и поля).
+        :param Menu_: объект меню,  к которому привязывается пункт.
+        :param ItemName_: имя пункта меню.
+        :param ItemStruct_: струтура пункта (его атрибуты и поля).
         """
         # Если надпись у объекта не определена,
         # то не обрабатывать его
@@ -201,8 +201,8 @@ class icMenuBar(wx.MenuBar):
         """
         Найти объект-пункт/меню по его имени.
         Поиск производится только на уровне данного меню.
-        @param Name_: имя пункта/меню.
-        @return: Возвращает ссылку на меню или None.
+        :param Name_: имя пункта/меню.
+        :return: Возвращает ссылку на меню или None.
         """
         if Name_ in self._register:
             return self._register[Name_]
@@ -212,8 +212,8 @@ class icMenuBar(wx.MenuBar):
         """
         Найти объект-пункт/меню по его идентификатору.
         Поиск производится только на уровне данного меню.
-        @param ID_: идентификатор пункта/меню.
-        @return: Возвращает ссылку на меню или None.
+        :param ID_: идентификатор пункта/меню.
+        :return: Возвращает ссылку на меню или None.
         """
         if ID_ in self._register:
             return self._register[ID_]
@@ -223,8 +223,8 @@ class icMenuBar(wx.MenuBar):
         """
         Найти пункт меню по его имени во всей иерархии.
         Поиск производится рекурсивно во всех подменю данного меню.
-        @param Name_: имя пункта меню.
-        @return: Возвращает ссылку на пункт меню или None.
+        :param Name_: имя пункта меню.
+        :return: Возвращает ссылку на пункт меню или None.
         """
         prev_menu = None
         for menu in self._register.values():
@@ -241,8 +241,8 @@ class icMenuBar(wx.MenuBar):
         """
         Найти пункт меню по его id во всей иерархии.
         Поиск производится рекурсивно во всех подменю данного меню.
-        @param ID_: id пункта меню.
-        @return: Возвращает ссылку на пункт меню или None.
+        :param ID_: id пункта меню.
+        :return: Возвращает ссылку на пункт меню или None.
         """
         prev_menu = None
         for menu in self._register.values():
@@ -258,7 +258,7 @@ class icMenuBar(wx.MenuBar):
     def Register(self, Item_):
         """
         Прописать во внутреннем реестре.
-        @param Item_: объект пункта.
+        :param Item_: объект пункта.
         """
         item_id = Item_.GetID()
         item_name = Item_.GetAlias()

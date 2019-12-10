@@ -5,23 +5,23 @@
 Класс описания ячейки сложной шапки.
 Модуль содержит описания класса ячейки сложной шапки.
 
-@type BGR_SOLID: C{int}
-@var BGR_SOLID: Идентификатор сплошной одноцветной заливки.
-@type BGR_GRAD_TOP: C{int}
-@var BGR_GRAD_TOP: Идентификатор градиентной заливки в вертикальном направлении
+:type BGR_SOLID: C{int}
+:var BGR_SOLID: Идентификатор сплошной одноцветной заливки.
+:type BGR_GRAD_TOP: C{int}
+:var BGR_GRAD_TOP: Идентификатор градиентной заливки в вертикальном направлении
     от светлого к темному.
-@type BGR_GRAD_BOTTOM: C{int}
-@var BGR_GRAD_BOTTOM: Идентификатор градиентной заливки в вертикальном направлении
+:type BGR_GRAD_BOTTOM: C{int}
+:var BGR_GRAD_BOTTOM: Идентификатор градиентной заливки в вертикальном направлении
     от темного к светлому.
-@type BGR_GRAD_LEFT: C{int}
-@var BGR_GRAD_LEFT: Идентификатор градиентной заливки в горизонтальном направлении
+:type BGR_GRAD_LEFT: C{int}
+:var BGR_GRAD_LEFT: Идентификатор градиентной заливки в горизонтальном направлении
     от светлого к темному.
-@type BGR_GRAD_RIGHT: C{int}
-@var BGR_GRAD_RIGHT: Идентификатор градиентной заливки в горизотнальном направлении
+:type BGR_GRAD_RIGHT: C{int}
+:var BGR_GRAD_RIGHT: Идентификатор градиентной заливки в горизотнальном направлении
     от темного к светлому.
 
-@type SPC_IC_HEADCELL: C{Dictionary}
-@var SPC_IC_HEADCELL: Спецификация на описание ячееки сложной шапки. Описание ключей:
+:type SPC_IC_HEADCELL: C{Dictionary}
+:var SPC_IC_HEADCELL: Спецификация на описание ячееки сложной шапки. Описание ключей:
 
     - B{name='CellHead'}: Имя объекта.
     - B{type='CellHead'}: Тип объекта.
@@ -164,16 +164,16 @@ class icHeadCell(icwidget.icWidget, wx.Control):
                  bCounter=False, progressDlg=None):
         """
         Конструктор для создания объекта icBoxSizer.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_HEADCELL, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -462,8 +462,8 @@ class icHeadCell(icwidget.icWidget, wx.Control):
     def setRoundCorners(self, corners):
         """
         Устанавливает скругленные углы.
-        @type corners: C{tuple}
-        @param corners: Картеж, описывает наличие скругленных углов границы
+        :type corners: C{tuple}
+        :param corners: Картеж, описывает наличие скругленных углов границы
             в виде (LT, RT, RB, LB). Пример: (1,0,0,1)
         """
         if corners:
@@ -576,8 +576,8 @@ class icHeadCell(icwidget.icWidget, wx.Control):
     def draw(self, dc):
         """
         Функция рисует ячейку.
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
         """
         try:
             return self._draw(dc)
@@ -587,8 +587,8 @@ class icHeadCell(icwidget.icWidget, wx.Control):
     def _draw(self, dc):
         """
         Функция рисует ячейку.
-        @type dc: C{wx.DC}
-        @param dc: Контекст устройства.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устройства.
         """
         # dc.BeginDrawing()
         clr = self.GetBackgroundColour()

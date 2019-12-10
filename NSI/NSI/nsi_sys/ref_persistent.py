@@ -34,7 +34,7 @@ class icRefTablePersistent(object):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         # Закешированное имя таблицы
         self.table_name = None
@@ -62,7 +62,7 @@ class icRefTablePersistent(object):
         """
         Функции поддержки блокировок.
         Заблокировать текущий. Блокировка ведется по UUID.
-        @param code: Код блокируемого объекта.
+        :param code: Код блокируемого объекта.
         """
         if code:
             if self._lockSystem:
@@ -74,7 +74,7 @@ class icRefTablePersistent(object):
         """
         Функции поддержки блокировок.
         Разблокировать.
-        @param code: Код блокируемого объекта.
+        :param code: Код блокируемого объекта.
         """
         if code:
             if self._lockSystem:
@@ -86,7 +86,7 @@ class icRefTablePersistent(object):
         """
         Функции поддержки блокировок.
         Заблокирован?
-        @param code: Код блокируемого объекта.
+        :param code: Код блокируемого объекта.
         """
         if code:
             if self._lockSystem:
@@ -98,7 +98,7 @@ class icRefTablePersistent(object):
         """
         Функции поддержки блокировок.
         Владелец блокировки.
-        @param code: Код блокируемого объекта.
+        :param code: Код блокируемого объекта.
         """
         if code:
             if self._lockSystem:
@@ -111,8 +111,8 @@ class icRefTablePersistent(object):
         """
         Функции поддержки блокировок.
         Моя блокировка?
-        @param code: Код блокируемого объекта.
-        @return: True/False.
+        :param code: Код блокируемого объекта.
+        :return: True/False.
         """
         if code:
             lock_name = self.getSprav().getName() + self.getName() + code
@@ -123,8 +123,8 @@ class icRefTablePersistent(object):
     def genTableRes(self, table_name=None):
         """
         Генерация ресурса таблицы уровня.
-        @param table_name: Имя таблицы уровня.
-        @return: True - ресурс успешно создан / False - ошибка.
+        :param table_name: Имя таблицы уровня.
+        :return: True - ресурс успешно создан / False - ошибка.
         """
         # Открыть проект
         prj_res_ctrl = glob_functions.getKernel().getProjectResController()
@@ -183,7 +183,7 @@ class icRefTablePersistent(object):
     def _genTableName(self):
         """
         Генерация имени таблицы уровня.
-        @return: Имя таблицы уровня.
+        :return: Имя таблицы уровня.
         """
         sprav = self.getSprav()
         level_names = [level.getName() for level in sprav.getLevels()]
@@ -194,8 +194,8 @@ class icRefTablePersistent(object):
     def _createTableRes(self, table_name=None):
         """
         Генерация спецификации таблицы уровня.
-        @param table_name: Имя таблицы уровня.
-        @return: True - ресурс успешно создан / False - ошибка.
+        :param table_name: Имя таблицы уровня.
+        :return: True - ресурс успешно создан / False - ошибка.
         """
         if table_name is None:
             table_name = self.getTableName()
@@ -217,7 +217,7 @@ class icRefTablePersistent(object):
     def _createTabSpc(self, table_name=None):
         """
         Создать спецификацию таблицы.
-        @param table_name: Имя таблицы уровня.
+        :param table_name: Имя таблицы уровня.
         """
         tab_spc = util.icSpcDefStruct(util.DeepCopy(ic_tab_wrp.ic_class_spc), None)
         # Установить свойства таблицы
@@ -244,8 +244,8 @@ class icRefTablePersistent(object):
     def _createFieldSpc(self, **field_attrs):
         """
         Создать спецификацию поля кода-идентификатора объекта-ссылки.
-        @param field_attrs: Атрибуты поля.
-        @param field_name: Имя поля кода-идентификатора объекта-ссылки.
+        :param field_attrs: Атрибуты поля.
+        :param field_name: Имя поля кода-идентификатора объекта-ссылки.
         """
         field_spc = util.icSpcDefStruct(util.DeepCopy(ic_field_wrp.ic_class_spc), None)
 
@@ -263,7 +263,7 @@ class icRefTablePersistent(object):
     def _createLinkSpc(self, table_name):
         """
         Создать спецификацию связи c таблицей.
-        @param table_name: Имя таблицы с которой устанавливается связь.
+        :param table_name: Имя таблицы с которой устанавливается связь.
         """
         # Инициализировать спецификацию связи
         link_spc = util.icSpcDefStruct(util.DeepCopy(ic_link_wrp.ic_class_spc), None)
@@ -277,8 +277,8 @@ class icRefTablePersistent(object):
     def _gen_parent_link_name(self, parent_table_name):
         """
         Генерация имени связи с родительской таблицей по имени родительской таблицы.
-        @param parent_table_name: Имя родительской таблицы.
-        @return: Имя связи с родительской таблицей.
+        :param parent_table_name: Имя родительской таблицы.
+        :return: Имя связи с родительской таблицей.
         """
         return 'id_' + parent_table_name.lower()
 
@@ -301,7 +301,7 @@ class icRefFieldPersistent(object):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         pass
 

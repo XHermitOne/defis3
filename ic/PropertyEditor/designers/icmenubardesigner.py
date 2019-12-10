@@ -32,16 +32,16 @@ class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesig
             evalSpace = None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """ 
         Конструктор для создания icMenuBar
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         from ic.components.user import ic_menubar_wrp
         #import ic.engine.ic_menu as ic_menu

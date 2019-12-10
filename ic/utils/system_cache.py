@@ -4,8 +4,8 @@
 """
 Модуль управления буферезированными данными.
 
-@type systemCache: C{icCache}
-@var systemCache: Системный буфер.
+:type systemCache: C{icCache}
+:var systemCache: Системный буфер.
 """
 
 import copy
@@ -39,10 +39,10 @@ class icCache:
     def add(self, classObj, id, obj):
         """ 
         Добавляет объект в буфер класса.
-        @type classObj: C{string}
-        @param classObj: Имя класса буфера.
-        @param id: Идентификатор объекта.
-        @param obj: Объект, которых кладется в буфер.
+        :type classObj: C{string}
+        :param classObj: Имя класса буфера.
+        :param id: Идентификатор объекта.
+        :param obj: Объект, которых кладется в буфер.
         """
         if classObj in self.cache:
             self.cache[classObj][id] = obj
@@ -62,12 +62,12 @@ class icCache:
     def get(self, classObj, id, bCopy=False):
         """ 
         Возвращает объект из буфера.
-        @type classObj: C{string}
-        @param classObj: Имя класса буфера.
-        @param id: Идентификатор объекта.
-        @param obj: Объект, которых кладется в буфер.
-        @type bCopy: C{bool}
-        @param bCopy: Признак возвата копии объекта.
+        :type classObj: C{string}
+        :param classObj: Имя класса буфера.
+        :param id: Идентификатор объекта.
+        :param obj: Объект, которых кладется в буфер.
+        :type bCopy: C{bool}
+        :param bCopy: Признак возвата копии объекта.
         """
         if bCopy:
             return copy.deepcopy(self.cache[classObj][id])
@@ -77,8 +77,8 @@ class icCache:
     def clear(self, classObj=None):
         """ 
         Чистит буфер класса.
-        @type classObj: C{string}
-        @param classObj: Имя класса буфера.
+        :type classObj: C{string}
+        :param classObj: Имя класса буфера.
         """
         if classObj in self.cache:
             return self.cache.pop(classObj)
@@ -88,8 +88,8 @@ class icCache:
     def getAll(self, bCopy=False):
         """
         Получить буфер полностью.
-        @type bCopy: C{bool}
-        @param bCopy: Признак возвата копии.
+        :type bCopy: C{bool}
+        :param bCopy: Признак возвата копии.
         """
         if bCopy:
             return copy.deepcopy(self.cache)

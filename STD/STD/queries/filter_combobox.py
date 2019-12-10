@@ -72,7 +72,7 @@ class icFilterComboBoxProto(wx.ComboBox):
     def setEnvironment(self, env=None):
         """
         Установить окружение для работы редактора.
-        @param env: Окружение, словарно-списковая структура формата
+        :param env: Окружение, словарно-списковая структура формата
         filter_builder_env.FILTER_ENVIRONMENT.
         """
         self.environment = env
@@ -85,14 +85,14 @@ class icFilterComboBoxProto(wx.ComboBox):
     def _genUUID(self):
         """
         Генерация UUID.
-        @return: UUID.
+        :return: UUID.
         """
         return str(uuid.uuid4())
 
     def clearFilters(self):
         """
         Очистить фильтры контрола.
-        @return: True/False
+        :return: True/False
         """
         self._filters = []
         self.Clear()
@@ -101,8 +101,8 @@ class icFilterComboBoxProto(wx.ComboBox):
     def setFilters(self, filters):
         """
         Установить фильтры контрола.
-        @param filters:
-        @return: True/False.
+        :param filters:
+        :return: True/False.
         """
         # Сначала очистить комбобокс
         self.clearFilters()
@@ -114,7 +114,7 @@ class icFilterComboBoxProto(wx.ComboBox):
     def saveFilters(self, filters_filename=None):
         """
         Сохранить фильтры.
-        @param filters_filename: Имя файла хранения фильтров.
+        :param filters_filename: Имя файла хранения фильтров.
             Если не определен, то генерируется по UUID.
         """
         if os.path.exists(filters_filename):
@@ -134,7 +134,7 @@ class icFilterComboBoxProto(wx.ComboBox):
     def loadFilters(self, filters_filename=None):
         """
         Загрузить фильтры.
-        @param filters_filename: Имя файла хранения фильтров.
+        :param filters_filename: Имя файла хранения фильтров.
             Если не определен, то генерируется по UUID.
         """
         filters_filename = os.path.normpath(filters_filename)
@@ -155,8 +155,8 @@ class icFilterComboBoxProto(wx.ComboBox):
     def selectFilter(self, filter_name):
         """
         Сделать активным фильтр в комбобокс.
-        @param filter_name: Имя фильтра.
-        @return: Структура выбранного фильтра, или None если фильтр не найден.
+        :param filter_name: Имя фильтра.
+        :return: Структура выбранного фильтра, или None если фильтр не найден.
         """
         find_filter = [(i, filter_dict) for i, filter_dict in enumerate(self._filters) if filter_dict['record_id'] == filter_name]
         if find_filter:
@@ -168,7 +168,7 @@ class icFilterComboBoxProto(wx.ComboBox):
     def getSelectedFilter(self):
         """
         Выбранный фильтр.
-        @return: Возвращает структуру выбранного фильтра или
+        :return: Возвращает структуру выбранного фильтра или
             None, если фильтрация отключена.
         """
         i = self.GetSelection()-1
@@ -190,9 +190,9 @@ class icFilterComboBoxProto(wx.ComboBox):
     def addFilter(self, new_filter=None, auto_select=True):
         """
         Дбавить фильтр.
-        @param new_filter: Структура фильтра.
-        @param auto_select: Автовыбор нового фильтра?
-        @return: True/False.
+        :param new_filter: Структура фильтра.
+        :param auto_select: Автовыбор нового фильтра?
+        :return: True/False.
         """
         if new_filter is None:
             # Необходимо сначала сконструировать фильтр
@@ -218,8 +218,8 @@ class icFilterComboBoxProto(wx.ComboBox):
     def delFilter(self, filter_name=None):
         """
         Удалить фильтр.
-        @param filter_name: Имя фильтра.
-        @return: True/False.
+        :param filter_name: Имя фильтра.
+        :return: True/False.
         """
         if filter_name is None:
             # Если имя не определено удалить выбранный фильтр

@@ -169,7 +169,7 @@ class icDBResLoadManager(object):
     def is_db_store(self, path=None):
         """
         Принак хранения ресурса в базе.
-        @param path: Идентификатор ресурса (путь в файловой системе).
+        :param path: Идентификатор ресурса (путь в файловой системе).
         """
         return self.dbstore and [el for el in self.dbstore if el in path or []]
 
@@ -177,7 +177,7 @@ class icDBResLoadManager(object):
     def load_db_res(self, path):
         """
         Загрузка из базы.
-        @param path: Идентификатор ресурса (путь в файловой системе).
+        :param path: Идентификатор ресурса (путь в файловой системе).
         """
         if self.sysdb:
             session = self.sysdb.session()
@@ -191,9 +191,9 @@ class icDBResLoadManager(object):
     def lock_db(self, path, flag=True, ttl=None):
         """
         Блокирование ресурса.
-        @param path: Идентификатор.
-        @param flag: Признак блокировки/разблокировки.
-        @param bDel: Признак удаления записи.
+        :param path: Идентификатор.
+        :param flag: Признак блокировки/разблокировки.
+        :param bDel: Признак удаления записи.
         """
         if self.sysdb:
             session = self.sysdb.session()
@@ -220,8 +220,8 @@ class icDBResLoadManager(object):
     def unlock_db(self, path, bDel=False):
         """
         Разблокирование ресурса.
-        @param path: Идентификатор.
-        @param bDel: Признак удаления записи.
+        :param path: Идентификатор.
+        :param bDel: Признак удаления записи.
         """
         if self.sysdb:
             if bDel:
@@ -237,7 +237,7 @@ class icDBResLoadManager(object):
     def lock_file(self, path,  ttl=None):
         """
         Блокирование ресурса.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         p, tail = os.path.split(path)
         nm, ext = tail.split('.')
@@ -246,7 +246,7 @@ class icDBResLoadManager(object):
     def unlock_file(self, path):
         """
         Разблокирование ресурса.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         p, tail = os.path.split(path)
         nm, ext = tail.split('.')
@@ -255,7 +255,7 @@ class icDBResLoadManager(object):
     def lock_res(self, path, ttl=None, bAdd=True):
         """
         Блокирование ресурса.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         if self.is_db_store(path):
             return self.lock_db(path, ttl=ttl)
@@ -265,7 +265,7 @@ class icDBResLoadManager(object):
     def unlock_res(self, path):
         """
         Блокирование ресурса.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         if self.is_db_store(path):
             return self.unlock_db(path)
@@ -276,7 +276,7 @@ class icDBResLoadManager(object):
     def is_lock_db(self, path):
         """
         Признак блокировки объекта.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         if self.sysdb:
             session = self.sysdb.session()
@@ -301,7 +301,7 @@ class icDBResLoadManager(object):
     def is_lock_file(self, path):
         """
         Признак блокировки объекта.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         p, tail = os.path.split(path)
         nm, ext = tail.split('.')
@@ -310,7 +310,7 @@ class icDBResLoadManager(object):
     def is_lock_res(self, path):
         """
         Признак блокирования ресурса.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         if self.dbstore and [el for el in self.dbstore if el in path]:
             return self.is_lock_db(path)
@@ -320,7 +320,7 @@ class icDBResLoadManager(object):
     def load_file_res(self, path, bRefresh=True):
         """
         Загрузка из файла.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         filename = filefunc.getAbsolutePath(path)
         log.debug(u'Загрузка ресурса <%s>. Файл ресурса <%s>' % (path, filename))
@@ -330,7 +330,7 @@ class icDBResLoadManager(object):
     def load_res(self, path, bRefresh=True):
         """
         Загружает ресурс.
-        @param path: Идентификатор.
+        :param path: Идентификатор.
         """
         res = None
         if self.is_db_store(path):

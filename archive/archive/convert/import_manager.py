@@ -58,8 +58,8 @@ class icBalansImportManager(icImportManagerInterface):
     def __init__(self, pack_scan_panel=None, dbf_find_smb_urls=()):
         """
         Конструктор.
-        @param pack_scan_panel: Панель отображения списка документов в пакетной обработке.
-        @param dbf_find_smb_urls: Список путей SMB ресурсов для поиска DBF файлов загрузки.
+        :param pack_scan_panel: Панель отображения списка документов в пакетной обработке.
+        :param dbf_find_smb_urls: Список путей SMB ресурсов для поиска DBF файлов загрузки.
         """
         self.dbf_find_smb_urls = dbf_find_smb_urls
 
@@ -89,9 +89,9 @@ class icBalansImportManager(icImportManagerInterface):
     def smb_download_dbf(self, download_urls=None, dbf_filename=None, dst_path=None):
         """
         Найти и загрузить DBF файл.
-        @param download_urls: Список путей поиска DBF файла.
-        @param dbf_filename: Имя DBF файла.
-        @return: True - Произошла загрузка, False - ничего не загружено.
+        :param download_urls: Список путей поиска DBF файла.
+        :param dbf_filename: Имя DBF файла.
+        :return: True - Произошла загрузка, False - ничего не загружено.
         """
         if download_urls is None:
             download_urls = self.dbf_find_smb_urls
@@ -144,8 +144,8 @@ class icBalansImportManager(icImportManagerInterface):
     def find_doc_type_code(self, typ_doc, in_out):
         """
         Поиск кода типа документа.
-        @param type_doc: Наименование типа документа.
-        @param in_out: Признак приходного/расходного документа.
+        :param type_doc: Наименование типа документа.
+        :param in_out: Признак приходного/расходного документа.
         """
         typ = None
         log.debug(u'Приход/Расход <%d>' % in_out)
@@ -180,8 +180,8 @@ class icBalansImportManager(icImportManagerInterface):
     def get_doc_type_subcode(self, typ_doc, in_out):
         """
         Поиск кода типа документа.
-        @param type_doc: Наименование типа документа.
-        @param in_out: Признак приходного/расходного документа.
+        :param type_doc: Наименование типа документа.
+        :param in_out: Признак приходного/расходного документа.
         """
         if typ_doc.upper() == u'СЧЕТ-ФАКТУРА':
             return u'СФ'
@@ -246,9 +246,9 @@ class icBalansImportManager(icImportManagerInterface):
     def gen_contragent_code(self, inn, kpp, i=0):
         """
         Генерация кода контрагента по инн + кпп.
-        @param inn: ИНН контрагента.
-        @param kpp: КПП контрагента.
-        @param i: Порядковый индекс в обработке.
+        :param inn: ИНН контрагента.
+        :param kpp: КПП контрагента.
+        :param i: Порядковый индекс в обработке.
         """
         if inn == '0' or not inn.strip():
             # ВНИМАНИЕ! У иностранных фирм может быть не указан ИНН
@@ -283,8 +283,8 @@ class icBalansImportManager(icImportManagerInterface):
     def is_correct_contragent_code(self, contragent_code):
         """
         Контроль на не корректный код контрагента.
-        @param contragent_code: Проверяемый код контрагента.
-        @return: True - код корректный/False - не корректный.
+        :param contragent_code: Проверяемый код контрагента.
+        :return: True - код корректный/False - не корректный.
         """
         try:
             return (contragent_code is not None) and bool(contragent_code.strip()) and (len(contragent_code) == 21)

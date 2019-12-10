@@ -196,7 +196,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def addNode(self, root, res, level=0, start_level=0, is_progress=False):
         """
         Добавить дочерние узлы, описанные словарем.
-        @param is_progress: Отображать прогресс бар при загрузке?
+        :param is_progress: Отображать прогресс бар при загрузке?
         """
         id_pic, id_exp_pic = self._getPicturesId(res)
         
@@ -223,8 +223,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def _isChildrenRes(self, Res_):
         """
         Есть ли в описании ресурса описание дочерних элементов?
-        @param Res_: Ресурс.
-        @return: Возвращает True/False.
+        :param Res_: Ресурс.
+        :return: Возвращает True/False.
         """
         if 'children' in Res_ and Res_['children']:
             return True
@@ -233,8 +233,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def _getPicturesId(self, Res_):
         """
         Определение картинок для изобращения узла по ресурсу этого узла.
-        @param Res_: Ресурс узла.
-        @return: Кортеж из 2-х элементов - идентификаторов картинок.
+        :param Res_: Ресурс узла.
+        :return: Кортеж из 2-х элементов - идентификаторов картинок.
         """
         # Если нет дочерних элементов в описании, тогда картинки-файлы
         if not self._isChildrenRes(Res_):
@@ -254,8 +254,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def setItemRecord(self, Item_, Record_):
         """
         Установить список записи на узле.
-        @param Item_: ID узла у которого устанавливается запись.
-        @param Record_: Запись узла. Список.
+        :param Item_: ID узла у которого устанавливается запись.
+        :param Record_: Запись узла. Список.
         """
         if Record_ and self.isList(Record_):
             for idx, value in enumerate(Record_[1:]):
@@ -268,8 +268,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def getItemRecord(self, Item_):
         """
         Список записи на узле.
-        @param Item_: ID узла у которого устанавливается запись.
-        @return: Возвращает список строк записи узла. 
+        :param Item_: ID узла у которого устанавливается запись.
+        :return: Возвращает список строк записи узла.
             Или None в случае ошибки.
         """
         try:
@@ -287,7 +287,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def getSelectionRecord(self):
         """
         Список записи выбранного узла.
-        @return: Возвращает список строк записи узла. 
+        :return: Возвращает список строк записи узла.
             Или None в случае ошибки.
         """
         selection_item = self.GetMainWindow().GetSelection()
@@ -296,8 +296,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def setLabelCols(self, LabelCols_):
         """
         Установить надписи колонок.
-        @param LabelCols_: Надписи колонок. Список строк.
-        @return: Возвращает результат выполнения функции True/False.
+        :param LabelCols_: Надписи колонок. Список строк.
+        :return: Возвращает результат выполнения функции True/False.
         """
         try:
             col_count = self.GetMainWindow().GetColumnCount()
@@ -343,13 +343,13 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def LoadTree(self, Tree_=None, AutoSelect_=True, AutoExpand_=True, is_progress=False):
         """
         Заполняем дерево.
-        @type Tree_: C{list}
-        @param Tree_: Словарно-списковая структура, отображаемая в дереве.
-        @type AutoSelect_: C{bool}
-        @param AutoSelect_: Автоматически выбрать последний элемент.
-        @type AutoExpand_: C{bool}
-        @param AutoExpand_: Автоматически развернуть корневой элемент.
-        @param is_progress: Отображать прогресс бар при загрузке?
+        :type Tree_: C{list}
+        :param Tree_: Словарно-списковая структура, отображаемая в дереве.
+        :type AutoSelect_: C{bool}
+        :param AutoSelect_: Автоматически выбрать последний элемент.
+        :type AutoExpand_: C{bool}
+        :param AutoExpand_: Автоматически развернуть корневой элемент.
+        :param is_progress: Отображать прогресс бар при загрузке?
         """
         # Если включен автовыбор элемента
         # то сначала сбросить выделение всех элементов
@@ -400,8 +400,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def selectItemPath(self, ItemPath_, CurItem_=None):
         """
         Выбрать элемент по пути.
-        @param ItemPath_: Путь до элемента.
-        @param CurItem_: Текущий элемент поиска. 
+        :param ItemPath_: Путь до элемента.
+        :param CurItem_: Текущий элемент поиска.
             Если None, то поиск начиниется с корня.
         """
         if CurItem_ is None:
@@ -419,8 +419,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def getItemPath(self, Item_, Path_=None):
         """
         Путь до элемента. Путь - список имен элементов.
-        @param Item_: Элемент дерева.
-        @param Path_: Текущий заполненный путь.
+        :param Item_: Элемент дерева.
+        :param Path_: Текущий заполненный путь.
         """
         parent = self.GetMainWindow().GetItemParent(Item_)
         # Если есть родительский элемент, то вызвать рекурсивно
@@ -440,8 +440,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def getItemChildren(self, Item_=None):
         """
         Список дочерних элементов узла дерева.
-        @param Item_: Узел/элемент дерева. Если None, то корневой элемент.
-        @return: Список дочерних элементов узла дерева 
+        :param Item_: Узел/элемент дерева. Если None, то корневой элемент.
+        :return: Список дочерних элементов узла дерева
             или None в случае ошибки.
         """
         try:
@@ -468,18 +468,18 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def findItemColumnString(self, string, curItem=None, columns=None, curColIdx=0, bILike=True):
         """
         Функция ищет подстроку в массиве данных.
-        @type string: C{string}
-        @param string: Строка поиска
-        @type curItem: C{int}
-        @param curItem: Элемент дерева, с которого начинается поиск.
-        @type columns: C{list}
-        @param columns: Список колонок записи каждого элемента, по которым ведется поиск.
-        @type curColIdx: C{int}
-        @param curColIdx: Индекс текущей колонки из списка колонок.
-        @type bILike: C{bool}
-        @param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
+        :type string: C{string}
+        :param string: Строка поиска
+        :type curItem: C{int}
+        :param curItem: Элемент дерева, с которого начинается поиск.
+        :type columns: C{list}
+        :param columns: Список колонок записи каждого элемента, по которым ведется поиск.
+        :type curColIdx: C{int}
+        :param curColIdx: Индекс текущей колонки из списка колонок.
+        :type bILike: C{bool}
+        :param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
         на точное соответствие.
-        @return: Возвращает кортеж (номер элемента дерева, где найдена искомая строка,
+        :return: Возвращает кортеж (номер элемента дерева, где найдена искомая строка,
         индекс номера колонки, где найдена искомая строка).
         """
         try:
@@ -548,14 +548,14 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def selectFindItemColumn(self, string, columns=None, bILike=True):
         """
         Поиск и выделение пункта по строке.
-        @type string: C{string}
-        @param string: Строка поиска
-        @type columns: C{list}
-        @param columns: Список колонок записи каждого элемента, по которым ведется поиск.
-        @type bILike: C{bool}
-        @param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
+        :type string: C{string}
+        :param string: Строка поиска
+        :type columns: C{list}
+        :param columns: Список колонок записи каждого элемента, по которым ведется поиск.
+        :type bILike: C{bool}
+        :param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
             на точное соответствие.
-        @return: Возвращает номер элемента дерева, где найдена искомая строка.
+        :return: Возвращает номер элемента дерева, где найдена искомая строка.
         """
         cur_item = self.GetMainWindow().GetSelection()
         cur_item.Expand()
@@ -586,14 +586,14 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         """
         Функция ищет подстроку в массиве данных. Поиск производится по
         надписям элементов.
-        @type string: C{string}
-        @param string: Строка поиска
-        @type curItem: C{int}
-        @param curItem: Элемент дерева, с которого начинается поиск.
-        @type bILike: C{bool}
-        @param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
+        :type string: C{string}
+        :param string: Строка поиска
+        :type curItem: C{int}
+        :param curItem: Элемент дерева, с которого начинается поиск.
+        :type bILike: C{bool}
+        :param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
         на точное соответствие.
-        @return: Возвращает кортеж (номер элемента дерева, где найдена искомая строка,
+        :return: Возвращает кортеж (номер элемента дерева, где найдена искомая строка,
         индекс номера колонки, где найдена искомая строка).
         """
         try:
@@ -669,12 +669,12 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
         """
         Поиск и выделение пункта по строке. Поиск производится по
         надписям элементов.
-        @type string: C{string}
-        @param string: Строка поиска
-        @type bILike: C{bool}
-        @param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
+        :type string: C{string}
+        :param string: Строка поиска
+        :type bILike: C{bool}
+        :param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
             на точное соответствие.
-        @return: Возвращает номер элемента дерева, где найдена искомая строка.
+        :return: Возвращает номер элемента дерева, где найдена искомая строка.
         """
         cur_item = self.GetMainWindow().GetSelection()
 
@@ -825,8 +825,8 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def checkItemChildren(self, Item_=None, Check_=True):
         """
         Отметить все дочерние элементы.
-        @param Item_: Указанный элемент дерева.
-        @param Check_: True - установить отметку, False - убрать отметку.
+        :param Item_: Указанный элемент дерева.
+        :param Check_: True - установить отметку, False - убрать отметку.
         """
         if Item_ is None:
             Item_ = self.GetMainWindow().GetRootItem()
@@ -839,7 +839,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def LoadData(self, func=None, *arg, **kwarg):
         """
         Функция загрузки данных.
-        @param func: Функция загрузки данных, которая должна вернуть словарно-
+        :param func: Функция загрузки данных, которая должна вернуть словарно-
             списковую структуру, описывающую дерево. 
         """
         from . import delayedres
@@ -849,7 +849,7 @@ class icSmartTreeListCtrl(hypertreelist.HyperTreeList):
     def LoadData2(self, func=None, view_func=None, *arg, **kwarg):
         """
         Функция загрузки данных.
-        @param func: Функция загрузки данных, которая должна вернуть словарно-
+        :param func: Функция загрузки данных, которая должна вернуть словарно-
             списковую структуру, описывающую дерево. 
         """
         from . import delayedres
@@ -896,8 +896,8 @@ def __view_data(obj):
 def test(par=0):
     """
     Тестируем пользовательский класс.
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     app = wx.PySimpleApp()
     

@@ -5,8 +5,8 @@
 Обкладка для компонента wx.Button.
 Содержит описание класса icButton, который по ресурсному описанию создает стандартную кнопку.
 
-@type SPC_IC_BUTTON: C{dictionary}
-@var SPC_IC_BUTTON: Спецификация на ресурсное описание окна.
+:type SPC_IC_BUTTON: C{dictionary}
+:var SPC_IC_BUTTON: Спецификация на ресурсное описание окна.
 Описание ключей SPC_IC_BUTTON:
 
     - B{name = 'default'}: Имя окна.
@@ -31,8 +31,8 @@
     - B{mouseContextDown=None}: Выражение, выполняемое после нажатия правой кнопки мыши.
     - B{keyDown=None}: Выражение, выполняемое при получении сообщения от клавиатуры.
 
-@type ICButtonStyle: C{dictionary}
-@var ICButtonStyle: Словарь специальных стилей компонента.
+:type ICButtonStyle: C{dictionary}
+:var ICButtonStyle: Словарь специальных стилей компонента.
 Описание ключей ICButtonStyle:
 
     - C{wx.BU_LEFT}: Выравнивает текст подписи по левому краю кнопки (Win32).
@@ -157,18 +157,18 @@ def get_property_editor_userAttr(attr, value, pos, size,
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
-    @type attr: C{string}
-    @param attr: Имя текущего атрибута.
-    @type value: C{string}
-    @param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
-    @type pos: C{wx.Point}
-    @param pos: Позиция окна.
-    @type size: C{wx.Size}
-    @param size: Размер диалогового окна.
-    @type style: C{int}
-    @param style: Стиль диалога.
-    @type propEdt: C{ic.components.user.objects.PropNotebookEdt}
-    @param propEdt: Указатель на редактор свойств.
+    :type attr: C{string}
+    :param attr: Имя текущего атрибута.
+    :type value: C{string}
+    :param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
+    :type pos: C{wx.Point}
+    :param pos: Позиция окна.
+    :type size: C{wx.Size}
+    :param size: Размер диалогового окна.
+    :type style: C{int}
+    :param style: Стиль диалога.
+    :type propEdt: C{ic.components.user.objects.PropNotebookEdt}
+    :param propEdt: Указатель на редактор свойств.
     """
     if attr == 'userAttr':
         return get_property_editor_userAttr(attr, value, pos, size, style, propEdt, *arg, **kwarg)
@@ -227,16 +227,16 @@ class icButton(icwidget.icWidget, wx.Button):
                  bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icButton.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         self.parent = parent
         component = util.icSpcDefStruct(SPC_IC_BUTTON, component)

@@ -61,7 +61,7 @@ class icDateTimeCtrl(datetime_ctrl.icDateTimeControl,
     ВНИМАНИЕ! Наследование от icWidget д.б. на последнем месте,
     чтобы переопределить методы setValue/getValue. Они необходимы для
     заполнения значениями в формах-карточках с помощью icFormDataManger.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
 

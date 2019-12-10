@@ -764,7 +764,7 @@ class icChoiceDocsDlg(icSearchDocPanelCtrl,
     def set_filter(self, filter_requisites=None):
         """
         Установить фильтр документов по значениям реквизитов карточки документа.
-        @param filter_requisites: Словарь значений реквизитов по которым происходит фильтрация.
+        :param filter_requisites: Словарь значений реквизитов по которым происходит фильтрация.
         """
         # Если фильтр не указан, то не производить фильтрацию
         if not filter_requisites:
@@ -872,8 +872,8 @@ def search_doc_dlg(parent=None):
 def choice_docs_dlg(parent=None, prev_filter=None):
     """
     Поиск и выбор сразу нескольких документов с помощью диалоговой формы.
-    @param parent: Родительское окно.
-    @param prev_filter: Словарь предварительного фильтра документов по
+    :param parent: Родительское окно.
+    :param prev_filter: Словарь предварительного фильтра документов по
         значениям атрибутам карточки документа.
     """
     if parent is None:

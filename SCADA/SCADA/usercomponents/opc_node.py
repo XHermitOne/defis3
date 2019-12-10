@@ -82,7 +82,7 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     """
     Компонент OPC контроллера/узла SCADA системы.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
@@ -97,22 +97,22 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
@@ -135,19 +135,19 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def is_localhost(self, host=None):
         """
         Проверка указан ли хост как localhost.
-        @param host: Указанный хост.
-        @return: True - localhost/False-нет.
+        :param host: Указанный хост.
+        :return: True - localhost/False-нет.
         """
         return (not host) or (isinstance(host, str) and host.lower().strip() in ('localhost', '127.0.0.1'))
 
     def connect(self, host=None, opc_server=None):
         """
         Создание объекта OPC клиента.
-        @param host: Хост OPC сервера для возможности удаленного подключения (через DCOM) к OPC серверу.
+        :param host: Хост OPC сервера для возможности удаленного подключения (через DCOM) к OPC серверу.
             Если не определен, то берется из описания компонента.
-        @param opc_server: Имя OPC сервера.
+        :param opc_server: Имя OPC сервера.
             Если не определен, то берется из описания компонента.
-        @return: Объект OPC сервера.
+        :return: Объект OPC сервера.
         """
         if host is None:
             host = self.getHost()
@@ -185,8 +185,8 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def disconnect(self, opc_client=None):
         """
         Закрыть соединение.
-        @param opc_client: Объект OPC клиента.
-        @return: True/False.
+        :param opc_client: Объект OPC клиента.
+        :return: True/False.
         """
         try:
             if opc_client:
@@ -233,8 +233,8 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def read_value(self, address):
         """
         Чтение значения по адресу.
-        @param address: Адрес значения в узле.
-        @return: Запрашиваемое значение или None в случае ошибки чтения.
+        :param address: Адрес значения в узле.
+        :return: Запрашиваемое значение или None в случае ошибки чтения.
         """
         opc = None
 
@@ -264,8 +264,8 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def read_values(self, addresses):
         """
         Чтение значений по адресам.
-        @param addresses: Список адресов значений в узле.
-        @return: Список запрашиваемых значений или None в случае ошибки чтения.
+        :param addresses: Список адресов значений в узле.
+        :return: Список запрашиваемых значений или None в случае ошибки чтения.
         """
         opc = None
 
@@ -295,8 +295,8 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     def readTags(self, *tags):
         """
         Прочитать список тегов.
-        @param tags: Список объектов тегов.
-        @return: True/False.
+        :param tags: Список объектов тегов.
+        :return: True/False.
         """
         if not tags:
             log.warning(u'Не определен список тегов для чтения')
@@ -323,8 +323,8 @@ class icOPCNode(icwidget.icSimple, node.icSCADANodeProto):
     # def write_value(self, address, value):
     #     """
     #     Запись значения по адресу.
-    #     @param address: Адрес значения в узле.
-    #     @param value: Записываемое значение.
-    #     @return: True - запись прошла успешно/False - ошибка.
+    #     :param address: Адрес значения в узле.
+    #     :param value: Записываемое значение.
+    #     :return: True - запись прошла успешно/False - ошибка.
     #     """
     #     pass

@@ -36,7 +36,7 @@ class icStdMetaTreeBrowserProto(std_metatree_browser_proto.icStdMetaTreeBrowserP
     def setMetaTree(self, metatree=None):
         """
         Установить метадерево.
-        @param metatree: Объект метадерева.
+        :param metatree: Объект метадерева.
         """
         return self.metatree_list_ctrl.setMetaTree(metatree)
 
@@ -44,10 +44,10 @@ class icStdMetaTreeBrowserProto(std_metatree_browser_proto.icStdMetaTreeBrowserP
 def browse_metatree_std_panel(parent=None, title=u''):
     """
     Функция вызова стандартного браузера в главном органайзере.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно.
-    @param title: Заголовок.
-    @return: True/False.
+    :param title: Заголовок.
+    :return: True/False.
     """
     try:
         if parent is None:

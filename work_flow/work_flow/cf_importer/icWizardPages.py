@@ -43,8 +43,8 @@ class icCFParsePage(wx.adv.PyWizardPage):
     def __init__(self, parent, title):
         """
         Конструктор.
-        @param parent: Родительский визард, в который вставляется страница.
-        @param title: Заголовок страницы.
+        :param parent: Родительский визард, в который вставляется страница.
+        :param title: Заголовок страницы.
         """
         wx.adv.PyWizardPage.__init__(self, parent)
         
@@ -93,8 +93,8 @@ class icCFParsePage(wx.adv.PyWizardPage):
     def parse_cf_file(self, cf_filename, cf_dirname):
         """
         Парсинг файла конфигурации 1с.
-        @param cf_filename: Полное имя CF файла конфигурации 1c.
-        @param cf_dirname: Директория, в которую бедет происходить парсинг.
+        :param cf_filename: Полное имя CF файла конфигурации 1c.
+        :param cf_dirname: Директория, в которую бедет происходить парсинг.
         """
         return parse_cmd.parse_cf_file(cf_filename, cf_dirname,
                                        txt_ctrl=self.cf_parse_panel.logTxt)
@@ -107,8 +107,8 @@ class icCFChoicePage(wx.adv.PyWizardPage):
     def __init__(self, parent, title):
         """
         Конструктор.
-        @param parent: Родительский визард, в который вставляется страница.
-        @param title: Заголовок страницы.
+        :param parent: Родительский визард, в который вставляется страница.
+        :param title: Заголовок страницы.
         """
         wx.adv.PyWizardPage.__init__(self, parent)
         
@@ -175,7 +175,7 @@ class icCFChoicePage(wx.adv.PyWizardPage):
     def gen_resources(self, metaobjects):
         """
         Генерация ресурсов, соответствующих метаобъектам 1С.
-        @return:
+        :return:
         """
         log.debug(u'Запуск генерации ресурсов')
         for metaobject in metaobjects:
@@ -189,9 +189,9 @@ class icCFEndPage(wx.adv.PyWizardPage):
     def __init__(self, parent, title, txt=None):
         """
         Конструктор.
-        @param parent: Родительский визард, в который вставляется страница.
-        @param title: Заголовок страницы.
-        @param txt: Текст.
+        :param parent: Родительский визард, в который вставляется страница.
+        :param title: Заголовок страницы.
+        :param txt: Текст.
         """
         wx.adv.PyWizardPage.__init__(self, parent)
         

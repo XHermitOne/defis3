@@ -21,9 +21,9 @@ DEFAULT_COLOUR = 'default'
 def is_same_wx_object(wx_obj1, wx_obj2):
     """
     Проверка на тот же самый объект wx.
-    @param wx_obj1: Первый сравниваемый wx объект.
-    @param wx_obj2: Второй сравниваемый wx объект.
-    @return: Если это тот же самый объект, то возвращается True иначе False.
+    :param wx_obj1: Первый сравниваемый wx объект.
+    :param wx_obj2: Второй сравниваемый wx объект.
+    :return: Если это тот же самый объект, то возвращается True иначе False.
     """
     if issubclass(wx_obj1.__class__, wx.Object) and issubclass(wx_obj2.__class__, wx.Object):
         # Сравнение наследников wx.Object
@@ -40,9 +40,9 @@ def is_same_wx_object(wx_obj1, wx_obj2):
 def is_wx_object_in_list(wx_obj, wx_obj_list):
     """
     Проверка есть ли wx объект в списке.
-    @param wx_obj: wx Объект.
-    @param wx_obj_list: Список каких либо объектов.
-    @return: True/False.
+    :param wx_obj: wx Объект.
+    :param wx_obj_list: Список каких либо объектов.
+    :return: True/False.
     """
     return bool([obj for obj in wx_obj_list if is_same_wx_object(wx_obj, obj)])
 
@@ -50,9 +50,9 @@ def is_wx_object_in_list(wx_obj, wx_obj_list):
 def get_index_wx_object_in_list(wx_obj, wx_obj_list):
     """
     Получить индекс wx объекта в списке.
-    @param wx_obj: wx Объект.
-    @param wx_obj_list: Список каких либо объектов.
-    @return: Индекс объекта в списке, если он в нем присутствует
+    :param wx_obj: wx Объект.
+    :param wx_obj_list: Список каких либо объектов.
+    :return: Индекс объекта в списке, если он в нем присутствует
         или -1 если он не присутствует.
     """
     for i, obj in enumerate(wx_obj_list):
@@ -64,8 +64,8 @@ def get_index_wx_object_in_list(wx_obj, wx_obj_list):
 def isWxDeadObject(wx_object):
     """
     Проверка является ли объект WX удаленным/разрушенным методом Destroy.
-    @param wx_object: WX объект.
-    @return: True/False.
+    :param wx_object: WX объект.
+    :return: True/False.
     """
     if wx_object is None:
         return True
@@ -78,8 +78,8 @@ def isWxDeadObject(wx_object):
 def wxColour2StrHex(colour):
     """
     Цвет wxColour в виде строки #RRGGBB.
-    @param colour: Цвет wx.Colour.
-    @return: Строка #RRGGBB соответствующая цвету.    
+    :param colour: Цвет wx.Colour.
+    :return: Строка #RRGGBB соответствующая цвету.
     """
     if isinstance(colour, wx.Colour):
         return colour.GetAsString(wx.C2S_HTML_SYNTAX)
@@ -99,8 +99,8 @@ wxColour2StrRGB = wxColour2StrHex
 def StrHex2wxColour(rgb_colour):
     """
     Преобразование строки в виде #RRGGBB в цвет wxColour.
-    @param rgb_colour: Цвет в виде строки #RRGGBB.
-    @return: Цвет wx.Colour.
+    :param rgb_colour: Цвет в виде строки #RRGGBB.
+    :return: Цвет wx.Colour.
     """
     str_rgb = rgb_colour.replace('#', '')
     red = eval('0x' + str_rgb[:2])
@@ -117,8 +117,8 @@ StrRGB2wxColour = StrHex2wxColour
 def RGB2wxColour(rgb):
     """
     Преобразовать цвет в виде кортежа (Red, Green, Blue) в wxColour объект.
-    @param rgb: Кортеж (Red, Green, Blue).
-    @return: Цвет wx.Colour или None в случае ошибки.
+    :param rgb: Кортеж (Red, Green, Blue).
+    :return: Цвет wx.Colour или None в случае ошибки.
     """
     if (not isinstance(rgb, tuple) or not isinstance(rgb, list)) and len(rgb) != 3:
         log.warning(u'Не возможно преобразовать <%s> в wx.Colour' % str(rgb))
@@ -130,8 +130,8 @@ def RGB2wxColour(rgb):
 def wxColour2RGB(colour):
     """
     Преобразовать wxColour объект в цвет в виде кортежа (Red, Green, Blue).
-    @param colour: Цвет wx.Colour или None в случае ошибки.
-    @return: Кортеж (Red, Green, Blue) или None в случае ошибки.
+    :param colour: Цвет wx.Colour или None в случае ошибки.
+    :return: Кортеж (Red, Green, Blue) или None в случае ошибки.
     """
     if not isinstance(colour, wx.Colour):
         log.warning(u'Тип <%s> не определен как цвет wx.Colour' % colour.__class__.__name__)
@@ -142,7 +142,7 @@ def wxColour2RGB(colour):
 def isDarkSysTheme():
     """
     Проверка является ли системная тема ОС темной.
-    @return: True - темная тема / False - светлая.
+    :return: True - темная тема / False - светлая.
     """
     # Цвет темы будем определять отностительно цвета окна
     win_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
@@ -159,9 +159,9 @@ def adaptSysThemeColour(dark_theme_colour=None, light_theme_colour=None):
     Вся суть в том что математически вычисляется цвет, контракстирующий с
     текущей системной темой, но сохраняющий цвет.
     Достаточно указать один из цветов:
-    @param dark_theme_colour: Цвет wx.Colour, соответствующий/контракстирующий с темной теме.
-    @param light_theme_colour: Цвет wx.Colour, соответствующий/контракстирующий с светлой теме.
-    @return: Адаптированный цвет.
+    :param dark_theme_colour: Цвет wx.Colour, соответствующий/контракстирующий с темной теме.
+    :param light_theme_colour: Цвет wx.Colour, соответствующий/контракстирующий с светлой теме.
+    :return: Адаптированный цвет.
     """
     global WX_ADAPT_COLOURS
 
@@ -205,9 +205,9 @@ def adaptSysThemeColour(dark_theme_colour=None, light_theme_colour=None):
 def getTintColour(colour, calc_rate=None):
     """
     Получить оттененный цвет от указанного.
-    @param colour: Основной цвет wx.Colour.
-    @param calc_rate: Коэффициент расчета оттенения. Если не указан то берется 7/8.
-    @return: Оттененный цвет.
+    :param colour: Основной цвет wx.Colour.
+    :param calc_rate: Коэффициент расчета оттенения. Если не указан то берется 7/8.
+    :return: Оттененный цвет.
     """
     if calc_rate is None:
         calc_rate = 7.0 / 8.0
@@ -219,8 +219,8 @@ def isDefaultColour(colour):
     Проверка является ли указанный цвет цветом по умолчанию?
     wxPython при сравнении цвета со строкой, которую не возможно преобразовать в цвет,
     выдает предупреждение. Чтобы избежать этого реализована эта фуенкция.
-    @param colour: Проверяемый цвет.
-    @return: True - цвет указан как цвет по умолчанию. False - нет.
+    :param colour: Проверяемый цвет.
+    :return: True - цвет указан как цвет по умолчанию. False - нет.
     """
     return isinstance(colour, str) and colour == DEFAULT_COLOUR
 
@@ -242,7 +242,7 @@ def getWxPythonMinorVersion():
 def isWxPython4():
     """
     Проверка на wxPython версии 4 и выше.
-    @return: True - wxPython версии 4 и выше / False - другая версия wxPython.
+    :return: True - wxPython версии 4 и выше / False - другая версия wxPython.
     """
     return wx.MAJOR_VERSION >= 4
 
@@ -287,16 +287,16 @@ def showInfoWindow(parent=None, ctrl=None, x=-1, y=-1, info_text=u'',
                    backgroundColour=None):
     """
     Отобразить текст информации в всплывающем окне.
-    @param parent: Родительское окно для отображения всплыващего окна.
-    @param ctrl: Контрол, к которому приклеплено всплывающее окно.
-    @param x: Координата X вывода всплывающего окна.
+    :param parent: Родительское окно для отображения всплыващего окна.
+    :param ctrl: Контрол, к которому приклеплено всплывающее окно.
+    :param x: Координата X вывода всплывающего окна.
         Если не определено, то берется левая граница контрола.
-    @param y: Координата Y вывода всплывающего окна.
+    :param y: Координата Y вывода всплывающего окна.
         Если не определено, то берется нижняя граница контрола.
-    @param info_text: Текст информационного сообщения.
-    @param backgroundColour: Цвет фона окна.
+    :param info_text: Текст информационного сообщения.
+    :param backgroundColour: Цвет фона окна.
         Если не определен, то берется 'CADET BLUE'.
-    @return: Функция возвращает созданное всплывающее окно
+    :return: Функция возвращает созданное всплывающее окно
         или None в случае ошибки.
     """
     try:
@@ -333,7 +333,7 @@ def showInfoWindow(parent=None, ctrl=None, x=-1, y=-1, info_text=u'',
 def isCreateApp():
     """
     Проверка создали объект приложения WX.
-    @return: True - Да объект приложения создан / False - Нет.
+    :return: True - Да объект приложения создан / False - Нет.
     """
     app = wx.GetApp()
     return app is not None

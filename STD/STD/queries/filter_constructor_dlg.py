@@ -26,9 +26,9 @@ __version__ = (0, 1, 1, 2)
 def get_filter_constructor_dlg(parent=None, default_filter_data=None, env=None):
     """
     Функция вызова диалогового окна конструктора фильтров.
-    @param parent: Родительское окно диалога конструктора фильтров.
-    @param default_filter_data: Фильтр по умолчанию.
-    @param env: Окружение работы конструктора фильтров.
+    :param parent: Родительское окно диалога конструктора фильтров.
+    :param default_filter_data: Фильтр по умолчанию.
+    :param env: Окружение работы конструктора фильтров.
     """
     if env is None:
         log.warning(u'Не определено окружение для конструктора фильтров')

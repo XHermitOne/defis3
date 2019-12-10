@@ -49,7 +49,7 @@ class icWXApp(wx.App, ickernel.icKernel):
     def setBehaviour(self, behaviour_res_filename):
         """
         Установить поведение системы.
-        @param behaviour_res_filename: Имя файла ресурса со связями.
+        :param behaviour_res_filename: Имя файла ресурса со связями.
         """
         from ic.components import icResourceParser
         try:

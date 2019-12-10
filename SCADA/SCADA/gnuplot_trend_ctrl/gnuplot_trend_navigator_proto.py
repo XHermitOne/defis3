@@ -54,30 +54,30 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
     def setIsShowLegend(self, is_show):
         """
         Установить переключатель отображения легенды.
-        @param is_show: True - отобразить / False - скрыть
-        @return:
+        :param is_show: True - отобразить / False - скрыть
+        :return:
         """
         return self.showLegend(is_show)
 
     def draw(self, redraw=True):
         """
         Основной метод отрисовки тренда.
-        @param redraw: Принудительная прорисовка.
+        :param redraw: Принудительная прорисовка.
         """
         return self.trend.draw(redraw)
 
     def getTrend(self):
         """
         Объект тренда.
-        @return:
+        :return:
         """
         return self.trend
 
     def setLegend(self, pens=None):
         """
         Заполнить легенду.
-        @param pens: Описания перьев.
-        @return: True/False.
+        :param pens: Описания перьев.
+        :return: True/False.
         """
         if pens is None:
             pens = self.trend.child
@@ -102,9 +102,9 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
     def showLegend(self, is_show=True, redraw=True):
         """
         Отобразить легенду?
-        @param is_show: True - отобразить / False - скрыть
-        @param redraw: Перерисовка сплиттера.
-        @return: True/False.
+        :param is_show: True - отобразить / False - скрыть
+        :param redraw: Перерисовка сплиттера.
+        :return: True/False.
         """
         self.__is_show_legend = is_show
         if is_show:
@@ -147,7 +147,7 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
     def getReport(self):
         """
         Получить отчет в виде файла PDF.
-        @return: Имя файла PDF или None в случае ошибки.
+        :return: Имя файла PDF или None в случае ошибки.
         """
         try:
             width, height = self.getTrend().GetSize()

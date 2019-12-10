@@ -56,7 +56,7 @@ class icSCADATagProto(object):
     def readValue(self):
         """
         Прочитать из узла-источника данных SCADA текущее значение тега.
-        @return: Текущее значение тега.
+        :return: Текущее значение тега.
         """
 
         node = self.getNode()
@@ -72,8 +72,8 @@ class icSCADATagProto(object):
     def getCurValue(self, do_read=False):
         """
         Текущее значение тега.
-        @param do_read: Произвести автоматическое чтение из источника данных?
-        @return: Текущее значение тега.
+        :param do_read: Произвести автоматическое чтение из источника данных?
+        :return: Текущее значение тега.
         """
         if do_read:
             self.readValue()
@@ -89,8 +89,8 @@ class icSCADATagProto(object):
     def setCurValue(self, value):
         """
         Установить текущее значение тега.
-        @param value: Текущее значение тега.
-        @return: True/False.
+        :param value: Текущее значение тега.
+        :return: True/False.
         """
         # Переместить текущее значение в предыдущее
         self._prev_value = self._cur_value
@@ -108,30 +108,30 @@ class icSCADATagProto(object):
     def normValueInto(self, value):
         """
         Преобразование типа значения для установки внутреннего значения.
-        @param value: Текущее значение тега.
-        @return: Преобразованное значение.
+        :param value: Текущее значение тега.
+        :return: Преобразованное значение.
         """
         return value
 
     def normValueOut(self, value):
         """
         Преобразование типа значения для получения из внутреннего значения.
-        @param value: Текущее значение тега.
-        @return: Преобразованное значение.
+        :param value: Текущее значение тега.
+        :return: Преобразованное значение.
         """
         return value
 
     def getPrevValue(self):
         """
         Предыдущее значение тега.
-        @return: Предыдущее значение тега.
+        :return: Предыдущее значение тега.
         """
         return self._prev_value
 
     def getNodePsp(self):
         """
         Паспорт узла-источника данных SCADA.
-        @return: Паспорт или None в случае ошибки.
+        :return: Паспорт или None в случае ошибки.
         """
         log.error(u'Функция getNodePsp не реализована в <%s>' % self.__class__.__name__)
         return None
@@ -139,9 +139,9 @@ class icSCADATagProto(object):
     def getNode(self, node_psp=None):
         """
         Объект узла-источника данных SCADA.
-        @param node_psp: Паспорт узла-источника данных SCADA.
+        :param node_psp: Паспорт узла-источника данных SCADA.
             Если не определено, то задается функцией self.getNodePsp.
-        @return: Объект узла-источника данных SCADA или
+        :return: Объект узла-источника данных SCADA или
             None в случае ошибки.
         """
         log.error(u'Функция getNode не реализована в <%s>' % self.__class__.__name__)
@@ -150,7 +150,7 @@ class icSCADATagProto(object):
     def getScanClassPsp(self):
         """
         Паспорт класса сканирования данных SCADA.
-        @return: Паспорт или None в случае ошибки.
+        :return: Паспорт или None в случае ошибки.
         """
         log.error(u'Функция getScanClassPsp не реализована в <%s>' % self.__class__.__name__)
         return None
@@ -158,9 +158,9 @@ class icSCADATagProto(object):
     def getScanClass(self, scan_class_psp=None):
         """
         Объект класса сканирования данных SCADA.
-        @param scan_class_psp: Паспорт класса сканирования данных SCADA.
+        :param scan_class_psp: Паспорт класса сканирования данных SCADA.
             Если не определено, то задается функцией self.getScanClassPsp.
-        @return: Объект класса сканирования данных SCADA или
+        :return: Объект класса сканирования данных SCADA или
             None в случае ошибки.
         """
         return None

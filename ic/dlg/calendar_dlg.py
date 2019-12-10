@@ -16,9 +16,9 @@ __version__ = (0, 1, 1, 1)
 def openCalendarDlg(parent=None, date_fmt=datetimefunc.DEFAULT_DATETIME_FMT):
     """
     Диалоговое окно календаря.
-    @param parent: Родительское окно.
-    @param date_fmt: Формат дыты.
-    @return: Возвращает строку выбранной даты в указанном формате или 
+    :param parent: Родительское окно.
+    :param date_fmt: Формат дыты.
+    :return: Возвращает строку выбранной даты в указанном формате или
         пустую строку, если дата не выбрана.
     """
     result = ''
@@ -48,8 +48,8 @@ def openCalendarDlg(parent=None, date_fmt=datetimefunc.DEFAULT_DATETIME_FMT):
 def getDateDlg(parent=None):
     """
     Диалоговое окно календаря.
-    @param parent: Родительское окно.
-    @return: Возвращает выбранную дату datetime.date.
+    :param parent: Родительское окно.
+    :return: Возвращает выбранную дату datetime.date.
         Или None, если нажата <Отмена>.
     """
     result = None

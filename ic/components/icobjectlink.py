@@ -27,16 +27,16 @@
 
 Класс пользовательского визуального компонента.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -135,7 +135,7 @@ def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
 class icObjectLink(parentModule.icBase):
     """
     Описание пользовательского компонента.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{type='defaultType'}:
         - B{name='default'}:
@@ -145,16 +145,16 @@ class icObjectLink(parentModule.icBase):
     def __init__(self, parent, id, component, logType=0, evalSpace=None, *arg, **kwarg):
         """
         Конструктор пользовательского компонента.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         component = util.icSpcDefStruct(self.component_spc, component)
 
@@ -183,9 +183,9 @@ class icObjectLink(parentModule.icBase):
     def do_replacement(self, res, replacement_dct=None):
         """
         Произвести замены в ресурсе.
-        @param res: Ресурс объекта.
-        @param replacement_dct: Словарь замен.
-        @return: Ресурс с произведенными заменами
+        :param res: Ресурс объекта.
+        :param replacement_dct: Словарь замен.
+        :return: Ресурс с произведенными заменами
         """
         if not res:
             log.warning(u'Не определен ресурс')
@@ -213,8 +213,8 @@ class icObjectLink(parentModule.icBase):
     def get_replacement_dct(self, res=None):
         """
         Получить словарь замен ресурса перед сборкой связанного объекта.
-        @param res: Ресурс.
-        @return: Словарь замен.
+        :param res: Ресурс.
+        :return: Словарь замен.
         """
         if res is None:
             res = self.getResource()
@@ -248,8 +248,8 @@ class icObjectLink(parentModule.icBase):
 def test(par=0):
     """
     Тестируем пользовательский класс.
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     import ic.components.ictestapp as ictestapp
     app = ictestapp.TestApp(par)

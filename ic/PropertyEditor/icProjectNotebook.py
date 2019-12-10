@@ -35,9 +35,9 @@ class icProjectNB(fnb.FlatNotebook):
     def __init__(self, parent, pos=wx.DefaultPosition, size=wx.DefaultSize, *args, **kwargs):
         """
         Конструктор.
-        @param parent: Родительское окно.
-        @param pos: Позиция.
-        @param size: Размер.
+        :param parent: Родительское окно.
+        :param pos: Позиция.
+        :param size: Размер.
         """
         style = fnb.FNB_NODRAG | fnb.FNB_NO_X_BUTTON | fnb.FNB_VC71 | fnb.FNB_BACKGROUND_GRADIENT
         fnb.FlatNotebook.__init__(self, parent, *args, **kwargs)
@@ -51,8 +51,8 @@ class icProjectNB(fnb.FlatNotebook):
     def create_page(self, caption=u''):
         """
         Создать новую страницу нотебука.
-        @param caption: Заголовок страницы.
-        @return: Объект wx.Panel новой страницы нотебука.
+        :param caption: Заголовок страницы.
+        :return: Объект wx.Panel новой страницы нотебука.
         """
         page = wx.Panel(self)
         return page
@@ -78,9 +78,9 @@ class icProjectNB(fnb.FlatNotebook):
     def init_notebook(self, prj_edt, res_edt, ifs):
         """
         Инициализация нотебука.
-        @param prj_edt: Редактор проекта.
-        @param res_edt: Редактор ресурса.
-        @param ifs: Объект, реализующий интерфейс IDE.
+        :param prj_edt: Редактор проекта.
+        :param res_edt: Редактор ресурса.
+        :param ifs: Объект, реализующий интерфейс IDE.
         """
         prj_edt.type = 'PrjTree'
         self.add_project_page(prj_edt)

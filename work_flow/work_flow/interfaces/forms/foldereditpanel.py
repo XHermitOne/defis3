@@ -27,12 +27,12 @@ class IFolderEditPanel(edit_panel.IEditPanel):
     def __init__(self, parent,metaObj=None,tree=None):
         '''
         Конструктор интерфейса.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type metaObj: C{icMetaItem}
-        @param metaObj: Указатель на метаобъект.
-        @type tree: C{ic.components.user.ictreelistctrl.icTreeListCtrl}
-        @param tree: Указатель на дерево метаобъектов.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type metaObj: C{icMetaItem}
+        :param metaObj: Указатель на метаобъект.
+        :type tree: C{ic.components.user.ictreelistctrl.icTreeListCtrl}
+        :param tree: Указатель на дерево метаобъектов.
         '''
         #
         

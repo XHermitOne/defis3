@@ -49,19 +49,19 @@ class icAssociationDict(persistant.icPersistant):
         """
         Конструктор частотного словаря.
         
-        @type uniq_name: C{string}
-        @param uniq_name: Уникальное имя словаря.
-        @type assc_key: C{tuple}
-        @param assc_key: Картеж, задающий ассоциативный ключ. Элементами картежа
+        :type uniq_name: C{string}
+        :param uniq_name: Уникальное имя словаря.
+        :type assc_key: C{tuple}
+        :param assc_key: Картеж, задающий ассоциативный ключ. Элементами картежа
             являются имена ключевых полей.
-        @type assc_val: C{tuple}
-        @param assc_val: Картеж, задающий значение ассоциации.
-        @type res_path: C{string}
-        @param res_path: Путь до папки где хранится словрь <res_path/resource.var>.
-        @type subsys: C{string}
-        @param subsys: Имя подсистемы.
-        @type buffSize: C{int}
-        @param buffSize: Размер буфера по определенному ключу.
+        :type assc_val: C{tuple}
+        :param assc_val: Картеж, задающий значение ассоциации.
+        :type res_path: C{string}
+        :param res_path: Путь до папки где хранится словрь <res_path/resource.var>.
+        :type subsys: C{string}
+        :param subsys: Имя подсистемы.
+        :type buffSize: C{int}
+        :param buffSize: Размер буфера по определенному ключу.
         """
         self.assc_key = assc_key
         self.assc_val = assc_val
@@ -97,8 +97,8 @@ class icAssociationDict(persistant.icPersistant):
         """
         Читает словарь.
         
-        @rtype: C{...}
-        @return: Возвращает сохраненный объект.
+        :rtype: C{...}
+        :return: Возвращает сохраненный объект.
         """
         self._model = self.Load()
         return self._model
@@ -107,8 +107,8 @@ class icAssociationDict(persistant.icPersistant):
         """
         Сохраняет словарь в хранилище пользователя.
 
-        @rtype: C{bool}
-        @return: Признак успешного завершения операции.
+        :rtype: C{bool}
+        :return: Признак успешного завершения операции.
         """
         return self.Save()
 
@@ -116,8 +116,8 @@ class icAssociationDict(persistant.icPersistant):
         """
         Возвращает значение по ключу. В случае если заданного ключа нет возвращает None.
 
-        @type key: C{tuple}
-        @param key: Ключ объекта в словаре.
+        :type key: C{tuple}
+        :param key: Ключ объекта в словаре.
         """
         if key in self._model:
             return self._model[key]
@@ -128,10 +128,10 @@ class icAssociationDict(persistant.icPersistant):
         """
         Возвращает значение определенного поля ассоциации.
         
-        @type key: C{tuple}
-        @param key: Ключ объекта в словаре.
-        @type fld_name: C{string}
-        @param fld_name: Имя поля.
+        :type key: C{tuple}
+        :param key: Ключ объекта в словаре.
+        :type fld_name: C{string}
+        :param fld_name: Имя поля.
         """
         if key in self._model:
             vals = self._model[key][0]
@@ -152,10 +152,10 @@ class icAssociationDict(persistant.icPersistant):
         """
         Удаляет ассоциацию из словаря.
         
-        @type key: C{tuple}
-        @param key: Ключ объекта в словаре.
-        @rtype: C{bool}
-        @return: Признак успешного удаления.
+        :type key: C{tuple}
+        :param key: Ключ объекта в словаре.
+        :rtype: C{bool}
+        :return: Признак успешного удаления.
         """
         if key in self._model:
             self._model.pop(key)
@@ -167,9 +167,9 @@ class icAssociationDict(persistant.icPersistant):
         """
         Объединяет два ассоциативных словаря в один.
 
-        @type obj: C{icAssociationDict}
-        @param obj: Другой ассоциативный словарь.
-        @return: Дополненную метомодель словаря.
+        :type obj: C{icAssociationDict}
+        :param obj: Другой ассоциативный словарь.
+        :return: Дополненную метомодель словаря.
         """
         #   Список новых ключей
         addkey = []
@@ -199,10 +199,10 @@ class icAssociationDict(persistant.icPersistant):
         """
         Добавляет вариант в словарь, упорядочивает его и по необходимости чистит.
 
-        @type key: C{tuple}
-        @param key: Ключ объекта в словаре.
-        @type val: C{dictionary}
-        @param val: Добавляемый вариант.
+        :type key: C{tuple}
+        :param key: Ключ объекта в словаре.
+        :type val: C{dictionary}
+        :param val: Добавляемый вариант.
         """
         if val and key in self._model:
             self._model[key][0] = val

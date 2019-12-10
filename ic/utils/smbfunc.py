@@ -37,8 +37,8 @@ def smb_url_path_split(smb_url):
     Если в пути встречается символ <#> то библиотека парсинга URL воспринимает далее 
     стоящие символы как fragment. Это надо учитывать. 
     Для этого предназначена эта функция.
-    @param smb_url: Объект ParseResult библиотеки urlparse.
-    @return: Список составляющих пути к SMB ресурсу.
+    :param smb_url: Объект ParseResult библиотеки urlparse.
+    :return: Список составляющих пути к SMB ресурсу.
     """
     path_list = smb_url.path.split(os.path.sep)
     if smb_url.fragment:
@@ -51,8 +51,8 @@ def smb_url_path_split(smb_url):
 def get_smb_path_from_url(url):
     """
     Определить путь к SMB ресурсу по URL.
-    @param url: URL samba ресурса.
-    @return: Путь к samba ресурсу выбранный из URL.
+    :param url: URL samba ресурса.
+    :return: Путь к samba ресурсу выбранный из URL.
     """
     url = urllib.parse.urlparse(url)
     path_list = smb_url_path_split(url)
@@ -64,19 +64,19 @@ def get_smb_path_from_url(url):
 def smb_download_file(download_urls=None, filename=None, out_path=None, re_write=True, smb=None):
     """
     Найти и загрузить файл.
-    @param download_urls: Список путей поиска файла.
+    :param download_urls: Список путей поиска файла.
         Пример:
         ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/NSI/',
          'smb://xhermit@TELEMETRIA/share/install/', ...
          )
         Параметр может задаваться строкой. В таком случае считаем что URL один.
-    @param filename: Относительное имя файла.
+    :param filename: Относительное имя файла.
         Например:
         '/2017/FDOC/RC001.DCM'
-    @param out_path: Локальный путь для сохранения файла.
-    @param re_write: Перезаписать локальный файл, если он уже существует?
-    @param smb: Объект samba ресурса в случае уже открытого ресурса.
-    @return: True - Произошла загрузка, False - ничего не загружено.
+    :param out_path: Локальный путь для сохранения файла.
+    :param re_write: Перезаписать локальный файл, если он уже существует?
+    :param smb: Объект samba ресурса в случае уже открытого ресурса.
+    :return: True - Произошла загрузка, False - ничего не загружено.
     """
     if download_urls is None:
         log.warning(u'Не определены пути поиска файла на SMB ресурсах')
@@ -158,19 +158,19 @@ def smb_download_file(download_urls=None, filename=None, out_path=None, re_write
 def smb_download_file_rename(download_urls=None, filename=None, dst_filename=None, re_write=True, smb=None):
     """
     Найти и загрузить файл с переименованием.
-    @param download_urls: Список путей поиска файла.
+    :param download_urls: Список путей поиска файла.
         Пример:
         ('smb://xhermit@SAFE/Backup/daily.0/Nas_pvz/smb/sys_bucks/Nas_pvz/NSI/',
          'smb://xhermit@TELEMETRIA/share/install/', ...
          )
         Параметр может задаваться строкой. В таком случае считаем что URL один.
-    @param filename: Относительное имя файла.
+    :param filename: Относительное имя файла.
         Например:
         '/2017/FDOC/RC001.DCM'
-    @param dst_filename: Новое полное наименование для сохранения файла.
-    @param re_write: Перезаписать локальный файл, если он уже существует?
-    @param smb: Объект samba ресурса в случае уже открытого ресурса.
-    @return: True - Произошла загрузка, False - ничего не загружено.
+    :param dst_filename: Новое полное наименование для сохранения файла.
+    :param re_write: Перезаписать локальный файл, если он уже существует?
+    :param smb: Объект samba ресурса в случае уже открытого ресурса.
+    :return: True - Произошла загрузка, False - ничего не загружено.
     """
     # Сначала просто загрузим файл
     tmp_path = tempfile.mktemp()
@@ -197,8 +197,8 @@ def smb_download_file_rename(download_urls=None, filename=None, dst_filename=Non
 def smb_connect(url):
     """
     Соединиться с samba ресурсом.
-    @param url: URL samba ресурса.
-    @return: Объект SAMBA ресурса или None в случае ошибки.
+    :param url: URL samba ресурса.
+    :return: Объект SAMBA ресурса или None в случае ошибки.
     """
     smb = None
     try:
@@ -228,8 +228,8 @@ def smb_connect(url):
 def smb_disconnect(smb):
     """
     Закрыть соединение с samba ресурсом.
-    @param smb: Объект SAMBA ресурса.
-    @return: True/False.
+    :param smb: Объект SAMBA ресурса.
+    :return: True/False.
     """
     try:
         if smb:
@@ -244,11 +244,11 @@ def smb_disconnect(smb):
 def smb_listdir_filename(url=None, filename_pattern=None, smb=None):
     """
     Список файлов SMB ресурса.
-    @param url: URL samba ресурса.
-    @param filename_pattern: Выбрать имена файлов по указанному шаблону.
+    :param url: URL samba ресурса.
+    :param filename_pattern: Выбрать имена файлов по указанному шаблону.
         Шаблон файлов указывается как *.DBF например.
-    @param smb: Объект samba ресурса в случае уже открытого ресурса.
-    @return: Список имен файлов samba ресурса.
+    :param smb: Объект samba ресурса в случае уже открытого ресурса.
+    :return: Список имен файлов samba ресурса.
         Функция возвращает только имена файлов.
         Имена папок не включаются в список.
     """
@@ -292,10 +292,10 @@ DEFAULT_SMB_DATETIME_FMT = '%a %b %d %H:%M:%S %Y'
 def _smb_to_datetime(str_datetime, bSetLocale=False):
     """
     Преобразовать время из строкового варианта в datetime.
-    @param str_datetime: Время в строковом виде.
+    :param str_datetime: Время в строковом виде.
         Например 'Пн июл 29 17:23:39 2019 +07'.
-    @param bSetLocale: Установить системную локаль?
-    @return: datetime.datetime или None в случае ошибки.
+    :param bSetLocale: Установить системную локаль?
+    :return: datetime.datetime или None в случае ошибки.
     """
     if bSetLocale:
         # Для корректного преобразования времени необходимо установить системную локаль
@@ -313,11 +313,11 @@ def _smb_to_datetime(str_datetime, bSetLocale=False):
 def get_smb_file_info(url=None, filename=None, smb=None, bToDateTime=True):
     """
     Получить всю информацию о файле в виде структуры.
-    @param url: URL samba ресурса.
-    @param filename: Имя файла. Напрмер /2019/TEST.DBF
-    @param smb: Объект samba ресурса в случае уже открытого ресурса.
-    @param bToDateTime: Преобразовать сразу время из строкового представления в datetime?
-    @return: Словарь информации о файле:
+    :param url: URL samba ресурса.
+    :param filename: Имя файла. Напрмер /2019/TEST.DBF
+    :param smb: Объект samba ресурса в случае уже открытого ресурса.
+    :param bToDateTime: Преобразовать сразу время из строкового представления в datetime?
+    :return: Словарь информации о файле:
         {
             'create_time': Время создания файла,
             'access_time': Время последнего доступа к файлу,
@@ -362,10 +362,10 @@ def get_smb_file_info(url=None, filename=None, smb=None, bToDateTime=True):
 def isdir_smb(url=None, path=None, smb=None):
     """
     Проверка на то что файловый объект является директорией.
-    @param url: URL samba ресурса.
-    @param path: Имя файлового объекта. Напрмер /2019/TEST.DBF
-    @param smb: Объект samba ресурса в случае уже открытого ресурса.
-    @return: True - Это директория. False - нет.
+    :param url: URL samba ресурса.
+    :param path: Имя файлового объекта. Напрмер /2019/TEST.DBF
+    :param smb: Объект samba ресурса в случае уже открытого ресурса.
+    :return: True - Это директория. False - нет.
     """
     is_dir = None
     try:
@@ -389,10 +389,10 @@ def isdir_smb(url=None, path=None, smb=None):
 def isfile_smb(url=None, path=None, smb=None):
     """
     Проверка на то что файловый объект является файлом.
-    @param url: URL samba ресурса.
-    @param path: Имя файлового объекта. Напрмер /2019/TEST.DBF
-    @param smb: Объект samba ресурса в случае уже открытого ресурса.
-    @return: True - Это файл. False - нет.
+    :param url: URL samba ресурса.
+    :param path: Имя файлового объекта. Напрмер /2019/TEST.DBF
+    :param smb: Объект samba ресурса в случае уже открытого ресурса.
+    :return: True - Это файл. False - нет.
     """
     is_file = None
     try:

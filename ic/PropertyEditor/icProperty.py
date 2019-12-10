@@ -157,26 +157,26 @@ class NameValue(icEvent):
     def __init__(self, main, indx, name='', value='', type=icDefInf.EDT_TEXTFIELD, dict={},
                  nameType=icNameTypeNormal, height=oiLineHeight):
         """
-        @type main: C{wx.Window}
-        @param main: Указатель на окно сплиттера.
-        @type indx: C{int}
-        @param indx: Индекс свойства.
-        @type type: C{int}
-        @param type: Тип редактора. 
+        :type main: C{wx.Window}
+        :param main: Указатель на окно сплиттера.
+        :type indx: C{int}
+        :param indx: Индекс свойства.
+        :type type: C{int}
+        :param type: Тип редактора. 
             EDT_TEXTFIELD = 0 - текстовое поле, 
             EDT_CHOICE = 1 - Choice, 
             EDT_CHECK_BOX = 2 - CheckBox,
             EDT_2CHECK_BOX = 3 - Разворачиваемый набор CheckBox (используется для комбинированных свойств). 
             EDT_EXTERNAL = 4 - Внешний редактор.
-        @type dict: C{Dictionary}
-        @param dict: Словарь дополнительных свойств.            
-        @type nameType: C{int}
-        @param nameType: Тип представления названия свойства:
+        :type dict: C{Dictionary}
+        :param dict: Словарь дополнительных свойств.            
+        :type nameType: C{int}
+        :param nameType: Тип представления названия свойства:
             icNameTypeNormal - StaticText.
             icNameTypeCheckBox - CheckBox.
             icNameTypeReadonly - Нередактируемое свойство - StaticText выделенный жирным шрифтом.
-        @type height: C{int}
-        @param height: Высота строки.
+        :type height: C{int}
+        :param height: Высота строки.
         """
         icEvent.__init__(self)
         
@@ -267,8 +267,8 @@ class NameValue(icEvent):
         """
         Разрешает или запрещает редактирование свойства.
         
-        @type bEnable: C{bool}
-        @param bEnable: Признак разрешения редактирования. Если bEditor == True, редактирование разрешено 
+        :type bEnable: C{bool}
+        :param bEnable: Признак разрешения редактирования. Если bEditor == True, редактирование разрешено 
             в противном случае запрещено.
         """
         self.__editorEnable = bEnable
@@ -277,8 +277,8 @@ class NameValue(icEvent):
         """
         Возвращает значение признака редактирования.
         
-        @rtype: C{bool}
-        @return: Возвращает значение признака редактирования. Если True, редактирование разрешено 
+        :rtype: C{bool}
+        :return: Возвращает значение признака редактирования. Если True, редактирование разрешено
             в противном случае запрещено.
         """
         return self.__editorEnable
@@ -608,10 +608,10 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Устанавливает новое значение свойства.
         
-        @type prop: C{string}
-        @param prop: Имя свойства.
-        @type value: C{string}
-        @param value: Новое значение свойства.
+        :type prop: C{string}
+        :param prop: Имя свойства.
+        :type value: C{string}
+        :param value: Новое значение свойства.
         """
         
         for prop_obj in self.NameValues:
@@ -640,8 +640,8 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Удаляет свойство из редактора.
         
-        @type indx: C{int}
-        @param indx: Индекс свойства
+        :type indx: C{int}
+        :param indx: Индекс свойства
         """
         try:
             prop = self.NameValues[indx]
@@ -660,8 +660,8 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Заполняет словарь данными из редактора.
         
-        @type dict: C{dictionary}
-        @param dict: Словарь, который заполняется данными из редактора свойств.
+        :type dict: C{dictionary}
+        :param dict: Словарь, который заполняется данными из редактора свойств.
         """
         
         for obj in self.NameValues:
@@ -735,18 +735,18 @@ class icPropWin(icEvent, wx.ScrolledWindow):
                       nameType=0, bRefresh=True, height=oiLineHeight):
         """
         Вставляет строку в таблицу свойств.
-        @type indx: C{int}
-        @param indx: Позиция, куда вставляется свойство.
-        @type text: C{string}
-        @param text: Название свойства.
-        @type value: C{...}
-        @param value: Значение свойства. 
-        @type type: C{int}
-        @param type: Тип редактора. 
-        @type dict: C{Dictionary}
-        @param dict: Словарь дополнительных свойств.            
-        @type bRefresh: C{bool}
-        @param bRefresh: Признак перерисовки компонента.            
+        :type indx: C{int}
+        :param indx: Позиция, куда вставляется свойство.
+        :type text: C{string}
+        :param text: Название свойства.
+        :type value: C{...}
+        :param value: Значение свойства. 
+        :type type: C{int}
+        :param type: Тип редактора. 
+        :type dict: C{Dictionary}
+        :param dict: Словарь дополнительных свойств.            
+        :type bRefresh: C{bool}
+        :param bRefresh: Признак перерисовки компонента.            
         """
         obj = NameValue(self, indx, text, value, type, dict, nameType, height)
         self.NameValues.insert(indx, obj)
@@ -759,16 +759,16 @@ class icPropWin(icEvent, wx.ScrolledWindow):
                       bRefresh=True, height=oiLineHeight):
         """
         Добавляет строку в таблицу свойств.
-        @type text: C{string}
-        @param text: Название свойства.
-        @type value: C{...}
-        @param value: Значение свойства. 
-        @type type: C{int}
-        @param type: Тип редактора. 
-        @type dict: C{Dictionary}
-        @param dict: Словарь дополнительных свойств.            
-        @type bRefresh: C{bool}
-        @param bRefresh: Признак перерисовки компонента.            
+        :type text: C{string}
+        :param text: Название свойства.
+        :type value: C{...}
+        :param value: Значение свойства. 
+        :type type: C{int}
+        :param type: Тип редактора. 
+        :type dict: C{Dictionary}
+        :param dict: Словарь дополнительных свойств.            
+        :type bRefresh: C{bool}
+        :param bRefresh: Признак перерисовки компонента.            
         """
         indx = len(self.NameValues)
         obj = NameValue(self, indx, text, value, type, dict, nameType, height)
@@ -781,8 +781,8 @@ class icPropWin(icEvent, wx.ScrolledWindow):
     def RemoveIndx(self, indx, bRefresh=False):
         """
         Удаляет строку из редактора.
-        @type indx: C{int}
-        @param indx: Индекс совйства в редакторе.
+        :type indx: C{int}
+        :param indx: Индекс совйства в редакторе.
         """
         
         if indx >= 0 and indx < len(self.NameValues):
@@ -820,8 +820,8 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Удаляет все строки из редактора.
         
-        @type bRefresh: C{bool}
-        @param bRefresh: Признак перерисовки редактора.  Если True, то перерисовывается.
+        :type bRefresh: C{bool}
+        :param bRefresh: Признак перерисовки редактора.  Если True, то перерисовывается.
         """
         indx = 0
         size = len(self.NameValues)
@@ -898,10 +898,10 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Устанавливаем позиции прокруток.
         
-        @type wOffset: C{int}
-        @param wOffset:  Горизонатльное смещение.
-        @type hOffset: C{int}
-        @param hOffset: Вертикальное смещение.
+        :type wOffset: C{int}
+        :param wOffset:  Горизонатльное смещение.
+        :type hOffset: C{int}
+        :param hOffset: Вертикальное смещение.
         """
         height = len(self.NameValues)
         self.SetScrollbars(oiLineHeight, oiLineHeight, 0, height + 1, wOffset, hOffset)
@@ -910,8 +910,8 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Фунцкия разрешает/запрещает редактирование данных.
         
-        @type bEnable: C{bool}.
-        @param bEnable: Флаг разрешения редактирования.
+        :type bEnable: C{bool}.
+        :param bEnable: Флаг разрешения редактирования.
         """
         self.__editorEnable = bEnable
 
@@ -938,10 +938,10 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Функция устанавливает редактор для редактирования заданного свойства.
 
-        @type name: C{string}
-        @param name: Имя заданного свойства.
-        @rtype: C{bool}
-        @return: Признак успешного выполнения.
+        :type name: C{string}
+        :param name: Имя заданного свойства.
+        :rtype: C{bool}
+        :return: Признак успешного выполнения.
         """
         for indx, obj in enumerate(self.NameValues):
             if obj.name == name:
@@ -952,8 +952,8 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Выбирает нужное свойство для редактирования.
         
-        @type indx: C{int}
-        @param indx: Индекс свойства, которое будет редактироваться. Если None, то 
+        :type indx: C{int}
+        :param indx: Индекс свойства, которое будет редактироваться. Если None, то 
             закроется редактор редактируемого свойства.
         """
         obj = self.selectedEdt
@@ -1021,8 +1021,8 @@ class icPropWin(icEvent, wx.ScrolledWindow):
         """
         Иметирует сообщение <EVT_LEFT_DOWN> на нужном свойстве.
         
-        @type indx: C{int}
-        @param indx: Индекс свойства в редакторе.
+        :type indx: C{int}
+        :param indx: Индекс свойства в редакторе.
         """
         try:
             obj = self.NameValues[indx]

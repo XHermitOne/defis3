@@ -7,8 +7,8 @@
 Для корректной работы класса html.HtmlWindow с русскими буквами требуется запись в реестре.
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage 1252=c_1251.nls
 
-@type SPC_IC_HTML_PANEL: C{dictionary}
-@var SPC_IC_HTML_PANEL: Спецификация на ресурсное описание компонента. Ключи SPC_IC_HTML_PANEL:
+:type SPC_IC_HTML_PANEL: C{dictionary}
+:var SPC_IC_HTML_PANEL: Спецификация на ресурсное описание компонента. Ключи SPC_IC_HTML_PANEL:
 
     - B{name = 'default'}: Имя окна.
     - B{type = 'HtmlPanel'}: Тип объекта.
@@ -19,8 +19,8 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage 1252=c_1251.nls
     - B{style=wx.HW_SCROLLBAR_AUTO}:Стиль окна. Используются все стили класса wxWindow.
     - B{file=None}:Html файл, который будет отображаться в окне.
 
-@type ICHtmlPanelStyle: C{dictionary}
-@var ICHtmlPanelStyle: Словарь стилей компонента. Описпание ключей ICHtmlPanelStyle:
+:type ICHtmlPanelStyle: C{dictionary}
+:var ICHtmlPanelStyle: Словарь стилей компонента. Описпание ключей ICHtmlPanelStyle:
 
     - C{wx.html.HW_SCROLLBAR_NEVER}: Окно без вертикального скролирования.
     - C{wx.html.HW_SCROLLBAR_AUTO}: C вертикальным скролированием.
@@ -61,16 +61,16 @@ class icHtmlPanel(icWidget, wx.Panel):
                  bCounter=False, progressDlg=None):
         """
         Конструктор для создания icHtmlPanel.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         #   Атрибуты сайзера
         self.sizer = None

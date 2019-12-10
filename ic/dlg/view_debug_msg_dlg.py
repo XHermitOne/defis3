@@ -36,8 +36,8 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def init(self, env_locals=None, env_globals=None):
         """
         Инициализация диалогового окна.
-        @param env_locals: Словарь локального пространства имен (locals).
-        @param env_globals: Словарь глобального пространства имен (globals).
+        :param env_locals: Словарь локального пространства имен (locals).
+        :param env_globals: Словарь глобального пространства имен (globals).
         """
         self._locals = env_locals
         self._globals = env_globals
@@ -69,7 +69,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def setMessage(self, message_text):
         """
         Установить сообщение.
-        @param message_text: Текст сообщения.
+        :param message_text: Текст сообщения.
         """
         if not isinstance(message_text, str):
             message_text = str(message_text)
@@ -79,7 +79,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def setErrorMessage(self, message_text):
         """
         Установить сообщение об ОШИБКЕ.
-        @param message_text: Текст сообщения.
+        :param message_text: Текст сообщения.
         """
         self.setErrorIcon()
         text_colour = wxfunc.adaptSysThemeColour(dark_theme_colour=wx.RED)
@@ -89,7 +89,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def setWarningMessage(self, message_text):
         """
         Установить ПРЕДУПРЕЖДАЮЩЕЕ сообщение.
-        @param message_text: Текст сообщения.
+        :param message_text: Текст сообщения.
         """
         self.setWarningIcon()
         text_colour = wxfunc.adaptSysThemeColour(dark_theme_colour=wx.YELLOW)
@@ -99,7 +99,7 @@ class icViewDebugMessageDlg(view_debug_message_dlg_proto.icViewDebugMsgDialogPro
     def setInfoMessage(self, message_text):
         """
         Установить ИНФОРМАЦИОННОЕ сообщение.
-        @param message_text: Текст сообщения.
+        :param message_text: Текст сообщения.
         """
         self.setInfoIcon()
         text_colour = wxfunc.adaptSysThemeColour(dark_theme_colour=wx.GREEN)
@@ -126,12 +126,12 @@ def view_debug_error_dlg(parent=None, message_text=u'',
                          env_locals=None, env_globals=None):
     """
     Показать сообшение об ОШИБКЕ в диалоге для отладки.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно программы.
-    @param message_text: Текст сообщения.
-    @param env_locals: Словарь локального пространства имен (locals).
-    @param env_globals: Словарь глобального пространства имен (globals).
-    @return: True/False.
+    :param message_text: Текст сообщения.
+    :param env_locals: Словарь локального пространства имен (locals).
+    :param env_globals: Словарь глобального пространства имен (globals).
+    :return: True/False.
     """
     if parent is None:
         app = wx.GetApp()
@@ -156,12 +156,12 @@ def view_debug_warning_dlg(parent=None, message_text=u'',
                            env_locals=None, env_globals=None):
     """
     Показать ПРЕДУПРЕЖДАЮЩЕЕ сообшение в диалоге для отладки.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно программы.
-    @param message_text: Текст сообщения.
-    @param env_locals: Словарь локального пространства имен (locals).
-    @param env_globals: Словарь глобального пространства имен (globals).
-    @return: True/False.
+    :param message_text: Текст сообщения.
+    :param env_locals: Словарь локального пространства имен (locals).
+    :param env_globals: Словарь глобального пространства имен (globals).
+    :return: True/False.
     """
     if parent is None:
         app = wx.GetApp()
@@ -186,12 +186,12 @@ def view_debug_info_dlg(parent=None, message_text=u'',
                         env_locals=None, env_globals=None):
     """
     Показать ИНФОРМАЦИОННОГО сообшения в диалоге для отладки.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно программы.
-    @param message_text: Текст сообщения.
-    @param env_locals: Словарь локального пространства имен (locals).
-    @param env_globals: Словарь глобального пространства имен (globals).
-    @return: True/False.
+    :param message_text: Текст сообщения.
+    :param env_locals: Словарь локального пространства имен (locals).
+    :param env_globals: Словарь глобального пространства имен (globals).
+    :return: True/False.
     """
     if parent is None:
         app = wx.GetApp()
@@ -216,12 +216,12 @@ def view_debug_exception_dlg(parent=None, exception_msg_fmt=None,
                              env_locals=None, env_globals=None):
     """
     Показать сообшение об КРИТИЧЕСКОЙ ОШИБКЕ (EXCEPTION) в диалоге для отладки.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно программы.
-    @param exception_msg_fmt: Формат для дополнения сообщения критической ошибки.
-    @param env_locals: Словарь локального пространства имен (locals).
-    @param env_globals: Словарь глобального пространства имен (globals).
-    @return: True/False.
+    :param exception_msg_fmt: Формат для дополнения сообщения критической ошибки.
+    :param env_locals: Словарь локального пространства имен (locals).
+    :param env_globals: Словарь глобального пространства имен (globals).
+    :return: True/False.
     """
     exception_text = traceback.format_exc()
 

@@ -34,8 +34,8 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def __init__(self, parent, ID=-1):
         """
         Конструктор.
-        @param parent: Родительское wx.Window окно.
-        @param ID: Идентификатор wx.ID.
+        :param parent: Родительское wx.Window окно.
+        :param ID: Идентификатор wx.ID.
         """
         wx.ScrolledWindow.__init__(self, parent, ID)
 
@@ -87,15 +87,15 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
             Возвращает:
             True - можно перемещать фигуру
             False - нельзя перемещать фигуру
-        @param can_move_to_func: Дополнительная функция проверки возможности перемещения фигуры.
+        :param can_move_to_func: Дополнительная функция проверки возможности перемещения фигуры.
         """
         self.can_move_to_func = can_move_to_func
 
     def getBoard(self, idx=0):
         """
         Обект доски размещения.
-        @param idx: Номер доски размещения
-        @return: Объект доски размещения.
+        :param idx: Номер доски размещения
+        :return: Объект доски размещения.
         """
         if idx < 0:
             idx = 0
@@ -108,7 +108,7 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def setBackgroundBmp(self, background_bitmap=None):
         """
         Установить картинку фона.
-        @param background_bitmap: Объект картинки wx.Bitmap.
+        :param background_bitmap: Объект картинки wx.Bitmap.
         Может задаваться прсто именем файла.
         """
         if isinstance(background_bitmap, wx.Bitmap):
@@ -125,8 +125,8 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def deleteBoard(self, idx=-1):
         """
         Удалить доску.
-        @param idx: Идекс доски.
-        @return: True/False.
+        :param idx: Идекс доски.
+        :return: True/False.
         """
         try:
             del self.boards[idx]
@@ -138,7 +138,7 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def deleteBoards(self):
         """
         Удалить все доски.
-        @return: True/False.
+        :return: True/False.
         """
         self.boards = list()
         return True
@@ -146,7 +146,7 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def appendBoard(self, new_board, *args, **kwargs):
         """
         Добавить доску размещения. Сколько досок столько и ярусов.
-        @param new_board: Объект доски размещения.
+        :param new_board: Объект доски размещения.
         """
         if board:
             if isinstance(new_board, board.icWMSBoard):
@@ -165,7 +165,7 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def findFreeCell(self):
         """
         Поиск свободной ячейки на досках расположения.
-        @return: Объект board.icWMSCell или None, если
+        :return: Объект board.icWMSCell или None, если
         не найдено ни одной свободной ячейки.
         """
         cell = None
@@ -178,10 +178,10 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def getCell(self, x, y, board_idx=0):
         """
         Поиск ячейки на доске расположения по позиции.
-        @param x: Позиция ячейки X.
-        @param y: Позиция ячейки Y.
-        @param board_idx: Индекс доски расположения.
-        @return: Объект board.icWMSCell или None, если
+        :param x: Позиция ячейки X.
+        :param y: Позиция ячейки Y.
+        :param board_idx: Индекс доски расположения.
+        :return: Объект board.icWMSCell или None, если
         не найдено ни одной ячейки.
         """
         board_obj = self.boards[board_idx]
@@ -191,9 +191,9 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def getCellByIdx(self, cell_idx, board_idx=0):
         """
         Поиск ячейки на доске расположения по позиции.
-        @param cell_idx: Индекс ячейки.
-        @param board_idx: Индекс доски расположения.
-        @return: Объект board.icWMSCell или None, если
+        :param cell_idx: Индекс ячейки.
+        :param board_idx: Индекс доски расположения.
+        :return: Объект board.icWMSCell или None, если
             не найдено ни одной ячейки.
         """
         board_obj = self.boards[board_idx]
@@ -203,7 +203,7 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def deleteShapes(self):
         """
         Удалить фигуры.
-        @return: True/False
+        :return: True/False
         """
         self.shapes = []
 
@@ -221,12 +221,12 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
         ВНИМАНИЕ! Если координата первого размещения фигуры не
         указана (т.е. (-1, -1)), то размещение происходит
         в первую свободную ячейку.
-        @param shape_type: Идентификатор типа фигуры.
-        @param pos_x: Координата X первого размещения фигуры.
-        @param pos_y: Координата Y первого размещения фигуры.
-        @param tag: Тег прикрепляемый к фигуре.
+        :param shape_type: Идентификатор типа фигуры.
+        :param pos_x: Координата X первого размещения фигуры.
+        :param pos_y: Координата Y первого размещения фигуры.
+        :param tag: Тег прикрепляемый к фигуре.
         Тег - дополнительный параметр идентификации фигуры.
-        @return: True/False.
+        :return: True/False.
         """
         # Фигура
         shape_class = SHAPE_TYPES.get(shape_type, None)
@@ -275,9 +275,9 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def drawBackground(self, dc, x=0, y=0):
         """
         Отрисовка фона.
-        @param dc: Контекст устройства виджета.
-        @param x: Координата X.
-        @param y: Координата Y.
+        :param dc: Контекст устройства виджета.
+        :param x: Координата X.
+        :param y: Координата Y.
         """
         dc.DrawBitmap(self.bg_bmp, x, y)
 
@@ -295,8 +295,8 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
         This is actually a sophisticated 'hit test', but in this
         case we're also determining which shape, if any, was 'hit'.
         Поиск фигуры по точке.
-        @param point: Точка.
-        @return: Объект фигуры
+        :param point: Точка.
+        :return: Объект фигуры
         """
         for shape in self.shapes:
             if shape.HitTest(point):
@@ -308,8 +308,8 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
         Обновить информацию о выделенной фигуре в другом объекте.
         ВНИМАНИЕ! Объект д.б. определен в конструкторе яруса
             и у этого объекта д.б. метод refreshSelected.
-        @param selected_point: Выбранная точка.
-        @param mouse_pressed: Код нажатой кнопки мыши.
+        :param selected_point: Выбранная точка.
+        :param mouse_pressed: Код нажатой кнопки мыши.
         """
         if self.refresh_selected_obj and hasattr(self.refresh_selected_obj, 'refreshSelected'):
             # Просто передаем управление методу другого объекта
@@ -375,10 +375,10 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
         """
         Отобразить дополнительные данные о фигуре в всплывающем окне.
         По умолчанию всплывающее окно отображается под фигурой.
-        @param shape: Объект фигуры.
-        @param x: Координата X вывода всплывающего окна.
+        :param shape: Объект фигуры.
+        :param x: Координата X вывода всплывающего окна.
         Если -1, то береться left.
-        @param y: Координата Y вывода всплывающего окна.
+        :param y: Координата Y вывода всплывающего окна.
         Если -1, то береться top.
         """
         if shape is None:
@@ -418,9 +418,9 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
         """
         Найти ячейку по точке.
         Поиск производится по всем доскам расположения.
-        @param x: Координата x проверяемой точки.
-        @param y: Координата y проверяемой точки.
-        @return: Объект ячейки, в которую попадает точка (x, y).
+        :param x: Координата x проверяемой точки.
+        :param y: Координата y проверяемой точки.
+        :return: Объект ячейки, в которую попадает точка (x, y).
             None если ячейка не найдена.
         """
         find_cell = None
@@ -433,9 +433,9 @@ class icWMSTierContructorCtrl(wx.ScrolledWindow):
     def replaceCells(self, src_cell, dst_cell):
         """
         Поменять местами содержимое ячеек.
-        @param src_cell: Ячейка - источник.
-        @param dst_cell: Ячейка - получатель
-        @return: True - перемещение прошло успешно / 
+        :param src_cell: Ячейка - источник.
+        :param dst_cell: Ячейка - получатель
+        :return: True - перемещение прошло успешно /
             False - перемещение не прошло по какой-либо ошибке.
         """
         src_shape = src_cell.getShape()

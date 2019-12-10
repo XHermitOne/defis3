@@ -144,10 +144,10 @@ class icSpravMultipleChoiceComboCtrlProto(wx.ComboCtrl):
     def setCodes(self, codes):
         """
         Установить коды справочника как выбранные.
-        @param codes: Коды справочника. Список строк.
+        :param codes: Коды справочника. Список строк.
             ВНИМАНИЕ! Коды могут задаваться строкой.
             Тогда считаем что это список из 1 кода.
-        @return: True/False.
+        :return: True/False.
         """
         if codes is None:
             # Да пустое значение тоже можно
@@ -181,7 +181,7 @@ class icSpravMultipleChoiceComboCtrlProto(wx.ComboCtrl):
     def choiceSprav(self):
         """
         Вызов выбора из справочника.
-        @return: Выбранный код.
+        :return: Выбранный код.
         """
         if self._selected_codes is None:
             self._selected_codes = list()

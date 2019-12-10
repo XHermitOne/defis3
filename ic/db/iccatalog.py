@@ -88,18 +88,18 @@ class icItemCatalog(icAbsItemCatalog):
                  reg_time=None, act_time=None, pic=None, *arg, **kwarg):
         """
         Конструктор.
-        @param path: Идентификатор объекта.
-        @param pobj: Указатель на объект.
-        @param otype: Тип объекта.
-        @param title: Заголовок.
-        @param description: Описание объекта.
-        @type reg_time: C{string}
-        @param reg_time: Время регистрации в формате yyyy-mm-dd hh:MM:ss.
-        @type act_time: C{string}
-        @param act_time: Время актуальности в формате yyyy-mm-dd hh:MM:ss.
-        @param pic: путь до соответствующей картинки.
-        @param id: Идентификатор в хранилище.
-        @param catalog: Ссылка на каталог, в котором зарегистрирован элемент.
+        :param path: Идентификатор объекта.
+        :param pobj: Указатель на объект.
+        :param otype: Тип объекта.
+        :param title: Заголовок.
+        :param description: Описание объекта.
+        :type reg_time: C{string}
+        :param reg_time: Время регистрации в формате yyyy-mm-dd hh:MM:ss.
+        :type act_time: C{string}
+        :param act_time: Время актуальности в формате yyyy-mm-dd hh:MM:ss.
+        :param pic: путь до соответствующей картинки.
+        :param id: Идентификатор в хранилище.
+        :param catalog: Ссылка на каталог, в котором зарегистрирован элемент.
         """
         self.get_pic(bInit=True)
         self.id = kwarg.get('id', None)
@@ -194,8 +194,8 @@ catalog_type_dct = {}
 def reg_catalog_type(item_cls):
     """
     Регистрация типов элементов.
-    @type item_cls: C{icItemCatalog}
-    @param item_cls: Класс элемента каталога.
+    :type item_cls: C{icItemCatalog}
+    :param item_cls: Класс элемента каталога.
     """
     global catalog_type_dct
     catalog_type_dct[item_cls.catalog_type] = item_cls
@@ -325,7 +325,7 @@ class icCatalog(icAbsCatalog):
     def add_item(self, parent_item, name, item):
         """
         Добавление элемента в родительскую папку.
-        @param parent_item: Родительский элемент. Если None, то элемент добавляется
+        :param parent_item: Родительский элемент. Если None, то элемент добавляется
             в корень каталога.
         """
         if parent_item:
@@ -349,9 +349,9 @@ class icCatalog(icAbsCatalog):
         """
         Зарегистрировать объект в каталоге. У каждого объекта должен быть
         родитель.
-        @param path: Ключ.
-        @param pobj: Указатель на объект, который регистрируется в каталоге.
-        @param otype: Тип регистрируемого объекта.
+        :param path: Ключ.
+        :param pobj: Указатель на объект, который регистрируется в каталоге.
+        :param otype: Тип регистрируемого объекта.
         """
         pp = self.get_parent_path(path)
         if not pp or (pp in self.keys()):
@@ -369,7 +369,7 @@ class icCatalog(icAbsCatalog):
     def get_path_lst(self, path):
         """
         Возвращает список указательей на объекты по заданному пути.
-        @param path: Путь в каталоге.
+        :param path: Путь в каталоге.
         """
         t = path.split(FLD_DIV)
         lst = []
@@ -447,7 +447,7 @@ class icCatalog(icAbsCatalog):
     def get_parent_item(self, item):
         """
         Возвращает родительский эдемент.
-        @param item: Элемент каталога.
+        :param item: Элемент каталога.
         """
         pp = self.get_parent_path(item.path)
         if pp:
@@ -459,7 +459,7 @@ class icCatalog(icAbsCatalog):
     def get_obj_lst(self, path):
         """
         Возвращает список объектов по заданному пути.
-        @param path: Путь в каталоге.
+        :param path: Путь в каталоге.
         """
         
     @norm_path
@@ -537,7 +537,7 @@ class icCatalog(icAbsCatalog):
     def filter_type(self, otype=None):
         """
         Поиск объектов заданного типа.
-        @param otype: Тип объекта.
+        :param otype: Тип объекта.
         """
         otype = otype or DEFAULT_OTYPE
         lst = icListResultSearch()
@@ -550,7 +550,7 @@ class icCatalog(icAbsCatalog):
     def get_type_dct(self, tps=None):
         """
         Возвращает словарь: ключи типы объектов, значения списка объектов заданного типа.
-        @param tps: Список типов попадающих в словарь. Если None, то отбираются 
+        :param tps: Список типов попадающих в словарь. Если None, то отбираются 
             все типы.
         """
         dct = {}

@@ -29,9 +29,9 @@ DEFAULT_TEXT_FONT = 'Courier New'
 def setStampedText(parent, prompt_text, font_name=DEFAULT_TEXT_FONT):
     """
     Функция выводит на фоне окна тесненный текст.
-    @param parent: Окно.
-    @param prompt_text: Строка текста.
-    @param font_name: Шрифт.
+    :param parent: Окно.
+    :param prompt_text: Строка текста.
+    :param font_name: Шрифт.
     """
     try:
         if parent is None:
@@ -84,7 +84,7 @@ def setStampedText(parent, prompt_text, font_name=DEFAULT_TEXT_FONT):
 def showSplash(img_filename=''):
     """
     Функция выводит на экран всплывающее окошко системы.
-    @param img_filename: Имя графического файла (BMP).
+    :param img_filename: Имя графического файла (BMP).
     """
     try:
         if (not img_filename) or (not os.path.exists(img_filename)):
@@ -111,7 +111,7 @@ class icSplashScreen(wx.adv.SplashScreen):
     def __init__(self, img_filename=''):
         """
         Конструктор.
-        @param img_filename: Имя графического файла,
+        :param img_filename: Имя графического файла,
             отображаемого в окне.
         """
         try:
@@ -140,7 +140,7 @@ def showMsgWin(title=''):
 def closeMsgWin(msg_window):
     """
     Функция закрывает окно для сообщений системы.
-    @param msg_window: Ссылка на объект окно сообщений.
+    :param msg_window: Ссылка на объект окно сообщений.
     """
     if msg_window is not None:
         msg_window.Close(False)
@@ -149,8 +149,8 @@ def closeMsgWin(msg_window):
 def setMsgText(msg_window, msg_text):
     """
     Вывести сообщение в окне.
-    @param msg_window: Ссылка на объект окно сообщений.
-    @param msg_text: Текст сообщения.
+    :param msg_window: Ссылка на объект окно сообщений.
+    :param msg_text: Текст сообщения.
     """
     try:
         if msg_window is not None:
@@ -179,7 +179,7 @@ class icMsgWin(wx.Frame):
     def setMsgText(self, msg_text):
         """
         Вывести сообщение в окне.
-        @param msg_text: Текст сообщения.
+        :param msg_text: Текст сообщения.
         """
         self.msg_label.SetLabel(msg_text)
 

@@ -31,7 +31,7 @@ class icWMSRackContructorCtrl(wx.StaticBitmap):
     def setBackgound(self, bmp=None):
         """
         Установить фон.
-        @param bmp: Объект wx.Bitmap фона.
+        :param bmp: Объект wx.Bitmap фона.
             Может задаваться именем файла картинки.
         """
         if isinstance(bmp, str):
@@ -47,7 +47,7 @@ class icWMSRackContructorCtrl(wx.StaticBitmap):
     # def draw(self, dc):
     #     """
     #     Отрисовка состояния стелажа.
-    #     @param dc: Контекст устройства контрола.
+    #     :param dc: Контекст устройства контрола.
     #     """
     #     if self.bg_bmp:
     #         dc.DrawBitmap(self.bg_bmp, 0, 0)

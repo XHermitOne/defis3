@@ -48,7 +48,7 @@ class icPrjTreeImgList(wx.ImageList):
     def setNodeImgIdx(self, node):
         """
         Установить компонент для редактирования.
-        @param node: Компонент.
+        :param node: Компонент.
         """
         node_class = node.__class__.__name__
         node_name = node.name
@@ -62,7 +62,7 @@ class icPrjTreeImgList(wx.ImageList):
     def getNodeImgIdx(self, node):
         """
         Получить данные о компоненте для редактирования.
-        @param node: Компонент.
+        :param node: Компонент.
         """
         # Если тип компонента не зарегистрирован, то зарегистрировать его
         self.setNodeImgIdx(node)
@@ -73,7 +73,7 @@ class icPrjTreeImgList(wx.ImageList):
     def getNodeImgExtendedIdx(self, node):
         """
         Получить данные о компоненте для редактирования.
-        @param node: Компонент.
+        :param node: Компонент.
         """
         # Если тип компонента не зарегистрирован, то зарегистрировать его
         self.setNodeImgIdx(node)
@@ -86,9 +86,9 @@ class icPrjTreeImgList(wx.ImageList):
     def setNodeImg(self, img, img_idx=-1):
         """
         Добавить картинку компонента в список образов.
-        @param img: Имя файла образа компонента или сам образ.
-        @param img_idx: Указание на какое место поместить картинку.
-        @return: Возвращает индекс соответствующий этому образу.
+        :param img: Имя файла образа компонента или сам образ.
+        :param img_idx: Указание на какое место поместить картинку.
+        :return: Возвращает индекс соответствующий этому образу.
         """
         # Заменять картинку в списке не надо
         if img_idx < 0:
@@ -113,9 +113,9 @@ class icPrjTreeImgList(wx.ImageList):
     def replaceImg(self, img_idx, img):
         """
         Заменить образ в списке образов.
-        @param img_idx: Индекс заменяемого образа.
-        @param img: Сам wx.Bitmap образ.
-        @return: Функция возвращает новый индекс образа.
+        :param img_idx: Индекс заменяемого образа.
+        :param img: Сам wx.Bitmap образ.
+        :return: Функция возвращает новый индекс образа.
         """
         try:
             self._img_lst.Replace(img_idx, img)
@@ -132,8 +132,8 @@ class icPrjTree(wx.TreeCtrl):
     def __init__(self, parent, ide=None):
         """
         Конструктор.
-        @param parent: Родитель-панель.
-        @param ide: Указатель на объект IDE.
+        :param parent: Родитель-панель.
+        :param ide: Указатель на объект IDE.
         """
         # Окно всплывающих подсказок
         self._helpWin = None
@@ -202,7 +202,7 @@ class icPrjTree(wx.TreeCtrl):
     def setRoot(self, prj=None):
         """
         Функция по ресурсному описанию строит дерево описаниея.
-        @param prj: Корень дерева проекта.
+        :param prj: Корень дерева проекта.
         """
         try:
             if not prj:
@@ -230,9 +230,9 @@ class icPrjTree(wx.TreeCtrl):
     def expandAllWithoutRoot(self, cur_item=None, bRefresh=True):
         """
         Раскрыть все ветки дерева (когда корень скрыт).
-        @param cur_item: Текущий узел дерева.
+        :param cur_item: Текущий узел дерева.
             Если None, то корень.
-        @param bRefresh: Флаг обновления дерева.
+        :param bRefresh: Флаг обновления дерева.
         """
         if (cur_item is None) or (cur_item == self.GetRootItem()):
             # Начать с корня
@@ -256,9 +256,9 @@ class icPrjTree(wx.TreeCtrl):
     def expandAll(self, cur_item=None, bRefresh=True):
         """
         Раскрыть все ветки дерева.
-        @param cur_item: Текущий узел дерева.
+        :param cur_item: Текущий узел дерева.
             Если None, то корень.
-        @param bRefresh: Флаг обновления дерева.
+        :param bRefresh: Флаг обновления дерева.
         """
         if cur_item is None:
             # Начать с корня
@@ -277,8 +277,8 @@ class icPrjTree(wx.TreeCtrl):
     def addBranch(self, root, node):
         """
         Добавляет ветку в дерево.
-        @param node: компонент.
-        @return: Возвращает узел дерева.
+        :param node: компонент.
+        :return: Возвращает узел дерева.
         """
         # Определить образ компонента
         img_idx = self._img_list.getNodeImgIdx(node)
@@ -330,8 +330,8 @@ class icPrjTree(wx.TreeCtrl):
     def addBranchInSelection(self, node):
         """
         Добавляет ветку в дерево в текущий выделенный узел.
-        @param node: Описание/спецификация компонента.
-        @return: Возвращает узел дерева.
+        :param node: Описание/спецификация компонента.
+        :return: Возвращает узел дерева.
         """
         item = self.addBranch(self.GetSelection(), node)
         # Прописать идентификатор в узле
@@ -346,8 +346,8 @@ class icPrjTree(wx.TreeCtrl):
     def addBranchInParentSelection(self, node):
         """
         Добавляет ветку в дерево в родителя выделенного узел.
-        @param node: Описание/спецификация компонента.
-        @return: Возвращает узел дерева.
+        :param node: Описание/спецификация компонента.
+        :return: Возвращает узел дерева.
         """
         item = self.addBranch(self.GetItemParent(self.GetSelection()), node)
         # Прописать идентификатор в узле
@@ -375,8 +375,8 @@ class icPrjTree(wx.TreeCtrl):
     def refreshObj(self, root=None, bRefresh=True):
         """
         Обновить изображения дерева объекта.
-        @param root: Указание корня откуда начинать обновление.
-        @param bRefresh: Признак обновления самого объекта-дерева.
+        :param root: Указание корня откуда начинать обновление.
+        :param bRefresh: Признак обновления самого объекта-дерева.
         """
         if root is None:
             root = self.GetRootItem()
@@ -417,7 +417,7 @@ class icPrjTree(wx.TreeCtrl):
     def setResourceEditor(self, res_editor=None):
         """
         Запомнить указатель на редактор ресурсов.
-        @param res_editor: Редактор ресурсов.
+        :param res_editor: Редактор ресурсов.
         """
         self.res_editor = res_editor
 
@@ -495,8 +495,8 @@ class icPrjTree(wx.TreeCtrl):
     def _checkLegalLabel(self, label):
         """
         Проверка допустимости имени узла.
-        @param label: Имя узла.
-        @return: Возвращает True/False.
+        :param label: Имя узла.
+        :return: Возвращает True/False.
         """
         if not label:
             return False

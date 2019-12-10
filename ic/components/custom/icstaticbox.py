@@ -4,8 +4,8 @@
 """
 Обкладка для компонента wx.StaticBox.
 
-@type SPC_IC_STATICBOX: C{dictionary}
-@var SPC_IC_STATICBOX: Спецификация на ресурсное описание панели инструментов.
+:type SPC_IC_STATICBOX: C{dictionary}
+:var SPC_IC_STATICBOX: Спецификация на ресурсное описание панели инструментов.
 Описание ключей SPC_IC_STATICBOX:
 
     - B{type='StaticBox'}: Тип компонента.
@@ -87,16 +87,16 @@ class icStaticBox(icWidget, wx.StaticBox):
         """
         Конструктор для создания icStaticBox
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         icSpcDefStruct(SPC_IC_STATICBOX, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)

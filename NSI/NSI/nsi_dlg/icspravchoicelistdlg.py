@@ -57,8 +57,8 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
     def _getStrCode(self, code=None):
         """
         Преобразовать структурный код справочника в строковый вид.
-        @param code: Код справочника в виде кортежа.
-        @return: Строка-код справочника или None если код пустой.
+        :param code: Код справочника в виде кортежа.
+        :return: Строка-код справочника или None если код пустой.
         """
         if code is None:
             code = self._cur_code
@@ -67,8 +67,8 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
     def isEmptyCode(self, code=None):
         """
         Проверка на пустой код.
-        @param code: Код справочника в виде кортежа.
-        @return: True/False.
+        :param code: Код справочника в виде кортежа.
+        :return: True/False.
         """
         if code is None:
             code = self._cur_code
@@ -82,8 +82,8 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
     def setNextCurCode(self, code):
         """
         Установить следующий уровень кода справочника.
-        @param code: Код справочника.
-        @return: Текуший код уровня.
+        :param code: Код справочника.
+        :return: Текуший код уровня.
         """
         code_list = [subcode for subcode in self._sprav.StrCode2ListCode(code) if subcode]
         self._cur_code = tuple(code_list)
@@ -96,7 +96,7 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
     def setPrevCurCode(self):
         """
         Установить предыдущий уровень кода справочника.
-        @return: Предыдущий код уровня.
+        :return: Предыдущий код уровня.
         """
         if len(self._cur_code) > 1:
             self._cur_code = self._cur_code[:-1]
@@ -111,8 +111,8 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
     def getSpravPath(self, code):
         """
         Путь справочника по структурному коду.
-        @param code: Код справочника в виде кортежа.
-        @return:
+        :param code: Код справочника в виде кортежа.
+        :return:
         """
         names = []
         for i, cod in enumerate(code):
@@ -125,7 +125,7 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
     def setSprav(self, sprav):
         """
         Установить активный справочник.
-        @param sprav: Объект справочника.
+        :param sprav: Объект справочника.
         """
         self._sprav = sprav
 
@@ -276,10 +276,10 @@ class icSpravChoiceListDialog(nsi_dialogs_proto.icSpravChoiceListDlgProto):
 def getSpravChoiceListDlg(parent=None, sprav=None):
     """
     Вызов диалогового окна выбора кода справочника.
-    @param parent: Родительское окно.
-    @param sprav: Справочник. Может задаваться как объектом,
+    :param parent: Родительское окно.
+    :param sprav: Справочник. Может задаваться как объектом,
         так и паспортом справочника.
-    @return: Строковый выбранный код.
+    :return: Строковый выбранный код.
     """
     result = None
     if parent is None:

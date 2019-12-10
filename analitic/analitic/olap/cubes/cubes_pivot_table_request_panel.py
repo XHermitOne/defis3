@@ -42,8 +42,8 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def setOLAPServer(self, olap_server, bRefresh=False):
         """
         Установить тестируемый OLAP сервер.
-        @param olap_server: OLAP сервер
-        @param bRefresh: Сделать обновление контролов?
+        :param olap_server: OLAP сервер
+        :param bRefresh: Сделать обновление контролов?
         """
         self._OLAP_server = olap_server
 
@@ -54,7 +54,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def refreshCubeChoice(self, i_cube=0):
         """
         Обновить список кубов.
-        @param i_cube: Индекс выбранного куба.
+        :param i_cube: Индекс выбранного куба.
         """
         if self._OLAP_server:
             # Настраиваем контрол выбора кубов
@@ -69,7 +69,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def refreshDimensionChoice(self, i_cube):
         """
         Обновить список измерений в зависимости от выбранного куба.
-        @param i_cube: Индекс выбранного куба.
+        :param i_cube: Индекс выбранного куба.
         """
         cube = self._OLAP_server.getCubes()[i_cube] if i_cube >= 0 else None
         if cube:
@@ -90,7 +90,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def refreshAggregateChoice(self, i_cube):
         """
         Обновить список агрегаций.
-        @param i_cube: Индекс выбранного куба.
+        :param i_cube: Индекс выбранного куба.
         """
         cube = self._OLAP_server.getCubes()[i_cube] if i_cube >= 0 else None
         if cube:
@@ -125,9 +125,9 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def show_help_popup_win(self, button, info_text):
         """
         Отобразить/скрыть всплывающее окно помощи.
-        @param button: Кнопка вызова окна помощи.
-        @param info_text: Текст помощи.
-        @return:
+        :param button: Кнопка вызова окна помощи.
+        :param info_text: Текст помощи.
+        :return:
         """
         if self._help_popup_win:
             self._help_popup_win.close()
@@ -148,8 +148,8 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def _parse_drilldown(self, drilldown):
         """
         Парсер представления части запроса измерений по строкам и колонкам.
-        @param drilldown: Часть запроса в виде
-        @return: Кортеж:
+        :param drilldown: Часть запроса в виде
+        :return: Кортеж:
             Имя измерения строк, Имя уровня измерения строк,
             Имя измерения колонок, Имя уровня измерения колонок
         """
@@ -181,8 +181,8 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def setRequest(self, request):
         """
         Установить запрос к серверу OLAP в структурном виде.
-        @param request: Словарь параметров запроса к OLAP серверу.
-        @return: True/False.
+        :param request: Словарь параметров запроса к OLAP серверу.
+        :return: True/False.
         """
         try:
             return self._setRequest(request=request)
@@ -193,8 +193,8 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def _setRequest(self, request):
         """
         Установить запрос к серверу OLAP в структурном виде.
-        @param request: Словарь параметров запроса к OLAP серверу.
-        @return: True/False.
+        :param request: Словарь параметров запроса к OLAP серверу.
+        :return: True/False.
         """
         if request is None:
             request = dict()
@@ -282,7 +282,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def getRequest(self):
         """
         Получить запрос к серверу OLAP в структурном виде.
-        @return: Словарь параметров запроса к OLAP серверу.
+        :return: Словарь параметров запроса к OLAP серверу.
             Словарь заполняется в соответствии с выбранными
             параметрами контролов панели.
         """
@@ -295,7 +295,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def _getRequest(self):
         """
         Получить запрос к серверу OLAP в структурном виде.
-        @return: Словарь параметров запроса к OLAP серверу.
+        :return: Словарь параметров запроса к OLAP серверу.
             Словарь заполняется в соответствии с выбранными
             параметрами контролов панели.
         """
@@ -358,7 +358,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
     def getRequestURL(self, request=None):
         """
         Получить URL запроса к серверу OLAP по его структурному описанию.
-        @return: Словарь параметров запроса к OLAP серверу.
+        :return: Словарь параметров запроса к OLAP серверу.
             Если не определен, то берется из контролов.
         """
         if request is None:
@@ -450,7 +450,7 @@ class icCubesPivotTabRequestPanel(cubes_olap_srv_request_form_proto.icCubesPivot
 def show_cubes_pivot_tab_request_panel(title=u''):
     """
     Отобразить панель запроса сводной таблицы к OLAP серверу.
-    @param title: Заголовок страницы нотебука главного окна.
+    :param title: Заголовок страницы нотебука главного окна.
     """
     try:
         main_win = ic.getMainWin()

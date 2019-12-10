@@ -48,7 +48,7 @@ REPLACE_SPC_KEYS = [key for key in ic_class_spc.keys() if not key in NON_REPLACE
 class %s(ictemplate.icTemplateInterface):
     \"\"\"
     User component class.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
         - B{type='defaultType'}:
         - B{name='default'}:
@@ -124,7 +124,7 @@ parentClass = getattr(parentModule, parentModule.ic_class_name)
 class %s(parentClass):
     \"\"\"
     User component class.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
         - B{type='defaultType'}:
         - B{name='default'}:

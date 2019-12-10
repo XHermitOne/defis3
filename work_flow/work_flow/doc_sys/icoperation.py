@@ -35,7 +35,7 @@ class icOperationInterface(object):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         self._parent = parent
 
@@ -48,14 +48,14 @@ class icOperationInterface(object):
     def do(self):
         """
         Запуск выполнения операции.
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def undo(self):
         """
         Запуск выполнения отмены операции.
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
@@ -74,7 +74,7 @@ class icOperationProto(icOperationInterface):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icOperationInterface.__init__(self, parent)
 
@@ -105,13 +105,13 @@ class icFuncOperationProto(icOperationProto):
     def do(self):
         """
         Запуск выполнения операции.
-        @return: True/False.
+        :return: True/False.
         """
         return False
 
     def undo(self):
         """
         Запуск выполнения отмены операции.
-        @return: True/False.
+        :return: True/False.
         """
         return False

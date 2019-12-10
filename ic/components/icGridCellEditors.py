@@ -360,7 +360,7 @@ class icGridCellNSIEditor(wx.grid.GridCellEditor):
     def __init__(self):
         """
         Конструктор.
-        @param NSIPassport: Паспорт справочника.
+        :param NSIPassport: Паспорт справочника.
         """
         self._eventHandler = None
         wx.grid.GridCellEditor.__init__(self)

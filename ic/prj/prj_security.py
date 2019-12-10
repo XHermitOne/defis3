@@ -79,8 +79,8 @@ class icPrjSecurity(prj_node.icPrjFolder):
     def createUser(self, username='new_user'):
         """
         Создать нового пользователя.
-        @param username: Имя пользователя.
-        @return: Функция возвращает узел созданного пользователя
+        :param username: Имя пользователя.
+        :return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         tree_prj = self.getRoot().getParent()
@@ -102,8 +102,8 @@ class icPrjSecurity(prj_node.icPrjFolder):
     def createRole(self, role_name='new_role'):
         """
         Создать новую роль.
-        @param role_name: Имя роли.
-        @return: Функция возвращает узел созданной роли
+        :param role_name: Имя роли.
+        :return: Функция возвращает узел созданной роли
             или None в случае ошибки.
         """
         tree_prj = self.getRoot().getParent()
@@ -121,8 +121,8 @@ class icPrjSecurity(prj_node.icPrjFolder):
     def createUserGroup(self, user_group_name='new_user_grp'):
         """
         Создать новой группы пользователей.
-        @param user_group_name: Имя группы пользователей.
-        @return: Функция возвращает узел созданной группы пользователей
+        :param user_group_name: Имя группы пользователей.
+        :return: Функция возвращает узел созданной группы пользователей
             или None в случае ошибки.
         """
         tree_prj = self.getRoot().getParent()
@@ -144,8 +144,8 @@ class icPrjSecurity(prj_node.icPrjFolder):
     def _addChildUser(self, username):
         """
         Добавление узла пользователя.
-        @param username: Имя пользователя.
-        @return: Функция возвращает узел созданного пользователя
+        :param username: Имя пользователя.
+        :return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         try:
@@ -160,8 +160,8 @@ class icPrjSecurity(prj_node.icPrjFolder):
     def _addChildRole(self, role_name):
         """
         Добавление узла роли.
-        @param role_name: Имя роли.
-        @return: Функция возвращает узел созданной роли
+        :param role_name: Имя роли.
+        :return: Функция возвращает узел созданной роли
             или None в случае ошибки.
         """
         try:
@@ -179,8 +179,8 @@ class icPrjSecurity(prj_node.icPrjFolder):
     def _addChildUserGroup(self, user_group_name):
         """
         Добавление узла группы пользователей.
-        @param user_group_name: Имя группы пользователей.
-        @return: Функция возвращает узел созданного пользователя
+        :param user_group_name: Имя группы пользователей.
+        :return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         try:
@@ -245,8 +245,8 @@ class icPrjSecurity(prj_node.icPrjFolder):
     def delUser(self, username):
         """
         Удаление пользователя.
-        @param username: Имя пользователя.
-        @return: Возвращает результат выполнения операции True/False.
+        :param username: Имя пользователя.
+        :return: Возвращает результат выполнения операции True/False.
         """
         tree_prj = self.getRoot().getParent()
         res_editor = tree_prj.res_editor
@@ -262,7 +262,7 @@ class icPrjSecurity(prj_node.icPrjFolder):
     def _delChildUser(self, username):
         """
         Удалить дочерний узел пользователя.
-        @param username: Имя пользователя.
+        :param username: Имя пользователя.
         """
         for i_child in range(len(self.children)):
             child = self.children[i_child]
@@ -394,8 +394,8 @@ class icPrjUserPrototype(prj_node.icPrjNode):
     def rename(self, old_name, new_name):
         """
         Переименование пользователя.
-        @param old_name: Старое имя.
-        @param new_name: Новое имя.
+        :param old_name: Старое имя.
+        :param new_name: Новое имя.
         """
         tree_prj = self.getRoot().getParent()
         res_editor = tree_prj.res_editor
@@ -472,8 +472,8 @@ class icPrjUserGroup(prj_node.icPrjFolder, icPrjUserPrototype):
     def createUser(self, username='new_user'):
         """
         Создать нового пользователя.
-        @param username: Имя пользователя.
-        @return: Функция возвращает узел созданного пользователя
+        :param username: Имя пользователя.
+        :return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         tree_prj = self.getRoot().getParent()
@@ -501,8 +501,8 @@ class icPrjUserGroup(prj_node.icPrjFolder, icPrjUserPrototype):
     def _addChildUser(self, username):
         """
         Добавление узла пользователя.
-        @param username: Имя пользователя.
-        @return: Функция возвращает узел созданного пользователя
+        :param username: Имя пользователя.
+        :return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         try:
@@ -517,8 +517,8 @@ class icPrjUserGroup(prj_node.icPrjFolder, icPrjUserPrototype):
     def createUserGroup(self, user_group_name='new_user_grp'):
         """
         Создать новой группы пользователей.
-        @param user_group_name: Имя группы пользователей.
-        @return: Функция возвращает узел созданной группы пользователей
+        :param user_group_name: Имя группы пользователей.
+        :return: Функция возвращает узел созданной группы пользователей
             или None в случае ошибки.
         """
         tree_prj = self.getRoot().getParent()
@@ -546,8 +546,8 @@ class icPrjUserGroup(prj_node.icPrjFolder, icPrjUserPrototype):
     def _addChildUserGroup(self, user_group_name):
         """
         Добавление узла группы пользователей.
-        @param user_group_name: Имя группы пользователей.
-        @return: Функция возвращает узел созданного пользователя
+        :param user_group_name: Имя группы пользователей.
+        :return: Функция возвращает узел созданного пользователя
             или None в случае ошибки.
         """
         try:

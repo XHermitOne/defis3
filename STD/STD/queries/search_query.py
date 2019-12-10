@@ -15,11 +15,11 @@ class SearchManager(object):
     def _date_query(self, tab, date_attr,  min, max, q=None, bConv=True):
         """
         Запрос по промежутку дат.
-        @param tab: Таблица.
-        @param date_attr: Атрибут поиска.
-        @param min: Начальная дата.
-        @param max: Конечная дата.
-        @param q: Подготовленный запрос.
+        :param tab: Таблица.
+        :param date_attr: Атрибут поиска.
+        :param min: Начальная дата.
+        :param max: Конечная дата.
+        :param q: Подготовленный запрос.
         """
         attr = getattr(tab.c, date_attr)
         date_min, date_max = None, None

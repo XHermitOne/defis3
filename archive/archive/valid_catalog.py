@@ -17,7 +17,7 @@ __version__ = (0, 1, 1, 1)
 def validZipDocCatalog(zipdoc_dir=None):
     """
     Проверка корректного примонтированного каталога документов.
-    @return: True/False.
+    :return: True/False.
     """
     try:
         if zipdoc_dir is None:
@@ -34,7 +34,7 @@ def validZipDocCatalog(zipdoc_dir=None):
 def validZipDocDir(zipdoc_dir=None):
     """
     Проверка наличия папки каталога документов.
-    @return: True/False.
+    :return: True/False.
     """
     if zipdoc_dir is None:
         zipdoc_dir = ic.settings.archive.SETTINGS.zipdoc_dir.get()
@@ -44,7 +44,7 @@ def validZipDocDir(zipdoc_dir=None):
 def isEmptyDir(dirname):
     """
     Проверка пустой папки.
-    @return: True/False.
+    :return: True/False.
     """
     if not os.path.exists(dirname):
         return True

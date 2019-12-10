@@ -27,7 +27,7 @@ class icMetaConstPrototype:
     def __init__(self, Resource_):
         """
         Конструктор.
-        @param Resource_: Ресурс описания.
+        :param Resource_: Ресурс описания.
         """
         self._value = None
         

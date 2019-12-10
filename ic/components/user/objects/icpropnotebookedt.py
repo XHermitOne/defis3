@@ -98,10 +98,10 @@ class PropNotebookEdt:
     def AddAttrPageLst(self, indx, attr):
         """
         Добавляет атрибут в список заданной страницы.
-        @type indx: C{int}
-        @param indx: Индекс страницы.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
+        :type indx: C{int}
+        :param indx: Индекс страницы.
+        :type attr: C{string}
+        :param attr: Имя атрибута.
         """
         if indx in self._pages_flt:
             self._pages_flt[indx].append(attr)
@@ -109,12 +109,12 @@ class PropNotebookEdt:
     def AddProperty(self, attr, value, typeEdt=icDefInf.EDT_PY_SCRIPT):
         """
         Функция добавляет свойство в ресурс.
-        @type attr: C{string}
-        @param attr: Имя свойства.
-        @type value: C{string}
-        @param value: Значение свойства.
-        @type typeEdt: C{int}
-        @param typeEdt: Тип редактора.
+        :type attr: C{string}
+        :param attr: Имя свойства.
+        :type value: C{string}
+        :param value: Значение свойства.
+        :type typeEdt: C{int}
+        :param typeEdt: Тип редактора.
         """
         self.SetProperty(attr, value)
         res = self.getResource()
@@ -130,16 +130,16 @@ class PropNotebookEdt:
     def Ctrl(self, grid, value, row, col):
         """
         Контроль значений свойств.
-        @type grid: C{wx.Grid}
-        @param grid: Указатель на грид, в котором редактируются свойста ресурса.
-        @type value: C{string}
-        @param value: Проверяемое значение.
-        @type row: C{int}
-        @param row: Номер строки.
-        @type col: C{int}
-        @param col: Номер колонки.
-        @rtype: C{int}
-        @return: Возвращает код проверки.
+        :type grid: C{wx.Grid}
+        :param grid: Указатель на грид, в котором редактируются свойста ресурса.
+        :type value: C{string}
+        :param value: Проверяемое значение.
+        :type row: C{int}
+        :param row: Номер строки.
+        :type col: C{int}
+        :param col: Номер колонки.
+        :rtype: C{int}
+        :return: Возвращает код проверки.
         """
         if not self.IsEnableCtrl():
             return coderror.IC_CTRL_OK
@@ -215,8 +215,8 @@ class PropNotebookEdt:
     def EnableCtrl(self, bEnable):
         """
         Включает/отключает контроль.
-        @type bEnable: C{bool}
-        @param bEnable: Признак включения контроля значения свойств.
+        :type bEnable: C{bool}
+        :param bEnable: Признак включения контроля значения свойств.
         """
         self._ctrl = bEnable
         
@@ -254,8 +254,8 @@ class PropNotebookEdt:
     def GetAttr(self, row=-1):
         """
         Возвращает имя атрибута по номеру сроки.
-        @type row: C{int}
-        @param row: Номер строки.
+        :type row: C{int}
+        :param row: Номер строки.
         """
         grid = self.GetPropertyGrid()
         if row < 0:
@@ -334,8 +334,8 @@ class PropNotebookEdt:
     def GetPageAttrLst(self, indx):
         """
         Возвращает список атрибутов заданной страницы.
-        @type indx: C{int}
-        @param indx: Индекс страницы.
+        :type indx: C{int}
+        :param indx: Индекс страницы.
         """
         if indx in self._pages_flt:
             return self._pages_flt[indx]
@@ -521,10 +521,10 @@ class PropNotebookEdt:
     def OnSelectGridCell(self, row, col):
         """
         Функция вызывается при выборе ячейки грида.
-        @type row: C{int}
-        @param row: Номер ряда.
-        @type col: C{int}
-        @param col: Номер колонки.
+        :type row: C{int}
+        :param row: Номер ряда.
+        :type col: C{int}
+        :param col: Номер колонки.
         """
         grid = self.GetPropertyGrid()
         if grid:
@@ -582,10 +582,10 @@ class PropNotebookEdt:
     def OnPostSelectGridCell(self, row, col):
         """
         Функция вызывается после выбора ячейки грида.
-        @type row: C{int}
-        @param row: Номер ряда.
-        @type col: C{int}
-        @param col: Номер колонки.
+        :type row: C{int}
+        :param row: Номер ряда.
+        :type col: C{int}
+        :param col: Номер колонки.
         """
         _grid = self.GetPropertyGrid()
         try:
@@ -795,9 +795,9 @@ class PropNotebookEdt:
     def SetNameProperty(self, prop, value):
         """
         Устанавливает значение заданного свойства.
-        @type prop: C{string}
-        @param prop: Имя атрибута.
-        @param value: Значение атрибута.
+        :type prop: C{string}
+        :param prop: Имя атрибута.
+        :param value: Значение атрибута.
         """
         if prop in self.getResource():
             self.getResource()[prop] = value
@@ -809,10 +809,10 @@ class PropNotebookEdt:
         """
         Устанавливает значение заданного свойства. Предварительно,
         значение преобразуется к нужному типу.
-        @type prop: C{string}
-        @param prop: Имя атрибута.
-        @type value: C{string}
-        @param value: Значение атрибута.
+        :type prop: C{string}
+        :param prop: Имя атрибута.
+        :type value: C{string}
+        :param value: Значение атрибута.
         """
         #   Определяем тип свойства
         typ = self.GetPropertyType(prop)
@@ -829,8 +829,8 @@ class PropNotebookEdt:
     def SetResTree(self, resTree):
         """
         Установить ссылку на дерево ресурса.
-        @type resTree: C{icResTree.icResTree}
-        @param resTree: Указатель на дерево ресурса.
+        :type resTree: C{icResTree.icResTree}
+        :param resTree: Указатель на дерево ресурса.
         """
         self._resTree = resTree
         
@@ -850,8 +850,8 @@ class PropNotebookEdt:
     def SelectPropertyEdt(self, prop):
         """
         Устанавливает заданное свойство на редактирование.
-        @type prop: C{string}
-        @param prop: Свойство ресурса, которое надо редактировать.
+        :type prop: C{string}
+        :param prop: Свойство ресурса, которое надо редактировать.
         """
         for i in range(self.GetPageNumber()):
             lst = self.GetPageAttrLst(i)
@@ -865,13 +865,13 @@ class PropNotebookEdt:
     def SetResource(self, res, spec=None, parent_res=None):
         """
         Устанавливает ресурс на редактирование.
-        @type res: C{dictionary}
-        @param res: Ресурс, который будет редактироваться.
-        @type spec: C{dictionary}
-        @param spec: Спецификация ресурса. Используется для определения атрибутов, не
+        :type res: C{dictionary}
+        :param res: Ресурс, который будет редактироваться.
+        :type spec: C{dictionary}
+        :param spec: Спецификация ресурса. Используется для определения атрибутов, не
             описанных в спецификации. В редакторе они помечаются цветом.
-        @type parent_res: C{dictionary}
-        @param parent_res: Родительский ресурс.
+        :type parent_res: C{dictionary}
+        :param parent_res: Родительский ресурс.
         """
         #   Принудительно выходим из редактирования
         grid = self.evalSpace['_dict_obj']['PropertyGrid']

@@ -78,29 +78,29 @@ class ic2GISMap(object):
                  **kwargs):
         """
         Конструктор. Создание карты.
-        @param location: Точка геолокации (ширина, долгота) центра карты.
-        @param width: Ширина карты.
-        @param height: Высота карты.
-        @param left:
-        @param top:
-        @param position:
-        @param tiles: Карта набора плиток для использования.
-        @param attr: Атрибуция плитки карты; требуется только при передаче пользовательского URL плитки.
-        @param min_zoom: Минимально допустимый уровень масштабирования для создаваемого слоя листов.
-        @param max_zoom: Максимально допустимый уровень масштабирования для создаваемого слоя листов.
-        @param zoom_start: Начальный уровень масштабирования для карты.
-        @param min_lat:
-        @param max_lat:
-        @param min_lon:
-        @param max_lon:
-        @param max_bounds:
-        @param crs:
-        @param control_scale: Независимо от того, чтобы добавить масштаб управления на карте.
-        @param prefer_canvas:
-        @param no_touch:
-        @param disable_3d:
-        @param png_enabled:
-        @param zoom_control: Отображение управления масштабированием на карте.
+        :param location: Точка геолокации (ширина, долгота) центра карты.
+        :param width: Ширина карты.
+        :param height: Высота карты.
+        :param left:
+        :param top:
+        :param position:
+        :param tiles: Карта набора плиток для использования.
+        :param attr: Атрибуция плитки карты; требуется только при передаче пользовательского URL плитки.
+        :param min_zoom: Минимально допустимый уровень масштабирования для создаваемого слоя листов.
+        :param max_zoom: Максимально допустимый уровень масштабирования для создаваемого слоя листов.
+        :param zoom_start: Начальный уровень масштабирования для карты.
+        :param min_lat:
+        :param max_lat:
+        :param min_lon:
+        :param max_lon:
+        :param max_bounds:
+        :param crs:
+        :param control_scale: Независимо от того, чтобы добавить масштаб управления на карте.
+        :param prefer_canvas:
+        :param no_touch:
+        :param disable_3d:
+        :param png_enabled:
+        :param zoom_control: Отображение управления масштабированием на карте.
         """
         if location is None:
             # If location is not passed we center and zoom out.
@@ -125,8 +125,8 @@ class ic2GISMap(object):
     def add_marker(self, marker):
         """
         Добавить маркер на карту.
-        @param marker: Объект маркера.
-        @return: True/False.
+        :param marker: Объект маркера.
+        :return: True/False.
         """
         self.markers.append(marker)
         return True
@@ -134,7 +134,7 @@ class ic2GISMap(object):
     def render(self, **kwargs):
         """
         Генерирует HTML-представление элемента.
-        @return: Сгенерированное HTML представление карты.
+        :return: Сгенерированное HTML представление карты.
         """
         return self._map_template.render(location=self.location,
                                          zoom=self.zoom,
@@ -144,8 +144,8 @@ class ic2GISMap(object):
     def save(self, html_filename):
         """
         Сохранить карту в HTML файле.
-        @param html_filename: Полное имя HTML файла.
-        @return: True/False.
+        :param html_filename: Полное имя HTML файла.
+        :return: True/False.
         """
         map_html = self.render()
         html = self._html_template.render(map=map_html,

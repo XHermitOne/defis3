@@ -4,8 +4,8 @@
 """
 Обкладка для класса wxFrame. Генерирут объект по ресурсному описанию.
 Содержит описание класса icFrame, который по ресурсному описанию создает фрэймовое окно.
-@type SPC_IC_FRAME: C{dictionary}
-@var SPC_IC_FRAME: Спецификация на ресурсное описание окна. Описание ключей SPC_IC_FRAME:
+:type SPC_IC_FRAME: C{dictionary}
+:var SPC_IC_FRAME: Спецификация на ресурсное описание окна. Описание ключей SPC_IC_FRAME:
     - B{name = 'default'}: Имя окна.
     - B{type = 'Frame'}: Тип объекта.
     - B{title = 'Frame'}: Заголовок окна.
@@ -22,8 +22,8 @@
     - B{style=0}: Стиль окна.
     - B{child=[]}: Cписок дочерних элементов.
         
-@type ICFrameStyle: C{dictionary}
-@var ICFrameStyle: Словарь специальных стилей компонента. Описание ключей ICFrameStyle:
+:type ICFrameStyle: C{dictionary}
+:var ICFrameStyle: Словарь специальных стилей компонента. Описание ключей ICFrameStyle:
     - C{DEFAULT_FRAME_STYLE} - определяется как wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION.
     - C{ICONIZE} - выводит окно в свернутом виде.
     - C{MINIMIZE} - аналогично  wxICONIZE.
@@ -151,16 +151,16 @@ class icFrame(icwidget.icWidget, wx.Frame):
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icFrame
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         if component is None:
             component = {}

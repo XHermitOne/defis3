@@ -7,8 +7,8 @@
 Содержит описание класса icDatasetNavigator, который по ресурсному описанию создает компонент
 навигации и поиска по источнику данных.
 
-@type SPC_IC_DATASET_NAVIGATOR: C{dictionary}
-@var SPC_IC_DATASET_NAVIGATOR: Спецификация на ресурсное описание навигатора.
+:type SPC_IC_DATASET_NAVIGATOR: C{dictionary}
+:var SPC_IC_DATASET_NAVIGATOR: Спецификация на ресурсное описание навигатора.
 Описание ключей SPC_IC_DATASET_NAVIGATOR:
 
     - B{name = 'default'}: Имя окна.
@@ -184,18 +184,18 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
                  bCounter=False, progressDlg=None, step=1):
         """
         Конструктор для создания icDatasetNavigator.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type step: C{int}
-        @param step: Шаг изменения курсора.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type step: C{int}
+        :param step: Шаг изменения курсора.
         """
         util.icSpcDefStruct(SPC_IC_DATASET_NAVIGATOR, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -337,7 +337,7 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
     def setLink(self, object_link):
         """
         Установить связь с объектом грида и источником данных.
-        @param object_link: Объект грида.
+        :param object_link: Объект грида.
         """
         self.object_link = object_link
         if self.object_link is None:
@@ -652,8 +652,8 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
         """
         Обновляет данные в текстовом поле после изменения курсора в
         источнике данных.
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
         """
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:
@@ -685,16 +685,16 @@ class icDatasetNavigator(icWidget, wx.ToolBar):
     def FindRowString(self, obj, string, cursor, fields):
         """
         Функция ищет строку в массиве данных.
-        @type data: C{icDataset}
-        @param data: Объект доступа к источнику данных
-        @type string: C{string}
-        @param string: Строка поиска
-        @type cur: C{int}
-        @param cur: Начальное положение курсора.
-        @type fields: C{dictionary}
-        @param fields: Список полей по которым ведется поиск.
-        @rtype: C{tuple}
-        @return: Возвращает номер строку и название поля, где найдена искомая строка.
+        :type data: C{icDataset}
+        :param data: Объект доступа к источнику данных
+        :type string: C{string}
+        :param string: Строка поиска
+        :type cur: C{int}
+        :param cur: Начальное положение курсора.
+        :type fields: C{dictionary}
+        :param fields: Список полей по которым ведется поиск.
+        :rtype: C{tuple}
+        :return: Возвращает номер строку и название поля, где найдена искомая строка.
         """
         log.info(u'>>> FindRowString : fields=%s' % fields)
         if not string or not obj:

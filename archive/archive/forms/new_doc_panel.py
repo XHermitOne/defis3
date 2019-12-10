@@ -65,10 +65,10 @@ def gen_scan_filename(doc, file_ext='.pdf'):
 def put_doc_catalog(doc, scan_filename, doRemoveScan=True):
     """
     Разместить документ в каталоге.
-    @param doc: Объект документа карточки скана.
-    @param scan_filename: Имя файла сканированого документа.
-    @param doRemoveScan: Удалить промежуточный файл скана?
-    @return: True/False.
+    :param doc: Объект документа карточки скана.
+    :param scan_filename: Имя файла сканированого документа.
+    :param doRemoveScan: Удалить промежуточный файл скана?
+    :return: True/False.
     """
     file_ext = os.path.splitext(scan_filename)[1]
     doc_filename = gen_scan_filename(doc, file_ext)
@@ -106,8 +106,8 @@ class icDocCardPanelManager():
     def valid(self, data):
         """
         Валидация. Проверка правильности заполнения экранной формы.
-        @param data: Данные экранной формы в виде словаря.
-        @return: True - проверка прошла успешно.
+        :param data: Данные экранной формы в виде словаря.
+        :return: True - проверка прошла успешно.
             False - ошибка заполнения данных.
         """
         if data:
@@ -154,10 +154,10 @@ class icDocCardPanelManager():
     def put_doc_catalog(self, doc, scan_filename, doRemoveScan=True):
         """
         Разместить документ в каталоге.
-        @param doc: Объект документа карточки скана.
-        @param scan_filename: Имя файла сканированого документа.
-        @param doRemoveScan: Удалить промежуточный файл скана?
-        @return: True/False.
+        :param doc: Объект документа карточки скана.
+        :param scan_filename: Имя файла сканированого документа.
+        :param doRemoveScan: Удалить промежуточный файл скана?
+        :return: True/False.
         """
         return put_doc_catalog(doc, scan_filename, doRemoveScan)
 
@@ -166,16 +166,16 @@ class icDocCardPanelManager():
         Проверка корректности добавляемой ссылки на документ.
         Нельзя добавлять уже существующие связи.
         Также нельзя чтобы документ ссылался сам на себя.
-        @param doc_uuid: UUID документа добавляемой связи/ссылки.
-        @return: True - все ок. False - нельзя добавлять ссылку на объект.
+        :param doc_uuid: UUID документа добавляемой связи/ссылки.
+        :return: True - все ок. False - нельзя добавлять ссылку на объект.
         """
         return (doc_uuid is not None) and (doc_uuid not in self._link_to_uuids)
 
     def valid_links(self, docs_uuid):
         """
         Проверка корректности списка добавляемых ссылок на документы.
-        @param docs_uuid: Список UUID документов добавляемой связи/ссылки.
-        @return: True - все ок. False - нельзя добавлять ссылку на объект.
+        :param docs_uuid: Список UUID документов добавляемой связи/ссылки.
+        :return: True - все ок. False - нельзя добавлять ссылку на объект.
         """
         return min([self.valid_link(doc_uuid) for doc_uuid in docs_uuid])
 
@@ -184,7 +184,7 @@ class icDocCardPanelManager():
     def _getDocText(self, doc_filename):
         """
         Получить текст документа.
-        @param doc_filename: Полное имя файла документа.
+        :param doc_filename: Полное имя файла документа.
         """
         if not os.path.exists(doc_filename):
             log.warning(u'Определение текста документа. Файл <%s> не найден.' % doc_filename)
@@ -305,7 +305,7 @@ class icNewArchiveDocPanel(new_doc_form_proto.icNewDocPanelProto,
     def reg_doc(self, doc_data):
         """
         Регистрация нового документа в архиве.
-        @param doc_data: Данные о регистрируемомом документе.
+        :param doc_data: Данные о регистрируемомом документе.
         """
         if not os.path.exists(doc_data['file_name']):
             msg = u'Не существует файла скана <%s>. Документ не зарегистрирован' % doc_data['file_name']

@@ -5,16 +5,16 @@
 Иерархический справочник.
 Класс пользовательского визуального компонента.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -109,7 +109,7 @@ class SpravTreeList(icwidget.icWidget,
     """
     Класс представления структурного справочника в виде дерева.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{name='default'}:
         - B{labels=[]}: Список заголовков колонок.
@@ -131,22 +131,22 @@ class SpravTreeList(icwidget.icWidget,
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -266,21 +266,21 @@ class SpravTreeList(icwidget.icWidget,
         Добавляет в определенный узел дочерние элементы, которые определяются
         по маске кода.
         
-        @type parent_item: C{wx.CtrlTreeItem}
-        @param parent_item: Узел, куда добавляются дочерние элементы.
-        @type cod_mask: C{string}
-        @param cod_mask: Маска кода справочника, по которой определяются дочерние
+        :type parent_item: C{wx.CtrlTreeItem}
+        :param parent_item: Узел, куда добавляются дочерние элементы.
+        :type cod_mask: C{string}
+        :param cod_mask: Маска кода справочника, по которой определяются дочерние
             элементы.
-        @type level: C{int}
-        @param level: Номер уровня кода родительского элемента.
-        @type levelLenList: C{list}
-        @param levelLenList: Список размеров уровней. Индекс списка соответствует номеру
+        :type level: C{int}
+        :param level: Номер уровня кода родительского элемента.
+        :type levelLenList: C{list}
+        :param levelLenList: Список размеров уровней. Индекс списка соответствует номеру
             уровня кода.
-        @type rows_dict: C{dictionary}
-        @param rows_dict: Словарь записей из справочника. В качестве ключей размеры кодов,
+        :type rows_dict: C{dictionary}
+        :param rows_dict: Словарь записей из справочника. В качестве ключей размеры кодов,
             в качестве значений список записей с данным размером кода.
-        @rtype: C{bool}
-        @return: Признак того, что в узел добавлены дочерние элементы.
+        :rtype: C{bool}
+        :return: Признак того, что в узел добавлены дочерние элементы.
         """
         if level >= len(levelLenList):
             return False
@@ -351,10 +351,10 @@ class SpravTreeList(icwidget.icWidget,
         """
         Выбирает элемент дерева по структурному коду.
         
-        @type cod: C{string}
-        @param cod: Структурный код.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного выполнения.
+        :type cod: C{string}
+        :param cod: Структурный код.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного выполнения.
         """
         if cod in self._codItemDict:
             item = self._codItemDict[cod]
@@ -398,9 +398,9 @@ class SpravTreeList(icwidget.icWidget,
     def getDataTab(self, CurItem_=None):
         """
         Получить таблицу записей всех элементов.
-        @param CurItem_: Текущий обработываемый узел дерева.
+        :param CurItem_: Текущий обработываемый узел дерева.
             Если None, то корневой элемент.
-        @return: Список записей дочерних элементов или None в случае ошибки.
+        :return: Список записей дочерних элементов или None в случае ошибки.
         """
         try:
             table = []
@@ -479,8 +479,8 @@ def test(par=0):
     """
     Тестируем пользовательский класс.
     
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     import ic.components.ictestapp as ictestapp
     

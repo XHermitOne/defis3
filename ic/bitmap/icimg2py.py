@@ -24,8 +24,8 @@ __version__ = (0, 1, 1, 2)
 def getImgFileData(img_filename):
     """
     Получить данные файла образа.
-    @param img_filename: Имя файла образа.
-    @return: Данные образа или None  в случае ошибки.
+    :param img_filename: Имя файла образа.
+    :return: Данные образа или None  в случае ошибки.
     """
     try:
         # Определить тип образа и расширение файла
@@ -53,7 +53,7 @@ def getImgFileData(img_filename):
 def crunchImgData(img_data):
     """
     Нормализовать данные для записи в файл *.py.
-    @param img_data: Данные образа.
+    :param img_data: Данные образа.
     """
     try:
         return img2py.crunch_data(img_data, 0)
@@ -116,7 +116,7 @@ def create_crunch_data(data, compressed):
 def getImageFromData(img_data):
     """
     Создание wx.Image из строки серилизованной картинки.
-    @param img_data: Данные строки серилизованной картинки.
+    :param img_data: Данные строки серилизованной картинки.
     """
     stream = io.BytesIO(img_data)
     return wx.Image(stream)
@@ -125,7 +125,7 @@ def getImageFromData(img_data):
 def getBitmapFromData(img_data):
     """
     Создание wx.Bitmap из строки серилизованной картинки.
-    @param img_data: Данные строки серилизованной картинки.
+    :param img_data: Данные строки серилизованной картинки.
     """
     image = getImageFromData(img_data)
     return wx.Bitmap(image)
@@ -134,7 +134,7 @@ def getBitmapFromData(img_data):
 def getIconFromData(img_data):
     """
     Создание wx.Icon из строки серилизованной картинки.
-    @param img_data: Данные строки серилизованной картинки.
+    :param img_data: Данные строки серилизованной картинки.
     """
     icon = wx.Icon()
     icon.CopyFromBitmap(getBitmapFromData(img_data))

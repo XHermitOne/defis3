@@ -47,24 +47,24 @@ class icEMailSender(object):
                  connect_protect=None, authent=None):
         """
         Конструктор.
-        @param from_adr: Адрес отправителя.
-        @param to_adr: Адрес/адреса получаетелей.
+        :param from_adr: Адрес отправителя.
+        :param to_adr: Адрес/адреса получаетелей.
             Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.
-        @param subject: Заголовок письма.
-        @param body: Тело письма,
-        @param attache_files: Список прикрепляемых файлов.
-        @param smtp_server: Адрес SMTP сервера.
-        @param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
-        @param login: Логин пользователя SMTP сервера.
-        @param password: Пароль пользователя SMTP сервера.
-        @param enable_send: Вкл./выкл. отправки писем.
-        @param encoding: Кодировка писем. По умолчанию UTF-8.
-        @param outbox_dir: Папка исходящих файлов.
-        @param auto_del_files: Автоматически удалять прикрепляемые файлы после отправки?
-        @param prev_send_cmd: Комманда, выполняемая перед отправкой письма.
-        @param post_send_cmd: Комманда, выполняемая после отправки письма.
-        @param connect_protect: Защита соединения.
-        @param authent: Метод аутентификации.
+        :param subject: Заголовок письма.
+        :param body: Тело письма,
+        :param attache_files: Список прикрепляемых файлов.
+        :param smtp_server: Адрес SMTP сервера.
+        :param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
+        :param login: Логин пользователя SMTP сервера.
+        :param password: Пароль пользователя SMTP сервера.
+        :param enable_send: Вкл./выкл. отправки писем.
+        :param encoding: Кодировка писем. По умолчанию UTF-8.
+        :param outbox_dir: Папка исходящих файлов.
+        :param auto_del_files: Автоматически удалять прикрепляемые файлы после отправки?
+        :param prev_send_cmd: Комманда, выполняемая перед отправкой письма.
+        :param post_send_cmd: Комманда, выполняемая после отправки письма.
+        :param connect_protect: Защита соединения.
+        :param authent: Метод аутентификации.
         """
         self.from_adr = from_adr
         self.to_adr = to_adr.split(EMAIL_ADR_DELIMETER) if isinstance(to_adr, str) else to_adr
@@ -102,7 +102,7 @@ class icEMailSender(object):
     def _do_cmd_list(self, cmd_list, mode=os.P_WAIT):
         """
         Выполнение списка команд ОС.
-        @param cmd_list: Список команд ОС.
+        :param cmd_list: Список команд ОС.
         """
         if cmd_list and isinstance(cmd_list, list):
             for cmd in cmd_list:
@@ -140,17 +140,17 @@ class icEMailSender(object):
         """
         Функция отправки  письма. Если какой  параметр функции
             None, то этот параметр берется из внутренних настроек отправщика.
-        @param from_adr: Адрес отправителя.
-        @param to_adr: Адрес/адреса получаетелей.
+        :param from_adr: Адрес отправителя.
+        :param to_adr: Адрес/адреса получаетелей.
             Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.
-        @param subject: Заголовок письма.
-        @param body: Тело письма,
-        @param attache_files: Список прикрепляемых файлов.
-        @param smtp_server: Адрес SMTP сервера.
-        @param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
-        @param login: Логин пользователя SMTP сервера.
-        @param password: Пароль пользователя SMTP сервера.
-        @return: True/False.
+        :param subject: Заголовок письма.
+        :param body: Тело письма,
+        :param attache_files: Список прикрепляемых файлов.
+        :param smtp_server: Адрес SMTP сервера.
+        :param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
+        :param login: Логин пользователя SMTP сервера.
+        :param password: Пароль пользователя SMTP сервера.
+        :return: True/False.
         """
         if self.prev_send_cmd:
             self._do_cmd_list(self.prev_send_cmd, None)
@@ -178,17 +178,17 @@ class icEMailSender(object):
         """
         Функция отправки  письма. Если какой  параметр функции
             None, то этот параметр берется из внутренних настроек отправщика.
-        @param from_adr: Адрес отправителя.
-        @param to_adr: Адрес/адреса получаетелей.
+        :param from_adr: Адрес отправителя.
+        :param to_adr: Адрес/адреса получаетелей.
             Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.
-        @param subject: Заголовок письма.
-        @param body: Тело письма,
-        @param attache_files: Список прикрепляемых файлов.
-        @param smtp_server: Адрес SMTP сервера.
-        @param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
-        @param login: Логин пользователя SMTP сервера.
-        @param password: Пароль пользователя SMTP сервера.
-        @return: True/False.
+        :param subject: Заголовок письма.
+        :param body: Тело письма,
+        :param attache_files: Список прикрепляемых файлов.
+        :param smtp_server: Адрес SMTP сервера.
+        :param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
+        :param login: Логин пользователя SMTP сервера.
+        :param password: Пароль пользователя SMTP сервера.
+        :return: True/False.
         """
         # Отправка писем выключена
         if not self.enable_send:
@@ -290,8 +290,8 @@ class icEMailSender(object):
     def get_outbox_filenames(self, outbox_dir=None):
         """
         Посмотреть есть ли файлы в папке исходящих файлов.
-        @param outbox_dir: Папка исходящих файлов.
-        @return: Список файлов находящихся в папке исходящих файлов.
+        :param outbox_dir: Папка исходящих файлов.
+        :return: Список файлов находящихся в папке исходящих файлов.
         """
         outbox_dir = self.outbox_dir if outbox_dir is None else outbox_dir
 
@@ -306,25 +306,25 @@ class icEMailSender(object):
 def send_mail(*args, **kwargs):
     """
     Отсылка письма из командной строки.
-    @param from_adr: Адрес отправителя.
-    @param to_adr: Адрес/адреса получаетелей.
+    :param from_adr: Адрес отправителя.
+    :param to_adr: Адрес/адреса получаетелей.
         Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.
-    @param subject: Заголовок письма.
-    @param body: Тело письма,
-    @param attache_files: Список прикрепляемых файлов.
-    @param smtp_server: Адрес SMTP сервера.
-    @param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
-    @param login: Логин пользователя SMTP сервера.
-    @param password: Пароль пользователя SMTP сервера.
-    @param enable_send: Вкл./выкл. отправки писем.
-    @param encoding: Кодировка писем. По умолчанию UTF-8.
-    @param outbox_dir: Папка исходящих файлов.
-    @param auto_del_files: Автоматически удалять прикрепляемые файлы после отправки?
-    @param prev_send_cmd: Комманда, выполняемая перед отправкой письма.
-    @param post_send_cmd: Комманда, выполняемая после отправки письма.
-    @param connect_protect: Защита соединения.
-    @param authent: Метод аутентификации.
-    @return: True/False.
+    :param subject: Заголовок письма.
+    :param body: Тело письма,
+    :param attache_files: Список прикрепляемых файлов.
+    :param smtp_server: Адрес SMTP сервера.
+    :param smtp_port: Порт SMTP сервера. Обычно по умолчанию 25.
+    :param login: Логин пользователя SMTP сервера.
+    :param password: Пароль пользователя SMTP сервера.
+    :param enable_send: Вкл./выкл. отправки писем.
+    :param encoding: Кодировка писем. По умолчанию UTF-8.
+    :param outbox_dir: Папка исходящих файлов.
+    :param auto_del_files: Автоматически удалять прикрепляемые файлы после отправки?
+    :param prev_send_cmd: Комманда, выполняемая перед отправкой письма.
+    :param post_send_cmd: Комманда, выполняемая после отправки письма.
+    :param connect_protect: Защита соединения.
+    :param authent: Метод аутентификации.
+    :return: True/False.
     """
     mail_sender = icEMailSender(*args, **kwargs)
     result = mail_sender.send_mail()

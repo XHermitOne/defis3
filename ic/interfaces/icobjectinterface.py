@@ -23,18 +23,18 @@ class icObjectInterface:
                  bIndicator=False, moduleRes=None, **par):
         """
         Конструктор интерфейса.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно, если оно есть. В противном случае None.
-        @type resource: C{dictionary}
-        @param resource: Ресурсное описание, по которому строится компонент.
-        @type evalSpace: C{dictionary}
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type bIndicator: C{bool}
-        @param bIndicator: Признак отображения процесса создания объекта в статусной строке
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно, если оно есть. В противном случае None.
+        :type resource: C{dictionary}
+        :param resource: Ресурсное описание, по которому строится компонент.
+        :type evalSpace: C{dictionary}
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type bIndicator: C{bool}
+        :param bIndicator: Признак отображения процесса создания объекта в статусной строке
             главного окна.
-        @param moduleRes: Полное имя модуля ресурса.
-        @type par: C{dictionary}
-        @param par: Список дополнительных параметров, которые будут добавлены в
+        :param moduleRes: Полное имя модуля ресурса.
+        :type par: C{dictionary}
+        :param par: Список дополнительных параметров, которые будут добавлены в
             пространство имен объекта.
         """
         #   Инициализация пространства имен объекта
@@ -97,14 +97,14 @@ class icObjectInterface:
     def _findres(self, res, nameObj, typeObj):
         """
         Ищет ресурс нужного объекта по дереву ресурса.
-        @type res: C{dictionary}
-        @param res: Ресурсное описание.
-        @type nameObj: C{string}
-        @param nameObj: Имя объекта.
-        @type typeObj: C{string}
-        @param typeObj: Тип объекта.
-        @rtype: C{dictionary}
-        @return: Ресурсное описание найденного объекта.
+        :type res: C{dictionary}
+        :param res: Ресурсное описание.
+        :type nameObj: C{string}
+        :param nameObj: Имя объекта.
+        :type typeObj: C{string}
+        :param typeObj: Тип объекта.
+        :rtype: C{dictionary}
+        :return: Ресурсное описание найденного объекта.
         """
         if 'name' not in res:
             return
@@ -129,12 +129,12 @@ class icObjectInterface:
     def GetObjectResource(self, nameObj, typeObj=None, resource=None):
         """
         Возвращает ресурс нужного объекта.
-        @type nameObj: C{string}
-        @param nameObj: Имя объекта.
-        @type typeObj: C{string}
-        @param typeObj: Тип объекта.
-        @rtype: C{dictionary}
-        @return: Ресурсное описание найденного объекта.
+        :type nameObj: C{string}
+        :param nameObj: Имя объекта.
+        :type typeObj: C{string}
+        :param typeObj: Тип объекта.
+        :rtype: C{dictionary}
+        :return: Ресурсное описание найденного объекта.
         """
         if resource is None:
             return self._findres(self.getResource(), nameObj, typeObj)

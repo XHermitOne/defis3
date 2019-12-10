@@ -29,9 +29,9 @@ _REF_SQL_STORAGE = dict()
 def getRefSQLStorageByPsp(db_psp, ref_object=None):
     """
     Получить объект SQL хранилища объектов-ссылок/справочников по имени.
-    @param db_psp: Паспорт БД.
-    @param ref_object: Объект-ссылка/справочник.
-    @return: Объект SQL хранилища объектов-ссылок/справочников.
+    :param db_psp: Паспорт БД.
+    :param ref_object: Объект-ссылка/справочник.
+    :return: Объект SQL хранилища объектов-ссылок/справочников.
     """
     global _REF_SQL_STORAGE
 
@@ -53,8 +53,8 @@ class icRefStorageInterface(icspravstorage.icSpravStorageInterface):
     def __init__(self, parent, db_psp, *args, **kwargs):
         """
         Конструктор.
-        @param parent: Родительский объект.
-        @param db_psp: Паспорт БД.
+        :param parent: Родительский объект.
+        :param db_psp: Паспорт БД.
         """
         self._parent = parent
         self._db_psp = db_psp
@@ -71,22 +71,22 @@ class icRefStorageInterface(icspravstorage.icSpravStorageInterface):
     def saveObject(self, obj):
         """
         Сохранить объект в хранилище.
-        @param obj: Сохраняемый объект.
+        :param obj: Сохраняемый объект.
         """
         log.warning(u'Не определен метод saveObject в <%s>' % self.__class__.__name__)
 
     def loadObject(self, obj, obj_id):
         """
         Загрузить данные объекта из хранилища по идентификатору.
-        @param obj: Объект.
-        @param obj_id: Идентификатор объекта.
+        :param obj: Объект.
+        :param obj_id: Идентификатор объекта.
         """
         log.warning(u'Не определен метод loadObject в <%s>' % self.__class__.__name__)
 
     def _normRecDict(self, record_dict):
         """
         Нормализация словаря записи.
-        @param record_dict: Словарь данных записи.
+        :param record_dict: Словарь данных записи.
         """
         cod = record_dict.get('cod', None)
         if cod is None:
@@ -152,8 +152,8 @@ class icRefSQLStorageContainer(object):
     def setTable(self, table_name=None):
         """
         Установить таблицу, по ее имени.
-        @param table_name: Имя таблицы.
-        @return: Возвращает объект таблицы или None, если таблицу получить нельзя.
+        :param table_name: Имя таблицы.
+        :return: Возвращает объект таблицы или None, если таблицу получить нельзя.
         """
         if table_name:
             if not self.hasName(table_name):
@@ -178,8 +178,8 @@ class icRefSQLStorage(icRefStorageInterface):
     def __init__(self, parent, db_psp):
         """
         Конструктор.
-        @param parent: Родительский объект.
-        @param db_psp: Паспорт БД.
+        :param parent: Родительский объект.
+        :param db_psp: Паспорт БД.
         """
         icRefStorageInterface.__init__(self, parent, db_psp)
         # Контейнер
@@ -231,9 +231,9 @@ class icRefSQLStorage(icRefStorageInterface):
     def _get_level_index_by_code(self, level_cod=None):
         """
         Определить индекс уровня по коду.
-        @param level_cod: Код, запрашиваемого уровня.
+        :param level_cod: Код, запрашиваемого уровня.
             Если None, то считается что это самый верхний уровень.
-        @return: Индекс уровня или None в случае ошибки или
+        :return: Индекс уровня или None в случае ошибки или
             если код не принадлежит ни одному уровню.
         """
         if not level_cod:
@@ -254,11 +254,11 @@ class icRefSQLStorage(icRefStorageInterface):
     def getLevelTable(self, level_cod=None, dt=None):
         """
         Таблица данных уровня.
-        @param level_cod: Код, запрашиваемого уровня.
+        :param level_cod: Код, запрашиваемого уровня.
             Если None, то возвращаются данные самого верхнего уровня.
-        @type dt: C{string}
-        @param dt: Время актуальности данных.
-        @return: Список кортежей, соответствующий данным запрашиваемого уровня.
+        :type dt: C{string}
+        :param dt: Время актуальности данных.
+        :return: Список кортежей, соответствующий данным запрашиваемого уровня.
             Имена полей таблицы данных уровня определятся с помощью функции
             getSpravFieldNames().
             Или None в случае ошибки.
@@ -304,9 +304,9 @@ class icRefSQLStorage(icRefStorageInterface):
     def getSpravFieldNames(self, level_idx=0):
         """
         Список имен полей таблицы данных объекта-ссылки/справочника.
-        @param level_idx: Индекс уровня объекта-ссылки/справочника.
+        :param level_idx: Индекс уровня объекта-ссылки/справочника.
             Если не определен, то считаем что это таблица самого верхнего уровня.
-        @return: Список имен полей таблицы данных объекта-ссылки/справочника.
+        :return: Список имен полей таблицы данных объекта-ссылки/справочника.
             Либо пустой список в случае ошибки.
         """
         if 0 <= level_idx < self.getParent().getLevelCount():
@@ -323,7 +323,7 @@ class icRefSQLStorage(icRefStorageInterface):
     def is_empty(self):
         """
         Проверка на пустой справочник.
-        @return: True - справочник пустой, False - Есть данные.
+        :return: True - справочник пустой, False - Есть данные.
         """
         sprav_table = self.getSpravParent().getTable()
         return sprav_table.is_empty()
@@ -331,10 +331,10 @@ class icRefSQLStorage(icRefStorageInterface):
     def getSpravFieldDict(self, field_values, level_idx=0):
         """
         Получить запись таблицы данных справочника в виде словаря.
-        @param field_values: Список значений записи таблицы значений уровня.
-        @param level_idx: Индекс уровня объекта-ссылки/справочника.
+        :param field_values: Список значений записи таблицы значений уровня.
+        :param level_idx: Индекс уровня объекта-ссылки/справочника.
             Если не определен, то индекс определяется как индекс самого верхнего уровня.
-        @return: запись таблицы данных справочника в виде словаря.
+        :return: запись таблицы данных справочника в виде словаря.
         """
         fld_names = self.getSpravFieldNames(level_idx=level_idx)
         # log.debug(u'%d. Список полей %s. Значения %s' % (level_idx, fld_names, str(field_values)))
@@ -362,9 +362,9 @@ class icRefSQLStorage(icRefStorageInterface):
     def getRecByCod(self, cod, dt=None):
         """
         Получить запись по коду.
-        @param cod: Код.
-        @param dt: Период актуальности.
-        @return: Возвращает словарь записи или None в случае ошибки.
+        :param cod: Код.
+        :param dt: Период актуальности.
+        :return: Возвращает словарь записи или None в случае ошибки.
         """
         if cod:
             try:
@@ -385,7 +385,7 @@ class icRefSQLStorage(icRefStorageInterface):
     def addRecDictDataTab(self, record_dict):
         """
         Добавить запись в таблице данных.
-        @param record_dict: Словарь данных записи.
+        :param record_dict: Словарь данных записи.
         """
         try:
             field_data = self._normRecDict(record_dict)
@@ -418,10 +418,10 @@ class icRefSQLStorage(icRefStorageInterface):
     def updateRecByCod(self, cod, record_dict, dt=None):
         """
         Изменить запись по коду.
-        @param cod: Код.
-        @param record_dict: Словарь изменений.
-        @param dt: Период актуальности.
-        @return: Возвращает результат выполнения операции True/False.
+        :param cod: Код.
+        :param record_dict: Словарь изменений.
+        :param dt: Период актуальности.
+        :return: Возвращает результат выполнения операции True/False.
         """
         level = self.getSpravParent().getLevelByCod(cod)
         level_table = level.getTable()
@@ -452,14 +452,14 @@ class icRefSQLStorage(icRefStorageInterface):
                order_by=None, is_desc=False):
         """
         Поиск по полю.
-        @param search_value: Искомое значение.
-        @param search_fieldname: Имя поля, по которому производим поиск.
-        @param order_by: Порядок сортировки.
+        :param search_value: Искомое значение.
+        :param search_fieldname: Имя поля, по которому производим поиск.
+        :param order_by: Порядок сортировки.
             Список полей порядка сортировки.
             Если сортировку надо производить по одному полю, то можно указать
             его имя в строковом виде.
-        @param is_desc: Произвести обратную сортировку?
-        @return: Список найденных кодов соответствующих искомому значению.
+        :param is_desc: Произвести обратную сортировку?
+        :return: Список найденных кодов соответствующих искомому значению.
         """
         result = list()
         levels = self.getSpravParent().getLevels()
@@ -525,7 +525,7 @@ LC_CTYPE = 'ru_RU.UTF-8'        (Тип символа)''')
     def find_code(self, **field_values):
         """
         Поиск кода по нескольким полям.
-        @param field_values: Словарь значений полей.
+        :param field_values: Словарь значений полей.
             Например:
                 {
                     'name': u'ОАО "Рога и копыта"',
@@ -533,7 +533,7 @@ LC_CTYPE = 'ru_RU.UTF-8'        (Тип символа)''')
                     ...
                 }
             Поиск производиться на точное сравнение по <И>.
-        @return: Список найденных кодов соответствующих искомому значению.
+        :return: Список найденных кодов соответствующих искомому значению.
         """
         codes = list()
         # Все таблицы уровней
@@ -551,9 +551,9 @@ LC_CTYPE = 'ru_RU.UTF-8'        (Тип символа)''')
     def find_code_where(self, table, where):
         """
         Поиск кода по нескольким условиям выборке SQLAlchemy.
-        @param table: Объект таблицы, в которой производится поиск.
-        @param where: Условия выборки SQLAlchemy.
-        @return: Список найденных кодов соответствующих искомому значению.
+        :param table: Объект таблицы, в которой производится поиск.
+        :param where: Условия выборки SQLAlchemy.
+        :return: Список найденных кодов соответствующих искомому значению.
         """
         result = list()
         if table:

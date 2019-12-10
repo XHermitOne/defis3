@@ -113,16 +113,16 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
         Проверка корректности добавляемой ссылки на документ.
         Нельзя добавлять уже существующие связи.
         Также нельзя чтобы документ ссылался сам на себя.
-        @param doc_uuid: UUID документа добавляемой связи/ссылки.
-        @return: True - все ок. False - нельзя добавлять ссылку на объект.
+        :param doc_uuid: UUID документа добавляемой связи/ссылки.
+        :return: True - все ок. False - нельзя добавлять ссылку на объект.
         """
         return (doc_uuid is not None) and (doc_uuid not in self._link_to_uuids) and doc_uuid != self.document.getUUID()
 
     def valid_links(self, docs_uuid):
         """
         Проверка корректности списка добавляемых ссылок на документы.
-        @param docs_uuid: Список UUID документов добавляемой связи/ссылки.
-        @return: True - все ок. False - нельзя добавлять ссылку на объект.
+        :param docs_uuid: Список UUID документов добавляемой связи/ссылки.
+        :return: True - все ок. False - нельзя добавлять ссылку на объект.
         """
         return min([self.valid_link(doc_uuid) for doc_uuid in docs_uuid])
 
@@ -266,8 +266,8 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
     def _addLinksCtrl(self, doc, links_to):
         """
         Добавление нескольких связей в контрол списка связей.
-        @param doc: Объект документа.
-        @param links_to: Список UUID документов, на которые ссылаемся.
+        :param doc: Объект документа.
+        :param links_to: Список UUID документов, на которые ссылаемся.
         """
         if links_to is None:
             links_to = list()
@@ -283,8 +283,8 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
     def _addLinkCtrl(self, doc, link_to):
         """
         Добавить связь в контрол списка.
-        @param doc: Объект документа.
-        @param link_to: UUID документа, на который ссылаемся.
+        :param doc: Объект документа.
+        :param link_to: UUID документа, на который ссылаемся.
         """
         if link_to not in self._link_to_uuids:
             self._link_to_uuids.append(link_to)
@@ -381,8 +381,8 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
     def valid(self, data):
         """
         Валидация. Проверка правильности заполнения экранной формы.
-        @param data: Данные экранной формы в виде словаря.
-        @return: True - проверка прошла успешно.
+        :param data: Данные экранной формы в виде словаря.
+        :return: True - проверка прошла успешно.
             False - ошибка заполнения данных.
         """
         if data:
@@ -421,9 +421,9 @@ class icEditDocDlg(edit_doc_form_proto.icEditDocDlgProto):
 def valid_edit_doc(parent=None, doc=None):
     """
     Контроль данных редактируемого документа.
-    @param parent: Родительское окно диалогового окна редактирования.
-    @param doc: Объект редактируемого документа.
-    @return: True/False.
+    :param parent: Родительское окно диалогового окна редактирования.
+    :param doc: Объект редактируемого документа.
+    :return: True/False.
     """
     n_doc = doc.getRequisiteValue('n_doc')
     if n_doc is None:
@@ -438,9 +438,9 @@ def valid_edit_doc(parent=None, doc=None):
 def edit_doc_dlg(parent=None, doc=None):
     """
     Редактирование документа в диалоговом окне.
-    @param parent: Родительское окно диалогового окна редактирования.
-    @param doc: Объект редактируемого документа.
-    @return: True/False.
+    :param parent: Родительское окно диалогового окна редактирования.
+    :param doc: Объект редактируемого документа.
+    :return: True/False.
     """
     if doc is None:
         log.warning(u'Не определен документ для редактирования')
@@ -465,8 +465,8 @@ def edit_doc_dlg(parent=None, doc=None):
 def edit_document_dlg(doc=None, parent=None):
     """
     Редактирование документа в диалоговом окне.
-    @param doc: Объект редактируемого документа.
-    @param parent: Родительское окно диалогового окна редактирования.
-    @return: True/False.
+    :param doc: Объект редактируемого документа.
+    :param parent: Родительское окно диалогового окна редактирования.
+    :return: True/False.
     """
     return edit_doc_dlg(parent, doc)

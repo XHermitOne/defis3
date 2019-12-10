@@ -4,14 +4,14 @@
 """
 Модуль описания класса главного окна системы
 
-@var DEFAULT_WIN_RES_FILE: Имя файла ресурса окна по умолчанию.
-@var CUR_WIN_RES_FILE_NAME: Имя текущего открытого файла ресурсов окна.
-@var CUR_WIN_RES_FILE: Образ ресурсного файла в памяти.
-@var IC_WIN_WIDTH_MIN: Минимальная допустимая ширина окна.
-@var IC_WIN_HEIGHT_MIN: Минимальная допустимая высота окна.
+:var DEFAULT_WIN_RES_FILE: Имя файла ресурса окна по умолчанию.
+:var CUR_WIN_RES_FILE_NAME: Имя текущего открытого файла ресурсов окна.
+:var CUR_WIN_RES_FILE: Образ ресурсного файла в памяти.
+:var IC_WIN_WIDTH_MIN: Минимальная допустимая ширина окна.
+:var IC_WIN_HEIGHT_MIN: Минимальная допустимая высота окна.
 
-@type SPC_IC_WIN: C{dictionary}
-@var SPC_IC_WIN: Спецификация на ресурсное описание компонента icMainWindow.
+:type SPC_IC_WIN: C{dictionary}
+:var SPC_IC_WIN: Спецификация на ресурсное описание компонента icMainWindow.
 Описание ключей SPC_IC_WIN:
     - B{name = 'name'}: Имя.
     - B{name = 'description'}: Описание.
@@ -142,11 +142,11 @@ def createMainWindowByRes(name, res_filename=DEFAULT_WIN_RES_FILE,
                           parent=None, engine=None):
     """
     Функция создает из ресурса окно по его имени.
-    @param name: Имя-идентификатор окна прописанный в файле ресурса.
-    @param res_filename: Имя ресурсного файла.
-    @param parent: Родительское окно (если нет, то None).
-    @param engine: Родительский ДВИЖОК (если нет, то None).
-    @return: Возвращает объект окна или None в случае ошибки.
+    :param name: Имя-идентификатор окна прописанный в файле ресурса.
+    :param res_filename: Имя ресурсного файла.
+    :param parent: Родительское окно (если нет, то None).
+    :param engine: Родительский ДВИЖОК (если нет, то None).
+    :return: Возвращает объект окна или None в случае ошибки.
     """
     win = None
     try:
@@ -167,11 +167,11 @@ def createMainWin(name, res_filename=DEFAULT_WIN_RES_FILE,
                   parent=None, engine=None):
     """
     Функция создает из ресурса окно по его имени.
-    @param name: Имя-идентификатор окна прописанный в файле ресурса.
-    @param res_filename: Имя ресурсного файла.
-    @param parent: Родительское окно (если нет, то None).
-    @param engine: Родительский ДВИЖОК (если нет, то None).
-    @return: Возвращает объект окна или None в случае ошибки.
+    :param name: Имя-идентификатор окна прописанный в файле ресурса.
+    :param res_filename: Имя ресурсного файла.
+    :param parent: Родительское окно (если нет, то None).
+    :param engine: Родительский ДВИЖОК (если нет, то None).
+    :return: Возвращает объект окна или None в случае ошибки.
     """
     win = None
     try:
@@ -192,8 +192,8 @@ def createMainWin(name, res_filename=DEFAULT_WIN_RES_FILE,
 def openWinResFile(res_filename):
     """
     Загрузить информацию из файла ресурсов в память.
-    @param res_filename: Имя ресурсного файла.
-    @return: Возвращает словарь, который определен в файле.
+    :param res_filename: Имя ресурсного файла.
+    :return: Возвращает словарь, который определен в файле.
     """
     global CUR_WIN_RES_FILE_NAME
     global CUR_WIN_RES_FILE
@@ -215,9 +215,9 @@ def closeWinResFile():
 def loadWinStruct(name, res_filename=DEFAULT_WIN_RES_FILE):
     """
     Загрузить атрибуты компонента из файла ресурсов.
-    @param name: Имя-идентификатор окна.
-    @param res_filename: Имя ресурсного файла.
-    @return: Возвращает словарь, описывающий окно
+    :param name: Имя-идентификатор окна.
+    :param res_filename: Имя ресурсного файла.
+    :return: Возвращает словарь, описывающий окно
         (см описание формата ресурсного файла окна).
     """
     return resource.icGetRes(name,
@@ -238,7 +238,7 @@ class icStatusBar(wx.StatusBar):
     def __init__(self, parent):
         """
         Конструктор.
-        @param parent: Родительское главное окно.
+        :param parent: Родительское главное окно.
         """
         wx.StatusBar.__init__(self, parent, wx.NewId(),
                               style=wx.STB_SIZEGRIP | wx.FULL_REPAINT_ON_RESIZE)
@@ -265,9 +265,9 @@ class icStatusBar(wx.StatusBar):
     def openProgressBar(self, label='', min_value=0, max_value=100):
         """
         Открыть прогресс бар статусной строки.
-        @param label: Надпись статусной строки.
-        @param min_value: Минимальное значение.
-        @param max_value: Максимальное занчение.
+        :param label: Надпись статусной строки.
+        :param min_value: Минимальное значение.
+        :param max_value: Максимальное занчение.
         """
         self.SetStatusText(label, sbfLabel)
         if not self.progress_bar:
@@ -281,7 +281,7 @@ class icStatusBar(wx.StatusBar):
     def closeProgressBar(self, label=''):
         """
         Закрыть прогресс бар.
-        @param label: Надпись статусной строки.
+        :param label: Надпись статусной строки.
         """
         self.SetStatusText(label, sbfLabel)
         self.SetStatusText('', sbfProcent)
@@ -295,8 +295,8 @@ class icStatusBar(wx.StatusBar):
     def updateProgressBar(self, label='', value=-1):
         """
         Обновить прогресс бар.
-        @param label: Надпись статусной строки.
-        @param value: Значение.
+        :param label: Надпись статусной строки.
+        :param value: Значение.
         """
         if value == -1:
             # Высчитать очередное значение и запомнить его
@@ -327,11 +327,11 @@ class icMainWindow(wx.Frame):
                  parent=None, engine=None):
         """
         Конструктор.
-        @param name: Имя окна.
-        @param win_struct: Словарь, описывающий окно.
-        @param res_filename: Имя ресурсного файла.
-        @param parent: Родительское окно.
-        @param engine: Родительский ДВИЖОК.
+        :param name: Имя окна.
+        :param win_struct: Словарь, описывающий окно.
+        :param res_filename: Имя ресурсного файла.
+        :param parent: Родительское окно.
+        :param engine: Родительский ДВИЖОК.
         """
         # --- Свойства класса ---
         # Иденитификатор числовой
@@ -533,7 +533,7 @@ class icMainWindow(wx.Frame):
     def getIconFilename(self):
         """
         Полное имя файла иконки.
-        @return: Полное имя файла иконки.
+        :return: Полное имя файла иконки.
             None если иконка не определена.
         """
         icon = self.resource.get(RES_WIN_ICON, None) if hasattr(self, 'resource') else None
@@ -546,7 +546,7 @@ class icMainWindow(wx.Frame):
     def setIcon(self, icon):
         """
         Установить иконку.
-        @param icon: Или имя файла *.ico или объект wx.Icon.
+        :param icon: Или имя файла *.ico или объект wx.Icon.
         """
         if isinstance(icon, str):
             ico_file_name = filefunc.get_absolute_path(icon)
@@ -722,7 +722,7 @@ class icMainWindow(wx.Frame):
     def setTitleFunc(self, title_func):
         """
         Установить метод заполнения заголовка.
-        @param title_func: Словарь функции метода заполнения заголовка.
+        :param title_func: Словарь функции метода заполнения заголовка.
         """
         self._TitleFunc = title_func
 
@@ -769,17 +769,17 @@ class icMainWindow(wx.Frame):
                    default_page=-1):
         """
         Добавить страницу.
-        @param page: Страница-объект наследник wx.Window.
-        @param title: Заголовок страницы.
-        @param open_exists: Если страница уже создана-открыть ее.
-        @param image: Файл образа или сам образ в заголовке страницы.
-        @param bCanClose: Признак разрешения закрытия страницы при помощи
+        :param page: Страница-объект наследник wx.Window.
+        :param title: Заголовок страницы.
+        :param open_exists: Если страница уже создана-открыть ее.
+        :param image: Файл образа или сам образ в заголовке страницы.
+        :param bCanClose: Признак разрешения закрытия страницы при помощи
             стандартного всплывающего меню.
-        @param open_script: Блок кода открытия страницы при переключенни
+        :param open_script: Блок кода открытия страницы при переключенни
             м/у страницами.
-        @param close_script: Блок кода закрытия страницы при переключенни
+        :param close_script: Блок кода закрытия страницы при переключенни
             м/у страницами.
-        @param default_page: Индекс страницы,  открываемой по умолчанию.
+        :param default_page: Индекс страницы,  открываемой по умолчанию.
             Если -1, то открывается текущая добавляемая страница.
         """
         if self.content_obj is not None:
@@ -809,7 +809,7 @@ class icMainWindow(wx.Frame):
     def delOrgPage(self, page_index):
         """
         Удалить страницу.
-        @param page_index: Индекс страницы.
+        :param page_index: Индекс страницы.
         """
         if self.content_obj is not None:
             log.warning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
@@ -830,7 +830,7 @@ class icMainWindow(wx.Frame):
     def delOrg(self):
         """
         Удалить органайзер(Объект главного менеджера системных панелей).
-        @return: Возвращает результат выполнения операции True/False.
+        :return: Возвращает результат выполнения операции True/False.
         """
         if self.content_obj is not None:
             log.warning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
@@ -852,7 +852,7 @@ class icMainWindow(wx.Frame):
     def closeOrgPages(self):
         """
         Закрыть все страницы органайзера(Объект главного менеджера системных панелей).
-        @return: Возвращает результат выполнения операции True/False.
+        :return: Возвращает результат выполнения операции True/False.
         """
         if self.content_obj is not None:
             log.warning(u'Notebook главного окна заменен объектом-содержанием <%s>' % self.content_obj)
@@ -870,7 +870,7 @@ class icMainWindow(wx.Frame):
     def _createAreaSplitter(self):
         """
         Создать разделитель областей.
-        @return: Объект главного вертикального разделителя или 
+        :return: Объект главного вертикального разделителя или
             None в случае ошибки.
         """
         try:
@@ -921,10 +921,10 @@ class icMainWindow(wx.Frame):
     def _insPanel(self, splitter, index, panel):
         """
         Установить панель.
-        @param splitter: Сплиттер, в который будет устанавливаться панель.
-        @param index: Индекс в сплиттере.
-        @param panel: Объект панели. Наследник от wx.Window.
-        @return: Возвращает True/False.
+        :param splitter: Сплиттер, в который будет устанавливаться панель.
+        :param index: Индекс в сплиттере.
+        :param panel: Объект панели. Наследник от wx.Window.
+        :return: Возвращает True/False.
         """
         try:
             if splitter is None:
@@ -953,9 +953,9 @@ class icMainWindow(wx.Frame):
     def _delPanel(self, splitter, index):
         """
         Удалить из области панель с указанным индексом.
-        @param splitter: Сплиттер, в который устанавленна панель.
-        @param index: Индекс в сплиттере.
-        @return: Возвращает True/False.
+        :param splitter: Сплиттер, в который устанавленна панель.
+        :param index: Индекс в сплиттере.
+        :return: Возвращает True/False.
         """
         try:
             if splitter is None:

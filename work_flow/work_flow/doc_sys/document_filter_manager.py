@@ -36,14 +36,14 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
     def setFilters(self, *filter_list):
         """
         Установить список фильтра документов.
-        @param filter_list: Список фильтра.
+        :param filter_list: Список фильтра.
         """
         setattr(self, DOC_FILTER_LIST_NAME, list(filter_list))
 
     def getFilters(self):
         """
         Получить список фильтра документов.
-        @return: Список фильтра документов.
+        :return: Список фильтра документов.
         """
         try:
             return getattr(self, DOC_FILTER_LIST_NAME)
@@ -54,8 +54,8 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
     def addFilter(self, filter_func):
         """
         Добавить фильтр в список.
-        @param filter_func: Функция фильтрации.
-        @return: Заполненнный список фильтра документов.
+        :param filter_func: Функция фильтрации.
+        :return: Заполненнный список фильтра документов.
         """
         new_filter = self.getFilters()
         new_filter.append(filter_func)
@@ -65,10 +65,10 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
     def filterDocs(self, filter_list=None, bRefresh=True):
         """
         Запуск фильтрации документов.
-        @param filter_list: Список фильтрации.
+        :param filter_list: Список фильтрации.
             Если не определен, то берется текущий внутренний.
-        @param bRefresh: Признак автоматического обновления списка документов.
-        @return:
+        :param bRefresh: Признак автоматического обновления списка документов.
+        :return:
         """
         if filter_list is None:
             filter_list = self.getFilters()
@@ -79,14 +79,14 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
     def setAssociates(self, **associate_dict):
         """
         Установить словарь ассоциаций.
-        @param associate_dict: Словарь ассоциаций.
+        :param associate_dict: Словарь ассоциаций.
         """
         setattr(self, DOC_FILTER_ASSOCIATE_NAME, associate_dict)
 
     def getAssociates(self):
         """
         Получить словарь ассоциаций.
-        @return: Словарь ассоциаций.
+        :return: Словарь ассоциаций.
         """
         try:
             return getattr(self, DOC_FILTER_ASSOCIATE_NAME)
@@ -97,11 +97,11 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
     def addAssociate(self, **associate):
         """
         Добавить ассоциацию.
-        @param associate: Ассоциация.
+        :param associate: Ассоциация.
             Ассоциация представляет из себя словарь.
             Главным атрибутом является type - тип реквизита.
             Тип реквизита необходим для определения функции фильтрации.
-        @return: Заполненнный словарь ассоциации.
+        :return: Заполненнный словарь ассоциации.
         """
         associate_dict = self.getAssociates()
         associate_dict[associate.get('name', None)] = associate
@@ -115,12 +115,12 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
                                  one_check_box=None):
         """
         Ассоциировать реквизит с контролами выбора фильтра диапазона дат.
-        @param requisite_name: Наименование реквизита.
-        @param enable_check_box: Чекбокс включения в фильтрацию контролов управления фильтра.
-        @param begin_date_ctrl: Контрол выбора начальной даты фильтра.
-        @param end_date_ctrl: Контрол выбора конечной даты фильтра.
-        @param one_check_box: Чекбокс выбора выбора на конкретную дату.
-        @return: True/False.
+        :param requisite_name: Наименование реквизита.
+        :param enable_check_box: Чекбокс включения в фильтрацию контролов управления фильтра.
+        :param begin_date_ctrl: Контрол выбора начальной даты фильтра.
+        :param end_date_ctrl: Контрол выбора конечной даты фильтра.
+        :param one_check_box: Чекбокс выбора выбора на конкретную дату.
+        :return: True/False.
         """
         try:
             associate = dict(name=requisite_name,
@@ -143,12 +143,12 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
                             contain_radiobox=None):
         """
         Ассоциировать реквизит с контролами выбора фильтра поиска в текстовом реквизите.
-        @param requisite_name: Наименование реквизита.
-        @param enable_check_box: Чекбокс включения в фильтрацию контролов управления фильтра.
-        @param text_ctrl: Контрол ввода текстового фильтра.
-        @param contain_radiobox: Радиобокс переключения поиска содержания.
+        :param requisite_name: Наименование реквизита.
+        :param enable_check_box: Чекбокс включения в фильтрацию контролов управления фильтра.
+        :param text_ctrl: Контрол ввода текстового фильтра.
+        :param contain_radiobox: Радиобокс переключения поиска содержания.
             (*) В начале () Содержит () В конце () Точное совпадение
-        @return: True/False.
+        :return: True/False.
         """
         try:
             associate = dict(name=requisite_name,
@@ -169,10 +169,10 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
                              sprav_ctrl=None):
         """
         Ассоциировать реквизит с контролами выбора фильтра поиска в реквизите справочника.
-        @param requisite_name: Наименование реквизита.
-        @param enable_check_box: Чекбокс включения в фильтрацию контролов управления фильтра.
-        @param sprav_ctrl: Контрол выбора фильтра по коду справочника.
-        @return: True/False.
+        :param requisite_name: Наименование реквизита.
+        :param enable_check_box: Чекбокс включения в фильтрацию контролов управления фильтра.
+        :param sprav_ctrl: Контрол выбора фильтра по коду справочника.
+        :return: True/False.
         """
         try:
             associate = dict(name=requisite_name,
@@ -192,10 +192,10 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
                                   sprav_ctrl=None):
         """
         Ассоциировать реквизит с контролами выбора фильтра поиска в реквизите справочника по нескольким кодам.
-        @param requisite_name: Наименование реквизита.
-        @param enable_check_box: Чекбокс включения в фильтрацию контролов управления фильтра.
-        @param sprav_ctrl: Контрол выбора фильтра по ескольким кодам справочника.
-        @return: True/False.
+        :param requisite_name: Наименование реквизита.
+        :param enable_check_box: Чекбокс включения в фильтрацию контролов управления фильтра.
+        :param sprav_ctrl: Контрол выбора фильтра по ескольким кодам справочника.
+        :return: True/False.
         """
         try:
             associate = dict(name=requisite_name,
@@ -213,9 +213,9 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
     def buildFilter(self, logic='AND'):
         """
         Построить фильтр документов по логике выбора в контролах.
-        @param logic: Связующая логика фильтра.
+        :param logic: Связующая логика фильтра.
             М.б. AND - связь по И / OR - связь по ИЛИ.
-        @return: Заполненный фильтр.
+        :return: Заполненный фильтр.
             Для создания фильтров надо пользоваться
             функциями из STD.queries.filter_generate.
             Функции генерации фильтров для вызова
@@ -228,11 +228,11 @@ class icDocumentFilterManagerProto(document_navigator_manager.icDocumentNavigato
     def refreshFilterDocs(self, logic_ctrl=None):
         """
         Обновить список документов в соответствии с выбранными фильтрами.
-        @param logic_ctrl: Контрол управления логикой фильтра.
+        :param logic_ctrl: Контрол управления логикой фильтра.
             Контролом может служить CheckBox или RadioBox.
             Первый элемент [0] всегда считается AND.
             Второй элемент [1] считается как OR.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             logic = 'AND'

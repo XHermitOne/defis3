@@ -38,8 +38,8 @@ class icGroupManipulationDlg(group_manipulation_dlg_proto.icGroupManipulationDlg
     def init(self, n_min=1, n_max=100):
         """
         Инициализация панели.
-        @param n_min: Диапазон возможных номеров. Минимальное значение.
-        @param n_max: Диапазон возможных номеров. Максимальное значение.
+        :param n_min: Диапазон возможных номеров. Минимальное значение.
+        :param n_max: Диапазон возможных номеров. Максимальное значение.
         """
         self.init_img()
         self.init_ctrl(n_min, n_max)
@@ -53,8 +53,8 @@ class icGroupManipulationDlg(group_manipulation_dlg_proto.icGroupManipulationDlg
     def init_ctrl(self, n_min=1, n_max=100):
         """
         Инициализация контролов.
-        @param n_min: Диапазон возможных номеров. Минимальное значение.
-        @param n_max: Диапазон возможных номеров. Максимальное значение.
+        :param n_min: Диапазон возможных номеров. Минимальное значение.
+        :param n_max: Диапазон возможных номеров. Максимальное значение.
         """
         self.begin_spinCtrl.SetRange(n_min, n_max)
         self.begin_spinCtrl.SetValue(n_min)
@@ -128,11 +128,11 @@ class icGroupManipulationDlg(group_manipulation_dlg_proto.icGroupManipulationDlg
 def show_group_manipulation_dlg(parent=None, n_min=1, n_max=100, position=None):
     """
     Открыть форму пареметров групповой обработки в режиме пакетного сканирования.
-    @param parent: Родительское окно.
-    @param n_min: Диапазон возможных номеров. Минимальное значение.
-    @param n_max: Диапазон возможных номеров. Максимальное значение.
-    @param position: Позиция вывода диалогового окна.
-    @return: True/False.
+    :param parent: Родительское окно.
+    :param n_min: Диапазон возможных номеров. Минимальное значение.
+    :param n_max: Диапазон возможных номеров. Максимальное значение.
+    :param position: Позиция вывода диалогового окна.
+    :return: True/False.
     """
     if parent is None:
         parent = ic.getMainWin()

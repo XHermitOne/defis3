@@ -4,8 +4,8 @@
 """
 Обкладка для класса wxPanel.
 Модуль содержит класс icwxPanel, который по ресурсному описанию создает окно (wxPanel).
-@type SPC_IC_PANEL: C{dictionary}
-@var SPC_IC_PANEL: Спецификация на ресурсное описание окна. Ключи SPC_IC_PANEL:
+:type SPC_IC_PANEL: C{dictionary}
+:var SPC_IC_PANEL: Спецификация на ресурсное описание окна. Ключи SPC_IC_PANEL:
 
     - B{name = 'default'}: Имя окна.
     - B{type = 'Panel'}: Тип объекта.
@@ -18,8 +18,8 @@
     - B{keyDown=None}: Выражение, выполняемое при нажатии кнопки <EVT_KEY_DOWN>.
     - B{child=[]}:Cписок дочерних элементов.
 
-@type ICPanelStyle: C{dictionary}
-@var ICPanelStyle: Словарь стилей компонента. Все стили wxWindow:
+:type ICPanelStyle: C{dictionary}
+:var ICPanelStyle: Словарь стилей компонента. Все стили wxWindow:
 """
 
 import wx
@@ -123,16 +123,16 @@ class icWXPanel(icWidget, wx.Panel):
                  bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icWXPanel.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         #   Атрибуты сайзера
         self.sizer = None
@@ -313,10 +313,10 @@ class icWXPanel(icWidget, wx.Panel):
     def setRoundBoundMode(self, bound_colour=None, step=0):
         """
         Устанавливает режим скругленных границ.
-        @type bound_colour: C{wx.Colour}
-        @param bound_colour: Цвет границы.
-        @type step: C{int}
-        @param step: Отступ границы от края окна.
+        :type bound_colour: C{wx.Colour}
+        :param bound_colour: Цвет границы.
+        :type step: C{int}
+        :param step: Отступ границы от края окна.
         """
         self.boundStep = step
         if bound_colour:
@@ -331,10 +331,10 @@ class icWXPanel(icWidget, wx.Panel):
     def setBorderMode(self, bound_colour=None, step=0):
         """
         Устанавливает режим скругленных границ.
-        @type bound_colour: C{wx.Colour}
-        @param bound_colour: Цвет границы.
-        @type step: C{int}
-        @param step: Отступ границы от края окна.
+        :type bound_colour: C{wx.Colour}
+        :param bound_colour: Цвет границы.
+        :type step: C{int}
+        :param step: Отступ границы от края окна.
         """
         self.boundStep = step
         if bound_colour:

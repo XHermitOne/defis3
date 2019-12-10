@@ -60,11 +60,11 @@ DOUBLEGIS_GEO_LACATOR_URL_FMT = 'https://catalog.api.2gis.ru/geo/search?q=%s&for
 def get_default_geolocations(address_query, geo_key=None):
     """
     Получить все данные геолокации по запрашиваемому адресу.
-    @param address_query: Запрашиваемый адрес.
+    :param address_query: Запрашиваемый адрес.
         Например:
             Москва, улица Гагарина, дом 10.
-    @param geo_key: Ключ API геолокатора.
-    @return: Список [(широта, долгота),...] данных геолокации или пустой список в случае ошибки.
+    :param geo_key: Ключ API геолокатора.
+    :return: Список [(широта, долгота),...] данных геолокации или пустой список в случае ошибки.
     """
     if geo_key is None:
         geo_key = YANDEX_GEO_LOCATOR_API_KEY
@@ -96,13 +96,13 @@ def get_default_geolocations(address_query, geo_key=None):
 def get_default_geolocation(address_query, geo_key=None, item=0, bCache=True):
     """
     Получить все данные геолокации по запрашиваемому адресу.
-    @param address_query: Запрашиваемый адрес.
+    :param address_query: Запрашиваемый адрес.
         Например:
             Москва, улица Гагарина, дом 10.
-    @param geo_key: Ключ API геолокатора.
-    @param item: Индекс выбираемого элемента.
-    @param bCache: Использовать внутренний кеш?
-    @return: (широта, долгота) данных геолокации или (None, None) в случае ошибки.
+    :param geo_key: Ключ API геолокатора.
+    :param item: Индекс выбираемого элемента.
+    :param bCache: Использовать внутренний кеш?
+    :return: (широта, долгота) данных геолокации или (None, None) в случае ошибки.
     """
     if bCache:
         global GEO_LOCATOR_CACHE
@@ -126,12 +126,12 @@ def get_yandexmaps_geolocation(address_query, geo_key=None, bCache=True):
     Получить данные геолокации по запрашиваемому адресу.
     Используется библиотека https://github.com/begyy/Yandexmaps.
     Установка: pip3 install Yandexmaps.
-    @param address_query: Запрашиваемый адрес.
+    :param address_query: Запрашиваемый адрес.
         Например:
             Москва, улица Гагарина, дом 10.
-    @param geo_key: Ключ API геолокатора.
-    @param bCache: Использовать внутренний кеш?
-    @return: (широта, долгота) данных геолокации или [None, None] в случае ошибки.
+    :param geo_key: Ключ API геолокатора.
+    :param bCache: Использовать внутренний кеш?
+    :return: (широта, долгота) данных геолокации или [None, None] в случае ошибки.
     """
     if bCache:
         global GEO_LOCATOR_CACHE
@@ -164,12 +164,12 @@ def get_2gis_geolocations(address_query, geo_key=None, bCache=True):
     """
     Получить все данные геолокации по запрашиваемому адресу.
     ВНИМАНИЕ! Функция не отлажена!!!!!
-    @param address_query: Запрашиваемый адрес.
+    :param address_query: Запрашиваемый адрес.
         Например:
             Москва, улица Гагарина, дом 10.
-    @param geo_key: Ключ API геолокатора.
-    @param bCache: Использовать внутренний кеш?
-    @return: Список [(широта, долгота),...] данных геолокации или пустой список в случае ошибки.
+    :param geo_key: Ключ API геолокатора.
+    :param bCache: Использовать внутренний кеш?
+    :return: Список [(широта, долгота),...] данных геолокации или пустой список в случае ошибки.
     """
     if bCache:
         global GEO_LOCATOR_CACHE
@@ -229,9 +229,9 @@ class icMapIndicator(object):
     def findGeoLocations(self, address_query):
         """
         Получить геграфические данные широты и долготы по запросу адреса.
-        @param address_query: Запрос адреса в виде:
+        :param address_query: Запрос адреса в виде:
             Москва, улица Гагарина, дом 10.
-        @return: Список кортежей найденных локаций:
+        :return: Список кортежей найденных локаций:
             (Географическая широта, географическая долгота)
             либо (None, None) в случае ошибки.
         """
@@ -240,9 +240,9 @@ class icMapIndicator(object):
     def findGeoLocation(self, address_query):
         """
         Получить геграфические данные широты и долготы по запросу адреса.
-        @param address_query: Запрос адреса в виде:
+        :param address_query: Запрос адреса в виде:
             Москва, улица Гагарина, дом 10.
-        @return: Кортеж: Географическая широта, географическая долгота
+        :return: Кортеж: Географическая широта, географическая долгота
             либо (None, None) в случае ошибки.
         """
         return None, None
@@ -250,11 +250,11 @@ class icMapIndicator(object):
     def getMapBitmap(self, geo_latitude, geo_longitude, img_filename=None):
         """
         Получить карту в виде картинки по заданным географическим координатам.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param img_filename: Файл образа для сохранения.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param img_filename: Файл образа для сохранения.
             Если не указан, то файл автоматически не сохраняется.
-        @return: wx.Bitmap запрашиваемой карты или None в случае ошибки.
+        :return: wx.Bitmap запрашиваемой карты или None в случае ошибки.
         """
         return None
 
@@ -264,17 +264,17 @@ class icMapIndicator(object):
                         popup_text=u'', tooltip_text=u''):
         """
         Добавление на карту маркера в виде окружности.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param radius: Радиус окружности.
-        @param color: Цвет окружности.
-        @param is_fill: Произвести заполнение внутренней области окружности?
-        @param fill_color: Цвет заполнения окружности.
-        @param popup_text: Текст всплывающей посказки маркера.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param radius: Радиус окружности.
+        :param color: Цвет окружности.
+        :param is_fill: Произвести заполнение внутренней области окружности?
+        :param fill_color: Цвет заполнения окружности.
+        :param popup_text: Текст всплывающей посказки маркера.
             Подсказка появляется по клику на маркере.
-        @param tooltip_text: Текст всплывающей посказки маркера.
+        :param tooltip_text: Текст всплывающей посказки маркера.
             Подсказка появляется при наведении мышки на маркер.
-        @return: True/False.
+        :return: True/False.
         """
         log.warning(u'Метод setCircleMarker компонента <%s> не определен' % self.__class__.__name__)
         return False
@@ -284,15 +284,15 @@ class icMapIndicator(object):
                      popup_text=u'', tooltip_text=u''):
         """
         Добавление на карту маркера-указателя.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param color: Цвет маркера.
-        @param icon: Иконка маркера.
-        @param popup_text: Текст всплывающей посказки маркера.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param color: Цвет маркера.
+        :param icon: Иконка маркера.
+        :param popup_text: Текст всплывающей посказки маркера.
             Подсказка появляется по клику на маркере.
-        @param tooltip_text: Текст всплывающей посказки маркера.
+        :param tooltip_text: Текст всплывающей посказки маркера.
             Подсказка появляется при наведении мышки на маркер.
-        @return: True/False.
+        :return: True/False.
         """
         log.warning(u'Метод setPinMarker компонента <%s> не определен' % self.__class__.__name__)
         return False
@@ -303,18 +303,18 @@ class icMapIndicator(object):
                                 popup_text=u'', tooltip_text=u''):
         """
         Добавление на карту маркера в виде окружности по адресу.
-        @param address: Запрашиваемый адрес.
+        :param address: Запрашиваемый адрес.
             Нaпример:
                 Москва, улица Гагарина, дом 10.
-        @param radius: Радиус окружности.
-        @param color: Цвет окружности.
-        @param is_fill: Произвести заполнение внутренней области окружности?
-        @param fill_color: Цвет заполнения окружности.
-        @param popup_text: Текст всплывающей посказки маркера.
+        :param radius: Радиус окружности.
+        :param color: Цвет окружности.
+        :param is_fill: Произвести заполнение внутренней области окружности?
+        :param fill_color: Цвет заполнения окружности.
+        :param popup_text: Текст всплывающей посказки маркера.
             Подсказка появляется по клику на маркере.
-        @param tooltip_text: Текст всплывающей посказки маркера.
+        :param tooltip_text: Текст всплывающей посказки маркера.
             Подсказка появляется при наведении мышки на маркер.
-        @return: True/False.
+        :return: True/False.
         """
         geo_latitude, geo_longitude = self.findGeoLocation(address_query=address)
         return self.setCircleMarker(geo_latitude, geo_longitude,
@@ -327,16 +327,16 @@ class icMapIndicator(object):
                               popup_text=u'', tooltip_text=u''):
         """
         Добавление на карту маркера-указателя по адресу.
-        @param address: Запрашиваемый адрес.
+        :param address: Запрашиваемый адрес.
             Нaпример:
                 Москва, улица Гагарина, дом 10.
-        @param color: Цвет маркера.
-        @param icon: Иконка маркера.
-        @param popup_text: Текст всплывающей посказки маркера.
+        :param color: Цвет маркера.
+        :param icon: Иконка маркера.
+        :param popup_text: Текст всплывающей посказки маркера.
             Подсказка появляется по клику на маркере.
-        @param tooltip_text: Текст всплывающей посказки маркера.
+        :param tooltip_text: Текст всплывающей посказки маркера.
             Подсказка появляется при наведении мышки на маркер.
-        @return: True/False.
+        :return: True/False.
         """
         geo_latitude, geo_longitude = self.findGeoLocation(address_query=address)
         return self.setPinMarker(geo_latitude, geo_longitude,
@@ -347,13 +347,13 @@ class icMapIndicator(object):
                            zoom=DEFAULT_ZOOM, html_filename=None, bReWrite=False):
         """
         Сохранить HTML файл для отображения карты.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param zoom: Коэффициент масштаба по умолчанию.
-        @param html_filename: Имя сохраняемого файла.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param zoom: Коэффициент масштаба по умолчанию.
+        :param html_filename: Имя сохраняемого файла.
             Если не указано, то генерируется.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: Полное имя HTML файла или None в случае ошибки.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: Полное имя HTML файла или None в случае ошибки.
         """
         log.warning(u'Метод saveMapBrowserFile компонента <%s> не определен' % self.__class__.__name__)
         return None
@@ -362,14 +362,14 @@ class icMapIndicator(object):
                                     html_filename=None, bReWrite=False):
         """
         Сохранить HTML файл для отображения карты по запросу адреса.
-        @param address: Запрашиваемый адрес.
+        :param address: Запрашиваемый адрес.
             Нaпример:
                 Москва, улица Гагарина, дом 10.
-        @param zoom: Коэффициент масштаба по умолчанию.
-        @param html_filename: Имя сохраняемого файла.
+        :param zoom: Коэффициент масштаба по умолчанию.
+        :param html_filename: Имя сохраняемого файла.
             Если не указано, то генерируется.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: Полное имя HTML файла или None в случае ошибки.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: Полное имя HTML файла или None в случае ошибки.
         """
         log.warning(u'Метод saveMapBrowserFileByAddress компонента <%s> не определен' % self.__class__.__name__)
         return None
@@ -379,13 +379,13 @@ class icMapIndicator(object):
                   html_filename=None, bReWrite=False):
         """
         Создать объект карты.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param zoom: Коэффициент масштаба по умолчанию.
-        @param html_filename: Имя сохраняемого файла.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param zoom: Коэффициент масштаба по умолчанию.
+        :param html_filename: Имя сохраняемого файла.
             Если не указано, то генерируется.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: Объект карты или None в случае ошибки.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: Объект карты или None в случае ошибки.
         """
         log.warning(u'Метод createMap компонента <%s> не определен' % self.__class__.__name__)
         return None
@@ -395,14 +395,14 @@ class icMapIndicator(object):
                            html_filename=None, bReWrite=False):
         """
         Создать объект карты по адресу.
-        @param address: Запрашиваемый адрес.
+        :param address: Запрашиваемый адрес.
             Нaпример:
                 Москва, улица Гагарина, дом 10.
-        @param zoom: Коэффициент масштаба по умолчанию.
-        @param html_filename: Имя сохраняемого файла.
+        :param zoom: Коэффициент масштаба по умолчанию.
+        :param html_filename: Имя сохраняемого файла.
             Если не указано, то генерируется.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: Объект карты или None в случае ошибки.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: Объект карты или None в случае ошибки.
         """
         log.warning(u'Метод createMapByAddress компонента <%s> не определен' % self.__class__.__name__)
         return None
@@ -434,7 +434,7 @@ class icMapIndicatorManagerProto(icMapIndicator):
         """
         Установить библиотеку рендеринга.
         Может быть библиотека folium либо собственная библиотека double_gis.
-        @param rendering: Библиотека рендеринга карт.
+        :param rendering: Библиотека рендеринга карт.
             По умолчанию собственная библиотека double_gis.
         """
         if rendering is None:
@@ -463,9 +463,9 @@ class icMapIndicatorManagerProto(icMapIndicator):
     def findGeoLocations(self, address_query):
         """
         Получить геграфические данные широты и долготы по запросу адреса.
-        @param address_query: Запрос адреса в виде:
+        :param address_query: Запрос адреса в виде:
             Москва, улица Гагарина, дом 10.
-        @return: Список кортежей найденных локаций:
+        :return: Список кортежей найденных локаций:
             (Географическая широта, географическая долгота)
             либо (None, None) в случае ошибки.
         """
@@ -478,10 +478,10 @@ class icMapIndicatorManagerProto(icMapIndicator):
     def findGeoLocation(self, address_query, item=0):
         """
         Получить геграфические данные широты и долготы по запросу адреса.
-        @param address_query: Запрос адреса в виде:
+        :param address_query: Запрос адреса в виде:
             Москва, улица Гагарина, дом 10.
-        @param item: Индекс выбранного элемента.
-        @return: Кортеж: Географическая широта, географическая долгота
+        :param item: Индекс выбранного элемента.
+        :return: Кортеж: Географическая широта, географическая долгота
             либо (None, None) в случае ошибки.
         """
         if yandex_maps and not GEO_LOCATOR_DEFAULT:
@@ -493,14 +493,14 @@ class icMapIndicatorManagerProto(icMapIndicator):
     def setBrowser(self, browser):
         """
         Установить браузер для отображения карты.
-        @param browser: Контрол браузера для отображения карты.
+        :param browser: Контрол браузера для отображения карты.
         """
         self._browser = browser
 
     def genMapBrowserFilename(self):
         """
         Сгенерировать имя HTML файла браузера для отображения карты.
-        @return: Полное имя файла для отображения карты.
+        :return: Полное имя файла для отображения карты.
         """
         gen_uuid = str(uuid.uuid4())
         gen_path = os.path.join(filefunc.getPrjProfilePath(), gen_uuid + '.html')
@@ -511,14 +511,14 @@ class icMapIndicatorManagerProto(icMapIndicator):
                   html_filename=None, bReWrite=False, bAutoSave=True):
         """
         Создать объект карты.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param zoom: Коэффициент масштаба по умолчанию.
-        @param html_filename: Имя сохраняемого файла.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param zoom: Коэффициент масштаба по умолчанию.
+        :param html_filename: Имя сохраняемого файла.
             Если не указано, то генерируется.
-        @param bReWrite: Перезаписать существующий файл?
-        @param bAutoSave: Автоматически сохранить файл?
-        @return: Объект карты или None в случае ошибки.
+        :param bReWrite: Перезаписать существующий файл?
+        :param bAutoSave: Автоматически сохранить файл?
+        :return: Объект карты или None в случае ошибки.
         """
         if geo_latitude in (None, 0) or geo_longitude in (None, 0):
             log.warning(u'Не полное определение геолокации <%s : %s>' % (geo_latitude, geo_longitude))
@@ -542,15 +542,15 @@ class icMapIndicatorManagerProto(icMapIndicator):
                            bAutoSave=True):
         """
         Создать объект карты по адресу.
-        @param address: Запрашиваемый адрес.
+        :param address: Запрашиваемый адрес.
             Нaпример:
                 Москва, улица Гагарина, дом 10.
-        @param zoom: Коэффициент масштаба по умолчанию.
-        @param html_filename: Имя сохраняемого файла.
+        :param zoom: Коэффициент масштаба по умолчанию.
+        :param html_filename: Имя сохраняемого файла.
             Если не указано, то генерируется.
-        @param bReWrite: Перезаписать существующий файл?
-        @param bAutoSave: Автоматически сохранить файл?
-        @return: Объект карты или None в случае ошибки.
+        :param bReWrite: Перезаписать существующий файл?
+        :param bAutoSave: Автоматически сохранить файл?
+        :return: Объект карты или None в случае ошибки.
         """
         geo_latitude, geo_longitude = self.findGeoLocation(address_query=address)
         return self.createMap(geo_latitude, geo_longitude, zoom=zoom,
@@ -562,13 +562,13 @@ class icMapIndicatorManagerProto(icMapIndicator):
                            html_filename=None, bReWrite=False):
         """
         Сохранить HTML файл для отображения карты.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param zoom: Коэффициент масштаба по умолчанию.
-        @param html_filename: Имя сохраняемого файла.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param zoom: Коэффициент масштаба по умолчанию.
+        :param html_filename: Имя сохраняемого файла.
             Если не указано, то генерируется.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: Полное имя HTML файла или None в случае ошибки.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: Полное имя HTML файла или None в случае ошибки.
         """
         if html_filename is None:
             html_filename = self.genMapBrowserFilename()
@@ -597,14 +597,14 @@ class icMapIndicatorManagerProto(icMapIndicator):
                                     html_filename=None, bReWrite=False):
         """
         Сохранить HTML файл для отображения карты по запросу адреса.
-        @param address: Запрашиваемый адрес.
+        :param address: Запрашиваемый адрес.
             Нaпример:
                 Москва, улица Гагарина, дом 10.
-        @param zoom: Коэффициент масштаба по умолчанию.
-        @param html_filename: Имя сохраняемого файла.
+        :param zoom: Коэффициент масштаба по умолчанию.
+        :param html_filename: Имя сохраняемого файла.
             Если не указано, то генерируется.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: Полное имя HTML файла или None в случае ошибки.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: Полное имя HTML файла или None в случае ошибки.
         """
         geo_latitude, geo_longitude = self.findGeoLocation(address_query=address)
         return self.saveMapBrowserFile(geo_latitude, geo_longitude,
@@ -614,9 +614,9 @@ class icMapIndicatorManagerProto(icMapIndicator):
     def setMapBrowserFile(self, html_filename=None):
         """
         Установить в браузере HTML файл для просмотра карт.
-        @param html_filename: Имя HTML файла браузера для просмотра карт.
+        :param html_filename: Имя HTML файла браузера для просмотра карт.
             Если не указано, то берется последнее сгенерированное имя.
-        @return: True/False.
+        :return: True/False.
         """
         if html_filename:
             self._html_filename = html_filename
@@ -640,17 +640,17 @@ class icMapIndicatorManagerProto(icMapIndicator):
                         popup_text=u'', tooltip_text=u''):
         """
         Добавление на карту маркера в виде окружности.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param radius: Радиус окружности.
-        @param color: Цвет окружности.
-        @param is_fill: Произвести заполнение внутренней области окружности?
-        @param fill_color: Цвет заполнения окружности.
-        @param popup_text: Текст всплывающей посказки маркера.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param radius: Радиус окружности.
+        :param color: Цвет окружности.
+        :param is_fill: Произвести заполнение внутренней области окружности?
+        :param fill_color: Цвет заполнения окружности.
+        :param popup_text: Текст всплывающей посказки маркера.
             Подсказка появляется по клику на маркере.
-        @param tooltip_text: Текст всплывающей посказки маркера.
+        :param tooltip_text: Текст всплывающей посказки маркера.
             Подсказка появляется при наведении мышки на маркер.
-        @return: True/False.
+        :return: True/False.
         """
         if self._geo_map is not None:
             try:
@@ -678,15 +678,15 @@ class icMapIndicatorManagerProto(icMapIndicator):
                      popup_text=u'', tooltip_text=u''):
         """
         Добавление на карту маркера-указателя.
-        @param geo_latitude: Географическая широта.
-        @param geo_longitude: Географическая долгота.
-        @param color: Цвет маркера.
-        @param icon: Иконка маркера.
-        @param popup_text: Текст всплывающей посказки маркера.
+        :param geo_latitude: Географическая широта.
+        :param geo_longitude: Географическая долгота.
+        :param color: Цвет маркера.
+        :param icon: Иконка маркера.
+        :param popup_text: Текст всплывающей посказки маркера.
             Подсказка появляется по клику на маркере.
-        @param tooltip_text: Текст всплывающей посказки маркера.
+        :param tooltip_text: Текст всплывающей посказки маркера.
             Подсказка появляется при наведении мышки на маркер.
-        @return: True/False.
+        :return: True/False.
         """
         if self._geo_map is not None:
             try:

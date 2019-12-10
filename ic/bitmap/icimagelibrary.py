@@ -30,7 +30,7 @@ class icImageLibraryPrototype:
     def __init__(self, children_images=None):
         """
         Крструктор.
-        @param children_images: Список дочерних объектов образов 
+        :param children_images: Список дочерних объектов образов 
         """
         if children_images is None:
             self._children = []
@@ -73,7 +73,7 @@ class icImageLibManager:
     def __init__(self, image_name=None):
         """
         Крструктор.
-        @param image_name: Наименование образа.
+        :param image_name: Наименование образа.
         """
         self._img_name = image_name
         self._img_filename = None
@@ -100,7 +100,7 @@ class icImageLibManager:
         """
         Базовое имя файла образа.
         Используется как имя образа из папки ic/imglib/common.
-        @param img_filename: Полное имя файла образа.
+        :param img_filename: Полное имя файла образа.
         """
         if img_filename is None:
             img_filename = self._img_filename
@@ -109,7 +109,7 @@ class icImageLibManager:
     def setFileName(self, img_filename=None):
         """
         Установить имя файла образа.
-        @param img_filename: Полное имя файла образа.
+        :param img_filename: Полное имя файла образа.
         """
         if img_filename and os.path.exists(img_filename):
             self._img_filename = img_filename
@@ -158,8 +158,8 @@ class icSerializedImagePrototype:
     def __init__(self, image_name, image_body=None):
         """
         Крструктор.
-        @param image_name: Наименование образа.
-        @param image_body: Серилизованный образ.
+        :param image_name: Наименование образа.
+        :param image_body: Серилизованный образ.
         """
         self._name = image_name
         self._body = image_body
@@ -204,7 +204,7 @@ class icSerializedImagePrototype:
     def setFileName(self, img_filename=None):
         """
         Установить имя файла образа.
-        @param img_filename: Полное имя файла образа.
+        :param img_filename: Полное имя файла образа.
         """
         if img_filename and os.path.exists(img_filename):
             self._img_filename = img_filename
@@ -216,14 +216,14 @@ class icSerializedImagePrototype:
     def serialize(self, img_filename):
         """
         Серилизовать образ и вернуть его серилизованное значение.
-        @param img_filename: Имя файла образа.
+        :param img_filename: Имя файла образа.
         """
         return icimg2py.getImgFileData(img_filename)
     
     def setSerialize(self, img_filename):
         """
         Серилизовать образ и установить в тело.
-        @param img_filename: Имя файла образа.
+        :param img_filename: Имя файла образа.
         """
         self._body = self.serialize(img_filename)
         return self._body

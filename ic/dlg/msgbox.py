@@ -11,14 +11,14 @@ import wx
 def MsgBox (parent, mess, title = 'MsgBox', style = wx.OK | wx.ICON_INFORMATION ):
     """
     Окно сообщения.
-    @type parent: C{wxWindow}
-    @param parent: Родительское окно.
-    @type mess: C{String}
-    @param mess: Текст сообщения.
-    @type title: C{String}
-    @param title: Текст заголовка окна.
-    @type style: C{long}
-    @param style: Стиль окна сообщений. По умолчанию wxOK | wxICON_INFORMATION.
+    :type parent: C{wxWindow}
+    :param parent: Родительское окно.
+    :type mess: C{String}
+    :param mess: Текст сообщения.
+    :type title: C{String}
+    :param title: Текст заголовка окна.
+    :type style: C{long}
+    :param style: Стиль окна сообщений. По умолчанию wxOK | wxICON_INFORMATION.
 
         Стили окна:
         - B{wxOK}: Выводит кнопку <OK>.

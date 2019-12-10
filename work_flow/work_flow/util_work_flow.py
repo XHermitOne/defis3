@@ -16,7 +16,7 @@ from ic.components import icResourceParser
 def browseDocJournal(DocJournalRes_):
     '''
     Открыть журнал документов в режиме управления документами.
-    @param DocJournalRes_: Имя ресурса журнала документов.
+    :param DocJournalRes_: Имя ресурса журнала документов.
     '''
     doc_jrnl=icResourceParser.icCreateObject(DocJournalRes_,'mtd')
     print('!!',doc_jrnl)

@@ -10,8 +10,8 @@
 При этом спецификация первой панели добавляется в атрибут 'win1',
 а второй панели в атрибут 'win2'.
 
-@type SPC_IC_SPLITTER: C{dictionary}
-@var SPC_IC_SPLITTER: Спецификация на ресурсное описание компонента. Описание ключей SPC_IC_SPLITTER:
+:type SPC_IC_SPLITTER: C{dictionary}
+:var SPC_IC_SPLITTER: Спецификация на ресурсное описание компонента. Описание ключей SPC_IC_SPLITTER:
 
     - B{name = 'DefaultName'}: Имя объекта.
     - B{type = 'SplitterWindow'}: Тип объекта.
@@ -35,8 +35,8 @@
         который распологается на окне.
     - B{min_panelsize=20}: Минимальный размер свернутой панели.
     
-@type ICSplitterStyle: C{dictionary}
-@var ICSplitterStyle: Словарь специальных стилей компонента. Описание ключей ICSplitterStyle:
+:type ICSplitterStyle: C{dictionary}
+:var ICSplitterStyle: Словарь специальных стилей компонента. Описание ключей ICSplitterStyle:
 
     - C{wx.SP_3D} - 3D вид бордюр и разделителя;
     - C{wx.SP_3DSASH} - 3D вид разделителя.
@@ -152,16 +152,16 @@ class icSplitter(icWidget, wx.SplitterWindow):
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания объекта icSplitterWindow.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_SPLITTER, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace, bPrepareProp=True)

@@ -4,8 +4,8 @@
 """
 Модуль абстрактного базового класса компонентов организации бизнес процессов.
 
-@type SPC_IC_WORKBASE: C{dictionary}
-@var SPC_IC_WORKBASE: Спецификация на ресурсное описание базового компонента автоматизации бизнес-процессов.
+:type SPC_IC_WORKBASE: C{dictionary}
+:var SPC_IC_WORKBASE: Спецификация на ресурсное описание базового компонента автоматизации бизнес-процессов.
 Описание ключей SPC_IC_WORKBASE:
 
     - B{name = 'default'}: Имя.
@@ -93,7 +93,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         self._parent = parent
         
@@ -149,11 +149,11 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def _canDo(self, user=None, permit=None):
         """
         Можно ли производить что-либо?
-        @param user: Указание пользователя.
+        :param user: Указание пользователя.
             Если None, то береться текущий зарегестрированный пользователь в системе.
-        @param permit: Список разрешенных пользователей.
+        :param permit: Список разрешенных пользователей.
             Если None, можно любому пользователю.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             # Если None, можно любому пользователю.
@@ -171,7 +171,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def canUserInit(self, user=None):
         """
         Может ли пользователь проинициализировать объект?
-        @param user: Указание пользователя.
+        :param user: Указание пользователя.
             Если None, то береться текущий зарегестрированный пользователь в системе.
         """
         return self._canDo(user, self.getInitUsers())
@@ -179,7 +179,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def canUserEdit(self, user=None):
         """
         Может ли пользователь редактировать объект?
-        @param user: Указание пользователя.
+        :param user: Указание пользователя.
             Если None, то береться текущий зарегестрированный пользователь в системе.
         """
         return self._canDo(user, self.getEditUsers())
@@ -187,7 +187,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def canUserView(self, user=None):
         """
         Может ли пользователь редактировать объект?
-        @param user: Указание пользователя.
+        :param user: Указание пользователя.
             Если None, то береться текущий зарегестрированный пользователь в системе.
         """
         return self._canDo(user, self.getViewUsers())
@@ -195,7 +195,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def canUserPrint(self, user=None):
         """
         Может ли пользователь распечатать объект?
-        @param user: Указание пользователя.
+        :param user: Указание пользователя.
             Если None, то береться текущий зарегестрированный пользователь в системе.
         """
         return self._canDo(user, self.getPrintUsers())
@@ -203,7 +203,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def canUserDel(self, user=None):
         """
         Может ли пользователь удалить объект?
-        @param user: Указание пользователя.
+        :param user: Указание пользователя.
             Если None, то береться текущий зарегестрированный пользователь в системе.
         """
         return self._canDo(user, self.getDelUsers())
@@ -211,7 +211,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def canUserSend(self, user=None):
         """
         Может ли пользователь отослать объект?
-        @param user: Указание пользователя.
+        :param user: Указание пользователя.
             Если None, то береться текущий зарегестрированный пользователь в системе.
         """
         return self._canDo(user, self.getSendUsers())
@@ -219,7 +219,7 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def doTask(self, task=None):
         """
         Выполнить задачу.
-        @param task: Имя задачи для выполнение, если None,
+        :param task: Имя задачи для выполнение, если None,
             то буруться имя из ресурса.
         """
         pass
@@ -233,16 +233,16 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def set(self, value=None):
         """
         Установить значение объекта.
-        @param value: Значение.
+        :param value: Значение.
         """
         pass
 
     def control(self, ctrl_obj, ctrl_code_block=None):
         """
         Контроль при добавлении/редактировании объекта.
-        @param ctrl_obj: Контролируемый объект.
-        @param ctrl_code_block: Блок кода контроля.
-        @return: Возвращает код ошибки контроля. Или 0, если все нормально.
+        :param ctrl_obj: Контролируемый объект.
+        :param ctrl_code_block: Блок кода контроля.
+        :return: Возвращает код ошибки контроля. Или 0, если все нормально.
         """
         return 0
 
@@ -285,15 +285,15 @@ class icWorkBase(persistent.icObjPersistent, form_generator.icObjFormGenerator):
     def sendTo(self, to_address=None, eval_space=None):
         """
         Отправка.
-        @param to_address: Указание адресата.
-        @param evalSpace_: Пространство имен.
+        :param to_address: Указание адресата.
+        :param evalSpace_: Пространство имен.
         """
         pass
         
     def Del(self, eval_space=None):
         """
         Удаление.
-        @param evalSpace_: Пространство имен.
+        :param evalSpace_: Пространство имен.
         """
         pass
 
@@ -306,7 +306,7 @@ class icRequisiteBase(persistent.icAttrPersistent, form_generator.icAttrFormGene
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         self._parent = parent
         
@@ -357,7 +357,7 @@ class icRequisiteBase(persistent.icAttrPersistent, form_generator.icAttrFormGene
     def init_data(self, value=None):
         """
         Инициализировать значение объекта.
-        @param value: Значение.
+        :param value: Значение.
         """
         if value is None:
             value = self.getDefault()
@@ -372,21 +372,21 @@ class icRequisiteBase(persistent.icAttrPersistent, form_generator.icAttrFormGene
     def setMyData(self, record):
         """
         Установить мои данные из строки.
-        @param record: Строка в виде словаря.
+        :param record: Строка в виде словаря.
         """
         log.warning(u'Не определен метод <setMyData>')
 
     def createLabelCtrl(self, parent=None):
         """
         Создание объекта контрола надписи реквизита.
-        @param parent: Родительское окно.
+        :param parent: Родительское окно.
         """
         return None
     
     def createEditorCtrl(self, parent=None):
         """
         Создание объекта контрола редактора реквизита.
-        @param parent: Родительское окно.
+        :param parent: Родительское окно.
         """
         return None
 
@@ -400,7 +400,7 @@ class icTabRequisiteBase(persistent.icObjPersistent,
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         self._parent = parent
         
@@ -463,7 +463,7 @@ class icTabRequisiteBase(persistent.icObjPersistent,
     def clearRows(self):
         """
         Удалить все строки из табличного реквизита.
-        @return: True/False.
+        :return: True/False.
         """
         self._value = list()
         return True
@@ -471,8 +471,8 @@ class icTabRequisiteBase(persistent.icObjPersistent,
     def addRow(self, **requisite_values):
         """
         Добавить строку в табличный реквизит.
-        @param requisite_values: Данные реквизитов.
-        @return: True/False.
+        :param requisite_values: Данные реквизитов.
+        :return: True/False.
         """
         row_requisites = dict()
 
@@ -489,7 +489,7 @@ class icTabRequisiteBase(persistent.icObjPersistent,
     def init_data(self, value=None):
         """
         Инициализировать значение объекта.
-        @param value: Значение.
+        :param value: Значение.
         """
         if value is None:
             value = self.getDefault()
@@ -510,20 +510,20 @@ class icTabRequisiteBase(persistent.icObjPersistent,
     def setMyData(self, record):
         """
         Установить мои данные из строки.
-        @param record: Строка в виде словаря.
+        :param record: Строка в виде словаря.
         """
         pass
 
     def createLabelCtrl(self, parent=None):
         """
         Создание объекта контрола надписи реквизита.
-        @param parent: Родительское окно.
+        :param parent: Родительское окно.
         """
         return None
     
     def createEditorCtrl(self, parent=None):
         """
         Создание объекта контрола редактора реквизита.
-        @param parent: Родительское окно.
+        :param parent: Родительское окно.
         """
         return None

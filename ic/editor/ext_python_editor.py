@@ -48,19 +48,19 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
         """
         Загружает нужный файл в IDE.
 
-        @type filename: C{string}
-        @param filename: Имя загружаемого файла.
-        @type bOpenInNewTab: C{bool}
-        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
-        @type bEditRecentFiles: C{bool}
-        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
+        :type filename: C{string}
+        :param filename: Имя загружаемого файла.
+        :type bOpenInNewTab: C{bool}
+        :param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        :type bEditRecentFiles: C{bool}
+        :param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
-        @type encoding: C{string}
-        @param encoding: Кодировка файла.
-        @type bReadonly: C{bool}
-        @param bReadonly: Указание, что файл откроется только для чтения.
-        @rtype: C{bool}
-        @return: Признак успешной загрузки.
+        :type encoding: C{string}
+        :param encoding: Кодировка файла.
+        :type bReadonly: C{bool}
+        :param bReadonly: Указание, что файл откроется только для чтения.
+        :rtype: C{bool}
+        :return: Признак успешной загрузки.
         """
         try:
             # Параметры кодировки
@@ -79,17 +79,17 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
     def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
-        @param res: Ресурсное описание.
-        @param res_editor: Указатель на редактор ресурсов.
+        :param res: Ресурсное описание.
+        :param res_editor: Указатель на редактор ресурсов.
         """
         log.error(u'Не реализован дизайнер форм в IDE <%s>' % self.__class__.__name__)
 
     def goToLine(self, filename, n_line=0):
         """
         Выпонить переход на линию модуля.
-        @param filename: Имя файла модуля.
-        @param n_line: Номер линии для перехода.
-        @return: True - выполнен переход / False - переход не выполнен.
+        :param filename: Имя файла модуля.
+        :param n_line: Номер линии для перехода.
+        :return: True - выполнен переход / False - переход не выполнен.
         """
         try:
             # Формирование командной строки запуска внешнего редактора
@@ -121,19 +121,19 @@ class icGeanyPythonEditor(icideinterface.icIDEInterface):
         """
         Загружает нужный файл в IDE.
 
-        @type filename: C{string}
-        @param filename: Имя загружаемого файла.
-        @type bOpenInNewTab: C{bool}
-        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
-        @type bEditRecentFiles: C{bool}
-        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
+        :type filename: C{string}
+        :param filename: Имя загружаемого файла.
+        :type bOpenInNewTab: C{bool}
+        :param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        :type bEditRecentFiles: C{bool}
+        :param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
-        @type encoding: C{string}
-        @param encoding: Кодировка файла.
-        @type bReadonly: C{bool}
-        @param bReadonly: Указание, что файл откроется только для чтения.
-        @rtype: C{bool}
-        @return: Признак успешной загрузки.
+        :type encoding: C{string}
+        :param encoding: Кодировка файла.
+        :type bReadonly: C{bool}
+        :param bReadonly: Указание, что файл откроется только для чтения.
+        :rtype: C{bool}
+        :return: Признак успешной загрузки.
         """
         try:
             # Формирование командной строки запуска внешнего редактора
@@ -153,25 +153,25 @@ class icGeanyPythonEditor(icideinterface.icIDEInterface):
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
-        @type filename: C{string}
-        @param filename: Имя файла.
+        :type filename: C{string}
+        :param filename: Имя файла.
         """
         pass
 
     def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
-        @param res: Ресурсное описание.
-        @param res_editor: Указатель на редактор ресурсов.
+        :param res: Ресурсное описание.
+        :param res_editor: Указатель на редактор ресурсов.
         """
         log.error(u'Не реализован дизайнер форм в IDE <%s>' % self.__class__.__name__)
 
     def goToLine(self, filename, n_line=0):
         """
         Выпонить переход на линию модуля.
-        @param filename: Имя файла модуля.
-        @param n_line: Номер линии для перехода.
-        @return: True - выполнен переход / False - переход не выполнен.
+        :param filename: Имя файла модуля.
+        :param n_line: Номер линии для перехода.
+        :return: True - выполнен переход / False - переход не выполнен.
         """
         try:
             # Формирование командной строки запуска внешнего редактора
@@ -211,19 +211,19 @@ class icAtomPythonEditor(icideinterface.icIDEInterface):
         """
         Загружает нужный файл в IDE.
 
-        @type filename: C{string}
-        @param filename: Имя загружаемого файла.
-        @type bOpenInNewTab: C{bool}
-        @param bOpenInNewTab: Признак загрузки файла на новой закладке.
-        @type bEditRecentFiles: C{bool}
-        @param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
+        :type filename: C{string}
+        :param filename: Имя загружаемого файла.
+        :type bOpenInNewTab: C{bool}
+        :param bOpenInNewTab: Признак загрузки файла на новой закладке.
+        :type bEditRecentFiles: C{bool}
+        :param bEditRecentFiles: Признак сохранении в списке недавно загружаемых файлов
             (пункт меню <File->Recent Open>).
-        @type encoding: C{string}
-        @param encoding: Кодировка файла.
-        @type bReadonly: C{bool}
-        @param bReadonly: Указание, что файл откроется только для чтения.
-        @rtype: C{bool}
-        @return: Признак успешной загрузки.
+        :type encoding: C{string}
+        :param encoding: Кодировка файла.
+        :type bReadonly: C{bool}
+        :param bReadonly: Указание, что файл откроется только для чтения.
+        :rtype: C{bool}
+        :return: Признак успешной загрузки.
         """
         try:
             # Формирование командной строки запуска внешнего редактора
@@ -242,25 +242,25 @@ class icAtomPythonEditor(icideinterface.icIDEInterface):
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
-        @type filename: C{string}
-        @param filename: Имя файла.
+        :type filename: C{string}
+        :param filename: Имя файла.
         """
         pass
 
     def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
-        @param res: Ресурсное описание.
-        @param res_editor: Указатель на редактор ресурсов.
+        :param res: Ресурсное описание.
+        :param res_editor: Указатель на редактор ресурсов.
         """
         log.error(u'Не реализован дизайнер форм в IDE <%s>' % self.__class__.__name__)
 
     def goToLine(self, filename, n_line=0):
         """
         Выпонить переход на линию модуля.
-        @param filename: Имя файла модуля.
-        @param n_line: Номер линии для перехода.
-        @return: True - выполнен переход / False - переход не выполнен.
+        :param filename: Имя файла модуля.
+        :param n_line: Номер линии для перехода.
+        :return: True - выполнен переход / False - переход не выполнен.
         """
         try:
             # Формирование командной строки запуска внешнего редактора

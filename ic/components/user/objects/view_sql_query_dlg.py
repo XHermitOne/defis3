@@ -53,7 +53,7 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
     def setDB(self, db):
         """
         Установить БД.
-        @param db: Объект БД.
+        :param db: Объект БД.
         """
         self.db = db
         if self.db is None:
@@ -63,8 +63,8 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
     def setSQLQuery(self, sql_txt):
         """
         Установить SQL запрос для просмотра.
-        @param sql_txt: Текст SQL запроса.
-        @return: True/False.
+        :param sql_txt: Текст SQL запроса.
+        :return: True/False.
         """
         if not sql_txt:
             log.warning(u'Не определен текст SQL запроса')
@@ -87,8 +87,8 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
     def setVariables(self, variables):
         """
         Установить переменные SQl запроса для редактирования.
-        @param variables: Словарь переменных.
-        @return: True/False.
+        :param variables: Словарь переменных.
+        :return: True/False.
         """
         if variables is None:
             variables = self.variables
@@ -108,9 +108,9 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
     def getSQLText(self, sql_query=None, variables=None):
         """
         Получить текст SQL запроса в зависимости от значения переменных.
-        @param sql_query: Шаблон SQL запроса.
-        @param variables: Словарь переменных.
-        @return: Текст SQL запроса.
+        :param sql_query: Шаблон SQL запроса.
+        :param variables: Словарь переменных.
+        :return: Текст SQL запроса.
         """
         if sql_query is None:
             sql_query = self.sql_query
@@ -122,7 +122,7 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
     def getVariables(self):
         """
         Получить словарь отредактированных переменных.
-        @return: Словарь отредактированных переменных.
+        :return: Словарь отредактированных переменных.
         """
         variables = dict()
         for property_name in self.variables.keys():
@@ -133,9 +133,9 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
     def refreshSQLText(self, sql_query=None, variables=None):
         """
         Обновить текст SQL запроса в зависимости от значения переменных.
-        @param sql_query: Шаблон SQL запроса.
-        @param variables: Словарь переменных.
-        @return: True/False
+        :param sql_query: Шаблон SQL запроса.
+        :param variables: Словарь переменных.
+        :return: True/False
         """
         if sql_query is None:
             sql_query = self.sql_query
@@ -153,9 +153,9 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
     def refreshDataList(self, sql_query=None, variables=None):
         """
         Обновление списка записей - результатов запроса.
-        @param sql_query: Шаблон SQL запроса.
-        @param variables: Словарь переменных.
-        @return: True/False
+        :param sql_query: Шаблон SQL запроса.
+        :param variables: Словарь переменных.
+        :return: True/False
         """
         if sql_query is None:
             sql_query = self.sql_query
@@ -196,8 +196,8 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
     def getSQLDataset(self, sql_text):
         """
         Получить набор записей по заполненному SQL выражению.
-        @param sql_text: SQL выражение.
-        @return: Заполненная таблица запроса.
+        :param sql_text: SQL выражение.
+        :return: Заполненная таблица запроса.
             Формат:
             ТАБЛИЦА ЗАПРОСА ПРЕДСТАВЛЯЕТСЯ В ВИДЕ СЛОВАРЯ
             {'__fields__': имена полей таблицы, '__data__': данные таблицы}
@@ -272,9 +272,9 @@ class icViewSQLQueryDialog(view_sql_query_dlg_proto.icViewSQLQueryDialogProto,
 def view_sql_query_dlg(parent=None, db=None, sql_txt=None):
     """
     Запуск диалогового окна просмотра результата SQL запроса.
-    @param parent: Родительское окно.
-    @param db: Объект БД.
-    @param sql_txt: Текст SQL запроса.
+    :param parent: Родительское окно.
+    :param db: Объект БД.
+    :param sql_txt: Текст SQL запроса.
     """
     if parent is None:
         parent = ic.getMainWin()
@@ -295,7 +295,7 @@ def view_sql_query_dlg(parent=None, db=None, sql_txt=None):
 def test():
     """
     Функция тестирования.
-    @return:
+    :return:
     """
     app = wx.PySimpleApp()
 

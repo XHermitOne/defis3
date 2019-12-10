@@ -19,6 +19,6 @@ class icSQLAlchemySchemeProto(icsourceinterface.icSourceInterface):
     def __init__(self, resource=None):
         """
         Конструктор.
-        @param resource: Ресурсное описание.
+        :param resource: Ресурсное описание.
         """
         icsourceinterface.icSourceInterface.__init__(self, resource)

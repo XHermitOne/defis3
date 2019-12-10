@@ -5,8 +5,8 @@
 Реквизит - ссылка на объект/документ.
 Реквизит определяет ссылку на другой бизнес объект.
 
-@type SPC_IC_REF_REQUISITE: C{dictionary}
-@var SPC_IC_REF_REQUISITE: Спецификация на ресурсное описание реквизита-ссылки на объект.
+:type SPC_IC_REF_REQUISITE: C{dictionary}
+:var SPC_IC_REF_REQUISITE: Спецификация на ресурсное описание реквизита-ссылки на объект.
 Описание ключей SPC_IC_REF_REQUISITE:
 
     - B{name = 'default'}: Имя.
@@ -107,7 +107,7 @@ class icOBJRequisiteProto(icworkbase.icRequisiteBase):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icworkbase.icRequisiteBase.__init__(self, parent)
         
@@ -182,9 +182,9 @@ class icOBJRequisiteProto(icworkbase.icRequisiteBase):
     def _getOBJFieldsSpc(self, ref_obj_resource, ref_obj_name, field_names):
         """
         Взять спецификацию поля связи с бизнес объектом/документом.
-        @param ref_obj_resource: Имя ресурсного файла связи с бизнес объектом/документом.
-        @param ref_obj_name: Имя бизнес объекта/документа.
-        @param field_names: Список имен полей.
+        :param ref_obj_resource: Имя ресурсного файла связи с бизнес объектом/документом.
+        :param ref_obj_name: Имя бизнес объекта/документа.
+        :param field_names: Список имен полей.
         """
         if ref_obj_resource is None:
             log.warning(u'Не определено имя ресурсного файла связи с бизнес объектом/документом.')
@@ -278,7 +278,7 @@ class icOBJRequisiteProto(icworkbase.icRequisiteBase):
     def setData(self, data):
         """
         Установить текущее значение объекта.
-        @param data: Данные в виде словаря в формате 'defaults'.
+        :param data: Данные в виде словаря в формате 'defaults'.
         """
         if self.value is None:
             self.value = dict()
@@ -295,7 +295,7 @@ class icOBJRequisiteProto(icworkbase.icRequisiteBase):
     def setMyData(self, record):
         """
         Установить мои данные из записи.
-        @param record: Запись в виде словаря.
+        :param record: Запись в виде словаря.
         """
         for field_name in self.getFields().keys():
             if record is not None:
@@ -328,7 +328,7 @@ class icOBJRequisiteProto(icworkbase.icRequisiteBase):
     def createEditorCtrl(self, parent=None):
         """
         Создание объекта контрола редактора реквизита.
-        @param parent: Родительское окно.
+        :param parent: Родительское окно.
         """
         spc = self._genREFEditorRes(self.name+'_edit')
         return self.GetKernel().createObjBySpc(parent, spc)
@@ -336,9 +336,9 @@ class icOBJRequisiteProto(icworkbase.icRequisiteBase):
     def setRefObj(self, ref_obj):
         """
         Установить бизнес объект/документ.
-        @param ref_obj: Объект бизнес объекта/документа.
+        :param ref_obj: Объект бизнес объекта/документа.
             Можно также задавать паспортом.
-        @return:
+        :return:
         """
         if toolfunc.is_pasport(ref_obj):
             self.setRefObjByPsp(ref_obj)
@@ -348,8 +348,8 @@ class icOBJRequisiteProto(icworkbase.icRequisiteBase):
     def setRefObjByPsp(self, obj_psp):
         """
         Установить бизнес объект/документ по его паспорту.
-        @param obj_psp: Паспорт бизнес объекта/документа.
-        @return: Объект созданного бизнес объекта/документа.
+        :param obj_psp: Паспорт бизнес объекта/документа.
+        :return: Объект созданного бизнес объекта/документа.
         """
         ref_obj = self.GetKernel().Create(obj_psp)
         self.setRefObj(ref_obj)

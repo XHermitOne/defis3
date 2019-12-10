@@ -51,9 +51,9 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def set_ctrl_value(self, ctrl, value):
         """
         Установить значение контрола не зависимо от типа.
-        @param ctrl: Объект контрола.
-        @param value: Значение контрола.
-        @return: True/False.
+        :param ctrl: Объект контрола.
+        :param value: Значение контрола.
+        :return: True/False.
         """
         result = False
         if hasattr(ctrl, 'setValue'):
@@ -93,9 +93,9 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def get_panel_data(self, panel, data_dict=None, *ctrl_names):
         """
         Получить выставленные значения в контролах объекта панели.
-        @param data_dict: Словарь для заполнения.
+        :param data_dict: Словарь для заполнения.
             Если не определен то создается новый словарь.
-        @param ctrl_names: Взять только контролы с именами...
+        :param ctrl_names: Взять только контролы с именами...
             Если имена контролов не определены,
             то обрабатываются контролы,
             указанные в соответствиях (accord).
@@ -127,9 +127,9 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def set_panel_data(self, panel, data_dict=None, *ctrl_names):
         """
         Установить значения в контролах.
-        @param panel: Объект панели.
-        @param data_dict: Словарь для заполнения.
-        @param ctrl_names: Взять только контролы с именами...
+        :param panel: Объект панели.
+        :param data_dict: Словарь для заполнения.
+        :param ctrl_names: Взять только контролы с именами...
             Если имена контролов не определены,
             то обрабатываются контролы,
             указанные в соответствиях (accord).
@@ -155,7 +155,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Получить данные контролов для сохранения.
         Не все данные могут сохраняться.
-        @return: Словарь с данными для записи.
+        :return: Словарь с данными для записи.
         """
         ctrl_data = dict()
         # Сначала сохранить размеры и положение самого окна
@@ -175,8 +175,8 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def _setCtrlData(self, ctrl_data):
         """
         Установить данные контролов после загрузки.
-        @param ctrl_data: Данные контролов.
-        @return: True/False.
+        :param ctrl_data: Данные контролов.
+        :return: True/False.
         """
         # Сначала установить размеры и позиции
         # самого диалогового окна
@@ -200,7 +200,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Установить словарь соответствий значений
         контролов и имен прикладного кода.
-        @param accord: Cловарь соответствий значений
+        :param accord: Cловарь соответствий значений
         контролов и имен прикладного кода.
             Формат:
             {'Имя используемое в прикладном коде': 'Имя контрола', ...}
@@ -211,7 +211,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Добавить словарь соответствий значений
         контролов и имен прикладного кода.
-        @param accord: Cловарь соответствий значений
+        :param accord: Cловарь соответствий значений
         контролов и имен прикладного кода.
             Формат:
             {'Имя используемое в прикладном коде': 'Имя контрола', ...}
@@ -223,7 +223,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Получить словарь соответствий значений
         контролов и имен прикладного кода.
-        @return: Cловарь соответствий значений
+        :return: Cловарь соответствий значений
         контролов и имен прикладного кода.
             Формат:
             {'Имя используемое в прикладном коде': 'Имя контрола', ...}
@@ -233,7 +233,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def get_accord_ctrl_data(self):
         """
         Получить согласованные данные.
-        @return: Словарь значений из контролов
+        :return: Словарь значений из контролов
             в формате соответствий.
             Формат:
             {'Имя используемое в прикладном коде': 'Значение контрола', ...}
@@ -245,7 +245,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def set_accord_ctrl_data(self, **data):
         """
         Установить согласованные данные.
-        @param data: Словарь значений в формате соответствий.
+        :param data: Словарь значений в формате соответствий.
             Контролы заполняются в согласно соответствиям.
             Формат:
             {'Имя используемое в прикладном коде': 'Значение контрола', ...}
@@ -257,8 +257,8 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Найти на панели контролы ввода на панели и определить
         их как словарь соответствий.
-        @param panel: Объект панели.
-        @return: Словарь соответствий контролов ввода.
+        :param panel: Объект панели.
+        :return: Словарь соответствий контролов ввода.
         """
         try:
             return self._find_panel_accord(panel)
@@ -270,8 +270,8 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Найти на панели контролы ввода на панели и определить
         их как словарь соответствий.
-        @param panel: Объект панели.
-        @return: Словарь соответствий контролов ввода.
+        :param panel: Объект панели.
+        :return: Словарь соответствий контролов ввода.
         """
         accord = dict()
         if not issubclass(panel.__class__, wx.Window):
@@ -303,9 +303,9 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def setAcceleratorTable_win(self, win=None, **key_combine_connections):
         """
         Установить акселераторную таблицу для окна.
-        @param win: Объект окна для которого устанавливается акселераторная
+        :param win: Объект окна для которого устанавливается акселераторная
             таблица. Если не определен, то берется self.
-        @param key_combine_connections: Словарь связей комбинаций клавиш
+        :param key_combine_connections: Словарь связей комбинаций клавиш
             с контролами обработки/управления.
             Формат:
                 {
@@ -317,7 +317,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
                     'CTRL_F1': self.tool1.GetId(), ...
                 }
             Пример комбинаций клавиш см. ic/utils/key_combins.py
-        @return: True/False
+        :return: True/False
         """
         if win is None:
             win = self
@@ -333,9 +333,9 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def getAcceleratorTable_win(self, win=None):
         """
         Получить акселераторную таблицу окна.
-        @param win: Объект окна для которого устанавливается акселераторная
+        :param win: Объект окна для которого устанавливается акселераторная
             таблица. Если не определен, то берется self.
-        @return: Объект акселераторной таблицы если он есть или None если его нет.
+        :return: Объект акселераторной таблицы если он есть или None если его нет.
         """
         if win is None:
             win = self
@@ -349,10 +349,10 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def setNotebookPage_image(self, notebook_ctrl, n_page=-1, img=None):
         """
         Установить картинку-иконку на странице wx.Notebook.
-        @param notebook_ctrl: Объект wx.Notebook.
-        @param n_page: Индекс страницы. Если < 0, то берется текущая выбранная.
-        @param img: Объект образа. Если None, то картинка убирается.
-        @return: True - картинка установлена. False - не устанолена по какой либо причине.
+        :param notebook_ctrl: Объект wx.Notebook.
+        :param n_page: Индекс страницы. Если < 0, то берется текущая выбранная.
+        :param img: Объект образа. Если None, то картинка убирается.
+        :return: True - картинка установлена. False - не устанолена по какой либо причине.
         """
         if notebook_ctrl is None:
             # Если объект не определен, то функция бессмыслена
@@ -392,7 +392,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def clear_panel_data(self, panel):
         """
         Очистить значения в контролах.
-        @param panel: Объект панели.
+        :param panel: Объект панели.
         """
         try:
             return self._clear_panel_data(panel)
@@ -402,7 +402,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def _clear_panel_data(self, panel):
         """
         Очистить значения в контролах.
-        @param panel: Объект панели.
+        :param panel: Объект панели.
         """
         if not issubclass(panel.__class__, wx.Panel):
             return
@@ -422,8 +422,8 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def clear_ctrl_value(self, ctrl):
         """
         Очистить значение контрола не зависимо от типа.
-        @param ctrl: Объект контрола.
-        @return: True/False.
+        :param ctrl: Объект контрола.
+        :return: True/False.
         """
         result = False
         if hasattr(ctrl, 'setValue'):
@@ -465,18 +465,18 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
                               resize_panel=0, redraw=True):
         """
         Cвертывание панели сплиттера.
-        @param splitter: Объект сплиттера wx.SplitterWindow.
-        @param toolbar: Панель инструментов.
+        :param splitter: Объект сплиттера wx.SplitterWindow.
+        :param toolbar: Панель инструментов.
             Для включения и выключения инструментов.
-        @param collapse_tool: Инструмент панели инструментов свертывания панели сплиттера.
+        :param collapse_tool: Инструмент панели инструментов свертывания панели сплиттера.
             Для включения и выключения инструментов.
-        @param expand_tool: Инструмент панели инструментов развертывания панели сплиттера.
+        :param expand_tool: Инструмент панели инструментов развертывания панели сплиттера.
             Для включения и выключения инструментов.
-        @param resize_panel: Индекс панели с изменяемым размером.
+        :param resize_panel: Индекс панели с изменяемым размером.
             0 - сворачивается/разворачивается первая панель
             1 - сворачивается/разворачивается вторая панель
-        @param redraw: Перерисовка?
-        @return: True/False.
+        :param redraw: Перерисовка?
+        :return: True/False.
         """
         if not isinstance(splitter, wx.SplitterWindow):
             log.warning(u'Объект <%s> не является сплиттером' % str(splitter))
@@ -514,18 +514,18 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
                             resize_panel=0, redraw=True):
         """
         Развертывание панели сплиттера.
-        @param splitter: Объект сплиттера wx.SplitterWindow.
-        @param toolbar: Панель инструментов.
+        :param splitter: Объект сплиттера wx.SplitterWindow.
+        :param toolbar: Панель инструментов.
             Для включения и выключения инструментов.
-        @param collapse_tool: Инструмент панели инструментов свертывания панели сплиттера.
+        :param collapse_tool: Инструмент панели инструментов свертывания панели сплиттера.
             Для включения и выключения инструментов.
-        @param expand_tool: Инструмент панели инструментов развертывания панели сплиттера.
+        :param expand_tool: Инструмент панели инструментов развертывания панели сплиттера.
             Для включения и выключения инструментов.
-        @param resize_panel: Индекс панели с изменяемым размером.
+        :param resize_panel: Индекс панели с изменяемым размером.
             0 - сворачивается/разворачивается первая панель
             1 - сворачивается/разворачивается вторая панель
-        @param redraw: Перерисовка?
-        @return: True/False.
+        :param redraw: Перерисовка?
+        :return: True/False.
         """
         if not isinstance(splitter, wx.SplitterWindow):
             log.warning(u'Объект <%s> не является сплиттером' % str(splitter))
@@ -563,9 +563,9 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def get_ctrl_data(self, data_dict=None, *ctrl_names):
         """
         Получить выставленные значения в контролах.
-        @param data_dict: Словарь для заполнения.
+        :param data_dict: Словарь для заполнения.
             Если не определен то создается новый словарь.
-        @param ctrl_names: Взять только контролы с именами...
+        :param ctrl_names: Взять только контролы с именами...
             Если имена контролов не определены,
             то обрабатываются контролы,
             указанные в соответствиях (accord).
@@ -575,8 +575,8 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def set_ctrl_data(self, data_dict=None, *ctrl_names):
         """
         Установить значения в контролах.
-        @param data_dict: Словарь для заполнения.
-        @param ctrl_names: Взять только контролы с именами...
+        :param data_dict: Словарь для заполнения.
+        :param ctrl_names: Взять только контролы с именами...
             Если имена контролов не определены,
             то обрабатываются контролы,
             указанные в соответствиях (accord).
@@ -587,7 +587,7 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
         """
         Проверка является ли системная тема ОС темной.
         Эта функция необходима для определения цвета текста контролов.
-        @return: True - темная тема / False - светлая
+        :return: True - темная тема / False - светлая
         """
         if not hasattr(self, '__is_dark_sys_theme'):
             is_dark_sys_theme = wxfunc.isDarkSysTheme()
@@ -597,10 +597,10 @@ class icPanelManager(listctrl_manager.icListCtrlManager,
     def reCreateGrid(self, grid, row_count=5, col_count=5):
         """
         Пересоздать грид с навым количеством строки X колонки.
-        @param grid: Объект wx.Grid.
-        @param row_count: Количество строк.
-        @param col_count: Количество колонок.
-        @return: True/False.
+        :param grid: Объект wx.Grid.
+        :param row_count: Количество строк.
+        :param col_count: Количество колонок.
+        :return: True/False.
         """
         if not isinstance(grid, wx.grid.Grid):
             log.warning(u'Ошибка типа объекта. Объект <%s> не является гридом' % grid.__class__.__name__)

@@ -50,18 +50,18 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
     def init_record_list_ctrl(self, records=(), columns=(), record_sort=None):
         """
         Инициализировать список записей.
-        @param records: Список записей. Каждая запись - словарь.
-        @param columns: Список отображаемых колонок. Каждая колонка - словарь:
+        :param records: Список записей. Каждая запись - словарь.
+        :param columns: Список отображаемых колонок. Каждая колонка - словарь:
             {'label': Заголовок колонки,
             'width': Ширина колонки,
             'align': Выравнивание,
             'field': Поле записи для отображения в колонке}
-        @param record_sort: Функция сортировки записей. Если не указана, то сортировки нет.
+        :param record_sort: Функция сортировки записей. Если не указана, то сортировки нет.
             Сортировка lambda функция:
                 lambda record: ...
             Например:
                 lambda record: record['name']
-        @return: True/False.
+        :return: True/False.
         """
         # Сортировка
         if record_sort:
@@ -82,20 +82,20 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
     def init_items_check_list(self, on_items=(), off_items=(), label=u'', item_sort=None):
         """
         Инициализировать списки выбора элементов.
-        @param on_items: Список словарей записей включенных элементов.
-        @param off_items: Список словарей записей отключенных элементов.
-        @param label: Поле словаря элемента для надписи отображения в списке элементов.
+        :param on_items: Список словарей записей включенных элементов.
+        :param off_items: Список словарей записей отключенных элементов.
+        :param label: Поле словаря элемента для надписи отображения в списке элементов.
             Либо lambda функция для получения надписи формата:
             lambda idx, item: ..., где
             idx - индекс записи
             item - словарь записи элемента выбора.
             lambda функция должна возвращать надпись, соответствующую элементу выбора.
-        @param item_sort: Функция сортировки элементов выбора. Если не указана, то сортировки нет.
+        :param item_sort: Функция сортировки элементов выбора. Если не указана, то сортировки нет.
             Сортировка lambda функция:
                 lambda item: ...
             Например:
                 lambda item: item['name']
-        @return: True/False
+        :return: True/False
         """
         if item_sort is None:
             item_sort = self.item_sort
@@ -118,32 +118,32 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
              record_sort=None, item_sort=None):
         """
         Инициализация диалоговой формы и всех ее объектов.
-        @param title: Заголовок диалогового окна.
-        @param records: Список записей. Каждая запись - словарь.
-        @param columns: Список отображаемых колонок. Каждая колонка - словарь:
+        :param title: Заголовок диалогового окна.
+        :param records: Список записей. Каждая запись - словарь.
+        :param columns: Список отображаемых колонок. Каждая колонка - словарь:
             {'label': Заголовок колонки,
             'width': Ширина колонки,
             'align': Выравнивание,
             'field': Поле записи для отображения в колонке}
-        @param items: Список записей элементов для выбора. Каждый элемент - словарь.
-        @param label: Поле словаря элемента для надписи отображения в списке элементов.
+        :param items: Список записей элементов для выбора. Каждый элемент - словарь.
+        :param label: Поле словаря элемента для надписи отображения в списке элементов.
             Либо lambda функция для получения надписи формата:
             lambda idx, item: ..., где
             idx - индекс записи
             item - словарь записи элемента выбора.
             lambda функция должна возвращать надпись, соответствующую элементу выбора.
-        @param is_default_on: Считаются все элементы по умолчанию выбранными?
-        @param record_sort: Функция сортировки записей. Если не указана, то сортировки нет.
+        :param is_default_on: Считаются все элементы по умолчанию выбранными?
+        :param record_sort: Функция сортировки записей. Если не указана, то сортировки нет.
             Сортировка lambda функция:
                 lambda record: ...
             Например:
                 lambda record: record['name']
-        @param item_sort: Функция сортировки элементов выбора. Если не указана, то сортировки нет.
+        :param item_sort: Функция сортировки элементов выбора. Если не указана, то сортировки нет.
             Сортировка lambda функция:
                 lambda item: ...
             Например:
                 lambda item: item['name']
-        @return: True/False.
+        :return: True/False.
         """
         # Установить заголовок диалогового окна
         self.SetTitle(title)
@@ -189,21 +189,21 @@ class icItemSelectorDialog(item_selector_dialog_proto.icItemSelectorDialogProto,
     def get_records(self):
         """
         Получить измененные записи.
-        @return: Список измененных записей.
+        :return: Список измененных записей.
         """
         return self.records
 
     def refreshItems(self, record_idx, record, item_sort=None):
         """
         Обновить списки выбранных элементов для записи.
-        @param record_idx: Индекс записи.
-        @param record: Словарь записи.
-        @param item_sort: Функция сортировки элементов выбора. Если не указана, то берется ранее установленная.
+        :param record_idx: Индекс записи.
+        :param record: Словарь записи.
+        :param item_sort: Функция сортировки элементов выбора. Если не указана, то берется ранее установленная.
             Сортировка lambda функция:
                 lambda item: ...
             Например:
                 lambda item: item['name']
-        @return: True/Falseю
+        :return: True/Falseю
         """
         if item_sort is None:
             item_sort = self.item_sort
@@ -306,33 +306,33 @@ def get_item_selector_dlg(parent=None, title=u'', records=(), columns=(), items=
                           record_sort=None, item_sort=None):
     """
     Вызов диалоговой формы выбора элементов связанных со списком записей.
-    @param parent: Родительское окно.
-    @param title: Заголовок диалогового окна.
-    @param records: Список записей. Каждая запись - словарь.
-    @param columns: Список отображаемых колонок. Каждая колонка - словарь:
+    :param parent: Родительское окно.
+    :param title: Заголовок диалогового окна.
+    :param records: Список записей. Каждая запись - словарь.
+    :param columns: Список отображаемых колонок. Каждая колонка - словарь:
         {'label': Заголовок колонки,
         'width': Ширина колонки,
         'align': Выравнивание,
         'field': Поле записи для отображения в колонке}
-    @param items: Список записей элементов для выбора. Каждый элемент - словарь.
-    @param label: Поле словаря элемента для надписи отображения в списке элементов.
+    :param items: Список записей элементов для выбора. Каждый элемент - словарь.
+    :param label: Поле словаря элемента для надписи отображения в списке элементов.
         Либо lambda функция для получения надписи формата:
         lambda idx, item: ..., где
         idx - индекс записи
         item - словарь записи элемента выбора.
         lambda функция должна возвращать надпись, соответствующую элементу выбора.
-    @param is_default_on: Считаются все элементы по умолчанию выбранными?
-    @param record_sort: Функция сортировки записей. Если не указана, то сортировки нет.
+    :param is_default_on: Считаются все элементы по умолчанию выбранными?
+    :param record_sort: Функция сортировки записей. Если не указана, то сортировки нет.
         Сортировка lambda функция:
             lambda record: ...
         Например:
             lambda record: record['name']
-    @param item_sort: Функция сортировки элементов выбора. Если не указана, то сортировки нет.
+    :param item_sort: Функция сортировки элементов выбора. Если не указана, то сортировки нет.
         Сортировка lambda функция:
             lambda item: ...
         Например:
             lambda item: item['name']
-    @return: Дополненный список записей выбранными и не выбранными элементами:
+    :return: Дополненный список записей выбранными и не выбранными элементами:
         {Словарь записи,
         '__on__': Список записей выбранных элементов,
         '__off__': Список записей не выбранных элементов}

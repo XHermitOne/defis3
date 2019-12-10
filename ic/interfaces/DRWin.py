@@ -14,8 +14,8 @@ class DRWin:
     def __init__(self, Parent_=None, DrFrame_=None, Position_=1, Index_=1):
         """
         Конструтор.
-        @param Parent_: Родительское окно.
-        @param DrFrame_: Главное окно drPython.
+        :param Parent_: Родительское окно.
+        :param DrFrame_: Главное окно drPython.
         """
         self._Parent = Parent_
         self._DrFrame = DrFrame_

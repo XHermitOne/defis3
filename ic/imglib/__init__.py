@@ -16,9 +16,9 @@ __version__ = (0, 1, 1, 1)
 def import_image_by_expr(expr):
     """
     Импорт изображения из модуля по выражению
-    @param expr:
-    @param expr: Выражение.
-    @return: Образ или None в случае ошибки.
+    :param expr:
+    :param expr: Выражение.
+    :return: Образ или None в случае ошибки.
     """
     img = None
     try:
@@ -34,7 +34,7 @@ def get_image_by_expr(expr):
     """
     Возвращет изображение по выражению.
     Пример: '@ic.imglib.newstyle_img.folder'.
-    @param expr: Выражение.
+    :param expr: Выражение.
     """
     import wx
     from . import common

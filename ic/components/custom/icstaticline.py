@@ -4,8 +4,8 @@
 """
 Обкладка для класса wx.StaicLine. Генерирут объект линию по ресурсному описанию.
 
-@type SPC_IC_LINE: C{Dictionary}
-@var SPC_IC_LINE: Спецификация на ресурсное описание компонента. Описание ключей:
+:type SPC_IC_LINE: C{Dictionary}
+:var SPC_IC_LINE: Спецификация на ресурсное описание компонента. Описание ключей:
 
     - B{name = 'DefaultName'}: Имя объекта.
     - B{type = 'StaticLine'}: Тип объекта.
@@ -76,16 +76,16 @@ class icStaticLine(icWidget, wx.StaticLine):
         """
         Конструктор для создания линии icStaticLine.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         icSpcDefStruct(SPC_IC_LINE, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)

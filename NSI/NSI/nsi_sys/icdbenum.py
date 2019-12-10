@@ -27,7 +27,7 @@ class icDBEnumProto(icsprav.icSpravProto):
     def __init__(self, sprav_manager=None, name=None):
         """
         Конструктор.
-        @param sprav_manager: Объект менеджера справочника.
-        @param name: Имя в списке менеджера справочников.
+        :param sprav_manager: Объект менеджера справочника.
+        :param name: Имя в списке менеджера справочников.
         """
         icsprav.icSpravProto.__init__(self, sprav_manager, name)

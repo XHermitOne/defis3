@@ -21,8 +21,8 @@
     do_operations - выполнение всех операций документа.
     undo_operations - выполнение отмены всех операций документа.
 
-@type SPC_IC_DOCUMENT: C{dictionary}
-@var SPC_IC_DOCUMENT: Спецификация на ресурсное описание документа.
+:type SPC_IC_DOCUMENT: C{dictionary}
+:var SPC_IC_DOCUMENT: Спецификация на ресурсное описание документа.
 Описание ключей SPC_IC_DOCUMENT:
 
     - B{name = 'default'}: Имя.
@@ -89,8 +89,8 @@ class icDocumentProto(icstateobj.icStateObjProto):
     def getDocUUID(self, doc_number=None):
         """
         Определить UUID документа по его номеру.
-        @param doc_number: Номер документа.
-        @return: UUID долкумента или None,
+        :param doc_number: Номер документа.
+        :return: UUID долкумента или None,
             если документ с таким номером отсутствует.
         """
         if doc_number is None:
@@ -106,8 +106,8 @@ class icDocumentProto(icstateobj.icStateObjProto):
     def find_operation(self, operation_name):
         """
         Поиск объекта операции по имени.
-        @param operation_name: Имя операции.
-        @return: Объект операции или None если операция
+        :param operation_name: Имя операции.
+        :return: Объект операции или None если операция
             не найдена.
         """
         find_operation_list = [requisite for requisite in self.getChildrenOperations() if requisite.getName() == operation_name]
@@ -124,8 +124,8 @@ class icDocumentProto(icstateobj.icStateObjProto):
         операции работают только с документом и его реквизитами.
         Перед выполнением операции необходимо заполнить соответствующие
         реквизиты (необходимые для выполнения операции) значениями.
-        @param operation_name: Имя операции.
-        @return: True/False.
+        :param operation_name: Имя операции.
+        :return: True/False.
         """
         operation = self.find_operation(operation_name)
         if operation:
@@ -135,8 +135,8 @@ class icDocumentProto(icstateobj.icStateObjProto):
     def _do_operation(self, operation):
         """
         Выполнить операцию.
-        @param operation: Объект операции.
-        @return: True/False.
+        :param operation: Объект операции.
+        :return: True/False.
         """
         return operation.do()
 
@@ -147,8 +147,8 @@ class icDocumentProto(icstateobj.icStateObjProto):
         операции работают только с документом и его реквизитами.
         Перед выполнением операции необходимо заполнить соответствующие
         реквизиты (необходимые для выполнения операции) значениями.
-        @param operation_name: Имя операции.
-        @return: True/False.
+        :param operation_name: Имя операции.
+        :return: True/False.
         """
         operation = self.find_operation(operation_name)
         if operation:
@@ -158,15 +158,15 @@ class icDocumentProto(icstateobj.icStateObjProto):
     def _undo_operation(self, operation):
         """
         Отмена операции.
-        @param operation: Объект операции.
-        @return: True/False.
+        :param operation: Объект операции.
+        :return: True/False.
         """
         return operation.undo()
 
     def do_operations(self):
         """
         Выполнение всех операций документа.
-        @return: True/False.
+        :return: True/False.
         """
         result = True
         for operation in self.getChildrenOperations():
@@ -176,7 +176,7 @@ class icDocumentProto(icstateobj.icStateObjProto):
     def undo_operations(self):
         """
         Выполнение отмены всех операций документа.
-        @return: True/False.
+        :return: True/False.
         """
         result = True
         for operation in self.getChildrenOperations():
@@ -188,16 +188,16 @@ class icDocumentProto(icstateobj.icStateObjProto):
         """
         Переместить документ из одной структуры документа в другую.
         Функция является примером архивирования документа.
-        @param dst_doc: Объект документа-приемника.
-        @param doc_uuid: UIID переносимого документа.
+        :param dst_doc: Объект документа-приемника.
+        :param doc_uuid: UIID переносимого документа.
             Переносимый документ может задаваться как номером так и UUID.
-        @param doc_num: Номер переносимого документа.
+        :param doc_num: Номер переносимого документа.
             Если номер не определен, то перенос производиться по UUID документа.
-        @param requisite_replace: Словарь замены имен реквизитов.
+        :param requisite_replace: Словарь замены имен реквизитов.
             Формат:
             {'Имя реквизита в документе-приемнике': 'Имя реквизита в документе-источнике'}
-        @param ask_del: Спрашивать об удалении документа из источника?
-        @return: True/False.
+        :param ask_del: Спрашивать об удалении документа из источника?
+        :return: True/False.
         """
         if doc_num:
             doc_uuid = self.getDocUUID(doc_num)

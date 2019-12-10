@@ -4,8 +4,8 @@
 """
 Модуль описания компонента выпадающего меню.
 
-@type SPC_IC_MENU: C{dictionary}
-@var SPC_IC_MENU: Спецификация на ресурсное описание компонента icMenu.
+:type SPC_IC_MENU: C{dictionary}
+:var SPC_IC_MENU: Спецификация на ресурсное описание компонента icMenu.
 Описание ключей SPC_IC_MENU:
     - B{name = 'description'}: Описание.
     - B{name = 'caption'}: Надпись.
@@ -114,8 +114,8 @@ class icMenu(wx.Menu):
     def DoMenu(self, MenuItems_):
         """
         Создать меню .
-        @param MenuItems_: список ресурсов пунктов меню.
-        @return: Возвращает ссылку на созданное горизонтальное меню или
+        :param MenuItems_: список ресурсов пунктов меню.
+        :return: Возвращает ссылку на созданное горизонтальное меню или
             None в случае ошибки.
         """
         try:
@@ -138,9 +138,9 @@ class icMenu(wx.Menu):
     def AppendMenuByStruct(self, MenuName_, MenuStruct_):
         """
         Добавить меню по его структуре.
-        @param MenuName_: имя меню.
-        @param MenuStruct_: структура меню.
-        @return: Возвращает ссылку на меню или None.
+        :param MenuName_: имя меню.
+        :param MenuStruct_: структура меню.
+        :return: Возвращает ссылку на меню или None.
         """
         # Создать подменю и заполнить его
         if ic.utils.toolfunc.getAttrValue('activate', MenuStruct_):
@@ -153,9 +153,9 @@ class icMenu(wx.Menu):
     def AppendItemByStruct(self, ItemName_, ItemStruct_):
         """
         Добавить пункт меню по его структуре.
-        @param ItemName_: имя пункта.
-        @param ItemStruct_: структура пункта.
-        @return: Возвращает ссылку на пункт меню или None.
+        :param ItemName_: имя пункта.
+        :param ItemStruct_: структура пункта.
+        :return: Возвращает ссылку на пункт меню или None.
         """
         if not ic.utils.toolfunc.getAttrValue('activate', ItemStruct_):
             return None
@@ -202,8 +202,8 @@ class icMenu(wx.Menu):
     def FindMenuItemByAlias(self, Name_):
         """
         Найти объект-пункт/меню по его имени.
-        @param Name_: имя пункта/подменю.
-        @return: Возвращает ссылку на объект-пункт/меню или None.
+        :param Name_: имя пункта/подменю.
+        :return: Возвращает ссылку на объект-пункт/меню или None.
         """
         if Name_ in self._register:
             return self._register[Name_]
@@ -212,8 +212,8 @@ class icMenu(wx.Menu):
     def FindMenuItemByID(self, ID_):
         """
         Найти объект-пункт/меню по его ID.
-        @param ID_: ID пункта/подменю.
-        @return: Возвращает ссылку на объект-пункт/меню или None.
+        :param ID_: ID пункта/подменю.
+        :return: Возвращает ссылку на объект-пункт/меню или None.
         """
         if ID_ in self._register:
             return self._register[ID_]
@@ -222,8 +222,8 @@ class icMenu(wx.Menu):
     def FindItemByAlias(self, Name_):
         """
         Найти пункт меню в самом меню или во всех дочерних меню.
-        @param Name_: имя пункта.
-        @return: Возвращает ссылку на пункт меню или None.
+        :param Name_: имя пункта.
+        :return: Возвращает ссылку на пункт меню или None.
         """
         prev_item = None
         for item in self._register.values():
@@ -245,8 +245,8 @@ class icMenu(wx.Menu):
     def FindItemByID(self, ID_):
         """
         Найти пункт меню в самом меню или во всех дочерних меню.
-        @param ID_: ID пункта/подменю.
-        @return: Возвращает ссылку на пункт меню или None.
+        :param ID_: ID пункта/подменю.
+        :return: Возвращает ссылку на пункт меню или None.
         """
         prev_item = None
         for item in self._register.values():
@@ -268,7 +268,7 @@ class icMenu(wx.Menu):
     def Register(self, Item_):
         """
         Прописать в реестре.
-        @param Item_: объект пункта меню.
+        :param Item_: объект пункта меню.
         """
         if Item_.__class__.__name__ != 'icMenu':
             if Item_.IsSeparator():

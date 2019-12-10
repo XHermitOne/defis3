@@ -35,8 +35,8 @@ def GetIndicatorLst(dict_obj):
     """
     Возвращает список индикаторов.
 
-    @type dict_obj: C{dictionary}
-    @param dict_obj: Словарь объектов формы.
+    :type dict_obj: C{dictionary}
+    :param dict_obj: Словарь объектов формы.
     """
     lst = []
     
@@ -115,10 +115,10 @@ def LoadIndicatorProperty(indicator, cod, typeSprav = 'Indicators'):
     """
     Востанавливает настройки индикатора из справочника индикаторов.
     
-    @type indicator: C{icArrowIndicator}
-    @param indicator: Указатель на индикатор.
-    @type cod: C{string}
-    @param cod: Код индикатора, под которым он зарегестрирован в справочнике
+    :type indicator: C{icArrowIndicator}
+    :param indicator: Указатель на индикатор.
+    :type cod: C{string}
+    :param cod: Код индикатора, под которым он зарегестрирован в справочнике
         индикаторов.
     """
     # return
@@ -186,10 +186,10 @@ def LoadIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
     """
     Востанавливает настройки индикатора из справочника индикаторов.
     
-    @type indicator: C{icArrowIndicator}
-    @param indicator: Указатель на индикатор.
-    @type cod: C{string}
-    @param cod: Код индикатора, под которым он зарегестрирован в справочнике
+    :type indicator: C{icArrowIndicator}
+    :param indicator: Указатель на индикатор.
+    :type cod: C{string}
+    :param cod: Код индикатора, под которым он зарегестрирован в справочнике
         индикаторов.
     """
     #   Читаем настройки
@@ -244,10 +244,10 @@ def LoadCAMonitorProperty(monitor, cod):
     """
     Загружает настройки монитора сравнительного анализа из справочнике мониторов.
     
-    @type monitor: C{wx.Window}
-    @param monitor: Указатель на монитор.
-    @type cod: C{string}
-    @param cod: Код монитора, под которым он зарегестрирован в справочнике
+    :type monitor: C{wx.Window}
+    :param monitor: Указатель на монитор.
+    :type cod: C{string}
+    :param cod: Код монитора, под которым он зарегестрирован в справочнике
         мониторов.
     """
     pass
@@ -257,8 +257,8 @@ def LoadMonitorProperties(dict_obj):
     """
     Загружает настройки индикаторов монитора.
     
-    @type dict_obj: C{dictionary}
-    @param dict_obj: Словарь объектов формы.
+    :type dict_obj: C{dictionary}
+    :param dict_obj: Словарь объектов формы.
     """
     # return
     lst = GetIndicatorLst(dict_obj)
@@ -286,8 +286,8 @@ def RefreshFormRealizMonitor(dict_obj):
     """
     Обновляет представление монитора <formRealiz>.
     
-    @type dict_obj: C{dictionary}
-    @param dict_obj: Словарь объектов формы.
+    :type dict_obj: C{dictionary}
+    :param dict_obj: Словарь объектов формы.
     """
     # return
 
@@ -319,8 +319,8 @@ def RefreshIndicatorValue(indicator):
     """
     Обновляет значение индикатора.
 
-    @type indicator: C{icArrowIndicator}
-    @param indicator: Указатель на индикатор.
+    :type indicator: C{icArrowIndicator}
+    :param indicator: Указатель на индикатор.
     """
     pass
 
@@ -329,10 +329,10 @@ def SaveCAMonitorProperty(monitor, cod):
     """
     Сохраняет настройки монитора сравнительного анализа в справочнике мониторов.
     
-    @type monitor: C{wx.Window}
-    @param monitor: Указатель на монитор.
-    @type cod: C{string}
-    @param cod: Код монитора, под которым он зарегестрирован в справочнике
+    :type monitor: C{wx.Window}
+    :param monitor: Указатель на монитор.
+    :type cod: C{string}
+    :param cod: Код монитора, под которым он зарегестрирован в справочнике
         мониторов.
     """
     pass
@@ -342,13 +342,13 @@ def SaveIndicatorProperty(indicator, cod, typeSprav='Indicators'):
     """
     Сохраняет настройки индикатора в справочнике индикаторов.
     
-    @type indicator: C{icArrowIndicator}
-    @param indicator: Указатель на индикатор.
-    @type cod: C{string}
-    @param cod: Код индикатора, под которым он зарегестрирован в справочнике
+    :type indicator: C{icArrowIndicator}
+    :param indicator: Указатель на индикатор.
+    :type cod: C{string}
+    :param cod: Код индикатора, под которым он зарегестрирован в справочнике
         индикаторов.
-    @type typeSprav: C{string}
-    @param typeSprav: Тип справочника, где хранятся настройки.
+    :type typeSprav: C{string}
+    :param typeSprav: Тип справочника, где хранятся настройки.
     """
     # return
     
@@ -401,13 +401,13 @@ def SaveIndicatorPropertyStorage(indicator, cod, typeSprav = 'Indicators'):
     """
     Сохраняет настройки индикатора в хранилище.
     
-    @type indicator: C{icArrowIndicator}
-    @param indicator: Указатель на индикатор.
-    @type cod: C{string}
-    @param cod: Код индикатора, под которым он зарегестрирован в справочнике
+    :type indicator: C{icArrowIndicator}
+    :param indicator: Указатель на индикатор.
+    :type cod: C{string}
+    :param cod: Код индикатора, под которым он зарегестрирован в справочнике
         индикаторов.
-    @type typeSprav: C{string}
-    @param typeSprav: Тип справочника, где хранятся настройки.
+    :type typeSprav: C{string}
+    :param typeSprav: Тип справочника, где хранятся настройки.
     """
     stRes = {}
     
@@ -462,8 +462,8 @@ def AnaliticProduct(ianlt):
     Функции для вызова более подробной информации в дереве аналитики
     по кнопке <Подробнее>.
     
-    @type ianlt: C{analitic.IAnaliticTree.IAnaliticTree}
-    @param ianlt: Указатель на интерфейст дерева аналитики.
+    :type ianlt: C{analitic.IAnaliticTree.IAnaliticTree}
+    :param ianlt: Указатель на интерфейст дерева аналитики.
     """
     t1, t2 = ianlt.period
     tree = ianlt.GetNameObj('AnaliticTreeList')

@@ -4,8 +4,8 @@
 """
 Обкладка для класса wx.ScrolledWindow. Генерирут окно с прокруткой.
 
-@type SPC_IC_SCROLLED_WINDOW: C{Dictionary}
-@var SPC_IC_SCROLLED_WINDOW: Спецификация на ресурсное описание окна. Описание ключей:
+:type SPC_IC_SCROLLED_WINDOW: C{Dictionary}
+:var SPC_IC_SCROLLED_WINDOW: Спецификация на ресурсное описание окна. Описание ключей:
 
     - B{name = 'default'}: Имя окна.
     - B{type = 'ScrolledWindow'}: Тип объекта.
@@ -21,8 +21,8 @@
         который распологается на окне.
     - В{child=[]}:Cписок дочерних элементов.
     
-@type ICWindowStyle: C{dictionary}
-@var ICWindowStyle: Словарь специальных стилей компонента:
+:type ICWindowStyle: C{dictionary}
+:var ICWindowStyle: Словарь специальных стилей компонента:
     wx.RETAINED - использует bitmap для ускорения перерисовки.
 
 """
@@ -118,16 +118,16 @@ class icScrolledWindow(icWidget, wx.ScrolledWindow):
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор.
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_SCROLLED_WINDOW, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)

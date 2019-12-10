@@ -92,7 +92,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def setOLAPServer(self, olap_server):
         """
         Установить OLAP сервер.
-        @param olap_server: OLAP сервер.
+        :param olap_server: OLAP сервер.
         """
         self._OLAP_server = olap_server
 
@@ -123,7 +123,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def _genUUID(self):
         """
         Генерация UUID.
-        @return: UUID.
+        :return: UUID.
         """
         return str(uuid.uuid4())
 
@@ -140,9 +140,9 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def getItemRequest(self, item=None):
         """
         Запрос, прикрепленный к элементу.
-        @param item: Текущий обрабатываемый элемент.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: Структура запроса или None если запрос не определен.
+        :return: Структура запроса или None если запрос не определен.
         """
         if item is None:
             item = self.GetRootItem()
@@ -153,9 +153,9 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def getItemIndicator(self, item=None):
         """
         Индикатор, прикрепленный к элементу.
-        @param item: Текущий обрабатываемый элемент.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: Структура индикатора или None если индикатор не определен.
+        :return: Структура индикатора или None если индикатор не определен.
         """
         if item is None:
             item = self.GetRootItem()
@@ -176,9 +176,9 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def editRootRequest(self, root_item=None):
         """
         Редактирование запроса корневого элемента.
-        @param root_item: Корневой элемент.
+        :param root_item: Корневой элемент.
             Если не определен, то берется автоматически.
-        @return: True/False.
+        :return: True/False.
         """
         if root_item is None:
             root_item = self.GetRootItem()
@@ -223,7 +223,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def createPopupMenu(self):
         """
         Создать всплывающее меню управления деревом запросов.
-        @return: Объект wx.Menu управления деревом запросов.
+        :return: Объект wx.Menu управления деревом запросов.
         """
         try:
             cur_item = self.GetSelection()
@@ -311,7 +311,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def renameItem(self, cur_item=None):
         """
         Переименовать узел.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -345,7 +345,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def moveUpItem(self, cur_item=None):
         """
         Переместить узел выше по списку.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -367,7 +367,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def moveDownItem(self, cur_item=None):
         """
         Переместить узел ниже по списку.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -389,7 +389,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def addRequestItem(self, cur_item=None):
         """
         Добавить OLAP запрос.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -423,7 +423,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def delRequestItem(self, cur_item=None):
         """
         Удалить запрос.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -444,7 +444,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def editRequestItem(self, cur_item=None):
         """
         Редактировать запрос.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -464,7 +464,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def refreshRootItemTitle(self):
         """
         Обновить надпись корневого элемента в соответствии с выбранным запросом.
-        @return: True/False.
+        :return: True/False.
         """
         item = self.GetRootItem()
         item_data = self.getItemData_tree(ctrl=self, item=item)
@@ -495,7 +495,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def editRequestIndicatorItem(self, cur_item=None):
         """
         Редактировать индикатор.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             if cur_item is None:
@@ -520,9 +520,9 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def saveRequests(self, save_filename=None):
         """
         Сохранить сведения об запросах в файле.
-        @param save_filename: Имя файла хранения дерева запросов.
+        :param save_filename: Имя файла хранения дерева запросов.
             Если не определен, то генерируется по UUID.
-        @return:
+        :return:
         """
         if save_filename is None:
             save_filename = self._save_filename
@@ -540,7 +540,7 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def loadRequests(self, save_filename=None):
         """
         Загрузить запросы.
-        @param save_filename: Имя файла хранения дерева запросов.
+        :param save_filename: Имя файла хранения дерева запросов.
             Если не определен, то генерируется по UUID.
         """
         if save_filename is None:
@@ -569,11 +569,11 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def refreshIndicators(self, bVisibleItems=True, item=None):
         """
         Обновить индикаторы элементов дерева.
-        @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
+        :param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
             Если нет, то обновляются индикаторы всех элементов.
-        @param item: Текущий обрабатываемый элемент.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             return self._refreshIndicators(bVisibleItems, item=item)
@@ -584,11 +584,11 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def _refreshIndicators(self, bVisibleItems=True, item=None):
         """
         Обновить индикаторы элементов дерева.
-        @param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
+        :param bVisibleItems: Обновлять индикаторы видимых элементов дерева?
             Если нет, то обновляются индикаторы всех элементов.
-        @param item: Текущий обрабатываемый элемент.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: True/False.
+        :return: True/False.
         """
         if item is None:
             item = self.GetRootItem()
@@ -618,10 +618,10 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def refreshIndicator(self, indicator, item=None):
         """
         Обновить индикатор элемента дерева.
-        @param indicator: Структура описания индикатора.
-        @param item: Текущий обрабатываемый элемент.
+        :param indicator: Структура описания индикатора.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: True/False.
+        :return: True/False.
         """
         try:
             # log.debug(u'Обновление индикатора %s' % str(indicator))
@@ -633,10 +633,10 @@ class icOLAPQueryTreeCtrlProto(wx.TreeCtrl,
     def _refreshIndicator(self, indicator, item=None):
         """
         Обновить индикатор элемента дерева.
-        @param indicator: Структура описания индикатора.
-        @param item: Текущий обрабатываемый элемент.
+        :param indicator: Структура описания индикатора.
+        :param item: Текущий обрабатываемый элемент.
             Если None, то берется корневой элемент.
-        @return: True/False.
+        :return: True/False.
         """
         if not indicator:
             # Индикатор не определен. Обновлять не надо

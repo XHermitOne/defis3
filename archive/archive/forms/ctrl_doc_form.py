@@ -79,9 +79,9 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
     def del_document(self, doc_uuid, do_del_card=True, do_del_scanfile=False):
         """
         Процедура удаления документа с указанным UUID.
-        @param doc_uuid: UUID удаляемого документа.
-        @param do_del_card: Удалить карточку документа?
-        @param do_del_scanfile: Удалить отсканированный файл документа?
+        :param doc_uuid: UUID удаляемого документа.
+        :param do_del_card: Удалить карточку документа?
+        :param do_del_scanfile: Удалить отсканированный файл документа?
         """
         doc = ic.metadata.THIS.mtd.scan_document.create()
         doc.load_obj(doc_uuid)
@@ -210,7 +210,7 @@ class icCtrlDocPanel(search_doc_form.icSearchDocPanelCtrl,
 def open_ctrl_search_doc_page(main_win=None):
     """
     Открыть страницу поиска/печати документа из архива.
-    @param main_win: Главное окно приложения.
+    :param main_win: Главное окно приложения.
     """
     if main_win is None:
         main_win = ic.getMainWin()

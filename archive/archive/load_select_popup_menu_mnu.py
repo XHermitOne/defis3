@@ -57,10 +57,10 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
     def choiceLoadFileName(self, sFileType, choice_year=None, choice_month=None):
         """
         Выбрать загружаемый файл.
-        @param sFileType: Тип загружаемого файла.
-        @param choice_year: Отфильтровать год.
-        @param choice_year: Отфильтровать месяц.
-        @return: Полное имя загружаемого файла или None, если нажата <отмена>.
+        :param sFileType: Тип загружаемого файла.
+        :param choice_year: Отфильтровать год.
+        :param choice_year: Отфильтровать месяц.
+        :return: Полное имя загружаемого файла или None, если нажата <отмена>.
         """
         load_doc_dir = ic.settings.archive.SETTINGS.load_doc_dir.get()
         # log.debug(u'Папка загрузки документов <%s>' % load_doc_dir)
@@ -243,8 +243,8 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
     def getYearMonthDlg(self, bYear=True, bMonth=False):
         """
         Получить год или месяц.
-        @param bYear: Определить дату как Год.
-        @param bMonth: Определить дату как Год-Месяц.
+        :param bYear: Определить дату как Год.
+        :param bMonth: Определить дату как Год-Месяц.
         """
         arch_year = None
         arch_month = None
@@ -269,9 +269,9 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
     def downloadArchiveDBF(self, arch_year, arch_month):
         """
         Произвести загрузку файлов архивных данных.
-        @param bYear: Определить дату как Год.
-        @param bMonth: Определить дату как Год-Месяц.
-        @return: True - загрузка произведена, False - нажата <Отмена>.
+        :param bYear: Определить дату как Год.
+        :param bMonth: Определить дату как Год-Месяц.
+        :return: True - загрузка произведена, False - нажата <Отмена>.
         """
         # Удалить все ранее загруженные файлы
         dbf_filenames = filefunc.getFilenamesByExt(load_net_config.DEST_PATH, '.DBF')

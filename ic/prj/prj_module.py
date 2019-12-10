@@ -84,8 +84,8 @@ class icPrjModules(prj_node.icPrjFolder):
         Получить отсортированный список файлов и подпапок по пути.
         Порядок сортировки: Сначала папки отсортированные по имени,
         затем файлы отсортированные по имени.
-        @param path: Текущая папка-пакет.
-        @return:
+        :param path: Текущая папка-пакет.
+        :return:
         """
         # Обработка подпапок
         file_list = [os.path.join(path, cur_file) for cur_file in os.listdir(path)]
@@ -107,7 +107,7 @@ class icPrjModules(prj_node.icPrjFolder):
     def buildPrjPy(self, path):
         """
         Построение всех узлов/py-модулей проекта.
-        @param path: Текущая папка-пакет/py-модуль.
+        :param path: Текущая папка-пакет/py-модуль.
         """
         # Обработка подпапок
         all_path_list = self._getPrjFileList(path)
@@ -117,9 +117,9 @@ class icPrjModules(prj_node.icPrjFolder):
     def _findModuleSignature(self, module_name, signature):
         """
         Проверка есть ли в модуле сигнатура?
-        @param module_name: Имя модуля.
-        @param signature: Текст сигнатуры.
-        @return: Возвращает True/False.
+        :param module_name: Имя модуля.
+        :param signature: Текст сигнатуры.
+        :return: Возвращает True/False.
         """
         find = False
         module_file = None
@@ -137,8 +137,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isModule(self, filename):
         """
         Проверка является ли файл модулм проекта.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.py' and
@@ -148,8 +148,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isFBP(self, filename):
         """ 
         Проверка является ли файл модулм проекта wxformbuilder.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.fbp')
@@ -157,8 +157,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isWXCP(self, filename):
         """
         Проверка является ли файл модулем проекта wxCrafter.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.wxcp')
@@ -166,8 +166,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isXRC(self, filename):
         """
         Проверка является ли файл XRC ресурсом форм.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.xrc') and \
@@ -178,8 +178,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isInterfaceModule(self, filename):
         """
         Проверка является ли файл интерфейсным модулем проекта.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.py' and \
@@ -189,8 +189,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isResourceModule(self, filename):
         """
         Проверка является ли файл ресурсным модулем проекта.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.py' and \
@@ -200,8 +200,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isImageModule(self, filename):
         """
         Проверка является ли файл модулем библиотеки образов проекта.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.py' and \
@@ -211,8 +211,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isFBModule(self, filename):
         """
         Проверка является ли файл модулем форм wxFormBuilder.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.py' and
@@ -223,8 +223,8 @@ class icPrjModules(prj_node.icPrjFolder):
         """
         Проверка является ли файл модулем форм,
         сгенерированных утилитой pywxrc (из XRC ресурса).
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.py' and
@@ -234,8 +234,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isTemplateModule(self, filename):
         """
         Проверка является ли файл модулем шаблона проекта.
-        @param filename: Имя файла.
-        @return: Возвращает True/False.
+        :param filename: Имя файла.
+        :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
                (os.path.splitext(filename)[1] == '.py' and \
@@ -245,8 +245,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def isPackage(self, directory):
         """
         Проверка является ли директория пакетом проекта.
-        @param directory: Указание директории.
-        @return: Возвращает True/False.
+        :param directory: Указание директории.
+        :return: Возвращает True/False.
         """
         is_dir = os.path.isdir(directory)
         is_in_prj = False
@@ -260,8 +260,8 @@ class icPrjModules(prj_node.icPrjFolder):
     def buildPyTree(self, cur_package, path):
         """
         Построение всех узлов/py-модулей проекта.
-        @param cur_package: Узел пакета, в который происходит добавление.
-        @param path: Текущая папка-пакет/py-модуль.
+        :param cur_package: Узел пакета, в который происходит добавление.
+        :param path: Текущая папка-пакет/py-модуль.
         """
         if self.isPackage(path):
             # Это пакет
@@ -421,7 +421,7 @@ class icPrjPackage(prj_node.icPrjFolder):
     def create(self, new_name=None):
         """
         Создание пакета.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         # Ввести наименование при создании
         if not new_name:
@@ -547,7 +547,7 @@ class icPrjPackage(prj_node.icPrjFolder):
     def paste(self, node):
         """
         Вставить.
-        @param node: Вставляемый узел.
+        :param node: Вставляемый узел.
         """
         # Можно вставлять толко модули или другие пакеты
         if issubclass(node.__class__, icPrjModule) or \
@@ -621,7 +621,7 @@ class icPrjModule(prj_node.icPrjNode):
     def create(self, new_name=None):
         """
         Функция создания модуля.
-        @param new_name: Указание нового имени созданного узла.
+        :param new_name: Указание нового имени созданного узла.
         """
         # Ввести наименование при создании
         if not new_name:
@@ -787,7 +787,7 @@ class icPrjModule(prj_node.icPrjNode):
     def paste(self, node):
         """
         Вставить.
-        @param node: Вставляемый узел.
+        :param node: Вставляемый узел.
         """
         # Можно вставлять толко модули или другие пакеты
         if issubclass(node.__class__, icPrjModule) or \
@@ -820,8 +820,8 @@ class icPrjModule(prj_node.icPrjNode):
     def isResClass(self, module_filename):
         """
         Проверка, является ли указанный модуль ресурсным классом.
-        @param module_filename: Имя файла модуля.
-        @return: Возвращает True/False.
+        :param module_filename: Имя файла модуля.
+        :return: Возвращает True/False.
         """
         ok = False
         module_lines = None

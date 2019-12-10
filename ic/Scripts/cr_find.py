@@ -39,8 +39,8 @@ def walk_find_rus(rus_txt, dir_, files_):
 
 def find_rus_module(dir_):
     """
-    @param dir_:
-    @return:
+    :param dir_:
+    :return:
     """
     rus = '���������������������������������'
     return os.path.walk(dir_, walk_find_rus, rus)

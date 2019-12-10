@@ -34,8 +34,8 @@ class PropValueRenderer(Grid.PyGridCellRenderer):
         """
         Устанавливает типы значений аттрибутов.
         
-        @type dict: C{dictionary}
-        @param dict: Словарь типов атрибутов. Ключи идентификаторы типов, значения списки
+        :type dict: C{dictionary}
+        :param dict: Словарь типов атрибутов. Ключи идентификаторы типов, значения списки
             атрибутов. Пример: {1:['attr1','a2'], 2:['n']}.
         """
         

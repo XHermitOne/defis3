@@ -57,9 +57,9 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def set_locals(self, env_locals=None, bRefresh=True):
         """
         Установить словарь локального пространства имен.
-        @param env_locals: Словарь локального пространства имен.
-        @param bRefresh: Автоматически обновить дерево локального пространства имен.
-        @param: True/False
+        :param env_locals: Словарь локального пространства имен.
+        :param bRefresh: Автоматически обновить дерево локального пространства имен.
+        :param: True/False
         """
         if env_locals is None:
             env_locals = dict()
@@ -78,9 +78,9 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def set_globals(self, env_globals=None, bRefresh=True):
         """
         Установить словарь глобального пространства имен.
-        @param env_globals: Словарь глобального пространства имен.
-        @param bRefresh: Автоматически обновить дерево глобального пространства имен.
-        @param: True/False
+        :param env_globals: Словарь глобального пространства имен.
+        :param bRefresh: Автоматически обновить дерево глобального пространства имен.
+        :param: True/False
         """
         if env_globals is None:
             env_globals = dict()
@@ -99,11 +99,11 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def refresh_env(self, tree_ctrl=None, env=None, bHideProtected=True):
         """
         Обновить контрол древовидного представления пространства имен.
-        @param tree_ctrl: Контрол древовидного представления пространства имен.
-        @param env: Словарь пространства имен.
-        @param bHideProtected: Скрыть имена, начинающиеся на '__' т.е.
+        :param tree_ctrl: Контрол древовидного представления пространства имен.
+        :param env: Словарь пространства имен.
+        :param bHideProtected: Скрыть имена, начинающиеся на '__' т.е.
             специально скрываемые/системные.
-        @return: True/False.
+        :return: True/False.
         """
         if not isinstance(env, dict):
             log.warning(u'Не корректный тип <%s> словаря пространства имен' % env.__class__.__name__)
@@ -124,12 +124,12 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def build_item_children(self, tree_ctrl=None, parent_item=None, children_dict=None, bHideProtected=True):
         """
         Достроить дочерние элементы.
-        @param tree_ctrl: Контрол древовидного представления пространства имен.
-        @param parent_item: Элемент дерева
-        @param children_dict: Словарь дочерних элементов.
-        @param bHideProtected: Скрыть имена, начинающиеся на '__' т.е.
+        :param tree_ctrl: Контрол древовидного представления пространства имен.
+        :param parent_item: Элемент дерева
+        :param children_dict: Словарь дочерних элементов.
+        :param bHideProtected: Скрыть имена, начинающиеся на '__' т.е.
             специально скрываемые/системные.
-        @return: True/False.
+        :return: True/False.
         """
         if not isinstance(children_dict, dict):
             log.warning(u'Не корректный тип <%s> словаря пространства имен' % children_dict.__class__.__name__)
@@ -153,8 +153,8 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def refresh_locals(self, env_locals=None):
         """
         Обновить контрол древовидного представления ЛОКАЛЬНОГО пространства имен.
-        @param env_locals: Словарь ЛОКАЛЬНОГО пространства имен.
-        @return: True/False.
+        :param env_locals: Словарь ЛОКАЛЬНОГО пространства имен.
+        :return: True/False.
         """
         if env_locals is None:
             env_locals = self._locals
@@ -164,8 +164,8 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
     def refresh_globals(self, env_globals=None):
         """
         Обновить контрол древовидного представления ГЛОБАЛЬНОГО пространства имен.
-        @param env_globals: Словарь ГЛОБАЛЬНОГО пространства имен.
-        @return: True/False.
+        :param env_globals: Словарь ГЛОБАЛЬНОГО пространства имен.
+        :return: True/False.
         """
         if env_globals is None:
             env_globals = self._globals
@@ -209,11 +209,11 @@ class icViewDebugEnvDlg(view_debug_env_dlg_proto.icViewDebugEnvDialogProto,
 def view_debug_namespace_dialog(parent=None, env_locals=None, env_globals=None):
     """
     Отобразить пространство имен (локальное и глобальное) для просмотра.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное.
-    @param env_locals: Словарь локального пространства имен (locals).
-    @param env_globals: Словарь глобального пространства имен (locals).
-    @return: True/False.
+    :param env_locals: Словарь локального пространства имен (locals).
+    :param env_globals: Словарь глобального пространства имен (locals).
+    :return: True/False.
     """
     if parent is None:
         app = wx.GetApp()
@@ -247,7 +247,7 @@ def view_debug_namespace_dialog(parent=None, env_locals=None, env_globals=None):
 def test():
     """
     Функция тестирования.
-    @return:
+    :return:
     """
     app = wx.PySimpleApp()
 

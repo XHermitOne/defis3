@@ -23,10 +23,10 @@ DEFAULT_CELL_BORDER_COLOUR = (64, 64, 64)
 def init_colour(colour, default=None):
     """
     Инициализация цвета по входным параметрам.
-    @param colour: Цвет в каком то виде.
-    @param default: Значение по умолчанию в случае
+    :param colour: Цвет в каком то виде.
+    :param default: Значение по умолчанию в случае
         не определенном значении цвета.
-    @return: Объект wx.Colour.
+    :return: Объект wx.Colour.
     """
     wx_colour = None
 
@@ -55,12 +55,12 @@ class icWMSCell(object):
                  idx=-1, board=None):
         """
         Конструктор.
-        @param left: Координата x левой границы ячейки на доске размещения.
-        @param top: Координата y верхней границы ячейки на доске размещения.
-        @param width: Ширина ячейки в точках.
-        @param height: Высота ячейки в точках.
-        @param idx: Номер ячейки на доске размещения.
-        @param board: Объект доски.
+        :param left: Координата x левой границы ячейки на доске размещения.
+        :param top: Координата y верхней границы ячейки на доске размещения.
+        :param width: Ширина ячейки в точках.
+        :param height: Высота ячейки в точках.
+        :param idx: Номер ячейки на доске размещения.
+        :param board: Объект доски.
         """
         self.left = left
         self.top = top
@@ -102,9 +102,9 @@ class icWMSCell(object):
     def point_in(self, x, y):
         """
         Проверка на попадание точки (x, y) в ячейку.
-        @param x: Координата x проверяемой точки.
-        @param y: Координата y проверяемой точки.
-        @return: True - Точка попадает в ячейку. False - не попадает в ячейку.
+        :param x: Координата x проверяемой точки.
+        :param y: Координата y проверяемой точки.
+        :return: True - Точка попадает в ячейку. False - не попадает в ячейку.
         """
         # Параметры ячейки корректно проинициализированы?
         is_init = (self.left >= 0) and (self.top >= 0) and (self.width > 0) and (self.height > 0)
@@ -115,7 +115,7 @@ class icWMSCell(object):
     def draw(self, dc):
         """
         Отрисовка ячейки.
-        @param dc: Контекст устройства для отрисовки.
+        :param dc: Контекст устройства для отрисовки.
         """
         if self.background_colour and self.border_colour:
             dc.SetPen(wx.Pen(self.border_colour, 0))
@@ -137,14 +137,14 @@ class icWMSCell(object):
     def getNext(self):
         """
         Получить следующуя ячейку на доске.
-        @return: Объект следующей ячейки или None, если ячейка последняя.
+        :return: Объект следующей ячейки или None, если ячейка последняя.
         """
         return self.board.getCell(self.index + 1) if self.board else None
 
     def getPrev(self):
         """
         Получить предыдущую ячейку на доске.
-        @return: Объект предыдущей ячейки или None, если ячейка первая.
+        :return: Объект предыдущей ячейки или None, если ячейка первая.
         """
         return self.board.getCell(self.index - 1) if self.board else None
 
@@ -166,15 +166,15 @@ class icWMSBoard(object):
                  bg_colour=None, constructor=None):
         """
         Конструктор.
-        @param cells: Список описаний ячеек.
+        :param cells: Список описаний ячеек.
             Формат:
             [{'left': 10, 'top': 10, 'width': 48, 'height': 48}, ...]
-        @param left: Координата x левой границы доски размещения.
-        @param top: Координата y верхней границы доски размещения.
-        @param width: Ширина доски размещения в точках.
-        @param height: Высота доски размещения в точках.
-        @param bg_colour: Цвет фона доски.
-        @param constructor: Объект конструктора, в котором расположена доска.
+        :param left: Координата x левой границы доски размещения.
+        :param top: Координата y верхней границы доски размещения.
+        :param width: Ширина доски размещения в точках.
+        :param height: Высота доски размещения в точках.
+        :param bg_colour: Цвет фона доски.
+        :param constructor: Объект конструктора, в котором расположена доска.
         """
         self.left = left
         self.top = top
@@ -198,7 +198,7 @@ class icWMSBoard(object):
     def getConstructorOffset(self):
         """
         Определеить смещение доски размещения в конструкторе.
-        @return: x смещение, y смещение.
+        :return: x смещение, y смещение.
         """
         if self.constructor:
             offset = self.constructor.ClientToScreen((0, 0))
@@ -209,10 +209,10 @@ class icWMSBoard(object):
     def build(self, cells):
         """
         Создание и инициализация объектов ячеек.
-        @param cells: Список описаний ячеек.
+        :param cells: Список описаний ячеек.
             Формат:
             [{'left': 10, 'top': 10, 'width': 48, 'height': 48}, ...]
-        @return: Список объектов ячеек.
+        :return: Список объектов ячеек.
         """
         assert isinstance(cells, list)
 
@@ -228,7 +228,7 @@ class icWMSBoard(object):
     def deleteCells(self):
         """
         Удалить все ячейки.
-        @return: True/False.
+        :return: True/False.
         """
         self.cells = list()
         return True
@@ -239,9 +239,9 @@ class icWMSBoard(object):
         Автоматическое создание и инициализация объектов ячеек.
         Размещение ячеек производиться автоматом последовательно
         слева-направо сверху-вниз.
-        @param cell_width: Ширина ячейки в точках.
-        @param cell_height: Высота ячейки в точках.
-        @return: Список объектов ячеек.
+        :param cell_width: Ширина ячейки в точках.
+        :param cell_height: Высота ячейки в точках.
+        :return: Список объектов ячеек.
         """
         cells = list()
         w_cells_count = int(self.width/cell_width)
@@ -259,7 +259,7 @@ class icWMSBoard(object):
     def draw(self, dc):
         """
         Отрисовка доски размещения.
-        @param dc: Контекст устройства для отрисовки.
+        :param dc: Контекст устройства для отрисовки.
         """
         # Заполнить подложку фоном
         if self.background_colour:
@@ -276,9 +276,9 @@ class icWMSBoard(object):
     def find_cell(self, x, y):
         """
         Найти ячейку по точке.
-        @param x: Координата x проверяемой точки.
-        @param y: Координата y проверяемой точки.
-        @return: Объект ячейки, в которую попадает точка (x, y).
+        :param x: Координата x проверяемой точки.
+        :param y: Координата y проверяемой точки.
+        :return: Объект ячейки, в которую попадает точка (x, y).
             None если ячейка не найдена.
         """
         find_cell = None
@@ -291,7 +291,7 @@ class icWMSBoard(object):
     def findFreeCell(self):
         """
         Поиск свободной ячейки на доске расположения.
-        @return: Объект board.icWMSCell или None, если
+        :return: Объект board.icWMSCell или None, если
         не найдено ни одной свободной ячейки.
         """
         find_cell = None
@@ -304,7 +304,7 @@ class icWMSBoard(object):
     def getShapeTags(self):
         """
         Получить список прикрепленных тегов к фигурам в ячейках.
-        @return: Список тегов.
+        :return: Список тегов.
         """
         tags = list()
         for cell in self.cells:
@@ -323,8 +323,8 @@ class icWMSBoard(object):
     def getCell(self, cell_idx):
         """
         Получить объект ячейки по индексу.
-        @param cell_idx: Индекс ячейки.
-        @return: Объект ячейки или None, если индекс ячейки не корректный.
+        :param cell_idx: Индекс ячейки.
+        :return: Объект ячейки или None, если индекс ячейки не корректный.
         """
         if cell_idx < 0:
             return None

@@ -29,7 +29,7 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
     def __init__(self, grid=None, *args, **kwargs):
         """
         Конструктор.
-        @param grid: Управляемый объект wx.Grid.
+        :param grid: Управляемый объект wx.Grid.
         """
         spreadsheet_manager.icSpreadSheetManager.__init__(self, *args, **kwargs)
 
@@ -44,16 +44,16 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
     def setSpreadSheetGrid(self, grid=None):
         """
         Установить управляемый объект wx.Grid.
-        @param grid: Управляемый объект wx.Grid.
+        :param grid: Управляемый объект wx.Grid.
         """
         self._spreadsheet_grid = grid
 
     def view_spreadsheet(self, spreadsheet_data, bAutoSize=True):
         """
         Отобразить данные структуры SpreadSheet в гриде.
-        @param spreadsheet_data: Данные структуры SpreadSheet.
-        @param bAutoSize: Автоматически переразмерить грид?
-        @return: True/False.
+        :param spreadsheet_data: Данные структуры SpreadSheet.
+        :param bAutoSize: Автоматически переразмерить грид?
+        :return: True/False.
         """
         # log.debug(u'Просмотр SpreadSheet %s' % str(spreadsheet_data))
         if self._spreadsheet_grid is None:
@@ -78,10 +78,10 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
     def _view_spreadsheet(self, spreadsheet_data, worksheet_name=None):
         """
         Отобразить данные структуры SpreadSheet в гриде.
-        @param spreadsheet_data: Данные структуры SpreadSheet.
-        @param worksheet_name: Имя листа.
+        :param spreadsheet_data: Данные структуры SpreadSheet.
+        :param worksheet_name: Имя листа.
             Если не определено, то берется первый лист.
-        @return: True/False.
+        :return: True/False.
         """
         self.setSpreadSheetData(spreadsheet_data)
         workbook = self.getWorkbook()
@@ -126,10 +126,10 @@ class icSpreadSheetViewManager(spreadsheet_manager.icSpreadSheetManager,
     def _set_grid_cell_style(self, row, col, style):
         """
         Выставить атрибуты стиля ячейки грида.
-        @param row: Строка ячейки.
-        @param col: Колонка ячейки.
-        @param style: Объект стиля.
-        @return: True/False.
+        :param row: Строка ячейки.
+        :param col: Колонка ячейки.
+        :param style: Объект стиля.
+        :return: True/False.
         """
         if style:
             # Шрифт

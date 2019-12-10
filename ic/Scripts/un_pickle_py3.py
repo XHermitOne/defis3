@@ -14,8 +14,8 @@ import pickle
 def load_pickle_data(filename):
     """
     Загрузить данные из файла.
-    @param filename: Полное имя файла.
-    @return: Структура данных содержимого файла.
+    :param filename: Полное имя файла.
+    :return: Структура данных содержимого файла.
     """
     file_obj = None
     try:
@@ -33,9 +33,9 @@ def load_pickle_data(filename):
 def save_text_data(filename, data):
     """
     Сохранить данные в текстовый файл.
-    @param filename: Полное имя файла.
-    @param data: Структура записываемых данных.
-    @return: True/False.
+    :param filename: Полное имя файла.
+    :param data: Структура записываемых данных.
+    :return: True/False.
     """
     if os.path.exists(filename):
         print(u'Файл <%s> уже существует' % filename)
@@ -58,8 +58,8 @@ def save_text_data(filename, data):
 def run(filename):
     """
     Функция выполнения
-    @param filename: Полное имя файла.
-    @return:
+    :param filename: Полное имя файла.
+    :return:
     """
     print(u'Обработка файла <%s>...' % filename)
     filename = os.path.abspath(os.path.normpath(filename))

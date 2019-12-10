@@ -23,7 +23,7 @@ ic_class_name = 'CatalogTable'
 class CatalogTable(icobjectinterface.icObjectInterface):
     def __init__(self, parent, src=None, table=None):
         """ Constructor.
-        @param scr: Паспорт источника данных.
+        :param scr: Паспорт источника данных.
         """
         #
         res = copy.deepcopy(resource)

@@ -43,10 +43,10 @@ def setLoadProccessBoxLabel(label=None, value=None):
     Примеры:
         2. setLoadProccessBoxLabel('Wait...', 20)
     
-    @type label: C{string}
-    @param label: Текст сообщения на верхней полосе индикации.
-    @type value: C{int}
-    @param value: Значение верхней полосы индикации от 0 до 100.
+    :type label: C{string}
+    :param label: Текст сообщения на верхней полосе индикации.
+    :type value: C{int}
+    :param value: Значение верхней полосы индикации от 0 до 100.
     """
     if ic_proccess_dlg:
         sx, sy = ic_proccess_dlg.GetSize()
@@ -60,12 +60,12 @@ def loadProjectProccess(parent, message,
                         frames=None, bAutoIncr=False):
     """
     Окно ожидания.
-    @param parent: Ссылка на окно.
-    @param message: Текст диалога.
-    @param function: Функция, которую необходимо подождать.
-    @param function_args: Аргументы функции.
-    @param function_kwargs: Именованные аргументы функции.
-    @param frames: Файлы-кадры.
+    :param parent: Ссылка на окно.
+    :param message: Текст диалога.
+    :param function: Функция, которую необходимо подождать.
+    :param function_args: Аргументы функции.
+    :param function_kwargs: Именованные аргументы функции.
+    :param frames: Файлы-кадры.
     """
     global ic_proccess_dlg
     if ic_proccess_dlg:
@@ -101,18 +101,18 @@ class icThreadLoadProjectDlg(wx.Dialog):
         """
         Конструктор.
         
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type message: C{string}
-        @param message: Сообщение верхнего индикатора.
-        @type min_value: C{int}
-        @param min_value: Минимальное значение верхнего индикатора.
-        @type max_value: C{int}
-        @param max_value: Максимальное значение верхнего индикатора.
-        @type style: C{int}
-        @param style: Стиль окна процесса.
-        @type bAutoIncr: C{bool}
-        @param bAutoIncr: Признак автоматического изменения состояния индикаторов.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type message: C{string}
+        :param message: Сообщение верхнего индикатора.
+        :type min_value: C{int}
+        :param min_value: Минимальное значение верхнего индикатора.
+        :type max_value: C{int}
+        :param max_value: Максимальное значение верхнего индикатора.
+        :type style: C{int}
+        :param style: Стиль окна процесса.
+        :type bAutoIncr: C{bool}
+        :param bAutoIncr: Признак автоматического изменения состояния индикаторов.
             Используется в тех случаях, когда размерность процесса не определена,
             а показывать чего то надо.
         """
@@ -207,7 +207,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
     def drawFrame(self, n_frame):
         """
         Отрисовка кадра.
-        @param n_frame: Номер кадра.
+        :param n_frame: Номер кадра.
         """
         frame_bmp = self._ani[n_frame]
         
@@ -266,7 +266,7 @@ class icThreadLoadProjectDlg(wx.Dialog):
     def drawPic(self, n_frame, dc, bClear=False):
         """
         Отрисовка кадра.
-        @param n_frame: Номер кадра.
+        :param n_frame: Номер кадра.
         """
         if self._ani:
             sx, sy = self.GetSize()

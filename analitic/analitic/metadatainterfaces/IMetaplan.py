@@ -215,8 +215,8 @@ class IMetaplan(icobjectinterface.icObjectInterface):
         """
         Возвращает указатель на базовый либо модифицированный план.
         
-        @rtype: C{ic.components.user.ic_metatree_wrp.icMetaTree}
-        @return: Возвращает указатель на базовый план.
+        :rtype: C{ic.components.user.ic_metatree_wrp.icMetaTree}
+        :return: Возвращает указатель на базовый план.
         """
         if self.planMenager:
             return self.planMenager.setMetaplanById(id)

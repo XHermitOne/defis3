@@ -63,7 +63,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
     def setEnvironment(self, env=None):
         """
         Установить окружение для работы редактора.
-        @param env: Окружение, словарно-списковая структура формата
+        :param env: Окружение, словарно-списковая структура формата
         filter_builder_env.FILTER_ENVIRONMENT.
         """
         self.environment = env
@@ -118,7 +118,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
     def addGroup(self, item=None, bAutoExpand_=True):
         """
         Добавить группу в элемент.
-        @return: Объект нового элемента дерева.
+        :return: Объект нового элемента дерева.
         """
         # ВНИМАНИЕ! Родителя у добавляемых контролов надо указывать self.GetMainWindow()
         logic_combobox = filter_builder_ctrl.icLogicLabelChoice(self.GetMainWindow(),
@@ -171,7 +171,7 @@ class icFilterConstructorTreeList(hypertreelist.HyperTreeList):
     def addCompare(self, item=None, bAutoExpand_=True):
         """
         Добавить условие в элемент.
-        @return: Объект нового элемента дерева.
+        :return: Объект нового элемента дерева.
         """
         # ВНИМАНИЕ! Родителя у добавляемых контролов надо указывать self.GetMainWindow()
         requisite_combobox = filter_builder_ctrl.icRequisiteLabelChoice(self.GetMainWindow(),

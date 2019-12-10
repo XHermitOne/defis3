@@ -19,10 +19,10 @@ class icSignal:
         """
         Конструктор сигнала.
         
-        @type passport: C{icObjectPassport}
-        @param passport: Объект идентификации (паспорт) объекта источника сигнала.
-        @type obj: C{icObject}
-        @param obj: Объект - источник сигнала.
+        :type passport: C{icObjectPassport}
+        :param passport: Объект идентификации (паспорт) объекта источника сигнала.
+        :type obj: C{icObject}
+        :param obj: Объект - источник сигнала.
         """
         self.passport = passport
         # Объект, сгенерировавший сигнал
@@ -114,8 +114,8 @@ class icWxEvtSignal(icSignal):
         """
         Конструктор сигнала.
         
-        @type passport: C{icObjectPassport}
-        @param passport: Объект идентификации (паспорт) объекта источника сигнала.
+        :type passport: C{icObjectPassport}
+        :param passport: Объект идентификации (паспорт) объекта источника сигнала.
         """
         self.passport = passport
         #   Событие, которое сгенерировало сигнал (если оно было)
@@ -146,10 +146,10 @@ class icChangedAttrSignal(icSignal):
         """
         Конструктор сигнала.
         
-        @type passport: C{icObjectPassport}
-        @param passport: Объект идентификации (паспорт) объекта источника сигнала.
-        @type attr: C{string}
-        @param attr: Атрибут объекта.
+        :type passport: C{icObjectPassport}
+        :param passport: Объект идентификации (паспорт) объекта источника сигнала.
+        :type attr: C{string}
+        :param attr: Атрибут объекта.
         """
         # Инициация сигнала
         self.init_signal()
@@ -174,10 +174,10 @@ class icPreFuncSignal(icSignal):
         """
         Конструктор сигнала.
 
-        @type obj: C{icObject}
-        @param obj: Объект, сгенерировавший сигнал.
-        @type func_name: C{string}
-        @param func_name: Имя функции.
+        :type obj: C{icObject}
+        :param obj: Объект, сгенерировавший сигнал.
+        :type func_name: C{string}
+        :param func_name: Имя функции.
         """
         # Инициация сигнала
         self.init_signal()
@@ -202,10 +202,10 @@ class icPostFuncSignal(icSignal):
         """
         Конструктор сигнала.
         
-        @type obj: C{icObject}
-        @param obj: Объект, сгенерировавший сигнал.
-        @type func_name: C{string}
-        @param func_name: Имя функции.
+        :type obj: C{icObject}
+        :param obj: Объект, сгенерировавший сигнал.
+        :type func_name: C{string}
+        :param func_name: Имя функции.
         """
         # Инициация сигнала
         self.init_signal()
@@ -229,8 +229,8 @@ class icInitObjectSignal(icSignal):
         """
         Конструктор сигнала.
         
-        @type obj: C{icObject}
-        @param obj: Объект, инициировавший сигнал.
+        :type obj: C{icObject}
+        :param obj: Объект, инициировавший сигнал.
         """
         self.passport = obj.GetPassport()
         #   Указатель на объект, инициировавший сигнал
@@ -250,8 +250,8 @@ class icDelObjectSignal(icSignal):
         """
         Конструктор сигнала.
         
-        @type obj: C{icObject}
-        @param obj: Объект, инициировавший сигнал.
+        :type obj: C{icObject}
+        :param obj: Объект, инициировавший сигнал.
         """
         self.passport = obj.GetPassport()
         #   Указатель на объект, инициировавший сигнал
@@ -271,8 +271,8 @@ class icSlot:
         """
         Конструктор сигнала.
         
-        @type passport: C{icObjectPassport}
-        @param passport: Объект идентификации (паспорт) объекта приемника сигнала.
+        :type passport: C{icObjectPassport}
+        :param passport: Объект идентификации (паспорт) объекта приемника сигнала.
         """
         self.uuid = uuidfunc.get_uuid()
         self.passport = passport

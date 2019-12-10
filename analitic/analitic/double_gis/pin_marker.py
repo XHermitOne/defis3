@@ -34,12 +34,12 @@ class ic2GISMarker(object):
                  **kwargs):
         """
         Конструктор. Создание маркера.
-        @param location: Геолокация маркера.
-        @param popup: Текст всплывающей посказки маркера.
+        :param location: Геолокация маркера.
+        :param popup: Текст всплывающей посказки маркера.
             Подсказка появляется по клику на маркере.
-        @param tooltip: Текст всплывающей посказки маркера.
+        :param tooltip: Текст всплывающей посказки маркера.
             Подсказка появляется при наведении мышки на маркер.
-        @param icon: Параметры иконки.
+        :param icon: Параметры иконки.
         """
         if location is None:
             # If location is not passed we center and zoom out.
@@ -55,7 +55,7 @@ class ic2GISMarker(object):
     def render(self, **kwargs):
         """
         Генерирует HTML-представление элемента.
-        @return: Сгенерированное HTML представление карты.
+        :return: Сгенерированное HTML представление карты.
         """
         return self._marker_template.render(location=self.location,
                                             icon=self.icon,
@@ -66,8 +66,8 @@ class ic2GISMarker(object):
     def add_to(self, geo_map):
         """
         Добавить маркер на карту.
-        @param geo_map: Объект карты.
-        @return: True/False.
+        :param geo_map: Объект карты.
+        :return: True/False.
         """
         try:
             geo_map.add_marker(self)

@@ -44,7 +44,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def setEnvironment(self, env=None):
         """
         Установить окружение для работы редактора.
-        @param env: Окружение, словарно-списковая структура формата
+        :param env: Окружение, словарно-списковая структура формата
         filter_builder_env.FILTER_ENVIRONMENT.
         """
         self.environment = env
@@ -52,15 +52,15 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def _genUUID(self):
         """
         Генерация UUID.
-        @return: UUID.
+        :return: UUID.
         """
         return str(uuid.uuid4())
 
     def addFilter(self, new_filter=None):
         """
         Добавить новый фильтр.
-        @param new_filter: Структура фильтра.
-        @return: True/False.
+        :param new_filter: Структура фильтра.
+        :return: True/False.
         """
         if new_filter is None:
             # Необходимо сначала сконструировать фильтр
@@ -84,8 +84,8 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def delFilter(self, filter_name=None):
         """
         Удалить фильтр.
-        @param filter_name: Имя фильтра.
-        @return: True/False.
+        :param filter_name: Имя фильтра.
+        :return: True/False.
         """
         if filter_name is None:
             # Если имя не определено удалить выбранный фильтр
@@ -131,7 +131,7 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def clearFilters(self):
         """
         Очистить фильтры контрола.
-        @return: True/False
+        :return: True/False
         """
         self._filters = []
         self.filterCheckList.Clear()
@@ -139,10 +139,10 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def setFilters(self, filter_data=None):
         """
         Установить фильтр контрола.
-        @param filter_data: Данные фильтра.
+        :param filter_data: Данные фильтра.
             Если None, то просто устанавливается список фильтров
             без установки логической связки.
-        @return: True/False.
+        :return: True/False.
         """
         if filter_data is not None:
             # Сначала очистить
@@ -170,15 +170,15 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def refreshFilters(self):
         """
         Обновление контрола фильтров.
-        @return: True/False.
+        :return: True/False.
         """
         return self.setFilters()
 
     def sortFilters(self, is_reverse=False):
         """
         Отсортировать список фильтров по наименованию.
-        @param is_reverse: Обратная сортировка?
-        @return: Отсортированный список фильтров.
+        :param is_reverse: Обратная сортировка?
+        :return: Отсортированный список фильтров.
         """
         # ВНИМАНИЕ! Здесь используется operator.itemgetter
         # для определения порядка группировки сортировки
@@ -196,9 +196,9 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def moveFilterUp(self, filter_idx=None):
         """
         Передвинуть фильтр с индексом filter_idx вверх по списку.
-        @param filter_idx: Индекс фильтра. Если None,
+        :param filter_idx: Индекс фильтра. Если None,
             то берется текущий выбранный.
-        @return: True/False.
+        :return: True/False.
         """
         if filter_idx is None:
             filter_idx = self.filterCheckList.GetSelection()
@@ -222,9 +222,9 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def moveFilterDown(self, filter_idx=None):
         """
         Передвинуть фильтр с индексом filter_idx вниз по списку.
-        @param filter_idx: Индекс фильтра. Если None,
+        :param filter_idx: Индекс фильтра. Если None,
             то берется текущий выбранный.
-        @return: True/False.
+        :return: True/False.
         """
         if filter_idx is None:
             filter_idx = self.filterCheckList.GetSelection()
@@ -248,8 +248,8 @@ class icFilterChoiceDlg(filter_choice_dlg.icFilterChoiceDlgProto):
     def setLimitLabel(self, limit=None, over_limit=None):
         """
         Вывести сообщение об ограничении количества записей.
-        @param limit: Ограничение количества записей.
-        @param over_limit: Количество записей при привышении ограничения.
+        :param limit: Ограничение количества записей.
+        :param over_limit: Количество записей при привышении ограничения.
         """
         if over_limit:
             try:
@@ -346,13 +346,13 @@ def get_filter_choice_dlg(parent=None, environment=None, cur_filter=None,
                           limit=None, over_limit=None):
     """
     Диалоговая форма выбора фильтра.
-    @param parent: Родительское окно.
-    @param environment: Окружение, словарно-списковая структура формата
+    :param parent: Родительское окно.
+    :param environment: Окружение, словарно-списковая структура формата
         filter_builder_env.FILTER_ENVIRONMENT.
-    @param cur_filter: Результирующий отредактированный фильтр.
-    @param limit: Ограничение количества строк фильтруемого объекта.
-    @param over_limit: Количество строк при привышении лимита.
-    @return: Выбранный фильтр или None в случае ошибки/отмены.
+    :param cur_filter: Результирующий отредактированный фильтр.
+    :param limit: Ограничение количества строк фильтруемого объекта.
+    :param over_limit: Количество строк при привышении лимита.
+    :return: Выбранный фильтр или None в случае ошибки/отмены.
     """
     if parent is None:
         app = wx.GetApp()
@@ -379,7 +379,7 @@ def get_filter_choice_dlg(parent=None, environment=None, cur_filter=None,
 def get_str_filter(cur_filter):
     """
     Фильтр в строковом представлении.
-    @return: Строка фильтра.
+    :return: Строка фильтра.
     """
     if cur_filter:
         join_str = u' %s ' % cur_filter.get('description', u'ИЛИ')
@@ -426,7 +426,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def setEnvironment(self, env=None):
         """
         Установить окружение для работы редактора.
-        @param env: Окружение, словарно-списковая структура формата
+        :param env: Окружение, словарно-списковая структура формата
         filter_builder_env.FILTER_ENVIRONMENT.
         """
         self._environment = env
@@ -439,7 +439,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def _genUUID(self):
         """
         Генерация UUID.
-        @return: UUID.
+        :return: UUID.
         """
         return str(uuid.uuid4())
 
@@ -481,7 +481,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def getStructFilter(self):
         """
         Получить структуру результирующего фильтра без <не отмеченных>.
-        @return: Структуру фильтра или None в случае ошибки.
+        :return: Структуру фильтра или None в случае ошибки.
         """
         if self._filter:
             struct_filter = copy.deepcopy(self._filter)
@@ -501,8 +501,8 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
         """
         Проверка преодоления ограничения.
         Функция автоматически сигнализирует о перодолении ограничения.
-        @param obj_count: Реальное количество объектов.
-        @return: True - ограничение не преодолено / False -превышено ограничение.
+        :param obj_count: Реальное количество объектов.
+        :return: True - ограничение не преодолено / False -превышено ограничение.
         """
         valid = obj_count <= self._limit
         if not valid:
@@ -516,7 +516,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def doDlgChoiceFilter(self):
         """
         Вызов диалогового окна выбора фильтра.
-        @return: True - нажата в итоге <OK>, False - <Отмена>.
+        :return: True - нажата в итоге <OK>, False - <Отмена>.
         """
         result = False
         self._dlg = icFilterChoiceDlg(self)
@@ -543,7 +543,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def getStrFilter(self):
         """
         Фильтр в строковом представлении.
-        @return: Строка фильтра.
+        :return: Строка фильтра.
         """
         if self._filter:
             join_str = u' %s ' % self._filter.get('description', u'ИЛИ')
@@ -572,9 +572,9 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def saveFilter(self, filter_filename=None):
         """
         Сохранить фильтр.
-        @param filter_filename: Имя файла хранения фильтра.
+        :param filter_filename: Имя файла хранения фильтра.
             Если не определен, то генерируется по UUID.
-        @return: True/False.
+        :return: True/False.
         """
         if filter_filename:
             filter_filename = os.path.normpath(filter_filename)
@@ -604,7 +604,7 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def loadFilter(self, filter_filename=None):
         """
         Загрузить фильтр.
-        @param filter_filename: Имя файла хранения фильтра.
+        :param filter_filename: Имя файла хранения фильтра.
             Если не определен, то генерируется по UUID.
         """
         if filter_filename:
@@ -634,8 +634,8 @@ class icFilterChoiceCtrlProto(wx.ComboCtrl):
     def setFilter(self, filter_data):
         """
         Установить фильтр контрола.
-        @param filter_data: Данные фильтра.
-        @return: True/False.
+        :param filter_data: Данные фильтра.
+        :return: True/False.
         """
         self._filter = filter_data
 

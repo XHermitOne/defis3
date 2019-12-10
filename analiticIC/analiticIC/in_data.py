@@ -45,7 +45,7 @@ __version__ = (0, 0, 0, 1)
 def loadInputData(input_data_dir=None):
     """
     Загрузить входные данные в БД.
-    @param input_data_dir: Папка в которой лежат дбфники.
+    :param input_data_dir: Папка в которой лежат дбфники.
     """
     if input_data_dir is None:
         input_data_dir=input_data.getInputDataDir()
@@ -286,9 +286,9 @@ def _delLoadData(DBFFileName_,DataTab_):
 def _syncSprav(Type_,Cod_,Name_):
     """
     Синхронизация данных справочника.
-    @param Type: Тип справочника.
-    @param Cod_: Код.
-    @param Name_: Название.
+    :param Type: Тип справочника.
+    :param Cod_: Код.
+    :param Name_: Название.
     """
     s_name=nsi.FSpravBuffRepl(Type_,Cod_)
     if s_name is None:
@@ -352,7 +352,7 @@ def _syncSpravMenagers(MenCod_,MenName_):
 def getDateRange(DBFFileName_,DateFieldName_='DTOPER'):
     """
     Определение загружаемого диапазона дат из DBF файла.
-    @return: Возвращает кортеж начальной и конечной даты.
+    :return: Возвращает кортеж начальной и конечной даты.
         Или None в случае ошибки.
     """
     dbf_f=dbf.icDBFFile(DBFFileName_)
@@ -642,7 +642,7 @@ def loadDataIC(DBFFileName_,SpravRecDict_):
     """
     Загрузка данных для ИнфоЦентра.
         У всех функций загрузки д.б. единый интерфейс!!!
-    @return: Возвращает загруженный диапазон дат.
+    :return: Возвращает загруженный диапазон дат.
     """
 
     begin_end_date_analitic=preloadDataDBFStandart(DBFFileName_,'analitic',SpravRecDict_['cod'])

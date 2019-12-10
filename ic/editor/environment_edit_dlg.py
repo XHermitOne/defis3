@@ -62,7 +62,7 @@ class icEnvironmentEditDlg(environment_edit_dlg_proto.icEditEnvironmentDlgProto,
     def set_base_variables(self, variables=None):
         """
         Установить в списке основные переменные окружения для просмотра.
-        @param variables: Список переменных окружения.
+        :param variables: Список переменных окружения.
             Если не определен, то получается автоматически из контекста.
         """
         if variables is None:
@@ -78,7 +78,7 @@ class icEnvironmentEditDlg(environment_edit_dlg_proto.icEditEnvironmentDlgProto,
     def set_ext_variables(self, variables=None):
         """
         Установить в списке дополнительные переменные окружения проекта.
-        @param variables: Список дополнительных переменных окружения.
+        :param variables: Список дополнительных переменных окружения.
             Если не определен, то получается автоматически из окружения проекта.
         """
         if variables is None:

@@ -63,7 +63,7 @@ __version__ = (0, 1, 1, 1)
 class icYearChoiceCtrl(parentModule.icChoice):
     """
     Компонент выбора года.
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Specification.
     """
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,

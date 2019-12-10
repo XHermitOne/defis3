@@ -4,8 +4,8 @@
 """
 Обкладка для компонента wx.RadioBox.
 
-@type SPC_IC_RADIOGROUP: C{dictionary}
-@var SPC_IC_RADIOGROUP: Спецификация на ресурсное описание панели инструментов. Описание ключей SPC_IC_RADIOGROUP:
+:type SPC_IC_RADIOGROUP: C{dictionary}
+:var SPC_IC_RADIOGROUP: Спецификация на ресурсное описание панели инструментов. Описание ключей SPC_IC_RADIOGROUP:
 
     - B{type='RadioGroup'}: Тип компонента.
     - B{name='default'}: Имя компонента.
@@ -102,16 +102,16 @@ class icRadioGroup(icWidget, wx.RadioBox):
         """
         Конструктор для создания  icRadioGroup
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_RADIOGROUP, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)

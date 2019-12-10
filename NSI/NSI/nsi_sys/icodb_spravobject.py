@@ -4,10 +4,10 @@
 """
 Интерфейс к однофайловой объектной справочной системе.
 
-@type sprav_file_name: C{string}
-@var sprav_file_name: Имя файла, где хранится основной справочник.
-@type sprav_log_file_name: C{string}
-@var sprav_log_file_name: Имя файла, где хранятся все изменения справочника.
+:type sprav_file_name: C{string}
+:var sprav_file_name: Имя файла, где хранится основной справочник.
+:type sprav_log_file_name: C{string}
+:var sprav_log_file_name: Имя файла, где хранятся все изменения справочника.
 """
 import wx
 import ic.components.icResourceParser as prs
@@ -44,7 +44,7 @@ class icODBNsiInterface(icobjectinterface.icObjectInterface):
         """
         Конструктор интерфейса.
         
-        @param SpravObj: Объект справочника.
+        :param SpravObj: Объект справочника.
         """
         # Имя источника
         self.db = db_name

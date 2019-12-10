@@ -27,8 +27,8 @@ class icCatalogLevelProto(object):
     def getFolderName(self, obj):
         """
         Определить имя папки уровня по размещаемому объекту.
-        @param obj: Размещаемый объект.
-        @return: Строковое имя папки.
+        :param obj: Размещаемый объект.
+        :return: Строковое имя папки.
         """
         if self._get_folder_name_func:
             return self._get_folder_name_func(obj)

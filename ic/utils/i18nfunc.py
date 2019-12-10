@@ -31,7 +31,7 @@ def GetAvailLocales():
     Gets a list of the available locales that have been installed
     for the editor. Returning a list of strings that represent the 
     canonical names of each language.
-    @return: list of all available local/languages available
+    :return: list of all available local/languages available
 
     """
     avail_loc = list()
@@ -48,9 +48,9 @@ def GetLocaleDict(loc_list, opt=OPT_NO_OP):
     dictionary of available language values using the canonical name as 
     the key. Supplying the Option OPT_DESCRIPT will return a dictionary
     of language id's with languages description as the key.
-    @param loc_list: list of locals
+    :param loc_list: list of locals
     @keyword opt: option for configuring return data
-    @return: dict of locales mapped to wx.LANGUAGE_*** values
+    :return: dict of locales mapped to wx.LANGUAGE_*** values
 
     """
     lang_dict = dict()
@@ -69,8 +69,8 @@ def GetLocaleDict(loc_list, opt=OPT_NO_OP):
 def GetLangId(lang_n):
     """Gets the ID of a language from the description string. If the 
     language cannot be found the function simply returns the default language
-    @param lang_n: Canonical name of a language
-    @return: wx.LANGUAGE_*** id of language
+    :param lang_n: Canonical name of a language
+    :return: wx.LANGUAGE_*** id of language
     
     """
     lang_desc = GetLocaleDict(GetAvailLocales(), OPT_DESCRIPT)
@@ -88,7 +88,7 @@ class LangListCombo(wx.adv.BitmapComboBox):
         editor as well as displaying the countries flag next to the item
         in the list.
 
-        @param default: The default item to show in the combo box
+        :param default: The default item to show in the combo box
         """
         lang_ids = GetLocaleDict(GetAvailLocales()).values()
         lang_items = langlist.CreateLanguagesResourceLists(langlist.LC_ONLY,

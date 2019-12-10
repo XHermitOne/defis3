@@ -4,8 +4,8 @@
 """
 Модуль пользователя.
 
-@type SPC_IC_USER: C{dictionary}
-@var SPC_IC_USER: Спецификация на ресурсное описание компонента icAccessManager.
+:type SPC_IC_USER: C{dictionary}
+:var SPC_IC_USER: Спецификация на ресурсное описание компонента icAccessManager.
 Описание ключей SPC_IC_USER:
     - B{name = 'password'}: Зашифрованный пароль пользователя.
     - B{name = 'group'}: Имя группы-родителя, у которой наследуются права доступа.
@@ -114,12 +114,12 @@ __version__ = (0, 1, 1, 2)
 def getUserRequisit(username):
     """
     Получить реквизиты пользователя.
-    @param username: Имя пользователя.
+    :param username: Имя пользователя.
         Если username не определено, тогда возвращается
         описание прав доступа текущего пользователя.
         Если UserName определен, тогда возвращается
         описание прав доступа указанного пользователя.
-    @return: Функция возвращает реквизиты текущего пользователя.
+    :return: Функция возвращает реквизиты текущего пользователя.
     """
     if modefunc.isRuntimeMode():
         # Режим исполнения
@@ -133,12 +133,12 @@ def getUserRequisit(username):
 def getAuthent(res_name, res_type, bShowMsg=True):
     """
     Функция возвращает права доступа к ресурсу для текущего пользователя в виде 8-символьной строки.
-    @param res_name: имя ресурса.
-    @param res_type: тип ресурса.
-    @param bShowMsg: флаг, описывающий разрешение на отображение
+    :param res_name: имя ресурса.
+    :param res_type: тип ресурса.
+    :param bShowMsg: флаг, описывающий разрешение на отображение
         сообщения о заблокированном ресурсе для данного пользователя.
         Параметр необязателен. По умолчанию сообщение показывается.
-    @return: Возвращает права доступа к ресурсу для текущего пользователя
+    :return: Возвращает права доступа к ресурсу для текущего пользователя
         в виде 8-символьной строки. Например '----dawr'
     """
     if modefunc.isRuntimeMode():
@@ -153,7 +153,7 @@ def getAuthent(res_name, res_type, bShowMsg=True):
 def canAuthent(permit, res_name, res_type, bShowMsg=True):
     """
     Функция определяет ограничения на запрашиваемый ресурс.
-    @param permit: символ или группа символов,
+    :param permit: символ или группа символов,
         определяющий право доступа на действие.
         'u' - использование (ACCESS_USE).
         'v' - отображение  (ACCESS_VIEW).
@@ -161,12 +161,12 @@ def canAuthent(permit, res_name, res_type, bShowMsg=True):
         'w' - редактирование (ACCESS_EDIT).
         'a' - добавление (ACCESS_APPEND).
         'd' - удаление (ACCESS_DELETE).
-    @param res_name: имя ресурса.
-    @param res_type: тип ресурса.
-    @param bShowMsg: флаг, описывающий разрешение на отображения
+    :param res_name: имя ресурса.
+    :param res_type: тип ресурса.
+    :param bShowMsg: флаг, описывающий разрешение на отображения
         сообщения о заблокированном ресурсе для данного пользователя.
         Параметр необязателен. По умолчанию сообщение показывается.
-    @return: Возвращает True, если ресурс не ограничен,
+    :return: Возвращает True, если ресурс не ограничен,
         запрашиваемыми правами доступа, False - ресурс ограничен.
     """
     # ВНИМАНИЕ!!! Проверка осуществляется только в режиме выполнения
@@ -239,7 +239,7 @@ class icUserPrototype(icbaseuser.icRootUser):
     def _createRoles(self, reles_id=None):
         """
         Создание списка ролей по идентификаторам.
-        @return: Список объектов ролей.
+        :return: Список объектов ролей.
         """
         if reles_id is None:
             reles_id = self._getRolesIdList()
@@ -268,9 +268,9 @@ class icUserPrototype(icbaseuser.icRootUser):
     def isRole(self, role_name):
         """
         Обладает пользователь ролью?
-        @param role_name: Наименование роли.
+        :param role_name: Наименование роли.
             Например: administrators.
-        @return: True/False
+        :return: True/False
         """
         user_roles_names = self.getRolesIdList()
         return role_name in user_roles_names
@@ -284,8 +284,8 @@ class icUserPrototype(icbaseuser.icRootUser):
     def Load(self, username, res_filename=None):
         """
         Загузить все реквизиты из ресурсного файла.
-        @param username: Имя пользователя в ресурсном файле.
-        @param res_filename: Имя ресурсного файла.
+        :param username: Имя пользователя в ресурсном файле.
+        :param res_filename: Имя ресурсного файла.
         """
         try:
             if res_filename is not None:
@@ -316,10 +316,10 @@ class icUserPrototype(icbaseuser.icRootUser):
     def _cutGroupRequisite(self, access_dict, user_group_name, user_requisit=None):
         """
         Собрать данные по группам.
-        @param access_dict: Словарь описаний ограничений доступа
+        :param access_dict: Словарь описаний ограничений доступа
             пользователей системы.
-        @param user_group_name: Имя группы пользователей в ресурсном файле.
-        @param user_requisit: Текущий реквизит пользователя.
+        :param user_group_name: Имя группы пользователей в ресурсном файле.
+        :param user_requisit: Текущий реквизит пользователя.
             При первом вызове функции д.б. {}
         """
         if user_requisit is None:
@@ -351,10 +351,10 @@ class icUserPrototype(icbaseuser.icRootUser):
     def cutUserRequisit(self, access_dict, username, user_requisit=None):
         """
         Собрать данные из словаря по одному пользователю.
-        @param access_dict: Словарь описаний ограничений доступа
+        :param access_dict: Словарь описаний ограничений доступа
             пользователей системы.
-        @param username: Имя пользователя в ресурсном файле.
-        @param user_requisit: Текущий реквизит пользователя.
+        :param username: Имя пользователя в ресурсном файле.
+        :param user_requisit: Текущий реквизит пользователя.
             При первом вызове функции д.б. {}
         """
         try:
@@ -395,8 +395,8 @@ class icUserPrototype(icbaseuser.icRootUser):
     def loadUser(self, username, res_filename=DEFAULT_USERS_RES_FILE):
         """
         Загузить данные из ресурсного файла по одному пользователю.
-        @param username: Имя пользователя в ресурсном файле.
-        @param res_filename: Имя ресурсного файла.
+        :param username: Имя пользователя в ресурсном файле.
+        :param res_filename: Имя ресурсного файла.
         """
         try:
             access_dict = util.readAndEvalFile(res_filename)
@@ -407,7 +407,7 @@ class icUserPrototype(icbaseuser.icRootUser):
     def _checkLoginUser(self, username):
         """
         Проверка зарегистрированного пользователя.
-        @param username: Имя пользователя.
+        :param username: Имя пользователя.
         """
         if not modefunc.isRuntimeMode():
             # Если режим конфигурирования, то обязательно
@@ -420,10 +420,10 @@ class icUserPrototype(icbaseuser.icRootUser):
     def _password_compare(self, user_password, login_password, login_password_crc):
         """
         Функция сравнения паролей.
-        @param user_password: Пароль определенный для пользователя в ресурсе.
-        @param login_password: Введенный пароль при логине.
-        @param login_password_crc: Контрольная сумма md5 введенного пароля при логине.
-        @return: Возвращает True если пароли совпадают и False если не совпадают.
+        :param user_password: Пароль определенный для пользователя в ресурсе.
+        :param login_password: Введенный пароль при логине.
+        :param login_password_crc: Контрольная сумма md5 введенного пароля при логине.
+        :return: Возвращает True если пароли совпадают и False если не совпадают.
         """
         if user_password is None or user_password == '':
             # Пароль для пользователя не определен
@@ -441,13 +441,13 @@ class icUserPrototype(icbaseuser.icRootUser):
                  db_mode=modefunc.DB_SHARE, bRuntimeMode=True):
         """
         Залогинить пользователя.
-        @param username: Имя пользователя.
-        @param password: Если задан пароль по умолчанию,
+        :param username: Имя пользователя.
+        :param password: Если задан пароль по умолчанию,
             то происходит автологин.
-        @param password_crc: Контрольная сумма логина.
-        @param db_mode: Режим использования БД.
-        @param bRuntimeMode: Признак режима исполнения.
-        @return: Возвращает True, если вход в систему успешный.
+        :param password_crc: Контрольная сумма логина.
+        :param db_mode: Режим использования БД.
+        :param bRuntimeMode: Признак режима исполнения.
+        :return: Возвращает True, если вход в систему успешный.
         """
         try:
             sys_enter = False  # Флаг входа в систему
@@ -513,12 +513,12 @@ class icUserPrototype(icbaseuser.icRootUser):
               bRuntimeMode=True, bAutoLogin=False):
         """
         Сделать заполнение формы логина пользователя и в случае удачного входа в систему загрузить реквизиты пользователя.
-        @param default_username: Имя пользователя по умолчанию.
-        @param default_password: Если задан пароль по умолчанию,
+        :param default_username: Имя пользователя по умолчанию.
+        :param default_password: Если задан пароль по умолчанию,
             то происходит автологин.
-        @param db_name: Режим использования БД.
-        @param bRuntimeMode: Признак режима исполнения.
-        @return: Возвращает True, если вход в систему успешный.
+        :param db_name: Режим использования БД.
+        :param bRuntimeMode: Признак режима исполнения.
+        :return: Возвращает True, если вход в систему успешный.
         """
         user_login = None
         res_filename = self.getUserResFileName()
@@ -621,12 +621,12 @@ class icUserPrototype(icbaseuser.icRootUser):
     def getUserRequisit(self, username=''):
         """
         Получить реквизиты пользователя.
-        @param username: Имя пользователя.
+        :param username: Имя пользователя.
             Если username не определено, тогда возвращается
             описание прав доступа текущего пользователя.
             Если UserName определен, тогда возвращается
             описание прав доступа указанного пользователя.
-        @return: Функция возвращает реквизиты текущего пользователя.
+        :return: Функция возвращает реквизиты текущего пользователя.
         """
         try:
             if username == '' or username is None or username == self._UserName:
@@ -642,13 +642,13 @@ class icUserPrototype(icbaseuser.icRootUser):
     def getAuthent(self, res_name, res_type=ACC_NONE, bShowMsg=True):
         """
         Функция возвращает права доступа к ресурсу для текущего пользователя в виде 8-символьной строки.
-        @param res_name: имя ресурса.
-        @param res_type: тип ресурса, необязательный параметр.
+        :param res_name: имя ресурса.
+        :param res_type: тип ресурса, необязательный параметр.
             Если он не определен, ресурс ищется среди всех типов ресурсов.
-        @param bShowMsg: флаг, описывающий разрешение на отображение
+        :param bShowMsg: флаг, описывающий разрешение на отображение
             сообщения о заблокированном ресурсе для данного пользователя.
             Параметр необязателен. По умолчанию сообщение показывается.
-        @return: Возвращает права доступа к ресурсу для текущего пользователя
+        :return: Возвращает права доступа к ресурсу для текущего пользователя
             в виде 8-символьной строки. Например '----dawr'
         """
         try:
@@ -671,7 +671,7 @@ class icUserPrototype(icbaseuser.icRootUser):
     def canAuthent(self, permit, res_name, res_type=ACC_NONE, bShowMsg=True):
         """
         Функция определяет ограничения на запрашиваемый ресурс.
-        @param permit: символ или группа символов,
+        :param permit: символ или группа символов,
             определяющий право доступа на действие.
             'u' - использование (ACCESS_USE).
             'v' - отображение  (ACCESS_VIEW).
@@ -679,13 +679,13 @@ class icUserPrototype(icbaseuser.icRootUser):
             'w' - редактирование (ACCESS_EDIT).
             'a' - добавление (ACCESS_APPEND).
             'd' - удаление (ACCESS_DELETE).
-        @param res_name: имя ресурса.
-        @param res_type: тип ресурса, необязательный параметр.
+        :param res_name: имя ресурса.
+        :param res_type: тип ресурса, необязательный параметр.
             Если он не определен, ресурс ищется среди всех типов ресурсов.
-        @param bShowMsg: флаг, описывающий разрешение на отображения
+        :param bShowMsg: флаг, описывающий разрешение на отображения
             сообщения о заблокированном ресурсе для данного пользователя.
             Параметр необязателен. По умолчанию сообщение показывается.
-        @return: Возвращает True, если ресурс не ограничен,
+        :return: Возвращает True, если ресурс не ограничен,
             запрашиваемыми правами доступа, False - ресурс ограничен.
         """
         try:
@@ -702,8 +702,8 @@ class icUserPrototype(icbaseuser.icRootUser):
     def canAccess(self, access_permit, ask_permit):
         """
         Проверка на разрешение всех запрашиваемых прав.
-        @param access_permit: права доступа, строка 8 символов.
-        @param ask_permit: символ или группа символов,
+        :param access_permit: права доступа, строка 8 символов.
+        :param ask_permit: символ или группа символов,
             определяющий право доступа на действие.
         """
         for i_symb in ask_permit:
@@ -715,7 +715,7 @@ class icUserPrototype(icbaseuser.icRootUser):
     def canWorkTime(self):
         """
         Проверить текущее время удовлетворяет временному графику доступа к системе.
-        @return: Возвращает True если текущее время удовлетворяет временному графику.
+        :return: Возвращает True если текущее время удовлетворяет временному графику.
             Иначе False.
         """
         return True
@@ -723,8 +723,8 @@ class icUserPrototype(icbaseuser.icRootUser):
     def canDBMode(self, db_mode=modefunc.DB_SHARE):
         """
         Можно залогиниться с таким режимом работы с БД?
-        @param db_mode: Режим использования БД.
-        @return: Возвращает True, если вход разрешен.
+        :param db_mode: Режим использования БД.
+        :return: Возвращает True, если вход разрешен.
         """
         if self._login_manager:
             return self._login_manager.canDBMode(db_mode)
@@ -814,7 +814,7 @@ class icLoginManager(object):
         Определить имя пользователя и пароль для автологина если они гдето указаны.
         Автологин может задаваться как из командной строки, так и через
         дополнительные атрибуты проекта, которые затем попадают в хранилище переменных.
-        @return: Функция возвращает кортеж (Логин,Пароль) используемый для автологина.
+        :return: Функция возвращает кортеж (Логин,Пароль) используемый для автологина.
         """
         if username:
             return username, password
@@ -837,12 +837,12 @@ class icLoginManager(object):
               bRuntimeMode=True, res_filename=None):
         """
         Сделать заполнение формы логина пользователя и в случае удачного входа в систему загрузить реквизиты пользователя.
-        @param default_username: Имя пользователя по умолчанию.
-        @param default_password: Если задан пароль по умолчанию,
+        :param default_username: Имя пользователя по умолчанию.
+        :param default_password: Если задан пароль по умолчанию,
             то происходит автологин.
-        @param db_mode: Режим использования БД.
-        @param bRuntimeMode: Признак режима исполнения.
-        @return: Заполненную структуру ввода.
+        :param db_mode: Режим использования БД.
+        :param bRuntimeMode: Признак режима исполнения.
+        :return: Заполненную структуру ввода.
         """
         # Установить режим работы системы
         modefunc.setRuntimeMode(bRuntimeMode)
@@ -883,8 +883,8 @@ class icLoginManager(object):
     def canDBMode(self, db_mode=modefunc.DB_SHARE):
         """
         Можно залогиниться с таким режимом работы с БД?
-        @param db_mode: Режим использования БД.
-        @return: Возвращает True, если вход разрешен.
+        :param db_mode: Режим использования БД.
+        :return: Возвращает True, если вход разрешен.
         """
         # Посмотреть колтчество пользователей системы
         param_count = self._reg_user_journal.getCurrentUsersCount()
@@ -911,7 +911,7 @@ class icLoginManager(object):
     def registerJournal(self, username, db_mode):
         """
         Прописать юзеря в журнале регистрации.
-        @param username: Имя пользователя.
+        :param username: Имя пользователя.
         """
         prj_name = glob_functions.getVar('PrjName')
         return self._reg_user_journal.register(username, prj_name, db_mode, modefunc.isRuntimeMode())

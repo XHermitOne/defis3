@@ -5,16 +5,16 @@
 Компонент древовидного представления данных.
 Класс пользовательского визуального компонента.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -120,7 +120,7 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     """
     Описание пользовательского компонента.
 
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{type='TreeList'}:
         - B{name='default'}:
@@ -136,22 +136,22 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -193,23 +193,23 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def getTitleRoot(self):
         """
         Надпись корневого элемента.
-        @return:
+        :return:
         """
         return self.getICAttr('titleRoot')
 
     def setTree(self, tree_data, label=None, expand_root=True, expand_all=False):
         """
         Установить данные дерева.
-        @param tree_data: Данные дерева:
+        :param tree_data: Данные дерева:
             Каждый узел дерева - словарь.
             Дочерние элементы находяться в ключе '__children__' в виде списка.
             Если корневой узел данных является списком,
             то в контроле присутствует несколько корневых узлов.
-        @param label: Ключ для определения надписи элемента дерева.
-        @param expand_root: Произвести автоматическое распахивание корневого элемента?
-        @param expand_all: Произвести автоматическое распахивание
+        :param label: Ключ для определения надписи элемента дерева.
+        :param expand_root: Произвести автоматическое распахивание корневого элемента?
+        :param expand_all: Произвести автоматическое распахивание
             всех дочерних элементовкорневого элемента?
-        @return: True/False.
+        :return: True/False.
         """
         result = self.setTree_TreeCtrl(self, tree_data, label=label)
         title_root = self.getTitleRoot()
@@ -223,14 +223,14 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def setItemColour(self, fg_colour=None, bg_colour=None, requirement=None):
         """
         Установить цвет элементов дерева в контроле по определенному условию.
-        @param fg_colour: Цвет текста, если условие выполненно.
-        @param bg_colour: Цвет фона, если условие выполненно.
-        @param requirement: lambda выражение, формата:
+        :param fg_colour: Цвет текста, если условие выполненно.
+        :param bg_colour: Цвет фона, если условие выполненно.
+        :param requirement: lambda выражение, формата:
             lambda item: ...
             Которое возвращает True/False.
             Если True, то установка цвета будет сделана.
             False - строка не расцвечивается.
-        @return:
+        :return:
         """
         return self.setItemColour_requirement(ctrl=self, fg_colour=fg_colour,
                                               bg_colour=bg_colour, requirement=requirement,
@@ -239,16 +239,16 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def setItemData(self, item, data):
         """
         Привязать данные к элементу дерева.
-        @param item: Элемент дерева.
-        @param data: Прикрепляемые данные.
+        :param item: Элемент дерева.
+        :param data: Прикрепляемые данные.
         """
         return self.setItemData_TreeCtrl(self, item, data)
 
     def getItemData(self, item):
         """
         Получить прикрепленные данные к элементу дерева.
-        @param item: Элемент дерева.
-        @return: Прикрепленные данные к элементу дерева или None в случае ошибки.
+        :param item: Элемент дерева.
+        :return: Прикрепленные данные к элементу дерева или None в случае ошибки.
         """
         return self.getItemData_TreeCtrl(self, item)
 
@@ -258,12 +258,12 @@ class icTreeCtrl(icwidget.icWidget, parentModule.TreeCtrl,
     def findItem(self, requirement=None):
         """
         Поиск элемента дерева по требованию.
-        @param requirement: lambda выражение, формата:
+        :param requirement: lambda выражение, формата:
             lambda item: ...
             Которое возвращает True/False.
             Если True, то элемент удовлетворяет критерию поиска.
             False - строка не удовлетворяет.
-        @return: Найденный элемент или None если не найден элемент.
+        :return: Найденный элемент или None если не найден элемент.
         """
         return self.findItem_requirement(ctrl=self, requirement=requirement)
 
@@ -311,8 +311,8 @@ def test(par=0):
     """
     Тестируем пользовательский класс.
     
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     res0 = {'d1': {'dd1': 'a1', 'dd2': 'a2'},
             'd2': {'cc1': 'a1', 'cc2': 'a2'},

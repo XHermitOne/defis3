@@ -123,8 +123,8 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def parse_key(self, key_txt):
         """
         Распарсить ключ элемента.
-        @param key_txt: Ключ элемента.
-        @return: Имя тега, его атрибуты.
+        :param key_txt: Ключ элемента.
+        :return: Имя тега, его атрибуты.
         """
         key_line = re.split(' |\n', key_txt)
         name = key_line[0]
@@ -138,10 +138,10 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def _do_write(self, data, parent_tag=None, tag_filter=None):
         """
         Процедура записи.
-        @param data: Данные для записи.
-        @param parent_tag: Родительский тег для
+        :param data: Данные для записи.
+        :param parent_tag: Родительский тег для
             обработки списков.
-        @param tag_filter: Словарь фильтра тегов,
+        :param tag_filter: Словарь фильтра тегов,
             определяющий список и порядок дочерних тегов для
             каждого тега.
             Порядок тегов важен для XML, поэтому введен этот фильтр.
@@ -175,8 +175,8 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def startWrite(self, data=None, tag_filter=None):
         """
         Начало записи.
-        @param data: Данные для записи.
-        @param tag_filter: Словарь фильтра тегов,
+        :param data: Данные для записи.
+        :param tag_filter: Словарь фильтра тегов,
             определяющий список и порядок дочерних тегов для
             каждого тега.
             Порядок тегов важен для XML, поэтому введен этот фильтр.

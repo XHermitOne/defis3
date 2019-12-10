@@ -74,7 +74,7 @@ class icSchemeDocPanel(scheme_doc_form_proto.icSchemeDocPanelProto,
     def viewScanFile(self, scan_filename):
         """
         Открыть программу просмотра файла скана.
-        @param scan_filename: Файл скана.
+        :param scan_filename: Файл скана.
         """
         if not scan_filename:
             msg = u'Файл скана не определен'

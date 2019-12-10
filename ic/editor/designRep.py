@@ -19,7 +19,7 @@ class ReportBrowserDlg(icreportbrowser.icReportBrowserDialog, designer.icDesignD
     def __init__(self, Parent_, Node_=None):
         """
         Конструктор.
-        @param Parent_: Родительское окно.
+        :param Parent_: Родительское окно.
         """
         designer.icDesignDlg.__init__(self, Parent_, Node_)
         icreportbrowser.icReportBrowserDialog.__init__(self, Parent_,

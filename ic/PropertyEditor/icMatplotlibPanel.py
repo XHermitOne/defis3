@@ -257,23 +257,23 @@ class icPlotPanel(wx.Panel):
         """
         Наполняет график точками.
         
-        @type dates: C{list | tuple}
-        @param dates: Список дат в формате datetime.
-        @type values: C{list | tuple}
-        @param values: Список значений.
-        @type dates: C{list | tuple}
-        @param dates: Список дат в формате datetime.
-        @type xlabel: C{string}
-        @param xlabel: Подпись оси X.
-        @type ylabel: C{string}
-        @param ylabel: Подпись оси Y.
-        @type bClear: C{bool}
-        @param bClear: Признак того, что необходимо все предыдущие точки удалить
+        :type dates: C{list | tuple}
+        :param dates: Список дат в формате datetime.
+        :type values: C{list | tuple}
+        :param values: Список значений.
+        :type dates: C{list | tuple}
+        :param dates: Список дат в формате datetime.
+        :type xlabel: C{string}
+        :param xlabel: Подпись оси X.
+        :type ylabel: C{string}
+        :param ylabel: Подпись оси Y.
+        :type bClear: C{bool}
+        :param bClear: Признак того, что необходимо все предыдущие точки удалить
             из графика.
-        @type titlePlot: C{string}
-        @param titlePlot: Заголовок.
-        @type legend: C{string}
-        @param legend: Легенда.
+        :type titlePlot: C{string}
+        :param titlePlot: Заголовок.
+        :type legend: C{string}
+        :param legend: Легенда.
         """
         if bClear:
             self.subplot.lines = []

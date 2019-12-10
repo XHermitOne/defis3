@@ -24,7 +24,7 @@ DEFAULT_SPRAV_MANAGER_NAME = 'nsi_sprav'
 def createSpravManager(SpravManagerResName_=DEFAULT_SPRAV_MANAGER_NAME):
     """
     Создать менеджер справочников.
-    @param SpravManagerResName_: Имя ресурса менеджера справочнков.
+    :param SpravManagerResName_: Имя ресурса менеджера справочнков.
         По умолчанию берется nsi_sprav.mtd.
     """
     global SPRAV_MANAGER
@@ -46,8 +46,8 @@ def destroySpravManager():
 def getSprav(SpravName_, SpravManager_=None):
     """
     Получить доступ к объекту справочника по имени.
-    @param SpravName_: Имя справочника.
-    @param SpravManager: Имя менеджера спровочников, если не определен, то nsi_sprav.
+    :param SpravName_: Имя справочника.
+    :param SpravManager: Имя менеджера спровочников, если не определен, то nsi_sprav.
     """
     try:
         if not SpravManager_:
@@ -64,16 +64,16 @@ def HlpSprav(typSprav, ParentCode=(None,),
     """
     Запуск визуального интерфейса просмотра,  поиска и выбора значений поля
         или группы полей из отмеченной строки указанного справочника.
-    @type typSprav: C{string}
-    @param typSprav: Код типа (номер) справочника.
-    @type ParentCode: C{...}
-    @param ParentCode: Код более верхнего уровня.
-    @param field: Задает поле или группу полей, которые надо вернуть.
-    @type datatime: C{string}
-    @param datatime: Время актуальности кода.
-    @param form: имя формы визуального интерфейса работы со справочником.
-    @param parentForm: Родительская форма.
-    @param SpravManager: Имя менеджера спровочников, если не определен, то nsi_sprav.
+    :type typSprav: C{string}
+    :param typSprav: Код типа (номер) справочника.
+    :type ParentCode: C{...}
+    :param ParentCode: Код более верхнего уровня.
+    :param field: Задает поле или группу полей, которые надо вернуть.
+    :type datatime: C{string}
+    :param datatime: Время актуальности кода.
+    :param form: имя формы визуального интерфейса работы со справочником.
+    :param parentForm: Родительская форма.
+    :param SpravManager: Имя менеджера спровочников, если не определен, то nsi_sprav.
     """
     try:
         if not SpravManager:
@@ -92,29 +92,29 @@ def CtrlSprav(typSprav, val, old=None,
               field='name', flds=None, datatime=None, bCount=True, cod='', SpravManager=None):
     """
     Функция контроля наличия в справочнике значения поля с указанным значением.
-    @type typSprav: C{string}
-    @param typSprav: Тип справочника.
-    @type cod: C{string}
-    @param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
-    @type val: C{...}
-    @param val: Проверяемое значение. Если тип картеж, то это означает, что проверяем структурное
+    :type typSprav: C{string}
+    :param typSprav: Тип справочника.
+    :type cod: C{string}
+    :param cod: Начальная подстрока структурного кода, ограничивающая множество возможных кодов.
+    :type val: C{...}
+    :param val: Проверяемое значение. Если тип картеж, то это означает, что проверяем структурное
         значение (например иерархический код справочника).
-    @type old: C{...}
-    @param old: Старое значение.
-    @type field: C{string}
-    @param filed: Поле, по которому проверяется значение.
-    @type flds: C{dictionary}
-    @param flds: Словарь соответствий между полями определенного класса данных и
+    :type old: C{...}
+    :param old: Старое значение.
+    :type field: C{string}
+    :param filed: Поле, по которому проверяется значение.
+    :type flds: C{dictionary}
+    :param flds: Словарь соответствий между полями определенного класса данных и
         полями справочника. Если контроль значения пройдет успешно, то
         соответствующие значения из справочника будут перенесены в поля класса
         данных. Пример: {'summa':'f1', 'summa2':'f2'}
-    @type datatime: C{string}
-    @param datatime: Время актуальности кода.
-    @type bCount: C{string}
-    @param bCount: признак того, что необходимо вести количество ссылок.
-    @param SpravManager: Имя менеджера спровочников, если не определен, то nsi_sprav.
-    @rtype: C{int}
-    @return: Код возврата функции контроля.
+    :type datatime: C{string}
+    :param datatime: Время актуальности кода.
+    :type bCount: C{string}
+    :param bCount: признак того, что необходимо вести количество ссылок.
+    :param SpravManager: Имя менеджера спровочников, если не определен, то nsi_sprav.
+    :rtype: C{int}
+    :return: Код возврата функции контроля.
     """
     try:
         if not SpravManager:
@@ -131,17 +131,17 @@ def FSprav(typSprav, cod, field='name', datatime=None, SpravManager=None):
     """
     Поиск по коду.
     
-    @type typeSprav: C{...}
-    @param typeSprav: Тип справочника.
-    @type cod: C{...}
-    @param cod: Код строки справочника.
-    @type field: C{string | list }
-    @param field: Имя поля или список полей.
-    @type datatime: C{string}
-    @param datatime: Время актуальности справочной информации.
-    @param SpravManager: Имя менеджера спровочников, если не определен, то nsi_sprav.
-    @rtype: C{dictionary}
-    @return: Значение либо словарь значений (если поле field задает список полей).
+    :type typeSprav: C{...}
+    :param typeSprav: Тип справочника.
+    :type cod: C{...}
+    :param cod: Код строки справочника.
+    :type field: C{string | list }
+    :param field: Имя поля или список полей.
+    :type datatime: C{string}
+    :param datatime: Время актуальности справочной информации.
+    :param SpravManager: Имя менеджера спровочников, если не определен, то nsi_sprav.
+    :rtype: C{dictionary}
+    :return: Значение либо словарь значений (если поле field задает список полей).
         None, если строка с заданным кодом не найдена.
     """
     try:

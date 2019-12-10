@@ -4,8 +4,8 @@
 """
 Базовые кдассы библиотеки от которых наследуются все остальные.
 Содержит описание базовых классов всех компонентов библиотеки ic: icBase, icSizer, icWidget.
-@type SPC_IC_SIMPLE: C{dictionary}
-@var SPC_IC_SIMPLE: Спецификация на ресурсное описание базового класса. Описание ключей SPC_IC_SIMPLE:
+:type SPC_IC_SIMPLE: C{dictionary}
+:var SPC_IC_SIMPLE: Спецификация на ресурсное описание базового класса. Описание ключей SPC_IC_SIMPLE:
 
     - B{name='simple'}: Имя окна.
     - B{type='Simple'}: Тип объекта.
@@ -45,8 +45,8 @@
     - B{__version__base='0.0.0.0'}: Версия базовой спецификации объекта.
     - B{__version__='0.0.0.0'}: Версия спецификации объекта.
 
-@type SPC_IC_BASE: C{dictionary}
-@var SPC_IC_BASE: Спецификация на ресурсное описание базового класса. Описание ключей SPC_IC_BASE:
+:type SPC_IC_BASE: C{dictionary}
+:var SPC_IC_BASE: Спецификация на ресурсное описание базового класса. Описание ключей SPC_IC_BASE:
 
     - B{name='widget'}: Имя окна.
     - B{type='Widget'}: Тип объекта.
@@ -55,8 +55,8 @@
     - B{flag=0}: Параметр flag при добавлении в сайзер.
     - B{border=0}: Признак признак бордюры при добавлении в сайзер.
 
-@type SPC_IC_SIZER: C{dictionary}
-@var SPC_IC_SIZER: Спецификация на ресурсное описание базового класса сайзеров. Описание ключей SPC_IC_SIZER:
+:type SPC_IC_SIZER: C{dictionary}
+:var SPC_IC_SIZER: Спецификация на ресурсное описание базового класса сайзеров. Описание ключей SPC_IC_SIZER:
 
     - B{name='DefaultName'}:Имя окна.
     - B{type='Sizer'}: Тип объекта.
@@ -65,8 +65,8 @@
     - B{__parent__=SPC_IC_BASE}: Спецификация, от которой происходит наследование аттрибутов.
     - B{child=[]}:
 
-@type SPC_IC_WIDGET: C{dictionary}
-@var SPC_IC_WIDGET: Спецификация на ресурсное описание базового класса визуальных компонентов.
+:type SPC_IC_WIDGET: C{dictionary}
+:var SPC_IC_WIDGET: Спецификация на ресурсное описание базового класса визуальных компонентов.
 Описание ключей SPC_IC_WIDGET:
 
     - B{name='widget'}: Имя окна.
@@ -427,8 +427,8 @@ class icShape(object):
     def drawShape(self, dc=None):
         """
         Функция перерисовывает компонент.
-        @type dc: C{wx.DC}
-        @param dc: Контекст устроийства вывода.
+        :type dc: C{wx.DC}
+        :param dc: Контекст устроийства вывода.
         """
         #   Вызываем метод перерисовки компонента
         if self.editorBackground:
@@ -504,7 +504,7 @@ class icResObjContext(icContext.Context):
     def setValueInCtrl(self, Control_, DataDict_):
         """
         Установить значения контролов из словаря.
-        @param Control_: Обрабатываемая форма/контрол.
+        :param Control_: Обрабатываемая форма/контрол.
         """
         self._controls_ = []
         result = self._setValueInCtrl(Control_, DataDict_)
@@ -515,7 +515,7 @@ class icResObjContext(icContext.Context):
     def _setValueInCtrl(self, Control_, DataDict_):
         """
         Установить значения контролов в форме из словаря.
-        @param Control_: Обрабатываемая форма/контрол.
+        :param Control_: Обрабатываемая форма/контрол.
         """
         # Инициализировать значения всех контролов
         if DataDict_:
@@ -561,9 +561,9 @@ class icResObjContext(icContext.Context):
     def _setCtrlValue(self, Control_, Value_=None, ErrMsg_=u''):
         """
         Функция установки значения контрола с обработкой ошибки.
-        @param Control_: Объект контрола.
-        @param Value_: Устанавливаемое значение.
-        @param ErrMsg_: Сообщение в случае ошибки.
+        :param Control_: Объект контрола.
+        :param Value_: Устанавливаемое значение.
+        :param ErrMsg_: Сообщение в случае ошибки.
         """
         try:
             if Value_ is None:
@@ -575,8 +575,8 @@ class icResObjContext(icContext.Context):
     def clearValueInCtrl(self, Control_, DataNames_=None):
         """
         Сбросить значения контролов.
-        @param Control_: Обрабатываемая форма/контрол.
-        @param DataNames_: Список имен, для контролов которых
+        :param Control_: Обрабатываемая форма/контрол.
+        :param DataNames_: Список имен, для контролов которых
         нужно сбросить значения. Если None, то сбрасываются
         значения у всех контролов.
         """
@@ -588,8 +588,8 @@ class icResObjContext(icContext.Context):
     def _clearValueInCtrl(self, Control_, DataNames_=None):
         """
         Ссбросить значения контролов в форме.
-        @param Control_: Обрабатываемая форма/контрол.
-        @param DataNames_: Список имен, для контролов которых
+        :param Control_: Обрабатываемая форма/контрол.
+        :param DataNames_: Список имен, для контролов которых
         нужно сбросить значения. Если None, то сбрасываются
         значения у всех контролов.
         """
@@ -644,7 +644,7 @@ class icResObjContext(icContext.Context):
     def getValueInCtrl(self, Control_):
         """
         Получить значения контролов в виде словаря.
-        @param Control_: Обрабатываемая форма/контрол.
+        :param Control_: Обрабатываемая форма/контрол.
         """
         self._controls_ = []
         result = self._getValueInCtrl(Control_)
@@ -655,7 +655,7 @@ class icResObjContext(icContext.Context):
     def _getValueInCtrl(self, Control_):
         """
         Получить значения контролов в форме в виде словаря.
-        @param Control_: Обрабатываемая форма/контрол.
+        :param Control_: Обрабатываемая форма/контрол.
         """
         data = {}
         # Инициализировать значения всех контролов
@@ -723,9 +723,9 @@ class icSimple(icobject.icObject):
     def TestComponentResource(res, context, parent=None, *arg, **kwarg):
         """
         Функция тестирования компонента.
-        @param res: Ресурсное описание.
-        @param context: Контекст ресурса.
-        @param parent: Родительское окно.
+        :param res: Ресурсное описание.
+        :param context: Контекст ресурса.
+        :param parent: Родительское окно.
         """
         return None
 
@@ -733,16 +733,16 @@ class icSimple(icobject.icObject):
                  evalSpace=None, bGenUUID=True, bPrepareProp=False):
         """
         Конструктор для создания icBase.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         if id > 32767:
             id = -1
@@ -986,8 +986,8 @@ class icSimple(icobject.icObject):
     def GetChildByName(self, name):
         """
         По имени находит дочерний элемент.
-        @type name: C{string}
-        @param name: Имя дочернего элемента.
+        :type name: C{string}
+        :param name: Имя дочернего элемента.
         """
         lst = self.GetComponentsList()
         for el in lst:
@@ -997,8 +997,8 @@ class icSimple(icobject.icObject):
     def FindObjectByName(self, name):
         """
         Найти каскадно объект среди всех дочерних по имени.
-        @type name: C{string}
-        @param name: Имя дочернего элемента.
+        :type name: C{string}
+        :param name: Имя дочернего элемента.
         """
         children = []
         if self.IsSizer():
@@ -1079,12 +1079,12 @@ class icSimple(icobject.icObject):
     def SaveUserProperty(self, prop, value):
         """
         По возможности сохраняет свойство в настройках пользователя.
-        @type prop: C{string}
-        @param prop: Имя свойства.
-        @type value: C{...}
-        @param value: Значение свойства.
-        @rtype: C{bool}
-        @return: Признак успешного сохранения.
+        :type prop: C{string}
+        :param prop: Имя свойства.
+        :type value: C{...}
+        :param value: Значение свойства.
+        :rtype: C{bool}
+        :return: Признак успешного сохранения.
         """
         if self.saveChangeProperty:
             key = self.GetPropertyKey(prop)
@@ -1103,9 +1103,9 @@ class icSimple(icobject.icObject):
     def LoadUserProperty(self, prop):
         """
         Читает значение определенного свойства из настроек пользователя.
-        @type prop: C{string}
-        @param prop: Имя свойства.
-        @return: Значение сохраненного ранее свойства.
+        :type prop: C{string}
+        :param prop: Имя свойства.
+        :return: Значение сохраненного ранее свойства.
         """
         value = None
         if self.saveChangeProperty:
@@ -1131,8 +1131,8 @@ class icSimple(icobject.icObject):
         SyntaxError: unexpected character after line continuation character.
         Чтобы этого не происходило удаляются все символы новой строки/перевода каретки
         из исполняемого выражения.
-        @param expr: Само выражение. Если не строка, то остается без изменений.
-        @return: Подготовленное выражение.
+        :param expr: Само выражение. Если не строка, то остается без изменений.
+        :return: Подготовленное выражение.
         """
         if isinstance(expr, str):
             expr = expr.strip()
@@ -1143,9 +1143,9 @@ class icSimple(icobject.icObject):
     def getExpression(self, attr):
         """
         Получить выражение для последующего выполнения.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
-        @return: Подготовленное выражение.
+        :type attr: C{string}
+        :param attr: Имя атрибута.
+        :return: Подготовленное выражение.
         """
         expr = self.resource[attr]
         return self._prepare_expression(expr)
@@ -1153,13 +1153,13 @@ class icSimple(icobject.icObject):
     def eval_attr(self, attr, subkey='', bReUse=True):
         """
         Функция вычисления атрибутов.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
-        @type subkey: C{string}
-        @param subkey: Имя уточняющего ключа.
-        @type bReUse: C{bool}
-        @param bReUse: Признак посторного использования компилированного выражения.
-        @return: Код ошибки из модуля coderror, Возвращаемое значение вычисляемого выржения.
+        :type attr: C{string}
+        :param attr: Имя атрибута.
+        :type subkey: C{string}
+        :param subkey: Имя уточняющего ключа.
+        :type bReUse: C{bool}
+        :param bReUse: Признак посторного использования компилированного выражения.
+        :return: Код ошибки из модуля coderror, Возвращаемое значение вычисляемого выржения.
         """
         expr = self.getExpression(attr)
         if self.GetUUID() and bReUse:
@@ -1186,13 +1186,13 @@ class icSimple(icobject.icObject):
     def eval_expr(self, expr, subkey='expr', bReUse=True ):
         """
         Функция вычисления атрибутов.
-        @type expr: C{string}
-        @param expr: Вычисляемое выражение.
-        @type subkey: C{string}
-        @param subkey: Имя уточняющего ключа.
-        @type bReUse: C{bool}
-        @param bReUse: Признак повторного использования компилированного выражения.
-        @return: Код ошибки из модуля coderror, Возвращаемое значение вычисляемого выржения.
+        :type expr: C{string}
+        :param expr: Вычисляемое выражение.
+        :type subkey: C{string}
+        :param subkey: Имя уточняющего ключа.
+        :type bReUse: C{bool}
+        :param bReUse: Признак повторного использования компилированного выражения.
+        :return: Код ошибки из модуля coderror, Возвращаемое значение вычисляемого выржения.
         """
         expr = self._prepare_expression(expr)
         if self.GetUUID() and bReUse:
@@ -1208,7 +1208,7 @@ class icSimple(icobject.icObject):
         """
         Функция возвращает вычисленный атрибут. Если вычислить не удается, то
         возвращается None.
-        @return: Возвращает значение атрибута. None - если произошла ошибка при
+        :return: Возвращает значение атрибута. None - если произошла ошибка при
             вычислении атрибута.
         """
         attr_val = self.getExpression(attr)
@@ -1236,9 +1236,9 @@ class icSimple(icobject.icObject):
     def isICAttrValue(self, attr):
         """
         Функция проверяет заполненность атрибута.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
-        @return: Если атрибут заполненный, то возвращает True,
+        :type attr: C{string}
+        :param attr: Имя атрибута.
+        :return: Если атрибут заполненный, то возвращает True,
             иначе False.
         """
         attr_val = self.resource[attr]
@@ -1250,7 +1250,7 @@ class icSimple(icobject.icObject):
     def getDataName(self):
         """
         Наименование данных из контекста/источника данных.
-        @return: Наименование данных из контекста/источника данных.
+        :return: Наименование данных из контекста/источника данных.
         """
         return self.getICAttr('data_name')
 
@@ -1258,14 +1258,14 @@ class icSimple(icobject.icObject):
         """
         Функция вычисляет значение атрибута. Если атрибут вычисляемый,
         то она вычисляет его. Вычисляемый атрибут определяется по счиволу '@'.
-        @type attr: C{string}
-        @param attr: Имя атрибута.
-        @type bExpectedExpr: C{bool}
-        @param bExpectedExpr: Признак того, что ожидается, что атрибут является
+        :type attr: C{string}
+        :param attr: Имя атрибута.
+        :type bExpectedExpr: C{bool}
+        :param bExpectedExpr: Признак того, что ожидается, что атрибут является
             вычисляемым. Если True, то проверка на '@' не производится.
-        @type bReUse: C{bool}
-        @param bReUse: Признак повторного использования компилированного выражения.
-        @return: Если атрибут вычисляемый, возвращает вычисленное значение атрибута.
+        :type bReUse: C{bool}
+        :param bReUse: Признак повторного использования компилированного выражения.
+        :return: Если атрибут вычисляемый, возвращает вычисленное значение атрибута.
             None - если произошла ошибка при вычислении атрибута. Если атрибут
             не вычисляемый, то возвращется значение атрибута.
         """
@@ -1338,7 +1338,7 @@ class icSimple(icobject.icObject):
          'Значение data_name элемента': результат функции getValue() элемента.
          ...
         }
-        @return: Возвращает заполненный словарь данных.
+        :return: Возвращает заполненный словарь данных.
         """
         data = {}
 
@@ -1407,9 +1407,9 @@ class icSimple(icobject.icObject):
     def find_child_resource(self, child_name, res=None):
         """
         Поиск ресурса дочернего объекта рекурсивно по имени.
-        @param child_name: Имя дочернего объекта.
-        @param res: Ресурс. Если не определен, то берется self.resource.
-        @return: Словарь ресурса найденного объекта или None
+        :param child_name: Имя дочернего объекта.
+        :param res: Ресурс. Если не определен, то берется self.resource.
+        :return: Словарь ресурса найденного объекта или None
             если не найдено.
         """
         if res is None:
@@ -1433,16 +1433,16 @@ class icBase(icSimple, icShape):
                  bPrepareProp=False):
         """
         Конструктор для создания icBase.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         component = util.icSpcDefStruct(SPC_IC_BASE, component)
         icSimple.__init__(self, parent, id, component, logType, evalSpace, bPrepareProp=bPrepareProp)
@@ -1477,12 +1477,12 @@ class icBase(icSimple, icShape):
         Например, для всех объектов неактивный страницы органайзера этот признак
         будет устанавливаться в False. Для компонента 'icNotebook' эта функция
         переопределена т. к. только на активной странице компоненты видимы.
-        @type bVisible: C{bool}
-        @param bVisible: Признак обновления представления объекта данных.
-        @type lst: C{list}
-        @param lst: Список видимых объектов.
-        @rtype: C{list}
-        @return: Список видимых объектов.
+        :type bVisible: C{bool}
+        :param bVisible: Признак обновления представления объекта данных.
+        :type lst: C{list}
+        :param lst: Список видимых объектов.
+        :rtype: C{list}
+        :return: Список видимых объектов.
         """
         self.bStatusVisible = bVisible
         if lst is None:
@@ -1512,18 +1512,18 @@ class icSizer(icBase):
                  sizer=None, bPrepareProp=False):
         """
         Конструктор базового класса сайзеров.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type sizer: C{icSizer}
-        @param sizer: Ссылка на родительский сайзер.
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type sizer: C{icSizer}
+        :param sizer: Ссылка на родительский сайзер.
         """
         util.icSpcDefStruct(SPC_IC_SIZER, component)
         icBase.__init__(self, parent, id, component, logType, evalSpace, bPrepareProp=bPrepareProp)
@@ -1570,7 +1570,7 @@ class icSizer(icBase):
     def regObject(self, obj):
         """
         Зарегистрировать объект во внутренних списках виджета.
-        @param obj: Объект.
+        :param obj: Объект.
         """
         self.objectList.append(obj)
 
@@ -1649,8 +1649,8 @@ class icSizer(icBase):
     def GetIndex(self, obj):
         """
         Возвращает индекс объекта в списке объектов сайзера.
-        @type obj: C{...}
-        @param obj: Ссылка на объет, индекс которого ищется.
+        :type obj: C{...}
+        :param obj: Ссылка на объет, индекс которого ищется.
         """
         for indx, x in enumerate(self.objectList):
             try:
@@ -1702,16 +1702,16 @@ class icWidget(icBase, icEvent):
                  evalSpace=None, bPrepareProp=False):
         """
         Конструктор для создания icWidget.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type id: C{int}
-        @param id: Идентификатор окна
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type id: C{int}
+        :param id: Идентификатор окна
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         #   Дополняем описание до спецификации
         component = util.icSpcDefStruct(SPC_IC_WIDGET, component)
@@ -1753,7 +1753,7 @@ class icWidget(icBase, icEvent):
     def isEnabled(self):
         """
         Объект включен?
-        @return: True/False.
+        :return: True/False.
         """
         if hasattr(self, 'IsEnabled'):
             return self.IsEnabled()
@@ -1869,8 +1869,8 @@ class icWidget(icBase, icEvent):
     def UpdateRelObj(self, lstUpdate = None):
         """
         Изменяет состояния компонентов, работающих с источниками данных.
-        @type lstUpdate: C{list}
-        @param lstUpdate: Список объектов, которые необходимо обновить.
+        :type lstUpdate: C{list}
+        :param lstUpdate: Список объектов, которые необходимо обновить.
         """
         if self.dataset is None:
             _classname = None
@@ -1910,8 +1910,8 @@ class icWidget(icBase, icEvent):
     def UpdateRelObjDB(self, lstUpdate = None):
         """
         Изменяет данные в классах данных.
-        @type lstUpdate: C{list}
-        @param lstUpdate: Список объектов, которые необходимо обновить
+        :type lstUpdate: C{list}
+        :param lstUpdate: Список объектов, которые необходимо обновить
         """
         if self.dataset is None:
             _classname = None
@@ -1993,13 +1993,13 @@ class icWidget(icBase, icEvent):
         """
         Определить родительский объект по типу.
         Поиск производится рекурсивно по дереву агрегации объектов.
-        @param parent_class: Класс родительского объекта:
+        :param parent_class: Класс родительского объекта:
             wx.Dialog, wx.Frame, wx.Panel и т.п.
-        @param cur_object: Текущий проверяемый объект.
+        :param cur_object: Текущий проверяемый объект.
             Если None, то берется self.
-        @param is_subclass: True - Проверять на наследственность от класса.
+        :param is_subclass: True - Проверять на наследственность от класса.
             False - Проверять на полное совпадение.
-        @return: Родительский объект, соответствующий типу или None
+        :return: Родительский объект, соответствующий типу или None
             если такой объект не найден.
         """
         if cur_object is None:
@@ -2036,14 +2036,14 @@ class icShortHelpString(wx.PopupWindow):
     def __init__(self, parent, text, pos=(0, 0), time=1000):
         """
         Конструктор всплывающей подсказки.
-        @type parent: C{wx.Window}
-        @param parent: Родительское окно.
-        @type text: C{string}
-        @param text: Текст подсказки.
-        @type pos: C{wx.Point}
-        @type pos: Позиция подсказки.
-        @type time: C{float}
-        @param time: Период времени (в милисекундах) после которого подсказка уничтожается.
+        :type parent: C{wx.Window}
+        :param parent: Родительское окно.
+        :type text: C{string}
+        :param text: Текст подсказки.
+        :type pos: C{wx.Point}
+        :type pos: Позиция подсказки.
+        :type time: C{float}
+        :param time: Период времени (в милисекундах) после которого подсказка уничтожается.
         """
         wx.PopupWindow.__init__(self, parent, 0)
         self.SetBackgroundColour(wx.Colour(255, 255, 206))

@@ -53,13 +53,13 @@ EXTERNAL_PROGRAMS_CFG = {'calculator': {'description': u'Калькулятор'
 def run_external_programm(programm_name=None, run_cmd=None):
     """
     Запустить внешнюю программу.
-    @param programm_name: Имя программы.
+    :param programm_name: Имя программы.
         Если имя программы не определено, то выводиться
         диалоговое окно выбора внешней программы.
-    @param run_cmd: Командная строка запуска.
+    :param run_cmd: Командная строка запуска.
         Если команда не определена, то по имени программы
         она находится в словаре описания внешних программ.
-    @return: True/False.
+    :return: True/False.
     """
     if run_cmd:
         # Просто определена команда и надо ее запустить
@@ -106,8 +106,8 @@ def run_external_programm(programm_name=None, run_cmd=None):
 def run_command(run_cmd):
     """
     Запуск команды ОС.
-    @param run_cmd: Команндная строка запуска.
-    @return: True/False.
+    :param run_cmd: Команндная строка запуска.
+    :return: True/False.
     """
     if run_cmd is None:
         log.warning(u'Команда запуска внешней программы не определена')

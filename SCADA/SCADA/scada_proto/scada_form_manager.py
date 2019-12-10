@@ -57,11 +57,11 @@ class icSCADAFormManager(form_manager.icFormManager):
         """
         Получить адреса объектов указанных в data_name свойстве контролов панели.
         Адреса объектов указываются как <Имя_движка.Имя_объекта_в_движке>.
-        @param ctrl_names: Взять только контролы с именами...
+        :param ctrl_names: Взять только контролы с именами...
             Если имена контролов не определены,
             то обрабатываются контролы,
             указанные в соответствиях (accord).
-        @return: Заполненный список [(контрол, адрес тега),...)
+        :return: Заполненный список [(контрол, адрес тега),...)
         """
         if self._obj_addresses_cache is None:
             self._obj_addresses_cache = self._get_panel_obj_addresses(None, *ctrl_names)
@@ -71,13 +71,13 @@ class icSCADAFormManager(form_manager.icFormManager):
         """
         Получить адреса объектов указанных в data_name свойстве контролов панели.
         Адреса объектов указываются как <Имя_движка.Имя_объекта_в_движке>.
-        @param data_list: Список для заполнения.
+        :param data_list: Список для заполнения.
             Если не определен то создается новый список.
-        @param ctrl_names: Взять только контролы с именами...
+        :param ctrl_names: Взять только контролы с именами...
             Если имена контролов не определены,
             то обрабатываются контролы,
             указанные в соответствиях (accord).
-        @return: Заполненный список [(контрол, адрес тега),...)
+        :return: Заполненный список [(контрол, адрес тега),...)
         """
         result = list() if data_list is None else data_list
         if not ctrl_names:
@@ -107,30 +107,30 @@ class icSCADAFormManager(form_manager.icFormManager):
     def is_address(self, value):
         """
         Проверка является ли строковое значение адресом SCADA объекта.
-        @param value: Проверяемое значение.
-        @return: True - это адрес объекта / False - нет.
+        :param value: Проверяемое значение.
+        :return: True - это адрес объекта / False - нет.
         """
         return bool(value) and (ADDRESS_DELIMETER in value) and (value.count(ADDRESS_DELIMETER) == 1)
 
     def startEngines(self):
         """
         Запуск движков.
-        @return: True-все движки успешно запущены / False - ошибка запуска.
+        :return: True-все движки успешно запущены / False - ошибка запуска.
         """
         return all([engine.start(self) for engine in self.scada_engines])
 
     def stopEngines(self):
         """
         Останов движков.
-        @return: True-все движки успешно остановлены / False - ошибка останова.
+        :return: True-все движки успешно остановлены / False - ошибка останова.
         """
         return all([engine.stop(self) for engine in self.scada_engines])
 
     def addSCADAEngine(self, scada_engine):
         """
         Добавить движок в список.
-        @param scada_engine: Объект движка.
-        @return: True/False.
+        :param scada_engine: Объект движка.
+        :return: True/False.
         """
         if scada_engine is None:
             log.warning(u'Не определен объект движка сканирования SCADA системы')
@@ -150,7 +150,7 @@ class icSCADAFormManager(form_manager.icFormManager):
     def startTimer(self):
         """
         Запуск таймера обновления данных.
-        @return: True/False.
+        :return: True/False.
         """
         if self.scan_tick > 0:
             # Обновить данные в начале запуска в любом случае
@@ -170,7 +170,7 @@ class icSCADAFormManager(form_manager.icFormManager):
     def stopTimer(self):
         """
         Останов таймера обновления данных.
-        @return: True/False.
+        :return: True/False.
         """
         if self.timer:
             self.timer.Stop()
@@ -189,8 +189,8 @@ class icSCADAFormManager(form_manager.icFormManager):
     def findSCADAEngine(self, engine_name):
         """
         Поиск движка скада системы в списке по имени.
-        @param engine_name: Имя движка.
-        @return: Объект движка или None, ели объект движка не найден.
+        :param engine_name: Имя движка.
+        :return: Объект движка или None, ели объект движка не найден.
         """
         for engine in self.scada_engines:
             if engine.name == engine_name:
@@ -227,9 +227,9 @@ class icSCADAFormManager(form_manager.icFormManager):
     def findSCADAObject(self, obj_address):
         """
         Поиск объекта по его адресу.
-        @param obj_address: Адрес объекта.
+        :param obj_address: Адрес объекта.
             Адреса объектов указываются как <Имя_движка.Имя_объекта_в_движке>.
-        @return: Найденный объект или None, если объект не найден.
+        :return: Найденный объект или None, если объект не найден.
         """
         if not isinstance(obj_address, str):
             log.error(u'Не корректный тип адреса <%s> объекта SCADA движка' % obj_address.__class__.__name__)
@@ -251,7 +251,7 @@ class icSCADAFormManager(form_manager.icFormManager):
     def start(self):
         """
         Функция общего запуска.
-        @return: True/False.
+        :return: True/False.
         """
         result_engines = self.startEngines()
         result_timer = self.startTimer()
@@ -260,7 +260,7 @@ class icSCADAFormManager(form_manager.icFormManager):
     def stop(self):
         """
         Функция общего останова.
-        @return: True/False.
+        :return: True/False.
         """
         result_timer = self.stopTimer()
         result_engines = self.stopEngines()

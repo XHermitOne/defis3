@@ -92,9 +92,9 @@ class icAccRegistry(object):
                  result_table_name=DEFAULT_RESULT_TABLE):
         """
         Конструктор.
-        @param db_url: Параметры подключения к БД.
-        @param operation_table_name: Имя таблицы движений.
-        @param result_table_name: Имя итоговой таблицы.
+        :param db_url: Параметры подключения к БД.
+        :param operation_table_name: Имя таблицы движений.
+        :param result_table_name: Имя итоговой таблицы.
         """
         self._db_url = DEFAULT_DB_URL if db_url is None else db_url
         self._connection = None
@@ -140,15 +140,15 @@ class icAccRegistry(object):
     def is_connected(self):
         """
         Установлена связь с БД?
-        @return: True/False
+        :return: True/False
         """
         return self._connection is not None
 
     def connect(self, db_url=None):
         """
         Установить связь с БД.
-        @param db_url: URL связи с БД.
-        @return: Объект связи с БД.
+        :param db_url: URL связи с БД.
+        :return: Объект связи с БД.
         """
         if db_url is None:
             db_url = self._db_url
@@ -163,7 +163,7 @@ class icAccRegistry(object):
     def disconnect(self):
         """
         Разорвать связь с БД.
-        @return: True/False.
+        :return: True/False.
         """
         if self._connection:
             self._connection.dispose()
@@ -173,7 +173,7 @@ class icAccRegistry(object):
     def get_connection(self, auto_connect=True):
         """
         Объект связи с БД.
-        @param auto_connect: Если не установлена связь,
+        :param auto_connect: Если не установлена связь,
             произвести автоматический коннект?
         """
         if self._connection is None and auto_connect:
@@ -184,9 +184,9 @@ class icAccRegistry(object):
         """
         Выполнить SQL выражение.
         @connection: Объект связи с БД.
-        @param sql: Текстовый формат SQL выражения.
-        @param args: Параметры SQL выражения.
-        @return: Рекордсет.
+        :param sql: Текстовый формат SQL выражения.
+        :param args: Параметры SQL выражения.
+        :return: Рекордсет.
         """
         if connection is None:
             connection = self._connection
@@ -209,8 +209,8 @@ class icAccRegistry(object):
     def append_resource_requisite(self, requisite_name, requisite_type):
         """
         Добавление ресурса.
-        @param requisite_name: Имя реквизита.
-        @param requisite_type: Тип реквизита.
+        :param requisite_name: Имя реквизита.
+        :param requisite_type: Тип реквизита.
             Тип ресурсного реквизита
             м.б. только или целый ('int') или вещественный ('float').
         """
@@ -221,7 +221,7 @@ class icAccRegistry(object):
     def get_resource_requisite_names(self):
         """
         Имена реквизитов ресурсов.
-        @return: Список имен реквизитов ресурсов.
+        :return: Список имен реквизитов ресурсов.
         """
         names = [requisite.get('requisite_name', None) for requisite in self._resource_requisites]
         return names
@@ -229,8 +229,8 @@ class icAccRegistry(object):
     def append_dimension_requisite(self, requisite_name, requisite_type):
         """
         Добавление измерения.
-        @param requisite_name: Имя реквизита.
-        @param requisite_type: Тип реквизита.
+        :param requisite_name: Имя реквизита.
+        :param requisite_type: Тип реквизита.
             Тип реквизита измерения
             м.б. только целый ('int'), дата-время('datetime')
             или текстовый ('text').
@@ -242,7 +242,7 @@ class icAccRegistry(object):
     def get_dimension_requisite_names(self):
         """
         Имена реквизитов измерений.
-        @return: Список имен реквизитов измерений.
+        :return: Список имен реквизитов измерений.
         """
         names = [requisite.get('requisite_name', None) for requisite in self._dimension_requisites]
         return names
@@ -250,8 +250,8 @@ class icAccRegistry(object):
     def append_extended_requisite(self, requisite_name, requisite_type):
         """
         Добавление дополнительного реквизита.
-        @param requisite_name: Имя реквизита.
-        @param requisite_type: Тип реквизита.
+        :param requisite_name: Имя реквизита.
+        :param requisite_type: Тип реквизита.
             Тип реквизита дополнительного реквизита
             м.б. целый ('int'), вещественный ('float'),
             дата-время('datetime') или текстовый ('text').
@@ -263,7 +263,7 @@ class icAccRegistry(object):
     def get_extended_requisite_names(self):
         """
         Имена дополнительных реквизитов.
-        @return: Список имен дополнительных реквизитов.
+        :return: Список имен дополнительных реквизитов.
         """
         names = [requisite.get('requisite_name', None) for requisite in self._extended_requisites]
         return names
@@ -271,9 +271,9 @@ class icAccRegistry(object):
     def gen_column(self, requisite_name, requisite_type):
         """
         Генерация объекта колонки по описанию реквизита.
-        @param requisite_name: Имя реквизита.
-        @param requisite_type: Тип реквизита.
-        @return: Объект колонки sqlalchemy или None в
+        :param requisite_name: Имя реквизита.
+        :param requisite_type: Тип реквизита.
+        :return: Объект колонки sqlalchemy или None в
             случае ошибки.
         """
         # Привести все имена к нижнему регистру
@@ -295,9 +295,9 @@ class icAccRegistry(object):
     def gen_table(self, table_name, requisites):
         """
         Генерация объекта таблицы по описанию реквизитов.
-        @param table_name: Имя таблицы.
-        @param requisites: Список описаний реквизитов.
-        @return: Объект таблицы sqlalchemy или None
+        :param table_name: Имя таблицы.
+        :param requisites: Список описаний реквизитов.
+        :return: Объект таблицы sqlalchemy или None
             в случае ошибки.
         """
         metadata = sqlalchemy.MetaData(self._connection)
@@ -309,7 +309,7 @@ class icAccRegistry(object):
     def _get_operation_requisites(self):
         """
         Список реквизитов-полей таблицы движения
-        @return: Список словарей описания полей:
+        :return: Список словарей описания полей:
             [{'requisite_name': <Имя поля>,
             'requisite_type': <Тип поля>}, ...]
         """
@@ -333,8 +333,8 @@ class icAccRegistry(object):
         '+' - это операция прихода.
         '-' - это операция расхода.
         А также поле даты-времени операции.
-        @param operation_table_name: Имя таблицы движений.
-        @return: Объект таблицы движений или None в случае ошибки.
+        :param operation_table_name: Имя таблицы движений.
+        :return: Объект таблицы движений или None в случае ошибки.
         """
         if operation_table_name is None:
             operation_table_name = self._operation_table_name
@@ -347,7 +347,7 @@ class icAccRegistry(object):
     def _get_result_requisites(self):
         """
         Список реквизитов-полей итоговой таблицы.
-        @return: Список словарей описания полей:
+        :return: Список словарей описания полей:
             [{'requisite_name': <Имя поля>,
             'requisite_type': <Тип поля>}, ...]
         """
@@ -357,8 +357,8 @@ class icAccRegistry(object):
     def create_result_table(self, result_table_name=None):
         """
         Создание таблицы итогов.
-        @param result_table_name: Имя итоговой таблицы.
-        @return: Объект итоговой таблицы или None в случае ошибки.
+        :param result_table_name: Имя итоговой таблицы.
+        :return: Объект итоговой таблицы или None в случае ошибки.
         """
         if result_table_name is None:
             result_table_name = self._result_table_name
@@ -372,8 +372,8 @@ class icAccRegistry(object):
         """
         Определить по значениям реквизитов какую операция
         осуществляется. Приход?
-        @param requisite_values: Значения реквизитов.
-        @return: True - приход. False - нет.
+        :param requisite_values: Значения реквизитов.
+        :return: True - приход. False - нет.
         """
         code = requisite_values.get(CODE_OPERATION_FIELD, None)
         return code == RECEIPT_OPERATION_CODE
@@ -382,8 +382,8 @@ class icAccRegistry(object):
         """
         Определить по значениям реквизитов какую операция
         осуществляется. Расход?
-        @param requisite_values: Значения реквизитов.
-        @return: True - расход. False - нет.
+        :param requisite_values: Значения реквизитов.
+        :return: True - расход. False - нет.
         """
         code = requisite_values.get(CODE_OPERATION_FIELD, None)
         return code == EXPENSE_OPERATION_CODE
@@ -395,8 +395,8 @@ class icAccRegistry(object):
         бизнес объекта. И при добавлении нового бизнесс объекта
         в таком случае необходимо инициализировать его уникальный
         идентификатор.
-        @param table: Объект таблицы sqlalchemy.
-        @return: True/False.
+        :param table: Объект таблицы sqlalchemy.
+        :return: True/False.
         """
         mapper = sqlalchemy.inspect(table)
         column_names = mapper.columns.keys()
@@ -407,11 +407,11 @@ class icAccRegistry(object):
                       requisite_values):
         """
         Выполнение операции движения. Внутреняя функция.
-        @param transaction: Объект транзакции-сессии (sqlalchemy).
-        @param operation_table: Объект таблицы операций движения (sqlalchemy).
-        @param result_table: Объект итоговой таблицы (sqlalchemy).
-        @param requisite_values: Значения реквизитов.
-        @return: True - операция прошла успешно.
+        :param transaction: Объект транзакции-сессии (sqlalchemy).
+        :param operation_table: Объект таблицы операций движения (sqlalchemy).
+        :param result_table: Объект итоговой таблицы (sqlalchemy).
+        :param requisite_values: Значения реквизитов.
+        :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
             Транзакция откатила выполнение операции.
         """
@@ -471,8 +471,8 @@ class icAccRegistry(object):
         """
         Отфильтровать только небходимые значения реквизитов
         для таблицы операций движения.
-        @param requisite_values: Значения реквизитов.
-        @return: Список реквизитов используемых в регистре.
+        :param requisite_values: Значения реквизитов.
+        :return: Список реквизитов используемых в регистре.
         """
         used_requisite_names = [CODE_OPERATION_FIELD,
                                 DT_OPERATION_FIELD,
@@ -485,8 +485,8 @@ class icAccRegistry(object):
         """
         Отфильтровать только небходимые значения реквизитов
         для таблицы итогов.
-        @param requisite_values: Значения реквизитов.
-        @return: Список реквизитов используемых в регистре.
+        :param requisite_values: Значения реквизитов.
+        :return: Список реквизитов используемых в регистре.
         """
         used_requisite_names = [requisite['requisite_name'] for requisite in self._dimension_requisites] + \
                                [requisite['requisite_name'] for requisite in self._resource_requisites] + \
@@ -496,8 +496,8 @@ class icAccRegistry(object):
     def do_operation(self, **requisite_values):
         """
         Выполнение операции движения.
-        @param requisite_values: Значения реквизитов.
-        @return: True - операция прошла успешно.
+        :param requisite_values: Значения реквизитов.
+        :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
             Транзакция откатила выполнение операции.
         """
@@ -526,8 +526,8 @@ class icAccRegistry(object):
     def undo_operation(self, **requisite_values):
         """
         Отмена выполнения операции движения.
-        @param requisite_values: Значения реквизитов.
-        @return: True - Отмена операции прошла успешно.
+        :param requisite_values: Значения реквизитов.
+        :return: True - Отмена операции прошла успешно.
             False - Отмена операции не закончена по причине какой-то ошибки.
             Транзакция откатила выполнение операции.
         """
@@ -638,8 +638,8 @@ class icAccRegistry(object):
     def do_operations(self, requisite_values_list):
         """
         Групповое выполнение операций движения.
-        @param requisite_values_list: Список словарей значений реквизитов.
-        @return: True - операция прошла успешно.
+        :param requisite_values_list: Список словарей значений реквизитов.
+        :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
             Транзакция откатила выполнение операции.
         """
@@ -671,8 +671,8 @@ class icAccRegistry(object):
     def receipt(self, **requisite_values):
         """
         Приход.
-        @param requisite_values: Значения реквизитов.
-        @return: True - операция прошла успешно.
+        :param requisite_values: Значения реквизитов.
+        :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
             Транзакция откатила выполнение операции.
         """
@@ -682,8 +682,8 @@ class icAccRegistry(object):
     def expense(self, **requisite_values):
         """
         Расход.
-        @param requisite_values: Значения реквизитов.
-        @return: True - операция прошла успешно.
+        :param requisite_values: Значения реквизитов.
+        :return: True - операция прошла успешно.
             False - Операция не закончена по причине какой-то ошибки.
             Транзакция откатила выполнение операции.
         """
@@ -695,9 +695,9 @@ class icAccRegistry(object):
         Удаление старых(не актуальных) операций
         для уменьшения размера таблицы операций движения.
         Бывают задачи, в которых старые движения не нужны.
-        @param dt_actual: Дата-время, с которой данные считаются
+        :param dt_actual: Дата-время, с которой данные считаются
             актуальными. Если None, то берется сегодняшняя дата.
-        @return: True/False.
+        :return: True/False.
         """
         if dt_actual is None:
             dt_actual = datetime.date.today()

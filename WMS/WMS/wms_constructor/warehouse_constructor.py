@@ -20,8 +20,8 @@ class icWMSWarehouseContructorCtrl(wx.ScrolledWindow):
     def __init__(self, parent, ID=-1):
         """
         Конструктор.
-        @param parent: Родительское wx.Window окно.
-        @param ID: Идентификатор wx.ID.
+        :param parent: Родительское wx.Window окно.
+        :param ID: Идентификатор wx.ID.
         """
         wx.ScrolledWindow.__init__(self, parent, ID)
         self.shapes = []

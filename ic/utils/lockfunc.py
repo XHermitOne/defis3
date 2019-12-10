@@ -53,9 +53,9 @@ UNKNOWN_COMPUTER = u'Компьютер не определен'
 def LockRecord(table, record, message=None):
     """
     Блокировка записи по имени/номеру таблицы и номеру записи
-    @param table: -имя таблицы (int/String)
-    @param record:  -номер записи (int/String)
-    @param message: -тестовое сообщение (небязательное)
+    :param table: -имя таблицы (int/String)
+    :param record:  -номер записи (int/String)
+    :param message: -тестовое сообщение (небязательное)
     """
     global ERROR_CODE
     ERROR_CODE = 0
@@ -107,9 +107,9 @@ def LockRecord(table, record, message=None):
 def unLockRecord(table, record):
     """
     Разблокировка записи по имени/номеру таблицы и номеру записи.
-    @type table: C{int/string}
-    @param table: Имя таблицы.
-    @type record: C{int/string}
+    :type table: C{int/string}
+    :param table: Имя таблицы.
+    :type record: C{int/string}
     @parma record: Номер записи.
     """
     global ERROR_CODE
@@ -153,9 +153,9 @@ def isLockTable(table):
 def readMessage(table, record):
     """
     Чтение текста собщения, если оно есть.
-    @type table: C{int/string}
-    @param table: Имя таблицы.
-    @type record: C{int/string}
+    :type table: C{int/string}
+    :param table: Имя таблицы.
+    :type record: C{int/string}
     @parma record: Номер записи.
     """
     ret = None
@@ -184,9 +184,9 @@ def readMessage(table, record):
 def isLockRecord(table, record):
     """
     Проверка на блокировку записи.
-    @type table: C{int/string}
-    @param table: Имя таблицы.
-    @type record: C{int/string}
+    :type table: C{int/string}
+    :param table: Имя таблицы.
+    :type record: C{int/string}
     @parma record: Номер записи.
     """
     ret = None
@@ -255,9 +255,9 @@ def getLockDir():
 def DelMyLockInDir(LockMyID_, LockDir_, DirFilesLock_):
     """
     Удалить блокировки только из указанной папки.
-    @param LockMyID_: Идентификация хозяина блокировок.
-    @param LockDir_: Папка блокировок.
-    @param DirFilesLock_: Имена файлов и папок в директории lock_dir
+    :param LockMyID_: Идентификация хозяина блокировок.
+    :param LockDir_: Папка блокировок.
+    :param DirFilesLock_: Имена файлов и папок в директории lock_dir
     """
     try:
         # Отфильтровать только файлы
@@ -289,8 +289,8 @@ def DelMyLockInDir(LockMyID_, LockDir_, DirFilesLock_):
 def DelMyLock(LockMyID_=None, LockDir_=LOCK_DIR):
     """
     Функция рекурсивного удаления блокировок записей.
-    @param LockMyID_: Идентификация хозяина блокировок.
-    @param LockDir_: Папка блокировок.
+    :param LockMyID_: Идентификация хозяина блокировок.
+    :param LockDir_: Папка блокировок.
     """
     if not LockMyID_:
         LockMyID_ = GetMyHostName()
@@ -301,9 +301,9 @@ def DelMyLock(LockMyID_=None, LockDir_=LOCK_DIR):
 def LockFile(FileName_, LockRecord_=None):
     """
     Блокировка файла.
-    @param FileName_: Полное имя блокируемого файла.
-    @param LockRecord_: Запись блокировки.
-    @return: Возвращает кортеж:
+    :param FileName_: Полное имя блокируемого файла.
+    :param LockRecord_: Запись блокировки.
+    :return: Возвращает кортеж:
         (результат выполения операции, запись блокировки).
     """
     lock_file_flag = False  # Флаг блокировки файла
@@ -361,8 +361,8 @@ def LockFile(FileName_, LockRecord_=None):
 def ReadLockRecord(LockFile_):
     """
     Прочитать запись блокировки из файла блокировки.
-    @param LockFile_: Имя файла блокировки.
-    @return: Возвращает запись блокировки или None в случае ошибки.
+    :param LockFile_: Имя файла блокировки.
+    :return: Возвращает запись блокировки или None в случае ошибки.
     """
     f = None
     lock_file = None
@@ -394,8 +394,8 @@ def ReadLockRecord(LockFile_):
 def IsLockedFile(FileName_):
     """
     Проверка блокировки файла.
-    @param FileName_: Имя файла.
-    @return: Возвращает результат True/False.
+    :param FileName_: Имя файла.
+    :return: Возвращает результат True/False.
     """
     # Сгенерировать имя файла блокировки
     lock_file = os.path.splitext(FileName_)[0]+LOCK_FILE_EXT
@@ -405,7 +405,7 @@ def IsLockedFile(FileName_):
 def ComputerName():
     """
     Имя хоста.
-    @return: Получит имя компа в сети.
+    :return: Получит имя компа в сети.
     """
     comp_name = None
     if 'COMPUTERNAME' in os.environ:
@@ -433,13 +433,13 @@ def GetMyHostName():
 def UnLockFile(FileName_, **If_):
     """
     Разблокировать файл.
-    @param FileName_: Имя файла.
-    @param If_: Условие проверки разблокировки.
+    :param FileName_: Имя файла.
+    :param If_: Условие проверки разблокировки.
         Ключ записи блокировки=значение.
         Проверка производится по 'И'.
         Если такого ключа в записи нет,
         то его значение берется None.
-    @return: Возвращает результат True/False.
+    :return: Возвращает результат True/False.
     """
     # Сгенерировать имя файла блокировки
     lock_file = os.path.splitext(FileName_)[0]+LOCK_FILE_EXT
@@ -468,10 +468,10 @@ def _UnLockFileWalk(args, CurDir_, CurNames_):
     """
     Вспомогательная функция разблокировки файла на уровне каталога по имени
     компьютера. Используется в функции os.path.walk().
-    @param args: Кортеж (Имя компьютера файлы которого нужно раблокировать,
+    :param args: Кортеж (Имя компьютера файлы которого нужно раблокировать,
         Имя пользователя).
-    @param CurDir_: Текущий директорий.
-    @param CurNames_: Имена поддиректорий и файлов в текущей директории.
+    :param CurDir_: Текущий директорий.
+    :param CurNames_: Имена поддиректорий и файлов в текущей директории.
     """
     computer_name = args[0]
     user_name = args[1]
@@ -500,9 +500,9 @@ def _UnLockFileWalk(args, CurDir_, CurNames_):
 def UnLockAllFile(LockDir_, ComputerName_=None, UserName_=None):
     """
     Разблокировка всех файлов.
-    @param LockDir_: Директория блокировок.
-    @param ComputerName_: Имя компьютера файлы которого нужно раблокировать.
-    @return: Возвращает результат True/False.
+    :param LockDir_: Директория блокировок.
+    :param ComputerName_: Имя компьютера файлы которого нужно раблокировать.
+    :return: Возвращает результат True/False.
     """
     if not ComputerName_:
         ComputerName_ = ComputerName()
@@ -522,7 +522,7 @@ class icLockSystem:
     def __init__(self, LockDir_=None):
         """
         Конструктор.
-        @param LockDir_: Папка блокировки.
+        :param LockDir_: Папка блокировки.
         """
         if LockDir_ is None:
             lock_dir = getLockDir()
@@ -535,7 +535,7 @@ class icLockSystem:
     def lockDirRes(self, LockName_):
         """
         Поставить блокировку в виде директории.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
             М.б. реализовано в виде списка имен,
             что определяет путь к директории.
         """
@@ -544,7 +544,7 @@ class icLockSystem:
     def unLockDirRes(self, LockName_):
         """
         Убрать блокировку в виде директории.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
             М.б. реализовано в виде списка имен,
             что определяет путь к директории.
         """
@@ -554,7 +554,7 @@ class icLockSystem:
     def _getLockFileName(self, LockName_):
         """
         Определитьимя файла блокировки по имени блокировки.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
         """
         lock_name = DEFAULT_LOCK_NAME
         lock_file_name = ''
@@ -573,11 +573,11 @@ class icLockSystem:
     def lockFileRes(self, LockName_, LockRec_=None, unLockMy=True):
         """
         Поставить блокировку в виде файла.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
             М.б. реализовано в виде списка имен,
             что определяет путь к файлу.
-        @param LockRec_: Запись блокировки.
-        @param unLockMy: Автоматическая разблокировка моих блокировок?
+        :param LockRec_: Запись блокировки.
+        :param unLockMy: Автоматическая разблокировка моих блокировок?
         """
         lock_file_name = self._getLockFileName(LockName_)
         if LockRec_ is None:
@@ -594,7 +594,7 @@ class icLockSystem:
     def unLockFileRes(self, LockName_):
         """
         Убрать блокировку в виде файла.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
             М.б. реализовано в виде списка имен,
             что определяет путь к файлу.
         """
@@ -604,9 +604,9 @@ class icLockSystem:
     def isMyLockRes(self, LockName_, LockRec_=None):
         """
         Проверка является ли ресурс заблокирован мной.
-        @param LockName_: Имя блокировки.
-        @param LockRec_: Запись блокировки.
-        @return: True - ресурс заблокирован мной,
+        :param LockName_: Имя блокировки.
+        :param LockRec_: Запись блокировки.
+        :return: True - ресурс заблокирован мной,
             False - ресурс вообще не заблокирован или заблокирован не мной.
         """
         if LockRec_ is None:
@@ -621,8 +621,8 @@ class icLockSystem:
     def isLockFileRes(self, LockName_, unLockMy=True):
         """
         Существует ли файловая блокировка с именем.
-        @param LockName_: Имя блокировки.
-        @param unLockMy: Автоматическая разблокировка моих блокировок?
+        :param LockName_: Имя блокировки.
+        :param unLockMy: Автоматическая разблокировка моих блокировок?
         """
         if unLockMy and self.isMyLockRes(LockName_):
             # Это мной поставленная блокировка. Поэтому мы можем снять ее
@@ -634,7 +634,7 @@ class icLockSystem:
     def getLockRec(self, LockName_):
         """
         Определить запись блокировки.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
         """
         lock_file_name = self._getLockFileName(LockName_)
         return ReadLockRecord(lock_file_name)
@@ -642,7 +642,7 @@ class icLockSystem:
     def getLockUsername(self, LockName_):
         """
         Определить имя пользователя блокировки.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
         """
         if self.isLockFileRes(LockName_):
             lock_rec = self.getLockRec(LockName_)
@@ -652,7 +652,7 @@ class icLockSystem:
     def getLockComputer(self, LockName_):
         """
         Определить имя компьютера блокировки.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
         """
         if self.isLockFileRes(LockName_):
             lock_rec = self.getLockRec(LockName_)
@@ -663,7 +663,7 @@ class icLockSystem:
     def isLockRes(self, LockName_):
         """
         Существует ли блокировка с именем.
-        @param LockName_: Имя блокировки.
+        :param LockName_: Имя блокировки.
         """
         pass
         

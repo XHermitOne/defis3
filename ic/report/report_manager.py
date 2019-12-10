@@ -51,9 +51,9 @@ class icReportManager(object):
     def __init__(self, report_exec_filename=None, report_dir=None):
         """
         Конструктор.
-        @param report_exec_filename: Полный путь до исполняемого файла <icreport.py>.
+        :param report_exec_filename: Полный путь до исполняемого файла <icreport.py>.
             Если не определен, то берется из конфигурационного файла.
-        @param report_dir: Папка отчетов, если не определена, то
+        :param report_dir: Папка отчетов, если не определена, то
             будет использоваться папка reports d папке текущего проекта.
         """
         self._report_exec_filename = config.get_glob_var('DEFAULT_REPORT_EXEC_FILENAME') if report_exec_filename is None else report_exec_filename
@@ -89,7 +89,7 @@ class icReportManager(object):
         Папка отчетов.
         Папка отчетов по умолчанию всегда находиться в папке проекта.
         Например: /defis/NSI/NSI/reports.
-        @return: Полный путь до директории отчетов.
+        :return: Полный путь до директории отчетов.
         """
         if self._report_dir is None:
             prj_dir = glob_functions.getVar('PRJ_DIR')
@@ -116,15 +116,15 @@ class icReportManager(object):
                      stylelib_filename=None, variables=None):
         """
         Запуск генерации отчета и вывод его на печать.
-        @param report_filename: Имя файла шаблона отчета.
+        :param report_filename: Имя файла шаблона отчета.
             Пути задаются относительно папки отчетов.
-        @param db_url: Connection string в виде url. Например
+        :param db_url: Connection string в виде url. Например
             postgresql+psycopg2://postgres:postgres@10.0.0.3:5432/realization.
-        @param sql: Запрос SQL.
-        @param command: Комманда после генерации. print/preview/export.
-        @param stylelib_filename: Файл библиотеки стилей.
-        @param variables: Словарь переменных для заполнения отчета.
-        @return: True/False.
+        :param sql: Запрос SQL.
+        :param command: Комманда после генерации. print/preview/export.
+        :param stylelib_filename: Файл библиотеки стилей.
+        :param variables: Словарь переменных для заполнения отчета.
+        :return: True/False.
         """
         try:
             if os.path.exists(self._report_exec_filename):
@@ -152,15 +152,15 @@ class icReportManager(object):
                        stylelib_filename=None, variables=None):
         """
         Запуск генерации отчета с предварительным просмотром.
-        @param report_filename: Имя файла шаблона отчета.
+        :param report_filename: Имя файла шаблона отчета.
             Пути задаются относительно папки отчетов.
-        @param db_url: Connection string в виде url. Например
+        :param db_url: Connection string в виде url. Например
             postgresql+psycopg2://postgres:postgres@10.0.0.3:5432/realization.
-        @param sql: Запрос SQL.
-        @param command: Комманда после генерации. print/preview/export.
-        @param stylelib_filename: Файл библиотеки стилей.
-        @param variables: Словарь дополнительных переменных.
-        @return: True/False.
+        :param sql: Запрос SQL.
+        :param command: Комманда после генерации. print/preview/export.
+        :param stylelib_filename: Файл библиотеки стилей.
+        :param variables: Словарь дополнительных переменных.
+        :return: True/False.
         """
         try:
             if os.path.exists(self._report_exec_filename):
@@ -188,15 +188,15 @@ class icReportManager(object):
                       stylelib_filename=None, variables=None):
         """
         Запуск генерации отчета с конвертацией в офисную программу.
-        @param report_filename: Имя файла шаблона отчета.
+        :param report_filename: Имя файла шаблона отчета.
             Пути задаются относительно папки отчетов.
-        @param db_url: Connection string в виде url. Например
+        :param db_url: Connection string в виде url. Например
             postgresql+psycopg2://postgres:postgres@10.0.0.3:5432/realization.
-        @param sql: Запрос SQL.
-        @param command: Комманда после генерации. print/preview/export.
-        @param stylelib_filename: Файл библиотеки стилей.
-        @param variables: Словарь дополнительных переменных.
-        @return: True/False.
+        :param sql: Запрос SQL.
+        :param command: Комманда после генерации. print/preview/export.
+        :param stylelib_filename: Файл библиотеки стилей.
+        :param variables: Словарь дополнительных переменных.
+        :return: True/False.
         """
         try:
             if os.path.exists(self._report_exec_filename):
@@ -224,17 +224,17 @@ class icReportManager(object):
                            stylelib_filename=None, variables=None):
         """
         Выбрать действие, которое хотим сделать с отчетом, после генерации отчета.
-        @param report_filename: Имя файла шаблона отчета.
+        :param report_filename: Имя файла шаблона отчета.
             Пути задаются относительно папки отчетов.
-        @param parent: Родительское wxWindow окно для диалога.
+        :param parent: Родительское wxWindow окно для диалога.
             Если не указано, то береться wx.GetAppt().GetTopWindow().
-        @param db_url: Connection string в виде url. Например
+        :param db_url: Connection string в виде url. Например
             postgresql+psycopg2://postgres:postgres@10.0.0.3:5432/realization.
-        @param sql: Запрос SQL.
-        @param command: Комманда после генерации. print/preview/export.
-        @param stylelib_filename: Файл библиотеки стилей.
-        @param variables: Словарь дополнительных переменных.
-        @return: True/False.
+        :param sql: Запрос SQL.
+        :param command: Комманда после генерации. print/preview/export.
+        :param stylelib_filename: Файл библиотеки стилей.
+        :param variables: Словарь дополнительных переменных.
+        :return: True/False.
         """
         try:
             if os.path.exists(self._report_exec_filename):
@@ -258,9 +258,9 @@ class icReportManager(object):
     def _addCmdVars(self, cmd, variables=None):
         """
         Добавить дополнительные переменные в командную строку.
-        @param cmd: Строка команды.
-        @param variables: Словарь дополнительных переменных.
-        @return: Строка команды с дополнительными параметрами.
+        :param cmd: Строка команды.
+        :param variables: Словарь дополнительных переменных.
+        :return: Строка команды с дополнительными параметрами.
         """
         if variables:
             cmd += ' ' + ' '.join(['--var="%s=%s"' % (var_name, var_value) for var_name, var_value in variables.items()])
@@ -269,10 +269,10 @@ class icReportManager(object):
     def _addCmdDBURL(self, cmd, db_url=None):
         """
         Добавить БД URL в командную строку.
-        @param cmd: Строка команды.
-        @param db_url: Connection string в виде url. Например
+        :param cmd: Строка команды.
+        :param db_url: Connection string в виде url. Например
             postgresql+psycopg2://postgres:postgres@10.0.0.3:5432/realization.
-        @return: Строка команды с дополнительными параметрами.
+        :return: Строка команды с дополнительными параметрами.
         """
         if db_url:
             cmd += ' --db="%s"' % db_url
@@ -281,9 +281,9 @@ class icReportManager(object):
     def _addCmdSQL(self, cmd, sql=None):
         """
         Добавить SQL в командную строку.
-        @param cmd: Строка команды.
-        @param sql: Запрос SQL.
-        @return: Строка команды с дополнительными параметрами.
+        :param cmd: Строка команды.
+        :param sql: Запрос SQL.
+        :return: Строка команды с дополнительными параметрами.
         """
         if sql:
             cmd += ' --sql="%s"' % sql
@@ -292,14 +292,14 @@ class icReportManager(object):
     def _addCmdPostCommand(self, cmd, command=None):
         """
         Добавить команду после генерации в командную строку.
-        @param cmd: Строка команды.
-        @param command: Комманда после генерации.
+        :param cmd: Строка команды.
+        :param command: Комманда после генерации.
             Все возможне команды определены константами в данном модуле:
                 DO_COMMAND_PRINT = 'print'
                 DO_COMMAND_PREVIEW = 'preview'
                 DO_COMMAND_EXPORT = 'export'
                 DO_COMMAND_SELECT = 'select'
-        @return: Строка команды с дополнительными параметрами.
+        :return: Строка команды с дополнительными параметрами.
         """
         if command:
             cmd += ' --%s' % command
@@ -308,9 +308,9 @@ class icReportManager(object):
     def _addCmdStyleLib(self, cmd, stylelib_filename=None):
         """
         Добавить файл библиотеки стилей в командную строку.
-        @param cmd: Строка команды.
-        @param stylelib_filename: Файл библиотеки стилей.
-        @return: Строка команды с дополнительными параметрами.
+        :param cmd: Строка команды.
+        :param stylelib_filename: Файл библиотеки стилей.
+        :return: Строка команды с дополнительными параметрами.
         """
         if stylelib_filename:
             cmd += ' --stylelib="%s"' % stylelib_filename
@@ -320,14 +320,14 @@ class icReportManager(object):
                        stylelib_filename=None, variables=None):
         """
         Добавление в командную строку дополнительных параметров запуска.
-        @param cmd: Строка команды.
-        @param db_url: Connection string в виде url. Например
+        :param cmd: Строка команды.
+        :param db_url: Connection string в виде url. Например
             postgresql+psycopg2://postgres:postgres@10.0.0.3:5432/realization.
-        @param sql: Запрос SQL.
-        @param command: Комманда после генерации. print/preview/export.
-        @param stylelib_filename: Файл библиотеки стилей.
-        @param variables: Словарь дополнительных переменных.
-        @return: Строка команды с дополнительными параметрами.
+        :param sql: Запрос SQL.
+        :param command: Комманда после генерации. print/preview/export.
+        :param stylelib_filename: Файл библиотеки стилей.
+        :param variables: Словарь дополнительных переменных.
+        :return: Строка команды с дополнительными параметрами.
         """
         cmd = self._addCmdDBURL(cmd, db_url)
         cmd = self._addCmdSQL(cmd, sql)
@@ -341,17 +341,17 @@ class icReportManager(object):
                            stylelib_filename=None, variables=None):
         """
         Сначала выбрать действие, которое хотим сделать с отчетом.
-        @param report_filename: Имя файла шаблона отчета.
+        :param report_filename: Имя файла шаблона отчета.
             Пути задаются относительно папки отчетов.
-        @param parent: Родительское wxWindow окно для диалога.
+        :param parent: Родительское wxWindow окно для диалога.
             Если не указано, то береться wx.GetAppt().GetTopWindow().
-        @param db_url: Connection string в виде url. Например
+        :param db_url: Connection string в виде url. Например
             postgresql+psycopg2://postgres:postgres@10.0.0.3:5432/realization.
-        @param sql: Запрос SQL.
-        @param command: Комманда после генерации. print/preview/export.
-        @param stylelib_filename: Файл библиотеки стилей.
-        @param variables: Словарь дополнительных переменных.
-        @return: True/False.
+        :param sql: Запрос SQL.
+        :param command: Комманда после генерации. print/preview/export.
+        :param stylelib_filename: Файл библиотеки стилей.
+        :param variables: Словарь дополнительных переменных.
+        :return: True/False.
         """
         try:
             if parent is None:
@@ -387,9 +387,9 @@ class icReportManager(object):
     def getReportResourceFilename(self, report_filename='', report_dir=''):
         """
         Получить полное имя файла шаблона отчета.
-        @param report_filename: Имя файла отчета в кратком виде.
-        @param report_dir: Папка отчетов.
-        @return: Полное имя файла отчета.
+        :param report_filename: Имя файла отчета в кратком виде.
+        :param report_dir: Папка отчетов.
+        :return: Полное имя файла отчета.
         """
         # Проверить расширение
         if not report_filename.endswith(DEFAULT_REPORT_FILE_EXT):
@@ -411,16 +411,16 @@ class icReportManager(object):
     def loadReportResource(self, report_filename=''):
         """
         Загрузить ресурс шаблона отчета.
-        @param report_filename: Полное имя файла шаблона отчета.
-        @return: Данные шаблона отчета.
+        :param report_filename: Полное имя файла шаблона отчета.
+        :return: Данные шаблона отчета.
         """
         return resfunc.loadResource(report_filename)
 
     def getReportDescription(self, report_filename):
         """
         Получить описание отчета
-        @param report_filename: Имя шаблона отчета.
-        @return: Описание отчета или имя файла отчета, если не определено описание.
+        :param report_filename: Имя шаблона отчета.
+        :return: Описание отчета или имя файла отчета, если не определено описание.
         """
         res_filename = self.getReportResourceFilename(report_filename, self.getReportDir())
         report_res = self.loadReportResource(res_filename)

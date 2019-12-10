@@ -17,9 +17,9 @@ _ = wx.GetTranslation
 def icNamesSQLObj2SQL(Txt_, DataClassName_, DataClassScheme_=None):
     """
     Перевод имен таблиц и полей из контекста SQLObject в контекст sqlite.
-    @param Txt_: Корректируемый текст.
-    @param DataClassName_: Имя класса данных (класса таблицы).
-    @param DataClassScheme_: Схема описания класса данных (класса таблицы).
+    :param Txt_: Корректируемый текст.
+    :param DataClassName_: Имя класса данных (класса таблицы).
+    :param DataClassScheme_: Схема описания класса данных (класса таблицы).
     """
     try:
         txt = Txt_
@@ -46,8 +46,8 @@ def icQuerySQLObj2SQL(SQLTxt_, ResTab_):
     """
     Преобразование имен в тексте SQL запроса в контексте SQLObject в имена
     в контексте sqlite.
-    @param SQLTxt_: Текст SQL запроса.
-    @param ResTab_: Ресурсное описание таблиц.
+    :param SQLTxt_: Текст SQL запроса.
+    :param ResTab_: Ресурсное описание таблиц.
     """
     try:
         sql_txt = SQLTxt_
@@ -79,8 +79,8 @@ def fcmpLen(x, y):
 def sortLen(lst):
     """
     Функция сортирует в порядке уменьшения длины элементов списка.
-    @type lst: C{list}
-    @param lst: Список, который надо отсортировать.
+    :type lst: C{list}
+    :param lst: Список, который надо отсортировать.
     """
     try:
         lst.sort(fcmpLen)
@@ -102,8 +102,8 @@ def dictFilterToSQL(flt, tables, _id='id'):
     
         B{Пример:} C{{'f1':['gh', 2, '123', '3MM']}}
         
-    @type flt: C{dictionary}
-    @param flt: Словарь задающий структурный фильтр.
+    :type flt: C{dictionary}
+    :param flt: Словарь задающий структурный фильтр.
     """
     if isinstance(flt, str):
         return flt
@@ -156,8 +156,8 @@ def convQueryToSQL(query, classes=None):
     """
     Преобразует запрос c SQLObject-ими именами в полноценный SQL запрос
     к базе.
-    @type classes: C{list | tuple}
-    @param classes: Список
+    :type classes: C{list | tuple}
+    :param classes: Список
     """
     dictRepl = {}
     if type(classes) in [list, tuple]:
@@ -187,13 +187,13 @@ def convQueryToSQL(query, classes=None):
 def replSQLObjNamesToSQL(query, dictRepl):
     """
     Преобразует запрос имен в SQL запросе.
-    @type flt: C{dictionary | string}
-    @param flt: Словарь задающий фильтр.
-    @type dictRepl: C{dictionary}
-    @param dictRepl: Словарь замен имен из представления SQLObject в
+    :type flt: C{dictionary | string}
+    :param flt: Словарь задающий фильтр.
+    :type dictRepl: C{dictionary}
+    :param dictRepl: Словарь замен имен из представления SQLObject в
         представление SQL выражений.
-    @rtype: C{string}
-    @return: SQL выражение на фильтрацию объектов класса данных.
+    :rtype: C{string}
+    :return: SQL выражение на фильтрацию объектов класса данных.
     """
     if isinstance(query, str):
         return None
@@ -217,17 +217,17 @@ def replSQLObjNamesToSQL(query, dictRepl):
 def isInFilteredVal(flt, fld, value, isVerSize=True):
     """
     Функция проверяет принадлежит ли значение заданому фильтру.
-    @type flt: C{dictionary}
-    @param flt: Словарь задающий структурный фильтр.
-    @type fld: C{string}
-    @param fld: Имя атрибута, для которого проверяется значение.
-    @type value: C{...}
-    @param value: Проверяемое значение.
-    @type isVerSize: C{bool}
-    @param isVerSize: Признак того, что размер значения не может быть больше
+    :type flt: C{dictionary}
+    :param flt: Словарь задающий структурный фильтр.
+    :type fld: C{string}
+    :param fld: Имя атрибута, для которого проверяется значение.
+    :type value: C{...}
+    :param value: Проверяемое значение.
+    :type isVerSize: C{bool}
+    :param isVerSize: Признак того, что размер значения не может быть больше
         размера шаблона.
-    @rtype: C{bool}
-    @return: Признак принадлежность значения заданному фильтру.
+    :rtype: C{bool}
+    :return: Признак принадлежность значения заданному фильтру.
     """
     if not isinstance(flt, dict):
         log.info(_('Unexpected filter type. Must be srting type or dictionary.'))
@@ -275,8 +275,8 @@ def isInFilteredVal(flt, fld, value, isVerSize=True):
 def InitValidValue(flt, fld, value):
     """
     Функция модифицирует значение под заданный шаблон.
-    @type flt: C{dictionary}
-    @param flt: Словарь задающий структурный фильтр. Действие фильта зависимости
+    :type flt: C{dictionary}
+    :param flt: Словарь задающий структурный фильтр. Действие фильта зависимости
         от типа значения словаря. Если:
             1) катеж, список - задает шаблон по подстрокам; если элемент списка/картежа
                строка размер и значение подстроки; если число, то только размер.
@@ -287,12 +287,12 @@ def InitValidValue(flt, fld, value):
                     'f3_0':['12','34'],            - шаблон '1234'
                     'f3':[2,'ASD', '##']}          - шаблон '**ASD##' (* - любой символ)
 
-    @type fld: C{string}
-    @param fld: Имя атрибута, для которого модифицируется значение.
-    @type value: C{...}
-    @param value: Проверяемое значение.
-    @rtype: C{string}
-    @return: Возвращает модифицированное значение. Не обозначенные позиции будут
+    :type fld: C{string}
+    :param fld: Имя атрибута, для которого модифицируется значение.
+    :type value: C{...}
+    :param value: Проверяемое значение.
+    :rtype: C{string}
+    :return: Возвращает модифицированное значение. Не обозначенные позиции будут
         заполнены '*'
     """
     if fld not in flt.keys():

@@ -22,9 +22,9 @@ MONTHS = (u'Январь', u'Февраль',
 def get_first_day_of_month(year, month):
     """
     Первый день месяца.
-    @param year: Год.
-    @param month: Месяц.
-    @return: Первый дата месяца.
+    :param year: Год.
+    :param month: Месяц.
+    :return: Первый дата месяца.
     """
     if not isinstance(year, int):
         year = int(year)
@@ -40,9 +40,9 @@ def get_first_day_of_month(year, month):
 def get_last_day_of_month(year, month):
     """
     Последний день месяца.
-    @param year: Год.
-    @param month: Месяц.
-    @return: Последняя дата месяца.
+    :param year: Год.
+    :param month: Месяц.
+    :return: Последняя дата месяца.
     """
     if not isinstance(year, int):
         year = int(year)
@@ -62,8 +62,8 @@ def get_last_day_of_month(year, month):
 def next_month(src_date):
     """
     Следующий месяц от заданного числа.
-    @param src_date: Исходная дата
-    @return: Новую расчетную дату.
+    :param src_date: Исходная дата
+    :return: Новую расчетную дату.
     """
     return src_date + datetime.timedelta(days=(src_date.max.day - src_date.day) + 1)
 
@@ -71,8 +71,8 @@ def next_month(src_date):
 def prev_month(src_date):
     """
     Предыдущий месяц от заданного числа.
-    @param src_date: Исходная дата
-    @return: Новую расчетную дату.
+    :param src_date: Исходная дата
+    :return: Новую расчетную дату.
     """
     result = src_date - datetime.timedelta(days=src_date.day)
     result.replace(day=1)
@@ -124,9 +124,9 @@ def loadYEAR():
 def get_min_date_time(date=None):
     """
     Время начала дня.
-    @param date: Дата datetime.date.
+    :param date: Дата datetime.date.
         Если не указана, то берется сегодняшняя системная дата.
-    @return: Время начала указанного дня. Например 2018-01-01 00:00:00.
+    :return: Время начала указанного дня. Например 2018-01-01 00:00:00.
     """
     if date is None:
         date = datetime.date.today()
@@ -138,9 +138,9 @@ def get_min_date_time(date=None):
 def get_max_date_time(date=None):
     """
     Время окончания дня.
-    @param date: Дата datetime.date.
+    :param date: Дата datetime.date.
         Если не указана, то берется сегодняшняя системная дата.
-    @return: Время окончания указанного дня.
+    :return: Время окончания указанного дня.
         Например 2018-01-01 23:59:59.
     """
     if date is None:
@@ -153,9 +153,9 @@ def get_max_date_time(date=None):
 def is_min_date_time(dt, cmp_microsecond=False):
     """
     Время начала дня?
-    @param dt: Дата-время datetime.datetime.
-    @param cmp_microsecond: Сравнивать микросекунды?
-    @return: True-да. Например 2018-01-01 00:00:00 / False - нет.
+    :param dt: Дата-время datetime.datetime.
+    :param cmp_microsecond: Сравнивать микросекунды?
+    :return: True-да. Например 2018-01-01 00:00:00 / False - нет.
     """
     if not cmp_microsecond:
         return dt.hour == 0 and dt.minute == 0 and dt.second == 0
@@ -165,9 +165,9 @@ def is_min_date_time(dt, cmp_microsecond=False):
 def is_max_date_time(dt, cmp_microsecond=False):
     """
     Время окончания дня?
-    @param dt: Дата-время datetime.datetime.
-    @param cmp_microsecond: Сравнивать микросекунды?
-    @return: True-да. Например 2018-01-01 23:59:59 / False - нет.
+    :param dt: Дата-время datetime.datetime.
+    :param cmp_microsecond: Сравнивать микросекунды?
+    :return: True-да. Например 2018-01-01 23:59:59 / False - нет.
     """
     max_dt = datetime.time.max
     if not cmp_microsecond:

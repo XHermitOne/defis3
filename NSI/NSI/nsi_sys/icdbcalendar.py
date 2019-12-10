@@ -33,8 +33,8 @@ class icDBCalendarProto(icsprav.icSpravProto):
     def __init__(self, sprav_manager=None, name=None):
         """
         Конструктор.
-        @param sprav_manager: Объект менеджера справочника.
-        @param name: Имя в списке менеджера справочников.
+        :param sprav_manager: Объект менеджера справочника.
+        :param name: Имя в списке менеджера справочников.
         """
         icsprav.icSpravProto.__init__(self, sprav_manager, name)
     
@@ -65,8 +65,8 @@ class icDBCalendarProto(icsprav.icSpravProto):
     def loadData(self, str_date, fmt=datetimefunc.DEFAULT_DATETIME_FMT):
         """
         Прочитать данные за день.
-        @param str_date: День в виде строки.
-        @param fmt: Формат строки.
+        :param str_date: День в виде строки.
+        :param fmt: Формат строки.
         """
         date_tuple = datetimefunc.DateTimeTuple(str_date, fmt)
         year_str = '%04d' % date_tuple[0]
@@ -81,9 +81,9 @@ class icDBCalendarProto(icsprav.icSpravProto):
     def saveData(self, record_dict, str_date, fmt=datetimefunc.DEFAULT_DATETIME_FMT):
         """
         Сохранить данные на день.
-        @param record_dict: Заполненный словарь записи.
-        @param str_date: День в виде строки.
-        @param fmt: Формат строки.
+        :param record_dict: Заполненный словарь записи.
+        :param str_date: День в виде строки.
+        :param fmt: Формат строки.
         """
         date_tuple = datetimefunc.DateTimeTuple(str_date, fmt)
         year_str = '%04d' % date_tuple[0]
@@ -124,7 +124,7 @@ class icDBCalendarProto(icsprav.icSpravProto):
     def generateYear(self, year):
         """
         Генерация календарного графика на год.
-        @param year: Указание года, за который нужно сгенерировать календарный график.
+        :param year: Указание года, за который нужно сгенерировать календарный график.
         """
         self._genYearRec(year)
         # Перебор по месяцам

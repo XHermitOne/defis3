@@ -6,8 +6,8 @@
 Ключ 'description' содержит описание полей таблицы (см. icDataSet) . Ключ 'data' содержит данные в виде списка записей. Запись в
 свою очередь представляется в виде списка значений полей. Привязка к имени поля осуществляется через описание.
 
-@type SPC_IC_SIMPLE_DATASET: C{Dictionary}
-@var SPC_IC_SIMPLE_DATASET: Спецификация на ресурсное описание компонента.
+:type SPC_IC_SIMPLE_DATASET: C{Dictionary}
+:var SPC_IC_SIMPLE_DATASET: Спецификация на ресурсное описание компонента.
 
     Описание ключей:
     - B{name = 'DefaultName'}: Имя объекта.
@@ -103,15 +103,15 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
     def __init__(self, id, component, logType=0, evalSpace={}, indxLst=None):
         """
         Конструктор для создания таблицы.
-        @type id: C{int}
-        @param id: Идентификатор объекта.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @param indxLst: Список колонок задающих индекс строки.
+        :type id: C{int}
+        :param id: Идентификатор объекта.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :param indxLst: Список колонок задающих индекс строки.
         """
         component = icSpcDefStruct(SPC_IC_SIMPLE_DATASET, component)
 
@@ -218,8 +218,8 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
     def getDefaultInitLst(self, gridtypes=None):
         """
         Определяет значение по умолчанию в зависимости от типа колонки.
-        @type gridtypes: C{list}
-        @param gridlist: Список типов колонок.
+        :type gridtypes: C{list}
+        :param gridlist: Список типов колонок.
         """
         self.init = {}
 
@@ -244,16 +244,16 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         Устанавливает значение поля. Если имя поля не найдено в источнике данных,
         то функция пытается выполнить функцию на запись по описанию колонки из ресурсного
         описания по аттрибуту 'setvalue'.
-        @param rec: Номер записи
-        @type rec: C{int}
-        @param fieldName: Имя поля
-        @type fieldName: C{string}
-        @param value: Значение
-        @type bReal: C{bool}
-        @param bReal: Параметр совместимости с icSQLObjDataSet.
-        @type bCtrl: C{bool}
-        @param bCtrl: Параметр совместимости с icSQLObjDataSet.
-        @return: Возвращает в случае успеха код контроля (0,1,2), в противном случае None.
+        :param rec: Номер записи
+        :type rec: C{int}
+        :param fieldName: Имя поля
+        :type fieldName: C{string}
+        :param value: Значение
+        :type bReal: C{bool}
+        :param bReal: Параметр совместимости с icSQLObjDataSet.
+        :type bCtrl: C{bool}
+        :param bCtrl: Параметр совместимости с icSQLObjDataSet.
+        :return: Возвращает в случае успеха код контроля (0,1,2), в противном случае None.
         """
         #   Проверка на права доступа к данному методу
         if not user_manager.canAuthent('wr', self.name, user_manager.ACC_DATA):
@@ -281,16 +281,16 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Функция по имени колонки и номеру записи возвращает значение
         из буфера.
-        @type rec: C{int}
-        @param rec: Номер строки.
-        @type fieldName: C{string}
-        @param fieldName: Имя поля.
-        @type bReal: C{bool}
-        @param bReal: Параметр совместимости с icSQLObjDataSet.
-        @type bFromBuff: C{bool}
-        @param bFromBuff: Параметр совместимости с icSQLObjDataSet.
-        @rtype: C{...}
-        @return: По имени колонки и номеру записи возвращает значение из буфера. Если поле или номер записи
+        :type rec: C{int}
+        :param rec: Номер строки.
+        :type fieldName: C{string}
+        :param fieldName: Имя поля.
+        :type bReal: C{bool}
+        :param bReal: Параметр совместимости с icSQLObjDataSet.
+        :type bFromBuff: C{bool}
+        :param bFromBuff: Параметр совместимости с icSQLObjDataSet.
+        :rtype: C{...}
+        :return: По имени колонки и номеру записи возвращает значение из буфера. Если поле или номер записи
             указаны не верно, то функция возвращает C{None}.
         """
         value = ''
@@ -324,15 +324,15 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         словарь обновлений (values) не определен, то обновления берутся из
         буфера изменений строки.
 
-        @type rec: C{int}
-        @param rec: Номер записи.
-        @type values: C{dictionary}
-        @param values: Словарь значений. В качестве ключей используются имена полей.
-        @type bReal: C{bool}
-        @param bReal: Параметр совместимости с icSQLObjDataSet.
-        @type bCtrl: C{bool}
-        @param bCtrl: Параметр совместимости с icSQLObjDataSet.
-        @return: Возвращает код контроля записи = IC_CTRL_OK.
+        :type rec: C{int}
+        :param rec: Номер записи.
+        :type values: C{dictionary}
+        :param values: Словарь значений. В качестве ключей используются имена полей.
+        :type bReal: C{bool}
+        :param bReal: Параметр совместимости с icSQLObjDataSet.
+        :type bCtrl: C{bool}
+        :param bCtrl: Параметр совместимости с icSQLObjDataSet.
+        :return: Возвращает код контроля записи = IC_CTRL_OK.
         """
         #   Если номер строки не указан, то номер записи определяем по положению курсора
         if rec is None:
@@ -365,17 +365,17 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Функция добавляет новую запись.
 
-        @param fieldName: Имя колонки.
-        @type fieldName: C{string}
-        @type values: C{dictionary}
-        @param values: Словарь известных значений. В качестве ключей имена полей,
+        :param fieldName: Имя колонки.
+        :type fieldName: C{string}
+        :type values: C{dictionary}
+        :param values: Словарь известных значений. В качестве ключей имена полей,
             значения полей в качестве значений.
-        @type postAddExpr: C{string}
-        @param postAddExpr: Параметр совместимости с icSQLObjDataSet.
-        @type uuid_postAddExpr: C{string}
-        @return uuid_postAddExpr: Параметр совместимости с icSQLObjDataSet.
-        @return: Возвращает признак успешного выполнения.
-        @rtype: C{bool}
+        :type postAddExpr: C{string}
+        :param postAddExpr: Параметр совместимости с icSQLObjDataSet.
+        :type uuid_postAddExpr: C{string}
+        :return uuid_postAddExpr: Параметр совместимости с icSQLObjDataSet.
+        :return: Возвращает признак успешного выполнения.
+        :rtype: C{bool}
         """
         #   Проверка на права доступа к данному методу
         if not user_manager.canAuthent('a', self.name, user_manager.ACC_DATA, True):
@@ -416,10 +416,10 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Удаляет запись из источника данных.
 
-        @param rec: Номер записи.
-        @type rec:  C{int}
-        @return: Код завершение операции.
-        @rtype: C{int}
+        :param rec: Номер записи.
+        :type rec:  C{int}
+        :return: Код завершение операции.
+        :rtype: C{int}
         """
         #   Проверка на права доступа к данному методу
         if not user_manager.canAuthent('d', self.name, user_manager.ACC_DATA, True):
@@ -462,10 +462,10 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Устанавливает курсор в определенную позицию.
 
-        @type rec: C{int}
-        @param rec: Номер записи. По умолчанию C{rec=0}.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного выполнения. При попытке установить значение курсора
+        :type rec: C{int}
+        :param rec: Номер записи. По умолчанию C{rec=0}.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного выполнения. При попытке установить значение курсора
             меньше нуля или больше номера последней записи функция вернет C{False}, в другом случае C{True}.
         """
         if rec == -1:
@@ -493,8 +493,8 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         Признак выхода за конец таблицы. Соответствующий флаг устанавливается при попытке
         сместится за последнюю запись.
 
-        @rtype: C{bool}
-        @return: Признак за конец таблицы.
+        :rtype: C{bool}
+        :return: Признак за конец таблицы.
         """
         return self.bEof
 
@@ -503,8 +503,8 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         Соответствующий флаг устанавливается при попытке
         получить запись c номером < 0.
 
-        @rtype: C{bool}
-        @return: Признак попытки C{Skip(-1)} на самой первой записи таблицы.
+        :rtype: C{bool}
+        :return: Признак попытки C{Skip(-1)} на самой первой записи таблицы.
         """
         return self.bBof
 
@@ -512,10 +512,10 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Смещение на определенное количество записей относительно текущей.
 
-        @type offset: C{int}
-        @param offset: Смещение относительно текущей записи. По умолчанию C{offset=1}.
-        @rtype: C{bool}
-        @return: Признак успешного выполнения. При попытке установить значение курсора
+        :type offset: C{int}
+        :param offset: Смещение относительно текущей записи. По умолчанию C{offset=1}.
+        :rtype: C{bool}
+        :return: Признак успешного выполнения. При попытке установить значение курсора
             меньше нуля, положение курсора не изменится и функция вернет C{False}, а
             соответствующий флаг для функции C{IsBOF()} установится в положение C{True}. Если функция
             попытается установить положение курсора больше номера последней записи, то соответствующий
@@ -547,8 +547,8 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Возвращает положение курсора.
 
-        @rtype: C{int}
-        @return: Возвращает положение курсора.
+        :rtype: C{int}
+        :return: Возвращает положение курсора.
         """
 
         return self.cursor
@@ -563,8 +563,8 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Возвращает количество записей в источнике данных.
 
-        @rtype: C{int}
-        @return: Количество записей в источнике данных.
+        :rtype: C{int}
+        :return: Количество записей в источнике данных.
         """
         return len(self.data)
 
@@ -572,8 +572,8 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Возвращает количество полей. Вычисляется по словарю описания полей.
 
-        @rtype: C{int}
-        @return: Количество полей.
+        :rtype: C{int}
+        :return: Количество полей.
         """
         return len(self.description)
 
@@ -581,11 +581,11 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Функция проверяет есль ли в буфере изменений какие-либо изменения.
 
-        @type rec: C{int}
-        @param rec: Номер записи, где проверяются изменения. Если rec = None,
+        :type rec: C{int}
+        :param rec: Номер записи, где проверяются изменения. Если rec = None,
             то проверяется текущая запись.
-        @rtype: C{bool}
-        @return: Если True, то буфер содержит изменения по заданной записи.
+        :rtype: C{bool}
+        :return: Если True, то буфер содержит изменения по заданной записи.
         """
         if self.changeRowBuff is None or self.changeRowBuff == {}:
             return False
@@ -602,8 +602,8 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Функция чистит буфер изменений строки.
 
-        @type rec: C{int}
-        @param rec: Номер записи, буфер которой небходимо почистить. Если rec = None,
+        :type rec: C{int}
+        :param rec: Номер записи, буфер которой небходимо почистить. Если rec = None,
             то чистится буфер текущей записи, если rec < 0 то чистится буфер всех
             записей.
         """
@@ -619,8 +619,8 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Функция возвращает список полей.
 
-        @rtype: C{list}
-        @return: Возвращает список полей.
+        :rtype: C{list}
+        :return: Возвращает список полей.
         """
         return self.listFld
 
@@ -640,13 +640,13 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Сортирует данные по заданному полю.
 
-        @type fld: C{dictionary}
-        @param fld: Словарное описание поля из схемы данных.
-        @type direction: C{int}
-        @param direction: Направление сортировки. 1 - по возрастанию, -1 по убыванию.
+        :type fld: C{dictionary}
+        :param fld: Словарное описание поля из схемы данных.
+        :type direction: C{int}
+        :param direction: Направление сортировки. 1 - по возрастанию, -1 по убыванию.
             Если не указано, то сортровка направления чередуются.
-        @rtype: C{bool}
-        @return: Признак успешной сортировки.
+        :rtype: C{bool}
+        :return: Признак успешной сортировки.
         """
         if fld in self.getFieldList():
             self._sortExprList = [fld]
@@ -714,17 +714,17 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         Это желательная функция для всех объектов данных, используется
         в для поиска в объекте навигации.
 
-        @type string: C{string}
-        @param string: Строка поиска
-        @type cursor: C{int}
-        @param cursor: Начальное положение курсора.
-        @type fields: C{list}
-        @param fields: Список полей по которым ведется поиск.
-        @type bILike: C{bool}
-        @param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
+        :type string: C{string}
+        :param string: Строка поиска
+        :type cursor: C{int}
+        :param cursor: Начальное положение курсора.
+        :type fields: C{list}
+        :param fields: Список полей по которым ведется поиск.
+        :type bILike: C{bool}
+        :param bILike: Признак поиска без учета регистра. Если False - то поиск ведется
             на точное соответствие.
-        @rtype: C{tuple}
-        @return: Возвращает номер строку и название поля, где найдена искомая строка.
+        :rtype: C{tuple}
+        :return: Возвращает номер строку и название поля, где найдена искомая строка.
         """
         try:
             # Без учета регистра?

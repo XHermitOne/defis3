@@ -19,8 +19,8 @@ class icSignalSrc:
         """
         Конструктор.
         
-        @type passport: C{icobject.icObjectPassport}
-        @param passport: Паспорт объекта источника.
+        :type passport: C{icobject.icObjectPassport}
+        :param passport: Паспорт объекта источника.
         """
         self.kernel = None
         self.passport = passport
@@ -47,10 +47,10 @@ class icWxEvtSignalSrc(icSignalSrc):
         """
         Конструктор.
         
-        @type passport: C{icobject.icObjectPassport}
-        @param passport: Паспорт объекта источника.
-        @type event_id: C{int}
-        @param event_id: Идентификатор события. Пример: wx.EVT_LEFT_DOWN.
+        :type passport: C{icobject.icObjectPassport}
+        :param passport: Паспорт объекта источника.
+        :type event_id: C{int}
+        :param event_id: Идентификатор события. Пример: wx.EVT_LEFT_DOWN.
         """
         icSignalSrc.__init__(self, passport)
         self.event_id = event_id
@@ -60,8 +60,8 @@ class icWxEvtSignalSrc(icSignalSrc):
         """
         Генерация сигнала.
         
-        @type event: C{wx.Event}
-        @param event: Событие, по которому генерируется сигнал.
+        :type event: C{wx.Event}
+        :param event: Событие, по которому генерируется сигнал.
         """
         return icsignal.icWxEvtSignal(self.passport, obj, event)
         
@@ -86,10 +86,10 @@ class icChangedAttrSrc(icSignalSrc):
         """
         Конструктор.
         
-        @type passport: C{icobject.icObjectPassport}
-        @param passport: Паспорт объекта источника.
-        @type attr: C{string}
-        @param attr: Имя атрибута объекта.
+        :type passport: C{icobject.icObjectPassport}
+        :param passport: Паспорт объекта источника.
+        :type attr: C{string}
+        :param attr: Имя атрибута объекта.
         """
         icSignalSrc.__init__(self, passport)
         self.attr = attr
@@ -98,8 +98,8 @@ class icChangedAttrSrc(icSignalSrc):
         """
         Генерация сигнала.
         
-        @type attr: C{string}
-        @param attr: Имя атрибута объекта.
+        :type attr: C{string}
+        :param attr: Имя атрибута объекта.
         """
         if not attr:
             attr = self.attr
@@ -122,10 +122,10 @@ class icPreFuncSrc(icSignalSrc):
         """
         Конструктор.
         
-        @type passport: C{icobject.icObjectPassport}
-        @param passport: Паспорт объекта источника.
-        @type func_name: C{string}
-        @param func_name: Имя функции.
+        :type passport: C{icobject.icObjectPassport}
+        :param passport: Паспорт объекта источника.
+        :type func_name: C{string}
+        :param func_name: Имя функции.
         """
         icSignalSrc.__init__(self, passport)
         self.func_name = func_name
@@ -134,8 +134,8 @@ class icPreFuncSrc(icSignalSrc):
         """
         Генерация сигнала.
         
-        @type func_name: C{string}
-        @param func_name: Имя функции объекта.
+        :type func_name: C{string}
+        :param func_name: Имя функции объекта.
         """
         if not func_name:
             func_name = self.func_name
@@ -158,10 +158,10 @@ class icPostFuncSrc(icSignalSrc):
         """
         Конструктор.
         
-        @type passport: C{icobject.icObjectPassport}
-        @param passport: Паспорт объекта источника.
-        @type func_name: C{string}
-        @param func_name: Имя функции.
+        :type passport: C{icobject.icObjectPassport}
+        :param passport: Паспорт объекта источника.
+        :type func_name: C{string}
+        :param func_name: Имя функции.
         """
         icSignalSrc.__init__(self, passport)
         self.func_name = func_name
@@ -170,8 +170,8 @@ class icPostFuncSrc(icSignalSrc):
         """
         Генерация сигнала.
         
-        @type func_name: C{string}
-        @param func_name: Имя функции объекта.
+        :type func_name: C{string}
+        :param func_name: Имя функции объекта.
         """
         if not func_name:
             func_name = self.func_name

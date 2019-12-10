@@ -221,8 +221,8 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
         """
         Заполняем дерево.
         
-        @type treeDict: C{dictionary}
-        @param treeDict: Словарно-списковая структура, отображаемая в дереве.
+        :type treeDict: C{dictionary}
+        :param treeDict: Словарно-списковая структура, отображаемая в дереве.
         """
         if not treeDict:
             treeDict = self.treeDict
@@ -505,8 +505,8 @@ class MetaTreeCtrlInterface(treectrl_manager.icTreeCtrlManager):
         """
         Устанавливает признак разрешающий или запрещающий редактировать дерево.
         
-        @type bEdit: C{bool}
-        @param bEdit: Признак разрешающий или запрещающий редактировать дерево.
+        :type bEdit: C{bool}
+        :param bEdit: Признак разрешающий или запрещающий редактировать дерево.
         """
         self._bEditMode = bEdit
     

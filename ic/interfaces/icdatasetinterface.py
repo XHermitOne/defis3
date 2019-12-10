@@ -48,8 +48,8 @@ class icDatasetInterface(object):
         """
         Функция определяет появились ли в источнике данных новые записи.
 
-        @rtype: C{bool}
-        @return: Возвращает True - в случае если в буфере появились данные о добавленных записях, False в противном
+        :rtype: C{bool}
+        :return: Возвращает True - в случае если в буфере появились данные о добавленных записях, False в противном
             случае.
         """
         return False
@@ -58,10 +58,10 @@ class icDatasetInterface(object):
         """
         Функция определяет удалена ли соответствующая запись из источника данных или нет.
 
-        @type cursor: C{long}
-        @param cursor: Положение курсора.
-        @rtype: C{bool}
-        @return: Возвращает True - в случае если соответствующая запись удалена из источника данных, False в противном
+        :type cursor: C{long}
+        :param cursor: Положение курсора.
+        :rtype: C{bool}
+        :return: Возвращает True - в случае если соответствующая запись удалена из источника данных, False в противном
             случае.
         """
         return False
@@ -87,16 +87,16 @@ class icDatasetInterface(object):
         """
         Функция по имени колонки и номеру записи возвращает значение из буфера.
         
-        @type rec: C{int}
-        @param rec: Номер строки.
-        @type fieldName: C{string}
-        @param fieldName: Имя поля.
-        @type bReal: C{bool}
-        @param bReal: Параметр совместимости с icSQLObjDataSet.
-        @type bFromBuff: C{bool}
-        @param bFromBuff: Параметр совместимости с icSQLObjDataSet.
-        @rtype: C{...}
-        @return: По имени колонки и номеру записи возвращает значение из буфера. Если поле или номер записи
+        :type rec: C{int}
+        :param rec: Номер строки.
+        :type fieldName: C{string}
+        :param fieldName: Имя поля.
+        :type bReal: C{bool}
+        :param bReal: Параметр совместимости с icSQLObjDataSet.
+        :type bFromBuff: C{bool}
+        :param bFromBuff: Параметр совместимости с icSQLObjDataSet.
+        :rtype: C{...}
+        :return: По имени колонки и номеру записи возвращает значение из буфера. Если поле или номер записи
             указаны не верно, то функция возвращает C{None}.
         """
         pass
@@ -117,16 +117,16 @@ class icDatasetInterface(object):
         то функция пытается выполнить функцию на запись по описанию колонки из ресурсного
         описания по аттрибуту 'setvalue'.
 
-        @param rec: Номер записи
-        @type rec: C{int}
-        @param fieldName: Имя поля
-        @type fieldName: C{string}
-        @param value: Значение
-        @type bReal: C{bool}
-        @param bReal: Параметр совместимости с icSQLObjDataSet.
-        @type bCtrl: C{bool}
-        @param bCtrl: Параметр совместимости с icSQLObjDataSet.
-        @return: Возвращает в случае успеха код контроля (0,1,2), в противном случае None.
+        :param rec: Номер записи
+        :type rec: C{int}
+        :param fieldName: Имя поля
+        :type fieldName: C{string}
+        :param value: Значение
+        :type bReal: C{bool}
+        :param bReal: Параметр совместимости с icSQLObjDataSet.
+        :type bCtrl: C{bool}
+        :param bCtrl: Параметр совместимости с icSQLObjDataSet.
+        :return: Возвращает в случае успеха код контроля (0,1,2), в противном случае None.
         """
         pass
         
@@ -138,15 +138,15 @@ class icDatasetInterface(object):
         словарь обновлений (values) не определен, то обновления берутся из буфера
         изменений строки.
         
-        @type rec: C{int}
-        @param rec: Номер записи.
-        @type values: C{dictionary}
-        @param values: Словарь значений. В качестве ключей используются имена полей.
-        @type bReal: C{bool}
-        @param bReal: Параметр совместимости с icSQLObjDataSet.
-        @type bCtrl: C{bool}
-        @param bCtrl: Параметр совместимости с icSQLObjDataSet.
-        @return: Возвращает код контроля записи = IC_CTRL_OK.
+        :type rec: C{int}
+        :param rec: Номер записи.
+        :type values: C{dictionary}
+        :param values: Словарь значений. В качестве ключей используются имена полей.
+        :type bReal: C{bool}
+        :param bReal: Параметр совместимости с icSQLObjDataSet.
+        :type bCtrl: C{bool}
+        :param bCtrl: Параметр совместимости с icSQLObjDataSet.
+        :return: Возвращает код контроля записи = IC_CTRL_OK.
         """
         pass
         
@@ -154,15 +154,15 @@ class icDatasetInterface(object):
         """
         Функция добавляет новую запись.
 
-        @type values: C{dictionary}
-        @param values: Словарь известных значений. В качестве ключей имена полей,
+        :type values: C{dictionary}
+        :param values: Словарь известных значений. В качестве ключей имена полей,
             значения полей в качестве значений.
-        @type postAddExpr: C{string}
-        @param postAddExpr: Параметр совместимости с icSQLObjDataSet.
-        @type uuid_postAddExpr: C{string}
-        @param uuid_postAddExpr: Параметр совместимости с icSQLObjDataSet.
-        @return: Возвращает признак успешного выполнения.
-        @rtype: C{bool}
+        :type postAddExpr: C{string}
+        :param postAddExpr: Параметр совместимости с icSQLObjDataSet.
+        :type uuid_postAddExpr: C{string}
+        :param uuid_postAddExpr: Параметр совместимости с icSQLObjDataSet.
+        :return: Возвращает признак успешного выполнения.
+        :rtype: C{bool}
         """
         pass
         
@@ -170,10 +170,10 @@ class icDatasetInterface(object):
         """
         Удаляет запись из источника данных.
 
-        @param rec: Номер записи.
-        @type rec:  C{int}
-        @return: Код завершение операции.
-        @rtype: C{int}
+        :param rec: Номер записи.
+        :type rec:  C{int}
+        :return: Код завершение операции.
+        :rtype: C{int}
         """
         pass
 
@@ -181,11 +181,11 @@ class icDatasetInterface(object):
         """
         Блокирует нужную запись для записи.
 
-        @type rec: C{int}
-        @param rec: Номер записи. По умолчанию B{rec=-1}. Если номер записи C{None}, то блокируется
+        :type rec: C{int}
+        :param rec: Номер записи. По умолчанию B{rec=-1}. Если номер записи C{None}, то блокируется
             вся таблица. Если номер записи < 0, то блокируется текущая запись.
-        @rtype: C{bool}
-        @return: Возвращает код ошибки.
+        :rtype: C{bool}
+        :return: Возвращает код ошибки.
         """
         pass
 
@@ -193,11 +193,11 @@ class icDatasetInterface(object):
         """
         Разблокирует нужную запись.
 
-        @type rec: C{int}
-        @param rec: Номер записи. По умолчанию B{rec=-1}.  Если номер записи C{None}, то разблокируется
+        :type rec: C{int}
+        :param rec: Номер записи. По умолчанию B{rec=-1}.  Если номер записи C{None}, то разблокируется
             вся таблица. Если номер записи < 0, то разблокируется текущая запись.
-        @rtype: C{bool}
-        @return: Возвращает код ошибки.
+        :rtype: C{bool}
+        :return: Возвращает код ошибки.
         """
         pass
 
@@ -206,10 +206,10 @@ class icDatasetInterface(object):
         """
         Устанавливает курсор в определенную позицию.
         
-        @type rec: C{int}
-        @param rec: Номер записи. По умолчанию C{rec=0}.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного выполнения. При попытке установить значение курсора
+        :type rec: C{int}
+        :param rec: Номер записи. По умолчанию C{rec=0}.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного выполнения. При попытке установить значение курсора
             меньше нуля или больше номера последней записи функция вернет C{False}, в другом случае C{True}.
         """
         pass
@@ -218,6 +218,6 @@ class icDatasetInterface(object):
         """
         Устанавливаем значение структурному фильтру.
         
-        @param flt: Структурный фильтр (подробнее в описании ic.utils.translate.InitValidValue()).
+        :param flt: Структурный фильтр (подробнее в описании ic.utils.translate.InitValidValue()).
         """
         self.filter = flt

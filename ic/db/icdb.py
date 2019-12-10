@@ -54,8 +54,8 @@ DB_TYPE_URL_DRIVER = {SQLITE_DB_TYPE: 'sqlite',
 def createDBUrl(res):
     """
     Функция создает URL БД по ее спецификации/ресурсному описанию.
-    @param res: Ресурс БД.
-    @return: Строка URL БД.
+    :param res: Ресурс БД.
+    :return: Строка URL БД.
         Например:
             postgresql://username:password@host:port/dbname
     """
@@ -81,8 +81,8 @@ def createDBUrl(res):
 def checkDBConnect(db_url=None):
     """
     Проверка связи с БД.
-    @param db_url: URL связи с БД.
-    @return: True - есть связь.
+    :param db_url: URL связи с БД.
+    :return: True - есть связь.
     False - связь не установлена.
     """
     if db_url is None:
@@ -129,8 +129,8 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def __init__(self, db_resource=None, bAutoScheme=False):
         """
         Конструктор.
-        @param db_resource: Ресурсное описание БД.
-        @param bAutoScheme: Автоматическое создание схемы.
+        :param db_resource: Ресурсное описание БД.
+        :param bAutoScheme: Автоматическое создание схемы.
         """
         icsourceinterface.icSourceInterface.__init__(self, db_resource)
         # URL
@@ -174,15 +174,15 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def getDBUrl(self):
         """
         URL связи с БД.
-        @return: Строку URL.
+        :return: Строку URL.
         """
         return self._db_url
 
     def checkConnect(self, db_url=None):
         """
         Проверка связи с БД.
-        @param db_url: URL связи с БД.
-        @return: True - есть связь.
+        :param db_url: URL связи с БД.
+        :return: True - есть связь.
         False - связь не установлена.
         """
         if db_url is None:
@@ -192,7 +192,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def checkOnline(self):
         """
         Проверка текущей связи с БД
-        @return: True - связь установлена / False - связь разорвана по какой либо причине.
+        :return: True - связь установлена / False - связь разорвана по какой либо причине.
         """
         if self._connection is None:
             # Не определена связь в принципе
@@ -350,8 +350,8 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         Создать по ресурсу БД словарь описания связи с БД.
         Эта функция необходима для получения словаря описания связи и
         последующем его сохранении в настроечных файлах.
-        @param db_resource: Ресурс БД.
-        @return: Словарь атрибутов связи с БД.
+        :param db_resource: Ресурс БД.
+        :return: Словарь атрибутов связи с БД.
         """
         conn_dict = dict()
         conn_dict['drivername'] = self._connectionTypesCreate.setdefault(db_resource['type'], None)
@@ -420,7 +420,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def createScheme(self, bReCreate=True):
         """
         Создать схему БД (все таблицы в БД).
-        @param bReCreate: признак пересоздания схемы.
+        :param bReCreate: признак пересоздания схемы.
         """
         # Сначала отфильтровать таблицы которые не ссылаются на текущую БД
         if not self._tables or bReCreate:
@@ -453,8 +453,8 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def connect(self, db_url=None):
         """
         Установить связь с БД.
-        @param db_url: URL связи с БД.
-        @return: Объект связи с БД.
+        :param db_url: URL связи с БД.
+        :return: Объект связи с БД.
         """
         if db_url is None:
             db_url = self.getDBUrl()
@@ -469,7 +469,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def disconnect(self):
         """
         Разорвать связь с БД.
-        @return: True/False.
+        :return: True/False.
         """
         if self._connection:
             self._connection.dispose()
@@ -479,7 +479,7 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def get_connection(self, auto_connect=True):
         """
         Объект связи с БД.
-        @param auto_connect: Если не установлена связь,
+        :param auto_connect: Если не установлена связь,
             произвести автоматический коннект?
         """
         if self._connection is None and auto_connect:
@@ -490,11 +490,11 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         """
         Сессия. Используется для обеспечения
         транзакционного механизма.
-        @param autoflush: Авто сброс?
+        :param autoflush: Авто сброс?
             Для транзакций установить в False.
-        @param autocommit: Авто комитить?
+        :param autocommit: Авто комитить?
             Для транзакций установить в False.
-        @return: Объект сессии/Транзакции.
+        :return: Объект сессии/Транзакции.
         """
         if not self._session:
             self._session = self.getSession(autoflush=autoflush,
@@ -507,8 +507,8 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         Пример:
         >>> r = scheme.getQuery('user')
         >>> obj_lst = r.filter(ridord_id).all()
-        @param tab_name: Имя таблицы.
-        @param sess: Сессия.
+        :param tab_name: Имя таблицы.
+        :param sess: Сессия.
         """
         if not sess:
             dct = self.getTables()
@@ -544,16 +544,16 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def _isSQLReturnResult(self, sql_query):
         """
         Проверка, должен ли результат запроса возвращать значения.
-        @param sql_query: Строка запроса.
+        :param sql_query: Строка запроса.
         """
         return bool(sql_query.lower().find('select') != -1)
 
     def executeSQL(self, sql_query, to_dict=False):
         """
         Выполнить строку запроса.
-        @param sql_query: Строка запроса.
-        @param to_dict: Преобразовать все записи в словари?
-        @return: Возвражает словарь {'__fields__':((..),(..),..),'__data__':[(..),(..),..]}.
+        :param sql_query: Строка запроса.
+        :param to_dict: Преобразовать все записи в словари?
+        :return: Возвражает словарь {'__fields__':((..),(..),..),'__data__':[(..),(..),..]}.
             Или None в случае ошибки.
         """
         result = None
@@ -585,8 +585,8 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         """
         Преобразовать описания полей во внутренний вариан описаний.
         Метод абстрактный и переопределяется для каждой БД отдельно.
-        @param field_description: Список описаний полей DBAPI2.
-        @return: Список описаний полей во внутреннем формате:
+        :param field_description: Список описаний полей DBAPI2.
+        :return: Список описаний полей во внутреннем формате:
             [
             ('Имя поля', 'Тип поля (T, I, F, DateTime, Boolean и т.п)', Длина поля),
             ...
@@ -598,9 +598,9 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
     def executeSQLOne(self, sql_query, to_dict=False):
         """
         Выполнить строку запроса и вернуть только одну запись.
-        @param sql_query: Строка запроса.
-        @param to_dict: Преобразовать запись в словарь?
-        @return: Возвражает словарь {'__fields__':((..),(..),..),'__data__':[(..),(..),..]}.
+        :param sql_query: Строка запроса.
+        :param to_dict: Преобразовать запись в словарь?
+        :return: Возвражает словарь {'__fields__':((..),(..),..),'__data__':[(..),(..),..]}.
             Или None в случае ошибки.
         """
         result = None
@@ -631,10 +631,10 @@ class icSQLAlchemyDB(icsourceinterface.icSourceInterface):
         """
         Выбрать список объектов из класса данных.
         См. описание функции select в SQLAlchemy.
-        @param columns: Объекты колонок которые нужно выбрать.
-        @param whereclause: Условие выбора.
-        @param from_obj: Таблицы из которых производится выбор.
-        @return: Возвражает объект SelectResults.
+        :param columns: Объекты колонок которые нужно выбрать.
+        :param whereclause: Условие выбора.
+        :param from_obj: Таблицы из которых производится выбор.
+        :return: Возвражает объект SelectResults.
         """
         return sqlalchemy.select(*args, **kwargs).execute()
 

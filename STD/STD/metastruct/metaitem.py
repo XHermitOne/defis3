@@ -113,9 +113,9 @@ class icMetaProperty:
     def __init__(self, MetaObj_, Property_=None, Const_=None):
         """
         Конструктор.
-        @param MetaObj_: Метаобъект, свойства которого является.
-        @param Property_: Словарь изменяемых свойств.
-        @param Const_: Словарь неизменяемых свойств.
+        :param MetaObj_: Метаобъект, свойства которого является.
+        :param Property_: Словарь изменяемых свойств.
+        :param Const_: Словарь неизменяемых свойств.
         """
         if Property_ is None:
             Property_ = {}
@@ -194,7 +194,7 @@ class icMetaProperty:
     def getParentProperty(self, PropertyName_):
         """
         Значение свойств родительского узла (рекурсивно).
-        @param PropertyName_: Имя искомого свойства.
+        :param PropertyName_: Имя искомого свойства.
         """
         if PropertyName_ in self.__dict__['property']:
             return self.__dict__['property'][PropertyName_]
@@ -212,8 +212,8 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def __init__(self, Parent_, Resource_):
         """
         Конструктор.
-        @param Parent_: Родительский метакомпонент.
-        @param Resource_: Ресурс описания мета компонента.
+        :param Parent_: Родительский метакомпонент.
+        :param Resource_: Ресурс описания мета компонента.
         """
         # Расширить спецификацию
         Resource_ = util.icSpcDefStruct(SPC_IC_METAITEM, Resource_, False)
@@ -421,7 +421,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def renameStoreNode(self, NewName_):
         """
         Переименовать узел хранилища метаобъекта.
-        @param NewName_: Новое имя.
+        :param NewName_: Новое имя.
         """
         node = self.getStoreNodeLevel()
         if node is not None:
@@ -432,7 +432,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def createValueStorage(self, ParentStoreNode_):
         """
         Функция возвращает хранилище метаобъекта.
-        @param ParentStoreNode_: Родительский узел хранилища.
+        :param ParentStoreNode_: Родительский узел хранилища.
         """
         storage_node = None
         if self._storage_type == DIR_STORAGE_TYPE:
@@ -460,7 +460,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def setValueStorage(self, StorageNode_):
         """
         Функция устанавливает значения метаобъекта в хранилище метаобъекта.
-        @param StorageNode_: Узел хранилища, соответствующий метаобъекту.
+        :param StorageNode_: Узел хранилища, соответствующий метаобъекту.
         """
         storage_node = StorageNode_
 
@@ -472,7 +472,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def readPropertyStorage(self, ReLoad_=False):
         """
         Прочитать свойство из хранилища.
-        @param ReLoad_: Признак необходимости обновления свойств узлоа из
+        :param ReLoad_: Признак необходимости обновления свойств узлоа из
             хранилища.
         """
         node = self.getStoreNodeLevel()
@@ -626,12 +626,12 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def Add(self, Name_=None, Type_=None):
         """
         Добавить дочерний метакомпонент.
-        @param Name_: Имя добавляемого объекта,
+        :param Name_: Имя добавляемого объекта,
             если None, то имя генерируется.
-        @param Type_: Имя компонента, объект которого
+        :param Type_: Имя компонента, объект которого
             будет добавлен в дерево.
             Если None, то будет сделан запрос имени.
-        @return: Созданный объект метакомпонента.
+        :return: Созданный объект метакомпонента.
         """
         new_metaobj = self._add(Name_, Type_)
         
@@ -653,12 +653,12 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def _add(self, Name_=None, Type_=None):
         """
         Добавить дочерний метакомпонент.
-        @param Name_: Имя добавляемого объекта,
+        :param Name_: Имя добавляемого объекта,
             если None, то имя генерируется.
-        @param Type_: Имя компонента, объект которого
+        :param Type_: Имя компонента, объект которого
             будет добавлен в дерево.
             Если None, то будет сделан запрос имени.
-        @return: Созданный объект метакомпонента.
+        :return: Созданный объект метакомпонента.
         """
         new_metaobj = None
         # Имя не определено
@@ -706,10 +706,10 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def createMetaObj(self, Parent_, NewName_, ReLoadProperty_=False):
         """
         Создать объект метаобъект.
-        @param Parent_: Родитель.
-        @param NewName_: Имя метаобъекта.
-        @param ReLoadProperty_: Признак перезагрузки свойств метаобъекта из хранилища.
-        @return: Возвращает метаобъект.
+        :param Parent_: Родитель.
+        :param NewName_: Имя метаобъекта.
+        :param ReLoadProperty_: Признак перезагрузки свойств метаобъекта из хранилища.
+        :return: Возвращает метаобъект.
         """
         res = copy.deepcopy(self.resource)
         res['name'] = NewName_
@@ -730,7 +730,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def DelChild(self, Name_=None):
         """
         Удалить дочерний метакомпонент.
-        @param Name_: Имя удаляемого объекта,
+        :param Name_: Имя удаляемого объекта,
             если None, то имя запрашивается.
         """
         if Name_ is None:
@@ -781,7 +781,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def getContainerMetaItem(self, MetaItemName_):
         """
         Взять метакомпонент, который может быть узлом дерева по имени.
-        @param MetaItemName_: Имя мета компонента-типа.
+        :param MetaItemName_: Имя мета компонента-типа.
         """
         if self._Parent:
             return self._Parent.getContainerMetaItem(MetaItemName_)
@@ -790,7 +790,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def Save(self, MetaObject_=None):
         """
         Сохранить данные метаобъекта.
-        @param MetaObject_: Сохраняемый метаобъект.
+        :param MetaObject_: Сохраняемый метаобъект.
             Если None, то значит надо сохранить себя.
         """
         if MetaObject_ is None:
@@ -809,7 +809,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def Load(self, MetaObject_=None):
         """
         Загрузить данные метаобъекта.
-        @param MetaObject_: Загружаемый метаобъект.
+        :param MetaObject_: Загружаемый метаобъект.
             Если None, то значит надо загрузить себя.
         """
         if MetaObject_ is None:
@@ -821,9 +821,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def setPath(self, Path_, CurStoreLevel_, **MetaObjects_):
         """
         Установить данные метаобъектов по указанной ветке/пути.
-        @param Path_: Список имен метаобъектов/ветки.
-        @param CurStoreLevel_: Текущий уровень хранилища. Если None, то корень.
-        @param MetaObjects_: Сохраняемые метаобъекты.
+        :param Path_: Список имен метаобъектов/ветки.
+        :param CurStoreLevel_: Текущий уровень хранилища. Если None, то корень.
+        :param MetaObjects_: Сохраняемые метаобъекты.
         """
         if self._Parent:
             return self._Parent.setPath(Path_, CurStoreLevel_, **MetaObjects_)
@@ -832,7 +832,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def SaveAllChildren(self, ParentMetaObject_=None):
         """
         Сохранить себя и все дочерние узлы.
-        @param ParentMetaObject_: Сохраняемый метаобъект.
+        :param ParentMetaObject_: Сохраняемый метаобъект.
         """
         if ParentMetaObject_ is None:
             ParentMetaObject_ = self
@@ -872,9 +872,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
         """
         Получить список метакомпонентов, которые могут быть вставлены в
         текущий метаобъект.
-        @param CanContain_: Разрешающее правило включения. Список имен метакомпонент.
-        @param CanNotContain_: Запрещающее правило включения. Список имен метакомпонент.
-        @return: Список метакомпонент.
+        :param CanContain_: Разрешающее правило включения. Список имен метакомпонент.
+        :param CanNotContain_: Запрещающее правило включения. Список имен метакомпонент.
+        :return: Список метакомпонент.
         """
         if CanContain_ == -1:
             CanContain_ = self.getCanContain()
@@ -906,9 +906,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def _buildMetaObj(self, Name_, StoreNode_, ReBuild_=False):
         """
         Низкоуровневая функция построения узла.
-        @param Name_: Имя дочернего узла.
-        @param StoreNode_: Узел родителя в хранилище.
-        @param ReBuild_: Флаг установки пересоздания узлов.
+        :param Name_: Имя дочернего узла.
+        :param StoreNode_: Узел родителя в хранилище.
+        :param ReBuild_: Флаг установки пересоздания узлов.
         """
         new_metaobj = None
         if issubclass(StoreNode_[Name_].__class__, storesrc.icFileStorage):
@@ -940,9 +940,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def BuildBranch(self, Path_, ReBuild_=False, BuildAll_=True):
         """
         Построить только ветку.
-        @param Path_: Путь до узла.
-        @param ReBuild_: Флаг установки пересоздания узлов.
-        @param BuildAll_: Вызвать у созданного узла BuildAll автоматически?
+        :param Path_: Путь до узла.
+        :param ReBuild_: Флаг установки пересоздания узлов.
+        :param BuildAll_: Вызвать у созданного узла BuildAll автоматически?
         """
         metaobj_path = self.getPath()
         store_node = self.getStoreNodeLevel(metaobj_path)
@@ -962,7 +962,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def Build(self, ReBuild_=False):
         """
         Построить дерево объектов по данным хранилища.
-        @param ReBuild_: Флаг установки пересоздания узлов.
+        :param ReBuild_: Флаг установки пересоздания узлов.
         """
         metaobj_path = self.getPath()
         store_node = self.getStoreNodeLevel(metaobj_path)
@@ -997,7 +997,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def getStoreNodeLevel(self, Path_=None):
         """
         Получить узел хранилища по пути.
-        @param Path_: Путь.
+        :param Path_: Путь.
         """
         if Path_ is None:
             # Если определен узел, тогда просто вернуть его
@@ -1009,8 +1009,8 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def isStoreNodeLevel(self, Path_=None):
         """
         Проверить существует ли узел хранилища с таким путем.
-        @param Path_: Путь.
-        @return: True/False.
+        :param Path_: Путь.
+        :return: True/False.
         """
         if Path_ is None:
             # Если определен узел, тогда просто вернуть его
@@ -1022,8 +1022,8 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def saveStoreNodeLevel(self, Path_=None, MetaObject_=None):
         """
         Сохранить узел хранилища по пути.
-        @param Path_: Путь.
-        @param MetaObject_: Сохраняемый метаобъект.
+        :param Path_: Путь.
+        :param MetaObject_: Сохраняемый метаобъект.
         """
         if MetaObject_ is None:
             MetaObject_ = self
@@ -1096,8 +1096,8 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def Clone(self, CloneName_=None):
         """
         Создать клон метаобъекта.
-        @param CloneName_: Имя клона, если None,то имя генерируется.
-        @return: Возвращает объект клона или None в случае неудачи.
+        :param CloneName_: Имя клона, если None,то имя генерируется.
+        :return: Возвращает объект клона или None в случае неудачи.
         """
         if CloneName_ is None:
             CloneName_ = self.genNewName()
@@ -1121,9 +1121,9 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def _clone(self, CloneName_, doCopyChildren_=True):
         """
         Создать клон метаобъекта.
-        @param CloneName_: Имя клона, если None,то имя генерируется.
-        @param doCopyChildren_: Признак копирования дочерних узлов.
-        @return: Возвращает объект клона или None в случае неудачи.
+        :param CloneName_: Имя клона, если None,то имя генерируется.
+        :param doCopyChildren_: Признак копирования дочерних узлов.
+        :return: Возвращает объект клона или None в случае неудачи.
         """
         try:
             log.info(u'Создание клона %s метаобъекта %s родитель: %s' % (CloneName_, self.name,
@@ -1153,7 +1153,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def pastChildren(self):
         """
         Вставить все дочерние метаобъекты из клипбоарда.
-        @return: None - ошибка. False - не могу вставить в текущий объект.
+        :return: None - ошибка. False - не могу вставить в текущий объект.
             True - все ок.
         """
         if not clipboard.emptyClipboard():
@@ -1169,8 +1169,8 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def canMyChild(self, MetaObject_):
         """
         Может ли метаобъект быть дочерним метаобъектом текущего метаобъекта?
-        @param MetaObject_: Метаобъект, претендующий на роль дочернего.
-        @return: Возвращает True/False.
+        :param MetaObject_: Метаобъект, претендующий на роль дочернего.
+        :return: Возвращает True/False.
         """
         try:
             my_container_metaitems = [metaitem.name for metaitem in self.getMyContainerMetaItems()]
@@ -1182,7 +1182,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def canPastChildren(self):
         """
         Можно ли вставить в текущий узел объекты из клипборда?
-        @return: True/False.
+        :return: True/False.
         """
         if clipboard.emptyClipboard():
             return False
@@ -1198,7 +1198,7 @@ class icMetaItemEngine(icMetaComponentInterface, object):
     def _deepcopyChildren(self, Children_):
         """
         Сделать полную копию ветки дочерних метаобъектов.
-        @param Children_: Список дочерних метаобъектов, копии которых необходимо получить.
+        :param Children_: Список дочерних метаобъектов, копии которых необходимо получить.
         """
         for child in Children_.items():
             try:

@@ -22,12 +22,12 @@ def getCanContainLst(modifId, metatype, bBuff=True, plan_sys = None):
     определенном компоненте - разрешающее правило. Список генерится по
     объекту описания модификации плана.
 
-    @type modifId: C{string}
-    @param modifId: Идентификатор модификации плана.
-    @type metatype: C{string}
-    @param metatype: Тип узла метадерева планов.
-    @type bBuff: C{bool}.
-    @param bBuff: Признак разрешающий брать значения из буфера.
+    :type modifId: C{string}
+    :param modifId: Идентификатор модификации плана.
+    :type metatype: C{string}
+    :param metatype: Тип узла метадерева планов.
+    :type bBuff: C{bool}.
+    :param bBuff: Признак разрешающий брать значения из буфера.
     """
     #   Список, описывающий структуру модификации
     #   Пример: ['p1', 'p2', 'p3']
@@ -69,8 +69,8 @@ class icPlanMenager_old:
         """
         Конструктор.
         
-        @param modif_id: Идентификатор текущей модификации планов.
-        @param plan_sys: Имя системы планирования, определяет имя хранилища, где
+        :param modif_id: Идентификатор текущей модификации планов.
+        :param plan_sys: Имя системы планирования, определяет имя хранилища, где
             будут храниться описания модификаций планов.
         """
         self.plan_sys = plan_sys
@@ -129,8 +129,8 @@ class icPlanMenager_old:
         """
         Возвращает указатель на базовый либо модифицированный план.
         
-        @rtype: C{ic.components.user.ic_metatree_wrp.icMetaTree}
-        @return: Возвращает указатель на базовый план.
+        :rtype: C{ic.components.user.ic_metatree_wrp.icMetaTree}
+        :return: Возвращает указатель на базовый план.
         """
         if self._baseStorageName:
             if id in (None, '__base__'):
@@ -153,10 +153,10 @@ class icPlanMenager:
         """
         Конструктор.
         
-        @param modif_id: Идентификатор текущей модификации планов.
-        @param plan_sys: Имя подсистемы планирования.
-        @type plan_mod: C{icplanmodifmanager.PlanModifManager}
-        @param plan_mod: Cистема планирования - объект определяет модификации планов.
+        :param modif_id: Идентификатор текущей модификации планов.
+        :param plan_sys: Имя подсистемы планирования.
+        :type plan_mod: C{icplanmodifmanager.PlanModifManager}
+        :param plan_mod: Cистема планирования - объект определяет модификации планов.
         """
         self.plan_sys = plan_sys
         self.plan_mod = plan_mod
@@ -211,8 +211,8 @@ class icPlanMenager:
         """
         Возвращает указатель на базовый либо модифицированный план.
         
-        @rtype: C{ic.components.user.ic_metatree_wrp.icMetaTree}
-        @return: Возвращает указатель на базовый план.
+        :rtype: C{ic.components.user.ic_metatree_wrp.icMetaTree}
+        :return: Возвращает указатель на базовый план.
         """
         if self._baseStorageName:
             if id in (None, '__base__'):
@@ -238,17 +238,17 @@ class icMultiSrcBrows(brows.MetaTreeBrows, icPlanMenager):
         """
         Конструктор.
         
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type metatype: C{string}
-        @param metatype: Имя метатипа.
-        @type bPanelBuff: C{string}
-        @param bPanelBuff: Признак буферизации панелей.
-        @param metaclass: Интерфейс к метоописанию дереву планов. Если данный
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type metatype: C{string}
+        :param metatype: Имя метатипа.
+        :type bPanelBuff: C{string}
+        :param bPanelBuff: Признак буферизации панелей.
+        :param metaclass: Интерфейс к метоописанию дереву планов. Если данный
             атрибут определен, то параметр <metatype> игнорируется.
-        @param treeRootTitle: Заголовок корневого элемента дерева.
-        @param treeLabels: Заголовки колонок TreeListCtrl.
-        @param plan_sys: Имя системы планирования, определяет имя хранилища, где
+        :param treeRootTitle: Заголовок корневого элемента дерева.
+        :param treeLabels: Заголовки колонок TreeListCtrl.
+        :param plan_sys: Имя системы планирования, определяет имя хранилища, где
             будут храниться описания модификаций планов.
         """
 #        #   Указатель на интерфейс к дереву планов
@@ -345,17 +345,17 @@ class icMonitoringBrows(icMultiSrcBrows):
         """
         Конструктор.
         
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type metatype: C{string}
-        @param metatype: Имя метатипа.
-        @type bPanelBuff: C{string}
-        @param bPanelBuff: Признак буферизации панелей.
-        @param metaclass: Интерфейс к метоописанию дереву планов. Если данный
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type metatype: C{string}
+        :param metatype: Имя метатипа.
+        :type bPanelBuff: C{string}
+        :param bPanelBuff: Признак буферизации панелей.
+        :param metaclass: Интерфейс к метоописанию дереву планов. Если данный
             атрибут определен, то параметр <metatype> игнорируется.
-        @param treeRootTitle: Заголовок корневого элемента дерева.
-        @param treeLabels: Заголовки колонок TreeListCtrl.
-        @param plan_sys: Имя системы планирования, определяет имя хранилища, где
+        :param treeRootTitle: Заголовок корневого элемента дерева.
+        :param treeLabels: Заголовки колонок TreeListCtrl.
+        :param plan_sys: Имя системы планирования, определяет имя хранилища, где
             будут храниться описания модификаций планов.
         """
         #   Функции пересчета модификаций планов по базовому плану
@@ -381,17 +381,17 @@ class icPlanBrows(icMultiSrcBrows):
         """
         Конструктор.
         
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type metatype: C{string}
-        @param metatype: Имя метатипа.
-        @type bPanelBuff: C{string}
-        @param bPanelBuff: Признак буферизации панелей.
-        @param metaclass: Интерфейс к метоописанию дереву планов. Если данный
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type metatype: C{string}
+        :param metatype: Имя метатипа.
+        :type bPanelBuff: C{string}
+        :param bPanelBuff: Признак буферизации панелей.
+        :param metaclass: Интерфейс к метоописанию дереву планов. Если данный
             атрибут определен, то параметр <metatype> игнорируется.
-        @param treeRootTitle: Заголовок корневого элемента дерева.
-        @param treeLabels: Заголовки колонок TreeListCtrl.
-        @param plan_sys: Имя системы планирования, определяет имя хранилища, где
+        :param treeRootTitle: Заголовок корневого элемента дерева.
+        :param treeLabels: Заголовки колонок TreeListCtrl.
+        :param plan_sys: Имя системы планирования, определяет имя хранилища, где
             будут храниться описания модификаций планов.
         """
         #   Функция пересчета модифицированного плана по базовому плану

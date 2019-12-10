@@ -78,12 +78,12 @@ class icGenModelDialog(gen_model_dialog_proto.icGenModelDialogProto,
 def open_gen_model_dialog(parent=None, tab_res_filename=None):
     """
     Функция вызова диалогового окна генерации модулей модели и менеджера модели.
-    @param parent: Родительское окно.
+    :param parent: Родительское окно.
         Если не определено, то берется главное окно приложения.
-    @param tab_res_filename: Полное имя файла ресурса таблицы, по
+    :param tab_res_filename: Полное имя файла ресурса таблицы, по
         которому производится генерация.
         Если не определено, то вызывается диалог выбора файла непосредственно.
-    @return: True/False.
+    :return: True/False.
     """
     if parent is None:
         app = wx.GetApp()

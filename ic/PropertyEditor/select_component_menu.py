@@ -51,8 +51,8 @@ class icSelectComponentMenuManager:
     def init(self, parent=None, parent_component=None):
         """
         Инициализация внутренних переменных.
-        @param parent: Родительское окно.
-        @param parent_component: Описание родительского компонента.
+        :param parent: Родительское окно.
+        :param parent_component: Описание родительского компонента.
         """
         self._parent_window = parent
         # Родительский компонент не определен,
@@ -79,7 +79,7 @@ class icSelectComponentMenuManager:
     def create(self):
         """
         Создание меню выбора компонента из всех возможных.
-        @return: Объект wx.FlatMenu с заполненными компонентами или
+        :return: Объект wx.FlatMenu с заполненными компонентами или
             None в случае ошибки.
         """
         try:
@@ -91,7 +91,7 @@ class icSelectComponentMenuManager:
     def _create(self):
         """
         Создание меню выбора компонента из всех возможных.
-        @return: Объект wx.FlatMenu с заполненными компонентами или
+        :return: Объект wx.FlatMenu с заполненными компонентами или
             None в случае ошибки.
         """
         log.warning(u'Не определен метод создания меню')
@@ -113,7 +113,7 @@ class icSelectComponentMenu(wx.Menu, icSelectComponentMenuManager):
     def _create(self):
         """
         Создание меню выбора компонента из всех возможных.
-        @return: Объект wx.FlatMenu с заполненными компонентами или
+        :return: Объект wx.FlatMenu с заполненными компонентами или
             None в случае ошибки.
         """
         # Цикл по группам
@@ -157,9 +157,9 @@ class icSelectComponentMenu(wx.Menu, icSelectComponentMenuManager):
 def popup_component_menu(parent=None, button=None):
     """
     Вызов всплывающего меню выбора компонента.
-    @param parent: Родительское окно для отображения.
-    @param button: Объект кнопки wx.Button, по которой производится вызов меню.
-    @return: Описание выбранного компонента или
+    :param parent: Родительское окно для отображения.
+    :param button: Объект кнопки wx.Button, по которой производится вызов меню.
+    :return: Описание выбранного компонента или
         None, если компонент не выбран.
     """
     if parent is None:
@@ -191,7 +191,7 @@ class icSelectComponentFlatMenu(flatmenu.FlatMenu,
     def _create(self):
         """
         Создание меню выбора компонента из всех возможных.
-        @return: Объект wx.FlatMenu с заполненными компонентами или
+        :return: Объект wx.FlatMenu с заполненными компонентами или
             None в случае ошибки.
         """
         # Цикл по группам
@@ -235,9 +235,9 @@ class icSelectComponentFlatMenu(flatmenu.FlatMenu,
 def popup_component_flatmenu(parent=None, button=None):
     """
     Вызов всплывающего меню выбора компонента.
-    @param parent: Родительское окно для отображения.
-    @param button: Объект кнопки wx.Button, по которой производится вызов меню.
-    @return: Описание выбранного компонента или
+    :param parent: Родительское окно для отображения.
+    :param button: Объект кнопки wx.Button, по которой производится вызов меню.
+    :return: Описание выбранного компонента или
         None, если компонент не выбран.
     """
     if parent is None:

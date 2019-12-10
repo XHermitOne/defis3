@@ -5,16 +5,16 @@
 Иерархический справочник.
 Класс пользовательского визуального компонента.
 
-@type ic_user_name: C{string}
-@var ic_user_name: Имя пользовательского класса.
-@type ic_can_contain: C{list | int}
-@var ic_can_contain: Разрешающее правило - список типов компонентов, которые
+:type ic_user_name: C{string}
+:var ic_user_name: Имя пользовательского класса.
+:type ic_can_contain: C{list | int}
+:var ic_can_contain: Разрешающее правило - список типов компонентов, которые
     могут содержаться в данном компоненте. -1 - означает, что любой компонент
     может содержатся в данном компоненте. Вместе с переменной ic_can_not_contain
     задает полное правило по которому определяется возможность добавления других
     компонентов в данный комопнент.
-@type ic_can_not_contain: C{list}
-@var ic_can_not_contain: Запрещающее правило - список типов компонентов,
+:type ic_can_not_contain: C{list}
+:var ic_can_not_contain: Запрещающее правило - список типов компонентов,
     которые не могут содержаться в данном компоненте. Запрещающее правило
     начинает работать если разрешающее правило разрешает добавлять любой
     компонент (ic_can_contain = -1).
@@ -130,7 +130,7 @@ class icTableTreeList(icwidget.icWidget,
     небольших таблиц (максимум несколько тысяч записей), поскольку все записи
     буферизируются.
     
-    @type component_spc: C{dictionary}
+    :type component_spc: C{dictionary}
     @cvar component_spc: Спецификация компонента.
         - B{name='default'}:
         - B{labels=[]}: Список заголовков колонок.
@@ -165,22 +165,22 @@ class icTableTreeList(icwidget.icWidget,
         """
         Конструктор базового класса пользовательских компонентов.
 
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
-        @type bCounter: C{bool}
-        @param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
+        :type bCounter: C{bool}
+        :param bCounter: Признак отображения в ProgressBar-е. Иногда это не нужно -
             для создания объектов полученных по ссылки. Т. к. они не учтены при подсчете
             общего количества объектов.
-        @type progressDlg: C{wx.ProgressDialog}
-        @param progressDlg: Указатель на идикатор создания формы.
+        :type progressDlg: C{wx.ProgressDialog}
+        :param progressDlg: Указатель на идикатор создания формы.
         """
         component = util.icSpcDefStruct(self.component_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -305,21 +305,21 @@ class icTableTreeList(icwidget.icWidget,
         Добавляет в определенный узел дочерние элементы, которые определяются
         по маске кода.
         
-        @type parent_item: C{wx.CtrlTreeItem}
-        @param parent_item: Узел, куда добавляются дочерние элементы.
-        @type cod_mask: C{string}
-        @param cod_mask: Маска кода справочника, по которой определяются дочерние
+        :type parent_item: C{wx.CtrlTreeItem}
+        :param parent_item: Узел, куда добавляются дочерние элементы.
+        :type cod_mask: C{string}
+        :param cod_mask: Маска кода справочника, по которой определяются дочерние
             элементы.
-        @type level: C{int}
-        @param level: Номер уровня кода родительского элемента.
-        @type levelLenList: C{list}
-        @param levelLenList: Список размеров уровней. Индекс списка соответствует номеру
+        :type level: C{int}
+        :param level: Номер уровня кода родительского элемента.
+        :type levelLenList: C{list}
+        :param levelLenList: Список размеров уровней. Индекс списка соответствует номеру
             уровня кода.
-        @type rows_dict: C{dictionary}
-        @param rows_dict: Словарь записей из справочника. В качестве ключей размеры кодов,
+        :type rows_dict: C{dictionary}
+        :param rows_dict: Словарь записей из справочника. В качестве ключей размеры кодов,
             в качестве значений список записей с данным размером кода.
-        @rtype: C{bool}
-        @return: Признак того, что в узел добавлены дочерние элементы.
+        :rtype: C{bool}
+        :return: Признак того, что в узел добавлены дочерние элементы.
         """
         if level >= len(rows_dict):
             return False
@@ -378,12 +378,12 @@ class icTableTreeList(icwidget.icWidget,
         """
         Определяем состояние строки.
         
-        @type row: C{list}
-        @param row: Буфер строки; первый элемент структурный код в виде картежа,
+        :type row: C{list}
+        :param row: Буфер строки; первый элемент структурный код в виде картежа,
             второй название элемента дерева, остальные элементы дополнительные
             отображаемые поля.
-        @rtype: C{int}
-        @return: Идентификатор состояния (ROW_STATE_NORMAL, ROW_STATE_RED, ...).
+        :rtype: C{int}
+        :return: Идентификатор состояния (ROW_STATE_NORMAL, ROW_STATE_RED, ...).
         """
         if self._stateFunction:
             return self._stateFunction(self, row, *argw, **kwarg)
@@ -394,13 +394,13 @@ class icTableTreeList(icwidget.icWidget,
         """
         Возвращаем список индексов родительских кодов.
         
-        @type cod_dict: C{dictionary}
-        @param cod_dict: Словарь списков кодов записей добвленных в структуру
+        :type cod_dict: C{dictionary}
+        :param cod_dict: Словарь списков кодов записей добвленных в структуру
             дерева. Ключи - номера уровней кода.
-        @type cod_lst: C{list}
-        @param cod_lst: Структура кода проверяемой записи.
-        @rtype: C{list}
-        @return: Список индексов записей, в которых надо учесть сумму.
+        :type cod_lst: C{list}
+        :param cod_lst: Структура кода проверяемой записи.
+        :rtype: C{list}
+        :return: Список индексов записей, в которых надо учесть сумму.
         """
         indx_lst = []
         
@@ -421,11 +421,11 @@ class icTableTreeList(icwidget.icWidget,
         """
         Возвращает значение поля из буфера справочника.
         
-        @type typSprav: C{string}
-        @param typSprav: Тип справочника.
-        @type cod: C{string}
-        @param cod: Код записи из справочника.
-        @return: Возвращает значение поля из справочника по коду.
+        :type typSprav: C{string}
+        :param typSprav: Тип справочника.
+        :type cod: C{string}
+        :param cod: Код записи из справочника.
+        :return: Возвращает значение поля из справочника по коду.
         """
         if self._spravBuff:
             try:
@@ -545,8 +545,8 @@ class icTableTreeList(icwidget.icWidget,
         """
         Устанавливает внешний буфер справочников в качестве текущего.
         
-        @type buff: C{dictionary}
-        @param buff: Подготовленный буфер справочников. В качестве ключей типы
+        :type buff: C{dictionary}
+        :param buff: Подготовленный буфер справочников. В качестве ключей типы
             справочников, в качестве значений словрь соответствий значений одного
             поля по значениям другого.
         """
@@ -556,10 +556,10 @@ class icTableTreeList(icwidget.icWidget,
         """
         Выбирает элемент дерева по структурному коду.
         
-        @type cod: C{string}
-        @param cod: Структурный код.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного выполнения.
+        :type cod: C{string}
+        :param cod: Структурный код.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного выполнения.
         """
         if cod in self._codItemDict:
             item = self._codItemDict[cod]
@@ -628,8 +628,8 @@ def test(par=0):
     """
     Тестируем пользовательский класс.
     
-    @type par: C{int}
-    @param par: Тип консоли.
+    :type par: C{int}
+    :param par: Тип консоли.
     """
     
     import ic.components.ictestapp as ictestapp

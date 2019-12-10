@@ -53,10 +53,10 @@ class icWMSSimpleTruckConstructorCtrl(wx.Panel):
     def setTierCount(self, tier_count=1, box_layout_scheme=None):
         """
         Установить количество ярусов со схемой погрузки паллет.
-        @param tier_count: Количество ярусов.
-        @param box_layout_scheme: Схема погрузки.
+        :param tier_count: Количество ярусов.
+        :param box_layout_scheme: Схема погрузки.
         Схема задается по позициям.
-        @return: True/False.
+        :return: True/False.
         """
         if box_layout_scheme and tier_count > 0:
             for i in range(tier_count):
@@ -131,10 +131,10 @@ class icWMSTruckConstructorCtrl(wx.Panel):
     def setTierCount(self, tier_count=1, box_layout_scheme=None):
         """
         Установить количество ярусов со схемой погрузки паллет.
-        @param tier_count: Количество ярусов.
-        @param box_layout_scheme: Схема погрузки.
+        :param tier_count: Количество ярусов.
+        :param box_layout_scheme: Схема погрузки.
         Схема задается по позициям.
-        @return: True/False.
+        :return: True/False.
         """
         if box_layout_scheme and tier_count > 0:
             for i in range(tier_count):

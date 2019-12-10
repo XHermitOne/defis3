@@ -80,9 +80,9 @@ class ClassSecurityInfo(SecurityInfo):
     def is_permission(self, id_permission, permissions):
         """
         Проверка на есть ли такое право в списке?
-        @param id_permission: Идентификатор.
-        @param permissions: Список прав.
-        @return: True/False.
+        :param id_permission: Идентификатор.
+        :param permissions: Список прав.
+        :return: True/False.
         """
         return id_permission in [el.id for el in permissions]
 

@@ -123,11 +123,11 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setScene(self, min_x=None, min_y=None, max_x=None, max_y=None):
         """
         Установить текущую сцену тренда.
-        @param min_x: Минимальное значение по оси X.
-        @param min_y: Минимальное значение по оси Y.
-        @param max_x: Максимальное значение по оси X.
-        @param max_y: Максимальное значение по оси Y.
-        @return: Текущая сцена тренда.
+        :param min_x: Минимальное значение по оси X.
+        :param min_y: Минимальное значение по оси Y.
+        :param max_x: Максимальное значение по оси X.
+        :param max_y: Максимальное значение по оси Y.
+        :return: Текущая сцена тренда.
         """
         # Адаптация сцены по данным
         if self._cur_scene is None:
@@ -154,11 +154,11 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setTunes(self, x_tunes=None, y_tunes=None):
         """
         Установить шкалы настройки.
-        @param x_tunes: Шкала настройки по оси X.
+        :param x_tunes: Шкала настройки по оси X.
             Если None, то шкала не устанавливается.
-        @param y_tunes: Шкала настройки по оси Y.
+        :param y_tunes: Шкала настройки по оси Y.
             Если None, то шкала не устанавливается.
-        @return: Кортеж (x_tunes, y_tunes) текущих шкал настройки.
+        :return: Кортеж (x_tunes, y_tunes) текущих шкал настройки.
         """
         if x_tunes is not None:
             self._x_tunes = x_tunes
@@ -169,11 +169,11 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setFormats(self, x_format=None, y_format=None):
         """
         Установить форматы шкал.
-        @param x_format: Формат шкалы оси X.
+        :param x_format: Формат шкалы оси X.
             Если None, то формат не устанавливается.
-        @param y_format: Формат шкалы оси Y.
+        :param y_format: Формат шкалы оси Y.
             Если None, то формат не устанавливается.
-        @return: Кортеж (x_format, y_format) текущих форматов.
+        :return: Кортеж (x_format, y_format) текущих форматов.
         """
         if x_format is not None:
             self._x_format = x_format
@@ -184,11 +184,11 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setPrecisions(self, x_precision=None, y_precision=None):
         """
         Установить цену деления по осям.
-        @param x_precision: Цена деления оси X.
+        :param x_precision: Цена деления оси X.
             Если None, то цена деления не устанавливается.
-        @param y_precision: Цена деления оси Y.
+        :param y_precision: Цена деления оси Y.
             Если None, то цена деления не устанавливается.
-        @return: Кортеж (x_precision, y_precision) текущих цен деления.
+        :return: Кортеж (x_precision, y_precision) текущих цен деления.
         """
         if x_precision is not None:
             if isinstance(x_precision, str):
@@ -241,8 +241,8 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def _convertDate(self, dt):
         """
         Корректное преобразование типа даты в datetime.datetime.
-        @param dt: Дата.
-        @return: Дата-время.
+        :param dt: Дата.
+        :return: Дата-время.
         """
         new_dt = None
         if isinstance(dt, datetime.date):
@@ -263,7 +263,7 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setStartDT(self, new_dt):
         """
         Начальная дата-время тренда.
-        @param new_dt: Новое значение.
+        :param new_dt: Новое значение.
         """
         self.start_datetime = self._convertDate(new_dt)
 
@@ -276,7 +276,7 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setStopDT(self, new_dt):
         """
         Конечная дата-время тренда.
-        @param new_dt: Новое значение.
+        :param new_dt: Новое значение.
         """
         self.stop_datetime = self._convertDate(new_dt)
 
@@ -300,8 +300,8 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def del_frame(self, frame_filename=None):
         """
         Удалить файл кадра
-        @param frame_filename: Имя файла кадра тренда.
-        @return: True/False.
+        :param frame_filename: Имя файла кадра тренда.
+        :return: True/False.
         """
         if frame_filename is None:
             frame_filename = self.getFrameFileName()
@@ -328,12 +328,12 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                    scene=None, points=None):
         """
         Отрисовка кадра данных тренда.
-        @param size: Размер кадра в точках.
-        @param x_format: Формат шкалы X.
-        @param y_format: Формат шкалы Y.
-        @param scene: Границы окна сцены в данных предметной области.
-        @param points: Список точек графика.
-        @return: Имя файла отрисованного кадра или None в случае ошибки.
+        :param size: Размер кадра в точках.
+        :param x_format: Формат шкалы X.
+        :param y_format: Формат шкалы Y.
+        :param scene: Границы окна сцены в данных предметной области.
+        :param points: Список точек графика.
+        :return: Имя файла отрисованного кадра или None в случае ошибки.
         """
         try:
             if scene is None:
@@ -349,12 +349,12 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                      scene=None, points=None):
         """
         Отрисовка кадра данных тренда в виде отчета PDF.
-        @param size: Размер кадра в точках.
-        @param x_format: Формат шкалы X.
-        @param y_format: Формат шкалы Y.
-        @param scene: Границы окна сцены в данных предметной области.
-        @param points: Список точек графика.
-        @return: Имя файла отрисованного кадра или None в случае ошибки.
+        :param size: Размер кадра в точках.
+        :param x_format: Формат шкалы X.
+        :param y_format: Формат шкалы Y.
+        :param scene: Границы окна сцены в данных предметной области.
+        :param points: Список точек графика.
+        :return: Имя файла отрисованного кадра или None в случае ошибки.
         """
         try:
             if scene is None:
@@ -370,12 +370,12 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                     points=None, file_type=PNG_FILE_TYPE):
         """
         Отрисовка кадра данных тренда.
-        @param size: Размер кадра в точках.
-        @param x_format: Формат шкалы X.
-        @param y_format: Формат шкалы Y.
-        @param scene: Границы окна сцены в данных предметной области.
-        @param points: Список точек графика.
-        @return: Имя файла отрисованного кадра или None в случае ошибки.
+        :param size: Размер кадра в точках.
+        :param x_format: Формат шкалы X.
+        :param y_format: Формат шкалы Y.
+        :param scene: Границы окна сцены в данных предметной области.
+        :param points: Список точек графика.
+        :return: Имя файла отрисованного кадра или None в случае ошибки.
         """
         cmd = '%s --%s ' % (NIXPLOT_FILENAME, file_type)
 
@@ -443,8 +443,8 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def set_frame(self, frame_filename=None):
         """
         Установить кадр.
-        @param frame_filename: Полное имя файла кадра.
-        @return: True/False.
+        :param frame_filename: Полное имя файла кадра.
+        :return: True/False.
         """
         if frame_filename and os.path.exists(frame_filename) and frame_filename.endswith(PNG_FILE_TYPE.lower()):
             bmp = bmpfunc.createBitmap(frame_filename)
@@ -456,8 +456,8 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def getPenData(self, pen_index=0):
         """
         Данные соответствующие перу.
-        @param pen_index: Индекс пера. По умолчанию берется первое перо.
-        @return: Список (Время, Значение)
+        :param pen_index: Индекс пера. По умолчанию берется первое перо.
+        :return: Список (Время, Значение)
         """
         pens = self.getPens()
 
@@ -469,8 +469,8 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def draw(self, redraw=True, size=None):
         """
         Основной метод отрисовки тренда.
-        @param redraw: Принудительная прорисовка.
-        @param size: Размер.
+        :param redraw: Принудительная прорисовка.
+        :param size: Размер.
         """
         if size is None:
             size = self.GetSize()
@@ -513,9 +513,9 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def adaptScene(self, graph_data=None):
         """
         Адаптировать текущую сцену для отображения по данным графика.
-        @param graph_data: Список точек графика.
+        :param graph_data: Список точек графика.
             [(x1, y1), (x2, y2), ... (xN, yN)]
-        @return: Текущая сцена тренда.
+        :return: Текущая сцена тренда.
         """
         if graph_data is None:
             graph_data = self.getPenData(pen_index=0)
@@ -561,11 +561,11 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def zoomX(self, step=1, redraw=True):
         """
         Увеличить цену деления оси X в соответствии со шкалой настройки.
-        @param step: Шаг по шкале настройки
+        :param step: Шаг по шкале настройки
             >0 - увеличение
             <0 - уменьшение
-        @param redraw: Произвести перерисовку кадра тренда?
-        @return: True/False.
+        :param redraw: Произвести перерисовку кадра тренда?
+        :return: True/False.
         """
         try:
             prev_idx = self._x_tunes.index(self._x_precision)
@@ -582,11 +582,11 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def zoomY(self, step=1, redraw=True):
         """
         Увеличить цену деления оси Y в соответствии со шкалой настройки.
-        @param step: Шаг по шкале настройки
+        :param step: Шаг по шкале настройки
             >0 - увеличение
             <0 - уменьшение
-        @param redraw: Произвести перерисовку кадра тренда?
-        @return: True/False.
+        :param redraw: Произвести перерисовку кадра тренда?
+        :return: True/False.
         """
         try:
             prev_idx = self._y_tunes.index(self._y_precision)
@@ -603,11 +603,11 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def moveSceneX(self, step=1, redraw=True):
         """
         Передвижение сцены по оси X на указанное количество цены деления.
-        @param step: Количество цен деления для передвижения
+        :param step: Количество цен деления для передвижения
             >0 - увеличение
             <0 - уменьшение
-        @param redraw: Произвести перерисовку кадра тренда?
-        @return: True/False.
+        :param redraw: Произвести перерисовку кадра тренда?
+        :return: True/False.
         """
         self._cur_scene = (self._cur_scene[0] + step*self._x_precision,
                            self._cur_scene[1],
@@ -621,11 +621,11 @@ class icNixplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def moveSceneY(self, step=1, redraw=True):
         """
         Передвижение сцены по оси Y на указанное количество цены деления.
-        @param step: Количество цен деления для передвижения
+        :param step: Количество цен деления для передвижения
             >0 - увеличение
             <0 - уменьшение
-        @param redraw: Произвести перерисовку кадра тренда?
-        @return: True/False.
+        :param redraw: Произвести перерисовку кадра тренда?
+        :return: True/False.
         """
         self._cur_scene = (self._cur_scene[0],
                            self._cur_scene[1] + step*self._y_precision,

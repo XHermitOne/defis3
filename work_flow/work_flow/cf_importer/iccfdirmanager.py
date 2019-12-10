@@ -22,7 +22,7 @@ class icCFDirManager:
     def __init__(self, cf_dirname=None):
         """
         Конструктор.
-        @param cf_dirname: Папка конфигурации 1с.
+        :param cf_dirname: Папка конфигурации 1с.
         """
         self.cf_dir = cf_dirname
         
@@ -32,7 +32,7 @@ class icCFDirManager:
     def buildMetaObjects(self, cf_dirname=None):
         """
         Построить дерево объектов конфигурации.
-        @param cf_dirname: Папка конфигурации 1с.
+        :param cf_dirname: Папка конфигурации 1с.
         """
         if cf_dirname:
             self.cf_dir = cf_dirname

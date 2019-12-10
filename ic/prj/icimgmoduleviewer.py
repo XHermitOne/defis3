@@ -64,8 +64,8 @@ class icImgModulePrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
     def _addImg(self, img_name, img):
         """
         Добавить образ в грид.
-        @param img_name: Имя образа.
-        @param img: Объект образа wx.Bitmap.
+        :param img_name: Имя образа.
+        :param img: Объект образа wx.Bitmap.
         """
         if not bool((self.GetNumberRows() == 1) and (not self.GetCellValue(0, 1))):
             self.AppendRows()

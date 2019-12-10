@@ -4,8 +4,8 @@
 """
 Модуль содержит описание класса IEHtmlPanel, который отображае HTML текст в окне.
 
-@type SPC_IC_IE_HTML: C{dictionary}
-@var SPC_IC_IE_HTML: Спецификация на ресурсное описание :
+:type SPC_IC_IE_HTML: C{dictionary}
+:var SPC_IC_IE_HTML: Спецификация на ресурсное описание :
 
     - B{type='IEHtmlWindow'}: Тип компонента.
     - B{name='default'}: Имя компонента.
@@ -44,14 +44,14 @@ class icIEHtmlPanel(icWidget, wx.Window):
                  bCounter=False, progressDlg=None):
         """
         Конструктор.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога)
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений
+        :type evalSpace: C{dictionary}
         """
         icSpcDefStruct(SPC_IC_IE_HTML, component)
         icWidget.__init__(self, parent, id, component, logType, evalSpace)

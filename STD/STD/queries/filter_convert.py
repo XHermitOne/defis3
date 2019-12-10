@@ -51,11 +51,11 @@ __version__ = (0, 1, 1, 2)
 def convertFilter2PgSQL(filter_data, table_name, fields=('*',), limit=None):
     """
     Конвертировать фильтр в SQL представление Postgres.
-    @param filter_data: Структура фильтра.
-    @param table_name: Имя таблицы запроса.
-    @param fields: Список/Кортеж имен полей используемых в запросе.
-    @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
-    @return: Возвращает строковое представление оператора
+    :param filter_data: Структура фильтра.
+    :param table_name: Имя таблицы запроса.
+    :param fields: Список/Кортеж имен полей используемых в запросе.
+    :param limit: Ограничение по строкам. Если не определено, то ограничения нет.
+    :return: Возвращает строковое представление оператора
     SELECT диалекта PgSQL.
     """
     sql_fmt = '''SELECT %s
@@ -82,8 +82,8 @@ class icFilter2PostgreSQLConverter(object):
     def __init__(self, filter_data, code_page='utf-8'):
         """
         Конструктор.
-        @param filter_data: Структура фильтра.
-        @param code_page: Кодировка текста в фильтре.
+        :param filter_data: Структура фильтра.
+        :param code_page: Кодировка текста в фильтре.
         """
         self.filter = filter_data
         self.codepage = code_page
@@ -91,7 +91,7 @@ class icFilter2PostgreSQLConverter(object):
     def convert(self):
         """
         Запуск конвертации.
-        @return: Возвращает строковое представление секции WHERE оператора
+        :return: Возвращает строковое представление секции WHERE оператора
         SELECT диалекта PgSQL.
         """
         # ВНИМАНИЕ!
@@ -104,8 +104,8 @@ class icFilter2PostgreSQLConverter(object):
     def gen_group_sql(self, group_data):
         """
         Генерация части SQL выражения, соответствующего группе реквизитов-элементов.
-        @param group_data: Структура группы.
-        @return: Возвращает строку секции WHERE SQL, соответствующую данной группе.
+        :param group_data: Структура группы.
+        :return: Возвращает строку секции WHERE SQL, соответствующую данной группе.
         """
         sql_fmt = '''( %s )'''
         
@@ -126,8 +126,8 @@ class icFilter2PostgreSQLConverter(object):
     def gen_requisite_sql(self, requisite):
         """
         Генерация части SQL выражения, соответствующую данному реквизиту.
-        @param requisite: Структура реквизита.
-        @return: Возвращает строку секции WHERE SQl, соответствующую данному элементу.
+        :param requisite: Структура реквизита.
+        :return: Возвращает строку секции WHERE SQl, соответствующую данному элементу.
         """
         return ' '.join(requisite['__sql__'])
     
@@ -143,11 +143,11 @@ LOGIC_NAME2SQLALCHEMY_LOGIC = {'AND': sqlalchemy.and_,
 def convertFilter2SQLAlchemy(filter_data, table, fields=('*',), limit=None):
     """
     Конвертация фильтра в представление SQLAlchemy.
-    @param filter_data: Структура фильтра.
-    @param table: Таблица запроса.
-    @param fields: Список/Кортеж имен полей используемых в запросе.
-    @param limit: Ограничение по строкам. Если не определено, то ограничения нет.
-    @return: Объект sqlalchemy.sql.selectable.Select.
+    :param filter_data: Структура фильтра.
+    :param table: Таблица запроса.
+    :param fields: Список/Кортеж имен полей используемых в запросе.
+    :param limit: Ограничение по строкам. Если не определено, то ограничения нет.
+    :return: Объект sqlalchemy.sql.selectable.Select.
     """
     converter = icFilter2SQLAlchemyConverter(filter_data, table)
     where = converter.convert()
@@ -170,8 +170,8 @@ class icFilter2SQLAlchemyConverter(object):
     def __init__(self, filter_data, table, code_page='utf-8'):
         """
         Конструктор.
-        @param filter_data: Структура фильтра.
-        @param table: Объект таблицы.
+        :param filter_data: Структура фильтра.
+        :param table: Объект таблицы.
         """
         self.filter = filter_data
         self.table = table
@@ -193,8 +193,8 @@ class icFilter2SQLAlchemyConverter(object):
     def gen_group_section(self, group_data):
         """
         Генерация секции группы.
-        @param group_data: Структура группы.
-        @return: Возвращает результат.
+        :param group_data: Структура группы.
+        :return: Возвращает результат.
         """
         sql_alchemy_elements = []
         for element in group_data.get('children', []):
@@ -217,8 +217,8 @@ class icFilter2SQLAlchemyConverter(object):
     def gen_requisite_section(self, requisite):
         """
         Генерация секции реквизита.
-        @param requisite: Структура реквизита.
-        @return: Возвращает результат.
+        :param requisite: Структура реквизита.
+        :return: Возвращает результат.
         """
         try:
             if 'get_args' in requisite and requisite['get_args']:

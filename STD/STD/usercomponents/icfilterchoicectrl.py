@@ -124,7 +124,7 @@ class icFilterChoiceCtrl(icwidget.icWidget,
         Это уникальный идентификатор паспорта компонента.
         Не изменяемый в зависимости от редактирования т.к.
         паспорт не меняется.
-        @return: UUID строка контрольной суммы паспорта.
+        :return: UUID строка контрольной суммы паспорта.
         """
         if self._widget_psp_uuid:
             return self._widget_psp_uuid

@@ -141,7 +141,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         Запуск сервера.
         ВНИМАНИЕ! Сохранение файла настроек и модели происходит при запуске
         сервера.
-        @return: True/False.
+        :return: True/False.
         """
         if self.is_running():
             # Если сервер уже запущен, то запуск производить не надо
@@ -164,7 +164,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def stop(self):
         """
         Остановка сервера.
-        @return: True/False.
+        :return: True/False.
         """
         log.warning(u'Не определен метод останова OLAP сервера <%s>' % self.__class__.__name__)
         return False
@@ -172,7 +172,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def is_running(self):
         """
         Проверка того что OLAP сервер запущен.
-        @return: True - сервер запущен, False - нет.
+        :return: True - сервер запущен, False - нет.
         """
         exec_filename = self.getExec()
         log.info(u'Проверка запущенного OLAP сервера по <%s>' % exec_filename)
@@ -181,7 +181,7 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def getRequestURL(self, request=None):
         """
         Получить URL запроса к серверу OLAP по его структурному описанию.
-        @return: Словарь параметров запроса к OLAP серверу.
+        :return: Словарь параметров запроса к OLAP серверу.
             Если не определен, то берется из контролов.
         """
         if request is None:
@@ -241,8 +241,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def get_request_url(self, request_url):
         """
         Получить полный запрос получения данных от сервера по URL.
-        @param request_url: URL запроса к OLAP серверу.
-        @return: Полный сгенерированный запрос.
+        :param request_url: URL запроса к OLAP серверу.
+        :return: Полный сгенерированный запрос.
         """
         url = OLAP_SERVER_URL_FMT % (self.getHost(), self.getPort(),
                                      request_url)
@@ -253,10 +253,10 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def get_response(self, request_url):
         """
         Запрос получения данных от сервера по URL.
-        @param request_url: URL запроса к OLAP серверу.
+        :param request_url: URL запроса к OLAP серверу.
             Может задаваться как полный URL (начинается с http://)
             так и не полный (/cube/...)
-        @return: Запрашиваемые данные или None в случае ошибки.
+        :return: Запрашиваемые данные или None в случае ошибки.
         """
         url = self.get_request_url(request_url) if not request_url.startswith(FULL_URL_PREFIX) else request_url
         log.debug(u'Определение JSON по URL <%s>' % url)
@@ -338,10 +338,10 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _save_ini(self, ini_filename=None, bReWrite=True):
         """
         Сохранить файл настройки OLAP сервера.
-        @param ini_filename: Полное имя INI файла настроек OLAP сервера.
+        :param ini_filename: Полное имя INI файла настроек OLAP сервера.
             Если не определено, то берем имя файла из описания объекта.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: True/False.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: True/False.
         """
         if ini_filename is None:
             ini_filename = self.getINIFileName()
@@ -397,10 +397,10 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         Сохранить файл настройки OLAP сервера.
         ВНИМАНИЕ! Сохранение файла настроек и модели происходит при запуске
         сервера.
-        @param ini_filename: Полное имя INI файла настроек OLAP сервера.
+        :param ini_filename: Полное имя INI файла настроек OLAP сервера.
             Если не определено, то берем имя файла из описания объекта.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: True/False.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: True/False.
         """
         try:
             return self._save_ini(ini_filename=ini_filename, bReWrite=bReWrite)
@@ -411,10 +411,10 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _save_model(self, model_filename=None, bReWrite=True):
         """
         Сохранить файл описания кубов OLAP сервера.
-        @param model_filename: Полное имя JSON файла описания кубов OLAP сервера.
+        :param model_filename: Полное имя JSON файла описания кубов OLAP сервера.
             Если не определено, то берем имя файла из описания объекта.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: True/False.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: True/False.
         """
         if model_filename is None:
             model_filename = self.getModelFileName()
@@ -437,8 +437,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _get_model_cube(self, cube):
         """
         Содержимое модели куба.
-        @param cube: Объект куба.
-        @return: Словарь содержимого модели, соответствующей кубу.
+        :param cube: Объект куба.
+        :return: Словарь содержимого модели, соответствующей кубу.
         """
         dimensions = cube.getDimensions()
         cube_content = dict(name=cube.getTableName(),
@@ -502,8 +502,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _get_model_measure(self, measure):
         """
         Содержимое модели меры/фактических данных.
-        @param measure: Объект меры.
-        @return: Словарь содержимого модели, соответствующей мере.
+        :param measure: Объект меры.
+        :return: Словарь содержимого модели, соответствующей мере.
         """
         measure_content = dict(name=measure.getFieldName())
         measure_label = measure.getLabel()
@@ -514,8 +514,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _get_model_aggregate(self, aggregate):
         """
         Содержимое модели агрегации данных.
-        @param aggregate: Объект агрегации данных.
-        @return: Словарь содержимого модели, соответствующей агрегации данных.
+        :param aggregate: Объект агрегации данных.
+        :return: Словарь содержимого модели, соответствующей агрегации данных.
         """
         aggregate_content = dict(name=aggregate.getName())
         aggregate_function = aggregate.getFunctionName()
@@ -532,8 +532,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _get_model_dimension(self, dimension):
         """
         Содержимое модели измерения.
-        @param dimension: Объект измерения.
-        @return: Словарь содержимого модели, соответствующей измерению.
+        :param dimension: Объект измерения.
+        :return: Словарь содержимого модели, соответствующей измерению.
         """
         dimension_content = dict(name=dimension.getName())
         label = dimension.getLabel()
@@ -555,8 +555,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _get_model_dimension_level(self, level):
         """
         Содержимое модели уровня измерения.
-        @param level: Объект уровня.
-        @return: Словарь содержимого модели, соответствующей уровню измерения.
+        :param level: Объект уровня.
+        :return: Словарь содержимого модели, соответствующей уровню измерения.
         """
         level_content = dict(name=level.getName())
         level_attributes = level.getAttributes()
@@ -574,8 +574,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _get_model_dimension_hierarchy(self, hierarchy):
         """
         Содержимое модели иерархии уровней измерения.
-        @param hierarchy: Объект иерархии.
-        @return: Словарь содержимого модели, соответствующей иерархии.
+        :param hierarchy: Объект иерархии.
+        :return: Словарь содержимого модели, соответствующей иерархии.
         """
         hierarchy_content = dict(name=hierarchy.getName())
         hierarchy_levels = hierarchy.getLevelNames()
@@ -588,10 +588,10 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         Сохранить файл описания кубов OLAP сервера.
         ВНИМАНИЕ! Сохранение файла настроек и модели происходит при запуске
         сервера.
-        @param model_filename: Полное имя JSON файла описания кубов OLAP сервера.
+        :param model_filename: Полное имя JSON файла описания кубов OLAP сервера.
             Если не определено, то берем имя файла из описания объекта.
-        @param bReWrite: Перезаписать существующий файл?
-        @return: True/False.
+        :param bReWrite: Перезаписать существующий файл?
+        :return: True/False.
         """
         try:
             return self._save_model(model_filename=model_filename, bReWrite=bReWrite)
@@ -614,8 +614,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def findCube(self, cube_name=None):
         """
         Найти объект куба по его имени.
-        @param cube_name: Имя куба. Если не определено, то просто берется первый куб.
-        @return: Объект куба или None, если куб с таким именем не найден.
+        :param cube_name: Имя куба. Если не определено, то просто берется первый куб.
+        :return: Объект куба или None, если куб с таким именем не найден.
         """
         cube = None
         if cube_name is None:
@@ -632,8 +632,8 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _prepare_spreadsheet(self, spreadsheet_mngr):
         """
         Подготовить структуру Spreadsheet для дальнейшего заполнения.
-        @param spreadsheet_mngr: Объект управления структурой SpreadSheet
-        @return: True/False.
+        :param spreadsheet_mngr: Объект управления структурой SpreadSheet
+        :return: True/False.
         """
         # Создаем книгу
         workbook = spreadsheet_mngr.createWorkbook()
@@ -655,11 +655,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _create_spreadsheet_table(self, spreadsheet_mngr, worksheet, row_count, col_count):
         """
         Создать таблицу SpreadSheet.
-        @param spreadsheet_mngr: Менеджер управления структурой SpreadSheet.
-        @param worksheet: Объект листа.
-        @param row_count: Количество строк.
-        @param col_count: Количество столбцов.
-        @return: Объект таблицы
+        :param spreadsheet_mngr: Менеджер управления структурой SpreadSheet.
+        :param worksheet: Объект листа.
+        :param row_count: Количество строк.
+        :param col_count: Количество столбцов.
+        :return: Объект таблицы
         """
         # Создаем таблицу
         table = worksheet.createTable()
@@ -672,11 +672,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         Подготовка данных для сводной таблицы.
         Манипулирование данными производится с помощью библиотеки pandas.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
-        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
-        @param bDebug: Вывести отладочную информацию в консоль?
-        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        :param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        :param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        :param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        :param bDebug: Вывести отладочную информацию в консоль?
+        :return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         # log.debug(u'Результат запроса: %s' % str(json_dict))
         # attributes = json_dict.get('attributes', list())
@@ -715,11 +715,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def norm_pivot_dataframe(self, dataframe, cube=None, row_dimension=None, col_dimension=None):
         """
         Нормировать сводную таблицу.
-        @param dataframe: Объект сводной таблицы.
-        @param cube: Объект куба. Если не определен, то берется первый куб в списке.
-        @param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
-        @param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
-        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        :param dataframe: Объект сводной таблицы.
+        :param cube: Объект куба. Если не определен, то берется первый куб в списке.
+        :param row_dimension: Измерение/измерения, которые будут отображаться по строкам.
+        :param col_dimension: Измерение/измерения, которые будут отображаться по колонкам.
+        :return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         if cube is None:
             cubes = self.getCubes()
@@ -746,16 +746,16 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def total_pivot_dataframe(self, dataframe):
         """
         Расчет общих итогов сводной таблицы по строкам.
-        @param dataframe: Объект pandas.DataFrame сводной таблицы.
-        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        :param dataframe: Объект pandas.DataFrame сводной таблицы.
+        :return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         return self.total_pivot_table(dataframe=dataframe)
 
     def total_group_pivot_dataframe(self, dataframe):
         """
         Расчет групповых итогов сводной таблицы по строкам.
-        @param dataframe: Объект pandas.DataFrame сводной таблицы.
-        @return: Объект pandas.DataFrame, соответствующей сводной таблице.
+        :param dataframe: Объект pandas.DataFrame сводной таблицы.
+        :return: Объект pandas.DataFrame, соответствующей сводной таблице.
         """
         return self.total_group_pivot_table(dataframe=dataframe)
 
@@ -763,11 +763,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         Преобразование результатов запроса к OLAP серверу к структуре
         сводной таблицы (Pivot Table) в формате SpreadSheet.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param cube: Куб. Если не определен, то берется первый.
-        @param dataframe: Объект pandas.DataFrame.
+        :param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        :param cube: Куб. Если не определен, то берется первый.
+        :param dataframe: Объект pandas.DataFrame.
             Если не определен, то берется внутренний объект.
-        @return: Словарь структуры SpreadSheet.
+        :return: Словарь структуры SpreadSheet.
         """
         try:
             return self._to_pivot_spreadsheet(json_dict=json_dict, cube=cube,
@@ -780,11 +780,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
         """
         Преобразование результатов запроса к OLAP серверу к структуре
         сводной таблицы (Pivot Table) в формате SpreadSheet.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param cube: Куб. Если не определен, то берется первый.
-        @param dataframe: Объект pandas.DataFrame.
+        :param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        :param cube: Куб. Если не определен, то берется первый.
+        :param dataframe: Объект pandas.DataFrame.
             Если не определен, то берется внутренний объект.
-        @return: Словарь структуры SpreadSheet.
+        :return: Словарь структуры SpreadSheet.
         """
         if cube is None:
             cubes = self.getCubes()
@@ -818,12 +818,12 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _create_pivot_spreadsheet_header(self, table, json_dict, cube, dataframe=None):
         """
         Создать заголовок данных структуры Pivot SpreadSheet.
-        @param table: Объект таблицы.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param cube: Объект куба.
-        @param dataframe: Объект pandas.DataFrame.
+        :param table: Объект таблицы.
+        :param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        :param cube: Объект куба.
+        :param dataframe: Объект pandas.DataFrame.
             Если не определен, то берется внутренний объект.
-        @return: True/False
+        :return: True/False
         """
         if dataframe is None:
             dataframe = self.getPivotDataFrame()
@@ -901,9 +901,9 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _get_pivot_label(self, cube, name):
         """
         Получить надпись ячейки по имени.
-        @param cube: Объект куба.
-        @param name: Имя измерения/агрегации.
-        @return: Надпись или пустая строка, если не возможно определить.
+        :param cube: Объект куба.
+        :param name: Имя измерения/агрегации.
+        :return: Надпись или пустая строка, если не возможно определить.
         """
         label = u''
         try:
@@ -931,11 +931,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _create_pivot_spreadsheet_detail(self, table, json_dict, dataframe=None):
         """
         Создать тело табличной части данных структуры Pivot SpreadSheet.
-        @param table: Объект таблицы.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param dataframe: Объект pandas.DataFrame.
+        :param table: Объект таблицы.
+        :param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        :param dataframe: Объект pandas.DataFrame.
             Если не определен, то берется внутренний объект.
-        @return: True/False
+        :return: True/False
         """
         if dataframe is None:
             dataframe = self.getPivotDataFrame()
@@ -982,11 +982,11 @@ class icCubesOLAPServerProto(olap_server_interface.icOLAPServerInterface,
     def _create_pivot_spreadsheet_footer(self, table, json_dict, dataframe=None):
         """
         Создать подвал/итоговую строку данных структуры Pivot SpreadSheet.
-        @param table: Объект таблицы.
-        @param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
-        @param dataframe: Объект pandas.DataFrame.
+        :param table: Объект таблицы.
+        :param json_dict: Результаты запроса к OLAP серверу в виде словаря JSON.
+        :param dataframe: Объект pandas.DataFrame.
             Если не определен, то берется внутренний объект.
-        @return: True/False
+        :return: True/False
         """
         if dataframe is None:
             dataframe = self.getPivotDataFrame()

@@ -33,7 +33,7 @@ class icImgList:
     def setImgIdx(self, id, img, img_ext=None):
         """
         Установить компонент для редактирования.
-        @param id: Идентификатор объекта асоциированного с образом.
+        :param id: Идентификатор объекта асоциированного с образом.
         """
         # Если тип компонента не зарегистрирован, то зарегистрировать его
         if id not in self._ImgIdx:
@@ -49,7 +49,7 @@ class icImgList:
     def getImgIdx(self, id):
         """
         Получить данные о компоненте для редактирования.
-        @param id: Идентификатор объекта асоциированного с образом.
+        :param id: Идентификатор объекта асоциированного с образом.
         """
         if id in self._ImgIdx:
             return self._ImgIdx[id]
@@ -58,7 +58,7 @@ class icImgList:
     def getImgExtendedIdx(self, id):
         """
         Получить данные о компоненте для редактирования.
-        @param id: Идентификатор объекта асоциированного с образом.
+        :param id: Идентификатор объекта асоциированного с образом.
         """
         if id in self._ImgExtendedIdx:
             return self._ImgExtendedIdx[id]
@@ -67,16 +67,16 @@ class icImgList:
     def getImgIdxTuple(self, id):
         """
         Получить сразу два идентификатора в виде кортежа.
-        @param id: Идентификатор объекта асоциированного с образом.
+        :param id: Идентификатор объекта асоциированного с образом.
         """
         return self.getImgIdx(id), self.getImgExtendedIdx(id)
     
     def setImg(self, img, img_idx=-1):
         """
         Добавить картинку компонента в список образов.
-        @param img: Имя файла образа компонента или сам образ.
-        @param img_idx: Указание на какое место поместить картинку.
-        @return: Возвращает индекс соответствующий этому образу.
+        :param img: Имя файла образа компонента или сам образ.
+        :param img_idx: Указание на какое место поместить картинку.
+        :return: Возвращает индекс соответствующий этому образу.
         """
         # Заменять картинку в списке не надо
         if img_idx < 0:
@@ -101,9 +101,9 @@ class icImgList:
     def replaceImg(self, img_idx, img):
         """
         Заменить образ в списке образов.
-        @param img_idx: Индекс заменяемого образа.
-        @param img: Сам wx.Bitmap образ.
-        @return: Функция возвращает новый индекс образа.
+        :param img_idx: Индекс заменяемого образа.
+        :param img: Сам wx.Bitmap образ.
+        :return: Функция возвращает новый индекс образа.
         """
         try:
             self._img_lst.Replace(img_idx, img)

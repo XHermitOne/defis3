@@ -19,9 +19,9 @@ DEFAULT_COLOR_NAMES_SEQUENCE = ('blue', 'green', 'yellow', 'red', 'cyan', 'magen
 def get_marker_icon_filename(icon_name):
     """
     Получить полное имя файла иконки маркера.
-    @param icon_name: Имя иконки.
+    :param icon_name: Имя иконки.
         Может задаваться как имя (например marker) или базовое имя файла (например marker.png).
-    @return: Полное имя файла или None в случае ошибки.
+    :return: Полное имя файла или None в случае ошибки.
     """
     if not isinstance(icon_name, str):
         log.warning(u'Не корректный тип <%s> имени иконки' % icon_name.__class__.__name__)

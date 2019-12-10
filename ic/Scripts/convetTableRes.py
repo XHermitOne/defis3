@@ -9,10 +9,10 @@ def ConvertRes(old_res_fl, path, ext=None):
     """
     Функция конвертирует и 'режит' ресурсы старых версий в новые.
 
-    @type old_res_fl: C{string}
-    @param old_res_fl: Полный путь до ресурса старой версии.
-    @type path: C{string}
-    @param path: Полный путь до папки, куда положить новые ресурсы.
+    :type old_res_fl: C{string}
+    :param old_res_fl: Полный путь до ресурса старой версии.
+    :type path: C{string}
+    :param path: Полный путь до папки, куда положить новые ресурсы.
     """
     pth, fileName = os.path.split(old_res_fl)
 

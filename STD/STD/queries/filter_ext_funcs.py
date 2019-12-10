@@ -20,7 +20,7 @@ DEFAULT_END_DATE_FMT = '%Y.%m.%d 23:59:59'
 def get_args_sys_date():
     """
     Получение аргументов текущей даты.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     now_date = datetime.datetime.now()
     # next_date = now_date + datetime.timedelta(days=1)
@@ -32,7 +32,7 @@ def get_args_sys_date():
 def get_args_sys_month():
     """
     Получение аргументов текущего месяца.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     now = datetime.datetime.now()
     first_day_month = datetime.datetime(now.year, now.month, 1)
@@ -47,7 +47,7 @@ def get_args_sys_month():
 def get_args_sys_year():
     """
     Получение аргументов текущего года.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     now = datetime.datetime.now()
     first_day_year = datetime.datetime(now.year, 1, 1)
@@ -62,7 +62,7 @@ def get_args_sys_year():
 def get_args_choice_date():
     """
     Получение аргументов даты с выбором.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_date = std_dlg.getDateDlg()
     if choice_date:
@@ -74,7 +74,7 @@ def get_args_choice_date():
 def get_args_choice_month():
     """
     Получение аргументов месяца с выбором.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_month = std_dlg.getMonthDlg()
     if choice_month:
@@ -89,7 +89,7 @@ def get_args_choice_month():
 def get_args_choice_year():
     """
     Получение аргументов года с выбором.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_year = std_dlg.getYearDlg()
     if choice_year:
@@ -104,7 +104,7 @@ def get_args_choice_year():
 def get_args_choice_date_range():
     """
     Получение аргументов c выбором диапазона дат.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_range = std_dlg.getDateRangeDlg()
     if choice_range:
@@ -117,7 +117,7 @@ def get_args_choice_date_range():
 def get_args_choice_month_range():
     """
     Получение аргументов c выбором диапазона месяцев.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_range = std_dlg.getMonthRangeDlg()
     if choice_range:
@@ -132,7 +132,7 @@ def get_args_choice_month_range():
 def get_args_sys_date_datetime():
     """
     Получение аргументов текущей даты.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     today = datetime.date.today()
     tomorrow = today + datetime.timedelta(days=1)
@@ -142,7 +142,7 @@ def get_args_sys_date_datetime():
 def get_args_yesterday_datetime():
     """
     Получение аргументов вчерашней даты.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days=1)
@@ -152,7 +152,7 @@ def get_args_yesterday_datetime():
 def get_args_two_days_ago_datetime():
     """
     Получение аргументов позавчерашней даты.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days=1)
@@ -163,7 +163,7 @@ def get_args_two_days_ago_datetime():
 def get_args_sys_month_datetime():
     """
     Получение аргументов текущего месяца.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     now = datetime.datetime.now()
     first_day_month = datetime.datetime(now.year, now.month, 1)
@@ -176,7 +176,7 @@ def get_args_sys_month_datetime():
 def get_args_sys_year_datetime():
     """
     Получение аргументов текущего системного года.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     now = datetime.datetime.now()
     first_day_year = datetime.datetime(now.year, 1, 1)
@@ -189,7 +189,7 @@ def get_args_sys_year_datetime():
 def get_args_oper_year_datetime():
     """
     Получение аргументов текущего операционного года.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     from ic.engine import glob_functions
     first_day_year = datetime.datetime(glob_functions.getOperateYear(), 1, 1)
@@ -202,7 +202,7 @@ def get_args_oper_year_datetime():
 def get_args_choice_date_datetime():
     """
     Получение аргументов даты с выбором.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_date = std_dlg.getDateDlg()
     if choice_date:
@@ -214,7 +214,7 @@ def get_args_choice_date_datetime():
 def get_args_choice_month_datetime():
     """
     Получение аргументов месяца с выбором.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_month = std_dlg.getMonthDlg()
     if choice_month:
@@ -227,7 +227,7 @@ def get_args_choice_month_datetime():
 def get_args_choice_year_datetime():
     """
     Получение аргументов года с выбором.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_year = std_dlg.getYearDlg()
     if choice_year:
@@ -240,7 +240,7 @@ def get_args_choice_year_datetime():
 def get_args_choice_date_range_datetime():
     """
     Получение аргументов c выбором диапазона дат.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_range = std_dlg.getDateRangeDlg()
     if choice_range:
@@ -251,7 +251,7 @@ def get_args_choice_date_range_datetime():
 def get_args_choice_month_range_datetime():
     """
     Получение аргументов c выбором диапазона месяцев.
-    @return: Словарь заполненных аргументов.
+    :return: Словарь заполненных аргументов.
     """
     choice_range = std_dlg.getMonthRangeDlg()
     if choice_range:

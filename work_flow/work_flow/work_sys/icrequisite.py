@@ -7,8 +7,8 @@
 описывает поля редактирования/просмотра этого атрибута, 
 поле хранения атрибута и т.п.
 
-@type SPC_IC_REQUISITE: C{dictionary}
-@var SPC_IC_REQUISITE: Спецификация на ресурсное описание реквизита.
+:type SPC_IC_REQUISITE: C{dictionary}
+:var SPC_IC_REQUISITE: Спецификация на ресурсное описание реквизита.
 Описание ключей SPC_IC_REQUISITE:
 
     - B{name = 'default'}: Имя.
@@ -21,8 +21,8 @@
     - B{set_value = None}: Функционал, исполняемый при установке значения реквизита.
     - B{get_value = None}: Функционал, исполняемый при получениии значения реквизита.
 
-@type SPC_IC_NSI_REQUISITE: C{dictionary}
-@var SPC_IC_NSI_REQUISITE: Спецификация на ресурсное описание реквизита-связи со справочником.
+:type SPC_IC_NSI_REQUISITE: C{dictionary}
+:var SPC_IC_NSI_REQUISITE: Спецификация на ресурсное описание реквизита-связи со справочником.
 Описание ключей SPC_IC_NSI_REQUISITE:
 
     - B{name = 'default'}: Имя.
@@ -36,8 +36,8 @@
     - B{nsi_type = None}: Справочник.
     - B{auto_set = True}: Признак автоматического заполнения полей при редактировании.
 
-@type SPC_IC_DOC_REQUISITE: C{dictionary}
-@var SPC_IC_DOC_REQUISITE: Спецификация на ресурсное описание реквизита-связи с документом.
+:type SPC_IC_DOC_REQUISITE: C{dictionary}
+:var SPC_IC_DOC_REQUISITE: Спецификация на ресурсное описание реквизита-связи с документом.
 Описание ключей SPC_IC_DOC_REQUISITE:
 
     - B{name = 'default'}: Имя.
@@ -261,7 +261,7 @@ class icRequisiteProto(icworkbase.icRequisiteBase):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icworkbase.icRequisiteBase.__init__(self, parent)
         
@@ -286,7 +286,7 @@ class icRequisiteProto(icworkbase.icRequisiteBase):
     def setMyData(self, record):
         """
         Установить мои данные из строки.
-        @param record: Строка в виде словаря.
+        :param record: Строка в виде словаря.
         """
         if self.field in record:
             self.setData(record[self.field])
@@ -398,7 +398,7 @@ class icRequisiteProto(icworkbase.icRequisiteBase):
     def createEditorCtrl(self, parent=None):
         """
         Создание объекта контрола редактора реквизита.
-        @param parent: Родительское окно.
+        :param parent: Родительское окно.
         """
         if self.type_val == 'T':
             spc = self._genTxtEditorRes(self.name+'_edit')
@@ -425,7 +425,7 @@ class icRegGroupProto(icworkbase.icRequisiteBase):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icworkbase.icRequisiteBase.__init__(self, parent)
         
@@ -456,7 +456,7 @@ class icRegSumProto(icworkbase.icRequisiteBase):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icworkbase.icRequisiteBase.__init__(self, parent)
         
@@ -496,7 +496,7 @@ class icNSIRequisiteProto(icworkbase.icRequisiteBase):
     def __init__(self, parent=None):
         """
         Конструктор.
-        @param parent: Родительский объект.
+        :param parent: Родительский объект.
         """
         icworkbase.icRequisiteBase.__init__(self, parent)
         
@@ -583,9 +583,9 @@ class icNSIRequisiteProto(icworkbase.icRequisiteBase):
     def _getNSIFieldsSpc(self, nsi_resource_name, nsi_type, field_names):
         """
         Взять спецификацию поля справочника.
-        @param nsi_resource_name: Имя ресурсного файла справочника.
-        @param nsi_type: Тип справочника.
-        @param field_names: Список имен полей справочника.
+        :param nsi_resource_name: Имя ресурсного файла справочника.
+        :param nsi_type: Тип справочника.
+        :param field_names: Список имен полей справочника.
         """
         if nsi_resource_name is None:
             nsi_res_name = 'nsi_sprav'
@@ -688,7 +688,7 @@ class icNSIRequisiteProto(icworkbase.icRequisiteBase):
     def setData(self, data):
         """
         Установить текущее значение объекта.
-        @param data: Данные справочника в виде словаря в формате 'defaults'.
+        :param data: Данные справочника в виде словаря в формате 'defaults'.
         """
         if self.value is None:
             self.value = dict()
@@ -711,7 +711,7 @@ class icNSIRequisiteProto(icworkbase.icRequisiteBase):
     def setMyData(self, record):
         """
         Установить мои данные из строки.
-        @param record: Строка в виде словаря.
+        :param record: Строка в виде словаря.
         """
         for field_name in self.getFields().keys():
             if record is not None:
@@ -744,7 +744,7 @@ class icNSIRequisiteProto(icworkbase.icRequisiteBase):
     def createEditorCtrl(self, parent=None):
         """
         Создание объекта контрола редактора реквизита.
-        @param parent: Родительское окно.
+        :param parent: Родительское окно.
         """
         spc = self._genNSIEditorRes(self.name+'_edit')
         return self.GetKernel().createObjBySpc(parent, spc)
@@ -752,9 +752,9 @@ class icNSIRequisiteProto(icworkbase.icRequisiteBase):
     def setSprav(self, sprav):
         """
         Установить справочник.
-        @param sprav: Объект справочника.
+        :param sprav: Объект справочника.
             Можно также задавать паспортом.
-        @return:
+        :return:
         """
         if toolfunc.is_pasport(sprav):
             self.setSpravByPsp(sprav)
@@ -764,8 +764,8 @@ class icNSIRequisiteProto(icworkbase.icRequisiteBase):
     def setSpravByPsp(self, nsi_psp):
         """
         Установить справочник по его паспорту.
-        @param nsi_psp: Паспорт справочника.
-        @return: Объект созданного справочника.
+        :param nsi_psp: Паспорт справочника.
+        :return: Объект созданного справочника.
         """
         sprav = self.GetKernel().Create(nsi_psp)
         self.setSprav(sprav)

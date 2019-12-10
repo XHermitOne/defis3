@@ -43,8 +43,8 @@ class icKernelContext(icContext.BaseContext):
     def Get(self, name):
         """
         Получить копию объекта.
-        @param name: Имя объекта.
-        @return: Возвращает копию объекта не связанную с оригиналом
+        :param name: Имя объекта.
+        :return: Возвращает копию объекта не связанную с оригиналом
             или None, если нет такого объекта.
         """
         return self.get(name, None)
@@ -52,17 +52,17 @@ class icKernelContext(icContext.BaseContext):
     def Set(self, name, data):
         """
         Сохранить объект.
-        @param name: Имя объекта.
-        @param data: Данные.
-        @return: Возвращает результат выполнения операции (False или True).
+        :param name: Имя объекта.
+        :param data: Данные.
+        :return: Возвращает результат выполнения операции (False или True).
         """
         return self.__setitem__(name, data)
 
     def Del(self, name):
         """
         Удалить объект.
-        @param name: Имя объекта.
-        @return: Возвращает удаленный из хранилища объект.
+        :param name: Имя объекта.
+        :return: Возвращает удаленный из хранилища объект.
         """
         return self.__delitem__(name)
         
@@ -75,8 +75,8 @@ class icKernelContext(icContext.BaseContext):
     def Is(self, Name_):
         """
         Функция проверяет усть ли объект в хранилище.
-        @param Name_: Имя объекта.
-        @return: Результат поиска (0/1).
+        :param Name_: Имя объекта.
+        :return: Результат поиска (0/1).
         """
         return Name_ in self
     
@@ -125,7 +125,7 @@ class icKernelContext(icContext.BaseContext):
     def initEnv(self, prj_dir, **environ):
         """
         Инициализация окружения по папке проекта.
-        @param prj_dir: Папке проекта.
+        :param prj_dir: Папке проекта.
         """
         if isinstance(prj_dir, str):
             # prj_dirname = prj_dirname.encode(sys.getfilesystemencoding())
@@ -199,7 +199,7 @@ class icKernelContext(icContext.BaseContext):
     def _isSubSysDir(self, dir_path):
         """
         Проверить, является ли папка папкой подсистемы.
-        @param dir_path: Исследуемая папка.
+        :param dir_path: Исследуемая папка.
         """
         is_dir = os.path.isdir(dir_path)
         is_init_file = os.path.exists(os.path.join(dir_path, '__init__.py'))

@@ -4,8 +4,8 @@
 """
 Обкладка для компонента wx.TextCtrl.
 
-@type SPC_IC_TEXTFIELD: C{dictionary}
-@var SPC_IC_TEXTFIELD: Спецификация на ресурсное описание компонента:
+:type SPC_IC_TEXTFIELD: C{dictionary}
+:var SPC_IC_TEXTFIELD: Спецификация на ресурсное описание компонента:
 
     - B{type='TextField'}: Тип компонента.
     - B{name='default'}: Имя компонента.
@@ -44,8 +44,8 @@
     - B{recount=None}: Выражение, возвращающее список пересчитываемых компонентов. Под этим понимается пересчет
         значений хранимых в базе данных.
 
-@type ICTextFieldStyle: C{dictionary}
-@var ICTextFieldStyle: Словарь специальных стилей компонента. Описание ключей ICTextFieldStyle:
+:type ICTextFieldStyle: C{dictionary}
+:var ICTextFieldStyle: Словарь специальных стилей компонента. Описание ключей ICTextFieldStyle:
 
     - C{wx.TE_PROCESS_ENTER}:  Компонент будет генерировать сообщение wx.EVENT_TYPE_TEXT_ENTER_COMMAND.
     - C{wx.TE_PROCESS_TAB}:  Компонент будет получать сообщение EVT_CHAR при нажатии TAB.
@@ -191,16 +191,16 @@ class icTextField(icWidget, wx.TextCtrl):
                  bCounter=False, progressDlg=None):
         """
         Конструктор для создания icTextField.
-        @type parent: C{wx.Window}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wx.Window}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         self.bkillfocus = True
         #   Признак временной потери фокуса
@@ -488,8 +488,8 @@ class icTextField(icWidget, wx.TextCtrl):
     def CtrlValue(self, value=None):
         """
         Контроль значения.
-        @rtype: C{bool}
-        @return: Возращает признак, разрещающий или запрещающий установить значение.
+        :rtype: C{bool}
+        :return: Возращает признак, разрещающий или запрещающий установить значение.
         """
         codCtrl = IC_CTRL_OK
         if value is None:
@@ -575,8 +575,8 @@ class icTextField(icWidget, wx.TextCtrl):
         """
         Функция читает значение поля и удаляет символы форматирования
         шаблона вывода.
-        @return: Возвращает значение поля без символов форматирования.
-        @rtype: C{string}
+        :return: Возвращает значение поля без символов форматирования.
+        :rtype: C{string}
         """
         value = wx.TextCtrl.GetValue(self)
         #   Убираем форматирование по шаблону
@@ -605,10 +605,10 @@ class icTextField(icWidget, wx.TextCtrl):
         """
         Устанавливает значение поля, признак изменения, а также форматирует
         текст по шаблону вывода.
-        @type value:
-        @param value:
-        @type prz:  C{int}
-        @param prz: Устанавливает признак изменения поля
+        :type value:
+        :param value:
+        :type prz:  C{int}
+        :param prz: Устанавливает признак изменения поля
         """
         #   Если аттрибут описания 'getvalue' определен, то вычисляем выводимое значение поля
         if self.getvalue not in (None, 'None', ''):
@@ -684,13 +684,13 @@ class icTextField(icWidget, wx.TextCtrl):
     def UpdateDataDB(self, db_name=None, bRestore=False):
         """
         Обновляем данные в базе данных.
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
-        @type bRestore: C{bool}
-        @param bRestore: Признак обновления представления. Если True, то при
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
+        :type bRestore: C{bool}
+        :param bRestore: Признак обновления представления. Если True, то при
             неудачной попытки записи программа востановит значение поля по базе
-        @rtype: C{int}
-        @return: Возвращает код контроля на запись.
+        :rtype: C{int}
+        :return: Возвращает код контроля на запись.
         """
         #   Если класс данных не задан, то считаем, что данные необходимо обновить
         if db_name is None:
@@ -728,13 +728,13 @@ class icTextField(icWidget, wx.TextCtrl):
         """
         Обновляет данные в текстовом поле (если компонент привязан к
         источнику данных).
-        @type db_name: C{String}
-        @param db_name: Имя источника данных.
-        @type bFromBuff: C{bool}
-        @param bFromBuff: Признак, который указывает, что значения можно брать из
+        :type db_name: C{String}
+        :param db_name: Имя источника данных.
+        :type bFromBuff: C{bool}
+        :param bFromBuff: Признак, который указывает, что значения можно брать из
             буфера измененных значений.
-        @rtype: C{bool}
-        @return: Возвращает признак успешного обновления.
+        :rtype: C{bool}
+        :return: Возвращает признак успешного обновления.
         """
         #   Если класс данных не задан, то считаем, что объект необходимо обновить
         if db_name is None:

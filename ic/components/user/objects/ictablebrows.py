@@ -49,8 +49,8 @@ class TableBrows:
     def generateGridRes(self, ds_res=None):
         """
         Генерируется ресурсное описание грида по классу данных.
-        @type ds_res: C{dictionary}
-        @param ds_res: Ресурсное описание вкласса данных.
+        :type ds_res: C{dictionary}
+        :param ds_res: Ресурсное описание вкласса данных.
         """
         if not ds_res:
             ds_res = self.GetNameObj('table').resource

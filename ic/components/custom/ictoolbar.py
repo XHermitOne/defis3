@@ -6,8 +6,8 @@
 по ресурсному описанию. В панеле инструментов
 может находится: кнопка,  разделитель, текст, текст с выбором.
 
-@type SPC_IC_TOOLBAR: C{dictionary}
-@var SPC_IC_TOOLBAR: Спецификация на ресурсное описание панели инструментов. Описание ключей:
+:type SPC_IC_TOOLBAR: C{dictionary}
+:var SPC_IC_TOOLBAR: Спецификация на ресурсное описание панели инструментов. Описание ключей:
 
     - B{name = 'DefaultName'}: Имя объекта.
     - B{type = 'ToolBar'}: Тип объекта.
@@ -27,19 +27,19 @@
         - TB_NODIVIDER  - Убирает разделитель над кнопками (только Windows).
         - TB_NOALIGN  - Отминяет выравнивание по родительскому окну (Windows only).
 
-@type ICToolbarStyle: C{dictionary}
-@var ICToolbarStyle: Словарь специальных стилей компонента.
+:type ICToolbarStyle: C{dictionary}
+:var ICToolbarStyle: Словарь специальных стилей компонента.
         
-@type SPC_IC_TB_SEPARATOR: C{Dictionary}
-@var SPC_IC_TB_SEPARATOR: Спецификация на ресурсное описание резделителя между гуппами инструментов.
+:type SPC_IC_TB_SEPARATOR: C{Dictionary}
+:var SPC_IC_TB_SEPARATOR: Спецификация на ресурсное описание резделителя между гуппами инструментов.
 Описание ключей:
 
     - B{name = ''}: Имя объекта.
     - B{type = 'Separator'}: Тип объекта.
     - B{size = 5}: Размер разделителя, устанавливаемого ф-ией: wx.ToolBar.SetToolSeparation(obj, size).
 
-@type SPC_IC_TB_TOOL: C{Dictionary}
-@var SPC_IC_TB_TOOL: Спецификация на ресурсное описание инструмента панели инструментов. Описание ключей:
+:type SPC_IC_TB_TOOL: C{Dictionary}
+:var SPC_IC_TB_TOOL: Спецификация на ресурсное описание инструмента панели инструментов. Описание ключей:
 
     - B{name = 'default'}: Имя объекта.
     - B{type = 'ToolBarTool'}: Тип объекта.
@@ -233,16 +233,16 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
         """
         Конструктор.
 
-        @type parent: C{wxWindow}
-        @param parent: Указатель на родительское окно.
-        @type id: C{int}
-        @param id: Идентификатор окна.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента.
-        @type logType: C{int}
-        @param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
-        @param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
-        @type evalSpace: C{dictionary}
+        :type parent: C{wxWindow}
+        :param parent: Указатель на родительское окно.
+        :type id: C{int}
+        :param id: Идентификатор окна.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента.
+        :type logType: C{int}
+        :param logType: Тип лога (0 - консоль, 1- файл, 2- окно лога).
+        :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
+        :type evalSpace: C{dictionary}
         """
         util.icSpcDefStruct(SPC_IC_TOOLBAR, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
@@ -362,10 +362,10 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
     def AddToolRes(self, id, component, indx=0):
         """
         Добавляет инструмент в панель по ресурсному описанию.
-        @type id: C{int}
-        @param id: Идентификатор инструмента.
-        @type component: C{dictionary}
-        @param component: Словарь описания компонента согласно спецификации, описанной в SPC_IC_TB_TOOL.
+        :type id: C{int}
+        :param id: Идентификатор инструмента.
+        :type component: C{dictionary}
+        :param component: Словарь описания компонента согласно спецификации, описанной в SPC_IC_TB_TOOL.
         """
         util.icSpcDefStruct(SPC_IC_TB_TOOL, component)
         
@@ -399,7 +399,7 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
     def getToolId(self, ToolName_):
         """
         Идентификатор инструмента по его имени.
-        @param ToolName_: Имя инструмента.
+        :param ToolName_: Имя инструмента.
         """
         try:
             return self._tool_name_id[ToolName_]
@@ -409,8 +409,8 @@ class icToolBar(icwidget.icWidget, wx.ToolBar):
     def enableTool(self, ToolName_, Enable_=True):
         """
         Вкл./выкл. инструмент по имени.
-        @param ToolName_: Имя инструмента.
-        @param Enable_: True/False.
+        :param ToolName_: Имя инструмента.
+        :param Enable_: True/False.
         """
         return self.EnableTool(self.getToolId(ToolName_), Enable_)
         

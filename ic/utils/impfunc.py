@@ -16,8 +16,8 @@ __version__ = (0, 1, 1, 1)
 def importModule(name):
     """
     Импортирование модуля. Пример: subsys.usercomponents.component
-    @type name: C{string}
-    @param name: Имя модуля.
+    :type name: C{string}
+    :param name: Имя модуля.
     """
     mod = __import__(name, globals(), locals(), [], -1)
     # Поскольку __import__ возвращает родительский модуль
@@ -32,11 +32,11 @@ def importModule(name):
 def loadSource(name, path):
     """
     Возвращает загруженный модуль.
-    @type name: C{string}
-    @param name: Имя модуля.
-    @type path: C{string}
-    @param path: Полный путь до модуля.
-    @return: Объект загруженного модуля или None в случае ошибки.
+    :type name: C{string}
+    :param name: Имя модуля.
+    :type path: C{string}
+    :param path: Полный путь до модуля.
+    :return: Объект загруженного модуля или None в случае ошибки.
     """
     module = None
     try:
@@ -55,8 +55,8 @@ def loadSource(name, path):
 def unloadSource(name):
     """
     Выгрузить модуль.
-    @type name: C{string}
-    @param name: Имя модуля.
+    :type name: C{string}
+    :param name: Имя модуля.
     """
     if name in sys.modules:
         del sys.modules[name]
@@ -67,10 +67,10 @@ def unloadSource(name):
 def reloadSource(name, path=None):
     """
     Перезагрузить модуль.
-    @type name: C{string}
-    @param name: Имя модуля.
-    @type path: C{string}
-    @param path: Полный путь до модуля.
+    :type name: C{string}
+    :param name: Имя модуля.
+    :type path: C{string}
+    :param path: Полный путь до модуля.
     """
     if path is None:
         if name in sys.modules:
@@ -92,8 +92,8 @@ def addImportPath(path):
     Добавить путь для возможности импорта.
     Добавление происходит в sys.path.
     Также производится проверка на дублирование путей в sys.path
-    @param path: Добавляемый путь для импорта.
-    @return: Список путей sys.path.
+    :param path: Добавляемый путь для импорта.
+    :return: Список путей sys.path.
     """
     if not isinstance(path, str):
         log.warning(u'Добавление пути для возможности импорта: ошибка типа <%s>' % type(path))

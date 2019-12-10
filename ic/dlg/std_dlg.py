@@ -49,13 +49,13 @@ __version__ = (0, 1, 9, 1)
 def getIntegerDlg(parent=None, title=None, label=None, min_value=0, max_value=100):
     """
     Ввод целого числа в диалоговом окне.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param title: Заголовок окна.
-    @param label: Текст приглашения ввода.
-    @param min_value: Минимально-допустимое значение.
-    @param max_value: Максимально-допустимое значение.
-    @return: Введенное значение или None если нажата <отмена>.
+    :param title: Заголовок окна.
+    :param label: Текст приглашения ввода.
+    :param min_value: Минимально-допустимое значение.
+    :param max_value: Максимально-допустимое значение.
+    :return: Введенное значение или None если нажата <отмена>.
     """
     value = None
 
@@ -76,9 +76,9 @@ def getIntegerDlg(parent=None, title=None, label=None, min_value=0, max_value=10
 def getDateDlg(parent=None):
     """
     Выбор даты в диалоговом окне календаря.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @return: Выбранную дату(datetime) или None если нажата <отмена>.
+    :return: Выбранную дату(datetime) или None если нажата <отмена>.
     """
     selected_date = None
 
@@ -98,11 +98,11 @@ def getDateDlg(parent=None):
 def getYearDlg(parent=None, title=None, default_year=None):
     """
     Выбор года в диалоговом окне.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param title: Заоголовок диалогового окна.
-    @param default_year: Устанавлемое здачение по умолчанию.
-    @return: Выбранный год (datetime) или None если нажата <отмена>.
+    :param title: Заоголовок диалогового окна.
+    :param default_year: Устанавлемое здачение по умолчанию.
+    :return: Выбранный год (datetime) или None если нажата <отмена>.
     """
     selected_year = None
 
@@ -131,9 +131,9 @@ def getYearDlg(parent=None, title=None, default_year=None):
 def getMonthDlg(parent=None):
     """
     Выбор месяца в диалоговом окне.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @return: Первый день выбранного месяца (datetime) или None если нажата <отмена>.
+    :return: Первый день выбранного месяца (datetime) или None если нажата <отмена>.
     """
     selected_month = None
 
@@ -153,9 +153,9 @@ def getMonthDlg(parent=None):
 def getQuarterDlg(parent=None):
     """
     Выбор квартала в диалоговом окне.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @return: Кортеж (год, номер картала) или None если нажата <отмена>.
+    :return: Кортеж (год, номер картала) или None если нажата <отмена>.
     """
     selected_quarter = None
 
@@ -178,11 +178,11 @@ MONTH_CHOICES = datefunc.MONTHS
 def getMonthNumDlg(parent=None, title=None, text=None):
     """
     Выбор номера месяца в диалоговом окне.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param title: Заоголовок диалогового окна.
-    @param text: Приглашение ввода.
-    @return: Номер месяца 1-январь ... 12-декабрь или None, если нажата <Отмена>.
+    :param title: Заоголовок диалогового окна.
+    :param text: Приглашение ввода.
+    :return: Номер месяца 1-январь ... 12-декабрь или None, если нажата <Отмена>.
     """
     if parent is None:
         parent = wx.GetApp().GetTopWindow()
@@ -199,9 +199,9 @@ def getMonthNumDlg(parent=None, title=None, text=None):
 def getMonthRangeDlg(parent=None):
     """
     Выбор периода по месяцам в диалоговом окне.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @return: Кортеж периода по месяцам (datetime) или None если нажата <отмена>.
+    :return: Кортеж периода по месяцам (datetime) или None если нажата <отмена>.
     """
     selected_range = None
 
@@ -221,10 +221,10 @@ def getMonthRangeDlg(parent=None):
 def getDateRangeDlg(parent=None, is_concrete_date=False):
     """
     Выбор периода по датам в диалоговом окне.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param is_concrete_date: Вкл. режим ввода конкретной даты?
-    @return: Кортеж периода по датам (datetime) или None если нажата <отмена>.
+    :param is_concrete_date: Вкл. режим ввода конкретной даты?
+    :return: Кортеж периода по датам (datetime) или None если нажата <отмена>.
     """
     selected_range = None
 
@@ -254,14 +254,14 @@ def getNSIListDlg(parent=None,
                   ext_filter=''):
     """
     Выбор значения из простого спискового справочника.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param db_url: URL подключения к БД.
-    @param nsi_sprav_tabname: Имя таблицы справочника.
-    @param code_fieldname: Имя поля кода в таблице справочника.
-    @param name_fieldname: Имя поля наименования в таблице справочника.
-    @param ext_filter: Дополнительный фильтр записей.
-    @return: Выбранный код справочника или None если нажата <отмена>.
+    :param db_url: URL подключения к БД.
+    :param nsi_sprav_tabname: Имя таблицы справочника.
+    :param code_fieldname: Имя поля кода в таблице справочника.
+    :param name_fieldname: Имя поля наименования в таблице справочника.
+    :param ext_filter: Дополнительный фильтр записей.
+    :return: Выбранный код справочника или None если нажата <отмена>.
     """
     selected_code = None
 
@@ -287,13 +287,13 @@ def getStdDlgQueue(*dlgs):
     """
     Определить очередность вызова диалоговых окон для
     определения параметров запроса отчета.
-    @param dlgs: Список словарей описания вызова диалоговых окон.
+    :param dlgs: Список словарей описания вызова диалоговых окон.
         Вызов диалогового окна - это словарь формата:
         {'key': Ключ результата,
          'function': Функция вызова диалога,
          'args': Список аргументов функции вызова диалога,
          'kwargs': Словарь именованных аргументов вункции вызова диалога}.
-    @return: Словарь заполненных значений с помощью диалоговых функций.
+    :return: Словарь заполненных значений с помощью диалоговых функций.
     """
     # ВНИМАНИЕ! Для корректного отображения окон необходимо указать
     # frame в явном виде
@@ -317,15 +317,15 @@ def getStdDlgQueue(*dlgs):
 def getRadioChoiceDlg(parent=None, title=None, label=None, choices=()):
     """
     Выбор элемента wxRadioBox.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param title: Заголовок окна.
-    @param label: Текст приглашения ввода.
-    @param choices: Список выбора.
+    :param title: Заголовок окна.
+    :param label: Текст приглашения ввода.
+    :param choices: Список выбора.
         Максимальное количество элементов выбора 5.
         При большем количестве элементов необходимо использовать 
         другую диалоговую форму выбора.    
-    @return: Индекс выбранного эдемента или None если нажата <отмена>.
+    :return: Индекс выбранного эдемента или None если нажата <отмена>.
     """
     value = None
 
@@ -346,14 +346,14 @@ def getRadioChoiceDlg(parent=None, title=None, label=None, choices=()):
 def getIntRangeDlg(parent=None, title=None, label_begin=None, label_end=None, min_value=0, max_value=100):
     """
     Ввод целого числа в диалоговом окне.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param title: Заголовок окна.
-    @param label_begin: Текст приглашения ввода первого номера диапазона.
-    @param label_end: Текст приглашения ввода последнего номера диапазона.
-    @param min_value: Минимально-допустимое значение.
-    @param max_value: Максимально-допустимое значение.
-    @return: Введенное значение или None если нажата <отмена>.
+    :param title: Заголовок окна.
+    :param label_begin: Текст приглашения ввода первого номера диапазона.
+    :param label_end: Текст приглашения ввода последнего номера диапазона.
+    :param min_value: Минимально-допустимое значение.
+    :param max_value: Максимально-допустимое значение.
+    :return: Введенное значение или None если нажата <отмена>.
     """
     value = None
 
@@ -375,16 +375,16 @@ def getIntRangeDlg(parent=None, title=None, label_begin=None, label_end=None, mi
 def getCheckBoxDlg(parent=None, title=None, label=None, choices=(), defaults=()):
     """
     Выбор элементов wxCheckBox.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param title: Заголовок окна.
-    @param label: Текст приглашения ввода.
-    @param choices: Список выбора.
+    :param title: Заголовок окна.
+    :param label: Текст приглашения ввода.
+    :param choices: Список выбора.
         Максимальное количество элементов выбора 7.
         При большем количестве элементов необходимо использовать
         другую диалоговую форму выбора.
-    @param defaults: Список отметок по умолчанию.
-    @return: Признак выбранного элемента True-выбран/False-нет или None если нажата <отмена>.
+    :param defaults: Список отметок по умолчанию.
+    :return: Признак выбранного элемента True-выбран/False-нет или None если нажата <отмена>.
     """
     value = None
 
@@ -406,16 +406,16 @@ def getRadioChoiceMaxiDlg(parent=None, title=None, label=None,
                           choices=(), default=None):
     """
     Выбор элемента wxRadioBox.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param title: Заголовок окна.
-    @param label: Текст приглашения ввода.
-    @param choices: Список выбора.
+    :param title: Заголовок окна.
+    :param label: Текст приглашения ввода.
+    :param choices: Список выбора.
         Максимальное количество элементов выбора 5.
         При большем количестве элементов необходимо использовать
         другую диалоговую форму выбора.
-    @param default: Индекс выбранного элемента по умолчанию.
-    @return: Индекс выбранного эдемента или None если нажата <отмена>.
+    :param default: Индекс выбранного элемента по умолчанию.
+    :return: Индекс выбранного эдемента или None если нажата <отмена>.
     """
     value = None
 
@@ -436,16 +436,16 @@ def getRadioChoiceMaxiDlg(parent=None, title=None, label=None,
 def getCheckBoxMaxiDlg(parent=None, title=None, label=None, choices=(), defaults=()):
     """
     Выбор элементов wxCheckBox.
-    @param parent: Родительское окно. Если не определено, то
+    :param parent: Родительское окно. Если не определено, то
         береться wx.GetApp().GetTopWindow()
-    @param title: Заголовок окна.
-    @param label: Текст приглашения ввода.
-    @param choices: Список выбора.
+    :param title: Заголовок окна.
+    :param label: Текст приглашения ввода.
+    :param choices: Список выбора.
         Максимальное количество элементов выбора 7.
         При большем количестве элементов необходимо использовать
         другую диалоговую форму выбора.
-    @param defaults: Список отметок по умолчанию.
-    @return: Признак выбранного элемента True-выбран/False-нет или None если нажата <отмена>.
+    :param defaults: Список отметок по умолчанию.
+    :return: Признак выбранного элемента True-выбран/False-нет или None если нажата <отмена>.
     """
     value = None
 
