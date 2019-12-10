@@ -79,6 +79,7 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
     def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
+
         :param res: Ресурсное описание.
         :param res_editor: Указатель на редактор ресурсов.
         """
@@ -86,7 +87,8 @@ class icGEditPythonEditor(icideinterface.icIDEInterface):
 
     def goToLine(self, filename, n_line=0):
         """
-        Выпонить переход на линию модуля.
+        Выполнить переход на линию модуля.
+
         :param filename: Имя файла модуля.
         :param n_line: Номер линии для перехода.
         :return: True - выполнен переход / False - переход не выполнен.
@@ -153,6 +155,7 @@ class icGeanyPythonEditor(icideinterface.icIDEInterface):
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
+
         :type filename: C{string}
         :param filename: Имя файла.
         """
@@ -161,6 +164,7 @@ class icGeanyPythonEditor(icideinterface.icIDEInterface):
     def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
+
         :param res: Ресурсное описание.
         :param res_editor: Указатель на редактор ресурсов.
         """
@@ -169,6 +173,7 @@ class icGeanyPythonEditor(icideinterface.icIDEInterface):
     def goToLine(self, filename, n_line=0):
         """
         Выпонить переход на линию модуля.
+
         :param filename: Имя файла модуля.
         :param n_line: Номер линии для перехода.
         :return: True - выполнен переход / False - переход не выполнен.
@@ -242,6 +247,7 @@ class icAtomPythonEditor(icideinterface.icIDEInterface):
     def isOpenedFile(self, filename):
         """
         Проверить открыт файл или нет.
+
         :type filename: C{string}
         :param filename: Имя файла.
         """
@@ -250,6 +256,7 @@ class icAtomPythonEditor(icideinterface.icIDEInterface):
     def openFormEditor(self, res, res_editor=None, *arg, **kwarg):
         """
         Открыть редактор форм для редактирования ресурса.
+
         :param res: Ресурсное описание.
         :param res_editor: Указатель на редактор ресурсов.
         """
@@ -258,6 +265,7 @@ class icAtomPythonEditor(icideinterface.icIDEInterface):
     def goToLine(self, filename, n_line=0):
         """
         Выпонить переход на линию модуля.
+
         :param filename: Имя файла модуля.
         :param n_line: Номер линии для перехода.
         :return: True - выполнен переход / False - переход не выполнен.
