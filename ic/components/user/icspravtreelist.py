@@ -110,7 +110,7 @@ class SpravTreeList(icwidget.icWidget,
     Класс представления структурного справочника в виде дерева.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         - B{name='default'}:
         - B{labels=[]}: Список заголовков колонок.
         - B{wcols=[]}: Список размеров колонок. C{Пример:[100,20]}.

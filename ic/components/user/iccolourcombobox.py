@@ -90,7 +90,7 @@ class icColourComboBox(icwidget.icWidget, wx.ComboCtrl):
     """
     КОМБОБОКС ВЫБОРА ЦВЕТА.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         - B{type='ColourComboBox'}:
         - B{name='default'}:
         - B{value=''}:

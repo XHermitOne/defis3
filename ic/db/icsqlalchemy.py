@@ -68,6 +68,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def __init__(self, table_resource, tab_res_name=None, bReCreate=False, bRefresh=False, DB_=None):
         """
         Конструктор.
+
         :param table_resource: Ресурсное описание класса данных/таблицы.
         :param tab_res_name: Указание ресурса описаний классов данных.
         :param bReCreate: Флаг пересоздания класса таблицы.
@@ -164,6 +165,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def _createDataClass(self, table_resource, bAutoCreate=True, bReCreate=False):
         """
         Создание объекта таблицы.
+
         :param table_resource: Ресурс таблицы.
         :param bAutoCreate: Автоматически создать в БД?
         :param bReCreate: Признак пересоздания таблицы.
@@ -225,6 +227,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def _create(self, table_resource):
         """
         Создать таблицу в БД.
+
         :param table_resource: Ресурс таблицы.
         """
         tab_name = table_resource['name']
@@ -268,6 +271,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def _createField(self, field_resource):
         """
         Создать объект поля таблицы.
+
         :param field_resource: Ресурс поля.
         """
         name = field_resource['field']
@@ -317,6 +321,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def _createLink(self, link_resource):
         """
         Создать связь с таблицей.
+
         :param link_resource: Ресурс связи.
         """
         name = None
@@ -385,6 +390,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def getFieldNames(self, bIsID=False):
         """
         Список имен полей таблицы.
+
         :param bIsID: С идентификационным полем?
         """
         if self.dataclass is not None:
@@ -403,6 +409,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def getFieldIdx(self, field_name):
         """
         Индекс поля таблицы.
+
         :param field_name: Имя поля таблицы.
         """
         fld_names = self.getFieldNames(True)
@@ -416,6 +423,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def getFieldType(self, field_name):
         """
         Тип поля по его имени.
+
         :param field_name: Имя поля таблицы.
         """
         if self.dataclass is not None:
@@ -429,6 +437,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def getFieldLength(self, field_name):
         """
         Длина поля по его имени.
+
         :param field_name: Имя поля таблицы.
         """
         if self.dataclass is not None:
@@ -473,6 +482,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         Установить имя таблицы в базе данных, соответствующих данному классу
         данных.
+
         :param db_tab_name: Новое имя таблицы в БД.
         """
         if self.dataclass is not None:
@@ -534,6 +544,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         Удалить записи из таблицы.
         Переписанные низкоуровневые операции с поддержкой транзакций.
+
         :param where: Условие выбора записей (SQLAlchemy).
             Например:
                 icsqlalchemy.and_(tab.c.uuid == obj_uuid)
@@ -624,6 +635,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def _prepareRecData(self, record_data):
         """
         Приведение данных записи к типу.
+
         :param record_data: Словарь или список записи.
         """
         try:
@@ -702,6 +714,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         Использование:
             tab.add(field1=value1, field2=value2) или
             tab.add(value1, value2)
+
         :return: Возвращает объект управления добавленной записью.
         Получить идентификатор добавленной записи, как
         InsertObject.inserted_primary_key[0].
@@ -731,6 +744,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def add_and_get_id(self, *args, **kwargs):
         """
         Добавить объект и получить идентификатор добавленной записи.
+
         :return: Возвращает идентификатор добавленной записи.
             Или None в случае ошибки.
         """
@@ -742,6 +756,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         Добавить запись в таблицу.
         Переписанные низкоуровневые операции с поддержкой транзакций.
+
         :param rec: Запись таблицы.
         :param transaction: Объект транзакции.
         :return: True/False.
@@ -784,6 +799,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def update(self, id, *args, **kwargs):
         """
         Изменить объект.
+
         :param id: Идентификатор записи.
         """
         if self.dataclass is not None:
@@ -805,6 +821,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         """
         Изменить запись в таблице.
         Переписанные низкоуровневые операции с поддержкой транзакций.
+
         :param rec_id: Идентификатор записи.
         :param rec: Запись таблицы в виде словаря.
         :param transaction: Объект транзакции.
@@ -829,6 +846,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def update_where(self, where, *args, **kwargs):
         """
         Изменить объект.
+
         :param where: Условие выборки.
         """
         if self.dataclass is not None:
@@ -902,6 +920,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def count(self, *args, **kwargs):
         """
         Количество записей, соответствующих запросу sqlalchemy.
+
         :return: Количество записей.
         """
         if self.dataclass is not None:
@@ -912,6 +931,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def is_empty(self):
         """
         Проверка на пустую таблицу.
+
         :return: True - таблица пустая / False - нет / None - ошибка.
         """
         count = self.count()
@@ -926,6 +946,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
         Поиск наличия связи проверяется по count(*)
         SQL аналог:
             SELECT COUNT(*) FROM TABLE_NAME WHERE <link_field> = <link_value>
+
         :param link_field: Имя поля связи.
         :param link_value: Значение связи.
         :return: True - есть ссылки/связи / False - нет / None в случае ошибки.
@@ -1083,6 +1104,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def queryAll(self, *args, **kwargs):
         """
         Выполнить запрос класса данных.
+
         :return: Возвращает список кортежей.
         """
         if self.db:
@@ -1114,6 +1136,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def queryRecs(self, sql_text):
         """
         Выполнить запрос класса данных.
+
         :param sql_text: Строка запроса.
         :return: Возвражает список объектов icSQLRecord.
         """
@@ -1125,6 +1148,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def executeSQL(self, sql_text):
         """
         Выполнить строку запроса.
+
         :param sql_text: Строка запроса.
         :return: Возвражает список объектов icSQLRecord.
         """
@@ -1133,6 +1157,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def convQueryToSQL(self, sql_text):
         """
         Конвертация запроса в терминах класса в SQL запрос.
+
         :param sql_text: Текст SQL запроса.
         """
         tab_class_name = self.getClassName()
@@ -1143,6 +1168,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def _get_drop_sql_txt(self, bCascade):
         """
         Текст запроса удаления таблицы из БД.
+
         :param bCascade: Признак удаления дочерних таблиц.
         :return: Возвращает строку запроса на удаление таблицы из БД.
         """
@@ -1158,6 +1184,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def drop(self, bCascade=False):
         """
         Удалить таблицу из БД.
+
         :param bCascade: Признак удаления дочерних таблиц.
         :return: Возвращает результат выполнения операции True/False.
         """
@@ -1177,6 +1204,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def syncDB(self):
         """
         Функция синхронизации ресурса таблицы с представлением в БД.
+
         :return: Возвращает True/False.
         """
         try:
@@ -1206,6 +1234,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def makeBackup(self, bak_table_name=None):
         """
         Сделать бекап таблицы в БД.
+
         :param bak_table_name: Имя таблицы бекапа. Если None, тогда имя генерируется.
         :return: Возвращает True/False.
         """
@@ -1218,6 +1247,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def copy_to(self, new_table_name):
         """
         Копирвание содержимого таблицы в новую таблицу.
+
         :param new_table_name: Новое имя таблицы.
         :return: Возвращает True/False.
         """
@@ -1292,6 +1322,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def releaseConnection(self, connection):
         """
         Освобождает соединение.
+
         :param connection: Объект соединения.
         """
         if self.dataclass is not None:
@@ -1300,6 +1331,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def clear(self, transaction=None):
         """
         Очистить таблицу.
+
         :param transaction: Объект транзакции.
             Если определена транзакция то очищаем через транзакционный механизм.
         """
@@ -1313,6 +1345,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def clear_transact(self, transaction=None):
         """
         Очистить таблицу. Транзакционный механизм.
+
         :param transaction: Объект транзакции.
         """
         if transaction is not None and self.dataclass is not None:
@@ -1394,6 +1427,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def getCascadeDict(self, id_record):
         """
         Получить данные каскада в виде словаря по идентификатору.
+
         :param id_record: Идентификатор головной записи.
         """
         try:
@@ -1405,6 +1439,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def _createTabByName(self, tab_name):
         """
         Создать таблицу по имени.
+
         :param tab_name: Имя таблицы.
         :return: Объект таблицы или None, если ошибка.
         """
@@ -1420,6 +1455,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def getChildTable(self, tab_name):
         """
         Получить объект дочерней таблицы по имени.
+
         :param tab_name: Имя дочерней таблицы.
         :return: Объект таблицы или None,
             если дочерняя таблица не найдена.
@@ -1436,6 +1472,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def getParentTable(self, tab_name):
         """
         Получить объект родительской таблицы по имени.
+
         :param tab_name: Имя родительской таблицы.
         :return: Объект таблицы или None,
             если родительская таблица не найдена.
@@ -1452,6 +1489,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def getLinkIdFieldName(self, parent_table):
         """
         Имя поля идентификатора родительской таблицы в дочерней таблице.
+
         :param parent_table: Родительская таблица.
             Может задаваться как именем, так и объектом.
         :return: Строка идентификатора родительской таблицы.
@@ -1473,6 +1511,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def _getCascadeDict(self, id_record=0):
         """
         Получить данные каскада в виде словаря по идентификатору.
+
         :param id_record: Идентификатор записи.
         """
         cascade_dict = dict()
@@ -1628,6 +1667,7 @@ class icSQLAlchemyDataClass(icdataclassinterface.icDataClassInterface, object):
     def get_normalized(self, query_result=None, **kwargs):
         """
         Произвести нормализацию результата запроса.
+
         :param query_result: Абстрактный результат запроса.
         :param kwargs: Дополнительные параметры.
         :return: Функция возвращает результат запроса
@@ -1666,6 +1706,7 @@ class icSQLAlchemyTabClass(icSQLAlchemyDataClass):
     def __init__(self, table_name, bReCreate=False, bRefresh=False, sub_system_name=None, **kwargs):
         """
         Конструктор.
+
         :param table_name: Ресурсное описание класса данных/таблицы.
         :param bReCreate: Флаг пересоздания класса таблицы.
             По умолчанию не пересоздавать.

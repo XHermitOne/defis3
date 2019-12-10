@@ -164,7 +164,7 @@ class icSQLAlchemyDataSet(icdatasetinterface.icDatasetInterface):
     Интерфейс для работы с табличными данными.
     
     :type _bInspectDB: C{bool}
-    @cvar _bInspectDB: Если данный флаг = True, то при каждом обращении к объекту по индексу будет проверятся изменилась ли
+    :cvar _bInspectDB: Если данный флаг = True, то при каждом обращении к объекту по индексу будет проверятся изменилась ли
            таблица (см. ф-ию isTableChanged).
     """
     ISInspectDB = False

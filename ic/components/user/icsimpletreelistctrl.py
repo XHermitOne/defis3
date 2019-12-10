@@ -167,7 +167,7 @@ class icSimpleTreeListCtrl(parentModule.TreeListCtrl, icwidget.icWidget,
     """
     Описание пользовательского компонента.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         - B{type='TreeList'}:
         - B{name='default'}:
         - B{titleRoot='root'}: Подписть корневого элемента.

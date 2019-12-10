@@ -48,6 +48,7 @@ __version__ = (0, 0, 0, 1)
 def getSchemeDir(bAutoCreate=True):
     """
     Функция получения пути хранения модулей моделей.
+
     :param bAutoCreate: Создать папку хранения модулей моделей если она не существует?
     :return: Папка хранения модулей моделей.
         Папка хранения модулей моделей - пакет в проекте с именем scheme.
@@ -62,6 +63,7 @@ def getSchemeDir(bAutoCreate=True):
 def createSchemeDir(scheme_dirname=None):
     """
     Создать папку хранения модулей моделей.
+
     :param scheme_dirname: Папка хранения модулей моделей.
         Если не определена, то генерируется.
     :return: True/False.
@@ -84,6 +86,7 @@ def createSchemeDir(scheme_dirname=None):
 def genModelModuleFilename(name, bFullName=True):
     """
     Генерация имени файла модуля модели по имени.
+
     :param name: Имя на основе которого производится генерация.
     :param bFullName: Генерировать полное имя файла (с полным путем хранения)?
     :return: Имя файла модуля модели.
@@ -97,6 +100,7 @@ def genModelModuleFilename(name, bFullName=True):
 def genModelModuleManagerFilename(name, bFullName=True):
     """
     Генерация имени файла модуля менеджера модели по имени.
+
     :param name: Имя на основе которого производится генерация.
     :param bFullName: Генерировать полное имя файла (с полным путем хранения)?
     :return: Имя файла модуля менеджера модели.

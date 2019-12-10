@@ -31,6 +31,7 @@ def _show_about_box(parent, name, version, description,
                     license, icon):
     """
     Отобразить диалоговое окно <О программе...>
+
     :param parent: Родительское окно.
     :param name: Наименование программы.
     :param version: Версия программы.
@@ -69,6 +70,7 @@ def showAbout(parent=None, name=None, version=None, description=None,
               license=None, icon_filename=None):
     """
     Отобразить диалоговое окно <О программе...>
+
     :param parent: Родительское окно.
     :param name: Наименование программы.
     :param version: Версия программы.

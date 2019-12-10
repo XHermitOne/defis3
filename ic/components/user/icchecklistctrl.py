@@ -81,7 +81,7 @@ class icCheckListCtrl(icwidget.icWidget, wx.ListCtrl,
     Класс многоколоночного списка с возможностью отметки строки.
     Описание пользовательского компонента.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         - B{type='TreeList'}:
         - B{name='default'}:
         - B{titleRoot='root'}: Подписть корневого элемента.

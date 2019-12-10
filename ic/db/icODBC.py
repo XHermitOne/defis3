@@ -63,6 +63,7 @@ class icODBCDataSourceProto(icsourceinterface.icSourceInterface):
     def __init__(self, resource=None):
         """
         Конструктор.
+
         :param resource: Ресурс описания компонента.
         """
         icsourceinterface.icSourceInterface.__init__(self, resource)
@@ -119,6 +120,7 @@ class icODBCDataSourceProto(icsourceinterface.icSourceInterface):
     def execSQL(self, sql_text):
         """
         Выполнить SQL запрос.
+
         :param sql_text: Текст SQL запроса.
         :return: Результат возвращается в формате icquery.QUERY_TABLE_RESULT.
         Либо None в случае ошибки.

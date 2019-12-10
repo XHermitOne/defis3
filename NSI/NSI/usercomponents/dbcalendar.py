@@ -147,7 +147,7 @@ class icDBCalendar(icwidget.icSimple, parentModule.icDBCalendarProto):
     Описание пользовательского компонента КАЛЕНДАРЬ/КАЛЕНДАРНЫЙ ГРАФИК.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         
         - B{type='defaultType'}:
         - B{name='default'}:

@@ -22,7 +22,7 @@ class icBaseEdt:
     """
     Базовый класс внешних редакторов.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = -1
 
@@ -153,7 +153,7 @@ class icTextEdt(icBaseEdt):
     """
     Редактор текстового значения.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 0
 
@@ -170,7 +170,7 @@ class icROTextEdt(icBaseEdt):
     """
     Текстовое значения, которое предназначено только для чтения.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 17
 
@@ -194,7 +194,7 @@ class icImageEdt(icBaseEdt):
     """
     Редактор образа.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 18
 
@@ -241,7 +241,7 @@ class icFileEdt(icBaseEdt):
     """
     Редактор выбора файла.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 51
 
@@ -268,7 +268,7 @@ class icDirEdt(icBaseEdt):
     """
     Редактор выбора директории.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 52
 
@@ -295,7 +295,7 @@ class icPyScriptEdt(icBaseEdt):
     """
     Редактор Python скриптов.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 12
 
@@ -427,9 +427,9 @@ class icChoiceEdt(icBaseEdt):
     """
     Редактор значения из списка.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     :type AttrListDict: C{dictionary}
-    @cvar AttrListDict: Словарь списков возможных значений для атрибутов данного типа.
+    :cvar AttrListDict: Словарь списков возможных значений для атрибутов данного типа.
     """
     ID_Editor = 1
     AttrListDict = {}
@@ -564,7 +564,7 @@ class icTextListEdt(icBaseEdt):
     """
     Редактор списка в текстовом виде.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 20
 
@@ -663,7 +663,7 @@ class icTextDictEdt(icBaseEdt):
     """
     Редактор словаря в питоновском синтаксисе.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 30
 
@@ -750,7 +750,7 @@ class icDictEdt(icBaseEdt):
     """
     Редактор словаря.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 35
 
@@ -774,7 +774,7 @@ class icFontEdt(icBaseEdt):
     """
     Редактор шрифта.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 9
 
@@ -840,7 +840,7 @@ class icNumberEdt(icBaseEdt):
     """
     Редактор числовых значений.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 40
 
@@ -877,7 +877,7 @@ class icCheckBoxEdt(icBaseEdt):
     """
     Редактор логических значений.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 2
 
@@ -949,9 +949,9 @@ class icCombineEdt(icBaseEdt):
     """
     Редактор комбинированных значений.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     :type AttrCombDict: C{dictionary}
-    @cvar AttrCombDict: Словарь словарей комбинированных свойств.
+    :cvar AttrCombDict: Словарь словарей комбинированных свойств.
     """
 
     ID_Editor = 7
@@ -1077,7 +1077,7 @@ class icColorEdt(icBaseEdt):
     """
     Редактор значений цветов.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 8
 
@@ -1174,7 +1174,7 @@ class icPointEdt(icBaseEdt):
     """
     Редактор значений wx.Point.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 10
 
@@ -1198,7 +1198,7 @@ class icSizeEdt(icBaseEdt):
     """
     Редактор значений wx.Size.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 11
 
@@ -1222,7 +1222,7 @@ class icUserEdt(icBaseEdt):
     """
     Редактор текстового значения.
     :type ID_Edtitor: C{int}
-    @cvar ID_Edtitor: Идентификатор внешнего редактора.
+    :cvar ID_Edtitor: Идентификатор внешнего редактора.
     """
     ID_Editor = 16
 

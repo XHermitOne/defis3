@@ -36,7 +36,8 @@ __version__ = (0, 1, 1, 1)
 def XmlFile2Dict(xml_filename, encoding='utf-8'):
     """
     Функция конвертации файлов Excel в xml формате в словарь Python.
-    :param xml_filename: Имя xml файла. 
+
+    :param xml_filename: Имя xml файла.
     :return: Функция возвращает заполненный словарь, 
         или None в случае ошибки.
     """
@@ -163,6 +164,7 @@ class icXML2DICTReader(xml.sax.handler.ContentHandler):
 def _strip_xml_dict_keys(xml_dict):
     """
     Убрать лишнее из ключей словаря.
+
     :param xml_dict: Обрабатываемый словарь XML данных.
         Ключи в этом словаре представленны в виде:
         u'http://fsrar.ru/WEGAIS/WB_DOC_SINGLE_01:Documents'
@@ -188,6 +190,7 @@ def _strip_xml_dict_keys(xml_dict):
 def convert_xml_text2dict(xml_text_data, codepage='utf-8'):
     """
     Простая конвертация XML текста в словарь.
+
     :param xml_text_data: Текстовые данные XML.
     :param codepage: Кодовая страница XML.
     :return: Словарь, соотыветствующий XML тексту.
@@ -200,6 +203,7 @@ def convert_xml_text2dict(xml_text_data, codepage='utf-8'):
 def convert_xml_file2dict(xml_filename, codepage='utf-8'):
     """
     Простая конвертация XML файла в словарь.
+
     :param xml_filename: Полное наименование XML файла
     :param codepage: Кодовая страница XML файла.
     :return: Словарь, соотыветствующий XML файлу.

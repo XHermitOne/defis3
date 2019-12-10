@@ -69,6 +69,7 @@ class icImgLibResource:
     def __init__(self, img_lib_filename=None):
         """
         Крструктор.
+
         :param img_lib_filename: Файл библиотеки образов *.py.
         """
         # Файл библиотеки образов
@@ -82,6 +83,7 @@ class icImgLibResource:
     def loadImgLib(self, img_lib_filename=None):
         """
         Загрузить текст библиотеки образов.
+
         :param img_lib_filename: Файл библиотеки образов *.py.
         """
         if not img_lib_filename:
@@ -118,6 +120,7 @@ class icImgLibResource:
     def createImgBlock(self, img_name, img_data):
         """
         Создать блок образа.
+
         :param img_name: Имя добавляемого объекта.
         :param img_data: Сериализованные данные файла образа.
         """
@@ -134,6 +137,7 @@ class icImgLibResource:
     def getImgData(self, img_filename):
         """
         Получить данные образа из файла образа.
+
         :param img_filename: Имя файла образа.
         """
         return icimg2py.getImgFileData(img_filename)
@@ -141,6 +145,7 @@ class icImgLibResource:
     def addImgBlock(self, img_block):
         """
         Добавить блок образа к библиотеке.
+
         :param img_block: Блок образа.
         """
         if not self._img_lib_text:
@@ -151,6 +156,7 @@ class icImgLibResource:
     def addImg(self, img_filename):
         """
         Добавить образ в библиотеку образов из файла.
+
         :param img_filename: Имя файла образа.
         """
         img_name = os.path.splitext(os.path.basename(img_filename))[0]
@@ -162,6 +168,7 @@ class icImgLibResource:
     def saveImgLib(self, img_lib_filename=None):
         """
         Сохранить изменения в библиотеку образов.
+
         :param img_lib_filename: Файл библиотеки образов *.py.
         :return: Возвращает результат выполнения операции True/False.
         """
@@ -188,6 +195,7 @@ class icImgLibResource:
     def findImgBlock(self, img_name):
         """
         Найти блок образа в библиотеке образов.
+
         :param img_name: Имя объекта.
         :return: Возвращает кортеж позиции начала и конца или None, если блок не найден.
         """
@@ -209,6 +217,7 @@ class icImgLibResource:
     def delImgBlock(self, img_name):
         """
         Удалить блок образа по имени.
+
         :param img_name: Имя объекта.
         :return: Возвращает результат выполнения операции True/False.
         """
@@ -225,6 +234,7 @@ class icImgLibResource:
     def findImgData(self, img_name):
         """
         Получить из библиотеки образов данные образов по имени образа.
+
         :param img_name: Имя объекта.
         :return: Возвращает строку данных образа или
             None, если образ с таким именем не найден.
@@ -243,6 +253,7 @@ class icImgLibResource:
     def renameImgBlock(self, img_name, new_img_name):
         """
         Переименовать блок.
+
         :param img_name: Имя объекта.
         :param new_img_name: Новое имя объекта.
         :return: True/False.
@@ -263,6 +274,7 @@ class icImgLibResource:
     def getImages(self, img_lib_filename=None):
         """
         Получить словарь оборазов из библиотеки образов.
+
         :param img_lib_filename: Файл библиотека образов.
         """
         # Импорт модуля библиотеки образов

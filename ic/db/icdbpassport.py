@@ -25,6 +25,7 @@ def to_db_passport(func):
 def get_object(psp):
     """ 
     По паспорту возвращает объект замапированного к таблице класса.
+
     :type psp: C{icDBPassport}
     :param psp: Паспорт объекта данных.
     """

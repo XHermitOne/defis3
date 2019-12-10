@@ -239,7 +239,7 @@ class icTitlesNotebook(icwidget.icWidget, parentModule.PyControl):
     """
     Описание пользовательского компонента.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         - B{name='default'}:
         - B{icDelButton=0}: Признак наличия кнопки 'удалить закладку'.
         - B{onSelectTitle=None}: Выражение выполняемое после выбора закладки.

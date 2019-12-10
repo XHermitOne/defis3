@@ -621,6 +621,7 @@ class icDataLink(icwidget.icSimple):
         Определить ресурс по выражению.
         Если не определен ресурс и определено выражение, которое возвращает
         ресурс.
+
         :return:
         """
         res = None
@@ -638,6 +639,7 @@ class icDataLink(icwidget.icSimple):
         """
         Произвести замены в ресурсе.
         Замены производяться с помощью метода <ReloadAttr>.
+
         :param res: Ресурс.
         :param component: Описание компонента DataLink.
         :return: Ресурс с произведенными заменами.
@@ -678,6 +680,7 @@ class icDataLink(icwidget.icSimple):
         """
         Собирает ресурсное описание по ссылке.
         Ресурсное описание собирается по паспорту объекта.
+
         :type component: C{dictionary}
         :param component: Словарь описания ссылки.
         """
@@ -726,6 +729,7 @@ class icDataLink(icwidget.icSimple):
         """
         Собирает ресурсное описание по ссылке.
         Ресурсное описание собирается по ссылке на файл ресурса.
+
         :type component: C{dictionary}
         :param component: Словарь описания ссылки.
         """

@@ -56,7 +56,7 @@ class icCatalogLevel(icwidget.icSimple, parentModule.icCatalogLevelProto):
     """
     Компонент уровня каталога.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Specification.
+    :cvar component_spc: Specification.
     """
 
     component_spc = ic_class_spc

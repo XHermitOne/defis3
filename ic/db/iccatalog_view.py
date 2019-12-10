@@ -135,6 +135,7 @@ class icSimpleCatalogViewIc(ObjectListView, icBaseCatalogView):
     def __init__(self, catalog, *arg, **kwarg):
         """
         Конструктор.
+
         :type catalog: C{ic.db.iccatalog.icCatalog}
         :param catalog: Каталог.
         """
@@ -153,7 +154,9 @@ class icGroupCatalogViewIc(GroupListView, icBaseCatalogView):
     """
 
     def __init__(self, catalog, *arg, **kwarg):
-        """ Конструктор.
+        """
+        Конструктор.
+
         :type catalog: C{ic.db.iccatalog.icCatalog}
         :param catalog: Каталог.
         """

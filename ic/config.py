@@ -30,10 +30,14 @@ PROFILE_PATH = os.path.join(os.environ.get('HOME', os.path.dirname(__file__)),
 # Альтернативное расположение wxFormBuilder
 ALTER_WXFORMBUILDER = '~/dev/ide/wxFormBuilder/output/bin/wxformbuilder'
 
+# Папка HTML файлов документации
+DOC_HTML_PATH = os.path.join(os.path.dirname(__file__), 'doc', '_build', 'html')
+
 
 def get_cfg_var(sName):
     """
     Прочитать значение переменной конфига.
+
     :type sName: C{string}
     :param sName: Имя переменной.
     """
@@ -43,6 +47,7 @@ def get_cfg_var(sName):
 def set_cfg_var(sName, vValue):
     """
     Установить значение переменной конфига.
+
     :type sName: C{string}
     :param sName: Имя переменной.
     :param vValue: Значение переменной.

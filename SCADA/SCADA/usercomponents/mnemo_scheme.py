@@ -123,7 +123,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     Мнемосхема SCADA системы.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
         - B{name='default'}:
@@ -173,6 +173,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def getScanClassPsp(self):
         """
         Паспорт класса сканирования данных SCADA.
+
         :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('scan_class')
@@ -180,6 +181,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def getScanClass(self, scan_class_psp=None):
         """
         Объект класса сканирования данных SCADA.
+
         :param scan_class_psp: Паспорт класса сканирования данных SCADA.
             Если не определено, то задается функцией self.getScanClassPsp.
         :return: Объект класса сканирования данных SCADA или
@@ -201,6 +203,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def initScanTick(self):
         """
         Инициализация периода сканирования по классу сканирования.
+
         :return: Период сканирования или None в случае ошибки.
         """
         scan_class = self.getScanClass()
@@ -211,6 +214,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def createEngines(self):
         """
         Создать список движков.
+
         :return: Список движков.
         """
         kernel = self.GetKernel()
@@ -220,6 +224,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     def init(self):
         """
         Полная инициализация объекта.
+
         :return: True/False.
         """
         # Создать список движков

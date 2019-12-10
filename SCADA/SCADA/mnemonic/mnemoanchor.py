@@ -40,6 +40,7 @@ class icMnemoAnchorProto(object):
                  min_size=None, max_size=None):
         """
         Конструктор.
+
         :param pos: Опорная позиция якоря.
         :param size: Размер ячейки якоря.
         :param direction: Указание направления смещения якоря.
@@ -55,6 +56,7 @@ class icMnemoAnchorProto(object):
     def setControlPosition(self, ctrl=None):
         """
         Установить позицию и размер контрола в ссответствии с данным якорем.
+
         :param ctrl: Объект контрола.
         :return: True/False.
         """

@@ -74,8 +74,9 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def startElementLevel(self, name, attrs=dict(), auto_close=False):
         """
         Начало тега.
-        @name: Имя тега.
-        @attrs: Атрибуты тега (словарь).
+
+        :param name: Имя тега.
+        :param attrs: Атрибуты тега (словарь).
         """
         # Дописать новый отступ
         self._my_write('\n' + self.break_line)
@@ -89,7 +90,8 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def endElementLevel(self, name, auto_close=False):
         """
         Конец тега.
-        @name: Имя, закрываемого тега.
+
+        :param name: Имя, закрываемого тега.
         """
         if self.break_line:
             self.break_line = self.break_line[:-2]
@@ -102,8 +104,9 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def startElement(self, name, attrs=dict(), auto_close=False):
         """
         Начало тега.
-        @name: Имя тега.
-        @attrs: Атрибуты тега (словарь).
+
+        :param name: Имя тега.
+        :param attrs: Атрибуты тега (словарь).
         """
         # Дописать новый отступ
         self._my_write('\n' + self.break_line)
@@ -116,13 +119,15 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def endElement(self, name, auto_close=False):
         """
         Конец тега.
-        @name: Имя, закрываемого тега.
+
+        :param name: Имя, закрываемого тега.
         """
         self._endElement(name, auto_close)
 
     def parse_key(self, key_txt):
         """
         Распарсить ключ элемента.
+
         :param key_txt: Ключ элемента.
         :return: Имя тега, его атрибуты.
         """
@@ -138,6 +143,7 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def _do_write(self, data, parent_tag=None, tag_filter=None):
         """
         Процедура записи.
+
         :param data: Данные для записи.
         :param parent_tag: Родительский тег для
             обработки списков.
@@ -175,6 +181,7 @@ class icSimpleDict2XmlWriter(saxutils.XMLGenerator):
     def startWrite(self, data=None, tag_filter=None):
         """
         Начало записи.
+
         :param data: Данные для записи.
         :param tag_filter: Словарь фильтра тегов,
             определяющий список и порядок дочерних тегов для

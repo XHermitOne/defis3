@@ -32,6 +32,7 @@ class icModelManager(object):
     def create_session(self, db_url=None):
         """
         Создать сессию для организации транзакций при работе с БД.
+
         :param db_url: URL связи с БД.
         :return: Объект сессии или None в случае ошибки.
         """
@@ -55,6 +56,7 @@ class icModelManager(object):
         иначе сервер PostgreSQL не освобождаем связи и происходит
         превышение лимита открытых связей. После превышения лимита
         PostygreSQL сервер отказывает клиентам в обслуживании.
+
         :param session: Объект сессии.
         :return: True/False.
         """
@@ -71,6 +73,7 @@ class icModelManager(object):
     def rollback_session(self, session=None, bAutoClose=False):
         """
         Отмена транзакций.
+
         :param session: Объект сессии.
         :param bAutoClose: Автоматически закрыть сессию?
         :return: True/False.
@@ -90,6 +93,7 @@ class icModelManager(object):
     def commit_session(self, session=None, bAutoClose=False):
         """
         Подтвердить транзакции.
+
         :param session: Объект сессии.
         :param bAutoClose: Автоматически закрыть сессию?
         :return: True/False.
@@ -112,6 +116,7 @@ class icModelManager(object):
         Поиск наличия связи проверяется по count(*)
         SQL аналог:
             SELECT COUNT(*) FROM TABLE_NAME WHERE <link_field> = <link_value>
+
         :param link_field: Имя поля связи.
         :param link_value: Значение связи.
         :return: True - есть ссылки/связи / False - нет / None в случае ошибки.

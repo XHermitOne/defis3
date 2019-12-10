@@ -135,7 +135,7 @@ class icSCADAPanel(icwxpanel.icWXPanel, scada_form_manager.icSCADAFormManager):
     Панель оперативных данных SCADA системы.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
         - B{name='default'}:

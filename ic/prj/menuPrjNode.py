@@ -288,10 +288,10 @@ class icMenuPrjNode(flatmenu.FlatMenu):
             
         if ok:
             dlgfunc.openMsgBox(u'Синхронизация таблицы',
-                            u'Создана копия таблицы <%s>. Старая таблица удалена.' % self._Parent.name)
+                               u'Создана копия таблицы <%s>. Старая таблица удалена.' % self._Parent.name)
         else:
             dlgfunc.openMsgBox(u'Синхронизация таблицы',
-                            u'Ошибка синхронизации таблицы <%s>' % self._Parent.name)
+                               u'Ошибка синхронизации таблицы <%s>' % self._Parent.name)
             
     import_res_filter = u'Tables (*.tab)|*.tab|DB (*.src)|*.src|ODB (*.odb)|*.odb|Forms (*.frm)|*.frm|Main window (*.win)|*.win|Menu (*.mnu)|*.mnu|Metadata (*.mtd)|*.mtd'
     
@@ -302,7 +302,7 @@ class icMenuPrjNode(flatmenu.FlatMenu):
         tree_prj = self._Parent.getRoot().getParent()
 
         res_file_name = dlgfunc.getFileDlg(tree_prj,
-                                         u'Выберите ресурсный файл',
+                                           u'Выберите ресурсный файл',
                                            self.import_res_filter,
                                            default_path=filefunc.getRootDir())
 

@@ -46,6 +46,7 @@ def createLibraryBitmap(img_filename, bMask=False):
     """
     Создать объект Bitmap из файла img_filename.
     К имени файла добавляется путь библиотеки образов ic.imglib.common.
+
     :param img_filename: Краткое имя файла.
     :param bMask: Флаг создания маски по изображению.
         Фон д.б. DEFAULT_MASK_COLOUR.
@@ -63,6 +64,7 @@ def createLibraryBitmap(img_filename, bMask=False):
 def createBitmap(img_filename, bMask=False):
     """
     Создать объект Bitmap из файла img_filename.
+
     :param img_filename: Имя файла.
     :param bMask: Флаг создания маски по изображению.
         Фон д.б. DEFAULT_MASK_COLOUR.
@@ -88,6 +90,7 @@ def createBitmap(img_filename, bMask=False):
 def createEmptyBitmap(width, height, background_colour=None):
     """
     Создать пустой битмап.
+
     :param width: Ширина Bitmap.
     :param height: Высота битмапа.
     :param background_colour: Цвет фона. По умолчанию используется белый.
@@ -117,6 +120,7 @@ def createEmptyBitmap(width, height, background_colour=None):
 def createAni(parent, size, freame_delay, *frame_filenames):
     """
     Создание анимированного объекта.
+
     :param parent: Окно-родитель.
     :param size: Размер.
     :param freame_delay: Задержка м/у кадрами в секундах.
@@ -144,6 +148,7 @@ def getSysImg(image_name):
 def findBitmap(*img_filenames):
     """
     Поиск и создание объекта Bitmap по списку имен файлов картинок.
+
     :param img_filenames: Имена файлов, которые необходимо просмотреть.
     :return: Возвращает созданный объект Bitmap или
         None в случае если ни один из предложенных файлов не существует.

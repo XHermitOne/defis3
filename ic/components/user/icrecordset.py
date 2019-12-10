@@ -119,7 +119,7 @@ class icRecordset(icwidget.icSimple, parentModule.icSQLAlchemyDataSet):
     """
     Описание пользовательского компонента.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         
         - B{type='Recordset'}: Тип объекта.
         - B{name='default'}: Имя объекта.

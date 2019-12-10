@@ -185,7 +185,7 @@ class icOBJRequisite(parentModule.icOBJRequisiteProto, icwidget.icSimple):
     Реквизит-ссылка на бизнес объект/документ.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         
         - B{type='defaultType'}:
         - B{name='default'}:

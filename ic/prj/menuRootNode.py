@@ -21,6 +21,7 @@ from ic.utils import inifunc
 from ic.bitmap import bmpfunc
 from ic.dlg import dlgfunc
 from ic.log import log
+from ic import config
 
 __version__ = (0, 1, 1, 1)
 
@@ -274,6 +275,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
     def saveINIOpenedPath(self, prj_path):
         """
         Сохранить в INI файле путь открытого проекта.
+
         :param prj_path: Путь открытого проекта.
         """
         inifunc.saveParamINI(PRJ_INI_FILE, 'PRJ', 'LastOpenedPaths', prj_path)
@@ -360,8 +362,9 @@ class icMenuRootNode(flatmenu.FlatMenu):
     def editFileIDE(self, filename):
         """
         Редактирование файла в редакторе.
+
         :param filename: Полное имя редактируемого файла.
-        :return: True/Falseю
+        :return: True/False.
         """
         if not os.path.exists(filename):
             dlgfunc.openMsgBox(u'ПРОЕКТ',
@@ -389,8 +392,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         """
         Помощь...
         """
-        import ic
-        hlp_file_name = os.path.join(os.path.dirname(ic.__file__), 'doc', 'index.html')
+        hlp_file_name = os.path.join(config.DOC_HTML_PATH, 'index.html')
         if os.path.exists(hlp_file_name):
             if wx.Platform == '__WXMSW__':
                 hlp_file_name = os.path.normpath(hlp_file_name)
@@ -403,7 +405,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
                     log.error()
         else:
             dlgfunc.openWarningBox(u'ПОМОЩЬ',
-                                u'Файл помощи <%s> не найден. Запустите генерацию документации :-)' % hlp_file_name)
+                                   u'Файл помощи <%s> не найден. Запустите генерацию документации' % hlp_file_name)
 
     def onMakeInstall(self, event):
         """
@@ -472,7 +474,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         # Проверить открыт ли какой-нибудь проект
         if not prj_filename:
             dlgfunc.openWarningBox(u'ВНИМАНИЕ',
-                                u'''Импорт можно производить только в определенный проект.
+                                   u'''Импорт можно производить только в определенный проект.
  Откройте проект для возможности импорта''')
             return
 
@@ -480,7 +482,7 @@ class icMenuRootNode(flatmenu.FlatMenu):
         # Проверить импортированны ли NSI и work_flow
         if 'NSI' not in import_system_names or 'work_flow' not in import_system_names:
             dlgfunc.openWarningBox(u'ВНИМАНИЕ',
-                                u'''Импортирование метаобъектов возможно
+                                   u'''Импортирование метаобъектов возможно
  только при подключенных подсистемах <NSI> и <work_flow>''')
 
         try:

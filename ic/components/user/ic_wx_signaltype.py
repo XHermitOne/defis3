@@ -176,7 +176,7 @@ class icWX_SignalType(icwidget.icSimple):
     Описание интерфейса сигнала (кто, куда и что посылает, и кто это обрабатывает).
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         - B{type='defaultType'}:
         - B{name='default'}:
         - B{src=None}: Паспорт источника сообщения. Если паспорт не определен,

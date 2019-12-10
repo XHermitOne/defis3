@@ -62,7 +62,7 @@ class icDateTimeCtrl(datetime_ctrl.icDateTimeControl,
     чтобы переопределить методы setValue/getValue. Они необходимы для
     заполнения значениями в формах-карточках с помощью icFormDataManger.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Specification.
+    :cvar component_spc: Specification.
     """
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,

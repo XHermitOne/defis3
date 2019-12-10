@@ -28,6 +28,7 @@ DEFAULT_DBF_ENCODING = 'cp1251'
 def get_dbf_field_names(tab_filename):
     """
     Получить имена полей таблицы DBF.
+
     :param tab_filename: Имя файла таблицы DBF.
     :return: Список имен полей таблицы DBF.
     """
@@ -48,6 +49,7 @@ def get_dbf_field_names(tab_filename):
 def check_exists_columns(tab_filename, columns, auto_create=True):
     """
     Проверка существования колонок в таблице.
+
     :param tab_filename: Имя файла таблицы DBF.
     :param columns: Список колонок.
         [(Имя колонки, Тип колонки, Длина, Значение по умолчанию)]
@@ -77,6 +79,7 @@ def append_dbf_new_field(dbf_filename,
                          new_fieldname, field_type, field_length, default=None):
     """
     Добавить новое поле в DBF файл.
+
     :param dbf_filename: Имя DBF файла.
     :param new_fieldname: Имя нового поля.
     :param field_type: Тип поля (C-символьное).
@@ -130,6 +133,7 @@ def append_dbf_new_field(dbf_filename,
 def append_dbf_new_fields(dbf_filename, *field_defs):
     """
     Добавить новые поля в DBF файл.
+
     :param dbf_filename: Имя DBF файла.
     :param field_defs: Описания полей (Имя поля, Тип, Длина, Значение по умолчанию).
     :return: Объект DBF таблицы.
@@ -181,6 +185,7 @@ def append_dbf_new_fields(dbf_filename, *field_defs):
 def set_dbf_field_value(dbf_filename, field_name, value, field_type='C'):
     """
     Установить значение поля DBF таблицы.
+
     :param dbf_filename: Имя DBF файла.
     :param field_name: Наименование поля DBF таблицы.
     :param value: Значение.

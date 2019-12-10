@@ -188,7 +188,7 @@ class icNSIRequisite(parentModule.icNSIRequisiteProto, icwidget.icSimple):
     Реквизит связи со справочником NSI.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         
         - B{type='defaultType'}:
         - B{name='default'}:

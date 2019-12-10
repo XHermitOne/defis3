@@ -40,6 +40,7 @@ class icCOMServerProto(icsourcinterface.icSourceInterface):
     def __init__(self, resource_data=None):
         """
         Конструктор.
+
         :param resource_data: Ресурс описания компонента.
         """
         icsourcinterface.icSourceInterface.__init__(self, resource_data)

@@ -643,7 +643,7 @@ class icArrowIndicator(icwidget.icWidget, wx.PyControl):
     которые задаются в %).
     
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         - B{type='ArrowIndicator'}:
         - B{name='default'}:
         - B{typPar=''}: Тип наблюдаемого параметра (см описание атрибута 'cod').

@@ -77,7 +77,7 @@ class icMemoryNode(icwidget.icSimple, node.icSCADANodeProto):
     Компонент контроллера/узла SCADA системы памяти.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
         - B{name='default'}:

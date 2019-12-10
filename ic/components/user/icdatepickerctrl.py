@@ -90,7 +90,7 @@ class icDatePickerCtrl(icwidget.icWidget, wx.adv.DatePickerCtrl):
     """
     Описание пользовательского компонента.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         - B{type='DatePickerCtrl'}:
         - B{name='default'}:
         - B{value=''}:

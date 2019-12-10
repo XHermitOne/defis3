@@ -72,7 +72,7 @@ class icDocumentFilterManager(icdocumentnavigatormanager.icDocumentNavigatorMana
     """
     Компонент менеджера управления фильтрацией и сортировкой документов.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
         - B{name='default'}:

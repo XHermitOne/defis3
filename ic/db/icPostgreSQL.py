@@ -66,6 +66,7 @@ SPC_IC_POSTGRESQL = {'type': POSTGRES_DB_TYPE,
 def getActiveConnectionsPostgreSQL(db_url=None):
     """
     Список активных связей с БД PostgreSQL.
+
     :param db_url: URL связи с БД.
     :return: Список словарей записей активных связей или None в случае ошибки.
     """
@@ -94,6 +95,7 @@ def getActiveConnectionsPostgreSQL(db_url=None):
 def countActiveConnectionsPostgreSQL(db_url=None):
     """
     Колчество активных связей с БД PostgreSQL.
+
     :param db_url: URL связи с БД.
     :return: Количество активных связей или -1 в случае ошибки.
     """
@@ -118,6 +120,7 @@ _PSYCOPG2_COLUMN_TYPES2FIELD_TYPE = {'STRING': field_types.TEXT_FIELD_TYPE,
 def psycopg2_field_description2fields(*field_description):
     """
     Преобразовать описания полей DBAPI2 psycopg2 во внутренний вариан описаний.
+
     :param field_description: Список описаний полей DBAPI2.
         Описания полей ожидаются как описания колонок psycopg2.
     :return: Список описаний полей во внутреннем формате:

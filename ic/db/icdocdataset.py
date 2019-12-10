@@ -59,6 +59,7 @@ class icDocDataset(icsimpledataset.icSimpleDataset):
     def __init__(self, id, component, logType = 0, evalSpace = {}):
         """
         Конструктор для создания таблицы.
+
         :type id: C{int}
         :param id: Идентификатор объекта.
         :type component: C{dictionary}
@@ -145,8 +146,8 @@ class icDocDataset(icsimpledataset.icSimpleDataset):
         """
         Устанавливает ссылку на табличную часть документа (спецификацию).
         
-        param spc: Указатель на спецификацию.
-        param lst: Список имен реквизитов.
+        :param spc: Указатель на спецификацию.
+        :param lst: Список имен реквизитов.
         """
         self._spc = spc
         data = spc.getTabData(lst)

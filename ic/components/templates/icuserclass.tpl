@@ -81,7 +81,7 @@ class $class_name:<icUserBase>$(icwidget.icWidget, parentModule.$parent_class:<p
     """
     Описание пользовательского компонента.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         $spc_description: $
     """
     component_spc = ic_class_spc

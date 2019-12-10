@@ -36,6 +36,7 @@ class icCOMClientProto:
     def __init__(self, resource_data=None):
         """
         Конструктор.
+
         :param resource_data: Ресурс описания компонента.
         """
         self._com_server_name = resource_data['server']

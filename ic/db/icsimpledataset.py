@@ -103,6 +103,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
     def __init__(self, id, component, logType=0, evalSpace={}, indxLst=None):
         """
         Конструктор для создания таблицы.
+
         :type id: C{int}
         :param id: Идентификатор объекта.
         :type component: C{dictionary}
@@ -218,6 +219,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
     def getDefaultInitLst(self, gridtypes=None):
         """
         Определяет значение по умолчанию в зависимости от типа колонки.
+
         :type gridtypes: C{list}
         :param gridlist: Список типов колонок.
         """
@@ -238,12 +240,12 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
                 self.init[fld] = val
 
     # ----- Интерфйс dataseta -----------------------------
-
     def setNameValue(self, fieldName, value, rec=None, bReal=False, bCtrl=True):
         """
         Устанавливает значение поля. Если имя поля не найдено в источнике данных,
         то функция пытается выполнить функцию на запись по описанию колонки из ресурсного
         описания по аттрибуту 'setvalue'.
+
         :param rec: Номер записи
         :type rec: C{int}
         :param fieldName: Имя поля
@@ -281,6 +283,7 @@ class icSimpleDataset(icdatasetinterface.icDatasetInterface):
         """
         Функция по имени колонки и номеру записи возвращает значение
         из буфера.
+
         :type rec: C{int}
         :param rec: Номер строки.
         :type fieldName: C{string}

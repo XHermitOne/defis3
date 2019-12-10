@@ -32,7 +32,7 @@ class CImageList(wx.ImageList, parentClass):
     """
     User component class.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Specification.
+    :cvar component_spc: Specification.
         - B{type='defaultType'}:
         - B{name='default'}:
     """

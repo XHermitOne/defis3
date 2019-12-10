@@ -107,7 +107,7 @@ class icFuncOperation(icwidget.icSimple, parentModule.icFuncOperationProto):
         post_undo - Скрипт, запускаемый после выполнения отмены операции
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
         
         - B{type='defaultType'}:
         - B{name='default'}:

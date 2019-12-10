@@ -49,7 +49,7 @@ class %s(ictemplate.icTemplateInterface):
     \"\"\"
     User component class.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Specification.
+    :cvar component_spc: Specification.
         - B{type='defaultType'}:
         - B{name='default'}:
     \"\"\"
@@ -125,7 +125,7 @@ class %s(parentClass):
     \"\"\"
     User component class.
     :type component_spc: C{dictionary}
-    @cvar component_spc: Specification.
+    :cvar component_spc: Specification.
         - B{type='defaultType'}:
         - B{name='default'}:
     \"\"\"

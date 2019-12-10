@@ -131,7 +131,7 @@ class icDateTimeSCADATag(scada_tag.icSCADATagProto, icwidget.icSimple):
     Компонент временного тега SCADA системы.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
         - B{name='default'}:

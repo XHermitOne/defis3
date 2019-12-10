@@ -148,7 +148,7 @@ class icRefNSIRequisite(parentModule.icRefNSIRequisiteProto, icwidget.icSimple):
     Класс пользовательского компонента РЕКВИЗИТ СВЯЗИ С ОБЪЕКТОМ-ССЫЛКА/СПРАВОЧНИКОМ.
 
     :type component_spc: C{dictionary}
-    @cvar component_spc: Спецификация компонента.
+    :cvar component_spc: Спецификация компонента.
 
         - B{type='defaultType'}:
         - B{name='default'}:
