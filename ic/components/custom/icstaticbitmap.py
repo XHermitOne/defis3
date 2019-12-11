@@ -9,7 +9,7 @@
 
     - B{name = 'DefaultName'}: Имя объекта.
     - B{field_name=None}: Имя поля базы данных, которое отображает компонент.
-    - B{type = 'Image'}: Тип объекта.
+    - B{type = 'StaticBitmap'}: Тип объекта.
     - B{file}: Полный путь до файла хранения картинки.
     - B{position = (-1,-1)}: Расположение компонента на родительском окне.
     - B{foregroundColor=None}: Цвет текста.
@@ -56,7 +56,7 @@ def getImage(img_data):
 imgcard = 'GIF (*.gif)|*.gif|JPG (*.jpg)|*.jpg|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp|All files (*.*)|*.*'
 
 
-SPC_IC_BITMAP = {'type': 'Image',
+SPC_IC_BITMAP = {'type': 'StaticBitmap',
                  'name': 'DefaultName',
 
                  'field_name': None,
@@ -107,7 +107,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (1, 1, 1, 1)
+__version__ = (1, 1, 2, 1)
 
 
 class icStaticBitmap(icWidget, wx.StaticBitmap):
@@ -159,7 +159,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
             pass
         else:
             self.file = util.getICAttr(component['file'], self.evalSpace, msg='ERROR')
-            bmptype = bmpfunc.getBitmapType(self.file)
+            bmptype = bmpfunc.getBitmapType(self.file) if self.file else None
 
             if bmptype is not None and os.path.isfile(self.file):
                 img = wx.Image(self.file, bmptype).ConvertToBitmap()
@@ -239,6 +239,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
     def SetValue(self, new_file):
         """
         Устанавливает новое значение картинки.
+
         :type new_file: C{string}
         :param new_file: Новое имя файла картинки.
         :rtype: C{bool}
@@ -292,6 +293,7 @@ class icStaticBitmap(icWidget, wx.StaticBitmap):
     def UpdateViewFromDB(self, db_name=None):
         """
         Обновляет данные в текстовом поле после изменения курсора в источнике данных.
+
         :type db_name: C{String}
         :param db_name: Имя источника данных.
         """

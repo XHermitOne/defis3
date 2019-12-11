@@ -106,39 +106,38 @@ ic_class_name = 'icSpeedmeter'
 ic_class_styles = ICSpeedmeterStyle
 
 #   Спецификация на ресурсное описание класса
-ic_class_spc = dict({'type': 'Speedmeter',
-                     'name': 'default',
-                     'child': [],
-                     'activate': True,
-                     '_uuid': None,
-                     'style': parentModule.SM_DRAW_HAND |
-                     parentModule.SM_DRAW_PARTIAL_SECTORS |
-                     parentModule.SM_DRAW_SECONDARY_TICKS |
-                     parentModule.SM_DRAW_MIDDLE_TEXT |
-                     parentModule.SM_ROTATE_TEXT,
+ic_class_spc = {'type': 'Speedmeter',
+                'name': 'default',
+                'child': [],
+                'activate': True,
+                '_uuid': None,
+                'style': parentModule.SM_DRAW_HAND |
+                         parentModule.SM_DRAW_PARTIAL_SECTORS |
+                         parentModule.SM_DRAW_SECONDARY_TICKS |
+                         parentModule.SM_DRAW_MIDDLE_TEXT |
+                         parentModule.SM_ROTATE_TEXT,
 
-                     '__events__': {},
-                     '__lists__': {'hand_style': ['Hand', 'Arrow'],
-                                   'direction': ['Advance', 'Reverse']},
-                     '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
-                                                                 'middle_txt'],
-                                        icDefInf.EDT_COLOR: ['ticks_color', 'hand_color',
-                                                             'middle_txt_color', 'background',
-                                                             'shadow_color', 'arc_color', 'filler_color',
-                                                             'first_gradient_color',
-                                                             'second_gradient_color'],
-                                        icDefInf.EDT_FONT: ['ticks_font', 'middle_txt_font'],
-                                        icDefInf.EDT_TEXTLIST: ['angle_range'],
-                                        icDefInf.EDT_NUMBER: ['second_ticks_count',
-                                                              'value'],
-                                        icDefInf.EDT_CHOICE: ['hand_style', 'direction'],
-                                        icDefInf.EDT_CHECK_BOX: ['external_arc'],
-                                        },
-                     '__parent__': SPC_IC_SPEEDMETER,
-                     })
+                '__styles__': ic_class_styles,
+                '__events__': {},
+                '__lists__': {'hand_style': ['Hand', 'Arrow'],
+                              'direction': ['Advance', 'Reverse']},
+                '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid',
+                                                            'middle_txt'],
+                                   icDefInf.EDT_COLOR: ['ticks_color', 'hand_color',
+                                                        'middle_txt_color', 'background',
+                                                        'shadow_color', 'arc_color', 'filler_color',
+                                                        'first_gradient_color',
+                                                        'second_gradient_color'],
+                                   icDefInf.EDT_FONT: ['ticks_font', 'middle_txt_font'],
+                                   icDefInf.EDT_TEXTLIST: ['angle_range'],
+                                   icDefInf.EDT_NUMBER: ['second_ticks_count',
+                                                         'value'],
+                                   icDefInf.EDT_CHOICE: ['hand_style', 'direction'],
+                                   icDefInf.EDT_CHECK_BOX: ['external_arc'],
+                                   },
+                '__parent__': SPC_IC_SPEEDMETER,
+                }
                     
-ic_class_spc['__styles__'] = ic_class_styles
-
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = bmpfunc.createLibraryBitmap('dashboard.png')
@@ -156,7 +155,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 1)
+__version__ = (0, 1, 1, 1)
 
 
 class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):

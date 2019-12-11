@@ -45,4 +45,4 @@ EDT_NEW_PROPERTY = 15
 ic_reg_edt_class = {}
 """
 
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 1)

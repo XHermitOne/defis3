@@ -178,6 +178,7 @@ ICSizerFlag = {'TOP': wx.TOP,
 def strToVal(typ, text):
     """
     Функция преобразует строку в значение в зависимости от типа.
+
     :type typ: C{int}
     :param typ: Тип значения, к котророму необходимо преобразовать.
     :type text: C{string}
@@ -244,6 +245,7 @@ def strToVal(typ, text):
 def ctrlVal(typ, text):
     """
     Функция проверяет соответствие значения определенному типу.
+
     :type typ: C{int}
     :param typ: Тип значения, к котророму необходимо преобразовать.
     :type text: C{string}
@@ -331,6 +333,7 @@ def ClearUserGroup():
 def RegComponentGroup(name):
     """
     Функция регистрации новой группы компонентов.
+
     :type name: C{string}
     :param name: Имя группы.
     :rtype: C{int}
@@ -377,6 +380,7 @@ def getDeactivateColour():
 def getStyleDict(style, allstyles):
     """
     Возвращает стиль компонента в виде словаря.
+
     :type style: C{long}
     :param style: Стиль компонента.
     :type allstyles: C{dictionary}

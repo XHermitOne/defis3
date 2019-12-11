@@ -9,7 +9,6 @@ import wx
 from ic.components import icwidget
 # Расширенные редакторы
 from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEdt as pspEdt
-from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportListUserEdt as pspListEdt
 
 from ic.PropertyEditor import icDefInf
 
@@ -19,8 +18,14 @@ from ic.dlg import dlgfunc
 from ic.utils import coderror
 from ic.utils import util
 
-from SCADA.mnemonic import mnemoanchor
+from ..mnemonic import mnemoanchor
 
+
+ANCHOR_DIRECTION_CHOICES = {'ANCHOR_DIRECTION_FROM_LEFT_TO_RIGHT': mnemoanchor.ANCHOR_DIRECTION_FROM_LEFT_TO_RIGHT,
+                            'ANCHOR_DIRECTION_FROM_RIGHT_TO_LEFT': mnemoanchor.ANCHOR_DIRECTION_FROM_RIGHT_TO_LEFT,
+                            'ANCHOR_DIRECTION_FROM_TOP_TO_BOTTOM': mnemoanchor.ANCHOR_DIRECTION_FROM_TOP_TO_BOTTOM,
+                            'ANCHOR_DIRECTION_FROM_BOTTOM_TO_TOP': mnemoanchor.ANCHOR_DIRECTION_FROM_BOTTOM_TO_TOP,
+                            }
 
 #   Тип компонента
 ic_class_type = icDefInf._icUserType
@@ -34,10 +39,16 @@ ic_class_spc = {'type': 'MnemoAnchor',
                 'child': [],
                 'activate': True,
                 '_uuid': None,
+                'style': mnemoanchor.ANCHOR_DIRECTION_FROM_LEFT_TO_RIGHT | mnemoanchor.ANCHOR_DIRECTION_FROM_TOP_TO_BOTTOM,
 
                 '__events__': {},
                 '__lists__': {},
+                '__styles__': ANCHOR_DIRECTION_CHOICES,
                 '__attr_types__': {icDefInf.EDT_TEXTFIELD: ['description', '_uuid'],
+                                   icDefInf.EDT_POINT: ['svg_pos', ],
+                                   icDefInf.EDT_SIZE: ['svg_size', 'min_size', 'max_size'],
+                                   icDefInf.EDT_COMBINE: ['style'],
+                                   icDefInf.EDT_USER_PROPERTY: ['attachment'],
                                    },
                 '__parent__': mnemoanchor.SPC_IC_MNEMOANCHOR,
                 }
@@ -63,56 +74,41 @@ __version__ = (0, 1, 1, 1)
 
 
 # Функции редактирования
-# def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
-#     """
-#     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
-#     """
-#     ret = None
-#     if attr in ('scan_class',):
-#         ret = pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
-#     elif attr in ('engines',):
-#         ret = pspListEdt.get_user_property_editor(value, pos, size, style, propEdt)
-#
-#     if ret is None:
-#         return value
-#
-#     return ret
-#
-#
-# def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
-#     """
-#     Стандартная функция контроля.
-#     """
-#     if attr in ('scan_class',):
-#         ret = str_to_val_user_property(attr, value, propEdt)
-#         if ret:
-#             parent = propEdt
-#             if not ret[0][0] in ('ScanClass',):
-#                 dlgfunc.openWarningBox(u'ОШИБКА',
-#                                        u'Выбранный объект не является КЛАССОМ СКАНИРОВАНИЯ.')
-#                 return coderror.IC_CTRL_FAILED_IGNORE
-#             return coderror.IC_CTRL_OK
-#     elif attr in ('engines',):
-#         ret = str_to_val_user_property(attr, value, propEdt)
-#         if ret:
-#             parent = propEdt
-#             first_menubar_type = ret[0][0][0]
-#             for cur_psp in ret:
-#                 if not cur_psp[0][0] in ('SCADAEngine',):
-#                     dlgfunc.openWarningBox(u'ОШИБКА',
-#                                            u'Выбранный объект [%s] не является ДВИЖКОМ SCADA СИСТЕМЫ.' % cur_psp)
-#                     return coderror.IC_CTRL_FAILED_IGNORE
-#             return coderror.IC_CTRL_OK
-#
-#
-# def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
-#     """
-#     Стандартная функция преобразования текста в значение.
-#     """
-#     if attr in ('scan_class',):
-#         return pspEdt.str_to_val_user_property(text, propEdt)
-#     elif attr in ('engines',):
-#         return pspListEdt.str_to_val_user_property(text, propEdt)
+def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
+    """
+    ret = None
+    if attr in ('attachment',):
+        ret = pspEdt.get_user_property_editor(value, pos, size, style, propEdt)
+
+    if ret is None:
+        return value
+
+    return ret
+
+
+def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция контроля.
+    """
+    if attr in ('attachment',):
+        ret = str_to_val_user_property(attr, value, propEdt)
+        if ret:
+            parent = propEdt
+            if not ret[0][0] in ('TextField', 'StaticText', 'StaticBitmap', 'Speedmeter', 'Button'):
+                dlgfunc.openWarningBox(u'ОШИБКА',
+                                       u'Выбранный объект не является КОНТРОЛОМ, размещаемым на мнемосхеме.')
+                return coderror.IC_CTRL_FAILED_IGNORE
+            return coderror.IC_CTRL_OK
+
+
+def str_to_val_user_property(attr, text, propEdt, *arg, **kwarg):
+    """
+    Стандартная функция преобразования текста в значение.
+    """
+    if attr in ('attachment',):
+        return pspEdt.str_to_val_user_property(text, propEdt)
 
 
 class icMnemoAnchor(icwidget.icSimple, mnemoanchor.icMnemoAnchorProto):
@@ -152,10 +148,50 @@ class icMnemoAnchor(icwidget.icSimple, mnemoanchor.icMnemoAnchorProto):
         """
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwidget.icSimple.__init__(self, parent, id, component, logType, evalSpace)
-        mnemoanchor.icMnemoAnchorProto.__init__(self)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
         lst_keys = [x for x in component.keys() if not x.startswith('__')]
 
         for key in lst_keys:
             setattr(self, key, component[key])
+
+        mnemoanchor.icMnemoAnchorProto.__init__(self,
+                                                mnemoscheme=parent,
+                                                pos=self.svg_pos,
+                                                size=self.svg_size,
+                                                direction=self.style,
+                                                min_size=self.min_size,
+                                                max_size=self.max_size)
+
+    def getStyle(self):
+        """
+        Получить стиль якоря.
+        """
+        return self.style
+
+    # Другое наименование метода
+    getDirection = getStyle
+
+    def getAttachmentPsp(self):
+        """
+        Получить паспорт объекта прикрепленного к якорю контрола.
+        """
+        return self.getICAttr('attachment')
+
+    def getAttachment(self):
+        """
+        Получить объект прикрепленного к якорю контрола.
+
+        :return: Объект контрола, который может быть размещен на мнемосхеме
+            или None в случае ошибки.
+        """
+        psp = self.getAttachmentPsp()
+
+        if psp:
+            name = psp[0][1]
+            if self.parent.isChild(name):
+                return self.parent.GetChildByName(name)
+            else:
+                log.warning(u'Объект <%s> не является дочерним мнемосхемы якоря <%s>' % (name, self.getName()))
+        return None
+

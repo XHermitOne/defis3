@@ -169,7 +169,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             # Не определена БД
             parent = propEdt
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
+                               u'Свойство <%s> обязательно должно быть определено для этого объекта.' % attr, parent)
     elif attr in ('list_ctrl',):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:

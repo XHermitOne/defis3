@@ -19,7 +19,8 @@ from ic.utils import coderror
 from ic.utils import util
 
 from ic.components import icwxpanel
-from SCADA.mnemonic import mnemoscheme
+from ..mnemonic import mnemoscheme
+from . import mnemo_anchor
 
 # --- Спецификация ---
 #   Тип компонента
@@ -54,8 +55,8 @@ ic_class_pic2 = bmpfunc.createLibraryBitmap('chart_organisation.png')
 ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
 
-#   Список компонентов, которые могут содержаться в компоненте
-ic_can_contain = ['MemoAnchor', 'StaticText', 'Image', 'Button']
+#   Список компонентов, которые могут содержаться в дпнном компоненте
+ic_can_contain = ['MnemoAnchor', 'TextField', 'StaticText', 'StaticBitmap', 'Speedmeter', 'Button']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен
 #   список ic_can_contain
@@ -63,6 +64,9 @@ ic_can_not_contain = []
 
 #   Версия компонента
 __version__ = (0, 1, 1, 1)
+
+DEFAULT_TEST_WIDTH = 800
+DEFAULT_TEST_HEIGHT = 600
 
 
 # Функции редактирования
@@ -131,6 +135,20 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
     """
     component_spc = ic_class_spc
 
+    @staticmethod
+    def TestComponentResource(res, context, parent, *arg, **kwarg):
+        import ic.components.icResourceParser as prs
+        testObj = prs.CreateForm('Test', formRes=res,
+                                 evalSpace=context, parent=parent, bIndicator=True)
+        #   Для оконных компонентов надо вызвать метод Show
+        try:
+            if testObj:
+                testObj.SetSize(wx.Size(DEFAULT_TEST_WIDTH, DEFAULT_TEST_HEIGHT))
+                testObj.Show(True)
+                testObj.SetFocus()
+        except:
+            log.fatal(u'Ошибка тестирования мнемосхемы <%s>' % testObj.getName())
+
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
         """
@@ -156,10 +174,6 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
         component = util.icSpcDefStruct(self.component_spc, component, True)
         icwxpanel.icWXPanel.__init__(self, parent, id, component, logType, evalSpace)
         mnemoscheme.icMnemoSchemeProto.__init__(self)
-        # Контрол картинки для отображения фона
-        size = self.GetSize()
-        self.background_static_bitmap = wx.StaticBitmap(self, -1, wx.EmptyBitmap(width=size.GetWidth(),
-                                                                                 height=size.GetHeight()), (0, 0))
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
         lst_keys = [x for x in component.keys() if not x.startswith('__')]
@@ -168,19 +182,39 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
             setattr(self, key, component[key])
 
         self.setSVGBackground(self.svg_background, bAutoDraw=False)
+        self.setSVGSize(self.svg_width, self.svg_height)
 
         self.Bind(wx.EVT_CLOSE, self.onClose)
+        self.Bind(wx.EVT_ERASE_BACKGROUND, self.onEraseBackground)
 
         # Объект класса сканирования данных SCADA.
         self._scan_class = None
 
         self.init()
 
+    def onEraseBackground(self, event):
+        """
+        Добавление картинки на фон панели через контекст устройства.
+        """
+        bmp = self.getBackgroundBitmap()
+        if bmp:
+            dc = event.GetDC()
+
+            if not dc:
+                dc = wx.ClientDC(self)
+                rect = self.GetUpdateRegion().GetBox()
+                dc.SetClippingRect(rect)
+            dc.Clear()
+
+            dc.DrawBitmap(bmp, 0, 0)
+
     def onPanelSize(self, event):
         """
         Переопределение обработчика переразмеривания панели мнемосхемы.
         """
         self.drawBackground()
+        self.layoutAll(False)
+
         icwxpanel.icWXPanel.onPanelSize(self, event)
 
     def getScanClassPsp(self):
@@ -265,3 +299,28 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
         self.stopEngines()
 
         event.Skip()
+
+    def getAnchors(self):
+        """
+        Получить список якорей мнемосхемы.
+
+        :return: Список якорей мнемосхемы.
+        """
+        children = self.get_children_lst()
+        return [child for child in children if isinstance(child, mnemo_anchor.icMnemoAnchor)]
+
+    def layoutAll(self, bAutoRefresh=True):
+        """
+        Разместить все контролы мнемосхемы в соответствии с якорями.
+
+        :param bAutoRefresh: Автоматически обновить мнемосхему.
+        :return: True/False
+        """
+        anchors = self.getAnchors()
+        result = all([anchor.layoutControl() for anchor in anchors])
+
+        if bAutoRefresh:
+            self.Refresh()
+
+        return result
+

@@ -28,7 +28,7 @@ class ic_user_property_editor:
         Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
         
         :type value: C{string}
-        :param value: Текущее значение цвета в виде 'wx.Colour(r,g,b)'.
+        :param value: Текущее значение в виде строки.
         :type pos: C{wx.Point}
         :param pos: Позиция окна.
         :type size: C{wx.Size}
@@ -66,6 +66,17 @@ class icObjectPassportUserEdt(ic_user_property_editor):
     def get_user_property_editor(value, pos, size, style, propEdt, *arg, **kwarg):
         """
         Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
+
+        :type value: C{string}
+        :param value: Текущее значение в виде строки.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :type propEdt: C{ic.components.user.objects.PropNotebookEdt}
+        :param propEdt: Указатель на редактор свойств.
         """
         if value:
             parent = propEdt
@@ -124,6 +135,17 @@ class icObjectPassportListUserEdt(ic_user_property_editor):
     def get_user_property_editor(value, pos, size, style, propEdt, *arg, **kwarg):
         """
         Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
+
+        :type value: C{string}
+        :param value: Текущее значение в виде строки.
+        :type pos: C{wx.Point}
+        :param pos: Позиция окна.
+        :type size: C{wx.Size}
+        :param size: Размер диалогового окна.
+        :type style: C{int}
+        :param style: Стиль диалога.
+        :type propEdt: C{ic.components.user.objects.PropNotebookEdt}
+        :param propEdt: Указатель на редактор свойств.
         """
         if value:
             parent = propEdt
@@ -173,3 +195,4 @@ class icObjectPassportListUserEdt(ic_user_property_editor):
             log.fatal(u'Ошибка >>> str_to_val_user_property в eval(text): text=%s' % text)
             return None
         return value
+

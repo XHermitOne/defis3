@@ -117,7 +117,7 @@ class icWXPanel(icWidget, wx.Panel):
                 testObj.Show(True)
                 testObj.SetFocus()
         except:
-            log.fatal()
+            log.fatal(u'Ошибка тестирования панели <%s>' % testObj.getName())
     
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None, *arg, **kwarg):
@@ -186,13 +186,13 @@ class icWXPanel(icWidget, wx.Panel):
         """
         if self.child:
             if '_root_obj' not in self.evalSpace or not self.evalSpace['_root_obj']:
-                    self.evalSpace['_root_obj'] = self
+                self.evalSpace['_root_obj'] = self
             kernel = self.GetKernel()
             if kernel:
                 kernel.parse_resource(self, self.child, None, context=self.evalSpace,
                                       bCounter=bCounter, progressDlg=progressDlg)
             else:
-                log.warning('Not define kernel in widget <%s>' % self)
+                log.warning(u'Не определено ядро для <%s>' % self.getName())
 
     def destroyWin(self):
         """

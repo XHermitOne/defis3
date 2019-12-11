@@ -127,11 +127,12 @@ class icKernel(icBaseKernel):
         self.__connectionLst += lst
 
     def parse_resource(self, parent, res, sizer=None, logType=0,
-                       context=None, bCounter=True, progressDlg=None):
+                       context=None, bCounter=True, progressDlg=None, **kwargs):
         """
         Низкоуровневый парсинг ресурса.
         """
-        prs.icResourceParser(parent, res, sizer, logType, context, bCounter=bCounter, progressDlg=progressDlg)
+        prs.icResourceParser(parent, res, sizer, logType, context,
+                             bCounter=bCounter, progressDlg=progressDlg, **kwargs)
 
     @decorators.to_passport
     def getResByPsp(self, passport):
@@ -142,25 +143,6 @@ class icKernel(icBaseKernel):
         :param passport: идентификатор описания (паспорт) объекта.
         """
         return resource.getResByPsp(tuple(passport))
-
-    # def getResByPsp_depricated(self, passport):
-    #     """
-    #     Возвращает ресурса объекта по его паспорту.
-    #     :type passport: C{icObjectPassport}
-    #     :param passport: идентификатор описания (паспорт) объекта.
-    #     """
-    #     objType = passport.getDescrType()
-    #     className = passport.getDescrName()
-    #     resName, extName = passport.getDescrMod().split('.')
-    #     subsys = passport.getDescrSubsys()
-    #     res = resource.icGetRes(resName, extName, pathRes=resource.getSubsysPath(subsys), nameRes=resName)
-    #     if res and objType:
-    #         res_mod = res.get('res_module', None)
-    #         file_res = res.get('__file_res')
-    #         res = resource.FindResInRes(res, className, objType)
-    #         res['res_module'] = res_mod
-    #         res['__file_res'] = file_res
-    #     return res
 
     @decorators.init_context
     @decorators.to_passport

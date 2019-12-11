@@ -12,6 +12,8 @@
 Для позиционирования контролов на мнемосхеме используются компоненты-якоря,
 которые определяют положение и размер контролов ввода вывода относительно
 элементов SVG фона мнемосхемы.
+
+ВНИМАНИЕ! Сама мнемосхема центруется на форме.
 """
 
 import wx
@@ -33,13 +35,17 @@ SPC_IC_MNEMOSCHEME = {'engines': list(),
                       'scan_class': None,
                       'auto_run': False,
                       'svg_background': None,
+                      'svg_width': 0.0,
+                      'svg_height': 0.0,
 
                       '__parent__': icwxpanel.SPC_IC_PANEL,
 
                       '__attr_hlp__': {'engines': u'Список движков SCADA системы',
                                        'scan_class': u'Класс сканирования',
                                        'auto_run': u'Признак автозапуска и автоостанова всех движков при создании/закрытии окна',
-                                       'svg_background': u'SVG файл фона мнемосхемы'
+                                       'svg_background': u'SVG файл фона мнемосхемы',
+                                       'svg_width': u'Ширина SVG в исходных единицах измерения',
+                                       'svg_height': u'Высота SVG в исходных единицах измерения',
                                        },
                       }
 
@@ -57,10 +63,28 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
         """
         scada_form_manager.icSCADAFormManager.__init__(self)
 
-        # Фон мнемосхемы
+        # Полное имя файла фона мнемосхемы
         self._svg_background = None
-        # Контрол картинки для отображения фона
-        self.background_static_bitmap = None
+        # Объект картинки для отображения фона
+        self._background_bitmap = None
+
+        # Размер SVG в исходных единицах измерения
+        self._svg_size = (0.0, 0.0)
+
+    def setSVGSize(self, svg_width, svg_height):
+        """
+        Установить размер SVG в исходных единицах измерения.
+
+        :param svg_width: Ширина SVG в исходных единицах измерения
+        :param svg_height: Высота SVG в исходных единицах измерения
+        """
+        self._svg_size = (svg_width, svg_height)
+
+    def getSVGSize(self):
+        """
+        Размер SVG в исходных единицах измерения
+        """
+        return self._svg_size
 
     def setSVGBackground(self, svg_filename, bAutoDraw=True):
         """
@@ -131,10 +155,16 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
                     log.warning(u'Ошибка конвертации SVG -> PNG (<%s> -> <%s>)' % (self._svg_background, png_filename))
                     return False
 
-            bmp = bmpfunc.createBitmap(png_filename)
-            if self.background_static_bitmap:
-                self.background_static_bitmap.SetBitmap(bmp)
+            self._background_bitmap = bmpfunc.createBitmap(png_filename)
             return True
         except:
             log.fatal(u'Ошибка отрисовки фона мнемосхемы')
         return False
+
+    def getBackgroundBitmap(self):
+        """
+        Объект картинки для отображения фона.
+
+        :return: Объект wx.Bitmap, соответствующий текущему фону мнемосхемы.
+        """
+        return self._background_bitmap

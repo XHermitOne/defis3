@@ -4,6 +4,7 @@
 """
 Базовые кдассы библиотеки от которых наследуются все остальные.
 Содержит описание базовых классов всех компонентов библиотеки ic: icBase, icSizer, icWidget.
+
 :type SPC_IC_SIMPLE: C{dictionary}
 :var SPC_IC_SIMPLE: Спецификация на ресурсное описание базового класса. Описание ключей SPC_IC_SIMPLE:
 
@@ -67,6 +68,7 @@
 
 :type SPC_IC_WIDGET: C{dictionary}
 :var SPC_IC_WIDGET: Спецификация на ресурсное описание базового класса визуальных компонентов.
+
 Описание ключей SPC_IC_WIDGET:
 
     - B{name='widget'}: Имя окна.
@@ -427,6 +429,7 @@ class icShape(object):
     def drawShape(self, dc=None):
         """
         Функция перерисовывает компонент.
+
         :type dc: C{wx.DC}
         :param dc: Контекст устроийства вывода.
         """
@@ -504,6 +507,7 @@ class icResObjContext(icContext.Context):
     def setValueInCtrl(self, Control_, DataDict_):
         """
         Установить значения контролов из словаря.
+
         :param Control_: Обрабатываемая форма/контрол.
         """
         self._controls_ = []
@@ -515,6 +519,7 @@ class icResObjContext(icContext.Context):
     def _setValueInCtrl(self, Control_, DataDict_):
         """
         Установить значения контролов в форме из словаря.
+
         :param Control_: Обрабатываемая форма/контрол.
         """
         # Инициализировать значения всех контролов
@@ -561,6 +566,7 @@ class icResObjContext(icContext.Context):
     def _setCtrlValue(self, Control_, Value_=None, ErrMsg_=u''):
         """
         Функция установки значения контрола с обработкой ошибки.
+
         :param Control_: Объект контрола.
         :param Value_: Устанавливаемое значение.
         :param ErrMsg_: Сообщение в случае ошибки.
@@ -575,6 +581,7 @@ class icResObjContext(icContext.Context):
     def clearValueInCtrl(self, Control_, DataNames_=None):
         """
         Сбросить значения контролов.
+
         :param Control_: Обрабатываемая форма/контрол.
         :param DataNames_: Список имен, для контролов которых
         нужно сбросить значения. Если None, то сбрасываются
@@ -588,6 +595,7 @@ class icResObjContext(icContext.Context):
     def _clearValueInCtrl(self, Control_, DataNames_=None):
         """
         Ссбросить значения контролов в форме.
+
         :param Control_: Обрабатываемая форма/контрол.
         :param DataNames_: Список имен, для контролов которых
         нужно сбросить значения. Если None, то сбрасываются
@@ -644,6 +652,7 @@ class icResObjContext(icContext.Context):
     def getValueInCtrl(self, Control_):
         """
         Получить значения контролов в виде словаря.
+
         :param Control_: Обрабатываемая форма/контрол.
         """
         self._controls_ = []
@@ -655,6 +664,7 @@ class icResObjContext(icContext.Context):
     def _getValueInCtrl(self, Control_):
         """
         Получить значения контролов в форме в виде словаря.
+
         :param Control_: Обрабатываемая форма/контрол.
         """
         data = {}
@@ -723,6 +733,7 @@ class icSimple(icobject.icObject):
     def TestComponentResource(res, context, parent=None, *arg, **kwarg):
         """
         Функция тестирования компонента.
+
         :param res: Ресурсное описание.
         :param context: Контекст ресурса.
         :param parent: Родительское окно.
@@ -733,6 +744,7 @@ class icSimple(icobject.icObject):
                  evalSpace=None, bGenUUID=True, bPrepareProp=False):
         """
         Конструктор для создания icBase.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно
         :type id: C{int}
@@ -940,7 +952,7 @@ class icSimple(icobject.icObject):
 
     def reg_child(self, obj, name=None):
         """
-        Регестрируем дочерний компонентов.
+        Регистрируем дочерний компонент.
         """
         self.component_lst.append(obj)
         if name:
@@ -986,6 +998,7 @@ class icSimple(icobject.icObject):
     def GetChildByName(self, name):
         """
         По имени находит дочерний элемент.
+
         :type name: C{string}
         :param name: Имя дочернего элемента.
         """
@@ -997,8 +1010,11 @@ class icSimple(icobject.icObject):
     def FindObjectByName(self, name):
         """
         Найти каскадно объект среди всех дочерних по имени.
+
         :type name: C{string}
         :param name: Имя дочернего элемента.
+        :return: Искомый дочерний объект или
+            None, если объект с таким именем не найден.
         """
         children = []
         if self.IsSizer():
@@ -1041,6 +1057,15 @@ class icSimple(icobject.icObject):
         """
         return bool(self.components)
 
+    def isChild(self, name):
+        """
+        Проверка: есть ли у объекта дочерний объект с указанным именем.
+
+        :param name: Имя объекта.
+        :return: True/False.
+        """
+        return name in self.components
+
     def GetUUIDAttr(self, *attrs):
         """
         Возвращает уникальный иденификатор атрибута компонента.
@@ -1079,6 +1104,7 @@ class icSimple(icobject.icObject):
     def SaveUserProperty(self, prop, value):
         """
         По возможности сохраняет свойство в настройках пользователя.
+
         :type prop: C{string}
         :param prop: Имя свойства.
         :type value: C{...}
@@ -1103,6 +1129,7 @@ class icSimple(icobject.icObject):
     def LoadUserProperty(self, prop):
         """
         Читает значение определенного свойства из настроек пользователя.
+
         :type prop: C{string}
         :param prop: Имя свойства.
         :return: Значение сохраненного ранее свойства.
@@ -1131,6 +1158,7 @@ class icSimple(icobject.icObject):
         SyntaxError: unexpected character after line continuation character.
         Чтобы этого не происходило удаляются все символы новой строки/перевода каретки
         из исполняемого выражения.
+
         :param expr: Само выражение. Если не строка, то остается без изменений.
         :return: Подготовленное выражение.
         """
@@ -1143,6 +1171,7 @@ class icSimple(icobject.icObject):
     def getExpression(self, attr):
         """
         Получить выражение для последующего выполнения.
+
         :type attr: C{string}
         :param attr: Имя атрибута.
         :return: Подготовленное выражение.
@@ -1153,6 +1182,7 @@ class icSimple(icobject.icObject):
     def eval_attr(self, attr, subkey='', bReUse=True):
         """
         Функция вычисления атрибутов.
+
         :type attr: C{string}
         :param attr: Имя атрибута.
         :type subkey: C{string}
@@ -1186,6 +1216,7 @@ class icSimple(icobject.icObject):
     def eval_expr(self, expr, subkey='expr', bReUse=True ):
         """
         Функция вычисления атрибутов.
+
         :type expr: C{string}
         :param expr: Вычисляемое выражение.
         :type subkey: C{string}
@@ -1208,6 +1239,7 @@ class icSimple(icobject.icObject):
         """
         Функция возвращает вычисленный атрибут. Если вычислить не удается, то
         возвращается None.
+
         :return: Возвращает значение атрибута. None - если произошла ошибка при
             вычислении атрибута.
         """
@@ -1236,6 +1268,7 @@ class icSimple(icobject.icObject):
     def isICAttrValue(self, attr):
         """
         Функция проверяет заполненность атрибута.
+
         :type attr: C{string}
         :param attr: Имя атрибута.
         :return: Если атрибут заполненный, то возвращает True,
@@ -1250,6 +1283,7 @@ class icSimple(icobject.icObject):
     def getDataName(self):
         """
         Наименование данных из контекста/источника данных.
+
         :return: Наименование данных из контекста/источника данных.
         """
         return self.getICAttr('data_name')
@@ -1258,6 +1292,7 @@ class icSimple(icobject.icObject):
         """
         Функция вычисляет значение атрибута. Если атрибут вычисляемый,
         то она вычисляет его. Вычисляемый атрибут определяется по счиволу '@'.
+
         :type attr: C{string}
         :param attr: Имя атрибута.
         :type bExpectedExpr: C{bool}
@@ -1338,6 +1373,7 @@ class icSimple(icobject.icObject):
          'Значение data_name элемента': результат функции getValue() элемента.
          ...
         }
+
         :return: Возвращает заполненный словарь данных.
         """
         data = {}
@@ -1407,6 +1443,7 @@ class icSimple(icobject.icObject):
     def find_child_resource(self, child_name, res=None):
         """
         Поиск ресурса дочернего объекта рекурсивно по имени.
+
         :param child_name: Имя дочернего объекта.
         :param res: Ресурс. Если не определен, то берется self.resource.
         :return: Словарь ресурса найденного объекта или None
@@ -1428,11 +1465,11 @@ class icBase(icSimple, icShape):
     """
     Базовый класс для базовыз визуальных компонентов библиотеки ic.
     """
-
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bPrepareProp=False):
         """
         Конструктор для создания icBase.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно
         :type id: C{int}
@@ -1477,6 +1514,7 @@ class icBase(icSimple, icShape):
         Например, для всех объектов неактивный страницы органайзера этот признак
         будет устанавливаться в False. Для компонента 'icNotebook' эта функция
         переопределена т. к. только на активной странице компоненты видимы.
+
         :type bVisible: C{bool}
         :param bVisible: Признак обновления представления объекта данных.
         :type lst: C{list}
@@ -1505,13 +1543,13 @@ class icSizer(icBase):
     """
     Базовый класс для всех сайзеров.
     """
-
     DESIGN_SHAPE_COLOR = (230, 240, 255)
 
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None,
                  sizer=None, bPrepareProp=False):
         """
         Конструктор базового класса сайзеров.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -1570,6 +1608,7 @@ class icSizer(icBase):
     def regObject(self, obj):
         """
         Зарегистрировать объект во внутренних списках виджета.
+
         :param obj: Объект.
         """
         self.objectList.append(obj)
@@ -1649,6 +1688,7 @@ class icSizer(icBase):
     def GetIndex(self, obj):
         """
         Возвращает индекс объекта в списке объектов сайзера.
+
         :type obj: C{...}
         :param obj: Ссылка на объет, индекс которого ищется.
         """
@@ -1697,11 +1737,11 @@ class icWidget(icBase, icEvent):
     Базовый класс для визуальных компонентов, работающий с объектами
     данных.
     """
-
     def __init__(self, parent, id=-1, component=None, logType=0,
                  evalSpace=None, bPrepareProp=False):
         """
         Конструктор для создания icWidget.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно
         :type id: C{int}
@@ -1753,6 +1793,7 @@ class icWidget(icBase, icEvent):
     def isEnabled(self):
         """
         Объект включен?
+
         :return: True/False.
         """
         if hasattr(self, 'IsEnabled'):
@@ -1869,6 +1910,7 @@ class icWidget(icBase, icEvent):
     def UpdateRelObj(self, lstUpdate = None):
         """
         Изменяет состояния компонентов, работающих с источниками данных.
+
         :type lstUpdate: C{list}
         :param lstUpdate: Список объектов, которые необходимо обновить.
         """
@@ -1910,6 +1952,7 @@ class icWidget(icBase, icEvent):
     def UpdateRelObjDB(self, lstUpdate = None):
         """
         Изменяет данные в классах данных.
+
         :type lstUpdate: C{list}
         :param lstUpdate: Список объектов, которые необходимо обновить
         """
@@ -1993,6 +2036,7 @@ class icWidget(icBase, icEvent):
         """
         Определить родительский объект по типу.
         Поиск производится рекурсивно по дереву агрегации объектов.
+
         :param parent_class: Класс родительского объекта:
             wx.Dialog, wx.Frame, wx.Panel и т.п.
         :param cur_object: Текущий проверяемый объект.
@@ -2032,10 +2076,10 @@ class icShortHelpString(wx.PopupWindow):
     """
     Класс реализации всплывающей подсказки.
     """
-
     def __init__(self, parent, text, pos=(0, 0), time=1000):
         """
         Конструктор всплывающей подсказки.
+
         :type parent: C{wx.Window}
         :param parent: Родительское окно.
         :type text: C{string}

@@ -28,6 +28,7 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
     def CreateControls(self, propGrid, property, pos, sz):
         """
         Создание дополнительных кнопок.
+
         :param propGrid:
         :param property:
         :param pos:
@@ -67,6 +68,7 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
     def OnEvent(self, propGrid, prop, ctrl, event):
         """
         Обработка клика на дополнительных кнопках.
+
         :param propGrid:
         :param prop:
         :param ctrl:
@@ -100,6 +102,7 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
     def create_on_event(self, property, property_name=None):
         """
         Сгенерировать обработчик в модуле менеджера ресурса.
+
         :param property: Объект редактируемого свойства.
         :param property_name: Наименование свойства.
         :return: True/False.
@@ -148,6 +151,7 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
     def _find_and_goto_func(self, tree, ide, res_editor, property_value, signature='GetManager'):
         """
         Найти и перейти к функции...
+
         :return: True - Перешли, False - функция не найдена.
         """
         # signature = '%s(self).' % signature
@@ -170,6 +174,7 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
     def find_on_event(self, property, property_name=None, property_value=None):
         """
         Открыть модуль менеджера ресурса и промотать до функции - обработчика.
+
         :param property: Объект редактируемого свойства.
         :param property_name: Наименование свойства.
         :param property_value: Значение свойства.

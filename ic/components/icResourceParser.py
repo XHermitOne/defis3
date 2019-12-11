@@ -191,6 +191,7 @@ def clearFormBuffer():
 def setStateFormInBuffer(formName, subsys, parent, flt='', state=False):
     """
     Устанавливает состояние формы (Используется уже или нет) из буфера.
+
     :type formName: C{string}
     :param formName: Имя формы.
     :type subsys: C{string}
@@ -215,6 +216,7 @@ def setStateFormInBuffer(formName, subsys, parent, flt='', state=False):
 def getFormKey(formName, subsys, parent, flt):
     """
     Функция генерирует уникальный ключ формы.
+
     :type formName: C{string}
     :param formName: Имя формы.
     :type subsys: C{string}
@@ -264,6 +266,7 @@ def cmpTime(x, y):
 def addFormToBuffer(frm, formName, subsys, parent, flt='', state=False):
     """
     Функция добавляет форму в буфер.
+
     :type frm: C{wx.Window}
     :param frm: Форму, которую надо сохранить в буфере.
     :type formName: C{string}
@@ -313,6 +316,7 @@ def addFormToBuffer(frm, formName, subsys, parent, flt='', state=False):
 def getFormFromBuffer(formName, subsys, parent, flt=''):
     """
     Функция достает форму из буфера.
+
     :type formName: C{string}
     :param formName: Имя формы.
     :type subsys: C{string}
@@ -377,6 +381,7 @@ def CreateForm(formName, fileRes=None, filter={}, bShow=False, logType=0,
                evalSpace=None, parent=None, formRes=None, bIndicator=True):
     """
     Функция создает форму по заданому ресурсному описанию.
+
     :type formName: C{string}
     :param formName: Имя подсистемы и имя формы через '/'. Если имя подсистемы не
          указано, то используется стандартный механизм поиска ресурса.
@@ -449,6 +454,7 @@ def ModalForm(formName, fileRes=None, filter={}, logType=0,
     это может (если этим пользоваться не аккуратно, например, передать простанство
     имен одной формы другой) приводить к печальным последствиям. Параметры
     формы передаются через **kwargs.
+
     :type formName: C{string}
     :param formName: Имя формы.
     :type fileRes: C{string}
@@ -520,6 +526,7 @@ def ResultForm(formName, fileRes=None, filter={}, logType=0,
                evalSpace=None, parent=None, bBuff=False, bIndicator=True, key=''):
     """
     Функция создает диалоговое окно. И возвращает введенные данные.
+
     :type formName: C{string}
     :param formName: Имя формы.
     :type fileRes: C{string}
@@ -602,6 +609,7 @@ def ResultForm(formName, fileRes=None, filter={}, logType=0,
 def icBuildObject(parent, objRes, logType=0, evalSpace=None, bIndicator=False, id=None):
     """
     Функция собирает объект по ресурсному описанию.
+
     :type parent: C{wx.Window}
     :param parent: Указатель на родительское окно, на котором располагаются другие компоненты.
     :type objRes: C{Dictionary}
@@ -753,9 +761,11 @@ def createDialog(parent, id, component, logType, evalSpace):
 
 
 def Constructor(parent, id, component, logType=0, evalSpace=None,
-                bCounter=False, progressDlg=None, bUserComponent=False, sizer=None):
+                bCounter=False, progressDlg=None, bUserComponent=False, sizer=None,
+                bDebug=False):
     """
     Функция вызывает конструктор для создания объекта по ресурсному описанию.
+
     :type parent: C{wx.Window}
     :param parent: Указатель на родительское окно.
     :type id: C{int}
@@ -772,14 +782,18 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
         общего количества объектов.
     :type progressDlg: C{wx.ProgressDialog}
     :param progressDlg: Указатель на идикатор создания формы.
+    :param bDebug: Дополнительный флаг для вывода отладочной информации при сборке объекта.
     """
-    # log.info(u'Вызов конструктора объекта <%s>' % component['name'])
+    if bDebug:
+        log.info(u'Вызов конструктора объекта <%s : %s>' % (component.get('name'), component.get('type')))
+
     #   Вызываем конструктор
     modl = None
     try:
         # Переопределение компонентов
         if 'component_module' in component and not component['component_module'] in (None, 'None', ''):
-            log.info(u'Импорт модуля <%s>' % component['component_module'])
+            if bDebug:
+                log.info(u'Импорт модуля <%s>' % component.get('component_module'))
             exec('import %s as modl' % component['component_module'])
         else:
             modl = GetComponentModulDict()[component['type']]
@@ -806,8 +820,12 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
             wxw = constr(parent, id, component, logType, evalSpace,
                          bCounter=bCounter, progressDlg=progressDlg, sizer=sizer)
         else:
+            if bDebug:
+                log.debug(u'Запуск конструктора <%s : %s>...' % (component.get('name'), component.get('type')))
             wxw = constr(parent, id, component, logType, evalSpace,
                          bCounter=bCounter, progressDlg=progressDlg)
+            if bDebug:
+                log.debug(u'<%s : %s>...OK' % (component.get('name'), component.get('type')))
         # Некоторые компоненты могут совершать подмену объектов
         if hasattr(wxw, 'get_replace_object'):
             wxw = wxw.get_replace_object()
@@ -840,9 +858,11 @@ def Constructor(parent, id, component, logType=0, evalSpace=None,
 
 
 def icResourceParser(parent, components, sizer=None, logType=0,
-                     evalSpace=None, bCounter=True, progressDlg=None, ids=None, **kwargs):
+                     evalSpace=None, bCounter=True, progressDlg=None, ids=None,
+                     bDebug=False, **kwargs):
     """
     Парсер. Функция рекурсивного разбора ресурсного описания.
+
     :type parent: C{wx.Window}
     :param parent: Указатель на родительское окно, на котором располагаются другие компоненты.
     :type components: C{List}
@@ -859,8 +879,10 @@ def icResourceParser(parent, components, sizer=None, logType=0,
         общего количества объектов.
     :type ids: {list | tuple}
     :param ids: Список идентификаторов объектов.
+    :param bDebug: Дополнительный флаг для вывода отладочной информации при сборке объекта.
     """
-    # log.info(u'Сборка объектов')
+    if bDebug:
+        log.info(u'Сборка объектов')
 
     #   Получаем указатель на индикатор и указатель главного окна (Dialog, Frame)
     main_parent = evalSpace.get('_main_parent', None)
@@ -908,9 +930,8 @@ def icResourceParser(parent, components, sizer=None, logType=0,
             #   созданных компонентов ресурса
             if bCounter:
                 progress.icUpdateProgressBar(u'Создаем компонент: <%s>' % name)
-            else:
-                # log.info(u'Создаем компонент: <%s> type: <%s>' % (name, component['type']))
-                pass
+            elif bDebug:
+                log.info(u'Создаем компонент: <%s> type: <%s>' % (name, component['type']))
 
             # Оконные компоненты
             if parent is None and component['type'] in ('Panel', 'Window',
@@ -961,8 +982,13 @@ def icResourceParser(parent, components, sizer=None, logType=0,
 
             # Стандартные и пользовательские компоненты
             else:
+                if bDebug:
+                    log.debug(u'Создание стандартного компонента <%s : %s>...' % (component.get('name'),
+                                                                                  component.get('type')))
                 wxw = Constructor(parent, component_id or icNewId(), component, logType, evalSpace,
-                                  bCounter, progressDlg, sizer=sizer)
+                                  bCounter, progressDlg, sizer=sizer, bDebug=bDebug)
+                if bDebug:
+                    log.debug(u'<%s : %s>...OK' % (component.get('name'), component.get('type')))
 
             # Выполняем выражения инициализации для не визуальных компонентов
             if wxw is None and 'init_expr' in component and not component['init_expr'] in (None, 'None', ''):
@@ -1003,7 +1029,7 @@ def icResourceParser(parent, components, sizer=None, logType=0,
             # Заполнение контейнеров
             if wxw is not None and parent is not None and name and component['type'] != 'Table':
                 # Регестрируем компонены в родительском компоненте
-                if parent.type != 'ExternalWin':
+                if hasattr(parent, 'type') and parent.type != 'ExternalWin':
                     if not sizer:
                         parent.reg_child(wxw, name)
                     # NOTE: 7/05/08. Для того, чтобы можно было объект вставить в сайзер,
@@ -1057,6 +1083,7 @@ def icResourceParser(parent, components, sizer=None, logType=0,
 def icCreateObject(ResName_, ResExt_, parent=None, context=None, subsys=None, className=None, **kwargs):
     """
     Функция создает объект по имени и типу ресурса.
+
     :type ResName_: C{string}
     :param ResName_: Имя ресурса, по которому создается объект.
     :type ResExt_: C{string}
