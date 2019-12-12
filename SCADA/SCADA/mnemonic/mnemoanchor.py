@@ -42,6 +42,12 @@ SPC_IC_MNEMOANCHOR = {'svg_pos': (0.0, 0.0),
                                        },
                       }
 
+# ВНИМАНИЕ! Замечено, что при экспорте из LibreOffice Draw схемы в SVG файл
+# смещается результирующие координаты. Для коррекции введено дополнительное смещение
+# Значения подобраны экспериментальным путем
+CORRECT_SVG_OFFSET_X = 1.7
+CORRECT_SVG_OFFSET_Y = 1.65
+
 
 class icMnemoAnchorProto(object):
     """
@@ -139,9 +145,14 @@ class icMnemoAnchorProto(object):
         if zoom_coef:
             pix_offset_x = round((float(pix_width) - float(svg_width) / zoom_coef) / 2.0)
             pix_offset_y = round((float(pix_height) - float(svg_height) / zoom_coef) / 2.0)
-            pix_x = round(float(svg_pos_x) / zoom_coef) + pix_offset_x
-            pix_y = round(float(svg_pos_y) / zoom_coef) + pix_offset_y
-            log.debug(u'Расчетные значения: Смещение [%d x %d] / Результирующая точка [%d x %d]' % (pix_offset_x, pix_offset_y, pix_x, pix_y))
+            pix_x = round((float(svg_pos_x) - CORRECT_SVG_OFFSET_X) / zoom_coef) + pix_offset_x
+            pix_y = round((float(svg_pos_y) - CORRECT_SVG_OFFSET_Y) / zoom_coef) + pix_offset_y
+            # log.debug(u'Расчетные значения:')
+            # log.debug(u'\tРазмер в точках [%d x %d]' % (pix_width, pix_height))
+            # log.debug(u'\tРазмер SVG [%f x %f]' % (float(svg_width), float(svg_height)))
+            # log.debug(u'\tКоэффициент масштабирования [%f x %f] [%f]' % (zoom_coef_width, zoom_coef_height, zoom_coef))
+            # log.debug(u'\tСмещение [%d x %d]' % (pix_offset_x, pix_offset_y))
+            # log.debug(u'\tРезультирующая точка [%d x %d]' % (pix_x, pix_y))
 
             return pix_x, pix_y
         else:
@@ -210,4 +221,5 @@ class icMnemoAnchorProto(object):
             if max_size[1] > 0:
                 pix_bottom = min(pix_bottom, pix_top + max_size[1])
 
+        # log.debug(u'2Размер области якоря [%d %d %d %d]' % (pix_left, pix_top, pix_right, pix_bottom))
         return pix_left, pix_top, pix_right, pix_bottom

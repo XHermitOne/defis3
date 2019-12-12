@@ -196,17 +196,7 @@ class icMnemoScheme(icwxpanel.icWXPanel, mnemoscheme.icMnemoSchemeProto):
         """
         Добавление картинки на фон панели через контекст устройства.
         """
-        bmp = self.getBackgroundBitmap()
-        if bmp:
-            dc = event.GetDC()
-
-            if not dc:
-                dc = wx.ClientDC(self)
-                rect = self.GetUpdateRegion().GetBox()
-                dc.SetClippingRect(rect)
-            dc.Clear()
-
-            dc.DrawBitmap(bmp, 0, 0)
+        self.drawDCBitmap(dc=event.GetDC(), bmp=self.getBackgroundBitmap())
 
     def onPanelSize(self, event):
         """

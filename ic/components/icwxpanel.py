@@ -358,6 +358,33 @@ class icWXPanel(icWidget, wx.Panel):
         self.Bind(wx.EVT_PAINT, self.onPaint)
         self.is_editor_mode = True
 
+    def drawDCBitmap(self, dc=None, bmp=None, pos_x=0, pos_y=0):
+        """
+        Отрисовать wx.Bitmap на контексте устройства панели.
+
+        :param dc: Объект контекста устройства.
+            Если не определен, то берется контекст панели.
+        :param bmp: Объект wx.Bitmap.
+        :param pos_x: Координата X левого верхнего угла wx.Bitmap на контексте устройства.
+            По умолчанию 0.
+        :param pos_y: Координата Y левого верхнего угла wx.Bitmap на контексте устройства.
+            По умолчанию 0.
+        :return: True/False.
+        """
+        if bmp:
+            if not dc:
+                dc = wx.ClientDC(self)
+
+                rect = self.GetUpdateRegion().GetBox()
+                dc.SetClippingRect(rect)
+
+            dc.Clear()
+            dc.DrawBitmap(bmp, pos_x, pos_y)
+            return True
+        else:
+            log.warning(u'Не определен объект wx.Bitmap для отрисовки на контексте устройства панели <%s>' % self.getName())
+        return False
+
 
 def test(par=0):
     """
