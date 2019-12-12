@@ -57,6 +57,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
     def choiceLoadFileName(self, sFileType, choice_year=None, choice_month=None):
         """
         Выбрать загружаемый файл.
+
         :param sFileType: Тип загружаемого файла.
         :param choice_year: Отфильтровать год.
         :param choice_year: Отфильтровать месяц.
@@ -70,6 +71,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             # log.debug(u'Список файлов %s' % str(filenames))
             if choice_year and not choice_month:
                 filenames = [filename for filename in filenames if filename.endswith('_%d.DBF' % choice_year)]
+                # log.debug(u'Список файлов за год %s' % str(filenames))
             elif choice_year and choice_month:
                 filter_func = lambda filename: any([filename.endswith('%02d_%s_%d.DBF' % (choice_month, ext, choice_year)) for ext in load_net_config.DOWNLOAD_FILE_EXT_UPPER])
                 filenames = [filename for filename in filenames if filter_func(filename)]
@@ -101,8 +103,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Реализация. ' + (u'' if warehouse == '000' or not warehouse.isdigit() else u'Склад %d. ' % int(warehouse))
             prefix = self.getMonthLabel(dbf_filename)
         elif dbf_filename.startswith('Z'):
-            schet = dbf_filename[2:5]
-            label += u'Затраты. ' + (u'' if schet == '000' or not schet.isdigit() else u'Счет %02d-%02d. ' % (int(schet[:2]), int(schet[-1:])))
+            label += u'Затраты. ' + self.getSchetLabel(dbf_filename) + u' '
             prefix = self.getMonthLabel(dbf_filename)
             log.debug(u'Затраты <%s>' % dbf_filename)
         elif dbf_filename.startswith('M'):
@@ -113,7 +114,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             # label += u'Основные средства. '
             prefix = self.getOSNLabel(dbf_filename)
         elif dbf_filename.startswith('U'):
-            label += u'Аренда. '
+            label += u'Аренда. ' + self.getSchetLabel(dbf_filename) + u' '
             prefix = self.getQuartalLabel(dbf_filename)
         else:
             label += u'Не определенный участок. '
@@ -153,10 +154,12 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             return None
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
             return None
-        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
-            return None
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'APX':
+            label += u'Документы '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':
-            return None
+           return None
+        elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'APX':
+           return None
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ARH':
             label += u'Продажа. Документы '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ARH':
@@ -205,11 +208,25 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
         """
         """
         label = u''
-        if int(dbf_filename[2:5]) == 0:
-            # ... иначе это квартал
-            quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
-            if quartal:
-                label = u'за %d квартал' % quartal
+
+        # ... это квартал
+        quartal = int(dbf_filename[5:7]) if dbf_filename[5:7].isdigit() else 0
+        if quartal:
+            label = u'за %d квартал' % quartal
+        return label
+
+    def getSchetLabel(self, dbf_filename):
+        """
+        Получить номер счета.
+        """
+        schet = dbf_filename[2:5]
+        label = u''
+        if schet == '761':
+            label = u'Счет 76-01'
+        elif schet == '766':
+            label = u'Счет 76-06'
+        elif schet == '762':
+            label = u'Счет 76-12'
         return label
 
     def getMonthLabel(self, dbf_filename):
@@ -243,6 +260,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
     def getYearMonthDlg(self, bYear=True, bMonth=False):
         """
         Получить год или месяц.
+
         :param bYear: Определить дату как Год.
         :param bMonth: Определить дату как Год-Месяц.
         """
@@ -269,6 +287,7 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
     def downloadArchiveDBF(self, arch_year, arch_month):
         """
         Произвести загрузку файлов архивных данных.
+
         :param bYear: Определить дату как Год.
         :param bMonth: Определить дату как Год-Месяц.
         :return: True - загрузка произведена, False - нажата <Отмена>.

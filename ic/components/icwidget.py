@@ -989,9 +989,9 @@ class icSimple(icobject.icObject):
                             name = res['name']
 
                         try:
-                            lst[indx] = self.components[name]
+                            lst[indx] = self.components.get(name)
                         except KeyError:
-                            lst[indx] = self.evalSpace['_dict_obj'][name]
+                            lst[indx] = self.evalSpace['_dict_obj'].get(name)
 
                     return lst
 
@@ -1003,9 +1003,11 @@ class icSimple(icobject.icObject):
         :param name: Имя дочернего элемента.
         """
         lst = self.GetComponentsList()
-        for el in lst:
-            if el.name == name:
-                return el
+        for child in lst:
+            if child:
+                if child.name == name:
+                    return child
+        return None
 
     def FindObjectByName(self, name):
         """

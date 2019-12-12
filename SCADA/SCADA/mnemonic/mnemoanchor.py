@@ -90,6 +90,19 @@ class icMnemoAnchorProto(object):
         :param ctrl: Объект контрола.
         :return: True/False.
         """
+        try:
+            return self._layoutControl(ctrl=ctrl)
+        except:
+            log.fatal(u'Ошибка установки размера и позиции контрола в соответствии с якорем <%s>' % self.getName())
+        return False
+
+    def _layoutControl(self, ctrl=None):
+        """
+        Установить позицию и размер контрола в ссответствии с данным якорем.
+
+        :param ctrl: Объект контрола.
+        :return: True/False.
+        """
         if ctrl is None:
             ctrl = self.getAttachment()
 

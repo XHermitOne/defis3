@@ -58,6 +58,7 @@ class icBalansImportManager(icImportManagerInterface):
     def __init__(self, pack_scan_panel=None, dbf_find_smb_urls=()):
         """
         Конструктор.
+
         :param pack_scan_panel: Панель отображения списка документов в пакетной обработке.
         :param dbf_find_smb_urls: Список путей SMB ресурсов для поиска DBF файлов загрузки.
         """
@@ -89,6 +90,7 @@ class icBalansImportManager(icImportManagerInterface):
     def smb_download_dbf(self, download_urls=None, dbf_filename=None, dst_path=None):
         """
         Найти и загрузить DBF файл.
+
         :param download_urls: Список путей поиска DBF файла.
         :param dbf_filename: Имя DBF файла.
         :return: True - Произошла загрузка, False - ничего не загружено.
@@ -144,6 +146,7 @@ class icBalansImportManager(icImportManagerInterface):
     def find_doc_type_code(self, typ_doc, in_out):
         """
         Поиск кода типа документа.
+
         :param type_doc: Наименование типа документа.
         :param in_out: Признак приходного/расходного документа.
         """
@@ -173,6 +176,9 @@ class icBalansImportManager(icImportManagerInterface):
         elif typ_doc.upper() == u'ОС4Б':
             # Акт группового списания
             typ = '9009600000000'
+        elif typ_doc.upper() in (u'СОГЛАШЕНИЕ О ЗАЧЕТЕ ТРЕБОВАНИЙ', ):
+            # СОГЛАШЕНИЕ О ЗАЧЕТЕ ТРЕБОВАНИЙ
+            typ = '9009700000000'
         else:
             log.warning(u'Не определен тип документа <%s>' % typ_doc)
         return typ
@@ -180,6 +186,7 @@ class icBalansImportManager(icImportManagerInterface):
     def get_doc_type_subcode(self, typ_doc, in_out):
         """
         Поиск кода типа документа.
+
         :param type_doc: Наименование типа документа.
         :param in_out: Признак приходного/расходного документа.
         """
@@ -246,6 +253,7 @@ class icBalansImportManager(icImportManagerInterface):
     def gen_contragent_code(self, inn, kpp, i=0):
         """
         Генерация кода контрагента по инн + кпп.
+
         :param inn: ИНН контрагента.
         :param kpp: КПП контрагента.
         :param i: Порядковый индекс в обработке.
@@ -283,6 +291,7 @@ class icBalansImportManager(icImportManagerInterface):
     def is_correct_contragent_code(self, contragent_code):
         """
         Контроль на не корректный код контрагента.
+
         :param contragent_code: Проверяемый код контрагента.
         :return: True - код корректный/False - не корректный.
         """

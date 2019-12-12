@@ -35,22 +35,18 @@
     - C{SM_DRAW_FANCY_TICKS): Отрисовка мажорной шкалы.
 """
 
+import os.path
 from math import pi     # Необходимо для расчета углов
-# from math import sqrt
 import wx
 from ic.components import icwidget
 from ic.utils import util
-# import ic.components.icResourceParser as prs
-# from ic.imglib import common
 from ic.PropertyEditor import icDefInf
-# from ic.engine import ic_user
 
 from ic.log import log
 from ic.utils import filefunc
 from ic.components import icfont
 
 import wx.lib.agw.speedmeter as parentModule
-# from STD.visualcomponents import visualcomponents_img
 from ic.bitmap import bmpfunc
 
 # --- Спецификация ---
@@ -137,7 +133,7 @@ ic_class_spc = {'type': 'Speedmeter',
                                    },
                 '__parent__': SPC_IC_SPEEDMETER,
                 }
-                    
+
 #   Имя иконки класса, которые располагаются в директории
 #   ic/components/user/images
 ic_class_pic = bmpfunc.createLibraryBitmap('dashboard.png')
@@ -146,7 +142,7 @@ ic_class_pic2 = bmpfunc.createLibraryBitmap('dashboard.png')
 #   Путь до файла документации
 ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
-                    
+
 #   Список компонентов, которые могут содержаться в компоненте
 ic_can_contain = []
 
@@ -155,7 +151,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
@@ -169,7 +165,6 @@ class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
@@ -198,7 +193,6 @@ class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
         #   По спецификации создаем соответствующие атрибуты (кроме служебных атрибутов)
-        # lst_keys = filter(lambda x: x.find('__') <> 0, component.keys())
         lst_keys = [x for x in component.keys() if not x.startswith('__')]
 
         for key in lst_keys:
@@ -315,6 +309,7 @@ class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
     def setAngleRange(self, Start_, End_):
         """
         Установить сектор поля.
+
         :param Start_: Начальная граница сектора в градусах.
         :param End_: Конечная граница в градусах.
         """
@@ -399,6 +394,7 @@ class icSpeedmeter(icwidget.icWidget, parentModule.SpeedMeter):
     def setMiddleIcon(self, ICOFileName_):
         """
         Иконка в центре поля.
+
         :param ICOFileName_: Имя файла *.ico.
         """
         if ICOFileName_:
