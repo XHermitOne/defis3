@@ -45,8 +45,8 @@ SPC_IC_MNEMOANCHOR = {'svg_pos': (0.0, 0.0),
 # ВНИМАНИЕ! Замечено, что при экспорте из LibreOffice Draw схемы в SVG файл
 # смещается результирующие координаты. Для коррекции введено дополнительное смещение
 # Значения подобраны экспериментальным путем
-CORRECT_SVG_OFFSET_X = 1.7
-CORRECT_SVG_OFFSET_Y = 1.65
+CORRECT_SVG_OFFSET_X = 0    # 1.7
+CORRECT_SVG_OFFSET_Y = 0    # 1.65
 
 
 class icMnemoAnchorProto(object):
