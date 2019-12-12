@@ -147,6 +147,14 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
 
             png_filename = os.path.join(filefunc.getPrjProfilePath(),
                                         '%s_background_%dx%d.png' % (self.getName(), width, height))
+            svg_filename = os.path.join(filefunc.getPrjProfilePath(),
+                                        os.path.basename(self._svg_background))
+            if not os.path.exists(svg_filename) or not filefunc.is_same_file_length(svg_filename, self._svg_background):
+                # Если файл поменялся, то перезаписать его в HOME папке
+                filefunc.copyFile(self._svg_background, svg_filename)
+                # и удалить все файлы PNG
+                filefunc.delAllFilesFilter(filefunc.getPrjProfilePath(), '%s_background_*.png' % self.getName())
+
             if not os.path.exists(png_filename) or bAutoRewrite:
                 # Запустить конвертацию файла
                 cmd = SVG2PNG_CONVERT_CMD_FMT % (width, height, width, height, self._svg_background, png_filename)
