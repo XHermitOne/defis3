@@ -157,10 +157,10 @@ class icMnemoSchemeProto(scada_form_manager.icSCADAFormManager):
 
             if not os.path.exists(png_filename) or bAutoRewrite:
                 # Запустить конвертацию файла
-                cmd = SVG2PNG_CONVERT_CMD_FMT % (width, height, width, height, self._svg_background, png_filename)
+                cmd = SVG2PNG_CONVERT_CMD_FMT % (width, height, width, height, svg_filename, png_filename)
                 os.system(cmd)
                 if not os.path.exists(png_filename):
-                    log.warning(u'Ошибка конвертации SVG -> PNG (<%s> -> <%s>)' % (self._svg_background, png_filename))
+                    log.warning(u'Ошибка конвертации SVG -> PNG (<%s> -> <%s>)' % (svg_filename, png_filename))
                     return False
 
             self._background_bitmap = bmpfunc.createBitmap(png_filename)
