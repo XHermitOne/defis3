@@ -157,6 +157,7 @@ def get_property_editor_userAttr(attr, value, pos, size,
 def get_user_property_editor(attr, value, pos, size, style, propEdt, *arg, **kwarg):
     """
     Стандартная функция для вызова пользовательских редакторов свойств (EDT_USER_PROPERTY).
+
     :type attr: C{string}
     :param attr: Имя текущего атрибута.
     :type value: C{string}
@@ -227,6 +228,7 @@ class icButton(icwidget.icWidget, wx.Button):
                  bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icButton.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно
         :type id: C{int}
