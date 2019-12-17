@@ -121,9 +121,14 @@ class icPyScriptPropertyEditor(wx.propgrid.PGTextCtrlEditor):
         # Основные управляющие объекты
         tree = self.property_edit_manager.res_tree
         res_editor = tree.GetResEditor()
+        # Определяем имя выбранного объекта
+        obj_item = res_editor.tree.lastSel
+        obj_res = res_editor.tree.GetItemData(obj_item)
+        obj_name = obj_res.get('name', u'')
+
         ide = res_editor.GetIDEInterface()
 
-        func_name = property_name if property_name.startswith('on') else 'on_%s' % property_name
+        func_name = property_name if property_name.startswith('on') else 'on_%s_%s' % (obj_name, property_name)
 
         py_filename = res_editor.file.replace('\\', '/')
         path, ext = os.path.os.path.splitext(py_filename)

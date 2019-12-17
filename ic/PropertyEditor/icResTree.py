@@ -71,6 +71,7 @@ OpenTreeItemIdDict = dict()
 def addOpenTreeItemId(key, id):
     """
     Добавляет идентификатор открытого узла дерева.
+
     :type key: C{string}
     :param key: Ключ по которому будет храниться идентификатор.
     """
@@ -81,6 +82,7 @@ def addOpenTreeItemId(key, id):
 def getOpenTreeItemId(key):
     """
     Добавляет идентификатор открытого узла дерева.
+
     :type key: C{string}
     :param key: Ключ по, которому будет храниться идентификатор.
     """
@@ -125,7 +127,6 @@ SPC_IC_RESTREE = {'name': 'tree',
 #       6           -  Если компонент является контейнером и второй параметр = -1, то содержит спиок
 #                        компонентов, которые не могут содержаться в контейнере.
 #       7       - модуль
-
 ObjectsInfo = None
 
 
@@ -276,6 +277,7 @@ def OnFile(event):
 def getStyleFromDict(style_dict, allstyles):
     """
     Вычисляет стиль компонента из словарного представления.
+
     :type style_dict: C{dictionary}
     :param style_dict: Ресурсное описание компонета.
     :type allstyles: C{dictionary}
@@ -313,6 +315,7 @@ def getComponentStyleDict(component):
 def findSpcStruct(component):
     """
     Функция достраивает ресурсное описание до спецификации.
+
     :type component: C{dictionary}
     :param component: Ресурсное описание компонета.
     :rtype: C{tuple}
@@ -371,6 +374,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None):
         """
         Конструктор для создания дерева объектов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -529,6 +533,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def AddItem(self, item, res_obj, bNewName = True, bRefreshEditor=True):
         """
         Добавляет ресурсное описание в контейнер.
+
         :type item: C{wx.TreeItem}
         :param item: Узел дерева, куда добавляется элемент.
         :type res_obj: C{dictionary}
@@ -583,6 +588,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def AddTypeItem(self, res_id, obj_type, pos=(-1, -1), size=(-1, -1), bRefreshEditor=True):
         """
         Добавляет описание объекта в ресурс зная узел и тип добавляемого объекта.
+
         :type res_id: C{int}
         :param res_id: Внутренний идентификатор узла дерева.
         :type obj_type: C{string}
@@ -616,6 +622,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         """
         Изменяет свойства (размер, расположение, способ выравнивания) объекта в
         графическом редакторе.
+
         :type property: C{string}
         :param property: Имя свойства.
         :type value: C{...}
@@ -639,6 +646,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         """
         Изменяет заданное свойство ресурсного описания объекта, который определяется
         по ресурсному идентификатору узла.
+
         :type id: C{int}
         :param id: Ресурсный идентификатор узла.
         :type property: C{string}
@@ -684,6 +692,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def DeleteItem(self, item, bRefreshEditor=True):
         """
         Удаляет узел из ресурса.
+
         :type item: C{wx.TreeItem}
         :param item: Идентификатор узла дерева.
         :type bRefreshEditor: C{bool}
@@ -729,6 +738,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def findInItem(self, item, findStr):
         """
         Ищет подстроку в ресурсном описании компонента.
+
         :type item: C{TreeCtrlItemId}
         :param item: Узел, с которого ведется поиск.
         :type findStr: C{string}
@@ -748,6 +758,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def findItem(self, prnt, findStr):
         """
         Ищет в ресурсном описании формы подстроку текста.
+
         :type prnt: C{TreeCtrlItemId}
         :param prnt: Узел, с которого ведется поиск.
         :type findStr: C{string}
@@ -802,6 +813,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def GetIdObj(self, id):
         """
         Возврвщает объект, привязанный к ресурсному идентификатору узла.
+
         :type id: C{int}
         :param id: Ресурсный идентификатор узла.
         :return: Возврвщает объект, привязанный к ресурсному идентификатору узла.
@@ -809,8 +821,10 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         try:
             item = self._dictResTreeId[id]
             data = self.GetItemData(item)
+            return data
         except:
             log.error(u'GetIdObj ERROR')
+        return None
 
     def GetPanelGroup(self):
         """
@@ -834,6 +848,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def GetTypeModule(self, typObj=None):
         """
         Возвращает модуль компонента заданного типа.
+
         :type typObj: C{string}
         :param typObj: Тип объекта.
         """
@@ -947,8 +962,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def InsItem(self, item, res_obj=None, insType=0, bRefreshEditor=True):
         """
         Вставляет ресурсное описание в контейнер в нужное место.
-        :type pos: C{int}
-        :param pos: Позиция куда вставляется объект.
+
         :type item: C{wx.TreeItem}
         :param item: Узел дерева, куда добавляется элемент.
         :type res_obj: C{dictionary}
@@ -1090,6 +1104,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
         Обрабатывается нажатие на правую кнопку мыши. Выводится
         меню с объектами которые могут быть добавлены в ресурсное
         описание.
+
         :param event: Event.
         :param bgr_win: Окно, на которое выводится меню.
         """
@@ -1612,7 +1627,8 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
 
     def parseTree(self, res):
         """
-        Функция по ресурсному описанию строит дерево описаниея.
+        Функция по ресурсному описанию строит дерево описания.
+
         :type res: C{dictionary}
         :param res: Ресурсное описание формы.
         :rtype: C{bool}
@@ -1672,6 +1688,7 @@ class icResTree(icwidget.icWidget, wx.TreeCtrl):
     def SelectResId(self, res_id, bSelInGraphEdt=False):
         """
         Выбирает элемент дерева по идентификатору ресурса.
+
         :type res_id: C{int}
         :param res_id: идентификатор ресурса.
         :type bSelInGraphEdt: C{Bool}
@@ -1719,10 +1736,10 @@ class icPropertyNotebookGrp:
     ресурсного описание формы. Атрибуты сгруппированы по трем группам: 'базовые',
     'специальные', 'все'.
     """
-
     def __init__(self, parent, sizer=None, logType=0):
         """
         Конструктор для создания редактора атрибутов компонента.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type logType: C{int}
@@ -1761,6 +1778,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def __init__(self, parent, id, component={}, logType=0, evalSpace={}):
         """
         Конструктор для создания редактора ресурсов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -1956,6 +1974,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def CreateResource(self, nameRes, filePath, fileName, fileExt, templ=None, bRecreate=False):
         """
         Создает ресурс заданного типа.
+
         :type nameRes: C{string}
         :param nameRes: Имя ресурса в ресурсном файле.
         :type filePath: C{string}
@@ -2014,6 +2033,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def get_res_module_name(self, rn=None):
         """
         Возвращает имя модуля ресурса.
+
         :param rn: Имя ресурса.
         """
         if not rn:
@@ -2031,6 +2051,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def get_obj_module_name(self, name='', rn=None):
         """
         Возвращает имя модуля объекта.
+
         :param name: Имя ресурса.
         :param rn: Имя объекта.
         """
@@ -2048,6 +2069,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def create_res_module(self, rn=None):
         """
         Создает модуль ресурса.
+
         :type rn: C{unicode}
         :param rn: Имя ресурса.
         """
@@ -2072,6 +2094,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def create_obj_module(self, name, fn=None):
         """
         Создает модуль ресурса.
+
         :param fn: Имя файла ресурса.
         """
         if os.path.isfile(fn):
@@ -2139,6 +2162,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def SetResource(self, nameRes, filePath, fileName, fileExt, bEnable=True):
         """
         Устанавливает ресурс на редактирование.
+
         :type nameRes: C{string}
         :param nameRes: Имя ресурса в ресурсном файле.
         :type filePath: C{string}
@@ -2166,6 +2190,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def RenameResource(self, oldNameRes, oldFileName, nameRes, fileName):
         """
         Переименовывает имя ресурса и имя файла ресурсов.
+
         :type oldNameRes: C{string}
         :param oldNameRes: Старое имя ресурса.
         :type oldFileName: C{string}
@@ -2328,6 +2353,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def LoadRes(self, path, formName=None):
         """
         Загружает ресурсное описание.
+
         :type path: C{string}
         :param path: Путь до файла.
         :rtype: C{bool}
@@ -2395,6 +2421,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def open_ide_py_module(self, py_filename=None):
         """
         Открываем на редактирование модуль Python с менеджером ресурса.
+
         :param py_filename: Модуль питона с менеджером ресурса.
         :return: True/False.
         """
@@ -2723,6 +2750,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def SaveRes(self, path, bAsk=False):
         """
         Сохраняет ресурсное описание в файл.
+
         :type path: C{string}
         :param path: Путь до файла.
         :type bAsk: C{bool}
@@ -2767,6 +2795,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
     def ToggleEnable(self, bEnable = True):
         """
         Фунцкия разрешает/запрещает редактирование данных.
+
         :type bEnable: C{bool}.
         :param bEnable: Флаг разрешения редактирования.
         """
@@ -2780,7 +2809,6 @@ class icResourseEditorFrame(wx.Frame):
     """
     Фрейм для редактора проекта.
     """
-
     def __init__(self, parent, id=-1, title=u'DEFIS',
                  size=(-1, -1), pos=(-1, -1), style=wx.DEFAULT_FRAME_STYLE):
         """
@@ -2820,6 +2848,7 @@ def init_locale():
 def GetProjectEditorOLD(parent, drFrame=None, ifs=None):
     """
     Возвращает редактор проекта.
+
     :param parent: Родительское окно.
     :param drFrame: Главное окно ide.
     :param ifs: Интерфейс взаимодействия с ide.
@@ -2857,6 +2886,7 @@ def GetProjectEditorOLD(parent, drFrame=None, ifs=None):
 def GetProjectEditor(parent, drFrame=None, ifs=None):
     """
     Возвращает редактор проекта.
+
     :param parent: Родительское окно.
     :param drFrame: Главное окно ide (depricated).
     :param ifs: Интерфейс взаимодействия с ide.
@@ -2883,7 +2913,6 @@ class icResourseEditorMainFrame(wx.Frame):
     """
     Фрейм для редактора проекта.
     """
-
     def __init__(self, parent, id=-1, title=u'Frame Editor',
                  size=(-1, -1), pos=(-1, -1), style=wx.DEFAULT_FRAME_STYLE):
         """

@@ -132,6 +132,7 @@ def SetCompileString(UnicId, kind, compl):
 def GetCompileString(UnicId, kind):
     """
     Возвращает откомпилированную строку из буфера.
+
     :type UnicId: C{string}
     :param UnicId: Уникальный идентификатор строки.
     :type kind: C{string}
@@ -156,6 +157,7 @@ def prepareDictRpl(fileVar):
     """
     Подготавливает словарь замен по ресурсному описанию свойств системы
     (*.var) для функции readAndEvalFile.
+
     :type fileVar: C{string}
     :param fileVar: Имя файла, свойств (*.var)
     :rtype: C{dictionary}
@@ -187,6 +189,7 @@ def clearResourceBuff(fileName=None):
 def readAndEvalFile(filename, dictRpl={}, bRefresh=False, *arg, **kwarg):
     """
     Функция читает файл и выполняет его.
+
     :type filename: C{string}
     :param filename: Имя ресурсного файла.
     :type dictRpl: C{dictionary}
@@ -301,6 +304,7 @@ def DeepCopy(struct):
 def icSpcDefStruct(spc, struct, bAll=False, count=0):
     """
     Дополняет структуру описания объекта до требований спецификации.
+
     :type spc: C{dictionary}
     :param spc: Словарь описания спецификации.
     :type struct: C{dictionary}
@@ -362,7 +366,8 @@ def AddAttrSpace(obj, localSpace):
     """
     Добавляет все аттрибуты объета в словарь кроме внутренних аттрибутов,
     имена котроых начинаются с '_' и '__'
-    :param obj: Обеъект.
+
+    :param obj: Объект.
     :param localSpace: Словарь имен.
     :type localSpace: C{dictionary}
     """
@@ -437,6 +442,7 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
     globals(). Если передается уникальный идентификатор выполняемого выражения,
     то функция откомпилирует выражение и сохранит в буфере для последующего
     использования.
+
     :type expr: C{string}
     :param expr: Вычисляемое выражение.
     :type logType: C{int}
@@ -475,7 +481,8 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
             log.fatal()
             log.warning(u'''ВНИМАНИЕ! 
             Если GetManager(self) возвращает None, 
-            то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
+            то возможна ошибка в не корректном определении manager_class в модуле ресурса 
+            либо ошибке импорта модуля ресурса''')
 
     if globSpace is None:
         globSpace = globals()
@@ -515,7 +522,8 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
                 log.fatal()
                 log.warning(u'''ВНИМАНИЕ! 
                 Если GetManager(self) возвращает None, 
-                то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
+                то возможна ошибка в не корректном определении manager_class в модуле ресурса
+                либо ошибке импорта модуля ресурса''')
             return coderror.IC_EVAL_ERROR, ret
     #############################################
     #   Компилируем и выполняем, если выражение еще
@@ -549,15 +557,17 @@ def ic_eval(expr, logType=-1, evalSpace=None, msg='', globSpace=None, compileKey
                     log.fatal()
                     log.warning(u'''ВНИМАНИЕ! 
                     Если GetManager(self) возвращает None, 
-                    то возможна ошибка в не корректном определении manager_class в модуле ресурса''')
+                    то возможна ошибка в не корректном определении manager_class в модуле ресурса
+                    либо ошибке импорта модуля ресурса''')
     return bSuccess, ret
 
 
-def icEvalExpr(expr, spcRepl = '', funcPath = ''):
+def icEvalExpr(expr, spcRepl='', funcPath=''):
     """
     Функция производит замены специальных символов в выражении на необходимые ссылки
     B{Пример:} C{icEvalExpr('@GetRowSum(_.row, 0)', 'self.parent.grid', 'ic.globfunc.grid') ->
     'ic.globfunc.grid.GetRowSum(self.parent.grid.row, 0)'}
+
     :type expr: C{string}
     :param expr: Преобразовываемое выражение.
     :type spcRepl: C{string}
@@ -585,6 +595,7 @@ def icEvalExpr(expr, spcRepl = '', funcPath = ''):
 def getICObj(objName, evalSpace):
     """
     Возвращает объект из пространства имен формы.
+
     :type objName: C{string}
     :param objName: Имя объекта.
     :param evalSpace: Пространство имен формы.
@@ -601,6 +612,7 @@ def getICObj(objName, evalSpace):
 def getICDataObj(objName, evalSpace):
     """
     Возвращает объект данных из пространства имен формы.
+
     :type objName: C{string}
     :param objName: Имя объекта.
     :param evalSpace: Пространство имен формы.
@@ -612,6 +624,7 @@ def getICDataObj(objName, evalSpace):
         obj = None
     return obj
 
+
 # Коды доступа
 #   Код доступа недопускающий переопределения
 CODE_NOBODY = 1234567
@@ -621,6 +634,7 @@ CODE_NODEL = 1
 def setKey(evalSpace, key, obj, cod_access=None):
     """
     Функция добавляет объект в пространство имен.
+
     :param evalSpace: Пространство имен формы.
     :type evalSpace: C{dictionary}
     :param key: Ключ в пространстве имен.
@@ -706,6 +720,7 @@ def InitEvalSpace(evalSpace=None):
 def SetFilter(dataset, flt=None):
     """
     Устанавливаем фильтр на нужный объект данных.
+
     :type dataset: C{icSQLObjDataset}
     :param dataset: Объект индексного доступа к классу данных.
     :type flt: C{string | dictionary}
@@ -736,6 +751,7 @@ def SetFilter(dataset, flt=None):
 def ic_import(dict_names, evalSpace = {}, isDebug = False):
     """
     Функция формирует пространство имен выражений.
+
     :param dict_names: Словарь описания пространства имен. Пример: C{'{'ic.dlg.msgbox':['MsgBox','']}'}
     :type dict_names: C{dictionary}
     :param evalSpace: Пространство имен формы.
@@ -792,6 +808,7 @@ def ic_import(dict_names, evalSpace = {}, isDebug = False):
 def isExprDict(expr):
     """
     Функция определяет, является выражение записью словаря.
+
     :type expr: C{string}
     :param expr: Строковое выражение.
     :rtype: C{bool}
@@ -806,6 +823,7 @@ def isExprDict(expr):
 def isAcivateRes(res, evalSpace):
     """
     Функция определяет активированный ресурс или нет.
+
     :param res: Ресурсное описание компонента.
     :type res: C{dictionary}
     :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
@@ -844,6 +862,7 @@ def getKeyExpr(expr, keycod, event, evalSpace={}):
     Функция возвращает выражения для обработки нажатия клавиш. Словарь
     expr задает способы реакции на некоторые клавиши.
     Пример: {'wx.WXK_F3':{'bShift':0, 'bCtrl':0, 'expr':'func_F3()'}, ...}
+
     :type expr: C{string | dictionary}
     :param expr: Вычисляемое выражение.
     :type keycod: C{string}
@@ -904,6 +923,7 @@ def getSpcAttr(res, key, evalSpace={}, msg=None):
     Функция возвращает атрибут ресурсного описания. Если атрибут вычисляемый,
     то она вычисляет его. Вычисляемый атрибут определяется по счиволу '@'. Считается,
     что нужный ключ у ресурса существует.
+
     :param res: Ресурсное описание компонента.
     :type res: C{dictionary}
     :param key: Имя атрибута.
@@ -926,6 +946,7 @@ def getICAttr(attr_val, evalSpace=None, msg=None, compileKey=None):
     """
     Функция вычисляет значение атрибута. Если атрибут вычисляемый,
     то она вычисляет его. Вычисляемый атрибут определяется по счиволу '@'.
+
     :param attr_val: Не вычесленный атрибут.
     :type attr_val: C{dictionary}
     :param evalSpace: Пространство имен, необходимых для вычисления внешних выражений.
@@ -1010,6 +1031,7 @@ def test1():
     print('>>> spc=')
     spc.pop('__parent__')
     print(spc)
+
 
 _SS = '''
 def test2(s):
