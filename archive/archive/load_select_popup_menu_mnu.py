@@ -151,9 +151,9 @@ class icLoadSelectPopupMenuManager(icmanagerinterface.icWidgetManager):
             label += u'Документы '
         # Участок АРЕНДА
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'R' and file_ext == 'ASF':
-            return None
+            label += u'Продажа. СФ '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'ASF':
-            return None
+            label += u'Покупка. СФ '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'O' and file_ext == 'APX':
             label += u'Документы '
         elif dbf_filename.startswith('U') and dbf_filename[1:2].upper() == 'P' and file_ext == 'APX':

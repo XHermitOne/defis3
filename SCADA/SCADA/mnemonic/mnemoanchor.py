@@ -45,8 +45,8 @@ SPC_IC_MNEMOANCHOR = {'svg_pos': (0.0, 0.0),
 # ВНИМАНИЕ! Замечено, что при экспорте из LibreOffice Draw схемы в SVG файл
 # смещается результирующие координаты. Для коррекции введено дополнительное смещение
 # Значения подобраны экспериментальным путем
-CORRECT_SVG_OFFSET_X = 0    # 1.7
-CORRECT_SVG_OFFSET_Y = 0    # 1.65
+CORRECT_SVG_OFFSET_X = 0
+CORRECT_SVG_OFFSET_Y = 0
 
 
 class icMnemoAnchorProto(object):
@@ -113,9 +113,13 @@ class icMnemoAnchorProto(object):
 
                 # Позиция контрола
                 ctrl.SetPosition((pix_left, pix_top))
+
+                svg_width, svg_height = self._size
+                ctrl_size = ctrl.GetSize()
+
                 # Размер контрола
-                width = pix_right - pix_left
-                height = pix_bottom - pix_top
+                width = pix_right - pix_left if svg_width > 0 else ctrl_size.GetWidth()
+                height = pix_bottom - pix_top if svg_height > 0 else ctrl_size.GetHeight()
                 width = width if width > 0 else -1
                 height = height if height > 0 else -1
                 if width >= 0 and height >= 0:

@@ -96,7 +96,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt
-            if not ret[0][0] in ('TextField', 'StaticText', 'StaticBitmap', 'Speedmeter', 'Button', 'LEDNumberCtrl'):
+            if not ret[0][0] in ('TextField', 'StaticText', 'StaticBitmap', 'Speedmeter', 'LEDNumberCtrl', 'Button', 'PlateButton'):
                 dlgfunc.openWarningBox(u'ОШИБКА',
                                        u'Выбранный объект не является КОНТРОЛОМ, размещаемым на мнемосхеме.')
                 return coderror.IC_CTRL_FAILED_IGNORE

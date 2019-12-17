@@ -56,7 +56,8 @@ ic_class_doc = ''
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в дпнном компоненте
-ic_can_contain = ['MnemoAnchor', 'TextField', 'StaticText', 'StaticBitmap', 'Speedmeter', 'Button', 'LEDNumberCtrl']
+ic_can_contain = ['MnemoAnchor', 'TextField', 'StaticText', 'StaticBitmap', 'Speedmeter', 'LEDNumberCtrl',
+                  'Button', 'PlateButton']
 
 #   Список компонентов, которые не могут содержаться в компоненте, если не определен
 #   список ic_can_contain
