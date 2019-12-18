@@ -117,19 +117,19 @@ def createEmptyBitmap(width, height, background_colour=None):
     return None
 
 
-def createAni(parent, size, freame_delay, *frame_filenames):
+def createAni(parent, size, frame_delay, *frame_filenames):
     """
     Создание анимированного объекта.
 
     :param parent: Окно-родитель.
     :param size: Размер.
-    :param freame_delay: Задержка м/у кадрами в секундах.
+    :param frame_delay: Задержка м/у кадрами в секундах.
     :param frame_filenames: Файлы-кадры.
     :return: Возвращает созданный объект или None в случае ошибки.
     """
     try:
         frames = [createBitmap(frame_file_name) for frame_file_name in frame_filenames]
-        throbber = throb.Throbber(parent, -1, frames, size=size, frameDelay=freame_delay)
+        throbber = throb.Throbber(parent, -1, frames, size=size, frameDelay=frame_delay)
         return throbber
     except:
         log.fatal(u'Ошибка создания анимированного объекта.')
