@@ -6,6 +6,8 @@
 в SQL БД в широком формате.
 """
 
+import sqlalchemy
+
 from ic.PropertyEditor import icDefInf
 from ic.components import icwidget
 
@@ -75,7 +77,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 3, 1)
 
 # Имя поля временных значений по умолчанию
 DEFAULT_DT_FIELDNAME = 'dt'
@@ -106,7 +108,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
             parent = propEdt
             if not ret[0][0] in ('Table',):
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Выбранный объект не является Таблицей.', parent)
+                                   u'Выбранный объект не является Таблицей.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE
             return coderror.IC_CTRL_OK
         elif ret in (None, ''):
@@ -179,6 +181,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
     def getTablePsp(self):
         """
         Паспорт таблицы исторических данных.
+
         :return: Паспорт или None в случае ошибки.
         """
         return self.getICAttr('table')
@@ -186,6 +189,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
     def getTableName(self):
         """
         Определить имя таблицы исторических данных в БД.
+
         :return: Имя таблицы или None.
         """
         return self.getICAttr('get_tab_name')
@@ -193,6 +197,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
     def getDTFieldName(self):
         """
         Определить имя поля с временными значениями таблицы исторических данных в БД.
+
         :return: Имя поля.
         """
         dt_fieldname = self.getICAttr('dt_fieldname')
@@ -201,6 +206,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
     def getTable(self, table_name=None):
         """
         Объект таблицы исторических данных.
+
         :param table_name: Имя таблицы исторических данных, задаваемый явным образом.
             Если не определено, то задается функцией self.getTableName.
         :return: Объект таблицы исторических данных или
@@ -228,6 +234,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
     def _do_record_filter(self, rec_filter, records):
         """
         Произвести фильтрацию записей по функции-фильтру.
+
         :param rec_filter: Функция дополнительного фильтра записей.
             Если фукция задается текстовым блоком кода:
             В качестве аргумента функция принимает текущую запись в виде словаря.
@@ -259,6 +266,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
         Получить исторические данные указанного диапазона.
         ВНИМАНИЕ! в таблице исторических данных должно ОБЯЗАТЕЛЬНО
         присутствовать поле <dt> в котором храниться дата-время.
+
         :type start_dt: datetime.datetime.
         :param start_dt: Начальное дата-время диапазона кеширования.
         :type stop_dt: datetime.datetime.
@@ -270,7 +278,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
             В пространстве имен есть переменная RECORD, указывающая на текущую запись.
             Функция возвращает True для записи, которая попадает в результирующий список,
             False - если не попадает.
-        :return: Список записей широкого формата указанного диапазона.
+        :return: Список словарей записей широкого формата указанного диапазона.
             Или None в случае ошибки.
         """
         if rec_filter is None:
@@ -294,6 +302,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
     def get_tag_data(self, tag_name, start_dt, stop_dt, rec_filter=None):
         """
         Получить исторические данные указанного диапазона по определенному тегу.
+
         :param tag_name: Имя тега.
         :type start_dt: datetime.datetime.
         :param start_dt: Начальное дата-время диапазона кеширования.
@@ -308,7 +317,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
             False - если не попадает.
         :return: Список записей {'dt': дата-время из указанного диапазона,
                                  'data': значение тега}.
-            Или None в случае ошибки.
+            Или пустой список в случае ошибки.
         """
         records = self.get(start_dt, stop_dt, rec_filter=rec_filter)
         dt_fieldname = self.getDTFieldName()
@@ -316,3 +325,119 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
         # Обязательно отсортировать по времени
         tag_data.sort()
         return tag_data
+
+    def get_last(self, rec_filter=None, rec_limit=1):
+        """
+        Получить последние зарегистрированные исторические данные.
+
+        :param rec_filter: Функция дополнительного фильтра записей.
+            Если функция не указана, то берется значение 'rec_filter' из спецификации.
+            Если фукция задается текстовым блоком кода:
+            В качестве аргумента функция принимает текущую запись в виде словаря.
+            В пространстве имен есть переменная RECORD, указывающая на текущую запись.
+            Функция возвращает True для записи, которая попадает в результирующий список,
+            False - если не попадает.
+        :param rec_limit: Ограничение количества записей.
+        :return: Последняя зарегистрированная запись широкого формата в виде словаря.
+            Или пустой словарь в случае ошибки.
+        """
+        if rec_filter is None:
+            rec_filter = self.rec_filter
+
+        tab = self.getTable()
+        log.debug(u'Чтение последней зарегистрированной записи из таблицы <%s>' % tab.getDBTableName())
+        if tab:
+            dt_field = getattr(tab.dataclass.c, self.getDTFieldName())
+            recordset = tab.c.order_by(sqlalchemy.desc(dt_field)).limit(rec_limit).execute()
+            records = [dict(record) for record in recordset]
+
+            if rec_filter:
+                records = self._do_record_filter(rec_filter, records)
+
+            record = records[0]
+            return record
+        else:
+            log.warning(u'Не определена таблица хранения исторических данных в объекте <%s>' % self.name)
+        return dict()
+
+    def get_last_tag_data(self, tag_name, rec_filter=None, rec_limit=1):
+        """
+        Получить последние зарегистрированные исторические данные по определенному тегу.
+
+        :param rec_filter: Функция дополнительного фильтра записей.
+            Если функция не указана, то берется значение 'rec_filter' из спецификации.
+            Если фукция задается текстовым блоком кода:
+            В качестве аргумента функция принимает текущую запись в виде словаря.
+            В пространстве имен есть переменная RECORD, указывающая на текущую запись.
+            Функция возвращает True для записи, которая попадает в результирующий список,
+            False - если не попадает.
+        :param rec_limit: Ограничение количества записей.
+        :return: Словарь {'dt': дата-время последней регистрации,
+                          'data': значение тега}.
+            Или пустой словарь в случае ошибки.
+        """
+        last_record = self.get_last(rec_filter, rec_limit)
+        if last_record:
+            dt_fieldname = self.getDTFieldName()
+            tag_data = dict(dt=last_record.get(dt_fieldname),
+                            data=last_record.get(tag_name))
+            return tag_data
+        return dict()
+
+    def get_first(self, rec_filter=None, rec_limit=1):
+        """
+        Получить первые зарегистрированные исторические данные.
+
+        :param rec_filter: Функция дополнительного фильтра записей.
+            Если функция не указана, то берется значение 'rec_filter' из спецификации.
+            Если фукция задается текстовым блоком кода:
+            В качестве аргумента функция принимает текущую запись в виде словаря.
+            В пространстве имен есть переменная RECORD, указывающая на текущую запись.
+            Функция возвращает True для записи, которая попадает в результирующий список,
+            False - если не попадает.
+        :param rec_limit: Ограничение количества записей.
+        :return: Первая зарегистрированная запись широкого формата в виде словаря.
+            Или пустой словарь в случае ошибки.
+        """
+        if rec_filter is None:
+            rec_filter = self.rec_filter
+
+        tab = self.getTable()
+        log.debug(u'Чтение первой зарегистрированной записи из таблицы <%s>' % tab.getDBTableName())
+        if tab:
+            dt_field = getattr(tab.dataclass.c, self.getDTFieldName())
+            recordset = tab.c.order_by(dt_field).limit(rec_limit).execute()
+            records = [dict(record) for record in recordset]
+
+            if rec_filter:
+                records = self._do_record_filter(rec_filter, records)
+
+            record = records[0]
+            return record
+        else:
+            log.warning(u'Не определена таблица хранения исторических данных в объекте <%s>' % self.name)
+        return dict()
+
+    def get_first_tag_data(self, tag_name, rec_filter=None, rec_limit=1):
+        """
+        Получить первые зарегистрированные исторические данные по определенному тегу.
+
+        :param rec_filter: Функция дополнительного фильтра записей.
+            Если функция не указана, то берется значение 'rec_filter' из спецификации.
+            Если фукция задается текстовым блоком кода:
+            В качестве аргумента функция принимает текущую запись в виде словаря.
+            В пространстве имен есть переменная RECORD, указывающая на текущую запись.
+            Функция возвращает True для записи, которая попадает в результирующий список,
+            False - если не попадает.
+        :param rec_limit: Ограничение количества записей.
+        :return: Словарь {'dt': дата-время первой регистрации,
+                          'data': значение тега}.
+            Или пустой словарь в случае ошибки.
+        """
+        first_record = self.get_first(rec_filter, rec_limit)
+        if first_record:
+            dt_fieldname = self.getDTFieldName()
+            tag_data = dict(dt=first_record.get(dt_fieldname),
+                            data=first_record.get(tag_name))
+            return tag_data
+        return dict()
