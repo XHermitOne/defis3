@@ -48,12 +48,17 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
         """
         gnuplot_trend_navigator_panel_proto.icGnuplotTrendNavigatorPanelProto.__init__(self, *args, **kwargs)
 
+        # Должна быть хотя бы одна колонка у легенды
+        self.setColumns_list_ctrl(ctrl=self.legend_listCtrl,
+                                  cols=(dict(label=u'', width=self.legend_listCtrl.GetSize().GetWidth()), ))
+
         # Переключатель отображения легенды
         self.__is_show_legend = False
 
     def setIsShowLegend(self, is_show):
         """
         Установить переключатель отображения легенды.
+
         :param is_show: True - отобразить / False - скрыть
         :return:
         """
@@ -62,6 +67,7 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
     def draw(self, redraw=True):
         """
         Основной метод отрисовки тренда.
+
         :param redraw: Принудительная прорисовка.
         """
         return self.trend.draw(redraw)
@@ -69,13 +75,52 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
     def getTrend(self):
         """
         Объект тренда.
+
         :return:
         """
         return self.trend
 
+    def setStartDT(self, new_dt):
+        """
+        Начальная дата-время тренда.
+
+        :param new_dt: Новое значение.
+        """
+        return self.trend.setStartDT(new_dt=new_dt)
+
+    def setStopDT(self, new_dt):
+        """
+        Конечная дата-время тренда.
+
+        :param new_dt: Новое значение.
+        """
+        return self.trend.setStopDT(new_dt=new_dt)
+
+    def getStartDT(self):
+        """
+        Начальная дата-время тренда.
+        """
+        return self.trend.getStartDT()
+
+    def getStopDT(self):
+        """
+        Конечная дата-время тренда.
+        """
+        return self.trend.getStopDT()
+
+    def getPenData(self, pen_index=0):
+        """
+        Данные соответствующие перу.
+
+        :param pen_index: Индекс пера. По умолчанию берется первое перо.
+        :return: Список (Время, Значение)
+        """
+        return self.trend.getPenData(pen_index=pen_index)
+
     def setLegend(self, pens=None):
         """
         Заполнить легенду.
+
         :param pens: Описания перьев.
         :return: True/False.
         """
@@ -83,16 +128,24 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
             pens = self.trend.child
 
         # Очистить строки списка легенды
-        self.legend_checkList.Clear()
+        self.clear_list_ctrl(ctrl=self.legend_listCtrl)
 
         try:
             for pen in pens:
                 pen_colour_rgb = pen.get('colour', (128, 128, 128))
+                # Определяем надпись пера в легенде
                 pen_label = pen.get('legend', UNKNOWN_PEN_LABEL)
-                item = self.legend_checkList.Append(pen_label)
-                if isinstance(pen_colour_rgb, tuple):
-                    self.legend_checkList.SetItemForegroundColour(item, pen_colour_rgb)
+                pen_label = pen_label if pen_label else str(pen.get('description', UNKNOWN_PEN_LABEL))
+                self.appendRow_list_ctrl(ctrl=self.legend_listCtrl, row=(pen_label, ))
+
+                row = self.getItemCount(self.legend_listCtrl) - 1
+                if isinstance(pen_colour_rgb, tuple) or isinstance(pen_colour_rgb, wx.Colour):
+                    self.setRowForegroundColour_list_ctrl(ctrl=self.legend_listCtrl,
+                                                          i_row=row, colour=pen_colour_rgb)
                 elif isinstance(pen_colour_rgb, str):
+                    self.setRowForegroundColour_list_ctrl(ctrl=self.legend_listCtrl,
+                                                          i_row=row, colour=wx.Colour(pen_colour_rgb))
+                else:
                     log.warning(u'Не поддерживается режим установки цвета')
             return True
         except:
@@ -102,6 +155,7 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
     def showLegend(self, is_show=True, redraw=True):
         """
         Отобразить легенду?
+
         :param is_show: True - отобразить / False - скрыть
         :param redraw: Перерисовка сплиттера.
         :return: True/False.
@@ -147,6 +201,7 @@ class icGnuplotTrendNavigatorProto(gnuplot_trend_navigator_panel_proto.icGnuplot
     def getReport(self):
         """
         Получить отчет в виде файла PDF.
+
         :return: Имя файла PDF или None в случае ошибки.
         """
         try:

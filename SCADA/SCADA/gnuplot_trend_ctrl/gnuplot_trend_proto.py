@@ -119,6 +119,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setScene(self, min_x=None, min_y=None, max_x=None, max_y=None):
         """
         Установить текущую сцену тренда.
+
         :param min_x: Минимальное значение по оси X.
         :param min_y: Минимальное значение по оси Y.
         :param max_x: Максимальное значение по оси X.
@@ -150,6 +151,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setStartDT(self, new_dt):
         """
         Начальная дата-время тренда.
+
         :param new_dt: Новое значение.
         """
         self.start_datetime = self._convertDate(new_dt)
@@ -158,6 +160,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setStopDT(self, new_dt):
         """
         Конечная дата-время тренда.
+
         :param new_dt: Новое значение.
         """
         self.stop_datetime = self._convertDate(new_dt)
@@ -166,6 +169,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setFormats(self, x_format=None, y_format=None):
         """
         Установить форматы шкал.
+
         :param x_format: Формат шкалы оси X.
             Если None, то формат не устанавливается.
         :param y_format: Формат шкалы оси Y.
@@ -181,6 +185,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def setPrecisions(self, x_precision=None, y_precision=None):
         """
         Установить цену деления по осям.
+
         :param x_precision: Цена деления оси X.
             Если None, то цена деления не устанавливается.
         :param y_precision: Цена деления оси Y.
@@ -253,6 +258,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def del_frame(self, frame_filename=None):
         """
         Удалить файл кадра
+
         :param frame_filename: Имя файла кадра тренда.
         :return: True/False.
         """
@@ -272,6 +278,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                    scene=None, points=None):
         """
         Отрисовка кадра данных тренда.
+
         :param size: Размер кадра в точках.
         :param x_format: Формат шкалы X.
         :param y_format: Формат шкалы Y.
@@ -293,6 +300,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                      scene=None, points=None):
         """
         Отрисовка кадра данных тренда в виде отчета PDF.
+
         :param size: Размер кадра в точках.
         :param x_format: Формат шкалы X.
         :param y_format: Формат шкалы Y.
@@ -314,6 +322,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
                     points=None, file_type=PNG_FILE_TYPE):
         """
         Отрисовка кадра данных тренда.
+
         :param size: Размер кадра в точках.
         :param x_format: Формат шкалы X.
         :param y_format: Формат шкалы Y.
@@ -391,6 +400,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def set_frame(self, frame_filename=None):
         """
         Установить кадр.
+
         :param frame_filename: Полное имя файла кадра.
         :return: True/False.
         """
@@ -407,6 +417,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def draw(self, redraw=True, size=None):
         """
         Основной метод отрисовки тренда.
+
         :param redraw: Принудительная прорисовка.
         :param size: Размер.
         """
@@ -452,6 +463,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def adaptScene(self, graph_data=None):
         """
         Адаптировать текущую сцену для отображения по данным графика.
+
         :param graph_data: Список точек графика.
             [(x1, y1), (x2, y2), ... (xN, yN)]
         :return: Текущая сцена тренда.
@@ -505,6 +517,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def zoomX(self, step=1, redraw=True):
         """
         Увеличить цену деления оси X в соответствии со шкалой настройки.
+
         :param step: Шаг по шкале настройки
             >0 - увеличение
             <0 - уменьшение
@@ -527,6 +540,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
         :param step: Шаг по шкале настройки
             >0 - увеличение
             <0 - уменьшение
+
         :param redraw: Произвести перерисовку кадра тренда?
         :return: True/False.
         """
@@ -542,6 +556,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def moveSceneX(self, step=1, redraw=True):
         """
         Передвижение сцены по оси X на указанное количество цены деления.
+
         :param step: Количество цен деления для передвижения
             >0 - увеличение
             <0 - уменьшение
@@ -560,6 +575,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def moveSceneY(self, step=1, redraw=True):
         """
         Передвижение сцены по оси Y на указанное количество цены деления.
+
         :param step: Количество цен деления для передвижения
             >0 - увеличение
             <0 - уменьшение
@@ -578,6 +594,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def moveSceneFirst(self, redraw=True):
         """
         Передвижение сцены по оси X на первое значение тренда.
+
         :param redraw: Произвести перерисовку кадра тренда?
         :return: True/False.
         """
@@ -604,6 +621,7 @@ class icGnuplotTrendProto(wx.Panel, trend_proto.icTrendProto):
     def moveSceneLast(self, redraw=True):
         """
         Передвижение сцены по оси Y на указанное количество цены деления.
+
         :param redraw: Произвести перерисовку кадра тренда?
         :return: True/False.
         """

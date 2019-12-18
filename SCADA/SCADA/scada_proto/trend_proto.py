@@ -32,7 +32,6 @@ class icTrendProto(object):
     """
     Абстрактный класс временного графика. Исторический тренд.
     """
-
     def __init__(self, *args, **kwargs):
         """
         Конструктор.
@@ -47,6 +46,7 @@ class icTrendProto(object):
     def _convertDate(self, dt):
         """
         Корректное преобразование типа даты в datetime.datetime.
+
         :param dt: Дата.
         :return: Дата-время.
         """
@@ -69,6 +69,7 @@ class icTrendProto(object):
     def _dt2str(self, dt_value=None, time_format=DEFAULT_X_FORMAT):
         """
         Преобразование datetime в строковый вид согласно формату.
+
         :param dt_value: Значение datetime.datetime или datetime.timedelta.
         :param time_format: Формат представления.
         :return: Отформатированная строка значений datetime.
@@ -92,6 +93,7 @@ class icTrendProto(object):
         """
         Преобразование строкового представления значений
         временной шкалы в datetime вид.
+
         :param time_value: Строковое представление даты-вермени.
         :param time_format: Формат представления.
         :param bToTimeDelta: Преобразовать в datetime.timedelta?
@@ -123,6 +125,7 @@ class icTrendProto(object):
     def _get_dt_format(self, time_format=DEFAULT_X_FORMAT):
         """
         Привести к единому виду формат временных значений.
+
         :param time_format: Формат представления.
         :return: Формат
         """
@@ -138,6 +141,7 @@ class icTrendProto(object):
     def setStartDT(self, new_dt):
         """
         Начальная дата-время тренда.
+
         :param new_dt: Новое значение.
         """
         self.start_datetime = self._convertDate(new_dt)
@@ -151,6 +155,7 @@ class icTrendProto(object):
     def setStopDT(self, new_dt):
         """
         Конечная дата-время тренда.
+
         :param new_dt: Новое значение.
         """
         self.stop_datetime = self._convertDate(new_dt)
@@ -176,6 +181,7 @@ class icTrendProto(object):
     def getPenData(self, pen_index=0):
         """
         Данные соответствующие перу.
+
         :param pen_index: Индекс пера. По умолчанию берется первое перо.
         :return: Список (Время, Значение)
         """
@@ -189,6 +195,7 @@ class icTrendProto(object):
     def draw(self, redraw=True):
         """
         Основной метод отрисовки тренда.
+
         :param redraw: Принудительная прорисовка.
         """
         log.warning(u'Не определен метод отрисовки тренда')
@@ -203,6 +210,7 @@ class icTrendProto(object):
     def setHistory(self, history):
         """
         Поменять источник данных для всех перьев тренда.
+
         :param history: Объект исторических данных - источника данных.
         :return: True/False.
         """
@@ -216,6 +224,7 @@ class icTrendProto(object):
     def zoomX(self, step=1, redraw=True):
         """
         Увеличить цену деления оси X в соответствии со шкалой настройки.
+
         :param step: Шаг по шкале настройки
             >0 - увеличение
             <0 - уменьшение
@@ -228,6 +237,7 @@ class icTrendProto(object):
     def zoomY(self, step=1, redraw=True):
         """
         Увеличить цену деления оси Y в соответствии со шкалой настройки.
+
         :param step: Шаг по шкале настройки
             >0 - увеличение
             <0 - уменьшение
@@ -240,6 +250,7 @@ class icTrendProto(object):
     def moveSceneX(self, step=1, redraw=True):
         """
         Передвижение сцены по оси X на указанное количество цены деления.
+
         :param step: Количество цен деления для передвижения
             >0 - увеличение
             <0 - уменьшение
@@ -252,6 +263,7 @@ class icTrendProto(object):
     def moveSceneY(self, step=1, redraw=True):
         """
         Передвижение сцены по оси Y на указанное количество цены деления.
+
         :param step: Количество цен деления для передвижения
             >0 - увеличение
             <0 - уменьшение
@@ -260,5 +272,3 @@ class icTrendProto(object):
         """
         log.warning(u'Не определен метод движения тренда')
         return False
-
-

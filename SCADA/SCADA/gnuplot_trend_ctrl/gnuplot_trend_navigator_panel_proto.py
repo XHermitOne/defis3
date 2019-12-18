@@ -51,9 +51,8 @@ class icGnuplotTrendNavigatorPanelProto ( wx.Panel ):
 		self.legend_panel = wx.Panel( self.trend_splitter, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer6 = wx.BoxSizer( wx.VERTICAL )
 		
-		legend_checkListChoices = []
-		self.legend_checkList = wx.CheckListBox( self.legend_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, legend_checkListChoices, 0 )
-		bSizer6.Add( self.legend_checkList, 1, wx.ALL|wx.EXPAND, 5 )
+		self.legend_listCtrl = wx.ListCtrl( self.legend_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LC_NO_HEADER|wx.LC_REPORT|wx.LC_SINGLE_SEL )
+		bSizer6.Add( self.legend_listCtrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
 		self.legend_panel.SetSizer( bSizer6 )
