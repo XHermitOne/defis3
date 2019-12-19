@@ -54,7 +54,6 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     """
     Главный класс проекта.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -119,6 +118,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def unlockResInResEditor(self, res_editor=None):
         """
         Разблокировать ресурс, который находится в редакторе ресурсов.
+
         :param res_editor: Редактор ресурса.
         """
         if res_editor is None:
@@ -140,6 +140,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def unlockPyFileInIDE(self, py_filename):
         """
         Разблокировать модуль.
+
         :param py_filename: Имя модуля.
         """
         ide = self.getParent().getIDE()
@@ -329,6 +330,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def getPrjSubsys(self, prj_filename):
         """
         Имя проекта и имя проекта, подсистемой которого он является.
+
         :param prj_filename: Имя файла проекта.
         :return: Кортеж (имя проекта, имя подсистемы).
         """
@@ -340,6 +342,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def login(self, username=None, password=None, prj_filename=None):
         """
         Открыть регистрацию программиста в режиме редактирования.
+
         :param username: Имя пользователя.
         :param password: Пароль. Если имя или пароль не указаны, то выводится
         окно входа в систему.
@@ -483,6 +486,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def buildPrjRes(self, cur_folder, res_node, res_name, folder_class=None):
         """
         Построение всех узлов/ресурсов проекта.
+
         :param cur_folder: Текущая папка, в которую происходит добавление узлов.
         :param res_node: Ресурс, соответствующий этому узлу.
         :param res_name: Имя ресурса, соответствующего этому узлу.
@@ -522,6 +526,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def synchroPrj(self, bRefresh=False):
         """
         Синхронизация дерева проекта с изменениями другими программистами.
+
         :param bRefresh: указание принудительного обновления дерева проекта.
         """
         prj_file = self.getPrjFileName()
@@ -573,6 +578,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def rename(self, old_name, new_name):
         """
         Переименование проекта.
+
         :param old_name: Старое имя.
         :param new_name: Новое имя.
         """
@@ -617,6 +623,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def choiceUsernameDlg(self, parent=None):
         """
         Вызов диалога выбора имени пользователя текущего проекта.
+
         :param parent: Родительское окно. Если не указано, то берется getPrjTreeCtrl().
         :return: Имя выбранного пользователя или None если нажата <Отмена>.
         """
@@ -639,6 +646,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def _runPrjCmd(self, app_dir, prj_path, username=None):
         """
         Запуск проекта на исполнение.
+
         :param app_dir: Папка приложения.
         :param prj_path: Папка проекта.
         :param username: Имя пользователя, запускающего проект.
@@ -736,6 +744,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def getResNamesByTypes(self, *res_types):
         """
         Список имен ресурсов в проекте по их типу.
+
         :param res_types: Кортеж строковых определение типа ресурса 'tab','frm',...
         :return: Возвращает список имен ресурсов заданных типов.
         """
@@ -744,6 +753,7 @@ class icPrjRoot(ImpNode.icPrjImportSys):
     def getObjNamesByTypes(self, *res_types):
         """
         Список имен объектов в проекте по их типу ресурса.
+
         :param res_types: Кортеж строковых определение типа ресурса 'tab','frm',...
         :return: Возвращает список имен объектов.
         """

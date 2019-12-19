@@ -42,7 +42,7 @@ from . import menuImpNode
 
 from . import new_metadata_resource_dlg
 
-__version__ = (0, 1, 4, 1)
+__version__ = (0, 1, 4, 2)
 
 _ = wx.GetTranslation
 
@@ -51,7 +51,6 @@ class icPrjResources(prj_node.icPrjFolder):
     """
     Ресурсы.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -76,6 +75,7 @@ class icPrjResources(prj_node.icPrjFolder):
     def create(self, new_name=None):
         """
         Создать папку.
+
         :param new_name: Указание нового имени созданного узла.
         """
         # Прописать в родительской папке
@@ -104,6 +104,7 @@ class icPrjResources(prj_node.icPrjFolder):
     def rename(self, old_name, new_name):
         """
         Переименование папки.
+
         :param old_name: Старое имя папки.
         :param new_name: Новое имя папки.
         """
@@ -117,6 +118,7 @@ class icPrjResources(prj_node.icPrjFolder):
     def importChild(self, res_filename=None):
         """
         Импортировать ресурс, как дочерний узел.
+
         :param res_filename: Имя импортируемого ресурсного файла.
         :return: Возвращает вновь созданный узел или None.
         """
@@ -145,7 +147,6 @@ class icPrjResource(prj_node.icPrjNode):
     """
     Ресурс.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -202,6 +203,7 @@ class icPrjResource(prj_node.icPrjNode):
     def _setTemplateSpc(self, spc, new_name):
         """
         Вспомогательная функция установки шаблона заполнения ресурса по спецификации.
+
         :param spc: Спецификция компонента.
         :param new_name: Новое имя ресурса.
         :return: True/False.
@@ -222,6 +224,7 @@ class icPrjResource(prj_node.icPrjNode):
     def create(self, new_name=None):
         """
         Функция создания ресурса.
+
         :param new_name: Указание нового имени созданного узла.
         """
         # Ввести наименование при создании ресурса
@@ -251,7 +254,7 @@ class icPrjResource(prj_node.icPrjNode):
             # не создавать ресурс, а вывести сообщение.
             if self.getRoot().prj_res_manager.isResByNameANDType(res_name, res_ext):
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Ресурс/папка <%s.%s> существует в проекте!' % (res_name, res_ext))
+                                   u'Ресурс/папка <%s.%s> существует в проекте!' % (res_name, res_ext))
                 return None
             # Добавить ресурс в ресурс проекта
             self.getRoot().prj_res_manager.addRes(res_name, res_ext, self._Parent.name)
@@ -276,7 +279,7 @@ class icPrjResource(prj_node.icPrjNode):
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_file):
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Модуль <%s> уже существует!' % mod_file)
+                                   u'Модуль <%s> уже существует!' % mod_file)
                 return False
             # Добавить модуль в ресурс проекта
             ok = self.getRoot().getParent().res_editor.CreateResource(res_name, mod_path, mod_file, mod_ext,
@@ -321,7 +324,7 @@ class icPrjResource(prj_node.icPrjNode):
                     lock_rec = resfunc.getLockResRecord(res_name, res_file,
                                                         res_ext, self.getRoot().lock_dir)
                     dlgfunc.openWarningBox(u'БЛОКИРОВКА',
-                                        u'Ресурс <%s> заблокирован пользователем <%s> с компьютера <%s>.' % (res_name,
+                                           u'Ресурс <%s> заблокирован пользователем <%s> с компьютера <%s>.' % (res_name,
                                                                                                              lock_rec['user'],
                                                                                                              lock_rec['computer']))
                     # Открыть только для чтения
@@ -336,6 +339,7 @@ class icPrjResource(prj_node.icPrjNode):
     def rename(self, old_name, new_name):
         """
         Переименование ресурса.
+
         :param old_name: Старое имя ресурса.
         :param new_name: Новое имя ресурса.
         """
@@ -380,6 +384,7 @@ class icPrjResource(prj_node.icPrjNode):
     def cut(self):
         """
         Вырезать узел.
+
         :return: Возвращает указхатель на удаленный узел.
         """
         # Переименовать файл ресурса, если он есть
@@ -429,6 +434,7 @@ class icPrjResource(prj_node.icPrjNode):
     def paste(self, node):
         """
         Вставить.
+
         :param node: Вставляемый узел.
         """
         # Поменять расширение у bak файлов.
@@ -531,7 +537,6 @@ class icPrjTabRes(icPrjResource):
     """
     Таблица.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -548,12 +553,13 @@ class icPrjTabRes(icPrjResource):
     def create(self, new_name=None):
         """
         Создание ресурса.
+
         :param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую Таблицу будем создавать а затем создать ее
         global TableTypeChoice
         spc = TableTypeChoice[dlgfunc.getSingleChoiceDlg(self.getRoot().getParent(),
-                                                       u'ТИПЫ ТАБЛИЦ', u'Выберите из списка типов таблиц:',
+                                                         u'ТИПЫ ТАБЛИЦ', u'Выберите из списка типов таблиц:',
                                                          [txt for txt in TableTypeChoice.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
@@ -576,10 +582,10 @@ class icPrjTabRes(icPrjResource):
         Удалить узел. Удалить таблицу из БД тоже.
         """
         if dlgfunc.getAskDlg(u'ВНИМАНИЕ!',
-                           u'Удалить таблицу из БД?') == wx.YES:
+                             u'Удалить таблицу из БД?') == wx.YES:
             del_cascade = False
             if dlgfunc.getAskDlg(u'ВНИМАНИЕ!',
-                               u'Удалить дочерние таблицы из БД?') == wx.YES:
+                                 u'Удалить дочерние таблицы из БД?') == wx.YES:
                 del_cascade = True
             import ic.db.icsqlalchemy
             try: 
@@ -593,6 +599,7 @@ class icPrjTabRes(icPrjResource):
     def rename(self, old_name, new_name):
         """
         Переименование ресурса.
+
         :param old_name: Старое имя ресурса.
         :param new_name: Новое имя ресурса.
         """
@@ -600,7 +607,7 @@ class icPrjTabRes(icPrjResource):
         old_name = old_name.lower()
         if new_name != new_name or old_name != old_name:
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'All table, field and link name must be in lower case')
+                               u'All table, field and link name must be in lower case')
         return icPrjResource.rename(self, old_name, new_name)
 
     def extend(self):
@@ -648,7 +655,6 @@ class icPrjDBRes(icPrjResource):
     """
     БД.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -665,12 +671,13 @@ class icPrjDBRes(icPrjResource):
     def create(self, new_name=None):
         """
         Создание ресурса.
+
         :param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global DATABASE_TYPE_CHOICE
         spc = DATABASE_TYPE_CHOICE[dlgfunc.getSingleChoiceDlg(self.getRoot().getParent(),
-                                                    u'ТИПЫ БД', u'Выберите из списка типов БД:',
+                                                              u'ТИПЫ БД', u'Выберите из списка типов БД:',
                                                               [txt for txt in DATABASE_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
@@ -719,7 +726,6 @@ class icPrjSQLiteRes(icPrjResource):
     """
     БД SQLite.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -738,7 +744,6 @@ class icPrjPostgreSQLRes(icPrjResource):
     """
     БД PostgreSQL.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -771,7 +776,6 @@ class icPrjFrmRes(icPrjResource):
     """
     Форма.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -813,7 +817,6 @@ class icPrjWinRes(icPrjResource):
     """
     Главное окно.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -830,13 +833,14 @@ class icPrjWinRes(icPrjResource):
     def create(self, new_name=None):
         """
         Создание ресурса.
+
         :param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую БД будем создавать а затем создать ее
         global WINDOW_TYPE_CHOICE
         spc = WINDOW_TYPE_CHOICE[dlgfunc.getSingleChoiceDlg(self.getRoot().getParent(),
-                                                     u'ВИДЫ ГЛАВНОГО ОКНА',
-                                                     u'Выберите из списка типов главного окна:',
+                                                            u'ВИДЫ ГЛАВНОГО ОКНА',
+                                                            u'Выберите из списка типов главного окна:',
                                                             [txt for txt in WINDOW_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
@@ -879,7 +883,6 @@ class icPrjMenuRes(icPrjResource):
     """
     Меню.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -896,13 +899,14 @@ class icPrjMenuRes(icPrjResource):
     def create(self, new_name=None):
         """
         Создание ресурса.
+
         :param new_name: Указание нового имени созданного узла.
         """
         # Сначал спросить какую меню будем создавать а затем создать ее
         global MENU_TYPE_CHOICE
         spc = MENU_TYPE_CHOICE[dlgfunc.getSingleChoiceDlg(self.getRoot().getParent(),
-                                                      u'ВИДЫ ГЛАВНОГО МЕНЮ',
-                                                      u'Выберите из списка видов главного меню:',
+                                                          u'ВИДЫ ГЛАВНОГО МЕНЮ',
+                                                          u'Выберите из списка видов главного меню:',
                                                           [txt for txt in MENU_TYPE_CHOICE.keys() if isinstance(txt, str)])]
         if spc is None:
             # Нажата ОТМЕНА
@@ -936,7 +940,6 @@ class icPrjTemplate(icPrjResource):
     """
     Шаблон.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -955,7 +958,6 @@ class icPrjMethod(icPrjResource):
     """
     Метод.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -975,7 +977,6 @@ class icPrjMetaDataRes(icPrjResource):
     """
     Дерево метаклассов/Метаданные.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -989,6 +990,7 @@ class icPrjMetaDataRes(icPrjResource):
     def _getExtendToolList(self):
         """
         Список дополнительных инструментов узла.
+
         :return: Список словарей:
             [{
                 'name': Наименование инструмента,
@@ -1018,7 +1020,7 @@ class icPrjMetaDataRes(icPrjResource):
                 fbp_base_filename = list(res.values())[0]['name'].lower() + '_frm_proto.fbp'
                 # Выбор имени файла проекта
                 fbp_dir = dlgfunc.getDirDlg(self.getPrjTreeCtrl(),
-                                          u'Выбор файла папки хранения проекта wxFormBuilder для генерации',
+                                            u'Выбор файла папки хранения проекта wxFormBuilder для генерации',
                                             default_path=self.getPath())
                 if not fbp_dir:
                     # Нажали отмену
@@ -1052,8 +1054,8 @@ class icPrjMetaDataRes(icPrjResource):
         if ext_tools:
             choices = [tool['label'] for tool in ext_tools]
             i_select = dlgfunc.getSingleChoiceIdxDlg(self.getPrjTreeCtrl(),
-                                                   u'Дополнительные инструменты',
-                                                   u'Выберите операцию с ресурсом:',
+                                                     u'Дополнительные инструменты',
+                                                     u'Выберите операцию с ресурсом:',
                                                      choices)
             if i_select >= 0:
                 func = ext_tools[i_select]['function']
@@ -1064,6 +1066,7 @@ class icPrjMetaDataRes(icPrjResource):
     def create(self, new_name=None):
         """
         Функция создания ресурса.
+
         :param new_name: Указание нового имени созданного узла.
         """
         default_name = new_name if new_name else self.name

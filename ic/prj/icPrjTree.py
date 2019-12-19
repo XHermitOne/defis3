@@ -48,6 +48,7 @@ class icPrjTreeImgList(wx.ImageList):
     def setNodeImgIdx(self, node):
         """
         Установить компонент для редактирования.
+
         :param node: Компонент.
         """
         node_class = node.__class__.__name__
@@ -62,6 +63,7 @@ class icPrjTreeImgList(wx.ImageList):
     def getNodeImgIdx(self, node):
         """
         Получить данные о компоненте для редактирования.
+
         :param node: Компонент.
         """
         # Если тип компонента не зарегистрирован, то зарегистрировать его
@@ -73,6 +75,7 @@ class icPrjTreeImgList(wx.ImageList):
     def getNodeImgExtendedIdx(self, node):
         """
         Получить данные о компоненте для редактирования.
+
         :param node: Компонент.
         """
         # Если тип компонента не зарегистрирован, то зарегистрировать его
@@ -86,6 +89,7 @@ class icPrjTreeImgList(wx.ImageList):
     def setNodeImg(self, img, img_idx=-1):
         """
         Добавить картинку компонента в список образов.
+
         :param img: Имя файла образа компонента или сам образ.
         :param img_idx: Указание на какое место поместить картинку.
         :return: Возвращает индекс соответствующий этому образу.
@@ -113,6 +117,7 @@ class icPrjTreeImgList(wx.ImageList):
     def replaceImg(self, img_idx, img):
         """
         Заменить образ в списке образов.
+
         :param img_idx: Индекс заменяемого образа.
         :param img: Сам wx.Bitmap образ.
         :return: Функция возвращает новый индекс образа.
@@ -132,6 +137,7 @@ class icPrjTree(wx.TreeCtrl):
     def __init__(self, parent, ide=None):
         """
         Конструктор.
+
         :param parent: Родитель-панель.
         :param ide: Указатель на объект IDE.
         """
@@ -201,7 +207,8 @@ class icPrjTree(wx.TreeCtrl):
 
     def setRoot(self, prj=None):
         """
-        Функция по ресурсному описанию строит дерево описаниея.
+        Функция по ресурсному описанию строит дерево описания.
+
         :param prj: Корень дерева проекта.
         """
         try:
@@ -214,9 +221,12 @@ class icPrjTree(wx.TreeCtrl):
 
             if prj:
                 self.addBranch(self._Root, prj)
+                # log.debug(u'Дерево проекта построено')
             # Распахнуть содержание компонента
+            # log.debug(u'Открытие дерева проекта...')
             if self._Root:
                 self.Expand(self._Root)
+            # log.debug(u'Открытие дерева проекта...ok')
             return True
         except:
             log.fatal(u'Ошибка построения дерева проекта')
@@ -230,6 +240,7 @@ class icPrjTree(wx.TreeCtrl):
     def expandAllWithoutRoot(self, cur_item=None, bRefresh=True):
         """
         Раскрыть все ветки дерева (когда корень скрыт).
+
         :param cur_item: Текущий узел дерева.
             Если None, то корень.
         :param bRefresh: Флаг обновления дерева.
@@ -256,6 +267,7 @@ class icPrjTree(wx.TreeCtrl):
     def expandAll(self, cur_item=None, bRefresh=True):
         """
         Раскрыть все ветки дерева.
+
         :param cur_item: Текущий узел дерева.
             Если None, то корень.
         :param bRefresh: Флаг обновления дерева.
@@ -277,6 +289,7 @@ class icPrjTree(wx.TreeCtrl):
     def addBranch(self, root, node):
         """
         Добавляет ветку в дерево.
+
         :param node: компонент.
         :return: Возвращает узел дерева.
         """
@@ -330,6 +343,7 @@ class icPrjTree(wx.TreeCtrl):
     def addBranchInSelection(self, node):
         """
         Добавляет ветку в дерево в текущий выделенный узел.
+
         :param node: Описание/спецификация компонента.
         :return: Возвращает узел дерева.
         """
@@ -346,6 +360,7 @@ class icPrjTree(wx.TreeCtrl):
     def addBranchInParentSelection(self, node):
         """
         Добавляет ветку в дерево в родителя выделенного узел.
+
         :param node: Описание/спецификация компонента.
         :return: Возвращает узел дерева.
         """
@@ -375,6 +390,7 @@ class icPrjTree(wx.TreeCtrl):
     def refreshObj(self, root=None, bRefresh=True):
         """
         Обновить изображения дерева объекта.
+
         :param root: Указание корня откуда начинать обновление.
         :param bRefresh: Признак обновления самого объекта-дерева.
         """
@@ -417,6 +433,7 @@ class icPrjTree(wx.TreeCtrl):
     def setResourceEditor(self, res_editor=None):
         """
         Запомнить указатель на редактор ресурсов.
+
         :param res_editor: Редактор ресурсов.
         """
         self.res_editor = res_editor
@@ -448,24 +465,30 @@ class icPrjTree(wx.TreeCtrl):
         """
         if self._Prj:
             self._Prj.synchroPrj()
+            log.debug(u'Синхронизация проекта по выделеннию компонента')
             
             # Всплывающие подсказки
             # Если старое окно уже создано и отображается, то удалить его
             if self._helpWin:
+                log.debug(u'Закрытие окна помощи')
                 self._helpWin.Show(False)
                 self._helpWin.Destroy()
                 self._helpWin = None
                 
             item = event.GetItem()
+            log.debug(u'Определен элемент дерева')
             node = self.GetItemData(item)
+            log.debug(u'Получены данные узла')
             if node and node.isShowPopupHelp():
+                log.debug(u'Смена окна всплывающих подсказок')
                 help_txt = node.getPopupHelpText()
                 if help_txt:
                     item_rect = self.GetBoundingRect(item)
                     # Создать и отобразить окно всплывающих подсказок
                     self._helpWin = icwidget.icShortHelpString(self, help_txt,
                                                                (item_rect.right, item_rect.top), 5000)
-                    
+
+        log.debug(u'Синхронизация проекта по выделеннию компонента...ok')
         event.Skip()
     
     def onItemActivated(self, event):
@@ -495,6 +518,7 @@ class icPrjTree(wx.TreeCtrl):
     def _checkLegalLabel(self, label):
         """
         Проверка допустимости имени узла.
+
         :param label: Имя узла.
         :return: Возвращает True/False.
         """
@@ -599,7 +623,6 @@ class icPrjTreeViewer(icPrjTree):
     """
     Класс просмотрщика проекта.
     """
-
     def __init__(self, parent, ide=None):
         """
         Конструктор.

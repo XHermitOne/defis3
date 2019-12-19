@@ -153,10 +153,19 @@ class icTrendPenProto(object):
     def getLineData(self):
         """
         Получить данные линий.
+
         :return: Список точек.
         """
         data = get_test_data()
         return data
+
+    def getHistory(self):
+        """
+        Объект исторических данных - источника данных.
+
+        :return: Объект или None в случае ошибки.
+        """
+        return None
 
 
 class icTrendPen(icwidget.icSimple, icTrendPenProto):
@@ -239,6 +248,7 @@ class icTrendPen(icwidget.icSimple, icTrendPenProto):
     def getHistory(self):
         """
         Объект исторических данных - источника данных.
+
         :return: Объект или None в случае ошибки.
         """
         psp = self.getHistoryPsp()
@@ -251,6 +261,7 @@ class icTrendPen(icwidget.icSimple, icTrendPenProto):
     def setHistory(self, history):
         """
         Установить объект исторических данных - источника данных.
+
         :param history: Объект исторических данных - источника данных.
         :return: True/False.
         """
@@ -279,6 +290,7 @@ class icTrendPen(icwidget.icSimple, icTrendPenProto):
     def getLineData(self):
         """
         Получить данные линий.
+
         :return: Список точек.
         """
         history_obj = self.getHistory()

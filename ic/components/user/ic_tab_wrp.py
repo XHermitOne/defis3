@@ -108,7 +108,7 @@ ic_can_contain = ['Field', 'Link']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 2, 3)
+__version__ = (0, 1, 2, 4)
 
 # ВНИМАНИЕ! Для таблиц хранения справочников создадим
 # предварительно заполненную спецификацию
@@ -201,7 +201,7 @@ def property_editor_ctrl(attr, value, propEdt, *arg, **kwarg):
         ret = str_to_val_user_property(attr, value, propEdt)
         if ret:
             parent = propEdt
-            ctrl_types = icdb.DB_TYPES + [icsqlalchemy.TABLE_TYPE, None]
+            ctrl_types = list(icdb.DB_TYPES) + [icsqlalchemy.TABLE_TYPE, None]
             if ret[0][0] not in ctrl_types:
                 dlgfunc.openWarningBox(u'ОШИБКА', u'Объект не БД типа.', parent)
                 return coderror.IC_CTRL_FAILED_IGNORE

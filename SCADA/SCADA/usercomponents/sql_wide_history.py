@@ -348,7 +348,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
         log.debug(u'Чтение последней зарегистрированной записи из таблицы <%s>' % tab.getDBTableName())
         if tab:
             dt_field = getattr(tab.dataclass.c, self.getDTFieldName())
-            recordset = tab.c.order_by(sqlalchemy.desc(dt_field)).limit(rec_limit).execute()
+            recordset = tab.dataclass.select().order_by(sqlalchemy.desc(dt_field)).limit(rec_limit).execute()
             records = [dict(record) for record in recordset]
 
             if rec_filter:
@@ -406,7 +406,7 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
         log.debug(u'Чтение первой зарегистрированной записи из таблицы <%s>' % tab.getDBTableName())
         if tab:
             dt_field = getattr(tab.dataclass.c, self.getDTFieldName())
-            recordset = tab.c.order_by(dt_field).limit(rec_limit).execute()
+            recordset = tab.dataclass.select().order_by(dt_field).limit(rec_limit).execute()
             records = [dict(record) for record in recordset]
 
             if rec_filter:
