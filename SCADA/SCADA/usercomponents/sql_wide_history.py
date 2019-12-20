@@ -21,11 +21,14 @@ from ic.PropertyEditor.ExternalEditors.passportobj import icObjectPassportUserEd
 
 from SCADA.scada_proto import history
 
+# Имя поля временных значений по умолчанию
+DEFAULT_DT_FIELDNAME = 'dt'
+
 # --- Спецификация ---
 SPC_IC_SQLWIDEHISTORY = {'table': None,     # Таблица БД
                          'get_tab_name': None,  # Метод определения имени таблицы
                          'rec_filter': None,    # Дополнительная функция фильтрации исторических данных
-                         'dt_fieldname': 'dt',  # Наименование поля времменного значения
+                         'dt_fieldname': DEFAULT_DT_FIELDNAME,  # Наименование поля времменного значения
                          '__parent__': icwidget.SPC_IC_SIMPLE,
                          '__attr_help__': {'table': u'Паспорт таблицы хранения исторических данных',
                                            'get_tab_name': u'Метод определения имени таблицы',
@@ -78,9 +81,6 @@ ic_can_not_contain = None
 
 #   Версия компонента
 __version__ = (0, 1, 3, 1)
-
-# Имя поля временных значений по умолчанию
-DEFAULT_DT_FIELDNAME = 'dt'
 
 
 # Функции редактирования
@@ -347,15 +347,22 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
         tab = self.getTable()
         log.debug(u'Чтение последней зарегистрированной записи из таблицы <%s>' % tab.getDBTableName())
         if tab:
-            dt_field = getattr(tab.dataclass.c, self.getDTFieldName())
+            dt_fieldname = self.getDTFieldName()
+            dt_field = getattr(tab.dataclass.c, dt_fieldname)
             recordset = tab.dataclass.select().order_by(sqlalchemy.desc(dt_field)).limit(rec_limit).execute()
             records = [dict(record) for record in recordset]
 
             if rec_filter:
                 records = self._do_record_filter(rec_filter, records)
 
-            record = records[0]
-            return record
+            if records:
+                record = dict(records[0])
+                if DEFAULT_DT_FIELDNAME not in record:
+                    # Прописать время на всякий случай по стандартному ключу
+                    record[DEFAULT_DT_FIELDNAME] = record[dt_fieldname]
+                return record
+            else:
+                log.warning(u'Нет данных в таблице исторических данных <%s>' % tab.getName())
         else:
             log.warning(u'Не определена таблица хранения исторических данных в объекте <%s>' % self.name)
         return dict()
@@ -405,15 +412,22 @@ class icSQLWideHistory(icwidget.icSimple, history.icWideHistoryProto):
         tab = self.getTable()
         log.debug(u'Чтение первой зарегистрированной записи из таблицы <%s>' % tab.getDBTableName())
         if tab:
-            dt_field = getattr(tab.dataclass.c, self.getDTFieldName())
+            dt_fieldname = self.getDTFieldName()
+            dt_field = getattr(tab.dataclass.c, dt_fieldname)
             recordset = tab.dataclass.select().order_by(dt_field).limit(rec_limit).execute()
             records = [dict(record) for record in recordset]
 
             if rec_filter:
                 records = self._do_record_filter(rec_filter, records)
 
-            record = records[0]
-            return record
+            if records:
+                record = dict(records[0])
+                if DEFAULT_DT_FIELDNAME not in record:
+                    # Прописать время на всякий случай по стандартному ключу
+                    record[DEFAULT_DT_FIELDNAME] = record[dt_fieldname]
+                return record
+            else:
+                log.warning(u'Нет данных в таблице исторических данных <%s>' % tab.getName())
         else:
             log.warning(u'Не определена таблица хранения исторических данных в объекте <%s>' % self.name)
         return dict()
