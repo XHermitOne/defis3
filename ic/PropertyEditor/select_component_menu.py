@@ -51,6 +51,7 @@ class icSelectComponentMenuManager:
     def init(self, parent=None, parent_component=None):
         """
         Инициализация внутренних переменных.
+
         :param parent: Родительское окно.
         :param parent_component: Описание родительского компонента.
         """
@@ -79,6 +80,7 @@ class icSelectComponentMenuManager:
     def create(self):
         """
         Создание меню выбора компонента из всех возможных.
+
         :return: Объект wx.FlatMenu с заполненными компонентами или
             None в случае ошибки.
         """
@@ -91,6 +93,7 @@ class icSelectComponentMenuManager:
     def _create(self):
         """
         Создание меню выбора компонента из всех возможных.
+
         :return: Объект wx.FlatMenu с заполненными компонентами или
             None в случае ошибки.
         """
@@ -113,6 +116,7 @@ class icSelectComponentMenu(wx.Menu, icSelectComponentMenuManager):
     def _create(self):
         """
         Создание меню выбора компонента из всех возможных.
+
         :return: Объект wx.FlatMenu с заполненными компонентами или
             None в случае ошибки.
         """
@@ -157,6 +161,7 @@ class icSelectComponentMenu(wx.Menu, icSelectComponentMenuManager):
 def popup_component_menu(parent=None, button=None):
     """
     Вызов всплывающего меню выбора компонента.
+
     :param parent: Родительское окно для отображения.
     :param button: Объект кнопки wx.Button, по которой производится вызов меню.
     :return: Описание выбранного компонента или
@@ -191,6 +196,7 @@ class icSelectComponentFlatMenu(flatmenu.FlatMenu,
     def _create(self):
         """
         Создание меню выбора компонента из всех возможных.
+
         :return: Объект wx.FlatMenu с заполненными компонентами или
             None в случае ошибки.
         """
@@ -235,6 +241,7 @@ class icSelectComponentFlatMenu(flatmenu.FlatMenu,
 def popup_component_flatmenu(parent=None, button=None):
     """
     Вызов всплывающего меню выбора компонента.
+
     :param parent: Родительское окно для отображения.
     :param button: Объект кнопки wx.Button, по которой производится вызов меню.
     :return: Описание выбранного компонента или

@@ -93,7 +93,7 @@ def FontEdtDlg(parent, value):
     if value:
         fnt = eval(value)
     else:
-        fnt = {}
+        fnt = dict()
 
     curFont = icfont.icFont(fnt)
     data.SetInitialFont(curFont)
@@ -104,7 +104,7 @@ def FontEdtDlg(parent, value):
         data = dlg.GetFontData()
         font = data.GetChosenFont()
         
-        fnt = {}
+        fnt = dict()
         fnt['size'] = font.GetPointSize()
         fnt['family'] = icfont.getICFamily(font)
         fnt['style'] = icfont.getICFontStyle(font)

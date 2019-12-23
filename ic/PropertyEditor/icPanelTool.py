@@ -18,6 +18,7 @@ _ = wx.GetTranslation
 if wx.VERSION > (2, 8, 11, 10):
     wx.Colour = wx.Colour
 
+
 class icPanelTool(wx.Panel):
     """
     Класс панели инструментов.
@@ -247,6 +248,7 @@ class icPanelTool(wx.Panel):
                  style=wx.DEFAULT_FRAME_STYLE, GroupsInfo=None, ObjectsInfo=None, layout='horiz'):
         """
         Конструктор создания панели инструментов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type pos: C{wx.Point}
@@ -311,6 +313,7 @@ class icPanelTool(wx.Panel):
     def AddTool(self, tool):
         """
         Добавлят инструмент в с надор инструментов.
+
         :type tool: C{ictoggleimagebutton.icToggleImageButton}
         :param tool: Инструмент палитры.
         """
@@ -378,6 +381,7 @@ class icPanelTool(wx.Panel):
         """
         Устанавливает для отображенмя в панели инструментов стиль расположения компонента
         в сайзере.
+
         :type flag: C{int}
         :param flag: Стиль расположения компонента в сайзере.
         """
@@ -395,7 +399,9 @@ class icPanelTool(wx.Panel):
                     
     def SetProportionStyle(self, prop):
         """
-        Устанавливает признак пропорциональности при размещении компонента в сайзере.
+        Устанавливает признак пропорциональности при размещении компонента
+        в сайзере.
+
         :type prop: C{bool}
         :param prop: Признак пропорциональность при размещении компонента в сайзере.
         """
@@ -404,7 +410,8 @@ class icPanelTool(wx.Panel):
     def GetProportionStyle(self):
         """
         Возвращает признак пропорциональность при размещении компонента в
-        сайзере."""
+        сайзере.
+        """
         return self.flagCompDict['proportion'].GetToggle()
         
     def GetToggleType(self):
@@ -427,6 +434,7 @@ class icPanelTool(wx.Panel):
     def SetGraphEditor(self, edt):
         """
         Устанавливает указатель на графический редактор.
+
         :type edt: C{icBackground}
         :param edt: Указатель на графический редактор.
         """
@@ -492,11 +500,11 @@ class icPanelToolFrame(wx.MiniFrame):
     """
     Фрейм панели инструментов.
     """
-
     def __init__(self, parent, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, GroupsInfo=None, ObjectsInfo=None, layout='horiz'):
         """
         Конструктор создания панели инструментов.
+
         :type parent: C{wx.Window}
         :param parent: Указатель на родительское окно.
         :type pos: C{wx.Point}

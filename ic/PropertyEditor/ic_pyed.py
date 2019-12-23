@@ -37,14 +37,13 @@ else:
              }
 
 
-__version__ = (0, 0, 1, 2)
+__version__ = (0, 1, 1, 1)
 
 
 class icPyEditor(stc.StyledTextCtrl):
     """
     Класс редактора модулей питона.
     """
-    
     def SetReadOnlyMode(self, bReadOnly=True):
         """
         Устанавливает режим 'только для чтения'.
@@ -59,8 +58,9 @@ class icPyEditor(stc.StyledTextCtrl):
     def __init__(self, Parent_, id, ModuleText_=None, ModuleName_=None, pos=(-1, -1), size=(-1, -1)):
         """
         Конструктор.
+
         :param Parent_: Родительское окно.
-        @parent ModuleText_: Имя модуля для редактирования.
+        :param ModuleText_: Имя модуля для редактирования.
         """
         stc.StyledTextCtrl.__init__(self, Parent_, id, pos, size, style=wx.NO_FULL_REPAINT_ON_RESIZE | wx.BORDER_NONE)
 
@@ -246,7 +246,6 @@ class icPyEditor(stc.StyledTextCtrl):
         """
         Поиск подстроки в тексте.
         """
-
         end = self.GetLastPosition()
         textstring = self.GetRange(0, end).lower()
         start = self.GetSelection()[1]
@@ -276,7 +275,6 @@ class icPyEditor(stc.StyledTextCtrl):
         """
         Продолжает поиск (по Ctrl-G)
         """
-        
         if self.finddata.GetFindString():
             self.OnFind(event)
         else:
@@ -543,7 +541,6 @@ class icPyEditorFrame(icframe.icFrame):
     """
     Простой редактор исходников на Python.
     """
-    
     def __init__(self, parent, component={}, text=None, logType=0, evalSpace={}):
         """
         Конструктор для редактора питоновских текстов.
@@ -601,7 +598,6 @@ class icPyEditorFrame(icframe.icFrame):
         """
         Обрабатывает изменения текста в редакторе.
         """
-        
         if not self.editor.IsFirstLoad:
             if self.editor.GetModuleName() is None:
                 self.editor.SetModuleName('default.py')
@@ -692,7 +688,6 @@ class icPyEditorFrame(icframe.icFrame):
         """
         Обрабатывает нажатие кнопки 'сохранить как'.
         """
-        
         dlg = wx.FileDialog(self, u'Выбери имя файла', '', '', _PyCard, wx.SAVE)
 
         if dlg.ShowModal() == wx.ID_OK:
@@ -707,7 +702,6 @@ class icPyEditorFrame(icframe.icFrame):
 class icPyEditorDlg(icEvent, wx.Dialog):
     """
     """
-
     def __init__(self, parent, text, pos=(-1, -1), size=(-1, -1), style=wx.DEFAULT_DIALOG_STYLE):
         """
         """

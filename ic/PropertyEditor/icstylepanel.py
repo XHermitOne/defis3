@@ -41,7 +41,6 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         """
         Создаем панель инструментов.
         """
-        # from ic.imglib import newstyle_img
         import ic.components.custom.ictoggleimagebutton as ictoggleimagebutton
 
         szr = wx.BoxSizer()
@@ -142,6 +141,7 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
     def addTool(self, tool):
         """
         Добавлят инструмент в с надор инструментов.
+
         :type tool: C{ictoggleimagebutton.icToggleImageButton}
         :param tool: Инструмент палитры.
         """
@@ -213,6 +213,7 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
         """
         Устанавливает для отображенмя в панели инструментов стиль расположения компонента
         в сайзере.
+
         :type flag: C{int}
         :param flag: Стиль расположения компонента в сайзере.
         """
@@ -230,7 +231,9 @@ class icStyleToolPanel(icwxpanel.icWXPanel):
                     
     def setProportionStyle(self, prop):
         """
-        Устанавливает признак пропорциональности при размещении компонента в сайзере.
+        Устанавливает признак пропорциональности при размещении компонента
+        в сайзере.
+
         :type prop: C{bool}
         :param prop: Признак пропорциональность при размещении компонента в сайзере.
         """

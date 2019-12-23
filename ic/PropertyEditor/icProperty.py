@@ -93,7 +93,6 @@ def OnButt(event):
 class icTextValue(GenStaticText):
     """
     """
-
     def __init__(self, parent, ID, label, pos=wx.DefaultPosition, size = wx.DefaultSize, style=0):
         """
         """
@@ -153,10 +152,11 @@ class NameValue(icEvent):
     """
     Класс описывает строку панели свойств.
     """
-
     def __init__(self, main, indx, name='', value='', type=icDefInf.EDT_TEXTFIELD, dict={},
                  nameType=icNameTypeNormal, height=oiLineHeight):
         """
+        Конструктор.
+
         :type main: C{wx.Window}
         :param main: Указатель на окно сплиттера.
         :type indx: C{int}
@@ -520,7 +520,6 @@ class icPropWin(icEvent, wx.ScrolledWindow):
     """
     Класс описывает таблицу сойств определенного объекта.
     """
-    
     def _init_ctrls(self, prnt):
         """
         Создаем необходимые компоненты
@@ -735,6 +734,7 @@ class icPropWin(icEvent, wx.ScrolledWindow):
                       nameType=0, bRefresh=True, height=oiLineHeight):
         """
         Вставляет строку в таблицу свойств.
+
         :type indx: C{int}
         :param indx: Позиция, куда вставляется свойство.
         :type text: C{string}
@@ -759,6 +759,7 @@ class icPropWin(icEvent, wx.ScrolledWindow):
                       bRefresh=True, height=oiLineHeight):
         """
         Добавляет строку в таблицу свойств.
+
         :type text: C{string}
         :param text: Название свойства.
         :type value: C{...}
@@ -781,6 +782,7 @@ class icPropWin(icEvent, wx.ScrolledWindow):
     def RemoveIndx(self, indx, bRefresh=False):
         """
         Удаляет строку из редактора.
+
         :type indx: C{int}
         :param indx: Индекс совйства в редакторе.
         """
@@ -1006,7 +1008,7 @@ class icPropWin(icEvent, wx.ScrolledWindow):
                         
                     self.PopPropery(sel.list_del_property[-1], bRefresh=True)
             except:
-                LogLastError('RemoveIndx in SelectEdt(...)')
+                log.fatal(u'Ошибка')
 
             # Ставим признак редактирования
             sel.list_del_property = []
@@ -1032,7 +1034,7 @@ class icPropWin(icEvent, wx.ScrolledWindow):
             msg.m_x, msg.m_y = (0, 0)
             obj.name_ctrl.GetEventHandler().AddPendingEvent(msg)
         except:
-            LogLastError('ERROR in PostSelectProperty(indx=%d)' % indx)
+            log.fatal(u'Ошибка. Индекс [%d]' % indx)
 
     def OnSelect(self, event):
         """

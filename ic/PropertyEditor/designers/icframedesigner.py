@@ -32,6 +32,7 @@ class icFrameDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesigne
                  evalSpace = None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icFrame
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно
         :type id: C{int}

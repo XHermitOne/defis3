@@ -55,10 +55,10 @@ class icBackground(object):
     """
     Базовый класс для всех подложек редактора форм.
     """
-
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace={}):
         """
         Конструктор для создания объекта icBoxSizer.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -110,6 +110,7 @@ class icBackground(object):
     def AddObject(self, obj):
         """
         Добавляет объект в коллекцию редактируемых объектов.
+
         :param obj: Объект, который будет редактироваться.
         """
         # Для того, чтобы можно было определить ресурсное описание компонента от
@@ -142,6 +143,7 @@ class icBackground(object):
         """
         Добавляет объект определенного типа в ресурсное описание в определенное место с
         определенными размерами.
+
         :type prnt: C{wx.Window}
         :param prnt: Компонент ресурса, куда добавляется новый объект.
         :type toggleType: C{string}
@@ -178,6 +180,7 @@ class icBackground(object):
     def convToBGR(self, obj=None):
         """
         Конвертирует из координат на родительском окне в координаты подложки.
+
         :type pos: C{wx.Point}
         :param pos: Координаты на родительском окне.
         """
@@ -199,6 +202,7 @@ class icBackground(object):
     def ChangeObjProperty(self, obj, property, value):
         """
         Изменяет заданное свойство объекта в графическом редакторе.
+
         :param obj: Объекта, у которого меняется свойство.
         :type property: C{string}
         :param property: Имя свойства.
@@ -268,6 +272,7 @@ class icBackground(object):
     def ChangeItemProperty(self, iditem, property, value):
         """
         Изменяет заданное свойство объекта в графическом редакторе.
+
         :type iditem: C{int}
         :param iditem: Идентификатор ресусного описания объекта.
         :type property: C{string}
@@ -291,6 +296,7 @@ class icBackground(object):
     def ChangeSelItemProperty(self, property, value):
         """
         Изменяет заданное свойство текущего объекта в графическом редакторе.
+
         :type property: C{string}
         :param property: Имя свойства.
         :type value: C{...}
@@ -312,6 +318,7 @@ class icBackground(object):
     def ChangeResItemProperty(self, iditem, property, value, bRefresh=True):
         """
         Изменяет заданное свойство ресурсного описания объекта.
+
         :type iditem: C{int}
         :param iditem: Идентификатор ресурса, у которого изменяем свойство.
         :type property: C{string}
@@ -326,6 +333,7 @@ class icBackground(object):
     def ChangeResProperty(self, obj, property, value, bRefresh=True):
         """
         Изменяет заданное свойство ресурсного описания объекта.
+
         :type obj: C{icBase}
         :param obj: Объект, у которого изменяем свойство.
         :type property: C{string}
@@ -354,6 +362,7 @@ class icBackground(object):
     def DragSelObj(self, pos):
         """
         Захватывает выбранный объект для перетаскивания.
+
         :type pos: C{wx.Point}
         :param pos: Позиция захвата относительно родительского окна.
         """
@@ -520,7 +529,9 @@ class icBackground(object):
         self.RefreshStatusBar()
         
     def OnMove(self, event):
-        """ Обработка события мыши <wx.EVT_MOTION>."""
+        """
+        Обработка события мыши <wx.EVT_MOTION>.
+        """
         if not self.selectedObj or self.selectedObj.name == '__EditorBackground__':
             event.Skip()
             return
@@ -1108,6 +1119,7 @@ class icBackground(object):
     def ReSizer(self, obj=None):
         """
         Перестраивает сайзер.
+
         :param obj: Объект, который изменил свой параметры.
         """
         if not obj:
@@ -1174,6 +1186,7 @@ class icBackground(object):
         Выбор объкта в качестве текущего по попределенному идентификатору.
         Идентификатор хранится в ресурсном описании каждого объекта под ключом
         '__item_id'
+
         :type res: C{dictionary}
         :param res: Ресурсное описания объекта.
         :rtype: C{Bool}
@@ -1189,19 +1202,20 @@ class icBackground(object):
                 pass
         return False
 
-    def SelectObjId(self, iditem):
+    def SelectObjId(self, item_id):
         """
         Выбор объкта в качестве текущего по определенному идентификатору.
         Идентификатор хранится в ресурсном описании каждого объекта под ключом
         '__item_id'
-        :type itemid: C{int}
-        :param itemid: Идентификатор описания объекта.
+
+        :type item_id: C{int}
+        :param item_id: Идентификатор описания объекта.
         :rtype: C{Bool}
         :return: Признак успешного выбора.
         """
         for obj in self.container:
             try:
-                if obj.resource['__item_id'] == iditem:
+                if obj.resource['__item_id'] == item_id:
                     self.SelectObj(obj, bDrag=False)
                     self.ReSizer()
                     obj.SetFocus()
@@ -1220,6 +1234,7 @@ class icBackground(object):
         """
         Функция выбора объкта в качестве текущего. Выбор происходит по
         нажатию левой кнопки мыши на выбираемом объекте.
+
         :type obj_event: C{наследник от wx.Window}
         :param obj_event: Выбираемый объект.
         :type x: C{int}
@@ -1286,6 +1301,7 @@ class icBackground(object):
 def BindEditorEvent(self, id=None):
     """
     Функция создает все обработчики событий необходимые редактору форм.
+
     :param self: Указатель на окно редактора.
     """
     self.Bind(wx.EVT_CLOSE, self.OnClose)
@@ -1307,6 +1323,7 @@ class icBackgroundDialog(icBackground, icdialog.icDialog):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace={}):
         """
         Конструктор для создания объекта icBackgroundFrame.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -1336,6 +1353,7 @@ class icBackgroundPanel(icBackground, wx.Panel):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None):
         """
         Конструктор для создания объекта icBackgroundFDialog.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -1362,6 +1380,7 @@ class icBackgroundFDialog(icwidget.icSimple, wx.Frame):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace={}):
         """
         Конструктор для создания объекта icBackgroundFDialog.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -1460,6 +1479,7 @@ class icBackgroundFrame(icBackground, icwidget.icSimple, wx.Frame):
     def __init__(self, parent, id=-1, component={}, logType=0, evalSpace=None):
         """
         Конструктор для создания icBackgroundFrame.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}
@@ -1517,6 +1537,7 @@ class icBackgroundDocumentFrame(icBackground, icwidget.icBase, wx.ScrolledWindow
     def __init__(self, parent, id=-1, component=None, logType=0, context=None):
         """
         Конструктор для создания icBackgroundFrame.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно.
         :type id: C{int}

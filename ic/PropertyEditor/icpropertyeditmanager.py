@@ -80,6 +80,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def register_custom_editor(self, *editor_classes):
         """
         Регистрация пользовательских редакторов свойств.
+
         :param editors_classes: Список классов пользовательских редакторов.
         """
         if not editor_classes:
@@ -112,6 +113,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def getPropertyType(self, name, res=None):
         """
         Определить тип редактора атрибута по описанию ресурса.
+
         :param name: Имя атрибута.
         :param res: Редактируемый ресурс.
         :return: Тип редактора атрибута icDefInf.EDT_...
@@ -132,6 +134,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def _get_combin_value_list(self, value, choice_dict):
         """
         Получить строковое представление значения
+
         :param value: Текущее значение.
         :param choice_dict: Словарь взможных значений.
         :return: Строковое представление значения.
@@ -145,6 +148,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def createWXProperty(self, name, value, property_type, spc=None):
         """
         Создать свойство wx по типу редактора.
+
         :param name: Имя свойства/атрибута.
         :param value: Значение свойства/атрибута.
         :param property_type: Тип редактора свойства.
@@ -338,6 +342,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def buildPropertyEditors(self, res=None):
         """
         Заполнение редакторами своиств.
+
         :param res: Ресурсное описание компонента.
         """
         self.Clear()
@@ -406,6 +411,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def isIgnoreProperty(self, name):
         """
         Игнорировать атрибут?
+
         :param name: Имя атрибута.
         :return: True/False
         """
@@ -415,6 +421,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def isBaseProperty(self, name):
         """
         Является атрибут основным?
+
         :param name: Имя атрибута.
         :return: True/False
         """
@@ -424,6 +431,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def isVisualProperty(self, name):
         """
         Является атрибут атрибутом отображения?
+
         :param name: Имя атрибута.
         :return: True/False
         """
@@ -433,6 +441,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def isSpecialProperty(self, name):
         """
         Является атрибут специальным?
+
         :param name: Имя атрибута.
         :return: True/False
         """
@@ -442,6 +451,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def isEvent(self, name, res=None):
         """
         Является атрибут событием?
+
         :param name: Имя атрибута.
         :return: True/False
         """
@@ -457,6 +467,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def getBaseProperties(self, res):
         """
         Определить базовые свойства ресурса.
+
         :param res: Редактируемый ресурс.
         :return: Кортеж имен атрибутов основных свойств.
         """
@@ -472,6 +483,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def getVisualProperties(self, res):
         """
         Определить свойства отображения ресурса.
+
         :param res: Редактируемый ресурс.
         :return: Кортеж имен атрибутов свойств отображения.
         """
@@ -482,6 +494,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def getSpecialProperties(self, res):
         """
         Определить специальные свойства ресурса.
+
         :param res: Редактируемый ресурс.
         :return: Кортеж имен атрибутов специальных свойств.
         """
@@ -492,6 +505,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def getEvens(self, res):
         """
         Определить события ресурса.
+
         :param res: Редактируемый ресурс.
         :return: Кортеж имен атрибутов событий.
         """
@@ -523,6 +537,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def setResource(self, res, spc=None, parent_res=None):
         """
         Устанавливает ресурс на редактирование.
+
         :type res: C{dictionary}
         :param res: Ресурс, который будет редактироваться.
         :type spc: C{dictionary}
@@ -570,6 +585,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def enableValidate(self, bEnable):
         """
         Включает/отключает контроль.
+
         :type bEnable: C{bool}
         :param bEnable: Признак включения контроля значения свойств.
         """
@@ -578,6 +594,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def validate(self, name, value):
         """
         Контроль значений свойств.
+
         :type name: C{string}
         :param name: Имя атрибута.
         :type value: C{string}
@@ -625,6 +642,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         """
         Некоторые свойства влияют на отображение дерева ресурсов.
         Обновление дерева ресурсов при установке свойств.
+
         :type name: C{string}
         :param name: Имя атрибута.
         :type value: C{string}
@@ -653,6 +671,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
         SyntaxError: unexpected character after line continuation character.
         Чтобы этого не происходило удаляются все символы новой строки/перевода каретки
         из исполняемого выражения.
+
         :param expr: Само выражение. Если не строка, то остается без изменений.
         :return: Подготовленное выражение.
         """
@@ -664,6 +683,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def _convertValue(self, attr_name, str_value, property_type, spc=None):
         """
         Преобразовать значение согласно типу редактора свойства.
+
         :param attr_name: Имя атрибута.
         :param str_value: Значение в строковом представлении.
         :param property_type: Тип редактора свойства.
@@ -818,6 +838,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def findPropertyType(self, name, spc):
         """
         Поиск по спецификациям типа свойства/атрибута.
+
         :param name: Имя свойства/атрибута.
         :param spc: Спецификация.
         :return: Код типа свойства/атрибута или None, если не найдено
@@ -842,6 +863,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def convertPropertyValue(self, name, str_value, spc):
         """
         Преобразовать значение свойства к типу указанному в спецификации.
+
         :param name: Имя свойства/аттрибута.
         :param str_value: Значение в строковом представлении.
         :param spc: Спецификация компонента.
@@ -860,6 +882,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def setPropertyValue(self, name, value, bConvert=True):
         """
         Установить значение свойства в ресурсе.
+
         :param name: Имя свойства/аттрибута.
         :param value: Значение свойства/аттрибута.
         :param bConvert: Произвести конвертацию строкового значения?
@@ -878,6 +901,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def setReadOnly(self, bEnable=True):
         """
         Установить редактор в режиме чтения.
+
         :param bEnable: Вкл./Выкл.
         """
         pass
@@ -892,6 +916,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def setResTree(self, res_tree):
         """
         Установить объект дерева ресурса.
+
         :type res_tree: C{icResTree.icResTree}
         :param res_tree: Указатель на дерево ресурса.
         """
@@ -923,6 +948,7 @@ class icPropertyEditorManager(wx.propgrid.PropertyGridManager):
     def initPropertyHelp(self, spc):
         """
         Инициализировать словарь строк помоши атрибутов спецификации компонента.
+
         :param spc: Спецификация компонента.
         :return: Словарь строк помощи:
             {

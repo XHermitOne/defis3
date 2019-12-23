@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Редактор ресурсов.
 """
@@ -2377,7 +2378,7 @@ class icResourceEditor(icwidget.icWidget, wx.SplitterWindow):
                     self._formName = formName
                 elif formName and formName not in _res.keys():
                     dlgfunc.openWarningBox(u'ОШИБКА',
-                                        u'Не найдена форма <%s> в <%s>' % (formName, path))
+                                           u'Не найдена форма <%s> в <%s>' % (formName, path))
                 elif len(_res.keys()) == 1:
                     self._formName = list(_res.keys())[0]
                     self.res = _res[self._formName]

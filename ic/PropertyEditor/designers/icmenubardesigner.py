@@ -1,37 +1,31 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# -----------------------------------------------------------------------------
-# Name:        icmenubardesigner.py
-# Purpose:     Дизайнер горизонтального меню.
-#
-# Author:      <Kolchanov A. V.>
-#
-# Created:     11.02.2008
-# RCS-ID:      $Id: icmenubardesigner.py $
-# Copyright:   (c) 2008
-# Licence:     <your licence>
-# -----------------------------------------------------------------------------
+"""
+Дизайнер горизонтального меню.
+"""
 
 import wx
 from ic.utils import util
 from ic.components import icwidget
-import ic.utils.resource as resource
-import ic.utils.graphicUtils as graphicUtils
 from ic.interfaces import icdesignerinterface
+
 _ = wx.GetTranslation
 
-#---------- Классы --------------
+
 class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesignerInterface):
-    """ Класс дизайнер горизонтального меню."""
+    """
+    Класс дизайнер горизонтального меню.
+    """
     @staticmethod
     def getToolPanelCls():
         return None
     
-    def __init__(self, parent = None, id = -1, component = {}, logType = 0,
-            evalSpace = None, bCounter=False, progressDlg=None, *arg, **kwarg):
+    def __init__(self, parent=None, id=-1, component={}, logType=0,
+                 evalSpace = None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """ 
-        Конструктор для создания icMenuBar
+        Конструктор для создания icMenuBar.
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно
         :type id: C{int}
@@ -44,35 +38,34 @@ class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesig
         :type evalSpace: C{dictionary}
         """
         from ic.components.user import ic_menubar_wrp
-        #import ic.engine.ic_menu as ic_menu
-        
+
         self.bSizerAdd = False
         util.icSpcDefStruct(ic_menubar_wrp.ic_class_spc, component)
         icwidget.icWidget.__init__(self, parent, id, component, logType, evalSpace)
 
-        #Высота горизонтального меню
+        # Высота горизонтального меню
         self.menubar_h = 20
         
-        fgr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENUTEXT) #component['foregroundColor']
-        bgr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU) #component['backgroundColor']
+        fgr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENUTEXT)
+        bgr = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU)
 
         style = wx.BORDER_SIMPLE
-        wx.Panel.__init__(self, parent, id, self.position, self.size, style = style, name = self.name)
+        wx.Panel.__init__(self, parent, id, self.position, self.size, style=style, name=self.name)
         
-        if fgr != None:
+        if fgr is not None:
             self.SetForegroundColour(fgr)
-        if bgr != None:
+        if bgr is not None:
             self.SetBackgroundColour(bgr)
 
         #   Создаем дочерние компоненты
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
         
-        #Создание дочерних дизайнеров
+        # Создание дочерних дизайнеров
         children = self.childCreator(bCounter, progressDlg)
         if children:
             for child in children:
                 self.sizer.Add(child, 0, wx.ALIGN_LEFT)
-        #Добавить пустое место 
+        # Добавить пустое место
         self.sizer.Add((50, self.menubar_h+1))
         
         self.SetSizer(self.sizer)
@@ -87,7 +80,7 @@ class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesig
             if not self.evalSpace['_root_obj']:
                 self.evalSpace['_root_obj'] = self
             self.GetKernel().parse_resource(self, self.child, None, context=self.evalSpace,
-                                bCounter = bCounter, progressDlg = progressDlg)
+                                            bCounter=bCounter, progressDlg=progressDlg)
             return self.get_children_lst()
 
     def setEditorMode(self):
@@ -96,18 +89,20 @@ class icMenuBarDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesig
         """
         self.is_editor_mode = True
 
+
 def test2(par=0):
-    """ Тестируем класс icFrameDesigner."""
+    """
+    Тестируем класс icFrameDesigner.
+    """
     from ic.components.ictestapp import TestApp
     from ic.components import icframe
     app = TestApp(par)
     main_win = icframe.icFrame()
-    frame = icMenuBarDesigner(main_win, component = {'title':'wxFrame Test',
-                                #'backgroundColor':(255,255,255),
-                                'keyDown':'print \'keyDown in icFrame\''})
-    #MsgBox(frame, 'Проверка')
+    frame = icMenuBarDesigner(main_win, component={'title': 'wxFrame Test',
+                                                   'keyDown': 'print \'keyDown in icFrame\''})
     main_win.Show(True)
     app.MainLoop()
+
 
 if __name__ == '__main__':
     test2()

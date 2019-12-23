@@ -23,7 +23,6 @@ class icDesignerApp(wx.App):
     """
     Приложение дезайнера.
     """
-
     def OnInit(self):
         """
         Инициализация приложения.

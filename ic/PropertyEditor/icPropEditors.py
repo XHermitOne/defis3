@@ -57,7 +57,6 @@ class icEditPropCtrl(icEvent):
     """
     Интерфейс для компонентов, которые редактируют свойства в редакторе свойств.
     """
-
     def __init__(self, nameValue):
         """
         Конструктор.
@@ -122,9 +121,10 @@ class icEditPropText(icEditPropCtrl):
     """
     Класс редактирования текстовых свойств.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -145,9 +145,10 @@ class icEditPropNumber(icEditPropCtrl):
     """
     Класс редактора числовых значений (int | float).
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -184,9 +185,10 @@ class icEditPropTextList(icEditPropCtrl):
     """
     Класс редактирования списка.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -221,9 +223,10 @@ class icEditPropTextDict(icEditPropCtrl):
     """
     Класс редактирования списка.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -258,9 +261,10 @@ class icEditPropPoint(icEditPropCtrl):
     """
     Класс редактирования текстовых свойств.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -295,9 +299,10 @@ class icEditPropSize(icEditPropCtrl):
     """
     Класс редактирования размеров объекта.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -332,9 +337,10 @@ class icEditPropCombine(icEditPropCtrl):
     """
     Класс редактирования комбинированных свойств.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -411,9 +417,10 @@ class icEditPropDict(icEditPropCtrl):
     """
     Класс редактирования значений словаря.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -506,9 +513,10 @@ class icEditImportNames(icEditPropDict):
     """
     Класс редактирования словаря импортируемых имен.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -576,9 +584,10 @@ class icEditPropChoice(icEditPropCtrl):
     """
     Класс редактирования свойств через wx.Choice.
     """
-    
     def __init__(self, nameValue, pos, size, style=0):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -621,9 +630,10 @@ class icEditPropCheckBox(icEditPropCtrl):
     """
     Класс редактирования свойств через wx.CheckBox.
     """
-    
     def __init__(self, nameValue, pos, size, style=0):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -670,9 +680,10 @@ class icEditPropTButton(icEditPropCtrl):
     """
     Класс редактирования текстовых свойств.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER, label='...'):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -701,7 +712,6 @@ class icEditPropTButton(icEditPropCtrl):
     def OnButton(self, event):
         """
         """
-                
         self.nameValue.value = self.propEditor['OnButton']()
         self.nameValue.oldValue = self.value
         self.nameValue.edit_ctrl.SetValue(self.nameValue.GetStr())
@@ -733,9 +743,10 @@ class icEditColor(icEditPropTButton):
     """
     Редактор для редактирования цветов.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -796,6 +807,8 @@ class icEditFont(icEditPropTButton):
     """
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -908,9 +921,10 @@ class icEditPropPyScript(icEditPropTButton):
     """
     Класс редактирования питоновских скриптов.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -1076,9 +1090,10 @@ class icEditNewProperty(icEditPropTButton):
     """
     Редактор для добавления нового свойства.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}
@@ -1125,9 +1140,10 @@ class icEditAddProperty(icEditPropPyScript):
     """
     Редактор для добавления нового свойства.
     """
-    
     def __init__(self, nameValue, pos, size, style=wx.SIMPLE_BORDER):
         """
+        Конструктор.
+
         :type nameValue: C{NameValue}
         :param nameValue: Указатель на объект свойства NameValue.
         :type pos: C{wx.Point}

@@ -27,11 +27,11 @@ class icDialogDesigner(icwidget.icWidget, wx.Panel, icdesignerinterface.icDesign
     """
     Класс дизайнер фрейма.
     """
-
     def __init__(self, parent=None, id=-1, component={}, logType=0,
                  evalSpace=None, bCounter=False, progressDlg=None, *arg, **kwarg):
         """
         Конструктор для создания icFrame
+
         :type parent: C{wxWindow}
         :param parent: Указатель на родительское окно
         :type id: C{int}

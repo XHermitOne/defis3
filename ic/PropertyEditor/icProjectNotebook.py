@@ -35,6 +35,7 @@ class icProjectNB(fnb.FlatNotebook):
     def __init__(self, parent, pos=wx.DefaultPosition, size=wx.DefaultSize, *args, **kwargs):
         """
         Конструктор.
+
         :param parent: Родительское окно.
         :param pos: Позиция.
         :param size: Размер.
@@ -51,6 +52,7 @@ class icProjectNB(fnb.FlatNotebook):
     def create_page(self, caption=u''):
         """
         Создать новую страницу нотебука.
+
         :param caption: Заголовок страницы.
         :return: Объект wx.Panel новой страницы нотебука.
         """
@@ -78,6 +80,7 @@ class icProjectNB(fnb.FlatNotebook):
     def init_notebook(self, prj_edt, res_edt, ifs):
         """
         Инициализация нотебука.
+
         :param prj_edt: Редактор проекта.
         :param res_edt: Редактор ресурса.
         :param ifs: Объект, реализующий интерфейс IDE.
