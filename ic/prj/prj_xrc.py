@@ -22,7 +22,6 @@ class icPrjXRCResource(prj_node.icPrjNode):
     """
     Файл ресурса форм XRC.
     """
-
     def __init__(self, parent=None):
         """ 
         Конструктор.
@@ -47,6 +46,7 @@ class icPrjXRCResource(prj_node.icPrjNode):
     def create(self, new_name=None):
         """ 
         Функция создания.
+
         :param new_name: Указание нового имени созданного узла.
         """
         cmd = 'xrced --meta&'

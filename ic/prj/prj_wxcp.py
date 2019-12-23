@@ -26,7 +26,6 @@ class icPrjWXCrafterProject(prj_node.icPrjNode,
     """
     Проект wxCrafter.
     """
-
     def __init__(self, parent=None):
         """ 
         Конструктор.
@@ -52,6 +51,7 @@ class icPrjWXCrafterProject(prj_node.icPrjNode,
     def create(self, new_name=None):
         """ 
         Функция создания.
+
         :param new_name: Указание нового имени созданного узла.
         """
         self.create_project()

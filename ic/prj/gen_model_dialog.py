@@ -78,6 +78,7 @@ class icGenModelDialog(gen_model_dialog_proto.icGenModelDialogProto,
 def open_gen_model_dialog(parent=None, tab_res_filename=None):
     """
     Функция вызова диалогового окна генерации модулей модели и менеджера модели.
+
     :param parent: Родительское окно.
         Если не определено, то берется главное окно приложения.
     :param tab_res_filename: Полное имя файла ресурса таблицы, по

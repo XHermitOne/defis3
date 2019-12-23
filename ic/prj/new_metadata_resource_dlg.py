@@ -71,6 +71,7 @@ def new_metadata_resource_dlg(parent=None, default_resource_name=None):
     """
     Вызвать диалоговое окно для выбора параметров
     для создания нового ресурса метаданных.
+
     :param parent: Родительское окно.
     :param default_resource_name: Имя ресурса по умолчанию.
     :return: Кортеж: (имя ресурса, ресурс выбранного компонента)

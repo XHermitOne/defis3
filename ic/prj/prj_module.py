@@ -51,7 +51,6 @@ class icPrjModules(prj_node.icPrjFolder):
     """
     Функционал.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -84,6 +83,7 @@ class icPrjModules(prj_node.icPrjFolder):
         Получить отсортированный список файлов и подпапок по пути.
         Порядок сортировки: Сначала папки отсортированные по имени,
         затем файлы отсортированные по имени.
+
         :param path: Текущая папка-пакет.
         :return:
         """
@@ -107,6 +107,7 @@ class icPrjModules(prj_node.icPrjFolder):
     def buildPrjPy(self, path):
         """
         Построение всех узлов/py-модулей проекта.
+
         :param path: Текущая папка-пакет/py-модуль.
         """
         # Обработка подпапок
@@ -117,6 +118,7 @@ class icPrjModules(prj_node.icPrjFolder):
     def _findModuleSignature(self, module_name, signature):
         """
         Проверка есть ли в модуле сигнатура?
+
         :param module_name: Имя модуля.
         :param signature: Текст сигнатуры.
         :return: Возвращает True/False.
@@ -137,6 +139,7 @@ class icPrjModules(prj_node.icPrjFolder):
     def isModule(self, filename):
         """
         Проверка является ли файл модулм проекта.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
@@ -148,6 +151,7 @@ class icPrjModules(prj_node.icPrjFolder):
     def isFBP(self, filename):
         """ 
         Проверка является ли файл модулм проекта wxformbuilder.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
@@ -157,6 +161,7 @@ class icPrjModules(prj_node.icPrjFolder):
     def isWXCP(self, filename):
         """
         Проверка является ли файл модулем проекта wxCrafter.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
@@ -166,6 +171,7 @@ class icPrjModules(prj_node.icPrjFolder):
     def isXRC(self, filename):
         """
         Проверка является ли файл XRC ресурсом форм.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
@@ -178,73 +184,80 @@ class icPrjModules(prj_node.icPrjFolder):
     def isInterfaceModule(self, filename):
         """
         Проверка является ли файл интерфейсным модулем проекта.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
-               (os.path.splitext(filename)[1] == '.py' and \
-                os.path.basename(filename) != '__init__.py') and \
-               self._findModuleSignature(filename, INTERFACE_MODULE_SIGNATURE)
+            (os.path.splitext(filename)[1] == '.py' and
+             os.path.basename(filename) != '__init__.py') and \
+            self._findModuleSignature(filename, INTERFACE_MODULE_SIGNATURE)
             
     def isResourceModule(self, filename):
         """
         Проверка является ли файл ресурсным модулем проекта.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
-               (os.path.splitext(filename)[1] == '.py' and \
-                os.path.basename(filename) != '__init__.py') and \
-               self._findModuleSignature(filename, RESOURCE_MODULE_SIGNATURE)
+            (os.path.splitext(filename)[1] == '.py' and
+             os.path.basename(filename) != '__init__.py') and \
+            self._findModuleSignature(filename, RESOURCE_MODULE_SIGNATURE)
             
     def isImageModule(self, filename):
         """
         Проверка является ли файл модулем библиотеки образов проекта.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
-               (os.path.splitext(filename)[1] == '.py' and \
-                os.path.basename(filename) != '__init__.py') and \
-               self._findModuleSignature(filename, IMAGE_MODULE_SIGNATURE)
+            (os.path.splitext(filename)[1] == '.py' and
+             os.path.basename(filename) != '__init__.py') and \
+            self._findModuleSignature(filename, IMAGE_MODULE_SIGNATURE)
 
     def isFBModule(self, filename):
         """
         Проверка является ли файл модулем форм wxFormBuilder.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
-               (os.path.splitext(filename)[1] == '.py' and
-                os.path.basename(filename) != '__init__.py') and \
-               self._findModuleSignature(filename, WXFB_MODULE_SIGNATURE)
+            (os.path.splitext(filename)[1] == '.py' and
+             os.path.basename(filename) != '__init__.py') and \
+            self._findModuleSignature(filename, WXFB_MODULE_SIGNATURE)
 
     def isXRCModule(self, filename):
         """
         Проверка является ли файл модулем форм,
         сгенерированных утилитой pywxrc (из XRC ресурса).
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
-               (os.path.splitext(filename)[1] == '.py' and
-                os.path.basename(filename) != '__init__.py') and \
-               self._findModuleSignature(filename, XRC_MODULE_SIGNATURE)
+            (os.path.splitext(filename)[1] == '.py' and
+             os.path.basename(filename) != '__init__.py') and \
+            self._findModuleSignature(filename, XRC_MODULE_SIGNATURE)
 
     def isTemplateModule(self, filename):
         """
         Проверка является ли файл модулем шаблона проекта.
+
         :param filename: Имя файла.
         :return: Возвращает True/False.
         """
         return os.path.isfile(filename) and \
-               (os.path.splitext(filename)[1] == '.py' and \
-                os.path.basename(filename) != '__init__.py') and \
-               self._findModuleSignature(filename, TEMPLATE_MODULE_SIGNATURE)
+            (os.path.splitext(filename)[1] == '.py' and
+             os.path.basename(filename) != '__init__.py') and \
+            self._findModuleSignature(filename, TEMPLATE_MODULE_SIGNATURE)
             
     def isPackage(self, directory):
         """
         Проверка является ли директория пакетом проекта.
+
         :param directory: Указание директории.
         :return: Возвращает True/False.
         """
@@ -260,6 +273,7 @@ class icPrjModules(prj_node.icPrjFolder):
     def buildPyTree(self, cur_package, path):
         """
         Построение всех узлов/py-модулей проекта.
+
         :param cur_package: Узел пакета, в который происходит добавление.
         :param path: Текущая папка-пакет/py-модуль.
         """
@@ -421,6 +435,7 @@ class icPrjPackage(prj_node.icPrjFolder):
     def create(self, new_name=None):
         """
         Создание пакета.
+
         :param new_name: Указание нового имени созданного узла.
         """
         # Ввести наименование при создании
@@ -547,6 +562,7 @@ class icPrjPackage(prj_node.icPrjFolder):
     def paste(self, node):
         """
         Вставить.
+
         :param node: Вставляемый узел.
         """
         # Можно вставлять толко модули или другие пакеты
@@ -559,7 +575,7 @@ class icPrjPackage(prj_node.icPrjFolder):
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_name):
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Модуль <%s> уже существует!' % mod_name)
+                                   u'Модуль <%s> уже существует!' % mod_name)
                 return False
             # Добавить модуль в ресурс проекта
             node.getRoot().prj_res_manager.addModule(mod_name, mod_path)
@@ -583,7 +599,6 @@ class icPrjModule(prj_node.icPrjNode):
     """
     Модуль/Функционал.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -621,6 +636,7 @@ class icPrjModule(prj_node.icPrjNode):
     def create(self, new_name=None):
         """
         Функция создания модуля.
+
         :param new_name: Указание нового имени созданного узла.
         """
         # Ввести наименование при создании
@@ -635,7 +651,7 @@ class icPrjModule(prj_node.icPrjNode):
         # Есть уже модуль с таким именем?
         if self.getRoot().prj_res_manager.isModByName(mod_name):
             dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                            u'Модуль <%s> уже существует!' % mod_name)
+                               u'Модуль <%s> уже существует!' % mod_name)
             return False
         # Добавить модуль в ресурс проекта
         self.getRoot().prj_res_manager.addModule(mod_name, mod_path)
@@ -688,12 +704,12 @@ class icPrjModule(prj_node.icPrjNode):
                 if resfunc.isLockRes(self.name, parent_pack, 'py',
                                      self.getRoot().lock_dir):
                     lock_rec = resfunc.getLockResRecord(self.name, parent_pack,
-                                                       'py', self.getRoot().lock_dir)
+                                                        'py', self.getRoot().lock_dir)
 
                     lock_user = lock_rec.get('user', u'Не определен') if lock_rec else u'Не определен'
                     lock_computer = lock_rec.get('computer', u'Не определен') if lock_rec else u'Не определен'
                     dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                    u'Ресурс <%s> заблокирован пользователем <%s>. Компьютер: <%s>.' % (self.name, 
+                                       u'Ресурс <%s> заблокирован пользователем <%s>. Компьютер: <%s>.' % (self.name,
                                                                                                         lock_user,
                                                                                                         lock_computer))
                     self.readonly = True
@@ -787,6 +803,7 @@ class icPrjModule(prj_node.icPrjNode):
     def paste(self, node):
         """
         Вставить.
+
         :param node: Вставляемый узел.
         """
         # Можно вставлять толко модули или другие пакеты
@@ -800,7 +817,7 @@ class icPrjModule(prj_node.icPrjNode):
             # Есть уже модуль с таким именем?
             if self.getRoot().prj_res_manager.isModByName(mod_name):
                 dlgfunc.openMsgBox(u'ВНИМАНИЕ!',
-                                u'Модуль <%s> уже существует!' % mod_name)
+                                   u'Модуль <%s> уже существует!' % mod_name)
                 return False
             # Добавить модуль в ресурс проекта
             node.getRoot().prj_res_manager.addModule(mod_name, mod_path)
@@ -820,6 +837,7 @@ class icPrjModule(prj_node.icPrjNode):
     def isResClass(self, module_filename):
         """
         Проверка, является ли указанный модуль ресурсным классом.
+
         :param module_filename: Имя файла модуля.
         :return: Возвращает True/False.
         """
@@ -868,7 +886,6 @@ class icPrjInterfaceModule(icPrjModule):
     """
     Интерфейсный модуль.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -904,7 +921,6 @@ class icPrjTemplateModule(icPrjModule):
     """
     Модуль шаблона.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -919,7 +935,6 @@ class icPrjResourceModule(icPrjModule):
     """
     Ресурсный модуль.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -934,7 +949,6 @@ class icPrjImageModule(icPrjModule):
     """
     Модуль библиотеки образов.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -956,7 +970,7 @@ class icPrjImageModule(icPrjModule):
         Редактирование модуля.
         """
         dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
-                            u'''Редактирование модуля библиотеки образов запрещено.
+                               u'''Редактирование модуля библиотеки образов запрещено.
 Модули библиотеки образов генерируются в редакторе библиотеки образов.''')
 
 
@@ -964,7 +978,6 @@ class icPrjFBModule(icPrjModule, wxfb_manager.icWXFormBuilderManager):
     """
     Модуль форм wxFormBuilder.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -981,7 +994,7 @@ class icPrjFBModule(icPrjModule, wxfb_manager.icWXFormBuilderManager):
         Редактирование модуля.
         """
         dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
-                            u'''Редактирование модуля форм wxFormBuilder запрещено.
+                               u'''Редактирование модуля форм wxFormBuilder запрещено.
 Модули форм генерируются в среде wxFormBuilder.''')
 
     def onNodePopup(self, event):
@@ -1055,7 +1068,6 @@ class icPrjXRCModule(icPrjModule):
     """
     Модуль форм, сгенерированных утилитой pywxrc (из XRC ресурса).
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.
@@ -1072,7 +1084,7 @@ class icPrjXRCModule(icPrjModule):
         Редактирование модуля.
         """
         dlgfunc.openWarningBox(u'ПРЕДУПРЕЖДЕНИЕ',
-                            u'''Редактирование модуля форм, сгенерированных утилитой pywxrc (из XRC ресурса), запрещено.
+                               u'''Редактирование модуля форм, сгенерированных утилитой pywxrc (из XRC ресурса), запрещено.
 Модули форм генерируются средствами дизайнера XRC файла.''')
 
     def onNodePopup(self, event):

@@ -5,7 +5,6 @@
 Просмотрщик ресурсного узла проекта.
 """
 
-# --- Подключение библиотек ---
 from ic.utils import util
 from ic.interfaces import icprjnodeviewer
 from ic.PropertyEditor import icResTree
@@ -19,7 +18,6 @@ class icResPrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
     """
     Просмотрщик ресурсного узла проекта.
     """
-
     def __init__(self, parent, node):
         """
         Конструктор.

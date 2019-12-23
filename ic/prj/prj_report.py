@@ -21,7 +21,6 @@ class icPrjReports(prj_node.icPrjNode):
     """
     Отчеты.
     """
-
     def __init__(self, parent=None):
         """
         Конструктор.

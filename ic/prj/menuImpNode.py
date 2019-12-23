@@ -5,7 +5,6 @@
 Модуль меню добавления/редактирования импортируемых подсистем.
 """
 
-# --- Подключение библиотек ---
 import wx
 from wx.lib.agw import flatmenu
 
@@ -21,7 +20,6 @@ class icMenuImpNode(flatmenu.FlatMenu):
     """
     Меню добавления/редактирования импортируемых подсистем.
     """
-
     def __init__(self, parent):
         """
         Конструктор.
@@ -90,7 +88,6 @@ class icMenuImpSysNode(flatmenu.FlatMenu):
     """
     Меню обновления импортируемой подсистемы.
     """
-
     def __init__(self, parent):
         """
         Конструктор.
@@ -153,7 +150,6 @@ class icMenuNotImpSysNode(flatmenu.FlatMenu):
     """
     Меню обновления не импортированной подсистемы.
     """
-
     def __init__(self, parent):
         """
         Конструктор.
@@ -200,7 +196,6 @@ class icMenuImpResNode(flatmenu.FlatMenu):
     """
     Меню копирования ресурсов из импортируемых подсистем.
     """
-
     def __init__(self, parent):
         """
         Конструктор.

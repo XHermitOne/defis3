@@ -5,7 +5,6 @@
 Модуль меню управления механизмом модулей.
 """
 
-# --- Подключение библиотек ---
 import os
 import os.path
 import wx
@@ -28,7 +27,6 @@ class icMenuModNode(flatmenu.FlatMenu):
     """
     Меню управления механизмом модулей.
     """
-
     def __init__(self, parent):
         """
         Конструктор.

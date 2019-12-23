@@ -73,7 +73,6 @@
 Переменные и значения попадают в окружение проекта автоматически.
 """
 
-# Подключение библиотек
 import re
 import os.path
 import wx
@@ -101,7 +100,6 @@ class icPrjRes(resManager.icResourceManagerInterface):
     """
     Класс управления ресурсом проекта.
     """
-
     def __init__(self):
         """
         Конструктор.
@@ -120,6 +118,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def newPrj(self, prj_name, py_pack=None, prj_template=None):
         """
         Создание нового проекта по умолчанию.
+
         :param prj_name: Имя проекта.
         :param py_pack: Макет модулей питона.
         :param prj_template: Шаблон для создания проекта.
@@ -210,6 +209,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def _save_prj(self, prj_filename, project=None):
         """
         Непосредственное сохранение проекта.
+
         :param prj_filename: Имя файла проекта.
         :param project: Структура проекта.
         :return: Возвращает результат выполнения True/False.
@@ -227,6 +227,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def addFolder(self, new_folder_name, dst_folder_name, cur_folder=None):
         """
         Добавить папку.
+
         :param new_folder_name: Имя новой папки.
         :param dst_folder_name: Имя папки или проекта,
             в которую будет добавляться новая папка.
@@ -260,6 +261,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def addRes(self, new_res_name, res_type, dst_folder_name, cur_folder=None):
         """
         Добавить ресурс.
+
         :param new_res_name: Имя нового ресурса.
         :param res_type: Тип ресурса ('tab','var','win','mnu','svb','frm').
         :param dst_folder_name: Имя папки или проекта,
@@ -287,6 +289,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def delFolder(self, del_folder_name, cur_folder=None):
         """
         Удалить папку с именем.
+
         :param del_folder_name: Имя удаляемой папки.
         :param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
@@ -312,6 +315,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getFolder(self, folder_name, cur_folder=None):
         """
         Взять папку с именем.
+
         :param folder_name: Имя папки.
         :param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
@@ -335,6 +339,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getFolderBody(self, folder_name, cur_folder=None):
         """
         Взять содержимое папки с именем.
+
         :param folder_name: Имя папки.
         :param cur_folder: Текущая папка,  если None,
             то берется папка проекта.
@@ -358,6 +363,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def delRes(self, res_name, res_type=None, cur_folder=None):
         """
         Удалить ресурс по имени и типу.
+
         :param res_name: Имя ресурса.
         :param res_type: Тип ресурса, если None,
             то проверка на тип не производится.
@@ -389,6 +395,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getResRef(self, res_name, res_type=None, cur_folder=None):
         """
         Получить кортеж указания ресурса по имени и типу.
+
         :param res_name: Имя ресурса.
         :param res_type: Тип ресурса, если None,
             то проверка на тип не производится.
@@ -466,6 +473,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def addPackage(self, package_path, new_package_name=None):
         """
         Добавить пакет модулей в дерево проектов.
+
         :param package_path: Путь пакета.
         :param new_package_name: Имя нового пакета.
         :return: Результат добавления True|False.
@@ -478,6 +486,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def addModule(self, module_name, package_path):
         """
         Добавить модуль в дерево проектов.
+
         :param module_name: Имя модуля.
         :param package_path: Путь пакета.
         """
@@ -486,6 +495,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def renameRes(self, old_name, new_name, cur_folder=None):
         """
         Переименовать ресурс/папку.
+
         :param old_name: Старое имя.
         :param new_name: Новое имя.
         :param cur_folder: Текущая папка,  если None, 
@@ -512,6 +522,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def newSubSys(self, subsys_name, subsys_prj_filename, py_pack):
         """
         Создать новую импортируемую подсистему.
+
         :param subsys_name: Имя импортируемой подсистемы.
         :param subsys_prj_filename: Файл импортируемой подсистемы.
         :param py_pack: Пакет импортируемой подсистмы.
@@ -528,6 +539,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def isResORFolderByName(self, name, cur_folder=None):
         """
         Проверка, есть ли ресурс или папка с таким именем в проекте.
+
         :param name: Имя.
         :return: Возвращает результат операции True/False.
         """
@@ -550,6 +562,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def isResByNameANDType(self, name, res_type=None, cur_folder=None):
         """
         Проверка, есть ли ресурс с таким именем и типом в проекте.
+
         :param name: Имя.
         :param res_type: Строковое определение типа ресурса 'tab','frm',...
             Если тип None, то проверка по типу не делается.
@@ -577,6 +590,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getResNameListByType(self, res_type, cur_folder=None):
         """
         Список имен ресурсов в проекте по их типу.
+
         :param res_type: Строковое определение типа ресурса 'tab','frm',...
         :return: Возвращает список имен ресурсов заданного типа.
         """
@@ -601,6 +615,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getResNameListByTypes(self, res_types, cur_folder=None):
         """
         Список имен ресурсов в проекте по их типу.
+
         :param res_types: Кортеж строковых определение типа ресурса 'tab','frm',...
         :return: Возвращает список имен ресурсов заданных типов.
         """
@@ -625,6 +640,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getResNamesByTypes(self, *res_types):
         """
         Список имен ресурсов в проекте по их типу.
+
         :param res_types: Кортеж строковых определение типа ресурса 'tab','frm',...
         :return: Возвращает список имен ресурсов заданных типов.
         """
@@ -633,6 +649,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getResFileNamesByResPattern(self, res_pattern, cur_folder=None):
         """
         Список имен файлов ресурсов по шаблону ресурса.
+
         :param res_pattern: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
         :return: Список имен файлов ресурсов по шаблону ресурса.
         """
@@ -665,6 +682,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getObjectsByResPattern(self, *res_pattern):
         """
         Получить список кортежей (тип объекта,имя объекта) по шаблону ресурса.
+
         :param res_pattern: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
         :return: Список кортежей (тип объекта,имя объекта) по шаблону ресурса.
         """
@@ -687,6 +705,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getObjectsInResByType(self, res_filename, obj_type, cur_obj=None):
         """
         Поиск объектов в ресурсе по типу.
+
         :param res_filename: Имя файла ресурса.
         :param OBjType_: Тип объекта, например 'icButton'.
         :return: Список кортежей формата:
@@ -714,6 +733,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getObjectsInResByTypes(self, res_filename, obj_types, cur_obj=None):
         """
         Поиск объектов в ресурсе по типу.
+
         :param res_filename: Имя файла ресурса.
         :param OBjTypes_: Кортеж типов объектов, например ('icButton',).
         :return: Список кортежей формата:
@@ -742,6 +762,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getObjByResPatternANDType(self, res_pattern, obj_type):
         """
         Получить список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
+
         :param res_pattern: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
         :param obj_type: Тип объекта. Например 'icButton'.
         :return: Список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
@@ -758,6 +779,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getObjByResPatternANDTypes(self, res_pattern, obj_types):
         """
         Получить список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
+
         :param res_pattern: Кортеж строковых определений шаблонов ресурса '.*\.tab',...
         :param obj_types: Кортеж типов объектов, например ('icButton',).
         :return: Список кортежей (тип объекта,имя объекта) по шаблону ресурса и типу объекта.
@@ -774,6 +796,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def isModByName(self, module_name):
         """
         Проверить, есть ли модуль с таким именем.
+
         :param module_name: Имя модуля.
         :return: Возвращает результат операции True/False.
         """
@@ -782,6 +805,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def isImpSubSys(self, name):
         """
         Проверить, является ли name именем импортируемой подсистемы.
+
         :param name: Имя некого ресурса.
         :return: Возвращает True/False.
         """
@@ -790,6 +814,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def getImpSubSysIdx(self, name):
         """
         Возвращает индекс импортируемой подсистемы по имени.
+
         :param name: Имя подсистемы.
         :return: Индекс в структуре ресурсного файла импортируемой подсистемы
             с именем name или -1, если такая подсистема в описании не найдена.
@@ -807,6 +832,7 @@ class icPrjRes(resManager.icResourceManagerInterface):
     def delImpSubSys(self, name, bAutoSave=True):
         """
         Удалить из файла *.pro импортируемую подсистему по имени.
+
         :param name: Имя подсистемы.
         :param bAutoSave: Автоматически сохранить файл *.pro после удаления.
         :return: Возвращает True/False.

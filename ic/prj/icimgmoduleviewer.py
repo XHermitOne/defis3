@@ -5,7 +5,6 @@
 Просмотрщик узла модуля библиотеки образов проекта.
 """
 
-# --- Подключение библиотек ---
 import wx
 import wx.grid
 
@@ -16,10 +15,6 @@ from ic.components.user import icsimplegrid
 __version__ = (0, 1, 1, 1)
 
 _ = wx.GetTranslation
-# --- Константы ---
-# --- Функции управления ---
-
-# --- Описание классов ---
 
 
 class icImgModulePrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
@@ -64,6 +59,7 @@ class icImgModulePrjNodeViewer(icprjnodeviewer.icPrjNodeViewerInterface,
     def _addImg(self, img_name, img):
         """
         Добавить образ в грид.
+
         :param img_name: Имя образа.
         :param img: Объект образа wx.Bitmap.
         """

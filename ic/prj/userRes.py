@@ -23,11 +23,10 @@ _ = wx.GetTranslation
 __version__ = (0, 1, 1, 1)
 
 
-class UserIcResource(resManager.icResourceManagerInterface):
+class icUserResourceManager(resManager.icResourceManagerInterface):
     """
     Класс управления ресурсом проекта.
     """
-
     def __init__(self):
         """
         Конструктор.
@@ -53,6 +52,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def HasItemInDict(self, p, ResName, tp):
         """
         Функция проверки наличия элемента в словаре.
+
         :param  p: путь к элементу в виде '' для ресурса типа TAB,VAR,WIN,MNU,SVB,FRM
             в виде '['tab1']['shema'][0]['group']' для ресурса типа TAB-SHEMA.
         :param ResName: имя ресурса.
@@ -79,6 +79,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def newDefault(self, UserName_='new_user'):
         """
         Создание ресурса по умолччанию. Для одного пользователя!!!.
+
         :param UserName_: Имя пользрвателя по умолчанию.
         """
         usr = {'_uuid': None,
@@ -99,6 +100,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def newDefaultUser(self, UserName_='new_user'):
         """
         Создание ресурса по умолччанию. Для одного пользователя!!!.
+
         :param UserName_: Имя пользрвателя по умолчанию.
         """
         usr = copy.deepcopy(user_manager.SPC_IC_USER)
@@ -109,6 +111,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def newDefaultUserGroup(self, UserGrpName_='new_user_grp'):
         """
         Спецификация группы пользователей по умолчанию.
+
         :param UserGrpName_: Имя группы пользрвателей.
         """
         usr_grp = copy.deepcopy(user_manager.SPC_IC_USERGROUP)
@@ -119,6 +122,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def Add(self, parent=None):
         """
         Добавить элемент.
+
         :param parent: родительский.
         """
         # получить новое имя
@@ -134,6 +138,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def renameUser(self, OldUserName_, NewUserName_):
         """
         Переименовать пользователя.
+
         :param OldUserName_: Старое имя пользователя.
         :param NewUserName_: Новое имя пользователя.
         :return: Функция возвращает результат выполнения операции True/False.
@@ -151,6 +156,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def Copy(self, struct, parent=None):
         """
         Копирует данные.
+
         :param struct: Дерево.
         :param parent: Родительский.
         :return: Возвращает struct с новыми именами.
@@ -221,6 +227,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def PasteFromClip(self, struct, lst, parent=None):
         """
         Вставляет данные из Clipboard'а.
+
         :param struct: Дерево.
         :param lst: Список словарей - значений соответствующих ключей.
         :param parent: Родительский.
@@ -264,6 +271,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def saveAs(self, res_filename=None):
         """
         Сохранить как...
+
         :param res_filename: Имя ресурсного файла, если None, 
             то сделать его запрос.
         :return: Функция возвращает результат выполнения операции 
@@ -285,6 +293,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def load(self, res_filename=None):
         """
         Загрузить из ресурсного файла.
+
         :param res_filename: Имя ресурсного файла, если None, 
             то сделать его запрос.
         """
@@ -327,6 +336,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
         {'Dirs':[{'Dir1':['Dir1_1','Dir1_2']},'Dir2']}].
         Если элемент списка - строка, то это НЕ группа.
         Если элемент списка - словарь, то это группа.
+
         :return: Возвращает словарно-списковую структуру.
         """
         # Формируем список кортежей, каждый кортеж содержит отношение (потомок,родитель)
@@ -359,6 +369,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def DictToTreeLevel(self, key, list):
         """
         Вспомогательная рекурсивная функция.
+
         :param key: имя элемента (проверяется входимость элемента в список кортежей).
         :param list: список кортежей.
         :return: Возвращает 1,если элемент обнаружен, иначе 0
@@ -371,6 +382,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def DictToTreeList(self, key, list):
         """
         Вспомогательная рекурсивная функция.
+
         :param key: имя элемента (проверяется входимость элемента в список кортежей).
         :param list: список кортежей.
         :return: Возвращает списочно-словарную структуру
@@ -393,6 +405,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def createUser(self, UserName_='new_user'):
         """
         Создание нового пользователя в структуре.
+
         :param UserName_: Имя пользователя.
         :return: Возвращает результат выполнения операции True/False.
         """
@@ -410,6 +423,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def createUserGroup(self, UserGrpName_='new_user_grp'):
         """
         Создание новой группы пользователей в структуре.
+
         :param username: Имя пользователя.
         :return: Возвращает результат выполнения операции True/False.
         """
@@ -427,6 +441,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def createRes(self, ResFileName_=None):
         """
         Создать файл ресурсов прав и пользователей.
+
         :param ResFileName_: Имя ресурсного файла.
         :return: Функция возвращает результат выполнения операции 
             сохранения True/False.
@@ -443,6 +458,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def delUser(self, UserName_='new_user'):
         """
         Удаление пользователя из ресурса.
+
         :param UserName_: Имя пользователя.
         :return: Возвращает True/False.
         """
@@ -456,7 +472,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
             if user_legacy:
                 # Если есть, то не удалять его
                 dlgfunc.MsgBox(u'ВНИМАНИЕ!',
-                              u'У пользователя <%s> есть наследники. Сначала удалите их.' % user_legacy)
+                               u'У пользователя <%s> есть наследники. Сначала удалите их.' % user_legacy)
                 return False
             del self._user_res[UserName_]
             return True
@@ -465,6 +481,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def findUserLegacy(self, UserName_='new_user'):
         """
         Поиск имен пользователей, которые наследуют права от username.
+
         :param UserName_: Имя пользователя.
         :return: Возвращает список имен пользователей-наследников
             или None  в случае ошибки.
@@ -476,6 +493,7 @@ class UserIcResource(resManager.icResourceManagerInterface):
     def isUser(self, UserName_='new_user'):
         """
         Проверка,  есть ли такой пользователь в ресурса.
+
         :param UserName_: Имя пользователя.
         """
         if self._user_res:
