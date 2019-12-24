@@ -87,7 +87,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ui-scroll-pane-block.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ui-scroll-pane-block.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.metatreelistctrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -98,7 +98,7 @@ ic_can_contain = ['GridCell']
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 # Функции редактирования
@@ -222,6 +222,7 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         Получить надписи колонок.
         Контрол в любом случае имеет одну колонку для отображения метадерева.
         Переопределяемый метод.
+
         :return: Список надписай колонок.
         """
         return [column.get('label', u'') for column in self.resource['child']]
@@ -231,6 +232,7 @@ class icMetaTreeListCtrl(parentModule.icMetaTreeListCtrlProto, icwidget.icWidget
         Получить ширины колонок.
         Контрол в любом случае имеет одну колонку для отображения метадерева.
         Переопределяемый метод.
+
         :return: Список ширин колонок.
         """
         return [column.get('width', wx.DefaultSize.GetWidth()) for column in self.resource['child']]

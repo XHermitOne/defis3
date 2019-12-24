@@ -75,7 +75,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('funnel--arrow.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('funnel--arrow.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.icfiltertreectrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -86,7 +86,7 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 class icFilterTreeCtrl(icwidget.icWidget,
@@ -146,6 +146,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
         Это уникальный идентификатор паспорта компонента.
         Не изменяемый в зависимости от редактирования т.к.
         паспорт не меняется.
+
         :return: UUID строка контрольной суммы паспорта.
         """
         if self._widget_psp_uuid:
@@ -166,6 +167,7 @@ class icFilterTreeCtrl(icwidget.icWidget,
     def getCurRecords(self, item_filter=None, **kwargs):
         """
         Код получения набора записей, соответствующих фильтру для индикаторов.
+
         :param item_filter: Описание фильтра элемента.
             Если None, то фильтрация не производится.
             ВНИМАНИЕ! При выполнении блока кода <get_records> в пространство имен помещается

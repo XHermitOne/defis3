@@ -5,10 +5,6 @@
 Контрол организации последовательности списка.
 """
 
-
-# import datetime
-# import wx
-
 from ic.utils import util
 from ic.bitmap import bmpfunc
 from ic.components import icwidget as parentModule
@@ -36,7 +32,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('ui-flow.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('ui-flow.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.icsequencelistbox.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -47,13 +43,14 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icSequenceListBox(sequence_list_box_ctrl.icSequenceListBox,
                         parentModule.icWidget):
     """
     Контрол организации последовательности списка.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Specification.
     """

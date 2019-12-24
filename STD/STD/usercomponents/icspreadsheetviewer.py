@@ -42,7 +42,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('table-excel.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('table-excel.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.icspreadsheetviewer.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -53,7 +53,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icSpreadSheetViewerCtrl(icwidget.icWidget,

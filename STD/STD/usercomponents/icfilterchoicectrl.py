@@ -67,7 +67,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('funnel--pencil.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('funnel--pencil.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.icfilterchoicectrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -78,7 +78,7 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 class icFilterChoiceCtrl(icwidget.icWidget,
@@ -124,6 +124,7 @@ class icFilterChoiceCtrl(icwidget.icWidget,
         Это уникальный идентификатор паспорта компонента.
         Не изменяемый в зависимости от редактирования т.к.
         паспорт не меняется.
+
         :return: UUID строка контрольной суммы паспорта.
         """
         if self._widget_psp_uuid:

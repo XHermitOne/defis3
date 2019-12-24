@@ -51,7 +51,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('folders_explorer.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('folders_explorer.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.iccataloger.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -62,16 +62,16 @@ ic_can_contain = ['CatalogLevel']
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 0, 0, 3)
+__version__ = (0, 1, 1, 2)
 
 
 class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
     """
     Компонент каталогизатора.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Specification.
     """
-
     component_spc = ic_class_spc
 
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace = None,
@@ -128,6 +128,7 @@ class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
     def isPutPhysicFunc(self):
         """
         Определена функция расположения в каталогизаторе?
+
         :return: True/False.
         """
         return self.isICAttrValue('put_physic_func')
@@ -135,6 +136,7 @@ class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
     def isGetPhysicFunc(self):
         """
         Определена функция получения объекта из каталогизатора?
+
         :return: True/False.
         """
         return self.isICAttrValue('get_physic_func')
@@ -142,6 +144,7 @@ class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
     def putPhysicFunc(self, obj, physic_path):
         """
         Функция помещения объекта в физический каталог.
+
         :param obj: Размещаемый в физическом каталоге объект.
         :param physic_path: Путь размещения объекта в физическом каталоге.
         :return: True/False.
@@ -161,6 +164,7 @@ class icCataloger(icwidget.icSimple, parentModule.icCatalogerProto):
     def getPhysicFunc(self, physic_path):
         """
         Функция получения объекта из физического каталога.
+
         :param physic_path: Путь размещения объекта в физическом каталоге.
         :return: Объект/Имя файла, размещенного в физическом каталоге.
         """

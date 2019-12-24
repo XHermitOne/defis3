@@ -9,7 +9,6 @@
 import wx
 import datetime
 from ic.utils import util
-from ic.kernel import io_prnt
 from ic.bitmap import bmpfunc
 from ic.components import icwidget as parentModule
 from ic.PropertyEditor import icDefInf
@@ -40,7 +39,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('calendar-property.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('calendar-property.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.icdatetimectrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -51,7 +50,7 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 0, 0, 2)
+__version__ = (0, 1, 1, 2)
 
 
 class icDateTimeCtrl(datetime_ctrl.icDateTimeControl,
@@ -61,6 +60,7 @@ class icDateTimeCtrl(datetime_ctrl.icDateTimeControl,
     ВНИМАНИЕ! Наследование от icWidget д.б. на последнем месте,
     чтобы переопределить методы setValue/getValue. Они необходимы для
     заполнения значениями в формах-карточках с помощью icFormDataManger.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Specification.
     """

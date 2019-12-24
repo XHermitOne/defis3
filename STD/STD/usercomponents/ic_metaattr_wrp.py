@@ -58,7 +58,7 @@ ic_class_pic = '@common.imgEdtMetaAttr'
 ic_class_pic2 = '@common.imgEdtMetaAttr'
 
 #   Путь до файла документации
-ic_class_doc = 'ic/doc/ic.components.user.ic_metaattr_wrp.icMetaAttr-class.html'
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.ic_metaattr_wrp.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -69,14 +69,13 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icMetaAttr(icwidget.icSimple, metaattr.icMetaAttrPrototype):
     """
     Атрибут метакомпонента.
     """
-
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
                  bCounter=False, progressDlg=None):
         """

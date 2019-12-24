@@ -46,7 +46,7 @@ ic_class_pic = bmpfunc.createLibraryBitmap('combo_box_calendar.png')
 ic_class_pic2 = bmpfunc.createLibraryBitmap('combo_box_calendar.png')
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.icyearchoicectrl.html'
 ic_class_spc['__doc__'] = ic_class_doc
 
 #   Список компонентов, которые могут содержаться в компоненте
@@ -57,12 +57,13 @@ ic_can_contain = []
 ic_can_not_contain = []
 
 #   Версия компонента
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 class icYearChoiceCtrl(parentModule.icChoice):
     """
     Компонент выбора года.
+
     :type component_spc: C{dictionary}
     :cvar component_spc: Specification.
     """

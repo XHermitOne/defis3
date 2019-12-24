@@ -3,6 +3,7 @@
 
 """
 Контрол дерева конструктора фильтров.
+
 Класс пользовательского компонента <контрол дерева конструктора фильтров>.
 
 :type ic_user_name: C{string}
@@ -60,7 +61,7 @@ ic_class_pic = common.imgEdtTreeListCtrl
 ic_class_pic2 = common.imgEdtTreeListCtrl
 
 #   Путь до файла документации
-ic_class_doc = ''
+ic_class_doc = 'STD/doc/_build/html/STD.usercomponents.icfilterconstructortree.html'
 ic_class_spc['__doc__'] = ic_class_doc
                     
 #   Список компонентов, которые могут содержаться в компоненте
@@ -71,9 +72,7 @@ ic_can_contain = []
 ic_can_not_contain = None
 
 #   Версия компонента
-__version__ = (0, 0, 0, 1)
-
-# Функции редактирования
+__version__ = (0, 1, 1, 2)
 
 
 class icFilterConstructorTreeCtrl(icwidget.icWidget, parentModule.icFilterConstructorTreeList):
@@ -87,7 +86,6 @@ class icFilterConstructorTreeCtrl(icwidget.icWidget, parentModule.icFilterConstr
         - B{name='default'}:
 
     """
-
     component_spc = ic_class_spc
     
     def __init__(self, parent, id=-1, component=None, logType=0, evalSpace=None,
