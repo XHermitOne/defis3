@@ -36,7 +36,6 @@ class icEMailSender(object):
     """
     Отправщик писем.
     """
-
     def __init__(self, from_adr=None, to_adr=None,
                  subject=None, body=None, attache_files=None,
                  smtp_server=None, smtp_port=None,
@@ -47,6 +46,7 @@ class icEMailSender(object):
                  connect_protect=None, authent=None):
         """
         Конструктор.
+
         :param from_adr: Адрес отправителя.
         :param to_adr: Адрес/адреса получаетелей.
             Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.
@@ -102,6 +102,7 @@ class icEMailSender(object):
     def _do_cmd_list(self, cmd_list, mode=os.P_WAIT):
         """
         Выполнение списка команд ОС.
+
         :param cmd_list: Список команд ОС.
         """
         if cmd_list and isinstance(cmd_list, list):
@@ -119,7 +120,8 @@ class icEMailSender(object):
 
     def _do_cmd(self, cmd, mode=None):
         """
-        Выполнить команду в указанном режиме (с ожиданием завершения/без ожидания).
+        Выполнить команду в указанном режиме
+        (с ожиданием завершения/без ожидания).
         """
         try:
             if mode is None:
@@ -140,6 +142,7 @@ class icEMailSender(object):
         """
         Функция отправки  письма. Если какой  параметр функции
             None, то этот параметр берется из внутренних настроек отправщика.
+
         :param from_adr: Адрес отправителя.
         :param to_adr: Адрес/адреса получаетелей.
             Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.
@@ -178,6 +181,7 @@ class icEMailSender(object):
         """
         Функция отправки  письма. Если какой  параметр функции
             None, то этот параметр берется из внутренних настроек отправщика.
+
         :param from_adr: Адрес отправителя.
         :param to_adr: Адрес/адреса получаетелей.
             Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.
@@ -290,6 +294,7 @@ class icEMailSender(object):
     def get_outbox_filenames(self, outbox_dir=None):
         """
         Посмотреть есть ли файлы в папке исходящих файлов.
+
         :param outbox_dir: Папка исходящих файлов.
         :return: Список файлов находящихся в папке исходящих файлов.
         """
@@ -306,6 +311,7 @@ class icEMailSender(object):
 def send_mail(*args, **kwargs):
     """
     Отсылка письма из командной строки.
+
     :param from_adr: Адрес отправителя.
     :param to_adr: Адрес/адреса получаетелей.
         Может задаваться списком или текстом разделенным EMAIL_ADR_DELIMETER.

@@ -3,6 +3,7 @@
 
 """ 
 Функции для работы с графикой.
+
 :type BGR_SOLID: C{int}
 :param BGR_SOLID: Идентификатор сплошной одноцветной заливки.
 :type BGR_GRAD_TOP: C{int}
@@ -21,7 +22,7 @@
 
 import wx
 
-__version__ = (0, 1, 1, 3)
+__version__ = (0, 1, 1, 4)
 
 #   Идентификаторы типов заливки ячейки
 BGR_SOLID = 0
@@ -35,6 +36,7 @@ BGR_GRAD_RIGHT = 4
 def getMidColour(clr1, clr2, part=0.5):
     """ 
     Функция возвращает промежуточный цвет между двумя.
+
     :type clr1: C{wx.Colour}
     :param clr1: Первый цвет.
     :type clr2: C{wx.Colour}
@@ -51,27 +53,28 @@ def getMidColour(clr1, clr2, part=0.5):
 def drawGradient(dc, width, height, clr, gradType=BGR_GRAD_TOP, x0=0, y0=0, delta=None):
     """ 
     Рисует прямоугольник с градиентной заливкой.
-    type dc: C{wx.DC}
-    param dc: Контекст устройства.
-    type width: C{int}
-    param width: Ширина прямоугольника.
-    type height: C{int}
-    param height: Высота прямоугольника.
-    type clr: C{wx.Colour}
-    param clr: Основной цвет.
-    type gradType: C{int}
-    param gradType: Тип заливки:
+
+    :type dc: C{wx.DC}
+    :param dc: Контекст устройства.
+    :type width: C{int}
+    :param width: Ширина прямоугольника.
+    :type height: C{int}
+    :param height: Высота прямоугольника.
+    :type clr: C{wx.Colour}
+    :param clr: Основной цвет.
+    :type gradType: C{int}
+    :param gradType: Тип заливки:
         BGR_SOLID - сплошная заливка без градиента.
         BGR_GRAD_TOP - верх-низ
         BGR_GRAD_BOTTOM - низ-верх
         BGR_GRAD_LEFT - лево-право
         BGR_GRAD_RIGHT - право-лево.
-    type x0: C{int}
-    param x0: Левый угол.
-    type y0: C{int}
-    param y0: Верх угла.
-    type delta: C{int}
-    param delta: Глубина градиента
+    :type x0: C{int}
+    :param x0: Левый угол.
+    :type y0: C{int}
+    :param y0: Верх угла.
+    :type delta: C{int}
+    :param delta: Глубина градиента
     """
     if not delta:
         if clr.Red() == clr.Green() and clr.Red() ==  clr.Blue():
@@ -162,27 +165,28 @@ def drawGradientRect(dc, width, height, clr1, clr2=wx.Colour(128, 128, 128),
                      gradType=BGR_GRAD_TOP, x0=0, y0=0):
     """ 
     Рисует прямоугольник с градиентной заливкой.
-    type dc: C{wx.DC}
-    param dc: Контекст устройства.
-    type width: C{int}
-    param width: Ширина прямоугольника.
-    type height: C{int}
-    param height: Высота прямоугольника.
-    type clr1: C{wx.Colour}
-    param clr1: цвет 1.
-    type clr2: C{wx.Colour}
-    param clr2: цвет 2.
-    type gradType: C{int}
-    param gradType: Тип заливки:
+
+    :type dc: C{wx.DC}
+    :param dc: Контекст устройства.
+    :type width: C{int}
+    :param width: Ширина прямоугольника.
+    :type height: C{int}
+    :param height: Высота прямоугольника.
+    :type clr1: C{wx.Colour}
+    :param clr1: цвет 1.
+    :type clr2: C{wx.Colour}
+    :param clr2: цвет 2.
+    :type gradType: C{int}
+    :param gradType: Тип заливки:
         BGR_SOLID - сплошная заливка без градиента.
         BGR_GRAD_TOP - верх-низ
         BGR_GRAD_BOTTOM - низ-верх
         BGR_GRAD_LEFT - лево-право
         BGR_GRAD_RIGHT - право-лево.
-    type x0: C{int}
-    param x0: Левый угол.
-    type y0: C{int}
-    param y0: Верх угла.
+    :type x0: C{int}
+    :param x0: Левый угол.
+    :type y0: C{int}
+    :param y0: Верх угла.
     """
     if gradType in [BGR_GRAD_TOP, BGR_GRAD_BOTTOM]:
         for h in range(height):
@@ -223,6 +227,7 @@ def drawRoundCornersRect(dc, pos, size, fgr, bgr, bgr_prnt,
                          st=0, clrLst=None, corners=(1, 1, 1, 1), backgroundType=0):
     """ 
     Рисует скругленные углы (радиус=4).
+
     :type dc: C{wx.DC}
     :param dc: Контекст устройства.
     :type pos: C{tuple/list}
@@ -323,11 +328,12 @@ def getAdjustColour(color, percent, alpha=wx.ALPHA_OPAQUE):
     """ 
     Brighten/Darken input colour by percent and adjust alpha
     channel if needed. Returns the modified color.
+
     :param color: color object to adjust
     :type color: wx.Colour
     :param percent: percent to adjust +(brighten) or -(darken)
     :type percent: int
-    @keyword alpha: amount to adjust alpha channel
+    :param alpha: amount to adjust alpha channel
     """ 
     end_color = wx.WHITE
     if color == end_color and percent < 0:
@@ -350,11 +356,12 @@ def getAdjustColour2(color, shift, alpha=wx.ALPHA_OPAQUE):
     """ 
     Brighten/Darken input colour by percent and adjust alpha
     channel if needed. Returns the modified color.
+
     :param color: color object to adjust
     :type color: wx.Colour
     :param percent: percent to adjust +(brighten) or -(darken)
     :type percent: int
-    @keyword alpha: amount to adjust alpha channel
+    :param alpha: amount to adjust alpha channel
     """ 
     I = float(color.Red() + color.Green() + color.Blue())/(3.0*255)
     if I > 0.5:

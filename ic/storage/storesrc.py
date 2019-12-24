@@ -59,7 +59,6 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
     """
     Узел файлового хранилища.
     """
-
     def __init__(self):
         """
         Конструктор.
@@ -84,6 +83,7 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
     def setParentNode(self, ParentNode_, Name_):
         """
         Установить родительский узел.
+
         :param ParentNode_: Родительский узел.
         :param Name_: Имя данного узла.
         """
@@ -92,6 +92,7 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
     def setName(self, NewName_):
         """
         Установить имя узла.
+
         :param NewName_: НОвое имя.
         """
         if NewName_ == self.getName():
@@ -155,6 +156,7 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
     def setProperty(self, NewProperty_):
         """
         Установить свойства узла.
+
         :param NewProperty_: Словарь свойств.
         """
         return self.__setitem__('property', NewProperty_)
@@ -277,6 +279,7 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
         """
         Заблокировать.
         ВНИМАНИЕ!!! Блокировать необходимо весь файл целиком.
+
         :param Name_: Имя блокируемого объекта.
         :return: Возвращает результат успешной блокировки True/False.
         """
@@ -287,6 +290,7 @@ class icFileNodeStorage(storage_interface.icElementStorageInterface):
     def unLock(self, Name_=None):
         """
         Разблокировать.
+
         :param Name_: Имя блокируемого объекта.
         :return: Возвращает результат успешной разблокировки True/False.
         """
@@ -299,7 +303,6 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     """
     Файловое хранилище.
     """
-
     # Текущее открытое файловое хранилище
     CUR_FILE_STORAGE_OPEN = None
     
@@ -396,6 +399,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     def setParentNode(self, ParentNode_, Name_):
         """
         Привязать узел к родительскому.
+
         :param ParentNode_: Узел, в котором находится папка.
             Родительский узел.
         :param Name_: Имя узла.
@@ -484,6 +488,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     def _readyData(self, Data_=None):
         """
         Подготовка данных для записи.
+
         :param Data_: Данные (дерево узлов), которые надо записать.
         """
         # Если данные не определены, то получить их
@@ -527,6 +532,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     def setProperty(self, NewProperty_):
         """
         Установить свойства узла.
+
         :param NewProperty_: Словарь свойств.
         """
         return self.__setitem__('property', NewProperty_)
@@ -553,6 +559,7 @@ class icFileStorage(storage_interface.icElementStorageInterface):
     def Clone(self, CloneName_):
         """
         Клонировать узел.
+
         :param CloneName_: Имя клона.
         """
         new_file_name = os.path.join(os.path.dirname(self._FileName),
@@ -756,7 +763,6 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     """
     Папочное хранилище типовых объектов.
     """
-
     def __init__(self):
         """
         Конструктор.
@@ -844,6 +850,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def renameNodeDir(self, NewNodeDir_):
         """
         Переименовать папку.
+
         :param NewNodeDir_: Новая папка узла.
         """
         try:
@@ -859,6 +866,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def copyNodeDir(self, NewNodeDir_):
         """
         Скопировать папку.
+
         :param NewNodeDir_: Новая папка узла.
         """
         try:
@@ -909,6 +917,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def setNodeDir(self, Name_):
         """
         Установить папку узла.
+
         :param Name_: Имя узла.
         """
         if self._ParentNode is not None:
@@ -921,6 +930,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def setParentNode(self, ParentNode_, Name_):
         """
         Привязать узел к родительскому.
+
         :param ParentNode_: Узел, в котором находится папка.
             Родительский узел.
         :param Name_: Имя узла.
@@ -957,6 +967,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def setProperty(self, NewProperty_):
         """
         Установить свойства узла.
+
         :param NewProperty_: Словарь свойств.
         """
         self.property = icFileStorage()
@@ -991,6 +1002,7 @@ class icDirStorage(storage_interface.icElementStorageInterface):
     def Clone(self, CloneName_):
         """
         Клонировать узел.
+
         :param CloneName_: Имя клона.
         """
         new_dir_name = os.path.join(os.path.dirname(self._NodeDir), CloneName_)
@@ -1150,7 +1162,6 @@ class icTreeDirStorage(icDirStorage):
     Хранилище типовых объектов в виде дерева каталогов.
     Для системного использования.
     """
-
     def __init__(self, StorageDir_=None):
         """
         Конструктор.
@@ -1210,6 +1221,7 @@ class icTreeDirStorage(icDirStorage):
     def lock(self, Name_=None):
         """
         Заблокировать ресурс папочного хранилища.
+
         :param Name_: Имя блокируемого объекта.
         """
         if Name_ is None:
@@ -1221,6 +1233,7 @@ class icTreeDirStorage(icDirStorage):
     def unLock(self, Name_=None):
         """
         Разблокировать ресурс папочного хранилища.
+
         :param Name_: Имя блокируемого объекта.
         """
         if Name_ is None:
@@ -1242,6 +1255,7 @@ class icTreeDirStorage(icDirStorage):
     def ownerLock(self, Name_=None):
         """
         Владелец блокировки.
+
         :return: Имя компьютера-владельца блокировки. Если None, то блокирвки нет.
         """
         if Name_ is None:
@@ -1279,7 +1293,6 @@ class icObjectStorageSource(icTreeDirStorage,
     Хранилище типовых объектов.
     Стандартизует интерфейс к хранению объектов.
     """
-
     def __init__(self, Res_=None):
         """
         Конструктор.
@@ -1296,7 +1309,6 @@ class icObjStorageSrc(icObjectStorageSource):
     Стандартизует интерфейс к хранению объектов.
     Доступ по имени.
     """
-
     def __init__(self, Name_=None):
         """
         Конструктор.

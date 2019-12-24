@@ -43,7 +43,7 @@ from . import uuidfunc
 from ic.log import log
 import ic
 
-__version__ = (1, 1, 2, 2)
+__version__ = (1, 1, 2, 3)
 
 DEFAULT_ENCODING = 'utf-8'
 

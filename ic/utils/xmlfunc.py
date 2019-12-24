@@ -13,12 +13,13 @@ from ic.contrib import dicttoxml
 from ic.log import log
 from ic.convert import simple_dict2xml
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def load_xml_content(xml_filename, is_change_keys=True):
     """
     Загрузить содержимое XML файла в словарно списковую структуру.
+
     :param xml_filename: Полное имя XML файла.
     :param is_change_keys: Произвести автоматическую замену ключей на короткие.
     :return: Словарно-списковая структура содержания XML файла.
@@ -48,6 +49,7 @@ def load_xml_content(xml_filename, is_change_keys=True):
 def change_keys_doc(xml_document):
     """
     Сократить ключи документа.
+
     :param xml_document: Содержание XML документа.
     :return: Содержание документа с короткими ключами.
     """
@@ -69,6 +71,7 @@ def change_keys_doc(xml_document):
 def save_xml_content(xml_filename, data, is_rewrite=True):
     """
     Записать словарно списковую структуру в XML файл.
+
     :param xml_filename: Полное имя XML файла.
     :param data: Словарно-списковая структура содержания XML файла.
     :param is_rewrite: Перезаписать результирующий файл, если необходимо?
@@ -109,6 +112,7 @@ def save_simple_xml_content(xml_filename, data, is_rewrite=True, tag_filter=None
     """
     Записать словарно списковую структуру в XML файл.
     Самая простая реализация.
+
     :param xml_filename: Полное имя XML файла.
     :param data: Словарно-списковая структура содержания XML файла.
     :param is_rewrite: Перезаписать результирующий файл, если необходимо?

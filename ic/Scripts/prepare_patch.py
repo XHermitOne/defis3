@@ -131,6 +131,7 @@ def parse_folder(args, dirname, names):
 def prepare_patch_tree(path, path_to, lt, ignor_list=IGNOR_PATCH_FILE_EXT):
     """
     Создает папку с файлами которые изменились с определенного времени.
+
     :param path: Путь до папки с проектом.
     :param path_to: Путь куда положить патч.
     :param lt: Время актуальных изменений. Если не указано, то изменения беруться за текущий день.

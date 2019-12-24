@@ -28,7 +28,7 @@ from . import extfunc
 from . import strfunc
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 DEFAULT_ENCODING = 'utf-8'
 
@@ -41,6 +41,7 @@ ALTER_CSV_DELITEMER = u';'
 def createTxtFile(filename, txt=None):
     """
     Создать текстовый файл.
+
     :param filename: Имя создаваемого файла.
     :param txt: Текст по умолчанию записываемый в файл.
     :return: True/False.
@@ -68,6 +69,7 @@ def save_file_csv(csv_filename, records=(),
                   replacements=None):
     """
     Запись в CSV файл списка записей.
+
     :param csv_filename: Имя CSV файла.
     :param records: Список записей.
         Каждая запись представляет собой список значений полей.
@@ -90,6 +92,7 @@ def load_file_csv(csv_filename, delim=u',',
                   encoding=DEFAULT_ENCODING, to_unicode=True):
     """
     Чтение csv файла в виде списка записей.
+
     :param csv_filename; Имя CSV файла.
     :param delim: Разделитель.
     :param encoding: Кодовая страница файла

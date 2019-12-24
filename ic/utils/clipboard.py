@@ -23,6 +23,7 @@ CLIPBOARD = None
 def toClipboard(cur_object):
     """
     Положить объект в клипбоард.
+
     :param cur_object: Объект.
     """
     global CLIPBOARD
@@ -49,6 +50,7 @@ def toClipboard(cur_object):
 def fromClipboard(bClear=True):
     """
     Получить содержимое клипборда.
+
     :param bClear: Признак того,  что после извлечения содержимое очищается.
     """
     global CLIPBOARD
@@ -86,6 +88,7 @@ def clearClipboard():
 def emptyClipboard():
     """
     Проверка клипбоарда. Пустой или нет.
+
     :return: True-если клипбоард пустой.
         False-если в клипбоарде что-либо есть.
     """

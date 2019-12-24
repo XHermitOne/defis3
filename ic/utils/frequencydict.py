@@ -3,7 +3,9 @@
 
 """
 Класс поддержки частотного словаря.
+
 Функции частотного словаря.
+
 Частотный словарь хранит по определенному ключу (имя поля/тескстового поля) список ранее
 вводимых вариантов значений с счетчиком вводов. При достяжении определенного размера списка
 некоторое количество наименее используемых вариантов удаляются.
@@ -56,11 +58,11 @@ class icFrequencyDict(persistant.icPersistant):
     """
     Частотный словарь.
     """
-
     def __init__(self, uniq_name, res_path=None, subsys='',
                  start_pos=fillStartPosition, buffSize=freqDictBuffSize):
         """
         Конструктор частотного словаря.
+
         :type uniq_name: C{string}
         :param uniq_name: Уникальное имя словаря.
         :type res_path: C{string}
@@ -92,6 +94,7 @@ class icFrequencyDict(persistant.icPersistant):
         """
         Устанавливает значение позиций курсора текста после которой функция OnAutoTextFill
         начинает генерировать варианты продолжения слов.
+
         :type start_pos: C{int}
         :param start_pos: Позиция курсора текста после которой функция OnAutoTextFill
             начинает генерировать варианты продолжения слов.
@@ -108,6 +111,7 @@ class icFrequencyDict(persistant.icPersistant):
     def LoadDict(self):
         """
         Читает словарь.
+
         :rtype: C{...}
         :return: Возвращает сохраненный объект.
         """
@@ -117,6 +121,7 @@ class icFrequencyDict(persistant.icPersistant):
     def SaveDict(self):
         """
         Сохраняет словарь в хранилище пользователя.
+
         :rtype: C{bool}
         :return: Признак успешного завершения операции.
         """
@@ -125,6 +130,7 @@ class icFrequencyDict(persistant.icPersistant):
     def UpdateDict(self, obj, *args, **kwargs):
         """
         Объединяет два частотных словаря в один.
+
         :type obj: C{icFrequencydict}
         :param obj: Частотный словарь информация из которого добавляется в текущий словарь.
         :return: Дополненную метомодель частотного словаря.
@@ -166,6 +172,7 @@ class icFrequencyDict(persistant.icPersistant):
         """
         Разбивка списка предложенных значений на слова и их сортировка.
         В новом варианте используем сортировку по тексту в нижнем регистре
+
         :param value_list: Список часто используемых значений.
         :return: Список часто используемых значений отсортированных и с выделенными словами.
             Например:
@@ -190,7 +197,9 @@ class icFrequencyDict(persistant.icPersistant):
 
     def gen_words_with_count(self, *frecuency_value_list):
         """
-        Сгенерировать список часто используемых слов с коэффициентом использивания.
+        Сгенерировать список часто используемых слов с коэффициентом
+        использивания.
+
         :param frecuency_value_list: Список элементов часто используемых слов:
             Элемент списка: (u'Часто используемое слово или фраза',
                                коэффициент/счетчик использования).
@@ -204,6 +213,7 @@ class icFrequencyDict(persistant.icPersistant):
     def FindBestVar(self, key, txt):
         """
         Возвращает наиболее часто повоторяющийся вариант слова.
+
         :type key: C{string}
         :param key: Ключ объекта (имя поля) в частотном словаре.
         :type txt: C{string}
@@ -235,6 +245,7 @@ class icFrequencyDict(persistant.icPersistant):
         """
         Обрабатывает сообщение <icEvents.EVT_TEXT_TEMPL>. Используется для того,
         чтобы предаставить пользователю вариант текста, который он уже вводил.
+
         :type text_ctrl: C{wx.TextCtrl}
         :param text_ctrl: Указатель на объект ввода.
         :type key: C{string}
@@ -262,6 +273,7 @@ class icFrequencyDict(persistant.icPersistant):
     def AddTextFill(self, text_ctrl, key=None):
         """
         Добавляем введеный в контроле текст в частотный словарь.
+
         :type text_ctrl: C{wx.TextCtrl}
         :param text_ctrl: Указатель на объект ввода.
         :type key: C{string}
@@ -287,6 +299,7 @@ class icFrequencyDict(persistant.icPersistant):
         Упорядочивает список слов и вобавляет слово в частотный словарь ввода.
         Если значение слова не передается, то буфер только упорядочивается по 
         убыванию частоты обращений к слову.
+
         :type key: C{string}
         :param key: Ключ объекта (имя поля) в частотном словаре.
         :type val: C{string}
@@ -335,7 +348,8 @@ class icFrequencyDict(persistant.icPersistant):
 
     def saveTextFillControls(self, **controls):
         """
-        Сохранить автозаполнения заполнения контролов. 
+        Сохранить автозаполнения заполнения контролов.
+
         :param controls: Словарь контролов заполнения.
             Ключи словаря используются как ключи частотного словаря.
         :return: True/False.

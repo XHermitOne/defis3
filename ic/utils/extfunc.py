@@ -30,7 +30,7 @@ except:
     print(u'Import error ic_str module')
     log = None
 
-__version__ = (0, 1, 2, 2)
+__version__ = (0, 1, 2, 3)
 
 
 DEFAULT_ENCODING = 'utf-8'
@@ -46,6 +46,7 @@ def who_am_i():
 def is_root_user():
     """
     Проверить текущий пользователь - root?
+
     :return: Функция возвращает True/False.
     """
     return bool(who_am_i().lower() == 'root')
@@ -54,6 +55,7 @@ def is_root_user():
 def check_python_library_version(lib_name, lib_version, compare='=='):
     """
     Проверка установлена ли библиотека указанной версии.
+
     :param lib_name: Имя библиотеки, например 'wx'.
     :param lib_version: Версия библиотеки, например '2.8.8.1'.
     :param compare: Оператор сравнения.
@@ -84,6 +86,7 @@ def check_python_library_version(lib_name, lib_version, compare='=='):
 def version_compare_greate_equal(version1, version2, delimiter='.'):
     """
     Сравнение версий на Version1_>=version2.
+
     :param version1: Версия 1. В строковом виде. Например '2.8.9.2'.
     :param version2: Версия 2. В строковом виде. Например '2.8.10.1'.
     :param delimiter: Разделитель. Например точка.
@@ -115,6 +118,7 @@ def check_python_labraries(**kwargs):
 def check_linux_package(package_name, version=None, compare='=='):
     """
     Проверка установленного пакета Linux.
+
     :param package_name: Имя пакета, например 'libgnomeprintui'
     :param version: Версия пакета. Если None, то версия не проверяется.\
     :param compare: Метод проверки версии.
@@ -132,6 +136,7 @@ def check_linux_package(package_name, version=None, compare='=='):
 def check_deb_linux_package(package_name, version=None, compare='=='):
     """
     Проверка установленного пакета Linux.
+
     :param package_name: Имя пакета, например 'libgnomeprintui'
     :param version: Версия пакета. Если None, то версия не проверяется.\
     :param compare: Метод проверки версии.
@@ -152,6 +157,7 @@ def check_deb_linux_package(package_name, version=None, compare='=='):
 def check_deb_package_install(package_name):
     """
     Проверка установленн ли пакет DEB.
+
     :param package_name: Имя пакета, например 'libgnomeprintui'
     :return: True-пакет установлен, False-не установлен,
         None-система пакетов не определена.
@@ -198,6 +204,7 @@ DEBIAN_LINUX_NAMES = ('Ubuntu', 'Debian', 'Mint', 'Knopix')
 def is_deb_linux():
     """
     Проверка является ли дистрибутив c системой пакетов Debian.
+
     :return: Возвращает True/False.
     """
     linux_name = get_linux_name()
@@ -211,6 +218,7 @@ def is_deb_linux_uname():
     Проверка осуществляется с помощью команды uname.
     ВНИМАНИЕ! Это не надежный способ.
     Функция переписана.
+
     :return: Возвращает True/False.
     """
     uname_result = get_uname()
@@ -235,6 +243,7 @@ def get_dist_packages_path():
 def create_pth_file(pth_filename, path):
     """
     Создание *.pth файла в папке site_packages.
+
     :param pth_filename: Не полное имя pth файла, например 'ic.pth'.
     :param path: Путь который указывается в pth файле.
     :return: Возвращает результат выполнения операции True/False.
@@ -266,6 +275,7 @@ def create_pth_file(pth_filename, path):
 def unzip_to_dir(zip_filename, dst_dir=None, bOverwrite=True, bConsole=True):
     """
     Распаковать *.zip архив в папку.
+
     :param zip_filename: Полное имя *.zip архива.
     :param dst_dir: Указание папки, в которую будет архив разворачиваться.
         Если не указывается, то происходит разархивирование в туже папку
@@ -300,6 +310,7 @@ def unzip_to_dir(zip_filename, dst_dir=None, bOverwrite=True, bConsole=True):
 def targz_extract_to_dir(tar_filename, dst_dir, bConsole=True):
     """
     Распаковать *.tar архив в папку.
+
     :param tar_filename: Полное имя *.tar архива.
     :param dst_dir: Указание папки, в которую будет архив разворачиваться.
     :param bConsole: Вывод в консоль?
@@ -327,6 +338,7 @@ def targz_extract_to_dir(tar_filename, dst_dir, bConsole=True):
 def deb_pkg_install(deb_filename):
     """
     Установить deb пакет.
+
     :param deb_filename: Полное имя *.deb пакета.
     :return: Возвращает результат выполнения операции True/False.
     """
@@ -344,6 +356,7 @@ def deb_pkg_install(deb_filename):
 def deb_pkg_uninstall(deb_package_name):
     """
     Деинсталлировать DEB пакет.
+
     :param deb_package_name: Имя пакета. Например dosemu.
     :return: Возвращает результат выполнения операции True/False.
     """
@@ -391,6 +404,7 @@ def get_login():
 def dir_dlg(title='', default_path=''):
     """
     Диалог выбора каталога.
+
     :param title: Заголовок диалогового окна.
     :param default_path: Путь по умолчанию.
     """
@@ -425,6 +439,7 @@ def dir_dlg(title='', default_path=''):
 def file_dlg(title='', filename_filter='', default_path=''):
     """
     Открыть диалог выбора файла для открытия/записи.
+
     :param title: Заголовок диалогового окна.
     :param filename_filter: Фильтр файлов.
     :param default_path: Путь по умолчанию.
@@ -491,15 +506,11 @@ def check_dir(dirname):
 def save_file_text(filename, txt=''):
     """
     Запись текста в файл.
+
     :param filename; Имя файла.
     :param txt: Записываемый текст.
     :return: True/False
     """
-    # if isinstance(txt, str):
-    #    # Если передается текст в юникоде,
-    #    #  то автоматом перекодировать в UTF-8
-    #    txt = txt.encode(DEFAULT_ENCODING)
-
     file_obj = None
     try:
         file_obj = open(filename, 'wt')
@@ -518,6 +529,7 @@ def load_file_text(filename, code_page='utf-8',
                    to_unicode=False):
     """
     Чтение текстового файла.
+
     :param filename; Имя файла.
     :param code_page: Кодовая страница файла
         (для преобразования в Unicode).
@@ -539,8 +551,6 @@ def load_file_text(filename, code_page='utf-8',
         print(u'Load text file <%s>' % filename)
         return ''
 
-    # if to_unicode:
-    #    return unicode(txt, code_page)
     return txt
 
 
@@ -548,6 +558,7 @@ def load_file_unicode(filename, code_page=None):
     """
     Чтение текстового файла сразу в виде unocode.
     Определение содовой страницы происходит автоматически.
+
     :param filename; Имя файла.
     :param code_page: Кодовая страница файла.
         Если не определена, то пробуем определить ее.
@@ -562,6 +573,7 @@ def load_file_unicode(filename, code_page=None):
 def recode_text_file(txt_filename, new_filename=None, src_codepage=None, dst_codepage='utf-8'):
     """
     Перекодировать текстовый файл из одной кодирровки в другую.
+
     :param txt_filename: Полное наименование текстового файла.
     :param new_filename: Полное наименование результирующего текстового файла.
         Если не определено, то берется исходное имя файла.
@@ -595,6 +607,7 @@ def recode_text_file(txt_filename, new_filename=None, src_codepage=None, dst_cod
 def copy_file_to(src_filename, dst_path, bReWrite=True):
     """
     Копировать файл в указанную папку.
+
     :param src_filename: Имя файла-источника.
     :param dst_path: Папка-назначение.
     :param bReWrite: Перезаписать файл, если он уже существует?
@@ -653,6 +666,7 @@ def set_public_chmode_tree(path):
 def sym_link(link_path, linkname, username=None, bOverwrite=True):
     """
     Создать символическую ссылку.
+
     :param link_path: На что ссылается ссылка.
     :param linkname: Имя ссылки.
     :param username: Имя пользователя.
@@ -679,6 +693,7 @@ def get_options(arguments=None):
     """
     Преобразование параметров командной строки в словарь python.
     Параметры командной строки в виде --ключ=значение.
+
     :param arguments: Список строк параметров.
     :return: Словарь значений или None в случае ошибки.
     """
@@ -707,6 +722,7 @@ def get_options(arguments=None):
 def normpath(path, username=None):
     """
     Нормировать путь.
+
     :param path: Путь.
     :param username: Имя пользователя.
     """
@@ -738,6 +754,7 @@ def getPlatform():
 def copyFile(filename, new_filename, bRewrite=True):
     """
     Создает копию файла с новым именем.
+
     :type filename: C{string}
     :param filename: Полное имя файла.
     :type new_filename: C{string}
@@ -773,6 +790,7 @@ def copyFile(filename, new_filename, bRewrite=True):
 def copyToDir(filename, dst_dir, bRewrite=True):
     """
     Копировать файл в папку.
+
     :type filename: C{string}
     :param filename: Имя файла.
     :type dst_dir: C{string}
@@ -789,6 +807,7 @@ def copyToDir(filename, dst_dir, bRewrite=True):
 def changeExt(filename, new_ext):
     """
     Поменять у файла расширение.
+
     :type filename: C{string}
     :param filename: Полное имя файла.
     :type new_ext: C{string}
@@ -811,6 +830,7 @@ def changeExt(filename, new_ext):
 def parseCmd(command):
     """
     Распарсить команду.
+
     :type command: c{string}
     :param command: Строковое представление команды.
     :return: Список [<Комманда>,<Аргумент1>,<Аргумент2>,..]
@@ -838,6 +858,7 @@ def parseCmd(command):
 def getComputerName():
     """
     Имя компютера. Без перекодировки.
+
     :return: Получить имя компьютера в сети.
         Имя компьютера возвращается в utf-8 кодировке.
     """
@@ -852,6 +873,7 @@ def getComputerName():
 def getComputerNameLAT():
     """
     Имя компютера. Все русские буквы заменяются латиницей.
+
     :return: Получить имя компьютера в сети.
     """
     comp_name = None
@@ -874,6 +896,7 @@ def getComputerNameLAT():
 def _rus2lat(text, translate_dict):
     """
     Перевод русских букв в латинские по словарю замен.
+
     :param text: Русский текст.
     :param translate_dict: Словарь замен.
     """
@@ -906,6 +929,7 @@ def rus2lat(text):
 def norm_path(path, delim=os.path.sep):
     """
     Удалить двойные разделител из пути.
+
     :type path: C{string}
     :param path: Путь
     :type delim: C{string}
@@ -921,6 +945,7 @@ def norm_path(path, delim=os.path.sep):
 def getHomeDir():
     """
     Папка HOME.
+
     :return: Строку-путь до папки пользователя.
     """
     if isWindowsPlatform():
@@ -934,6 +959,7 @@ def getHomeDir():
 def text_file_append(txt_filename, text, cr='\n'):
     """
     Добавить строки в текстовый файл.
+
     :param txt_filename: Имя текстового файла.
     :param text: Добавляемый текст.
     :param cr: Символ возврата каретки.
@@ -968,6 +994,7 @@ def text_file_append(txt_filename, text, cr='\n'):
 def text_file_replace(txt_filename, old_string, new_string, bAutoAdd=True, cr='\n'):
     """
     Замена строки в текстовом файле.
+
     :param txt_filename: Имя текстового файла.
     :param old_string: Старая строка.
     :param new_string: Новая строка.
@@ -1006,6 +1033,7 @@ def text_file_replace(txt_filename, old_string, new_string, bAutoAdd=True, cr='\
 def text_file_find(txt_filename, find_string):
     """
     Поиск строки в текстовом файле.
+
     :param txt_filename: Имя текстового файла.
     :param find_string: Сирока поиска.
     :return: True/False.
@@ -1033,6 +1061,7 @@ def text_file_find(txt_filename, find_string):
 def text_file_subreplace(txt_filename, sub_string, new_string, bAutoAdd=True, cr='\n'):
     """
     Замена строки в текстовом файле с поиском подстроки.
+
     :param txt_filename: Имя текстового файла.
     :param sub_string: Под строка  выявления строки замены.
     :param new_string: Новая строка.
@@ -1076,6 +1105,7 @@ def text_file_subreplace(txt_filename, sub_string, new_string, bAutoAdd=True, cr
 def text_file_subdelete(txt_filename, sub_string):
     """
     Удаление строки в текстовом файле с поиском подстроки.
+
     :param txt_filename: Имя текстового файла.
     :param sub_string: Под строка  выявления строки удаления.
     :return: True/False.
@@ -1112,6 +1142,7 @@ def text_file_subdelete(txt_filename, sub_string):
 def exec_sys_command(command):
     """
     Функция выполнения команды ОС.
+
     :param command: Текст команды.
     """
     try:
@@ -1125,6 +1156,7 @@ def exec_sys_command(command):
 def targz_install_python_package(targz_package_filename=None):
     """
     Установить Python пакет в виде tar.gz архива.
+
     :param targz_package_filename: Имя файла архива поставки Python пакета.
     :return: True/False.
     """
@@ -1163,6 +1195,7 @@ def targz_install_python_package(targz_package_filename=None):
 def checkPingHost(host_name):
     """
     Проверка связи с хостом по пингу (ping).
+
     :param host_name: Имя хоста.
     :return: True - связь с хостом есть. False - сбой связи.
     """
@@ -1173,6 +1206,7 @@ def checkPingHost(host_name):
 def loadBinaryFile(filename):
     """
     Загрузить данные бинарного файла.
+
     :param filename: Полное имя загружаемого файла.
     :return: Бинарные данные файла.
     """
@@ -1187,6 +1221,7 @@ def loadBinaryFile(filename):
 def read_text_file_lines(txt_filename):
     """
     Прочитать текстовый файл как список строк.
+
     :param txt_filename: Полное имя текстового файла.
     :return: Список строк файла.
     """
@@ -1235,6 +1270,7 @@ def read_text_file_lines(txt_filename):
 def append_text_file_line(line, txt_filename=None):
     """
     Записать линию в текстовый файл.
+
     :param line: Линия в виде строки.
     :param txt_filename: Полное имя текстового файла.
     :return: True/False.
@@ -1260,6 +1296,7 @@ def append_text_file_line(line, txt_filename=None):
 def is_float_str(txt):
     """
     Определить является ли строка числом с плавающей запятой.
+
     :param txt: Анализируемая строка.
     :return: True/False
     """
@@ -1273,6 +1310,7 @@ def is_float_str(txt):
 def is_int_str(txt):
     """
     Определить является ли строка целым числом.
+
     :param txt: Анализируемая строка.
     :return: True/False
     """
@@ -1282,6 +1320,7 @@ def is_int_str(txt):
 def is_None_str(txt):
     """
     Определить является ли строка None.
+
     :param txt: Анализируемая строка.
     :return: True/False
     """
@@ -1291,6 +1330,7 @@ def is_None_str(txt):
 def wise_type_translate_str(txt):
     """
     Преобразование типа из строки к реальному типу.
+
     :param txt: Анализируемая строка.
     :return: Значение строки реального типа.
         Например:

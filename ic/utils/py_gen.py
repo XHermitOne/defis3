@@ -120,7 +120,8 @@ def %s(parent=None):
 def genPyForm_by_wxFBModule(wxFB_module_filename, output_filename=None,
                             src_class_name=None, parent=None, re_write=False):
     """
-    Генерация модуля формы по модулю формы, сгенерированного wxFormBuilder. 
+    Генерация модуля формы по модулю формы, сгенерированного wxFormBuilder.
+
     :param wxFB_module_filename: Полное наименование файла модуля Python,
         сгенерированного wxFormBuilder.
     :param output_filename: Имя результирующего файла.

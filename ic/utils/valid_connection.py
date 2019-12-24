@@ -30,12 +30,13 @@ try:
 except:
     pass
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 
 def validPingHost(host_name):
     """
     Проверка связи с хостом по пингу (ping).
+
     :param host_name: Имя хоста.
     :return: True - связь с хостом есть. False - сбой связи.
     """
@@ -52,6 +53,7 @@ def validPingHost(host_name):
 def validDBConnectODBC(connection_str=None):
     """
     Проверка связи с БД ODBC.
+
     :param connection_str: Connection string связи с БД.
     :return: True - есть связь. False - связь не установлена.
     """
@@ -87,6 +89,7 @@ def validDBConnectODBC(connection_str=None):
 def getNotValidDBConnectODBCErrTxt(connection_str=None):
     """
     Получить сообщение об ошибке в случае не доступности связи с БД ODBC.
+
     :param connection_str: Connection string связи с БД.
     :return: Текст ошибки или пустая строка в случае отсутствия ошибки.
     """
@@ -124,6 +127,7 @@ def getNotValidDBConnectODBCErrTxt(connection_str=None):
 def validURL(url):
     """
     Проверка доступности URL.
+
     :param url: URL. Например http://localhost:8080
     :return: True/False.
     """
@@ -138,6 +142,7 @@ def validURL(url):
 def getNotValidURLErrTxt(url):
     """
     Получить сообщение об ошибке в случае не доступности URL.
+
     :param url: URL. Например http://localhost:8080
     :return: Текст ошибки или пустая строка в случае отсутствия ошибки.
     """
@@ -172,6 +177,7 @@ JDBC_DRIVER_FILENAME = {'DBF': os.path.join(JDBC_DRIVER_DIR, 'DBF_JDBC42.jar'),
 def validDBConnectJDBC(connection_url=None, jdbc_type=None):
     """
     Проверка связи с БД JDBC.
+
     :param connection_url: Connection string связи с БД.
     :param jdbc_type: Тип JDBC драйвера.
         Поддерживаются следующие типы:
@@ -229,6 +235,7 @@ def validDBConnectJDBC(connection_url=None, jdbc_type=None):
 def getNotValidDBConnectJDBCErrTxt(connection_url=None, jdbc_type=None):
     """
     Получить сообщение об ошибке в случае не доступности связи с БД JDBC.
+
     :param connection_url: Connection string связи с БД.
     :param jdbc_type: Тип JDBC драйвера.
         Поддерживаются следующие типы:
@@ -290,6 +297,7 @@ def getNotValidDBConnectJDBCErrTxt(connection_url=None, jdbc_type=None):
 def validDBConnectSQLAlchemy(connection_str=None):
     """
     Проверка связи с БД через SQLAlchemy.
+
     :param connection_str: Connection string связи с БД.
     :return: True - есть связь. False - связь не установлена.
     """
@@ -321,7 +329,9 @@ def validDBConnectSQLAlchemy(connection_str=None):
 
 def getNotValidDBConnectSQLAlchemyErrTxt(connection_str=None):
     """
-    Получить сообщение об ошибке в случае не доступности связи с БД через SQLAlchemy.
+    Получить сообщение об ошибке в случае не доступности связи
+    с БД через SQLAlchemy.
+
     :param connection_str: Connection string связи с БД.
     :return: Текст ошибки или пустая строка в случае отсутствия ошибки.
     """

@@ -31,8 +31,8 @@ def GetAvailLocales():
     Gets a list of the available locales that have been installed
     for the editor. Returning a list of strings that represent the 
     canonical names of each language.
-    :return: list of all available local/languages available
 
+    :return: list of all available local/languages available
     """
     avail_loc = list()
     loc = glob.glob(os.path.join(LANG_DIR, '*'))
@@ -44,12 +44,14 @@ def GetAvailLocales():
 
 
 def GetLocaleDict(loc_list, opt=OPT_NO_OP):
-    """Takes a list of cannonical locale names and by default returns a 
+    """
+    Takes a list of cannonical locale names and by default returns a
     dictionary of available language values using the canonical name as 
     the key. Supplying the Option OPT_DESCRIPT will return a dictionary
     of language id's with languages description as the key.
+
     :param loc_list: list of locals
-    @keyword opt: option for configuring return data
+    :param opt: option for configuring return data
     :return: dict of locales mapped to wx.LANGUAGE_*** values
 
     """
@@ -67,11 +69,12 @@ def GetLocaleDict(loc_list, opt=OPT_NO_OP):
 
 
 def GetLangId(lang_n):
-    """Gets the ID of a language from the description string. If the 
+    """
+    Gets the ID of a language from the description string. If the
     language cannot be found the function simply returns the default language
+
     :param lang_n: Canonical name of a language
     :return: wx.LANGUAGE_*** id of language
-    
     """
     lang_desc = GetLocaleDict(GetAvailLocales(), OPT_DESCRIPT)
     return lang_desc.get(lang_n, wx.LANGUAGE_DEFAULT)

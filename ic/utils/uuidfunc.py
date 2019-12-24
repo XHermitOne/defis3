@@ -4,7 +4,7 @@
 import uuid
 import hashlib
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def get_uuid(*args):
@@ -18,6 +18,7 @@ def get_uuid(*args):
 def get_uuid_attr(uuid_str, *attrs):
     """
     Переобразовать UUID в уникальное имя атрибута.
+
     :param uuid_str: UUID в строковом представлении.
     :param attrs: Список дополнительных атрибутов.
     :return: Сгенерированная строка.
@@ -31,6 +32,7 @@ def get_uuid_attr(uuid_str, *attrs):
 def get_passport_check_sum(passport, asUUID=True):
     """
     Получить контрольную сумму паспорта.
+
     :param passport: Паспорт.
     :param asUUID: Преобразовать к UUID
         (XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX) виду?
@@ -47,6 +49,7 @@ def get_passport_check_sum(passport, asUUID=True):
 def valid_uuid(UUID):
     """
     Проверка корректного значения UUID.
+
     :return: True/False.
     """
     if not isinstance(UUID, str):

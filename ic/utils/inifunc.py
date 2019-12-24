@@ -3,6 +3,7 @@
 
 """
 Модуль функций пользователя для работы с файлами установок.
+
 INI файлы - много-секционные файлы настройки
 CFG файлы - простые файлы настроек
 
@@ -22,7 +23,7 @@ try:
 except ImportError:
     log.error('Ошибка импорта configparser', bForcePrint=True)
 
-__version__ = (0, 1, 2, 1)
+__version__ = (0, 1, 2, 2)
 
 CFG_FILE_EXT = '.cfg'
 INI_FILE_EXT = '.ini'
@@ -32,6 +33,7 @@ DEFAULT_ENCODE = 'utf-8'
 def loadParamCFG(cfg_filename, param_name):
     """
     Чтение параметра из файла настроек.
+
     :type cfg_filename: C{string}
     :param cfg_filename: Полное имя файла настроек.
     :type param_name: C{string}
@@ -65,6 +67,7 @@ def loadParamCFG(cfg_filename, param_name):
 def saveParamCFG(cfg_filename, param_name, param_value):
     """
     Запись параметра в файл настроек.
+
     :type cfg_filename: C{string}
     :param cfg_filename: Полное имя файла настроек.
     :type param_name: C{string}
@@ -110,6 +113,7 @@ def saveParamCFG(cfg_filename, param_name, param_value):
 def loadParamINI(ini_filename, section, param_name):
     """
     Чтение параметра из файла настроек.
+
     :type ini_filename: C{string}
     :param ini_filename: Полное имя файла настроек.
     :type section: C{string}
@@ -135,6 +139,7 @@ def loadParamINI(ini_filename, section, param_name):
 def loadParamINIValue(*args, **kwargs):
     """
     Чтение параметра из файла настроек.
+
     :return: Происходит попытка прееобразование из строки возвращаемого
         значения к реальному типу по средством <eval>.
         Если при преобразовании возникла ошибка, то возвращается строка.
@@ -150,6 +155,7 @@ def loadParamINIValue(*args, **kwargs):
 def saveParamINI(ini_filename, section, param_name, param_value):
     """
     Запись параметра в файл настроек.
+
     :type ini_filename: C{string}
     :param ini_filename: Полное имя файла настроек.
     :type section: C{string}
@@ -202,6 +208,7 @@ def saveParamINI(ini_filename, section, param_name, param_value):
 def delParamINI(ini_filename, section, param_name):
     """
     Удалить параметр из секции конфигурационного файла.
+
     :type ini_filename: C{string}
     :param ini_filename: Полное имя файла настроек.
     :type section: C{string}
@@ -246,6 +253,7 @@ def delParamINI(ini_filename, section, param_name):
 def getParamCountINI(ini_filename, section):
     """
     Количество параметров в секции.
+
     :type ini_filename: C{string}
     :param ini_filename: Полное имя файла настроек.
     :type section: C{string}
@@ -280,6 +288,7 @@ def getParamCountINI(ini_filename, section):
 def getParamNamesINI(ini_filename, section):
     """
     Имена параметров в секции.
+
     :type ini_filename: C{string}
     :param ini_filename: Полное имя файла настроек.
     :type section: C{string}
@@ -314,6 +323,7 @@ def getParamNamesINI(ini_filename, section):
 def INI2Dict(ini_filename):
     """
     Представление содержимого INI файла в виде словаря.
+
     :type ini_filename: C{string}
     :param ini_filename: Полное имя файла настроек.
     :return: Заполненный словарь или None в случае ошибки.
@@ -358,6 +368,7 @@ def INI2Dict(ini_filename):
 def Dict2INI(dictionary, ini_filename, bRewrite=False):
     """
     Представление/запись словаря в виде INI файла.
+
     :type dictionary: C{dictionary}
     :param dictionary: Исходный словарь.
     :type ini_filename: C{string}

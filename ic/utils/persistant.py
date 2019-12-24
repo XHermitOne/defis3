@@ -3,6 +3,7 @@
 
 """
 Базовый класс объектов, которые могут хранится в системном хранилище.
+
 Описание базового класса объектов, которые могут хранится в системном хранилище.
 В хранилище храняться не сами объекты, а их метамодели. Под метомоделью понимается
 описание объекта в терминах встроенных питоновский типов (int | string | tuple  | list | ...).
@@ -29,10 +30,10 @@ class icPersistant:
     """
     Базовый класс объектов, которые могут хранится в системном хранилище.
     """
-
     def __init__(self, uniq_name, res_type='var', res_path=None, subsys='', przBuff=True):
         """
         Конструктор базового класса.
+
         :type uniq_name: C{string}
         :param uniq_name: Уникальное имя объекта.
         :type res_type: C{string}
@@ -69,6 +70,7 @@ class icPersistant:
     def LoadPersistent(self, przBuff=None):
         """
         Читает объект.
+
         :rtype: C{...}
         :return: Возвращает сохраненный объект.
         """
@@ -85,6 +87,7 @@ class icPersistant:
     def getRes(self, res_path, res_name, res_type='var'):
         """
         Получить ресурс.
+
         :param res_path: путь к ресурсным файлам (d:/aaa/fff).
         :param res_name: имя ресурса.
         :param res_type: тип ресурса.
@@ -100,6 +103,7 @@ class icPersistant:
     def SavePersistent(self, przBuff=None):
         """
         Сохраняет объект в хранилище.
+
         :type obj: C{стандартные питоновские типы, которые серилизует cPickle}
         :param obj: Метамодель объекта в представлении питоновских типов.
         :rtype: C{bool}
@@ -115,6 +119,7 @@ class icPersistant:
     def setRes(self, res, res_path, res_name, res_type='var'):
         """
         Установить ресурс.
+
         :param res: Сам ресурс.
         :param res_path: путь к ресурсным файлам (d:/aaa/fff).
         :param res_name: имя ресурса.

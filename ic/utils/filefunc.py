@@ -24,7 +24,7 @@ from ic.dlg import dlgfunc
 
 import ic.config
 
-__version__ = (1, 2, 1, 1)
+__version__ = (1, 2, 1, 2)
 
 _ = wx.GetTranslation
 
@@ -53,6 +53,7 @@ def makeDirs(path):
 def changeExt(filename, new_ext):
     """
     Поменять у файла расширение.
+
     :param filename: Полное имя файла.
     :param new_ext: Новое расширение файла (Например: '.bak').
     :return: Возвращает новое полное имя файла.
@@ -72,6 +73,7 @@ def changeExt(filename, new_ext):
 def copyFile(filename, new_filename, bRewrite=True):
     """
     Создает копию файла с новым именем.
+
     :param filename: Полное имя файла.
     :param new_filename: Новое имя файла.
     :param bRewrite: True-если новый файл уже существует, 
@@ -120,6 +122,7 @@ def copyFile(filename, new_filename, bRewrite=True):
 def createBAKFile(filename, bak_file_ext='.bak'):
     """
     Создает копию файла с новым расширением BAK.
+
     :param filename: Полное имя файла.
     :param bak_file_ext: Расширение BAK файла.
     :return: Возвращает результат выполнения операции True/False.
@@ -139,6 +142,7 @@ def createBAKFile(filename, bak_file_ext='.bak'):
 def getSubDirs(path):
     """
     Функция возвращает список поддиректорий.
+
     :param path: Дирeкторий.
     :return: В случае ошибки возвращает None.
     """
@@ -157,6 +161,7 @@ def getSubDirs(path):
 def getSubDirsFilter(path, dir_filters=('.svn', '.SVN', '.Svn')):
     """
     Функция возвращает список поддиректорий с отфильтрованными папками.
+
     :param path: Дирикторий.
     :param dir_filters: Список недопустимых имен папок.
     :return: В случае ошибки возвращает None.
@@ -177,7 +182,9 @@ def getSubDirsFilter(path, dir_filters=('.svn', '.SVN', '.Svn')):
 
 def getSubDirsFilterSVN(path):
     """
-    Функция возвращает список поддиректорий с отфильтрованными папками Subversion.
+    Функция возвращает список поддиректорий
+    с отфильтрованными папками Subversion.
+
     :param path: Дирикторий.
     :param filename_filter: Список недопустимых имен папок.
     :return: В случае ошибки возвращает None.
@@ -188,6 +195,7 @@ def getSubDirsFilterSVN(path):
 def getFilenames(path):
     """
     Функция возвращает список файлов в директории.
+
     :param path: Дирикторий.
     :return: В случае ошибки возвращает None.
     """
@@ -208,6 +216,7 @@ def getFilenames(path):
 def getFilenamesByExt(path, ext):
     """
     Функция возвращает список всех файлов в директории с указанным расширением.
+
     :param path: Путь.
     :param ext: Расширение, например '.pro'.
     :return: В случае ошибки возвращает None.
@@ -236,6 +245,7 @@ def deleteFilesByExt(path, ext):
     """
     Функция УДАЛЯЕТ РЕКУРСИВНО В ПОДДИРЕКТОРИЯХ все файлы в директории с
     заданным расширением.
+
     :param path: Путь.
     :param ext: Расширение.
     :return: Возвращает результат выполнения операции True/False.
@@ -265,6 +275,7 @@ def get_current_dir():
     """
     Текущая папка.
     Относительнай путь считается от папки defis.
+
     :return:
     """
     cur_dir = os.path.dirname(os.path.dirname(ic.config.__file__))
@@ -276,6 +287,7 @@ def getRelativePath(path):
     """
     Относительный путь.
     Относительнай путь считается от папки defis.
+
     :param path: Путь.
     """
     path = os.path.normpath(path)
@@ -286,6 +298,7 @@ def getRelativePath(path):
 def getAbsolutePath(path):
     """
     Абсолютный путь.
+
     :param path: Путь.
     """
     try:
@@ -304,6 +317,7 @@ def getAbsolutePath(path):
 def get_relative_path(path, cur_dir=None):
     """
     Относительный путь. Путь приводится к виду Unix.
+
     :param path: Путь.
     :param cur_dir: Текущий путь.
     """
@@ -340,7 +354,8 @@ def getCurDirPrj(path=None):
 
 def get_absolute_path(path, cur_dir=None):
     """ 
-    Абсолютный путь. Путь приводится к виду Unix. 
+    Абсолютный путь. Путь приводится к виду Unix.
+
     :param path: Путь.
     :param cur_dir: Текущий путь.
     """
@@ -367,6 +382,7 @@ def get_absolute_path(path, cur_dir=None):
 def getPathFile(path, filename):
     """
     Корректное представление общего имени файла.
+
     :param path: Путь.
     :param filename: Имя файла.
     """
@@ -416,6 +432,7 @@ def isSamePathWin(path1, path2):
 def _pathFilter(path, filters):
     """
     Фильтрация путей.
+
     :return: Возвращает True если папок с указанными имена в фильтре нет в пути и
         False если наоборот.
     """
@@ -432,8 +449,9 @@ def _pathFilter(path, filters):
 def _addCopyDirWalk(args, cur_dir, cur_filenames):
     """
     Функция рекурсивного обхода при добавлении папок и файлов в существующую.
+
     :param cur_dir: Текущая обрабатываемая папка.
-    :param CurName_: Имена файлов и папок в текущей обрабатываемой папке.
+    :param cur_filenames: Имена файлов и папок в текущей обрабатываемой папке.
     """
     from_dir = args[0]
     to_dir = args[1]
@@ -460,6 +478,7 @@ def _addCopyDirWalk(args, cur_dir, cur_filenames):
 def addCopyDir(src_dir, dst_dir, not_copy_filter=('.svn', '.SVN', '.Svn')):
     """
     Дополнить папку dst_dir файлами и папками из dst_dir
+
     :param src_dir: Папка/директория,  которая копируется.
     :param dst_dir: Папка/директория, в которую копируется dst_dir.
     :param not_copy_filter: Не копировать файлы/папки.
@@ -476,6 +495,7 @@ def copyDir(src_dir, dst_dir, bReWrite=False, bAddDir=True):
     """
     Функция папку dst_dir в папку dst_dir со всеми внутренними поддиректориями
     и файлами.
+
     :param src_dir: Папка/директория,  которая копируется.
     :param dst_dir: Папка/директория, в которую копируется dst_dir.
     :param bReWrite: Указание перезаписи директории,
@@ -502,7 +522,9 @@ def copyDir(src_dir, dst_dir, bReWrite=False, bAddDir=True):
 
 def cloneDir(src_dir, dst_dir, bReWrite=False):
     """
-    Функция переносит все содержимое папки dst_dir в папку с новым именем dst_dir.
+    Функция переносит все содержимое папки dst_dir
+    в папку с новым именем dst_dir.
+
     :param src_dir: Папка/директория,  которая копируется.
     :param dst_dir: Новое имя папки/директории.
     :param bReWrite: Указание перезаписи директории, если она
@@ -526,6 +548,7 @@ def cloneDir(src_dir, dst_dir, bReWrite=False):
 def isSubDir(dir1, dir2):
     """
     Функция проверяет, является ли директория dir1 поддиректорией dir2.
+
     :return: Возвращает True/False.
     """
     dir1 = os.path.abspath(dir1)
@@ -544,6 +567,7 @@ def isSubDir(dir1, dir2):
 def removeFile(filename=None):
     """
     Удалить файл.
+
     :param filename: Имя удаляемого файла.
     :return: True/False.
     """
@@ -571,6 +595,7 @@ def genDefaultBakFileName():
 def getFilesByMask(filename_mask):
     """
     Список файлов по маске.
+
     :param filename_mask: Маска файлов. Например C:\Temp\*.dbf.
     :return: Возвращает список строк-полных путей к файлам.
         В случае ошибки None.
@@ -599,6 +624,7 @@ def getFilesByMask(filename_mask):
 def copyToDir(filename, dst_dir, bRewrite=True):
     """
     Копировать файл в папку.
+
     :param filename: Имя файла.
     :param dst_dir: Папка в которую необходимо скопировать.
     :param bRewrite: True-если новый файл уже существует, 
@@ -614,6 +640,7 @@ def delAllFilesFilter(delete_dir, *mask_filters):
     """
     Удаление всех файлов из папки с фильтрацией по маске файла. Удаление
     рекурсивное по поддиректориям.
+
     :param delete_dir: Папка-источник.
     :param mask_filters: Список масок файлов которые нужно удалить.
         Например '*_pkl.tab'.
@@ -666,6 +693,7 @@ def getTempFileName(prefix=None):
 def getHomePath():
     """
     Путь к домашней директории.
+
     :return: Строку-путь до папки пользователя.
     """
     os_platform = platform.uname()[0].lower()
@@ -683,6 +711,7 @@ def getHomePath():
 def getProfilePath(bAutoCreatePath=True, profile_dirname=None):
     """
     Папка профиля программы DEFIS.
+
     :param bAutoCreatePath: Создать автоматически путь если его нет?
     :param profile_dirname: Явное указание папки профиля.
         Если не указано, то берется ic.config.PROFILE_DIRNAME.
@@ -707,6 +736,7 @@ def getProfilePath(bAutoCreatePath=True, profile_dirname=None):
 def getPrjProfilePath(bAutoCreatePath=True, profile_dirname=None):
     """
     Папка профиля прикладного проекта.
+
     :param bAutoCreatePath: Создать автоматически путь если его нет?
     :param profile_dirname: Явное указание папки профиля.
         Если не указано, то берется ic.config.PROFILE_DIRNAME.
@@ -735,6 +765,7 @@ def getPrjProfilePath(bAutoCreatePath=True, profile_dirname=None):
 def getProjectDir():
     """
     Папка проекта.
+
     :return: Папка проекта.
     """
     from ic.engine import glob_functions
@@ -744,6 +775,7 @@ def getProjectDir():
 def getRootProjectDir():
     """
     Корневая папка проекта, в которой находяться все папки подсистем проекта.
+
     :return: Корневая папка проекта, в которой находяться все папки подсистем проекта.
     """
     prj_dir = getProjectDir()
@@ -765,6 +797,7 @@ def getHomeDir():
 def getRootDir():
     """
     Папка DEFIS.
+
     :return: Путь до папки DEFIS.
     """
     # Берем относительно имени файла
@@ -776,10 +809,12 @@ def getRootDir():
         return u''
     return root_path
 
+
 def is_same_file_length(filename1, filename2):
     """
     Проверка что файл1 и файл2 совпадают.
     Проверка производиться по размеру файлу.
+
     :return: True/False.
     """
     if os.path.exists(filename1) and os.path.exists(filename2):
@@ -800,6 +835,7 @@ def get_check_sum_file(filename):
     Определение контрольной суммы файла.
         ВНИМАНИЕ! Для файлов большого размера скорее всего не применима функция,
         т.к. медленная.
+
     :param filename: Полное имя файла.
     :return: Контрольная сумма файла или None, если какая-либо ошибка.
     """
@@ -825,6 +861,7 @@ def get_file_md5(filename):
     """
     Вычисление контрольной суммы большого файла.
     Взято с http://yushakov.com/code-work/piton/vychislenie-kontrolnoj-summy-dlya-bolshogo-fajla/
+
     :param filename: Полное имя файла.
     :return: Контрольная сумма файла или None, если какая-либо ошибка.
     """
@@ -849,6 +886,7 @@ def get_file_md5(filename):
 def get_dir_filename_list(directory, filename_pattern=None, sort_filename=False):
     """
     Получить список имен файлов в папке по шаблону.
+
     :param directory: Полный путь до директории.
     :param filename_pattern: Шаблон имен файлов. Если не определен, то беруться все файлы.
     :param sort_filename: Произвести автоматическую сортировку списка по имени файлов?
@@ -886,6 +924,7 @@ def get_home_path(username=None):
 def normal_path(path, username=None):
     """
     Нормировать путь.
+
     :param path: Путь.
     :param username: Имя пользователя.
     """
@@ -896,6 +935,7 @@ def normal_path(path, username=None):
 def fileList(src_dirname):
     """
     Список файлов в директории с полными путями.
+
     :param src_dirname: Исходная директория.
     :return: Список файлов.
     """
@@ -905,6 +945,7 @@ def fileList(src_dirname):
 def norm_path(cur_path, delim=os.path.sep):
     """
     Удалить двойные разделител из пути.
+
     :type cur_path: C{string}
     :param cur_path: Путь
     :type delim: C{string}

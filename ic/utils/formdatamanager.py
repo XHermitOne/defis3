@@ -3,6 +3,7 @@
 
 """
 Менеджер заполнения/чтения данных формы.
+
 ВНИМАНИЕ! Данные заполняются ассоциативно,
 поэтому могут заполняться не полностью.
 Отлаживаться необходимо по логу.
@@ -20,7 +21,7 @@ from ic.utils import datetimefunc
 from . import frequencydict
 
 
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 
 class icFormDataManager(object):
@@ -30,6 +31,7 @@ class icFormDataManager(object):
     def __init__(self, form=None):
         """
         Конструктор.
+
         :param form: Форма с контролами, отражающими данные.
             Если None то считается что форма наследуется от
             icFormDataManager и в данном случае берется self.
@@ -45,6 +47,7 @@ class icFormDataManager(object):
     def findControlByName(self, name):
         """
         Определить контрол по его имени.
+
         :param name: Имя контрола.
         :return: Объект контрола формы или None в случае
             когда контрол не найден.
@@ -69,6 +72,7 @@ class icFormDataManager(object):
     def setControlValue(self, ctrl, value):
         """
         Установить значение в найденный контрол.
+
         :param ctrl: Контрол.
         :param value: Значение кoнтрола.
         :return: True/False.
@@ -124,6 +128,7 @@ class icFormDataManager(object):
     def setData(self, data):
         """
         Установить данные в форму.
+
         :param data: Словарь данных формы.
         :return: True/False.
         """
@@ -145,6 +150,7 @@ class icFormDataManager(object):
     def getAllChildren(self, form=None):
         """
         Получить список всех контролов формы.
+
         :param form: Форма. Если не определен, то берется self.__form
         :return: Словарь контролов. { 'имя контрола': объект контрола}.
         """
@@ -162,6 +168,7 @@ class icFormDataManager(object):
     def getControlValue(self, ctrl):
         """
         Прочитать значение контрола.
+
         :param ctrl: Контрол.
         :return: Значение в любом виде.
         """
@@ -211,6 +218,7 @@ class icFormDataManager(object):
     def getData(self, *name_filter):
         """
         Прочитать данные из формы.
+
         :param name_filter: Список имен контролов,
             значения которых надо прочитать.
             Если не определен, то берется весь список имен формы.

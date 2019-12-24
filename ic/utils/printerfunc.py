@@ -29,6 +29,7 @@ NO_DEFAULT_PRINTER_MSG = 'no system default destination'
 def _get_exec_cmd_stdout_lines(cmd):
     """
     Выполнить команду ОС и верноть список строк выходного потока.
+
     :param cmd: Комманда. М.б. в строковом виде или в виде списка.
         Напрмер:
         'lpstat -d' или ('lpstat', '-d')
@@ -55,6 +56,7 @@ def _get_exec_cmd_stdout_lines(cmd):
 def noDefaultPrinter(sLPStatResult=None):
     """
     Проверка на установленный по умолчанию принтер в системе.
+
     :param sLPStatResult: Результат команды lpstat -d. Если None,
                 то функция сама вызовет команду lpstat -d.
     :return: True-нет принтера по умалчанию, False - есть принтер по умолчанию.
@@ -73,6 +75,7 @@ def noDefaultPrinter(sLPStatResult=None):
 def getDefaultPrinter():
     """
     Имя принтера по умолчанию.
+
     :return: Имя принтера по умолчанию или None, если не установлен.
     """
     cmd = ('lpstat', '-d')
@@ -89,6 +92,7 @@ def getPrinterDevices():
     """
     Получить список устройств принтеров.
     Функция работает через утилиту lpstat.
+
     :return: Список [(имя принтера, адрес подключения),...].
     """
     cmd = ('lpstat', '-v')
@@ -104,6 +108,7 @@ def getPrinterDevices():
 def getNetworkPrinters():
     """
     Список имен сетевых принтеров.
+
     :return: Список строк имен принтеров у которых сетевой адрес.
     """
     printer_devices = getPrinterDevices()
@@ -114,6 +119,7 @@ def getPrinters():
     """
     Получить список инсталированных принтеров.
     Функция работает через утилиту lpstat.
+
     :return: Список строк (имен принтеров).
     """
     cmd = ('lpstat', '-a')
@@ -128,6 +134,7 @@ def getPrinters():
 def getPrintersInfo():
     """
     Получить информацию о принтерах.
+
     :return: Список кортежей
         [(По умолчанию?, Название принтера, Сетевой принтер?),...].
     """
@@ -144,6 +151,7 @@ def getPrintersInfo():
 def printPDF(sPDFFileName, sPrinter=None, iCopies=1):
     """
     Отправить на печать PDF файл.
+
     :type sPDFFileName: C{string}
     :param sPDFFileName: Имя PDF файла для печати.
     :type sPrinter: C{string}
@@ -177,6 +185,7 @@ def print_file(filename, printer_name=None, copies=1):
     PDF файлы печатаются функцией printPDF.
     Графические файлы сначала конвертируем в PDF
     а затем печатаем как обычный PDF.
+
     :param filename: Полное имя печатаемого файла.
     :param printer_name: Имя принтера для печати. Если не указан,то
          на печать принтера по умолчанию.

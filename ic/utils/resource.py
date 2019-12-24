@@ -23,7 +23,7 @@ import ic.storage.storesrc
 from . import util
 from ic.engine import glob_functions
 
-__version__ = (1, 1, 1, 2)
+__version__ = (1, 1, 1, 3)
 
 _ = wx.GetTranslation
 
@@ -106,6 +106,7 @@ def icGetUserPath():
 def icSetUserVariable(varName, value, subsys='', bClose = False):
     """
     Функция устанавливает переменную пользователя.
+
     :type varName: C{string}
     :param varName: Имя переменной.
     :type value: C{string}
@@ -155,6 +156,7 @@ def icCloseLocalStorage():
 def icGetUserVariable(varName, subsys='', bClose = False):
     """
     Функция устанавливает переменную пользователя.
+
     :type varName: C{string}
     :param varName: Имя переменной.
     :type value: C{string}
@@ -228,22 +230,24 @@ def icGetHlpPath():
     return IC_DOC_PATH
 
 
-def icGetResFileName(Ext_='tab'):
+def icGetResFileName(ext='tab'):
     """
     Ресурсный файл.
+
     :return: Функцмя возвращает полное имя ресурсного файла по его расширению.
     """
-    res_file = os.path.join(icGetResPath(), 'resource.'+Ext_)
+    res_file = os.path.join(icGetResPath(), 'resource.' + ext)
     res_file = res_file.replace('\\', '/')
     # print(res_file)
     return res_file
 
 
-def inherit(prnt_res, resource, lstExcept=[]):
+def inherit(parent_res, resource, lstExcept=[]):
     """
     Наследуем атрибуты родительского описания.
-    :type prnt_res: C{dictionary}
-    :param prnt_res: Родительское описание.
+
+    :type parent_res: C{dictionary}
+    :param parent_res: Родительское описание.
     :type resource: C{dictionary}
     :param resource: Описание потомка.
     :type lstExcept: C{list}
@@ -252,24 +256,25 @@ def inherit(prnt_res, resource, lstExcept=[]):
     :return: Возвращает наследованное ресурсное описание.
     """
     for key, attr in resource.items():
-        if key not in lstExcept and not attr and key in prnt_res:
-            resource[key] = prnt_res[key]
+        if key not in lstExcept and not attr and key in parent_res:
+            resource[key] = parent_res[key]
 
     return resource
 
 
-def inheritDataClass(prnt_res, resource):
+def inheritDataClass(parent_res, resource):
     """
     Функция наследования ресурсных описаний классов данных.
-    :type prnt_res: C{dictionary}
-    :param prnt_res: Родительское описание.
+
+    :type parent_res: C{dictionary}
+    :param parent_res: Родительское описание.
     :type resource: C{dictionary}
     :param resource: Описание потомка.
     :rtype: C{dictionary}
     :return: Возвращает наследованное ресурсное описание класса данных.
     """
     #   Наследуем атрибуты родительского класса данных
-    inherit(prnt_res, resource, ['parent'])
+    inherit(parent_res, resource, ['parent'])
 
     #   Наследуем описания полей
     #   1. Создаем словарь схемы дочернего ресурса
@@ -277,7 +282,7 @@ def inheritDataClass(prnt_res, resource):
     for fld in resource['scheme']:
         res_dict[fld['name']] = fld
 
-    for fld in prnt_res['scheme']:
+    for fld in parent_res['scheme']:
         #   Если имена совпали, то используем наследование
         if fld['name'] in res_dict.keys():
             inherit(fld, res_dict[fld['name']])
@@ -292,6 +297,7 @@ def buildDataClassRes(resource, nameRes='resource'):
     """
     Собирает ресурсное описание класса данных с испольозованием механизма
     наследования.
+
     :type resource: C{dictionary}
     :param resource: Ресурсное описание без наследования.
     :type nameRes: C{string}
@@ -332,6 +338,7 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
     Возврвщает ресурсное описание объекта. После того как функция находит
     нужное ресурсное описание в служебном атрибуте ресурса '__file_res' прописывается
     полный путь до файла ресурса, где он был найден.
+
     :type className: C{string}
     :param className: Имя ресурса.
     :type ext: C{string}
@@ -409,6 +416,7 @@ def icGetRes(className, ext='tab', pathRes=None, bCopy=True, bRefresh=False, nam
 def getResFilesByType(ext='tab', pathRes=None):
     """
     Получить список файлов по типу.
+
     :type ext: C{string}
     :param ext: Расширения ресурсного файла для данного ресурса.
     :type pathRes: C{string}
@@ -445,6 +453,7 @@ def getResFilesByType(ext='tab', pathRes=None):
 def getResourcesByType(ext='tab', pathRes=None, bRefresh=False):
     """
     Получить список ресурсов по типу.
+
     :type ext: C{string}
     :param ext: Расширения ресурсного файла для данного ресурса.
     :type pathRes: C{string}
@@ -471,6 +480,7 @@ def RefreshResUUID(res, prnt_res, new_uuid):
     """
     Обновляет UUID ресурса. Для некоторых ресурсов (GridCell) обновление надо проводить в
     родительском ресурсе, так как они описывают один состовной объект.
+
     :type res: C{dictionary}
     :param res: Ресурсное описание компонента.
     :type prnt_res: C{dictionary}
@@ -628,6 +638,7 @@ manager_class = %s
 def genObjModuleHead(on, fn, descr=_('Object module'), ver=u'(0, 0, 0, 1)'):
     """
     Генерирует заголовок модуля объекта.
+
     :param on: Имя объекта.
     :param fn: Путь до модуля.
     :param descr: Описание объекта.
@@ -682,6 +693,7 @@ def getICObjectResource(path):
 def saveICObject(path, className, res):
     """
     Генерирует по ресурсу питоновский класс и сохраняет в нужном модуле.
+
     :type path: C{string}
     :param path: Путь до файла.
     :type className: C{string}
@@ -705,6 +717,7 @@ def saveICObject(path, className, res):
 def updateICObject(path, className, res, version=None):
     """
     Обновляет ресурсное описание питоновского класса.
+
     :type path: C{string}
     :param path: Путь до файла.
     :type className: C{string}
@@ -750,6 +763,7 @@ __version__ = %s
 def getSubsysPath(subsys=None):
     """
     Функция по имени подсистемы определяет полный путь до подсистемы.
+
     :type subsys: C{string}
     :param subsys: Имя подсистемы.
     """
@@ -763,6 +777,7 @@ def getSubsysPath(subsys=None):
 def method(id_meth, subsys, esp=locals(), **params):
     """
     Находит и выполняет метод подсистемы.
+
     :type id_meth: C{string}
     :param id_meth: Идентификатор метода.
     :type subsys: C{string}
@@ -808,6 +823,7 @@ def icSaveRes(className, ext, pathRes=None, nameRes='resource',
               resData=None, ResFmt=PICKLE_RES_FMT):
     """
     Сохранить ресурсное описание объекта.
+
     :type className: C{string}
     :param className: Имя ресурса.
     :type ext: C{string}
@@ -837,6 +853,7 @@ def icSaveRes(className, ext, pathRes=None, nameRes='resource',
 def updateImporsObjModule(fn, imp_path):
     """
     Добавляет строку импорта на модуль объекта в модуль ресурса.
+
     :param fn: Имя модуля ресурса.
     :param imp_path: Имя модуля объекта.
     """
@@ -891,6 +908,7 @@ def updateImporsObjModule(fn, imp_path):
 def _findres(res, nameObj, typeObj):
     """
     Ищет ресурс нужного объекта по дереву ресурса.
+
     :param res: Ресурсное описание.
     :param nameObj: Имя объекта.
     :param typeObj: Тип объекта.
@@ -916,6 +934,7 @@ def _findres(res, nameObj, typeObj):
 def FindResInRes(res, nameObj, typeObj=None):
     """
     Ищет ресурс нужного объекта по дереву ресурса.
+
     :type res: C{dictionary}
     :param res: Ресурсное описание.
     :param res: Ресурс.
@@ -932,6 +951,7 @@ def FindResInRes(res, nameObj, typeObj=None):
 def find_child_resource(name, res):
     """
     Поиск ресурса дочернего объекта рекурсивно по имени.
+
     :param name: Имя дочернего объекта.
     :param res: Ресурс.
     :return: Словарь ресурса найденного объекта или None
@@ -952,6 +972,7 @@ def find_child_resource(name, res):
 def update_child_resource(child_name, res, child_res):
     """
     Обновить ресурс дочернего объекта.
+
     :param child_name: Имя дочернего объекта.
     :param res: Ресурс.
     :return: Измененный словарь ресурса объекта или None
@@ -972,6 +993,7 @@ def update_child_resource(child_name, res, child_res):
 def getResByPsp(passport):
     """
     Возвращает ресурса объекта по его паспорту.
+
     :type passport: C{tuple}
     :param passport: идентификатор описания (паспорт) объекта.
     """

@@ -10,7 +10,7 @@
 
 import copy
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 __named_cache__ = {}
 
@@ -39,6 +39,7 @@ class icCache:
     def add(self, classObj, id, obj):
         """ 
         Добавляет объект в буфер класса.
+
         :type classObj: C{string}
         :param classObj: Имя класса буфера.
         :param id: Идентификатор объекта.
@@ -62,6 +63,7 @@ class icCache:
     def get(self, classObj, id, bCopy=False):
         """ 
         Возвращает объект из буфера.
+
         :type classObj: C{string}
         :param classObj: Имя класса буфера.
         :param id: Идентификатор объекта.
@@ -77,6 +79,7 @@ class icCache:
     def clear(self, classObj=None):
         """ 
         Чистит буфер класса.
+
         :type classObj: C{string}
         :param classObj: Имя класса буфера.
         """
@@ -88,6 +91,7 @@ class icCache:
     def getAll(self, bCopy=False):
         """
         Получить буфер полностью.
+
         :type bCopy: C{bool}
         :param bCopy: Признак возвата копии.
         """

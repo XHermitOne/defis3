@@ -21,6 +21,7 @@ from ic.editor import wxfb_manager
 def adapt_form_py(py_filename):
     """
     Адаптация конкретного модуля Python.
+
     :param py_filename: Полное имя файла модуля Python.
     :return: True / False.
     """
@@ -34,6 +35,7 @@ def adapt_form_py(py_filename):
 def adapt(source):
     """
     Произвести адаптацию Python модулей форм wxFormBuilder.
+
     :param source: Источник. Может быть файл модуля или папка.
     :return: True/False.
     """

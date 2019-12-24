@@ -32,6 +32,7 @@ __version__ = (0, 1, 1, 1)
 def CreateObjectStorageByDir(Dir_):
     """
     Создает хранилище типовых объектов.
+
     :param Dir_: Папка - хранилище.
     """
     return icObjectStorageDir(Dir_)
@@ -42,10 +43,10 @@ class icObjectStorageDir(storesrc.icTreeDirStorage,
     """
     Абстрактное хранилище типовых объектов.
     """
-
     def __init__(self, Dir_):
         """
         Конструктор.
+
         :param Dir_: Папка - хранилище.
         """
         # Привести относительные пути к папке проекта
@@ -61,7 +62,6 @@ class icObjectStorage(storesrc.icObjStorageSrc,
     """
     Абстрактное хранилище типовых объектов.
     """
-
     def __init__(self, Resource_=None):
         """
         Конструктор.

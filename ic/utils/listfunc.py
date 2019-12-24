@@ -8,7 +8,7 @@
 import operator
 import functools
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 
 def sort_multi_key(items, keys):
@@ -19,6 +19,7 @@ def sort_multi_key(items, keys):
     Примеры использования:
         result = sort_multi_key(undecorated, ['key1', 'key2', 'key3'])
         result = sort_multi_key(undecorated, ['-key1', '-key2', '-key3'])
+
     :param items: Список словарей.
     :param keys: Порядок сортировки по ключам.
     :return: ОТсортированный список.
@@ -29,6 +30,7 @@ def sort_multi_key(items, keys):
     def comparer(left, right):
         """
         Функция сравнения.
+
         :param left: Левое значение для сравнения
         :param right:
         :return:
@@ -55,6 +57,7 @@ OR_COMPARE_SIGNATURE = 'OR'
 def filter_multi_key(items, finds, compare=AND_COMPARE_SIGNATURE):
     """
     Фильтрация списка словарей по значениям нескольких ключей.
+
     :param items: Список словарей.
     :param finds: Словарь значений ключей.
     :param compare: Метод сравнения И/AND или ИЛИ/OR.
@@ -73,6 +76,7 @@ def filter_multi_key(items, finds, compare=AND_COMPARE_SIGNATURE):
 def find_multi_key(items, find_keys, compare=AND_COMPARE_SIGNATURE):
     """
     Поиск в списке словарей по значениям нескольких ключей.
+
     :param items: Список словарей.
     :param find_keys: Словарь значений ключей.
     :param compare: Метод сравнения И/AND или ИЛИ/OR.

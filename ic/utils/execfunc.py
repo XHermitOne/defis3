@@ -57,6 +57,7 @@ SPC_IC_FUNC = {'name': 'func1',     # код-имя функции, строка
 def execute_method(function, self=None):
     """
     Выполнить метод.
+
     :param self: ссылка на объект, который вызывает эту функцию.
     :param function: словарь функции (см. документацию на ресурсные файлы).
     """
@@ -84,6 +85,7 @@ def execute_method(function, self=None):
 def execute_code(code_block, self=None):
     """
     Выполнить блок кода.
+
     :param self: ссылка на объект, который вызывает эту функцию.
     :param function: строка функции.
         Если строка начинается с символа '@', то это выполняемая функция.
@@ -109,6 +111,7 @@ def execute_code(code_block, self=None):
 def is_empty_method(function):
     """
     Проверка пустой словарь функции или нет.
+
     :param function: Словарь функции.
     :return: Истина - если словарь пустой (ни модуль, ни метод не определены).
              В противном случае - ложь.
@@ -134,6 +137,7 @@ def is_empty_method(function):
 def getNameFuncFromCode(code_block):
     """
     Получить имя функции из блока кода.
+
     :param code_block: Блок кода.
         Блок кода - строка в формате:
             @ИмяФункции(аргументы)
@@ -153,6 +157,7 @@ def getNameFuncFromCode(code_block):
 def doSysCmd(command):
     """
     Функция выполняет команду системы.
+
     :param command: Строка системной команды.
     """
     log.debug(u'Выполнение команды: <%s>' % command)
@@ -162,6 +167,7 @@ def doSysCmd(command):
 def exec_function(function):
     """
     Выполнить функцию и возвратить значение.
+
     :param function: Описание функции (См. спецификацию SPC_IC_FUNC).
     :return: Возвращает значение,  которое возвращает функция.
     """
@@ -177,6 +183,7 @@ def exec_function(function):
 def execFuncByName(function_name, functions):
     """
     Выполнить функцию и возвратить значение по его имени.
+
     :param function_name: Имя функции (См. fnc_fmt.doc).
     :param functions: Описание функций (См. fnc_fmt.doc) или 
         имя файла где оно храниться.
@@ -194,7 +201,9 @@ def execFuncByName(function_name, functions):
 def doMethod(method_str, name_space=None):
     """
     Вызов метода.
-    :param method_str: Строковый вызов метода. Например 'NSI.method1(a1=3,s2=4)'.
+
+    :param method_str: Строковый вызов метода.
+        Например 'NSI.method1(a1=3,s2=4)'.
     :param name_space: Пространство имен.
     """
     try:
@@ -238,6 +247,7 @@ else:
 def createRunApp(prj_dir):
     """
     Создать если надо модуль запуска прикладной системы.
+
     :return: True/False.
     """
     run_py_file_name = os.path.join(filefunc.get_absolute_path(prj_dir), 'run.py')
@@ -259,6 +269,7 @@ def createRunApp(prj_dir):
 def runTask(command):
     """
     Запуск команды, как отдельной задачи.
+
     :type command: C{string}
     :param command: Комманда системы.
     """
@@ -270,6 +281,7 @@ def runTask(command):
 def runTaskSH(command):
     """
     Запуск команды, как отдельной задачи с отдельной консолью в Linux.
+
     :type command: C{string}
     :param command: Комманда системы.
     """
@@ -294,6 +306,7 @@ def runTaskSH(command):
 def runTaskBAT(command):
     """
     Запуск команды, как отдельной задачи с отдельной консолью.
+
     :type command: C{string}
     :param command: Комманда системы.
     """
@@ -318,6 +331,7 @@ def runTaskBAT(command):
 def runProgramm(command, exec_mode=os.P_NOWAIT):
     """
     Запуск программы на выполнение.
+
     :type command: C{string}
     :param command: Комманда системы.
     :param exec_mode: Режим выполнения команды. См os режимы выполнения.
@@ -352,6 +366,7 @@ def runProgramm(command, exec_mode=os.P_NOWAIT):
 def runOSCommand(command, bWait=True):
     """
     Запуск команды OC.
+
     :type command: C{string}
     :param command: Комманда системы.
     :param bWait: Команда ожидания процесса.
@@ -372,6 +387,7 @@ def runOSCommand(command, bWait=True):
 def execFuncStr(function_str, name_space=None, bReImport=False, *args, **kwargs):
     """
     Выполнение строковой функции в формате: пакеты.модуль.функция(аргументы).
+
     :type function_str: C{string}
     :param function_str: Строковая функция.
     :type name_space: C{dictionary}
@@ -411,6 +427,7 @@ def execFuncStr(function_str, name_space=None, bReImport=False, *args, **kwargs)
 def exec_code(code_block='', bReImport=False, name_space=None, kwargs=None):
     """
     Выполнить блок кода.
+
     :type code_block: C{string}
     :param code_block: Блок кода.
         Блок кода - строка в формате:
@@ -473,6 +490,7 @@ def exec_code(code_block='', bReImport=False, name_space=None, kwargs=None):
 def exec_sys_cmd(command, split_lines=False):
     """
     Выполнить системную команду и получить результат ее выполнения.
+
     :param command: Системная команда.
     :param split_lines: Произвести разделение на линии?
     :return: Если нет разделения по линиям, то возвращается текст который

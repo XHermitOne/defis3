@@ -17,7 +17,7 @@ from . import inifunc
 from . import modefunc
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 _ = wx.GetTranslation
 
@@ -30,14 +30,14 @@ class icRegUserJournal:
     """
     Журнал пользователей.
     """
-
-    def __init__(self, RegJrnFileName_=DEFAULT_REG_JRN_FILE_NAME):
+    def __init__(self, jrn_filename=DEFAULT_REG_JRN_FILE_NAME):
         """
         Конструктор.
-        :param RegJrnFileName_: Файл журнала регистрации пользователей.
+
+        :param jrn_filename: Файл журнала регистрации пользователей.
         """
         # Имя файла журнала регистрации
-        self._journal_file_name = filefunc.get_absolute_path(RegJrnFileName_)
+        self._journal_file_name = filefunc.get_absolute_path(jrn_filename)
         # Имя текущего ползователя
         self._current_user = None
         # Удалить регистрацию о пользователе из журнала?
@@ -49,11 +49,11 @@ class icRegUserJournal:
         """
         return self._current_user
         
-    def setCurUser(self, UserName_):
+    def setCurUser(self, user_name):
         """
         Текущий пользователь.
         """
-        self._current_user = UserName_
+        self._current_user = user_name
         
     def getComputerName(self):
         """
@@ -78,55 +78,57 @@ class icRegUserJournal:
             return eval(param)
         return []
    
-    def isRegUserName(self, UserName_):
+    def isRegUserName(self, user_name):
         """
         Пользователь уже зарегистрирован?
-        :param UserName_: Имя пользователя.
+
+        :param user_name: Имя пользователя.
         """
         user_list = self.getCurrentUserNames()
         if user_list:
-            return UserName_ in user_list
+            return user_name in user_list
         return False
         
-    def register(self, UserName_, *StartParam_):
+    def register(self, user_name, *params):
         """
         Зарегистрировать пользователя в журнале.
-        :param UserName_: Имя пользователя.
-        :param StartParam_: Параметры запуска.
+
+        :param user_name: Имя пользователя.
+        :param params: Параметры запуска.
         """
         try:
-            if self.isRegUserName(UserName_):
+            if self.isRegUserName(user_name):
                 self._del_reg_user = False
                 
             # Текущее время
             str_time = time.asctime(time.localtime(time.time()))
             # Имя компьютера
             host_name = self.getComputerName()
-            full_start_param = [str_time, host_name, UserName_]+list(StartParam_)
+            full_start_param = [str_time, host_name, user_name] + list(params)
             # Прописать в списке зарегестрированных пользователей текущего юзера
             user_list = self.getRegUserList()
 
-            if UserName_ not in user_list:
-                user_list.append(UserName_)
+            if user_name not in user_list:
+                user_list.append(user_name)
             inifunc.saveParamINI(self._journal_file_name, 'REG_USER_LIST',
                                  host_name, str(user_list))
             # Прописать текущего пользователя как последнего зарегестрированного
             inifunc.saveParamINI(self._journal_file_name, 'REG_LAST_USER',
-                                 host_name, str(UserName_))
+                                 host_name, str(user_name))
             
             # Прописать машину,  юзеря и время входа в систему
             result = inifunc.saveParamINI(self._journal_file_name, 'CURRENT_USERS',
-                                          UserName_, str(tuple(full_start_param)))
+                                          user_name, str(tuple(full_start_param)))
                 
             # Указать в журнале текущего пользователя
-            self.setCurUser(UserName_)
+            self.setCurUser(user_name)
 
             if modefunc.isDebugMode():
-                log.info(u'Регистрация пользователя <%s>' % UserName_)
+                log.info(u'Регистрация пользователя <%s>' % user_name)
             return result
         except:
-            log.fatal(u'Ошибка регистрации пользователя <%s> в журнале' % UserName_)
-            return False    
+            log.fatal(u'Ошибка регистрации пользователя <%s> в журнале' % user_name)
+        return False
             
     def unregister(self):
         """
@@ -177,15 +179,15 @@ class icRegUserJournal:
         """
         return []
 
-    def getCurrentUserStartParam(self, UserName_):
+    def getCurrentUserStartParam(self, user_name):
         """
         Параметры запуска пользователя.
-        :param UserName_: Имя пользователя.
+        :param user_name: Имя пользователя.
         """
         try:
             return eval(inifunc.loadParamINI(self._journal_file_name,
-                                         'CURRENT_USERS', UserName_))
+                                             'CURRENT_USERS', user_name))
         except:
-            log.fatal(u'Ошибка определения параметров запуска пользователя <%s>. Журнал <%s>' % (UserName_,
+            log.fatal(u'Ошибка определения параметров запуска пользователя <%s>. Журнал <%s>' % (user_name,
                                                                                                  self._journal_file_name))
-            return None
+        return None

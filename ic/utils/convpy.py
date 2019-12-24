@@ -10,7 +10,6 @@ def DoPyEndLine(dir_path):
     """
     Функция во всех модулях пакета приводит разделители линий к питоновскому виду.
     """
-
     if os.path.isdir(dir_path):
         #   Определяем список файлов
         dir_list = os.listdir(dir_path)

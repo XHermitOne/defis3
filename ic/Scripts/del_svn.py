@@ -20,6 +20,7 @@ def is_linux():
     """
     return sys.platform[:3].lower() == 'lin'
 
+
 if is_windows():
     PATH_DELIMETER = '\\'
 elif is_linux():
@@ -50,6 +51,7 @@ def del_x(Dir_, DelFilter_=('.svn', '.SVN', '.Svn')):
         return True
     except:
         raise
+
 
 print('START')
 del_x(os.getcwd())

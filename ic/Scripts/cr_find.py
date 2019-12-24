@@ -42,8 +42,9 @@ def find_rus_module(dir_):
     :param dir_:
     :return:
     """
-    rus = '���������������������������������'
+    rus = ''
     return os.path.walk(dir_, walk_find_rus, rus)
+
 
 if __name__ == '__main__':
     find_rus_module('P:\\defis\\ic\\')

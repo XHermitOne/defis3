@@ -10,12 +10,13 @@ import importlib.util
 
 from ic.log import log
 
-__version__ = (0, 1, 1, 1)
+__version__ = (0, 1, 1, 2)
 
 
 def importModule(name):
     """
     Импортирование модуля. Пример: subsys.usercomponents.component
+
     :type name: C{string}
     :param name: Имя модуля.
     """
@@ -32,6 +33,7 @@ def importModule(name):
 def loadSource(name, path):
     """
     Возвращает загруженный модуль.
+
     :type name: C{string}
     :param name: Имя модуля.
     :type path: C{string}
@@ -55,6 +57,7 @@ def loadSource(name, path):
 def unloadSource(name):
     """
     Выгрузить модуль.
+
     :type name: C{string}
     :param name: Имя модуля.
     """
@@ -67,6 +70,7 @@ def unloadSource(name):
 def reloadSource(name, path=None):
     """
     Перезагрузить модуль.
+
     :type name: C{string}
     :param name: Имя модуля.
     :type path: C{string}
@@ -92,6 +96,7 @@ def addImportPath(path):
     Добавить путь для возможности импорта.
     Добавление происходит в sys.path.
     Также производится проверка на дублирование путей в sys.path
+
     :param path: Добавляемый путь для импорта.
     :return: Список путей sys.path.
     """

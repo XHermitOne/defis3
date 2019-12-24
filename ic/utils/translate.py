@@ -9,7 +9,7 @@ import wx
 from . import resource
 from ic.log import log
 
-__version__ = (0, 1, 1, 2)
+__version__ = (0, 1, 1, 3)
 
 _ = wx.GetTranslation
 
@@ -17,6 +17,7 @@ _ = wx.GetTranslation
 def icNamesSQLObj2SQL(Txt_, DataClassName_, DataClassScheme_=None):
     """
     Перевод имен таблиц и полей из контекста SQLObject в контекст sqlite.
+
     :param Txt_: Корректируемый текст.
     :param DataClassName_: Имя класса данных (класса таблицы).
     :param DataClassScheme_: Схема описания класса данных (класса таблицы).
@@ -46,6 +47,7 @@ def icQuerySQLObj2SQL(SQLTxt_, ResTab_):
     """
     Преобразование имен в тексте SQL запроса в контексте SQLObject в имена
     в контексте sqlite.
+
     :param SQLTxt_: Текст SQL запроса.
     :param ResTab_: Ресурсное описание таблиц.
     """
@@ -79,6 +81,7 @@ def fcmpLen(x, y):
 def sortLen(lst):
     """
     Функция сортирует в порядке уменьшения длины элементов списка.
+
     :type lst: C{list}
     :param lst: Список, который надо отсортировать.
     """
@@ -156,6 +159,7 @@ def convQueryToSQL(query, classes=None):
     """
     Преобразует запрос c SQLObject-ими именами в полноценный SQL запрос
     к базе.
+
     :type classes: C{list | tuple}
     :param classes: Список
     """
@@ -187,6 +191,7 @@ def convQueryToSQL(query, classes=None):
 def replSQLObjNamesToSQL(query, dictRepl):
     """
     Преобразует запрос имен в SQL запросе.
+
     :type flt: C{dictionary | string}
     :param flt: Словарь задающий фильтр.
     :type dictRepl: C{dictionary}
@@ -217,6 +222,7 @@ def replSQLObjNamesToSQL(query, dictRepl):
 def isInFilteredVal(flt, fld, value, isVerSize=True):
     """
     Функция проверяет принадлежит ли значение заданому фильтру.
+
     :type flt: C{dictionary}
     :param flt: Словарь задающий структурный фильтр.
     :type fld: C{string}
@@ -275,6 +281,7 @@ def isInFilteredVal(flt, fld, value, isVerSize=True):
 def InitValidValue(flt, fld, value):
     """
     Функция модифицирует значение под заданный шаблон.
+
     :type flt: C{dictionary}
     :param flt: Словарь задающий структурный фильтр. Действие фильта зависимости
         от типа значения словаря. Если:

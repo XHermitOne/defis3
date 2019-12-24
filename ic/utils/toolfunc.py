@@ -33,6 +33,7 @@ __version__ = (0, 1, 2, 1)
 def defineSpcStruct(spc, struct):
     """
     Дополняет структуру описания объекта до требований спецификации.
+
     :type spc: C{dictionary}.
     :param spc: Словарь описания спецификации.
     :type struct: C{dictionary}.
@@ -60,6 +61,7 @@ def defineSpcStruct(spc, struct):
 def getAttrValue(attr_name, spc):
     """
     Получить нормированное значение свойства из спецификации.
+
     :param attr_name: Имя атрибута.
     :param spc: Спецификация.
     """
@@ -98,6 +100,7 @@ PADDING = '    '
 def StructToTxt(struct, level=0):
     """
     Перевод словарно-списковой структуры в форматированный текст.
+
     :param struct : словарно-списковая структура.
     :param level: уровень вложенности (д.б. 0).
     """
@@ -147,6 +150,7 @@ def StructToTxt(struct, level=0):
 def delKeyInDictTree(struct, key):
     """
     Функция удаляет из словаря рекурсивно все указанные ключи.
+
     :param struct: Непосредственно словарь или список.
     :param key: Ключ, который необходимо удалить.
     """
@@ -172,6 +176,7 @@ def delKeyInDictTree(struct, key):
 def setKeyInDictTree(struct, key, value):
     """
     Функция устанавливает значенеи ключа в словаре рекурсивно.
+
     :param struct: Непосредственно словарь или список.
     :param key: Ключ, который необходимо установить.
     :param value: Значение ключа.
@@ -202,6 +207,7 @@ def doEval(code_block, log_type=-1,
     использование стандартной, функции eval(...), а также обрабатывает исключения. 
     В качестве локального пространства имен используется словарь LocalSpace. 
     В качестве глобального пространства имен берется словарь GlobalSpace.
+
     :type code_block: C{string}
     :param code_block: Вычисляемое выражение.
     :type log_type: C{int}
@@ -224,6 +230,7 @@ def doEval(code_block, log_type=-1,
 def setFilesToGlob(*args):
     """
     Поместить структуры, хранящиеся в файлах в глобальное пространство имен.
+
     :param args: Имена файлов и имена структур в глобальном пространстве состояний
         передаются в формате:
             (ИмяСтруктуры1, ИмяФайла1), (ИмяСтруктуры2, ИмяФайла2),...
@@ -244,6 +251,7 @@ def setFilesToGlob(*args):
 def recodeText(text, old_codepage, new_codepage):
     """
     Перекодировать из одной кодировки в другую.
+
     :param text: Строка.
     :param old_codepage: Кодовая страница строки.
     :param new_codepage: Новая кодовая страница строки.
@@ -271,6 +279,7 @@ def toOctHexString(text, to_code):
     """
     Закодировать строку в восьмеричном/шестнадцатеричном виде.
     Символы с кодом < 128 не кодируются.
+
     :param text:
     :param to_code: Кодировка 'OCT'-восьмеричное представление.
                             'HEX'-шестнадцатеричное представление.
@@ -304,6 +313,7 @@ def recodeListStr(list_data, old_codepage, new_codepage):
     """
     Перекодировать все строки в списке рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
+
     :param list_data: Сам список.
     :param old_codepage: Кодовая страница строки.
     :param new_codepage: Новая кодовая страница строки.
@@ -333,6 +343,7 @@ def recodeDictStr(dict_data, old_codepage, new_codepage):
     """
     Перекодировать все строки в словаре рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
+
     :param dict_data: Сам словарь.
     :param old_codepage: Кодовая страница строки.
     :param new_codepage: Новая кодовая страница строки.
@@ -368,6 +379,7 @@ def recodeTupleStr(Tuple_, StringCP_, NewCP_):
     """
     Перекодировать все строки в кортеже рекурсивно в другую кодировку.
     Перекодировка производится также внутри вложенных словарей и кортежей.
+
     :param Tuple_: Сам кортеж.
     :param StringCP_: Кодовая страница строки.
     :param NewCP_: Новая кодовая страница строки.
@@ -384,6 +396,7 @@ def recodeTupleStr(Tuple_, StringCP_, NewCP_):
 def recodeStructStr(struct, old_codepage, new_codepage):
     """
     Перекодировать все строки в структуре рекурсивно в другую кодировку.
+
     :param struct: Сруктура (список, словарь, кортеж).
     :param old_codepage: Кодовая страница строки.
     :param new_codepage: Новая кодовая страница строки.
@@ -410,6 +423,7 @@ def recodeStructStr(struct, old_codepage, new_codepage):
 def getRegValue(reg_key, reg_value=None):
     """
     Взять информацию из реестра относительно данного проекта.
+
     :param reg_key: Ключ реестра.
     :param reg_value: Имя значения из реестра.
     """
@@ -431,6 +445,7 @@ def getRegValue(reg_key, reg_value=None):
 def findChildResByName(children_res, child_name):
     """
     Поиск ресурсного описания дочернего объекта по имени.
+
     :param children_res: Список ресурсов-описаний дечерних объектов.
     :return child_name: Имя искомого дочернего объекта.
     :return: Индекс ресурсного описания в списке, если 
@@ -445,6 +460,7 @@ def findChildResByName(children_res, child_name):
 def getFuncListInModule(module_obj=None):
     """
     Получить список имен функций в модуле.
+
     :param module_obj: Объект модуля.
         Для использования модуль д.б. импортирован.
     :return: Возвращает список кортежей:
@@ -458,6 +474,7 @@ def getFuncListInModule(module_obj=None):
 def isOSWindowsPlatform():
     """
     Функция определения ОС.
+
     :return: True-если ОС-Windows и False во всех остальных случаях.
     """
     return bool(sys.platform[:3].lower() == 'win')
@@ -490,6 +507,7 @@ def encode_unicode_struct(struct, code_page='utf-8'):
 def get_check_summ(value):
     """
     Посчитать контрольную сумму переменной.
+
     :param value: Переменная, которая м.б. представлена в виде строки.
     :return: Возвращает md5 контрольную сумму или None в случае ошибки.
     """
@@ -505,6 +523,7 @@ def get_check_summ(value):
 def is_pasport(passport):
     """
     Проверка является ли структура паспортом.
+
     :param passport: Проверяемая структура.
     :return: True/False.
     """
@@ -519,6 +538,7 @@ def is_pasport(passport):
 def get_tree_lst_length(tree_data):
     """
     Подсчет всех элементов дерева.
+
     :param tree_data: Данные дерева. Дерево представлено как список списков.
     :return: Количество элементов дерева.
     """
@@ -536,6 +556,7 @@ def get_tree_length(tree_data, children_key='children'):
     """
     Подсчет всех элементов дерева. Элементы дерева - словари.
     Дочерние элементы находятся по ключу <children_key>.
+
     :param tree_data: Данные дерева. Дерево представлено как список списков.
     :param children_key: Ключ дочерних элементов.
     :return: Количество элементов дерева.

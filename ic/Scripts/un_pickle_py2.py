@@ -14,6 +14,7 @@ import cPickle
 def load_pickle_data(filename):
     """
     Загрузить данные из файла.
+
     :param filename: Полное имя файла.
     :return: Структура данных содержимого файла.
     """
@@ -33,6 +34,7 @@ def load_pickle_data(filename):
 def save_text_data(filename, data):
     """
     Сохранить данные в текстовый файл.
+
     :param filename: Полное имя файла.
     :param data: Структура записываемых данных.
     :return: True/False.
@@ -58,6 +60,7 @@ def save_text_data(filename, data):
 def run(filename):
     """
     Функция выполнения
+
     :param filename: Полное имя файла.
     :return:
     """
